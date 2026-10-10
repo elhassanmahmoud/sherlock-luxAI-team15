@@ -1,7 +1,7 @@
 """Hyperparameter an einer Stelle (gut fuer die Folie "Training configuration")."""
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, fields
 
 
 @dataclass
@@ -31,6 +31,17 @@ class AgentConfig:
     Units aus der Spawn-Ecke die Relic-Zonen praktisch nie und der w_point-Reward
     wird nie gesehen (im Experiment: Recall der Punkte-Tiles ~5%)."""
 
+    # --- Ablations-Schalter (docs/EXPERIMENT_PROTOKOLL.md). Jede Ablation
+    # schaltet genau EINEN davon gegenueber "full" um.
+    use_belief: bool = True
+    """False: das Netz sieht nur die aktuelle Beobachtung (MemorylessBelief).
+    Reward, Maske und gefuehrte Exploration nutzen weiter den vollen Belief."""
+    use_shaping: bool = True
+    """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
+    Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""
+    canonical: bool = True
+    """False: keine Spiegelung; je Seite ein eigenes Netz (agent_p0/agent_p1)."""
+
     # --- Aktionen
     use_sap: bool = True              # 6. Aktion: Sap auf heuristisch bestes Ziel
     mask_actions: bool = True         # Asteroiden/Kartenrand/Sap ohne Ziel maskieren
@@ -48,3 +59,9 @@ class AgentConfig:
 
     def to_dict(self) -> dict:
         return asdict(self)
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "AgentConfig":
+        """Unbekannte Schluessel ignorieren (aeltere/neuere Checkpoints)."""
+        known = {f.name for f in fields(cls)}
+        return cls(**{k: v for k, v in (d or {}).items() if k in known})

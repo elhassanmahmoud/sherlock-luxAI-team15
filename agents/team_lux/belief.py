@@ -75,8 +75,9 @@ STABLE_FROM_MATCH_STEP = 50
 class Belief:
     """Persistentes Weltmodell eines Agenten fuer ein komplettes Spiel."""
 
-    def __init__(self, team_id: int, W: int = 24, H: int = 24):
+    def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True):
         self.W, self.H = W, H
+        self.canonical = bool(canonical)
         self.set_team(team_id)
         self.reset_game()
 
@@ -85,7 +86,8 @@ class Belief:
         self.team_id = int(team_id)
         self.opp_team_id = 1 - self.team_id
         # player_1 sieht die Welt gespiegelt -> in kanonischen Raum drehen
-        self.mirrored = self.team_id == 1
+        # (Ablation no_canonical: nie spiegeln, dafuer getrennte Netze je Seite)
+        self.mirrored = self.canonical and self.team_id == 1
 
     def reset_game(self) -> None:
         W, H = self.W, self.H
@@ -339,3 +341,23 @@ class Belief:
             hit = np.array(sorted(self.relic_positions), dtype=np.int32)
             self._cache[key] = hit
         return hit
+
+
+class MemorylessBelief(Belief):
+    """Ablation `no_belief`: dieselbe Schnittstelle, aber ohne Gedaechtnis.
+
+    Vor jeder Beobachtung wird alles verworfen, d. h. Relics, Karte und
+    "erkundet" spiegeln nur das aktuell Sichtbare wider. Punkte-Tiles koennen
+    ohne Gedaechtnis (Punktverlauf ueber Steps) nicht abgeleitet werden und
+    bleiben leer.
+    """
+
+    def observe(self, obs) -> None:
+        step = int(np.asarray(obs["steps"]))
+        if step == self._last_step:
+            return
+        self.reset_game()
+        super().observe(obs)
+
+    def _infer_point_tiles(self, *args, **kwargs) -> None:
+        return
