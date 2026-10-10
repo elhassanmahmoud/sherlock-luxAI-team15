@@ -1,0 +1,148 @@
+{
+  "name": "20261010_no_shaping_s0",
+  "variant": "no_shaping",
+  "kind": "team_lux",
+  "overrides": {
+    "use_shaping": false
+  },
+  "config": {
+    "hidden": 256,
+    "dueling": true,
+    "gamma": 0.99,
+    "lr": 0.0003,
+    "batch_size": 256,
+    "buffer_capacity": 300000,
+    "learn_start": 5000,
+    "train_every": 2,
+    "target_update_every": 500,
+    "grad_clip": 5.0,
+    "double_dqn": true,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 60000,
+    "guided_prob": 0.7,
+    "use_belief": true,
+    "use_shaping": false,
+    "canonical": true,
+    "use_sap": true,
+    "mask_actions": true,
+    "w_point": 1.0,
+    "w_shape": 0.5,
+    "w_explore": 0.3,
+    "w_energy": 0.1,
+    "w_stack": 0.3,
+    "w_death": 0.5,
+    "w_match": 2.0,
+    "w_discovery": 0.5,
+    "w_sap_hit": 0.3
+  },
+  "separate_side_networks": false,
+  "run_seed": 0,
+  "train_games": 3000,
+  "train_seeds": [
+    0,
+    1499
+  ],
+  "curriculum": "erste 25% default, dann abwechselnd default/solution92",
+  "val_seeds": [
+    500000,
+    500001,
+    500002,
+    500003,
+    500004,
+    500005,
+    500006,
+    500007
+  ],
+  "val_every": 250,
+  "test_seeds": [
+    900000,
+    900001,
+    900002,
+    900003,
+    900004,
+    900005,
+    900006,
+    900007,
+    900008,
+    900009,
+    900010,
+    900011,
+    900012,
+    900013,
+    900014,
+    900015,
+    900016,
+    900017,
+    900018,
+    900019,
+    900020,
+    900021,
+    900022,
+    900023,
+    900024,
+    900025,
+    900026,
+    900027,
+    900028,
+    900029
+  ],
+  "eval_opponents": [
+    "default",
+    "solution92"
+  ],
+  "sides": [
+    "player_0",
+    "player_1"
+  ],
+  "eval_epsilon": 0.0,
+  "git": {
+    "commit": "503ada4da6336dc1eec6e5a2b001070411d917c6",
+    "dirty": false
+  },
+  "started": "2026-10-10T18:00:13",
+  "python": "3.14.6",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "argv": [
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/scripts/experiment.py",
+    "--variant",
+    "no_shaping",
+    "--run-seed",
+    "0",
+    "--games",
+    "3000",
+    "--val-every",
+    "250",
+    "--date",
+    "20261010"
+  ],
+  "versions": {
+    "torch": "2.14.1",
+    "numpy": "2.5.3",
+    "luxai-s3": "0.2.1",
+    "jax": "0.11.2"
+  },
+  "test_summary": {
+    "default": {
+      "games": 60,
+      "winrate": 0.2,
+      "match_winrate": 0.18333333333333332,
+      "point_winrate": 0.20833333333333334,
+      "avg_points": 126.21666666666667,
+      "avg_opp_points": 268.6666666666667
+    },
+    "solution92": {
+      "games": 60,
+      "winrate": 0.0,
+      "match_winrate": 0.005555555555555556,
+      "point_winrate": 0.0,
+      "avg_points": 82.28333333333333,
+      "avg_opp_points": 1616.9833333333333
+    }
+  },
+  "train_secs": 3967.2,
+  "test_secs": 107.7,
+  "finished": "2026-10-10T19:08:08",
+  "runtime_secs": 4075.0,
+  "status": "done"
+}
