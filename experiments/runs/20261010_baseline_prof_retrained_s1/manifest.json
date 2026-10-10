@@ -1,0 +1,116 @@
+{
+  "name": "20261010_baseline_prof_retrained_s1",
+  "variant": "baseline_prof_retrained",
+  "kind": "prof_train",
+  "overrides": {},
+  "config": null,
+  "separate_side_networks": false,
+  "run_seed": 1,
+  "train_games": 3000,
+  "train_seeds": [
+    10000,
+    11499
+  ],
+  "curriculum": "erste 25% default, dann abwechselnd default/solution92",
+  "val_seeds": [
+    500000,
+    500001,
+    500002,
+    500003,
+    500004,
+    500005,
+    500006,
+    500007
+  ],
+  "val_every": 250,
+  "test_seeds": [
+    900000,
+    900001,
+    900002,
+    900003,
+    900004,
+    900005,
+    900006,
+    900007,
+    900008,
+    900009,
+    900010,
+    900011,
+    900012,
+    900013,
+    900014,
+    900015,
+    900016,
+    900017,
+    900018,
+    900019,
+    900020,
+    900021,
+    900022,
+    900023,
+    900024,
+    900025,
+    900026,
+    900027,
+    900028,
+    900029
+  ],
+  "eval_opponents": [
+    "default",
+    "solution92"
+  ],
+  "sides": [
+    "player_0",
+    "player_1"
+  ],
+  "eval_epsilon": 0.0,
+  "git": {
+    "commit": "503ada4da6336dc1eec6e5a2b001070411d917c6",
+    "dirty": false
+  },
+  "started": "2026-10-10T18:00:13",
+  "python": "3.14.6",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "argv": [
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/scripts/experiment.py",
+    "--variant",
+    "baseline_prof_retrained",
+    "--run-seed",
+    "1",
+    "--games",
+    "3000",
+    "--val-every",
+    "250",
+    "--date",
+    "20261010"
+  ],
+  "versions": {
+    "torch": "2.14.1",
+    "numpy": "2.5.3",
+    "luxai-s3": "0.2.1",
+    "jax": "0.11.2"
+  },
+  "test_summary": {
+    "default": {
+      "games": 60,
+      "winrate": 0.0,
+      "match_winrate": 0.016666666666666666,
+      "point_winrate": 0.0,
+      "avg_points": 3.2333333333333334,
+      "avg_opp_points": 268.71666666666664
+    },
+    "solution92": {
+      "games": 60,
+      "winrate": 0.0,
+      "match_winrate": 0.005555555555555556,
+      "point_winrate": 0.0,
+      "avg_points": 3.1333333333333333,
+      "avg_opp_points": 1654.35
+    }
+  },
+  "train_secs": 3526.5,
+  "test_secs": 100.0,
+  "finished": "2026-10-10T19:00:40",
+  "runtime_secs": 3626.5,
+  "status": "done"
+}
