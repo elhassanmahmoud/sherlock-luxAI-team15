@@ -93,7 +93,7 @@ für jedes Spiel:
 | Netz | `agents/team_lux/model.py` | MLP 79 → 256 → 256, dann Dueling: V (128 → 1) und A (128 → 6), `Q = V + A − mean(A)`. |
 | Aktionen | `agents/team_lux/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Das Netz entscheidet nur, **ob** gesapt wird; das Ziel wählt eine Heuristik (maximale Gegnerenergie im 3×3-Bereich). Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
 | Reward | `agents/team_lux/reward.py` | Pro Einheit: + Eigentümer eines bewiesenen Punkte-Tiles, − Stacking, + Potential-Shaping zum zugewiesenen Ziel (Ng et al. 1999), + Erkundung und Entdeckung, + Energie, − Tod, ± Sap-Treffer, ± Matchergebnis (aus Δ `team_wins`). |
-| Lernen | `agents/team_lux/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300k Übergänge pro Einheit), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
+| Lernen | `agents/team_lux/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300 000 Übergänge, je Einheit und Step einer), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
 
 Alle Hyperparameter stehen an einer Stelle: `agents/team_lux/config.py` (`AgentConfig`).
 
@@ -111,7 +111,7 @@ Alle Hyperparameter stehen an einer Stelle: `agents/team_lux/config.py` (`AgentC
 │   │   ├── replay_buffer.py      Ringpuffer mit Aktionsmasken
 │   │   ├── geometry.py           Spiegelung echt ↔ kanonisch
 │   │   ├── config.py             alle Hyperparameter und Ablations-Schalter
-│   │   ├── agent.yaml            Import-/Lade-Pfade
+│   │   ├── agents.yaml           Import-/Lade-Pfade (Folie 51)
 │   │   └── weights/              trainierte Gewichte agent_p0.pth / agent_p1.pth
 │   ├── DQN/                      Baseline des Dozenten (unverändert)
 │   ├── default/                  schwacher Benchmark-Gegner
