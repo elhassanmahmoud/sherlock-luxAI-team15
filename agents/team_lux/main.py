@@ -38,7 +38,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 from agents.team_lux import geometry as geo
-from agents.team_lux.belief import Belief
+from agents.team_lux.belief import Belief, MemorylessBelief
 from agents.team_lux.config import AgentConfig
 from agents.team_lux.features import FEATURE_DIM, build_features, make_context
 from agents.team_lux.model import N_ACTIONS, QNet
@@ -58,10 +58,13 @@ class Agent_x:
         name: str = "Team Lux Agent_X",
         cfg: Optional[AgentConfig] = None,
         train: bool = True,
+        seed: Optional[int] = None,
     ) -> None:
         self.name = name
         self.agent_path = agent_path
-        self.cfg = cfg or AgentConfig()
+        # Ohne explizite Config die des Checkpoints uebernehmen - so laedt der
+        # Runner jede Ablations-Variante mit passender Architektur.
+        self.cfg = cfg or self._cfg_from_checkpoint(agent_path) or AgentConfig()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.env_cfg: Optional[dict] = None
 
@@ -70,7 +73,7 @@ class Agent_x:
         self.target_q = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
         self.opt = optim.Adam(self.q.parameters(), lr=self.cfg.lr)
         self.buffer = ReplayBuffer(self.cfg.buffer_capacity, FEATURE_DIM)
-        self.rng = np.random.default_rng()
+        self.rng = np.random.default_rng(seed)
 
         self.training = bool(train)
         self.autosave_on_terminate = True
@@ -78,7 +81,10 @@ class Agent_x:
         self.learn_steps = 0
         self.recent_losses: list[float] = []
 
-        self.belief = Belief(0)
+        self.belief = Belief(0, canonical=self.cfg.canonical)
+        # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
+        self.feat_belief = (self.belief if self.cfg.use_belief
+                            else MemorylessBelief(0, canonical=self.cfg.canonical))
         self._set_player(player)
         self._reset_episode_state()
 
@@ -93,14 +99,28 @@ class Agent_x:
         self.team_id = 0 if player == "player_0" else 1
         self.opp_team_id = 1 - self.team_id
         self.belief.set_team(self.team_id)
+        self.feat_belief.set_team(self.team_id)
 
     def new_game(self, player: Optional[str] = None) -> None:
         """Vor jedem Spiel aufrufen (Netz/Buffer/Epsilon bleiben erhalten)."""
         if player is not None and player != self.player:
             self._set_player(player)
-        self.belief.reset_game()
-        self.belief.set_team(self.team_id)
+        for b in {id(self.belief): self.belief, id(self.feat_belief): self.feat_belief}.values():
+            b.reset_game()
+            b.set_team(self.team_id)
         self._reset_episode_state()
+
+    @staticmethod
+    def _cfg_from_checkpoint(path: Optional[str]) -> Optional[AgentConfig]:
+        if not path or not os.path.isfile(path):
+            return None
+        try:
+            ckpt = torch.load(path, map_location="cpu", weights_only=False)
+        except Exception:
+            return None
+        if isinstance(ckpt, dict) and isinstance(ckpt.get("cfg"), dict):
+            return AgentConfig.from_dict(ckpt["cfg"])
+        return None
 
     def _reset_episode_state(self) -> None:
         self._prev_feats: dict[int, np.ndarray] = {}
@@ -109,15 +129,29 @@ class Agent_x:
         self._prev_ctx: Optional[dict] = None
         self._sap_hits: dict[int, int] = {}
         self._cache: Optional[tuple] = None
+        # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
+        self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
+                         "sap_attempts": 0, "sap_hits_est": 0}
+
+    def episode_stats(self) -> dict:
+        """Agent-spezifische Kennzahlen des laufenden/letzten Spiels."""
+        st = dict(self.ep_stats)
+        n = max(1, st["unit_steps"])
+        st["greedy_masked_frac"] = st["greedy_masked"] / n
+        st["relics_found"] = len(self.belief.relic_positions)
+        st["known_point_tiles"] = int(self.belief.point_tiles.sum())
+        st["belief_contradictions"] = int(self.belief.contradictions)
+        return st
 
     # ------------------------------------------------------------ runner API
     def set_env_cfg(self, env_cfg) -> None:
         self.env_cfg = env_cfg
         W = int(env_cfg.get("map_width", 24))
         H = int(env_cfg.get("map_height", 24))
-        if (W, H) != (self.belief.W, self.belief.H):
-            self.belief.W, self.belief.H = W, H
-            self.belief.reset_game()
+        for b in (self.belief, self.feat_belief):
+            if (W, H) != (b.W, b.H):
+                b.W, b.H = W, H
+                b.reset_game()
 
     def set_to_eval_mode(self) -> None:
         self.training = False
@@ -146,9 +180,14 @@ class Agent_x:
         if self._cache is not None and self._cache[0] == sid:
             return self._cache[1:]
         ctx = make_context(self, obs)
+        if self.feat_belief is self.belief:
+            fctx = ctx
+        else:
+            self.feat_belief.observe(obs)
+            fctx = make_context(self, obs, belief=self.feat_belief)
         ids = [int(u) for u in ctx["ally_ids"].tolist()]
         saps = {u: self._best_sap_target(ctx, u) for u in ids}
-        feats = {u: build_features(ctx, u) for u in ids}
+        feats = {u: build_features(fctx, u) for u in ids}
         masks = {u: self._action_mask(ctx, u, saps[u]) for u in ids}
         self._cache = (sid, ctx, ids, feats, masks, saps)
         return self._cache[1:]
@@ -171,13 +210,18 @@ class Agent_x:
         with torch.no_grad():
             t = torch.as_tensor(feats, dtype=torch.float32, device=self.device)
             q = self.q(t).cpu().numpy()
+        raw_greedy = q.argmax(axis=1)
         q[~masks] = -np.inf
         greedy = q.argmax(axis=1)
+        st = self.ep_stats
+        st["unit_steps"] += len(ids)
+        st["greedy_masked"] += int((~masks[np.arange(len(ids)), raw_greedy]).sum())
 
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
             if self.training and len(legal) > 0 and self.rng.random() < eps:
+                st["explore_steps"] += 1
                 if self.rng.random() < self.cfg.guided_prob:
                     a = self._guided_action(ctx, uid, masks[k], legal)
                 else:
@@ -194,6 +238,8 @@ class Agent_x:
                     dx, dy = geo.mirror_delta(dx, dy)
                 actions[uid] = [geo.SAP, dx, dy]
                 self._sap_hits[uid] = hits
+                st["sap_attempts"] += 1
+                st["sap_hits_est"] += int(hits > 0)
             else:
                 d = a if a < 5 else geo.STAY
                 if self.belief.mirrored:

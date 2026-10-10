@@ -119,9 +119,13 @@ def assign_targets(belief, unit_ids, unit_pos, W, H) -> dict[int, tuple[int, int
     return out
 
 
-def make_context(agent, obs) -> dict:
-    """Alle pro Step einmalig benoetigten Groessen (kanonischer Raum)."""
-    belief = agent.belief
+def make_context(agent, obs, belief=None) -> dict:
+    """Alle pro Step einmalig benoetigten Groessen (kanonischer Raum).
+
+    `belief` ueberschreibt agent.belief (Ablation no_belief: Features aus einer
+    gedaechtnislosen Sicht, Reward weiter aus dem vollen Belief).
+    """
+    belief = belief if belief is not None else agent.belief
     W, H = belief.W, belief.H
     cfg = agent.env_cfg or {}
     team, opp = belief.team_id, belief.opp_team_id
