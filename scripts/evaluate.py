@@ -10,9 +10,10 @@ import argparse
 import numpy as np
 
 from scripts.common import OPPONENTS, make_opponent, play_game
+from scripts.protocol import VAL_SEED_BASE
 
 
-def evaluate(weights: str, opponent: str, games: int = 20, base_seed: int = 10_000,
+def evaluate(weights: str, opponent: str, games: int = 20, base_seed: int = VAL_SEED_BASE,
              verbose: bool = True, env=None, agent=None) -> dict:
     """Spielt `games` Seeds x 2 Seiten ohne Exploration und ohne Lernen."""
     from luxai_s3.wrappers import LuxAIS3GymEnv
@@ -68,7 +69,8 @@ def main() -> None:
     ap.add_argument("--games", type=int, default=20, help="Anzahl Seeds (x2 Seiten)")
     ap.add_argument("--opponent", choices=OPPONENTS, default="default")
     ap.add_argument("--weights", default="agents/team_lux/weights/agent_p0.pth")
-    ap.add_argument("--seed", type=int, default=10_000)
+    ap.add_argument("--seed", type=int, default=VAL_SEED_BASE,
+                    help="Default: Validierungs-Seeds (Test-Seeds nur fuer die finale Auswertung)")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 

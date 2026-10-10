@@ -21,6 +21,7 @@ from pathlib import Path
 import numpy as np
 
 from scripts.common import ROOT, OPPONENTS, make_opponent, play_game
+from scripts.protocol import VAL_SEED_BASE
 
 WEIGHTS = ROOT / "agents" / "team_lux" / "weights"
 LOGS = ROOT / "logs"
@@ -137,7 +138,7 @@ def main() -> None:
                     from scripts.evaluate import evaluate
                     opp_eval = args.eval_opponent or args.opponent
                     res = evaluate(str(snapshot), opp_eval, args.eval_games,
-                                   base_seed=900_000, verbose=False,
+                                   base_seed=VAL_SEED_BASE, verbose=False,
                                    env=env, agent=agent)
                     agent.set_to_train_mode()
                     print(f"    -> Eval gegen {opp_eval}: WR={res['winrate']:.3f} "
