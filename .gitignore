@@ -6,3 +6,10 @@ venv/
 replays/
 logs/*.csv
 .idea/
+
+# Kursfolien (gross, nicht unser Material)
+Reinforcement Learning_upload.pptx
+# Experiment-Rohdaten: nur Ergebnisse/Manifeste versionieren, keine Checkpoints
+experiments/runs/**/*.pth
+experiments/replays/*.json
+.pytest_cache/
