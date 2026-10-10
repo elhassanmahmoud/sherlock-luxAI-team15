@@ -85,7 +85,15 @@ def make_opponent(kind: str, player: str, self_play_path: str | None = None):
 
 
 def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
-    """Ein komplettes Spiel (3 Matches). Gibt Statistiken zurueck."""
+    """Ein komplettes Spiel (3 Matches). Gibt Ergebnis + Kennzahlen zurueck.
+
+    Globale Zufallsquellen (np.random/random - genutzt von default und Prof-DQN)
+    werden mit dem Spiel-Seed gesetzt, damit jedes Spiel reproduzierbar ist.
+    """
+    import random
+
+    from scripts.metrics import GameTracker
+
     opp_side = "player_1" if our_side == "player_0" else "player_0"
     t0 = time.time()
 
@@ -94,11 +102,15 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
     if hasattr(opp, "new_game"):
         opp.new_game(opp_side)
 
+    random.seed(seed)
+    np.random.seed(seed % (2**32))
     obs, info = env.reset(seed=seed)
     env_cfg = info["params"]
     for a in (agent, opp):
         if hasattr(a, "set_env_cfg"):
             a.set_env_cfg(env_cfg)
+    team = 0 if our_side == "player_0" else 1
+    tracker = GameTracker(team, env_cfg)
 
     step = 0
     done = False
@@ -111,6 +123,7 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
             our_side: agent.act(step=step, obs=obs[our_side]),
             opp_side: opp.act(step=step, obs=obs[opp_side]),
         }
+        tracker.record(obs[our_side], actions[our_side])
         next_obs, reward, terminated, truncated, info = env.step(actions)
         done = bool(np.asarray(terminated[our_side])) or bool(np.asarray(truncated[our_side]))
         if train and hasattr(agent, "update"):
@@ -133,15 +146,23 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
     totals = [totals[t] + cur[t] for t in (0, 1)]
 
     o = last_obs[our_side]
-    team = 0 if our_side == "player_0" else 1
     wins = np.asarray(o["team_wins"]).tolist()
     our_w, opp_w = int(wins[team]), int(wins[1 - team])
     result = 1.0 if our_w > opp_w else (0.0 if our_w < opp_w else 0.5)
-    return dict(
+    our_p, opp_p = int(totals[team]), int(totals[1 - team])
+    row = dict(
         seed=seed, side=our_side, steps=step,
         our_wins=our_w, opp_wins=opp_w,
-        our_points=int(totals[team]), opp_points=int(totals[1 - team]),
-        result=result, secs=round(time.time() - t0, 2),
-        known_point_tiles=int(agent.belief.point_tiles.sum()) if hasattr(agent, "belief") else 0,
-        relics_found=len(agent.belief.relic_positions) if hasattr(agent, "belief") else 0,
+        our_points=our_p, opp_points=opp_p,
+        result=result,
+        game_win=int(our_w > opp_w),
+        point_win=1.0 if our_p > opp_p else (0.0 if our_p < opp_p else 0.5),
+        secs=round(time.time() - t0, 2),
     )
+    row.update(tracker.summary())
+    extra = agent.episode_stats() if hasattr(agent, "episode_stats") else {}
+    row["relics_found"] = extra.get("relics_found", row["relics_seen"])
+    row["known_point_tiles"] = extra.get("known_point_tiles", float("nan"))
+    row["greedy_masked_frac"] = extra.get("greedy_masked_frac", float("nan"))
+    row["belief_contradictions"] = extra.get("belief_contradictions", float("nan"))
+    return row
