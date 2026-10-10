@@ -120,4 +120,5 @@ Warum 3000 Spiele: ε fällt nach ≈ 200 Spielen auf 0,05 (`eps_decay_steps = 6
 
 | Datum | Änderung | Grund | Testdaten schon gesehen? |
 |---|---|---|---|
-| – | – | – | – |
+| 10.10.2026 | Verbesserungsrunde `full_ft`: Weitertraining der 3 `full`-Starts (3000 Spiele, 70 % Solution_92, eigene Trainings-Seeds ab 200 000), Checkpoint-Auswahl nach Validierungs-Score, danach einmal Test | Testergebnis des Batches: gegen Solution_92 nur 18,9 %, Lernkurve steigt bis zum Ende | **ja** – die Entscheidung *dass* nachtrainiert wird, folgt aus den Testzahlen. Die `full_ft`-Testzahlen sind deshalb kein unabhängiger Vergleich mit dem Batch, sondern nur ein Hinweis. |
+| 10.10.2026 | Auswahl des Abgabe-Agenten: `full`-Start mit bestem Validierungs-Score (s0: 0,75 > s2: 0,60 > s1: 0,58) | Abgabe braucht einen konkreten Gewichtssatz | nein (Auswahl nur auf Validierung) |
