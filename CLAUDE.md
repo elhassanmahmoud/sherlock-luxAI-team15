@@ -52,7 +52,7 @@
 - Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
 - Nachtraining (`finetune.py`) hat verschlechtert: Replay Buffer wird nicht gespeichert → vor nächstem Versuch fixen.
 - Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
-- Offen für 16.10.: Präsentationsfolien, Slot buchen, Replays ansehen, proben. Team 15, Agent Sherlock (`agents/sherlock/`, umbenannt von team_lux).
+- Offen für 16.10.: Präsentationsfolien, Slot buchen, Replays ansehen, proben. Team 15 (Mahmoud El-Hassan, Moayed Shawesh), Agent Sherlock (`agents/sherlock/`, umbenannt von team_lux).
 
 ## Konventionen
 - Arrays `[x][y]`, unsichtbare Werte = -1, Aktionen Shape `(max_units, 3)`: 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap(dx, dy).
