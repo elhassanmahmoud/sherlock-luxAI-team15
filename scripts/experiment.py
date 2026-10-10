@@ -176,7 +176,7 @@ def main(argv=None) -> None:
     manifest = dict(
         name=name, variant=args.variant, kind=VARIANTS[args.variant][0],
         overrides=VARIANTS[args.variant][1],
-        config=variant_cfg(args.variant).to_dict() if VARIANTS[args.variant][0] == "team_lux" else None,
+        config=variant_cfg(args.variant).to_dict() if VARIANTS[args.variant][0] == "sherlock" else None,
         separate_side_networks=learners.split,
         run_seed=args.run_seed, train_games=games,
         train_seeds=[P.train_seed(args.run_seed, 0), P.train_seed(args.run_seed, max(0, games - 1))] if games else [],

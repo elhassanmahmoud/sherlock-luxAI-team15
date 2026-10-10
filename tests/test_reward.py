@@ -5,8 +5,8 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from agents.team_lux.config import AgentConfig
-from agents.team_lux.reward import unit_rewards
+from agents.sherlock.config import AgentConfig
+from agents.sherlock.reward import unit_rewards
 from tests.conftest import H, W
 
 ZERO = dict(w_point=0.0, w_shape=0.0, w_explore=0.0, w_energy=0.0, w_stack=0.0,
@@ -82,7 +82,7 @@ def test_no_shaping_keeps_only_points_and_match():
 def test_match_boundary_transitions_in_real_game(env):
     """Am echten Env: kein Uebergang ab match_step 0 (Reste des alten Matches,
     sonst falsche Tod-Strafe) und Matchende beendet die Unit-Episode."""
-    from agents.team_lux.main import Agent_x
+    from agents.sherlock.main import Agent_x
     from agents.default.default import DefaultAgent
     from scripts.common import play_game
 

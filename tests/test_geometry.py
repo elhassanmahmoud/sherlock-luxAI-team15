@@ -2,8 +2,8 @@
 import numpy as np
 import pytest
 
-from agents.team_lux import geometry as geo
-from agents.team_lux.belief import Belief
+from agents.sherlock import geometry as geo
+from agents.sherlock.belief import Belief
 from tests.conftest import H, W, make_obs
 
 

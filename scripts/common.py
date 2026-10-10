@@ -77,7 +77,7 @@ def make_opponent(kind: str, player: str, self_play_path: str | None = None):
     if kind == "random":
         return RandomAgent(player)
     if kind == "self":
-        from agents.team_lux.main import Agent_x
+        from agents.sherlock.main import Agent_x
         opp = Agent_x(player, agent_path=self_play_path, name="Self-Play Snapshot", train=False)
         opp.set_to_eval_mode()
         return opp

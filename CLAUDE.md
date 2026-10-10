@@ -23,8 +23,8 @@
 
 ### Phase 0 – Setup (heute)
 - [x] `requirements.txt` angelegt — [x] venv aufsetzen, `params.py` auf 3 Matches (`scripts/set_match_count.py`)
-- [x] `main.py` auf 4 (team_lux) vs 2 umgestellt — [x] ein Spiel mit Replay laufen lassen
-- [x] Agent-Ordner `agents/team_lux/` (Skelett, Klasse `Agent_x`), Eintrag Gruppe 4 in `Paths.csv` (Platzhalter: Teamname + echte Moodle-Gruppennummer noch eintragen)
+- [x] `main.py` auf 15 (Sherlock) vs 2 umgestellt — [x] ein Spiel mit Replay laufen lassen
+- [x] Agent-Ordner `agents/sherlock/` (Skelett, Klasse `Agent_x`), Eintrag Gruppe 15 in `Paths.csv` (Agent Sherlock)
 
 ### Phase 1 – Training, das wirklich speichert
 - [x] Eigenes `train.py`: Env direkt (`LuxAIS3GymEnv(numpy_output=True)`), Agent EINMAL erzeugen, viele Spiele, Gegner wählbar (default / Solution_92 / Self-Play)
@@ -52,19 +52,19 @@
 - Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
 - Nachtraining (`finetune.py`) hat verschlechtert: Replay Buffer wird nicht gespeichert → vor nächstem Versuch fixen.
 - Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
-- Offen für 16.10.: Präsentationsfolien, echter Teamname + Moodle-Gruppe (Platzhalter team_lux/4), Slot buchen.
+- Offen für 16.10.: Präsentationsfolien, Slot buchen, Replays ansehen, proben. Team 15, Agent Sherlock (`agents/sherlock/`, umbenannt von team_lux).
 
 ## Konventionen
 - Arrays `[x][y]`, unsichtbare Werte = -1, Aktionen Shape `(max_units, 3)`: 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap(dx, dy).
 - Kleine, überprüfbare Schritte; nach jeder Änderung ein kurzes Testspiel laufen lassen.
 
 ## Ordnerstruktur (eigener Code)
-- `agents/team_lux/main.py` – Agent_x (runner-API, Workaround: speichert bei terminated)
-- `agents/team_lux/belief.py` – Gedächtnis (Relics, Punkte-Tiles, Karte)
-- `agents/team_lux/features.py` – Features pro Einheit
-- `agents/team_lux/reward.py` – Reward Shaping
-- `agents/team_lux/model.py` – Netze
-- `agents/team_lux/replay_buffer.py` – Replay Buffer
-- `agents/team_lux/weights/` – .pth (P0/P1 getrennt)
+- `agents/sherlock/main.py` – Agent_x (runner-API, Workaround: speichert bei terminated)
+- `agents/sherlock/belief.py` – Gedächtnis (Relics, Punkte-Tiles, Karte)
+- `agents/sherlock/features.py` – Features pro Einheit
+- `agents/sherlock/reward.py` – Reward Shaping
+- `agents/sherlock/model.py` – Netze
+- `agents/sherlock/replay_buffer.py` – Replay Buffer
+- `agents/sherlock/weights/` – .pth (P0/P1 getrennt)
 - `scripts/train.py`, `scripts/evaluate.py` – eigenes Training/Evaluation
 - `logs/`, `replays/` (gitignored), `docs/presentation/`

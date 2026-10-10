@@ -1,7 +1,7 @@
 """agent.zip fuer die Abgabe bauen (Vorgaben laut Kursfolie 51).
 
     python -m scripts.build_submission
-    python -m scripts.build_submission --team-name team_lux --group 4
+    python -m scripts.build_submission --team-name sherlock --group 15
     python -m scripts.build_submission --from-run experiments/runs/20261010_full_s1
 
 Inhalt von dist/agent.zip:
@@ -16,7 +16,7 @@ Inhalt von dist/agent.zip:
     paths.csv                Moodle-Gruppe;Import_Path;Load_Path_P0;Load_Path_P1
 
 --from-run kopiert vorher die Gewichte eines Experiment-Laufs nach
-agents/team_lux/weights/ (die Pfade aus Paths.csv). Danach prueft das Skript
+agents/sherlock/weights/ (die Pfade aus Paths.csv). Danach prueft das Skript
 das entpackte Zip: Import ueber lux/runner.load_class_from_path, Pflichtmethoden,
 Laden beider Seiten und ein Aktionsschritt auf einer echten Beobachtung.
 """
@@ -32,7 +32,7 @@ from pathlib import Path
 
 from scripts.common import ROOT
 
-SRC = ROOT / "agents" / "team_lux"
+SRC = ROOT / "agents" / "sherlock"
 REQUIRED = ["act", "update", "set_to_eval_mode", "set_env_cfg", "save_agent", "load_agent"]
 
 
@@ -112,8 +112,8 @@ def check(zip_path: Path, team: str) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--team-name", default="team_lux", help="Ordnername im Zip (= Teamname)")
-    ap.add_argument("--group", type=int, default=4, help="Moodle-Gruppennummer")
+    ap.add_argument("--team-name", default="sherlock", help="Ordnername im Zip (= Teamname)")
+    ap.add_argument("--group", type=int, default=15, help="Moodle-Gruppennummer")
     ap.add_argument("--from-run", default=None, help="Gewichte aus diesem Run-Ordner uebernehmen")
     ap.add_argument("--out", default=str(ROOT / "dist" / "agent.zip"))
     ap.add_argument("--no-check", action="store_true")

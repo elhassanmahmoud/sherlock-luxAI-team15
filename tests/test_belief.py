@@ -1,8 +1,8 @@
 """Belief: Relics ueber Matches merken, Punkte-Tiles aus Punktzuwachs ableiten."""
 import numpy as np
 
-from agents.team_lux import geometry as geo
-from agents.team_lux.belief import Belief, MemorylessBelief, STABLE_FROM_MATCH_STEP
+from agents.sherlock import geometry as geo
+from agents.sherlock.belief import Belief, MemorylessBelief, STABLE_FROM_MATCH_STEP
 from tests.conftest import make_obs
 
 MS = STABLE_FROM_MATCH_STEP + 5  # match_step im stabilen Bereich

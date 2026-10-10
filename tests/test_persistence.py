@@ -4,9 +4,9 @@ from dataclasses import replace
 import numpy as np
 import torch
 
-from agents.team_lux.config import AgentConfig
-from agents.team_lux.features import FEATURE_DIM
-from agents.team_lux.main import Agent_x
+from agents.sherlock.config import AgentConfig
+from agents.sherlock.features import FEATURE_DIM
+from agents.sherlock.main import Agent_x
 
 
 def test_save_load_gives_identical_q_and_counters(tmp_path, env):

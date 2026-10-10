@@ -1,4 +1,4 @@
-"""Training des team_lux-Agenten.
+"""Training des Sherlock-Agenten.
 
     python -m scripts.train --games 400 --opponent default
     python -m scripts.train --games 300 --opponent solution92 --resume
@@ -23,7 +23,7 @@ import numpy as np
 from scripts.common import ROOT, OPPONENTS, make_opponent, play_game
 from scripts.protocol import VAL_SEED_BASE
 
-WEIGHTS = ROOT / "agents" / "team_lux" / "weights"
+WEIGHTS = ROOT / "agents" / "sherlock" / "weights"
 LOGS = ROOT / "logs"
 
 LOG_FIELDS = [
@@ -64,8 +64,8 @@ def main() -> None:
 
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
-    from agents.team_lux.config import AgentConfig
-    from agents.team_lux.main import Agent_x
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.main import Agent_x
 
     cfg = AgentConfig()
     resume_path = str(WEIGHTS / "agent_p0.pth") if args.resume else None

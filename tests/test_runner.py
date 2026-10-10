@@ -7,7 +7,7 @@ import pandas as pd
 import lux.runner as runner
 from tests.conftest import ROOT
 
-GROUP = 4
+GROUP = 15
 REQUIRED = ["act", "update", "save_agent", "load_agent", "set_to_eval_mode", "set_env_cfg"]
 
 
@@ -40,7 +40,7 @@ def test_short_real_game_via_runner(tmp_path, monkeypatch):
 
 
 def test_short_game_both_sides_without_errors(env):
-    from agents.team_lux.main import Agent_x
+    from agents.sherlock.main import Agent_x
     from scripts.common import make_opponent, play_game
 
     a = Agent_x("player_0", agent_path=str(ROOT / paths_row()["Load_Path_P0"]), train=False)
