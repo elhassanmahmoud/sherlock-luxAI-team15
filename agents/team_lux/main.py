@@ -37,13 +37,13 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from agents.team_lux import geometry as geo
-from agents.team_lux.belief import Belief, MemorylessBelief
-from agents.team_lux.config import AgentConfig
-from agents.team_lux.features import FEATURE_DIM, build_features, make_context
-from agents.team_lux.model import N_ACTIONS, QNet
-from agents.team_lux.replay_buffer import ReplayBuffer
-from agents.team_lux.reward import unit_rewards
+from . import geometry as geo
+from .belief import Belief, MemorylessBelief
+from .config import AgentConfig
+from .features import FEATURE_DIM, build_features, make_context
+from .model import N_ACTIONS, QNet
+from .replay_buffer import ReplayBuffer
+from .reward import unit_rewards
 
 SAP_DROPOFF_ASSUMED = 0.5  # unit_sap_dropoff_factor ist nicht beobachtbar
 

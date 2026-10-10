@@ -144,7 +144,7 @@ class Belief:
             self.reset_match()
             return  # zu Matchbeginn existieren noch keine Units
 
-        from agents.team_lux import geometry as geo  # lokal: vermeidet Zyklus
+        from . import geometry as geo  # lokal: vermeidet Zyklus
 
         sensor = np.asarray(obs["sensor_mask"], dtype=bool)
         tile_type = np.asarray(obs["map_features"]["tile_type"], dtype=np.int32)
