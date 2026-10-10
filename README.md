@@ -22,7 +22,25 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 ## Ergebnisse
 
 <!-- ERGEBNISSE:START -->
-> **Noch ausstehend.** Der Experiment-Batch vom 10.10.2026 (8 Varianten, 3 Trainingsstarts, je 3000 Trainingsspiele, 30 Test-Seeds × 2 Seiten × 2 Gegner) läuft noch. Die Zahlen werden nach Abschluss mit `scripts/report.py` erzeugt und hier eingetragen. Bis dahin stehen hier bewusst keine Werte.
+Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart), ε = 0, 3 Trainingsstarts à 3000 Spiele. Angegeben sind die Winrate mit 95-%-Bootstrap-KI und in Klammern die Standardabweichung über die Starts. Batch vom 10.10.2026.
+
+| Agent | gegen `default` | gegen `Solution_92_Kaggle` | Punkte pro Spiel (vs. default / vs. Sol92) |
+|---|---|---|---|
+| **`full` (unser Agent)** | **87,8 %** [76,7; 96,7] (± 3,5) | **18,9 %** [8,3; 31,7] (± 3,5) | 541 : 142 / 497 : 993 |
+| Prof-DQN, mitgelieferte Gewichte | 0,0 % [0; 0] | 0,0 % [0; 0] | 5 : 268 / 4 : 1655 |
+| Prof-DQN, gleich lang neu trainiert | 0,0 % [0; 0] | 0,0 % [0; 0] | 4 : 269 / 3 : 1654 |
+
+![Winrate je Variante mit 95-%-KI](docs/report/winrate_ci.png)
+
+Wichtigste Erkenntnisse aus der Ablation ([Details und Einordnung](docs/ERGEBNISSE_20261010.md)):
+
+- **Gedächtnis (Belief)** ist der größte Hebel: ohne Gedächtnis −32 Prozentpunkte gegen `default` und −17 gegen Solution_92, beides belegt.
+- **Reward Shaping** stabilisiert das Training: Ohne Shaping kollabiert einer von drei Starts.
+- **Sap** bringt gegen Solution_92 +16 Prozentpunkte.
+- Für **Spiegelung** und **geführte Exploration** ist kein Effekt belegt; die KIs schließen 0 ein.
+- Mehr Training allein macht den Prof-DQN **nicht** besser. Der Vorsprung kommt von der Methode.
+
+Die Abgabe-Gewichte in `agents/team_lux/weights/` stammen vom Start `full_s0`, ausgewählt nach dem Validierungs-Score und nicht nach den Testzahlen.
 <!-- ERGEBNISSE:END -->
 
 ## Architektur
@@ -155,6 +173,8 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Tests | `python -m pytest -q` |
 | Abgabe bauen | `python -m scripts.build_submission` |
 
+> **Achtung:** `scripts.train` schreibt nach `agents/team_lux/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Für Experimente besser `scripts.experiment` nutzen; das schreibt in einen eigenen Run-Ordner. Zurückholen geht mit `git checkout agents/team_lux/weights/`.
+
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`.
 
 > Warum ein eigenes `train.py`? Der Kurs-Runner (`lux/runner.py`) erzeugt die Agenten in jedem Spiel neu und ruft `save_agent()` vor dem Spiel auf. Gelerntes würde damit nie gespeichert. Unsere Skripte nutzen das Env direkt; zur Abgabe bleibt der Agent trotzdem voll runner-kompatibel (`tests/test_runner.py`).
@@ -173,7 +193,7 @@ Wir wollen belegen, welche Änderung wie viel bringt, und zwar im Vergleich zur 
 - **Statistik**: 3 Trainingsstarts pro Variante (Mittel ± SD). 95-%-Bootstrap-KIs mit zwei Ebenen (Starts × Seeds) und gepaarter Bootstrap für Differenzen zu `full`.
 - **Reproduzierbarkeit**: Jeder Lauf schreibt `manifest.json` mit Config, Seeds, Git-Commit und Laufzeit.
 
-Ergebnisse und ehrliche Einordnung stehen in `docs/ERGEBNISSE_<datum>.md` (sobald der Batch fertig ist), die Rohdaten in `experiments/runs/`.
+Ergebnisse und ehrliche Einordnung: [`docs/ERGEBNISSE_20261010.md`](docs/ERGEBNISSE_20261010.md), automatisch erzeugte Tabellen: [`docs/report/tabellen.md`](docs/report/tabellen.md), Rohdaten: `experiments/runs/`.
 
 ## Abgabe (agent.zip)
 
@@ -192,8 +212,9 @@ Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine
 
 Ehrlicher Stand: **10.10.2026**.
 
-- Gegen `Solution_92_Kaggle` gewinnt bisher keine Variante zuverlässig. Wir erwarten dort vor allem Unterschiede in Punkten und Match-Siegen, nicht in der Spiel-Winrate.
-- Die geführte Exploration ist eine Heuristik (Schritt Richtung zugewiesenes Ziel). Die hohe **Trainings**-Winrate gegen `default` stammt zum Teil von ihr. Aussagekräftig ist nur die Evaluation mit ε = 0.
+- Gegen `Solution_92_Kaggle` gewinnt `full` nur knapp jedes fünfte Spiel (18,9 %) und holt etwa halb so viele Punkte wie der Gegner.
+- Die geführte Exploration (Heuristik) bringt laut Ablation nichts Messbares und kann entfallen.
+- „Sap-Treffer“ wird nur über sichtbare Gegner im Zielbereich gezählt; den tatsächlichen Energieschaden messen wir noch nicht.
 - Das Sap-Ziel wählt eine Heuristik; das Netz entscheidet nur, ob gesapt wird.
 - Das MLP sieht nur lokale Ausschnitte und Distanzen, keine Karte. Ein CNN auf Kartenkanälen oder PPO mit Action-Masking ist für Phase 3 geplant.
 - Statistik: 3 Starts × 30 Seeds lösen Unterschiede unter etwa 10 Prozentpunkten nicht sicher auf. Es gibt keine Korrektur für Mehrfachvergleiche.
