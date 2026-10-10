@@ -11,10 +11,15 @@ DQN viel zu spaerlich, deshalb formen wir pro Einheit und pro Step:
     + w_energy    * Energieaenderung / 400
     - w_death     * Einheit verloren
     + w_sap_hit   * getroffene Gegner beim Sap (bzw. Strafe bei Fehlschuss)
-    + w_match     * Env-Reward (Matchsieg/-niederlage)
+    + w_match     * Matchergebnis in DIESEM Step (+1 Sieg, -1 Niederlage)
 
 Mit cfg.use_shaping = False (Ablation no_shaping) bleibt nur
-  r = w_point * (Eigentuemer eines bewiesenen Punkte-Tiles) + w_match * Env-Reward
+  r = w_point * (Eigentuemer eines bewiesenen Punkte-Tiles) + w_match * Matchergebnis
+
+Achtung Env-Reward: LuxAIS3GymEnv liefert in JEDEM Step team_wins kumulativ
+(luxai_s3/env.py: reward[player_k] = state.team_wins[k]), nicht nur beim
+Matchende. Wir nutzen ihn deshalb nicht direkt, sondern die Aenderung von
+team_wins zwischen zwei Steps (match_outcome).
 
 phi(s) = -SHAPE_SCALE * dist(unit, zugewiesenes Ziel) / (W + H)
 
@@ -57,17 +62,24 @@ def _on_owned_point_tile(next_ctx: dict, uid: int) -> int:
     return 1 if owner == uid else -1
 
 
-def _sparse_rewards(cfg, alive_now, alive_next, next_ctx, env_reward) -> dict[int, float]:
+def match_outcome(ctx: dict, next_ctx: dict) -> float:
+    """+1 wenn wir in diesem Step ein Match gewonnen haben, -1 bei Niederlage, sonst 0."""
+    d_own = next_ctx["own_wins"] - ctx["own_wins"]
+    d_opp = next_ctx["opp_wins"] - ctx["opp_wins"]
+    return float(d_own - d_opp)
+
+
+def _sparse_rewards(cfg, alive_now, alive_next, next_ctx, outcome) -> dict[int, float]:
     out: dict[int, float] = {}
     for uid in alive_now:
-        r = cfg.w_match * float(env_reward)
+        r = cfg.w_match * outcome
         if uid in alive_next and _on_owned_point_tile(next_ctx, uid) == 1:
             r += cfg.w_point
         out[uid] = float(r)
     return out
 
 
-def unit_rewards(cfg, ctx: dict, next_ctx: dict, env_reward: float,
+def unit_rewards(cfg, ctx: dict, next_ctx: dict,
                  actions: dict[int, int], sap_hits: dict[int, int]) -> dict[int, float]:
     """Reward je Unit, die im Ausgangszustand `ctx` gelebt hat."""
     alive_now = set(int(u) for u in ctx["ally_ids"].tolist())
@@ -80,12 +92,13 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict, env_reward: float,
         + cfg.w_discovery * belief.newly_proven
     ) / n
 
+    outcome = match_outcome(ctx, next_ctx)
     if not cfg.use_shaping:
-        return _sparse_rewards(cfg, alive_now, alive_next, next_ctx, env_reward)
+        return _sparse_rewards(cfg, alive_now, alive_next, next_ctx, outcome)
 
     out: dict[int, float] = {}
     for uid in alive_now:
-        r = team_bonus + cfg.w_match * float(env_reward)
+        r = team_bonus + cfg.w_match * outcome
 
         if uid in alive_next:
             on_point = _on_owned_point_tile(next_ctx, uid)

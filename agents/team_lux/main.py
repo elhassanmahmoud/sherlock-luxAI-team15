@@ -20,7 +20,7 @@ Pseudocode (fuer die Praesentation):
                 a_u      <- eps-greedy( argmax_a Q(s_u, a) ueber mask_u )
             env.step(actions)
             belief.observe(obs_{t+1}); ctx' <- make_context(obs_{t+1})
-            r_u <- shaped_reward(ctx, ctx', env_reward)
+            r_u <- shaped_reward(ctx, ctx')          # Matchsieg aus Delta team_wins
             Buffer <- (s_u, a_u, r_u, s'_u, done_u, mask'_u)   fuer alle u
             alle train_every Steps:
                 Batch ziehen
@@ -88,9 +88,9 @@ class Agent_x:
         self._set_player(player)
         self._reset_episode_state()
 
-        if agent_path:
-            self.load_agent(agent_path)
         self.target_q.load_state_dict(self.q.state_dict())
+        if agent_path:
+            self.load_agent(agent_path)  # laedt auch target_q (nicht danach ueberschreiben)
 
     # ------------------------------------------------------------- identitaet
     def _set_player(self, player: str) -> None:
@@ -197,10 +197,17 @@ class Agent_x:
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
 
-        ctx, ids, feat_map, mask_map, sap_targets = self._decide(obs)
-        self._prev_ctx = ctx
         self._prev_feats, self._prev_actions, self._prev_masks = {}, {}, {}
         self._sap_hits = {}
+        # Match-Start (match_step 0): die sichtbaren Units sind Reste des alten
+        # Matches, die Engine setzt sie im naechsten Step zurueck -> No-op und
+        # kein Lern-Uebergang (sonst falsche Tod-Strafe fuer alle Units).
+        if int(np.asarray(obs["match_steps"])) == 0:
+            self._prev_ctx = None
+            return actions
+
+        ctx, ids, feat_map, mask_map, sap_targets = self._decide(obs)
+        self._prev_ctx = ctx
         if not ids:
             return actions
 
@@ -336,8 +343,9 @@ class Agent_x:
             return
 
         next_ctx, next_ids, next_feats, next_masks, _ = self._decide(next_obs)
-        env_r = float(np.asarray(reward).reshape(-1)[0]) if np.size(reward) else 0.0
-        rewards = unit_rewards(self.cfg, prev_ctx, next_ctx, env_r,
+        # Matchende (next match_step 0): fuer die Units endet hier ihre Episode.
+        match_over = next_ctx["match_step"] == 0
+        rewards = unit_rewards(self.cfg, prev_ctx, next_ctx,
                                self._prev_actions, self._sap_hits)
 
         alive_next = set(int(u) for u in next_ctx["ally_ids"].tolist())
@@ -350,7 +358,7 @@ class Agent_x:
             if uid in alive_next:
                 ns = next_feats[uid]
                 nmask = next_masks[uid]
-                done = bool(terminated)
+                done = bool(terminated) or match_over
             else:
                 ns, nmask, done = zero, dead_mask, True
             self.buffer.push(s, a, rewards.get(uid, 0.0), ns, done, nmask)
