@@ -22,30 +22,37 @@
 ## Plan
 
 ### Phase 0 – Setup (heute)
-- [x] `requirements.txt` angelegt — [ ] venv aufsetzen, `params.py` auf 3 Matches
-- [x] `main.py` auf 4 (team_lux) vs 2 umgestellt — [ ] ein Spiel mit Replay laufen lassen
+- [x] `requirements.txt` angelegt — [x] venv aufsetzen, `params.py` auf 3 Matches (`scripts/set_match_count.py`)
+- [x] `main.py` auf 4 (team_lux) vs 2 umgestellt — [x] ein Spiel mit Replay laufen lassen
 - [x] Agent-Ordner `agents/team_lux/` (Skelett, Klasse `Agent_x`), Eintrag Gruppe 4 in `Paths.csv` (Platzhalter: Teamname + echte Moodle-Gruppennummer noch eintragen)
 
 ### Phase 1 – Training, das wirklich speichert
-- [ ] Eigenes `train.py`: Env direkt (`LuxAIS3GymEnv(numpy_output=True)`), Agent EINMAL erzeugen, viele Spiele, Gegner wählbar (default / Solution_92 / Self-Play)
-- [ ] Speichern am Spielende, getrennte Pfade pro Seite oder seitenunabhängige Features (Spiegelung für player_1)
-- [ ] Logging: Winrate, Punkte, Loss, Epsilon pro Spiel (CSV)
-- [ ] `evaluate.py`: N Spiele gegen festen Gegner, feste Seeds, beide Seiten → Winrate
+- [x] Eigenes `train.py`: Env direkt (`LuxAIS3GymEnv(numpy_output=True)`), Agent EINMAL erzeugen, viele Spiele, Gegner wählbar (default / Solution_92 / Self-Play)
+- [x] Speichern am Spielende, getrennte Pfade pro Seite oder seitenunabhängige Features (Spiegelung für player_1)
+- [x] Logging: Winrate, Punkte, Loss, Epsilon pro Spiel (CSV)
+- [x] `evaluate.py`: N Spiele gegen festen Gegner, feste Seeds, beide Seiten → Winrate
 
 ### Phase 2 – DQN verbessern (Ziel bis 16.10.)
-- [ ] Replay Buffer + Target Network (Double DQN), Epsilon-Decay
-- [ ] Reward Shaping pro Einheit: + Zuwachs Team-Punkte pro Step, + Annäherung an Relic/unbekannte Kandidaten-Tiles, − Stacking auf demselben Tile, − Energie < Bewegungskosten, + Match-Sieg
-- [ ] Belief/Gedächtnis (eigene Klasse): gesehene Relic Nodes über Matches merken, Kandidaten-Tiles (5×5 um Relics), bewiesene Punkte-Tiles (aus Punktzuwachs ableiten), erkundete Tiles, Asteroiden/Nebel
-- [ ] Features erweitern um diese Infos (Abstand zum nächsten bekannten Punkte-Tile, ob Tile schon besetzt, lokales Energiefeld usw.)
-- [ ] Training gegen default → dann gegen Solution_92, Replays für Präsi speichern
+- [x] Replay Buffer + Target Network (Double DQN), Epsilon-Decay
+- [x] Reward Shaping pro Einheit: + Zuwachs Team-Punkte pro Step, + Annäherung an Relic/unbekannte Kandidaten-Tiles, − Stacking auf demselben Tile, − Energie < Bewegungskosten, + Match-Sieg
+- [x] Belief/Gedächtnis (eigene Klasse): gesehene Relic Nodes über Matches merken, Kandidaten-Tiles (5×5 um Relics), bewiesene Punkte-Tiles (aus Punktzuwachs ableiten), erkundete Tiles, Asteroiden/Nebel
+- [x] Features erweitern um diese Infos (Abstand zum nächsten bekannten Punkte-Tile, ob Tile schon besetzt, lokales Energiefeld usw.)
+- [x] Training gegen default → dann gegen Solution_92, Replays für Präsi speichern
 
 ### Phase 3 – bis 06.11.
-- [ ] Sap-Aktion ins Action-Space (Ziel: sichtbarer Gegner in Reichweite, Aktionsmaske)
+- [x] Sap-Aktion ins Action-Space (Ziel: sichtbarer Gegner in Reichweite, Aktionsmaske)
 - [ ] CNN auf Karten-Kanälen (24×24) statt Einzel-MLP, oder PPO mit Action-Masking
 - [ ] Self-Play / Gegner-Pool
 
 ### Phase 4 – bis 27.11.
 - [ ] Feinschliff, Turnier-Tests, agent.zip nach Folie 51 (agents.yaml, paths.csv, .pth, alle Pflichtmethoden)
+
+## Stand 10.10.2026 (Details: docs/ERGEBNISSE_20261010.md)
+- Abgabe-Gewichte = `full_s0` (Auswahl nach Validierung). Test: vs default 85–88 %, vs Solution_92 ≈ 19 %; Prof-DQN 0 %.
+- Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
+- Nachtraining (`finetune.py`) hat verschlechtert: Replay Buffer wird nicht gespeichert → vor nächstem Versuch fixen.
+- Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
+- Offen für 16.10.: Präsentationsfolien, echter Teamname + Moodle-Gruppe (Platzhalter team_lux/4), Slot buchen.
 
 ## Konventionen
 - Arrays `[x][y]`, unsichtbare Werte = -1, Aktionen Shape `(max_units, 3)`: 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap(dx, dy).
