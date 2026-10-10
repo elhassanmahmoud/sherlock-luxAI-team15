@@ -72,7 +72,7 @@ def main() -> None:
         env.close()
         src = next(Path(tmp).glob("*.json"))
         j = json.loads(src.read_text())
-        names = {side: f"team_lux[{man['variant']}]", opp_side: args.opponent}
+        names = {side: f"sherlock[{man['variant']}]", opp_side: args.opponent}
         j.setdefault("metadata", {})["players"] = names
         OUT.mkdir(parents=True, exist_ok=True)
         name = args.name or f"{run.name}_{args.opponent}_{seed}_{side}"

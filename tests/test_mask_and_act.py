@@ -3,8 +3,8 @@ import numpy as np
 import pytest
 import torch
 
-from agents.team_lux import geometry as geo
-from agents.team_lux.main import Agent_x
+from agents.sherlock import geometry as geo
+from agents.sherlock.main import Agent_x
 from tests.conftest import ENV_CFG, H, W, make_obs
 
 
@@ -53,7 +53,7 @@ def test_sap_needs_target_and_energy(agent):
 
 
 def test_no_sap_variant_has_five_actions():
-    from agents.team_lux.config import AgentConfig
+    from agents.sherlock.config import AgentConfig
     a = Agent_x("player_0", cfg=AgentConfig(use_sap=False), train=False)
     assert a.n_actions == 5
     assert len(a._action_mask(ctx_for(5, 5, 100), 0, None)) == 5

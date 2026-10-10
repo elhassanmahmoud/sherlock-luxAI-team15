@@ -1,7 +1,7 @@
-# Team Lux – RL-Agent für Lux AI Season 3
+# Sherlock – RL-Agent für Lux AI Season 3
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**
-Team: `team_lux` · Moodle-Gruppe: `4` *(Platzhalter – echten Teamnamen und Gruppennummer vor der Abgabe eintragen)*
+Team 15 · Moodle-Gruppe `15` · Agent **Sherlock** (`agents/sherlock/`, Name `Sherlock Agent_X`)
 
 Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit Nebel, driftenden Asteroiden und versteckten Punkte-Tiles rund um Relic-Nodes. Ein Spiel besteht aus 3 Matches à 100 Steps; jede Seite steuert bis zu 16 Einheiten.
 
@@ -40,7 +40,7 @@ Wichtigste Erkenntnisse aus der Ablation ([Details und Einordnung](docs/ERGEBNIS
 - Für **Spiegelung** und **geführte Exploration** ist kein Effekt belegt; die KIs schließen 0 ein.
 - Mehr Training allein macht den Prof-DQN **nicht** besser. Der Vorsprung kommt von der Methode.
 
-Die Abgabe-Gewichte in `agents/team_lux/weights/` stammen vom Start `full_s0`, ausgewählt nach dem Validierungs-Score und nicht nach den Testzahlen.
+Die Abgabe-Gewichte in `agents/sherlock/weights/` stammen vom Start `full_s0`, ausgewählt nach dem Validierungs-Score und nicht nach den Testzahlen.
 <!-- ERGEBNISSE:END -->
 
 ## Architektur
@@ -87,22 +87,22 @@ für jedes Spiel:
 
 | Baustein | Datei | Kurz |
 |---|---|---|
-| Spiegelung | `agents/team_lux/geometry.py` | Die Karte ist symmetrisch zur Antidiagonale, `M(x,y) = (23-y, 23-x)`. player_1 wird so gedreht, dass der eigene Spawn immer bei (0,0) liegt. Dadurch gibt es ein Netz für beide Seiten, und jedes Spiel liefert Erfahrung für beide. |
-| Belief | `agents/team_lux/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden per Constraint-Propagation aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet, erst ab `match_step ≥ 50`, weil Relics vorher noch spawnen. Dazu kommen Karte, Energie und erkundete Tiles. |
-| Features | `agents/team_lux/features.py` | 79 Werte pro Einheit: eigene Lage und Energie, Punktestand, nächstes Punkte-, Kandidaten-, Relic-, unerkundetes und zugewiesenes Ziel, aktuelles Tile, 5 Nachbarfelder × 6 Kanäle, nächster Gegner, globale Zähler. Namen in `FEATURE_NAMES`. |
-| Netz | `agents/team_lux/model.py` | MLP 79 → 256 → 256, dann Dueling: V (128 → 1) und A (128 → 6), `Q = V + A − mean(A)`. |
-| Aktionen | `agents/team_lux/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Das Netz entscheidet nur, **ob** gesapt wird; das Ziel wählt eine Heuristik (maximale Gegnerenergie im 3×3-Bereich). Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
-| Reward | `agents/team_lux/reward.py` | Pro Einheit: + Eigentümer eines bewiesenen Punkte-Tiles, − Stacking, + Potential-Shaping zum zugewiesenen Ziel (Ng et al. 1999), + Erkundung und Entdeckung, + Energie, − Tod, ± Sap-Treffer, ± Matchergebnis (aus Δ `team_wins`). |
-| Lernen | `agents/team_lux/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300 000 Übergänge, je Einheit und Step einer), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
+| Spiegelung | `agents/sherlock/geometry.py` | Die Karte ist symmetrisch zur Antidiagonale, `M(x,y) = (23-y, 23-x)`. player_1 wird so gedreht, dass der eigene Spawn immer bei (0,0) liegt. Dadurch gibt es ein Netz für beide Seiten, und jedes Spiel liefert Erfahrung für beide. |
+| Belief | `agents/sherlock/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden per Constraint-Propagation aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet, erst ab `match_step ≥ 50`, weil Relics vorher noch spawnen. Dazu kommen Karte, Energie und erkundete Tiles. |
+| Features | `agents/sherlock/features.py` | 79 Werte pro Einheit: eigene Lage und Energie, Punktestand, nächstes Punkte-, Kandidaten-, Relic-, unerkundetes und zugewiesenes Ziel, aktuelles Tile, 5 Nachbarfelder × 6 Kanäle, nächster Gegner, globale Zähler. Namen in `FEATURE_NAMES`. |
+| Netz | `agents/sherlock/model.py` | MLP 79 → 256 → 256, dann Dueling: V (128 → 1) und A (128 → 6), `Q = V + A − mean(A)`. |
+| Aktionen | `agents/sherlock/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Das Netz entscheidet nur, **ob** gesapt wird; das Ziel wählt eine Heuristik (maximale Gegnerenergie im 3×3-Bereich). Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
+| Reward | `agents/sherlock/reward.py` | Pro Einheit: + Eigentümer eines bewiesenen Punkte-Tiles, − Stacking, + Potential-Shaping zum zugewiesenen Ziel (Ng et al. 1999), + Erkundung und Entdeckung, + Energie, − Tod, ± Sap-Treffer, ± Matchergebnis (aus Δ `team_wins`). |
+| Lernen | `agents/sherlock/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300 000 Übergänge, je Einheit und Step einer), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
 
-Alle Hyperparameter stehen an einer Stelle: `agents/team_lux/config.py` (`AgentConfig`).
+Alle Hyperparameter stehen an einer Stelle: `agents/sherlock/config.py` (`AgentConfig`).
 
 ## Projektstruktur
 
 ```text
 .
 ├── agents/
-│   ├── team_lux/                 unser Agent (Abgabe-Ordner)
+│   ├── sherlock/                 unser Agent (Abgabe-Ordner)
 │   │   ├── main.py               Klasse Agent_x: act/update/save/load, DQN-Lernschritt, Masken
 │   │   ├── belief.py             Gedächtnis: Relics, Punkte-Tile-Inferenz, Karte
 │   │   ├── features.py           Feature-Vektor pro Einheit + Zielzuweisung
@@ -162,8 +162,8 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 
 | Zweck | Befehl |
 |---|---|
-| Ein Spiel mit Replay über den Kurs-Runner (Gruppe 4 vs. 2, siehe `main.py`) | `python main.py` → `replays/4_vs_2/*.json` |
-| Training (Agent wird einmal erzeugt, Gewichte nach `agents/team_lux/weights/`) | `python -m scripts.train --games 400 --opponent default` |
+| Ein Spiel mit Replay über den Kurs-Runner (Gruppe 15 vs. 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
+| Training (Agent wird einmal erzeugt, Gewichte nach `agents/sherlock/weights/`) | `python -m scripts.train --games 400 --opponent default` |
 | Training fortsetzen gegen den starken Gegner | `python -m scripts.train --games 300 --opponent solution92 --resume` |
 | Evaluation (N Seeds × beide Seiten, ε = 0) | `python -m scripts.evaluate --games 20 --opponent solution92` |
 | Ein Experiment-Lauf | `python -m scripts.experiment --variant full --run-seed 0 --games 3000` |
@@ -173,7 +173,7 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Tests | `python -m pytest -q` |
 | Abgabe bauen | `python -m scripts.build_submission` |
 
-> **Achtung:** `scripts.train` schreibt nach `agents/team_lux/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Für Experimente besser `scripts.experiment` nutzen; das schreibt in einen eigenen Run-Ordner. Zurückholen geht mit `git checkout agents/team_lux/weights/`.
+> **Achtung:** `scripts.train` schreibt nach `agents/sherlock/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Für Experimente besser `scripts.experiment` nutzen; das schreibt in einen eigenen Run-Ordner. Zurückholen geht mit `git checkout agents/sherlock/weights/`.
 
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`.
 
@@ -201,8 +201,8 @@ Vorgaben laut Kursfolie 51: Ordner mit Teamnamen, leere `__init__.py`, `main.py`
 
 ```bash
 # Gewichte eines Experiment-Laufs übernehmen und Zip bauen + prüfen
-python -m scripts.build_submission --from-run experiments/runs/<lauf> --team-name team_lux --group 4
-# nur bauen mit den Gewichten aus agents/team_lux/weights/
+python -m scripts.build_submission --from-run experiments/runs/<lauf> --team-name sherlock --group 15
+# nur bauen mit den Gewichten aus agents/sherlock/weights/
 python -m scripts.build_submission
 ```
 

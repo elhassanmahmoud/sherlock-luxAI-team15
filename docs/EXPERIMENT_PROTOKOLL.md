@@ -22,7 +22,7 @@ Vorab notierte Erwartungen (zum späteren Abgleich, nicht als Ergebnis):
 |---|---|---|
 | `baseline_prof` | `agents/DQN` unverändert, `agents/DQN/agent.pth` | keine; nur Evaluation |
 | `baseline_prof_retrained` | `agents/DQN` unverändert hinter `ProfAdapter` (`scripts/variants.py`) | Prof-Methode, gleich viele Trainingsspiele, gleicher Ablauf |
-| `full` | `agents/team_lux`, `AgentConfig()` | – |
+| `full` | `agents/sherlock`, `AgentConfig()` | – |
 | `no_belief` | `use_belief=False` | Netz sieht nur die aktuelle Beobachtung (`MemorylessBelief`) |
 | `no_shaping` | `use_shaping=False` | Reward = `w_point` (Eigentümer eines bewiesenen Punkte-Tiles) + `w_match` · Matchergebnis |
 | `no_sap` | `use_sap=False` | 5 statt 6 Aktionen |
@@ -71,11 +71,11 @@ Die Kennzahlen stehen in `train.csv` und `eval.csv`; berechnet werden sie in `sc
 | `our_points`/`opp_points` | Punkte, über die Matches summiert |
 | `wait_frac` | Anteil der Unit-Steps mit Aktion 0 |
 | `invalid_frac` | wirkungslose Aktionen: Rand, sichtbarer Asteroid, zu wenig Energie, Sap außer Reichweite |
-| `greedy_masked_frac` | wie oft das unmaskierte argmax Q illegal war und die Maske eingreifen musste (nur `team_lux`) |
+| `greedy_masked_frac` | wie oft das unmaskierte argmax Q illegal war und die Maske eingreifen musste (nur Sherlock) |
 | `sap_attempts`, `sap_hits` | Sap-Aktionen; davon mit sichtbarem Gegner im 3×3-Zielbereich |
 | `stack_frac` | Anteil der Unit-Steps auf einem Tile mit weiterer eigener Unit |
 | `relics_found` | bekannte Relics am Spielende (Belief; beim Prof-DQN: gesehene Relics) |
-| `known_point_tiles` | bewiesene Punkte-Tiles am Spielende (nur `team_lux`) |
+| `known_point_tiles` | bewiesene Punkte-Tiles am Spielende (nur Sherlock) |
 | `epsilon`, `mean_loss` | pro Trainingsspiel (`train.csv`) |
 
 `manifest.json` enthält Config, Seeds, Curriculum, Git-Commit (inkl. `dirty`), Paketversionen und Laufzeiten.
@@ -121,4 +121,5 @@ Warum 3000 Spiele: ε fällt nach ≈ 200 Spielen auf 0,05 (`eps_decay_steps = 6
 | Datum | Änderung | Grund | Testdaten schon gesehen? |
 |---|---|---|---|
 | 10.10.2026 | Verbesserungsrunde `full_ft`: Weitertraining der 3 `full`-Starts (3000 Spiele, 70 % Solution_92, eigene Trainings-Seeds ab 200 000), Checkpoint-Auswahl nach Validierungs-Score, danach einmal Test | Testergebnis des Batches: gegen Solution_92 nur 18,9 %, Lernkurve steigt bis zum Ende | **ja** – die Entscheidung *dass* nachtrainiert wird, folgt aus den Testzahlen. Die `full_ft`-Testzahlen sind deshalb kein unabhängiger Vergleich mit dem Batch, sondern nur ein Hinweis. |
+| 10.10.2026 | Agent-Ordner umbenannt: `agents/team_lux` → `agents/sherlock` (Teamname), Moodle-Gruppe 15. Die Läufe vom 10.10. liefen noch unter dem alten Namen; der Code ist sonst identisch. | Teamname festgelegt | nein |
 | 10.10.2026 | Auswahl des Abgabe-Agenten: `full`-Start mit bestem Validierungs-Score (s0: 0,75 > s2: 0,60 > s1: 0,58) | Abgabe braucht einen konkreten Gewichtssatz | nein (Auswahl nur auf Validierung) |

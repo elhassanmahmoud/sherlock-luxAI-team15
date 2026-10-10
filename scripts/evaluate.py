@@ -1,7 +1,7 @@
 """Evaluation: N Seeds gegen einen festen Gegner, jeder Seed von BEIDEN Seiten.
 
     python -m scripts.evaluate --games 20 --opponent solution92
-    python -m scripts.evaluate --games 20 --opponent default --weights agents/team_lux/weights/agent_best.pth
+    python -m scripts.evaluate --games 20 --opponent default --weights agents/sherlock/weights/agent_best.pth
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ def evaluate(weights: str, opponent: str, games: int = 20, base_seed: int = VAL_
     """Spielt `games` Seeds x 2 Seiten ohne Exploration und ohne Lernen."""
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
-    from agents.team_lux.main import Agent_x
+    from agents.sherlock.main import Agent_x
 
     own_env = env is None
     env = env or LuxAIS3GymEnv(numpy_output=True)
@@ -68,7 +68,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--games", type=int, default=20, help="Anzahl Seeds (x2 Seiten)")
     ap.add_argument("--opponent", choices=OPPONENTS, default="default")
-    ap.add_argument("--weights", default="agents/team_lux/weights/agent_p0.pth")
+    ap.add_argument("--weights", default="agents/sherlock/weights/agent_p0.pth")
     ap.add_argument("--seed", type=int, default=VAL_SEED_BASE,
                     help="Default: Validierungs-Seeds (Test-Seeds nur fuer die finale Auswertung)")
     ap.add_argument("--quiet", action="store_true")

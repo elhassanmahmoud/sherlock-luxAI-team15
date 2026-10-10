@@ -55,7 +55,7 @@ class Agent_x:
         self,
         player: str,
         agent_path: Optional[str] = None,
-        name: str = "Team Lux Agent_X",
+        name: str = "Sherlock Agent_X",
         cfg: Optional[AgentConfig] = None,
         train: bool = True,
         seed: Optional[int] = None,

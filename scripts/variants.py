@@ -11,7 +11,7 @@ from dataclasses import replace
 import numpy as np
 import torch
 
-from agents.team_lux.config import AgentConfig
+from agents.sherlock.config import AgentConfig
 
 PROF_WEIGHTS = "agents/DQN/agent.pth"
 
@@ -19,15 +19,15 @@ PROF_WEIGHTS = "agents/DQN/agent.pth"
 VARIANTS: dict[str, tuple[str, dict]] = {
     "baseline_prof": ("prof_frozen", {}),
     "baseline_prof_retrained": ("prof_train", {}),
-    "full": ("team_lux", {}),
-    "no_belief": ("team_lux", {"use_belief": False}),
-    "no_shaping": ("team_lux", {"use_shaping": False}),
-    "no_sap": ("team_lux", {"use_sap": False}),
-    "no_guided_explore": ("team_lux", {"guided_prob": 0.0}),
-    "no_canonical": ("team_lux", {"canonical": False}),
+    "full": ("sherlock", {}),
+    "no_belief": ("sherlock", {"use_belief": False}),
+    "no_shaping": ("sherlock", {"use_shaping": False}),
+    "no_sap": ("sherlock", {"use_sap": False}),
+    "no_guided_explore": ("sherlock", {"guided_prob": 0.0}),
+    "no_canonical": ("sherlock", {"canonical": False}),
 }
 
-ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "team_lux" and v != "full"]
+ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and v != "full"]
 
 
 def variant_cfg(name: str) -> AgentConfig:
@@ -42,7 +42,7 @@ def is_trainable(name: str) -> bool:
 def separate_sides(name: str) -> bool:
     """Braucht die Variante ein Netz pro Seite?"""
     kind, _ = VARIANTS[name]
-    return kind == "team_lux" and not variant_cfg(name).canonical
+    return kind == "sherlock" and not variant_cfg(name).canonical
 
 
 class ProfAdapter:
@@ -113,11 +113,11 @@ def make_learner(name: str, player: str, agent_path: str | None = None, seed: in
         return a
     if kind == "prof_train":
         return ProfAdapter(player, agent_path)
-    from agents.team_lux.main import Agent_x
+    from agents.sherlock.main import Agent_x
 
     path = agent_path if agent_path and os.path.isfile(agent_path) else None
     agent = Agent_x(player, agent_path=path, cfg=variant_cfg(name), seed=seed,
-                    name=f"team_lux[{name}]")
+                    name=f"sherlock[{name}]")
     agent.agent_path = agent_path
     agent.autosave_on_terminate = False
     return agent
