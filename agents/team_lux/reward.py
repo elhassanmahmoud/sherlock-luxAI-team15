@@ -33,7 +33,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from agents.team_lux import geometry as geo
+from . import geometry as geo
 
 SHAPE_SCALE = 10.0
 

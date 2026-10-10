@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from agents.team_lux import geometry as geo
-from agents.team_lux.belief import TILE_ASTEROID
+from . import geometry as geo
+from .belief import TILE_ASTEROID
 
 MAX_UNIT_ENERGY = 400.0   # feste Engine-Konstante (nicht randomisiert)
 MAX_TILE_ENERGY = 20.0
