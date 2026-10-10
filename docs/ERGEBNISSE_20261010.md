@@ -92,7 +92,22 @@ Die vollständige Tabelle steht in `report/tabellen.md`. Anmerkungen:
 ## 6. Verbesserungsrunde (nach dem Batch)
 
 <!-- FINETUNE:START -->
-*Läuft noch.* Die drei `full`-Starts werden 3000 weitere Spiele trainiert, zu 70 % gegen Solution_92 (`scripts/finetune.py`). Den Checkpoint wählen wir **nur nach Validierung**; danach wird einmal getestet. Die Entscheidung, Solution_92 stärker zu gewichten, folgt aus den Testergebnissen oben. Sie ist deshalb im Protokoll unter *Änderungen* vermerkt.
+Die drei `full`-Starts wurden 3000 weitere Spiele trainiert, davon 70 % gegen Solution_92 und mit eigenen Trainings-Seeds (`scripts/finetune.py`, Läufe `experiments/runs/20261010_full_ft_s*`). Den Checkpoint haben wir alle 250 Spiele nur auf der Validierung ausgewählt, danach einmal getestet.
+
+| Start | bester Checkpoint (Validierung) | Test vs. `default` vorher → nachher | Test vs. Solution_92 vorher → nachher |
+|---|---|---|---|
+| s0 | nach **0** Spielen (Start war am besten) | 85,0 % → 85,0 % | 20,0 % → 20,0 % |
+| s1 | nach 2250 Spielen | 86,7 % → 81,7 % | 15,0 % → 11,7 % |
+| s2 | nach 1000 Spielen | 91,7 % → 85,0 % | 21,7 % → 5,0 % |
+
+**Ergebnis: Das Nachtraining verbessert nichts. Bei s1 und s2 verschlechtert es den Agenten**, obwohl wir den Checkpoint auf der Validierung gewählt haben. Bei 16 Validierungsspielen pro Punkt ist der Auswahlwert selbst sehr verrauscht, deshalb bleibt die Validierungsauswahl hinter dem Test zurück. Bei s0 gewinnt der unveränderte Startpunkt; der Test reproduziert dort exakt die Batch-Werte, was die Reproduzierbarkeit bestätigt.
+
+**Hypothese**: Der Replay Buffer wird nicht im Checkpoint gespeichert. Das Nachtraining beginnt deshalb mit leerem Buffer, und gelernt wird schon ab 5000 Übergängen, also nach ≈ 1,3 Spielen, auf wenigen, stark korrelierten Daten. Dazu passt, dass der Validierungs-Score bei **allen drei** Starts schon nach 250 Spielen einbricht (0,75 → 0,37; 0,58 → 0,51; 0,60 → 0,41) und sich danach nur teilweise erholt. Der höhere Anteil an Niederlagen gegen Solution_92 verschiebt zusätzlich die Verteilung der Rewards.
+
+**Konsequenz**: Abgegeben wird weiter **`full_s0` aus dem Batch**. Bevor wir erneut nachtrainieren, wollen wir:
+1. den Buffer mitspeichern oder vor dem ersten Lernschritt mit dem aktuellen Netz neu füllen (`learn_start` anheben),
+2. eine kleinere Lernrate nutzen,
+3. mehr Validierungs-Seeds verwenden, damit die Auswahl weniger verrauscht ist.
 <!-- FINETUNE:END -->
 
 ## 7. Grenzen
@@ -104,7 +119,7 @@ Die vollständige Tabelle steht in `report/tabellen.md`. Anmerkungen:
 
 ## 8. Nächste Schritte
 
-1. Die Verbesserungsrunde gegen Solution_92 auswerten (Abschnitt 6).
+1. Nachtraining richtig aufsetzen: Replay Buffer mitspeichern bzw. neu füllen, kleinere Lernrate, mehr Validierungs-Seeds (Abschnitt 6).
 2. **Geführte Exploration entfernen** (`guided_prob = 0`) als einfachere Standardkonfiguration. Laut Ablation kostet das nichts.
 3. Stack-Strafe bzw. Shaping-Gewichte auf **Validierung** tunen, um Kollapse wie bei `no_shaping` s0 auch für `full` auszuschließen.
 4. Eine Kennzahl für den echten Sap-Schaden (Energieverlust des Gegners) ergänzen.
