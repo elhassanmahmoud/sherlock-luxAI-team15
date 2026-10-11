@@ -1,11 +1,18 @@
 """Verbesserungsrunde: einen fertigen Lauf weitertrainieren, besten Checkpoint
 NUR nach Validierung waehlen, dann einmal auf den Test-Seeds auswerten.
 
-    python -m scripts.finetune --init experiments/runs/20261010_full_s1 --games 3000 \
-        --sol92-frac 0.7 --name 20261010_full_ft_s1
+    python -m scripts.finetune --init experiments/runs/20261010_full_s0 --games 3000 \
+        --name 20261011_full_ft2_s0
 
 Unterschiede zu scripts/experiment.py:
   * Start aus vorhandenen Gewichten (env_steps bleiben erhalten -> eps bleibt 0.05)
+  * Replay Buffer: wird aus dem Init-Lauf geladen (<gewichte>.buffer.npz). Fehlt
+    er, wird er zuerst mit --prefill-games Spielen der eingefrorenen Policy
+    aufgefuellt, OHNE zu lernen. Grund: Die erste Runde (10.10.) startete mit
+    leerem Buffer, lernte nur auf wenigen frischen Transitions und verlernte
+    sofort (Validierung nach 250 Spielen deutlich schlechter als vorher).
+  * kleinere Lernrate (Default 1e-4 statt 3e-4) und 16 statt 8 Validierungs-Seeds,
+    damit die Checkpoint-Auswahl weniger vom Zufall abhaengt
   * Gegner-Mix mit hoeherem Solution_92-Anteil (--sol92-frac), Rest default
     (gegen Vergessen)
   * nach jeder Validierung: Checkpoint behalten, wenn der Validierungs-Score
@@ -45,12 +52,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--init", required=True, help="Run-Ordner mit Startgewichten")
     ap.add_argument("--games", type=int, default=3000)
-    ap.add_argument("--sol92-frac", type=float, default=0.7)
+    ap.add_argument("--sol92-frac", type=float, default=0.5)
     ap.add_argument("--val-every", type=int, default=250)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--name", required=True)
     ap.add_argument("--no-test", action="store_true")
-    ap.add_argument("--lr", type=float, default=None, help="optional andere Lernrate")
+    ap.add_argument("--lr", type=float, default=1e-4, help="Lernrate (0 = die des Checkpoints)")
+    ap.add_argument("--prefill-games", type=int, default=120,
+                    help="Spiele zum Auffuellen des Buffers, falls keiner gespeichert ist")
+    ap.add_argument("--n-val", type=int, default=16, help="Validierungs-Seeds pro Gegner")
     args = ap.parse_args()
 
     limit_threads()
@@ -58,11 +68,12 @@ def main() -> None:
 
     init = Path(args.init)
     src_man = json.loads((init / "manifest.json").read_text())
-    variant = src_man["variant"]
+    variant = src_man.get("base_variant", src_man["variant"])  # Kette: ft eines ft-Laufs
     run_dir = RUNS / args.name
     (run_dir / "weights").mkdir(parents=True, exist_ok=True)
-    for f in (init / "weights").glob("*.pth"):
-        shutil.copyfile(f, run_dir / "weights" / f.name)
+    for pat in ("*.pth", "*.buffer.npz"):
+        for f in (init / "weights").glob(pat):
+            shutil.copyfile(f, run_dir / "weights" / f.name)
     logf = open(run_dir / "log.txt", "a", encoding="utf-8")
 
     def log(msg):
@@ -73,7 +84,7 @@ def main() -> None:
 
     seed_everything(args.seed)
     learners = Learners(variant, run_dir, args.seed, load=True)
-    if args.lr is not None:
+    if args.lr:
         for _, a in learners.unique():
             for g in a.opt.param_groups:
                 g["lr"] = args.lr
@@ -84,10 +95,11 @@ def main() -> None:
         name=args.name, variant=f"{variant}_ft", base_variant=variant, kind="finetune",
         init_from=str(init), init_train_games=src_man.get("train_games"),
         run_seed=args.seed, train_games=args.games, sol92_frac=args.sol92_frac,
-        lr=args.lr, train_seeds=[FT_SEED_BASE + args.seed * 10_000,
+        lr=args.lr or None, prefill_games=args.prefill_games, buffer_loaded=0,
+        train_seeds=[FT_SEED_BASE + args.seed * 10_000,
                                  FT_SEED_BASE + args.seed * 10_000 + args.games // 2],
         selection="bester Checkpoint nach val_score (Validierung), siehe Docstring",
-        val_seeds=P.val_seeds(), val_every=args.val_every,
+        val_seeds=P.val_seeds(args.n_val), val_every=args.val_every,
         test_seeds=[] if args.no_test else P.test_seeds(),
         eval_opponents=list(P.EVAL_OPPONENTS), eval_epsilon=0.0,
         git=git_info(), started=datetime.now().isoformat(timespec="seconds"),
@@ -102,7 +114,7 @@ def main() -> None:
 
     def validate(after, vw):
         learners.eval_mode()
-        rows = play_set(env, learners, P.val_seeds(), P.EVAL_OPPONENTS)
+        rows = play_set(env, learners, P.val_seeds(args.n_val), P.EVAL_OPPONENTS)
         learners.train_mode()
         by = {o: summarize([r for r in rows if r["opponent"] == o]) for o in P.EVAL_OPPONENTS}
         for o, s in by.items():
@@ -116,10 +128,29 @@ def main() -> None:
             best.update(score=sc, after=after)
             learners.save()
             shutil.rmtree(best_dir, ignore_errors=True)
-            shutil.copytree(run_dir / "weights", best_dir)
+            shutil.copytree(run_dir / "weights", best_dir, ignore=shutil.ignore_patterns("*.npz"))
             log(f"    neuer bester Checkpoint (nach {after} Spielen)")
 
     learners.train_mode()
+    n_buf = learners.load_buffers()
+    manifest["buffer_loaded"] = n_buf
+    log(f"Buffer aus Init-Lauf geladen: {n_buf} Transitions")
+    if n_buf == 0 and args.prefill_games > 0:
+        # Buffer mit der eingefrorenen Policy (eps wie im Training) fuellen.
+        # Eigene Seeds hinter den Trainings-Seeds dieses Starts (games < 10_000).
+        assert args.games // 2 < 5_000
+        for _, a in learners.unique():
+            a.learn_enabled = False
+        for g in range(args.prefill_games):
+            side = P.SIDES[g % 2]
+            seed = FT_SEED_BASE + args.seed * 10_000 + 5_000 + g // 2
+            opp_name = "solution92" if rng.random() < args.sol92_frac else "default"
+            opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")
+            play_game(env, learners.agents[side], opp, seed, side, train=True)
+        for _, a in learners.unique():
+            a.learn_enabled = True
+        log(f"Buffer aufgefuellt: {args.prefill_games} Spiele, "
+            f"{len(learners.agents['player_0'].buffer)} Transitions")
     results = []
     with open(run_dir / "train.csv", "w", newline="") as fh, open(run_dir / "val.csv", "w", newline="") as vh:
         tw = csv.DictWriter(fh, fieldnames=TRAIN_FIELDS); tw.writeheader()
@@ -150,9 +181,11 @@ def main() -> None:
     manifest["best_after_games"] = best["after"]
     manifest["best_val_score"] = best["score"]
 
-    # bester Checkpoint -> weights/ (fuer Test, Replays, Abgabe)
+    # bester Checkpoint -> weights/ (fuer Test, Replays, Abgabe). Der Buffer
+    # (Stand Trainingsende) kommt daneben, damit der Lauf weitertrainierbar ist.
     shutil.rmtree(run_dir / "weights")
     shutil.copytree(best_dir, run_dir / "weights")
+    learners.save_buffers()
     if not args.no_test:
         learners = Learners(variant, run_dir, args.seed, load=True)
         learners.eval_mode()

@@ -107,6 +107,23 @@ class Learners:
         for side, a in self.unique():
             a.save_agent(self.paths[side])
 
+    def buffer_path(self, side: str) -> str:
+        return self.paths[side].replace(".pth", ".buffer.npz")
+
+    def save_buffers(self) -> None:
+        """Replay Buffer neben die Gewichte legen (fuer Weitertraining)."""
+        for side, a in self.unique():
+            if hasattr(a, "save_buffer"):
+                a.save_buffer(self.buffer_path(side))
+
+    def load_buffers(self) -> int:
+        """Gespeicherte Buffer laden, falls vorhanden. Gibt Anzahl Transitions zurueck."""
+        n = 0
+        for side, a in self.unique():
+            if hasattr(a, "load_buffer") and Path(self.buffer_path(side)).is_file():
+                n += a.load_buffer(self.buffer_path(side))
+        return n
+
 
 def play_set(env, learners: Learners, seeds, opponents, log=None, writer=None) -> list[dict]:
     """eps=0, ohne Lernen: jeder Seed von beiden Seiten gegen jeden Gegner."""
@@ -254,6 +271,7 @@ def main(argv=None) -> None:
                 if args.val_every and (g + 1) % args.val_every == 0 and g + 1 < games:
                     validate(g + 1)
             learners.save()
+            learners.save_buffers()
             validate(games)
         timings["train_secs"] = round(time.time() - t0, 1)
 
