@@ -72,10 +72,15 @@ class Agent_x:
         self.q = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
         self.target_q = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
         self.opt = optim.Adam(self.q.parameters(), lr=self.cfg.lr)
+        # Ensemble: weitere eingefrorene Netze (gleiche Architektur), deren
+        # Q-Werte beim Handeln mit q gemittelt werden. Glaettet das Springen
+        # einzelner DQN-Checkpoints. Nur zum Spielen, nicht zum Lernen.
+        self.extra_q: list[QNet] = []
         self.buffer = ReplayBuffer(self.cfg.buffer_capacity, FEATURE_DIM)
         self.rng = np.random.default_rng(seed)
 
         self.training = bool(train)
+        self.learn_enabled = True  # False: nur Transitions sammeln (Buffer auffuellen)
         self.autosave_on_terminate = True
         self.env_steps = 0
         self.learn_steps = 0
@@ -216,7 +221,10 @@ class Agent_x:
 
         with torch.no_grad():
             t = torch.as_tensor(feats, dtype=torch.float32, device=self.device)
-            q = self.q(t).cpu().numpy()
+            qt = self.q(t)
+            if self.extra_q and not self.training:
+                qt = torch.stack([qt] + [m(t) for m in self.extra_q]).mean(dim=0)
+            q = qt.cpu().numpy()
         raw_greedy = q.argmax(axis=1)
         q[~masks] = -np.inf
         greedy = q.argmax(axis=1)
@@ -363,7 +371,7 @@ class Agent_x:
                 ns, nmask, done = zero, dead_mask, True
             self.buffer.push(s, a, rewards.get(uid, 0.0), ns, done, nmask)
 
-        if (len(self.buffer) >= self.cfg.learn_start
+        if (self.learn_enabled and len(self.buffer) >= self.cfg.learn_start
                 and self.env_steps % self.cfg.train_every == 0):
             self._learn()
 
@@ -432,9 +440,17 @@ class Agent_x:
                 "cfg": self.cfg.to_dict(),
                 "feature_dim": FEATURE_DIM,
                 "n_actions": self.n_actions,
+                "ensemble": [m.state_dict() for m in self.extra_q],
             },
             path,
         )
+
+    def save_buffer(self, path: str) -> None:
+        """Replay Buffer separat speichern (gross, nur am Trainingsende)."""
+        self.buffer.save(path)
+
+    def load_buffer(self, path: str) -> int:
+        return self.buffer.load(path)
 
     def load_agent(self, load_path: str) -> None:
         if not os.path.isfile(load_path):
@@ -456,7 +472,14 @@ class Agent_x:
                 self.opt.load_state_dict(ckpt["opt"])
             except (ValueError, KeyError):
                 pass
+        self.extra_q = []
+        for sd in ckpt.get("ensemble", []):
+            m = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
+            m.load_state_dict(sd)
+            m.eval()
+            self.extra_q.append(m)
         self.env_steps = int(ckpt.get("env_steps", 0))
         self.learn_steps = int(ckpt.get("learn_steps", 0))
         print(f"[{self.name}] geladen: {load_path} "
-              f"(env_steps={self.env_steps}, eps={self.epsilon:.3f})")
+              f"(env_steps={self.env_steps}, eps={self.epsilon:.3f}, "
+              f"Ensemble={1 + len(self.extra_q)} Netze)")
