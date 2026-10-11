@@ -85,3 +85,16 @@ def test_act_translates_canonical_choice_to_real_move(team, start):
     canon = geo.mirror_xy(*start) if team else start
     canon_next = geo.mirror_xy(*real_next) if team else real_next
     assert canon_next == (canon[0] + 1, canon[1])
+
+
+def test_explore_memory_prefers_never_seen_tiles():
+    import numpy as np
+    from agents.sherlock.belief import Belief
+    from agents.sherlock.features import assign_targets
+    b = Belief(0)
+    b.explored_ever[:, :12] = True        # obere Haelfte frueher schon gesehen
+    unit = np.array([[5, 11]])
+    old = assign_targets(b, [0], unit, 24, 24)
+    new = assign_targets(b, [0], unit, 24, 24, seen_before_penalty=300.0)
+    assert old[0][1] <= 11 or old[0] == (5, 12)   # ohne Malus: naechstes Tile
+    assert new[0][1] >= 12                        # mit Malus: nie gesehenes Gebiet

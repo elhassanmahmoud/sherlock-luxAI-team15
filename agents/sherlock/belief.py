@@ -108,6 +108,8 @@ class Belief:
         self.point_tiles = np.zeros((W, H), dtype=bool)  # bewiesen: bringt Punkte
         self.dead_tiles = np.zeros((W, H), dtype=bool)   # bewiesen: bringt nichts
         self.explored = np.zeros((W, H), dtype=bool)
+        # wie explored, aber NICHT pro Match zurueckgesetzt (Zielwahl explore_memory)
+        self.explored_ever = np.zeros((W, H), dtype=bool)
         self.tile_type = np.full((W, H), TILE_UNKNOWN, dtype=np.int8)
         self.energy_map = np.zeros((W, H), dtype=np.float32)
 
@@ -195,6 +197,7 @@ class Belief:
         if new:
             self.explored |= explored_now
             self._coords_dirty = True
+        self.explored_ever |= explored_now
         # Asteroiden/Nebel driften (Slides 30/31) -> sichtbare Tiles ueberschreiben
         np.copyto(self.tile_type, tile_type.astype(np.int8), where=sensor)
         np.copyto(self.energy_map, energy, where=sensor)

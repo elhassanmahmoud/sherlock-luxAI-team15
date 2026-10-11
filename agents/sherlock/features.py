@@ -66,7 +66,8 @@ def _nearest(coords: np.ndarray, x: int, y: int, W: int, H: int):
 
 
 def assign_targets(belief, unit_ids, unit_pos, W, H,
-                   enemy_half_penalty: float = 0.0) -> dict[int, tuple[int, int]]:
+                   enemy_half_penalty: float = 0.0,
+                   seen_before_penalty: float = 0.0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -78,6 +79,12 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     teurer (cfg.home_first). Mit Symmetrie kennt der Belief auch die Punkte-
     Tiles beim Gegner; ohne Malus laufen Units dorthin und sterben (Analyse
     11.10.: 7,2 statt 5,8 Tote pro Match).
+
+    seen_before_penalty > 0 (cfg.explore_memory): unerkundete Tiles, die schon in
+    einem frueheren Match gesehen wurden, sind als Erkundungsziel teurer. Sonst
+    laeuft der Agent jedes Match wieder in dieselbe (falsche) Ecke, weil
+    `explored` pro Match zurueckgesetzt wird (Analyse 11.10.: auf manchen Karten
+    in allen 3 Matches kein Relic gefunden).
     """
     if len(unit_ids) == 0:
         return {}
@@ -97,19 +104,28 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             # nur die naechsten Kandidaten betrachten, damit die Matrix klein bleibt
             centre = unit_pos.mean(axis=0)
             d = np.abs(unexp[:, 0] - centre[0]) + np.abs(unexp[:, 1] - centre[1])
-            keep = np.argsort(d)[: max(len(unit_ids) * 4, 16)]
+            seen = np.zeros(len(unexp))
+            if seen_before_penalty:
+                seen = belief.explored_ever[unexp[:, 0], unexp[:, 1]] * float(seen_before_penalty)
+            order = np.argsort(d + seen, kind="stable") if seen_before_penalty else np.argsort(d)
+            keep = order[: max(len(unit_ids) * 4, 16)]
             targets.append(unexp[keep])
             prios.append(np.full(len(keep), 2, dtype=np.int32))
+            extra_seen = seen[keep]
     if not targets:
         return {}
     tgt = np.concatenate(targets, axis=0)
     prio = np.concatenate(prios, axis=0)
+    extra = np.zeros(len(tgt))
+    if seen_before_penalty and prio[-1] == 2:
+        extra[len(tgt) - len(extra_seen):] = extra_seen
 
     # Kostenmatrix (Units x Ziele); Prioritaet dominiert die Distanz
     cost = (
         np.abs(unit_pos[:, None, 0] - tgt[None, :, 0])
         + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1])
         + prio[None, :] * 1000
+        + extra[None, :]
     ).astype(np.float64)
     if enemy_half_penalty:
         # eigener Spawn: kanonisch immer (0, 0); ohne Spiegelung fuer Team 1 (W-1, H-1)
@@ -184,6 +200,7 @@ def make_context(agent, obs, belief=None) -> dict:
         belief, ally_ids,
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
         W, H, enemy_half_penalty=600.0 if agent.cfg.home_first else 0.0,
+        seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
     )
 
     return dict(

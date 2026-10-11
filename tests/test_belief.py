@@ -100,3 +100,12 @@ def test_symmetry_reopen_dead_keeps_points():
     assert b.dead_tiles[6, 6] and b.dead_tiles[geo.mirror_xy(6, 6)]
     b.observe(make_obs(101, 0))   # Matchwechsel -> Null-Wissen verworfen
     assert not b.dead_tiles.any() and b.point_tiles[geo.mirror_xy(5, 5)]
+
+
+def test_explored_ever_survives_match_change():
+    b = Belief(0)
+    b.observe(make_obs(10, 10, units=[(1, 1, 100)]))
+    seen = b.explored.copy()
+    assert seen.any()
+    b.observe(make_obs(101, 0))                     # Matchwechsel
+    assert not b.explored.any() and (b.explored_ever == seen).all()

@@ -44,6 +44,9 @@ class AgentConfig:
     home_first: bool = False
     """True: Zielzuweisung bestraft Ziele in der gegnerischen Haelfte (+600, d. h.
     eigene Punkte-Tiles < gegnerische Punkte-Tiles < eigene Kandidaten < ...)."""
+    explore_memory: bool = False
+    """True: Erkundung bevorzugt Tiles, die in KEINEM bisherigen Match gesehen
+    wurden (+300 Kosten fuer frueher gesehene, siehe features.assign_targets)."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""
