@@ -16,6 +16,9 @@ from pathlib import Path
 
 import torch
 
+# Nur was Netzform und Bedeutung der Eingaben bestimmt; Lernrate & Co. duerfen abweichen.
+PLAY_KEYS = ("hidden", "dueling", "use_sap", "use_belief", "canonical", "mask_actions")
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -27,9 +30,12 @@ def main() -> None:
     extra = []
     for p in args.ckpts[1:]:
         c = torch.load(p, map_location="cpu", weights_only=False)
-        for k in ("feature_dim", "n_actions", "cfg"):
+        for k in ("feature_dim", "n_actions"):
             if c.get(k) != base.get(k):
                 raise SystemExit(f"{p}: {k} passt nicht zu {args.ckpts[0]}")
+        for k in PLAY_KEYS:
+            if c["cfg"].get(k) != base["cfg"].get(k):
+                raise SystemExit(f"{p}: cfg.{k} passt nicht zu {args.ckpts[0]}")
         extra.append(c["q"])
         extra.extend(c.get("ensemble", []))
     base["ensemble"] = list(base.get("ensemble", [])) + extra
