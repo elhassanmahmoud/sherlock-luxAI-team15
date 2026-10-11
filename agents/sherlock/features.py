@@ -65,13 +65,19 @@ def _nearest(coords: np.ndarray, x: int, y: int, W: int, H: int):
     )
 
 
-def assign_targets(belief, unit_ids, unit_pos, W, H) -> dict[int, tuple[int, int]]:
+def assign_targets(belief, unit_ids, unit_pos, W, H,
+                   enemy_half_penalty: float = 0.0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
     Eindeutige Ziele verhindern, dass alle Units auf dasselbe Tile laufen
     (ein Tile bringt maximal einen Punkt, Slide 38) und liefern gleichzeitig
     das Potential fuer das Reward-Shaping (siehe reward.py).
+
+    enemy_half_penalty > 0: Ziele in der gegnerischen Kartenhaelfte werden
+    teurer (cfg.home_first). Mit Symmetrie kennt der Belief auch die Punkte-
+    Tiles beim Gegner; ohne Malus laufen Units dorthin und sterben (Analyse
+    11.10.: 7,2 statt 5,8 Tote pro Match).
     """
     if len(unit_ids) == 0:
         return {}
@@ -105,6 +111,12 @@ def assign_targets(belief, unit_ids, unit_pos, W, H) -> dict[int, tuple[int, int
         + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1])
         + prio[None, :] * 1000
     ).astype(np.float64)
+    if enemy_half_penalty:
+        # eigener Spawn: kanonisch immer (0, 0); ohne Spiegelung fuer Team 1 (W-1, H-1)
+        s = tgt[:, 0] + tgt[:, 1]
+        own_origin = belief.canonical or belief.team_id == 0
+        enemy = s > W - 1 if own_origin else s < W - 1
+        cost += enemy[None, :] * float(enemy_half_penalty)
 
     out: dict[int, tuple[int, int]] = {}
     n_assign = min(len(unit_ids), len(tgt))
@@ -171,7 +183,7 @@ def make_context(agent, obs, belief=None) -> dict:
     assigned = assign_targets(
         belief, ally_ids,
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
-        W, H,
+        W, H, enemy_half_penalty=600.0 if agent.cfg.home_first else 0.0,
     )
 
     return dict(

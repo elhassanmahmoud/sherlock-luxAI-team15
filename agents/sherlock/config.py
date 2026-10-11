@@ -41,6 +41,9 @@ class AgentConfig:
     Erkundung, siehe belief.py). Default False, damit alte Checkpoints und
     Experimente unveraendert reproduzierbar bleiben (from_dict fuellt fehlende
     Schluessel mit dem Default)."""
+    home_first: bool = False
+    """True: Zielzuweisung bestraft Ziele in der gegnerischen Haelfte (+600, d. h.
+    eigene Punkte-Tiles < gegnerische Punkte-Tiles < eigene Kandidaten < ...)."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""
