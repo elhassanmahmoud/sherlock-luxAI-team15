@@ -48,9 +48,9 @@
 - [ ] Feinschliff, Turnier-Tests, agent.zip nach Folie 51 (agents.yaml, paths.csv, .pth, alle Pflichtmethoden)
 
 ## Stand 10.10.2026 (Details: docs/ERGEBNISSE_20261010.md)
-- Abgabe-Gewichte = `full_s0` (Auswahl nach Validierung). Test: vs default 85–88 %, vs Solution_92 ≈ 19 %; Prof-DQN 0 %.
+- Abgabe-Gewichte seit 11.10. = Ensemble `full_s012` (3 Netze gemittelt, `scripts/build_ensemble.py`). Test: vs default 91,7 %, vs Solution_92 20 % (Validierung: +7,5 pp vs Solution_92 gegenüber `full_s0`, belegt). Vorher `full_s0` (Tag `abgabe-review-full_s0`).
 - Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
-- Nachtraining (`finetune.py`) hat verschlechtert: Replay Buffer wird nicht gespeichert → vor nächstem Versuch fixen.
+- Nachtraining (`finetune.py`): Buffer wird jetzt gespeichert/aufgefüllt (11.10.). Weitertrainieren bringt trotzdem keinen klaren Gewinn – einzelne DQN-Checkpoints schwanken stark; Ensemble glättet das.
 - Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
 - Offen für 16.10.: Präsentationsfolien, Slot buchen, Replays ansehen, proben. Team 15 (Mahmoud El-Hassan, Moayed Shawesh), Agent Sherlock (`agents/sherlock/`, umbenannt von team_lux).
 
