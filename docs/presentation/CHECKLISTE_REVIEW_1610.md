@@ -37,7 +37,7 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 | `main.py` mit `Agent_x` | ✅ |
 | `name: str='Team Name Agent_X'` | ✅ `Sherlock Agent_X` |
 | `act`, `update`, `set_to_eval_mode`, `set_env_cfg`, `save_agent`, `load_agent` | ✅ (Test `tests/test_runner.py`, Prüfung im Build-Skript) |
-| trainierte `.pth` | ✅ `agents/sherlock/weights/agent_p0.pth`, `agent_p1.pth` (`full_s0`) |
+| trainierte `.pth` | ✅ `agents/sherlock/weights/agent_p0.pth`, `agent_p1.pth` (seit 11.10.: `full_s012_sym` = Ensemble aus 3 Netzen + Symmetrie; vorher `full_s0`) |
 | `agents.yaml` | ✅ `agents/sherlock/agents.yaml` (und im Zip) |
 | `paths.csv` mit Moodle-Gruppe | ✅ Gruppe 15 |
 
@@ -53,6 +53,19 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 | README: alle Befehle und Links | geprüft |
 | Ergebnisse reproduzierbar | Replays und `evaluate.py` reproduzieren die Testwerte exakt |
 
+## Technische Prüfungen (11.10.2026, neuer Agent `full_s012_sym`)
+
+| Prüfung | Ergebnis |
+|---|---|
+| Frischer `git clone` von GitHub → `pytest` | 55/55 grün |
+| Kurs-Runner `train=False`: 15 vs 1/2/3/15 und 1/2/3 vs 15 (beide Seiten) | alle 7 ok |
+| Kurs-Runner `train=True` | läuft; verändert die Gewichte (gewollt) → nach Tests wiederherstellen |
+| Rechenzeit `act()` (3 Netze + Symmetrie) | Ø 0,7 ms, max 1,2 ms pro Step |
+| `dist/agent.zip` aus frischem Clone gebaut und geprüft | „Check ok“, 3 Netze, Symmetrie an |
+| gegen Prof-DQN (20 Seeds × 2 Seiten) | 100 % Spiele, 1072 : 2 Punkte |
+
+**Folien müssen aktualisiert werden:** Der Entwurf vom 10.10. zeigt noch `full_s0`. Neu dazu: Ensemble (+7,5 pp vs Solution_92), Niederlagen-Analyse mit Ground Truth, Spiegelsymmetrie (+7,1 pp), und die Negativ-Ergebnisse (Weitertraining, Self-Play, `home_first` ohne Effekt). Siehe `docs/EXPERIMENT_PROTOKOLL.md` Abschnitt 9.
+
 ## To-do Team vor dem 16.10.
 
 1. Slot auf Moodle buchen.
@@ -60,3 +73,4 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 3. Replays auf <https://s3vis.lux-ai.org/> ansehen und pro Spiel eine Beobachtung auf der Folie „Replays“ eintragen.
 4. Folien aufteilen, zweimal mit Uhr proben (Ziel 17–18 min plus Fragen).
 5. Jede Person kann Belief, Reward Shaping, Double DQN und die Ablation in eigenen Worten erklären (Folie 50: „Make sure you understand what you submit!“).
+6. **Neu (11.10.):** Jede Person kann auch Ensemble, Spiegelsymmetrie und die Niederlagen-Analyse erklären – das ist jetzt der stärkste „eigene Beitrag“ (Bewertungskriterium Originalität, Folie 11).
