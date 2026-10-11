@@ -11,6 +11,10 @@ Unterschiede zu scripts/experiment.py:
     aufgefuellt, OHNE zu lernen. Grund: Die erste Runde (10.10.) startete mit
     leerem Buffer, lernte nur auf wenigen frischen Transitions und verlernte
     sofort (Validierung nach 250 Spielen deutlich schlechter als vorher).
+  * Gegner-Pool / Self-Play (--pool, --mix, --snapshot-every): neben default und
+    Solution_92 spielt der Lerner gegen eingefrorene Versionen von uns selbst
+    (z. B. Abgabe-Ensemble) und gegen eigene Schnappschuesse waehrend des
+    Trainings. Ziel: robuster gegen unbekannte Spielstile (andere Gruppen).
   * kleinere Lernrate (Default 1e-4 statt 3e-4) und 16 statt 8 Validierungs-Seeds,
     damit die Checkpoint-Auswahl weniger vom Zufall abhaengt
   * Gegner-Mix mit hoeherem Solution_92-Anteil (--sol92-frac), Rest default
@@ -61,6 +65,14 @@ def main() -> None:
     ap.add_argument("--prefill-games", type=int, default=120,
                     help="Spiele zum Auffuellen des Buffers, falls keiner gespeichert ist")
     ap.add_argument("--n-val", type=int, default=16, help="Validierungs-Seeds pro Gegner")
+    ap.add_argument("--pool", nargs="*", default=[],
+                    help="eingefrorene Sherlock-Gewichte als Gegner (auch Ensembles)")
+    ap.add_argument("--mix", default=None,
+                    help="Gegner-Anteile, z. B. solution92=0.35,default=0.15,pool=0.5 "
+                         "(Default: --sol92-frac, Rest default)")
+    ap.add_argument("--snapshot-every", type=int, default=0,
+                    help="alle n Spiele Schnappschuss des Lerners in den Pool (0 = aus)")
+    ap.add_argument("--max-snapshots", type=int, default=4)
     args = ap.parse_args()
 
     limit_threads()
@@ -91,11 +103,35 @@ def main() -> None:
             a.cfg.lr = args.lr
 
     rng = np.random.default_rng(args.seed)
+    if args.mix:
+        mix = {k: float(v) for k, v in (kv.split("=") for kv in args.mix.split(","))}
+    else:
+        mix = {"solution92": args.sol92_frac, "default": 1.0 - args.sol92_frac}
+    assert set(mix) <= {"solution92", "default", "pool"}, mix
+    assert abs(sum(mix.values()) - 1.0) < 1e-6, mix
+    assert mix.get("pool", 0) == 0 or args.pool or args.snapshot_every, "pool ohne Gegner"
+    for p in args.pool:
+        assert Path(p).is_file(), p
+    pool = list(args.pool)          # feste Pool-Gegner
+    snapshots: list[str] = []       # rollierende Schnappschuesse des Lerners
+    pool_agents: dict[str, object] = {}
+    mix_names, mix_p = list(mix), np.array(list(mix.values()))
+
+    def pick_opponent(opp_side: str):
+        name = mix_names[rng.choice(len(mix_names), p=mix_p)]
+        if name != "pool":
+            return name, make_opponent(name, opp_side)
+        path = (pool + snapshots)[rng.integers(len(pool) + len(snapshots))]
+        if path not in pool_agents:   # einmal laden, danach wiederverwenden
+            pool_agents[path] = make_opponent("self", opp_side, self_play_path=path)
+        label = "pool:" + Path(path).parent.parent.name + "/" + Path(path).name
+        return label, pool_agents[path]
     manifest = dict(
         name=args.name, variant=f"{variant}_ft", base_variant=variant, kind="finetune",
         init_from=str(init), init_train_games=src_man.get("train_games"),
         run_seed=args.seed, train_games=args.games, sol92_frac=args.sol92_frac,
-        lr=args.lr or None, prefill_games=args.prefill_games, buffer_loaded=0,
+        lr=args.lr or None, mix=mix, pool=pool, snapshot_every=args.snapshot_every,
+        prefill_games=args.prefill_games, buffer_loaded=0,
         train_seeds=[FT_SEED_BASE + args.seed * 10_000,
                                  FT_SEED_BASE + args.seed * 10_000 + args.games // 2],
         selection="bester Checkpoint nach val_score (Validierung), siehe Docstring",
@@ -144,8 +180,7 @@ def main() -> None:
         for g in range(args.prefill_games):
             side = P.SIDES[g % 2]
             seed = FT_SEED_BASE + args.seed * 10_000 + 5_000 + g // 2
-            opp_name = "solution92" if rng.random() < args.sol92_frac else "default"
-            opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")
+            _, opp = pick_opponent("player_1" if side == "player_0" else "player_0")
             play_game(env, learners.agents[side], opp, seed, side, train=True)
         for _, a in learners.unique():
             a.learn_enabled = True
@@ -159,9 +194,8 @@ def main() -> None:
         for g in range(args.games):
             side = P.SIDES[g % 2]
             seed = FT_SEED_BASE + args.seed * 10_000 + g // 2
-            opp_name = "solution92" if rng.random() < args.sol92_frac else "default"
             agent = learners.agents[side]
-            opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")
+            opp_name, opp = pick_opponent("player_1" if side == "player_0" else "player_0")
             row = play_game(env, agent, opp, seed, side, train=True)
             results.append(row["result"])
             row.update(game=g, opponent=opp_name, epsilon=round(agent.epsilon, 4),
@@ -173,6 +207,15 @@ def main() -> None:
                 fh.flush()
                 log(f"[{g+1}/{args.games}] {opp_name} {row['our_wins']}-{row['opp_wins']} "
                     f"P {row['our_points']}:{row['opp_points']} loss={row['mean_loss']}")
+            if args.snapshot_every and (g + 1) % args.snapshot_every == 0:
+                snap = run_dir / "snapshots" / f"snap_{g + 1:05d}.pth"
+                snap.parent.mkdir(exist_ok=True)
+                agent.save_agent(str(snap))
+                snapshots.append(str(snap))
+                if len(snapshots) > args.max_snapshots:
+                    old = snapshots.pop(0)
+                    pool_agents.pop(old, None)
+                log(f"  Schnappschuss {snap.name} im Pool ({len(pool) + len(snapshots)} Pool-Gegner)")
             if (g + 1) % args.val_every == 0:
                 learners.save()
                 validate(g + 1, vw)
