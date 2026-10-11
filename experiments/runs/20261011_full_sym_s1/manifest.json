@@ -1,0 +1,110 @@
+{
+  "name": "20261011_full_sym_s1",
+  "variant": "full_sym",
+  "kind": "sherlock",
+  "overrides": {
+    "use_symmetry": true
+  },
+  "config": {
+    "hidden": 256,
+    "dueling": true,
+    "gamma": 0.99,
+    "lr": 0.0003,
+    "batch_size": 256,
+    "buffer_capacity": 300000,
+    "learn_start": 5000,
+    "train_every": 2,
+    "target_update_every": 500,
+    "grad_clip": 5.0,
+    "double_dqn": true,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 60000,
+    "guided_prob": 0.7,
+    "use_belief": true,
+    "use_symmetry": true,
+    "use_shaping": true,
+    "canonical": true,
+    "use_sap": true,
+    "mask_actions": true,
+    "w_point": 1.0,
+    "w_shape": 0.5,
+    "w_explore": 0.3,
+    "w_energy": 0.1,
+    "w_stack": 0.3,
+    "w_death": 0.5,
+    "w_match": 2.0,
+    "w_discovery": 0.5,
+    "w_sap_hit": 0.3
+  },
+  "separate_side_networks": false,
+  "run_seed": 1,
+  "train_games": 3000,
+  "train_seeds": [
+    10000,
+    11499
+  ],
+  "curriculum": "erste 25% default, dann abwechselnd default/solution92",
+  "val_seeds": [
+    500000,
+    500001,
+    500002,
+    500003,
+    500004,
+    500005,
+    500006,
+    500007,
+    500008,
+    500009,
+    500010,
+    500011,
+    500012,
+    500013,
+    500014,
+    500015
+  ],
+  "val_every": 250,
+  "test_seeds": [],
+  "eval_opponents": [
+    "default",
+    "solution92"
+  ],
+  "sides": [
+    "player_0",
+    "player_1"
+  ],
+  "eval_epsilon": 0.0,
+  "git": {
+    "commit": "d97f1d476e32b3f0697b80844f65feca81813cba",
+    "dirty": false
+  },
+  "started": "2026-10-11T22:14:56",
+  "python": "3.14.6",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "argv": [
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/scripts/experiment.py",
+    "--variant",
+    "full_sym",
+    "--run-seed",
+    "1",
+    "--games",
+    "3000",
+    "--val-every",
+    "250",
+    "--val-seeds",
+    "16",
+    "--no-test",
+    "--date",
+    "20261011"
+  ],
+  "versions": {
+    "torch": "2.14.1",
+    "numpy": "2.5.3",
+    "luxai-s3": "0.2.1",
+    "jax": "0.11.2"
+  },
+  "train_secs": 2899.6,
+  "finished": "2026-10-11T23:03:15",
+  "runtime_secs": 2899.6,
+  "status": "done"
+}

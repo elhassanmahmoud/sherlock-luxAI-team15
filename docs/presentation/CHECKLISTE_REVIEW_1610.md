@@ -37,7 +37,7 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 | `main.py` mit `Agent_x` | ✅ |
 | `name: str='Team Name Agent_X'` | ✅ `Sherlock Agent_X` |
 | `act`, `update`, `set_to_eval_mode`, `set_env_cfg`, `save_agent`, `load_agent` | ✅ (Test `tests/test_runner.py`, Prüfung im Build-Skript) |
-| trainierte `.pth` | ✅ `agents/sherlock/weights/agent_p0.pth`, `agent_p1.pth` (seit 11.10.: `full_s012_sym` = Ensemble aus 3 Netzen + Symmetrie; vorher `full_s0`) |
+| trainierte `.pth` | ✅ `agents/sherlock/weights/agent_p0.pth`, `agent_p1.pth` (seit 11.10.: `old3_sym3` = Ensemble aus 6 Netzen + Symmetrie + Erkundungsgedächtnis; vorher `full_s0`) |
 | `agents.yaml` | ✅ `agents/sherlock/agents.yaml` (und im Zip) |
 | `paths.csv` mit Moodle-Gruppe | ✅ Gruppe 15 |
 

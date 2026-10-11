@@ -48,7 +48,7 @@
 - [ ] Feinschliff, Turnier-Tests, agent.zip nach Folie 51 (agents.yaml, paths.csv, .pth, alle Pflichtmethoden)
 
 ## Stand 10.10.2026 (Details: docs/ERGEBNISSE_20261010.md)
-- Abgabe-Gewichte seit 11.10. = `full_s012_sym_em`: Ensemble aus 3 Netzen (`scripts/build_ensemble.py`) + Spiegelsymmetrie im Belief (`use_symmetry`) + Erkundungsgedächtnis über Matches (`explore_memory`). Validierung vs Solution_92: 17 % (`full_s0`) → 25 % (Ensemble) → 32 % (+Symmetrie); vs default ~95 %. Vorher `full_s0` (Tag `abgabe-review-full_s0`).
+- Abgabe-Gewichte seit 11.10. = `old3_sym3`: Ensemble aus 6 Netzen (3 × `full` + 3 × `full_sym`, `scripts/build_ensemble.py`) + Spiegelsymmetrie im Belief (`use_symmetry`) + Erkundungsgedächtnis über Matches (`explore_memory`). **Test: vs default 100 %, vs Solution_92 46,7 %** (`full_s0`: 85 % / 20 %). Vorher `full_s0` (Tag `abgabe-review-full_s0`). Methode, die wirkt: Niederlagen analysieren (`scripts/analyze_losses.py`) → Ursache beheben → auf NEUEN Val-Seeds prüfen (`compare_weights.py`/`compare_report.py`). Blind länger trainieren/Self-Play brachte nichts.
 - Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
 - Nachtraining (`finetune.py`): Buffer wird jetzt gespeichert/aufgefüllt (11.10.). Weitertrainieren bringt trotzdem keinen klaren Gewinn – einzelne DQN-Checkpoints schwanken stark; Ensemble glättet das.
 - Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
