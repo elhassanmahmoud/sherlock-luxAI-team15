@@ -36,6 +36,11 @@ class AgentConfig:
     use_belief: bool = True
     """False: das Netz sieht nur die aktuelle Beobachtung (MemorylessBelief).
     Reward, Maske und gefuehrte Exploration nutzen weiter den vollen Belief."""
+    use_symmetry: bool = False
+    """True: Belief nutzt die Spiegelsymmetrie der Karte (Relics, Punkte-/Null-Tiles,
+    Erkundung, siehe belief.py). Default False, damit alte Checkpoints und
+    Experimente unveraendert reproduzierbar bleiben (from_dict fuellt fehlende
+    Schluessel mit dem Default)."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""

@@ -73,3 +73,30 @@ def test_point_tiles_survive_match_change_dead_tiles_do_not():
     assert b.point_tiles[5, 5] and b.dead_tiles[6, 6]
     b.observe(make_obs(101, 0))
     assert b.point_tiles[5, 5] and not b.dead_tiles.any()
+
+
+def test_symmetry_mirrors_relics_point_and_dead_tiles():
+    b = Belief(0, symmetry=True)
+    b.observe(make_obs(MS, MS, units=[(8, 9, 50)], relics=[(8, 9)], points=(0, 0)))
+    mx, my = geo.mirror_xy(8, 9)
+    assert (mx, my) in b.relic_positions and b.relic_zone[mx, my]
+    b.observe(make_obs(MS + 1, MS + 1, units=[(8, 10, 50)], relics=[(8, 9)], points=(1, 0)))
+    assert b.point_tiles[8, 10] and b.point_tiles[geo.mirror_xy(8, 10)]
+    assert b.dead_tiles[8, 9] and b.dead_tiles[mx, my]
+    assert b.explored[geo.mirror_xy(8, 10)]
+
+
+def test_symmetry_off_keeps_old_behaviour():
+    b = Belief(0)
+    b.observe(make_obs(MS, MS, units=[(8, 9, 50)], relics=[(8, 9)], points=(0, 0)))
+    assert b.relic_positions == {(8, 9)}
+
+
+def test_symmetry_reopen_dead_keeps_points():
+    b = Belief(0, symmetry=True)
+    b.observe(make_obs(MS, MS, units=[(5, 5, 50)], points=(1, 0)))
+    assert b.point_tiles[5, 5] and b.point_tiles[geo.mirror_xy(5, 5)]
+    b.observe(make_obs(MS + 1, MS + 1, units=[(6, 6, 50)], points=(1, 0)))
+    assert b.dead_tiles[6, 6] and b.dead_tiles[geo.mirror_xy(6, 6)]
+    b.observe(make_obs(101, 0))   # Matchwechsel -> Null-Wissen verworfen
+    assert not b.dead_tiles.any() and b.point_tiles[geo.mirror_xy(5, 5)]

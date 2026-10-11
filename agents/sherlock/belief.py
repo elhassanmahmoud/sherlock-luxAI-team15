@@ -46,6 +46,15 @@ zweier Relics ueberlappen und das Tile zum spaeteren Relic gehoert). Deshalb:
     bei jedem Widerspruch verworfen (_reopen_dead).
 Ohne diese Korrektur entstehen falsche Punkte-Tiles (im Experiment 3 von 44).
 
+SYMMETRIE (11.10.2026, Schalter `symmetry`): Relics spawnen paarweise
+spiegelsymmetrisch zur Antidiagonale M(x, y) = (W-1-y, H-1-x), und die
+punktebringenden Tiles sind zu JEDEM Zeitpunkt symmetrisch (geprueft ueber
+1818 Steps auf 6 Seeds, 0 Verstoesse). Deshalb gilt jeder Schluss auch fuer das
+Spiegeltile: gesehenes Relic -> Spiegel-Relic bekannt, bewiesenes Punkte-/
+Null-Tile -> Spiegeltile ebenso, erkundetes Gebiet -> Spiegelgebiet erkundet.
+Die Analyse vom 11.10. (scripts/analyze_losses.py) zeigte: wir kennen am
+Matchende nur ~5 Punkte-Tiles, Solution_92 besetzt ~6.
+
 Implementierungsdetail: die Propagation laeuft auf flachen int-Indizes und
 Python-Sets, nicht auf numpy-Skalarindizierung - das ist ca. 50x schneller und
 war im Profiling der Flaschenhals.
@@ -75,9 +84,11 @@ STABLE_FROM_MATCH_STEP = 50
 class Belief:
     """Persistentes Weltmodell eines Agenten fuer ein komplettes Spiel."""
 
-    def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True):
+    def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
+                 symmetry: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
+        self.symmetry = bool(symmetry)
         self.set_team(team_id)
         self.reset_game()
 
@@ -175,10 +186,14 @@ class Belief:
         self._refresh_candidates()
 
     def _update_map(self, sensor, tile_type, energy) -> None:
-        new = int(np.count_nonzero(sensor & ~self.explored))
+        explored_now = sensor
+        if self.symmetry:
+            from . import geometry as geo
+            explored_now = sensor | geo.mirror_map(sensor)  # nur fuer "erkundet"
+        new = int(np.count_nonzero(explored_now & ~self.explored))
         self.newly_explored = new
         if new:
-            self.explored |= sensor
+            self.explored |= explored_now
             self._coords_dirty = True
         # Asteroiden/Nebel driften (Slides 30/31) -> sichtbare Tiles ueberschreiben
         np.copyto(self.tile_type, tile_type.astype(np.int8), where=sensor)
@@ -187,13 +202,20 @@ class Belief:
     def _update_relics(self, relic_pos, relic_mask) -> None:
         for i in np.nonzero(relic_mask)[0]:
             x, y = int(relic_pos[i][0]), int(relic_pos[i][1])
-            if x < 0 or y < 0 or (x, y) in self.relic_positions:
+            if x < 0 or y < 0:
                 continue
-            self.relic_positions.add((x, y))
-            r = RELIC_REWARD_RANGE
-            self.relic_zone[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
-            self._cand_dirty = True
-            self._coords_dirty = True
+            self._add_relic(x, y)
+            if self.symmetry:
+                self._add_relic(self.W - 1 - y, self.H - 1 - x)
+
+    def _add_relic(self, x: int, y: int) -> None:
+        if (x, y) in self.relic_positions:
+            return
+        self.relic_positions.add((x, y))
+        r = RELIC_REWARD_RANGE
+        self.relic_zone[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
+        self._cand_dirty = True
+        self._coords_dirty = True
 
     def _refresh_candidates(self) -> None:
         """candidate ist abgeleitet: Relic-Umfeld, das noch nicht entschieden ist."""
@@ -278,10 +300,20 @@ class Belief:
                     still_open.append((tuple(open_tiles), rest_now))
             self.records = still_open
 
+    def _mirror_idx(self, f: int) -> int:
+        x, y = divmod(f, self.H)
+        return (self.W - 1 - y) * self.H + (self.H - 1 - x)
+
     def _mark_point(self, f: int) -> None:
         self._dead.discard(f)
         if f in self._point:
             return
+        if self.symmetry:
+            m = self._mirror_idx(f)
+            if m != f:
+                self._point.add(f)          # Rekursionsschutz
+                self._mark_point(m)
+                self._point.discard(f)
         self._point.add(f)
         x, y = divmod(f, self.H)
         self.point_tiles[x, y] = True
@@ -294,6 +326,8 @@ class Belief:
         if f in self._dead or f in self._point:
             return
         self._dead.add(f)
+        if self.symmetry:
+            self._mark_dead(self._mirror_idx(f))
         x, y = divmod(f, self.H)
         self.dead_tiles[x, y] = True
         self._cand_dirty = True

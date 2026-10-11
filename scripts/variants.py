@@ -20,6 +20,7 @@ VARIANTS: dict[str, tuple[str, dict]] = {
     "baseline_prof": ("prof_frozen", {}),
     "baseline_prof_retrained": ("prof_train", {}),
     "full": ("sherlock", {}),
+    "full_sym": ("sherlock", {"use_symmetry": True}),
     "no_belief": ("sherlock", {"use_belief": False}),
     "no_shaping": ("sherlock", {"use_shaping": False}),
     "no_sap": ("sherlock", {"use_sap": False}),
@@ -27,7 +28,7 @@ VARIANTS: dict[str, tuple[str, dict]] = {
     "no_canonical": ("sherlock", {"canonical": False}),
 }
 
-ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and v != "full"]
+ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 
 def variant_cfg(name: str) -> AgentConfig:

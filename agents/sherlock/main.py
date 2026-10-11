@@ -86,10 +86,11 @@ class Agent_x:
         self.learn_steps = 0
         self.recent_losses: list[float] = []
 
-        self.belief = Belief(0, canonical=self.cfg.canonical)
+        self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
-                            else MemorylessBelief(0, canonical=self.cfg.canonical))
+                            else MemorylessBelief(0, canonical=self.cfg.canonical,
+                                             symmetry=self.cfg.use_symmetry))
         self._set_player(player)
         self._reset_episode_state()
 
