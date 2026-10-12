@@ -52,6 +52,7 @@
 - Experimente: `scripts/experiment.py` / `run_experiments.py` / `report.py`, Protokoll in `docs/EXPERIMENT_PROTOKOLL.md` (Test-Seeds 900000+ nur für finale Auswertung!).
 - Nachtraining (`finetune.py`): Buffer wird jetzt gespeichert/aufgefüllt (11.10.). Weitertrainieren bringt trotzdem keinen klaren Gewinn – einzelne DQN-Checkpoints schwanken stark; Ensemble glättet das.
 - Ablation: Belief größter Hebel, Shaping stabilisiert, Sap hilft vs Sol92, guided_explore/Spiegelung ohne belegten Effekt.
+- 12.10.: Folien auf `old3_sym3` aktualisiert (19 Folien), neue Replays. Match 1 = Schwachpunkt (Relic zu spät gefunden, `scripts/analyze_timing.py`). Neue Schalter (Default aus): `early_inference`, `explore_grid`, `scripted_explore`, `explore_stale`. **Kandidat für die nächste Abgabe (erst nach dem 16.10.): `m1_early` = `old3_sym3` + `early_inference`** (bestätigt auf 120 neuen Seeds: +7,9 pp vs Solution_92, +2,9 vs default). Val-Seeds bis 500 659 verbraucht.
 - Offen für 16.10.: Präsentationsfolien, Slot buchen, Replays ansehen, proben. Team 15 (Mahmoud El-Hassan, Moayed Shawesh), Agent Sherlock (`agents/sherlock/`, umbenannt von team_lux).
 
 ## Konventionen
