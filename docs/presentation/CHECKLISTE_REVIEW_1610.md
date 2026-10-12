@@ -13,7 +13,7 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 | Trainings-Konfiguration | Folie „Training“; `agents/sherlock/config.py` | ✅ |
 | Feature Engineering | Folien „Belief“, „Features“, „Abgleich Folie 50“ | ✅ |
 | Trainingsablauf: Anzahl Spiele, Gegner | 3000 Spiele/Lauf, 63 000 insgesamt, Curriculum default → Solution_92 | ✅ |
-| Ausgewählte Spiele zeigen | `docs/presentation/replays/` (4 Replays), Folie „Replays“ | ⚠️ Beobachtungen pro Replay noch eintragen (Platzhalter auf der Folie) |
+| Ausgewählte Spiele zeigen | `docs/presentation/replays/sherlock_*.json` (5 Replays mit Abgabe-Agent `old3_sym3`, 12.10.), Folie „Replays“ | ✅ Beobachtungen aus den Replay-Daten eingetragen – im Viewer gegenprüfen |
 | Beobachtungen, Hypothesen, Erkenntnisse | Folien „Ergebnisse“, „Ablation“, „Lernkurven“, „Erkenntnisse“ | ✅ |
 | Fragen, nächste Schritte | Folien „Grenzen“, „Fragen“ (mögliche Fragen in den Notizen) | ✅ |
 | Slot auf Moodle buchen | – | ❌ **Team** |
@@ -64,13 +64,13 @@ Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernot
 | `dist/agent.zip` aus frischem Clone gebaut und geprüft | „Check ok“, 3 Netze, Symmetrie an |
 | gegen Prof-DQN (20 Seeds × 2 Seiten) | 100 % Spiele, 1072 : 2 Punkte |
 
-**Folien müssen aktualisiert werden:** Der Entwurf vom 10.10. zeigt noch `full_s0`. Neu dazu: Ensemble (+7,5 pp vs Solution_92), Niederlagen-Analyse mit Ground Truth, Spiegelsymmetrie (+7,1 pp), und die Negativ-Ergebnisse (Weitertraining, Self-Play, `home_first` ohne Effekt). Siehe `docs/EXPERIMENT_PROTOKOLL.md` Abschnitt 9.
+**Folien aktualisiert (12.10., 19 Folien):** Kernaussage mit Testzahlen von `old3_sym3` (100 % / 46,7 %), neue Folien „Niederlagen-Analyse“ (Symmetrie, Erkundung über Matches) und „Vom Einzelnetz zur Abgabe“ (4 Schritte mit gepaarten Δ auf neuen Val-Seeds), Ensemble in „Architektur“, Negativ-Ergebnisse (Weitertraining, Self-Play) in „Erkenntnisse“, neue Replays, „Grenzen“ mit Befund Match 1. Siehe `docs/EXPERIMENT_PROTOKOLL.md` Abschnitt 9.
 
 ## To-do Team vor dem 16.10.
 
 1. Slot auf Moodle buchen.
 2. ✅ Teamname Sherlock, Gruppe 15 eingetragen.
-3. Replays auf <https://s3vis.lux-ai.org/> ansehen und pro Spiel eine Beobachtung auf der Folie „Replays“ eintragen.
+3. Replays (`sherlock_*.json`) auf <https://s3vis.lux-ai.org/> ansehen und prüfen, ob man die Beobachtungen auf der Folie „Replays“ im Bild gut sieht; ggf. eigene ergänzen.
 4. Folien aufteilen, zweimal mit Uhr proben (Ziel 17–18 min plus Fragen).
 5. Jede Person kann Belief, Reward Shaping, Double DQN und die Ablation in eigenen Worten erklären (Folie 50: „Make sure you understand what you submit!“).
 6. **Neu (11.10.):** Jede Person kann auch Ensemble, Spiegelsymmetrie und die Niederlagen-Analyse erklären – das ist jetzt der stärkste „eigene Beitrag“ (Bewertungskriterium Originalität, Folie 11).
