@@ -86,7 +86,8 @@ class Agent_x:
         self.learn_steps = 0
         self.recent_losses: list[float] = []
 
-        self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry)
+        self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry,
+                             early_inference=self.cfg.early_inference)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,
@@ -244,6 +245,8 @@ class Agent_x:
                     a = int(self.rng.choice(legal))
             else:
                 a = int(greedy[k])
+                if self.cfg.scripted_explore and a != geo.SAP:
+                    a = self._explore_action(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
@@ -272,8 +275,24 @@ class Agent_x:
         beschleunigt das Auffinden der Punkte-Tiles massiv.
         """
         tgt = ctx["assigned"].get(int(uid))
-        if tgt is None:
-            return int(self.rng.choice(legal))
+        a = self._step_toward(ctx, uid, mask, tgt) if tgt is not None else None
+        return int(self.rng.choice(legal)) if a is None else a
+
+    def _explore_action(self, ctx: dict, uid: int, mask: np.ndarray, greedy: int) -> int:
+        """cfg.scripted_explore: Units mit reinem Erkundungsziel (kein Punkte-/
+        Kandidaten-Tile) laufen direkt zum Ziel. Analyse 12.10.: in den ersten 40
+        Steps von Match 0 waehlt das Netz fast zur Haelfte "stehen" (wartet auf
+        Energiefeldern nahe dem Spawn) und findet das Relic spaeter als Solution_92."""
+        tgt = ctx["assigned"].get(int(uid))
+        b = self.belief
+        if tgt is None or b.point_tiles[tgt] or b.candidate[tgt]:
+            return greedy
+        a = self._step_toward(ctx, uid, mask, tgt)
+        return greedy if a is None else a
+
+    @staticmethod
+    def _step_toward(ctx: dict, uid: int, mask: np.ndarray, tgt) -> Optional[int]:
+        """Erlaubter Schritt Richtung tgt (laengere Achse zuerst), sonst None."""
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         dx, dy = tgt[0] - x, tgt[1] - y
         prefs = []
@@ -288,7 +307,7 @@ class Agent_x:
         for p in prefs:
             if mask[p]:
                 return int(p)
-        return int(self.rng.choice(legal))
+        return None
 
     def _action_mask(self, ctx: dict, uid: int, sap_target) -> np.ndarray:
         mask = np.ones(self.n_actions, dtype=bool)

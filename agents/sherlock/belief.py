@@ -79,16 +79,18 @@ MAX_MATCH_STEPS = 100
 # Ab diesem match_step aendert sich die Punkte-Schwelle innerhalb des Matches
 # nicht mehr, nur dann sind Schluesse ueber Punkte-Tiles verlaesslich.
 STABLE_FROM_MATCH_STEP = 50
+NEVER_SEEN = -1000
 
 
 class Belief:
     """Persistentes Weltmodell eines Agenten fuer ein komplettes Spiel."""
 
     def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
-                 symmetry: bool = False):
+                 symmetry: bool = False, early_inference: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
+        self.early_inference = bool(early_inference)
         self.set_team(team_id)
         self.reset_game()
 
@@ -110,6 +112,9 @@ class Belief:
         self.explored = np.zeros((W, H), dtype=bool)
         # wie explored, aber NICHT pro Match zurueckgesetzt (Zielwahl explore_memory)
         self.explored_ever = np.zeros((W, H), dtype=bool)
+        # match_step, an dem ein Tile (oder sein Spiegeltile) zuletzt gesehen wurde
+        self.last_seen = np.full((W, H), NEVER_SEEN, dtype=np.int16)
+        self.match_step = 0
         self.tile_type = np.full((W, H), TILE_UNKNOWN, dtype=np.int8)
         self.energy_map = np.zeros((W, H), dtype=np.float32)
 
@@ -136,6 +141,7 @@ class Belief:
         # Relics erscheinen in den ersten k Matches noch nachtraeglich (Slide 38)
         # -> Erkundungswissen pro Match zuruecksetzen, Relic-/Punktewissen behalten.
         self.explored[:] = False
+        self.last_seen[:] = NEVER_SEEN
         self._coords_dirty = True
         # Neues Match => moeglicherweise neues Relic-Paar => Punkte-Regel aendert sich
         self._reopen_dead()
@@ -153,6 +159,7 @@ class Belief:
         self.match_idx = step // (MAX_MATCH_STEPS + 1)
 
         match_step = int(np.asarray(obs["match_steps"]))
+        self.match_step = match_step
         if match_step == 0:
             self.reset_match()
             return  # zu Matchbeginn existieren noch keine Units
@@ -198,6 +205,7 @@ class Belief:
             self.explored |= explored_now
             self._coords_dirty = True
         self.explored_ever |= explored_now
+        self.last_seen[explored_now] = self.match_step
         # Asteroiden/Nebel driften (Slides 30/31) -> sichtbare Tiles ueberschreiben
         np.copyto(self.tile_type, tile_type.astype(np.int8), where=sensor)
         np.copyto(self.energy_map, energy, where=sensor)
@@ -229,9 +237,33 @@ class Belief:
         self._cand_dirty = False
 
     # ----------------------------------------------------- punkte-tile-logik
+    def known_pairs(self) -> int:
+        """Anzahl bekannter Relic-Paare (Relic und Spiegelrelic spawnen gemeinsam)."""
+        return len({min((x, y), (self.W - 1 - y, self.H - 1 - x))
+                    for x, y in self.relic_positions})
+
+    def pair_spawned(self) -> bool:
+        """Ist das Relic-Paar des aktuellen Matches sicher schon gespawnt?
+
+        Paar j spawnt in Match j (falls j < k) bei match_step 0..49, hoechstens
+        eines pro Match. Kennen wir j+1 Paare, sind 0..j alle da. In Match 0 gibt
+        es vor dem ersten Paar gar keine Relics: jeder Punkt (auch des Gegners)
+        beweist den Spawn.
+        """
+        if self.known_pairs() >= self.match_idx + 1:
+            return True
+        return self.match_idx == 0 and (self.last_points > 0 or self.last_opp_points > 0)
+
+    def _stable(self, match_step: int) -> bool:
+        """Darf aus dem Punktgewinn geschlossen werden? Nach dem (einzigen) Spawn
+        des Matches aendert sich die Punkte-Schwelle bis Matchende nicht mehr."""
+        if match_step >= STABLE_FROM_MATCH_STEP:
+            return True
+        return self.early_inference and self.pair_spawned()
+
     def _infer_point_tiles(self, ally_pos, ally_energy, ally_mask, gain: int,
                            match_step: int) -> None:
-        if match_step < STABLE_FROM_MATCH_STEP:
+        if not self._stable(match_step):
             return  # Relic-Spawn-Fenster: Punkte-Schwelle noch instabil
         H = self.H
         occupied = set()
@@ -365,6 +397,17 @@ class Belief:
 
     def unexplored_coords(self) -> np.ndarray:
         return self._coords("unexp", ~self.explored)
+
+    def explore_coords(self, stale: int = 0) -> np.ndarray:
+        """Erkundungsziele. stale > 0: in Match 0, solange kein Relic bekannt ist,
+        zaehlen nur Tiles als erkundet, die in den letzten `stale` Steps oder ab
+        match_step 49 gesehen wurden (vorher gesehene koennen ein spaeter
+        gespawntes Relic verbergen)."""
+        if stale <= 0 or self.match_idx != 0 or self.known_pairs() > 0:
+            return self.unexplored_coords()
+        ls = self.last_seen
+        fresh = (ls >= self.match_step - stale) | (ls >= STABLE_FROM_MATCH_STEP - 1)
+        return np.argwhere(~fresh).astype(np.int32)
 
     def relic_coords(self) -> np.ndarray:
         if not self.relic_positions:

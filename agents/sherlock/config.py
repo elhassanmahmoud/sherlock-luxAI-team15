@@ -47,6 +47,23 @@ class AgentConfig:
     explore_memory: bool = False
     """True: Erkundung bevorzugt Tiles, die in KEINEM bisherigen Match gesehen
     wurden (+300 Kosten fuer frueher gesehene, siehe features.assign_targets)."""
+    # --- Match-1-Schalter (12.10.2026, Analyse scripts/analyze_timing.py: wir sehen
+    # das erste Relic im Median 10 Steps nach Solution_92, in 12/80 Matches nie).
+    explore_grid: bool = False
+    """True: Erkundungsziele = je ein unerkundetes Tile pro 4x4-Block statt der
+    unerkundeten Tiles am naechsten zum Schwerpunkt -> Units verteilen sich."""
+    scripted_explore: bool = False
+    """True: Hat eine Unit nur ein Erkundungsziel (kein Punkte-/Kandidaten-Tile),
+    laeuft sie heuristisch dorthin statt der Netz-Aktion (ausser Sap). Das Netz
+    hat gelernt, am Matchanfang auf Energiefeldern nahe dem Spawn zu warten."""
+    explore_stale: int = 0
+    """> 0: In Match 0, solange kein Relic bekannt ist, gilt ein Tile nur als
+    erkundet, wenn es in den letzten `explore_stale` Steps oder ab match_step 49
+    gesehen wurde - das Relic-Paar spawnt erst bei match_step 0..49, Gebiete von
+    vorher koennen es verbergen. 0 = aus."""
+    early_inference: bool = False
+    """True: Punkte-Tile-Schluesse schon vor match_step 50, sobald das Relic-Paar
+    des aktuellen Matches sicher gespawnt ist (siehe Belief._stable)."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""

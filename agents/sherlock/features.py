@@ -65,9 +65,23 @@ def _nearest(coords: np.ndarray, x: int, y: int, W: int, H: int):
     )
 
 
+def grid_targets(coords: np.ndarray, block: int) -> np.ndarray:
+    """Pro block x block-Feld das unerkundete Tile, das der Blockmitte am naechsten liegt."""
+    if len(coords) == 0:
+        return coords
+    keys = (coords[:, 0] // block) * 1000 + coords[:, 1] // block
+    centre = (coords // block) * block + (block - 1) / 2.0
+    d = np.abs(coords - centre).sum(axis=1)
+    order = np.lexsort((d, keys))
+    first = np.ones(len(order), dtype=bool)
+    first[1:] = keys[order][1:] != keys[order][:-1]
+    return coords[order[first]]
+
+
 def assign_targets(belief, unit_ids, unit_pos, W, H,
                    enemy_half_penalty: float = 0.0,
-                   seen_before_penalty: float = 0.0) -> dict[int, tuple[int, int]]:
+                   seen_before_penalty: float = 0.0,
+                   grid: int = 0, stale: int = 0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -85,6 +99,11 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     laeuft der Agent jedes Match wieder in dieselbe (falsche) Ecke, weil
     `explored` pro Match zurueckgesetzt wird (Analyse 11.10.: auf manchen Karten
     in allen 3 Matches kein Relic gefunden).
+
+    grid > 0 (cfg.explore_grid): Erkundungsziele nur je ein Tile pro grid x grid-
+    Block, alle Bloecke statt nur die naechsten am Schwerpunkt -> die Units
+    verteilen sich ueber die Karte statt als Klumpen zu wandern.
+    stale > 0 (cfg.explore_stale): siehe Belief.explore_coords.
     """
     if len(unit_ids) == 0:
         return {}
@@ -97,7 +116,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             prios.append(np.full(len(pool), prio, dtype=np.int32))
     n_hard = int(sum(len(t) for t in targets))
     if n_hard < len(unit_ids):
-        unexp = belief.unexplored_coords()
+        unexp = belief.explore_coords(stale) if stale else belief.unexplored_coords()
+        if grid:
+            unexp = grid_targets(unexp, grid)
         if len(unexp) == 0:
             unexp = belief.relic_coords()
         if len(unexp):
@@ -108,7 +129,7 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             if seen_before_penalty:
                 seen = belief.explored_ever[unexp[:, 0], unexp[:, 1]] * float(seen_before_penalty)
             order = np.argsort(d + seen, kind="stable") if seen_before_penalty else np.argsort(d)
-            keep = order[: max(len(unit_ids) * 4, 16)]
+            keep = order if grid else order[: max(len(unit_ids) * 4, 16)]
             targets.append(unexp[keep])
             prios.append(np.full(len(keep), 2, dtype=np.int32))
             extra_seen = seen[keep]
@@ -201,6 +222,7 @@ def make_context(agent, obs, belief=None) -> dict:
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
         W, H, enemy_half_penalty=600.0 if agent.cfg.home_first else 0.0,
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
+        grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
     )
 
     return dict(
