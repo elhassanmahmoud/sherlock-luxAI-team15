@@ -192,8 +192,9 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Zweck | Befehl |
 |---|---|
 | Ein Spiel mit Replay über den Kurs-Runner (Gruppe 15 vs. 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
-| Training (Agent wird einmal erzeugt, Gewichte nach `agents/sherlock/weights/`) | `python -m scripts.train --games 400 --opponent default` |
-| Training fortsetzen gegen den starken Gegner | `python -m scripts.train --games 300 --opponent solution92 --resume` |
+| Neues Einzelnetz trainieren (automatisch neuer Run-Ordner) | `python -m scripts.train --games 400 --opponent default` |
+| Ausgabeordner selbst benennen (muss neu sein) | `python -m scripts.train --games 400 --output-dir experiments/runs/mein_training` |
+| Einzelnetz fortsetzen, Quelle erhalten und neue Ausgabe anlegen | `python -m scripts.train --games 300 --opponent solution92 --resume experiments/runs/mein_training/weights/agent_p0.pth` |
 | Evaluation (N Seeds × beide Seiten, ε = 0) | `python -m scripts.evaluate --games 20 --opponent solution92` |
 | Ein Experiment-Lauf | `python -m scripts.experiment --variant full --run-seed 0 --games 3000` |
 | Kompletter Batch (alle Varianten × 3 Starts) | `python -m scripts.run_experiments --games 3000 --workers 11` |
@@ -202,7 +203,15 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Tests | `python -m pytest -q` |
 | Abgabe bauen | `python -m scripts.build_submission` |
 
-> **Achtung:** `scripts.train` schreibt nach `agents/sherlock/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Mit einem geladenen Ensemble wird nur dessen erstes Netz weitertrainiert. Für beauftragte Experimente einen eigenen Run-Ordner über `scripts.experiment` verwenden und den bisherigen Stand erhalten. Im aktuellen Dokumentationsauftrag sind Training und Gewichteänderungen nicht freigegeben.
+### Sicher trainieren und fortsetzen
+
+`scripts.train` legt für **jeden Aufruf einen neuen Ordner** unter `experiments/runs/train_<Zeitstempel>_<Kennung>/` an. Darin liegen `train.csv` und `weights/agent_p0.pth`, `agent_p1.pth` sowie gegebenenfalls `agent_best.pth` und `agent_selfplay_snapshot.pth`. Auch beim Abbruch wird ausschließlich dort gespeichert. Der konkrete Pfad wird beim Start ausgegeben. `--tag` ergänzt nur den Namen der CSV-Datei.
+
+Mit `--output-dir` lässt sich der Run-Ordner benennen. Bereits vorhandene Ordner werden abgewiesen, damit auch ältere Versuche erhalten bleiben. Ziele im Abgabe-Gewichteordner und Verweise darauf über symbolische Links oder Hardlinks werden beim Schreiben geprüft. Ohne `--resume` beginnt ein neues Einzelnetz.
+
+**Geänderter Aufruf:** `--resume` benötigt jetzt den Pfad zu einem vorhandenen **Einzelnetz-Checkpoint**. Der Checkpoint wird nur gelesen, seine Konfiguration wird übernommen, Ergebnisse landen wieder in einem neuen Run-Ordner. Der Replay Buffer wird in diesem einfachen Trainingsskript nicht wiederhergestellt. Ein Ensemble wie die aktuelle Abgabe `old3_sym3` wird mit einer verständlichen Fehlermeldung abgewiesen: gemeinsames Weitertraining aller Mitglieder ist nicht implementiert. Dafür zunächst einen Einzelnetz-Checkpoint wählen und später ein neues Ensemble separat zusammenbauen.
+
+**Geltungsbereich:** Dieser Schutz gilt für `scripts.train` und den Paketbau mit `scripts.build_submission`. Agenten-Speichermethode und Kurs-Runner bleiben unverändert. `main.py` für Vorführungen weiterhin mit `train=False` betreiben; direktes Runner-Training und andere Schreibwerkzeuge wie `set_cfg`/`build_ensemble` niemals auf die Abgabe-Gewichte richten. Das ist ein Schutz der genannten Arbeitsabläufe, keine allgemeine Dateisystemsperre. Für systematische Vergleichsläufe bleibt `scripts.experiment` mit eigenem Run-Namen vorgesehen.
 
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`.
 
@@ -233,7 +242,7 @@ Das finale Paket ist für den 27.11. vorgesehen. Die Moodle-Aufgabe „Submissio
 Vorgaben laut Kursfolie 51: Ordner mit Teamnamen, leere `__init__.py`, `main.py` mit Klasse `Agent_x` (`name='Team Name Agent_X'`), Methoden `act`, `update`, `set_to_eval_mode`, `set_env_cfg`, `save_agent`, `load_agent`, trainierte `.pth`, `agents.yaml` und `paths.csv`.
 
 ```bash
-# Gewichte eines Experiment-Laufs übernehmen und Zip bauen + prüfen
+# Gewichte eines Runs direkt verpacken; Abgabe-Gewichte im Repository bleiben erhalten
 python -m scripts.build_submission --from-run experiments/runs/<lauf> --team-name sherlock --group 15
 # nur bauen mit den Gewichten aus agents/sherlock/weights/
 python -m scripts.build_submission
@@ -241,13 +250,15 @@ python -m scripts.build_submission
 
 Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine frische Kopie mit `lux/`. Dort lädt es den Agenten über `lux.runner.load_class_from_path`, prüft die Pflichtmethoden, lädt die Gewichte beider Seiten und führt einen Aktionsschritt aus. Weil das Paket relative Imports nutzt, funktioniert `--team-name` mit jedem Ordnernamen.
 
+`--from-run` liest `weights/agent.pth` oder das Paar `weights/agent_p0.pth`/`agent_p1.pth` direkt aus dem angegebenen Lauf und verpackt beide Seiten. Es ersetzt **keine** Gewichte unter `agents/sherlock/weights/`. Ohne diese Option wird weiterhin der bestehende Abgabe-Stand verpackt. `--out` darf weder geschützte Gewichte noch einen verwendeten Eingabe-Checkpoint überschreiben. Für mehrere Kandidaten unterschiedliche ZIP-Namen wählen; eine vorhandene ZIP am erlaubten Ausgabeziel wird weiterhin ersetzt.
+
 ## Grenzen und nächste Schritte
 
-Stand: **14.10.2026**. Die folgenden Punkte sind dokumentiert, noch nicht behoben oder aktiviert.
+Stand: **14.10.2026**. Trainingsausgaben und Paketbau sind inzwischen gegen das Überschreiben der Abgabe-Gewichte geschützt. Die folgenden fachlichen Punkte bleiben offen.
 
 - `old3_sym3` erreicht 46,7 % gegen Solution_92 auf den wiederholt verwendeten Benchmarkkarten. Das belegt keine Überlegenheit gegenüber diesem Gegner. Schwachpunkt bleibt unter anderem die frühe Erkundung im ersten Match.
 - `m1_early` aktiviert frühere Punktefeld-Inferenz. Die zweite Validierungsrunde dokumentiert +7,9 Prozentpunkte gegen Solution_92 auf 120 neuen Karten × beide Seiten. Es bleibt der Kandidat für nach dem Review; Abgabe-Gewichte unverändert.
-- Vor neuem Training: getrennte Ausgabepfade, expliziter Umgang mit dem Ensemble und Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy.
+- Vor aussagekräftigen neuen Trainingsstudien bleiben Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen sinnvoll. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy. Der Speicherschutz behebt diese Lernprobleme nicht.
 - Vor neuen Schlussfolgerungen: vollständige Punktezählung, Bootstrap nach Karte, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
 - „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Das Sap-Ziel und die Zielzuweisung sind heuristisch; das Netz wählt den Aktionstyp.
 - Weitertraining und Self-Play/Gegner-Pool wurden bereits untersucht und brachten in diesen Versuchen keinen klaren Gewinn. Das beweist keine allgemeine Grenze des Verfahrens.

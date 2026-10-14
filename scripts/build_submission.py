@@ -15,8 +15,8 @@ Inhalt von dist/agent.zip:
         agents.yaml          Import-Pfad + Lade-Pfade
     paths.csv                Moodle-Gruppe;Import_Path;Load_Path_P0;Load_Path_P1
 
---from-run kopiert vorher die Gewichte eines Experiment-Laufs nach
-agents/sherlock/weights/ (die Pfade aus Paths.csv). Danach prueft das Skript
+--from-run liest die Gewichte eines Experiment-Laufs direkt ins Zip.
+agents/sherlock/weights/ bleibt unveraendert. Danach prueft das Skript
 das entpackte Zip: Import ueber lux/runner.load_class_from_path, Pflichtmethoden,
 Laden beider Seiten und ein Aktionsschritt auf einer echten Beobachtung.
 """
@@ -31,31 +31,37 @@ import zipfile
 from pathlib import Path
 
 from scripts.common import ROOT
+from scripts.output_paths import checked_output
 
 SRC = ROOT / "agents" / "sherlock"
 REQUIRED = ["act", "update", "set_to_eval_mode", "set_env_cfg", "save_agent", "load_agent"]
 
 
-def install_weights(run_dir: Path) -> None:
+def run_weights(run_dir: Path) -> list[Path]:
     w = run_dir / "weights"
-    dst = SRC / "weights"
     if (w / "agent.pth").is_file():
         p0 = p1 = w / "agent.pth"
     else:
         p0, p1 = w / "agent_p0.pth", w / "agent_p1.pth"
-    for src, name in ((p0, "agent_p0.pth"), (p1, "agent_p1.pth")):
+    for src in (p0, p1):
         if not src.is_file():
             raise SystemExit(f"Gewichte fehlen: {src}")
-        shutil.copyfile(src, dst / name)
-    print(f"Gewichte aus {run_dir} -> {dst}")
+    return [p0, p1]
 
 
-def build(team: str, group: int, out: Path) -> Path:
+def build(team: str, group: int, out: Path, from_run: Path | None = None) -> Path:
     files = sorted(p for p in SRC.glob("*.py") if p.name != "__init__.py")
-    weights = [SRC / "weights" / "agent_p0.pth", SRC / "weights" / "agent_p1.pth"]
+    weights = (run_weights(from_run) if from_run is not None else
+               [SRC / "weights" / "agent_p0.pth", SRC / "weights" / "agent_p1.pth"])
     for w in weights:
         if not w.is_file():
             raise SystemExit(f"{w} fehlt - erst trainieren oder --from-run nutzen.")
+    try:
+        out = checked_output(out, SRC / "weights")
+        if any(out == w.resolve() or (out.exists() and out.samefile(w)) for w in weights):
+            raise ValueError(f"Zip-Ausgabe darf keine Eingabe-Gewichte ersetzen: {out}")
+    except (ValueError, OSError) as exc:
+        raise SystemExit(str(exc)) from exc
     imp = f"agents.{team}.main.Agent_x"
     lp0, lp1 = f"agents/{team}/weights/agent_p0.pth", f"agents/{team}/weights/agent_p1.pth"
     yaml = (f"%YAML 1.2\n---\n\nIMPORT_PATH: '{imp}'\n"
@@ -67,8 +73,8 @@ def build(team: str, group: int, out: Path) -> Path:
         z.writestr(f"{team}/__init__.py", "")
         for f in files:
             z.write(f, f"{team}/{f.name}")
-        for w in weights:
-            z.write(w, f"{team}/weights/{w.name}")
+        for i, w in enumerate(weights):
+            z.write(w, f"{team}/weights/agent_p{i}.pth")
         z.writestr(f"{team}/agents.yaml", yaml)
         z.writestr("paths.csv", csv)
     return out
@@ -114,14 +120,13 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--team-name", default="sherlock", help="Ordnername im Zip (= Teamname)")
     ap.add_argument("--group", type=int, default=15, help="Moodle-Gruppennummer")
-    ap.add_argument("--from-run", default=None, help="Gewichte aus diesem Run-Ordner uebernehmen")
+    ap.add_argument("--from-run", default=None, help="Gewichte dieses Runs direkt verpacken; Abgabe-Dateien unveraendert lassen")
     ap.add_argument("--out", default=str(ROOT / "dist" / "agent.zip"))
     ap.add_argument("--no-check", action="store_true")
     args = ap.parse_args()
 
-    if args.from_run:
-        install_weights(Path(args.from_run))
-    out = build(args.team_name, args.group, Path(args.out))
+    out = build(args.team_name, args.group, Path(args.out),
+                from_run=Path(args.from_run).expanduser() if args.from_run else None)
     with zipfile.ZipFile(out) as z:
         names = z.namelist()
     print(f"{out} ({out.stat().st_size / 1e6:.1f} MB):")

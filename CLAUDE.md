@@ -7,7 +7,7 @@
 - Nach abgeschlossenen Arbeiten dort Änderung, Grund, tatsächlich durchgeführte Prüfungen und offene Punkte ergänzen. Keine geplanten Tests als bestanden oder Vorschläge als umgesetzt darstellen.
 - Experimente und Auswahlentscheidungen weiterhin in [docs/EXPERIMENT_PROTOKOLL.md](docs/EXPERIMENT_PROTOKOLL.md) dokumentieren; bestehende Rohdaten und historische Resultate erhalten.
 - Vor Änderungen den Git-Status prüfen und Änderungen des anderen Teammitglieds erhalten. Getrennte Arbeitszweige für eigene Änderungen verwenden, sobald die nächste Codearbeit beginnt; gemeinsame Dateien beim Zusammenführen abgleichen.
-- Aktueller Auftrag vom 14.10.: gemeinsame Dokumentation, README und Checkliste; anschließend SSH-Zugriff einrichten und diese Dokumentationsänderungen auf GitHub hochladen. Keine Änderung an Agent, Trainingsskripten oder Gewichten. Weitere Korrekturen sind als offen dokumentiert, nicht zur Umsetzung freigegeben.
+- Aktueller Auftrag vom 14.10.: Schutz vor Überschreiben der Abgabe-Gewichte beim Training und Dokumentation für das Team. Dafür werden die Speicherwege in `scripts.train` und beim Paketbau angepasst; aktuelle Gewichte, Agentenlogik und Kurs-Runner bleiben unverändert. Andere fachliche Korrekturen sind weiterhin nicht beauftragt.
 
 ## Kontext
 - Das ist UNSER eigenes Projekt (Kopie des Dozenten-Templates). Originale vom Dozenten liegen unverändert in `~/Documents/01_RL`, `02_LuxAI`, `AnwendKiLux` → dort nichts ändern.
@@ -71,6 +71,10 @@ Punkte 1 und 2 wurden im Projekt bereits behoben; Punkt 3 wird durch die eigene 
 - Prüfung vom 14.10. in separater Kopie desselben Dateistands: 62 Tests bestanden, 120 Ensemble-Spiele reproduziert (60/60 gegen default, 28/60 gegen Solution_92; 30 Karten × beide Seiten je Gegner). Offene Mess-/Trainingsfehler und Prüfgrenzen: [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 ## Konventionen
+
+- `scripts.train` schreibt pro Aufruf in einen neuen Run-Ordner; ein optionales `--output-dir` darf noch nicht existieren. `--resume CHECKPOINT` liest ein vorhandenes Einzelnetz und schreibt in einen neuen Lauf. Ensemble-Resume wird abgewiesen. Quelle und Abgabe-Dateien nicht ersetzen; der einfache Trainer stellt den Replay Buffer nicht wieder her.
+- `scripts.build_submission --from-run` verpackt die angegebenen Gewichte direkt, ohne sie in `agents/sherlock/weights/` zu installieren. Eine neue Version der Abgabe-Gewichte muss separat ausdrücklich beauftragt werden.
+- Der Schutz gilt für diese beiden Skripte, nicht für beliebige Dateioperationen. `main.py` zur Vorführung bei `train=False` belassen; direkten Runner-Trainingsaufrufen oder anderen Schreibwerkzeugen niemals die Abgabe-Dateien als Ausgabe geben.
 - Arrays `[x][y]`, unsichtbare Werte = -1, Aktionen Shape `(max_units, 3)`: 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap(dx, dy).
 - Kleine, überprüfbare Schritte. Für Codeänderungen passende Tests und bei spielrelevanten Änderungen ein kurzes Testspiel ausführen; dabei Abgabe-Gewichte schützen. Bei reinen Dokumentationsänderungen genügen Diff-, Inhalts- und Linkprüfung, ohne Training oder neue Spiele.
 
