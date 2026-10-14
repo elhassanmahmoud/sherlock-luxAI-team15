@@ -38,7 +38,9 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 
 Grundlage: **30 Karten-Seeds (900000–900029) × beide Seiten je Gegner**, ohne Lernen und mit ε = 0. Quelle: [gespeicherte Einzelspiele](experiments/compare/TEST_old3_sym3.csv). In der separaten Prüfung vom 14.10. wurden alle 120 Spiele mit den ausgelieferten Gewichten reproduziert. Das sind je Gegner 30 Karten, keine 60 unabhängigen Karten. 100 % gegen default gelten für diese Stichprobe, nicht für beliebige künftige Spiele. Die Karten wurden während der Entwicklung mehrfach ausgewertet; die Ergebnisse sind ein wiederholt verwendeter Benchmark, kein unberührter Abschlusstest.
 
-**Messgrenzen:** Die protokollierten Punktesummen lassen den letzten Zuwachs vor dem Match-Reset aus. Siegquoten aus `team_wins` sind davon nicht betroffen. Deshalb stehen hier keine vermeintlich vollständigen Endpunktzahlen. Das spätere Vergleichsskript `compare_report.py` muss außerdem beim Bootstrap beide Seiten einer Karte zusammenhalten; dessen bisherige Konfidenzintervalle sind vor starken Signifikanzbehauptungen neu zu berechnen. Details und offene Korrekturen: [Arbeitsstand](docs/ARBEITSSTAND.md).
+**Messgrenzen:** Historische CSVs ohne `point_counting_version` lassen den letzten Zuwachs vor dem Match-Reset aus. Neue Messungen mit `point_counting_version=2` zählen ihn in Evaluation, Trainingsprotokollen und den beiden Diagnoseskripten mit. Siegquoten aus `team_wins` sind unverändert. Alte Punktzahlen und daraus abgeleitete Punkt-Siegquoten/Differenzen nicht mit Version 2 mischen; alte Dateien werden nicht nachträglich umgeschrieben. Das spätere Vergleichsskript `compare_report.py` muss außerdem beim Bootstrap beide Seiten einer Karte zusammenhalten; dessen bisherige Konfidenzintervalle sind vor starken Signifikanzbehauptungen neu zu berechnen. Details und offene Korrekturen: [Arbeitsstand](docs/ARBEITSSTAND.md).
+
+Die [neu gemessenen 120 Benchmarkspiele mit vollständigen Punkten](experiments/compare/TEST_old3_sym3_points_v2.csv) bestätigen dieselben Siege (60/60 und 28/60). Mittlere Gesamtpunkte je Spiel: **1076,25:120,47 gegen default**, **741,52:883,25 gegen Solution_92**. [Messumgebung und Prüfsummen](experiments/compare/TEST_old3_sym3_points_v2.json); unveränderte Gewichte, keine neue Modellauswahl.
 
 ### Historische Einzelnetz- und Ablationsstudie (10.10.)
 
@@ -254,12 +256,12 @@ Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine
 
 ## Grenzen und nächste Schritte
 
-Stand: **14.10.2026**. Trainingsausgaben und Paketbau sind inzwischen gegen das Überschreiben der Abgabe-Gewichte geschützt. Die folgenden fachlichen Punkte bleiben offen.
+Stand: **14.10.2026**. Trainingsausgaben und Paketbau sind gegen das Überschreiben der Abgabe-Gewichte geschützt; neue Auswertungen zählen jetzt auch den letzten Punktezuwachs jedes Matches. Die folgenden fachlichen Punkte bleiben offen.
 
 - `old3_sym3` erreicht 46,7 % gegen Solution_92 auf den wiederholt verwendeten Benchmarkkarten. Das belegt keine Überlegenheit gegenüber diesem Gegner. Schwachpunkt bleibt unter anderem die frühe Erkundung im ersten Match.
 - `m1_early` aktiviert frühere Punktefeld-Inferenz. Die zweite Validierungsrunde dokumentiert +7,9 Prozentpunkte gegen Solution_92 auf 120 neuen Karten × beide Seiten. Es bleibt der Kandidat für nach dem Review; Abgabe-Gewichte unverändert.
 - Vor aussagekräftigen neuen Trainingsstudien bleiben Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen sinnvoll. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy. Der Speicherschutz behebt diese Lernprobleme nicht.
-- Vor neuen Schlussfolgerungen: vollständige Punktezählung, Bootstrap nach Karte, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
+- Vor neuen Schlussfolgerungen: historische Punktvergleiche mit Version 2 neu messen, Bootstrap nach Karte, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
 - „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Das Sap-Ziel und die Zielzuweisung sind heuristisch; das Netz wählt den Aktionstyp.
 - Weitertraining und Self-Play/Gegner-Pool wurden bereits untersucht und brachten in diesen Versuchen keinen klaren Gewinn. Das beweist keine allgemeine Grenze des Verfahrens.
 - CNN oder PPO bleiben mögliche spätere Experimente. Zunächst sind verlässliche Messungen und gezielte Korrekturen am bestehenden Ansatz vorgesehen. Offene Aufgaben und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).

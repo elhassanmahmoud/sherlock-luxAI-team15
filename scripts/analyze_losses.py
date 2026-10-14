@@ -7,6 +7,8 @@ Eine Zeile pro (Spiel, Match, Team). Gemessen wird mit env.state, also mit
 Wissen, das kein Agent hat: welche Tiles WIRKLICH Punkte bringen (Formel aus
 luxai_s3/env.py, team_relic_score), wo alle Units stehen, wer stirbt.
 Nur Validierungs-Seeds (500 000+).
+Ab Punktemessung v2: first_score_step=-1 bedeutet nie gepunktet;
+101 ist ein erster Punkt im letzten Schritt (bei max_steps_in_match=100).
 """
 from __future__ import annotations
 
@@ -19,19 +21,13 @@ import numpy as np
 
 from scripts import protocol as P
 from scripts.experiment import limit_threads
+from scripts.scoring import POINT_COUNTING_VERSION, match_points_after_step, point_tile_map
 
-FIELDS = ["seed", "side", "match", "team", "is_us", "won_match", "points",
+FIELDS = ["seed", "side", "match", "team", "is_us", "won_match", "points", "point_counting_version",
           "first_score_step", "occ_mean", "occ_mean_late", "point_tiles_total",
           "occ_own_half", "occ_enemy_half", "contested_mean", "units_mean",
           "units_on_points_mean", "energy_mean", "neg_energy_units_mean", "deaths",
           "belief_known", "belief_correct"]
-
-
-def point_tile_map(st) -> np.ndarray:
-    """Tiles, die gerade Punkte bringen (wie team_relic_score in env.py)."""
-    w = np.asarray(st.relic_nodes_map_weights)
-    n = int(np.asarray(st.relic_nodes_mask).sum()) // 2
-    return (w > 0) & (w <= n)
 
 
 def play_and_measure(env, agent, opp, seed: int, our_side: str) -> list[dict]:
@@ -69,7 +65,8 @@ def play_and_measure(env, agent, opp, seed: int, our_side: str) -> list[dict]:
         for t in (0, 1):
             a = acc[t]
             row = dict(seed=seed, side=our_side, match=match_idx, team=t, is_us=int(t == us),
-                       points=a["pts"], first_score_step=a["first"] if a["first"] is not None else 101,
+                       point_counting_version=POINT_COUNTING_VERSION,
+                       points=a["pts"], first_score_step=a["first"] if a["first"] is not None else -1,
                        occ_mean=np.mean(a["occ"]), occ_mean_late=np.mean(a["occ_late"] or [0]),
                        point_tiles_total=int(ptm.sum()), occ_own_half=np.mean(a["own"]),
                        occ_enemy_half=np.mean(a["enemy"]), contested_mean=np.mean(a["cont"]),
@@ -90,12 +87,18 @@ def play_and_measure(env, agent, opp, seed: int, our_side: str) -> list[dict]:
     while not done:
         actions = {our_side: agent.act(step=step, obs=obs[our_side]),
                    opp_side: opp.act(step=step, obs=obs[opp_side])}
+        previous = obs[our_side]
         obs, reward, term, trunc, info = env.step(actions)
         done = bool(np.asarray(term[our_side])) or bool(np.asarray(trunc[our_side]))
         step += 1
         st = env.state
         ms = int(np.asarray(obs[our_side]["match_steps"]))
-        if ms == 0 or done:   # Match zu Ende (Units wurden entfernt / Spielende)
+        tp = match_points_after_step(previous, obs[our_side], info)
+        for t in (0, 1):
+            acc[t]["pts"] = int(tp[t])
+            if acc[t]["first"] is None and tp[t] > 0:
+                acc[t]["first"] = int(np.asarray(previous["match_steps"])) + 1
+        if ms == 0 or done:   # Match zu Ende; Endpunkte vor dem Reset rekonstruiert
             wins = flush(match_idx, obs)
             for r in rows[-2:]:
                 r["won_match"] = int(wins[r["team"]] > wins_before[r["team"]])
@@ -108,7 +111,6 @@ def play_and_measure(env, agent, opp, seed: int, our_side: str) -> list[dict]:
         mask = np.asarray(st.units_mask, bool)
         pos = np.asarray(st.units.position)
         ene = np.asarray(st.units.energy)[..., 0]
-        tp = np.asarray(st.team_points)
         occ_maps = []
         for t in (0, 1):
             ok = mask[t] & (ene[t] >= 0)
@@ -130,9 +132,6 @@ def play_and_measure(env, agent, opp, seed: int, our_side: str) -> list[dict]:
             a["on_pts"].append(int(on.sum()))
             a["energy"].append(float(ene[t][alive].mean()) if alive.any() else 0.0)
             a["neg"].append(int((ene[t][alive] < 0).sum()))
-            a["pts"] = int(tp[t])
-            if a["first"] is None and tp[t] > 0:
-                a["first"] = ms
             if prev_alive is not None:
                 a["deaths"] += int((prev_alive[t] & ~alive).sum())
         prev_alive = mask.copy()

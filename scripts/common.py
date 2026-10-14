@@ -14,6 +14,8 @@ from pathlib import Path
 
 import numpy as np
 
+from scripts.scoring import POINT_COUNTING_VERSION, match_points_after_step
+
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -115,9 +117,7 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
     step = 0
     done = False
     last_obs = obs
-    # Punkte werden pro Match zurueckgesetzt -> Matchmaxima aufsummieren
-    totals = [0, 0]
-    cur = [0, 0]
+    totals = np.zeros(2, dtype=np.int64)
     while not done:
         actions = {
             our_side: agent.act(step=step, obs=obs[our_side]),
@@ -135,15 +135,11 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
                 terminated=done,
                 next_obs=next_obs[our_side],
             )
-        pts_now = np.asarray(next_obs[our_side]["team_points"]).tolist()
-        for t in (0, 1):
-            if pts_now[t] < cur[t]:          # neues Match begonnen
-                totals[t] += cur[t]
-            cur[t] = int(pts_now[t])
+        points = match_points_after_step(obs[our_side], next_obs[our_side], info)
+        totals += points - np.asarray(obs[our_side]["team_points"])
         obs = next_obs
         last_obs = next_obs
         step += 1
-    totals = [totals[t] + cur[t] for t in (0, 1)]
 
     o = last_obs[our_side]
     wins = np.asarray(o["team_wins"]).tolist()
@@ -154,6 +150,7 @@ def play_game(env, agent, opp, seed: int, our_side: str, train: bool) -> dict:
         seed=seed, side=our_side, steps=step,
         our_wins=our_w, opp_wins=opp_w,
         our_points=our_p, opp_points=opp_p,
+        point_counting_version=POINT_COUNTING_VERSION,
         result=result,
         game_win=int(our_w > opp_w),
         point_win=1.0 if our_p > opp_p else (0.0 if our_p < opp_p else 0.5),

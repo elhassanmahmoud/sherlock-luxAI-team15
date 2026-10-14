@@ -8,7 +8,8 @@ Eine Zeile pro (Spiel, Match). Gemessen mit env.state (Ground Truth):
   active_relics    Anzahl aktiver Relics bei Matchende
   seen_step        erster match_step, an dem unser Belief ein AKTIVES Relic kennt
   opp_seen_step    erster match_step, an dem ein aktives Relic im Sensorbereich des Gegners liegt
-  first_score      erster match_step mit eigenem Punkt (101: nie), opp_first_score ebenso
+  first_score      erster Zaehlschritt mit eigenem Punkt (-1: nie), opp_first_score ebenso;
+                   101 = letzter Schritt bei max_steps_in_match=100 (Punktemessung v2)
   proven_50/75/100 bewiesene Punkte-Tiles (Belief) zu diesen match_steps, true_tiles = echte
   near_relic_50    eigene Units im 5x5-Umfeld aktiver Relics bei match_step 50 (Gegner: opp_near_50)
 Nur Validierungs-Seeds (500 000+).
@@ -23,11 +24,11 @@ from pathlib import Path
 import numpy as np
 
 from scripts import protocol as P
-from scripts.analyze_losses import point_tile_map
+from scripts.scoring import POINT_COUNTING_VERSION, match_points_after_step, point_tile_map
 from scripts.experiment import limit_threads
 
 FIELDS = ["seed", "side", "match", "won_match", "spawn_step", "active_relics", "seen_step",
-          "opp_seen_step", "first_score", "opp_first_score", "points", "opp_points",
+          "opp_seen_step", "first_score", "opp_first_score", "points", "opp_points", "point_counting_version",
           "proven_50", "proven_75", "proven_100", "true_tiles", "near_relic_50", "opp_near_50"]
 
 
@@ -65,18 +66,27 @@ def play_and_time(env, agent, opp, seed: int, our_side: str) -> list[dict]:
         lo = match_idx * 101
         spawn = [int(s) - lo for s in sched if lo <= s < lo + 101]
         return dict(seed=seed, side=our_side, match=match_idx, spawn_step=min(spawn) if spawn else -1,
-                    seen_step=101, opp_seen_step=101, first_score=101, opp_first_score=101,
+                    point_counting_version=POINT_COUNTING_VERSION,
+                    seen_step=101, opp_seen_step=101, first_score=-1, opp_first_score=-1,
                     proven_50=0, proven_75=0, proven_100=0, near_relic_50=0, opp_near_50=0)
 
     row = new_row()
     while not done:
         actions = {our_side: agent.act(step=step, obs=obs[our_side]),
                    opp_side: opp.act(step=step, obs=obs[opp_side])}
+        previous = obs[our_side]
         obs, reward, term, trunc, info = env.step(actions)
         done = bool(np.asarray(term[our_side])) or bool(np.asarray(trunc[our_side]))
         step += 1
         st = env.state
         ms = int(np.asarray(obs[our_side]["match_steps"]))
+        tp = match_points_after_step(previous, obs[our_side], info)
+        row["points"], row["opp_points"] = int(tp[us]), int(tp[them])
+        score_step = int(np.asarray(previous["match_steps"])) + 1
+        if row["first_score"] == -1 and tp[us] > 0:
+            row["first_score"] = score_step
+        if row["opp_first_score"] == -1 and tp[them] > 0:
+            row["opp_first_score"] = score_step
         if ms == 0 or done:
             wins = np.asarray(obs[our_side]["team_wins"])
             row["won_match"] = int(wins[us] > wins_before[us])
@@ -90,16 +100,10 @@ def play_and_time(env, agent, opp, seed: int, our_side: str) -> list[dict]:
 
         ptm = point_tile_map(st)
         zone = zone_map(st)
-        tp = np.asarray(st.team_points)
         relic_pos = np.asarray(st.relic_nodes)
         active = np.nonzero(np.asarray(st.relic_nodes_mask))[0]
         row["active_relics"] = len(active)
         row["true_tiles"] = int(ptm.sum())
-        row["points"], row["opp_points"] = int(tp[us]), int(tp[them])
-        if row["first_score"] == 101 and tp[us] > 0:
-            row["first_score"] = ms
-        if row["opp_first_score"] == 101 and tp[them] > 0:
-            row["opp_first_score"] = ms
 
         if row["seen_step"] == 101 and len(active):
             known = agent.belief.relic_positions

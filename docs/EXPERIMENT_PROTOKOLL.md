@@ -3,6 +3,18 @@
 Festgelegt am **10.10.2026, vor dem Start der Trainingsläufe** (Commit, mit dem der Batch gestartet wurde: siehe `git` in jeder `manifest.json`).
 Änderungen am Protokoll nach Ansicht der Testergebnisse werden unten im Abschnitt *Änderungen* mit Datum und Grund eingetragen.
 
+## Messkorrektur vom 14.10.2026: vollständige Punkte
+
+Neue Einzelspiel-, Trainings-, Validierungs- und Diagnosezeilen tragen `point_counting_version=2`. In LuxAI S3 0.2.1 wird nach dem letzten Punktezuwachs eines Matches `team_points` bereits auf null gesetzt. `scripts/scoring.py` rekonstruiert diesen Zuwachs aus `info["final_state"]`: ein Punkt je aktivem Punktefeld und Team mit mindestens einer lebenden Einheit mit Energie ≥ 0; Stacking zählt nicht mehrfach. Die letzte Aktion und neu aktivierte Relics sind berücksichtigt. Die Engine entfernt die Einheiten erst im nächsten Schritt.
+
+**Diagnoseformat v2:** `first_score`, `opp_first_score` und `first_score_step` verwenden jetzt **−1 für nie gepunktet**. 101 bezeichnet einen ersten Punkt im letzten Schritt bei der Kurskonfiguration. Alte Diagnose-CSVs verwendeten 101 für „nie“; Auswertungen dieser Spalten entsprechend der Version behandeln. Die Kennzeichnung der Sichtbarkeitszeiten (`seen_step`) bleibt unverändert.
+
+Die Messung bleibt außerhalb des Agenten: keine Änderung an Beobachtungen, Reward, Policy oder Gewichten. Die Sieger kommen weiterhin direkt aus `team_wins`. `analyze_losses` und `analyze_timing` erhalten ebenfalls vollständige Endpunkte; die separat bekannte zeitliche Verschiebung zwischen eigener und gegnerischer Erkundungsdiagnose ist damit nicht behoben.
+
+**Historische Daten:** Fehlende Versionsspalte bedeutet Version 1. Die bisherigen Rohdaten, Diagramme und Tabellen werden nicht rückwirkend geändert. Punkte, Punktedifferenzen und `point_win` aus Version 1 sind unvollständig. Für einen fairen Punktevergleich alle betroffenen Varianten mit ihren damaligen Gewichten, Seeds und Gegnern erneut auswerten und neue Dateinamen/Run-Ordner nutzen. Ein fehlender historischer Checkpoint lässt sich durch diese Korrektur nicht ersetzen. Berichtsskripte korrigieren bestehende CSVs nicht automatisch; beim Aufruf nur die gewünschten, gleich versionierten Dateien/Läufe auswählen.
+
+**Kontrollmessung:** Die 120 Spiele des ausgelieferten `old3_sym3` wurden mit denselben Seeds, Seiten und Gegnern neu gespielt: [vollständige Einzelspiele](../experiments/compare/TEST_old3_sym3_points_v2.csv), [Prüfsummen, Umgebung und Zusammenfassung](../experiments/compare/TEST_old3_sym3_points_v2.json). Alle bisherigen Nicht-Punkte-Kennzahlen stimmen überein (Laufzeiten ausgenommen). Siege weiterhin 60/60 gegen default und 28/60 gegen Solution_92. Mittlere vollständige Gesamtpunkte je Spiel: 1076,25:120,47 bzw. 741,52:883,25. Dies ist eine Messkorrektur auf bereits bekannten Benchmarkkarten, kein neuer unberührter Testsatz und kein Modellvergleich. Keine Gewichte neu trainiert oder ausgetauscht.
+
 ## 1. Fragestellung
 
 1. Ist unser Agent (`full`) besser als die DQN-Baseline des Dozenten?
@@ -68,7 +80,8 @@ Die Kennzahlen stehen in `train.csv` und `eval.csv`; berechnet werden sie in `sc
 | `result` | 1 Sieg, 0,5 Remis, 0 Niederlage (nach gewonnenen Matches) |
 | `game_win`, `point_win` | Spielsieg; mehr Punkte als der Gegner, summiert über alle 3 Matches |
 | `our_wins`/`opp_wins` | gewonnene Matches (0–3) |
-| `our_points`/`opp_points` | Punkte, über die Matches summiert |
+| `our_points`/`opp_points` | Punkte, über die Matches summiert; vollständig ab Version 2 |
+| `point_counting_version` | 2 = inklusive letztem Matchschritt; fehlend/1 = historische Unterzählung |
 | `wait_frac` | Anteil der Unit-Steps mit Aktion 0 |
 | `invalid_frac` | wirkungslose Aktionen: Rand, sichtbarer Asteroid, zu wenig Energie, Sap außer Reichweite |
 | `greedy_masked_frac` | wie oft das unmaskierte argmax Q illegal war und die Maske eingreifen musste (nur Sherlock) |

@@ -33,7 +33,7 @@ WEIGHTS = ROOT / "agents" / "sherlock" / "weights"
 
 LOG_FIELDS = [
     "game", "seed", "side", "opponent", "result", "our_wins", "opp_wins",
-    "our_points", "opp_points", "relics_found", "known_point_tiles",
+    "our_points", "opp_points", "point_counting_version", "relics_found", "known_point_tiles",
     "epsilon", "mean_loss", "buffer", "env_steps", "learn_steps", "secs",
     "winrate_50",
 ]

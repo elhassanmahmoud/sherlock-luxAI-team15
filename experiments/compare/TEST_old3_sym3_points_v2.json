@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-14",
+  "purpose": "Same 120 historical benchmark games, corrected point measurement only; no model selection or training.",
+  "point_counting_version": 2,
+  "source": "experiments/compare/TEST_old3_sym3.csv",
+  "source_sha256": "894c5baf961f0fa0d47e350fe15ffc6d8bd373df5a7648d968c9607e70dc5c9c",
+  "output": "experiments/compare/TEST_old3_sym3_points_v2.csv",
+  "output_sha256": "43247e01778091668d370aeb96ef771cae12796ea70413e415adcb5122ef9ac5",
+  "weights_sha256": {
+    "agents/sherlock/weights/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "python": "3.13.13",
+  "packages": {
+    "luxai-s3": "0.2.1",
+    "torch": "2.14.1",
+    "numpy": "2.5.4",
+    "jax": "0.11.2"
+  },
+  "match_count_per_episode": 3,
+  "max_steps_in_match": 100,
+  "unchanged_nonpoint_metrics_games": 120,
+  "elapsed_seconds": 106.66,
+  "summary": {
+    "default": {
+      "games": 60,
+      "wins": 60,
+      "avg_points": 1076.25,
+      "avg_opp_points": 120.46666666666667
+    },
+    "solution92": {
+      "games": 60,
+      "wins": 28,
+      "avg_points": 741.5166666666667,
+      "avg_opp_points": 883.25
+    }
+  },
+  "measurement_base_commit": "9edac5f9fc9b69f6d81180956d52e2ca528d5ca6",
+  "measurement_source_sha256": {
+    "scripts/common.py": "83989d9e8b45cc9957e7a2c0acfd9791149724d2a04791b584e471bac8a803e3",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "scripts/metrics.py": "35944cc163617af3d7e63fd6a1da992b60cda6ba28d2e7891c24963f1bb3853e"
+  },
+  "reproduction": "Read source CSV in row order; for each row call scripts.common.play_game with released Agent_x(train=False), make_opponent(opponent, opposite side), seed and side from that row. LuxAIS3GymEnv(numpy_output=True), one Torch/OMP thread, agent in eval mode. Save GAME_FIELDS to a new output; never overwrite source."
+}

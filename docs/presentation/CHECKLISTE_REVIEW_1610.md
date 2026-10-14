@@ -37,7 +37,8 @@ Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufg
 Quelle: [Einzelspiele](../../experiments/compare/TEST_old3_sym3.csv), reproduziert in der separaten Prüfung vom 14.10. Je Gegner 30 Karten × beide Seiten, ohne Lernen. Es sind keine 60 unabhängigen Karten. 100 % gelten nur für diese Stichprobe; die Testkarten wurden über mehrere Entwicklungsstände wiederverwendet.
 
 - Historische `full`-Werte (87,8 % / 18,9 %, Mittel über drei Starts) und Diagramme aus `docs/report/` ausdrücklich als ursprüngliche Einzelnetz-/Ablationsstudie kennzeichnen.
-- Gesamtpunktzahlen vorerst nicht als vollständige Endstände verwenden: Der letzte Zuwachs vor dem Match-Reset fehlt im Protokoll. Die Siegquoten sind nicht betroffen.
+- Die [120 neu gemessenen Benchmarkspiele](../../experiments/compare/TEST_old3_sym3_points_v2.csv) bestätigen die obigen Siege mit unveränderten Gewichten.
+- Gesamtpunktzahlen nur aus neuen Messungen mit `point_counting_version=2` verwenden. Alte CSVs ohne diese Spalte lassen den letzten Zuwachs vor jedem Match-Reset aus und bleiben historische Rohdaten. Die Siegquoten sind nicht betroffen.
 - Alte Konfidenzintervalle aus `compare_report.py` vor Signifikanzbehauptungen nach Karte gruppiert neu berechnen. Kein signifikanter Unterschied bedeutet nicht „wirkungslos“ oder „mindestens gleich gut“.
 - `no_belief` entfernt Gedächtnis aus den Netzmerkmalen, nicht aus allen Heuristiken und Belohnungen. Sap-Zielwahl ist heuristisch; Sap-Treffer sind geschätzt. Keine Garantie behaupten, dass die gesamte Shaping-Funktion die optimale Strategie unverändert lässt.
 

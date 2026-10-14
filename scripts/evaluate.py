@@ -11,6 +11,7 @@ import numpy as np
 
 from scripts.common import OPPONENTS, make_opponent, play_game
 from scripts.protocol import VAL_SEED_BASE
+from scripts.scoring import POINT_COUNTING_VERSION
 
 
 def evaluate(weights: str, opponent: str, games: int = 20, base_seed: int = VAL_SEED_BASE,
@@ -51,6 +52,7 @@ def evaluate(weights: str, opponent: str, games: int = 20, base_seed: int = VAL_
 
     res = dict(
         games=len(rows),
+        point_counting_version=POINT_COUNTING_VERSION,
         winrate=float(np.mean([r["result"] for r in rows])),
         match_winrate=float(
             np.sum([r["our_wins"] for r in rows])

@@ -38,14 +38,14 @@ RUNS = ROOT / "experiments" / "runs"
 
 GAME_FIELDS = [
     "seed", "side", "opponent", "result", "game_win", "point_win", "our_wins", "opp_wins",
-    "our_points", "opp_points", "wait_frac", "invalid_frac", "greedy_masked_frac",
+    "our_points", "opp_points", "point_counting_version", "wait_frac", "invalid_frac", "greedy_masked_frac",
     "sap_attempts", "sap_hits", "stack_frac", "relics_found", "relics_seen",
     "known_point_tiles", "belief_contradictions", "unit_steps", "steps", "secs",
 ]
 TRAIN_FIELDS = ["game"] + GAME_FIELDS + ["epsilon", "mean_loss", "env_steps", "learn_steps",
                                          "winrate_50"]
 VAL_FIELDS = ["after_games", "opponent", "games", "winrate", "match_winrate",
-              "point_winrate", "avg_points", "avg_opp_points", "secs"]
+              "point_winrate", "avg_points", "avg_opp_points", "point_counting_version", "secs"]
 
 
 def git_info() -> dict:
@@ -145,10 +145,14 @@ def play_set(env, learners: Learners, seeds, opponents, log=None, writer=None) -
 
 
 def summarize(rows: list[dict]) -> dict:
+    versions = {r.get("point_counting_version", 1) for r in rows}
+    if len(versions) > 1:
+        raise ValueError("Alte und korrigierte Punktemessungen nicht gemeinsam mitteln.")
     w = sum(r["our_wins"] for r in rows)
     m = sum(r["our_wins"] + r["opp_wins"] for r in rows)
     return dict(
         games=len(rows),
+        point_counting_version=next(iter(versions), None),
         winrate=float(np.mean([r["result"] for r in rows])) if rows else float("nan"),
         match_winrate=w / max(1, m),
         point_winrate=float(np.mean([r["point_win"] for r in rows])) if rows else float("nan"),
