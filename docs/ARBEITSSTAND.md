@@ -4,6 +4,20 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 14.10.2026 – Codex mit Moayed: modernes Gamma-Design
+
+**Auftrag:** Verbundenes Gamma für eine moderne, zurückhaltende Gestaltung nutzen. Inhaltliche Grundlage, leichterer Vortragsanteil für Moayed und unveränderte Gewichte beibehalten. Ausgangspunkt `9a26c6e`, Arbeitszweig `docs/gamma-design`.
+
+**Ergebnis:** [Online in Gamma](https://gamma.app/docs/ltmbj9ep61c77yl), [PowerPoint mit ergänzten Notizen](presentation/Sherlock_Review_Gamma_16-10-2026.pptx) und [PDF](presentation/Sherlock_Review_Gamma_16-10-2026.pdf). Anthrazit mit blauen Akzenten, serifenlose Überschriften, echte Spielbilder. Wegen der Tarifgrenze zehn Folien: Ausblick und Abschluss gemeinsam auf Folie 10, keine Hauptinhalte gestrichen. Ursprüngliche Fassung mit Reservefolien bleibt erhalten. Zeitplan weiterhin 10:40 Minuten, Moayed 5:15, Mahmoud 5:25; auf Folie 10 zuerst Mahmoud 55 Sekunden, dann Moayed 25 Sekunden. README, CLAUDE.md, Checkliste und Vortragsplan angepasst.
+
+**Übergabe:** [Gamma-Bearbeitung und Hinweise](presentation/GAMMA_DESIGN_1610.md). Die Online-Fassung ist die Designquelle. Sprechernotizen wurden lokal in alle zehn PowerPoint-Folien ergänzt und liegen auch als [JSON](presentation/source/gamma-slides.json) vor; erneute Gamma-Exporte übernehmen diese Ergänzungen nicht automatisch. Das Diagramm ist im Gamma-PPTX ein Bild; die ursprüngliche PowerPoint enthält das native Diagramm. Der kostenlose Gamma-Tarif fügt ein Wasserzeichen hinzu. Gamma-Berechtigungen für Mahmoud separat prüfen; GitHub-Dateien sind davon unabhängig.
+
+**Tatsächliche Prüfung:** Alle zehn finalen PDF-Seiten einzeln angesehen; Randprobleme auf Folien 6/9 in Gamma korrigiert und erneut exportiert. Zehn Seiten in 16:9, zentrale Zahlen/Architektur anhand der Exporttexte, zehn Notizen und 640 Sekunden Gesamtbudget geprüft. Die lokale Bearbeitung verändert nur die Notizen und bereinigt neun verwaiste Inhaltstyp-Verweise des Gamma-Exports; sämtliche Folien-, Layout- und Mediendateien bleiben byteidentisch zum Export. Paketprüfung danach ohne Befund. Relative Links und Git-Diff geprüft. Kein Test in nativem Microsoft PowerPoint: Darstellung und Notizenansicht auf dem Vortragsrechner noch prüfen.
+
+**Unverändert:** Agent, Skripte, Runner, Tests und Experimentdaten. Kein Training oder neue Spieltests. Beide Abgabe-Dateien behalten SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`.
+
+**Offen:** Inhalt und Aufteilung gemeinsam bestätigen, zweimal mit Uhr proben, Gamma-Zugriff/Präsentationsrechner prüfen, Slot bestätigen und bis 16.10.2026, 08:00 Uhr auf Moodle hochladen. Kein Moodle-Upload durch Codex.
+
 ## 14.10.2026 – Codex mit Moayed: neue Präsentation und gemeinsame Vortragsplanung
 
 **Auftrag:** Es gibt laut Moayed keine verwendbare Präsentation. Für den ersten Review neu aufbauen, etwa zehn bis höchstens zwölf Minuten; Moayed erhält den leichter zugänglichen Teil. Aufteilung und Vorbereitung für Mahmoud/Claude Code dokumentieren. Agent und Gewichte bleiben unverändert. Ausgangspunkt `12e0c4d`, Arbeitszweig `docs/review-presentation`.
