@@ -10,7 +10,7 @@ Stand 14.10.2026. Fachliche Basis: Git-Commit `12e0c4d9c31a81c54ba453b4f3fbb350b
 | 4 | 79 Merkmale und Inferenz | agents/sherlock/features.py; belief.py |
 | 5–6 | Dueling und Double DQN | agents/sherlock/model.py; main.py; reward.py; replay_buffer.py |
 | 7, 12 | Training und Konfiguration | Sechs Manifeste unter experiments/runs/20261010_full_s0 bis s2 und 20261011_full_sym_s0 bis s2; gespeicherte cfg des aktuellen agent_p0.pth |
-| 8 | 60/60 und 28/60 Siege | experiments/compare/TEST_old3_sym3_points_v2.csv und zugehörige JSON |
+| 8, 11 | 60/60 und 28/60 Siege | experiments/compare/TEST_old3_sym3_points_v2.csv und zugehörige JSON |
 | 9 | Spielbeispiel | docs/presentation/replays/sherlock_sieg_vs_default.json, Frames 23 und 90 |
 | 10–11 | Grenzen und Ausblick | docs/EXPERIMENT_PROTOKOLL.md; docs/ARBEITSSTAND.md; docs/STATISTIK_20261014.md |
 | 13 | Gelernt / programmiert | Agentenmodule wie oben; scripts/scoring.py nur für externe Messung |
@@ -51,4 +51,4 @@ Am 14.10. wurde ausschließlich der PDF-Export auf den dunklen Seiten 1 und 11 k
 
 ## Kurztitel und Aufzählungen
 
-Die Titel wurden am 14.10. auf kurze Themenbezeichnungen umgestellt. Folien 2, 8, 9 und 11 verwenden native Aufzählungsabsätze mit hängendem Einzug. Titel im Vortragsplan und in `slides.json` entsprechen der aktuellen PowerPoint/PDF. Sprechernotizen, fachliche Nachweise, Diagramm-Datentabelle, Zeitbudget und Sprecheraufteilung bleiben erhalten.
+Die Titel wurden am 14.10. auf kurze Themenbezeichnungen umgestellt. Folie 2 verwendet native Aufzählungsabsätze mit hängendem Einzug. Auf Wunsch von Moayed sind Folien 8, 9 und 11 wieder ohne Aufzählungszeichen. Titel im Vortragsplan und in `slides.json` entsprechen der aktuellen PowerPoint/PDF. Folie 11 bündelt jetzt den Ansatz (Gedächtnis plus sechs Netze), die Benchmark-Siegezahlen und den nächsten Schritt (frühe Erkundung, neue Testkarten). Die zugehörige Sprechernotiz ist in PowerPoint, JSON und Vortragsplan synchronisiert. Fachliche Nachweise, Diagramm-Datentabelle, Zeitbudget und Sprecheraufteilung bleiben erhalten.

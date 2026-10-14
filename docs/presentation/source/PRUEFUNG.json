@@ -25,8 +25,8 @@
     "new_agent_training_or_tests": "not performed; documentation only"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "79b27e9e70dd57d2dfcab6d64e197b615e5cf8670091c2ab084469bc8170ad13",
-    "Sherlock_Review_16-10-2026.pdf": "7676dd8d0ef0b2adb7e912be84dd0cbf29e6c816f2193ad21e5e91c1313a3fab"
+    "Sherlock_Review_16-10-2026.pptx": "229bc9481cfd6d59b925ac86331f63f3d19292b55984f4c2c1b09123ad7cff34",
+    "Sherlock_Review_16-10-2026.pdf": "8bc860e76a52eb4f916ad80a5e8256bf4d94fb450e2f26d8fb7365367f4d5c9f"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -65,5 +65,19 @@
     ],
     "unchanged": "Notes, charts, embedded workbook, tables, images, all non-target shapes, weights and planned timing",
     "verification": "Package/layout/font/native-table/chart validation passed; 13 PDF pages visually reviewed; dark-page edges checked; not opened in native PowerPoint."
+  },
+  "conclusion_revision": {
+    "date": "2026-10-14",
+    "base_commit": "8373e1a",
+    "changed_slides": [
+      8,
+      9,
+      11
+    ],
+    "current_native_bullet_slides": [
+      2
+    ],
+    "change": "Bullet markers removed from slides 8/9/11. Slide 11 now summarizes memory plus six networks, benchmark win counts and next steps; note synchronized.",
+    "verification": "Package, geometry, fonts, native tables/chart/workbook passed. Changed pages visually inspected; other ten pages pixel-identical to previous reviewed export. Dark edges checked; weights unchanged. Native PowerPoint not opened."
   }
 }
