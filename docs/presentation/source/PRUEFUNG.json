@@ -25,8 +25,8 @@
     "new_agent_training_or_tests": "not performed; documentation only"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "ba8b8b67c20b5b402f15fa6bbb845243e1fc5964cd86631bdd0db6cfd834ba4c",
-    "Sherlock_Review_16-10-2026.pdf": "41ac1dfbec8a3e5eb4c5f4c53a7807fff33d7a14bbbf1f7a8fa3082483ad90c6"
+    "Sherlock_Review_16-10-2026.pptx": "31c6c9fa0b8971edf573810c8820438b6bc1795e36f24694b79cd2afea44a732",
+    "Sherlock_Review_16-10-2026.pdf": "749ec9a90d45c2270f06788ec29582634319eac3cdb6d57ae534db3b87020b30"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -100,5 +100,17 @@
     "margin_left_pt": 26,
     "hanging_indent_pt": 20,
     "verification": "Eight text bodies changed, all other PPTX parts including notes unchanged. Package/layout/font/chart/table/workbook checks passed. Four changed PDF pages visually inspected; nine others pixel-identical to prior reviewed export. Dark edges and unchanged weight hashes verified. No native PowerPoint test."
+  },
+  "pseudocode_training_revision": {
+    "date": "2026-10-14",
+    "base_commit": "2108ea8",
+    "changed_slides": [
+      3,
+      7
+    ],
+    "design_reference": "User-provided team20-presentation3.pdf, slide 4; code panel and Courier New only",
+    "facts_checked": "act/_decide and all six completed base-run manifests",
+    "timing": "unchanged: 640 planned seconds; Moayed 315, Mahmoud 325; human rehearsal still pending",
+    "verification": "Package/layout/fonts/native tables/chart/workbook checks passed. Slides 3 and 7 visually inspected. Eleven other PDF pages pixel-identical; all PPTX entries except these slides and their two notes byte-identical. Dark-page edges and unchanged weight hashes verified. No native PowerPoint test."
   }
 }

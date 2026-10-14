@@ -31,13 +31,15 @@
     "title": "Unser Agent",
     "speaker": "Moayed",
     "secs": 55,
-    "note": "Die Grundidee lässt sich in drei Schritten erklären. Zuerst merkt Sherlock sich, was er schon gesehen hat. Dieses Gedächtnis nennen wir Belief. Danach erhält jede Einheit eine kompakte Beschreibung ihrer Situation. Sechs trainierte Netze bewerten die möglichen Aktionen. Schließlich wählen wir aus den erlaubten Aktionen die mit dem höchsten gemittelten Wert aus. Das Gedächtnis lernt nicht durch ein neuronales Netz: Es folgt programmierten Regeln und nutzt Beobachtungen. Die Bewertung der Aktionen wird dagegen im Training gelernt. Während der Auswertung wird nicht weitergelernt. Mahmoud erklärt jetzt, welche Informationen in die Netze eingehen und wie das Training funktioniert.",
+    "note": "Links stehen die drei Grundideen, rechts derselbe Ablauf als Pseudocode. Bei jedem Spielschritt aktualisiert Sherlock zuerst sein Gedächtnis mit den neuen Beobachtungen. Für jede eigene aktive Einheit berechnet er dann 79 Merkmale. Sechs trainierte Netze bewerten ihre möglichen Aktionen; wir mitteln diese Bewertungen und wählen die beste erlaubte Aktion. Die Aktionen aller Einheiten gehen anschließend an das Spiel. Das Gedächtnis folgt programmierten Regeln, die Netzbewertungen wurden gelernt. Beim Spielen bleiben die Gewichte fest. Der Pseudocode zeigt den vereinfachten Hauptablauf. Mahmoud erklärt jetzt die Merkmale und das Training.",
     "sources": [
       "agents/sherlock/main.py",
       "agents/sherlock/belief.py",
       "agents/sherlock/model.py"
     ],
-    "appendix": false
+    "appendix": false,
+    "design_reference": "team20-presentation3.pdf, Folie 4 (vom Team bereitgestellt): heller Codekasten, Courier New, Einrückungen und Kommentar; fachlicher Inhalt ausschließlich aus Sherlock.",
+    "pseudocode_scope": "Vereinfachter Spielablauf bei festen Gewichten, epsilon=0. Match-Reset, Sap-Zielwahl, Aktionsformat und Stapelverarbeitung sind nicht ausgeschrieben."
   },
   {
     "number": 4,
@@ -82,7 +84,7 @@
     "title": "Training und Auswertung",
     "speaker": "Mahmoud",
     "secs": 65,
-    "note": "Die sechs Basisläufe des aktuellen Ensembles hatten jeweils ein Budget von 3.000 Spielen. Das sind zusammen 18.000 Trainingsspiele über diese Läufe. Die ausgewählten Checkpoints können früher im Lauf liegen. Andere Varianten und Validierungsspiele sind hier nicht mitgezählt. In den ersten 25 Prozent wird gegen default trainiert, anschließend abwechselnd gegen default und Solution_92. Die Spielseite wechselt. Wir prüfen regelmäßig auf getrennten Validierungskarten und wählen dort Checkpoints aus. Wichtige Einstellungen sind Gamma 0,99, Lernrate 0,0003, Batchgröße 256 und ein Buffer mit 300.000 Übergängen. Epsilon fällt in 60.000 Umgebungsschritten von 1 auf 0,05. Für die Ergebnisfolie gilt dagegen Epsilon null: Die Gewichte sind fest, es wird nicht gelernt.",
+    "note": "Die sechs Basisläufe umfassen jeweils 3.000 Spiele, zusammen 18.000. Die ausgewählten Checkpoints können früher liegen. Zuerst trainieren wir gegen default, danach abwechselnd gegen default und Solution_92. Checkpoints wählen wir auf getrennten Validierungskarten. Rechts stehen die wichtigsten Einstellungen: Lernrate 0,0003, Gamma 0,99, Batchgröße 256 und 300.000 Einheitenübergänge im Buffer. Epsilon steuert die zufällige Exploration: Es sinkt über 60.000 Umgebungsschritte von eins auf 0,05. Das Target-Netz wird alle 500 Lernupdates aktualisiert. In der Auswertung spielen wir beide Seiten mit Epsilon null und festen Gewichten. Moayed zeigt jetzt die Ergebnisse.",
     "sources": [
       "experiments/runs/20261010_full_s{0,1,2}/manifest.json",
       "experiments/runs/20261011_full_sym_s{0,1,2}/manifest.json",

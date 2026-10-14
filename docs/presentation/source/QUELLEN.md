@@ -52,3 +52,11 @@ Am 14.10. wurde ausschließlich der PDF-Export auf den dunklen Seiten 1 und 11 k
 ## Kurztitel und Aufzählungen
 
 Die Titel wurden am 14.10. auf kurze Themenbezeichnungen umgestellt. Folien 2, 8, 9 und 11 verwenden auf Wunsch von Moayed native Aufzählungen mit kurzem Strich (–) statt Punkt. Zeichen und Text verwenden Helvetica Neue; der hängende Einzug lässt Abstand zwischen Strich und erstem Wort und richtet Folgezeilen am Text aus. Die Benchmark-Anmerkung auf Folie 8 bleibt ohne Listenzeichen. Titel im Vortragsplan und in `slides.json` entsprechen der aktuellen PowerPoint/PDF. Folie 11 bündelt jetzt den Ansatz (Gedächtnis plus sechs Netze), die Benchmark-Siegezahlen und den nächsten Schritt (frühe Erkundung, neue Testkarten). Die zugehörige Sprechernotiz ist in PowerPoint, JSON und Vortragsplan synchronisiert. Fachliche Nachweise, Diagramm-Datentabelle, Zeitbudget und Sprecheraufteilung bleiben erhalten.
+
+## Pseudocode und sichtbare Trainingsparameter
+
+Folie 3 orientiert sich gestalterisch an Folie 4 der vom Team bereitgestellten `team20-presentation3.pdf`: heller Codekasten, Courier New, eingerückte Schleifen und kurzer Kommentar. Farben, Titel und übrige Typografie bleiben im Sherlock-Design. Es wurden keine fachlichen Trading-Inhalte übernommen; die Referenzdatei wurde nicht ins Repo kopiert.
+
+Der Pseudocode beschreibt den vereinfachten Hauptablauf des festen Ensembles in `agents/sherlock/main.py` (`act`, `_decide`): Beobachtung ins Belief übernehmen, Merkmale erzeugen, sechs Netzbewertungen mitteln, erlaubte Aktion wählen und Aktionen zurückgeben. Match-Reset, heuristisches Sap-Ziel, Aktionsformat/Spiegelung und die tatsächliche Stapelverarbeitung sind zur Lesbarkeit ausgelassen. Es ist kein Trainingspseudocode und kein ausführbares Programm.
+
+Auf Folie 7 stehen Lernrate 0,0003, γ 0,99, Batch 256, Buffer 300.000 Einheitenübergänge, ε von 1,0 auf 0,05 über 60.000 Umgebungsschritte und Target-Kopie alle 500 Lernupdates. Die Werte wurden erneut mit allen sechs abgeschlossenen Basislauf-Manifesten abgeglichen. Details zu Lernbeginn und Trainingsintervall bleiben auf Folie 12. Elf Vortragsfolien und zwei Reservefolien sowie das geplante Zeitbudget von 640 Sekunden bleiben erhalten.

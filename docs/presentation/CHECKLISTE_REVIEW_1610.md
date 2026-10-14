@@ -19,10 +19,10 @@ Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden An
 
 | Vorgabe | Umsetzung im neuen Foliensatz | Vor der Präsentation |
 |---|---|---|
-| Agent und Algorithmus als Pseudocode | Folie 3: Ablauf beim Spielen; Folie 6: vereinfachter Trainingsschritt | Spielen und Lernen sicher unterscheiden |
+| Agent und Algorithmus als Pseudocode | Folie 3: eingerückter Pseudocode beim Spielen; Folie 6: vereinfachter Trainingsschritt | Spielen und Lernen sicher unterscheiden |
 | Netzarchitektur | Folie 5: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
 | RL-Algorithmus | Folie 6: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
-| Trainingskonfiguration | Folien 7 und 12 sowie Notizen; Werte mit gespeicherter cfg abgeglichen | Lernbeginn nach 5000 Einheitenübergängen, nicht Spielen |
+| Trainingskonfiguration | Folie 7: Lernrate, γ, Batch/Buffer, Exploration und Target-Kopie sichtbar; weitere Werte auf Reservefolie 12 | Umgebungsschritte, Einheitenübergänge und Lernupdates unterscheiden |
 | Feature Engineering | Folie 4: 79 Merkmale, Belief, Inferenzbeispiel in Notizen | Beobachtetes Wissen und vollständige Zuschaueransicht unterscheiden |
 | Trainingsablauf, Spiele, Gegner | Folie 7: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
 | Ausgewählte Spiele | Folie 9: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |

@@ -32,6 +32,8 @@ Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm
 | 10 | Erkenntnisse und Ausblick | Mahmoud | 0:55 | 9:20–10:15 |
 | 11 | Fazit und Fragen | Moayed | 0:25 | 10:15–10:40 |
 
+Folie 3 enthält links den einfachen Überblick und rechts den Pseudocode beim Spielen. Moayed erklärt den Ablauf in eigenen Worten und liest nicht jede Codezeile vor. Folie 7 zeigt die wichtigsten Trainingsparameter direkt; Mahmoud erklärt insbesondere Exploration und den Unterschied zur Auswertung. Weitere Parameter bleiben auf Reservefolie 12. Die bisherigen 55 bzw. 65 Sekunden bleiben Planwerte und müssen gemeinsam geprobt werden.
+
 Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. Es gibt keine zusätzliche Live-Demo im Zeitbudget. Die Spielbilder auf Folie 9 funktionieren auch ohne Internet.
 
 ### Übergaben
@@ -106,7 +108,7 @@ Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams 
 
 **Moayed · 0:55**
 
-Die Grundidee lässt sich in drei Schritten erklären. Zuerst merkt Sherlock sich, was er schon gesehen hat. Dieses Gedächtnis nennen wir Belief. Danach erhält jede Einheit eine kompakte Beschreibung ihrer Situation. Sechs trainierte Netze bewerten die möglichen Aktionen. Schließlich wählen wir aus den erlaubten Aktionen die mit dem höchsten gemittelten Wert aus. Das Gedächtnis lernt nicht durch ein neuronales Netz: Es folgt programmierten Regeln und nutzt Beobachtungen. Die Bewertung der Aktionen wird dagegen im Training gelernt. Während der Auswertung wird nicht weitergelernt. Mahmoud erklärt jetzt, welche Informationen in die Netze eingehen und wie das Training funktioniert.
+Links stehen die drei Grundideen, rechts derselbe Ablauf als Pseudocode. Bei jedem Spielschritt aktualisiert Sherlock zuerst sein Gedächtnis mit den neuen Beobachtungen. Für jede eigene aktive Einheit berechnet er dann 79 Merkmale. Sechs trainierte Netze bewerten ihre möglichen Aktionen; wir mitteln diese Bewertungen und wählen die beste erlaubte Aktion. Die Aktionen aller Einheiten gehen anschließend an das Spiel. Das Gedächtnis folgt programmierten Regeln, die Netzbewertungen wurden gelernt. Beim Spielen bleiben die Gewichte fest. Der Pseudocode zeigt den vereinfachten Hauptablauf. Mahmoud erklärt jetzt die Merkmale und das Training.
 
 ### Folie 4: Merkmale und Gedächtnis
 
@@ -130,7 +132,7 @@ Im Training sammeln wir Erfahrungen pro Einheit: Situation, Aktion, Belohnung un
 
 **Mahmoud · 1:05**
 
-Die sechs Basisläufe des aktuellen Ensembles hatten jeweils ein Budget von 3.000 Spielen. Das sind zusammen 18.000 Trainingsspiele über diese Läufe. Die ausgewählten Checkpoints können früher im Lauf liegen. Andere Varianten und Validierungsspiele sind hier nicht mitgezählt. In den ersten 25 Prozent wird gegen default trainiert, anschließend abwechselnd gegen default und Solution_92. Die Spielseite wechselt. Wir prüfen regelmäßig auf getrennten Validierungskarten und wählen dort Checkpoints aus. Wichtige Einstellungen sind Gamma 0,99, Lernrate 0,0003, Batchgröße 256 und ein Buffer mit 300.000 Übergängen. Epsilon fällt in 60.000 Umgebungsschritten von 1 auf 0,05. Für die Ergebnisfolie gilt dagegen Epsilon null: Die Gewichte sind fest, es wird nicht gelernt.
+Die sechs Basisläufe umfassen jeweils 3.000 Spiele, zusammen 18.000. Die ausgewählten Checkpoints können früher liegen. Zuerst trainieren wir gegen default, danach abwechselnd gegen default und Solution_92. Checkpoints wählen wir auf getrennten Validierungskarten. Rechts stehen die wichtigsten Einstellungen: Lernrate 0,0003, Gamma 0,99, Batchgröße 256 und 300.000 Einheitenübergänge im Buffer. Epsilon steuert die zufällige Exploration: Es sinkt über 60.000 Umgebungsschritte von eins auf 0,05. Das Target-Netz wird alle 500 Lernupdates aktualisiert. In der Auswertung spielen wir beide Seiten mit Epsilon null und festen Gewichten. Moayed zeigt jetzt die Ergebnisse.
 
 ### Folie 8: Benchmark-Ergebnisse
 
