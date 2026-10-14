@@ -1,76 +1,81 @@
 # Checkliste Review 16.10.2026 (benotet, 1/3 der Note)
 
-Abgleich der Vorgaben aus den Kursfolien („Reinforcement Learning“) mit unserem Stand vom 10.10.2026.
-Folienentwurf: Artifact „Sherlock – Review 16.10.“ (17 Folien, Sprechernotizen auf jeder Folie, Export als PPTX/PDF möglich).
+Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufgabe „Submission 1“ aus dem vom Team bereitgestellten Screenshot.
 
-## Folie 9 – Inhalt der Review-Präsentation (~20 min, Slot auf Moodle)
+## Termin, Vortragszeit und Slot
 
-| Vorgabe | Wo | Status |
+- **Upload der Präsentation: Freitag, 16.10.2026, 08:00 Uhr** laut Moodle-Aufgabe.
+- **Geplante Vortragsdauer: ungefähr zehn Minuten** laut Moodle-Aufgabe. Das ist keine sekundengenaue Abbruchgrenze; darauf soll die Vorbereitung zielen.
+- **Slot: 20 Minuten** laut Moayeds Angabe vom 14.10. Vortragsdauer und Slotlänge sind getrennte Angaben. Dass die übrige Zeit für Fragen, Überziehen oder Puffer vorgesehen ist, ist eine plausible, noch nicht bestätigte Aufteilung.
+- Für spätere Präsentationen könnten längere Vorträge und Battles vorgesehen sein. Die genaue Aufteilung je Termin noch anhand der jeweiligen Aufgabe bestätigen; nicht aus der Slotlänge ableiten.
+
+## Stand der Präsentationsdatei
+
+Ältere Notizen nennen einen externen Entwurf „Sherlock – Review 16.10.“ mit zunächst 17, später 19 Folien. **Im Repository liegt kein aktueller PPTX-/PDF-Folienexport.** Deshalb bestätigt diese Checkliste die verfügbaren Projektinhalte, nicht die Vollständigkeit oder Qualität dieses externen Entwurfs. Mahmoud erstellt laut Team die Präsentation; Export, Zeitumfang und tatsächliche Inhalte sind noch zu prüfen.
+
+## Geforderte Inhalte und verfügbare Belege
+
+| Vorgabe | Grundlage im Projekt | Noch an den Folien / im Vortrag prüfen |
 |---|---|---|
-| Algorithmus als Pseudocode | Folie „Algorithmus“; README; Docstring `agents/sherlock/main.py` | ✅ |
-| Netzarchitektur | Folie „Architektur“ (MLP 79 → 256 → 256, Dueling) | ✅ |
-| RL-Algorithmus | Double DQN, Replay Buffer, Target-Netz (Folie „Algorithmus“) | ✅ |
-| Trainings-Konfiguration | Folie „Training“; `agents/sherlock/config.py` | ✅ |
-| Feature Engineering | Folien „Belief“, „Features“, „Abgleich Folie 50“ | ✅ |
-| Trainingsablauf: Anzahl Spiele, Gegner | 3000 Spiele/Lauf, 63 000 insgesamt, Curriculum default → Solution_92 | ✅ |
-| Ausgewählte Spiele zeigen | `docs/presentation/replays/sherlock_*.json` (5 Replays mit Abgabe-Agent `old3_sym3`, 12.10.), Folie „Replays“ | ✅ Beobachtungen aus den Replay-Daten eingetragen – im Viewer gegenprüfen |
-| Beobachtungen, Hypothesen, Erkenntnisse | Folien „Ergebnisse“, „Ablation“, „Lernkurven“, „Erkenntnisse“ | ✅ |
-| Fragen, nächste Schritte | Folien „Grenzen“, „Fragen“ (mögliche Fragen in den Notizen) | ✅ |
-| Slot auf Moodle buchen | – | ❌ **Team** |
+| Agent und Algorithmus als Pseudocode | [README](../../README.md), `agents/sherlock/main.py` | Aktuellen Agenten `old3_sym3` erklären; Spielen und Training unterscheiden |
+| Netzarchitektur | MLP 79 → 256 → 256, Dueling-Köpfe; sechs Netze im Ensemble | Q-Werte mitteln, dann beste erlaubte Aktion; nicht nur ein Netz als aktuelle Abgabe darstellen |
+| RL-Algorithmus | Double DQN, Replay Buffer, Target-Netz | Online-Netz wählt, Target-Netz bewertet; verständlicher Pseudocode |
+| Trainingskonfiguration | `AgentConfig`, gespeicherte Checkpoint-Konfigurationen, Lauf-Manifeste | Tatsächliche Einstellungen des dargestellten Laufs statt nur Standardwerte; Lernbeginn nach 5000 Einheiten-Übergängen |
+| Feature Engineering | Belief, 79 Merkmale, Zielzuweisung, Masken | Beispiel für Punktefeld-Inferenz; kanonische Koordinaten und Symmetrie-Inferenz unterscheiden |
+| Trainingsablauf, Spiele, Gegner | 3000 Spiele je trainiertem Lauf; ursprünglicher Batch 63.000, alle 34 Manifeste zusammen 99.000 Trainingsspiele | Trainingsumfang klar abgrenzen; Validierung/Tests/Buffer-Vorfüllung nicht als Trainingsspiele mitzählen; default und Solution_92 nennen |
+| Ausgewählte Spiele | Fünf `sherlock_*.json`-Replays des aktuellen Ensembles in `docs/presentation/replays/` | Im Viewer ansehen, kurzen aussagekräftigen Ausschnitt wählen; Screenshot/Video als Ausweichmöglichkeit vorbereiten |
+| Beobachtungen, Hypothesen, Erkenntnisse | Historische Ablation und spätere Ensemble-/Erkundungsversuche im [Experimentprotokoll](../EXPERIMENT_PROTOKOLL.md) | Messung von Hypothese unterscheiden; auch erfolglose Versuche einordnen |
+| Fragen und nächste Schritte | `m1_early` als späterer Kandidat; offene Mess-/Trainingskorrekturen im [Arbeitsstand](../ARBEITSSTAND.md) | Änderungen nicht als bereits umgesetzt darstellen |
 
-## Folie 11 – Bewertungsraster
+## Zahlen und Aussagen für die Ergebnisfolie
 
-| Kriterium | Wie wir es abdecken | Offen |
+| Aktueller Agent `old3_sym3` | Siege | Siegquote |
 |---|---|---|
-| Klare Kernaussage | eigene Folie direkt nach dem Titel, am Ende wiederholt | – |
-| Logischer Aufbau | Problem → Lösung → Training → Ergebnisse → Erkenntnisse → Ausblick | – |
-| Verständliche Erklärungen | Belief an einem Zwei-Schritt-Beispiel; Begriffe in den Notizen erklärt | – |
-| Frei, in eigenen Worten sprechen | Notizen sind Stichwortgeber, nicht zum Ablesen | ❌ **proben**, Folien unter den Teammitgliedern aufteilen |
-| Hilfreiche Folien | eine Idee pro Folie, Diagramme mit Konfidenzintervallen | Platzhalter (Namen, Gruppe, Replay-Beobachtungen) füllen |
-| Originalität / eigener Beitrag | Punkte-Tile-Inferenz, Spiegelung, Ablationsstudie, Fund „Env-Reward ≠ Folie 45“ | – |
+| gegen default | 60/60 | 100,0 % |
+| gegen Solution_92 | 28/60 | 46,7 % |
 
-## Folie 51 – agent.zip (Abgabe erst 27.11., für den 16.10. schon erfüllt)
+Quelle: [Einzelspiele](../../experiments/compare/TEST_old3_sym3.csv), reproduziert in der separaten Prüfung vom 14.10. Je Gegner 30 Karten × beide Seiten, ohne Lernen. Es sind keine 60 unabhängigen Karten. 100 % gelten nur für diese Stichprobe; die Testkarten wurden über mehrere Entwicklungsstände wiederverwendet.
 
-| Vorgabe | Stand |
+- Historische `full`-Werte (87,8 % / 18,9 %, Mittel über drei Starts) und Diagramme aus `docs/report/` ausdrücklich als ursprüngliche Einzelnetz-/Ablationsstudie kennzeichnen.
+- Gesamtpunktzahlen vorerst nicht als vollständige Endstände verwenden: Der letzte Zuwachs vor dem Match-Reset fehlt im Protokoll. Die Siegquoten sind nicht betroffen.
+- Alte Konfidenzintervalle aus `compare_report.py` vor Signifikanzbehauptungen nach Karte gruppiert neu berechnen. Kein signifikanter Unterschied bedeutet nicht „wirkungslos“ oder „mindestens gleich gut“.
+- `no_belief` entfernt Gedächtnis aus den Netzmerkmalen, nicht aus allen Heuristiken und Belohnungen. Sap-Zielwahl ist heuristisch; Sap-Treffer sind geschätzt. Keine Garantie behaupten, dass die gesamte Shaping-Funktion die optimale Strategie unverändert lässt.
+
+## Vorschlag für ungefähr zehn Minuten Vortrag
+
+Dies ist eine Arbeitseinteilung, keine zusätzliche Kursvorgabe. Detailfolien können in den Anhang.
+
+| Teil | Richtzeit |
 |---|---|
-| Ordner = Teamname, leere `__init__.py` | ✅ `scripts/build_submission.py --team-name …` (relative Imports, beliebig umbenennbar) |
-| `main.py` mit `Agent_x` | ✅ |
-| `name: str='Team Name Agent_X'` | ✅ `Sherlock Agent_X` |
-| `act`, `update`, `set_to_eval_mode`, `set_env_cfg`, `save_agent`, `load_agent` | ✅ (Test `tests/test_runner.py`, Prüfung im Build-Skript) |
-| trainierte `.pth` | ✅ `agents/sherlock/weights/agent_p0.pth`, `agent_p1.pth` (seit 11.10.: `old3_sym3` = Ensemble aus 6 Netzen + Symmetrie + Erkundungsgedächtnis; vorher `full_s0`) |
-| `agents.yaml` | ✅ `agents/sherlock/agents.yaml` (und im Zip) |
-| `paths.csv` mit Moodle-Gruppe | ✅ Gruppe 15 |
+| Aufgabe und Kernaussage | 0:45 |
+| Agent, Merkmale und Gedächtnis | 2:00 |
+| Netz, Ensemble und Double DQN | 2:00 |
+| Trainingsablauf und Versuchsaufbau | 1:15 |
+| Ergebnisse und wichtigste Erkenntnis | 1:30 |
+| Ausgewählter Spielausschnitt | 1:30 |
+| Grenzen und nächste Schritte | 1:00 |
+| **Gesamt** | **10:00** |
 
-## Technische Prüfungen (10.10.2026)
+## Bewertungsraster und Team-To-dos
 
-| Prüfung | Ergebnis |
-|---|---|
-| Frischer `git clone` → `pytest` | 52/52 grün |
-| Kurs-Runner `train=False`, beide Seiten, vs default / Solution_92 / Prof-DQN | läuft; Replays werden geschrieben |
-| Kurs-Runner `train=True` | läuft; Agent speichert nach jedem Spiel selbst (Speicher-Bug umgangen) |
-| Rechenzeit `act()` | Ø 0,5 ms, max 0,9 ms pro Step |
-| `dist/agent.zip` entpackt in frische Kopie laden | ok, beide Seiten |
-| README: alle Befehle und Links | geprüft |
-| Ergebnisse reproduzierbar | Replays und `evaluate.py` reproduzieren die Testwerte exakt |
+- [ ] Slot/Buchung auf Moodle bestätigen; Buchungsstand ist hier nicht bekannt.
+- [ ] Aktuellen Folienexport erstellen und alle Pflichtinhalte anhand der Tabelle prüfen.
+- [ ] Teamnamen, Gruppe 15, Agent Sherlock und aktuelle Ensemble-Architektur korrekt angeben.
+- [ ] Klare Kernaussage und nachvollziehbaren Aufbau verwenden: Aufgabe → Lösung → Training → Ergebnisse → Erkenntnisse → Ausblick.
+- [ ] Bilder/Diagramme/Spielbeispiele lesbar gestalten; historische Ergebnisse und aktuelle Abgabe sauber beschriften.
+- [ ] Replays unter <https://s3vis.lux-ai.org/> ansehen und den Ausschnitt vorab festlegen.
+- [ ] Sprechanteile aufteilen und mindestens zweimal mit Uhr auf ungefähr zehn Minuten proben; frei und in eigenen Worten sprechen.
+- [ ] Beide können Belief, Features, Double DQN, Reward Shaping, Ensemble und die Grenzen der Ablation erklären. Beide können sagen, was gelernt und was heuristisch vorgegeben ist.
+- [ ] Präsentation bis **16.10., 08:00 Uhr** hochladen und den hochgeladenen Export prüfen.
 
-## Technische Prüfungen (11.10.2026, neuer Agent `full_s012_sym`)
+## Technische Prüfungen und spätere Agentenabgabe
 
-| Prüfung | Ergebnis |
-|---|---|
-| Frischer `git clone` von GitHub → `pytest` | 55/55 grün |
-| Kurs-Runner `train=False`: 15 vs 1/2/3/15 und 1/2/3 vs 15 (beide Seiten) | alle 7 ok |
-| Kurs-Runner `train=True` | läuft; verändert die Gewichte (gewollt) → nach Tests wiederherstellen |
-| Rechenzeit `act()` (3 Netze + Symmetrie) | Ø 0,7 ms, max 1,2 ms pro Step |
-| `dist/agent.zip` aus frischem Clone gebaut und geprüft | „Check ok“, 3 Netze, Symmetrie an |
-| gegen Prof-DQN (20 Seeds × 2 Seiten) | 100 % Spiele, 1072 : 2 Punkte |
+Die Moodle-Aufgabe für den 16.10. verlangt die Präsentation. Das finale Agentenpaket nach Kursfolie 51 ist für den 27.11. vorgesehen. Die Paketstruktur ist bereits vorhanden: Teamordner, leere `__init__.py`, `Agent_x`, Pflichtmethoden, `agents.yaml`, `paths.csv` und trainierte Gewichte.
 
-**Folien aktualisiert (12.10., 19 Folien):** Kernaussage mit Testzahlen von `old3_sym3` (100 % / 46,7 %), neue Folien „Niederlagen-Analyse“ (Symmetrie, Erkundung über Matches) und „Vom Einzelnetz zur Abgabe“ (4 Schritte mit gepaarten Δ auf neuen Val-Seeds), Ensemble in „Architektur“, Negativ-Ergebnisse (Weitertraining, Self-Play) in „Erkenntnisse“, neue Replays, „Grenzen“ mit Befund Match 1. Siehe `docs/EXPERIMENT_PROTOKOLL.md` Abschnitt 9.
+**Bereits durchgeführt am 14.10., in separater Kopie desselben Dateistands:**
 
-## To-do Team vor dem 16.10.
+- 62 Tests bestanden; 120 Spiele mit dem ausgelieferten Sechser-Ensemble reproduziert.
+- Paket gebaut, separat entpackt, beide Seiten geladen und zwei vollständige Spiele gegen default über den Kurs-Runner ausgeführt.
+- Im lokalen Test durchschnittlich ungefähr 0,99 ms pro `act()`, maximal ungefähr 34,94 ms; keine Garantie für andere Rechner.
 
-1. Slot auf Moodle buchen.
-2. ✅ Teamname Sherlock, Gruppe 15 eingetragen.
-3. Replays (`sherlock_*.json`) auf <https://s3vis.lux-ai.org/> ansehen und prüfen, ob man die Beobachtungen auf der Folie „Replays“ im Bild gut sieht; ggf. eigene ergänzen.
-4. Folien aufteilen, zweimal mit Uhr proben (Ziel 17–18 min plus Fragen).
-5. Jede Person kann Belief, Reward Shaping, Double DQN und die Ablation in eigenen Worten erklären (Folie 50: „Make sure you understand what you submit!“).
-6. **Neu (11.10.):** Jede Person kann auch Ensemble, Spiegelsymmetrie und die Niederlagen-Analyse erklären – das ist jetzt der stärkste „eigene Beitrag“ (Bewertungskriterium Originalität, Folie 11).
+Diese Prüfungen wurden für die Dokumentationsänderung nicht wiederholt. Ältere Notizen mit 52/55 Tests und drei Netzen beziehen sich auf frühere Stände. Auch bestandene Tests beseitigen die im [Arbeitsstand](../ARBEITSSTAND.md) dokumentierten offenen Mess- und Trainingsfehler nicht.

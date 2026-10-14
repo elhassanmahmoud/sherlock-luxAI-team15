@@ -9,6 +9,12 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet. Die Eingabe kommt aus einem **Gedächtnis (Belief)**, das Relics über Matches behält und die unsichtbaren Punkte-Tiles aus dem Punktezuwachs ableitet. Dazu kommen **Reward Shaping** pro Einheit, **Aktionsmasken** und eine **Spiegelung in einen kanonischen Raum**, sodass ein Netz für beide Seiten genügt.
 
+**Aktueller Abgabe-Stand (14.10.2026): `old3_sym3`.** Beim Spielen werden die Q-Werte von sechs Netzen gemittelt (3 × `full`, 3 × `full_sym`). Zusätzlich nutzt das Belief die Kartensymmetrie und merkt sich erkundete Gebiete über Matches. Die Gewichte beider Spielseiten enthalten dasselbe Ensemble. `m1_early` ist ein untersuchter Kandidat für nach dem Review; er ist nicht im aktuellen Abgabe-Stand aktiviert.
+
+**Zusammenarbeit:** [CLAUDE.md](CLAUDE.md) enthält die gemeinsamen Regeln für Claude Code und Codex; [AGENTS.md](AGENTS.md) verweist Codex darauf. Änderungen, Prüfungen und offene Aufgaben stehen im [gemeinsamen Arbeitsstand](docs/ARBEITSSTAND.md), Versuche weiterhin im [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md).
+
+**Erste Präsentation am 16.10.:** ungefähr **zehn Minuten Vortrag**, Präsentationsupload bis **08:00 Uhr** laut Moodle-Aufgabe „Submission 1“. Laut Team sind die Slots 20 Minuten lang. Eine Aufteilung der übrigen Zeit für Fragen/Puffer sowie längere Vorträge bei späteren Terminen sind noch nicht bestätigt. Vorbereitung: [Review-Checkliste](docs/presentation/CHECKLISTE_REVIEW_1610.md).
+
 ## Inhalt
 
 - [Ergebnisse](#ergebnisse)
@@ -23,26 +29,41 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 
 ## Ergebnisse
 
+### Aktuelles Ensemble `old3_sym3`
+
+| Gegner | Gewonnene Spiele | Siegquote |
+|---|---|---|
+| `default` | 60 von 60 | 100,0 % |
+| `Solution_92_Kaggle` | 28 von 60 | 46,7 % |
+
+Grundlage: **30 Karten-Seeds (900000–900029) × beide Seiten je Gegner**, ohne Lernen und mit ε = 0. Quelle: [gespeicherte Einzelspiele](experiments/compare/TEST_old3_sym3.csv). In der separaten Prüfung vom 14.10. wurden alle 120 Spiele mit den ausgelieferten Gewichten reproduziert. Das sind je Gegner 30 Karten, keine 60 unabhängigen Karten. 100 % gegen default gelten für diese Stichprobe, nicht für beliebige künftige Spiele. Die Karten wurden während der Entwicklung mehrfach ausgewertet; die Ergebnisse sind ein wiederholt verwendeter Benchmark, kein unberührter Abschlusstest.
+
+**Messgrenzen:** Die protokollierten Punktesummen lassen den letzten Zuwachs vor dem Match-Reset aus. Siegquoten aus `team_wins` sind davon nicht betroffen. Deshalb stehen hier keine vermeintlich vollständigen Endpunktzahlen. Das spätere Vergleichsskript `compare_report.py` muss außerdem beim Bootstrap beide Seiten einer Karte zusammenhalten; dessen bisherige Konfidenzintervalle sind vor starken Signifikanzbehauptungen neu zu berechnen. Details und offene Korrekturen: [Arbeitsstand](docs/ARBEITSSTAND.md).
+
+### Historische Einzelnetz- und Ablationsstudie (10.10.)
+
+Die folgende Tabelle und Grafik gehören zum ursprünglichen Einzelnetz-Batch. Sie beschreiben **nicht** das aktuelle Sechser-Ensemble. Auch `scripts.report` erzeugt derzeit keinen vollständigen Bericht aller späteren Varianten.
+
 <!-- ERGEBNISSE:START -->
 Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart), ε = 0, 3 Trainingsstarts à 3000 Spiele. Angegeben sind die Winrate mit 95-%-Bootstrap-KI und in Klammern die Standardabweichung über die Starts. Batch vom 10.10.2026.
 
-| Agent | gegen `default` | gegen `Solution_92_Kaggle` | Punkte pro Spiel (vs. default / vs. Sol92) |
-|---|---|---|---|
-| **`full` (unser Agent)** | **87,8 %** [76,7; 96,7] (± 3,5) | **18,9 %** [8,3; 31,7] (± 3,5) | 541 : 142 / 497 : 993 |
-| Prof-DQN, mitgelieferte Gewichte | 0,0 % [0; 0] | 0,0 % [0; 0] | 5 : 268 / 4 : 1655 |
-| Prof-DQN, gleich lang neu trainiert | 0,0 % [0; 0] | 0,0 % [0; 0] | 4 : 269 / 3 : 1654 |
+| Agent | gegen `default` | gegen `Solution_92_Kaggle` |
+|---|---|---|
+| **`full` (früherer Einzelnetz-Ansatz, drei Starts)** | **87,8 %** [76,7; 96,7] (± 3,5) | **18,9 %** [8,3; 31,7] (± 3,5) |
+| Prof-DQN, mitgelieferte Gewichte | 0,0 % [0; 0] | 0,0 % [0; 0] |
+| Prof-DQN, gleich lang neu trainiert | 0,0 % [0; 0] | 0,0 % [0; 0] |
 
 ![Winrate je Variante mit 95-%-KI](docs/report/winrate_ci.png)
 
 Wichtigste Erkenntnisse aus der Ablation ([Details und Einordnung](docs/ERGEBNISSE_20261010.md)):
 
-- **Gedächtnis (Belief)** ist der größte Hebel: ohne Gedächtnis −32 Prozentpunkte gegen `default` und −17 gegen Solution_92, beides belegt.
+- **Gedächtnis in den Netzmerkmalen** ist der größte Hebel: ohne diese Merkmale −32 Prozentpunkte gegen `default` und −17 gegen Solution_92. Bei `no_belief` verwenden Belohnungen, Masken und geführte Exploration weiterhin das Belief.
 - **Reward Shaping** stabilisiert das Training: Ohne Shaping kollabiert einer von drei Starts.
 - **Sap** bringt gegen Solution_92 +16 Prozentpunkte.
-- Für **Spiegelung** und **geführte Exploration** ist kein Effekt belegt; die KIs schließen 0 ein.
-- Mehr Training allein macht den Prof-DQN **nicht** besser. Der Vorsprung kommt von der Methode.
+- Für **kanonische Koordinaten** und **geführte Exploration** ist in dieser Ablation kein eindeutiger Effekt nachgewiesen; die KIs schließen 0 ein. Das beweist keine Wirkungslosigkeit. Die spätere Symmetrie-Inferenz im Belief ist eine andere Änderung.
+- Gleich langes Training brachte dem Prof-DQN in diesem Versuch keinen Sieg. Die Studie spricht für den Nutzen unserer Änderungen; sie beweist nicht, dass beliebiges längeres Training nutzlos wäre.
 
-Die Abgabe-Gewichte in `agents/sherlock/weights/` stammen vom Start `full_s0`, ausgewählt nach dem Validierungs-Score und nicht nach den Testzahlen.
+`full_s0` war der frühere, anhand der Validierung ausgewählte Abgabe-Stand. Die aktuellen Gewichte in `agents/sherlock/weights/` enthalten `old3_sym3`; dessen Auswahl auf neuen Validierungskarten ist im Experimentprotokoll dokumentiert.
 <!-- ERGEBNISSE:END -->
 
 ## Architektur
@@ -58,13 +79,15 @@ flowchart LR
     B --> Z[Zielzuweisung<br/>pro Einheit]
     B --> F[Features<br/>79 pro Einheit]
     Z --> F
-    F --> Q[Q-Netz<br/>Dueling MLP]
+    F --> Q[6 Dueling-MLPs<br/>Q-Werte mitteln]
     Q --> K[Aktionsmaske<br/>Rand · Asteroid · Energie · Sap-Ziel]
-    K --> A[argmax / ε-greedy]
+    K --> A[argmax im Spiel]
     A --> R[zurückspiegeln<br/>→ Aktion shape 16×3]
 ```
 
-### Pseudocode
+### Pseudocode: Einzelnetz-Training
+
+Dieser Ablauf erklärt das Training eines Mitglieds. Beim Spielen mit `old3_sym3` werden stattdessen die sechs Q-Vektoren gemittelt und die beste erlaubte Aktion gewählt; es gibt dann keine Lernschritte und keine ε-Exploration. Ein geladenes Ensemble gemeinsam weiterzutrainieren ist derzeit nicht implementiert.
 
 ```text
 für jedes Spiel:
@@ -79,9 +102,9 @@ für jedes Spiel:
         env.step(actions)
         r_u <- shaped_reward(ctx, ctx')             # pro Einheit
         Buffer <- (s_u, a_u, r_u, s'_u, done_u, mask'_u)
-        alle 2 Steps:
+        alle 2 Steps, sobald mindestens 5000 Einheiten-Übergänge im Buffer liegen:
             Batch ziehen
-            y = r + γ (1-done) Q_target(s', argmax_a Q_online(s', a))   # Double DQN
+            y = r + γ (1-done) Q_target(s', argmax über erlaubte a von Q_online(s', a))
             minimiere Huber(Q_online(s,a), y); Target alle 500 Lernschritte syncen
 ```
 
@@ -89,20 +112,23 @@ für jedes Spiel:
 
 | Baustein | Datei | Kurz |
 |---|---|---|
-| Spiegelung | `agents/sherlock/geometry.py` | Die Karte ist symmetrisch zur Antidiagonale, `M(x,y) = (23-y, 23-x)`. player_1 wird so gedreht, dass der eigene Spawn immer bei (0,0) liegt. Dadurch gibt es ein Netz für beide Seiten, und jedes Spiel liefert Erfahrung für beide. |
-| Belief | `agents/sherlock/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden per Constraint-Propagation aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet, erst ab `match_step ≥ 50`, weil Relics vorher noch spawnen. Dazu kommen Karte, Energie und erkundete Tiles. |
+| Spiegelung | `agents/sherlock/geometry.py` | Die Karte ist symmetrisch zur Antidiagonale, `M(x,y) = (23-y, 23-x)`. player_1 wird so gespiegelt, dass der eigene Spawn immer bei (0,0) liegt. Dieselben Netze können auf beiden Seiten eingesetzt und mit Erfahrungen aus beiden Seiten trainiert werden. |
+| Belief | `agents/sherlock/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden per Constraint-Propagation aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet; im aktuellen Abgabe-Stand erst ab `match_step ≥ 50`, weil Relics vorher noch spawnen. `use_symmetry` ergänzt gespiegeltes Wissen, `explore_memory` berücksichtigt bereits in früheren Matches erkundete Gebiete. |
 | Features | `agents/sherlock/features.py` | 79 Werte pro Einheit: eigene Lage und Energie, Punktestand, nächstes Punkte-, Kandidaten-, Relic-, unerkundetes und zugewiesenes Ziel, aktuelles Tile, 5 Nachbarfelder × 6 Kanäle, nächster Gegner, globale Zähler. Namen in `FEATURE_NAMES`. |
 | Netz | `agents/sherlock/model.py` | MLP 79 → 256 → 256, dann Dueling: V (128 → 1) und A (128 → 6), `Q = V + A − mean(A)`. |
+| Ensemble | `agents/sherlock/main.py`, `scripts/build_ensemble.py` | Beim Spielen Mittelwert der Q-Werte aus sechs separat trainierten Netzen: drei `full` und drei `full_sym`. Beide Gruppen verwenden dieselben drei Trainingsstart-Seeds; es sind keine sechs unabhängigen Start-Seeds. |
 | Aktionen | `agents/sherlock/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Das Netz entscheidet nur, **ob** gesapt wird; das Ziel wählt eine Heuristik (maximale Gegnerenergie im 3×3-Bereich). Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
 | Reward | `agents/sherlock/reward.py` | Pro Einheit: + Eigentümer eines bewiesenen Punkte-Tiles, − Stacking, + Potential-Shaping zum zugewiesenen Ziel (Ng et al. 1999), + Erkundung und Entdeckung, + Energie, − Tod, ± Sap-Treffer, ± Matchergebnis (aus Δ `team_wins`). |
 | Lernen | `agents/sherlock/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300 000 Übergänge, je Einheit und Step einer), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
 
-Alle Hyperparameter stehen an einer Stelle: `agents/sherlock/config.py` (`AgentConfig`).
+Die Standard-Hyperparameter stehen in `agents/sherlock/config.py` (`AgentConfig`). Beim Laden gelten die gespeicherten Einstellungen des Checkpoints; aktuelle Gewichte und Standardkonfiguration sind daher nicht automatisch gleichzusetzen.
 
 ## Projektstruktur
 
 ```text
 .
+├── AGENTS.md                     Einstieg für Codex → gemeinsame CLAUDE.md
+├── CLAUDE.md                     gemeinsame Projektregeln und fachlicher Stand
 ├── agents/
 │   ├── sherlock/                 unser Agent (Abgabe-Ordner)
 │   │   ├── main.py               Klasse Agent_x: act/update/save/load, DQN-Lernschritt, Masken
@@ -134,6 +160,7 @@ Alle Hyperparameter stehen an einer Stelle: `agents/sherlock/config.py` (`AgentC
 ├── tests/                        pytest: Spiegelung, Maske, Belief, Reward, Persistenz, Runner
 ├── experiments/runs/             ein Ordner pro Lauf (CSV, manifest.json; .pth nicht versioniert)
 ├── docs/
+│   ├── ARBEITSSTAND.md          Übergabe: Änderungen, Prüfungen, offene Aufgaben
 │   ├── EXPERIMENT_PROTOKOLL.md   Versuchsplan, vor dem Training festgelegt
 │   ├── ERGEBNISSE_*.md           Auswertung mit Einordnung
 │   ├── report/                   von report.py erzeugte Tabellen und Diagramme
@@ -175,7 +202,7 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Tests | `python -m pytest -q` |
 | Abgabe bauen | `python -m scripts.build_submission` |
 
-> **Achtung:** `scripts.train` schreibt nach `agents/sherlock/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Für Experimente besser `scripts.experiment` nutzen; das schreibt in einen eigenen Run-Ordner. Zurückholen geht mit `git checkout agents/sherlock/weights/`.
+> **Achtung:** `scripts.train` schreibt nach `agents/sherlock/weights/` und überschreibt damit die Abgabe-Gewichte. Ohne `--resume` beginnt es mit einem frischen Netz. Mit einem geladenen Ensemble wird nur dessen erstes Netz weitertrainiert. Für beauftragte Experimente einen eigenen Run-Ordner über `scripts.experiment` verwenden und den bisherigen Stand erhalten. Im aktuellen Dokumentationsauftrag sind Training und Gewichteänderungen nicht freigegeben.
 
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`.
 
@@ -183,21 +210,25 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 
 ## Experimente
 
-Wir wollen belegen, welche Änderung wie viel bringt, und zwar im Vergleich zur DQN-Baseline des Dozenten. Kurzfassung des Protokolls (vollständig in [`docs/EXPERIMENT_PROTOKOLL.md`](docs/EXPERIMENT_PROTOKOLL.md), festgelegt vor dem Training):
+Wir wollen belegen, welche Änderung wie viel bringt, und zwar im Vergleich zur DQN-Baseline des Dozenten. Kurzfassung des ursprünglichen Versuchsplans (vollständig mit späteren Erweiterungen und Abweichungen in [`docs/EXPERIMENT_PROTOKOLL.md`](docs/EXPERIMENT_PROTOKOLL.md)):
 
 - **Varianten**:
   - `baseline_prof`: Prof-DQN mit mitgelieferter `agent.pth`
   - `baseline_prof_retrained`: Prof-Code unverändert, aber gleich lang trainiert wie unsere Varianten (trennt „mehr Training“ von „bessere Methode“)
   - `full`
   - fünf Ablationen, die sich jeweils in **genau einem** `AgentConfig`-Schalter von `full` unterscheiden: `no_belief`, `no_shaping`, `no_sap`, `no_guided_explore`, `no_canonical`
-- **Seeds**: drei disjunkte Mengen (Training, 8 Validierungs-Seeds, 30 Test-Seeds). Test-Seeds werden nur einmal am Ende gespielt.
+- **Seeds**: ursprünglich drei disjunkte Mengen (Training, 8 Validierungs-Seeds, 30 Test-Seeds). Geplant war ein Test am Ende; tatsächlich wurden die 30 Testkarten für mehrere Entwicklungsstände erneut ausgewertet. Spätere Auswahlrunden verwendeten neue Validierungskarten; verbrauchte Bereiche stehen im Protokoll.
 - **Evaluation**: jedes Spiel von beiden Seiten, gegen `default` und `Solution_92_Kaggle`, ε = 0.
 - **Statistik**: 3 Trainingsstarts pro Variante (Mittel ± SD). 95-%-Bootstrap-KIs mit zwei Ebenen (Starts × Seeds) und gepaarter Bootstrap für Differenzen zu `full`.
 - **Reproduzierbarkeit**: Jeder Lauf schreibt `manifest.json` mit Config, Seeds, Git-Commit und Laufzeit.
 
 Ergebnisse und ehrliche Einordnung: [`docs/ERGEBNISSE_20261010.md`](docs/ERGEBNISSE_20261010.md), automatisch erzeugte Tabellen: [`docs/report/tabellen.md`](docs/report/tabellen.md), Rohdaten: `experiments/runs/`.
 
+Der ursprüngliche Batch umfasst 63.000 Trainingsspiele. Einschließlich späterem Weitertraining, Gegner-Pool und `full_sym` dokumentieren die 34 Manifeste insgesamt **99.000 Trainingsspiele**; Validierung, Tests und Buffer-Vorfüllung kommen zusätzlich hinzu. Ensemble-Vergleiche liegen in `experiments/compare/`. Diese historischen Trainingsläufe wurden bei der Prüfung vom 14.10. nicht erneut trainiert.
+
 ## Abgabe (agent.zip)
+
+Das finale Paket ist für den 27.11. vorgesehen. Die Moodle-Aufgabe „Submission 1“ am 16.10. verlangt den Präsentationsupload; daraus ergibt sich keine zusätzliche Pflicht zum Agentenpaket an diesem Termin.
 
 Vorgaben laut Kursfolie 51: Ordner mit Teamnamen, leere `__init__.py`, `main.py` mit Klasse `Agent_x` (`name='Team Name Agent_X'`), Methoden `act`, `update`, `set_to_eval_mode`, `set_env_cfg`, `save_agent`, `load_agent`, trainierte `.pth`, `agents.yaml` und `paths.csv`.
 
@@ -212,15 +243,15 @@ Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine
 
 ## Grenzen und nächste Schritte
 
-Ehrlicher Stand: **10.10.2026**.
+Stand: **14.10.2026**. Die folgenden Punkte sind dokumentiert, noch nicht behoben oder aktiviert.
 
-- Gegen `Solution_92_Kaggle` gewinnt `full` nur knapp jedes fünfte Spiel (18,9 %) und holt etwa halb so viele Punkte wie der Gegner.
-- Die geführte Exploration (Heuristik) bringt laut Ablation nichts Messbares und kann entfallen.
-- „Sap-Treffer“ wird nur über sichtbare Gegner im Zielbereich gezählt; den tatsächlichen Energieschaden messen wir noch nicht.
-- Das Sap-Ziel wählt eine Heuristik; das Netz entscheidet nur, ob gesapt wird.
-- Das MLP sieht nur lokale Ausschnitte und Distanzen, keine Karte. Ein CNN auf Kartenkanälen oder PPO mit Action-Masking ist für Phase 3 geplant.
-- Statistik: 3 Starts × 30 Seeds lösen Unterschiede unter etwa 10 Prozentpunkten nicht sicher auf. Es gibt keine Korrektur für Mehrfachvergleiche.
-- Self-Play bzw. ein Gegner-Pool ist noch nicht Teil des Protokolls.
+- `old3_sym3` erreicht 46,7 % gegen Solution_92 auf den wiederholt verwendeten Benchmarkkarten. Das belegt keine Überlegenheit gegenüber diesem Gegner. Schwachpunkt bleibt unter anderem die frühe Erkundung im ersten Match.
+- `m1_early` aktiviert frühere Punktefeld-Inferenz. Die zweite Validierungsrunde dokumentiert +7,9 Prozentpunkte gegen Solution_92 auf 120 neuen Karten × beide Seiten. Es bleibt der Kandidat für nach dem Review; Abgabe-Gewichte unverändert.
+- Vor neuem Training: getrennte Ausgabepfade, expliziter Umgang mit dem Ensemble und Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy.
+- Vor neuen Schlussfolgerungen: vollständige Punktezählung, Bootstrap nach Karte, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
+- „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Das Sap-Ziel und die Zielzuweisung sind heuristisch; das Netz wählt den Aktionstyp.
+- Weitertraining und Self-Play/Gegner-Pool wurden bereits untersucht und brachten in diesen Versuchen keinen klaren Gewinn. Das beweist keine allgemeine Grenze des Verfahrens.
+- CNN oder PPO bleiben mögliche spätere Experimente. Zunächst sind verlässliche Messungen und gezielte Korrekturen am bestehenden Ansatz vorgesehen. Offene Aufgaben und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 ## Quellen
 
