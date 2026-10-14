@@ -77,7 +77,9 @@
       "agents/sherlock/replay_buffer.py",
       "agents/sherlock/reward.py"
     ],
-    "appendix": false
+    "appendix": false,
+    "pseudocode_scope": "Vereinfachtes Double-DQN-Lernupdate: Batch ziehen, erlaubte Folgeaktion mit Online-Netz wählen, mit Target-Netz bewerten, Terminalfall berücksichtigen, gemeinsames Batch-Update und periodische Target-Kopie. Loss, Optimizer und Gradient Clipping nicht ausgeschrieben.",
+    "design_reference": "Wie Folie 3: heller Codekasten, Courier New, Einrückungen und kurzer fachlicher Kommentar."
   },
   {
     "number": 7,

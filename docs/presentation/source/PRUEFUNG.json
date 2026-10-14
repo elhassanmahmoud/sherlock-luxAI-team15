@@ -25,8 +25,8 @@
     "new_agent_training_or_tests": "not performed; documentation only"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "0c901b87bc0fe709cadb3d4a5527999a80b42b47f063123568caac35ad394bc1",
-    "Sherlock_Review_16-10-2026.pdf": "e6e8d0278425e33550cc085406fc108e42acf44fb6f8e222056c1fda90051f93"
+    "Sherlock_Review_16-10-2026.pptx": "b9e4fbedc86fcb79d28e4ecff682533db87d5a259c2b4b4cff51d4a5ceca1c7f",
+    "Sherlock_Review_16-10-2026.pdf": "8dbb3062869b3d45731416281878abb1635ce2a0582651a4a683a688f4ec4e04"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -124,5 +124,23 @@
     "table_top_px": 326,
     "header_height_px": 52,
     "verification": "Final slide 7 visually inspected with aligned table edges. Package/layout/fonts/native tables/chart/workbook passed. Text and notes unchanged; all other package entries byte-identical and twelve other PDF pages pixel-identical. Weights unchanged. Native PowerPoint not tested."
+  },
+  "training_code_cleanup": {
+    "date": "2026-10-14",
+    "base_commit": "a86ef79",
+    "changed_slides": [
+      6,
+      7
+    ],
+    "changes": "Slide 6 uses matching pseudocode panel; slide 7 has equal column widths and no presenter-only reserve-slide hint.",
+    "table_size_px": [
+      556,
+      300
+    ],
+    "table_columns_px": [
+      170,
+      386
+    ],
+    "verification": "Pseudocode checked against _learn. Package/layout/fonts/native tables/chart/workbook passed. Changed slides visually inspected; 11 others pixel-identical. PPTX dimensions identical; PDF table bounding differences below 0.1 pt export rounding. Main-slide text reviewed for presenter-only directions. Notes/timing/weights unchanged; native PowerPoint not tested."
   }
 }

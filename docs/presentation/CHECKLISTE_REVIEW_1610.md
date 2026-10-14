@@ -19,7 +19,7 @@ Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden An
 
 | Vorgabe | Umsetzung im neuen Foliensatz | Vor der Präsentation |
 |---|---|---|
-| Agent und Algorithmus als Pseudocode | Folie 3: eingerückter Pseudocode beim Spielen; Folie 6: vereinfachter Trainingsschritt | Spielen und Lernen sicher unterscheiden |
+| Agent und Algorithmus als Pseudocode | Folie 3: eingerückter Pseudocode beim Spielen; Folie 6: Pseudocode des Double-DQN-Lernupdates | Spielen und Lernen sicher unterscheiden |
 | Netzarchitektur | Folie 5: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
 | RL-Algorithmus | Folie 6: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
 | Trainingskonfiguration | Folie 7: Lernrate, γ, Batch/Buffer, Exploration und Target-Kopie sichtbar; weitere Werte auf Reservefolie 12 | Umgebungsschritte, Einheitenübergänge und Lernupdates unterscheiden |

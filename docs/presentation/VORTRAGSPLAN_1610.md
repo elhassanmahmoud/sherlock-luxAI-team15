@@ -34,6 +34,8 @@ Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm
 
 Folie 3 enthält links den einfachen Überblick und rechts den Pseudocode beim Spielen. Moayed erklärt den Ablauf in eigenen Worten und liest nicht jede Codezeile vor. Folie 7 zeigt die wichtigsten Trainingsparameter direkt; Mahmoud erklärt insbesondere Exploration und den Unterschied zur Auswertung. Weitere Parameter bleiben auf Reservefolie 12. Die bisherigen 55 bzw. 65 Sekunden bleiben Planwerte und müssen gemeinsam geprobt werden.
 
+Folie 6 zeigt den Trainingsschritt jetzt als eingerückten Pseudocode im Stil von Folie 3. Mahmoud erklärt vor allem „Online wählt, Target bewertet“ und den Terminalfall; die 75 Sekunden bleiben unverändert. Hinweise zum Vortragen und zur Reserve gehören in diesen Plan bzw. die Sprechernotizen, nicht sichtbar auf die Hauptfolien.
+
 Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. Es gibt keine zusätzliche Live-Demo im Zeitbudget. Die Spielbilder auf Folie 9 funktionieren auch ohne Internet.
 
 ### Übergaben

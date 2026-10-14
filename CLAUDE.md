@@ -9,6 +9,8 @@
 - Vor Änderungen den Git-Status prüfen und Änderungen des anderen Teammitglieds erhalten. Getrennte Arbeitszweige für eigene Änderungen verwenden, sobald die nächste Codearbeit beginnt; gemeinsame Dateien beim Zusammenführen abgleichen.
 - Aktueller Auftrag vom 14.10.: Auf Moayeds Wunsch wieder ausschließlich das ursprüngliche Präsentationsdesign verwenden, Inhalte prüfen und Gamma-Dateien aus dem aktuellen Repo entfernen. Elf Vortragsfolien plus zwei Reservefolien, Ziel 10:40 Minuten (maximal zwölf), Moayed behält den leichter zugänglichen Teil. [Vortragsplan](docs/presentation/VORTRAGSPLAN_1610.md) und ursprüngliche PowerPoint/PDF sind die gemeinsame Arbeitsgrundlage. Gewichte, Agentenlogik, Trainingsbelohnung und Kurs-Runner unverändert lassen.
 
+- Sichtbare Hauptfolien enthalten nur publikumsrelevante Inhalte. Interne Vortragsanweisungen, Zeitplanung und Hinweise auf Reservefolien gehören in Sprechernotizen und Vortragsplan. Fachliche Erläuterungen zu Daten, Auswertung und Grenzen bleiben auf den Folien.
+
 ## Kontext
 - Das ist UNSER eigenes Projekt (Kopie des Dozenten-Templates). Originale vom Dozenten liegen unverändert in `~/Documents/01_RL`, `02_LuxAI`, `AnwendKiLux` → dort nichts ändern.
 - Team baut einen RL-Agent (DQN/PPO/A2C, PyTorch) für Lux AI S3. Abgabe muss trainierte Gewichte (.pth) enthalten → rein regelbasiert reicht NICHT.
