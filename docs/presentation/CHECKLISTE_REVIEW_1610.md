@@ -11,21 +11,23 @@ Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufg
 
 ## Stand der Präsentationsdatei
 
-Ältere Notizen nennen einen externen Entwurf „Sherlock – Review 16.10.“ mit zunächst 17, später 19 Folien. **Im Repository liegt kein aktueller PPTX-/PDF-Folienexport.** Deshalb bestätigt diese Checkliste die verfügbaren Projektinhalte, nicht die Vollständigkeit oder Qualität dieses externen Entwurfs. Mahmoud erstellt laut Team die Präsentation; Export, Zeitumfang und tatsächliche Inhalte sind noch zu prüfen.
+Am 14.10. auf Moayeds Auftrag neu erstellt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **11 Vortragsfolien + 2 Reservefolien**, Ziel **10:40 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:15 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:25 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
+
+Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 11 stoppen und Seiten 12–13 nur bei Rückfragen zeigen.
 
 ## Geforderte Inhalte und verfügbare Belege
 
-| Vorgabe | Grundlage im Projekt | Noch an den Folien / im Vortrag prüfen |
+| Vorgabe | Umsetzung im neuen Foliensatz | Vor der Präsentation |
 |---|---|---|
-| Agent und Algorithmus als Pseudocode | [README](../../README.md), `agents/sherlock/main.py` | Aktuellen Agenten `old3_sym3` erklären; Spielen und Training unterscheiden |
-| Netzarchitektur | MLP 79 → 256 → 256, Dueling-Köpfe; sechs Netze im Ensemble | Q-Werte mitteln, dann beste erlaubte Aktion; nicht nur ein Netz als aktuelle Abgabe darstellen |
-| RL-Algorithmus | Double DQN, Replay Buffer, Target-Netz | Online-Netz wählt, Target-Netz bewertet; verständlicher Pseudocode |
-| Trainingskonfiguration | `AgentConfig`, gespeicherte Checkpoint-Konfigurationen, Lauf-Manifeste | Tatsächliche Einstellungen des dargestellten Laufs statt nur Standardwerte; Lernbeginn nach 5000 Einheiten-Übergängen |
-| Feature Engineering | Belief, 79 Merkmale, Zielzuweisung, Masken | Beispiel für Punktefeld-Inferenz; kanonische Koordinaten und Symmetrie-Inferenz unterscheiden |
-| Trainingsablauf, Spiele, Gegner | 3000 Spiele je trainiertem Lauf; ursprünglicher Batch 63.000, alle 34 Manifeste zusammen 99.000 Trainingsspiele | Trainingsumfang klar abgrenzen; Validierung/Tests/Buffer-Vorfüllung nicht als Trainingsspiele mitzählen; default und Solution_92 nennen |
-| Ausgewählte Spiele | Fünf `sherlock_*.json`-Replays des aktuellen Ensembles in `docs/presentation/replays/` | Im Viewer ansehen, kurzen aussagekräftigen Ausschnitt wählen; Screenshot/Video als Ausweichmöglichkeit vorbereiten |
-| Beobachtungen, Hypothesen, Erkenntnisse | Historische Ablation und spätere Ensemble-/Erkundungsversuche im [Experimentprotokoll](../EXPERIMENT_PROTOKOLL.md) | Messung von Hypothese unterscheiden; auch erfolglose Versuche einordnen |
-| Fragen und nächste Schritte | `m1_early` als späterer Kandidat; offene Mess-/Trainingskorrekturen im [Arbeitsstand](../ARBEITSSTAND.md) | Änderungen nicht als bereits umgesetzt darstellen |
+| Agent und Algorithmus als Pseudocode | Folie 3: Ablauf beim Spielen; Folie 6: vereinfachter Trainingsschritt | Spielen und Lernen sicher unterscheiden |
+| Netzarchitektur | Folie 5: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
+| RL-Algorithmus | Folie 6: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
+| Trainingskonfiguration | Folien 7 und 12 sowie Notizen; Werte mit gespeicherter cfg abgeglichen | Lernbeginn nach 5000 Einheitenübergängen, nicht Spielen |
+| Feature Engineering | Folie 4: 79 Merkmale, Belief, Inferenzbeispiel in Notizen | Beobachtetes Wissen und vollständige Zuschaueransicht unterscheiden |
+| Trainingsablauf, Spiele, Gegner | Folie 7: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
+| Ausgewählte Spiele | Folie 9: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |
+| Beobachtungen, Hypothesen, Erkenntnisse | Folien 8 und 10: Ergebnisse, Grenzen, erfolglose Versuche, Hypothese | Mehrfach verwendeten Benchmark offen benennen |
+| Fragen und nächste Schritte | Folien 10–11; Reserve 12–13 | m1_early als späteren Kandidaten darstellen |
 
 ## Zahlen und Aussagen für die Ergebnisfolie
 
@@ -42,30 +44,22 @@ Quelle: [Einzelspiele](../../experiments/compare/TEST_old3_sym3.csv), reproduzie
 - `compare_report.py` ist jetzt nach Karte gruppiert. Für Folien nur die [neu berechneten Intervalle](../STATISTIK_20261014.md) oder neu erzeugte Berichte verwenden; historische Intervalle anderer Vergleiche bleiben ungeprüft. `m1_early` Runde 1 gegen Solution_92 schließt jetzt null ein. Kein signifikanter Unterschied bedeutet nicht „wirkungslos“ oder „mindestens gleich gut“.
 - `no_belief` entfernt Gedächtnis aus den Netzmerkmalen, nicht aus allen Heuristiken und Belohnungen. Sap-Zielwahl ist heuristisch; Sap-Treffer sind geschätzt. Keine Garantie behaupten, dass die gesamte Shaping-Funktion die optimale Strategie unverändert lässt.
 
-## Vorschlag für ungefähr zehn Minuten Vortrag
+## Verbindliche Arbeitsplanung des Teams
 
-Dies ist eine Arbeitseinteilung, keine zusätzliche Kursvorgabe. Detailfolien können in den Anhang.
-
-| Teil | Richtzeit |
-|---|---|
-| Aufgabe und Kernaussage | 0:45 |
-| Agent, Merkmale und Gedächtnis | 2:00 |
-| Netz, Ensemble und Double DQN | 2:00 |
-| Trainingsablauf und Versuchsaufbau | 1:15 |
-| Ergebnisse und wichtigste Erkenntnis | 1:30 |
-| Ausgewählter Spielausschnitt | 1:30 |
-| Grenzen und nächste Schritte | 1:00 |
-| **Gesamt** | **10:00** |
+Der aktuelle [Vortragsplan](VORTRAGSPLAN_1610.md#aufteilung-und-zeitplan) enthält Folien, Sprecher, Zeitfenster, Übergaben und eine auf zehn Minuten gekürzte Variante. Er ist eine Teamplanung, keine zusätzliche Kursvorgabe. Der technische Vortragsteil liegt bei Mahmoud, der anschauliche Teil bei Moayed. Beide bereiten die Grundbegriffe und mögliche Rückfragen vor.
 
 ## Bewertungsraster und Team-To-dos
 
 - [ ] Slot/Buchung auf Moodle bestätigen; Buchungsstand ist hier nicht bekannt.
-- [ ] Aktuellen Folienexport erstellen und alle Pflichtinhalte anhand der Tabelle prüfen.
-- [ ] Teamnamen, Gruppe 15, Agent Sherlock und aktuelle Ensemble-Architektur korrekt angeben.
-- [ ] Klare Kernaussage und nachvollziehbaren Aufbau verwenden: Aufgabe → Lösung → Training → Ergebnisse → Erkenntnisse → Ausblick.
-- [ ] Bilder/Diagramme/Spielbeispiele lesbar gestalten; historische Ergebnisse und aktuelle Abgabe sauber beschriften.
-- [ ] Replays unter <https://s3vis.lux-ai.org/> ansehen und den Ausschnitt vorab festlegen.
-- [ ] Sprechanteile aufteilen und mindestens zweimal mit Uhr auf ungefähr zehn Minuten proben; frei und in eigenen Worten sprechen.
+- [x] Neuen Folienexport erstellen; Pflichtinhalte auf Folien 2–10 und in den Sprechernotizen abdecken.
+- [ ] Inhalt und Aufteilung gemeinsam bestätigen; Export auf dem Vortragsrechner prüfen.
+- [x] Teamnamen, Gruppe 15, Agent Sherlock und aktuelle Ensemble-Architektur korrekt angeben.
+- [x] Klare Kernaussage und nachvollziehbaren Aufbau verwenden: Aufgabe → Lösung → Training → Ergebnisse → Erkenntnisse → Ausblick.
+- [x] Bilder/Diagramme/Spielbeispiele lesbar gestalten; historische Ergebnisse und aktuelle Abgabe sauber beschriften.
+- [x] Replay-Ausschnitt festgelegt: Seed 900011, erstes Match, Frames 23 und 90. Echte Viewer-Bilder auf Folie 9, ohne Internet vorführbar.
+- [ ] Beide können den Bildvergleich in eigenen Worten erklären.
+- [x] Sprechanteile und Übergaben im Vortragsplan aufteilen.
+- [ ] Mindestens zweimal gemeinsam mit Uhr auf 10–12 Minuten proben; frei und in eigenen Worten sprechen.
 - [ ] Beide können Belief, Features, Double DQN, Reward Shaping, Ensemble und die Grenzen der Ablation erklären. Beide können sagen, was gelernt und was heuristisch vorgegeben ist.
 - [ ] Präsentation bis **16.10., 08:00 Uhr** hochladen und den hochgeladenen Export prüfen.
 
