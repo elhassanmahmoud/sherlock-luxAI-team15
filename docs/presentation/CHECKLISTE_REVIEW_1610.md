@@ -39,7 +39,7 @@ Quelle: [Einzelspiele](../../experiments/compare/TEST_old3_sym3.csv), reproduzie
 - Historische `full`-Werte (87,8 % / 18,9 %, Mittel über drei Starts) und Diagramme aus `docs/report/` ausdrücklich als ursprüngliche Einzelnetz-/Ablationsstudie kennzeichnen.
 - Die [120 neu gemessenen Benchmarkspiele](../../experiments/compare/TEST_old3_sym3_points_v2.csv) bestätigen die obigen Siege mit unveränderten Gewichten.
 - Gesamtpunktzahlen nur aus neuen Messungen mit `point_counting_version=2` verwenden. Alte CSVs ohne diese Spalte lassen den letzten Zuwachs vor jedem Match-Reset aus und bleiben historische Rohdaten. Die Siegquoten sind nicht betroffen.
-- Alte Konfidenzintervalle aus `compare_report.py` vor Signifikanzbehauptungen nach Karte gruppiert neu berechnen. Kein signifikanter Unterschied bedeutet nicht „wirkungslos“ oder „mindestens gleich gut“.
+- `compare_report.py` ist jetzt nach Karte gruppiert. Für Folien nur die [neu berechneten Intervalle](../STATISTIK_20261014.md) oder neu erzeugte Berichte verwenden; historische Intervalle anderer Vergleiche bleiben ungeprüft. `m1_early` Runde 1 gegen Solution_92 schließt jetzt null ein. Kein signifikanter Unterschied bedeutet nicht „wirkungslos“ oder „mindestens gleich gut“.
 - `no_belief` entfernt Gedächtnis aus den Netzmerkmalen, nicht aus allen Heuristiken und Belohnungen. Sap-Zielwahl ist heuristisch; Sap-Treffer sind geschätzt. Keine Garantie behaupten, dass die gesamte Shaping-Funktion die optimale Strategie unverändert lässt.
 
 ## Vorschlag für ungefähr zehn Minuten Vortrag

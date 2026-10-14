@@ -104,6 +104,14 @@ Die Kennzahlen stehen in `train.csv` und `eval.csv`; berechnet werden sie in `sc
 - Bei 3 Starts und 30 Seeds sind die Intervalle breit. Unterschiede unter etwa 10 Prozentpunkten können wir nicht sicher auflösen, und das schreiben wir auch so in die Ergebnisse.
 - Es gibt keine Korrektur für Mehrfachvergleiche (6 Ablationen × 2 Gegner). Einzelne knapp „signifikante“ Ergebnisse sind deshalb mit Vorsicht zu lesen.
 
+### Korrektur vom 14.10.: spätere Einzelmodell-/Ensemblevergleiche
+
+`scripts.compare_report.py` resampelte bisher einzelne Spielseiten. Seit der Korrektur bleiben beide Seiten derselben Karte zusammen; Kandidat und Referenz werden nach Gegner/Seed/Seite gepaart. WR, Differenz und Stichprobengröße beziehen sich auf dieselben gemeinsamen Karten. Fehlende Seiten, doppelte Spiele und ungültige Ergebnisse werden abgewiesen; ausgeschlossene nicht gemeinsame Karten werden ausgewiesen. 5000 Wiederholungen, Seed 0, 95-%-Perzentilintervall; bei nur einer gemeinsamen Karte kein KI.
+
+[Neu berechnete Beispiele, Aufrufe und Prüfsummen](STATISTIK_20261014.md). Wichtig: Das Intervall für `m1_early` gegen Solution_92 in Runde 1 enthält jetzt null ([0,00; +18,33] pp). Runde 2: +7,92 pp, KI [+2,50; +13,75] pp. Alte Zahlen in der folgenden datierten Historie bleiben als ursprüngliche Resultate erhalten und dürfen nicht als neu geprüfte Intervalle ausgegeben werden. Nicht alle historischen Vergleiche wurden neu berechnet.
+
+Die Korrektur verändert keine Gewichte, Rohdaten oder Siege. Sie erfasst Kartenstreuung bei festen Agenten, keine Streuung über Trainingsstarts; keine Korrektur für Mehrfachvergleiche oder Auswahl auf bekannten Karten. Die separate Zwei-Ebenen-Statistik `scripts/report.py` bleibt unverändert.
+
 ## 7. Rechenbudget
 
 Gemessen am 10.10.2026 auf dem Laptop (Apple Silicon, 5 Performance- und 10 Effizienz-Kerne, 24 GB RAM):

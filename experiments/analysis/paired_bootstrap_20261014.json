@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-14",
+  "method": "paired map-cluster percentile bootstrap; two sides per seed; fixed agents; shared maps only",
+  "bootstrap_samples": 5000,
+  "random_seed": 0,
+  "confidence_level": 0.95,
+  "measurement_base_commit": "839dacce78bd6fcfabec64a58b0b9dc8b0951765",
+  "code_sha256": "c43355f08fc71a07242e087ce67ec1d2aac2a7d0951fb1150754c60a642eea72",
+  "python": "3.13.13",
+  "packages": {
+    "pandas": "3.0.6",
+    "numpy": "2.5.4"
+  },
+  "weights_sha256": {
+    "agents/sherlock/weights/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "comparisons": [
+    {
+      "label": "Abgabe old3_sym3 vs full_s0",
+      "candidate": "experiments/compare/TEST_old3_sym3_points_v2.csv",
+      "reference": "experiments/compare/TEST_full_s0.csv",
+      "candidate_sha256": "43247e01778091668d370aeb96ef771cae12796ea70413e415adcb5122ef9ac5",
+      "reference_sha256": "8f30e3cac2e8336adee1144bd65e84791866dfe72f5b0152e754acd3164ff941",
+      "rows": [
+        {
+          "opponent": "default",
+          "maps": 30,
+          "games": 60,
+          "winrate": 1.0,
+          "ref_winrate": 0.85,
+          "delta": 0.15,
+          "low": 0.03333333333333333,
+          "high": 0.2833333333333333,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        },
+        {
+          "opponent": "solution92",
+          "maps": 30,
+          "games": 60,
+          "winrate": 0.4666666666666667,
+          "ref_winrate": 0.2,
+          "delta": 0.26666666666666666,
+          "low": 0.13333333333333333,
+          "high": 0.4166666666666667,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        }
+      ]
+    },
+    {
+      "label": "m1_early vs old3_sym3 – Runde 1",
+      "candidate": "experiments/compare/m1/m1_early.csv",
+      "reference": "experiments/compare/m1/old3_sym3.csv",
+      "candidate_sha256": "846711221011dab96ab86077f8f7bef49e754a00186c000909feabfcb2575343",
+      "reference_sha256": "fc21b402baf0a5146f75decc1b98cfecb02986703f575899cd7140e32bb2524b",
+      "rows": [
+        {
+          "opponent": "default",
+          "maps": 60,
+          "games": 120,
+          "winrate": 1.0,
+          "ref_winrate": 0.9916666666666667,
+          "delta": 0.008333333333333333,
+          "low": 0.0,
+          "high": 0.025,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        },
+        {
+          "opponent": "solution92",
+          "maps": 60,
+          "games": 120,
+          "winrate": 0.425,
+          "ref_winrate": 0.3333333333333333,
+          "delta": 0.09166666666666666,
+          "low": 0.0,
+          "high": 0.18333333333333332,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        }
+      ]
+    },
+    {
+      "label": "m1_early vs old3_sym3 – Runde 2",
+      "candidate": "experiments/compare/m1b/m1_early.csv",
+      "reference": "experiments/compare/m1b/old3_sym3.csv",
+      "candidate_sha256": "ff70c4d4261a589f158f3a06361f5181588249c46a337c0624013040c69f7871",
+      "reference_sha256": "25e7250de6fd2620197ef5ee25ac8a97ad2f66af01893bda48ee6e05c2983522",
+      "rows": [
+        {
+          "opponent": "default",
+          "maps": 120,
+          "games": 240,
+          "winrate": 0.9666666666666667,
+          "ref_winrate": 0.9375,
+          "delta": 0.029166666666666667,
+          "low": 0.004166666666666667,
+          "high": 0.058333333333333334,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        },
+        {
+          "opponent": "solution92",
+          "maps": 120,
+          "games": 240,
+          "winrate": 0.42083333333333334,
+          "ref_winrate": 0.3416666666666667,
+          "delta": 0.07916666666666666,
+          "low": 0.025,
+          "high": 0.1375,
+          "excluded_candidate": 0,
+          "excluded_reference": 0
+        }
+      ]
+    }
+  ]
+}

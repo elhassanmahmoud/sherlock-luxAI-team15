@@ -7,7 +7,7 @@
 - Nach abgeschlossenen Arbeiten dort Änderung, Grund, tatsächlich durchgeführte Prüfungen und offene Punkte ergänzen. Keine geplanten Tests als bestanden oder Vorschläge als umgesetzt darstellen.
 - Experimente und Auswahlentscheidungen weiterhin in [docs/EXPERIMENT_PROTOKOLL.md](docs/EXPERIMENT_PROTOKOLL.md) dokumentieren; bestehende Rohdaten und historische Resultate erhalten.
 - Vor Änderungen den Git-Status prüfen und Änderungen des anderen Teammitglieds erhalten. Getrennte Arbeitszweige für eigene Änderungen verwenden, sobald die nächste Codearbeit beginnt; gemeinsame Dateien beim Zusammenführen abgleichen.
-- Aktueller Auftrag vom 14.10.: Punktezählung der Auswertung einschließlich des letzten Matchschritts korrigieren und für das Team dokumentieren. Aktuelle Gewichte, Agentenlogik, Trainingsbelohnung und Kurs-Runner bleiben unverändert. Andere fachliche Korrekturen sind weiterhin nicht beauftragt.
+- Aktueller Auftrag vom 14.10.: Statistik in `scripts/compare_report.py` auf gepaarten Bootstrap über Karten korrigieren, prüfen, für das Team dokumentieren und in `main` hochladen. Gewichte, Agentenlogik, Trainingsbelohnung und Kurs-Runner unverändert lassen.
 
 ## Kontext
 - Das ist UNSER eigenes Projekt (Kopie des Dozenten-Templates). Originale vom Dozenten liegen unverändert in `~/Documents/01_RL`, `02_LuxAI`, `AnwendKiLux` → dort nichts ändern.
@@ -71,6 +71,8 @@ Punkte 1 und 2 wurden im Projekt bereits behoben; Punkt 3 wird durch die eigene 
 - Prüfung vom 14.10. in separater Kopie desselben Dateistands: 62 Tests bestanden, 120 Ensemble-Spiele reproduziert (60/60 gegen default, 28/60 gegen Solution_92; 30 Karten × beide Seiten je Gegner). Offene Mess-/Trainingsfehler und Prüfgrenzen: [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 ## Konventionen
+
+- `compare_report` resampelt ganze Karten (beide Seiten zusammen) und vergleicht nur gemeinsame vollständige Karten. Alte Konfidenzintervalle dieses Skripts nicht weiter als aktuelle Ergebnisse verwenden; korrigierte Beispiele und Grenzen stehen in [Statistikprüfung 14.10.](docs/STATISTIK_20261014.md). `report.py` bleibt die separate Zwei-Ebenen-Auswertung für Trainingsstarts.
 
 - Neue Punktemessungen tragen `point_counting_version=2`: vollständige Matchpunkte einschließlich des letzten Zuwachses vor dem Reset. CSVs ohne diese Spalte sind historische Version 1 und bleiben unverändert. Punktevergleiche nur innerhalb derselben Version; alte Spiele mit denselben Gewichten, Seeds und Gegnern in neue Dateien auswerten. Die Rekonstruktion aus `info["final_state"]` ist reine externe Messung und darf nicht als Agentenwissen oder Reward verwendet werden.
 
