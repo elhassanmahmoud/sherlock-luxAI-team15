@@ -25,8 +25,8 @@
     "new_agent_training_or_tests": "not performed; documentation only"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "b8858c2ffd7325e30a9e7f3b02f2efacef9e67c00b835f256dc6162176a8dfed",
-    "Sherlock_Review_16-10-2026.pdf": "8bfc1b2d12a062fb3f31efa0cc512de74972fcf69cdde525c1154304cb58aba6"
+    "Sherlock_Review_16-10-2026.pptx": "79b27e9e70dd57d2dfcab6d64e197b615e5cf8670091c2ab084469bc8170ad13",
+    "Sherlock_Review_16-10-2026.pdf": "7676dd8d0ef0b2adb7e912be84dd0cbf29e6c816f2193ad21e5e91c1313a3fab"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -38,5 +38,32 @@
     "previous_pdf_sha256": "7eba4e9601e4b6c124c0473161db82fad69d0286b2f4e9ecebe9067da4c3a600",
     "change": "Expanded background paint and clipping to bleed 1 pt beyond the dark pages; page boxes, text and all other page streams unchanged.",
     "verification": "Both changed pages rendered and visually inspected; all edge pixels at 1400 px are background color #102D35; unchanged PPTX and weights verified."
+  },
+  "text_revision": {
+    "date": "2026-10-14",
+    "base_commit": "f4d0889",
+    "titles": [
+      "Sherlock",
+      "Spielidee und Ziel",
+      "Unser Agent",
+      "Merkmale und Gedächtnis",
+      "Netzarchitektur und Ensemble",
+      "Double DQN",
+      "Training und Auswertung",
+      "Benchmark-Ergebnisse",
+      "Spielbeispiel",
+      "Erkenntnisse und Ausblick",
+      "Fazit und Fragen",
+      "Trainingsparameter",
+      "Gelernt und programmiert"
+    ],
+    "native_bullet_slides": [
+      2,
+      8,
+      9,
+      11
+    ],
+    "unchanged": "Notes, charts, embedded workbook, tables, images, all non-target shapes, weights and planned timing",
+    "verification": "Package/layout/font/native-table/chart validation passed; 13 PDF pages visually reviewed; dark-page edges checked; not opened in native PowerPoint."
   }
 }

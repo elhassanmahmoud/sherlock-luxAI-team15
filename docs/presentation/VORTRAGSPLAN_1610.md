@@ -20,17 +20,17 @@ Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm
 
 | Folie | Thema | Person | Dauer | Zeitfenster |
 |---|---|---|---|---|
-| 1 | Sherlock: Lernen mit Gedächtnis | Moayed | 0:30 | 0:00–0:30 |
-| 2 | Punkte finden, Felder halten, Matches gewinnen | Moayed | 1:00 | 0:30–1:30 |
-| 3 | Sherlock verbindet Gedächtnis und Lernen | Moayed | 0:55 | 1:30–2:25 |
-| 4 | 79 Merkmale machen die Situation greifbar | Mahmoud | 1:05 | 2:25–3:30 |
-| 5 | Sechs Netze bewerten dieselben sechs Aktionen | Mahmoud | 1:05 | 3:30–4:35 |
-| 6 | Double DQN: auswählen und bewerten trennen | Mahmoud | 1:15 | 4:35–5:50 |
-| 7 | Sechs Trainingsläufe, danach feste Gewichte | Mahmoud | 1:05 | 5:50–6:55 |
-| 8 | Stark gegen default – der stärkere Gegner bleibt offen | Moayed | 1:05 | 6:55–8:00 |
-| 9 | Ein Spiel: erst verteilen, dann Punktefelder besetzen | Moayed | 1:20 | 8:00–9:20 |
-| 10 | Erkenntnisse und die nächsten Schritte | Mahmoud | 0:55 | 9:20–10:15 |
-| 11 | Sherlock hat eine tragfähige Grundlage | Moayed | 0:25 | 10:15–10:40 |
+| 1 | Sherlock | Moayed | 0:30 | 0:00–0:30 |
+| 2 | Spielidee und Ziel | Moayed | 1:00 | 0:30–1:30 |
+| 3 | Unser Agent | Moayed | 0:55 | 1:30–2:25 |
+| 4 | Merkmale und Gedächtnis | Mahmoud | 1:05 | 2:25–3:30 |
+| 5 | Netzarchitektur und Ensemble | Mahmoud | 1:05 | 3:30–4:35 |
+| 6 | Double DQN | Mahmoud | 1:15 | 4:35–5:50 |
+| 7 | Training und Auswertung | Mahmoud | 1:05 | 5:50–6:55 |
+| 8 | Benchmark-Ergebnisse | Moayed | 1:05 | 6:55–8:00 |
+| 9 | Spielbeispiel | Moayed | 1:20 | 8:00–9:20 |
+| 10 | Erkenntnisse und Ausblick | Mahmoud | 0:55 | 9:20–10:15 |
+| 11 | Fazit und Fragen | Moayed | 0:25 | 10:15–10:40 |
 
 Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. Es gibt keine zusätzliche Live-Demo im Zeitbudget. Die Spielbilder auf Folie 9 funktionieren auch ohne Internet.
 
@@ -90,79 +90,79 @@ Wenn eine Rückfrage zu technisch wird, zuerst den Grundgedanken selbst erkläre
 
 Dies sind Formulierungsvorschläge zum Üben. Nicht wortwörtlich auswendig lernen. Die Quellen beziehen sich auf Dateien im Repository; der Folienstand verändert keine dieser Quellen.
 
-### Folie 1: Sherlock: Lernen mit Gedächtnis
+### Folie 1: Sherlock
 
 **Moayed · 0:30**
 
 Wir sind Mahmoud und Moayed, Team 15. Unser Agent heißt Sherlock. Er spielt Lux AI Season 3 und verbindet gelerntes Verhalten mit einem Gedächtnis für die Karte. Wir zeigen zuerst die Spielidee und den Ablauf, dann das Training und zum Schluss Ergebnisse und ein Beispiel. Unser Stand ist das Sechser-Ensemble old3_sym3.
 
-### Folie 2: Punkte finden, Felder halten, Matches gewinnen
+### Folie 2: Spielidee und Ziel
 
 **Moayed · 1:00**
 
 Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams steuern jeweils bis zu 16 Einheiten. Im Kurs besteht ein Spiel aus drei Matches. Wer mehr Matches gewinnt, gewinnt das Spiel. Die Herausforderung ist, dass der Agent nicht die ganze Karte sieht und die Punktefelder zunächst unbekannt sind. Er muss erkunden, Energie sinnvoll einsetzen und geeignete Felder besetzen. Auf dem Bild ist Sherlock blau und der Gegner rot. Die gelben Markierungen gehören zu Relics und Punktefeldern. Wichtig: Das ist die vollständige Replay-Ansicht für uns Zuschauer. Der Agent bekommt diese vollständige Information nicht.
 
-### Folie 3: Sherlock verbindet Gedächtnis und Lernen
+### Folie 3: Unser Agent
 
 **Moayed · 0:55**
 
 Die Grundidee lässt sich in drei Schritten erklären. Zuerst merkt Sherlock sich, was er schon gesehen hat. Dieses Gedächtnis nennen wir Belief. Danach erhält jede Einheit eine kompakte Beschreibung ihrer Situation. Sechs trainierte Netze bewerten die möglichen Aktionen. Schließlich wählen wir aus den erlaubten Aktionen die mit dem höchsten gemittelten Wert aus. Das Gedächtnis lernt nicht durch ein neuronales Netz: Es folgt programmierten Regeln und nutzt Beobachtungen. Die Bewertung der Aktionen wird dagegen im Training gelernt. Während der Auswertung wird nicht weitergelernt. Mahmoud erklärt jetzt, welche Informationen in die Netze eingehen und wie das Training funktioniert.
 
-### Folie 4: 79 Merkmale machen die Situation greifbar
+### Folie 4: Merkmale und Gedächtnis
 
 **Mahmoud · 1:05**
 
 Wir verwenden ein MLP mit 79 numerischen Merkmalen pro Einheit, keine vollständige Bildkarte. Die Merkmale beschreiben zum Beispiel Energie und Position, Umgebung, Ziele und Gegner. Das Belief speichert bekannte Relics, erkundete Bereiche und erschlossene Punktefelder. Vereinfachtes Beispiel: Eine einzige eigene Einheit steht auf einem noch unbekannten Kandidatenfeld und der Punktestand steigt um eins. Unter diesen Voraussetzungen lässt sich das Feld als Punktefeld erkennen. Bei mehreren Kandidaten braucht man weitere Beobachtungen. Außerdem verwenden wir die Kartensymmetrie. Davon zu unterscheiden sind kanonische Koordinaten: Beide Spielseiten werden aus vergleichbarer Perspektive beschrieben. Diese Regeln liefern Informationen an die gelernte Aktionsbewertung; sie ersetzen sie nicht.
 
-### Folie 5: Sechs Netze bewerten dieselben sechs Aktionen
+### Folie 5: Netzarchitektur und Ensemble
 
 **Mahmoud · 1:05**
 
 Jedes Mitglied des Ensembles ist ein Dueling-Netz. Es bekommt 79 Merkmale. Der gemeinsame Teil besteht aus zwei voll verbundenen Schichten mit jeweils 256 Neuronen und ReLU. Danach gibt es einen Kopf für den Zustandswert und einen Kopf für die Vorteile der sechs Aktionen; beide haben eine Zwischenschicht mit 128 Neuronen. Daraus entstehen sechs Q-Werte. Beim Spielen mitteln wir die Q-Werte der sechs trainierten Netze und wählen dann die beste erlaubte Aktion. Die sechs Aktionen sind Stehenbleiben, vier Bewegungsrichtungen und Sap. Das konkrete Sap-Ziel wird heuristisch gewählt. Double DQN bezeichnet unser Lernverfahren, Dueling die Netzarchitektur und Ensemble die Kombination mehrerer trainierter Netze.
 
-### Folie 6: Double DQN: auswählen und bewerten trennen
+### Folie 6: Double DQN
 
 **Mahmoud · 1:15**
 
 Im Training sammeln wir Erfahrungen pro Einheit: Situation, Aktion, Belohnung und Folgesituation. Zufällige Mini-Batches aus dem Replay Buffer verringern die direkte Abhängigkeit aufeinanderfolgender Erfahrungen. Double DQN trennt die Wahl der nächsten Aktion von ihrer Bewertung: Das aktuelle Online-Netz wählt die beste erlaubte Folgeaktion, das verzögert aktualisierte Target-Netz bewertet genau diese Aktion. Aus Belohnung und diskontiertem Folgewert entsteht das Lernziel. Am Ende eines Übergangs entfällt der Folgewert. Das Online-Netz wird an dieses Ziel angepasst; das Target-Netz wird alle 500 Lernupdates kopiert. Im Training probiert der Agent mit abnehmender Wahrscheinlichkeit Aktionen aus. Zusätzlich zu Punkten und Matchsiegen gibt es Shaping-Signale, etwa für Annäherung, Erkundung und Energie. Deren Gestaltung ist eine Modellierungsentscheidung mit eigenen Grenzen.
 
-### Folie 7: Sechs Trainingsläufe, danach feste Gewichte
+### Folie 7: Training und Auswertung
 
 **Mahmoud · 1:05**
 
 Die sechs Basisläufe des aktuellen Ensembles hatten jeweils ein Budget von 3.000 Spielen. Das sind zusammen 18.000 Trainingsspiele über diese Läufe. Die ausgewählten Checkpoints können früher im Lauf liegen. Andere Varianten und Validierungsspiele sind hier nicht mitgezählt. In den ersten 25 Prozent wird gegen default trainiert, anschließend abwechselnd gegen default und Solution_92. Die Spielseite wechselt. Wir prüfen regelmäßig auf getrennten Validierungskarten und wählen dort Checkpoints aus. Wichtige Einstellungen sind Gamma 0,99, Lernrate 0,0003, Batchgröße 256 und ein Buffer mit 300.000 Übergängen. Epsilon fällt in 60.000 Umgebungsschritten von 1 auf 0,05. Für die Ergebnisfolie gilt dagegen Epsilon null: Die Gewichte sind fest, es wird nicht gelernt.
 
-### Folie 8: Stark gegen default – der stärkere Gegner bleibt offen
+### Folie 8: Benchmark-Ergebnisse
 
 **Moayed · 1:05**
 
 Hier sehen wir die Ergebnisse des aktuellen Agenten. Gegen default gewinnt Sherlock 60 von 60 Spielen. Gegen den stärkeren regelbasierten Gegner Solution_92 sind es 28 von 60, also ungefähr 47 Prozent. Pro Gegner wurden 30 Karten auf beiden Spielseiten gespielt. Damit sind es 60 Spiele, aber nicht 60 unabhängige Karten. Diese Zahlen wurden mit den unveränderten Gewichten erneut bestätigt. Wir sollten daraus nicht ableiten, dass Sherlock immer gegen default gewinnt: Das Ergebnis gilt für diese Stichprobe. Außerdem wurden die Karten im Projekt bereits mehrfach ausgewertet. Für eine unabhängige Schlussbewertung brauchen wir später neue, zurückgehaltene Karten. Insgesamt funktioniert unser Ansatz, aber gegen den stärkeren Gegner gibt es noch deutliches Verbesserungspotenzial.
 
-### Folie 9: Ein Spiel: erst verteilen, dann Punktefelder besetzen
+### Folie 9: Spielbeispiel
 
 **Moayed · 1:20**
 
 Das sind zwei echte Bilder aus demselben Spiel gegen default. Sherlock ist blau, der Gegner rot. Links, bei Schritt 23, sind unsere Einheiten noch über die Karte verteilt und beide Teams haben null Punkte. Rechts, bei Schritt 90 im ersten Match, stehen viele blaue Einheiten im Bereich der gelb markierten Punktefelder. Der Zwischenstand ist 374 zu 11. Man sieht: Bewegung allein ist nicht das Ziel. Sobald geeignete Punktefelder bekannt sind, kann Stehenbleiben sinnvoll sein, weil ein besetztes Feld wiederholt Punkte bringt. Das Gedächtnis hilft dabei, einmal gewonnene Informationen weiterzuverwenden. Die Bilder zeigen die vollständige Zuschaueransicht, nicht den Wissensstand des Agenten. Dieses Spiel veranschaulicht einen gelungenen Ablauf; es beweist nicht, dass Sherlock in jedem Spiel so handelt. Die Niederlagen gegen Solution_92 gehören ebenfalls zu unserer Auswertung.
 
-### Folie 10: Erkenntnisse und die nächsten Schritte
+### Folie 10: Erkenntnisse und Ausblick
 
 **Mahmoud · 0:55**
 
 Unser Agent kombiniert gelernte Entscheidungen mit explizitem Wissen über das Spiel. Die bisherigen Versuche sprechen dafür, Gedächtnis und mehrere Netzbewertungen zu kombinieren. Weitertraining und Self-Play haben in den getesteten Varianten keinen klaren zusätzlichen Gewinn gebracht; das ist keine allgemeine Aussage gegen diese Verfahren. Eine Arbeitshypothese ist, dass bessere frühe Erkundung und frühere Inferenz im ersten Match helfen. Der Kandidat m1_early ist untersucht, aber noch nicht in der Abgabe aktiviert. Vor weiterem Training prüfen wir außerdem Reward und Einheitenübergänge. Für die nächste belastbare Bewertung wollen wir neue Testkarten zurückhalten. Der Präsentationsstand und seine Gewichte bleiben dabei fest.
 
-### Folie 11: Sherlock hat eine tragfähige Grundlage
+### Folie 11: Fazit und Fragen
 
 **Moayed · 0:25**
 
 Unser Zwischenstand ist ein trainierter und lauffähiger Agent, der sich Informationen merkt und mehrere Netzbewertungen kombiniert. Gegen default ist er auf unserem Benchmark stark, gegen Solution_92 ist noch Luft nach oben. Als Nächstes wollen wir gezielt die frühen Entscheidungen verbessern und sauber auf neuen Karten prüfen. Vielen Dank – wir freuen uns auf eure Fragen.
 
-### Folie 12: Trainingsparameter zum Nachschlagen
+### Folie 12: Trainingsparameter
 
 **Mahmoud · Reserve, nicht im Zeitplan**
 
 Reservefolie, nicht Teil des geplanten Vortrags. Diese Werte sind in der Konfiguration des aktuellen Ensemble-Checkpoints und in den sechs Laufmanifesten hinterlegt. 5.000 beim Lernbeginn bezeichnet Einheitenübergänge im Buffer, keine Spiele und keine Umgebungsschritte. Ein Update alle zwei Umgebungsschritte, sobald genügend Übergänge vorliegen. Target-Kopie nach 500 Lernupdates. Die sechs Läufe werden jeweils 3.000 Spiele trainiert; die aus der Validierung ausgewählten Gewichte können von einem früheren Checkpoint stammen.
 
-### Folie 13: Was wird gelernt – und was ist vorgegeben?
+### Folie 13: Gelernt und programmiert
 
 **Mahmoud · Reserve, nicht im Zeitplan**
 

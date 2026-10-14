@@ -48,3 +48,7 @@ Sherlock ist player_0/blau, default player_1/rot; Seed 900011. Die Bilder zeigen
 ## Randloser PDF-Hintergrund
 
 Am 14.10. wurde ausschließlich der PDF-Export auf den dunklen Seiten 1 und 11 korrigiert: Hintergrundfläche und Beschnitt reichen dort einen Punkt über die Seitenkante hinaus. Dadurch entfällt die weiße Haarlinie durch Export-/Rasterrundung. Seitenformat, Texte und Positionen bleiben gleich; die PowerPoint ist bereits randlos und unverändert. Nach einem neuen PDF-Export die Außenkanten dieser Seiten prüfen. Aktuelle Prüfsummen stehen in `PRUEFUNG.json`.
+
+## Kurztitel und Aufzählungen
+
+Die Titel wurden am 14.10. auf kurze Themenbezeichnungen umgestellt. Folien 2, 8, 9 und 11 verwenden native Aufzählungsabsätze mit hängendem Einzug. Titel im Vortragsplan und in `slides.json` entsprechen der aktuellen PowerPoint/PDF. Sprechernotizen, fachliche Nachweise, Diagramm-Datentabelle, Zeitbudget und Sprecheraufteilung bleiben erhalten.
