@@ -1,21 +1,16 @@
 # Sherlock: Vortragsplan für den 16.10.2026
 
-Stand: 14.10.2026. Neu aufgebaut auf Moayeds Auftrag; ersetzt die früher erwähnten externen Entwürfe. **Aktuelle Gamma-Fassung: 10 Vortragsfolien. Ziel 10:40 Minuten, maximal 12 Minuten Vortrag.** Ausblick und Abschluss stehen gemeinsam auf Folie 10. Die ursprünglichen zwei Reservefolien bleiben in der bisherigen PowerPoint/PDF und als Notizen weiter unten erhalten. Die Zeiten sind Planwerte, keine gemessene Probe. Fragen im Anschluss sind nicht in den 10:40 enthalten; genaue Slotaufteilung vor Ort bestätigen.
+Stand: 14.10.2026. Auf Moayeds Wunsch wieder die ursprüngliche Fassung; sie ist die einzige aktuelle Präsentation im Repository. **11 Vortragsfolien + 2 ausgeblendete Reservefolien. Ziel 10:40 Minuten, maximal 12 Minuten Vortrag.** Die Zeiten sind Planwerte, keine gemessene Probe. Fragen im Anschluss sind nicht in den 10:40 enthalten; genaue Slotaufteilung vor Ort bestätigen.
 
 ## Dateien und Bearbeitung
 
-- [Aktuelle Präsentation in Gamma](https://gamma.app/docs/ltmbj9ep61c77yl)
-- [Gamma-PowerPoint mit ergänzten Sprechernotizen](Sherlock_Review_Gamma_16-10-2026.pptx)
-- [Gamma-PDF für Vortrag und Upload](Sherlock_Review_Gamma_16-10-2026.pdf)
-- [Bisherige PowerPoint mit Reservefolien](Sherlock_Review_16-10-2026.pptx) und [bisherige PDF](Sherlock_Review_16-10-2026.pdf) als Rückfalloption
+- [Bearbeitbare PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx)
+- [PDF für Vortrag und Upload](Sherlock_Review_16-10-2026.pdf)
 - [Gemeinsame Checkliste](CHECKLISTE_REVIEW_1610.md)
-- [Gamma-Bearbeitung und Übergabe](GAMMA_DESIGN_1610.md)
-- [Sprechernotizen und Quellen der zehn Gamma-Folien](source/gamma-slides.json)
+- [Folieninhalte, Notizen und Quellen als JSON](source/slides.json)
 - [Bildquellen und fachliche Nachweise](source/QUELLEN.md)
 
-Gamma ist die aktuelle Quelle für das neue Design. Nach Änderungen dort neue Exporte erstellen und den Vortragsplan abgleichen. Die lokale Gamma-PowerPoint erhält zusätzlich die vorhandenen Sprechernotizen; ein frischer Gamma-Export übernimmt diese lokalen Ergänzungen nicht automatisch. Diagramme werden im Gamma-PowerPoint-Export nicht zwingend als native Excel-Diagramme ausgegeben; die ursprüngliche PowerPoint enthält das native Ergebnisdiagramm. Die neue PDF endet nach Seite 10. Reserveinformationen stehen im Leitfaden und in der ursprünglichen Fassung, nicht als zusätzliche Gamma-Folien.
-
-Sprechernotizen sind Lern- und Probenhilfe, kein Text zum Ablesen. Auf dem tatsächlichen Präsentationsrechner Schriftbild und Notizenansicht vorab testen. Der kostenlose Gamma-Tarif begrenzt die Erstellung auf zehn Karten und zeigt ein Gamma-Wasserzeichen im Export.
+Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm sind native Elemente; Spielbilder sind Screenshots. Nach Änderungen auch die PDF neu exportieren und prüfen. Die PDF enthält den Anhang als Seiten 12–13; beim normalen Vortrag auf Seite 11 enden. In PowerPoint sind die beiden Reservefolien ausgeblendet. Sprechernotizen sind Lern- und Probenhilfe, kein Text zum Ablesen. Auf dem tatsächlichen Präsentationsrechner Schriftbild und Notizenansicht vorab testen.
 
 ## Aufteilung und Zeitplan
 
@@ -32,10 +27,10 @@ Sprechernotizen sind Lern- und Probenhilfe, kein Text zum Ablesen. Auf dem tats�
 | 5 | Sechs Netze bewerten dieselben sechs Aktionen | Mahmoud | 1:05 | 3:30–4:35 |
 | 6 | Double DQN: auswählen und bewerten trennen | Mahmoud | 1:15 | 4:35–5:50 |
 | 7 | Sechs Trainingsläufe, danach feste Gewichte | Mahmoud | 1:05 | 5:50–6:55 |
-| 8 | Benchmark-Ergebnisse | Moayed | 1:05 | 6:55–8:00 |
+| 8 | Stark gegen default – der stärkere Gegner bleibt offen | Moayed | 1:05 | 6:55–8:00 |
 | 9 | Ein Spiel: erst verteilen, dann Punktefelder besetzen | Moayed | 1:20 | 8:00–9:20 |
-| 10, erster Teil | Erkenntnisse und nächste Schritte | Mahmoud | 0:55 | 9:20–10:15 |
-| 10, Abschluss | Fazit und Fragen | Moayed | 0:25 | 10:15–10:40 |
+| 10 | Erkenntnisse und die nächsten Schritte | Mahmoud | 0:55 | 9:20–10:15 |
+| 11 | Sherlock hat eine tragfähige Grundlage | Moayed | 0:25 | 10:15–10:40 |
 
 Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. Es gibt keine zusätzliche Live-Demo im Zeitbudget. Die Spielbilder auf Folie 9 funktionieren auch ohne Internet.
 
@@ -44,7 +39,7 @@ Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. 
 - Nach Folie 3, Moayed: „Mahmoud erklärt jetzt, welche Informationen in die Netze eingehen und wie das Training funktioniert.“
 - Nach Folie 7, Mahmoud: „Damit steht unser Agent fest. Moayed zeigt jetzt, wie er in der Auswertung abschneidet.“
 - Nach Folie 9, Moayed: „Das war ein gelungenes Beispiel. Mahmoud ordnet jetzt die Grenzen und unsere nächsten Schritte ein.“
-- Auf Folie 10 nach den nächsten Schritten, Mahmoud: „Damit zurück an Moayed für unser Fazit.“
+- Nach Folie 10, Mahmoud: „Damit zurück an Moayed für unser Fazit.“
 
 ### Wenn ihr auf genau zehn Minuten kommen müsst
 
@@ -56,7 +51,7 @@ Kontrollpunkt: Folie 8 beginnt geplant bei 6:55. Wenn ihr dort erst bei 8:00 sei
 
 1. **15 Minuten gemeinsam:** Folien durchgehen. Mahmoud erklärt Moayed Belief, Q-Wert, Ensemble und Double DQN jeweils an einem Beispiel. Offene Fragen direkt klären.
 2. **20 Minuten einzeln:** Eigene Folien in eigenen Worten erklären. Moayed braucht vor allem die Zahlen 60/60, 28/60 und „30 Karten auf beiden Seiten“ sowie die Bildgeschichte auf Folie 9. Mahmoud prüft die technischen Aussagen gegen den tatsächlichen Code.
-3. **Zwei vollständige Proben mit Uhr:** Je rund elf Minuten plus kurze Rückmeldung. Erste Probe zur Verständlichkeit, zweite zur Zeit. Übergaben mitproben und in der neuen PDF nach Folie 10 stoppen.
+3. **Zwei vollständige Proben mit Uhr:** Je rund elf Minuten plus kurze Rückmeldung. Erste Probe zur Verständlichkeit, zweite zur Zeit. Übergaben mitproben und auf der PDF nach Folie 11 stoppen.
 4. **10 Minuten Abschluss:** Export auf dem Vortragsrechner öffnen, Schriftbild/Diagramm/Spielbilder prüfen, PDF lokal sichern, Upload erledigen.
 
 Das ergibt ungefähr 70–80 Minuten konzentrierte Vorbereitung, verteilt auf kurze Blöcke. Mehr Zeit einplanen, falls die Grundbegriffe noch unklar sind. Frei sprechen; Stichworte dürfen beim Üben helfen, sollen aber beim Vortrag nicht abgelesen werden.
@@ -137,7 +132,7 @@ Im Training sammeln wir Erfahrungen pro Einheit: Situation, Aktion, Belohnung un
 
 Die sechs Basisläufe des aktuellen Ensembles hatten jeweils ein Budget von 3.000 Spielen. Das sind zusammen 18.000 Trainingsspiele über diese Läufe. Die ausgewählten Checkpoints können früher im Lauf liegen. Andere Varianten und Validierungsspiele sind hier nicht mitgezählt. In den ersten 25 Prozent wird gegen default trainiert, anschließend abwechselnd gegen default und Solution_92. Die Spielseite wechselt. Wir prüfen regelmäßig auf getrennten Validierungskarten und wählen dort Checkpoints aus. Wichtige Einstellungen sind Gamma 0,99, Lernrate 0,0003, Batchgröße 256 und ein Buffer mit 300.000 Übergängen. Epsilon fällt in 60.000 Umgebungsschritten von 1 auf 0,05. Für die Ergebnisfolie gilt dagegen Epsilon null: Die Gewichte sind fest, es wird nicht gelernt.
 
-### Folie 8: Benchmark-Ergebnisse
+### Folie 8: Stark gegen default – der stärkere Gegner bleibt offen
 
 **Moayed · 1:05**
 
@@ -155,19 +150,19 @@ Das sind zwei echte Bilder aus demselben Spiel gegen default. Sherlock ist blau,
 
 Unser Agent kombiniert gelernte Entscheidungen mit explizitem Wissen über das Spiel. Die bisherigen Versuche sprechen dafür, Gedächtnis und mehrere Netzbewertungen zu kombinieren. Weitertraining und Self-Play haben in den getesteten Varianten keinen klaren zusätzlichen Gewinn gebracht; das ist keine allgemeine Aussage gegen diese Verfahren. Eine Arbeitshypothese ist, dass bessere frühe Erkundung und frühere Inferenz im ersten Match helfen. Der Kandidat m1_early ist untersucht, aber noch nicht in der Abgabe aktiviert. Vor weiterem Training prüfen wir außerdem Reward und Einheitenübergänge. Für die nächste belastbare Bewertung wollen wir neue Testkarten zurückhalten. Der Präsentationsstand und seine Gewichte bleiben dabei fest.
 
-### Folie 10, Abschluss: Sherlock hat eine tragfähige Grundlage
+### Folie 11: Sherlock hat eine tragfähige Grundlage
 
 **Moayed · 0:25**
 
 Unser Zwischenstand ist ein trainierter und lauffähiger Agent, der sich Informationen merkt und mehrere Netzbewertungen kombiniert. Gegen default ist er auf unserem Benchmark stark, gegen Solution_92 ist noch Luft nach oben. Als Nächstes wollen wir gezielt die frühen Entscheidungen verbessern und sauber auf neuen Karten prüfen. Vielen Dank – wir freuen uns auf eure Fragen.
 
-### Reserveinformation: Trainingsparameter (Folie 12 der ursprünglichen Fassung)
+### Folie 12: Trainingsparameter zum Nachschlagen
 
 **Mahmoud · Reserve, nicht im Zeitplan**
 
 Reservefolie, nicht Teil des geplanten Vortrags. Diese Werte sind in der Konfiguration des aktuellen Ensemble-Checkpoints und in den sechs Laufmanifesten hinterlegt. 5.000 beim Lernbeginn bezeichnet Einheitenübergänge im Buffer, keine Spiele und keine Umgebungsschritte. Ein Update alle zwei Umgebungsschritte, sobald genügend Übergänge vorliegen. Target-Kopie nach 500 Lernupdates. Die sechs Läufe werden jeweils 3.000 Spiele trainiert; die aus der Validierung ausgewählten Gewichte können von einem früheren Checkpoint stammen.
 
-### Reserveinformation: Gelernt / vorgegeben (Folie 13 der ursprünglichen Fassung)
+### Folie 13: Was wird gelernt – und was ist vorgegeben?
 
 **Mahmoud · Reserve, nicht im Zeitplan**
 

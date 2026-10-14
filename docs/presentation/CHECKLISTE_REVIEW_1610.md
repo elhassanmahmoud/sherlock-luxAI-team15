@@ -11,9 +11,9 @@ Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufg
 
 ## Stand der Präsentationsdatei
 
-Aktuell: [Gamma-Fassung](https://gamma.app/docs/ltmbj9ep61c77yl), [PowerPoint mit ergänzten Notizen](Sherlock_Review_Gamma_16-10-2026.pptx) und [PDF](Sherlock_Review_Gamma_16-10-2026.pdf). **Zehn Vortragsfolien**, Ziel **10:40 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung und Lernhilfe](VORTRAGSPLAN_1610.md): Moayed 5:15, Mahmoud 5:25. Auf Folie 10 spricht zuerst Mahmoud über Erkenntnisse/nächste Schritte und danach Moayed das Fazit. Diese Zusammenfassung hält den kostenlosen Gamma-Tarif mit maximal zehn Karten pro Erstellung ein.
+Am 14.10. auf Moayeds Auftrag neu erstellt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **11 Vortragsfolien + 2 Reservefolien**, Ziel **10:40 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:15 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:25 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
 
-Die ursprüngliche [PowerPoint](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf) mit elf Haupt- und zwei Reservefolien bleiben als Rückfalloption erhalten. Die Reserveinformationen stehen auch im Leitfaden. Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die neue PDF endet nach Seite 10.
+Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 11 stoppen und Seiten 12–13 nur bei Rückfragen zeigen.
 
 ## Geforderte Inhalte und verfügbare Belege
 
@@ -22,12 +22,12 @@ Die ursprüngliche [PowerPoint](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherl
 | Agent und Algorithmus als Pseudocode | Folie 3: Ablauf beim Spielen; Folie 6: vereinfachter Trainingsschritt | Spielen und Lernen sicher unterscheiden |
 | Netzarchitektur | Folie 5: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
 | RL-Algorithmus | Folie 6: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
-| Trainingskonfiguration | Folie 7 sowie Notizen/Reserveinformation im Leitfaden; Werte mit gespeicherter cfg abgeglichen | Lernbeginn nach 5000 Einheitenübergängen, nicht Spielen |
+| Trainingskonfiguration | Folien 7 und 12 sowie Notizen; Werte mit gespeicherter cfg abgeglichen | Lernbeginn nach 5000 Einheitenübergängen, nicht Spielen |
 | Feature Engineering | Folie 4: 79 Merkmale, Belief, Inferenzbeispiel in Notizen | Beobachtetes Wissen und vollständige Zuschaueransicht unterscheiden |
 | Trainingsablauf, Spiele, Gegner | Folie 7: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
 | Ausgewählte Spiele | Folie 9: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |
 | Beobachtungen, Hypothesen, Erkenntnisse | Folien 8 und 10: Ergebnisse, Grenzen, erfolglose Versuche, Hypothese | Mehrfach verwendeten Benchmark offen benennen |
-| Fragen und nächste Schritte | Folie 10; Reserveinformationen im Leitfaden | m1_early als späteren Kandidaten darstellen |
+| Fragen und nächste Schritte | Folien 10–11; Reserve 12–13 | m1_early als späteren Kandidaten darstellen |
 
 ## Zahlen und Aussagen für die Ergebnisfolie
 
