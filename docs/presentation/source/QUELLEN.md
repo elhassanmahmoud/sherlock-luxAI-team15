@@ -44,3 +44,7 @@ Sherlock ist player_0/blau, default player_1/rot; Seed 900011. Die Bilder zeigen
 - `replay_023.png`: `871157e7ff99a4c169e40b892c12621310172f44d9041ae76a32954933583670`
 - `replay_061.png`: `872008904674bd28351f58dc36de1596ec91a975a5f4e2c7b9690d6a8431b31f`
 - `replay_090.png`: `5c66179058e2579a036ce066af9ebbabc3703590bd0c1a18cc7b3bd6e1f57eb0`
+
+## Randloser PDF-Hintergrund
+
+Am 14.10. wurde ausschließlich der PDF-Export auf den dunklen Seiten 1 und 11 korrigiert: Hintergrundfläche und Beschnitt reichen dort einen Punkt über die Seitenkante hinaus. Dadurch entfällt die weiße Haarlinie durch Export-/Rasterrundung. Seitenformat, Texte und Positionen bleiben gleich; die PowerPoint ist bereits randlos und unverändert. Nach einem neuen PDF-Export die Außenkanten dieser Seiten prüfen. Aktuelle Prüfsummen stehen in `PRUEFUNG.json`.
