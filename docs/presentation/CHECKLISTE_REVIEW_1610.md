@@ -1,6 +1,6 @@
 # Checkliste Review 16.10.2026 (benotet, 1/3 der Note)
 
-Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufgabe „Submission 1“ aus dem vom Team bereitgestellten Screenshot.
+Stand: 15.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufgabe „Submission 1“ aus dem vom Team bereitgestellten Screenshot.
 
 ## Termin, Vortragszeit und Slot
 
@@ -11,23 +11,23 @@ Stand: 14.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufg
 
 ## Stand der Präsentationsdatei
 
-Am 14.10. auf Moayeds Auftrag neu erstellt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **11 Vortragsfolien + 2 Reservefolien**, Ziel **10:40 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:15 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:25 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
+Am 14.10. auf Moayeds Auftrag erstellt, am 15.10. um eine Agenda ergänzt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **12 Vortragsfolien + 2 Reservefolien**, Ziel **11:00 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:35 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:25 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
 
-Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 11 stoppen und Seiten 12–13 nur bei Rückfragen zeigen.
+Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 12 stoppen und Seiten 13–14 nur bei Rückfragen zeigen.
 
 ## Geforderte Inhalte und verfügbare Belege
 
 | Vorgabe | Umsetzung im neuen Foliensatz | Vor der Präsentation |
 |---|---|---|
-| Agent und Algorithmus als Pseudocode | Folie 3: eingerückter Pseudocode beim Spielen; Folie 6: Pseudocode des Double-DQN-Lernupdates | Spielen und Lernen sicher unterscheiden |
-| Netzarchitektur | Folie 5: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
-| RL-Algorithmus | Folie 6: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
-| Trainingskonfiguration | Folie 7: Lernrate, γ, Batch/Buffer, Exploration und Target-Kopie sichtbar; weitere Werte auf Reservefolie 12 | Umgebungsschritte, Einheitenübergänge und Lernupdates unterscheiden |
-| Feature Engineering | Folie 4: 79 Merkmale, Belief, Inferenzbeispiel in Notizen | Beobachtetes Wissen und vollständige Zuschaueransicht unterscheiden |
-| Trainingsablauf, Spiele, Gegner | Folie 7: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
-| Ausgewählte Spiele | Folie 9: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |
-| Beobachtungen, Hypothesen, Erkenntnisse | Folien 8 und 10: Ergebnisse, Grenzen, erfolglose Versuche, Hypothese | Mehrfach verwendeten Benchmark offen benennen |
-| Fragen und nächste Schritte | Folien 10–11; Reserve 12–13 | m1_early als späteren Kandidaten darstellen |
+| Agent und Algorithmus als Pseudocode | Folie 4: eingerückter Pseudocode beim Spielen; Folie 7: Pseudocode des Double-DQN-Lernupdates | Spielen und Lernen sicher unterscheiden |
+| Netzarchitektur | Folie 6: 79 → 256 → 256, Dueling-Köpfe, sechs Netze | Q-Mittelwert und Aktionsmaske erklären |
+| RL-Algorithmus | Folie 7: Double DQN, Replay Buffer, Target-Netz; Notizen | Online-Netz wählt, Target-Netz bewertet |
+| Trainingskonfiguration | Folie 8: Lernrate, γ, Batch/Buffer, Exploration und Target-Kopie sichtbar; weitere Werte auf Reservefolie 13 | Umgebungsschritte, Einheitenübergänge und Lernupdates unterscheiden |
+| Feature Engineering | Folie 5: 79 Merkmale, Belief, Inferenzbeispiel in Notizen | Beobachtetes Wissen und vollständige Zuschaueransicht unterscheiden |
+| Trainingsablauf, Spiele, Gegner | Folie 8: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
+| Ausgewählte Spiele | Folie 10: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |
+| Beobachtungen, Hypothesen, Erkenntnisse | Folien 9 und 11: Ergebnisse, Grenzen, erfolglose Versuche, Hypothese | Mehrfach verwendeten Benchmark offen benennen |
+| Fragen und nächste Schritte | Folien 11–12; Reserve 13–14 | m1_early als späteren Kandidaten darstellen |
 
 ## Zahlen und Aussagen für die Ergebnisfolie
 
@@ -51,12 +51,12 @@ Der aktuelle [Vortragsplan](VORTRAGSPLAN_1610.md#aufteilung-und-zeitplan) enthä
 ## Bewertungsraster und Team-To-dos
 
 - [ ] Slot/Buchung auf Moodle bestätigen; Buchungsstand ist hier nicht bekannt.
-- [x] Neuen Folienexport erstellen; Pflichtinhalte auf Folien 2–10 und in den Sprechernotizen abdecken.
+- [x] Neuen Folienexport erstellen; Pflichtinhalte auf Folien 3–11 und in den Sprechernotizen abdecken.
 - [ ] Inhalt und Aufteilung gemeinsam bestätigen; Export auf dem Vortragsrechner prüfen.
 - [x] Teamnamen, Gruppe 15, Agent Sherlock und aktuelle Ensemble-Architektur korrekt angeben.
 - [x] Klare Kernaussage und nachvollziehbaren Aufbau verwenden: Aufgabe → Lösung → Training → Ergebnisse → Erkenntnisse → Ausblick.
 - [x] Bilder/Diagramme/Spielbeispiele lesbar gestalten; historische Ergebnisse und aktuelle Abgabe sauber beschriften.
-- [x] Replay-Ausschnitt festgelegt: Seed 900011, erstes Match, Frames 23 und 90. Echte Viewer-Bilder auf Folie 9, ohne Internet vorführbar.
+- [x] Replay-Ausschnitt festgelegt: Seed 900011, erstes Match, Frames 23 und 90. Echte Viewer-Bilder auf Folie 10, ohne Internet vorführbar.
 - [ ] Beide können den Bildvergleich in eigenen Worten erklären.
 - [x] Sprechanteile und Übergaben im Vortragsplan aufteilen.
 - [ ] Mindestens zweimal gemeinsam mit Uhr auf 10–12 Minuten proben; frei und in eigenen Worten sprechen.

@@ -15,7 +15,7 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 
 **Erste Präsentation am 16.10.:** ungefähr **zehn Minuten Vortrag**, Präsentationsupload bis **08:00 Uhr** laut Moodle-Aufgabe „Submission 1“. Laut Team sind die Slots 20 Minuten lang. Eine Aufteilung der übrigen Zeit für Fragen/Puffer sowie längere Vorträge bei späteren Terminen sind noch nicht bestätigt. Vorbereitung: [Review-Checkliste](docs/presentation/CHECKLISTE_REVIEW_1610.md).
 
-**Aktueller Foliensatz im ursprünglichen Design:** [PowerPoint mit Notizen](docs/presentation/Sherlock_Review_16-10-2026.pptx) · [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf) · [Vortragsplan und Lernhilfe](docs/presentation/VORTRAGSPLAN_1610.md). Elf Vortragsfolien plus zwei Reservefolien; geplant 10:40 Minuten, maximal zwölf. Moayed übernimmt den anschaulichen Teil (5:15), Mahmoud die Technik und nächsten Schritte (5:25). Pseudocode beim Spielen steht auf Folie 3, die wichtigsten Trainingsparameter auf Folie 7. Gemeinsame Probe und Moodle-Upload stehen noch aus.
+**Aktueller Foliensatz im ursprünglichen Design:** [PowerPoint mit Notizen](docs/presentation/Sherlock_Review_16-10-2026.pptx) · [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf) · [Vortragsplan und Lernhilfe](docs/presentation/VORTRAGSPLAN_1610.md). Zwölf Vortragsfolien plus zwei Reservefolien; geplant 11:00 Minuten, maximal zwölf. Moayed übernimmt den anschaulichen Teil (5:35), Mahmoud die Technik und nächsten Schritte (5:25). Agenda auf Folie 2; Pseudocode beim Spielen steht auf Folie 4, die wichtigsten Trainingsparameter auf Folie 8. Gemeinsame Probe und Moodle-Upload stehen noch aus.
 
 ## Inhalt
 

@@ -1,15 +1,15 @@
 {
-  "date": "2026-10-14",
+  "date": "2026-10-15",
   "content_base_commit": "12e0c4d9c31a81c54ba453b4f3fbb350b0589faa",
-  "total_slides": 13,
-  "main_slides": 11,
+  "total_slides": 14,
+  "main_slides": 12,
   "hidden_slides": [
-    12,
-    13
+    13,
+    14
   ],
-  "pdf_pages": 13,
+  "pdf_pages": 14,
   "planned_seconds": {
-    "Moayed": 315,
+    "Moayed": 335,
     "Mahmoud": 325
   },
   "human_rehearsal_done": false,
@@ -18,15 +18,15 @@
     "layout_and_font_policy": "passed",
     "editable_chart_and_embedded_workbook": "passed",
     "speaker_notes_on_all_slides": "passed",
-    "all_13_pdf_pages_visually_inspected": "passed",
     "replay_frame_scores_checked": "passed",
     "relative_document_links": "passed",
     "native_powerpoint_execution": "not performed",
-    "new_agent_training_or_tests": "not performed; documentation only"
+    "new_agent_training_or_tests": "not performed; documentation only",
+    "agenda_visually_inspected_existing_slide_bodies_compared": "passed"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "b9e4fbedc86fcb79d28e4ecff682533db87d5a259c2b4b4cff51d4a5ceca1c7f",
-    "Sherlock_Review_16-10-2026.pdf": "8dbb3062869b3d45731416281878abb1635ce2a0582651a4a683a688f4ec4e04"
+    "Sherlock_Review_16-10-2026.pptx": "00b7eab2304499565299f4587acb9d631e785466a719cfe961e4d708d6285a3f",
+    "Sherlock_Review_16-10-2026.pdf": "548b40291b88de71212c1d86e7cc05a01e05d45da1623643631d46d2af7bbf31"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -142,5 +142,26 @@
       386
     ],
     "verification": "Pseudocode checked against _learn. Package/layout/fonts/native tables/chart/workbook passed. Changed slides visually inspected; 11 others pixel-identical. PPTX dimensions identical; PDF table bounding differences below 0.1 pt export rounding. Main-slide text reviewed for presenter-only directions. Notes/timing/weights unchanged; native PowerPoint not tested."
+  },
+  "agenda_revision": {
+    "date": "2026-10-15",
+    "base_commit": "b3c7e3d",
+    "added_slide": 2,
+    "agenda_topics": [
+      "Spielidee und Ziel",
+      "Agent und Merkmale",
+      "Netzarchitektur und Lernverfahren",
+      "Training und Auswertung",
+      "Ergebnisse und Spielbeispiel",
+      "Erkenntnisse und Ausblick"
+    ],
+    "main_slides": 12,
+    "appendix_slides": [
+      13,
+      14
+    ],
+    "planned_seconds": 660,
+    "historical_numbering_note": "Earlier revision objects refer to their pre-agenda slide numbers.",
+    "verification": "Package/layout/fonts/native charts/tables/workbook passed; agenda visually inspected. Existing slide bodies and speaker notes preserved; existing renders identical outside changed page-number footer. All media/chart/workbook bytes and weight hashes unchanged. Dark edges corrected on pages 1/12. Native PowerPoint not tested."
   }
 }
