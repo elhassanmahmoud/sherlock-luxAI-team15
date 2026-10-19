@@ -83,6 +83,10 @@ class AgentConfig:
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""
+    keep_dead_fast: bool = False
+    """True: wie Solution_92 - Null-Tiles bleiben ueber Matchgrenzen gueltig, nur
+    Tiles neben NEU gefundenen Relics werden wieder offen (Risiko: ein noch
+    ungesehenes neues Relic; Widersprueche oeffnen dann alles)."""
     # --- Regel-Schalter (19.10.2026, rules.py). Default aus.
     pt_walk: bool = False
     """True: Units, deren Ziel ein bewiesenes Punkte-Tile ist, laufen auf dem
@@ -126,6 +130,8 @@ class AgentConfig:
     w_match: float = 2.0
     w_discovery: float = 0.5
     w_sap_hit: float = 0.3
+    w_opp_points: float = 0.0
+    """> 0: Strafe je Gegner-Punkt in diesem Step, auf das Team verteilt (19.10.)."""
 
     def to_dict(self) -> dict:
         return asdict(self)

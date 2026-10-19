@@ -99,7 +99,7 @@ class Belief:
     def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
                  symmetry: bool = False, early_inference: bool = False,
                  relic_filter: bool = False, subset_infer: bool = False,
-                 keep_dead: bool = False):
+                 keep_dead: bool = False, keep_dead_fast: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
@@ -107,6 +107,7 @@ class Belief:
         self.relic_filter = bool(relic_filter)
         self.subset_infer = bool(subset_infer)
         self.keep_dead = bool(keep_dead)
+        self.keep_dead_fast = bool(keep_dead_fast)
         self.set_team(team_id)
         self.reset_game()
 
@@ -165,7 +166,12 @@ class Belief:
         # Neues Match => moeglicherweise neues Relic-Paar => Punkte-Regel aendert sich
         if self.keep_dead:
             self._dead_hist |= self._dead
-        self._reopen_dead()
+        if self.keep_dead_fast:
+            # wie Solution_92: Null-Tiles bleiben, nur die Gleichungen verfallen;
+            # Tiles neben neu gefundenen Relics oeffnet _add_relic wieder
+            self.records.clear()
+        else:
+            self._reopen_dead()
 
     # ------------------------------------------------------------ observation
     def observe(self, obs) -> None:
@@ -249,6 +255,16 @@ class Belief:
             return
         self.relic_positions.add((x, y))
         self.relic_match[(x, y)] = self.match_idx
+        if self.keep_dead_fast and self._dead:
+            r = RELIC_REWARD_RANGE
+            for dx in range(-r, r + 1):
+                for dy in range(-r, r + 1):
+                    tx, ty = x + dx, y + dy
+                    if 0 <= tx < self.W and 0 <= ty < self.H:
+                        f = tx * self.H + ty
+                        if f in self._dead:
+                            self._dead.discard(f)
+                            self.dead_tiles[tx, ty] = False
         r = RELIC_REWARD_RANGE
         self.relic_zone[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
         self._cand_dirty = True

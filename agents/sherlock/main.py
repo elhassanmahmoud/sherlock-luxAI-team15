@@ -94,7 +94,8 @@ class Agent_x:
                              early_inference=self.cfg.early_inference,
                              relic_filter=self.cfg.relic_filter,
                              subset_infer=self.cfg.subset_infer,
-                             keep_dead=self.cfg.keep_dead)
+                             keep_dead=self.cfg.keep_dead,
+                             keep_dead_fast=self.cfg.keep_dead_fast)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,

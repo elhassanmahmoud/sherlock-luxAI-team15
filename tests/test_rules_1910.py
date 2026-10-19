@@ -153,3 +153,14 @@ def test_keep_dead_waits_while_new_relic_may_still_spawn():
     b.reset_match()
     b._restore_dead()
     assert not b.dead_tiles[5, 6]
+
+
+def test_opp_points_penalty_is_shared_by_team():
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.reward import unit_rewards
+    cfg = AgentConfig(w_opp_points=1.0, w_energy=0.0, w_shape=0.0, w_point=0.0)
+    ctx = _ctx([[1, 1], [2, 2]], [100, 100], [0, 1])
+    nxt = _ctx([[1, 1], [2, 2]], [100, 100], [0, 1])
+    nxt["belief"].opp_gain = 4
+    r = unit_rewards(cfg, ctx, nxt, {0: 0, 1: 0}, {})
+    assert r[0] == r[1] == -2.0

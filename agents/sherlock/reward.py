@@ -12,6 +12,7 @@ DQN viel zu spaerlich, deshalb formen wir pro Einheit und pro Step:
     - w_death     * Einheit verloren
     + w_sap_hit   * getroffene Gegner beim Sap (bzw. Strafe bei Fehlschuss)
     + w_match     * Matchergebnis in DIESEM Step (+1 Sieg, -1 Niederlage)
+    - w_opp_points * Gegner-Punkte in diesem Step (geteilt im Team, Default 0)
 
 Mit cfg.use_shaping = False (Ablation no_shaping) bleibt nur
   r = w_point * (Eigentuemer eines bewiesenen Punkte-Tiles) + w_match * Matchergebnis
@@ -115,6 +116,8 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict,
     team_bonus = (
         cfg.w_explore * min(belief.newly_explored / 20.0, 1.0)
         + cfg.w_discovery * belief.newly_proven
+        # 19.10.2026: Gegner-Punkte dieses Steps kosten das ganze Team (Stoeren lohnt)
+        - cfg.w_opp_points * getattr(belief, "opp_gain", 0)
     ) / n
 
     outcome = match_outcome(ctx, next_ctx)

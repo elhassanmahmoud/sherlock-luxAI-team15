@@ -27,6 +27,13 @@ VARIANTS: dict[str, tuple[str, dict]] = {
                                 "subset_infer": True, "explore_grid": True,
                                 "scripted_explore": True, "explore_stale": 20,
                                 "reward_fix": True}),
+    # 19.10.2026 abends: + Solution_92-Gedaechtnis und Strafe fuer Gegner-Punkte
+    "full_rules_opp": ("sherlock", {"use_symmetry": True, "explore_memory": True,
+                                    "early_inference": True, "relic_filter": True,
+                                    "subset_infer": True, "explore_grid": True,
+                                    "scripted_explore": True, "explore_stale": 20,
+                                    "reward_fix": True, "keep_dead_fast": True,
+                                    "w_opp_points": 1.0}),
     "no_belief": ("sherlock", {"use_belief": False}),
     "no_shaping": ("sherlock", {"use_shaping": False}),
     "no_sap": ("sherlock", {"use_sap": False}),
