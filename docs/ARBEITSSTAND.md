@@ -35,6 +35,10 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **Läuft/eingeplant (19.10. abends):** 6 × `full_rules` mit 70 % Solution_92, 4000 Spiele (`*_sol70`); PPO `cnn1` bis Iteration 150 (Iteration 50: 63 %); danach automatisch 6 × `full_rules_opp` (+ `keep_dead_fast`, Reward-Strafe `w_opp_points=1` für Gegner-Punkte, Gegner 60 % Solution_92 / 20 % Pool aus old3_sym3 + rules6 / 20 % default); CNN `cnn2` = BC vom Lehrer rules6 (800 Spiele, Lehrer-WR 65 % vs Solution_92 auf Trainingskarten), größeres Netz 48 Kanäle × 4 Blöcke.
 
+**Weitere Ergebnisse 19.10. abends:** „Scharfschützen“-Regel (Ziele auf gegnerischen Punkte-Tiles durch Tiles ersetzen, die Solution_92 wegen seiner Manhattan-Reichweitenprüfung nicht beschießt): **22 % statt 74 %** – viele „gegnerische“ Punkte-Tiles liegen direkt an der Mittellinie und sind wertvoll; Code wieder entfernt. PPO `cnn1` bei Iteration 80 angehalten (Rechner überlastet, 285 s/Iteration): Iteration 50 63,0 %, 80 60,5 % vs Solution_92 (BC 58 %), default jeweils 100 % – kein belegter Fortschritt durch PPO.
+
+**Nacht-Pipeline** `scripts/overnight_1910.sh` (Log `experiments/overnight_1910.log`): wartet auf die Trainings, baut `sol70_6`, `rules12`, `opp6`, `all18`, misst sie auf Val 720–819 gegen `N_r6_kdf_720` (rules6 + alle Regeln) und startet PPO für `cnn2` (200 Iterationen). Nichts davon ersetzt die Abgabe; Auswahl und Bestätigung auf neuen Karten (ab 500 920) stehen noch aus.
+
 **Arbeitsweise:** Mahmoud möchte, dass gute Stände direkt auf `main` committet und gepusht werden (keine Pull Requests/Feature-Branches). Achtung: Der Projektordner wird synchronisiert; ein Branch-Wechsel erzeugte Kopien „… 2.csv“, die in `989cc3c` entfernt wurden.
 
 **Werkzeuge:** `scripts/par_eval.py` (100 Karten × 2 Seiten × 2 Gegner in ~50 s, `--set` Schalter, PPO-Checkpoints automatisch erkannt), `analyze_losses.py --set`. Tests: 143 bestanden (neu `tests/test_rules_1910.py`).
