@@ -36,10 +36,16 @@ def train_side(game: int) -> str:
     return SIDES[game % 2]
 
 
-def train_opponent(game: int, total_games: int) -> str:
+def train_opponent(game: int, total_games: int, sol92_frac: float | None = None) -> str:
+    """Curriculum. sol92_frac (19.10.2026): Anteil Solution_92 nach der
+    Aufwaermphase; None = urspruengliches Protokoll (abwechselnd, 50 %).
+    Beide Seiten desselben Seeds bekommen denselben Gegner."""
     if game < int(CURRICULUM_WARMUP_FRAC * total_games):
         return "default"
-    return "default" if (game // 2) % 2 == 0 else "solution92"
+    if sol92_frac is None:
+        return "default" if (game // 2) % 2 == 0 else "solution92"
+    pair = game // 2
+    return "solution92" if (pair * 0.6180339887) % 1.0 < sol92_frac else "default"
 
 
 def val_seeds(n: int = N_VAL) -> list[int]:

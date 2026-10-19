@@ -170,6 +170,8 @@ def main(argv=None) -> None:
     ap.add_argument("--val-seeds", type=int, default=P.N_VAL)
     ap.add_argument("--test-seeds", type=int, default=P.N_TEST)
     ap.add_argument("--no-test", action="store_true", help="Test-Seeds nicht anfassen")
+    ap.add_argument("--sol92-frac", type=float, default=None,
+                    help="Anteil Solution_92 nach der Aufwaermphase (Default: Protokoll, 50 %%)")
     ap.add_argument("--tag", default="")
     ap.add_argument("--out", default=None, help="Run-Ordner (Default: experiments/runs/<datum>_...)")
     ap.add_argument("--date", default=datetime.now().strftime("%Y%m%d"))
@@ -201,7 +203,9 @@ def main(argv=None) -> None:
         separate_side_networks=learners.split,
         run_seed=args.run_seed, train_games=games,
         train_seeds=[P.train_seed(args.run_seed, 0), P.train_seed(args.run_seed, max(0, games - 1))] if games else [],
-        curriculum=f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann abwechselnd default/solution92",
+        curriculum=(f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann abwechselnd default/solution92"
+                    if args.sol92_frac is None else
+                    f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann {args.sol92_frac:.0%} solution92"),
         val_seeds=P.val_seeds(args.val_seeds) if args.val_every else [],
         val_every=args.val_every,
         test_seeds=[] if args.no_test else P.test_seeds(args.test_seeds),
@@ -251,7 +255,7 @@ def main(argv=None) -> None:
             validate(0)
             for g in range(games):
                 side = P.train_side(g)
-                opp_name = P.train_opponent(g, games)
+                opp_name = P.train_opponent(g, games, args.sol92_frac)
                 seed = P.train_seed(args.run_seed, g)
                 agent = learners.agents[side]
                 opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")

@@ -32,6 +32,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--variants", nargs="+", default=list(VARIANTS))
     ap.add_argument("--starts", type=int, default=3, help="Trainingsstarts pro Variante")
+    ap.add_argument("--first-start", type=int, default=0, help="erster run_seed")
     ap.add_argument("--games", type=int, default=3000)
     ap.add_argument("--val-every", type=int, default=250)
     ap.add_argument("--workers", type=int, default=11)
@@ -42,7 +43,7 @@ def main() -> None:
     args = ap.parse_args()
 
     jobs = []
-    for s in range(args.starts):
+    for s in range(args.first_start, args.first_start + args.starts):
         for v in args.variants:
             # eingefrorene Prof-Gewichte: deterministisch, ein Lauf genuegt
             if not is_trainable(v) and s > 0:
