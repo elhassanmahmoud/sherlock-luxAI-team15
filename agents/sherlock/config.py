@@ -94,6 +94,10 @@ class AgentConfig:
     pt_hold: bool = False
     """True: eine Unit, die als Erste auf einem bewiesenen Punkte-Tile steht,
     verlaesst es nicht (Netz darf nur stehen oder sappen)."""
+    ram: bool = False
+    """True: Units fahren auf Nachbar-Tiles mit schwaecheren Gegnern und
+    zerstoeren sie per Kollision (rules.ram_move)."""
+    ram_margin: float = 10.0
     fog_sap: bool = False
     """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
     unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte

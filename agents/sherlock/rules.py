@@ -192,3 +192,48 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
     a, b = best
     planned_fog[max(0, a - 1):a + 2, max(0, b - 1):b + 2] = True
     return a - x, b - y
+
+
+def ram_move(ctx: dict, uid: int, mask: np.ndarray, point_tiles: np.ndarray,
+             rammed: set, margin: float = 10.0):
+    """Schalter `ram`: auf ein Nachbar-Tile mit schwaecherem Gegner fahren.
+
+    Kollisionsregel der Engine: Stehen am Ende eines Schritts Units beider Teams
+    auf demselben Tile, ueberlebt das Team mit mehr Gesamtenergie, die anderen
+    Units werden entfernt (gewertet mit der Energie NACH der Bewegung, vor Saps).
+    Solution_92 laesst seine Units still auf Punkte-Tiles stehen. Ist unsere
+    Energie nach der Bewegung um `margin` groesser als die aller sichtbaren
+    Gegner auf dem Nachbar-Tile, zerstoert die Bewegung sie.
+    Eine Unit auf einem eigenen Punkte-Tile rammt nur auf ein Punkte-Tile.
+    `rammed` verhindert, dass zwei Units dasselbe Tile rammen.
+    Rueckgabe Richtung oder None.
+    """
+    ec = ctx["enemy_coords"]
+    if len(ec) == 0:
+        return None
+    from . import geometry as geo
+    x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+    e_after = float(ctx["ally_ene"][uid]) - float(ctx["move_cost"])
+    on_point = bool(point_tiles[x, y])
+    best, best_v = None, 0.0
+    for d in range(1, 5):
+        if not mask[d]:
+            continue
+        tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+        if (tx, ty) in rammed:
+            continue
+        here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
+        if not here.any():
+            continue
+        enemy_e = float(ctx["enemy_energies"][here].sum())
+        if e_after <= enemy_e + margin:
+            continue
+        tile_pt = bool(point_tiles[tx, ty])
+        if on_point and not tile_pt:
+            continue
+        v = 2.0 * int(here.sum()) + (3.0 if tile_pt else 0.0)
+        if v > best_v:
+            best, best_v = d, v
+    if best is not None:
+        rammed.add((x + int(geo.DIR_DX[best]), y + int(geo.DIR_DY[best])))
+    return best

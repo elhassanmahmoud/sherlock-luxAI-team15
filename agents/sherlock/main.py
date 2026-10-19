@@ -247,6 +247,7 @@ class Agent_x:
 
         planned = np.zeros(len(ctx["enemy_coords"]))
         planned_fog = np.zeros((ctx["W"], ctx["H"]), dtype=bool)
+        rammed: set = set()
         stationary = self._enemy_stationary(ctx)
         eps = self.epsilon
         for k, uid in enumerate(ids):
@@ -267,6 +268,12 @@ class Agent_x:
             self._prev_masks[uid] = masks[k]
 
             sap = sap_targets[uid]
+            if self.cfg.ram:
+                d = rules.ram_move(ctx, uid, masks[k], self.belief.point_tiles, rammed,
+                                   self.cfg.ram_margin)
+                if d is not None:
+                    a = d
+                    self._prev_actions[uid] = a
             if self.cfg.fog_sap and a == geo.STAY:
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
                 if sap is not sap_targets[uid]:
