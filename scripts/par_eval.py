@@ -54,9 +54,15 @@ def _worker(job: tuple) -> list[dict]:
     from agents.sherlock.main import Agent_x
     from scripts.common import make_opponent, play_game
 
+    import torch
     env = LuxAIS3GymEnv(numpy_output=True)
-    agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, overrides),
-                    train=False, seed=0)
+    ckpt = torch.load(weights, map_location="cpu", weights_only=False)
+    if isinstance(ckpt, dict) and ckpt.get("kind") == "ppo":
+        from agents.sherlock.ppo_agent import PPOAgent
+        agent = PPOAgent("player_0", agent_path=weights, train=False)
+    else:
+        agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, overrides),
+                        train=False, seed=0)
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
     rows = []

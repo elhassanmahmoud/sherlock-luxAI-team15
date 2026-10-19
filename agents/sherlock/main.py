@@ -91,7 +91,8 @@ class Agent_x:
         self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry,
                              early_inference=self.cfg.early_inference,
                              relic_filter=self.cfg.relic_filter,
-                             subset_infer=self.cfg.subset_infer)
+                             subset_infer=self.cfg.subset_infer,
+                             keep_dead=self.cfg.keep_dead)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,

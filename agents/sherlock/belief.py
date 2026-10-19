@@ -98,13 +98,15 @@ class Belief:
 
     def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
                  symmetry: bool = False, early_inference: bool = False,
-                 relic_filter: bool = False, subset_infer: bool = False):
+                 relic_filter: bool = False, subset_infer: bool = False,
+                 keep_dead: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
         self.early_inference = bool(early_inference)
         self.relic_filter = bool(relic_filter)
         self.subset_infer = bool(subset_infer)
+        self.keep_dead = bool(keep_dead)
         self.set_team(team_id)
         self.reset_game()
 
@@ -138,6 +140,8 @@ class Belief:
         self._cand_dirty = True
 
         self.records: list[tuple[tuple[int, ...], int]] = []
+        self._dead_hist: set[int] = set()       # Null-Tiles frueherer Matches
+        self.relic_match: dict[tuple[int, int], int] = {}  # Relic -> Match des Fundes
         self.last_points = 0
         self.last_opp_points = 0
         self.match_idx = 0
@@ -158,6 +162,8 @@ class Belief:
         self.last_seen[:] = NEVER_SEEN
         self._coords_dirty = True
         # Neues Match => moeglicherweise neues Relic-Paar => Punkte-Regel aendert sich
+        if self.keep_dead:
+            self._dead_hist |= self._dead
         self._reopen_dead()
 
     # ------------------------------------------------------------ observation
@@ -200,6 +206,8 @@ class Belief:
 
         self._update_map(sensor, tile_type, energy)
         self._update_relics(relic_pos, relic_mask)
+        if self.keep_dead and self._dead_hist:
+            self._restore_dead()
 
         points = int(np.asarray(obs["team_points"])[self.team_id])
         gain = points - self.last_points
@@ -237,6 +245,7 @@ class Belief:
         if (x, y) in self.relic_positions:
             return
         self.relic_positions.add((x, y))
+        self.relic_match[(x, y)] = self.match_idx
         r = RELIC_REWARD_RANGE
         self.relic_zone[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
         self._cand_dirty = True
@@ -350,6 +359,32 @@ class Belief:
         for d in derived:
             if d not in self.records:
                 self.records.append(d)
+
+    def _restore_dead(self) -> None:
+        """Schalter `keep_dead`: Null-Tiles frueherer Matches wiederherstellen.
+
+        Ein Tile, das in einem frueheren Match keine Punkte brachte, kann spaeter
+        nur punkten, wenn es im 5x5-Feld eines NEU gespawnten Relics liegt (die
+        Schwelle aktiviert nur die Masken neuer Relic-Paare). Sobald feststeht,
+        wo neue Relics dieses Matches liegen koennen, gelten alle alten
+        Null-Tiles ausserhalb dieser Zonen wieder als Null-Tiles. Ohne das testen
+        die Units jedes Match dieselben leeren Felder um alte Relics erneut.
+        """
+        new_relics = np.zeros((self.W, self.H), dtype=bool)
+        for (x, y), m in self.relic_match.items():
+            if m == self.match_idx:
+                new_relics[x, y] = True
+        if self.known_pairs() >= self.match_idx + 1:
+            possible = new_relics
+        elif self.match_step >= STABLE_FROM_MATCH_STEP:
+            possible = new_relics | (self.last_seen < STABLE_FROM_MATCH_STEP)
+        else:
+            return
+        zone = _dilate(possible, RELIC_REWARD_RANGE)
+        restore = [f for f in self._dead_hist if not zone[divmod(f, self.H)] and f not in self._point]
+        for f in restore:
+            self._dead_hist.discard(f)
+            self._mark_dead(f)
 
     def _possible_point_zone(self):
         """Tiles, die ueberhaupt Punkte bringen koennen (5x5 um moegliche Relics).

@@ -124,3 +124,32 @@ def test_reward_fix_terminal_potential_is_zero():
     r = unit_rewards(cfg, ctx, nxt, {0: 2}, {})[0]
     # phi(s) = -10 * 10/48, phi(s') = 0 im Terminalzustand
     assert abs(r - cfg.w_shape * (10.0 * 10 / 48)) < 1e-9
+
+
+def test_keep_dead_restores_old_null_tiles_outside_new_relic_zone():
+    b = Belief(0, symmetry=True, keep_dead=True)
+    b._add_relic(5, 5)
+    b._add_relic(*geo.mirror_xy(5, 5))
+    f = 5 * b.H + 6
+    b._mark_dead(f)
+    near_new = 10 * b.H + 9
+    b._mark_dead(near_new)
+    b.match_idx = 1
+    b.reset_match()
+    assert not b.dead_tiles[5, 6]  # Matchwechsel: erst verworfen
+    b._add_relic(10, 10)            # neues Paar in Match 1
+    b._add_relic(*geo.mirror_xy(10, 10))
+    b._restore_dead()
+    assert b.dead_tiles[5, 6]       # liegt nicht neben dem neuen Relic
+    assert not b.dead_tiles[10, 9]  # koennte zum neuen Relic gehoeren
+
+
+def test_keep_dead_waits_while_new_relic_may_still_spawn():
+    b = Belief(0, symmetry=True, keep_dead=True)
+    b._add_relic(5, 5)
+    b._add_relic(*geo.mirror_xy(5, 5))
+    b._mark_dead(5 * b.H + 6)
+    b.match_idx, b.match_step = 1, 20
+    b.reset_match()
+    b._restore_dead()
+    assert not b.dead_tiles[5, 6]

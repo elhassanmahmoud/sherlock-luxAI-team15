@@ -74,6 +74,9 @@ class AgentConfig:
     subset_infer: bool = False
     """True: zusaetzlich Differenzen von Teilmengen-Beobachtungen auswerten
     (Belief._add_differences) und doppelte Gleichungen nicht speichern."""
+    keep_dead: bool = False
+    """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
+    sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""
     # --- Regel-Schalter (19.10.2026, rules.py). Default aus.
     pt_walk: bool = False
     """True: Units, deren Ziel ein bewiesenes Punkte-Tile ist, laufen auf dem
