@@ -145,6 +145,8 @@ def main() -> None:
     ap.add_argument("--first", type=int, default=0)
     ap.add_argument("--n-seeds", type=int, default=10)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                    help="Config-Schalter wie in scripts.par_eval")
     args = ap.parse_args()
 
     limit_threads()
@@ -154,8 +156,11 @@ def main() -> None:
     from scripts.common import make_opponent
 
     env = LuxAIS3GymEnv(numpy_output=True)
-    agent = Agent_x("player_0", agent_path=args.weights, train=False)
+    from scripts.par_eval import build_cfg
+    agent = Agent_x("player_0", agent_path=args.weights, cfg=build_cfg(args.weights, args.set),
+                    train=False)
     agent.set_to_eval_mode()
+    agent.autosave_on_terminate = False
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     with open(args.out, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=FIELDS)

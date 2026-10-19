@@ -64,6 +64,19 @@ class AgentConfig:
     early_inference: bool = False
     """True: Punkte-Tile-Schluesse schon vor match_step 50, sobald das Relic-Paar
     des aktuellen Matches sicher gespawnt ist (siehe Belief._stable)."""
+    relic_filter: bool = False
+    """True: Punkte-Schluesse ignorieren Units ausserhalb jeder moeglichen
+    Relic-Reichweite (Belief._possible_point_zone, Idee aus Solution_92)."""
+    subset_infer: bool = False
+    """True: zusaetzlich Differenzen von Teilmengen-Beobachtungen auswerten
+    (Belief._add_differences) und doppelte Gleichungen nicht speichern."""
+    # --- Regel-Schalter (19.10.2026, rules.py). Default aus.
+    pt_walk: bool = False
+    """True: Units, deren Ziel ein bewiesenes Punkte-Tile ist, laufen auf dem
+    kuerzesten Weg (BFS) dorthin statt der Netz-Aktion (ausser Sap)."""
+    pt_hold: bool = False
+    """True: eine Unit, die als Erste auf einem bewiesenen Punkte-Tile steht,
+    verlaesst es nicht (Netz darf nur stehen oder sappen)."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""

@@ -82,15 +82,29 @@ STABLE_FROM_MATCH_STEP = 50
 NEVER_SEEN = -1000
 
 
+def _dilate(mask: np.ndarray, r: int) -> np.ndarray:
+    """Chebyshev-Dilatation um r (5x5 bei r=2), ohne scipy."""
+    W, H = mask.shape
+    pad = np.pad(mask, r)
+    out = np.zeros_like(mask)
+    for dx in range(2 * r + 1):
+        for dy in range(2 * r + 1):
+            out |= pad[dx:dx + W, dy:dy + H]
+    return out
+
+
 class Belief:
     """Persistentes Weltmodell eines Agenten fuer ein komplettes Spiel."""
 
     def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
-                 symmetry: bool = False, early_inference: bool = False):
+                 symmetry: bool = False, early_inference: bool = False,
+                 relic_filter: bool = False, subset_infer: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
         self.early_inference = bool(early_inference)
+        self.relic_filter = bool(relic_filter)
+        self.subset_infer = bool(subset_infer)
         self.set_team(team_id)
         self.reset_game()
 
@@ -275,6 +289,14 @@ class Belief:
         if not occupied:
             return
 
+        if self.relic_filter:
+            zone = self._possible_point_zone()
+            if zone is not None:
+                # Units ausserhalb jeder moeglichen Relic-Reichweite punkten nie
+                occupied = {f for f in occupied if zone[divmod(f, H)]}
+                if not occupied:
+                    return
+
         known = len(occupied & self._point)
         unknown = occupied - self._point - self._dead
         rest = gain - known
@@ -291,10 +313,67 @@ class Belief:
                 return
         if not unknown:
             return  # keine neue Information
-        self.records.append((tuple(sorted(unknown)), rest))
+        new = (tuple(sorted(unknown)), rest)
+        if self.subset_infer:
+            if new in self.records:
+                return  # dieselbe Gleichung schon bekannt
+            self._add_differences(new)
+        self.records.append(new)
         if len(self.records) > MAX_RECORDS:
             del self.records[: len(self.records) - MAX_RECORDS]
         self._propagate()
+
+    def _add_differences(self, new: tuple[tuple[int, ...], int]) -> None:
+        """Schalter `subset_infer`: Differenzen von Teilmengen-Gleichungen.
+
+        Jede Beobachtung ist eine Gleichung  Summe_{t in U} punkt(t) = rest.
+        Ist U_alt eine echte Teilmenge von U_neu, gilt fuer U_neu \\ U_alt die
+        Differenz der beiden rest-Werte (und umgekehrt). Typischer Fall: eine
+        Unit betritt ein neues Kandidaten-Tile, der Punktgewinn steigt um 1 ->
+        genau dieses Tile ist ein Punkte-Tile, auch wenn die uebrigen Tiles noch
+        offen sind. Die reine Alles-oder-nichts-Regel kann das nicht schliessen.
+        """
+        tiles_n, rest_n = set(new[0]), new[1]
+        derived = []
+        for tiles_o, rest_o in self.records:
+            if len(tiles_o) == len(tiles_n):
+                continue
+            so = set(tiles_o)
+            if so < tiles_n:
+                d = (tuple(sorted(tiles_n - so)), rest_n - rest_o)
+            elif tiles_n < so:
+                d = (tuple(sorted(so - tiles_n)), rest_o - rest_n)
+            else:
+                continue
+            if 0 <= d[1] <= len(d[0]) and d not in derived:
+                derived.append(d)
+        for d in derived:
+            if d not in self.records:
+                self.records.append(d)
+
+    def _possible_point_zone(self):
+        """Tiles, die ueberhaupt Punkte bringen koennen (5x5 um moegliche Relics).
+
+        Schalter `relic_filter` (19.10.2026, Idee aus Solution_92): Ein Tile kann
+        nur punkten, wenn ein Relic hoechstens 2 Felder entfernt ist. Moegliche
+        Relic-Orte:
+          * alle Paare dieses Matches bekannt (known_pairs >= match_idx + 1;
+            hoechstens ein Paar pro Match) -> nur die bekannten Relics,
+          * sonst ab match_step 50 (Spawnfenster vorbei): bekannte Relics und
+            jedes Tile, das in diesem Match nicht ab Step 50 gesehen wurde,
+          * sonst keine Einschraenkung (None).
+        Ohne den Filter landen alle Units weit weg von Relics als "unbekannt"
+        in den Constraints; die Alles-oder-nichts-Schluesse greifen dann kaum
+        (Analyse 19.10.: Match 1, Step 50 kennt Solution_92 2,6 Punkte-Tiles, wir 0,2).
+        """
+        if self.known_pairs() >= self.match_idx + 1:
+            return self.relic_zone
+        if self.match_step < STABLE_FROM_MATCH_STEP:
+            return None
+        possible = self.last_seen < STABLE_FROM_MATCH_STEP
+        for x, y in self.relic_positions:
+            possible[x, y] = True
+        return _dilate(possible, RELIC_REWARD_RANGE)
 
     def _reopen_dead(self) -> None:
         """Alle "bringt keine Punkte"-Schluesse verwerfen (siehe Modulkopf).

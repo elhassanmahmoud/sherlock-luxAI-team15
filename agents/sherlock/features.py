@@ -241,6 +241,7 @@ def make_context(agent, obs, belief=None) -> dict:
         explored=belief.explored,
         own_points=float(points[team]), opp_points=float(points[opp]),
         own_wins=float(wins[team]), opp_wins=float(wins[opp]),
+        step=int(np.asarray(obs["steps"])),
         match_step=match_step, max_match_steps=max_match_steps,
         match_idx=belief.match_idx,
         move_cost=float(cfg.get("unit_move_cost", 3)),

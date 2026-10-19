@@ -38,6 +38,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 from . import geometry as geo
+from . import rules
 from .belief import Belief, MemorylessBelief
 from .config import AgentConfig
 from .features import FEATURE_DIM, build_features, make_context
@@ -78,6 +79,7 @@ class Agent_x:
         self.extra_q: list[QNet] = []
         self.buffer = ReplayBuffer(self.cfg.buffer_capacity, FEATURE_DIM)
         self.rng = np.random.default_rng(seed)
+        self._paths = rules.PathCache()
 
         self.training = bool(train)
         self.learn_enabled = True  # False: nur Transitions sammeln (Buffer auffuellen)
@@ -87,7 +89,9 @@ class Agent_x:
         self.recent_losses: list[float] = []
 
         self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry,
-                             early_inference=self.cfg.early_inference)
+                             early_inference=self.cfg.early_inference,
+                             relic_filter=self.cfg.relic_filter,
+                             subset_infer=self.cfg.subset_infer)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,
@@ -247,6 +251,7 @@ class Agent_x:
                 a = int(greedy[k])
                 if self.cfg.scripted_explore and a != geo.SAP:
                     a = self._explore_action(ctx, uid, masks[k], a)
+                a = self._rule_override(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
@@ -289,6 +294,23 @@ class Agent_x:
             return greedy
         a = self._step_toward(ctx, uid, mask, tgt)
         return greedy if a is None else a
+
+    def _rule_override(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """Regel-Schalter aus rules.py auf die Netz-Aktion anwenden (Sap bleibt)."""
+        c = self.cfg
+        if a == geo.SAP or not (c.pt_walk or c.pt_hold):
+            return a
+        b = self.belief
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if c.pt_hold and b.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == int(uid):
+            return geo.STAY
+        tgt = ctx["assigned"].get(int(uid))
+        if c.pt_walk and tgt is not None and b.point_tiles[tgt] and (x, y) != tuple(tgt):
+            dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+            step = rules.first_step(dist, (x, y), mask, ctx["energy_map"])
+            if step is not None:
+                return step
+        return a
 
     @staticmethod
     def _step_toward(ctx: dict, uid: int, mask: np.ndarray, tgt) -> Optional[int]:
