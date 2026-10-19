@@ -170,6 +170,8 @@ def main(argv=None) -> None:
     ap.add_argument("--val-seeds", type=int, default=P.N_VAL)
     ap.add_argument("--test-seeds", type=int, default=P.N_TEST)
     ap.add_argument("--no-test", action="store_true", help="Test-Seeds nicht anfassen")
+    ap.add_argument("--pool", nargs="*", default=[], help="eigene Checkpoints als Gegner")
+    ap.add_argument("--pool-frac", type=float, default=0.0, help="Anteil Pool-Gegner nach der Aufwaermphase")
     ap.add_argument("--sol92-frac", type=float, default=None,
                     help="Anteil Solution_92 nach der Aufwaermphase (Default: Protokoll, 50 %%)")
     ap.add_argument("--tag", default="")
@@ -253,12 +255,24 @@ def main(argv=None) -> None:
                 vh.flush()
 
             validate(0)
+            pool_cache: dict = {}
+            if args.pool_frac and not args.pool:
+                raise SystemExit("--pool-frac braucht --pool")
             for g in range(games):
                 side = P.train_side(g)
-                opp_name = P.train_opponent(g, games, args.sol92_frac)
+                opp_name = P.train_opponent(g, games, args.sol92_frac, args.pool_frac)
                 seed = P.train_seed(args.run_seed, g)
                 agent = learners.agents[side]
-                opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")
+                opp_side = "player_1" if side == "player_0" else "player_0"
+                if opp_name == "pool":
+                    # eingefrorene eigene Checkpoints, reihum; einmal geladen, dann wiederverwendet
+                    path = args.pool[(g // 2) % len(args.pool)]
+                    if path not in pool_cache:
+                        pool_cache[path] = make_opponent("self", opp_side, self_play_path=path)
+                    opp = pool_cache[path]
+                    opp_name = f"pool:{Path(path).stem}"
+                else:
+                    opp = make_opponent(opp_name, opp_side)
                 row = play_game(env, agent, opp, seed, side, train=True)
                 results.append(row["result"])
                 row.update(

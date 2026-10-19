@@ -89,7 +89,11 @@ def _worker(job: tuple) -> list[dict]:
     for opp_name in opponents:
         for seed in seeds:
             for side in P.SIDES:
-                opp = make_opponent(opp_name, "player_1" if side == "player_0" else "player_0")
+                opp_side = "player_1" if side == "player_0" else "player_0"
+                if opp_name.startswith("self:"):  # eigener Checkpoint als Gegner
+                    opp = make_opponent("self", opp_side, self_play_path=opp_name[5:])
+                else:
+                    opp = make_opponent(opp_name, opp_side)
                 r = play_game(env, agent, opp, seed, side, train=False)
                 r["opponent"] = opp_name
                 rows.append({k: r.get(k) for k in GAME_FIELDS})
