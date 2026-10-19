@@ -1,0 +1,13 @@
+[20:17:21] bc: {'cmd': 'bc', 'run': 'cnn2', 'seed': 0, 'workers': 8, 'set': [], 'teacher_path': '/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ensembles/old3_sym3.pth', 'games': 400, 'epochs': 8, 'lr': 0.0005, 'mb': 4096, 'ch': 48, 'blocks': 4, 'iters': 100, 'clip': 0.15, 'ent': 0.003, 'vf': 0.5, 'sol92': 0.7, 'default': 0.15, 'teacher': 0.15, 'save_every': 10, 'vf_warmup': 3, 'detach_value': False, 'start': None}
+/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/scripts/ppo_train.py:198: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:821.)
+  tot += float(ce) * len(idx)
+[20:32:05] BC Epoche 1/8: CE 0.6960, Trefferquote 0.720
+[20:43:13] BC Epoche 2/8: CE 0.4964, Trefferquote 0.803
+[20:53:23] BC Epoche 3/8: CE 0.4554, Trefferquote 0.818
+[21:03:24] BC Epoche 4/8: CE 0.4254, Trefferquote 0.830
+[21:13:33] BC Epoche 5/8: CE 0.4016, Trefferquote 0.839
+[21:23:51] BC Epoche 6/8: CE 0.3812, Trefferquote 0.847
+[21:33:57] BC Epoche 7/8: CE 0.3670, Trefferquote 0.852
+[21:44:27] BC Epoche 8/8: CE 0.3555, Trefferquote 0.857
+[21:44:28] gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ppo/cnn2/bc.pth

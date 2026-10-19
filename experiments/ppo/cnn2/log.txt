@@ -1,0 +1,40 @@
+[20:11:10] collect: {'cmd': 'collect', 'run': 'cnn2', 'seed': 0, 'workers': 6, 'set': ['early_inference=true', 'relic_filter=true', 'subset_infer=true', 'explore_grid=true', 'scripted_explore=true', 'explore_stale=20', 'keep_dead_fast=true'], 'teacher_path': 'experiments/ensembles/rules6.pth', 'games': 800, 'epochs': 4, 'lr': 0.0003, 'mb': 2048, 'ch': 32, 'blocks': 3, 'iters': 100, 'clip': 0.15, 'ent': 0.003, 'vf': 0.5, 'sol92': 0.7, 'default': 0.15, 'teacher': 0.15, 'save_every': 10, 'vf_warmup': 3, 'detach_value': False, 'start': None}
+[20:17:09] Lehrer: 800 Spiele, 2858782 Unit-Schritte, WR {'solution92': np.float64(0.648068669527897), 'default': np.float64(0.9903381642512077), 'teacher': np.float64(0.5118110236220472)}, 358s
+[20:17:21] bc: {'cmd': 'bc', 'run': 'cnn2', 'seed': 0, 'workers': 8, 'set': [], 'teacher_path': '/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ensembles/old3_sym3.pth', 'games': 400, 'epochs': 8, 'lr': 0.0005, 'mb': 4096, 'ch': 48, 'blocks': 4, 'iters': 100, 'clip': 0.15, 'ent': 0.003, 'vf': 0.5, 'sol92': 0.7, 'default': 0.15, 'teacher': 0.15, 'save_every': 10, 'vf_warmup': 3, 'detach_value': False, 'start': None}
+[20:32:05] BC Epoche 1/8: CE 0.6960, Trefferquote 0.720
+[20:43:13] BC Epoche 2/8: CE 0.4964, Trefferquote 0.803
+[20:53:23] BC Epoche 3/8: CE 0.4554, Trefferquote 0.818
+[21:03:24] BC Epoche 4/8: CE 0.4254, Trefferquote 0.830
+[21:13:33] BC Epoche 5/8: CE 0.4016, Trefferquote 0.839
+[21:23:51] BC Epoche 6/8: CE 0.3812, Trefferquote 0.847
+[21:33:57] BC Epoche 7/8: CE 0.3670, Trefferquote 0.852
+[21:44:27] BC Epoche 8/8: CE 0.3555, Trefferquote 0.857
+[21:44:28] gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ppo/cnn2/bc.pth
+[22:55:38] ppo: {'cmd': 'ppo', 'run': 'cnn2', 'seed': 0, 'workers': 6, 'set': [], 'teacher_path': '/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ensembles/old3_sym3.pth', 'games': 48, 'epochs': 3, 'lr': 0.0001, 'mb': 4096, 'ch': 32, 'blocks': 3, 'iters': 200, 'clip': 0.15, 'ent': 0.003, 'vf': 0.5, 'sol92': 0.7, 'default': 0.1, 'teacher': 0.2, 'save_every': 10, 'vf_warmup': 5, 'detach_value': True, 'start': None}
+[22:55:39] eigener Critic-Kopf, neu initialisiert: ['vhead.0.weight', 'vhead.0.bias', 'vhead.2.weight', 'vhead.2.bias']
+[22:56:29] PPO 1: WR sol92 0.40 default 1.00 teacher 0.44 | ent 0.382 kl 0.0000 clip 0.000 | 50s
+[22:57:15] PPO 2: WR sol92 0.78 default 1.00 teacher 0.27 | ent 0.353 kl -0.0000 clip 0.000 | 46s
+[22:57:58] PPO 3: WR sol92 0.66 default 1.00 teacher 0.55 | ent 0.367 kl -0.0000 clip 0.000 | 43s
+[22:58:40] PPO 4: WR sol92 0.58 default 1.00 teacher 0.58 | ent 0.355 kl -0.0000 clip 0.000 | 42s
+[22:59:23] PPO 5: WR sol92 0.44 default 1.00 teacher 0.25 | ent 0.397 kl 0.0000 clip 0.000 | 43s
+[23:01:15] PPO 6: WR sol92 0.57 default 1.00 teacher 0.20 | ent 0.341 kl 0.0040 clip 0.074 | 113s
+[23:03:06] PPO 7: WR sol92 0.52 default 1.00 teacher 0.58 | ent 0.326 kl 0.0032 clip 0.063 | 111s
+[23:05:04] PPO 8: WR sol92 0.44 default 1.00 teacher 0.33 | ent 0.323 kl 0.0027 clip 0.058 | 118s
+[23:07:01] PPO 9: WR sol92 0.48 default 1.00 teacher 0.45 | ent 0.320 kl 0.0030 clip 0.061 | 117s
+[23:09:03] PPO 10: WR sol92 0.63 default 1.00 teacher 0.43 | ent 0.306 kl 0.0036 clip 0.065 | 122s
+[23:11:03] PPO 11: WR sol92 0.63 default 1.00 teacher 0.22 | ent 0.353 kl 0.0038 clip 0.071 | 120s
+[23:12:58] PPO 12: WR sol92 0.70 default 1.00 teacher 0.40 | ent 0.299 kl 0.0027 clip 0.053 | 115s
+[23:14:45] PPO 13: WR sol92 0.56 default 1.00 teacher 0.45 | ent 0.299 kl 0.0028 clip 0.052 | 107s
+[23:16:33] PPO 14: WR sol92 0.53 default 1.00 teacher 0.33 | ent 0.297 kl 0.0025 clip 0.051 | 108s
+[23:18:30] PPO 15: WR sol92 0.75 default 1.00 teacher 0.56 | ent 0.315 kl 0.0024 clip 0.051 | 117s
+[23:20:28] PPO 16: WR sol92 0.56 default 1.00 teacher 0.75 | ent 0.268 kl 0.0028 clip 0.055 | 118s
+[23:31:41] PPO 17: WR sol92 0.57 default 1.00 teacher 0.36 | ent 0.263 kl 0.0023 clip 0.044 | 673s
+[23:40:12] PPO 18: WR sol92 0.71 default 1.00 teacher 0.80 | ent 0.292 kl 0.0027 clip 0.052 | 511s
+[23:41:59] PPO 19: WR sol92 0.68 default 1.00 teacher 0.50 | ent 0.277 kl 0.0029 clip 0.058 | 107s
+[23:44:04] PPO 20: WR sol92 0.73 default 1.00 teacher 0.33 | ent 0.321 kl 0.0022 clip 0.049 | 125s
+[23:46:04] PPO 21: WR sol92 0.59 default 1.00 teacher 0.46 | ent 0.286 kl 0.0030 clip 0.055 | 120s
+[23:47:55] PPO 22: WR sol92 0.65 default 1.00 teacher 0.60 | ent 0.286 kl 0.0024 clip 0.051 | 111s
+[23:49:48] PPO 23: WR sol92 0.75 default 1.00 teacher 0.30 | ent 0.263 kl 0.0023 clip 0.050 | 113s
+[23:51:47] PPO 24: WR sol92 0.70 default 1.00 teacher 0.11 | ent 0.271 kl 0.0028 clip 0.052 | 119s
+[23:53:46] PPO 25: WR sol92 0.91 default 1.00 teacher 0.71 | ent 0.300 kl 0.0028 clip 0.061 | 118s
+[23:55:38] PPO 26: WR sol92 0.81 default 1.00 teacher 0.71 | ent 0.251 kl 0.0023 clip 0.050 | 112s
