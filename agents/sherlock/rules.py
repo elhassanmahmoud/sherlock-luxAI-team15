@@ -138,3 +138,57 @@ def plan_sap(ctx: dict, uid: int, planned: np.ndarray, stationary: np.ndarray,
     planned += best_dmg
     hits = int((best_dmg > 0).sum())
     return best[0] - x, best[1] - y, hits
+
+
+def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float = 0.5,
+            min_frac: float = 0.6):
+    """Sap auf unsichtbare Gegner auf ihren Punkte-Tiles (Schalter `fog_sap`).
+
+    Der Gegner punktet pro Step mit jedem besetzten Punkte-Tile. Bringt er mehr
+    Punkte, als sichtbare Gegner auf bekannten Punkte-Tiles erklaeren, stehen
+    die uebrigen auf Punkte-Tiles, die wir gerade nicht sehen. Kandidaten sind
+    bekannte Punkte-Tiles in der GEGNERHAELFTE ohne aktuelle Sicht; jedes wird
+    mit Wahrscheinlichkeit versteckt / Kandidaten als besetzt angenommen.
+    Gewaehlt wird das Zieltile mit dem groessten erwarteten Schaden (3x3).
+    `planned_fog` merkt sich bereits beschossene Tiles dieses Steps.
+    Rueckgabe (dx, dy) oder None.
+    """
+    W, H = ctx["W"], ctx["H"]
+    pt = belief.point_tiles
+    visible = belief.last_seen == belief.match_step
+    xs, ys = np.meshgrid(np.arange(W), np.arange(H), indexing="ij")
+    enemy_half = xs + ys > W - 1
+    seen_occ = 0
+    for ex, ey in ctx["enemy_coords"]:
+        if pt[ex, ey]:
+            seen_occ += 1
+    hidden = int(belief.opp_gain) - seen_occ
+    if hidden <= 0:
+        return None
+    cand = pt & ~visible & enemy_half & ~planned_fog
+    n = int(cand.sum())
+    if n == 0:
+        return None
+    p = min(1.0, hidden / n)
+    x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+    R = int(ctx["sap_range"])
+    cost = float(ctx["sap_cost"])
+    best, best_v = None, 0.0
+    cx, cy = np.nonzero(cand)
+    targets = set()
+    for tx, ty in zip(cx, cy):
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                a, b = int(tx) + dx, int(ty) + dy
+                if 0 <= a < W and 0 <= b < H and abs(a - x) <= R and abs(b - y) <= R:
+                    targets.add((a, b))
+    for a, b in targets:
+        cheb = np.maximum(np.abs(cx - a), np.abs(cy - b))
+        v = p * cost * (float((cheb == 0).sum()) + dropoff * float((cheb == 1).sum()))
+        if v > best_v:
+            best, best_v = (a, b), v
+    if best is None or best_v < min_frac * cost:
+        return None
+    a, b = best
+    planned_fog[max(0, a - 1):a + 2, max(0, b - 1):b + 2] = True
+    return a - x, b - y

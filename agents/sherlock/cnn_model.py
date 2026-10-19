@@ -74,10 +74,15 @@ class ResBlock(nn.Module):
 
 class PolicyNet(nn.Module):
     def __init__(self, feat_dim: int, n_actions: int = 6, in_ch: int = N_PLANES,
-                 ch: int = 32, blocks: int = 3, hidden: int = 256):
+                 ch: int = 32, blocks: int = 3, hidden: int = 256, detach_value: bool = False):
         super().__init__()
         self.arch = dict(feat_dim=feat_dim, n_actions=n_actions, in_ch=in_ch, ch=ch,
-                         blocks=blocks, hidden=hidden)
+                         blocks=blocks, hidden=hidden, detach_value=detach_value)
+        # detach_value: eigener Critic-Kopf auf angehaltenen Merkmalen, damit das
+        # Critic-Training die (per Nachahmung gelernte) Policy nicht verschiebt
+        self.detach_value = detach_value
+        if detach_value:
+            self.vhead = nn.Sequential(nn.Linear(hidden, 256), nn.ReLU(), nn.Linear(256, 1))
         self.stem = nn.Sequential(nn.Conv2d(in_ch, ch, 3, padding=1), nn.ReLU())
         self.blocks = nn.Sequential(*[ResBlock(ch) for _ in range(blocks)])
         self.unit = nn.Sequential(nn.Linear(feat_dim, 128), nn.ReLU())
@@ -94,4 +99,5 @@ class PolicyNet(nn.Module):
         local = fm[step_idx, :, pos[:, 0], pos[:, 1]]
         h = torch.cat([local, g[step_idx], self.unit(feats)], dim=1)
         h = self.body(h)
-        return self.pi(h), self.v(h).squeeze(-1)
+        v = self.vhead(h.detach()) if self.detach_value else self.v(h)
+        return self.pi(h), v.squeeze(-1)

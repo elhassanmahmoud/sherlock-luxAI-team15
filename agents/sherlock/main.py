@@ -77,6 +77,8 @@ class Agent_x:
         # Q-Werte beim Handeln mit q gemittelt werden. Glaettet das Springen
         # einzelner DQN-Checkpoints. Nur zum Spielen, nicht zum Lernen.
         self.extra_q: list[QNet] = []
+        self.cnn_policy = None  # optionale CNN-Policy zum Abstimmen (set_cnn_policy)
+        self.cnn_weight, self.cnn_temp = 1.0, 0.2
         self.buffer = ReplayBuffer(self.cfg.buffer_capacity, FEATURE_DIM)
         self.rng = np.random.default_rng(seed)
         self._paths = rules.PathCache()
@@ -233,6 +235,8 @@ class Agent_x:
             if self.extra_q and not self.training:
                 qt = torch.stack([qt] + [m(t) for m in self.extra_q]).mean(dim=0)
             q = qt.cpu().numpy()
+        if self.cnn_policy is not None and not self.training:
+            q = self._mix_cnn(ctx, ids, feats, masks, q)
         raw_greedy = q.argmax(axis=1)
         q[~masks] = -np.inf
         greedy = q.argmax(axis=1)
@@ -241,6 +245,7 @@ class Agent_x:
         st["greedy_masked"] += int((~masks[np.arange(len(ids)), raw_greedy]).sum())
 
         planned = np.zeros(len(ctx["enemy_coords"]))
+        planned_fog = np.zeros((ctx["W"], ctx["H"]), dtype=bool)
         stationary = self._enemy_stationary(ctx)
         eps = self.epsilon
         for k, uid in enumerate(ids):
@@ -261,6 +266,11 @@ class Agent_x:
             self._prev_masks[uid] = masks[k]
 
             sap = sap_targets[uid]
+            if self.cfg.fog_sap and a == geo.STAY:
+                sap = self._fog_sap(ctx, uid, planned_fog) or sap
+                if sap is not sap_targets[uid]:
+                    a = geo.SAP
+                    self._prev_actions[uid] = a
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:
@@ -280,6 +290,25 @@ class Agent_x:
                     d = geo.mirror_dir(d)
                 actions[uid] = [d, 0, 0]
         return actions
+
+    def set_cnn_policy(self, net, weight: float = 1.0, temp: float = 0.2) -> None:
+        """CNN-Policy (cnn_model.PolicyNet) zum Abstimmen mit den Q-Netzen."""
+        self.cnn_policy = net.eval() if net is not None else None
+        self.cnn_weight, self.cnn_temp = float(weight), float(temp)
+
+    def _mix_cnn(self, ctx, ids, feats, masks, q: np.ndarray) -> np.ndarray:
+        """Abstimmung: log softmax(Q / T) + w * log pi_CNN, jeweils ueber erlaubte Aktionen."""
+        from .cnn_model import map_planes
+        pos = np.array([[int(ctx["ally_pos"][u][0]), int(ctx["ally_pos"][u][1])] for u in ids])
+        m = torch.as_tensor(masks)
+        with torch.no_grad():
+            logits, _ = self.cnn_policy(torch.as_tensor(map_planes(ctx)[None]),
+                                        torch.zeros(len(ids), dtype=torch.long),
+                                        torch.as_tensor(pos, dtype=torch.long),
+                                        torch.as_tensor(feats))
+            lp = torch.log_softmax(logits.masked_fill(~m, -1e9), dim=1)
+            lq = torch.log_softmax(torch.as_tensor(q).masked_fill(~m, -1e9) / self.cnn_temp, dim=1)
+            return (lq + self.cnn_weight * lp).numpy()
 
     def _guided_action(self, ctx: dict, uid: int, mask: np.ndarray, legal: np.ndarray) -> int:
         """Heuristischer Explorationszug: Schritt Richtung zugewiesenes Ziel.
@@ -304,6 +333,20 @@ class Agent_x:
             return greedy
         a = self._step_toward(ctx, uid, mask, tgt)
         return greedy if a is None else a
+
+    def _fog_sap(self, ctx: dict, uid: int, planned_fog: np.ndarray):
+        """Sap in den Nebel fuer Units, die stehen wuerden, auf einem bewiesenen
+        Punkte-Tile stehen (oder jede Unit mit cfg.fog_any) und Energie fuer
+        Sap + Reserve haben."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if not self.cfg.fog_any and not self.belief.point_tiles[x, y]:
+            return None
+        if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + self.cfg.fog_reserve:
+            return None
+        t = rules.fog_sap(ctx, uid, self.belief, planned_fog)
+        if t is None:
+            return None
+        return t[0], t[1], 0
 
     def _enemy_stationary(self, ctx: dict) -> np.ndarray:
         """Je sichtbarem Gegner: stand er im letzten Step auf demselben Tile?"""
@@ -540,6 +583,12 @@ class Agent_x:
             m.load_state_dict(sd)
             m.eval()
             self.extra_q.append(m)
+        if isinstance(ckpt.get("cnn_policy"), dict):
+            from .cnn_model import PolicyNet
+            cp = ckpt["cnn_policy"]
+            net = PolicyNet(**cp["arch"])
+            net.load_state_dict(cp["state"])
+            self.set_cnn_policy(net, cp.get("weight", 1.0), cp.get("temp", 0.2))
         self.env_steps = int(ckpt.get("env_steps", 0))
         self.learn_steps = int(ckpt.get("learn_steps", 0))
         print(f"[{self.name}] geladen: {load_path} "

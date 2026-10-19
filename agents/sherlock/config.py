@@ -74,6 +74,9 @@ class AgentConfig:
     subset_infer: bool = False
     """True: zusaetzlich Differenzen von Teilmengen-Beobachtungen auswerten
     (Belief._add_differences) und doppelte Gleichungen nicht speichern."""
+    cand_quota: int = 0
+    """> 0: so viele eigene Kandidaten-Tiles rangieren vor den Punkte-Tiles der
+    Gegnerhaelfte (features.assign_targets)."""
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""
@@ -84,6 +87,14 @@ class AgentConfig:
     pt_hold: bool = False
     """True: eine Unit, die als Erste auf einem bewiesenen Punkte-Tile steht,
     verlaesst es nicht (Netz darf nur stehen oder sappen)."""
+    fog_sap: bool = False
+    """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
+    unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte
+    Besetzer verraet (rules.fog_sap)."""
+    fog_any: bool = False
+    """True: Nebel-Sap fuer jede stehende Unit, nicht nur auf Punkte-Tiles."""
+    fog_reserve: float = 30.0
+    """Energie, die nach einem Nebel-Sap mindestens uebrig bleiben soll."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0

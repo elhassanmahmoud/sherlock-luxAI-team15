@@ -81,7 +81,8 @@ def grid_targets(coords: np.ndarray, block: int) -> np.ndarray:
 def assign_targets(belief, unit_ids, unit_pos, W, H,
                    enemy_half_penalty: float = 0.0,
                    seen_before_penalty: float = 0.0,
-                   grid: int = 0, stale: int = 0) -> dict[int, tuple[int, int]]:
+                   grid: int = 0, stale: int = 0,
+                   cand_quota: int = 0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -104,6 +105,13 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     Block, alle Bloecke statt nur die naechsten am Schwerpunkt -> die Units
     verteilen sich ueber die Karte statt als Klumpen zu wandern.
     stale > 0 (cfg.explore_stale): siehe Belief.explore_coords.
+
+    cand_quota > 0 (cfg.cand_quota, 19.10.2026): die `cand_quota` Kandidaten-Tiles
+    der eigenen Haelfte, die am naechsten an bekannten Punkte-Tiles liegen,
+    rangieren direkt hinter den eigenen Punkte-Tiles und vor denen der
+    Gegnerhaelfte. Sonst bekommt in spaeten Matches keine Unit mehr ein
+    Kandidaten-Ziel (es gibt mehr bekannte Punkte-Tiles beider Haelften als
+    Units), und die letzten Punkte-Tiles der eigenen Haelfte bleiben unentdeckt.
     """
     if len(unit_ids) == 0:
         return {}
@@ -140,6 +148,21 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     extra = np.zeros(len(tgt))
     if seen_before_penalty and prio[-1] == 2:
         extra[len(tgt) - len(extra_seen):] = extra_seen
+    own_origin = belief.canonical or belief.team_id == 0
+    s_sum = tgt[:, 0] + tgt[:, 1]
+    in_enemy = s_sum > W - 1 if own_origin else s_sum < W - 1
+    if cand_quota > 0:
+        cand_idx = np.where((prio == 1) & ~in_enemy)[0]
+        pts = belief.point_coords()
+        if len(cand_idx) and len(pts):
+            c = tgt[cand_idx]
+            d = (np.abs(c[:, None, 0] - pts[None, :, 0]) + np.abs(c[:, None, 1] - pts[None, :, 1])).min(1)
+            pick = cand_idx[np.argsort(d, kind="stable")[:cand_quota]]
+            prio = prio.copy()
+            prio[pick] = 0
+            extra[pick] += 100.0
+            # Gegner-Punkte-Tiles hinter die Quote-Kandidaten
+            extra[(prio == 0) & in_enemy] += 200.0
 
     # Kostenmatrix (Units x Ziele); Prioritaet dominiert die Distanz
     cost = (
@@ -150,10 +173,7 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     ).astype(np.float64)
     if enemy_half_penalty:
         # eigener Spawn: kanonisch immer (0, 0); ohne Spiegelung fuer Team 1 (W-1, H-1)
-        s = tgt[:, 0] + tgt[:, 1]
-        own_origin = belief.canonical or belief.team_id == 0
-        enemy = s > W - 1 if own_origin else s < W - 1
-        cost += enemy[None, :] * float(enemy_half_penalty)
+        cost += in_enemy[None, :] * float(enemy_half_penalty)
 
     out: dict[int, tuple[int, int]] = {}
     n_assign = min(len(unit_ids), len(tgt))
@@ -224,6 +244,7 @@ def make_context(agent, obs, belief=None) -> dict:
         W, H, enemy_half_penalty=(agent.cfg.home_penalty or (600.0 if agent.cfg.home_first else 0.0)),
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
+        cand_quota=int(agent.cfg.cand_quota),
     )
 
     return dict(

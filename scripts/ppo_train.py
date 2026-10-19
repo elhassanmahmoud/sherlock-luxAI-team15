@@ -289,6 +289,13 @@ def cmd_ppo(args, log) -> None:
     start = run / (args.start or "bc.pth")
     base = PPOAgent("player_0", agent_path=str(start), train=False)
     net, cfg = base.net, base.cfg
+    if args.detach_value and not net.detach_value:
+        from agents.sherlock.cnn_model import PolicyNet
+        arch = dict(net.arch, detach_value=True)
+        new_net = PolicyNet(**arch)
+        missing = new_net.load_state_dict(net.state_dict(), strict=False).missing_keys
+        log(f"eigener Critic-Kopf, neu initialisiert: {missing}")
+        net = new_net.eval()
     opt = torch.optim.Adam(net.parameters(), lr=args.lr)
     rng = np.random.default_rng(args.seed + 7)
     mix = {"solution92": args.sol92, "default": args.default, "teacher": args.teacher}
@@ -347,6 +354,7 @@ def main() -> None:
     ap.add_argument("--teacher", type=float, default=0.15)
     ap.add_argument("--save-every", type=int, default=10)
     ap.add_argument("--vf-warmup", type=int, default=3, help="erste Iterationen nur Critic")
+    ap.add_argument("--detach-value", action="store_true", help="eigener Critic-Kopf")
     ap.add_argument("--start", default=None, help="Startgewichte im Run-Ordner (Default bc.pth)")
     args = ap.parse_args()
     run = _check_run_dir(args.run)

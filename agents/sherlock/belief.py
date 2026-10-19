@@ -144,6 +144,7 @@ class Belief:
         self.relic_match: dict[tuple[int, int], int] = {}  # Relic -> Match des Fundes
         self.last_points = 0
         self.last_opp_points = 0
+        self.opp_gain = 0
         self.match_idx = 0
         self.newly_proven = 0        # in diesem Step neu bewiesene Punkte-Tiles
         self.newly_explored = 0      # in diesem Step neu gesehene Tiles
@@ -212,7 +213,9 @@ class Belief:
         points = int(np.asarray(obs["team_points"])[self.team_id])
         gain = points - self.last_points
         self.last_points = points
-        self.last_opp_points = int(np.asarray(obs["team_points"])[self.opp_team_id])
+        opp_points = int(np.asarray(obs["team_points"])[self.opp_team_id])
+        self.opp_gain = max(0, opp_points - self.last_opp_points)  # Gegner-Punkte dieses Steps
+        self.last_opp_points = opp_points
         self._infer_point_tiles(ally_pos, ally_energy, ally_mask, gain, match_step)
         self._refresh_candidates()
 

@@ -32,6 +32,22 @@ def parse_value(v: str):
     return v
 
 
+def cnn_args(overrides: list[str]):
+    """cnn=PFAD, cnn_weight=W, cnn_temp=T aus den --set-Angaben herausziehen."""
+    rest, cnn, w, temp = [], None, 1.0, 0.2
+    for item in overrides:
+        k, v = item.split("=", 1)
+        if k == "cnn":
+            cnn = v
+        elif k == "cnn_weight":
+            w = float(v)
+        elif k == "cnn_temp":
+            temp = float(v)
+        else:
+            rest.append(item)
+    return rest, cnn, w, temp
+
+
 def build_cfg(weights: str, overrides: list[str]):
     from agents.sherlock.config import AgentConfig
     from agents.sherlock.main import Agent_x
@@ -61,8 +77,12 @@ def _worker(job: tuple) -> list[dict]:
         from agents.sherlock.ppo_agent import PPOAgent
         agent = PPOAgent("player_0", agent_path=weights, train=False)
     else:
-        agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, overrides),
+        agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, cnn_args(overrides)[0]),
                         train=False, seed=0)
+        _, cnn, w, temp = cnn_args(overrides)
+        if cnn:
+            from agents.sherlock.ppo_agent import PPOAgent
+            agent.set_cnn_policy(PPOAgent("player_0", agent_path=cnn).net, w, temp)
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
     rows = []
@@ -88,7 +108,7 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
-    build_cfg(args.weights, args.set)  # Schalter frueh pruefen
+    build_cfg(args.weights, cnn_args(args.set)[0])  # Schalter frueh pruefen
     out = Path(args.out)
     if out.exists():
         raise SystemExit(f"{out} existiert schon - neuen Namen waehlen")
