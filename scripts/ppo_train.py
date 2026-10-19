@@ -95,7 +95,7 @@ def play_recorded(env, agent, opp, seed: int, side: str, teacher: bool):
 
 
 def _rollout_worker(job: tuple):
-    kind, weights, overrides, games, wid = job
+    kind, weights, overrides, games, wid, teacher_path = job
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
@@ -107,7 +107,7 @@ def _rollout_worker(job: tuple):
     for seed, side, opp_kind, opp_path in games:
         opp_side = "player_1" if side == "player_0" else "player_0"
         if opp_kind == "teacher":
-            opp = _make_agent("teacher", str(TEACHER), opp_path or [], seed=seed)
+            opp = _make_agent("teacher", teacher_path, opp_path or [], seed=seed)
         else:
             opp = make_opponent(opp_kind, opp_side)
         data, res = play_recorded(env, agent, opp, seed, side, teacher=(kind == "teacher"))
@@ -129,9 +129,9 @@ def merge(datas: list[dict]) -> dict:
     return m
 
 
-def run_rollouts(pool, kind, weights, overrides, game_list, workers):
+def run_rollouts(pool, kind, weights, overrides, game_list, workers, teacher_path=str(TEACHER)):
     chunks = [game_list[i::workers] for i in range(workers)]
-    jobs = [(kind, weights, overrides, c, i) for i, c in enumerate(chunks) if c]
+    jobs = [(kind, weights, overrides, c, i, teacher_path) for i, c in enumerate(chunks) if c]
     res = pool.map(_rollout_worker, jobs)
     datas = [d for r in res for d in r[0]]
     results = [x for r in res for x in r[1]]
@@ -251,10 +251,11 @@ def cmd_collect(args, log) -> None:
     ctx = mp.get_context("spawn")
     t0 = time.time()
     with ctx.Pool(args.workers) as pool:
-        datas, results = run_rollouts(pool, "teacher", str(TEACHER), args.set, games, args.workers)
+        datas, results = run_rollouts(pool, "teacher", args.teacher_path, args.set, games,
+                                      args.workers, args.teacher_path)
     data = merge(datas)
     np.savez(run / "bc_data.npz", **data)
-    (run / "teacher.json").write_text(json.dumps({"weights": str(TEACHER), "set": args.set,
+    (run / "teacher.json").write_text(json.dumps({"weights": args.teacher_path, "set": args.set,
                                                   "games": len(games)}, indent=2))
     wr = {o: np.mean([r for k, r in results if k == o]) for o in mix}
     log(f"Lehrer: {len(games)} Spiele, {len(data['act'])} Unit-Schritte, WR {wr}, {time.time() - t0:.0f}s")
@@ -272,7 +273,7 @@ def cmd_bc(args, log) -> None:
     torch.manual_seed(args.seed)
     data = dict(np.load(run / "bc_data.npz"))
     teacher = json.loads((run / "teacher.json").read_text())
-    cfg = build_cfg(str(TEACHER), teacher["set"] + ["reward_fix=true"])
+    cfg = build_cfg(teacher["weights"], teacher["set"] + ["reward_fix=true"])
     for k in ("scripted_explore", "pt_walk", "pt_hold", "smart_sap"):
         setattr(cfg, k, False)  # Policy lernt diese Regeln selbst (Daten enthalten sie)
     net = PolicyNet(FEATURE_DIM, ch=args.ch, blocks=args.blocks)
@@ -299,7 +300,8 @@ def cmd_ppo(args, log) -> None:
     opt = torch.optim.Adam(net.parameters(), lr=args.lr)
     rng = np.random.default_rng(args.seed + 7)
     mix = {"solution92": args.sol92, "default": args.default, "teacher": args.teacher}
-    teacher_set = json.loads((run / "teacher.json").read_text())["set"]
+    teacher_info = json.loads((run / "teacher.json").read_text())
+    teacher_set = teacher_info["set"]
     cur = run / "ppo_current.pth"
     save_policy(str(cur), net, cfg, {"stage": "ppo", "iter": 0})
     logf = open(run / "ppo.csv", "a", newline="")
@@ -313,7 +315,8 @@ def cmd_ppo(args, log) -> None:
         for it in range(1, args.iters + 1):
             t0 = time.time()
             games = opponent_mix(rng, args.games, seed0 + it * args.games, mix, teacher_set)
-            datas, results = run_rollouts(pool, "ppo", str(cur), [], games, args.workers)
+            datas, results = run_rollouts(pool, "ppo", str(cur), [], games, args.workers,
+                                          teacher_info["weights"])
             data = merge(datas)
             st = ppo_update(net, opt, data, args.epochs, args.mb, args.clip, args.ent, args.vf,
                             policy_on=it > args.vf_warmup)
@@ -339,6 +342,7 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
                     help="Regel-Schalter fuer den Lehrer (collect)")
+    ap.add_argument("--teacher-path", default=str(TEACHER), help="Lehrer-Checkpoint (collect)")
     ap.add_argument("--games", type=int, default=400)
     ap.add_argument("--epochs", type=int, default=4)
     ap.add_argument("--lr", type=float, default=3e-4)
