@@ -1,6 +1,6 @@
 # Sherlock: Vortragsplan für den 16.10.2026
 
-Stand: 15.10.2026. Auf Moayeds Wunsch wieder die ursprüngliche Fassung; sie ist die einzige aktuelle Präsentation im Repository. **12 Vortragsfolien + 2 ausgeblendete Reservefolien. Ziel 11:00 Minuten, maximal 12 Minuten Vortrag.** Die Zeiten sind Planwerte, keine gemessene Probe. Fragen im Anschluss sind nicht in den 11:00 enthalten; genaue Slotaufteilung vor Ort bestätigen.
+Stand: 15.10.2026. Auf Moayeds Wunsch wieder die ursprüngliche Fassung; sie ist die einzige aktuelle Präsentation im Repository. **12 Vortragsfolien + 3 ausgeblendete Reservefolien. Ziel 11:10 Minuten, maximal 12 Minuten Vortrag.** Die Zeiten sind Planwerte, keine gemessene Probe. Fragen im Anschluss sind nicht in den 11:10 enthalten; genaue Slotaufteilung vor Ort bestätigen.
 
 ## Dateien und Bearbeitung
 
@@ -10,13 +10,13 @@ Stand: 15.10.2026. Auf Moayeds Wunsch wieder die ursprüngliche Fassung; sie ist
 - [Folieninhalte, Notizen und Quellen als JSON](source/slides.json)
 - [Bildquellen und fachliche Nachweise](source/QUELLEN.md)
 
-Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm sind native Elemente; Spielbilder sind Screenshots. Nach Änderungen auch die PDF neu exportieren und prüfen. Die PDF enthält den Anhang als Seiten 13–14; beim normalen Vortrag auf Seite 12 enden. In PowerPoint sind die beiden Reservefolien ausgeblendet. Sprechernotizen sind Lern- und Probenhilfe, kein Text zum Ablesen. Auf dem tatsächlichen Präsentationsrechner Schriftbild und Notizenansicht vorab testen.
+Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm sind native Elemente; Spielbilder sind Screenshots. Nach Änderungen auch die PDF neu exportieren und prüfen. Die PDF enthält den Anhang als Seiten 13–15; beim normalen Vortrag auf Seite 12 enden. In PowerPoint sind die drei Reservefolien ausgeblendet. Sprechernotizen sind Lern- und Probenhilfe, kein Text zum Ablesen. Auf dem tatsächlichen Präsentationsrechner Schriftbild und Notizenansicht vorab testen.
 
 ## Aufteilung und Zeitplan
 
 **Moayed: 5:35 Minuten.** Agenda, Aufgabe, Grundidee, Ergebnisse und Spielbeispiel. Keine Herleitung von Formeln; dafür verständlich erklären, was man auf den Bildern sieht und was die Zahlen aussagen.
 
-**Mahmoud: 5:25 Minuten.** Merkmale, Netzarchitektur, Lernverfahren, Trainingsaufbau und technische nächste Schritte.
+**Mahmoud: 5:35 Minuten.** Merkmale, Netzarchitektur, Lernverfahren, Trainingsaufbau und technische nächste Schritte.
 
 | Folie | Thema | Person | Dauer | Zeitfenster |
 |---|---|---|---|---|
@@ -30,10 +30,10 @@ Die PowerPoint ist die bearbeitbare Fassung: Text, Tabellen und Ergebnisdiagramm
 | 8 | Training und Auswertung | Mahmoud | 1:05 | 6:10–7:15 |
 | 9 | Benchmark-Ergebnisse | Moayed | 1:05 | 7:15–8:20 |
 | 10 | Spielbeispiel | Moayed | 1:20 | 8:20–9:40 |
-| 11 | Erkenntnisse und Ausblick | Mahmoud | 0:55 | 9:40–10:35 |
-| 12 | Fazit und Fragen | Moayed | 0:25 | 10:35–11:00 |
+| 11 | Erkenntnisse und Ausblick | Mahmoud | 1:05 | 9:40–10:45 |
+| 12 | Fazit und Fragen | Moayed | 0:25 | 10:45–11:10 |
 
-Folie 4 enthält links den einfachen Überblick und rechts den Pseudocode beim Spielen. Moayed erklärt den Ablauf in eigenen Worten und liest nicht jede Codezeile vor. Folie 8 zeigt die wichtigsten Trainingsparameter direkt; Mahmoud erklärt insbesondere Exploration und den Unterschied zur Auswertung. Weitere Parameter bleiben auf Reservefolie 13. Die bisherigen 55 bzw. 65 Sekunden bleiben Planwerte und müssen gemeinsam geprobt werden.
+Folie 4 enthält links den einfachen Überblick und rechts den Pseudocode beim Spielen. Moayed erklärt den Ablauf in eigenen Worten und liest nicht jede Codezeile vor. Folie 8 zeigt die wichtigsten Trainingsparameter direkt; Mahmoud erklärt insbesondere Exploration und den Unterschied zur Auswertung. Weitere Parameter bleiben auf Reservefolie 13, die Belohnung im Training auf Reservefolie 15. Die bisherigen 55 bzw. 65 Sekunden bleiben Planwerte und müssen gemeinsam geprobt werden.
 
 Folie 7 zeigt den Trainingsschritt jetzt als eingerückten Pseudocode im Stil von Folie 4. Mahmoud erklärt vor allem „Online wählt, Target bewertet“ und den Terminalfall; die 75 Sekunden bleiben unverändert. Hinweise zum Vortragen und zur Reserve gehören in diesen Plan bzw. die Sprechernotizen, nicht sichtbar auf die Hauptfolien.
 
@@ -48,7 +48,7 @@ Die Sprechzeiten schließen kurze Übergaben und das Zeigen auf die Bilder ein. 
 
 ### Wenn ihr auf genau zehn Minuten kommen müsst
 
-60 Sekunden einsparen: Agenda (Folie 2) um 10 Sekunden kürzen, Folie 5 um 10 Sekunden (längeres Inferenzbeispiel auslassen), Folie 6 um 10 Sekunden (Begriffstrennung in die Fragen verschieben), Folie 8 um 10 Sekunden (nur die wichtigsten Parameter erläutern) und Folie 10 um 20 Sekunden (die beiden Zustände und die Kernaussage erklären). Keine Pflichtfolie streichen.
+70 Sekunden einsparen: Agenda (Folie 2) um 10 Sekunden kürzen, Folie 11 um 10 Sekunden (Erkundungsgedächtnis nur in einem Satz), Folie 5 um 10 Sekunden (längeres Inferenzbeispiel auslassen), Folie 6 um 10 Sekunden (Begriffstrennung in die Fragen verschieben), Folie 8 um 10 Sekunden (nur die wichtigsten Parameter erläutern) und Folie 10 um 20 Sekunden (die beiden Zustände und die Kernaussage erklären). Keine Pflichtfolie streichen.
 
 Kontrollpunkt: Folie 9 beginnt geplant bei 7:15. Wenn ihr dort erst bei 8:00 seid, die kurze Version von Folie 10 nehmen und Folie 11 auf die drei Kernaussagen begrenzen. Vortragsende spätestens bei 12:00; Anhang nur auf Nachfrage. Eine verspätete erste Probe ist ein Anlass zum Kürzen, nicht zum schnelleren Ablesen.
 
@@ -85,6 +85,8 @@ Das ergibt ungefähr 70–80 Minuten konzentrierte Vorbereitung, verteilt auf ku
 - **Wie viel wurde trainiert?** Die sechs Basisläufe liefen je 3.000 Spiele: insgesamt 18.000 Laufspiele. Gewählte Checkpoints können früher liegen. Über alle 34 Projektmanifeste sind 99.000 Trainingsspiele dokumentiert; das ist eine andere, größere Bezugsmenge. Keine Validierungs- oder Testspiele als Training mitzählen.
 - **Kann der Agent die gelben Felder im Bild einfach sehen?** Nicht vollständig. Die Folie zeigt die Zuschaueransicht des Replays. Der Agent bekommt eingeschränkte Beobachtungen und erschließt Punktefelder.
 - **Gewinnt die höhere Gesamtpunktzahl automatisch das Spiel?** Entscheidend sind die gewonnenen Matches. Der Stand 374:11 auf Folie 10 ist nur ein Zwischenstand im ersten Match.
+- **Was hat am meisten gebracht?** Gezielte Änderungen nach Auswertung von Niederlagen: Spiegelsymmetrie im Gedächtnis, Erkundungsgedächtnis über Matches und sechs statt einem Netz. Auf denselben 30 Testkarten stieg die Siegquote gegen Solution_92 von 12/60 auf 28/60. Das ist ein Vergleich auf bereits mehrfach genutzten Karten, kein unabhängiger Schlusstest.
+- **Wie sieht eure Belohnung genau aus?** Reservefolie 15 zeigen: Punktefeld als Erster besetzen +1, Stapeln −0,3, Annäherung ans Ziel (potentialbasiert), Erkundung, Energie, Verlust einer Einheit, Sap-Treffer und Matchsieg +2.
 - **Was ist m1_early?** Ein untersuchter Kandidat für frühere Punktefeld-Inferenz. Noch nicht in den aktuellen Abgabe-Gewichten aktiviert; erst nach dem Review weiter bearbeiten.
 - **Sind die Gewichte durch die Korrektur der Statistik besser geworden?** Nein. Punktezählung und Statistik wurden berichtigt; die Gewichte und die Spielentscheidungen blieben gleich.
 - **Was habt ihr jeweils gemacht?** Nur die tatsächliche Arbeitsteilung nennen. Vortragsanteile sind keine Behauptung, dass beide gleich viel implementiert haben. Die bisherige Implementierung stammt überwiegend von Mahmoud; Moayed hat die gemeinsame Prüfung, Korrekturen und Vorbereitung mit Codex begleitet. Vor der Präsentation gemeinsam präzisieren, welche Beiträge jeder sicher erklären kann.
@@ -111,7 +113,7 @@ Wir beginnen mit der Spielidee und dem Aufbau unseres Agenten. Danach zeigen wir
 
 **Moayed · 1:00**
 
-Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams steuern jeweils bis zu 16 Einheiten. Im Kurs besteht ein Spiel aus drei Matches. Wer mehr Matches gewinnt, gewinnt das Spiel. Die Herausforderung ist, dass der Agent nicht die ganze Karte sieht und die Punktefelder zunächst unbekannt sind. Er muss erkunden, Energie sinnvoll einsetzen und geeignete Felder besetzen. Auf dem Bild ist Sherlock blau und der Gegner rot. Die gelben Markierungen gehören zu Relics und Punktefeldern. Wichtig: Das ist die vollständige Replay-Ansicht für uns Zuschauer. Der Agent bekommt diese vollständige Information nicht.
+Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams steuern jeweils bis zu 16 Einheiten. Im Kurs besteht ein Spiel aus drei Matches. Wer mehr Matches gewinnt, gewinnt das Spiel. Die Herausforderung ist, dass der Agent nicht die ganze Karte sieht und die Punktefelder zunächst unbekannt sind. Er muss erkunden, Energie sinnvoll einsetzen und die unsichtbaren Punktefelder finden und besetzen. Deshalb braucht er ein Gedächtnis. Auf dem Bild ist Sherlock blau und der Gegner rot. Die gelben Markierungen gehören zu Relics und Punktefeldern. Wichtig: Das ist die vollständige Replay-Ansicht für uns Zuschauer. Der Agent bekommt diese vollständige Information nicht.
 
 ### Folie 4: Unser Agent
 
@@ -129,7 +131,7 @@ Wir verwenden ein MLP mit 79 numerischen Merkmalen pro Einheit, keine vollständ
 
 **Mahmoud · 1:05**
 
-Jedes Mitglied des Ensembles ist ein Dueling-Netz. Es bekommt 79 Merkmale. Der gemeinsame Teil besteht aus zwei voll verbundenen Schichten mit jeweils 256 Neuronen und ReLU. Danach gibt es einen Kopf für den Zustandswert und einen Kopf für die Vorteile der sechs Aktionen; beide haben eine Zwischenschicht mit 128 Neuronen. Daraus entstehen sechs Q-Werte. Beim Spielen mitteln wir die Q-Werte der sechs trainierten Netze und wählen dann die beste erlaubte Aktion. Die sechs Aktionen sind Stehenbleiben, vier Bewegungsrichtungen und Sap. Das konkrete Sap-Ziel wird heuristisch gewählt. Double DQN bezeichnet unser Lernverfahren, Dueling die Netzarchitektur und Ensemble die Kombination mehrerer trainierter Netze.
+Jedes Mitglied des Ensembles ist ein Dueling-Netz. Es bekommt 79 Merkmale. Der gemeinsame Teil besteht aus zwei voll verbundenen Schichten mit jeweils 256 Neuronen und ReLU. Danach gibt es einen Kopf für den Zustandswert und einen Kopf für die Vorteile der sechs Aktionen; beide haben eine Zwischenschicht mit 128 Neuronen. Daraus entstehen sechs Q-Werte. Beim Spielen mitteln wir die Q-Werte der sechs trainierten Netze und wählen dann die beste erlaubte Aktion. Drei Netze wurden ohne, drei mit Spiegelsymmetrie im Gedächtnis trainiert; beim Spielen ist die Symmetrie für alle aktiv. Die sechs Aktionen sind Stehenbleiben, vier Bewegungsrichtungen und Sap. Das konkrete Sap-Ziel wird heuristisch gewählt. Double DQN bezeichnet unser Lernverfahren, Dueling die Netzarchitektur und Ensemble die Kombination mehrerer trainierter Netze.
 
 ### Folie 7: Double DQN
 
@@ -157,9 +159,11 @@ Das sind zwei echte Bilder aus demselben Spiel gegen default. Sherlock ist blau,
 
 ### Folie 11: Erkenntnisse und Ausblick
 
-**Mahmoud · 0:55**
+**Mahmoud · 1:05**
 
-Unser Agent kombiniert gelernte Entscheidungen mit explizitem Wissen über das Spiel. Die bisherigen Versuche sprechen dafür, Gedächtnis und mehrere Netzbewertungen zu kombinieren. Weitertraining und Self-Play haben in den getesteten Varianten keinen klaren zusätzlichen Gewinn gebracht; das ist keine allgemeine Aussage gegen diese Verfahren. Eine Arbeitshypothese ist, dass bessere frühe Erkundung und frühere Inferenz im ersten Match helfen. Der Kandidat m1_early ist untersucht, aber noch nicht in der Abgabe aktiviert. Vor weiterem Training prüfen wir außerdem Reward und Einheitenübergänge. Für die nächste belastbare Bewertung wollen wir neue Testkarten zurückhalten. Der Präsentationsstand und seine Gewichte bleiben dabei fest.
+Drei Erkenntnisse. Erstens: Am meisten haben gezielte Verbesserungen gebracht. Wir haben Niederlagen ausgewertet und daraus konkrete Änderungen abgeleitet. Die Karte ist spiegelsymmetrisch: Wer ein Relic sieht, kennt auch das gegenüberliegende. Außerdem merkt sich der Agent jetzt über Matches hinweg, welche Gebiete er schon erkundet hat; vorher fand er auf manchen Karten nie ein Relic. Zusammen mit sechs statt einem Netz stieg die Siegquote gegen Solution_92 auf denselben 30 Testkarten von 12 auf 28 von 60 Spielen. Zweitens: Weitertraining und Self-Play haben in unseren Versuchen keinen klaren Zusatzgewinn gebracht; das ist keine allgemeine Aussage über diese Verfahren. Drittens: Im ersten Match finden wir Relics oft spät. Als Nächstes wollen wir das beschleunigen und auf neuen, bisher unbenutzten Testkarten prüfen.
+
+Hintergrund, nicht vorlesen: gepaarter Karten-Bootstrap (scripts/compare_report.py) altes Einzelnetz full_s0 gegen old3_sym3, je 30 Karten × 2 Seiten: Solution_92 +26,7 pp, 95-%-KI [+13,3; +41,7]; default +15,0 pp, KI [+3,3; +28,3]. Ohne Korrektur für Mehrfachvergleiche und Modellauswahl; die Testkarten wurden mehrfach ausgewertet. Der Kandidat m1_early (frühere Inferenz) ist untersucht, aber nicht aktiv. Vor weiterem Training prüfen wir Reward und Einheitenübergänge.
 
 ### Folie 12: Fazit und Fragen
 
@@ -178,6 +182,12 @@ Reservefolie, nicht Teil des geplanten Vortrags. Diese Werte sind in der Konfigu
 **Mahmoud · Reserve, nicht im Zeitplan**
 
 Reservefolie. Q bezeichnet eine geschätzte zukünftige Belohnung für eine Aktion. Dueling: Q(s,a)=V(s)+A(s,a)−Mittelwert_a A(s,a). Double DQN trennt Auswahl und Bewertung beim Lernziel. Belief ist eine regelbasierte Zustandsrekonstruktion, kein Zugriff auf versteckte Engine-Daten. Die Punktezählung außerhalb des Agenten nutzt für die Auswertung zusätzliche Endzustandsinformationen; diese dürfen nicht als Agentenwissen dargestellt werden. Die Mess- und Statistikkorrekturen verbessern die Bewertung, nicht die Spielstärke.
+
+### Folie 15: Belohnung im Training
+
+**Mahmoud · Reserve, nicht im Zeitplan**
+
+Reservefolie, nicht Teil des geplanten Vortrags. Das Spiel liefert nur am Matchende ein Team-Signal; für DQN ist das zu spärlich. Deshalb bekommt jede Einheit in jedem Schritt eine eigene Belohnung. Wichtigster Teil: Wer zuerst auf einem bewiesenen Punktefeld steht, bekommt +1; eine zweite Einheit auf demselben Feld bekommt einen Abzug, weil das Feld nur einmal zählt. Die Annäherung ans zugewiesene Ziel ist potentialbasiertes Shaping nach Ng, Harada und Russell (1999): Potential gleich minus Abstand zum Ziel. Erkundungs- und Entdeckungsbonus werden auf das Team aufgeteilt. Ein gewonnenes Match gibt jeder Einheit +2. Bekannte offene Punkte für das nächste Training: Punktebelohnung bei negativer Energie, terminales Potential und wiederverwendete Einheiten-IDs.
 
 ## Vor dem Upload noch offen
 

@@ -1,16 +1,17 @@
 {
   "date": "2026-10-15",
   "content_base_commit": "12e0c4d9c31a81c54ba453b4f3fbb350b0589faa",
-  "total_slides": 14,
+  "total_slides": 15,
   "main_slides": 12,
   "hidden_slides": [
     13,
-    14
+    14,
+    15
   ],
-  "pdf_pages": 14,
+  "pdf_pages": 15,
   "planned_seconds": {
     "Moayed": 335,
-    "Mahmoud": 325
+    "Mahmoud": 335
   },
   "human_rehearsal_done": false,
   "checks": {
@@ -20,13 +21,13 @@
     "speaker_notes_on_all_slides": "passed",
     "replay_frame_scores_checked": "passed",
     "relative_document_links": "passed",
-    "native_powerpoint_execution": "not performed",
+    "native_powerpoint_execution": "passed: deck opened and exported to PDF by Microsoft PowerPoint for Mac (2026-10-15)",
     "new_agent_training_or_tests": "not performed; documentation only",
     "agenda_visually_inspected_existing_slide_bodies_compared": "passed"
   },
   "files": {
-    "Sherlock_Review_16-10-2026.pptx": "00b7eab2304499565299f4587acb9d631e785466a719cfe961e4d708d6285a3f",
-    "Sherlock_Review_16-10-2026.pdf": "548b40291b88de71212c1d86e7cc05a01e05d45da1623643631d46d2af7bbf31"
+    "Sherlock_Review_16-10-2026.pptx": "a45dbdc7ebb031b6299fe12214193960e57fd7bd9ef274e58c744c7ea7a8382f",
+    "Sherlock_Review_16-10-2026.pdf": "b015ce2e90979a58e42832a86b695f224c33659d1da80ef66566c157475c06cf"
   },
   "weights_sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
   "pdf_border_fix": {
@@ -163,5 +164,25 @@
     "planned_seconds": 660,
     "historical_numbering_note": "Earlier revision objects refer to their pre-agenda slide numbers.",
     "verification": "Package/layout/fonts/native charts/tables/workbook passed; agenda visually inspected. Existing slide bodies and speaker notes preserved; existing renders identical outside changed page-number footer. All media/chart/workbook bytes and weight hashes unchanged. Dark edges corrected on pages 1/12. Native PowerPoint not tested."
+  },
+  "insights_reward_revision": {
+    "date": "2026-10-15",
+    "base_commit": "ba1578f",
+    "by": "Claude Code mit Mahmoud",
+    "changed_slides": {
+      "3": "Punkten: unsichtbare Felder besetzen",
+      "5": "Belief-Zeile konkret: Punktezuwachs → Punktefelder",
+      "6": "Ensemble ohne interne Laufnamen: 6 Netze (3 + 3 mit Symmetrie)",
+      "11": "Erkenntnisse: 12/60 → 28/60 gegen Solution_92, Weitertraining half kaum, nächster Schritt Match 1",
+      "15": "neue ausgeblendete Reservefolie: Belohnung im Training"
+    },
+    "notes_changed": [
+      3,
+      6,
+      11,
+      15
+    ],
+    "planned_seconds": 670,
+    "verification": "Skill validator passed against previous deck; deck opened in native PowerPoint without repair; all 15 PDF pages rendered and inspected; dark-page edge pixels at 1400 px all #102D35; numbers checked against CSVs, compare_report, config/reward code and run manifests. Agent, weights and runner unchanged."
   }
 }

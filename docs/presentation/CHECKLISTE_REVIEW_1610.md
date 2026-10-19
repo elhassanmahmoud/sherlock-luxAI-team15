@@ -11,9 +11,9 @@ Stand: 15.10.2026. Grundlage: Kursfolien 9 und 11 sowie die konkrete Moodle-Aufg
 
 ## Stand der Präsentationsdatei
 
-Am 14.10. auf Moayeds Auftrag erstellt, am 15.10. um eine Agenda ergänzt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **12 Vortragsfolien + 2 Reservefolien**, Ziel **11:00 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:35 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:25 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
+Am 14.10. auf Moayeds Auftrag erstellt, am 15.10. um eine Agenda ergänzt: [PowerPoint mit Sprechernotizen](Sherlock_Review_16-10-2026.pptx) und [PDF](Sherlock_Review_16-10-2026.pdf). **12 Vortragsfolien + 3 Reservefolien**, Ziel **11:10 Minuten**, höchstens **12 Minuten Vortrag**. [Aufteilung, Zeitplan, Formulierungshilfen und Fragen](VORTRAGSPLAN_1610.md): Moayed 5:35 Minuten (Aufgabe, Überblick, Ergebnisse, Spielbeispiel, Abschluss), Mahmoud 5:35 Minuten (technischer Teil und nächste Schritte). Frühere externe Entwürfe sind damit nicht die aktuelle Arbeitsgrundlage.
 
-Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 12 stoppen und Seiten 13–14 nur bei Rückfragen zeigen.
+Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die drei Anhangsfolien sind in PowerPoint ausgeblendet; in der PDF nach Seite 12 stoppen und Seiten 13–15 nur bei Rückfragen zeigen.
 
 ## Geforderte Inhalte und verfügbare Belege
 
@@ -27,7 +27,7 @@ Die Zeiten sind noch nicht durch eine gemeinsame Probe bestätigt. Die beiden An
 | Trainingsablauf, Spiele, Gegner | Folie 8: 6 × 3000 = 18.000 Laufspiele; default und Solution_92 | Ausgewählte Checkpoints können früher liegen; keine Testspiele mitzählen |
 | Ausgewählte Spiele | Folie 10: zwei Bilder desselben Spiels (Seed 900011, Frames 23/90) | Vergleich ohne Live-Demo erklären |
 | Beobachtungen, Hypothesen, Erkenntnisse | Folien 9 und 11: Ergebnisse, Grenzen, erfolglose Versuche, Hypothese | Mehrfach verwendeten Benchmark offen benennen |
-| Fragen und nächste Schritte | Folien 11–12; Reserve 13–14 | m1_early als späteren Kandidaten darstellen |
+| Fragen und nächste Schritte | Folien 11–12; Reserve 13–15 | m1_early als späteren Kandidaten darstellen |
 
 ## Zahlen und Aussagen für die Ergebnisfolie
 

@@ -33,7 +33,7 @@
     "title": "Spielidee und Ziel",
     "speaker": "Moayed",
     "secs": 60,
-    "note": "Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams steuern jeweils bis zu 16 Einheiten. Im Kurs besteht ein Spiel aus drei Matches. Wer mehr Matches gewinnt, gewinnt das Spiel. Die Herausforderung ist, dass der Agent nicht die ganze Karte sieht und die Punktefelder zunächst unbekannt sind. Er muss erkunden, Energie sinnvoll einsetzen und geeignete Felder besetzen. Auf dem Bild ist Sherlock blau und der Gegner rot. Die gelben Markierungen gehören zu Relics und Punktefeldern. Wichtig: Das ist die vollständige Replay-Ansicht für uns Zuschauer. Der Agent bekommt diese vollständige Information nicht.",
+    "note": "Lux AI ist ein Strategiespiel auf einer Karte mit 24 mal 24 Feldern. Zwei Teams steuern jeweils bis zu 16 Einheiten. Im Kurs besteht ein Spiel aus drei Matches. Wer mehr Matches gewinnt, gewinnt das Spiel. Die Herausforderung ist, dass der Agent nicht die ganze Karte sieht und die Punktefelder zunächst unbekannt sind. Er muss erkunden, Energie sinnvoll einsetzen und die unsichtbaren Punktefelder finden und besetzen. Deshalb braucht er ein Gedächtnis. Auf dem Bild ist Sherlock blau und der Gegner rot. Die gelben Markierungen gehören zu Relics und Punktefeldern. Wichtig: Das ist die vollständige Replay-Ansicht für uns Zuschauer. Der Agent bekommt diese vollständige Information nicht.",
     "sources": [
       "lux/specs.md",
       "lux/Instructions.md",
@@ -75,7 +75,7 @@
     "title": "Netzarchitektur und Ensemble",
     "speaker": "Mahmoud",
     "secs": 65,
-    "note": "Jedes Mitglied des Ensembles ist ein Dueling-Netz. Es bekommt 79 Merkmale. Der gemeinsame Teil besteht aus zwei voll verbundenen Schichten mit jeweils 256 Neuronen und ReLU. Danach gibt es einen Kopf für den Zustandswert und einen Kopf für die Vorteile der sechs Aktionen; beide haben eine Zwischenschicht mit 128 Neuronen. Daraus entstehen sechs Q-Werte. Beim Spielen mitteln wir die Q-Werte der sechs trainierten Netze und wählen dann die beste erlaubte Aktion. Die sechs Aktionen sind Stehenbleiben, vier Bewegungsrichtungen und Sap. Das konkrete Sap-Ziel wird heuristisch gewählt. Double DQN bezeichnet unser Lernverfahren, Dueling die Netzarchitektur und Ensemble die Kombination mehrerer trainierter Netze.",
+    "note": "Jedes Mitglied des Ensembles ist ein Dueling-Netz. Es bekommt 79 Merkmale. Der gemeinsame Teil besteht aus zwei voll verbundenen Schichten mit jeweils 256 Neuronen und ReLU. Danach gibt es einen Kopf für den Zustandswert und einen Kopf für die Vorteile der sechs Aktionen; beide haben eine Zwischenschicht mit 128 Neuronen. Daraus entstehen sechs Q-Werte. Beim Spielen mitteln wir die Q-Werte der sechs trainierten Netze und wählen dann die beste erlaubte Aktion. Drei Netze wurden ohne, drei mit Spiegelsymmetrie im Gedächtnis trainiert; beim Spielen ist die Symmetrie für alle aktiv. Die sechs Aktionen sind Stehenbleiben, vier Bewegungsrichtungen und Sap. Das konkrete Sap-Ziel wird heuristisch gewählt. Double DQN bezeichnet unser Lernverfahren, Dueling die Netzarchitektur und Ensemble die Kombination mehrerer trainierter Netze.",
     "sources": [
       "agents/sherlock/model.py",
       "agents/sherlock/main.py",
@@ -141,14 +141,17 @@
     "number": 11,
     "title": "Erkenntnisse und Ausblick",
     "speaker": "Mahmoud",
-    "secs": 55,
-    "note": "Unser Agent kombiniert gelernte Entscheidungen mit explizitem Wissen über das Spiel. Die bisherigen Versuche sprechen dafür, Gedächtnis und mehrere Netzbewertungen zu kombinieren. Weitertraining und Self-Play haben in den getesteten Varianten keinen klaren zusätzlichen Gewinn gebracht; das ist keine allgemeine Aussage gegen diese Verfahren. Eine Arbeitshypothese ist, dass bessere frühe Erkundung und frühere Inferenz im ersten Match helfen. Der Kandidat m1_early ist untersucht, aber noch nicht in der Abgabe aktiviert. Vor weiterem Training prüfen wir außerdem Reward und Einheitenübergänge. Für die nächste belastbare Bewertung wollen wir neue Testkarten zurückhalten. Der Präsentationsstand und seine Gewichte bleiben dabei fest.",
+    "secs": 65,
+    "note": "Drei Erkenntnisse. Erstens: Am meisten haben gezielte Verbesserungen gebracht. Wir haben Niederlagen ausgewertet und daraus konkrete Änderungen abgeleitet. Die Karte ist spiegelsymmetrisch: Wer ein Relic sieht, kennt auch das gegenüberliegende. Außerdem merkt sich der Agent jetzt über Matches hinweg, welche Gebiete er schon erkundet hat; vorher fand er auf manchen Karten nie ein Relic. Zusammen mit sechs statt einem Netz stieg die Siegquote gegen Solution_92 auf denselben 30 Testkarten von 12 auf 28 von 60 Spielen. Zweitens: Weitertraining und Self-Play haben in unseren Versuchen keinen klaren Zusatzgewinn gebracht; das ist keine allgemeine Aussage über diese Verfahren. Drittens: Im ersten Match finden wir Relics oft spät. Als Nächstes wollen wir das beschleunigen und auf neuen, bisher unbenutzten Testkarten prüfen.",
     "sources": [
+      "experiments/compare/TEST_full_s0.csv",
+      "experiments/compare/TEST_old3_sym3_points_v2.csv",
+      "scripts/compare_report.py",
       "docs/EXPERIMENT_PROTOKOLL.md",
-      "docs/ARBEITSSTAND.md",
-      "docs/STATISTIK_20261014.md"
+      "docs/ARBEITSSTAND.md"
     ],
-    "appendix": false
+    "appendix": false,
+    "background": "Hintergrund, nicht vorlesen: gepaarter Karten-Bootstrap (scripts/compare_report.py) altes Einzelnetz full_s0 gegen old3_sym3, je 30 Karten × 2 Seiten: Solution_92 +26,7 pp, 95-%-KI [+13,3; +41,7]; default +15,0 pp, KI [+3,3; +28,3]. Ohne Korrektur für Mehrfachvergleiche und Modellauswahl; die Testkarten wurden mehrfach ausgewertet. Der Kandidat m1_early (frühere Inferenz) ist untersucht, aber nicht aktiv. Vor weiterem Training prüfen wir Reward und Einheitenübergänge."
   },
   {
     "number": 12,
@@ -186,6 +189,20 @@
       "agents/sherlock/belief.py",
       "agents/sherlock/main.py",
       "scripts/scoring.py",
+      "docs/ARBEITSSTAND.md"
+    ],
+    "appendix": true
+  },
+  {
+    "number": 15,
+    "title": "Belohnung im Training",
+    "speaker": "Mahmoud",
+    "secs": 0,
+    "note": "Reservefolie, nicht Teil des geplanten Vortrags. Das Spiel liefert nur am Matchende ein Team-Signal; für DQN ist das zu spärlich. Deshalb bekommt jede Einheit in jedem Schritt eine eigene Belohnung. Wichtigster Teil: Wer zuerst auf einem bewiesenen Punktefeld steht, bekommt +1; eine zweite Einheit auf demselben Feld bekommt einen Abzug, weil das Feld nur einmal zählt. Die Annäherung ans zugewiesene Ziel ist potentialbasiertes Shaping nach Ng, Harada und Russell (1999): Potential gleich minus Abstand zum Ziel. Erkundungs- und Entdeckungsbonus werden auf das Team aufgeteilt. Ein gewonnenes Match gibt jeder Einheit +2. Bekannte offene Punkte für das nächste Training: Punktebelohnung bei negativer Energie, terminales Potential und wiederverwendete Einheiten-IDs.",
+    "sources": [
+      "agents/sherlock/reward.py",
+      "agents/sherlock/config.py",
+      "experiments/runs/*full*/manifest.json",
       "docs/ARBEITSSTAND.md"
     ],
     "appendix": true
