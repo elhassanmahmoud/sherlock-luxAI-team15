@@ -95,7 +95,9 @@ class Agent_x:
                              relic_filter=self.cfg.relic_filter,
                              subset_infer=self.cfg.subset_infer,
                              keep_dead=self.cfg.keep_dead,
-                             keep_dead_fast=self.cfg.keep_dead_fast)
+                             keep_dead_fast=self.cfg.keep_dead_fast,
+                             opp_infer=self.cfg.opp_infer,
+                             stale_all=self.cfg.stale_all)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,
@@ -376,7 +378,10 @@ class Agent_x:
         if c.pt_hold and b.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == int(uid):
             return geo.STAY
         tgt = ctx["assigned"].get(int(uid))
-        if c.pt_walk and tgt is not None and b.point_tiles[tgt] and (x, y) != tuple(tgt):
+        own_ok = not c.pt_walk_own or tgt is None or tgt[0] + tgt[1] < ctx["W"] - 1
+        late_ok = b.match_idx >= c.pt_walk_from_match
+        if (c.pt_walk and own_ok and late_ok and tgt is not None and b.point_tiles[tgt]
+                and (x, y) != tuple(tgt)):
             dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
             step = rules.first_step(dist, (x, y), mask, ctx["energy_map"])
             if step is not None:

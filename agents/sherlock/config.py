@@ -87,10 +87,20 @@ class AgentConfig:
     """True: wie Solution_92 - Null-Tiles bleiben ueber Matchgrenzen gueltig, nur
     Tiles neben NEU gefundenen Relics werden wieder offen (Risiko: ein noch
     ungesehenes neues Relic; Widersprueche oeffnen dann alles)."""
+    stale_all: bool = False
+    """True: explore_stale gilt in JEDEM Match, solange das Relic-Paar dieses
+    Matches noch unbekannt ist (neue Paare spawnen auch in frueher gesehenen
+    Gebieten)."""
+    opp_infer: bool = False
+    """True: Null-Tiles auch aus dem Punktgewinn des Gegners (Belief._infer_from_enemy)."""
     # --- Regel-Schalter (19.10.2026, rules.py). Default aus.
     pt_walk: bool = False
     """True: Units, deren Ziel ein bewiesenes Punkte-Tile ist, laufen auf dem
     kuerzesten Weg (BFS) dorthin statt der Netz-Aktion (ausser Sap)."""
+    pt_walk_own: bool = False
+    """pt_walk nur fuer Punkte-Tiles der eigenen Haelfte."""
+    pt_walk_from_match: int = 0
+    """pt_walk erst ab diesem Match (0 = immer)."""
     pt_hold: bool = False
     """True: eine Unit, die als Erste auf einem bewiesenen Punkte-Tile steht,
     verlaesst es nicht (Netz darf nur stehen oder sappen)."""

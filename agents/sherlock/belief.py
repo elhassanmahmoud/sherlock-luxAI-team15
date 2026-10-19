@@ -99,7 +99,8 @@ class Belief:
     def __init__(self, team_id: int, W: int = 24, H: int = 24, canonical: bool = True,
                  symmetry: bool = False, early_inference: bool = False,
                  relic_filter: bool = False, subset_infer: bool = False,
-                 keep_dead: bool = False, keep_dead_fast: bool = False):
+                 keep_dead: bool = False, keep_dead_fast: bool = False,
+                 opp_infer: bool = False, stale_all: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
@@ -108,6 +109,8 @@ class Belief:
         self.subset_infer = bool(subset_infer)
         self.keep_dead = bool(keep_dead)
         self.keep_dead_fast = bool(keep_dead_fast)
+        self.opp_infer = bool(opp_infer)
+        self.stale_all = bool(stale_all)
         self.set_team(team_id)
         self.reset_game()
 
@@ -223,7 +226,42 @@ class Belief:
         self.opp_gain = max(0, opp_points - self.last_opp_points)  # Gegner-Punkte dieses Steps
         self.last_opp_points = opp_points
         self._infer_point_tiles(ally_pos, ally_energy, ally_mask, gain, match_step)
+        if self.opp_infer:
+            self._infer_from_enemy(obs, match_step)
         self._refresh_candidates()
+
+    def _infer_from_enemy(self, obs, match_step: int) -> None:
+        """Schalter `opp_infer`: Null-Tiles aus dem Punktgewinn des Gegners.
+
+        Der Gegner punktet mit genau den Punkte-Tiles, auf denen eine seiner
+        Units (Energie >= 0) steht - dieselben Tiles wie fuer uns. Erklaeren die
+        sichtbaren Gegner auf bekannten Punkte-Tiles schon den ganzen Gewinn,
+        bringt kein anderes Tile unter einer (sichtbaren) gegnerischen Unit
+        Punkte -> diese Tiles sind Null-Tiles (unsichtbare Gegner aendern daran
+        nichts, sie koennten den Gewinn nur erhoehen).
+        """
+        if not self._stable(match_step):
+            return
+        from . import geometry as geo
+        pos = np.asarray(obs["units"]["position"], dtype=np.int32)[self.opp_team_id]
+        mask = np.asarray(obs["units_mask"], dtype=bool)[self.opp_team_id]
+        ene = np.asarray(obs["units"]["energy"], dtype=np.int32)[self.opp_team_id]
+        if ene.ndim == 2 and ene.shape[-1] == 1:
+            ene = ene[:, 0]
+        if self.mirrored:
+            pos = geo.mirror_positions(pos, self.W, self.H)
+        occ = set()
+        for i in np.nonzero(mask)[0]:
+            x, y = int(pos[i][0]), int(pos[i][1])
+            if 0 <= x < self.W and 0 <= y < self.H and ene[i] >= 0:
+                occ.add(x * self.H + y)
+        if not occ:
+            return
+        known = len(occ & self._point)
+        if self.opp_gain != known:
+            return
+        for f in occ - self._point - self._dead:
+            self._mark_dead(f)
 
     def _update_map(self, sensor, tile_type, energy) -> None:
         explored_now = sensor
@@ -536,7 +574,13 @@ class Belief:
         zaehlen nur Tiles als erkundet, die in den letzten `stale` Steps oder ab
         match_step 49 gesehen wurden (vorher gesehene koennen ein spaeter
         gespawntes Relic verbergen)."""
-        if stale <= 0 or self.match_idx != 0 or self.known_pairs() > 0:
+        if stale <= 0:
+            return self.unexplored_coords()
+        if self.stale_all:
+            # jedes Match: solange ein Relic-Paar dieses Matches fehlen kann
+            if self.known_pairs() >= self.match_idx + 1:
+                return self.unexplored_coords()
+        elif self.match_idx != 0 or self.known_pairs() > 0:
             return self.unexplored_coords()
         ls = self.last_seen
         fresh = (ls >= self.match_step - stale) | (ls >= STABLE_FROM_MATCH_STEP - 1)
