@@ -78,3 +78,49 @@ def test_bfs_first_step_goes_around_asteroid():
     step = rules.first_step(dist, (0, 0), mask)
     assert step == geo.DOWN
     assert dist[0, 0] == 4
+
+
+def _ctx(pos, ene, ids, match_step=60, assigned=None):
+    W = H = 24
+    pt = np.zeros((W, H), bool)
+    pt[5, 5] = True
+    first = {}
+    for u in ids:
+        first.setdefault((int(pos[u][0]), int(pos[u][1])), u)
+    return dict(ally_ids=np.array(ids), ally_pos=np.array(pos), ally_ene=np.array(ene, dtype=float),
+                W=W, H=H, point_tiles=pt, first_on_tile=first, assigned=assigned or {},
+                own_wins=0.0, opp_wins=0.0, match_step=match_step,
+                belief=type("B", (), {"newly_explored": 0, "newly_proven": 0})())
+
+
+def test_reward_fix_treats_reused_id_as_death():
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.reward import surviving, unit_rewards
+    cfg = AgentConfig(reward_fix=True)
+    ctx = _ctx([[10, 10]], [100], [0])
+    nxt = _ctx([[0, 0]], [100], [0])  # gleiche ID, aber am Spawn neu entstanden
+    assert surviving(cfg, ctx, nxt) == set()
+    r = unit_rewards(cfg, ctx, nxt, {0: 0}, {})
+    assert r[0] == -cfg.w_death
+    old = AgentConfig(reward_fix=False)
+    assert surviving(old, ctx, nxt) == {0}
+
+
+def test_reward_fix_no_point_reward_with_negative_energy():
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.reward import unit_rewards
+    cfg = AgentConfig(reward_fix=True, w_energy=0.0, w_shape=0.0)
+    ctx = _ctx([[5, 5]], [10], [0])
+    nxt = _ctx([[5, 5]], [-5], [0])
+    assert unit_rewards(cfg, ctx, nxt, {0: 0}, {})[0] == 0.0
+
+
+def test_reward_fix_terminal_potential_is_zero():
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.reward import unit_rewards
+    cfg = AgentConfig(reward_fix=True, w_energy=0.0, w_point=0.0, w_stack=0.0)
+    ctx = _ctx([[0, 0]], [100], [0], match_step=99, assigned={0: (10, 0)})
+    nxt = _ctx([[1, 0]], [100], [0], match_step=0, assigned={0: (10, 0)})
+    r = unit_rewards(cfg, ctx, nxt, {0: 2}, {})[0]
+    # phi(s) = -10 * 10/48, phi(s') = 0 im Terminalzustand
+    assert abs(r - cfg.w_shape * (10.0 * 10 / 48)) < 1e-9

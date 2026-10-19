@@ -50,16 +50,39 @@ def _phi(ctx: dict, uid: int) -> float:
     return -SHAPE_SCALE * dist / float(ctx["W"] + ctx["H"])
 
 
-def _on_owned_point_tile(next_ctx: dict, uid: int) -> int:
-    """+1 Eigentuemer eines bewiesenen Punkte-Tiles, -1 redundant dort, 0 sonst."""
+def _on_owned_point_tile(next_ctx: dict, uid: int, energy_check: bool = False) -> int:
+    """+1 Eigentuemer eines bewiesenen Punkte-Tiles, -1 redundant dort, 0 sonst.
+
+    energy_check (cfg.reward_fix): Units mit negativer Energie punkten nicht.
+    """
     nx = int(next_ctx["ally_pos"][uid][0])
     ny = int(next_ctx["ally_pos"][uid][1])
     if not (0 <= nx < next_ctx["W"] and 0 <= ny < next_ctx["H"]):
+        return 0
+    if energy_check and float(next_ctx["ally_ene"][uid]) < 0:
         return 0
     if not next_ctx["point_tiles"][nx, ny]:
         return 0
     owner = next_ctx["first_on_tile"].get((nx, ny), uid)
     return 1 if owner == uid else -1
+
+
+def surviving(cfg, ctx: dict, next_ctx: dict) -> set[int]:
+    """Units aus `ctx`, die in `next_ctx` noch DIESELBE Unit sind.
+
+    cfg.reward_fix: Unit-IDs werden nach einem Tod wiederverwendet. Taucht eine
+    ID mehr als ein Feld entfernt wieder auf, ist die alte Unit gestorben und
+    am Spawn neu entstanden -> als Tod behandeln (Strafe, Episode endet).
+    """
+    alive_next = set(int(u) for u in next_ctx["ally_ids"].tolist())
+    if not cfg.reward_fix:
+        return alive_next
+    out = set()
+    for u in alive_next:
+        p, q = ctx["ally_pos"][u], next_ctx["ally_pos"][u]
+        if int(p[0]) < 0 or abs(int(p[0]) - int(q[0])) + abs(int(p[1]) - int(q[1])) <= 1:
+            out.add(u)
+    return out
 
 
 def match_outcome(ctx: dict, next_ctx: dict) -> float:
@@ -73,7 +96,7 @@ def _sparse_rewards(cfg, alive_now, alive_next, next_ctx, outcome) -> dict[int, 
     out: dict[int, float] = {}
     for uid in alive_now:
         r = cfg.w_match * outcome
-        if uid in alive_next and _on_owned_point_tile(next_ctx, uid) == 1:
+        if uid in alive_next and _on_owned_point_tile(next_ctx, uid, cfg.reward_fix) == 1:
             r += cfg.w_point
         out[uid] = float(r)
     return out
@@ -83,8 +106,10 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict,
                  actions: dict[int, int], sap_hits: dict[int, int]) -> dict[int, float]:
     """Reward je Unit, die im Ausgangszustand `ctx` gelebt hat."""
     alive_now = set(int(u) for u in ctx["ally_ids"].tolist())
-    alive_next = set(int(u) for u in next_ctx["ally_ids"].tolist())
+    alive_next = surviving(cfg, ctx, next_ctx)
     n = max(1, len(alive_now))
+    # cfg.reward_fix: am Matchende ist s' terminal -> phi(s') = 0 (Ng et al.)
+    terminal = cfg.reward_fix and next_ctx["match_step"] == 0
 
     belief = next_ctx["belief"]
     team_bonus = (
@@ -101,14 +126,15 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict,
         r = team_bonus + cfg.w_match * outcome
 
         if uid in alive_next:
-            on_point = _on_owned_point_tile(next_ctx, uid)
+            on_point = _on_owned_point_tile(next_ctx, uid, cfg.reward_fix)
             if on_point == 1:
                 r += cfg.w_point
             elif on_point == -1:
                 r -= cfg.w_stack
             de = float(next_ctx["ally_ene"][uid]) - float(ctx["ally_ene"][uid])
             r += cfg.w_energy * de / 400.0
-            r += cfg.w_shape * (cfg.gamma * _phi(next_ctx, uid) - _phi(ctx, uid))
+            phi_next = 0.0 if terminal else _phi(next_ctx, uid)
+            r += cfg.w_shape * (cfg.gamma * phi_next - _phi(ctx, uid))
         else:
             r -= cfg.w_death
 

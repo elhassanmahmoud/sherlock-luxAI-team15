@@ -44,6 +44,10 @@ class AgentConfig:
     home_first: bool = False
     """True: Zielzuweisung bestraft Ziele in der gegnerischen Haelfte (+600, d. h.
     eigene Punkte-Tiles < gegnerische Punkte-Tiles < eigene Kandidaten < ...)."""
+    home_penalty: float = 0.0
+    """> 0: ueberschreibt die Kosten fuer Ziele in der gegnerischen Haelfte
+    (home_first nutzt 600). 1500 ordnet: eigene Punkte-Tiles < eigene Kandidaten
+    < gegnerische Punkte-Tiles < Erkundung (Prioritaetsstufen kosten je 1000)."""
     explore_memory: bool = False
     """True: Erkundung bevorzugt Tiles, die in KEINEM bisherigen Match gesehen
     wurden (+300 Kosten fuer frueher gesehene, siehe features.assign_targets)."""
@@ -77,6 +81,14 @@ class AgentConfig:
     pt_hold: bool = False
     """True: eine Unit, die als Erste auf einem bewiesenen Punkte-Tile steht,
     verlaesst es nicht (Netz darf nur stehen oder sappen)."""
+    reward_fix: bool = False
+    """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
+    nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0
+    im terminalen Matchende-Zustand. Default aus = alte Trainings reproduzierbar."""
+    smart_sap: bool = False
+    """True: Sap-Ziel mit Teamabstimmung (rules.plan_sap): kein Overkill,
+    stehende Gegner/Gegner auf Punkte-Tiles bevorzugt, Abschuss-Bonus; lohnt
+    sich kein Sap mehr, bleibt die Unit stehen."""
     use_shaping: bool = True
     """False: Reward = w_point (auf bewiesenem Punkte-Tile) + w_match * Env-Reward.
     Ohne Potential-, Explore-, Discovery-, Stack-, Energie-, Tod- und Sap-Terme."""

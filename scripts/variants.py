@@ -21,6 +21,12 @@ VARIANTS: dict[str, tuple[str, dict]] = {
     "baseline_prof_retrained": ("prof_train", {}),
     "full": ("sherlock", {}),
     "full_sym": ("sherlock", {"use_symmetry": True}),
+    # 19.10.2026: alle bestaetigten Regeln + Reward-Korrekturen, neu trainiert
+    "full_rules": ("sherlock", {"use_symmetry": True, "explore_memory": True,
+                                "early_inference": True, "relic_filter": True,
+                                "subset_infer": True, "explore_grid": True,
+                                "scripted_explore": True, "explore_stale": 20,
+                                "reward_fix": True}),
     "no_belief": ("sherlock", {"use_belief": False}),
     "no_shaping": ("sherlock", {"use_shaping": False}),
     "no_sap": ("sherlock", {"use_sap": False}),

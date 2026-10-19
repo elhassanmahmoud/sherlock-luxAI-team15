@@ -44,7 +44,7 @@ from .config import AgentConfig
 from .features import FEATURE_DIM, build_features, make_context
 from .model import N_ACTIONS, QNet
 from .replay_buffer import ReplayBuffer
-from .reward import unit_rewards
+from .reward import surviving, unit_rewards
 
 SAP_DROPOFF_ASSUMED = 0.5  # unit_sap_dropoff_factor ist nicht beobachtbar
 
@@ -139,6 +139,7 @@ class Agent_x:
         self._prev_masks: dict[int, np.ndarray] = {}
         self._prev_ctx: Optional[dict] = None
         self._sap_hits: dict[int, int] = {}
+        self._enemy_prev: dict[int, tuple[int, int]] = {}
         self._cache: Optional[tuple] = None
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
@@ -238,6 +239,8 @@ class Agent_x:
         st["unit_steps"] += len(ids)
         st["greedy_masked"] += int((~masks[np.arange(len(ids)), raw_greedy]).sum())
 
+        planned = np.zeros(len(ctx["enemy_coords"]))
+        stationary = self._enemy_stationary(ctx)
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
@@ -256,8 +259,14 @@ class Agent_x:
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
 
-            if a == geo.SAP and sap_targets[uid] is not None:
-                dx, dy, hits = sap_targets[uid]
+            sap = sap_targets[uid]
+            if a == geo.SAP and sap is not None and self.cfg.smart_sap:
+                sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
+                if sap is None:
+                    a = geo.STAY
+                    self._prev_actions[uid] = a
+            if a == geo.SAP and sap is not None:
+                dx, dy, hits = sap
                 if self.belief.mirrored:
                     dx, dy = geo.mirror_delta(dx, dy)
                 actions[uid] = [geo.SAP, dx, dy]
@@ -294,6 +303,16 @@ class Agent_x:
             return greedy
         a = self._step_toward(ctx, uid, mask, tgt)
         return greedy if a is None else a
+
+    def _enemy_stationary(self, ctx: dict) -> np.ndarray:
+        """Je sichtbarem Gegner: stand er im letzten Step auf demselben Tile?"""
+        ids = ctx["enemy_vis_ids"]
+        ec = ctx["enemy_coords"]
+        prev = self._enemy_prev
+        out = np.array([prev.get(int(i)) == (int(c[0]), int(c[1])) for i, c in zip(ids, ec)],
+                       dtype=bool)
+        self._enemy_prev = {int(i): (int(c[0]), int(c[1])) for i, c in zip(ids, ec)}
+        return out
 
     def _rule_override(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """Regel-Schalter aus rules.py auf die Netz-Aktion anwenden (Sap bleibt)."""
@@ -398,7 +417,7 @@ class Agent_x:
         rewards = unit_rewards(self.cfg, prev_ctx, next_ctx,
                                self._prev_actions, self._sap_hits)
 
-        alive_next = set(int(u) for u in next_ctx["ally_ids"].tolist())
+        alive_next = surviving(self.cfg, prev_ctx, next_ctx)
         zero = np.zeros(FEATURE_DIM, dtype=np.float32)
         dead_mask = np.zeros(self.n_actions, dtype=bool)
         dead_mask[geo.STAY] = True

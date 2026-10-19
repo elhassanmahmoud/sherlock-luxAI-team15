@@ -207,6 +207,7 @@ def make_context(agent, obs, belief=None) -> dict:
         [[int(enemy_pos[i][0]), int(enemy_pos[i][1])] for i in enemy_ids
          if enemy_pos[i][0] >= 0], dtype=np.int32
     ).reshape(-1, 2)
+    enemy_vis_ids = np.array([int(i) for i in enemy_ids if enemy_pos[i][0] >= 0], dtype=np.int32)
     enemy_energies = np.array(
         [float(enemy_ene[i]) for i in enemy_ids if enemy_pos[i][0] >= 0],
         dtype=np.float32,
@@ -220,7 +221,7 @@ def make_context(agent, obs, belief=None) -> dict:
     assigned = assign_targets(
         belief, ally_ids,
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
-        W, H, enemy_half_penalty=600.0 if agent.cfg.home_first else 0.0,
+        W, H, enemy_half_penalty=(agent.cfg.home_penalty or (600.0 if agent.cfg.home_first else 0.0)),
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
     )
@@ -228,7 +229,7 @@ def make_context(agent, obs, belief=None) -> dict:
     return dict(
         belief=belief, W=W, H=H,
         ally_ids=ally_ids, ally_pos=ally_pos, ally_ene=ally_ene,
-        enemy_coords=enemy_coords, enemy_energies=enemy_energies,
+        enemy_coords=enemy_coords, enemy_energies=enemy_energies, enemy_vis_ids=enemy_vis_ids,
         ally_count=ally_count, first_on_tile=first_on_tile,
         point_coords=belief.point_coords(),
         cand_coords=belief.candidate_coords(),
