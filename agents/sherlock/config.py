@@ -48,6 +48,9 @@ class AgentConfig:
     """> 0: ueberschreibt die Kosten fuer Ziele in der gegnerischen Haelfte
     (home_first nutzt 600). 1500 ordnet: eigene Punkte-Tiles < eigene Kandidaten
     < gegnerische Punkte-Tiles < Erkundung (Prioritaetsstufen kosten je 1000)."""
+    home_last_only: bool = False
+    """True: home_first/home_penalty nur im letzten Match (Analyse 19.10.: in
+    Match 3 laufen ~4,7 Units zu Punkte-Tiles der Gegnerhaelfte, 0,4 besetzt)."""
     explore_memory: bool = False
     """True: Erkundung bevorzugt Tiles, die in KEINEM bisherigen Match gesehen
     wurden (+300 Kosten fuer frueher gesehene, siehe features.assign_targets)."""

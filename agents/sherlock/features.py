@@ -188,6 +188,13 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     return out
 
 
+def _home_penalty(cfg, match_idx: int) -> float:
+    """Kosten fuer Ziele in der Gegnerhaelfte (home_first/home_penalty/home_last_only)."""
+    if cfg.home_last_only and match_idx < N_MATCHES - 1:
+        return 0.0
+    return cfg.home_penalty or (600.0 if cfg.home_first else 0.0)
+
+
 def make_context(agent, obs, belief=None) -> dict:
     """Alle pro Step einmalig benoetigten Groessen (kanonischer Raum).
 
@@ -241,7 +248,7 @@ def make_context(agent, obs, belief=None) -> dict:
     assigned = assign_targets(
         belief, ally_ids,
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
-        W, H, enemy_half_penalty=(agent.cfg.home_penalty or (600.0 if agent.cfg.home_first else 0.0)),
+        W, H, enemy_half_penalty=_home_penalty(agent.cfg, belief.match_idx),
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
         cand_quota=int(agent.cfg.cand_quota),
