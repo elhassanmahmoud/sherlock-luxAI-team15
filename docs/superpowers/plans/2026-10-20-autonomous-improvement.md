@@ -194,3 +194,26 @@ Neue Bestätigungskarten erst nach Remote-Abgleich reservieren.
 
 Ein separater Remote-Beobachter meldet neue Commits, Änderungen und
 Seedreservierungen; nur der Koordinator integriert zwischen Messreihen.
+
+## Eingetroffener Kandidat V4: eigener Freigabeplan
+
+Vor weiteren lokalen Ergebnissen festgelegt: Mahmouds Commit `082057c`
+enthält V3 plus `contest_sap` und `opp_infer`. Seine vorab in `3a4f32f`
+dokumentierte Bestätigung auf 400 Karten 502820–503219 ergibt gegen
+Solution_92 +2,375 Prozentpunkte, KI [0,125; 4,625]; Default auf 100 Karten
+−0,5 Prozentpunkte. Unabhängig aus Git-Blobs nachgerechnet.
+
+Diese bestehende Bestätigung wird verwendet, nicht erneut als neue lokale
+Stichprobe ausgegeben. Die beobachtete Default-Grenze von höchstens −2 pp
+bleibt bestehen; für V4 wird die vorhandene 100-Karten-Default-Kontrolle
+transparent akzeptiert. Zusätzlich unverändert strenges direktes Gate:
+V4 gegen V3 auf 500720–500779/beiden Seiten, untere 95%-Kartenbootstrap-Grenze
+des mittleren Ergebnisses strikt über 0,5. Bei Überlappung keine automatische
+Übernahme, auch bei positivem externem Solution_92-Vergleich.
+
+Vorher Config-Differenz exakt die beiden genannten Flags sowie identische
+Netzparameter prüfen; danach einige vorhandene Karten lokal reproduzieren.
+Kursprobe und Sicherung von V3 vor einem eventuellen Austausch. Keine neuen
+Heuristikspiele vor Auswahl der festen Ausgangsbasis. V3 ist bereits installiert
+und vollständig geprüft; seine Übernahme wird durch diesen neuen Vergleich
+nicht zurückgenommen.
