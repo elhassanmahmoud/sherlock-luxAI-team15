@@ -325,3 +325,22 @@ def test_contest_sap_shoots_stronger_enemy_on_target_tile():
     a.belief.point_tiles[8, 5] = True
     obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(8, 5, 30)], relics=[(6, 6)])
     assert int(a.act(10, obs)[0, 0]) == geo.STAY
+
+
+def test_explore_quota_sends_one_unit_to_search_missing_relic():
+    from agents.sherlock.features import assign_targets
+    b = Belief(0)
+    b.match_idx, b.match_step = 1, 30
+    b.point_tiles[3, 3] = True
+    b.point_tiles[4, 4] = True
+    b.last_seen[:, :] = 30
+    b.last_seen[0:4, 12:16] = -1000          # eigener Block lange nicht gesehen
+    units = np.array([[5, 5], [6, 6]])
+    base = assign_targets(b, [0, 1], units, 24, 24)
+    assert set(base.values()) == {(3, 3), (4, 4)}   # ohne Quote erkundet niemand
+    q = assign_targets(b, [0, 1], units, 24, 24, explore_quota=1)
+    search = [t for t in q.values() if t not in ((3, 3), (4, 4))]
+    assert len(search) == 1 and 0 <= search[0][0] < 4 and 12 <= search[0][1] < 16
+    # beide Paare (Match 1 und 2) bekannt -> keine Quote
+    b.relic_positions.update({(10, 2), (21, 13), (5, 1), (22, 18)})
+    assert set(assign_targets(b, [0, 1], units, 24, 24, explore_quota=1).values()) == {(3, 3), (4, 4)}

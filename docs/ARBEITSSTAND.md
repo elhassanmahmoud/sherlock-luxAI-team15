@@ -26,6 +26,14 @@ Beim bereits erkannten Tod einer Einheit fehlte im potenzialbasierten Shaping de
 
 **Trainingsplan:** Je 400 Spiele aus identischen Anfangsgewichten (Seed 46, Karten 460000–460199), anschließend ausschließlich finale Checkpoints auf bekannten Entwicklungskarten vergleichen. Keine Wiederaufnahme alter Replay Buffer; keine Zwischencheckpoint-Auswahl. Der geprüfte Ablauf `experiments/analysis/autonomous_20261020/tools/reward_pilot.py` dokumentiert Start-/Endgewichte, Config, Quellcode und Ergebnisse, schützt V3/Sicherung und beendet eigene Prozesse spätestens um 06:00 Berlin. Vor dem tatsächlichen Start noch Gesamttests und kurze Reproduktion nach Integration der getrennten Diagnosevarianten. Noch kein Trainingsergebnis.
 
+## 20.10.2026, 20:35 – Claude Code mit Mahmoud: Relic-Suche im 2./3. Match (`explore_quota`) verworfen
+
+**Diagnose** (`all18_v3`, Val 720–759): In 13 von 57 verlorenen Matches haben wir mindestens ein Relic nie gefunden (davon 6, in denen Solution_92 alle fand). Ursache: In Match 2/3 gibt es mehr bekannte Ziele als Units, dann bekommt keine Unit ein Erkundungsziel.
+
+**Neuer Schalter `explore_quota`** (+ `explore_until=75`, Default aus, Test in `tests/test_rules_1910.py`): solange das Relic-Paar des Matches fehlen kann, suchen so viele Units (nicht auf Punkte-Tiles, zuerst ohne Ziel/mit Gegnerziel) lange nicht gesehene Tiles der eigenen Hälfte ab. Val 720 gegen `all18_v4` (84,5 %): Quote 1 **−8,0 (KI [−14,0; −2,0])**, Quote 2 **−9,5** → bleibt aus. Units vom Punktesammeln abzuziehen kostet mehr, als gefundene Relics bringen.
+
+Hinweis an Moayed/Codex: Moayeds V4-Direktvergleich gelesen; V3 bleibt Abgabe. Zielvergabe-/Sap-Geometrie-Diagnose und Reward-Trainingspilot sind bei Codex – Claude startet dazu nichts Paralleles.
+
 ## 20.10.2026, 20:25 – Codex: V4-Direktvergleich abgeschlossen, V3 bleibt Abgabe
 
 V4 enthält exakt dieselben 18 Netze wie V3; nur `contest_sap` und `opp_infer` sind zusätzlich aktiv. Mahmouds positive Bestätigung gegen Solution_92 bleibt gültig. Das vorab zusätzlich festgelegte direkte Gate ist jedoch **unklar**: V4 gewinnt gegen V3 **61/120 Spiele** auf 60 bekannten Entwicklungskarten 500720–500779, beide Seiten; Kartenbootstrap 95 % [43,33; 58,33] % bei 5.000 Wiederholungen. Die untere Grenze liegt nicht über 50 %. Deshalb keine automatische Übernahme, keine Behauptung, V4 sei schlechter. V3 bleibt die feste Ausgangsbasis für die nächsten eigenen Versuche.

@@ -97,6 +97,10 @@ class AgentConfig:
     contest_sap: bool = False
     """True: steht auf dem Ziel-Tile ein Gegner, den die Unit per Kollision nicht schlaegt,
     sappt sie dieses Tile aus der Entfernung (main._contest_sap)."""
+    explore_quota: int = 0
+    """> 0: so viele Units suchen in Match 2/3 gezielt das Relic-Paar, solange es fehlen
+    kann (bis explore_until), Ziel: lange nicht gesehene Tiles der eigenen Haelfte."""
+    explore_until: int = 75
     pt_sap: bool = False
     """True: Unit auf eigenem Punkte-Tile, deren Netz-Aktion 'stehen' ist, sappt
     stattdessen ein sichtbares Ziel in Reichweite (bleibt dabei auf dem Tile)."""
