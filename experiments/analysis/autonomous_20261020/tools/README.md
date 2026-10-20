@@ -84,3 +84,7 @@ review document, not an apply-ready patch. The extracted helper's function AST
 is identical to its source. No running source, repository file, weights, or Git
 state were changed to prepare this archive. No games were started by archival
 verification; full inference/environment integration was not rerun here.
+
+## Zweite Inferenzrunde
+
+`inference_development2.py --run` führt genau drei sequenzielle Vergleiche aus: V3, nur `active_targets`, nur `sap_geometry`. Maximal zwei Evaluationsworker, keine parallelen Trainings; 60 bekannte Karten × beide Seiten × zwei Gegner je Arm. Der Referenzarm muss alle 240 nichtzeitlichen Ergebnisse des früheren V3-Laufs exakt reproduzieren. Quellen/HEAD/Gewichte bleiben während des gesamten Laufs eingefroren. Exklusive Ausgabepfade unter `inference_development2/`, keine Überschreibung oder Übernahme von Gewichten. Vorab festgelegte Auswahl im autonomen Plan. Prozessprüfung mit elf stdlib-/AST-Fixtures einschließlich Replikationstrainern und SIGHUP geprüft; unabhängig statisch geprüft.
