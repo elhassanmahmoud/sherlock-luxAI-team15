@@ -1,0 +1,32 @@
+[16:56] Start
+[17:31] PPO cnn2c beendet
+P2c_ppo0010_720.csv: default: 1.000 (200 Spiele), solution92: 0.780 (200 Spiele) in 140s
+P2c_ppo0010_720              default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2c_ppo0010_720              solution92    100    200  0.780  0.800  -0.020  [-0.085; +0.040]
+P2c_ppo0020_720.csv: default: 1.000 (200 Spiele), solution92: 0.780 (200 Spiele) in 145s
+P2c_ppo0020_720              default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2c_ppo0020_720              solution92    100    200  0.780  0.800  -0.020  [-0.080; +0.040]
+P2c_ppo0030_720.csv: default: 1.000 (200 Spiele), solution92: 0.750 (200 Spiele) in 141s
+P2c_ppo0030_720              default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2c_ppo0030_720              solution92    100    200  0.750  0.800  -0.050  [-0.115; +0.010]
+P2c_ppo0040_720.csv: default: 1.000 (200 Spiele), solution92: 0.770 (200 Spiele) in 139s
+P2c_ppo0040_720              default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2c_ppo0040_720              solution92    100    200  0.770  0.800  -0.030  [-0.085; +0.025]
+[18:10] full_rules_fo fertig
+experiments/ensembles/fo6.pth: 6 Netze
+experiments/ensembles/all24fo_raw.pth: 24 Netze
+experiments/ensembles/all24fo.pth {'keep_dead_fast': True, 'far_opp': 10}
+I_fo6_720.csv: default: 0.995 (200 Spiele), solution92: 0.770 (200 Spiele) in 63s
+I_fo6_720                    default       100    200  0.995  1.000  -0.005  [-0.015; +0.000]
+I_fo6_720                    solution92    100    200  0.770  0.805  -0.035  [-0.105; +0.030]
+I_all24fo_720.csv: default: 1.000 (200 Spiele), solution92: 0.780 (200 Spiele) in 82s
+I_all24fo_720                default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+I_all24fo_720                solution92    100    200  0.780  0.805  -0.025  [-0.075; +0.025]
+J_a18fo10_1820.csv: default: 1.000 (400 Spiele), solution92: 0.748 (400 Spiele) in 139s
+J_fo6_1820.csv: default: 1.000 (400 Spiele), solution92: 0.757 (400 Spiele) in 115s
+J_fo6_1820                   default       200    400  1.000  1.000  +0.000  [+0.000; +0.000]
+J_fo6_1820                   solution92    200    400  0.757  0.748  +0.010  [-0.037; +0.055]
+J_all24fo_1820.csv: default: 1.000 (400 Spiele), solution92: 0.775 (400 Spiele) in 156s
+J_all24fo_1820               default       200    400  1.000  1.000  +0.000  [+0.000; +0.000]
+J_all24fo_1820               solution92    200    400  0.775  0.748  +0.028  [-0.010; +0.065]
+[18:20] Ende

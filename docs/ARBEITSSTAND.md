@@ -4,6 +4,23 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 abends – Claude Code mit Mahmoud: Pipeline-Ergebnisse und PPO-Prüfpunkt
+
+**Ausgangslage:** Moayeds Review `d0db18c` per Fast-Forward übernommen; danach Pipeline-Ergebnisse geprüft (Punkt 1 der Arbeitsliste). Mac war 09:58–16:54 zugeklappt im Akkubetrieb (Clamshell Sleep), die Trainings pausierten in dieser Zeit.
+
+**Pipeline `pipeline_2010.sh`** (Log `experiments/pipeline_2010.log`):
+- PPO `cnn2c` (ab `cnn2/ppo_0040`, `w_opp_points=1`, nur Reward geändert, kein Pool): Val 720 Iteration 10/20/30/40 = 78,0 / 78,0 / 75,0 / 77,0 % gegen 80,0 % am Start → kein Gewinn.
+- `fo6` (6 Netze `full_rules_fo`, `far_opp=10` schon im Training, je 4000 Spiele mit 70 % Solution_92): Val 720 77,0 % (−3,5 vs `all18_fo10`, n. s.).
+- `all24fo` (`all18` + `fo6`, `far_opp=10`): Val 720 78,0 % (−2,5, n. s.).
+- **Frische Karten 501 820–502 019** (200 Karten, 400 Spiele/Gegner, vorab in der Pipeline festgelegt): default alle 100 %; Solution_92 `all18_fo10` 74,75 %, `fo6` 75,75 % (+1,0, KI [−3,7; +5,5]), `all24fo` 77,5 % (+2,75, KI [−1,0; +6,5]) → **kein belegter Unterschied, `all18_fo10` bleibt Referenz.** `all18_fo10` auf zwei frischen Blöcken: 80,0 % und 74,75 %; die Kartenblöcke streuen deutlich.
+- Weitere Val-Tests: `all18_fo10` + `ram` 80,0 % (−0,5).
+
+**PPO-Prüfpunkt aus dem Review** (int8-Kartenebenen im Update): 2 Spiele mit `cnn2/ppo_0040` gegen Solution_92 (Seeds 123 401/123 402, Trainingsbereich), 7183 Unit-Schritte, gleiches Netz: Ratio neu/alt im Mittel 1,00005, mittlere Abweichung |r−1| 0,0015, Maximum 0,10, kein Schritt jenseits der Clip-Grenze 0,15. Die Rundung erklärt den späteren Leistungsabfall also nicht; Ebenen liegen in [−0,3; 1,0], kein int8-Überlauf.
+
+**Kandidaten-Manifest** `experiments/candidates_20261020.json`: SHA-256, Quellnetze (mit SHA-256), abweichende Config, Bauschritte und Ergebnisse für `all18_fo10` (SHA-256 `b2b7ffcc…4607`, 18 Netze) und `all24fo` (`e9ff09a6…8b03`, 24 Netze). Die Gewichte selbst bleiben gitignored (Konvention „keine Checkpoints versionieren“); Übertragung an Moayed noch zu vereinbaren. Kurs-Runner-Test `all18_fo10` (isolierte Kopie, 15 vs 2, 2 Spiele als player_0) ohne Fehler; der ausführlichere Runner-Test aus dem Review (beide Seiten, Laufzeit pro Zug) steht noch aus.
+
+**Seeds:** Val bis 502 019 verbraucht, nächster freier Index 2020. Abgabe-Gewichte unverändert (`3788fb72…d158`).
+
 ## 20.10.2026 – Codex mit Moayed: Review-Erkenntnisse und nächste Schritte dokumentiert
 
 **Auftrag:** Erkenntnisse aus der Prüfung von Mahmouds Commits und Vorschläge für die weitere Arbeit gemeinsam zugänglich machen. Ausschließlich Dokumentation; keine Änderungen an Agent, Gewichten, Training oder Runner. Laut Moayed erhielt die erste Präsentation die Note **1,3**.
