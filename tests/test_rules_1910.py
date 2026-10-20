@@ -289,3 +289,15 @@ def test_idle_sap_saps_off_point_tile_with_reserve():
     assert int(_stay_agent(idle_sap=True).act(10, obs)[0, 0]) == geo.SAP
     assert int(_stay_agent(idle_sap=True, idle_sap_reserve=70).act(10, obs)[0, 0]) == geo.STAY
     assert int(_stay_agent().act(10, obs)[0, 0]) == geo.STAY
+
+
+def test_safe_moves_blocks_move_onto_stronger_enemy():
+    from tests.conftest import make_obs
+    obs = make_obs(10, 10, units=[(5, 5, 50)], enemies=[(6, 5, 80)])
+    for flag, allowed in ((False, True), (True, False)):
+        a = _stay_agent(safe_moves=flag)
+        a.act(10, obs)
+        assert bool(a._prev_masks[0][geo.RIGHT]) == allowed
+    a = _stay_agent(safe_moves=True)
+    a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=[(6, 5, 20)]))
+    assert bool(a._prev_masks[0][geo.RIGHT])   # schwaecherer Gegner: Zug bleibt erlaubt

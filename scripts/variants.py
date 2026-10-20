@@ -41,6 +41,13 @@ VARIANTS: dict[str, tuple[str, dict]] = {
                                    "scripted_explore": True, "explore_stale": 20,
                                    "reward_fix": True, "keep_dead_fast": True,
                                    "far_opp": 10}),
+    # 20.10.2026 spaetabends: Regeln von all18_v3 (pt_sap, far_cand) schon im Training
+    "full_rules_v3": ("sherlock", {"use_symmetry": True, "explore_memory": True,
+                                   "early_inference": True, "relic_filter": True,
+                                   "subset_infer": True, "explore_grid": True,
+                                   "scripted_explore": True, "explore_stale": 20,
+                                   "reward_fix": True, "keep_dead_fast": True,
+                                   "far_opp": 10, "far_cand": True, "pt_sap": True}),
     "no_belief": ("sherlock", {"use_belief": False}),
     "no_shaping": ("sherlock", {"use_shaping": False}),
     "no_sap": ("sherlock", {"use_sap": False}),

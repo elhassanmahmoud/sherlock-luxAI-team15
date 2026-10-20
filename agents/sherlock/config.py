@@ -98,6 +98,9 @@ class AgentConfig:
     """Energie, die nach dem Sap mindestens uebrig bleiben muss (pt_sap)."""
     pt_sap_zone: bool = False
     """True (mit pt_sap): auch gestapelte Units und Units auf Kandidaten-Tiles sappen."""
+    safe_moves: bool = False
+    """True: Aktionsmaske verbietet Zuege auf ein Tile mit sichtbarem Gegner, dessen
+    Energie mindestens so gross ist wie die eigene nach dem Zug (Kollision verloren)."""
     idle_sap: bool = False
     """True: jede Unit, deren Netz-Aktion 'stehen' ist, sappt ein Ziel in Reichweite,
     wenn danach noch idle_sap_reserve Energie bleibt (auch abseits der Punkte-Tiles)."""

@@ -437,6 +437,15 @@ class Agent_x:
             tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
             ok = can_move and 0 <= tx < W and 0 <= ty < H and bool(ctx["passable"][tx, ty])
             mask[d] = ok
+        if self.cfg.safe_moves and len(ctx["enemy_coords"]):
+            # 20.10.2026: nicht auf ein Tile mit sichtbarem, mindestens gleich starkem Gegner
+            ec, ee = ctx["enemy_coords"], ctx["enemy_energies"]
+            for d in range(1, 5):
+                if mask[d]:
+                    tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                    here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
+                    if here.any() and float(ee[here].sum()) >= e - ctx["move_cost"]:
+                        mask[d] = False
         if self.n_actions > 5:
             mask[geo.SAP] = sap_target is not None and e >= ctx["sap_cost"]
         mask[geo.STAY] = True  # Stay ist immer legal
