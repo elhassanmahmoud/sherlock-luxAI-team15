@@ -66,7 +66,8 @@
     "results": {
       "G_a18_fo10_1620 (501620-501819)": "default 400/400, Solution_92 320/400 = 80,0 % (all18 ohne far_opp 74,0 %)",
       "J_a18fo10_1820 (501820-502019)": "default 400/400, Solution_92 74,75 %"
-    }
+    },
+    "shared_copy": "experiments/candidates/all18_fo10.pth"
   },
   "all24fo": {
     "file": "experiments/ensembles/all24fo.pth",
@@ -146,6 +147,15 @@
     "results": {
       "J_all24fo_1820 (501820-502019)": "default 400/400, Solution_92 77,5 % (+2,75 vs all18_fo10, KI [-1,0; +6,5])",
       "I_all24fo_720": "Solution_92 78,0 % (all18_fo10 80,5 %)"
+    },
+    "shared_copy": "experiments/candidates/all24fo.pth"
+  },
+  "cnn2_ppo0040": {
+    "shared_copy": "experiments/candidates/cnn2_ppo0040.pth",
+    "sha256": "007da1f1b040e54af61615ad817cf55cb8c025f6133a136a74f0fe9ca078d246",
+    "source": "experiments/ppo/cnn2/ppo_0040.pth",
+    "results": {
+      "Z_ppo0040_1420 (501420-501619)": "default 400/400, Solution_92 72,75 %"
     }
   }
 }
