@@ -200,3 +200,25 @@ def test_far_opp_keeps_nearby_enemy_tile():
     b = _StubBelief(points=[(12, 12)], cands=[(5, 5)])
     unit = np.array([[8, 8]])
     assert assign_targets(b, [0], unit, 24, 24, far_opp=10)[0] == (12, 12)
+
+
+def test_sticky_keeps_previous_target_unless_clearly_better():
+    from agents.sherlock.features import assign_targets
+    b = _StubBelief(points=[(8, 5), (5, 7)], cands=[])
+    unit = np.array([[5, 5]])
+    assert assign_targets(b, [0], unit, 24, 24)[0] == (5, 7)
+    assert assign_targets(b, [0], unit, 24, 24, prev={0: (8, 5)}, sticky=2.0)[0] == (8, 5)
+    # Vorteil des neuen Ziels groesser als sticky -> Wechsel
+    assert assign_targets(b, [0], unit, 24, 24, prev={0: (8, 5)}, sticky=0.5)[0] == (5, 7)
+
+
+def test_sticky_memory_resets_between_matches():
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.main import Agent_x
+    from tests.conftest import ENV_CFG, make_obs
+    a = Agent_x("player_0", cfg=AgentConfig(sticky=3.0), train=False)
+    a.set_env_cfg(ENV_CFG)
+    a.act(5, make_obs(5, 5, units=[(2, 2, 100)], relics=[(6, 6)]))
+    assert a._sticky_prev is not None and a._sticky_prev[0] == 0
+    a.new_game("player_0")
+    assert a._sticky_prev is None

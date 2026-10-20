@@ -147,6 +147,7 @@ class Agent_x:
         self._sap_hits: dict[int, int] = {}
         self._enemy_prev: dict[int, tuple[int, int]] = {}
         self._cache: Optional[tuple] = None
+        self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
                          "sap_attempts": 0, "sap_hits_est": 0}

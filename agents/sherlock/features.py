@@ -82,7 +82,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    enemy_half_penalty: float = 0.0,
                    seen_before_penalty: float = 0.0,
                    grid: int = 0, stale: int = 0,
-                   cand_quota: int = 0, far_opp: int = 0) -> dict[int, tuple[int, int]]:
+                   cand_quota: int = 0, far_opp: int = 0,
+                   prev: dict | None = None, sticky: float = 0.0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -184,6 +185,15 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                 + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1]))
         # 1500: hinter Kandidaten (1000 + Distanz), vor Erkundung (2000 + Distanz)
         cost += ((dist > far_opp) & ((prio == 0) & in_enemy)[None, :]) * 1500.0
+    if sticky and prev:
+        # bisheriges Ziel behalten, solange kein um mehr als `sticky` Felder besseres frei ist
+        index = {}
+        for ti, (tx, ty) in enumerate(tgt.tolist()):
+            index.setdefault((tx, ty), ti)
+        for ui, uid in enumerate(unit_ids):
+            ti = index.get(prev.get(int(uid)))
+            if ti is not None:
+                cost[ui, ti] -= float(sticky)
 
     out: dict[int, tuple[int, int]] = {}
     n_assign = min(len(unit_ids), len(tgt))
@@ -255,6 +265,9 @@ def make_context(agent, obs, belief=None) -> dict:
     match_step = int(np.asarray(obs["match_steps"]))
     max_match_steps = float(cfg.get("max_steps_in_match", 100))
 
+    sticky = float(agent.cfg.sticky)
+    prev = getattr(agent, "_sticky_prev", None)
+    prev = prev[1] if sticky and prev is not None and prev[0] == belief.match_idx else None
     assigned = assign_targets(
         belief, ally_ids,
         ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
@@ -262,7 +275,10 @@ def make_context(agent, obs, belief=None) -> dict:
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
         cand_quota=int(agent.cfg.cand_quota), far_opp=int(agent.cfg.far_opp),
+        prev=prev, sticky=sticky,
     )
+    if sticky and belief is agent.belief:
+        agent._sticky_prev = (belief.match_idx, dict(assigned))
 
     return dict(
         belief=belief, W=W, H=H,
