@@ -286,10 +286,16 @@ class Agent_x:
                 # 20.10.2026: auf eigenem Punkte-Tile stehen bleiben UND sappen (Tile bleibt
                 # besetzt). Diagnose: mit Sap-Gelegenheit sappte das Netz dort nur 9-12 %.
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
-                if (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid
-                        and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve):
+                on_tile = (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid)
+                if self.cfg.pt_sap_zone:  # auch gestapelt oder auf Kandidaten-Tiles
+                    on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
+                if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve:
                     a = geo.SAP
                     self._prev_actions[uid] = a
+            if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
+                    and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
+                a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
+                self._prev_actions[uid] = a
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:
@@ -460,6 +466,8 @@ class Agent_x:
             direct = cheb == 0
             splash = cheb == 1
             score = float(energies[direct].sum() + SAP_DROPOFF_ASSUMED * energies[splash].sum())
+            if self.cfg.sap_pt_first and self.belief.point_tiles[tx, ty]:
+                score += 1000.0  # 20.10.2026: Gegner auf Punkte-Tiles zuerst (sie punkten)
             hits = int(direct.sum() + splash.sum())
             if score > best_score:
                 best, best_score, best_hits = (tx - x, ty - y), score, hits

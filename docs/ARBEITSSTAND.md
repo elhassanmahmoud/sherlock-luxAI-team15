@@ -28,11 +28,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 - `pt_sap` (+ `pt_sap_reserve`): Unit auf eigenem Punkte-Tile sappt statt zu stehen, wenn ein Ziel in Reichweite ist: Val 720 81,0 % (+0,5, n. s.).
 - `pt_sap` + `far_cand`: Val 720 83,0 % (+2,5, n. s.). **Bestätigung auf frischen Karten 502 220–502 419** (200 Karten, 400 Spiele/Gegner, Kombination vorab festgelegt): default 100 % → 100 %, **Solution_92 71,75 → 78,5 % (+6,75, KI [+1,8; +12,0])**.
 
+**Weitere Versuche auf Basis `all18_v3`** (Val 720, Referenz `O_v3_720` 83,0 %; alle Schalter bleiben aus): `sap_pt_first` (Sap-Ziel bevorzugt Gegner auf Punkte-Tiles) ±0; `pt_hold` −2,0; `idle_sap` (jede stehende Unit sappt, Reserve 30) **−9,5**; `pt_sap_reserve` 25 / 60: −0,5 / −4,5; `fog_sap` (Reserve 0 / 30) −1,0 / −1,5; `pt_sap_zone` (auch gestapelt / Kandidaten-Tiles) ±0. CNN `cnn2/ppo_0040` mit `far_opp`, `far_cand`, `pt_sap` (in `PPOAgent` jetzt nur im Eval-Modus aktiv): 81,0 % (+1,0 n. s.). Diagnose `all18_v3` (Val 720–789): Matchsiege 91 / 81 / 69 % (vorher 90 / 75 / 57 %), Saps in Match 3 37,6 statt 19,4 je Spiel; Todesfälle je Spiel wir 56, Solution_92 66, überwiegend stehende Units (Kollision 14, wenig Energie 18, sonst 19, Sap 5).
+
 **Neuer Kandidat `all18_v3`** = `all18_fo10` + `pt_sap` + `far_cand` in der Config (`experiments/candidates/all18_v3.pth`, SHA-256 `aac1c910…d935`, auch in `scripts/install_candidates.sh` und im Manifest); 3 Karten × 2 Seiten × 2 Gegner identisch mit `--set`. Keine neue Abgabe.
 
 **Läuft:** `scripts/pipeline_cnn3.sh` (BC von `all18_fo10`: 1200 Lehrerspiele, 4,27 Mio. Unit-Schritte, Lehrer-WR 74 % vs Solution_92; danach PPO 60 Iterationen; Messung auf Val 720 und frischen Karten 502 020–502 219).
 
-**Prüfungen:** 152 Tests bestanden (Stand vor diesem Eintrag 150 + 2 neue `pt_sap`-Tests). Val-Seeds: 502 020–502 219 für cnn3 reserviert, 502 220–502 419 verbraucht, nächster freier Index 2420. Abgabe-Gewichte unverändert (`3788fb72…d158`).
+**Prüfungen:** 153 Tests bestanden (neu: `far_cand`, 2 × `pt_sap`). Val-Seeds: 502 020–502 219 für cnn3 reserviert, 502 220–502 419 verbraucht; **502 420–502 619 sind für Moayeds Bestätigungslauf exklusiv reserviert** (sein Plan `docs/superpowers/plans/2026-10-20-autonomous-improvement.md`), nächster freier Index für Mahmoud 2620. Abgabe-Gewichte unverändert (`3788fb72…d158`).
 
 ## 20.10.2026 – Codex mit Moayed: lokale Umgebung und all18_fo10-Funktionstest
 

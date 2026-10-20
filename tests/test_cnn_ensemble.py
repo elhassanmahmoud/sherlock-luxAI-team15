@@ -60,3 +60,23 @@ def test_ensemble_averages_log_probabilities(tmp_path):
         n2 = PPOAgent("player_0", agent_path=paths[1], train=False).net
         manual = (torch.log_softmax(n1(*x)[0], 1) + torch.log_softmax(n2(*x)[0], 1)) / 2
     assert torch.allclose(want, manual, atol=1e-6)
+
+
+def test_ppo_agent_pt_sap_only_in_eval_mode(tmp_path):
+    from agents.sherlock import geometry as geo
+
+    class StayNet(torch.nn.Module):
+        detach_value = False
+
+        def forward(self, planes, step_idx, pos, feats):
+            logits = torch.full((len(pos), 6), -5.0)
+            logits[:, geo.STAY] = 5.0
+            return logits, torch.zeros(len(pos))
+
+    cfg = AgentConfig(pt_sap=True)
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(6, 6)])
+    for sample, want in ((False, geo.SAP), (True, geo.STAY)):
+        agent = PPOAgent("player_0", cfg=cfg, train=sample, net=StayNet())
+        agent.set_env_cfg(ENV_CFG)
+        agent.belief.point_tiles[5, 5] = True
+        assert int(agent.act(10, obs)[0, 0]) == want

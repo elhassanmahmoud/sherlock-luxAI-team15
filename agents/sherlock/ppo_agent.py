@@ -182,6 +182,14 @@ class PPOAgent(Agent_x):
             self.recorder.on_act(ctx, ids, feats, masks, acts, logp, values.numpy())
         for k, uid in enumerate(ids):
             a = int(acts[k])
+            if (self.cfg.pt_sap and not self.sample and a == geo.STAY
+                    and sap_targets[uid] is not None and masks[k][geo.SAP]):
+                # wie Agent_x (20.10.2026): auf eigenem Punkte-Tile sappen statt stehen;
+                # nur im Eval-Modus, damit PPO-Daten on-policy bleiben
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                if (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid
+                        and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve):
+                    a = geo.SAP
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]

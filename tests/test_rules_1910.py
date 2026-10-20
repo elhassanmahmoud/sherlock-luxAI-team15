@@ -269,3 +269,23 @@ def test_pt_sap_respects_energy_reserve():
     a.belief.point_tiles[5, 5] = True
     obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(6, 6)])
     assert int(a.act(10, obs)[0, 0]) == geo.STAY   # 100 < 40 + 70
+
+
+def test_sap_pt_first_prefers_enemy_on_point_tile():
+    from tests.conftest import make_obs
+    for flag, want in ((False, (2, 1)), (True, (-2, 0))):
+        a = _stay_agent(pt_sap=True, sap_pt_first=flag)
+        a.belief.point_tiles[5, 5] = True
+        a.belief.point_tiles[3, 5] = True   # schwacher Gegner auf Punkte-Tile
+        obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 150), (3, 5, 20)],
+                       relics=[(6, 6)])
+        act = a.act(10, obs)
+        assert int(act[0, 0]) == geo.SAP and (int(act[0, 1]), int(act[0, 2])) == want
+
+
+def test_idle_sap_saps_off_point_tile_with_reserve():
+    from tests.conftest import make_obs
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(6, 6)])
+    assert int(_stay_agent(idle_sap=True).act(10, obs)[0, 0]) == geo.SAP
+    assert int(_stay_agent(idle_sap=True, idle_sap_reserve=70).act(10, obs)[0, 0]) == geo.STAY
+    assert int(_stay_agent().act(10, obs)[0, 0]) == geo.STAY

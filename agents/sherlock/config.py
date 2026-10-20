@@ -96,6 +96,14 @@ class AgentConfig:
     stattdessen ein sichtbares Ziel in Reichweite (bleibt dabei auf dem Tile)."""
     pt_sap_reserve: int = 0
     """Energie, die nach dem Sap mindestens uebrig bleiben muss (pt_sap)."""
+    pt_sap_zone: bool = False
+    """True (mit pt_sap): auch gestapelte Units und Units auf Kandidaten-Tiles sappen."""
+    idle_sap: bool = False
+    """True: jede Unit, deren Netz-Aktion 'stehen' ist, sappt ein Ziel in Reichweite,
+    wenn danach noch idle_sap_reserve Energie bleibt (auch abseits der Punkte-Tiles)."""
+    idle_sap_reserve: int = 30
+    sap_pt_first: bool = False
+    """True: Sap-Ziel bevorzugt Gegner auf bekannten Punkte-Tiles (_best_sap_target)."""
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""
