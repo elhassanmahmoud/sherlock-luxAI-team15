@@ -1,0 +1,57 @@
+{
+  "purpose": "Portable archival copy of the exact running observation-only diagnostic",
+  "algorithm_changes": false,
+  "expected_install_directory": "experiments/analysis/autonomous_20261020/tools",
+  "original_source_sha256": {
+    "diagnostic": "e6f3e41c9a3f202f2bdce5be175992e0055448059554bc1d40e5ef58bb5cee3f",
+    "observer": "9fecfed5a3519208456c1df6155eb27fe0674545447d10aabcd16baaabf4aac3",
+    "helper_source": "730437c9f9c95e54036e019e7e17fc9715766634210bfa52b186b23be946d94e",
+    "observer_tests": "845cd215649d43a87cb79f9f3ad50fe3fb3dec3bccff81ec6767b428cd73f768"
+  },
+  "source_labels": {
+    "diagnostic": "running temporary target diagnostic",
+    "observer": "reviewed temporary Sap observer",
+    "helper_source": "reviewed proposed agents/sherlock/rules.py",
+    "observer_tests": "reviewed Sap observer edge-case tests"
+  },
+  "repo_source_sha256": {
+    "agents/sherlock/config.py": "b0d0be8a4ffff0349df8712e16d9436541b9c006329e49c91aa78edab16a9f20",
+    "agents/sherlock/features.py": "f7281f7c10662a3fc65722ee6ad07309204641aa619d3f78a6c87ea67073ed13",
+    "agents/sherlock/belief.py": "16a42ee1f16c4b98da15ba26a97f41e8b95a8bbe35c1b9f356b7505ead117314",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/main.py": "4ba38c42185357561ebf5b6976d12c95c127b50584222b0ec9c296c12f84fd83",
+    "scripts/common.py": "83989d9e8b45cc9957e7a2c0acfd9791149724d2a04791b584e471bac8a803e3",
+    "scripts/experiment.py": "b3b89c9acee4099fcf840c08a52e8b991675a79b75c8795f3ea30d8a13dbf89a",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0"
+  },
+  "helper_ast_identical_to_original": true,
+  "path_changes": [
+    "repository root found through __file__ ancestors with repository markers",
+    "Sap observer loaded from sibling file",
+    "Sap helper extracted unchanged and loaded from sibling file"
+  ],
+  "repo_or_git_changes": false,
+  "games_started": 0,
+  "torch_or_jax_loaded": false,
+  "verification": {
+    "ast": "all archived Python files parsed",
+    "target_self_test": "portable output byte-identical to current running-source self-test output",
+    "target_self_test_returncode": 0,
+    "observer_edge_cases": 4,
+    "observer_test_returncode": 0,
+    "cwd_independence": "both portable checks passed from / in staged intended directory layout",
+    "games": 0,
+    "torch_or_jax_loaded": false
+  },
+  "archive_sha256": {
+    "README.md": "e6bc8bd68c550ba3c66e052d3ea491c2a02afc5dea4a399d7827479a0c3a4803",
+    "observe_sap_geometry.py": "7bc0d8cf18d078b54de45252f288a76b8eef9ab5b8718517797f0e5e7db2d2ff",
+    "observer_test_result.txt": "f37f3aba692ed899d683e6b061ae80420fa557dcb57846048668778f67b53489",
+    "portability-review.diff": "5ac6228ad562c3fa42da983d5c17d3048942672317e2572168230209badc4b5d",
+    "sap_geometry_helper.py": "f2422b44bd40dd14e03415a2a0fdba3b97651132affcd51908a7ca22817c3767",
+    "self_test_result.json": "be4b2871ed59041b087a091d062976412452370976807bcf901140cab3c3f6da",
+    "sherlock-target-diagnosis-20261020.py": "eb839a6523dc94451422474c8605463cc71c7bc33ee0141a012407a0408d4d68",
+    "source_snapshots/proposed_rules.py": "730437c9f9c95e54036e019e7e17fc9715766634210bfa52b186b23be946d94e",
+    "test_observer_edge_cases.py": "845cd215649d43a87cb79f9f3ad50fe3fb3dec3bccff81ec6767b428cd73f768"
+  }
+}

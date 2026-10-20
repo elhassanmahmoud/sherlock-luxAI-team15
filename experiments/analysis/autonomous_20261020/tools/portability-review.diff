@@ -1,0 +1,37 @@
+--- running-source/diagnostic.py
++++ tools/sherlock-target-diagnosis-20261020.py
+@@ -17,7 +17,13 @@
+ from pathlib import Path
+ from types import SimpleNamespace
+
+-ROOT = Path('<original-checkout>')
++# Supports placement under experiments/analysis/autonomous_20261020/tools/,
++# worktrees and source copies without depending on the current directory.
++ROOT = next((parent for parent in Path(__file__).resolve().parents
++             if (parent / 'agents/sherlock/features.py').is_file()
++             and (parent / 'scripts/common.py').is_file()), None)
++if ROOT is None:
++    raise RuntimeError('Place this tool inside a Sherlock repository checkout')
+ sys.path.insert(0, str(ROOT))
+ for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS'):
+     os.environ.setdefault(name, '1')
+@@ -220,7 +226,7 @@
+     from scripts.common import make_opponent, play_game
+     from luxai_s3.wrappers import LuxAIS3GymEnv
+     spec = importlib.util.spec_from_file_location(
+-        'sap_geometry_shadow', '<original-proposal>/observe_sap_geometry.py')
++        'sap_geometry_shadow', str(Path(__file__).with_name('observe_sap_geometry.py')))
+     sap_shadow = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(sap_shadow)
+
+--- running-source/observe_sap_geometry.py
++++ tools/observe_sap_geometry.py
+@@ -13,7 +13,7 @@
+
+
+ def _load_proposed_helper():
+-    path = Path(__file__).parent / "proposed/agents/sherlock/rules.py"
++    path = Path(__file__).parent / "sap_geometry_helper.py"
+     tree = ast.parse(path.read_text())
+     helper = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+                   and n.name == "better_sap_geometry")

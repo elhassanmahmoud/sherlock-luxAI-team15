@@ -1,0 +1,28 @@
+{
+  "status": "synthetic_checks_passed",
+  "games": 0,
+  "torch_loaded": false,
+  "jax_loaded": false,
+  "baseline": {
+    "0": [
+      3,
+      3
+    ],
+    "1": [
+      10,
+      10
+    ]
+  },
+  "shadow": {
+    "1": [
+      3,
+      3
+    ]
+  },
+  "changed_features": [
+    "assigned_dx",
+    "assigned_dy",
+    "assigned_dist"
+  ],
+  "note": "Mechanism reproduced, not empirical frequency or playing-strength benefit."
+}
