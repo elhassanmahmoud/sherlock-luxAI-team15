@@ -12,6 +12,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **`sap_kill_first`** (Sap-Ziel bevorzugt Gegner, die der Treffer zerstört): Val 720 **−8,0 (KI [−14,5; −1,5])** gegen `all18_v4` → aus; die bisherige Wahl (größte getroffene Gegnerenergie) ist besser.
 
+**`energy_pref`** (Punkte-Tiles mit hoher Feldenergie bevorzugen) 2 / 5: −1,5 / −3,5 → aus. **Seitenvergleich** über 3600 Spiele gegen Solution_92 (7 Messreihen): player_0 77,2 %, player_1 77,3 % – kein Spiegelungsfehler.
+
 Hinweis an Moayed/Codex: Moayeds V4-Direktvergleich gelesen; V3 bleibt Abgabe. Zielvergabe-/Sap-Geometrie-Diagnose und Reward-Trainingspilot sind bei Codex – Claude startet dazu nichts Paralleles.
 
 ## 20.10.2026, 20:25 – Codex: V4-Direktvergleich abgeschlossen, V3 bleibt Abgabe
