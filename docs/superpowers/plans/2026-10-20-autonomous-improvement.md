@@ -18,13 +18,14 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 
 ## Global Constraints
 
-- Abgabe-Gewichte unverändert; beide SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`.
+- Abgabe bis zur bestandenen Übernahmeprüfung unverändert; bisher beide SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`. Versionierte Sicherung unter `experiments/releases/20261020_old3_sym3/` dauerhaft erhalten.
 - Maximal zwei Evaluationsprozesse, höchstens ein Training; keine Cloud-Kosten.
 - Kurs-Runner unverändert; bestehende Kandidaten und Messdateien nicht ersetzen.
 - Ende dieses Zyklus spätestens 20.10.2026 23:15 UTC.
 - Entwicklung 500720–500779; Bestätigung 502420–502619 exklusiv reserviert.
 - CNN3 nicht doppelt starten; keine BC-Datensammlung auf dem 8-GB-Rechner.
-- Keine neue Abgabe ohne ausdrücklichen Auftrag.
+- Moayed hat den Austausch am 20.10. ausdrücklich freigegeben, sofern der Kandidat nachweislich besser ist. Übernahmeprüfung gemäß ergänztem Spec; Training überschreibt die Abgabe weiterhin nicht.
+- Sinnvolle Commit-Grenzen: Prüfwerkzeug mit Tests; abgeschlossene Entwicklungsmessung mit Auswahlentscheidung; bestätigte Kandidatenänderung mit Prüfungen; Abschlussbericht. Zugehörige Dokumentation jeweils mitführen. Nur geprüfte Arbeit pushen, laufende Messungen nicht als abgeschlossen einchecken.
 
 ## Review Focus
 
@@ -112,6 +113,8 @@ zusätzliche CSVs gegen alte Abgabe auf Entwicklungskarten.
   Varianten auf den 60 Entwicklungskarten prüfen.
 - [ ] Auswahlregel aus Spec anwenden; bei Unsicherheit Referenz behalten.
   Nicht nachträglich andere Varianten auf demselben Bestätigungsblock suchen.
+- [ ] Zusätzliche Übernahmeprüfung: alte Abgabe auf 502420–502619 gegen beide Gegner auswerten und gepaart mit dem ausgewählten Stand vergleichen. Ohne erfolgreichen Herausforderer V3 als einzigen Kandidaten gegen die alte Abgabe prüfen; dann diesen Teil trotz übersprungener Variantenbestätigung ausführen.
+- [ ] Für die Übernahme auch direkten Vergleich des ausgewählten Stands gegen die gesicherte alte Abgabe auf den 60 Entwicklungskarten prüfen; Sicherungspfad als Gegner verwenden.
 
 ## Aufgabe 5: Abschluss
 
@@ -123,6 +126,7 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
   auf zwei bereits benutzten Karten prüfen.
 - [ ] Betroffene Tests und Hash-Prüfungen durchführen.
 - [ ] Änderungen unabhängig prüfen lassen, wichtige Befunde beheben.
+- [ ] Nur bei erfüllten Übernahmekriterien: Sicherungsmanifest prüfen, beide Abgabedateien durch den geprüften Kandidaten ersetzen, Hash-Identität, Kursbetrieb und betroffene Tests erneut prüfen; bei Fehlern zurückrollen. Eigenen Übernahme-Commit samt Bericht und Rückweg erstellen. Andernfalls alte Abgabe behalten.
 - [ ] GitHub abgleichen, geprüfte Änderungen pushen; Planstatus aktualisieren.
 - [ ] Weiterführung beenden, sobald Zyklus fertig oder Arbeitsgrenze erreicht.
   Offene Schritte und laufende Prozesse ausdrücklich benennen.
@@ -140,3 +144,5 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - Aufgabe 3 gestartet: fünf sequenzielle Evaluationsläufe, je 240 Spiele, maximal zwei Worker. Status/PID/Commands und fertige Ergebnisse: `experiments/analysis/autonomous_20261020/development_state.json`. Laufprozess nicht duplizieren; unfertige CSVs nicht werten.
 - Leerlauf-Ruhezustand bis zur Arbeitsgrenze verhindert. Eigener Prozess ist in `experiments/analysis/autonomous_20261020/awake_until_deadline.json` dokumentiert. Bei frühem Abschluss nur diesen anhand PID und Kommando verifizierten caffeinate-Prozess beenden; keine fremden Prozesse stoppen.
 - Nächste Fortsetzung: laufenden Entwicklungsbatch prüfen, vollständige Ergebnisse auswerten, maximal einen eindeutigen Gewinner bestätigen. Bei Ende Automation deaktivieren.
+- Neue Freigabe: geprüften besseren Stand auch als Abgabe übernehmen. Bisherige Abgabe vorab bytegleich gesichert; ergänzende Vergleichsregel gegen die alte Abgabe vor Sichtung der neuen Karten festgelegt. Keine Änderung laufender Entwicklungsmessungen.
+- Git-Abgleich während Aufgabe 3: origin/main enthält zusätzlich `790997a` und `96bbf6f` von Mahmoud (weitere standardmäßig deaktivierte Sap-/Bewegungsschalter, CNN-Eval-Anpassung und neue Trainingspipeline). Laufenden Batch zunächst mit seinem ursprünglichen Code abschließen. Danach eigenen Sicherungs-/Freigabe-Commit auf origin/main rebasen, neue Tests und Referenzreproduktion prüfen, bevor die nächste Messreihe startet und gepusht wird. Keine zweite V3-Trainingspipeline starten. Die Sicherung ist lokal committet; Push steht bis zu diesem Abgleich aus.

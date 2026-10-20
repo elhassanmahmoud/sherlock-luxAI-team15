@@ -20,9 +20,13 @@ auf seinem Rechner unbekannt. Kein doppeltes CNN3-/BC-Training starten.
 
 ## Verbindliche Grenzen
 
-- Abgabe-Dateien `agents/sherlock/weights/agent_p0.pth` und `agent_p1.pth`
-  niemals ändern. Beide SHA-256:
+- Neue ausdrückliche Freigabe vom 20.10.: Abgabe-Dateien
+  `agents/sherlock/weights/agent_p0.pth` und `agent_p1.pth` dürfen nach
+  bestandener Übernahmeprüfung unten ersetzt werden. Bis dahin unverändert.
+  Beide bisherigen SHA-256:
   `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`.
+  Vorab geprüfte, versionierte Sicherung:
+  `experiments/releases/20261020_old3_sym3/`. Diese bleibt unverändert.
 - Vorhandene Kandidaten nicht überschreiben; neue Ergebnisse in neue Dateien.
 - Kurs-Runner `lux/runner.py` unverändert lassen.
 - Keine versteckten Umgebungsinformationen als Agentenfeatures oder Reward.
@@ -75,6 +79,32 @@ Prüfungen, Seeds, Config, Checkpoint-Hash, Codeversion und Grenzen speichern.
 Runner-Bericht enthält Seiten/Gegner, wiederholte Spiele, gültiges Aktionsformat,
 Initialisierung des Gedächtnisses und gemessene Entscheidungszeiten.
 Kein unbekanntes Kurs-Zeitlimit erfinden; Zeiten berichten, Grenzwert offen benennen.
-Entwicklungs- und Bestätigungsergebnisse getrennt halten. Ein erfolgreiches
-Experiment überschreibt weder automatisch die Abgabe noch macht es ältere
-Ergebnisse ungültig.
+Entwicklungs- und Bestätigungsergebnisse getrennt halten. Ältere Ergebnisse
+bleiben mit ihrem damaligen Stand gültig.
+
+## Übernahme in die Abgabe – ergänzende Freigabe vom 20.10.
+
+Die Auswahl unter den vier Varianten bleibt unverändert. Falls keine davon
+bestätigt wird, kommt ausschließlich die vorab festgelegte Referenz `all18_v3`
+als möglicher Ersatz der alten Abgabe infrage. Keine neue Parametersuche.
+
+Die alte Abgabe zusätzlich auf denselben frischen Seeds 502420–502619 gegen
+default/Solution_92 auswerten. Für die Übernahme muss der ausgewählte Stand
+gegenüber der alten Abgabe einen positiven gepaarten 95%-Karten-Bootstrap-Bereich
+gegen Solution_92 erreichen, darf gegen default höchstens zwei Prozentpunkte
+verlieren und muss die Kursprüfung auf beiden Seiten bestehen. Wenn die vier
+Varianten keinen Herausforderer liefern, V3 und alte Abgabe trotzdem auf
+diesem Block vergleichen. Ein direkter Vergleich gegen die gesicherte alte
+Abgabe auf 60 Entwicklungskarten ergänzt diese Prüfung; bei klarer Schwäche
+oder technischen Fehlern nicht übernehmen.
+
+Ein neuer experimenteller Herausforderer muss zusätzlich die ursprünglichen
+Kriterien gegenüber V3 erfüllen. Diese Zusatzprüfung ist vor Sichtung des
+Bestätigungsblocks festgelegt. Falls Zeit oder Beleg fehlen, alte Abgabe
+behalten und offenen Schritt dokumentieren.
+
+Vor dem Austausch Sicherung anhand Manifest prüfen. Nach dem Austausch
+beide Abgabedateien gegen den gewählten Kandidaten prüfen, Kursprüfung und
+betroffene Tests ausführen. Bei Fehlern gesicherte Dateien wiederherstellen.
+Übernahme als eigenen Commit mit Ergebnisbericht, Herkunft, alten/neuen Hashes
+und Rückweg dokumentieren. Trainings-Überschreibschutz nicht lockern.
