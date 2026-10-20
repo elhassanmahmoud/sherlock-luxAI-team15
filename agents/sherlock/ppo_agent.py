@@ -123,6 +123,13 @@ class PPOAgent(Agent_x):
             if ckpt is not None:
                 net.load_state_dict(ckpt["policy"])
         self.net = net.eval()
+        # 20.10.2026: Policy-Ensemble (scripts.build_cnn_ensemble) -> im Eval-Modus
+        # werden die log-Wahrscheinlichkeiten aller Netze gemittelt
+        self.extra_nets: list[PolicyNet] = []
+        for m in (ckpt or {}).get("ensemble", []):
+            extra = PolicyNet(**m["arch"])
+            extra.load_state_dict(m["policy"])
+            self.extra_nets.append(extra.eval())
         self.recorder: Optional[Recorder] = None
         self.sample = bool(train)
 
@@ -153,10 +160,16 @@ class PPOAgent(Agent_x):
         planes = map_planes(ctx)
         pos = np.array([[int(ctx["ally_pos"][u][0]), int(ctx["ally_pos"][u][1])] for u in ids])
         with torch.no_grad():
-            logits, values = self.net(
-                torch.as_tensor(planes[None]), torch.zeros(len(ids), dtype=torch.long),
-                torch.as_tensor(pos, dtype=torch.long), torch.as_tensor(feats))
+            inputs = (torch.as_tensor(planes[None]), torch.zeros(len(ids), dtype=torch.long),
+                      torch.as_tensor(pos, dtype=torch.long), torch.as_tensor(feats))
+            logits, values = self.net(*inputs)
             logits = logits.masked_fill(~torch.as_tensor(masks), -1e9)
+            if self.extra_nets and not self.sample:
+                logp_sum = torch.log_softmax(logits, dim=1)
+                for extra in self.extra_nets:
+                    lg = extra(*inputs)[0].masked_fill(~torch.as_tensor(masks), -1e9)
+                    logp_sum = logp_sum + torch.log_softmax(lg, dim=1)
+                logits = logp_sum / (1 + len(self.extra_nets))
             if self.sample:
                 dist = torch.distributions.Categorical(logits=logits)
                 a_t = dist.sample()

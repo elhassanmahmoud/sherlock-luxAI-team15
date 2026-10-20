@@ -1,0 +1,49 @@
+[23:57] Start
+[02:15] 6 Netze fertig:        2 +        4
+experiments/ensembles/all24.pth: 24 Netze
+experiments/ensembles/all24_kdf.pth {'keep_dead_fast': True}
+Y_all24_720.csv: default: 1.000 (200 Spiele), solution92: 0.755 (200 Spiele) in 157s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+Y_all24_720                  default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+Y_all24_720                  solution92    100    200  0.755  0.765  -0.010  [-0.060; +0.040]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+Y_all18_1220.csv: default: 1.000 (400 Spiele), solution92: 0.720 (400 Spiele) in 298s
+Y_all24_1220.csv: default: 1.000 (400 Spiele), solution92: 0.715 (400 Spiele) in 290s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+Y_all24_1220                 default       200    400  1.000  1.000  +0.000  [+0.000; +0.000]
+Y_all24_1220                 solution92    200    400  0.715  0.720  -0.005  [-0.048; +0.037]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+[05:10] PPO cnn2 beendet
+P2_ppo0050_720.csv: default: 1.000 (200 Spiele), solution92: 0.775 (200 Spiele) in 80s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+P2_ppo0050_720               default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2_ppo0050_720               solution92    100    200  0.775  0.730  +0.045  [-0.010; +0.105]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+P2_ppo0100_720.csv: default: 1.000 (200 Spiele), solution92: 0.700 (200 Spiele) in 80s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+P2_ppo0100_720               default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2_ppo0100_720               solution92    100    200  0.700  0.730  -0.030  [-0.110; +0.050]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+P2_ppo0150_720.csv: default: 1.000 (200 Spiele), solution92: 0.675 (200 Spiele) in 80s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+P2_ppo0150_720               default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2_ppo0150_720               solution92    100    200  0.675  0.730  -0.055  [-0.135; +0.025]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+P2_ppo0200_720.csv: default: 1.000 (200 Spiele), solution92: 0.680 (200 Spiele) in 79s
+Gepaarter Karten-Bootstrap: 5000 Wiederholungen, Seed 0; WR/Delta auf gemeinsamen Karten.
+WR = mittleres result (Remis zaehlt halb). Delta/KI in Anteilen: 0.01 = 1 Prozentpunkt.
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+P2_ppo0200_720               default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+P2_ppo0200_720               solution92    100    200  0.680  0.730  -0.050  [-0.135; +0.040]
+Intervalle fuer feste Agenten; keine Korrektur fuer Mehrfachvergleiche/Modellauswahl.
+[05:15] Ende

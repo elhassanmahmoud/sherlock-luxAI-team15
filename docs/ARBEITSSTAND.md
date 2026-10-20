@@ -4,6 +4,22 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 – Claude Code mit Mahmoud: Nacht-Ergebnisse, PPO-Stände, CNN-Ensemble
+
+**Nacht Teil 2** (`scripts/overnight_2010.sh`, Log `experiments/overnight_2010.log`): 6 weitere `full_rules`-Netze mit 70 % Solution_92 (`*_s18`–`*_s23_sol70`, je 4000 Spiele, 138 min). 24er-Ensemble `all24` gegen `all18` auf frischen Karten 501 220–501 419: default beide 100 %, Solution_92 71,5 vs 72,0 % (−0,5, KI [−4,8; +3,7]) → **mehr Netze bringen nichts mehr**.
+
+**PPO `cnn2`** (200 Iterationen ab BC, lr 1e-4, eigener Critic-Kopf), Val 720–819 vs Solution_92 (BC 73,0 %): Iteration 30 und 40 je **80,0 %**, 50 77,5 %, 60 72,5 %, 70 69,5 %, 100 70,0 %, 150 67,5 %, 200 68,0 % – PPO verbessert zuerst und verschlechtert sich danach (Entropie 0,38 → 0,12). Bestätigung auf frischen Karten 501 420–501 619 (200 Karten, 400 Spiele/Gegner): **`ppo_0040` default 100 %, Solution_92 72,8 %; `ppo_0030` 99,8 % / 72,8 %; `all18` 99,8 % / 71,0 %** (Δ +1,8, KI [−3,7; +7,2]) → ein einzelnes CNN nach 40 PPO-Iterationen ist so stark wie das 18er-DQN-Ensemble, aber nicht nachweisbar besser.
+
+**`all18` auf allen frischen Karten** (501 020–501 619, 600 Karten, je 1200 Spiele): default 99,9 %, Solution_92 72,4 %.
+
+**Neu: CNN-Policy-Ensemble** (`PPOAgent.extra_nets`, `scripts/build_cnn_ensemble.py`, Tests `tests/test_cnn_ensemble.py`): mittelt im Eval-Modus die log-Wahrscheinlichkeiten. Ensembles aus Ständen desselben Laufs (3, 5, 7 Netze) auf Val 720: 76,0 / 78,0 / 76,5 % gegen 80,0 % für `ppo_0040` allein → Stände eines Laufs sind zu ähnlich; Ensemble braucht unabhängige Läufe.
+
+**Diagnose Match 3** (60 Karten × 2 Seiten, Ground Truth, Skripte `diag_m3`, `diag_m3b`, `diag_know3` im Arbeitsverlauf): Matchsiege 88 / 69 / 49 %. Verlorene 3. Matches sind Karten mit vielen Punkte-Tiles (10,1 je Hälfte, gewonnene 5,6). Dort besetzt Solution_92 bei Step 50 7,5 der 10 Tiles seiner Hälfte, wir 5,3 der 10 unserer Hälfte, obwohl 15 Units leben: 5,7 Units sind auf dem Weg zu Punkte-Tiles der Gegnerhälfte (im Mittel 18 Felder entfernt, nur 0,2 dort angekommen), 1,8 eigene Punkte-Tiles sind noch ungetestete Kandidaten, 0,9 außerhalb jeder Kandidatenzone. Wissen über die eigene Hälfte (alle Karten, Match 3 Step 50): wir 6,1, Solution_92 6,6 von 7,9 Tiles, beide ohne Fehler.
+
+**Läuft:** PPO `cnn2b` ab `ppo_0040`, lr 3e-5, Entropie 0,01, neue Trainings-Seeds (`--seed 1`), 80 Iterationen, Stand alle 5 Iterationen.
+
+**Prüfungen:** 146 Tests bestanden. Val-Seeds bis 501 619 verbraucht, nächster freier Index 1620. Abgabe-Gewichte unverändert.
+
 ## 19.10.2026 – Claude Code mit Mahmoud: Regeln, Reward-Korrekturen, CNN + PPO
 
 **Auftrag:** Nach dem Review (lief laut Mahmoud gut) alles einbauen, was Regeln und Rewards hergeben, plus CNN/PPO (Empfehlung des Prof). Ziel bis 23.10.: default und Solution_92 möglichst immer schlagen. Commit/Push ausdrücklich erlaubt. Arbeitszweig `feat/regeln-rewards` (ab `b37aec3`, Präsi-Stand 15.10. vorher auf `docs/presentation-erkenntnisse` committet).
