@@ -33,9 +33,10 @@ auf seinem Rechner unbekannt. Kein doppeltes CNN3-/BC-Training starten.
 - Keine zusätzlichen kostenpflichtigen Dienste oder Cloud-Trainings buchen.
 - M3 / 8 GB: maximal zwei Evaluationsprozesse; höchstens ein Training
   gleichzeitig, keine parallele große Testsuite während eines Trainings.
-- Erster autonomer Arbeitszyklus maximal sechs Stunden ab Planbeginn,
-  spätestens **20.10.2026, 23:15 UTC / 21.10., 01:15 Berlin** beenden.
-  Dieser Zeitpunkt ist eine Arbeitsgrenze, kein versprochener Fertigstellungstermin.
+- Moayed hat den Arbeitszeitraum ausdrücklich bis **21.10.2026, 04:00 UTC /
+  06:00 Berlin** verlängert. Ab 05:30 Berlin nur noch rechtzeitig abschließbare
+  Prüfungen starten. Um 06:00 Arbeiten kontrolliert abschließen und Morgenbericht
+  im Chat und Repo liefern. Die frühere Grenze 23:15 UTC ist aufgehoben.
 - Nur getestete Änderungen pushen; vor jedem Push GitHub abgleichen.
   Direkte kleine Commits auf `main` sind vom Team autorisiert.
 - Lokale Dateien anderer Arbeiten, insbesondere `.DS_Store`, erhalten.
@@ -108,3 +109,19 @@ beide Abgabedateien gegen den gewählten Kandidaten prüfen, Kursprüfung und
 betroffene Tests ausführen. Bei Fehlern gesicherte Dateien wiederherstellen.
 Übernahme als eigenen Commit mit Ergebnisbericht, Herkunft, alten/neuen Hashes
 und Rückweg dokumentieren. Trainings-Überschreibschutz nicht lockern.
+
+## Verlängerung bis 06:00 – Auftrag vom 20.10.
+
+Nach dem ersten begrenzten Zyklus weitere sachlich begründete Diagnose-,
+Verbesserungs- und Trainingsschritte selbstständig bearbeiten. Vor jedem neuen
+Versuch Hypothese, Vergleichsstand, Auswahlregel und Karten schriftlich festlegen.
+Keine Bestätigungsdaten als neue Entwicklungsdaten benutzen und anschließend
+auf denselben Karten Erfolg behaupten. Neue remote Ergebnisse vor eigener
+Trainingsplanung prüfen; Mahmouds CNN3-/V3-Netz-Pipelines nicht duplizieren.
+Weitere Bestätigungsblöcke erst nach Abgleich mit Remote eindeutig reservieren.
+
+Wenn keine sinnvollen Schritte mehr offen sind, keine künstlichen Läufe starten;
+Bericht vorbereiten. Die automatische Fortsetzung bleibt für den Morgenbericht
+um 06:00 eingerichtet und wird danach deaktiviert. Bericht enthält vollständige
+Spielzahlen/Gegner/Karten, gescheiterte Ansätze, belegte Änderungen mit Unsicherheit,
+Abgabestand, Sicherung, tatsächlich gepushte Commits und offene Arbeit.

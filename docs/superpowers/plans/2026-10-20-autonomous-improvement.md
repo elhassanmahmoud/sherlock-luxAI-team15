@@ -21,7 +21,7 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 - Abgabe bis zur bestandenen Übernahmeprüfung unverändert; bisher beide SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`. Versionierte Sicherung unter `experiments/releases/20261020_old3_sym3/` dauerhaft erhalten.
 - Maximal zwei Evaluationsprozesse, höchstens ein Training; keine Cloud-Kosten.
 - Kurs-Runner unverändert; bestehende Kandidaten und Messdateien nicht ersetzen.
-- Ende dieses Zyklus spätestens 20.10.2026 23:15 UTC.
+- Neue Arbeitsgrenze: 21.10.2026 04:00 UTC / 06:00 Berlin. Ab 05:30 Berlin nur noch rechtzeitig abschließbare Arbeiten; um 06:00 Morgenbericht und kontrollierter Abschluss.
 - Entwicklung 500720–500779; Bestätigung 502420–502619 exklusiv reserviert.
 - CNN3 nicht doppelt starten; keine BC-Datensammlung auf dem 8-GB-Rechner.
 - Moayed hat den Austausch am 20.10. ausdrücklich freigegeben, sofern der Kandidat nachweislich besser ist. Übernahmeprüfung gemäß ergänztem Spec; Training überschreibt die Abgabe weiterhin nicht.
@@ -128,7 +128,7 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - [ ] Änderungen unabhängig prüfen lassen, wichtige Befunde beheben.
 - [ ] Nur bei erfüllten Übernahmekriterien: Sicherungsmanifest prüfen, beide Abgabedateien durch den geprüften Kandidaten ersetzen, Hash-Identität, Kursbetrieb und betroffene Tests erneut prüfen; bei Fehlern zurückrollen. Eigenen Übernahme-Commit samt Bericht und Rückweg erstellen. Andernfalls alte Abgabe behalten.
 - [ ] GitHub abgleichen, geprüfte Änderungen pushen; Planstatus aktualisieren.
-- [ ] Weiterführung beenden, sobald Zyklus fertig oder Arbeitsgrenze erreicht.
+- [ ] Nach dem ersten Zyklus begründete weitere Schritte bis zur neuen Arbeitsgrenze bearbeiten; um 06:00 Morgenbericht und Weiterführung beenden.
   Offene Schritte und laufende Prozesse ausdrücklich benennen.
 
 ## Laufendes Protokoll
@@ -139,10 +139,20 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - Ausführungsentscheidung: bestehender Hauptcheckout und direkte kleine main-Commits gemäß Teampräferenz; kein zusätzlicher Worktree.
 
 - Abschluss Aufgabe 2: unabhängiger Review-Befund zum stillen Checkpoint-Fallback behoben; 163 Tests bestanden und 8 Runner-Spiele mit verifizierten 18 Netzständen erfolgreich (`runner_verified.json`). Kein offener wichtiger Befund.
-- Automation: `sherlock-verbesserungsplan-fortsetzen`, alle 30 Minuten; bei Abschluss oder Arbeitsgrenze deaktivieren.
+- Automation: `sherlock-verbesserungsplan-fortsetzen`, jeweils zur vollen und halben Stunde; nach dem Morgenbericht um 06:00 deaktivieren.
 
 - Aufgabe 3 gestartet: fünf sequenzielle Evaluationsläufe, je 240 Spiele, maximal zwei Worker. Status/PID/Commands und fertige Ergebnisse: `experiments/analysis/autonomous_20261020/development_state.json`. Laufprozess nicht duplizieren; unfertige CSVs nicht werten.
-- Leerlauf-Ruhezustand bis zur Arbeitsgrenze verhindert. Eigener Prozess ist in `experiments/analysis/autonomous_20261020/awake_until_deadline.json` dokumentiert. Bei frühem Abschluss nur diesen anhand PID und Kommando verifizierten caffeinate-Prozess beenden; keine fremden Prozesse stoppen.
-- Nächste Fortsetzung: laufenden Entwicklungsbatch prüfen, vollständige Ergebnisse auswerten, maximal einen eindeutigen Gewinner bestätigen. Bei Ende Automation deaktivieren.
+- Leerlauf-Ruhezustand bis zur Arbeitsgrenze verhindert. Eigener Prozess ist in `experiments/analysis/autonomous_20261020/awake_until_deadline.json` dokumentiert. Bis zum Morgenbericht aktiv lassen; danach nur diesen anhand PID und Kommando verifizierten caffeinate-Prozess beenden; keine fremden Prozesse stoppen.
+- Nächste Fortsetzung: laufenden Entwicklungsbatch prüfen, vollständige Ergebnisse auswerten, maximal einen eindeutigen Gewinner bestätigen. Nach dem Morgenbericht Automation deaktivieren.
 - Neue Freigabe: geprüften besseren Stand auch als Abgabe übernehmen. Bisherige Abgabe vorab bytegleich gesichert; ergänzende Vergleichsregel gegen die alte Abgabe vor Sichtung der neuen Karten festgelegt. Keine Änderung laufender Entwicklungsmessungen.
 - Git-Abgleich während Aufgabe 3: origin/main enthält zusätzlich `790997a` und `96bbf6f` von Mahmoud (weitere standardmäßig deaktivierte Sap-/Bewegungsschalter, CNN-Eval-Anpassung und neue Trainingspipeline). Laufenden Batch zunächst mit seinem ursprünglichen Code abschließen. Danach eigenen Sicherungs-/Freigabe-Commit auf origin/main rebasen, neue Tests und Referenzreproduktion prüfen, bevor die nächste Messreihe startet und gepusht wird. Keine zweite V3-Trainingspipeline starten. Die Sicherung ist lokal committet; Push steht bis zu diesem Abgleich aus.
+
+## Weitere Nachtarbeit und Morgenbericht
+
+- [ ] Nach dem ersten Zyklus aktuelle Remote-Ergebnisse abgleichen und nächsten begründeten Schritt vorab dokumentieren. Vorrang: belastbare Übernahmeprüfung, Verlustdiagnose auf Entwicklungskarten, Robustheit gegen weitere vorhandene Gegner; neues Training nur mit konkreter Hypothese und ausreichender Laufzeit.
+- [ ] Keine zweite CNN3-/V3-Netz-Pipeline starten; weitere frische Karten erst nach Remote-Abgleich reservieren.
+- [ ] Bis 05:30 Berlin regulär arbeiten; danach Bericht und abschließende Prüfungen priorisieren.
+- [ ] Um 06:00 Berlin Bericht in `docs/MORGENBERICHT_20261021.md` und im Chat: Tests/Spielzahlen, belegter Stärkevergleich, negative Ergebnisse, Abgabe/Sicherung, gepushte Commits, Grenzen und offene Punkte.
+- [ ] Eigene verbleibende Jobs kontrolliert beenden, Wachhalteprozess anhand PID/Kommando beenden und Automation deaktivieren.
+
+Moayed hat diese Verlängerung und selbstständige Fortsetzung ausdrücklich beauftragt; keine erneute Freigabe für gewöhnliche Arbeitsschritte nötig.
