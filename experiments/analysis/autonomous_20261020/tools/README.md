@@ -88,3 +88,7 @@ verification; full inference/environment integration was not rerun here.
 ## Zweite Inferenzrunde
 
 `inference_development2.py --run` führt genau drei sequenzielle Vergleiche aus: V3, nur `active_targets`, nur `sap_geometry`. Maximal zwei Evaluationsworker, keine parallelen Trainings; 60 bekannte Karten × beide Seiten × zwei Gegner je Arm. Der Referenzarm muss alle 240 nichtzeitlichen Ergebnisse des früheren V3-Laufs exakt reproduzieren. Quellen/HEAD/Gewichte bleiben während des gesamten Laufs eingefroren. Exklusive Ausgabepfade unter `inference_development2/`, keine Überschreibung oder Übernahme von Gewichten. Vorab festgelegte Auswahl im autonomen Plan. Prozessprüfung mit elf stdlib-/AST-Fixtures einschließlich Replikationstrainern und SIGHUP geprüft; unabhängig statisch geprüft.
+
+## Explorationsvergleich in dieser Nacht
+
+`exploration_replication.py --run --run-seed 47 --games 3000` produziert genau ein frisches Paar (`control`/`slow`), nach manueller Ressourcen-/Restzeitprüfung. Weitere erlaubte Starts 48/49, immer 3000 Spiele. Nur `eps_decay_steps` unterscheidet sich. Explizite Zeitgrenzen sind auf diese Nacht festgelegt; keine automatische Promotion oder Folgejobs. `--self-test` prüft das Gerüst ohne Modellimporte. Der gebundene Plan und `exploration_pretraining_checks.json` dokumentieren Zulassung, Tests und Grenzen.

@@ -61,6 +61,12 @@ VARIANTS["full_rules_v3_terminal"] = (
     {**VARIANTS["full_rules_v3"][1], "terminal_death_potential": True},
 )
 
+# Gepaarter Explorationsversuch: nur langsamerer Epsilon-Abfall.
+VARIANTS["full_rules_v3_slowexplore"] = (
+    VARIANTS["full_rules_v3"][0],
+    {**VARIANTS["full_rules_v3"][1], "eps_decay_steps": 454500},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 
