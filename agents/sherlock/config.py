@@ -80,6 +80,10 @@ class AgentConfig:
     cand_quota: int = 0
     """> 0: so viele eigene Kandidaten-Tiles rangieren vor den Punkte-Tiles der
     Gegnerhaelfte (features.assign_targets)."""
+    far_opp: int = 0
+    """> 0: Punkte-Tiles der Gegnerhaelfte, die weiter als far_opp Felder von der
+    Unit entfernt sind, rangieren hinter den Kandidaten-Tiles (20.10.2026,
+    features.assign_targets)."""
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""

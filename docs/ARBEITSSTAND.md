@@ -16,9 +16,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **Diagnose Match 3** (60 Karten × 2 Seiten, Ground Truth, Skripte `diag_m3`, `diag_m3b`, `diag_know3` im Arbeitsverlauf): Matchsiege 88 / 69 / 49 %. Verlorene 3. Matches sind Karten mit vielen Punkte-Tiles (10,1 je Hälfte, gewonnene 5,6). Dort besetzt Solution_92 bei Step 50 7,5 der 10 Tiles seiner Hälfte, wir 5,3 der 10 unserer Hälfte, obwohl 15 Units leben: 5,7 Units sind auf dem Weg zu Punkte-Tiles der Gegnerhälfte (im Mittel 18 Felder entfernt, nur 0,2 dort angekommen), 1,8 eigene Punkte-Tiles sind noch ungetestete Kandidaten, 0,9 außerhalb jeder Kandidatenzone. Wissen über die eigene Hälfte (alle Karten, Match 3 Step 50): wir 6,1, Solution_92 6,6 von 7,9 Tiles, beide ohne Fehler.
 
-**Läuft:** PPO `cnn2b` ab `ppo_0040`, lr 3e-5, Entropie 0,01, neue Trainings-Seeds (`--seed 1`), 80 Iterationen, Stand alle 5 Iterationen.
+**PPO `cnn2b`** (ab `cnn2/ppo_0040`, lr 3e-5, Entropie 0,01, `--seed 1`, 80 Iterationen; `cnn2b/ppo_0040.pth` ist Iteration 40 dieses Laufs, nicht der Startpunkt): alle 16 Stände auf Val 720 zwischen 74,0 und 78,5 % gegen 80,0 % am Start → **Weitertrainieren mit PPO bringt nichts mehr.**
 
-**Prüfungen:** 146 Tests bestanden. Val-Seeds bis 501 619 verbraucht, nächster freier Index 1620. Abgabe-Gewichte unverändert.
+**Neuer Schalter `far_opp`** (Antwort auf die Match-3-Diagnose): Punkte-Tiles der Gegnerhälfte, die weiter als `far_opp` Felder von der Unit entfernt sind, rangieren in der Zielzuweisung hinter den Kandidaten-Tiles (`features.assign_targets`, Tests in `tests/test_rules_1910.py`). Val 720: `all18` + `far_opp=10` **80,5 % statt 76,5 %** (+4,0, KI [−1,0; +9,5]); CNN `ppo_0040` + `far_opp` 10 / 6: +0,5 / −0,5 pp. **Vorab festgelegte Bestätigung `far_opp=10` auf frischen Karten 501 620–501 819** (200 Karten, 400 Spiele/Gegner): default 100 % → 100 %, **Solution_92 74,0 → 80,0 % (+6,0, KI [+2,2; +9,8])**. Kandidat **`experiments/ensembles/all18_fo10.pth`** (gitignored) = `all18_kdf` + `far_opp=10` in der Config; 5 Karten × 2 Seiten × 2 Gegner identisch mit `--set`. `par_eval --set` wirkt jetzt auch auf CNN-Checkpoints.
+
+**Läuft:** PPO `cnn2c` ab `cnn2/ppo_0040` mit Reward-Strafe für Gegnerpunkte (`w_opp_points=1`), 40 Iterationen.
+
+**Prüfungen:** 148 Tests bestanden. Val-Seeds bis 501 819 verbraucht, nächster freier Index 1820. Abgabe-Gewichte unverändert.
 
 ## 19.10.2026 – Claude Code mit Mahmoud: Regeln, Reward-Korrekturen, CNN + PPO
 

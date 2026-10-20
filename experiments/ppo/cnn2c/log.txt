@@ -1,0 +1,8 @@
+[09:28:19] ppo: {'cmd': 'ppo', 'run': 'cnn2c', 'seed': 2, 'workers': 6, 'set': [], 'teacher_path': '/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/ensembles/old3_sym3.pth', 'games': 48, 'epochs': 3, 'lr': 5e-05, 'mb': 4096, 'ch': 32, 'blocks': 3, 'iters': 40, 'clip': 0.15, 'ent': 0.005, 'vf': 0.5, 'sol92': 0.7, 'default': 0.1, 'teacher': 0.2, 'save_every': 5, 'vf_warmup': 2, 'detach_value': True, 'start': 'start_opp.pth'}
+[09:29:03] PPO 1: WR sol92 0.48 default 1.00 teacher 0.85 | ent 0.247 kl -0.0000 clip 0.000 | 44s
+[09:29:44] PPO 2: WR sol92 0.74 default 1.00 teacher 0.75 | ent 0.239 kl 0.0000 clip 0.000 | 41s
+[09:31:43] PPO 3: WR sol92 0.86 default 1.00 teacher 0.43 | ent 0.243 kl 0.0014 clip 0.029 | 119s
+[09:33:38] PPO 4: WR sol92 0.81 default 1.00 teacher 0.73 | ent 0.264 kl 0.0014 clip 0.029 | 115s
+[09:35:35] PPO 5: WR sol92 0.77 default 1.00 teacher 0.55 | ent 0.238 kl 0.0015 clip 0.025 | 117s
+[09:37:32] PPO 6: WR sol92 0.58 default 1.00 teacher 0.33 | ent 0.224 kl 0.0012 clip 0.028 | 117s
+[09:39:32] PPO 7: WR sol92 0.66 default 1.00 teacher 0.70 | ent 0.230 kl 0.0011 clip 0.027 | 121s

@@ -82,7 +82,7 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    enemy_half_penalty: float = 0.0,
                    seen_before_penalty: float = 0.0,
                    grid: int = 0, stale: int = 0,
-                   cand_quota: int = 0) -> dict[int, tuple[int, int]]:
+                   cand_quota: int = 0, far_opp: int = 0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -112,6 +112,11 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     Gegnerhaelfte. Sonst bekommt in spaeten Matches keine Unit mehr ein
     Kandidaten-Ziel (es gibt mehr bekannte Punkte-Tiles beider Haelften als
     Units), und die letzten Punkte-Tiles der eigenen Haelfte bleiben unentdeckt.
+
+    far_opp > 0 (cfg.far_opp, 20.10.2026): Punkte-Tiles der Gegnerhaelfte, die
+    weiter als far_opp Felder von der Unit entfernt sind, rangieren hinter den
+    Kandidaten-Tiles. Diagnose Match 3: 5,7 Units liefen im Mittel 18 Felder weit
+    zu (meist besetzten) Gegner-Tiles, waehrend eigene Kandidaten offen blieben.
     """
     if len(unit_ids) == 0:
         return {}
@@ -174,6 +179,11 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     if enemy_half_penalty:
         # eigener Spawn: kanonisch immer (0, 0); ohne Spiegelung fuer Team 1 (W-1, H-1)
         cost += in_enemy[None, :] * float(enemy_half_penalty)
+    if far_opp > 0:
+        dist = (np.abs(unit_pos[:, None, 0] - tgt[None, :, 0])
+                + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1]))
+        # 1500: hinter Kandidaten (1000 + Distanz), vor Erkundung (2000 + Distanz)
+        cost += ((dist > far_opp) & ((prio == 0) & in_enemy)[None, :]) * 1500.0
 
     out: dict[int, tuple[int, int]] = {}
     n_assign = min(len(unit_ids), len(tgt))
@@ -251,7 +261,7 @@ def make_context(agent, obs, belief=None) -> dict:
         W, H, enemy_half_penalty=_home_penalty(agent.cfg, belief.match_idx),
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
-        cand_quota=int(agent.cfg.cand_quota),
+        cand_quota=int(agent.cfg.cand_quota), far_opp=int(agent.cfg.far_opp),
     )
 
     return dict(

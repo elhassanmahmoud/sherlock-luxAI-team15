@@ -75,7 +75,8 @@ def _worker(job: tuple) -> list[dict]:
     ckpt = torch.load(weights, map_location="cpu", weights_only=False)
     if isinstance(ckpt, dict) and ckpt.get("kind") == "ppo":
         from agents.sherlock.ppo_agent import PPOAgent
-        agent = PPOAgent("player_0", agent_path=weights, train=False)
+        agent = PPOAgent("player_0", agent_path=weights, train=False,
+                         cfg=build_cfg(weights, overrides) if overrides else None)
     else:
         agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, cnn_args(overrides)[0]),
                         train=False, seed=0)

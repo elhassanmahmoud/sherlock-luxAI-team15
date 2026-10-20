@@ -164,3 +164,39 @@ def test_opp_points_penalty_is_shared_by_team():
     nxt["belief"].opp_gain = 4
     r = unit_rewards(cfg, ctx, nxt, {0: 0, 1: 0}, {})
     assert r[0] == r[1] == -2.0
+
+
+class _StubBelief:
+    """Minimaler Belief fuer assign_targets (kanonisch, Team 0)."""
+    canonical, team_id = True, 0
+
+    def __init__(self, points, cands):
+        self._p = np.array(points, np.int32).reshape(-1, 2)
+        self._c = np.array(cands, np.int32).reshape(-1, 2)
+        self.explored_ever = np.zeros((24, 24), bool)
+
+    def point_coords(self):
+        return self._p
+
+    def candidate_coords(self):
+        return self._c
+
+    def explore_coords(self, stale=0):
+        return np.zeros((0, 2), np.int32)
+
+    unexplored_coords = relic_coords = lambda self: np.zeros((0, 2), np.int32)
+
+
+def test_far_opp_prefers_own_candidate_over_distant_enemy_tile():
+    from agents.sherlock.features import assign_targets
+    b = _StubBelief(points=[(20, 20)], cands=[(5, 5)])
+    unit = np.array([[2, 2]])
+    assert assign_targets(b, [0], unit, 24, 24)[0] == (20, 20)
+    assert assign_targets(b, [0], unit, 24, 24, far_opp=10)[0] == (5, 5)
+
+
+def test_far_opp_keeps_nearby_enemy_tile():
+    from agents.sherlock.features import assign_targets
+    b = _StubBelief(points=[(12, 12)], cands=[(5, 5)])
+    unit = np.array([[8, 8]])
+    assert assign_targets(b, [0], unit, 24, 24, far_opp=10)[0] == (12, 12)
