@@ -50,12 +50,12 @@ Ausgaben `experiments/analysis/autonomous_20261020/`.
 **Interfaces:** Eingang `all18_v3.pth`; Ausgang geprüfter Hash, Testergebnis,
 CSV für Seeds 500720/500721 und dokumentierte Pakete.
 
-- [ ] `pytest -q` ausführen. Erwartung: alle vorhandenen Tests erfolgreich;
+- [x] `pytest -q` ausführen. Erwartung: alle vorhandenen Tests erfolgreich;
   Fehler zunächst diagnostizieren, keine Agentenänderung auf Verdacht.
-- [ ] `all18_v3` auf zwei Entwicklungskarten gegen beide Gegner/beide Seiten
+- [x] `all18_v3` auf zwei Entwicklungskarten gegen beide Gegner/beide Seiten
   auswerten und mit `M_fo10_ptsap_fc_720.csv` vergleichen.
   Erwartung: alle Spielkennzahlen außer Zeit identisch.
-- [ ] Abgabe-/Kandidatenhashes vor/nachher prüfen und Befund dokumentieren.
+- [x] Abgabe-/Kandidatenhashes vor/nachher prüfen und Befund dokumentieren.
 
 ## Aufgabe 2: Kursbetrieb
 
@@ -66,20 +66,20 @@ CSV für Seeds 500720/500721 und dokumentierte Pakete.
 **Interfaces:** CLI `--weights PATH --out NEW_JSON`; Bericht über 8 Spiele
 (2 je Seite/Gegner), Aktionsvalidierung und Zeitverteilung.
 
-- [ ] Tests zuerst: temporäre Paths.csv zeigt für Gruppe 15 auf die
+- [x] Tests zuerst: temporäre Paths.csv zeigt für Gruppe 15 auf die
   Kandidatenkopie; Original bleibt bytegleich; bestehender Ausgabebericht
   wird abgewiesen. Erwartung vor Implementierung: fehlendes Modul/Funktion.
-- [ ] Hilfsfunktionen `prepare_workspace(root, weights, destination)` und
+- [x] Hilfsfunktionen `prepare_workspace(root, weights, destination)` und
   `validate_actions(actions, max_units)` implementieren. Workspace enthält
   kopierte Kandidatengewichte, eigene Paths.csv und Verweise auf Agentenmodule.
-- [ ] Aktionsvalidierung prüft Shape `(max_units, 3)`, endliche ganzzahlige
+- [x] Aktionsvalidierung prüft Shape `(max_units, 3)`, endliche ganzzahlige
   Werte und Aktionstyp 0–5. Energie-/Asteroidenmasken bleiben vorhandenen
   Agententests und Evaluationsmetriken zugeordnet.
-- [ ] Runner-Aufruf `train=False`; Agent instrumentieren, Entscheidungslatenz
+- [x] Runner-Aufruf `train=False`; Agent instrumentieren, Entscheidungslatenz
   messen und frisches Belief bei neuer Instanz prüfen. Startgewichte erhalten.
   Verwendete Zufallsseeds protokollieren; Runner-Ergebnisse nicht mit festen
   Benchmarkkarten verwechseln.
-- [ ] Unit-Tests und tatsächliche 8-Spiele-Prüfung ausführen; nur bei Erfolg
+- [x] Unit-Tests und tatsächliche 8-Spiele-Prüfung ausführen; nur bei Erfolg
   Bericht/Code committen. Kein erfundenes Zeitlimit als bestanden melden.
 
 ## Aufgabe 3: Begrenzte Entwicklungsmessung
@@ -136,3 +136,7 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 
 - Abschluss Aufgabe 2: unabhängiger Review-Befund zum stillen Checkpoint-Fallback behoben; 163 Tests bestanden und 8 Runner-Spiele mit verifizierten 18 Netzständen erfolgreich (`runner_verified.json`). Kein offener wichtiger Befund.
 - Automation: `sherlock-verbesserungsplan-fortsetzen`, alle 30 Minuten; bei Abschluss oder Arbeitsgrenze deaktivieren.
+
+- Aufgabe 3 gestartet: fünf sequenzielle Evaluationsläufe, je 240 Spiele, maximal zwei Worker. Status/PID/Commands und fertige Ergebnisse: `experiments/analysis/autonomous_20261020/development_state.json`. Laufprozess nicht duplizieren; unfertige CSVs nicht werten.
+- Leerlauf-Ruhezustand bis zur Arbeitsgrenze verhindert. Eigener Prozess ist in `experiments/analysis/autonomous_20261020/awake_until_deadline.json` dokumentiert. Bei frühem Abschluss nur diesen anhand PID und Kommando verifizierten caffeinate-Prozess beenden; keine fremden Prozesse stoppen.
+- Nächste Fortsetzung: laufenden Entwicklungsbatch prüfen, vollständige Ergebnisse auswerten, maximal einen eindeutigen Gewinner bestätigen. Bei Ende Automation deaktivieren.
