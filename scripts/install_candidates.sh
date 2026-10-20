@@ -16,6 +16,7 @@ while read -r sha src dst; do
     got=$(shasum -a 256 "$dst" | cut -d' ' -f1)
     if [ "$got" = "$sha" ]; then echo "OK   $dst"; else echo "FEHLER $dst: $got"; exit 1; fi
 done <<'LIST'
+aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935 all18_v3.pth experiments/ensembles/all18_v3.pth
 b2b7ffcc506d71a4657bb8990a71c0b25c4535f0f41564054ff687a1fa7b4607 all18_fo10.pth experiments/ensembles/all18_fo10.pth
 e9ff09a64ae0327e49ea8a4c0810abcf47bf2f1b05db02a4f4a6c8266f868b03 all24fo.pth experiments/ensembles/all24fo.pth
 007da1f1b040e54af61615ad817cf55cb8c025f6133a136a74f0fe9ca078d246 cnn2_ppo0040.pth experiments/ppo/cnn2/ppo_0040.pth

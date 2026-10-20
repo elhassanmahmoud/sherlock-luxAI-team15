@@ -282,6 +282,14 @@ class Agent_x:
                 if sap is not sap_targets[uid]:
                     a = geo.SAP
                     self._prev_actions[uid] = a
+            if self.cfg.pt_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]:
+                # 20.10.2026: auf eigenem Punkte-Tile stehen bleiben UND sappen (Tile bleibt
+                # besetzt). Diagnose: mit Sap-Gelegenheit sappte das Netz dort nur 9-12 %.
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                if (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid
+                        and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve):
+                    a = geo.SAP
+                    self._prev_actions[uid] = a
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:

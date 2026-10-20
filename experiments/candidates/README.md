@@ -7,6 +7,7 @@ Das ist **keine** neue Abgabe: `agents/sherlock/weights/` bleibt unverändert, b
 
 | Datei | Inhalt | SHA-256 | Ergebnis (frische Karten, beide Seiten) |
 |---|---|---|---|
+| **`all18_v3.pth`** (bester Stand 20.10. abends) | `all18_fo10` + `pt_sap` + `far_cand` in der Config | `aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935` | 502220–502419: default 400/400, Solution_92 78,5 % (`all18_fo10` dort 71,75 %, +6,75, KI [+1,8; +12,0]) |
 | `all18_fo10.pth` | 18 DQN-Netze (rules6 + sol70 + opp), Config inkl. `keep_dead_fast`, `far_opp=10` | `b2b7ffcc506d71a4657bb8990a71c0b25c4535f0f41564054ff687a1fa7b4607` | 501620–501819: default 400/400, Solution_92 320/400 = 80,0 %; 501820–502019: 400/400, 74,75 % |
 | `all24fo.pth` | `all18` + 6 Netze `full_rules_fo`, Config inkl. `keep_dead_fast`, `far_opp=10` | `e9ff09a64ae0327e49ea8a4c0810abcf47bf2f1b05db02a4f4a6c8266f868b03` | 501820–502019: default 400/400, Solution_92 77,5 % |
 | `rules6.pth` | 6 DQN-Netze `full_rules` (Lehrer für BC/PPO `cnn2`, Gegneranteil „teacher“ im PPO) | `124ec118a55f9653483c8cf2b518f5af8a1d4dfedbbd154c74c3cd79ff95bf6a` | 500820–500919: default 99,5 %, Solution_92 69,0 % |

@@ -222,3 +222,50 @@ def test_sticky_memory_resets_between_matches():
     assert a._sticky_prev is not None and a._sticky_prev[0] == 0
     a.new_game("player_0")
     assert a._sticky_prev is None
+
+
+def test_far_cand_prefers_own_candidate_over_distant_enemy_candidate():
+    from agents.sherlock.features import assign_targets
+    b2 = _StubBelief(points=[], cands=[(17, 10), (6, 6)])
+    u2 = np.array([[18, 18]])   # (17,10): 9 Felder (Gegnerhaelfte), (6,6): 24 Felder
+    assert assign_targets(b2, [0], u2, 24, 24, far_opp=8)[0] == (17, 10)
+    assert assign_targets(b2, [0], u2, 24, 24, far_opp=8, far_cand=True)[0] == (6, 6)
+
+
+def _stay_agent(**cfg):
+    import torch
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.main import Agent_x
+    from tests.conftest import ENV_CFG
+
+    class Stay(torch.nn.Module):
+        def forward(self, x):
+            q = torch.zeros(x.shape[0], 6)
+            q[:, geo.STAY] = 1.0
+            return q
+
+    a = Agent_x("player_0", cfg=AgentConfig(**cfg), train=False)
+    a.set_env_cfg(ENV_CFG)
+    a.set_to_eval_mode()
+    a.q = Stay()
+    return a
+
+
+def test_pt_sap_saps_from_own_point_tile_instead_of_staying():
+    from tests.conftest import make_obs
+    for flag, want in ((False, geo.STAY), (True, geo.SAP)):
+        a = _stay_agent(pt_sap=flag)
+        a.belief.point_tiles[5, 5] = True
+        obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(6, 6)])
+        act = a.act(10, obs)
+        assert int(act[0, 0]) == want
+        if want == geo.SAP:
+            assert (int(act[0, 1]), int(act[0, 2])) == (2, 1)
+
+
+def test_pt_sap_respects_energy_reserve():
+    from tests.conftest import make_obs
+    a = _stay_agent(pt_sap=True, pt_sap_reserve=70)
+    a.belief.point_tiles[5, 5] = True
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(6, 6)])
+    assert int(a.act(10, obs)[0, 0]) == geo.STAY   # 100 < 40 + 70

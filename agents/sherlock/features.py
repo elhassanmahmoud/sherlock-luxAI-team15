@@ -83,7 +83,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    seen_before_penalty: float = 0.0,
                    grid: int = 0, stale: int = 0,
                    cand_quota: int = 0, far_opp: int = 0,
-                   prev: dict | None = None, sticky: float = 0.0) -> dict[int, tuple[int, int]]:
+                   prev: dict | None = None, sticky: float = 0.0,
+                   far_cand: bool = False) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -185,6 +186,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                 + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1]))
         # 1500: hinter Kandidaten (1000 + Distanz), vor Erkundung (2000 + Distanz)
         cost += ((dist > far_opp) & ((prio == 0) & in_enemy)[None, :]) * 1500.0
+        if far_cand:
+            # ebenso entfernte Kandidaten der Gegnerhaelfte hinter die eigenen Kandidaten
+            cost += ((dist > far_opp) & ((prio == 1) & in_enemy)[None, :]) * 500.0
     if sticky and prev:
         # bisheriges Ziel behalten, solange kein um mehr als `sticky` Felder besseres frei ist
         index = {}
@@ -275,7 +279,7 @@ def make_context(agent, obs, belief=None) -> dict:
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),
         cand_quota=int(agent.cfg.cand_quota), far_opp=int(agent.cfg.far_opp),
-        prev=prev, sticky=sticky,
+        prev=prev, sticky=sticky, far_cand=bool(agent.cfg.far_cand),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))

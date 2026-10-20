@@ -4,6 +4,22 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 spätabends – Claude Code mit Mahmoud: `pt_sap` + `far_cand`, neuer Kandidat `all18_v3`
+
+**Diagnosen** (Val 720–779, `all18_fo10` vs Solution_92, Skripte im Arbeitsverlauf): Matchsiege 90 / 75 / 57 %; 42 von 109 verlorenen Matches mit mehr als 200 Punkten Rückstand. Bekannte eigene Punkte-Tiles in Match 2/3 (Step 40–95): 4,9 besetzt, 1,2 frei (davon 0,39 mit Gegner darauf, Rest meist von einer Unit angesteuert). Zielwechsel: 15–24 % aller Unit-Schritte, altes Ziel meist noch gültig. **Sap-Gelegenheiten:** steht eine Unit auf einem eigenen Punkte-Tile und hat ein Sap-Ziel, wählt das Netz nur in 9–12 % Sap, sonst meist „stehen“ (Solution_92 sappt in dieser Lage immer, `harvest()`).
+
+**Neue Schalter (Default aus, Tests in `tests/test_rules_1910.py`):**
+- `sticky` (Kostenabzug für das bisherige Ziel): Val 720 **−6,0 / −8,5 pp** (Stärke 3 / 6) → aus.
+- `far_cand`: entfernte Kandidaten der Gegnerhälfte (mit `far_opp`) hinter die eigenen Kandidaten: Val 720 82,0 % (+1,5, n. s.).
+- `pt_sap` (+ `pt_sap_reserve`): Unit auf eigenem Punkte-Tile sappt statt zu stehen, wenn ein Ziel in Reichweite ist: Val 720 81,0 % (+0,5, n. s.).
+- `pt_sap` + `far_cand`: Val 720 83,0 % (+2,5, n. s.). **Bestätigung auf frischen Karten 502 220–502 419** (200 Karten, 400 Spiele/Gegner, Kombination vorab festgelegt): default 100 % → 100 %, **Solution_92 71,75 → 78,5 % (+6,75, KI [+1,8; +12,0])**.
+
+**Neuer Kandidat `all18_v3`** = `all18_fo10` + `pt_sap` + `far_cand` in der Config (`experiments/candidates/all18_v3.pth`, SHA-256 `aac1c910…d935`, auch in `scripts/install_candidates.sh` und im Manifest); 3 Karten × 2 Seiten × 2 Gegner identisch mit `--set`. Keine neue Abgabe.
+
+**Läuft:** `scripts/pipeline_cnn3.sh` (BC von `all18_fo10`: 1200 Lehrerspiele, 4,27 Mio. Unit-Schritte, Lehrer-WR 74 % vs Solution_92; danach PPO 60 Iterationen; Messung auf Val 720 und frischen Karten 502 020–502 219).
+
+**Prüfungen:** 152 Tests bestanden (Stand vor diesem Eintrag 150 + 2 neue `pt_sap`-Tests). Val-Seeds: 502 020–502 219 für cnn3 reserviert, 502 220–502 419 verbraucht, nächster freier Index 2420. Abgabe-Gewichte unverändert (`3788fb72…d158`).
+
 ## 20.10.2026 – Codex mit Moayed: lokale Umgebung und all18_fo10-Funktionstest
 
 **Auftrag und Einrichtung:** Auf Moayeds Mac (M3, 8 GB, arm64) eine eigene `.venv` im Projekt angelegt, `requirements.txt` installiert und ausschließlich in dieser Umgebung die Kursregel auf drei Matches gesetzt. Ausgangsstand `5ec86ae`. Python 3.13.13, PyTorch 2.14.1, LuxAI-S3 0.2.1, NumPy 2.5.4, JAX/JAXlib 0.12.0. Vollständige Paketversionen, Befehl und Prüfsummen: [Umgebungsnachweis](../experiments/analysis/local_moe_environment_20261020.json). `.venv` bleibt lokal und gitignored; weder System-Python noch Agentenquellen geändert.

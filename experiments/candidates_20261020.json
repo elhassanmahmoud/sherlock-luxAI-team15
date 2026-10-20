@@ -157,5 +157,17 @@
     "results": {
       "Z_ppo0040_1420 (501420-501619)": "default 400/400, Solution_92 72,75 %"
     }
+  },
+  "all18_v3": {
+    "shared_copy": "experiments/candidates/all18_v3.pth",
+    "sha256": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "n_nets": 18,
+    "build": [
+      "python -m scripts.set_cfg experiments/ensembles/all18_fo10.pth experiments/ensembles/all18_v3.pth pt_sap=true far_cand=true"
+    ],
+    "results": {
+      "N_ptsap_fc_2220 (502220-502419)": "default 400/400, Solution_92 78,5 % vs all18_fo10 71,75 % (+6,75, KI [+1,8; +12,0])",
+      "M_fo10_ptsap_fc_720": "Solution_92 83,0 % (all18_fo10 80,5 %)"
+    }
   }
 }

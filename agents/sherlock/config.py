@@ -88,6 +88,14 @@ class AgentConfig:
     """> 0: Punkte-Tiles der Gegnerhaelfte, die weiter als far_opp Felder von der
     Unit entfernt sind, rangieren hinter den Kandidaten-Tiles (20.10.2026,
     features.assign_targets)."""
+    far_cand: bool = False
+    """True (mit far_opp): auch Kandidaten der Gegnerhaelfte, die weiter als far_opp
+    entfernt sind, rangieren hinter den eigenen Kandidaten (20.10.2026)."""
+    pt_sap: bool = False
+    """True: Unit auf eigenem Punkte-Tile, deren Netz-Aktion 'stehen' ist, sappt
+    stattdessen ein sichtbares Ziel in Reichweite (bleibt dabei auf dem Tile)."""
+    pt_sap_reserve: int = 0
+    """Energie, die nach dem Sap mindestens uebrig bleiben muss (pt_sap)."""
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""
