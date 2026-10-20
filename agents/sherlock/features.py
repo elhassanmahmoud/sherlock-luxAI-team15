@@ -84,7 +84,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    grid: int = 0, stale: int = 0,
                    cand_quota: int = 0, far_opp: int = 0,
                    prev: dict | None = None, sticky: float = 0.0,
-                   far_cand: bool = False, cand_boost: float = 0.0) -> dict[int, tuple[int, int]]:
+                   far_cand: bool = False, cand_boost: float = 0.0,
+                   explore_quota: int = 0, explore_until: int = 75) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -216,6 +217,57 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
         out[int(unit_ids[ui])] = (int(tgt[ti, 0]), int(tgt[ti, 1]))
         cost[ui, :] = np.inf
         cost[:, ti] = np.inf
+    if (explore_quota > 0 and belief.match_idx >= 1 and belief.match_step < explore_until
+            and belief.known_pairs() < belief.match_idx + 1):
+        out = _explore_quota(belief, unit_ids, unit_pos, out, W, H, explore_quota,
+                             grid or 4, own_origin)
+    return out
+
+
+def _explore_quota(belief, unit_ids, unit_pos, out: dict, W: int, H: int, quota: int,
+                   block: int, own_origin: bool, stale: int = 20) -> dict:
+    """20.10.2026 (cfg.explore_quota): Solange das Relic-Paar dieses Matches noch fehlen
+    kann, suchen `quota` Units gezielt danach. Diagnose: In Match 2/3 gibt es mehr bekannte
+    Ziele als Units, dann erkundet niemand; in 13 von 57 verlorenen Matches fehlte ein Relic.
+    Wegen der Spiegelsymmetrie genuegt die eigene Haelfte; Ziel sind Tiles, die seit `stale`
+    Steps nicht gesehen wurden (je ein Tile pro block x block). Abgezogen werden Units, die
+    nicht auf einem Punkte-Tile stehen, zuerst ohne Ziel / mit Ziel in der Gegnerhaelfte,
+    dann Kandidaten, zuletzt eigene Punkte-Tiles."""
+    xs, ys = np.indices((W, H))
+    own = (xs + ys <= W - 1) if own_origin else (xs + ys >= W - 1)
+    open_ = own & belief.passable & (belief.last_seen < belief.match_step - stale)
+    goals = np.argwhere(open_).astype(np.int32)
+    if len(goals) == 0:
+        return out
+    goals = grid_targets(goals, block)
+    out = dict(out)
+    ranked = []
+    for i, uid in enumerate(unit_ids):
+        uid = int(uid)
+        x, y = int(unit_pos[i][0]), int(unit_pos[i][1])
+        if belief.point_tiles[x, y]:
+            continue  # wer punktet, bleibt
+        t = out.get(uid)
+        if t is None or not (belief.point_tiles[t] or belief.candidate[t]):
+            r = 0
+        elif belief.point_tiles[t] and ((t[0] + t[1] > W - 1) if own_origin else (t[0] + t[1] < W - 1)):
+            r = 1
+        elif belief.candidate[t]:
+            r = 2
+        else:
+            r = 3
+        d = int((np.abs(goals[:, 0] - x) + np.abs(goals[:, 1] - y)).min())
+        ranked.append((r, d, i, uid))
+    taken: set = set()
+    for _, _, i, uid in sorted(ranked)[:quota]:
+        x, y = int(unit_pos[i][0]), int(unit_pos[i][1])
+        d = np.abs(goals[:, 0] - x) + np.abs(goals[:, 1] - y)
+        for gi in np.argsort(d, kind="stable"):
+            g = (int(goals[gi, 0]), int(goals[gi, 1]))
+            if g not in taken:
+                out[uid] = g
+                taken.add(g)
+                break
     return out
 
 
@@ -288,6 +340,7 @@ def make_context(agent, obs, belief=None) -> dict:
         cand_quota=int(agent.cfg.cand_quota), far_opp=int(agent.cfg.far_opp),
         prev=prev, sticky=sticky, far_cand=bool(agent.cfg.far_cand),
         cand_boost=float(agent.cfg.cand_boost),
+        explore_quota=int(agent.cfg.explore_quota), explore_until=int(agent.cfg.explore_until),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
