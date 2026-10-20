@@ -32,6 +32,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **Später getestet (Val 720 gegen `O_v3_720` 83,0 %, alle aus):** `safe_moves` (kein Zug auf Tile mit gleich starkem sichtbaren Gegner) −1,0; `ram` −1,5; `cand_boost` 10 / 30 (eigene Kandidaten auf einer Stufe mit Gegner-Punkte-Tiles) −2,5 / −3,0. **Diagnose fehlende eigene Punkte-Tiles** (`all18_v3`, Val 720–759): Match 3 Step 60/90 fehlen 1,54 / 1,24 von 8,2 – davon ungetestete Kandidaten 1,00 / 0,82, Relic unbekannt 0,49 / 0,36, fälschlich tot nur 0,04. Solution_92 kennt in Match 3 ohne neues Relic 97 % seiner Tiles, wir 84 %. Relic-Funde: gleich schnell wie Solution_92 (Match 3 neues Relic Median Step 37 vs 41), aber in 17 % vs 12 % der 3. Matches nicht alle Relics gefunden.
 
+**Noch später (Val 720 gegen 83,0 %):** `stale_all` −0,5; `opp_infer` +1,5; neuer Schalter `contest_sap` (steht auf dem Ziel-Tile ein Gegner, den die Unit per Kollision nicht schlägt, sappt sie dieses Tile aus der Entfernung) +1,5; `contest_sap` + `opp_infer` +1,5 (alle n. s.). Bestätigung der vorab festgelegten Kombination `all18_v3` + `contest_sap` + `opp_infer` läuft auf **400 frischen Karten 502 820–503 219** (nur gegen Solution_92, je 800 Spiele).
+
 **Neuer Kandidat `all18_v3`** = `all18_fo10` + `pt_sap` + `far_cand` in der Config (`experiments/candidates/all18_v3.pth`, SHA-256 `aac1c910…d935`, auch in `scripts/install_candidates.sh` und im Manifest); 3 Karten × 2 Seiten × 2 Gegner identisch mit `--set`. Keine neue Abgabe.
 
 **Läuft:** `scripts/pipeline_cnn3.sh` (BC von `all18_fo10`: 1200 Lehrerspiele, 4,27 Mio. Unit-Schritte, Lehrer-WR 74 % vs Solution_92; danach PPO 60 Iterationen; Messung auf Val 720 und frischen Karten 502 020–502 219).
