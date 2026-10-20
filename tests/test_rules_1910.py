@@ -301,3 +301,27 @@ def test_safe_moves_blocks_move_onto_stronger_enemy():
     a = _stay_agent(safe_moves=True)
     a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=[(6, 5, 20)]))
     assert bool(a._prev_masks[0][geo.RIGHT])   # schwaecherer Gegner: Zug bleibt erlaubt
+
+
+def test_cand_boost_tests_own_candidate_before_enemy_point_tile():
+    from agents.sherlock.features import assign_targets
+    b = _StubBelief(points=[(14, 13)], cands=[(9, 9)])
+    unit = np.array([[11, 11]])   # Gegner-Punkte-Tile 5 Felder, eigener Kandidat 4 Felder
+    assert assign_targets(b, [0], unit, 24, 24)[0] == (14, 13)        # ohne: Punkte-Tile zuerst
+    assert assign_targets(b, [0], unit, 24, 24, cand_boost=5.0)[0] == (9, 9)  # gleiche Stufe
+    b2 = _StubBelief(points=[(9, 9)], cands=[(8, 8)])   # eigenes Punkte-Tile bleibt vorn
+    assert assign_targets(b2, [0], np.array([[8, 9]]), 24, 24, cand_boost=5.0)[0] == (9, 9)
+
+
+def test_contest_sap_shoots_stronger_enemy_on_target_tile():
+    from tests.conftest import make_obs
+    a = _stay_agent(contest_sap=True)
+    a.belief.point_tiles[8, 5] = True       # einziges Ziel -> zugewiesen
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(8, 5, 150)], relics=[(6, 6)])
+    act = a.act(10, obs)
+    assert int(act[0, 0]) == geo.SAP and (int(act[0, 1]), int(act[0, 2])) == (3, 0)
+    # schwaecherer Gegner: kein Sap (Kollision gewinnt), Netz-Aktion bleibt
+    a = _stay_agent(contest_sap=True)
+    a.belief.point_tiles[8, 5] = True
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(8, 5, 30)], relics=[(6, 6)])
+    assert int(a.act(10, obs)[0, 0]) == geo.STAY

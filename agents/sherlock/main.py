@@ -282,6 +282,13 @@ class Agent_x:
                 if sap is not sap_targets[uid]:
                     a = geo.SAP
                     self._prev_actions[uid] = a
+            if self.cfg.contest_sap and a != geo.SAP and masks[k][geo.SAP]:
+                # 20.10.2026: auf dem Ziel-Tile steht ein Gegner, den wir per Kollision nicht
+                # schlagen -> aus der Entfernung auf genau dieses Tile sappen
+                c_sap = self._contest_sap(ctx, uid)
+                if c_sap is not None:
+                    sap, a = c_sap, geo.SAP
+                    self._prev_actions[uid] = a
             if self.cfg.pt_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]:
                 # 20.10.2026: auf eigenem Punkte-Tile stehen bleiben UND sappen (Tile bleibt
                 # besetzt). Diagnose: mit Sap-Gelegenheit sappte das Netz dort nur 9-12 %.
@@ -372,6 +379,26 @@ class Agent_x:
         if t is None:
             return None
         return t[0], t[1], 0
+
+    def _contest_sap(self, ctx: dict, uid: int):
+        """(dx, dy, Treffer) auf das zugewiesene Ziel-Tile, wenn dort ein sichtbarer
+        Gegner steht, der mindestens so viel Energie hat wie wir nach einem Zug, und
+        das Tile in Sap-Reichweite liegt; sonst None (cfg.contest_sap)."""
+        tgt = ctx["assigned"].get(int(uid))
+        ec = ctx["enemy_coords"]
+        if tgt is None or len(ec) == 0:
+            return None
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if (x, y) == tuple(tgt) or max(abs(tgt[0] - x), abs(tgt[1] - y)) > int(ctx["sap_range"]):
+            return None
+        here = (ec[:, 0] == tgt[0]) & (ec[:, 1] == tgt[1])
+        e = float(ctx["ally_ene"][uid])
+        if not here.any() or float(ctx["enemy_energies"][here].sum()) < e - ctx["move_cost"]:
+            return None
+        if e < ctx["sap_cost"]:
+            return None
+        cheb = np.maximum(np.abs(ec[:, 0] - tgt[0]), np.abs(ec[:, 1] - tgt[1]))
+        return int(tgt[0]) - x, int(tgt[1]) - y, int((cheb <= 1).sum())
 
     def _enemy_stationary(self, ctx: dict) -> np.ndarray:
         """Je sichtbarem Gegner: stand er im letzten Step auf demselben Tile?"""

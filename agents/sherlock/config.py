@@ -91,6 +91,12 @@ class AgentConfig:
     far_cand: bool = False
     """True (mit far_opp): auch Kandidaten der Gegnerhaelfte, die weiter als far_opp
     entfernt sind, rangieren hinter den eigenen Kandidaten (20.10.2026)."""
+    cand_boost: float = 0.0
+    """> 0: eigene Kandidaten-Tiles rangieren wie Punkte-Tiles mit cand_boost Feldern
+    Zusatzweg, Punkte-Tiles der Gegnerhaelfte bekommen denselben Zuschlag."""
+    contest_sap: bool = False
+    """True: steht auf dem Ziel-Tile ein Gegner, den die Unit per Kollision nicht schlaegt,
+    sappt sie dieses Tile aus der Entfernung (main._contest_sap)."""
     pt_sap: bool = False
     """True: Unit auf eigenem Punkte-Tile, deren Netz-Aktion 'stehen' ist, sappt
     stattdessen ein sichtbares Ziel in Reichweite (bleibt dabei auf dem Tile)."""
