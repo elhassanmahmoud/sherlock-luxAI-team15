@@ -4,6 +4,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 – Codex mit Moayed: Review-Erkenntnisse und nächste Schritte dokumentiert
+
+**Auftrag:** Erkenntnisse aus der Prüfung von Mahmouds Commits und Vorschläge für die weitere Arbeit gemeinsam zugänglich machen. Ausschließlich Dokumentation; keine Änderungen an Agent, Gewichten, Training oder Runner. Laut Moayed erhielt die erste Präsentation die Note **1,3**.
+
+**Übergabe:** Neuer [Review und priorisierte Arbeitsliste](REVIEW_NAECHSTE_SCHRITTE_20261020.md), geprüft gegen `2ed46e4`. Enthält nachgezählte Benchmark-Ergebnisse, Antworten auf die Prof-Fragen zu Reward/DQN/PPO/CNN und 18.000 Spielen sowie konkrete Prüfkriterien. Reihenfolge: aktuelle Pipeline-Ergebnisse prüfen und Kandidaten reproduzierbar sichern; Kurs-Runner prüfen; Match-3-Zielwahl verbessern; breiter mit zurückgehaltenen Karten bewerten; PPO-Konsistenz und Reward-Beiträge untersuchen. Vorschläge sind noch keine Umsetzung oder Freigabe für Agentenänderungen.
+
+**Wichtige Abgrenzungen:** `all18_fo10` ist ein experimenteller Kandidat, keine neue installierte Abgabe. Seine Gewichte und die PPO-Checkpoints sind gitignored und müssen separat zwischen den Arbeitsumgebungen verfügbar gemacht werden. Die neue Pipeline `pipeline_2010.sh` reserviert bereits Karten 501820–502019; keine doppelten Versuche oder widersprüchlichen Seed-Zuweisungen starten. Historische Karten 900000–900029 sind kein unberührter Testsatz. Das CNN ist beobachtet ähnlich erfolgreich wie `all18`, aber weder als überlegen noch statistisch gleichwertig belegt. Reward-Strafe und Gegner-Pool wurden gemeinsam verändert und lassen sich daraus nicht einzeln bewerten.
+
+**Prüfungen:** Verlinkte Ergebnis-CSVs nachgezählt, vollständige Seitenpaare/eindeutige Schlüssel und Punktemessversion geprüft; Dokumentlinks und Git-Diff geprüft. Keine neuen Spiele oder Trainings, keine Anwendungstests. Der Dokumentationscommit verändert ausschließlich Markdown-Dateien. Beide Abgabe-Dateien behalten SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`. Ausgangs-Arbeitskopie mit ihrem älteren Agentenstand nicht umgeschaltet; die Dokumentation wurde auf dem aktuellen GitHub-Stand in einer separaten Arbeitskopie erstellt.
+
+**Offen für Mahmoud:** Zuerst aktuelle Pipeline-Ergebnisse und Verfügbarkeit der Kandidatengewichte prüfen, dann einen der vorgeschlagenen Versuche gemeinsam auswählen. Die Arbeitsliste enthält auch einen noch ungemessenen PPO-Prüfpunkt: unterschiedliche Rundung der Kartenebenen bei Rollout und Update. Keine der vorgeschlagenen Codeänderungen wurde hier umgesetzt.
+
 ## 20.10.2026 – Claude Code mit Mahmoud: Nacht-Ergebnisse, PPO-Stände, CNN-Ensemble
 
 **Nacht Teil 2** (`scripts/overnight_2010.sh`, Log `experiments/overnight_2010.log`): 6 weitere `full_rules`-Netze mit 70 % Solution_92 (`*_s18`–`*_s23_sol70`, je 4000 Spiele, 138 min). 24er-Ensemble `all24` gegen `all18` auf frischen Karten 501 220–501 419: default beide 100 %, Solution_92 71,5 vs 72,0 % (−0,5, KI [−4,8; +3,7]) → **mehr Netze bringen nichts mehr**.

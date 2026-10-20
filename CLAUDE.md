@@ -12,6 +12,15 @@
 - Sichtbare Hauptfolien enthalten nur publikumsrelevante Inhalte. Interne Vortragsanweisungen, Zeitplanung und Hinweise auf Reservefolien gehören in Sprechernotizen und Vortragsplan. Fachliche Erläuterungen zu Daten, Auswertung und Grenzen bleiben auf den Folien.
 
 ## Kontext
+
+### Aktuelle Orientierung nach dem Review (20.10.2026)
+
+- Erste Präsentation abgeschlossen; laut Moayed Note **1,3**. Die Präsentationsvorbereitung vom 14./15.10. unten ist historisch.
+- CNN/PPO sowie neue DQN-Ensembles und Regelvarianten sind inzwischen implementiert und untersucht. Bestätigter experimenteller Kandidat im geprüften Stand `2ed46e4`: `all18_fo10`, 320/400 Siege gegen Solution_92 und 400/400 gegen default auf Karten 501620–501819. Abgabe-Gewichte weiterhin `old3_sym3`, unverändert.
+- [Review-Erkenntnisse und nächste Schritte](docs/REVIEW_NAECHSTE_SCHRITTE_20261020.md) enthalten die Vergleichsdaten, Prüfgrenzen, Prof-Fragen und priorisierten Vorschläge. Zuerst neue Ergebnisse der Pipeline vom 20.10. prüfen; für sie sind Karten 501820–502019 vorgesehen. Noch keine Umsetzung der Vorschläge beauftragt.
+- Für laufende Arbeiten immer den neuesten Arbeitsstand lesen; dieser Überblick ersetzt weder Laufmanifeste noch aktuelle Messergebnisse.
+
+### Projektgrundlagen
 - Das ist UNSER eigenes Projekt (Kopie des Dozenten-Templates). Originale vom Dozenten liegen unverändert in `~/Documents/01_RL`, `02_LuxAI`, `AnwendKiLux` → dort nichts ändern.
 - Team baut einen RL-Agent (DQN/PPO/A2C, PyTorch) für Lux AI S3. Abgabe muss trainierte Gewichte (.pth) enthalten → rein regelbasiert reicht NICHT.
 - Kurs-Regel: 3 Matches pro Spiel à 100 Steps (in `.venv/.../luxai_s3/params.py`: `match_count_per_episode = 3`).
@@ -56,7 +65,7 @@ Punkte 1 und 2 wurden im Projekt bereits behoben; Punkt 3 wird durch die eigene 
 
 ### Phase 3 – bis 06.11.
 - [x] Sap-Aktion ins Action-Space (Ziel: sichtbarer Gegner in Reichweite, Aktionsmaske)
-- [ ] CNN auf Karten-Kanälen (24×24) statt Einzel-MLP, oder PPO mit Action-Masking
+- [x] CNN auf Karten-Kanälen (24×24) und PPO mit Action-Masking implementiert und untersucht (19./20.10.); weitere Validierung und Auswahl offen, siehe aktuellen Arbeitsstand
 - [x] Self-Play / Gegner-Pool untersucht (`full_sp`, 11.10.); in diesen Versuchen kein klarer Gewinn, nicht in die Abgabe übernommen
 
 ### Phase 4 – bis 27.11.
