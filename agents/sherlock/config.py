@@ -97,6 +97,8 @@ class AgentConfig:
     contest_sap: bool = False
     """True: steht auf dem Ziel-Tile ein Gegner, den die Unit per Kollision nicht schlaegt,
     sappt sie dieses Tile aus der Entfernung (main._contest_sap)."""
+    energy_pref: float = 0.0
+    """> 0: Punkte-Tiles mit hoher Feldenergie bevorzugen (energy_pref Felder Umweg je 10 Energie)."""
     explore_quota: int = 0
     """> 0: so viele Units suchen in Match 2/3 gezielt das Relic-Paar, solange es fehlen
     kann (bis explore_until), Ziel: lange nicht gesehene Tiles der eigenen Haelfte."""
@@ -115,6 +117,8 @@ class AgentConfig:
     """True: jede Unit, deren Netz-Aktion 'stehen' ist, sappt ein Ziel in Reichweite,
     wenn danach noch idle_sap_reserve Energie bleibt (auch abseits der Punkte-Tiles)."""
     idle_sap_reserve: int = 30
+    sap_kill_first: bool = False
+    """True: Sap-Ziel bevorzugt Gegner, die der direkte Treffer zerstoert (Energie < Sap-Kosten)."""
     sap_pt_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner auf bekannten Punkte-Tiles (_best_sap_target)."""
     sap_geometry: bool = False

@@ -85,7 +85,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    cand_quota: int = 0, far_opp: int = 0,
                    prev: dict | None = None, sticky: float = 0.0,
                    far_cand: bool = False, cand_boost: float = 0.0,
-                   explore_quota: int = 0, explore_until: int = 75) -> dict[int, tuple[int, int]]:
+                   explore_quota: int = 0, explore_until: int = 75,
+                   energy_pref: float = 0.0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -197,6 +198,10 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
         own_cand = (prio == 1) & ~in_enemy
         cost[:, own_cand] -= 1000.0 - float(cand_boost)
         cost[:, (prio == 0) & in_enemy] += float(cand_boost)
+    if energy_pref > 0:
+        # 20.10.2026: Punkte-Tiles mit mehr Feldenergie bevorzugen (energy_pref Felder je 10 Energie)
+        e = np.asarray(belief.energy_map, dtype=np.float64)[tgt[:, 0], tgt[:, 1]]
+        cost[:, prio == 0] -= (np.clip(e, -20.0, 20.0) / 10.0 * float(energy_pref))[prio == 0]
     if sticky and prev:
         # bisheriges Ziel behalten, solange kein um mehr als `sticky` Felder besseres frei ist
         index = {}
@@ -345,6 +350,7 @@ def make_context(agent, obs, belief=None) -> dict:
         prev=prev, sticky=sticky, far_cand=bool(agent.cfg.far_cand),
         cand_boost=float(agent.cfg.cand_boost),
         explore_quota=int(agent.cfg.explore_quota), explore_until=int(agent.cfg.explore_until),
+        energy_pref=float(agent.cfg.energy_pref),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))

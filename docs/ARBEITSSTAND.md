@@ -5,6 +5,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 20.10.2026, 20:58 – Codex: Mahmouds aktuelle Änderungen integriert
+
+Remote bis `7ae858f` zusammengeführt: `sap_kill_first=False`, `energy_pref=0.0`, zugehörige Tests und die negativen Ergebnisse bleiben erhalten. Gemeinsamen Protokollkonflikt durch Erhalt beider Einträge gelöst. **217 Tests plus vier Untertests bestanden (43,74 s)**; Abgabe und Sicherung unverändert. Das ähnlich gute Gesamtergebnis beider Spielseiten in Mahmouds Notiz ist ein Plausibilitätscheck, allein kein Beweis, dass jeder Spiegelungsfehler ausgeschlossen ist. Vor der nächsten Variantenbewertung wird V3 auf allen 240 Entwicklungsspielen neu reproduziert.
+
 ## 20.10.2026, 20:56 – Codex: tatsächlicher Reward-Pilot verworfen
 
 Zwei frische Einzelnetze mit identischen Anfangstensoren und identischer Karten-/Gegnerfolge jeweils **400 Spiele trainiert**, danach jeweils 240 feste Auswertungsspiele. Einziger Unterschied: `terminal_death_potential`. Vollständiger Audit bestanden: Quellen/HEAD unverändert, gleiche Initialisierung, vollständige Spielschlüssel, endliche gelernte Tensoren und geschützte Abgabe/Sicherung. Details: [Pilotbericht](../experiments/analysis/autonomous_20261020/reward_pilot_analysis.md).
@@ -48,6 +52,10 @@ Beim bereits erkannten Tod einer Einheit fehlte im potenzialbasierten Shaping de
 **Diagnose** (`all18_v3`, Val 720–759): In 13 von 57 verlorenen Matches haben wir mindestens ein Relic nie gefunden (davon 6, in denen Solution_92 alle fand). Ursache: In Match 2/3 gibt es mehr bekannte Ziele als Units, dann bekommt keine Unit ein Erkundungsziel.
 
 **Neuer Schalter `explore_quota`** (+ `explore_until=75`, Default aus, Test in `tests/test_rules_1910.py`): solange das Relic-Paar des Matches fehlen kann, suchen so viele Units (nicht auf Punkte-Tiles, zuerst ohne Ziel/mit Gegnerziel) lange nicht gesehene Tiles der eigenen Hälfte ab. Val 720 gegen `all18_v4` (84,5 %): Quote 1 **−8,0 (KI [−14,0; −2,0])**, Quote 2 **−9,5** → bleibt aus. Units vom Punktesammeln abzuziehen kostet mehr, als gefundene Relics bringen.
+
+**`sap_kill_first`** (Sap-Ziel bevorzugt Gegner, die der Treffer zerstört): Val 720 **−8,0 (KI [−14,5; −1,5])** gegen `all18_v4` → aus; die bisherige Wahl (größte getroffene Gegnerenergie) ist besser.
+
+**`energy_pref`** (Punkte-Tiles mit hoher Feldenergie bevorzugen) 2 / 5: −1,5 / −3,5 → aus. **Seitenvergleich** über 3600 Spiele gegen Solution_92 (7 Messreihen): player_0 77,2 %, player_1 77,3 % – kein Spiegelungsfehler.
 
 Hinweis an Moayed/Codex: Moayeds V4-Direktvergleich gelesen; V3 bleibt Abgabe. Zielvergabe-/Sap-Geometrie-Diagnose und Reward-Trainingspilot sind bei Codex – Claude startet dazu nichts Paralleles.
 

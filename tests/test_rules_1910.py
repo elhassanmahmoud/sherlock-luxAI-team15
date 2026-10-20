@@ -344,3 +344,26 @@ def test_explore_quota_sends_one_unit_to_search_missing_relic():
     # beide Paare (Match 1 und 2) bekannt -> keine Quote
     b.relic_positions.update({(10, 2), (21, 13), (5, 1), (22, 18)})
     assert set(assign_targets(b, [0, 1], units, 24, 24, explore_quota=1).values()) == {(3, 3), (4, 4)}
+
+
+def test_sap_kill_first_prefers_killable_enemy():
+    from tests.conftest import make_obs
+    for flag, want in ((False, (2, 1)), (True, (-2, 0))):
+        a = _stay_agent(pt_sap=True, sap_kill_first=flag)
+        a.belief.point_tiles[5, 5] = True
+        obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 150), (3, 5, 20)],
+                       relics=[(6, 6)])
+        act = a.act(10, obs)
+        assert int(act[0, 0]) == geo.SAP and (int(act[0, 1]), int(act[0, 2])) == want
+
+
+def test_energy_pref_prefers_energetic_point_tile():
+    from agents.sherlock.features import assign_targets
+    b = Belief(0)
+    b.point_tiles[5, 8] = True     # 3 Felder, Energie -10
+    b.point_tiles[9, 5] = True     # 4 Felder, Energie +10
+    b.energy_map[5, 8] = -10
+    b.energy_map[9, 5] = 10
+    unit = np.array([[5, 5]])
+    assert assign_targets(b, [0], unit, 24, 24)[0] == (5, 8)
+    assert assign_targets(b, [0], unit, 24, 24, energy_pref=2.0)[0] == (9, 5)
