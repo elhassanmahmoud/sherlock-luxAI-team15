@@ -1,0 +1,196 @@
+{
+  "status": "complete",
+  "pid": 91452,
+  "code_commit": "975b3aa8eaf78d5ab066607c4f6ab3566648eaf9",
+  "weights_sha256": {
+    "experiments/ensembles/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "agents/sherlock/weights/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "deadline_utc": "2026-10-20T23:15:00Z",
+  "jobs": [
+    {
+      "name": "reference",
+      "override": null,
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/ensembles/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_reference.csv"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:14:08.605741+00:00",
+      "pid": 91465,
+      "summary": {
+        "default": {
+          "wins": 120,
+          "games": 120,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "wins": 102,
+          "games": 120,
+          "mean_result": 0.85
+        }
+      },
+      "finished_utc": "2026-10-20T17:16:58.669637+00:00"
+    },
+    {
+      "name": "reserve30",
+      "override": "pt_sap_reserve=30",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/ensembles/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_reserve30.csv",
+        "--set",
+        "pt_sap_reserve=30"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:16:58.693274+00:00",
+      "pid": 91614,
+      "summary": {
+        "default": {
+          "wins": 120,
+          "games": 120,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "wins": 101,
+          "games": 120,
+          "mean_result": 0.8416666666666667
+        }
+      },
+      "finished_utc": "2026-10-20T17:19:46.937038+00:00"
+    },
+    {
+      "name": "reserve60",
+      "override": "pt_sap_reserve=60",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/ensembles/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_reserve60.csv",
+        "--set",
+        "pt_sap_reserve=60"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:19:46.955495+00:00",
+      "pid": 91698,
+      "summary": {
+        "default": {
+          "wins": 120,
+          "games": 120,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "wins": 96,
+          "games": 120,
+          "mean_result": 0.8
+        }
+      },
+      "finished_utc": "2026-10-20T17:22:50.253121+00:00"
+    },
+    {
+      "name": "far6",
+      "override": "far_opp=6",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/ensembles/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_far6.csv",
+        "--set",
+        "far_opp=6"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:22:50.273130+00:00",
+      "pid": 91846,
+      "summary": {
+        "default": {
+          "wins": 120,
+          "games": 120,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "wins": 101,
+          "games": 120,
+          "mean_result": 0.8416666666666667
+        }
+      },
+      "finished_utc": "2026-10-20T17:27:10.345355+00:00"
+    },
+    {
+      "name": "far14",
+      "override": "far_opp=14",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/ensembles/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_far14.csv",
+        "--set",
+        "far_opp=14"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:27:10.402051+00:00",
+      "pid": 92042,
+      "summary": {
+        "default": {
+          "wins": 120,
+          "games": 120,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "wins": 100,
+          "games": 120,
+          "mean_result": 0.8333333333333334
+        }
+      },
+      "finished_utc": "2026-10-20T17:37:11.014398+00:00"
+    }
+  ]
+}

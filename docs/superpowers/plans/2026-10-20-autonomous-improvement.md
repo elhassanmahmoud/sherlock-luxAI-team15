@@ -39,7 +39,7 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 
 - [x] Aufgabe 1: Referenz und technische Basis prüfen.
 - [x] Aufgabe 2: Kursbetrieb prüfen.
-- [ ] Aufgabe 3: Begrenzte Entwicklungsmessung.
+- [x] Aufgabe 3: Begrenzte Entwicklungsmessung.
 - [ ] Aufgabe 4: Bestätigung und Gegnervergleich, falls Auswahlregel erfüllt.
 - [ ] Aufgabe 5: Abschlussbericht, Kandidat nur bei bestätigtem Vorteil, Push.
 
@@ -91,11 +91,11 @@ Ergebniszusammenfassung unter `experiments/analysis/autonomous_20261020/`.
 **Interfaces:** `scripts.par_eval` → vollständige CSVs, `scripts.compare_report`
 → gepaarte Vergleiche. Eingabe feste Referenz und vier Config-Overrides aus Spec.
 
-- [ ] Referenz und vier Varianten nacheinander ausführen, je 60 Karten,
+- [x] Referenz und vier Varianten nacheinander ausführen, je 60 Karten,
   beide Seiten und Gegner, `--workers 2`. Neue Ausgabepfade verwenden.
-- [ ] Je Datei 240 eindeutige Zeilen und vollständige Seitenpaare prüfen;
+- [x] Je Datei 240 eindeutige Zeilen und vollständige Seitenpaare prüfen;
   `point_counting_version=2`, keine fehlenden Ergebnisse.
-- [ ] Nach festgelegter Regel höchstens einen Herausforderer wählen;
+- [x] Nach festgelegter Regel höchstens einen Herausforderer wählen;
   Entscheidung inklusive verworfener Varianten dokumentieren.
 - [ ] Zwischenstand samt verwendeten Seeds und unveränderten Gewichtshashes pushen.
 
@@ -139,7 +139,7 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - Ausführungsentscheidung: bestehender Hauptcheckout und direkte kleine main-Commits gemäß Teampräferenz; kein zusätzlicher Worktree.
 
 - Abschluss Aufgabe 2: unabhängiger Review-Befund zum stillen Checkpoint-Fallback behoben; 163 Tests bestanden und 8 Runner-Spiele mit verifizierten 18 Netzständen erfolgreich (`runner_verified.json`). Kein offener wichtiger Befund.
-- Automation: `sherlock-verbesserungsplan-fortsetzen`, jeweils zur vollen und halben Stunde; nach dem Morgenbericht um 06:00 deaktivieren.
+- Automation: `sherlock-verbesserungsplan-fortsetzen`, nur noch Morgenbericht um 06:00. Moayed verlangt seit 19:39 kontinuierliche aktive Arbeit statt Intervallsteuerung; bis dahin im aktiven Chat weiterarbeiten.
 
 - Aufgabe 3 gestartet: fünf sequenzielle Evaluationsläufe, je 240 Spiele, maximal zwei Worker. Status/PID/Commands und fertige Ergebnisse: `experiments/analysis/autonomous_20261020/development_state.json`. Laufprozess nicht duplizieren; unfertige CSVs nicht werten.
 - Leerlauf-Ruhezustand bis zur Arbeitsgrenze verhindert. Eigener Prozess ist in `experiments/analysis/autonomous_20261020/awake_until_deadline.json` dokumentiert. Bis zum Morgenbericht aktiv lassen; danach nur diesen anhand PID und Kommando verifizierten caffeinate-Prozess beenden; keine fremden Prozesse stoppen.
@@ -156,3 +156,10 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - [ ] Eigene verbleibende Jobs kontrolliert beenden, Wachhalteprozess anhand PID/Kommando beenden und Automation deaktivieren.
 
 Moayed hat diese Verlängerung und selbstständige Fortsetzung ausdrücklich beauftragt; keine erneute Freigabe für gewöhnliche Arbeitsschritte nötig.
+
+- Aufgabe 3 abgeschlossen: fünf vollständige CSVs, insgesamt 1.200 Spiele; alle Schlüssel/Seitenpaare/Punktzählversion geprüft. V3 102/120 Siege gegen Solution_92, Reserve30 und far6 jeweils 101/120, Reserve60 96/120, far14 100/120; default stets 120/120. Kein Herausforderer ausgewählt. Vergleichsbericht: `experiments/analysis/autonomous_20261020/development_report.json`.
+- Rebase der zwei Dokumentations-/Sicherungs-Commits auf `96bbf6f` erfolgreich. Vor den frischen Karten gesamte Testsuite und V3-Reproduktion auf zwei Entwicklungskarten prüfen.
+- Nächster Batch: V3 und gesicherte alte Abgabe jeweils 200 frische Karten 502420–502619, beide Seiten/default/Solution_92; zusätzlich V3 direkt gegen gesicherte alte Abgabe auf 60 Entwicklungskarten. Keine Variante auf den frischen Karten nachselektieren.
+
+- Nach Remote-Abgleich: 167 Tests bestanden (129,41 s, numerische Threads auf eins begrenzt). Vorherigen langsamen Lauf während JAX-Kompilierung nach 88 Tests abgebrochen, kein vollständiger Erfolg behauptet.
+- Übernahmebatch gestartet: `experiments/analysis/autonomous_20261020/release_check_state.json`. Vier sequenzielle Aufgaben (Reproduktion, alte Abgabe frisch, V3 frisch, V3 direkt gegen alte Abgabe), maximal zwei Worker. Keine parallelen Rechenläufe oder Codeänderungen an diesem Checkout bis Batchende.
