@@ -5,6 +5,20 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 20.10.2026, 22:25 – Claude Code mit Mahmoud: CNN `cnn3` (Nachahmung + PPO) und Plan für 21.10.
+
+**`cnn3`** (`scripts/pipeline_cnn3.sh`, Log `experiments/pipeline_cnn3.log`): 1200 Lehrerspiele von `all18_fo10` (4,27 Mio. Unit-Schritte, Lehrer 74 % vs Solution_92 in der Datensammlung), BC 6 Epochen (48 Kanäle × 4 Blöcke, Trefferquote 88,4 %), PPO 60 Iterationen. Val 720 vs Solution_92 (gespeicherte Lehrer-Config, ohne `pt_sap`): BC 74,0 %, PPO 10/20/30/40/50/60 = 78,0 / 74,5 / 77,0 / 74,5 / **83,5** / 78,5 %; default immer 100 %. **Frische Karten 502 020–502 219** (vorab reserviert, bester Val-Stand `ppo_0050` gegen den Lehrer): `cnn3/ppo_0050` 99,5 % / 73,0 %, `all18_fo10` 99,5 % / 73,25 % (−0,25, KI [−5,0; +4,5]) → **das CNN erreicht das Lehrer-Niveau, nicht mehr**; der Val-Spitzenwert war Auswahlglück. `cnn3/ppo_0050` + `far_cand`/`pt_sap`/`opp_infer`: Val 81,0 % (−2,5). Auf demselben frischen Block **`all18_v4` 99,25 % / 76,25 %** (+3,0 vs `all18_fo10`, KI [−2,2; +8,3]; +3,25 vs CNN). PPO-Checkpoints liegen gitignored unter `experiments/ppo/cnn3/`.
+
+**Stand heute Abend:** beste bestätigte Variante `all18_v4` (Solution_92 auf frischen Blöcken 80,4 % / 400 Karten und 76,25 % / 200 Karten; default 98,5–99,25 %; gegen alte Abgabe 106/120). Abgabe ist laut Codex `all18_v3`. Mehr oder neu trainierte DQN-Netze (`fo6`, `all24fo`, `v3nets6`, `all24v3`) und PPO-Weitertraining brachten heute nichts.
+
+**Plan 21.10. (Mahmoud/Claude):**
+1. Schwachstelle Relics auf der Diagonale / umkämpfte Mittelzone (V4 dort 67 %) gezielt diagnostizieren.
+2. Große Karten im 3. Match: Besetzung der eigenen Hälfte (Solution_92 ~8 von 10, wir ~5–6).
+3. Modellauswahl für PPO auf einem eigenen, größeren Validierungsblock statt Val 720 (100 Karten sind für die Auswahl zu verrauscht; Val 720 ist stark wiederverwendet).
+4. Mit Moayed abstimmen, ob `all18_v4` die Abgabe ersetzen soll (Solution_92 +2,4 auf 400 Karten, alte Abgabe 106 vs 96/120, direkt gegen V3 unentschieden).
+
+**Seeds:** Val 502 020–502 219 (cnn3), 502 620–502 819 (v3nets), 502 820–503 219 (V4) verbraucht; Moayed 502 420–502 619. Nächster freier Index für Mahmoud: 3220.
+
 ## 20.10.2026, 21:50 – Claude Code mit Mahmoud: Netze mit V3-Regeln im Training – kein Gewinn
 
 `scripts/pipeline_v3nets.sh`: 6 × `full_rules_v3` (`pt_sap`, `far_cand`, `far_opp=10`, `keep_dead_fast` schon im Training; je 3000 Spiele, 70 % Solution_92, 128 min; Läufe `20261020_full_rules_v3_s40`–`s45_sol70`). Val 720 gegen `all18_v3` (83,0 %): `v3nets6` (nur die 6 neuen Netze) 75,5 % (−7,5, KI [−14,0; −1,0]), `all24v3` (18 + 6, V3-Schalter) 81,5 % (−1,5). **Frische Karten 502 620–502 819** (200 Karten, je 400 Spiele): `all18_v3` default 99,75 %, Solution_92 71,0 %; `v3nets6` 100 % / 70,0 % (−1,0, KI [−5,2; +3,5]); `all24v3` 100 % / **71,0 % (±0, KI [−4,3; +4,8])** → mehr bzw. neu trainierte DQN-Netze bringen nichts; die Gewinne heute kamen ausschließlich aus Regeln. Log: `experiments/pipeline_v3nets.log`.
