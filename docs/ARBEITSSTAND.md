@@ -13,6 +13,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **Stand heute Abend:** beste bestätigte Variante `all18_v4` (Solution_92 auf frischen Blöcken 80,4 % / 400 Karten und 76,25 % / 200 Karten; default 98,5–99,25 %; gegen alte Abgabe 106/120). Abgabe ist laut Codex `all18_v3`. Mehr oder neu trainierte DQN-Netze (`fo6`, `all24fo`, `v3nets6`, `all24v3`) und PPO-Weitertraining brachten heute nichts.
 
+**Diagnose Relics auf der Diagonale** (`all18_v4` vs Solution_92, die 33 Karten mit ungerader Relic-Zahl aus 502 820–503 219, beide Seiten, Ground Truth): Zone um das Diagonal-Relic ≈ 10 Punkte-Tiles (4,5 je Hälfte + 1,1 auf der Diagonale). Besetzt bei Step 30/50/75/95: wir 1,0 / 1,9 / 3,7 / 3,2, Solution_92 1,3 / 2,2 / 1,8 / 2,4. Eigener Teil (4,5 Tiles): wir 1,0 / 1,4 / 2,2 / 2,0, Gegner dort 0,0 / 0,4 / 0,5 / 0,6 → rund 2 eigene Tiles der Mittelzone bleiben frei; früh ist Solution_92 schneller. Ansatz für 21.10.: diese Tiles früher und dauerhaft besetzen (Ursache – Tod durch Sap/Energie-Void neben Gegnern oder unbekannte Kandidaten – noch zu klären).
+
 **Plan 21.10. (Mahmoud/Claude):**
 1. Schwachstelle Relics auf der Diagonale / umkämpfte Mittelzone (V4 dort 67 %) gezielt diagnostizieren.
 2. Große Karten im 3. Match: Besetzung der eigenen Hälfte (Solution_92 ~8 von 10, wir ~5–6).
