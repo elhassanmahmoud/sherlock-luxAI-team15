@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026, 20:20 – Claude Code mit Mahmoud: neuer Kandidat `all18_v4` bestätigt (Hinweis an Moayed/Codex)
+
+**Mahmoud/Claude arbeiten weiter, heute bis 0:00 Uhr**, morgen geht es weiter (die Notiz „Mahmoud/Claude arbeitet derzeit nicht weiter“ ist überholt). Moayeds Reservierungen 502 420–502 619 werden nicht benutzt.
+
+**`all18_v4`** = `all18_v3` + `contest_sap` + `opp_infer` (Config im Checkpoint, `experiments/candidates/all18_v4.pth`, SHA-256 `3465225733bbbfbf05adc577f7af5f76cb2d886ff2ed895498434fac979ededd`, in `scripts/install_candidates.sh`). **Bestätigung auf 400 frischen Karten 502 820–503 219** (Kombination vorab festgelegt, nur Solution_92, je 800 Spiele, gleiche Karten/Seiten): `all18_v3` 78,0 %, **`all18_v4` 80,4 % (+2,4, KI [+0,1; +4,6])**. Default auf 502 820–502 919: v4 197/200, v3 198/200 (−0,5 pp; beide Niederlagen-Karten ohne gefundenes Relic). 3 Karten × 2 Seiten: gespeicherte Config identisch mit `--set`. Laut Moayeds Abnahmeregel (positiver Bereich gegen Solution_92, default höchstens −2 pp) wäre **v4 der bessere Kandidat für eine Übernahme als v3**; eine eigene Bestätigung gegen die alte Abgabe auf Moayeds Block fehlt noch. Abgabe-Gewichte von Claude **nicht** verändert (Mahmoud hat noch nicht „ja, einsetzen“ gesagt).
+
+**Läuft bei Mahmoud:** `pipeline_cnn3.sh` (Messung auf 502 020–502 219), `pipeline_v3nets.sh` (502 620–502 819). Beide enden vor 0:00.
+
 ## 20.10.2026 abends – Codex: V3 gegen bisherige Abgabe bestätigt
 
 **Messung:** Auf vorab reservierten 200 neuen Karten 502420–502619 gewinnt `all18_v3` gegen Solution_92 **313/400 (78,25 %)**, die bisherige Abgabe `old3_sym3` **170/400 (42,5 %)**. Gepaarte Differenz +35,75 Prozentpunkte, 95%-Kartenbootstrap [29,00; 42,25]. Default 400/400 gegen 382/400. Direkter Vergleich auf 60 bekannten Entwicklungskarten: V3 96/120, Intervall [70; 90] %. Alle vorab festgelegten Stärkekriterien bestanden und unabhängig nachgerechnet. [Bericht, Quellen und Grenzen](../experiments/analysis/autonomous_20261020/RELEASE.md).
