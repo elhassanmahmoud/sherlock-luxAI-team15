@@ -34,6 +34,13 @@ VARIANTS: dict[str, tuple[str, dict]] = {
                                     "scripted_explore": True, "explore_stale": 20,
                                     "reward_fix": True, "keep_dead_fast": True,
                                     "w_opp_points": 1.0}),
+    # 20.10.2026: + far_opp=10 (bestaetigt +6 pp) schon im Training
+    "full_rules_fo": ("sherlock", {"use_symmetry": True, "explore_memory": True,
+                                   "early_inference": True, "relic_filter": True,
+                                   "subset_infer": True, "explore_grid": True,
+                                   "scripted_explore": True, "explore_stale": 20,
+                                   "reward_fix": True, "keep_dead_fast": True,
+                                   "far_opp": 10}),
     "no_belief": ("sherlock", {"use_belief": False}),
     "no_shaping": ("sherlock", {"use_shaping": False}),
     "no_sap": ("sherlock", {"use_sap": False}),
