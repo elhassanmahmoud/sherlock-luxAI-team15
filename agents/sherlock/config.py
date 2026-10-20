@@ -115,6 +115,8 @@ class AgentConfig:
     """True: jede Unit, deren Netz-Aktion 'stehen' ist, sappt ein Ziel in Reichweite,
     wenn danach noch idle_sap_reserve Energie bleibt (auch abseits der Punkte-Tiles)."""
     idle_sap_reserve: int = 30
+    sap_kill_first: bool = False
+    """True: Sap-Ziel bevorzugt Gegner, die der direkte Treffer zerstoert (Energie < Sap-Kosten)."""
     sap_pt_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner auf bekannten Punkte-Tiles (_best_sap_target)."""
     keep_dead: bool = False

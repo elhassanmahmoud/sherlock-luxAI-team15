@@ -504,6 +504,8 @@ class Agent_x:
             score = float(energies[direct].sum() + SAP_DROPOFF_ASSUMED * energies[splash].sum())
             if self.cfg.sap_pt_first and self.belief.point_tiles[tx, ty]:
                 score += 1000.0  # 20.10.2026: Gegner auf Punkte-Tiles zuerst (sie punkten)
+            if self.cfg.sap_kill_first and float(energies[direct].sum()) < float(ctx["sap_cost"]):
+                score += 2000.0  # 20.10.2026: Treffer zerstoert die Unit -> Tile wird frei
             hits = int(direct.sum() + splash.sum())
             if score > best_score:
                 best, best_score, best_hits = (tx - x, ty - y), score, hits
