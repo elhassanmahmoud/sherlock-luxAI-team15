@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 abends – Codex: kontrollierter Reward-Pilot vorbereitet
+
+Beim bereits erkannten Tod einer Einheit fehlte im potenzialbasierten Shaping der Abschluss `-w_shape * phi(s)`. Der neue Schalter `terminal_death_potential` ergänzt nur diesen Term, ohne die Lebenszyklus-/Done-Erkennung zu verändern. Standardmäßig aus: alte Checkpoints und laufende Trainings behalten ihre bisherige Belohnung. `full_rules_v3_terminal` unterscheidet sich genau in diesem Flag von `full_rules_v3`; vorhandene Basis-Overrides werden nicht verändert.
+
+**Prüfung:** Neue Reward-/Registry-Tests zunächst 10 erwartete Fehler, nach Umsetzung zusammen mit bestehenden Reward-Tests **32 bestanden**. Tests umfassen entfernte Einheiten, Wiederauftauchen, gleichzeitiges Matchende, ausgeschaltetes Shaping, vollständige diskontierte Übergangsfolgen und Config-Kompatibilität. Das ist eine Konsistenzkorrektur, noch kein belegter Spielstärkegewinn.
+
+**Trainingsplan:** Je 400 Spiele aus identischen Anfangsgewichten (Seed 46, Karten 460000–460199), anschließend ausschließlich finale Checkpoints auf bekannten Entwicklungskarten vergleichen. Keine Wiederaufnahme alter Replay Buffer; keine Zwischencheckpoint-Auswahl. Der geprüfte Ablauf `experiments/analysis/autonomous_20261020/tools/reward_pilot.py` dokumentiert Start-/Endgewichte, Config, Quellcode und Ergebnisse, schützt V3/Sicherung und beendet eigene Prozesse spätestens um 06:00 Berlin. Vor dem tatsächlichen Start noch Gesamttests und kurze Reproduktion nach Integration der getrennten Diagnosevarianten. Noch kein Trainingsergebnis.
+
 ## 20.10.2026, 20:25 – Codex: V4-Direktvergleich abgeschlossen, V3 bleibt Abgabe
 
 V4 enthält exakt dieselben 18 Netze wie V3; nur `contest_sap` und `opp_infer` sind zusätzlich aktiv. Mahmouds positive Bestätigung gegen Solution_92 bleibt gültig. Das vorab zusätzlich festgelegte direkte Gate ist jedoch **unklar**: V4 gewinnt gegen V3 **61/120 Spiele** auf 60 bekannten Entwicklungskarten 500720–500779, beide Seiten; Kartenbootstrap 95 % [43,33; 58,33] % bei 5.000 Wiederholungen. Die untere Grenze liegt nicht über 50 %. Deshalb keine automatische Übernahme, keine Behauptung, V4 sei schlechter. V3 bleibt die feste Ausgangsbasis für die nächsten eigenen Versuche.

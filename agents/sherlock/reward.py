@@ -140,6 +140,10 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict,
             r += cfg.w_shape * (cfg.gamma * phi_next - _phi(ctx, uid))
         else:
             r -= cfg.w_death
+            if cfg.terminal_death_potential:
+                # Derselbe Unit-Tod beendet den Lernuebergang: phi(s') = 0.
+                # Auch bei gleichzeitigem Matchende genau einmal anwenden.
+                r -= cfg.w_shape * _phi(ctx, uid)
 
         if actions.get(uid) == geo.SAP:
             hits = sap_hits.get(uid, 0)

@@ -55,6 +55,12 @@ VARIANTS: dict[str, tuple[str, dict]] = {
     "no_canonical": ("sherlock", {"canonical": False}),
 }
 
+# Gepaarter Trainingspilot: eigene Override-Kopie, Basisvariante unveraendert.
+VARIANTS["full_rules_v3_terminal"] = (
+    VARIANTS["full_rules_v3"][0],
+    {**VARIANTS["full_rules_v3"][1], "terminal_death_potential": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 

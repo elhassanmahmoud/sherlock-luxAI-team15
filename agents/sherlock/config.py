@@ -153,6 +153,10 @@ class AgentConfig:
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0
     im terminalen Matchende-Zustand. Default aus = alte Trainings reproduzierbar."""
+    terminal_death_potential: bool = False
+    """True: auch beim bereits erkannten Unit-Tod den terminalen Potentialterm
+    -w_shape * phi(s) addieren. Keine neue Done-Regel; fuer den geplanten Pilot
+    zusammen mit reward_fix=True. Default False erhaelt bisherige Rewards."""
     smart_sap: bool = False
     """True: Sap-Ziel mit Teamabstimmung (rules.plan_sap): kein Overkill,
     stehende Gegner/Gegner auf Punkte-Tiles bevorzugt, Abschuss-Bonus; lohnt
