@@ -12,6 +12,10 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 **Integration und Prüfung:** Remote bis `3a4f32f` normal gemergt; Messcode `14d239f` bleibt in der Historie. Beide Checkpoints einschließlich sämtlicher Netzparameter und effektiver Config geprüft; `cand_boost=0`, `contest_sap=False`, `pt_walk=False`. Alle Kennzahlen außer Zeit der 16 Schlussprüfspiele identisch. Gesamte Testsuite **169 bestanden (46,44 s)**. Sicherung und beide bisherigen Abgabedateien weiterhin bytegleich; Installation und anschließende Kursprüfung stehen als eigener Schritt an.
 
+**Anschließende Übernahme:** Beide Abgabedateien durch den geprüften V3-Kandidaten ersetzt, SHA-256 jeweils `aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935`. Danach acht Kurs-Runner-Spiele bestanden, beide Seiten/Gegner, je 303 Schritte, explizit verifizierte 18 Netze und frisches Belief. Maximale gemessene Entscheidungszeit 39,82 ms, keine Aussage zu einem unbekannten Turnierlimit. Manifest: `experiments/releases/20261020_all18_v3.json`. Alte Sicherung unverändert. Nach Installation zusätzlich 41 Lade-/Runner-/Gewichtsschutztests bestanden (22,05 s). README und gemeinsamer Überblick beschreiben nun V3; Präsentationsdateien bleiben historisch.
+
+**Datenintegrität:** Git hatte wegen `core.autocrlf=input` die CSV-Zeilenenden beim Einchecken normalisiert. Eine ordnerlokale `.gitattributes` erhält jetzt die exakten Messbytes, damit Audit-Hashes auch nach einem Clone stimmen. Alle elf CSVs im Arbeitsordner gegen ihre zuvor eingecheckten Fassungen geprüft: identische geparste Daten, nur Zeilenenden geändert.
+
 **Weitere Arbeit:** Moayed verlangt ausdrücklich auch neues Training und laufende Koordination mit Subagents. Ein Agent beobachtet neue Remote-Commits, ohne selbst zu mergen. Geplant sind ein kontrollierter Reward-Trainingsvergleich und getrennte Tests zur Zielvergabe sowie Sap-Geometrie; noch nicht als Verbesserungen bestätigt. Mahmouds zusätzliche Reservierungen 502620–502819 und 502820–503219 beachten. Kein zweites CNN3-/V3nets-Training starten.
 
 ## 20.10.2026 – Codex mit Moayed: selbstständiger Prüf- und Verbesserungszyklus

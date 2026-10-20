@@ -19,8 +19,8 @@
 ### Aktuelle Orientierung nach dem Review (20.10.2026)
 
 - Erste Präsentation abgeschlossen; laut Moayed Note **1,3**. Die Präsentationsvorbereitung vom 14./15.10. unten ist historisch.
-- CNN/PPO sowie neue DQN-Ensembles und Regelvarianten sind inzwischen implementiert und untersucht. Bestätigter experimenteller Kandidat im geprüften Stand `2ed46e4`: `all18_fo10`, 320/400 Siege gegen Solution_92 und 400/400 gegen default auf Karten 501620–501819. Abgabe-Gewichte weiterhin `old3_sym3`, unverändert.
-- [Review-Erkenntnisse und nächste Schritte](docs/REVIEW_NAECHSTE_SCHRITTE_20261020.md) enthalten die Vergleichsdaten, Prüfgrenzen, Prof-Fragen und priorisierten Vorschläge. Zuerst neue Ergebnisse der Pipeline vom 20.10. prüfen; für sie sind Karten 501820–502019 vorgesehen. Noch keine Umsetzung der Vorschläge beauftragt.
+- Aktuelle Abgabe seit 20.10.: **`all18_v3`**, 18 DQN-Netze, beide Dateien SHA-256 `aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935`. Bestätigt gegen die gesicherte alte Abgabe auf 200 neuen Karten 502420–502619: Solution_92 313/400 statt 170/400, default 400/400 statt 382/400; direkt 96/120 gegen alt. [Übernahmebericht](experiments/analysis/autonomous_20261020/RELEASE.md), Rückweg unter `experiments/releases/20261020_old3_sym3/`. CNN/PPO und weitere DQN-Varianten werden separat untersucht.
+- [Review-Erkenntnisse und nächste Schritte](docs/REVIEW_NAECHSTE_SCHRITTE_20261020.md) enthalten die Vergleichsdaten, Prüfgrenzen, Prof-Fragen und priorisierten Vorschläge. Der damalige Bericht ist ein historischer Review; der anschließend autorisierte autonome Verbesserungsplan und jüngste Arbeitsstand bestimmen die aktuellen Aufgaben und Seedreservierungen.
 - Für laufende Arbeiten immer den neuesten Arbeitsstand lesen; dieser Überblick ersetzt weder Laufmanifeste noch aktuelle Messergebnisse.
 
 ### Projektgrundlagen

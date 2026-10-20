@@ -40,8 +40,8 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 - [x] Aufgabe 1: Referenz und technische Basis prüfen.
 - [x] Aufgabe 2: Kursbetrieb prüfen.
 - [x] Aufgabe 3: Begrenzte Entwicklungsmessung.
-- [ ] Aufgabe 4: Bestätigung und Gegnervergleich, falls Auswahlregel erfüllt.
-- [ ] Aufgabe 5: Abschlussbericht, Kandidat nur bei bestätigtem Vorteil, Push.
+- [x] Aufgabe 4: Bestätigung und Gegnervergleich, falls Auswahlregel erfüllt.
+- [ ] Aufgabe 5: Erster Zyklus technisch abgeschlossen und V3 installiert; Übernahme-Commit/Push und späterer Morgenbericht noch offen.
 
 ## Aufgabe 1: Referenz und technische Basis
 
@@ -97,7 +97,7 @@ Ergebniszusammenfassung unter `experiments/analysis/autonomous_20261020/`.
   `point_counting_version=2`, keine fehlenden Ergebnisse.
 - [x] Nach festgelegter Regel höchstens einen Herausforderer wählen;
   Entscheidung inklusive verworfener Varianten dokumentieren.
-- [ ] Zwischenstand samt verwendeten Seeds und unveränderten Gewichtshashes pushen.
+- [x] Zwischenstand samt verwendeten Seeds und unveränderten Gewichtshashes pushen.
 
 ## Aufgabe 4: Bestätigung und Gegnervergleich
 
@@ -176,3 +176,21 @@ Moayed hat diese Verlängerung und selbstständige Fortsetzung ausdrücklich bea
 2. **Sap-Zielgeometrie:** Bei bereits gewähltem Sap können freie Zentren zwischen sichtbaren Gegnern unter dem bestehenden Energiescore günstiger sein. In denselben Beobachtungsspielen Häufigkeit messen; der Score ist weder tatsächlicher Schaden noch bewiesener Sieggewinn. Getrennter Schalter `sap_geometry`, standardmäßig aus, erhält Verfügbarkeit/Aktionsmaske und bisherige Gleichstände; keine neue Sap-Regel hinzufügen.
 3. Subagents bereiten isolierte Vorschläge und Grenzfalltests unter `/tmp` vor; Koordinator besitzt jetzt das zusammengeführte Diagnosewerkzeug. Gegenseitige Reviews erfolgen vor Übernahme. Keine zusätzlichen Spiele parallel zum laufenden Übernahmebatch.
 4. Nach Diagnose und Tests maximal diese zwei Einzelvarianten auf dem bekannten Entwicklungsblock vergleichen. Kein blindes Kombinieren. Einen überzeugenden Gewinner auf einem nach Remote-Abgleich neu reservierten Block bestätigen; die bereits betrachteten Karten 502420–502619 dafür nicht wieder als frisch bezeichnen. Ohne bestätigten Vorteil bleiben die Schalter aus.
+
+## Zusätzlicher Trainingsauftrag
+
+Moayed hat während der Arbeit ausdrücklich auch neues Training verlangt.
+Kontrollierter Pilot nach Abschluss der laufenden Prüfungen: `full_rules_v3`
+mit identischer Initialisierung/Trainingsfolge, einziger Unterschied ein
+standardmäßig ausgeschalteter Schalter `terminal_death_potential`.
+Beide Arme halten `active_targets=False` und `sap_geometry=False`.
+Je 400 Spiele, Startseed 46 (Karten 460000–460199), 70 % Solution_92 nach
+25 % Default-Aufwärmphase, keine Zwischencheckpoint-Auswahl, keine historischen
+Testkarten (`--no-test --val-every 0`). Danach beide finalen Einzelnetze auf
+500720–500779 gegen beide Gegner/Seiten vergleichen. Ein Startpaar ist ein
+Pilot, kein Nachweis über Trainingsstarts und kein automatischer Ersatz des
+18er-Ensembles. Laufzeit zunächst messen; höchstens ein Training gleichzeitig.
+Neue Bestätigungskarten erst nach Remote-Abgleich reservieren.
+
+Ein separater Remote-Beobachter meldet neue Commits, Änderungen und
+Seedreservierungen; nur der Koordinator integriert zwischen Messreihen.

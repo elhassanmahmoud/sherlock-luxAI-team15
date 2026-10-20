@@ -9,13 +9,13 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet. Die Eingabe kommt aus einem **Gedächtnis (Belief)**, das Relics über Matches behält und die unsichtbaren Punkte-Tiles aus dem Punktezuwachs ableitet. Dazu kommen **Reward Shaping** pro Einheit, **Aktionsmasken** und eine **Spiegelung in einen kanonischen Raum**, sodass ein Netz für beide Seiten genügt.
 
-**Aktueller Abgabe-Stand (14.10.2026): `old3_sym3`.** Beim Spielen werden die Q-Werte von sechs Netzen gemittelt (3 × `full`, 3 × `full_sym`). Zusätzlich nutzt das Belief die Kartensymmetrie und merkt sich erkundete Gebiete über Matches. Die Gewichte beider Spielseiten enthalten dasselbe Ensemble. `m1_early` ist ein untersuchter Kandidat für nach dem Review; er ist nicht im aktuellen Abgabe-Stand aktiviert.
+**Aktueller Abgabe-Stand (20.10.2026): `all18_v3`.** Beim Spielen werden die Q-Werte von 18 trainierten Netzen gemittelt (Gruppen `rules6`, `sol70`, `opp`). Gedächtnis, frühere Punktefeld-Inferenz, Zielzuweisung und Aktionsregeln ergänzen die Netze. V3 verwendet unter anderem `far_opp=10`, `far_cand` und `pt_sap`. Beide Spielseiten laden dasselbe Ensemble. [Übernahmevergleich und Prüfungen](experiments/analysis/autonomous_20261020/RELEASE.md) · [gesicherte alte Abgabe mit Rückweg](experiments/releases/20261020_old3_sym3/README.md).
 
 **Zusammenarbeit:** [CLAUDE.md](CLAUDE.md) enthält die gemeinsamen Regeln für Claude Code und Codex; [AGENTS.md](AGENTS.md) verweist Codex darauf. Änderungen, Prüfungen und offene Aufgaben stehen im [gemeinsamen Arbeitsstand](docs/ARBEITSSTAND.md), Versuche weiterhin im [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md).
 
-**Erste Präsentation am 16.10.:** ungefähr **zehn Minuten Vortrag**, Präsentationsupload bis **08:00 Uhr** laut Moodle-Aufgabe „Submission 1“. Laut Team sind die Slots 20 Minuten lang. Eine Aufteilung der übrigen Zeit für Fragen/Puffer sowie längere Vorträge bei späteren Terminen sind noch nicht bestätigt. Vorbereitung: [Review-Checkliste](docs/presentation/CHECKLISTE_REVIEW_1610.md).
+**Erste Präsentation am 16.10. abgeschlossen:** laut Moayed Note **1,3**. Nächster Termin ist die Zwischenpräsentation mit Battle am **06.11.** Die frühere [Review-Checkliste](docs/presentation/CHECKLISTE_REVIEW_1610.md) und Präsentation bleiben als historischer Stand erhalten.
 
-**Aktueller Foliensatz im ursprünglichen Design:** [PowerPoint mit Notizen](docs/presentation/Sherlock_Review_16-10-2026.pptx) · [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf) · [Vortragsplan und Lernhilfe](docs/presentation/VORTRAGSPLAN_1610.md). Zwölf Vortragsfolien plus drei Reservefolien; geplant 11:10 Minuten, maximal zwölf. Moayed übernimmt den anschaulichen Teil (5:35), Mahmoud die Technik und nächsten Schritte (5:35). Agenda auf Folie 2; Pseudocode beim Spielen steht auf Folie 4, die wichtigsten Trainingsparameter auf Folie 8. Gemeinsame Probe und Moodle-Upload stehen noch aus.
+**Foliensatz für das erste Review:** [PowerPoint mit Notizen](docs/presentation/Sherlock_Review_16-10-2026.pptx) · [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf) · [Vortragsplan und Lernhilfe](docs/presentation/VORTRAGSPLAN_1610.md). Diese Unterlagen beschreiben den damaligen Agenten und werden durch die neue Abgabe nicht nachträglich umgeschrieben.
 
 ## Inhalt
 
@@ -31,7 +31,24 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 
 ## Ergebnisse
 
-### Aktuelles Ensemble `old3_sym3`
+### Aktuelles Ensemble `all18_v3`
+
+200 vorab reservierte neue Karten **502420–502619**, beide Seiten, je 400 Spiele
+pro Agent und Gegner:
+
+| Gegner | Alte Abgabe `old3_sym3` | Aktuelle Abgabe `all18_v3` | Differenz mit 95%-Kartenbootstrap |
+|---|---:|---:|---:|
+| `default` | 382/400 (95,50 %) | 400/400 (100 %) | +4,50 pp [2,00; 7,50] |
+| `Solution_92_Kaggle` | 170/400 (42,50 %) | 313/400 (78,25 %) | +35,75 pp [29,00; 42,25] |
+
+Direkt gegen die gesicherte alte Abgabe gewinnt V3 96/120 Spiele auf 60 bekannten
+Entwicklungskarten; 95%-Intervall 70–90 %. Das ist eine zusätzliche Kontrolle,
+keine zweite frische Stichprobe. [Rohdaten, Methode, technische Prüfungen und
+Grenzen](experiments/analysis/autonomous_20261020/RELEASE.md). V3 ist Mahmouds
+bereits entwickelter Kandidat; dieser Vergleich bestätigt den gesamten Stand
+und isoliert keinen einzelnen Beitrag von Training, Netzanzahl oder Regeln.
+
+### Historisches Review-Ensemble `old3_sym3`
 
 | Gegner | Gewonnene Spiele | Siegquote |
 |---|---|---|
@@ -46,7 +63,7 @@ Die [neu gemessenen 120 Benchmarkspiele mit vollständigen Punkten](experiments/
 
 ### Historische Einzelnetz- und Ablationsstudie (10.10.)
 
-Die folgende Tabelle und Grafik gehören zum ursprünglichen Einzelnetz-Batch. Sie beschreiben **nicht** das aktuelle Sechser-Ensemble. Auch `scripts.report` erzeugt derzeit keinen vollständigen Bericht aller späteren Varianten.
+Die folgende Tabelle und Grafik gehören zum ursprünglichen Einzelnetz-Batch. Sie beschreiben **nicht** das aktuelle 18er-Ensemble. Auch `scripts.report` erzeugt derzeit keinen vollständigen Bericht aller späteren Varianten.
 
 <!-- ERGEBNISSE:START -->
 Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart), ε = 0, 3 Trainingsstarts à 3000 Spiele. Angegeben sind die Winrate mit 95-%-Bootstrap-KI und in Klammern die Standardabweichung über die Starts. Batch vom 10.10.2026.
@@ -67,7 +84,7 @@ Wichtigste Erkenntnisse aus der Ablation ([Details und Einordnung](docs/ERGEBNIS
 - Für **kanonische Koordinaten** und **geführte Exploration** ist in dieser Ablation kein eindeutiger Effekt nachgewiesen; die KIs schließen 0 ein. Das beweist keine Wirkungslosigkeit. Die spätere Symmetrie-Inferenz im Belief ist eine andere Änderung.
 - Gleich langes Training brachte dem Prof-DQN in diesem Versuch keinen Sieg. Die Studie spricht für den Nutzen unserer Änderungen; sie beweist nicht, dass beliebiges längeres Training nutzlos wäre.
 
-`full_s0` war der frühere, anhand der Validierung ausgewählte Abgabe-Stand. Die aktuellen Gewichte in `agents/sherlock/weights/` enthalten `old3_sym3`; dessen Auswahl auf neuen Validierungskarten ist im Experimentprotokoll dokumentiert.
+`full_s0` und danach `old3_sym3` waren frühere Abgabe-Stände. Die aktuellen Gewichte in `agents/sherlock/weights/` enthalten `all18_v3`; die Auswahl- und Übernahmevergleiche sind im Experimentprotokoll dokumentiert.
 <!-- ERGEBNISSE:END -->
 
 ## Architektur
@@ -83,15 +100,16 @@ flowchart LR
     B --> Z[Zielzuweisung<br/>pro Einheit]
     B --> F[Features<br/>79 pro Einheit]
     Z --> F
-    F --> Q[6 Dueling-MLPs<br/>Q-Werte mitteln]
+    F --> Q[18 Dueling-MLPs<br/>Q-Werte mitteln]
     Q --> K[Aktionsmaske<br/>Rand · Asteroid · Energie · Sap-Ziel]
     K --> A[argmax im Spiel]
-    A --> R[zurückspiegeln<br/>→ Aktion shape 16×3]
+    A --> H[Aktionsregeln<br/>z. B. Sap vom Punktefeld]
+    H --> R[zurückspiegeln<br/>→ Aktion shape 16×3]
 ```
 
 ### Pseudocode: Einzelnetz-Training
 
-Dieser Ablauf erklärt das Training eines Mitglieds. Beim Spielen mit `old3_sym3` werden stattdessen die sechs Q-Vektoren gemittelt und die beste erlaubte Aktion gewählt; es gibt dann keine Lernschritte und keine ε-Exploration. Ein geladenes Ensemble gemeinsam weiterzutrainieren ist derzeit nicht implementiert.
+Dieser Ablauf erklärt das Training eines Mitglieds. Beim Spielen mit `all18_v3` werden die 18 Q-Vektoren gemittelt und die beste erlaubte Aktion gewählt; zusätzliche aktivierte Regeln können sie anpassen. Es gibt dann keine Lernschritte und keine ε-Exploration. Ein geladenes Ensemble gemeinsam weiterzutrainieren ist derzeit nicht implementiert.
 
 ```text
 für jedes Spiel:
@@ -117,11 +135,11 @@ für jedes Spiel:
 | Baustein | Datei | Kurz |
 |---|---|---|
 | Spiegelung | `agents/sherlock/geometry.py` | Die Karte ist symmetrisch zur Antidiagonale, `M(x,y) = (23-y, 23-x)`. player_1 wird so gespiegelt, dass der eigene Spawn immer bei (0,0) liegt. Dieselben Netze können auf beiden Seiten eingesetzt und mit Erfahrungen aus beiden Seiten trainiert werden. |
-| Belief | `agents/sherlock/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden per Constraint-Propagation aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet; im aktuellen Abgabe-Stand erst ab `match_step ≥ 50`, weil Relics vorher noch spawnen. `use_symmetry` ergänzt gespiegeltes Wissen, `explore_memory` berücksichtigt bereits in früheren Matches erkundete Gebiete. |
+| Belief | `agents/sherlock/belief.py` | Merkt sich Relics über alle 3 Matches. Punkte-Tiles werden aus „Punktezuwachs vs. besetzte Tiles“ abgeleitet; `early_inference` erlaubt diese Inferenz schon vor Step 50. Weitere Regeln berücksichtigen mögliche Relic-Orte und spätere Spawns. Symmetrie ergänzt gespiegeltes Wissen; Erkundungsgedächtnis bleibt über Matches desselben Spiels erhalten. |
 | Features | `agents/sherlock/features.py` | 79 Werte pro Einheit: eigene Lage und Energie, Punktestand, nächstes Punkte-, Kandidaten-, Relic-, unerkundetes und zugewiesenes Ziel, aktuelles Tile, 5 Nachbarfelder × 6 Kanäle, nächster Gegner, globale Zähler. Namen in `FEATURE_NAMES`. |
 | Netz | `agents/sherlock/model.py` | MLP 79 → 256 → 256, dann Dueling: V (128 → 1) und A (128 → 6), `Q = V + A − mean(A)`. |
-| Ensemble | `agents/sherlock/main.py`, `scripts/build_ensemble.py` | Beim Spielen Mittelwert der Q-Werte aus sechs separat trainierten Netzen: drei `full` und drei `full_sym`. Beide Gruppen verwenden dieselben drei Trainingsstart-Seeds; es sind keine sechs unabhängigen Start-Seeds. |
-| Aktionen | `agents/sherlock/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Das Netz entscheidet nur, **ob** gesapt wird; das Ziel wählt eine Heuristik (maximale Gegnerenergie im 3×3-Bereich). Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
+| Ensemble | `agents/sherlock/main.py`, `scripts/build_ensemble.py` | Mittelwert der Q-Werte aus 18 trainierten Netzen der Gruppen `rules6`, `sol70` und `opp`. Herkunft und gespeicherte Config: `experiments/candidates_20261020.json`. |
+| Aktionen | `agents/sherlock/main.py` | 0 stay, 1–4 Bewegung, 5 Sap. Die Netze bewerten die Aktionen; Regeln ergänzen sie. Beispielsweise kann `pt_sap` Stehenbleiben auf einem Punktefeld durch Sap ersetzen. Das Ziel wählt eine Heuristik. Masken sperren Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel. |
 | Reward | `agents/sherlock/reward.py` | Pro Einheit: + Eigentümer eines bewiesenen Punkte-Tiles, − Stacking, + Potential-Shaping zum zugewiesenen Ziel (Ng et al. 1999), + Erkundung und Entdeckung, + Energie, − Tod, ± Sap-Treffer, ± Matchergebnis (aus Δ `team_wins`). |
 | Lernen | `agents/sherlock/main.py`, `replay_buffer.py` | Double DQN, Replay Buffer (300 000 Übergänge, je Einheit und Step einer), Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60k Env-Steps. 70 % der Explorationszüge gehen heuristisch Richtung zugewiesenes Ziel (geführte Exploration, off-policy erlaubt). |
 
@@ -213,7 +231,7 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 
 Mit `--output-dir` lässt sich der Run-Ordner benennen. Bereits vorhandene Ordner werden abgewiesen, damit auch ältere Versuche erhalten bleiben. Ziele im Abgabe-Gewichteordner und Verweise darauf über symbolische Links oder Hardlinks werden beim Schreiben geprüft. Ohne `--resume` beginnt ein neues Einzelnetz.
 
-**Geänderter Aufruf:** `--resume` benötigt jetzt den Pfad zu einem vorhandenen **Einzelnetz-Checkpoint**. Der Checkpoint wird nur gelesen, seine Konfiguration wird übernommen, Ergebnisse landen wieder in einem neuen Run-Ordner. Der Replay Buffer wird in diesem einfachen Trainingsskript nicht wiederhergestellt. Ein Ensemble wie die aktuelle Abgabe `old3_sym3` wird mit einer verständlichen Fehlermeldung abgewiesen: gemeinsames Weitertraining aller Mitglieder ist nicht implementiert. Dafür zunächst einen Einzelnetz-Checkpoint wählen und später ein neues Ensemble separat zusammenbauen.
+**Geänderter Aufruf:** `--resume` benötigt jetzt den Pfad zu einem vorhandenen **Einzelnetz-Checkpoint**. Der Checkpoint wird nur gelesen, seine Konfiguration wird übernommen, Ergebnisse landen wieder in einem neuen Run-Ordner. Der Replay Buffer wird in diesem einfachen Trainingsskript nicht wiederhergestellt. Ein Ensemble wie die aktuelle Abgabe `all18_v3` wird mit einer verständlichen Fehlermeldung abgewiesen: gemeinsames Weitertraining aller Mitglieder ist nicht implementiert. Dafür zunächst einen Einzelnetz-Checkpoint wählen und später ein neues Ensemble separat zusammenbauen.
 
 **Geltungsbereich:** Dieser Schutz gilt für `scripts.train` und den Paketbau mit `scripts.build_submission`. Agenten-Speichermethode und Kurs-Runner bleiben unverändert. `main.py` für Vorführungen weiterhin mit `train=False` betreiben; direktes Runner-Training und andere Schreibwerkzeuge wie `set_cfg`/`build_ensemble` niemals auf die Abgabe-Gewichte richten. Das ist ein Schutz der genannten Arbeitsabläufe, keine allgemeine Dateisystemsperre. Für systematische Vergleichsläufe bleibt `scripts.experiment` mit eigenem Run-Namen vorgesehen.
 
@@ -258,15 +276,15 @@ Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine
 
 ## Grenzen und nächste Schritte
 
-Stand: **14.10.2026**. Trainingsausgaben und Paketbau sind gegen das Überschreiben der Abgabe-Gewichte geschützt; neue Auswertungen zählen jetzt auch den letzten Punktezuwachs jedes Matches. Die folgenden fachlichen Punkte bleiben offen.
+Stand: **20.10.2026**. Trainingsausgaben und Paketbau sind gegen das Überschreiben der Abgabe-Gewichte geschützt. Eine geprüfte bessere Abgabe darf nach Moayeds Freigabe separat installiert werden; die alte bleibt gesichert.
 
-- `old3_sym3` erreicht 46,7 % gegen Solution_92 auf den wiederholt verwendeten Benchmarkkarten. Das belegt keine Überlegenheit gegenüber diesem Gegner. Schwachpunkt bleibt unter anderem die frühe Erkundung im ersten Match.
-- `m1_early` aktiviert frühere Punktefeld-Inferenz. Die zweite Validierungsrunde dokumentiert +7,9 Prozentpunkte gegen Solution_92 auf 120 neuen Karten × beide Seiten. Es bleibt der Kandidat für nach dem Review; Abgabe-Gewichte unverändert.
+- `all18_v3` erreicht 78,25 % gegen Solution_92 auf dem neuen 200-Karten-Block, verliert dort aber weiterhin 87/400 Spiele. Unbekannte Gegner und Karten bleiben eine eigene Robustheitsprüfung.
+- Frühe Inferenz ist inzwischen aktiviert. Nächste begründete Versuche betreffen die Zielvergabe an aktive Einheiten, Sap-Ziele und einen kontrollierten Vergleich der Trainingsbelohnung. Vorschläge gelten erst nach Messung und unabhängiger Bestätigung als Verbesserung.
 - Vor aussagekräftigen neuen Trainingsstudien bleiben Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen sinnvoll. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy. Der Speicherschutz behebt diese Lernprobleme nicht.
 - Vor neuen Schlussfolgerungen: historische Punktvergleiche mit Version 2 neu messen, alte Vergleichsintervalle mit der korrigierten Statistik neu berechnen, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
-- „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Das Sap-Ziel und die Zielzuweisung sind heuristisch; das Netz wählt den Aktionstyp.
+- „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Sap-Ziel, Zielzuweisung und ergänzende Aktionsregeln sind heuristisch; die Netze bewerten den Aktionstyp.
 - Weitertraining und Self-Play/Gegner-Pool wurden bereits untersucht und brachten in diesen Versuchen keinen klaren Gewinn. Das beweist keine allgemeine Grenze des Verfahrens.
-- CNN oder PPO bleiben mögliche spätere Experimente. Zunächst sind verlässliche Messungen und gezielte Korrekturen am bestehenden Ansatz vorgesehen. Offene Aufgaben und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).
+- CNN und PPO wurden bereits untersucht; weitere Läufe koordiniert Mahmoud. Keine laufende Pipeline duplizieren. Offene Aufgaben, Seedreservierungen und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 ## Quellen
 

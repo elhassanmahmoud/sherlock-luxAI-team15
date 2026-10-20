@@ -1,9 +1,8 @@
 # Übernahmeprüfung: all18_v3 gegen old3_sym3
 
-Stand: 20.10.2026. Die Spielmessung ist vollständig und erfüllt die vorab
-festgelegten Stärkekriterien. Checkpoint-Prüfung, Reproduktion nach Integration
-und Testsuite sind bestanden; Installation und anschließende Kursprobe sind
-in diesem Zwischenstand noch offen.
+Stand: 20.10.2026. **V3 ist als neue Abgabe installiert und technisch geprüft.**
+Die vorab festgelegten Stärkekriterien, Checkpoint-Prüfung, Reproduktion nach
+Integration, Testsuite und anschließende Kursprobe sind bestanden.
 
 ## Vergleich auf neuen Karten
 
@@ -87,6 +86,12 @@ und Configs beider Stände, Reproduktion von 16 bereits ausgewerteten Spielen
 nach Integration bis `3a4f32f` (siehe `final_release_checks.json`), vollständige
 Testsuite mit **169 Tests in 46,44 s**. Die zusätzlichen Pfade `cand_boost` und
 `contest_sap` sowie `pt_walk` sind in beiden effektiven Configs deaktiviert.
-Nach Installation: Hashkontrolle beider Abgabedateien und Kursprobe mit dem
-unveränderten Professor-Runner. Bei Fehlern keine Freigabe beziehungsweise
-Rückkehr zur gesicherten alten Abgabe.
+Nach Installation bestanden: Hashkontrolle beider Abgabedateien und acht Spiele
+mit dem unveränderten Professor-Runner, beide Seiten und beide Gegner,
+je 303 Schritte. Frisches Belief, korrekt geladene 18 Netze und gültiges
+Aktionsformat bestätigt. Höchste gemessene Entscheidungszeit 39,82 ms;
+damit wird kein unbekanntes Kurs-Zeitlimit zertifiziert.
+Bericht: `runner_installed_v3.json`; Übernahmemanifest:
+`experiments/releases/20261020_all18_v3.json`. Beide alten Sicherungsdateien
+bleiben unverändert. Nach Installation zusätzlich **41 betroffene Lade-,
+Runner- und Gewichtsschutztests bestanden (22,05 s)**.

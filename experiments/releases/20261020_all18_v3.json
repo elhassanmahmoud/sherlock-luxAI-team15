@@ -1,0 +1,40 @@
+{
+  "label": "all18_v3",
+  "status": "installed_and_verified",
+  "installed_at": "2026-10-20T18:13:25.454890+00:00",
+  "code_commit": "052ca1a167cfc0e5cca7e564544bf69ad339da78",
+  "candidate": "experiments/candidates/all18_v3.pth",
+  "candidate_sha256": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+  "installed_sha256": {
+    "agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935"
+  },
+  "rollback_manifest": "experiments/releases/20261020_old3_sym3/manifest.json",
+  "rollback_readme": "experiments/releases/20261020_old3_sym3/README.md",
+  "evidence_sha256": {
+    "experiments/analysis/autonomous_20261020/release_evidence.json": "848285cb4b212df0a941fefbab3c626b38d78304598cc1d4f91d707099eea405",
+    "experiments/analysis/autonomous_20261020/final_release_checks.json": "9f305621e3486a053d2a9c2e82b8d155ce239761db2d3c567cb18bc8196f517c",
+    "experiments/analysis/autonomous_20261020/runner_installed_v3.json": "49a86c42eb31b7953c5fb2ca9f8e62c11af076911a8b981af5e6f186d02b6931"
+  },
+  "tests": {
+    "passed": 169,
+    "seconds": 46.44,
+    "command": "OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q"
+  },
+  "notes": [
+    "Existing candidate developed by Mahmoud; no newly trained weights in this promotion.",
+    "Two old submission files retained byte-identically in versioned rollback directory.",
+    "16 reused benchmark games reproduced after upstream integration; 8 course-runner games after installation.",
+    "Course action format and checkpoint identity checked; no unknown tournament time limit certified."
+  ],
+  "post_install_tests": {
+    "passed": 41,
+    "seconds": 22.05,
+    "files": [
+      "tests/test_persistence.py",
+      "tests/test_runner.py",
+      "tests/test_candidate_runner.py",
+      "tests/test_weight_protection.py"
+    ]
+  }
+}
