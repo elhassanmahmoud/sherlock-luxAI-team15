@@ -5,6 +5,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 20.10.2026, 21:11 – Codex: zweite Inferenzrunde ohne belastbaren Gewinner
+
+720 vollständige Spiele auf bekannten Karten 500720–500779: V3, ausschließlich `active_targets`, ausschließlich `sap_geometry`, je 60 Karten × beide Seiten × zwei Gegner. Referenz reproduziert alle 240 nichtzeitlichen Kennzahlen des früheren V3-Laufs exakt. Alle Daten-/Quellen-/Gewichtsprüfungen bestanden. Default jeweils 120/120; Solution_92 V3 102/120, active 104/120, sap 103/120. Gepaarte Kartenintervalle: active +1,67 pp [−2,50; +5,83], sap +0,83 pp [−2,50; +5,00]. **Keine Variante erfüllt die vorab gesetzte Auswahlregel**, keine frische Bestätigung oder Übernahme gestartet. Schalter bleiben aus, Abgabe/Sicherung unverändert. [Bericht](../experiments/analysis/autonomous_20261020/inference_development2_analysis.md), Rohdaten und Auswertung archiviert. 510000–510199 wurden nicht benutzt.
+
 ## 20.10.2026, 20:58 – Codex: Mahmouds aktuelle Änderungen integriert
 
 Remote bis `7ae858f` zusammengeführt: `sap_kill_first=False`, `energy_pref=0.0`, zugehörige Tests und die negativen Ergebnisse bleiben erhalten. Gemeinsamen Protokollkonflikt durch Erhalt beider Einträge gelöst. **217 Tests plus vier Untertests bestanden (43,74 s)**; Abgabe und Sicherung unverändert. Das ähnlich gute Gesamtergebnis beider Spielseiten in Mahmouds Notiz ist ein Plausibilitätscheck, allein kein Beweis, dass jeder Spiegelungsfehler ausgeschlossen ist. Vor der nächsten Variantenbewertung wird V3 auf allen 240 Entwicklungsspielen neu reproduziert.
