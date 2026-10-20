@@ -4,6 +4,20 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 – Codex mit Moayed: selbstständiger Prüf- und Verbesserungszyklus
+
+**Auftrag:** Moayed hat die selbstständige Planung, Umsetzung, Prüfung und das Pushen freigegeben, einschließlich längerer lokaler Läufe. Laut Moayed arbeitet Mahmoud/Claude derzeit nicht weiter. Abgabe-Gewichte bleiben ausdrücklich unverändert. [Plan und Fortschritt](superpowers/plans/2026-10-20-autonomous-improvement.md), [Auswahlregeln und Grenzen](superpowers/specs/2026-10-20-autonomous-improvement-design.md). Erster begrenzter Zyklus endet spätestens 20.10. um 23:15 UTC; eine Fortsetzung in diesem Chat ist alle 30 Minuten eingerichtet und soll nach Abschluss deaktiviert werden.
+
+**Aktualisierung:** `1cadc18` übernommen, `all18_v3` installiert und als Referenz gewählt. Vorhandene Tests: 153 bestanden. Acht Entwicklungsspiele von V3 stimmen in allen Kennzahlen außer Zeit mit `M_fo10_ptsap_fc_720.csv` überein. Kein neues Training; die im Protokoll erwähnte CNN3-Pipeline wird nicht dupliziert.
+
+**Kursbetrieb:** Neues `scripts/check_candidate_runner.py` prüft Kandidaten mit dem unveränderten Kurs-Runner in einem temporären Arbeitsverzeichnis. Acht Spiele auf Seeds 500720/500721, zwei pro Seite/Gegner; Gewichte kopiert, Original-Paths.csv unverändert. Gemessen werden Entscheidungszeiten, frisches Belief bei neuer Instanz und das Aktionsformat. Der Gegner Solution_92 wird wie im Kurs-Runner nicht zusätzlich zwischen Spielen zurückgesetzt. Die Prüfung ist kein Siegquoten-Benchmark und zertifiziert kein unbekanntes Zeitlimit.
+
+**Review:** Unabhängige Prüfung des neuen Prüfwerkzeugs fand einen möglichen falschen Erfolg bei still abgewiesenem Checkpoint. Behoben: Architektur, Config und sämtliche geladenen Netzparameter werden jetzt gegen den Checkpoint verglichen; Regressionstest erst fehlgeschlagen, danach bestanden. Keine Agentenänderung. Bewertung strategischer Stärke, vollständiger Spiellegalität und unbekannter Kurs-Zeitlimits bleiben außerhalb dieser Integrationsprüfung.
+
+**Abschlussprüfung:** 163 Tests bestanden. Erneute acht Kurs-Runner-Spiele mit explizit geprüfter Checkpoint-Identität erfolgreich; [Bericht](../experiments/analysis/autonomous_20261020/runner_verified.json). Abgabe- und Kandidatenhashes unverändert.
+
+**Nächster Schritt / Reservierung:** Entwicklungsmessung auf 500720–500779: Referenz V3, Sap-Energiereserve 30/60 und `far_opp` 6/14, vier einzelne Varianten. Auswahl anhand mittlerem `result`, eindeutiger Gewinner, default höchstens −2 Prozentpunkte. **502420–502619 für die Bestätigung genau eines Herausforderers reserviert**; nicht für andere Versuche benutzen. 502020–502219 bleiben Mahmouds CNN3-Block. Neue CSVs und Status unter `experiments/compare/autonomous_20261020/` bzw. `experiments/analysis/autonomous_20261020/`.
+
 ## 20.10.2026 spätabends – Claude Code mit Mahmoud: `pt_sap` + `far_cand`, neuer Kandidat `all18_v3`
 
 **Diagnosen** (Val 720–779, `all18_fo10` vs Solution_92, Skripte im Arbeitsverlauf): Matchsiege 90 / 75 / 57 %; 42 von 109 verlorenen Matches mit mehr als 200 Punkten Rückstand. Bekannte eigene Punkte-Tiles in Match 2/3 (Step 40–95): 4,9 besetzt, 1,2 frei (davon 0,39 mit Gegner darauf, Rest meist von einer Unit angesteuert). Zielwechsel: 15–24 % aller Unit-Schritte, altes Ziel meist noch gültig. **Sap-Gelegenheiten:** steht eine Unit auf einem eigenen Punkte-Tile und hat ein Sap-Ziel, wählt das Netz nur in 9–12 % Sap, sonst meist „stehen“ (Solution_92 sappt in dieser Lage immer, `harvest()`).
