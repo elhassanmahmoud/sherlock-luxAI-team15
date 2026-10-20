@@ -1,0 +1,19 @@
+[19:21] Start
+[21:30] Training fertig
+experiments/ensembles/v3nets6.pth: 6 Netze
+experiments/ensembles/all24v3_raw.pth: 24 Netze
+experiments/ensembles/all24v3.pth {'keep_dead_fast': True, 'far_opp': 10, 'far_cand': True, 'pt_sap': True}
+R3_v3nets6_720.csv: default: 0.990 (200 Spiele), solution92: 0.755 (200 Spiele) in 102s
+R3_v3nets6_720               default       100    200  0.990  1.000  -0.010  [-0.030; +0.000]
+R3_v3nets6_720               solution92    100    200  0.755  0.830  -0.075  [-0.140; -0.010]
+R3_all24v3_720.csv: default: 1.000 (200 Spiele), solution92: 0.815 (200 Spiele) in 132s
+R3_all24v3_720               default       100    200  1.000  1.000  +0.000  [+0.000; +0.000]
+R3_all24v3_720               solution92    100    200  0.815  0.830  -0.015  [-0.070; +0.045]
+R3_v3_2620.csv: default: 0.998 (400 Spiele), solution92: 0.710 (400 Spiele) in 233s
+R3_v3nets6_2620.csv: default: 1.000 (400 Spiele), solution92: 0.700 (400 Spiele) in 191s
+R3_v3nets6_2620              default       200    400  1.000  0.998  +0.003  [+0.000; +0.007]
+R3_v3nets6_2620              solution92    200    400  0.700  0.710  -0.010  [-0.052; +0.035]
+R3_all24v3_2620.csv: default: 1.000 (400 Spiele), solution92: 0.710 (400 Spiele) in 266s
+R3_all24v3_2620              default       200    400  1.000  0.998  +0.003  [+0.000; +0.007]
+R3_all24v3_2620              solution92    200    400  0.710  0.710  +0.000  [-0.043; +0.048]
+[21:46] Ende

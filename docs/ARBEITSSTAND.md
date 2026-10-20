@@ -5,6 +5,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 20.10.2026, 21:50 – Claude Code mit Mahmoud: Netze mit V3-Regeln im Training – kein Gewinn
+
+`scripts/pipeline_v3nets.sh`: 6 × `full_rules_v3` (`pt_sap`, `far_cand`, `far_opp=10`, `keep_dead_fast` schon im Training; je 3000 Spiele, 70 % Solution_92, 128 min; Läufe `20261020_full_rules_v3_s40`–`s45_sol70`). Val 720 gegen `all18_v3` (83,0 %): `v3nets6` (nur die 6 neuen Netze) 75,5 % (−7,5, KI [−14,0; −1,0]), `all24v3` (18 + 6, V3-Schalter) 81,5 % (−1,5). **Frische Karten 502 620–502 819** (200 Karten, je 400 Spiele): `all18_v3` default 99,75 %, Solution_92 71,0 %; `v3nets6` 100 % / 70,0 % (−1,0, KI [−5,2; +3,5]); `all24v3` 100 % / **71,0 % (±0, KI [−4,3; +4,8])** → mehr bzw. neu trainierte DQN-Netze bringen nichts; die Gewinne heute kamen ausschließlich aus Regeln. Log: `experiments/pipeline_v3nets.log`.
+
 ## 20.10.2026, 21:14 – Codex: kontrollierter Explorationsvergleich vorbereitet
 
 Nach negativem Reward-Pilot eine getrennte, begründete Trainingsfrage: Der bisherige Epsilon-Abfall endet schon im 199. Spiel, während das 3.000er-Curriculum Solution_92 erst nach 750 Default-Spielen einführt. Neue Variante `full_rules_v3_slowexplore` ändert ausschließlich `eps_decay_steps` von 60000 auf 454500 (= 1500 Spiele). Alle experimentellen Reward-/Inferenzschalter bleiben aus. Dies verändert auch den Anteil geführter Aktionen und Regeln im Greedy-Zweig; kein isolierter Test uniformen Zufalls. [Diagnose](../experiments/analysis/autonomous_20261020/TRAINING_DIAGNOSIS.md), [vorab festgelegter Plan](superpowers/plans/2026-10-20-exploration-replication.md).
