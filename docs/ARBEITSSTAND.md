@@ -4,6 +4,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 – Codex mit Moayed: lokale Umgebung und all18_fo10-Funktionstest
+
+**Auftrag und Einrichtung:** Auf Moayeds Mac (M3, 8 GB, arm64) eine eigene `.venv` im Projekt angelegt, `requirements.txt` installiert und ausschließlich in dieser Umgebung die Kursregel auf drei Matches gesetzt. Ausgangsstand `5ec86ae`. Python 3.13.13, PyTorch 2.14.1, LuxAI-S3 0.2.1, NumPy 2.5.4, JAX/JAXlib 0.12.0. Vollständige Paketversionen, Befehl und Prüfsummen: [Umgebungsnachweis](../experiments/analysis/local_moe_environment_20261020.json). `.venv` bleibt lokal und gitignored; weder System-Python noch Agentenquellen geändert.
+
+**Prüfung:** `pip check` ohne Konflikte; `scripts.set_match_count --check` bestätigt drei Matches. `scripts.par_eval` mit `all18_fo10`, `--first 720 --n 2 --workers 2`: Seeds 500720/500721, beide Seiten, default und Solution_92, insgesamt acht Spiele. Ergebnis: default 4/4 Siege, Solution_92 2/4 Siege. [Lokale Messdaten](../experiments/compare/local_moe_all18_fo10_20261020.csv) stimmen in allen erfassten Feldern außer `secs` mit den zugehörigen Zeilen von `F_a18_fo10_720.csv` überein (numerische Vergleichstoleranz 1e-9). Vom Evaluator gemessene Laufzeit 32 Sekunden; erste Python-/Bibliotheksinitialisierung kommt zusätzlich hinzu. Kein neuer Leistungsvergleich auf unbekannten Karten, keine neuen Seeds verbraucht.
+
+**Synchronisierung während der Arbeit:** Mahmouds neuer Commit `2524f0c` (standardmäßig ausgeschalteter `sticky`-Schalter, CNN3-Pipeline) vor dem Hochladen übernommen. Dieselben acht Spiele anschließend erneut ausgeführt: alle Kennzahlen außer Laufzeit weiterhin identisch, Evaluator-Laufzeit 11 Sekunden. Beide Abgabe-Dateien und der Kandidat auch danach unverändert. Insgesamt 16 Spielausführungen auf denselben zwei bekannten Karten; keine unabhängige zusätzliche Stichprobe.
+
+**Schutz und Grenzen:** Kein Training, keine Codeänderungen, keine vollständige Testsuite und kein zusätzlicher Kurs-Runner-Test. Beide Abgabe-Dateien vor/nach dem Test SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`; Kandidat `all18_fo10` unverändert `b2b7ffcc506d71a4657bb8990a71c0b25c4535f0f41564054ff687a1fa7b4607`. Die Python-/JAX-Versionen weichen von Mahmouds Trainingsmanifest ab; auf diesen acht Spielen wurden dennoch identische Kennzahlen reproduziert. Das ist keine Garantie für sämtliche Trainings- und Auswertungspfade.
+
+**Weiterarbeiten:** Befehle im Projekt mit `.venv/bin/python` ausführen oder die Umgebung mit `source .venv/bin/activate` aktivieren. Die vier geteilten Kandidaten sind bereits an den Originalpfaden installiert. Für einen erneuten Test einen neuen CSV-Ausgabepfad wählen. Umfangreichere Runner-Prüfung und Auswahl des nächsten Verbesserungsversuchs bleiben offen; Nachttraining ist möglich, wurde aber noch nicht gestartet.
+
 ## 20.10.2026 abends – Claude Code mit Mahmoud: Pipeline-Ergebnisse und PPO-Prüfpunkt
 
 **Ausgangslage:** Moayeds Review `d0db18c` per Fast-Forward übernommen; danach Pipeline-Ergebnisse geprüft (Punkt 1 der Arbeitsliste). Mac war 09:58–16:54 zugeklappt im Akkubetrieb (Clamshell Sleep), die Trainings pausierten in dieser Zeit.
