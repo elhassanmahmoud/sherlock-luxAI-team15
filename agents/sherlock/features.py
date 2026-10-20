@@ -279,9 +279,13 @@ def make_context(agent, obs, belief=None) -> dict:
     sticky = float(agent.cfg.sticky)
     prev = getattr(agent, "_sticky_prev", None)
     prev = prev[1] if sticky and prev is not None and prev[0] == belief.match_idx else None
+    # Negative-energy units disappear before the next action; zero energy survives.
+    target_ids = ally_ids
+    if agent.cfg.active_targets:
+        target_ids = ally_ids[ally_ene[ally_ids] >= 0]
     assigned = assign_targets(
-        belief, ally_ids,
-        ally_pos[ally_ids] if len(ally_ids) else np.zeros((0, 2), np.int32),
+        belief, target_ids,
+        ally_pos[target_ids] if len(target_ids) else np.zeros((0, 2), np.int32),
         W, H, enemy_half_penalty=_home_penalty(agent.cfg, belief.match_idx),
         seen_before_penalty=300.0 if agent.cfg.explore_memory else 0.0,
         grid=4 if agent.cfg.explore_grid else 0, stale=int(agent.cfg.explore_stale),

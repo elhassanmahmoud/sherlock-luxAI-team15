@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 abends – Codex: aktive Zielbesitzer als getrennte Testvariante
+
+In der rein beobachtenden V3-Diagnose wurden 425 unbesetzte eigene Punktefelder in 38/40 Spielen einer Einheit mit negativer Energie zugeordnet; die Schattenzuweisung übergab sie einer lebenden Einheit. 139 dieser wiederholten Situationen hatten eine lebende Einheit in Manhattan-Distanz höchstens zwei mit Bewegungsenergie. Insgesamt änderten sich 2.729 Zielzuweisungen lebender Einheiten über 699 Schritte. Das sind Häufigkeiten, keine unabhängigen Ereignisse oder nachgewiesenen verlorenen Punkte.
+
+Neuer Schalter `active_targets=False`: Nur für die Zielzuweisung werden Einheiten mit negativer Energie herausgefiltert. Null Energie bleibt zulässig. Belegung, `first_on_tile`, sonstige Merkmale und Lebenszykluserkennung bleiben unverändert. **Prüfung:** zwölf Tests plus vier Seiten-/Koordinaten-Untertests bestanden, zuvor erwartete RED-Fehler. Rohdiagnose, Vergleich sämtlicher nichtzeitlicher Spielkennzahlen und portables Diagnosewerkzeug sind separat dokumentiert. Spielstärkeprüfung folgt; keine Gewichte geändert.
+
 ## 20.10.2026 abends – Codex: Sap-Geometrie als getrennte Testvariante
 
 40 reine Beobachtungsspiele mit V3 auf 500720–500739 (Solution_92, beide Seiten) reproduzieren sämtliche vorhandenen Kennzahlen außer Laufzeit. In 218 von 4.168 geeigneten ausgeführten Sap-Angriffen, verteilt über 32/40 Spiele, liefert ein freies Zielfeld einen höheren bestehenden Energiescore. Das ist ein beobachteter Ansatzpunkt, keine Messung tatsächlichen Schadens oder gewonnener Spiele.

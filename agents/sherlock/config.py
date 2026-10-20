@@ -160,6 +160,9 @@ class AgentConfig:
     """True: auch beim bereits erkannten Unit-Tod den terminalen Potentialterm
     -w_shape * phi(s) addieren. Keine neue Done-Regel; fuer den geplanten Pilot
     zusammen mit reward_fix=True. Default False erhaelt bisherige Rewards."""
+    active_targets: bool = False
+    """True: nur Units mit Energie >= 0 erhalten Ziele; sonstige Features bleiben
+    unveraendert. Default False erhaelt das Verhalten alter Checkpoints."""
     smart_sap: bool = False
     """True: Sap-Ziel mit Teamabstimmung (rules.plan_sap): kein Overkill,
     stehende Gegner/Gegner auf Punkte-Tiles bevorzugt, Abschuss-Bonus; lohnt
