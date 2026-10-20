@@ -217,3 +217,9 @@ Kursprobe und Sicherung von V3 vor einem eventuellen Austausch. Keine neuen
 Heuristikspiele vor Auswahl der festen Ausgangsbasis. V3 ist bereits installiert
 und vollständig geprüft; seine Übernahme wird durch diesen neuen Vergleich
 nicht zurückgenommen.
+
+Ergebnis: Identitätsprüfung bestanden; direkt V4 61/120 gegen V3,
+95%-Kartenbootstrap [43,33; 58,33] %. Damit unklar, keine automatische
+Übernahme. V3 bleibt Abgabe und feste Basis der folgenden eigenen Versuche.
+V4-Kursprobe/Reproduktion vorerst zurückgestellt, weil das Stärke-Gate nicht
+bestanden ist. CSV und JSON-Audit versioniert; keine Gewichtsänderung.

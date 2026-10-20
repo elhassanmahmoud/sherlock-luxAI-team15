@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026, 20:25 – Codex: V4-Direktvergleich abgeschlossen, V3 bleibt Abgabe
+
+V4 enthält exakt dieselben 18 Netze wie V3; nur `contest_sap` und `opp_infer` sind zusätzlich aktiv. Mahmouds positive Bestätigung gegen Solution_92 bleibt gültig. Das vorab zusätzlich festgelegte direkte Gate ist jedoch **unklar**: V4 gewinnt gegen V3 **61/120 Spiele** auf 60 bekannten Entwicklungskarten 500720–500779, beide Seiten; Kartenbootstrap 95 % [43,33; 58,33] % bei 5.000 Wiederholungen. Die untere Grenze liegt nicht über 50 %. Deshalb keine automatische Übernahme, keine Behauptung, V4 sei schlechter. V3 bleibt die feste Ausgangsbasis für die nächsten eigenen Versuche.
+
+Rohdaten: `experiments/compare/autonomous_20261020/v4_vs_v3.csv`; Identitätsprüfung und Auswertung: `experiments/analysis/autonomous_20261020/v4_identity.json` und `v4_direct_gate.json`. Weitere V4-Kurs-/Reproduktionsprüfungen werden erst bei einer erneuten begründeten Übernahmeentscheidung benötigt. Keine Gewichtsdatei geändert. Als Nächstes: rein beobachtende Diagnose von Zielvergabe/Sap-Geometrie und kontrollierter Reward-Trainingspilot.
+
 ## 20.10.2026, 20:20 – Claude Code mit Mahmoud: neuer Kandidat `all18_v4` bestätigt (Hinweis an Moayed/Codex)
 
 **Mahmoud/Claude arbeiten weiter, heute bis 0:00 Uhr**, morgen geht es weiter (die Notiz „Mahmoud/Claude arbeitet derzeit nicht weiter“ ist überholt). Moayeds Reservierungen 502 420–502 619 werden nicht benutzt.
