@@ -4,6 +4,15 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+
+## 20.10.2026, 20:56 – Codex: tatsächlicher Reward-Pilot verworfen
+
+Zwei frische Einzelnetze mit identischen Anfangstensoren und identischer Karten-/Gegnerfolge jeweils **400 Spiele trainiert**, danach jeweils 240 feste Auswertungsspiele. Einziger Unterschied: `terminal_death_potential`. Vollständiger Audit bestanden: Quellen/HEAD unverändert, gleiche Initialisierung, vollständige Spielschlüssel, endliche gelernte Tensoren und geschützte Abgabe/Sicherung. Details: [Pilotbericht](../experiments/analysis/autonomous_20261020/reward_pilot_analysis.md).
+
+Kontrolle gegen default 120/120, Korrektur 106/120; gegen Solution_92 43/120 statt 15/120. Differenz Korrektur minus Kontrolle **−23,33 Prozentpunkte**, gepaartes Kartenintervall [−34,17; −13,33]. Beide vorab festgelegten Schadensgrenzen verletzt: **keine große Reward-Replikation starten**, Schalter bleibt aus, Abgabe V3 bleibt unverändert. Ein Trainingsstart und bekannte Entwicklungskarten erlauben keine allgemeine Aussage über jede Trainingslänge; der konkrete Pilot reicht aber zum Stoppen dieses Versuchs. Kein Nutzen allein aus der mathematischen Motivation ableiten.
+
+Der vor Auswertung geschriebene bedingte Replikationsplan bleibt als Historie erhalten (SHA im Audit). Rohdaten/Manifeste und Initial-/Finalidentitäten versioniert; lokale experimentelle Checkpoints und Replay Buffer bleiben in ihren getrennten Run-Verzeichnissen. Das tatsächlich ausgeführte Audit-Skript ist unverändert als `tools/source_snapshots/reward_pilot_analysis_original.py` archiviert: historischer Rechnerpfad und exakte damalige HEAD-Prüfung, kein universeller Wiederausführungsbefehl auf aktuellem main. Nächster Schritt: zwei separat vorab festgelegte Inferenzvarianten prüfen, parallel Ursachenanalyse des Reward-Rückschritts.
+
 ## 20.10.2026, 20:36 – Codex: Integration geprüft, Trainingsstart vorbereitet
 
 Mahmouds `d41d1bf` normal gemergt (`05db41d`); seine deaktivierte Erkundungsquote und alle gemeinsamen Notizen erhalten. Danach **215 Tests plus vier Untertests bestanden (36,34 s)**. 24 kurze Spiele: V3 und die zwei einzeln aktivierten Inferenzvarianten auf je zwei Entwicklungskarten, beiden Seiten/Gegnern. V3 reproduziert alle acht bisherigen Spielzeilen außer Laufzeit. Varianten nur auf Lauffähigkeit geprüft, kein Stärkeurteil. Abgabe V3 und alte Sicherung bytegleich.
