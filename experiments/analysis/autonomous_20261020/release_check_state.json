@@ -1,0 +1,154 @@
+{
+  "status": "complete",
+  "pid": 93149,
+  "code_commit": "14d239fc2c55bca02fb9bb6ddf3e380ca554f0d5",
+  "deadline_utc": "2026-10-21T04:00:00Z",
+  "hashes": {
+    "experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "jobs": [
+    {
+      "name": "sync_smoke",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/candidates/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "2",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/sync_smoke.csv"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:45:00.113744+00:00",
+      "pid": 93163,
+      "summary": {
+        "default": {
+          "games": 4,
+          "wins": 4,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "games": 4,
+          "wins": 4,
+          "mean_result": 1.0
+        }
+      },
+      "finished_utc": "2026-10-20T17:45:15.340165+00:00"
+    },
+    {
+      "name": "release_old",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261020_old3_sym3/agent_p0.pth",
+        "--first",
+        "2420",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/release_old.csv"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:45:15.382457+00:00",
+      "pid": 93179,
+      "summary": {
+        "default": {
+          "games": 400,
+          "wins": 382,
+          "mean_result": 0.955
+        },
+        "solution92": {
+          "games": 400,
+          "wins": 170,
+          "mean_result": 0.425
+        }
+      },
+      "finished_utc": "2026-10-20T17:52:03.012418+00:00"
+    },
+    {
+      "name": "release_v3",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/candidates/all18_v3.pth",
+        "--first",
+        "2420",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/release_v3.csv"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T17:52:03.055370+00:00",
+      "pid": 94034,
+      "summary": {
+        "default": {
+          "games": 400,
+          "wins": 400,
+          "mean_result": 1.0
+        },
+        "solution92": {
+          "games": 400,
+          "wins": 313,
+          "mean_result": 0.7825
+        }
+      },
+      "finished_utc": "2026-10-20T18:04:28.775151+00:00"
+    },
+    {
+      "name": "v3_vs_old",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/candidates/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--opponents",
+        "self:/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261020_old3_sym3/agent_p0.pth",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v3_vs_old.csv"
+      ],
+      "status": "complete",
+      "started_utc": "2026-10-20T18:04:28.821582+00:00",
+      "pid": 95532,
+      "summary": {
+        "self:/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261020_old3_sym3/agent_p0.pth": {
+          "games": 120,
+          "wins": 96,
+          "mean_result": 0.8
+        }
+      },
+      "finished_utc": "2026-10-20T18:06:49.387586+00:00"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "audit_status": "complete",
+  "evidence_verdict": "pass",
+  "criteria": {
+    "solution92_positive_paired_ci": "pass",
+    "default_no_more_than_2pp_drop": "pass",
+    "direct_comparison": "pass"
+  },
+  "release_ready": false,
+  "release_readiness": "Pending final-code checkpoint reproduction, installed-weight hashes, course probe and relevant tests.",
+  "batch_code_commit": "14d239fc2c55bca02fb9bb6ddf3e380ca554f0d5",
+  "current_code_commit": "cd49b5dbe87525a15d1fb76c47931205a03c8177",
+  "current_agent_script_runner_changes_since_batch": [],
+  "protected_hashes_verified": {
+    "experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "agents/sherlock/weights/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "backup_manifest": {
+    "saved_at": "2026-10-20",
+    "label": "old3_sym3",
+    "source_commit": "fb9eef70f7d192ef6538e820d6b450acec084050",
+    "reason": "Verified rollback copy before any newly authorized release promotion; no promotion performed yet.",
+    "files": [
+      {
+        "original_path": "agents/sherlock/weights/agent_p0.pth",
+        "backup_file": "agent_p0.pth",
+        "sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "bytes": 5545675
+      },
+      {
+        "original_path": "agents/sherlock/weights/agent_p1.pth",
+        "backup_file": "agent_p1.pth",
+        "sha256": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "bytes": 5545675
+      }
+    ]
+  },
+  "state_sha256": "00a71bf085020f6a7205a2189461a339b50dee793a331a6dbdef245bd46a2853",
+  "sources": {
+    "sync_smoke": {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/sync_smoke.csv",
+      "sha256": "d13adde6bebe5963c4afa736804d5d620d05356df0a8e8c40e59f58154e920dd",
+      "rows": 8
+    },
+    "release_old": {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/release_old.csv",
+      "sha256": "a0c4e2912f58a1d38dd6f517c892864764841fae7857663b50b7e55c2daace35",
+      "rows": 800
+    },
+    "release_v3": {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/release_v3.csv",
+      "sha256": "0259b2130e785887dc194d0b35a53492633ccdad95a3d1f19b2498a134acca78",
+      "rows": 800
+    },
+    "v3_vs_old": {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v3_vs_old.csv",
+      "sha256": "f956874c08c968a2ff78fc7017c90cca5a4436ce1089b1f6a48a4f9a37fe07e3",
+      "rows": 120
+    }
+  },
+  "comparisons": {
+    "default": {
+      "maps": 200,
+      "games_per_agent": 400,
+      "candidate": {
+        "games": 400,
+        "wins": 400,
+        "draws": 0,
+        "losses": 0,
+        "mean_result": 1.0
+      },
+      "reference": {
+        "games": 400,
+        "wins": 382,
+        "draws": 0,
+        "losses": 18,
+        "mean_result": 0.955
+      },
+      "delta": {
+        "mean": 0.045,
+        "low": 0.02,
+        "high": 0.075
+      }
+    },
+    "solution92": {
+      "maps": 200,
+      "games_per_agent": 400,
+      "candidate": {
+        "games": 400,
+        "wins": 313,
+        "draws": 0,
+        "losses": 87,
+        "mean_result": 0.7825
+      },
+      "reference": {
+        "games": 400,
+        "wins": 170,
+        "draws": 0,
+        "losses": 230,
+        "mean_result": 0.425
+      },
+      "delta": {
+        "mean": 0.3575,
+        "low": 0.29,
+        "high": 0.4225
+      }
+    }
+  },
+  "direct_comparison": {
+    "maps": 60,
+    "games": 120,
+    "wins": 96,
+    "draws": 0,
+    "losses": 24,
+    "mean_result": 0.8,
+    "mean_result_interval": {
+      "mean": 0.8,
+      "low": 0.7,
+      "high": 0.9
+    },
+    "delta_vs_half": {
+      "mean": 0.3,
+      "low": 0.2,
+      "high": 0.4
+    }
+  },
+  "method": {
+    "unit": "whole map, both sides together",
+    "bootstrap_samples": 5000,
+    "random_seed": 0,
+    "interval": "95% percentile",
+    "point_counting_version": 2,
+    "primary_metric": "mean result; draw=0.5"
+  },
+  "direct_rule_provenance": "Conservative operationalization agreed with the coordinating agent before viewing the direct-comparison CSV: lower CI >0.5 passes; upper CI <0.5 vetoes; any overlap or contact with 0.5 is uncertain and cannot automatically promote. The original spec required no clear weakness but did not give this exact numerical threshold.",
+  "limits": [
+    "Evidence pass is not technical release approval.",
+    "Final code must be checked after remote integration; weight identity alone does not freeze policy behavior.",
+    "Fresh 200-map block is reserved for this sole candidate, not for renewed variant selection.",
+    "Direct comparison uses reused development maps, not an independent general-strength estimate.",
+    "Bootstrap concerns these fixed agents and opponents; no training-start or opponent-population uncertainty.",
+    "Default threshold is the predeclared observed mean difference, not a statistical noninferiority claim.",
+    "This script validates data and artifact identity, not that the agent actually loaded every tensor."
+  ]
+}

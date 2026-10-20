@@ -4,6 +4,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 abends – Codex: V3 gegen bisherige Abgabe bestätigt
+
+**Messung:** Auf vorab reservierten 200 neuen Karten 502420–502619 gewinnt `all18_v3` gegen Solution_92 **313/400 (78,25 %)**, die bisherige Abgabe `old3_sym3` **170/400 (42,5 %)**. Gepaarte Differenz +35,75 Prozentpunkte, 95%-Kartenbootstrap [29,00; 42,25]. Default 400/400 gegen 382/400. Direkter Vergleich auf 60 bekannten Entwicklungskarten: V3 96/120, Intervall [70; 90] %. Alle vorab festgelegten Stärkekriterien bestanden und unabhängig nachgerechnet. [Bericht, Quellen und Grenzen](../experiments/analysis/autonomous_20261020/RELEASE.md).
+
+**Einordnung:** Bestätigung von Mahmouds bereits vorhandenem Kandidaten; kein neues Training und kein Gewinn durch die vier verworfenen Codex-Varianten. 1.728 Spielausführungen im Übernahmebatch einschließlich acht Reproduktionsspielen; zusätzliche technische Reproduktion umfasst 16 bereits ausgewertete Spiele.
+
+**Integration und Prüfung:** Remote bis `3a4f32f` normal gemergt; Messcode `14d239f` bleibt in der Historie. Beide Checkpoints einschließlich sämtlicher Netzparameter und effektiver Config geprüft; `cand_boost=0`, `contest_sap=False`, `pt_walk=False`. Alle Kennzahlen außer Zeit der 16 Schlussprüfspiele identisch. Gesamte Testsuite **169 bestanden (46,44 s)**. Sicherung und beide bisherigen Abgabedateien weiterhin bytegleich; Installation und anschließende Kursprüfung stehen als eigener Schritt an.
+
+**Weitere Arbeit:** Moayed verlangt ausdrücklich auch neues Training und laufende Koordination mit Subagents. Ein Agent beobachtet neue Remote-Commits, ohne selbst zu mergen. Geplant sind ein kontrollierter Reward-Trainingsvergleich und getrennte Tests zur Zielvergabe sowie Sap-Geometrie; noch nicht als Verbesserungen bestätigt. Mahmouds zusätzliche Reservierungen 502620–502819 und 502820–503219 beachten. Kein zweites CNN3-/V3nets-Training starten.
+
 ## 20.10.2026 – Codex mit Moayed: selbstständiger Prüf- und Verbesserungszyklus
 
 **Auftrag:** Moayed hat die selbstständige Planung, Umsetzung, Prüfung und das Pushen freigegeben, einschließlich längerer lokaler Läufe. Laut Moayed arbeitet Mahmoud/Claude derzeit nicht weiter. Abgabe-Gewichte bleiben ausdrücklich unverändert. [Plan und Fortschritt](superpowers/plans/2026-10-20-autonomous-improvement.md), [Auswahlregeln und Grenzen](superpowers/specs/2026-10-20-autonomous-improvement-design.md). Moayed hat den Zeitraum anschließend bis **21.10., 06:00 Berlin / 04:00 UTC** verlängert und einen Morgenüberblick beauftragt. Seit 19:39 verlangt Moayed fortlaufende aktive Arbeit ohne Intervallsteuerung; Automation daher nur noch für den Morgenbericht um 06:00, danach deaktivieren. Weitere begründete Arbeit nach dem ersten Zyklus ist autorisiert; ab 05:30 Abschluss priorisieren.
