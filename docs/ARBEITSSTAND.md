@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026, 20:36 – Codex: Integration geprüft, Trainingsstart vorbereitet
+
+Mahmouds `d41d1bf` normal gemergt (`05db41d`); seine deaktivierte Erkundungsquote und alle gemeinsamen Notizen erhalten. Danach **215 Tests plus vier Untertests bestanden (36,34 s)**. 24 kurze Spiele: V3 und die zwei einzeln aktivierten Inferenzvarianten auf je zwei Entwicklungskarten, beiden Seiten/Gegnern. V3 reproduziert alle acht bisherigen Spielzeilen außer Laufzeit. Varianten nur auf Lauffähigkeit geprüft, kein Stärkeurteil. Abgabe V3 und alte Sicherung bytegleich.
+
+Audit: `experiments/analysis/autonomous_20261020/pretraining_checks.json`, Rohdaten `pretraining_*_smoke.csv`. Separater Reward-Pilot bereit für tatsächlichen Start: zwei frische Einzelnetze, je 400 Spiele, einziger Unterschied Terminal-Potentialkorrektur. Alle drei Flags standardmäßig aus; der Reward-Pilot aktiviert ausschließlich seinen Reward-Schalter im zweiten Arm. Während seines Laufs bleibt der lokale Code einschließlich HEAD eingefroren; Remote-Beobachter meldet weiterhin neue Commits, Integration erst danach.
+
+**Reservierung für danach:** Eigene Inferenzvarianten einzeln auf bekannten 500720–500779 prüfen; vorab festgelegte Auswahlregeln im Plan. 510000–510199 für höchstens einen Gewinner zur frischen Bestätigung reserviert. Mahmouds Trainings-/Bestätigungsblöcke werden nicht mitbenutzt.
+
 ## 20.10.2026 abends – Codex: aktive Zielbesitzer als getrennte Testvariante
 
 In der rein beobachtenden V3-Diagnose wurden 425 unbesetzte eigene Punktefelder in 38/40 Spielen einer Einheit mit negativer Energie zugeordnet; die Schattenzuweisung übergab sie einer lebenden Einheit. 139 dieser wiederholten Situationen hatten eine lebende Einheit in Manhattan-Distanz höchstens zwei mit Bewegungsenergie. Insgesamt änderten sich 2.729 Zielzuweisungen lebender Einheiten über 699 Schritte. Das sind Häufigkeiten, keine unabhängigen Ereignisse oder nachgewiesenen verlorenen Punkte.

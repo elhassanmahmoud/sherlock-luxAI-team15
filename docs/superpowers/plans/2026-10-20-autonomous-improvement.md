@@ -4,8 +4,8 @@
 > plan task-by-task. Moayed requests sequential autonomous execution and
 > pushing verified changes; do not ask again for routine stage approvals.
 
-**Goal:** Den aktuellen Kandidaten im Kursbetrieb absichern und höchstens
-eine klar bestätigte Verbesserung aus einem begrenzten Versuch übernehmen.
+**Goal:** Den ersten begrenzten Verbesserungszyklus abschließen und anschließend
+gemäß Moayeds erweitertem Nachtauftrag kontrolliert weiter verbessern und trainieren.
 
 **Architecture:** Bestehende Auswertungswerkzeuge und Kandidaten verwenden.
 Messung und Auswahl von Agentenlogik trennen; zunächst nur vorhandene Config-
@@ -41,7 +41,8 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 - [x] Aufgabe 2: Kursbetrieb prüfen.
 - [x] Aufgabe 3: Begrenzte Entwicklungsmessung.
 - [x] Aufgabe 4: Bestätigung und Gegnervergleich, falls Auswahlregel erfüllt.
-- [ ] Aufgabe 5: Erster Zyklus technisch abgeschlossen und V3 installiert; Übernahme-Commit/Push und späterer Morgenbericht noch offen.
+- [x] Aufgabe 5a: Erster Zyklus abgeschlossen; V3 installiert, geprüft, gesichert und gepusht (`9d657dc`).
+- [ ] Aufgabe 5b: Erweiterter Nachtauftrag und Morgenbericht um 06:00.
 
 ## Aufgabe 1: Referenz und technische Basis
 
@@ -223,3 +224,28 @@ Ergebnis: Identitätsprüfung bestanden; direkt V4 61/120 gegen V3,
 Übernahme. V3 bleibt Abgabe und feste Basis der folgenden eigenen Versuche.
 V4-Kursprobe/Reproduktion vorerst zurückgestellt, weil das Stärke-Gate nicht
 bestanden ist. CSV und JSON-Audit versioniert; keine Gewichtsänderung.
+
+## Fortsetzung nach beobachtender Diagnose
+
+40 Spiele auf 500720–500739 vollständig reproduziert; beide Mechanismen treten
+wiederholt auf (`DIAGNOSIS.md` im Analyseordner). Beide Varianten standardmäßig
+aus implementiert und unabhängig geprüft; Terminal-Reward-Pilot ebenfalls
+vorbereitet. Mahmouds `d41d1bf` mit deaktivierter `explore_quota` integriert.
+Nach Gesamttests und kurzem Funktionstest startet zuerst der feste
+400+400-Spiele-Trainingspilot. Währenddessen keine Code-/HEAD-Änderung.
+
+Anschließend die beiden **einzelnen** Inferenzvarianten `active_targets=True`
+und `sap_geometry=True` gegen V3 auf 500720–500779 messen, beide Seiten/Gegner,
+je 240 Spiele. Keine Kombination und keine zusätzlichen Parameterversuche.
+Vorab Auswahlregel: Solution_92-Differenz positiv und untere 95%-Grenze des
+gepaarten Kartenbootstraps über null, beobachteter Default-Verlust höchstens
+2 Prozentpunkte. Bei zwei geeigneten Varianten größere Solution_92-Differenz;
+bei Gleichstand keine automatische Auswahl. Entwicklungsintervalle sind
+explorativ; die Auswahl wird anschließend unabhängig bestätigt.
+
+Für genau einen so ausgewählten Kandidaten **510000–510199** reservieren
+(vor Nutzung nochmals auf Remote-Kollision prüfen). V3 und Kandidat dort
+gepaart auf beiden Seiten/Gegnern; Solution_92-Untergrenze > 0, Default-Verlust
+höchstens 2 pp sowie bereits festgelegtes strenges direktes Gate gegen V3.
+Ohne klare Bestätigung bleibt V3. Trainingspilot separat auswerten; ein einzelner
+400-Spiele-Start reicht nicht zur generellen Bewertung einer Trainingsmethode.

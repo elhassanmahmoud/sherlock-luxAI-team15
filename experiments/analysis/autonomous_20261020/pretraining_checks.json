@@ -1,0 +1,30 @@
+{
+  "code_commit": "05db41dd655a6a57a64209b2095c06cdd7aa615e",
+  "full_tests": 215,
+  "subtests": 4,
+  "full_test_seconds": 36.34,
+  "arms": {
+    "v3": {
+      "games": 8,
+      "sha256": "8128a5878a23526831b98765657386eafeacad6118ad14b72a0a890ac706bef4",
+      "baseline_metrics_reproduced": true
+    },
+    "active": {
+      "games": 8,
+      "sha256": "edb8f8f583c02a771f4290d75b226a297f7cf8cb9ad26b09509041db2d367b47",
+      "baseline_metrics_reproduced": false
+    },
+    "sap": {
+      "games": 8,
+      "sha256": "339dd64ac1cf8566686cfd005a51a5eba2a0c58d3ad4301f470543c1c55fe9dd",
+      "baseline_metrics_reproduced": false
+    }
+  },
+  "protected_weights": {
+    "agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "note": "Smoke tests only, not strength evidence. All three new flags default off. Training not started at time of audit."
+}
