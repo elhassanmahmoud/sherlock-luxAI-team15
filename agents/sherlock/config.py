@@ -113,6 +113,9 @@ class AgentConfig:
     idle_sap_reserve: int = 30
     sap_pt_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner auf bekannten Punkte-Tiles (_best_sap_target)."""
+    sap_geometry: bool = False
+    """True: bei bereits vorhandenem Sap-Ziel weitere legale Zentren pruefen;
+    nur strikt hoeherer bisheriger Energiescore ersetzt das Ziel. Keine neue Sap-Maske."""
     keep_dead: bool = False
     """True: Null-Tiles frueherer Matches gelten wieder, sobald feststeht, dass
     sie nicht neben einem neuen Relic liegen (Belief._restore_dead)."""

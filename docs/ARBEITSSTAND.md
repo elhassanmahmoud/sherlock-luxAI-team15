@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 20.10.2026 abends – Codex: Sap-Geometrie als getrennte Testvariante
+
+40 reine Beobachtungsspiele mit V3 auf 500720–500739 (Solution_92, beide Seiten) reproduzieren sämtliche vorhandenen Kennzahlen außer Laufzeit. In 218 von 4.168 geeigneten ausgeführten Sap-Angriffen, verteilt über 32/40 Spiele, liefert ein freies Zielfeld einen höheren bestehenden Energiescore. Das ist ein beobachteter Ansatzpunkt, keine Messung tatsächlichen Schadens oder gewonnener Spiele.
+
+Neuer Schalter `sap_geometry=False`: Nur wenn ein bisheriges legales Sap-Ziel vorhanden ist, werden zusätzliche freie Zentren geprüft. Ausschließlich ein strikt besserer Score ersetzt das alte Ziel; alte Gleichstände bleiben erhalten. Bei sichtbaren Gegnern mit negativer Energie bleibt der alte Pfad. Keine Änderung der Aktionsverfügbarkeit; neue leere Zentren erhalten keinen Gegner-auf-Punktefeld-Bonus.
+
+**Prüfung:** 12 gezielte Tests, zuerst vier erwartete Fehler, danach alle bestanden. Abgedeckt sind Cluster, Kartenrand/Reichweite, Spiegelung, Gleichstände, fehlende Ziele, negative Energie und Punktefeld-Priorität. Die Variante ist ausgeschaltet und noch nicht auf Spielstärke geprüft; keine Gewichte geändert.
+
 ## 20.10.2026 abends – Codex: kontrollierter Reward-Pilot vorbereitet
 
 Beim bereits erkannten Tod einer Einheit fehlte im potenzialbasierten Shaping der Abschluss `-w_shape * phi(s)`. Der neue Schalter `terminal_death_potential` ergänzt nur diesen Term, ohne die Lebenszyklus-/Done-Erkennung zu verändern. Standardmäßig aus: alte Checkpoints und laufende Trainings behalten ihre bisherige Belohnung. `full_rules_v3_terminal` unterscheidet sich genau in diesem Flag von `full_rules_v3`; vorhandene Basis-Overrides werden nicht verändert.

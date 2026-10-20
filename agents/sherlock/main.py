@@ -509,7 +509,12 @@ class Agent_x:
                 best, best_score, best_hits = (tx - x, ty - y), score, hits
         if best is None:
             return None
-        return best[0], best[1], best_hits
+        target = (best[0], best[1], best_hits)
+        if self.cfg.sap_geometry:
+            target = rules.better_sap_geometry(
+                ctx, uid, target, best_score, SAP_DROPOFF_ASSUMED,
+            )
+        return target
 
     # ------------------------------------------------------------- lernen
     def update(self, step: int, obs, reward, action, terminated: bool, next_obs) -> None:
