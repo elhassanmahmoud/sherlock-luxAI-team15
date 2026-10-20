@@ -71,6 +71,8 @@ Gepaarte Vergleichsauswertung aus dem Repo-Hauptverzeichnis:
 Eine erneute Spielausführung muss neue Ausgabepfade benutzen. Die Befehle im
 Statusbericht enthalten historische absolute Pfade von Moayeds Rechner;
 auf einem anderen Rechner durch den jeweiligen Repositorypfad ersetzen.
+Die lokale `.gitattributes` im Vergleichsordner verhindert Git-Zeilenenden-
+Umwandlung dieser CSVs: Audit-Hashes beziehen sich auf ihre exakten Bytes.
 
 ## Sicherung und technische Freigabe
 
