@@ -130,7 +130,10 @@ def write_csv(path, rows):
 def game(seed, side, opponent, **extra):
     return dict(seed=seed, side=side, opponent=opponent, result=1., game_win=1,
                 point_win=1., our_wins=2, opp_wins=1, our_points=100,
-                opp_points=50, point_counting_version=2, steps=303, secs=.1, **extra)
+                opp_points=50, point_counting_version=2, steps=303, secs=.1,
+                wait_frac=.2, invalid_frac=0., greedy_masked_frac=.1, sap_attempts=2,
+                sap_hits=1, stack_frac=.1, relics_found=2, relics_seen=2,
+                known_point_tiles=3, belief_contradictions=0, unit_steps=100, **extra)
 
 
 @pytest.fixture
@@ -422,3 +425,79 @@ def test_actual_small_learner_identity_and_saved_checkpoint_schema(tmp_path, stu
     identity = study.checkpoint_identity(path)
     assert identity['config'] == cfg.to_dict()
     assert identity['q_sha256'] == snapshot['learners'][0]['q_sha256']
+
+
+def test_checkpoint_audit_is_detected_as_heavy_work(study, monkeypatch):
+    monkeypatch.setattr(study.subprocess, 'check_output', lambda *args, **kwargs:
+        '345 /python -B -m scripts.early_curriculum_study --checkpoint-audit state.json 47 control\n')
+    with pytest.raises(ValueError, match='resource admission'):
+        study.check_resources()
+
+
+def test_shared_resource_lock_excludes_other_worktree_supervisor(tmp_path, study):
+    root = tmp_path / 'main'
+    subprocess.run(['git', 'init', '-q', str(root)], check=True)
+    subprocess.run(['git', '-C', str(root), '-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
+                    'commit', '--allow-empty', '-qm', 'fixture'], check=True)
+    worktree = tmp_path / 'worktree'
+    subprocess.run(['git', '-C', str(root), 'worktree', 'add', '--detach', '-q', str(worktree)], check=True)
+    code = "from scripts.early_curriculum_study import resource_lock; import sys\nwith resource_lock(sys.argv[1]): print('acquired')"
+    with study.resource_lock(root):
+        contender = subprocess.run([sys.executable, '-c', code, str(worktree)], capture_output=True, text=True)
+        assert contender.returncode != 0 and 'resource lock' in contender.stderr
+        assert 'acquired' not in contender.stdout
+    released = subprocess.run([sys.executable, '-c', code, str(worktree)], capture_output=True, text=True)
+    assert released.returncode == 0 and released.stdout.strip() == 'acquired'
+
+
+def test_cli_keeps_shared_lock_during_pair_execution(state, study, monkeypatch):
+    monkeypatch.setattr(study, 'ROOT', Path(state['root']))
+    def pairs(st):
+        code = "from scripts.early_curriculum_study import resource_lock; import sys\nwith resource_lock(sys.argv[1]): pass"
+        contender = subprocess.run([sys.executable, '-c', code, st['root']], capture_output=True, text=True)
+        assert contender.returncode != 0 and 'resource lock' in contender.stderr
+    monkeypatch.setattr(study, 'run_pairs', pairs)
+    study.main(['--resume-audited', state['run_id']])
+
+
+@pytest.mark.parametrize('filename,column', [('train.csv', 'epsilon'), ('train.csv', 'winrate_50'),
+    ('train.csv', 'invalid_frac'), ('val_games.csv', 'after_games'), ('val_games.csv', 'secs'),
+    ('val.csv', 'secs'), ('eval', 'sap_attempts'), ('eval', 'unit_steps'), ('eval', 'secs')])
+def test_audit_rejects_missing_required_columns(pair, study, filename, column):
+    paths = pair['arms']['47']['control']
+    path = Path(paths['eval']) if filename == 'eval' else Path(paths['run']) / filename
+    with path.open() as stream:
+        rows = list(csv.DictReader(stream))
+    for row in rows:
+        del row[column]
+    write_csv(path, rows)
+    phase = pair['phases']['eval_47_control' if filename == 'eval' else 'train_47_control']
+    phase['outputs'] = study.hashes(phase['outputs'])
+    with pytest.raises(ValueError, match='schema'):
+        study.audit_pair(pair, 47)
+
+
+def test_audit_consumes_complete_production_schemas(pair, study):
+    from scripts.experiment import GAME_FIELDS, TRAIN_FIELDS, VAL_FIELDS
+    paths = pair['arms']['47']['control']
+    for path, fields in [(Path(paths['run']) / 'train.csv', TRAIN_FIELDS),
+                         (Path(paths['run']) / 'val.csv', VAL_FIELDS),
+                         (Path(paths['run']) / 'val_games.csv', ['after_games'] + GAME_FIELDS),
+                         (Path(paths['eval']), GAME_FIELDS)]:
+        with path.open() as stream:
+            assert set(csv.DictReader(stream).fieldnames) == set(fields)
+    assert study.audit_pair(pair, 47)['complete']
+
+
+@pytest.mark.parametrize('prior', [set(), {signal.SIGUSR1}])
+def test_child_restores_prelaunch_signal_mask(state, study, prior):
+    output = Path(state['analysis']) / 'child_mask.json'
+    code = ('import json, signal; from pathlib import Path; Path(' + repr(str(output)) +
+            ').write_text(json.dumps(sorted(map(int, signal.pthread_sigmask(signal.SIG_BLOCK, [])))))')
+    original = signal.pthread_sigmask(signal.SIG_SETMASK, prior)
+    try:
+        study.run_process(state, {'jobs': []}, [sys.executable, '-c', code])
+        assert set(json.loads(output.read_text())) == {int(sig) for sig in prior}
+        assert signal.pthread_sigmask(signal.SIG_BLOCK, []) == prior
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, original)

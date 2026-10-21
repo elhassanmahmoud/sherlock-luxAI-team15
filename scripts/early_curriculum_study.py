@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import argparse
 import csv
+from contextlib import contextmanager
+import fcntl
 import hashlib
 import json
 import math
@@ -30,6 +32,18 @@ PLANS = ('docs/superpowers/plans/2026-10-21-early-opponent-curriculum.md',
 THREAD_ENV = {key: '1' for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS',
     'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS')}
 THREAD_ENV.update(PYTHONUNBUFFERED='1', PYTHONDONTWRITEBYTECODE='1')
+# Explicit wire schemas mirror experiment.py without importing its model stack.
+# Production-schema integration tests detect any future producer/schema drift.
+GAME_FIELDS = (
+    'seed', 'side', 'opponent', 'result', 'game_win', 'point_win', 'our_wins', 'opp_wins',
+    'our_points', 'opp_points', 'point_counting_version', 'wait_frac', 'invalid_frac',
+    'greedy_masked_frac', 'sap_attempts', 'sap_hits', 'stack_frac', 'relics_found',
+    'relics_seen', 'known_point_tiles', 'belief_contradictions', 'unit_steps', 'steps', 'secs',
+)
+TRAIN_FIELDS = ('game',) + GAME_FIELDS + ('epsilon', 'mean_loss', 'env_steps', 'learn_steps', 'winrate_50')
+VAL_FIELDS = ('after_games', 'opponent', 'games', 'winrate', 'match_winrate',
+              'point_winrate', 'avg_points', 'avg_opp_points', 'point_counting_version', 'secs')
+VAL_GAME_FIELDS = ('after_games',) + GAME_FIELDS
 CURRENT = None
 
 
@@ -204,10 +218,12 @@ def read_json(path):
     return json.loads(Path(path).read_text())
 
 
-def read_rows(path, *, games=True):
+def read_rows(path, *, games=True, fields=None):
     with Path(path).open(newline='') as stream:
         reader = csv.DictReader(stream)
-        require(reader.fieldnames and len(reader.fieldnames) == len(set(reader.fieldnames)), 'Invalid CSV header')
+        expected = fields if fields is not None else GAME_FIELDS if games else VAL_FIELDS
+        require(reader.fieldnames and len(reader.fieldnames) == len(expected)
+                and set(reader.fieldnames) == set(expected), 'Incomplete or unexpected CSV schema')
         rows = list(reader)
     require(rows, 'Empty CSV')
     for row in rows:
@@ -288,7 +304,7 @@ def audit_training(state, run_seed, arm):
     run = Path(state['arms'][str(run_seed)][arm]['run'])
     require(read_json(run / 'study.json') == dict(run_id=state['run_id'], run_seed=run_seed,
             arm=arm, source=state['source']), 'Wrong run ID/source ownership')
-    rows = read_rows(run / 'train.csv')
+    rows = read_rows(run / 'train.csv', fields=TRAIN_FIELDS)
     require(len(rows) == 3000, 'Incomplete training rows')
     mode = 'standard' if arm == 'control' else 'early_sol100'
     schedule = P.opponent_schedule(3000, .7, 0., mode)
@@ -322,7 +338,7 @@ def audit_training(state, run_seed, arm):
     require(all(manifest.get(k) == v for k, v in expected.items()), 'Wrong/incomplete training manifest')
     require(manifest['git']['commit'] == state['source']['head'] and manifest.get('finished'), 'Wrong source/completion')
     require(manifest['argv'][1:] == training_command(state, run_seed, arm)[4:], 'Wrong manifest argv')
-    val = read_rows(run / 'val_games.csv')
+    val = read_rows(run / 'val_games.csv', fields=VAL_GAME_FIELDS)
     times = (0, 750, 1500, 2250, 3000)
     validate_keys(val, range(500720, 500728), after=times)
     aggregates = read_rows(run / 'val.csv', games=False)
@@ -409,11 +425,29 @@ def stop_group(process):
     require(not group_exists(process.pid), 'Owned process group did not stop')
 
 
+@contextmanager
+def resource_lock(root):
+    """One cooperating supervisor across all worktrees/run IDs of this repo.
+
+    Hold for the entire managed study, including tensor audits and gaps between
+    phases. Foreign tools remain covered only by the process snapshot check.
+    """
+    common = subprocess.check_output(['git', '-C', str(root), 'rev-parse',
+        '--path-format=absolute', '--git-common-dir'], text=True).strip()
+    with (Path(common) / 'early_curriculum_resource.lock').open('a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise ValueError('Shared model resource lock is held by another supervisor') from exc
+        yield
+
+
 def check_resources():
     """Admission is exclusive across visible model jobs, not just this runner."""
     text = subprocess.check_output(['ps', '-axo', 'pid=,args='], text=True)
     pattern = re.compile(r'(?:-m\s+scripts\.|scripts/)(?:experiment|par_eval|train|finetune|evaluate|compare_weights|train_ppo|distill)(?:\s|\.py\b)')
-    foreign = [line for line in text.splitlines() if pattern.search(line)]
+    audit_pattern = re.compile(r'(?:-m\s+scripts\.|scripts/)early_curriculum_study(?:\.py)?\s+.*--checkpoint-audit(?:\s|$)')
+    foreign = [line for line in text.splitlines() if pattern.search(line) or audit_pattern.search(line)]
     require(not foreign, 'Another model job is active; resource admission refused')
 
 
@@ -432,7 +466,14 @@ def run_process(state, phase, command):
         with log.open('xb') as stream:
             blocked = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGHUP, signal.SIGINT, signal.SIGTERM})
             try:
-                process = subprocess.Popen(command, cwd=state['root'], env={**os.environ, **THREAD_ENV},
+                # exec preserves PID/PGID while a tiny stdlib launcher restores
+                # the pre-block mask. Avoid preexec_fn in a potentially threaded
+                # host; the supervisor's registration window remains protected.
+                launcher = ('import os, signal, sys; '
+                    f'signal.pthread_sigmask(signal.SIG_SETMASK, {sorted(map(int, blocked))!r}); '
+                    'os.execvpe(sys.argv[1], sys.argv[1:], os.environ)')
+                launch_argv = [state['python'], '-B', '-c', launcher, *command]
+                process = subprocess.Popen(launch_argv, cwd=state['root'], env={**os.environ, **THREAD_ENV},
                     start_new_session=True, stdout=stream, stderr=subprocess.STDOUT)
                 CURRENT = dict(process=process, owner_pid=os.getpid(), pgid=process.pid)
                 state['active'] = dict(owner_pid=os.getpid(), pid=process.pid, pgid=process.pid)
@@ -578,27 +619,27 @@ def main(argv=None):
             'Use --run-id ID --start or --resume-audited ID')
     for sig in (signal.SIGHUP, signal.SIGINT, signal.SIGTERM):
         signal.signal(sig, interrupted)
-    if args.start:
-        protected = [ROOT / 'experiments/candidates/all18_v3.pth']
-        protected += [ROOT / f'agents/sherlock/weights/agent_p{s}.pth' for s in (0, 1)]
-        protected += [ROOT / f'experiments/releases/20261020_old3_sym3/agent_p{s}.pth' for s in (0, 1)]
-        for index, path in enumerate(protected):
-            expected = ('aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935' if index < 3
-                        else '3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158')
-            require(digest(path) == expected, 'Frozen V3/rollback identity differs')
-        check_resources()
-        state = reserve_study(ROOT, args.run_id, sys.executable, [ROOT / p for p in PLANS],
-                              protected, now=time.time())
-    else:
-        state = resume_study(layout(ROOT, args.resume_audited)['state_path'])
-    import fcntl
-    with (Path(state['analysis']) / 'supervisor.lock').open('a') as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        # Re-read under the lock: another supervisor may have advanced meanwhile.
-        state = resume_study(state['state_path'])
-        run_pairs(state)
-        state['status'] = 'pairs_audited'
-        save_state(state)
+    with resource_lock(ROOT):
+        if args.start:
+            protected = [ROOT / 'experiments/candidates/all18_v3.pth']
+            protected += [ROOT / f'agents/sherlock/weights/agent_p{s}.pth' for s in (0, 1)]
+            protected += [ROOT / f'experiments/releases/20261020_old3_sym3/agent_p{s}.pth' for s in (0, 1)]
+            for index, path in enumerate(protected):
+                expected = ('aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935' if index < 3
+                            else '3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158')
+                require(digest(path) == expected, 'Frozen V3/rollback identity differs')
+            check_resources()
+            state = reserve_study(ROOT, args.run_id, sys.executable, [ROOT / p for p in PLANS],
+                                  protected, now=time.time())
+        else:
+            state = resume_study(layout(ROOT, args.resume_audited)['state_path'])
+        with (Path(state['analysis']) / 'supervisor.lock').open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            # Re-read under the lock: another supervisor may have advanced meanwhile.
+            state = resume_study(state['state_path'])
+            run_pairs(state)
+            state['status'] = 'pairs_audited'
+            save_state(state)
 
 
 if __name__ == '__main__':
