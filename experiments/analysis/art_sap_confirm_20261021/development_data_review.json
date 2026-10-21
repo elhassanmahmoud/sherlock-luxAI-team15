@@ -1,0 +1,158 @@
+{
+  "head": "9c1efc7fe4e09e1738ff489292786fa535670174",
+  "freeze_id": "561eef88a5c787431009720ad09a70e2900d1d0e25b1ad212d0310e67f942d43",
+  "hash_checks": {
+    "source_hashes": 83,
+    "input_hashes": 5,
+    "protected_hashes": 8
+  },
+  "candidate_sha256": "e392f20c60d51817591ee4c0061bc8150e7ec8aa312b42e704004538ead45497",
+  "candidate_receipt_sha256": "5d234b66eeaf19e2346f89b1ad2b1ede96fa8c1cb23ea0dc48d1c020cd904aa8",
+  "identical_serialized_tensor_storages": 264,
+  "identity_receipt_checks": true,
+  "comparisons": {
+    "v3": {
+      "rows": 240,
+      "non_time_fields": 23,
+      "matched_values": 5520,
+      "historical_exact": true,
+      "historical_sha256": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173",
+      "new_sha256": "a8527d4b19009a06f1fcadf7f148ae5e5f2ee8fd6958609dad4b29268b5a7b83"
+    },
+    "candidate": {
+      "rows": 240,
+      "non_time_fields": 23,
+      "matched_values": 5520,
+      "historical_exact": true,
+      "historical_sha256": "080488ca48aaf0a405d3b1a6bc70e699d7bcf71a12564ec7fdf5f058cd70687c",
+      "new_sha256": "a7c5f366e6b790e943b2d6fd83a61f414eca92319ec4948fe19d4c29e5d7e89c"
+    }
+  },
+  "jobs": {
+    "development_v3": {
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p0.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/analysis/art_sap_confirm_20261021/development_v3.csv"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 170.7687907218933,
+      "freeze_id": "561eef88a5c787431009720ad09a70e2900d1d0e25b1ad212d0310e67f942d43",
+      "output_sha256": "a8527d4b19009a06f1fcadf7f148ae5e5f2ee8fd6958609dad4b29268b5a7b83"
+    },
+    "development_candidate": {
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v3_art3_20261021.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/analysis/art_sap_confirm_20261021/development_candidate.csv"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 163.2752239704132,
+      "freeze_id": "561eef88a5c787431009720ad09a70e2900d1d0e25b1ad212d0310e67f942d43",
+      "output_sha256": "a7c5f366e6b790e943b2d6fd83a61f414eca92319ec4948fe19d4c29e5d7e89c"
+    }
+  },
+  "statistics": {
+    "default": {
+      "maps": 60,
+      "games_per_agent": 120,
+      "v3": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0
+      },
+      "candidate": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0
+      },
+      "true_win_delta": 0.0,
+      "paired_95_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "solution92": {
+      "maps": 60,
+      "games_per_agent": 120,
+      "v3": {
+        "wins": 102,
+        "draws": 0,
+        "losses": 18
+      },
+      "candidate": {
+        "wins": 108,
+        "draws": 0,
+        "losses": 12
+      },
+      "true_win_delta": 0.05,
+      "paired_95_ci": [
+        0.008333333333333333,
+        0.1
+      ]
+    }
+  },
+  "development_opponent_gate_passed": true,
+  "direct_development": {
+    "maps": 60,
+    "games": 120,
+    "wins": 80,
+    "draws": 0,
+    "losses": 40,
+    "mean_result": 0.6666666666666666,
+    "whole_map_95_ci": [
+      0.5833333333333334,
+      0.75
+    ],
+    "output_sha256": "9817c5feb5ad89d01858bcf5dd009d75102f1f116c37c597fd9e7648215c4aae",
+    "argv": [
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+      "-B",
+      "-m",
+      "scripts.par_eval",
+      "--weights",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v3_art3_20261021.pth",
+      "--first",
+      "720",
+      "--n",
+      "60",
+      "--workers",
+      "2",
+      "--opponents",
+      "self:/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p0.pth",
+      "--out",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/analysis/art_sap_confirm_20261021/direct_development.csv"
+    ],
+    "elapsed_seconds": 89.01093196868896,
+    "returncode": 0,
+    "development_direct_gate_passed": true
+  },
+  "course_outside_this_audit": true,
+  "fresh_confirmation_outside_this_audit": true
+}
