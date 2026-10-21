@@ -67,3 +67,6 @@ Auswahlblock 503220–503419 (Auswahlverzerrung möglich, deshalb nur Vorauswahl
 unbenutzten Bestätigungsblöcke 503420–503819 genau dann, wenn Solution_92 ≥ +3 pp vor V3
 (76,7 %) und default ≥ 99 %; dort unverändert die Übernahme-Gates oben. Keine weiteren
 Varianten oder Schwellen nach Sichtung.
+
+Ergebnis Nachtrag (22:08): `mix24_art3` Solution_92 78,2 % (Δ +1,5 [−3,0; +6,0] gegen V3),
+default 99,3 % → +3-Regel verfehlt, beendet. Bestätigungsblöcke 503420–503819 weiter unbenutzt.

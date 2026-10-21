@@ -9,6 +9,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 Die 6 Läufe `20261021_full_rules_v3_threat_s40`–`s45_sol70` (je 3000 Spiele, 18.000 insgesamt, je ~116 min, alle fehlerfrei) wurden nach dem [vorab festgelegten Plan](superpowers/plans/2026-10-21-threat-features.md) ausgewertet (`scripts/pipeline_threat.sh`, Log `experiments/pipeline_threat.log`). Auswahlblock 503220–503419, 200 Karten, beide Seiten, je 400 Spiele: V3 Solution_92 76,7 %, default 98,8 %; Kontrolle `v3nets6` 73,3 % (Δ −3,5 [−8,7; +1,5]); `threat6` 72,8 % (Δ −4,0 [−9,5; +1,3]); `mix24` = `threat6` + 18 V3-Netze 78,2 % (**Δ +1,5 [−2,8; +5,8]**), default 99,0 %. Methodenfrage `threat6` gegen Kontrolle: **−0,5 [−6,0; +4,8]** – kein messbarer Effekt der Gefahr-Merkmale. Vorab-Regel (+3 pp vor V3) verfehlt: Versuch beendet, **frische Blöcke 503420–503819 unbenutzt**, keine Abgabeänderung. Hashes `threat6` `7a26f21b…8d53`, `mix24` `ace788eb…8034` (lokal, gitignored).
 
+Vorab festgelegter Nachtrag `mix24_art3` (`mix24` + `art_sap`, 3 Treffer) auf demselben Auswahlblock: 78,2 % (Δ +1,5 [−3,0; +6,0]), default 99,3 % → ebenfalls beendet, frische Blöcke weiter unbenutzt.
+
 PPO `cnn3b` läuft weiter (Iteration 50 von 150, Trainings-WR gegen Solution_92 bisher flach ~0,71–0,73); Prüfung der Stände 50/100/letzter erst nach Laufende auf 503220–503419 laut Plan. Gesamte Testsuite nach Trainingsende **459 bestanden + 14 Untertests** (offener Punkt vom 19:33-Eintrag erledigt, inklusive Moayeds Ensemble-Korrektur `b359bd6`).
 
 ## 21.10.2026, 21:17 Berlin – Codex: V4-Programm ausgewertet, V3 bleibt Abgabe
