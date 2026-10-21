@@ -337,13 +337,18 @@ def worker(job):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--weights", required=True)
-    ap.add_argument("--seeds", required=True, help="a-b")
+    ap.add_argument("--seeds", default=None, help="a-b")
+    ap.add_argument("--seed-list", default=None, help="JSON-Liste von Seeds (statt --seeds)")
     ap.add_argument("--workers", type=int, default=7)
     ap.add_argument("--out", required=True)
     ap.add_argument("--set", action="append", default=[])
     args = ap.parse_args()
-    a, b = (int(x) for x in args.seeds.split("-"))
-    items = [(s, side) for s in range(a, b + 1) for side in ("player_0", "player_1")]
+    if args.seed_list:
+        seeds = [int(s) for s in json.loads(Path(args.seed_list).read_text())]
+    else:
+        a, b = (int(x) for x in args.seeds.split("-"))
+        seeds = list(range(a, b + 1))
+    items = [(s, side) for s in seeds for side in ("player_0", "player_1")]
     chunks = [items[i::args.workers] for i in range(args.workers)]
     ctx = mp.get_context("spawn")
     t0 = time.time()
