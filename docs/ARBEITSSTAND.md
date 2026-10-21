@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+
+## 21.10.2026, 20:16 Berlin – Codex: CNN-Fortsetzung beendet, Artillerie-Prüfung vorbereitet
+
+[724 neue registrierte Spiele, Rohdaten und unabhängiger Abschlussreview](../experiments/analysis/cnn3_sol90_s20_20261021/README.md): 240 Trainingsspiele ab Original-PPO60 in 38:50 Minuten, 240 Original-Referenzspiele, vier V3-Kontrollen und 240 Endstand-Spiele. Auf den bekannten 60 Karten gewinnt der einzige finale CNN-Kandidat gegen Solution **89/120**, Original-PPO60 **96/120**, V3 **102/120**; default alle120/120. Gegenüber V3 Δ−10,83 pp, gepaartes95%-Kartenintervall[−20;−2,5]. Vorgegebene Solution-Gates verfehlt; dieser Kandidat ist beendet. Keine frischen Tests, keine Zwischenstand-Auswahl und keine Übernahme. Alle V3-/Sicherungshashes unverändert.
+
+Root-Tensor-/Ladeprüfung und unabhängige CSV-/Hash-/Statistikprüfung bestanden. Quellen während des Versuchs eingefroren auf `47388d4`; 30 von32 Policy-Tensoren geändert, Architektur und effektive Konfiguration erhalten. Neuer kleiner Minibatch und frischer Adam erlauben keine isolierte Aussage über den Gegner-Mix. Die Spielzahlen werden nicht mit den parallel auf Mahmouds Rechner laufenden Trainings vermischt.
+
+Mahmouds Commits `f540da4` bis `baef7a8` gelesen und nach Ende der eigenen Modelljobs ins lokale main übernommen. [Unabhängiger Code-/Datenreview und separater Vorabplan](superpowers/plans/2026-10-21-art-sap-confirmation.md) für genau den bereits ausgewählten Artillerie-Schalter3: historisch108/120 statt102/120, aber sieben Varianten auf bekannten Karten und fehlende vollständige Run-Manifeste. Deshalb zuerst vollständige Reproduktion mit exakt18 unveränderten V3-Netzen, dann direkte/Kursprüfung und nur bei bestandenen Gates frische Karten. Noch keine eigenen Artillerie-Spiele. Mahmouds503220–503819 bleiben für seine Studien reserviert, Root523000–523399 ist noch unbenutzt.
+
+Separater Werkzeugfehler beim Wiederaufbau gespeicherter homogener Ensembles gefunden: veraltete `ensemble_dims` können beim Laden zusätzliche Netze unterschlagen. Gezielte Reproduktion/Korrektur in eigenem Zweig; unabhängiger Review und endgültige gemeinsame Integrationssuite stehen noch aus. Die Artillerie-Kopie verwendet diesen Builder nicht. Nachtauftrag läuft weiter bis spätestens22.10.06Berlin; spätestens05:15 Abschlussreserve. Aktuelle Abgabe bleibt V3.
+
+
 ## 21.10.2026, 19:33 Berlin – Claude Code mit Mahmoud: Festungs-Diagnose, zwei Trainings laufen
 
 **Diagnose** ([Mechanismus-Probe](../experiments/analysis/mechanism_probe_20261021/README.md), neues Messwerkzeug `scripts/mechanism_probe.py`, reine Messung, V3 unverändert, Entwicklungskarten 500720–500779): Verlorene Matches 3 liegen auf Karten mit vielen Punkte-Tiles. In den deutlichsten Niederlagen kippt das Sap-Verhältnis in Match 3 (z. B. 500753: 6 : 68 Saps, 23 : 4 Tote): Solution_92 sitzt mit vielen Units auf einem umkämpften Relic-Haufen („Festung“) und sappt alles in **Manhattan**-Reichweite; unsere wiedergeborenen Units laufen einzeln hinein. Die Engine erlaubt Saps im ganzen Quadrat.
