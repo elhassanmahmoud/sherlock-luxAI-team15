@@ -1,0 +1,11 @@
+[19:28:35] ppo: {'cmd': 'ppo', 'run': 'cnn3_sol90_s20_20261021', 'seed': 20, 'workers': 1, 'set': [], 'teacher_path': '/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/ensembles/old3_sym3.pth', 'games': 24, 'epochs': 3, 'lr': 0.0001, 'mb': 256, 'ch': 32, 'blocks': 3, 'iters': 10, 'clip': 0.15, 'ent': 0.003, 'vf': 0.5, 'sol92': 0.9, 'default': 0.1, 'teacher': 0.0, 'save_every': 10, 'vf_warmup': 0, 'detach_value': True, 'start': 'start.pth'}
+[19:31:51] PPO 1: WR sol92 0.81 default 1.00 teacher nan | ent 0.192 kl 0.0204 clip 0.129 | 196s
+[19:35:57] PPO 2: WR sol92 0.76 default 1.00 teacher nan | ent 0.169 kl 0.0205 clip 0.115 | 246s
+[19:39:53] PPO 3: WR sol92 0.71 default 1.00 teacher nan | ent 0.177 kl 0.0172 clip 0.113 | 236s
+[19:43:30] PPO 4: WR sol92 0.45 default 1.00 teacher nan | ent 0.174 kl 0.0177 clip 0.110 | 217s
+[19:47:19] PPO 5: WR sol92 0.78 default 1.00 teacher nan | ent 0.178 kl 0.0140 clip 0.105 | 229s
+[19:51:09] PPO 6: WR sol92 0.67 default 1.00 teacher nan | ent 0.207 kl 0.0183 clip 0.124 | 230s
+[19:55:02] PPO 7: WR sol92 0.81 default 1.00 teacher nan | ent 0.185 kl 0.0115 clip 0.098 | 232s
+[19:59:56] PPO 8: WR sol92 0.73 default 1.00 teacher nan | ent 0.166 kl 0.0117 clip 0.091 | 294s
+[20:03:50] PPO 9: WR sol92 0.52 default 1.00 teacher nan | ent 0.174 kl 0.0133 clip 0.097 | 234s
+[20:07:20] PPO 10: WR sol92 0.55 default 1.00 teacher nan | ent 0.188 kl 0.0110 clip 0.095 | 210s

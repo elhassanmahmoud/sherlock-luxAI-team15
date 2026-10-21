@@ -1,0 +1,26 @@
+{
+  "method": "independent csv pairing and NumPy resampling; no compare_report import",
+  "checks": {
+    "ppo60/default": {
+      "delta": 0.0,
+      "low": 0.0,
+      "high": 0.0
+    },
+    "ppo60/solution92": {
+      "delta": -0.058333333333333334,
+      "low": -0.15833333333333333,
+      "high": 0.03333333333333333
+    },
+    "v3/default": {
+      "delta": 0.0,
+      "low": 0.0,
+      "high": 0.0
+    },
+    "v3/solution92": {
+      "delta": -0.10833333333333334,
+      "low": -0.2,
+      "high": -0.025
+    }
+  },
+  "all_match": true
+}

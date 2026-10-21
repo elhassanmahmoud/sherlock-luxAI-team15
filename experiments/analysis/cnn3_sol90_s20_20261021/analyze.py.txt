@@ -1,0 +1,112 @@
+"""Fixed development gates for the one prespecified final CNN3 candidate."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import numpy as np
+import pandas as pd
+from scripts.compare_report import compare_results, validated_results
+from scripts.experiment import GAME_FIELDS
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = ROOT / 'experiments/analysis/cnn3_sol90_s20_20261021'
+state = json.loads((OUT / 'execution_state.json').read_text())
+assert state['active'] is None
+assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip() == state['head']
+assert all(j['returncode'] == 0 and j.get('verified_inputs_after') and not j.get('error') for j in state['jobs'])
+for label in ('baseline', 'v3_controls', 'training', 'candidate'):
+    assert sum(j['label'] == label for j in state['jobs']) == 1
+for path, digest in {**state['source_hashes'], **state['protected_hashes'], **state['input_hashes']}.items():
+    assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
+
+paths = {
+    'candidate': OUT / 'development_candidate.csv',
+    'ppo60': OUT / 'development_ppo60.csv',
+    'v3': ROOT / 'experiments/analysis/enemy_tie_energy_20261021/development_v3.csv',
+}
+frames = {k: pd.read_csv(path) for k, path in paths.items()}
+training_check = json.loads((OUT / 'training_check.json').read_text())
+assert training_check['training_games'] == 240 and training_check['iterations'] == 10
+for flag in ('finite_losses_and_policy', 'architecture_unchanged', 'effective_configuration_unchanged',
+             'latest_and_final_policy_identical', 'evaluation_loader_exact', 'protected_hashes_verified'):
+    assert training_check[flag] is True
+final = Path(training_check['final_checkpoint'])
+assert final.resolve() == (Path(state['run']) / 'ppo_0010.pth').resolve()
+assert training_check['warmstart_sha256'] == state['input_hashes'][str(Path(state['run']) / 'start.pth')]
+assert training_check['training_csv_sha256'] == hashlib.sha256((Path(state['run']) / 'ppo.csv').read_bytes()).hexdigest()
+assert hashlib.sha256(final.read_bytes()).hexdigest() == training_check['final_sha256']
+assert state['input_hashes'][str(final)] == training_check['final_sha256']
+for label, job_label in [('candidate', 'candidate'), ('ppo60', 'baseline')]:
+    job = next(j for j in state['jobs'] if j['label'] == job_label)
+    assert job['rows'] == 240 and job['output_sha256'] == hashlib.sha256(paths[label].read_bytes()).hexdigest()
+    if label == 'candidate':
+        arg = job['argv'][job['argv'].index('--weights') + 1]
+        assert (ROOT / arg).resolve() == final.resolve()
+expected = {(o, seed, side) for o in ('default', 'solution92')
+            for seed in range(500720, 500780) for side in ('player_0', 'player_1')}
+for label, df in frames.items():
+    validated_results(df, label)
+    assert set(df.columns) == set(GAME_FIELDS)
+    assert len(df) == 240 and set(zip(df.opponent, df.seed, df.side)) == expected
+    assert set(df.point_counting_version) == {2} and set(df.steps) == {303}
+    numeric = df.drop(columns=['side', 'opponent']).apply(pd.to_numeric, errors='raise')
+    assert np.isfinite(numeric.to_numpy()).all(), label
+    assert (numeric >= 0).all().all(), label
+    assert all(df[k].between(0, 1).all() for k in df.columns if k.endswith('_frac'))
+    assert df.invalid_frac.max() == 0
+    for col in ('our_wins', 'opp_wins'):
+        assert df[col].between(0, 3).all() and (df[col] == np.floor(df[col])).all()
+    assert ((df.our_wins + df.opp_wins) <= 3).all()
+    result = np.where(df.our_wins > df.opp_wins, 1., np.where(df.our_wins < df.opp_wins, 0., .5))
+    assert np.array_equal(result, df.result.to_numpy())
+    assert np.array_equal((result == 1).astype(int), df.game_win.to_numpy())
+    point_result = np.where(df.our_points > df.opp_points, 1., np.where(df.our_points < df.opp_points, 0., .5))
+    assert np.array_equal(point_result, df.point_win.to_numpy())
+
+reproduction = json.loads((OUT / 'v3_reproduction.json').read_text())
+control_path = OUT / 'v3_controls.csv'
+assert reproduction['games'] == 4 and reproduction['all_non_time_fields_identical'] is True
+assert reproduction['v3_sha256'] == state['protected_hashes'][str(ROOT / 'agents/sherlock/weights/agent_p0.pth')]
+assert reproduction['reference_sha256'] == hashlib.sha256(paths['v3'].read_bytes()).hexdigest()
+assert reproduction['controls_sha256'] == hashlib.sha256(control_path.read_bytes()).hexdigest()
+control_job = next(j for j in state['jobs'] if j['label'] == 'v3_controls')
+assert control_job['rows'] == 4 and control_job['output_sha256'] == reproduction['controls_sha256']
+control = pd.read_csv(control_path)
+assert len(control) == 4 and set(control.columns) == set(GAME_FIELDS)
+assert set(zip(control.opponent, control.seed, control.side)) == {
+    ('solution92', seed, side) for seed in (500720, 500721) for side in ('player_0', 'player_1')}
+reference = frames['v3'].set_index(['opponent', 'seed', 'side'])
+for _, row in control.iterrows():
+    match = reference.loc[(row.opponent, row.seed, row.side)]
+    assert all(row[k] == match[k] for k in control.columns if k not in ('secs', 'opponent', 'seed', 'side'))
+
+def counts(df):
+    return {name: int((df.result == val).sum())
+            for name, val in [('wins', 1), ('draws', .5), ('losses', 0)]}
+
+summary = {label: {opp: counts(df[df.opponent == opp]) for opp in ('default', 'solution92')}
+           for label, df in frames.items()}
+winframes = {label: df.assign(result=(df.result == 1).astype(float)) for label, df in frames.items()}
+comparisons = {ref: compare_results(winframes['candidate'], winframes[ref]) for ref in ('ppo60', 'v3')}
+gates = {
+    'solution_at_least_108_wins': summary['candidate']['solution92']['wins'] >= 108,
+    'solution_strictly_more_wins_than_ppo60': summary['candidate']['solution92']['wins'] > summary['ppo60']['solution92']['wins'],
+    'default_120_wins': summary['candidate']['default']['wins'] == 120,
+}
+report = {
+    'scope': 'known development maps only; fixed final checkpoint; no independent confirmation',
+    'source_head': state['head'],
+    'input_sha256': {label: hashlib.sha256(path.read_bytes()).hexdigest() for label, path in paths.items()},
+    'counts': summary,
+    'paired_actual_win_comparisons': comparisons,
+    'bootstrap': '5000 paired whole-map resamples including both sides; numpy default_rng(0); percentile 95%',
+    'development_gates': gates,
+    'advance_to_direct_and_course': all(gates.values()),
+    'v3_reproduction': reproduction,
+    'training_check': training_check,
+    'protected_hashes_verified': True,
+}
+dest = OUT / 'results.json'
+assert not dest.exists()
+dest.write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps(report, indent=2))
