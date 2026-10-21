@@ -18,12 +18,12 @@ Remote-Check vor Beginn: lokal = origin/main b008252, keine Modelljobs, zwölf v
 
 **Files:** Create scripts/observe_loss_mechanisms.py, tests/test_loss_mechanisms.py. Existing agent/common/scoring/engine files read-only. Root owns plan/docs and data archive.
 
-- [ ] Exakt zehn Karten 510862, 510847, 510930, 510956, 510950, 510972, 510819, 510858, 510911, 510839, jeweils beide Seiten, Solution_92, unveränderte V3. Auswahl nach vorliegenden Ergebnissen geschichtet: 13 Verluste/7 Siege; keine Prävalenzhochrechnung.
-- [ ] Minimaler passiver Observer um vorhandenes play_game, keine zweite Policyauswertung und kein Agentenpatch: zeitlich ausgerichtete t/act/t+1-Ereignisse, einzelne Matchpunkte/-Siege und Snapshots bei Matchschritten 25/50/75/100; bekannte/aktive/produktive Punktefelder und Energie getrennt. Replay/komprimierte Rohereignisse im selben Durchlauf.
-- [ ] Spezifisch prüfen: pt_sap/STAY-zu-SAP-Übergänge auf Punktefeldern, legal sichtbare gegnerische Nachbarpositionen/Energien vor Entscheidung, tatsächliche Bewegungen/Schäden/Kollisionen danach. Bloße räumliche Nähe beweist keinen Schaden. Optionaler externer Ein-Schritt-Gegenvergleich nur mit exakt demselben Enginezustand/RNG und fixierten gegnerischen Aktionen; niemals an Policy rückführen, nicht als mehrzügige Siegprognose ausgeben.
-- [ ] Tests vor Implementierung: korrekte Zeitbasis, Matchreset/letzter Punkt, beide Seiten/Koordinaten, sichtbare vs unsichtbare Gegner, Sapkosten/Kollisionsbedingungen; Instrumentierung verändert keine Aktionen. Keine große neue Diagnoseplattform.
-- [ ] Exklusive Outputpfade, gebundene Quell-/Inputhashes, 20 exakte Schlüssel, 303 Schritte/v2; sämtliche nichtzeitlichen GAME_FIELDS gegen fresh_v3.csv vergleichen. Erste Abweichung stoppt. Tests und unabhängiger Review vor Modellbatch.
-- [ ] Root führt einmal aus, prüft Rohdaten und entscheidet anhand konkret belegter Sequenzen über nächsten eng abgegrenzten Versuch. Keine willkürliche Regeländerung aus aggregierten Endwerten.
+- [x] Exakt zehn Karten 510862, 510847, 510930, 510956, 510950, 510972, 510819, 510858, 510911, 510839, jeweils beide Seiten, Solution_92, unveränderte V3. Auswahl nach vorliegenden Ergebnissen geschichtet: 13 Verluste/7 Siege; keine Prävalenzhochrechnung.
+- [x] Minimaler passiver Observer um vorhandenes play_game, keine zweite Policyauswertung und kein Agentenpatch: zeitlich ausgerichtete t/act/t+1-Ereignisse, einzelne Matchpunkte/-Siege und Snapshots bei Matchschritten 25/50/75/100; bekannte/aktive/produktive Punktefelder und Energie getrennt. Replay/komprimierte Rohereignisse im selben Durchlauf.
+- [x] Spezifisch prüfen: pt_sap/STAY-zu-SAP-Übergänge auf Punktefeldern, legal sichtbare gegnerische Nachbarpositionen/Energien vor Entscheidung, tatsächliche Bewegungen/Schäden/Kollisionen danach. Bloße räumliche Nähe beweist keinen Schaden. Optionaler externer Ein-Schritt-Gegenvergleich nur mit exakt demselben Enginezustand/RNG und fixierten gegnerischen Aktionen; niemals an Policy rückführen, nicht als mehrzügige Siegprognose ausgeben.
+- [x] Tests vor Implementierung: korrekte Zeitbasis, Matchreset/letzter Punkt, beide Seiten/Koordinaten, sichtbare vs unsichtbare Gegner, Sapkosten/Kollisionsbedingungen; Instrumentierung verändert keine Aktionen. Keine große neue Diagnoseplattform.
+- [x] Exklusive Outputpfade, gebundene Quell-/Inputhashes, 20 exakte Schlüssel, 303 Schritte/v2; sämtliche nichtzeitlichen GAME_FIELDS gegen fresh_v3.csv vergleichen. Erste Abweichung stoppt. Tests und unabhängiger Review vor Modellbatch.
+- [x] Root führt einmal aus, prüft Rohdaten und entscheidet anhand konkret belegter Sequenzen über nächsten eng abgegrenzten Versuch. Keine willkürliche Regeländerung aus aggregierten Endwerten.
 
 ### Task 2: Gezielt testen und trainieren
 
@@ -34,3 +34,7 @@ Remote-Check vor Beginn: lokal = origin/main b008252, keine Modelljobs, zwölf v
 ## Plan-Preflight / Rulings
 
 Task 1 schreibt nur neue Observerdateien; Curriculum Tasks 1/2/4 teilen experiment.py-Interfaces bzw. Studienrunner und müssen sequenziell erfolgen. Analyse-Task 3 verlangt exakt die Spielschlüssel und Ergebniswerte des Runners; die Auswertung akzeptiert keine stillen Inner Joins. Root integriert erst geprüfte Commits. Die Diagnose ist absichtlich begrenzt: nicht jede mögliche Latenz erfordert neue Instrumentierung vor dem ersten konkreten Mechanismustest. Bei fehlender Ursache kein spekulativer Agentenpatch, stattdessen kontrollierter Curriculumversuch. Kosten einer falschen Sap-Hypothese bleiben auf Observer und eine präregistrierte Entwicklungsprüfung begrenzt.
+
+## Ergebnis der ersten Diagnose
+
+Task 1 mit unveränderter V3 abgeschlossen und archiviert. Alle 20 Referenzen exakt reproduziert. Der postulierte unmittelbare Sap-Kollisionsmechanismus wurde durch die tatsächliche Engine widerlegt; kein Agentenpatch daraus. Späte Belegungsrückstände sind beschrieben, nicht kausal isoliert. Daher nächste Ausführung des unveränderten Curriculumplans, keine neue Inferenzvariante. Siehe loss_observation im Archiv continuous_20261021 und neuesten Arbeitsstand.

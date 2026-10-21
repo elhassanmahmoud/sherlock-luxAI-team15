@@ -1,0 +1,155 @@
+"""Read-only stdlib analysis of frozen passive loss archive. No policy/engine imports."""
+from pathlib import Path
+import csv,gzip,json,hashlib,collections,statistics
+BASE=Path('/Users/moayedshawesh/Desktop/KI/sherlock-counterplay')
+D=BASE/'experiments/analysis/continuous_20261021/loss_observation'
+OUT=Path('/tmp/sherlock-loss-mechanisms-result-20261021.json')
+DIR={0:(0,0),1:(0,-1),2:(1,0),3:(0,1),4:(-1,0)}
+def sh(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def xyset(a): return {tuple(x) for x in a}
+def addpos(a,b):return [a[0]+b[0],a[1]+b[1]]
+def summarize_outcome(row,u,team):
+ a=row['observed_after']; tr=row['truth_after'];uid=u['uid']; p=u['position']; mask=a['mask'][team][uid];ene=a['energy'][team][uid]; pos=a['position'][team][uid]
+ return dict(mask_after=mask,energy_after=ene,position_after=pos,negative_energy_after=bool(mask and ene<0),same_slot_productive_at_old_tile=bool(mask and ene>=0 and pos==p),old_tile_productive_after=tuple(p) in xyset(tr['productive_tiles'][team]),opponent_old_tile_productive_after=tuple(p) in xyset(tr['productive_tiles'][1-team]),match_reset_after=row['match_reset_after'])
+def compact(row,team,uid,opp_ids):
+ d=next((u for u in row['decision']['units'] if u['uid']==uid),None); tr=row['truth_t']; aft=row['truth_after']
+ return dict(step_t=row['step_t'],match=row['match']+1,match_step_t=row['match_step_t'],points_t=[row['points_t'][team],row['points_t'][1-team]],points_after=[row['points_after'][team],row['points_after'][1-team]],match_reset_after=row['match_reset_after'],own=dict(uid=uid,mask=tr['mask'][team][uid],position=tr['position'][team][uid],energy=tr['energy'][team][uid],action=row['actions'][f'player_{team}'][uid],after_rule=d['after_rule'] if d else None,inferred_pt_sap=d['inferred_pt_sap'] if d else None,after_mask=aft['mask'][team][uid],after_energy=aft['energy'][team][uid],after_position=aft['position'][team][uid]),opponents=[dict(uid=j,mask=tr['mask'][1-team][j],position=tr['position'][1-team][j],energy=tr['energy'][1-team][j],action=row['actions'][f'player_{1-team}'][j],after_mask=aft['mask'][1-team][j],after_energy=aft['energy'][1-team][j],after_position=aft['position'][1-team][j]) for j in opp_ids])
+manifest=json.loads((D/'manifest.json').read_text())
+result=dict(archive=str(D),manifest_sha256=sh(D/'manifest.json'),archive_head=manifest['head'],inputs=manifest['inputs'],source_hashes={},data_hashes=manifest['outputs'],definitions={'known_singleton':'Non-match-start, masked own slot with energy>=0 on known point and own_stack_size==1; additionally exact all-masked single occupancy is required for strict funnel.','funnel':'all known live singletons -> after_rule STAY -> inferred_pt_sap, legal SAP, final and recorded SAP, first_on_tile UID -> visible adjacent entrant possible -> exactly one possible entrant and SAP center equals its current position and stay margin>0,sap margin<=0. Margins are cost-only descriptors.','entering':'Visible eligible neighbor actually issues cardinal move whose destination is the defender tile; counts proposal, not post-collision visibility.','outcome':'For non-reset transitions only, own observed mask/energy/position; productive tile from external truth after. No lifetime/death attribution.','match_timing':'First scoring transition indexed by match_step_t+1; last onset of uninterrupted strictly negative points_after through match end = descriptive permanent deficit onset, not irrecoverability.','snapshots':'State t at match_step_t=25/50/75/100; known updated by act(obs_t). Intersection with true active tiles used. Equal weighting within game then games.','sampling':'Outcome-stratified 20 games /10 maps, not prevalence or strength sample. No unit-step CIs.','collision_correction':'Frozen engine collisions aggregate original_unit_energy captured after movement and BEFORE SAP. Same-step sap cost/damage does not change collision energy comparison.'},games=[],events=[],h2_events=[])
+for suffix in ('scripts/observe_loss_mechanisms.py','agents/sherlock/main.py','agents/sherlock/geometry.py','scripts/scoring.py','luxai_s3/env.py'):
+ ps=[p for p in manifest['sources'] if p.endswith('/'+suffix)]
+ for p in ps:result['source_hashes'][p]={'frozen':manifest['sources'][p],'current':sh(p),'matches':manifest['sources'][p]==sh(p)}
+allrows={}
+for game in csv.DictReader((D/'games.csv').open()):
+ seed=int(game['seed']);side=game['side'];team=int(side[-1]);key=f'{seed}_{side}'
+ rows=[json.loads(s) for s in gzip.open(D/f'{key}.jsonl.gz','rt')];allrows[key]=rows
+ summary=json.loads((D/f'{key}.summary.json').read_text()); counters=collections.Counter();matches=[]; snapshots=[];h2=collections.Counter()
+ for m in summary['matches']:
+  rr=[r for r in rows if r['match']==m['match']]; dif=[r['points_after'][team]-r['points_after'][1-team] for r in rr]
+  never_recover=next((i+1 for i in range(len(dif)) if all(v<0 for v in dif[i:])),None)
+  matches.append(dict(match=m['match']+1,own_points=m['points'][team],opponent_points=m['points'][1-team],won=m['winner']==team,tiebreak=m['tiebreak'],own_energy=m['energy_total'][team],opponent_energy=m['energy_total'][1-team],first_own_point=next((i+1 for i,r in enumerate(rr) if r['points_after'][team]>0),None),first_opponent_point=next((i+1 for i,r in enumerate(rr) if r['points_after'][1-team]>0),None),steps_behind=sum(d<0 for d in dif),steps_tied=sum(d==0 for d in dif),steps_ahead=sum(d>0 for d in dif),permanent_deficit_onset=never_recover,point_diffs=dif))
+ for r in summary['snapshots']:
+  true=xyset(r['truth_t']['active_point_tiles']);known=xyset(r['decision']['known_point_tiles']);own=xyset(r['truth_t']['productive_tiles'][team]);opp=xyset(r['truth_t']['productive_tiles'][1-team]);both=own&opp
+  snapshots.append(dict(match=r['match']+1,step=r['match_step_t'],true_active=len(true),known_total=len(known),known_active=len(known&true),known_inactive_or_false=len(known-true),own_productive=len(own),opp_productive=len(opp),own_productive_known=len(own&known),known_active_unoccupied=len((known&true)-own),own_coverage=len(own)/len(true) if true else None,opp_coverage=len(opp)/len(true) if true else None,known_coverage=len(known&true)/len(true) if true else None))
+ for i,r in enumerate(rows):
+  if r['match_step_t']==0:continue
+  for u in r['decision']['units']:
+   uid=u['uid'];p=u['position'];tr=r['truth_t']; live=tr['mask'][team][uid] and u['energy']>=0
+   if not live:continue
+   counters['live_recorded_unit_steps']+=1
+   if u['inferred_pt_sap']:counters['all_inferred_pt_sap']+=1
+   # optional H2 visible band: this is pair availability, not universally safe distance.
+   band=[e for e in u['visible_enemies'] if e['energy']>=0 and max(abs(e['position'][0]-p[0]),abs(e['position'][1]-p[1]))<=u['sap_range']<sum(abs(e['position'][j]-p[j]) for j in (0,1))]
+   if u['legal_mask'][5] and band:
+    h2['legal_sap_band_unit_steps']+=1;h2[f'action_{u["final_action"][0]}']+=1
+    if u['on_known_point']:h2['on_known_point']+=1
+    if u['final_action'][0] in (1,2,3,4):
+     nxt=addpos(p,DIR[u['final_action'][0]]);cross=[e for e in band if sum(abs(e['position'][j]-nxt[j]) for j in (0,1))<=u['sap_range']]
+     if cross:
+      h2['move_into_current_opponent_L1_range']+=1
+      prev=rows[i-1];stationary=[]
+      for e in cross:
+       prevu=next((z for z in prev['decision']['units'] if z['uid']==uid),None)
+       pe=next((z for z in prevu['visible_enemies'] if z['uid']==e['uid']),None) if prevu else None
+       if pe and pe['position']==e['position'] and prev['match']==r['match']:stationary.append(e)
+      if stationary:h2['cross_with_prior_step_visible_stationary_enemy']+=1
+   if not u['on_known_point'] or u['own_stack_size']!=1:continue
+   counters['known_live_singletons']+=1
+   exactstack=sum(tr['mask'][team][j] and tr['position'][team][j]==p for j in range(len(tr['mask'][team])))
+   if exactstack!=1:counters['known_live_singletons_with_masked_negative_companion']+=1;continue
+   counters['strict_known_singletons']+=1
+   stay=u['after_rule']==0
+   if stay:counters['post_rule_stay']+=1
+   forced=stay and u['inferred_pt_sap'] and u['legal_mask'][5] and u['final_action'][0]==5 and u['recorded_action_class']==5 and u['first_on_tile']==uid
+   if forced:counters['strict_forced_pt_sap']+=1
+   if forced or u['final_action'][0]==0:
+    typ='all_forced' if forced else 'all_final_stay'
+    out=summarize_outcome(r,u,team)
+    if r['match_reset_after']:counters[typ+'_reset']+=1
+    else:
+     counters[typ+'_nonreset']+=1
+     if not out['mask_after']:counters[typ+'_mask_missing']+=1
+     if out['negative_energy_after']:counters[typ+'_negative']+=1
+     if out['mask_after'] and out['position_after']!=p:counters[typ+'_slot_displaced']+=1
+     if not out['old_tile_productive_after']:counters[typ+'_occupation_lost']+=1
+   possible=[e for e in u['visible_enemies'] if e['can_move_to_unit'] and e['energy']>=0]
+   if not possible:continue
+   counters['visible_neighbor_context_all_actions']+=1
+   if stay:counters['visible_neighbor_post_rule_stay']+=1
+   center=addpos(p,u['final_action'][1:]) if u['final_action'][0]==5 else None
+   margin=[e for e in possible if e['cost_only_margin_stay']>0 and e['cost_only_margin_sap']<=0]
+   narrow=forced and len(possible)==1 and possible[0]['position']==center and len(margin)==1
+   entering=[e for e in possible if r['actions'][f'player_{1-team}'][e['uid']][0] in (1,2,3,4) and addpos(e['position'],DIR[r['actions'][f'player_{1-team}'][e['uid']][0]])==p]
+   category='forced' if forced else 'final_stay' if u['final_action'][0]==0 else 'other'
+   counters[category+'_visible_neighbor']+=1
+   if margin:counters[category+'_cost_margin_flip']+=1
+   if entering:counters[category+'_actual_entering']+=1
+   if narrow:counters['narrow_risk']+=1
+   if narrow and entering:counters['narrow_actual_entering']+=1
+   outcome=summarize_outcome(r,u,team)
+   if r['match_reset_after']:counters[category+'_reset_context']+=1
+   else:
+    counters[category+'_nonreset_neighbor']+=1
+    if entering:counters[category+'_actual_entering_nonreset']+=1
+    for name,pred in [('mask_missing',not outcome['mask_after']),('negative',outcome['negative_energy_after']),('slot_displaced',outcome['mask_after'] and outcome['position_after']!=p),('occupation_lost',not outcome['old_tile_productive_after']),('slot_not_productive',not outcome['same_slot_productive_at_old_tile'])]:
+     if pred:
+      counters[category+'_'+name]+=1
+      if entering:counters[category+'_entering_'+name]+=1
+      if narrow:counters['narrow_'+name]+=1
+      if narrow and entering:counters['narrow_entering_'+name]+=1
+   if forced or u['final_action'][0]==0:
+    result['events'].append(dict(game=key,seed=seed,side=side,game_won=bool(int(game['game_win'])),match=r['match']+1,step_t=r['step_t'],match_step_t=r['match_step_t'],uid=uid,category=category,narrow=narrow,possible_neighbors=possible,actual_entering_ids=[e['uid'] for e in entering],cost_margin_flip_ids=[e['uid'] for e in margin],own_context=u,sap_center=center,outcome=outcome,other_actions=dict(own_saps=sum(a[0]==5 for a in r['actions'][side]),opponent_saps=sum(a[0]==5 for a in r['actions'][f'player_{1-team}'])),known_tile_true=tuple(p) in xyset(tr['active_point_tiles'])))
+ won=sum(m['won'] for m in matches)>=2
+ result['games'].append(dict(game=key,seed=seed,side=side,won=won,matches=matches,snapshots=snapshots,counts=dict(counters),h2_counts=dict(h2)))
+# aggregated exact counts, denominators, per-map structure
+result['totals']={}
+for k in ('counts','h2_counts'):
+ result['totals'][k]=dict(sum((collections.Counter(g[k]) for g in result['games']),collections.Counter()))
+result['by_outcome']={}
+for won in (False,True):
+ gg=[g for g in result['games'] if g['won']==won]
+ result['by_outcome']['wins' if won else 'losses']=dict(games=len(gg),maps=len({g['seed'] for g in gg}),counts=dict(sum((collections.Counter(g['counts']) for g in gg),collections.Counter())),h2_counts=dict(sum((collections.Counter(g['h2_counts']) for g in gg),collections.Counter())))
+result['by_map']=[dict(seed=s,games=[g['game'] for g in result['games'] if g['seed']==s],wins=sum(g['won'] for g in result['games'] if g['seed']==s),counts=dict(sum((collections.Counter(g['counts']) for g in result['games'] if g['seed']==s),collections.Counter()))) for s in sorted({g['seed'] for g in result['games']})]
+result['snapshot_averages']=[]
+for won in (None,False,True):
+ for match in (1,2,3):
+  for step in (25,50,75,100):
+   ss=[s for g in result['games'] if won is None or g['won']==won for s in g['snapshots'] if s['match']==match and s['step']==step]
+   result['snapshot_averages'].append(dict(outcome='all' if won is None else 'wins' if won else 'losses',match=match,step=step,n_games=len(ss),n_games_active=sum(s['true_active']>0 for s in ss),**{k:statistics.mean(s[k] for s in ss if s[k] is not None) for k in ('true_active','known_active','known_active_unoccupied','own_productive','opp_productive','known_coverage','own_coverage','opp_coverage')}))
+# Representative selection: earliest narrow entering loss, earliest narrow entering survivor,
+# earliest forced entering occupation loss, earliest forced non-entering occupation loss, STAY entering loss/survival.
+selectors=[('narrow_entering_loss',lambda e:e['narrow'] and e['actual_entering_ids'] and not e['outcome']['old_tile_productive_after']),('narrow_entering_survival',lambda e:e['narrow'] and e['actual_entering_ids'] and e['outcome']['old_tile_productive_after']),('forced_entering_occupation_loss',lambda e:e['category']=='forced' and e['actual_entering_ids'] and not e['outcome']['old_tile_productive_after']),('forced_no_entry_occupation_loss',lambda e:e['category']=='forced' and not e['actual_entering_ids'] and not e['outcome']['old_tile_productive_after']),('stay_entering_loss',lambda e:e['category']=='final_stay' and e['actual_entering_ids'] and not e['outcome']['old_tile_productive_after']),('stay_entering_survival',lambda e:e['category']=='final_stay' and e['actual_entering_ids'] and e['outcome']['old_tile_productive_after'])]
+result['representatives']=[]
+for label,choose in selectors:
+ es=[e for e in result['events'] if not e['outcome']['match_reset_after'] and choose(e)]
+ if es:
+  e=es[0]; rows=allrows[e['game']];step=e['step_t']; result['representatives'].append(dict(label=label,event=e,window=[compact(r,int(e['side'][-1]),e['uid'],[x['uid'] for x in e['possible_neighbors']]) for r in rows if abs(r['step_t']-step)<=5]))
+# Post-event windows for all 13 narrow contexts; later observations are descriptive only.
+result['narrow_followup']=[]
+for e in result['events']:
+ if not e['narrow']:continue
+ rows=allrows[e['game']];step=e['step_t'];team=int(e['side'][-1]);uid=e['uid'];p=tuple(e['own_context']['position'])
+ follow=[]
+ for r in rows:
+  if r['step_t']<step or r['step_t']>step+4 or r['match']+1!=e['match']:continue
+  tr=r['truth_after']; mask=tr['mask'][team][uid];ene=tr['energy'][team][uid];pos=tr['position'][team][uid]
+  follow.append(dict(offset=r['step_t']-step+1,step_after=r['step_after'],mask=mask,energy=ene,position=pos,old_tile_productive=p in xyset(tr['productive_tiles'][team]),slot_productive_at_old_tile=mask and ene>=0 and tuple(pos)==p,reset=r['match_reset_after']))
+ result['narrow_followup'].append(dict(game=e['game'],step_t=step,uid=uid,actual_entering_ids=e['actual_entering_ids'],followup=follow))
+# Independently cross-check event records against aggregate funnel and outcome counters.
+c=result['totals']['counts'];es=result['events']
+checks={
+ '20_games_10_maps':len(result['games'])==20 and len(result['by_map'])==10,
+ '60_matches_240_snapshots':sum(len(g['matches']) for g in result['games'])==60 and sum(len(g['snapshots']) for g in result['games'])==240,
+ '6060_transitions':sum(map(len,allrows.values()))==6060,
+ 'forced_context_count':sum(e['category']=='forced' for e in es)==c['forced_visible_neighbor'],
+ 'narrow_count':sum(e['narrow'] for e in es)==c['narrow_risk'],
+ 'narrow_entering_count':sum(bool(e['narrow'] and e['actual_entering_ids']) for e in es)==c['narrow_actual_entering'],
+ 'forced_entering_losses':sum(e['category']=='forced' and bool(e['actual_entering_ids']) and not e['outcome']['match_reset_after'] and not e['outcome']['old_tile_productive_after'] for e in es)==c['forced_entering_occupation_lost'],
+ 'funnel_monotone':c['strict_known_singletons']>=c['post_rule_stay']>=c['strict_forced_pt_sap']>=c['forced_visible_neighbor']>=c['narrow_risk']>=c['narrow_actual_entering'],
+ 'checked_sources_match_freeze':all(v['matches'] for v in result['source_hashes'].values()),
+ 'all_snapshot_known_tiles_true_active':all(s['known_inactive_or_false']==0 for g in result['games'] for s in g['snapshots'])}
+assert all(checks.values()), checks
+result['validation']=checks
+result['analysis_script']=dict(path=__file__,sha256=sh(__file__))
+OUT.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'counts':result['totals'],'by_outcome':result['by_outcome'],'reps':[(x['label'],x['event']['game'],x['event']['step_t'],x['event']['uid']) for x in result['representatives']],'sources':result['source_hashes']},indent=2))

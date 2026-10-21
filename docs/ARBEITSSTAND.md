@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Verlustdiagnose abgeschlossen, kein neuer Regelpatch
+
+[Archiv und Ergebnis](../experiments/analysis/continuous_20261021/loss_observation/README.md) der 20 fest ausgewählten Partien vollständig: 6060 Übergänge, 60 Matchabschlüsse und 240 zeitlich ausgerichtete Schnappschüsse. Alle 460 nichtzeitlichen Referenzwerte identisch; Root prüfte 41 ursprüngliche Dateihashes sowie Matchsiege und die zentralen Belegungswerte unabhängig nach. Die ergebnisgeschichtete Stichprobe ist keine neue Siegquotenmessung.
+
+Matchsiege 16/20, 6/20, 3/20; alle 13 verlorenen Spiele verlieren Match 2 und 3. Dort sind spät viele Punktefelder bekannt, aber weniger produktiv besetzt als beim Gegner. Das unterscheidet Anreise, Zuweisung, Energie und Gegnerdruck noch nicht kausal. Kein erneuter pauschaler Reserve-/Zuweisungspatch. Die falsche Sap-Kollisionsannahme ist auch im engen echten Engine-Test widerlegt: gleiche Kollisionsmasken bei STAY/SAP, unterschiedliche Restenergie. Fünf enge beobachtete Eintrittskontexte behalten unmittelbar das produktive Feld. Kostenindikatoren bleiben deskriptiv.
+
+Nächster Schritt ist deshalb der getrennt vorab festgelegte Curriculumvergleich, bei unveränderter Agentenlogik. Seine erste Werkzeugänderung ist implementiert und wird unabhängig geprüft; vollständiger Studienrunner und Gates folgen, noch kein neues Langtraining gestartet. V3 und Sicherung unverändert.
+
 ## 21.10.2026 – Codex: Diagnosewerkzeug geprüft, erste Ursache widerlegt
 
 Observer `4503dba` und Korrektur `525060f` sind in main veröffentlicht. Tests: 231 plus 14 Teilprüfungen bestanden; nach unabhängig gefundenem Koordinatenfehler der Aufzeichnung neun fokussierte Tests bestanden, Review freigegeben. Anschließend genau 20 vorab ausgewählte Partien unveränderter V3 aufgenommen: 6060 Übergänge, alle 460 nichtzeitlichen Referenzwerte und 41 Ergebnisdatei-Hashes geprüft. Das ist Reproduktion, keine Verbesserung; fachliche Auswertung und Rohdatenarchiv folgen.

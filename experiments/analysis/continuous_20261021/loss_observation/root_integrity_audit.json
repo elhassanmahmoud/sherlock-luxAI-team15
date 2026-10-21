@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-10-21T10:28:27.190903+02:00",
+  "observer_status": "complete",
+  "head": "525060f01c5b7e7507e63982db5fd6742f6273f6",
+  "games": 20,
+  "non_time_field_comparisons": 460,
+  "all_equal": true,
+  "artifact_hashes_checked": 41,
+  "source_verification": "Observer checked source hashes and HEAD before/after every game; future training-tool changes occur after completed run.",
+  "reference_sha256": "71705b366a6012ff56285fd6dfb7964365e6e711439d37f33a6e2875dbdd44e2",
+  "independent_snapshot_checks": [
+    {
+      "match": 2,
+      "step": 75,
+      "n": 13,
+      "known_fraction": 0.8008847916009719,
+      "our_occupancy": 4,
+      "opp_occupancy": 7.615384615384615
+    },
+    {
+      "match": 3,
+      "step": 100,
+      "n": 13,
+      "known_fraction": 0.8857598857598857,
+      "our_occupancy": 4.615384615384615,
+      "opp_occupancy": 9.076923076923077
+    }
+  ],
+  "independent_match_wins": [
+    16,
+    6,
+    3
+  ]
+}
