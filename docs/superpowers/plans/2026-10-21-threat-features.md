@@ -59,7 +59,7 @@ gegen V3: `mix24` +1,5 [−2,8; +5,8], `threat6` −4,0 [−9,5; +1,3]; `threat6
 benutzt. PPO-Teil (Schritt 4) steht noch aus.
 
 
-## Nachtrag vor neuen Spielen (21.10.2026, 22:00): Kombination `mix24_art3`
+## Nachtrag vor neuen Spielen (21.10.2026, ca. 21:50): Kombination `mix24_art3`
 
 Festgelegt, bevor der Kandidat gespielt hat. `mix24_art3` = `mix24` + `art_sap=true`,
 `art_min_hits=3` (frisch bei Codex +2,25 pp auf 523000–523199). Nur auf dem bereits benutzten
@@ -68,5 +68,5 @@ unbenutzten Bestätigungsblöcke 503420–503819 genau dann, wenn Solution_92 �
 (76,7 %) und default ≥ 99 %; dort unverändert die Übernahme-Gates oben. Keine weiteren
 Varianten oder Schwellen nach Sichtung.
 
-Ergebnis Nachtrag (22:08): `mix24_art3` Solution_92 78,2 % (Δ +1,5 [−3,0; +6,0] gegen V3),
+Ergebnis Nachtrag (21:57): `mix24_art3` Solution_92 78,2 % (Δ +1,5 [−3,0; +6,0] gegen V3),
 default 99,3 % → +3-Regel verfehlt, beendet. Bestätigungsblöcke 503420–503819 weiter unbenutzt.
