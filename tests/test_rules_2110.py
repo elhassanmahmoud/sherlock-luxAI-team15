@@ -177,3 +177,40 @@ def test_threat_agent_has_larger_input_and_roundtrips(tmp_path):
     import torch
     assert torch.allclose(a.q(torch.as_tensor(x)), b.q(torch.as_tensor(x)))
     assert Agent_x("player_0", train=False).feat_dim == FEATURE_DIM
+
+
+def test_mixed_ensemble_feeds_old_nets_their_first_features(tmp_path, monkeypatch):
+    import sys
+
+    import numpy as np
+    import pytest
+    import torch
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.features import FEATURE_DIM
+    from agents.sherlock.main import Agent_x
+    from scripts import build_ensemble
+    from tests.conftest import ENV_CFG
+
+    new = Agent_x("player_0", cfg=AgentConfig(threat_feats=True), train=False)
+    old = Agent_x("player_0", train=False)
+    pn, po, out = (str(tmp_path / n) for n in ("new.pth", "old.pth", "mix.pth"))
+    new.save_agent(pn)
+    old.save_agent(po)
+    monkeypatch.setattr(sys, "argv", ["x", "--out", out, pn, po])
+    with pytest.raises(SystemExit):
+        build_ensemble.main()   # ohne --mixed abgewiesen
+    monkeypatch.setattr(sys, "argv", ["x", "--mixed", "--out", out, pn, po])
+    build_ensemble.main()
+    mix = Agent_x("player_0", agent_path=out, train=False)
+    mix.set_env_cfg(ENV_CFG)
+    assert [m.feat_dim for m in mix.extra_q] == [FEATURE_DIM]
+    obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=[(7, 6, 80)], relics=[(12, 12)])
+    feats = torch.as_tensor(mix._decide(obs)[2][0][None])
+    want = (new.q(feats) + old.q(feats[:, :FEATURE_DIM])) / 2
+    got = torch.stack([mix.q(feats), mix.extra_q[0](feats[:, :FEATURE_DIM])]).mean(0)
+    assert torch.allclose(got, want)
+    mix.set_to_eval_mode()
+    assert np.asarray(mix.act(10, obs)).shape == (16, 3)
+    resaved = str(tmp_path / "re.pth")
+    mix.save_agent(resaved)
+    assert torch.load(resaved, weights_only=False)["ensemble_dims"] == [FEATURE_DIM]

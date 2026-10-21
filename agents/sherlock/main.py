@@ -241,7 +241,8 @@ class Agent_x:
             t = torch.as_tensor(feats, dtype=torch.float32, device=self.device)
             qt = self.q(t)
             if self.extra_q and not self.training:
-                qt = torch.stack([qt] + [m(t) for m in self.extra_q]).mean(dim=0)
+                # gemischtes Ensemble: Netze mit weniger Eingaben sehen die ersten Merkmale
+                qt = torch.stack([qt] + [m(t[:, :m.feat_dim]) for m in self.extra_q]).mean(dim=0)
             q = qt.cpu().numpy()
         if self.cnn_policy is not None and not self.training:
             q = self._mix_cnn(ctx, ids, feats, masks, q)
@@ -664,6 +665,7 @@ class Agent_x:
                 "feature_dim": self.feat_dim,
                 "n_actions": self.n_actions,
                 "ensemble": [m.state_dict() for m in self.extra_q],
+                "ensemble_dims": [m.feat_dim for m in self.extra_q],
             },
             path,
         )
@@ -696,8 +698,10 @@ class Agent_x:
             except (ValueError, KeyError):
                 pass
         self.extra_q = []
-        for sd in ckpt.get("ensemble", []):
-            m = QNet(self.feat_dim, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
+        dims = ckpt.get("ensemble_dims") or [self.feat_dim] * len(ckpt.get("ensemble", []))
+        for sd, dim in zip(ckpt.get("ensemble", []), dims):
+            # 21.10.2026: Eingabegroesse je Netz (V3-Netze 79 neben Gefahr-Netzen 101)
+            m = QNet(int(dim), self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
             m.load_state_dict(sd)
             m.eval()
             self.extra_q.append(m)
