@@ -1,6 +1,6 @@
 # Sherlock – Ergebnisbericht 20./21.10.2026
 
-**Stand 21.10.2026, Abschlussauftrag bis 09:00 Berlin.**
+**Stand 21.10.2026, 09:00 Berlin. Auftrag bis 09:00 abgeschlossen.**
 
 ## Ergebnis für Moe und Mahmoud
 
@@ -21,11 +21,14 @@ Die Grafik zeigt die zusätzlichen Versuche; die zuvor bestätigte V3-Übernahme
 | V4 erster Direktvergleich | 60 bekannte Karten 500720–500779, beide Seiten: 120 Spiele | 61/120 gegen V3, Intervall [43,33; 58,33] % | Vorteil nicht eindeutig; Intervall des V4-Scores |
 | V4 unabhängige Bestätigung | 400 neue direkte Karten 510400–510799: 800 Spiele; 200 neue Gegnerkarten 510800–510999, beide Seiten/default und Solution_92 je V3/V4: 1600 Spiele | Direkt 408/800 = 51,0 %, KI [48,125; 54,0] %; Sol V4 313/400 statt V3 311/400, Δ +0,5 pp [−3,0; +4,0]; default beide 400/400 | Beide Vorteils-Gates verfehlt; V3 bleibt installiert |
 | Potentialterm beim Einheitentod (`terminal_death_potential`) | 2 × 400 neue Trainingsspiele auf Karten 460000–460199; 480 Evalspiele auf 500720–500779 | Solution_92 15/120 statt 43/120; −23,33 pp [−34,17; −13,33] | Pilotpaar mit Start 46 beendet, Schalter aus; kein allgemeines Urteil über Reward Shaping |
+| Vorbereitende Ziel-/Sap-Beobachtung | V3, 20 bekannte Karten 500720–500739, beide Seiten gegen Solution_92: 40 Spiele | Schattenzuweisung betrifft 38/40 Spiele; freies Sap-Zentrum mit höherem heuristischem Score in 32/40 | Begründet die getrennten Varianten, kein Nachweis von Zusatzpunkten oder Siegen |
 | Nur aktive Zielbesitzer / freiere Sap-Geometrie | Je Variante und V3 240 Spiele, zusammen 720, bekannte Karten 500720–500779 | Solution_92 +1,67 / +0,83 pp; beide Intervalle enthalten null; default jeweils 120/120 | Beide Schalter aus |
 | Längere Exploration im Training | 3 gepaarte Starts 47/48/49, jeweils 2 × 3000 Spiele: **18.000 Trainingsspiele**; je Start Karten 470000–471499 / 480000–481499 / 490000–491499; insgesamt 1440 Evalspiele auf 500720–500779, beide Seiten/default und Solution_92 | Mittlere Solution_92-Leistung 48,06 % statt 61,11 %, −13,06 pp [−19,17; −6,94]; 0/3 Starts positiv | Kein weiterer Lauf dieses Designs |
 | Feste Ensembles aus diesen Starts | 5 feste Arme einschließlich V3, je 240 Evalspiele auf 500720–500779, beide Seiten/default und Solution_92: 1200 | Solution_92: V3 102/120; control3 90/120; slow3 80/120; V3+control3 102/120; V3+slow3 98/120. Kein ausgewählter Gewinner | Keine frische Bestätigung, keine Gewichtsübernahme |
 | Punktefeld-Diagnose | V3/V4, zehn bekannte Karten 500720–500729, beide Seiten gegen Solution_92: 40 Beobachtungsspiele | Unerreichbare Nahziele 6,20 % / 7,62 % freier eigener Feld-Schritte; unter dem 10%-Arbeitsfilter; kein Segment nach der engen Stay-Definition im Primärfenster | Kein Policy-Patch |
 | Passive Aktionsfluss-Beobachtung | V3, zehn bekannte Karten 500720–500729, beide Seiten gegen Solution_92: 20 Spiele | Bei mindestens zwei legalen Aktionsklassen blieb die maskierte Greedyklasse in 56.352/61.880 = 91,07 % erhalten; sämtliche Referenzergebnisse reproduziert | Deskriptive Diagnose, keine neue Ablation oder Stärkeauswahl |
+
+Die vorbereitende [Ziel-/Sap-Beobachtung](../experiments/analysis/autonomous_20261020/DIAGNOSIS.md) und die spätere Punktefeld-Diagnose sind unterschiedliche 40-Spiel-Reihen.
 
 Die beiden eigenen Trainingsversuche umfassen zusammen **18.800 Trainingsspiele**. Das sind Spielausführungen, nicht unterschiedliche Karten und nicht das gesamte historische Trainingsbudget von Sherlock. Mahmouds separate Läufe werden nicht als eigene Arbeit mitgezählt. Kurze Funktions-/Runner-/Reproduktionsprüfungen stehen separat in den jeweiligen Prüfberichten; die Tabelle zählt sie nicht als zusätzliche unabhängige Stärkenachweise.
 
@@ -38,6 +41,8 @@ Nur der Epsilon-Abfall wurde geändert: 60.000 → 454.500 Umgebungsschritte. Je
 [Aggregation](../experiments/analysis/autonomous_20261020/exploration_aggregate.md), [Archivprüfung](../experiments/analysis/autonomous_20261020/historical_exploration_tools_20261021/exploration_archive_check.json), [feste Ensembleauswertung](../experiments/compare/autonomous_20261020/exploration_ensemble_development/state.json).
 
 ## Unabhängige V4-Bestätigung
+
+V4 nutzt dieselben 18 trainierten Netze wie V3 und ergänzt die zwei Spielregeln `contest_sap` und `opp_infer`; es handelt sich dabei nicht um neu trainierte Netzgewichte.
 
 Die vorher festgelegten 2.400 Spiele wurden am 21.10. von 07:35 bis 08:04 vollständig gespielt. Root und ein unabhängiger Reviewer kontrollierten Rohzahlen, Spielschlüssel, Kartenpaarung, Quellen-/Gewichtshashes, unveränderten HEAD und die Bootstraprechnung. Beide geforderten positiven Vorteilsnachweise fehlen. Keine früheren Daten gepoolt, keine zusätzlichen Karten nach schwachem Ergebnis angehängt, keine Gewichte ausgetauscht. V4 könnte einen kleinen Vorteil haben; diese Stichprobe bestätigt ihn unter den festgelegten Kriterien nicht. Sie beweist auch keine Gleichwertigkeit.
 
@@ -80,12 +85,14 @@ Wesentliche getrennte Commits dieser Fortsetzung:
 - `f4b93b1`: Trainingsdiagnose, Herkunftsprüfung und nächster Curriculum-Entwurf.
 - `fd5b350` und `e831f08`: passive Beobachtung und Trennung erzwungener Aktionen vorab festgelegt.
 - `5dda0a3`: vollständige Aktionsfluss-Beobachtung und unabhängige Prüfungen archiviert.
+- `07dbe71`: Morgenbericht, Ergebnisgrafik und abgeglichene gemeinsame Dokumentation.
+- `34fc59f`: unabhängig geprüfter künftiger Curriculumplan samt Kartenreservierung; keine Implementierung oder Trainingsausführung.
 
 Frühere zentrale Arbeiten: `9d657dc` V3-Übernahme; `0a07481` negativer Reward-Pilot; `2e56dce` zwei Inferenzvarianten ohne Gewinner; `c0f9c15` Explorationsplan und Ablaufwerkzeug; `8517f88` erstes Trainingspaar. Die Git-Historie enthält die weiteren sinnvollen Prüfschritte und Mahmouds eigene Beiträge; sie sind nicht alle neue Trainingsgewinne.
 
 Vor dem neuen V4-Lauf bestanden **223 Tests plus 14 Subtests**. Seitdem keine Pythonquellen geändert. Zusätzlich sieben Tests des einmaligen Vergleichsablaufs und vier Tests der unabhängigen Auditberechnung; alle 2.400 Datensätze anschließend erfolgreich geprüft. Die Aktionsbeobachtung bestand zusätzlich 13 isolierte Tests und beide vollständigen Datenaudits. CSV-Rohbytes bleiben erhalten; CRLF wird bei der Formatprüfung ausdrücklich als Zeilenende behandelt.
 
-Die abschließende Dokumentationsprüfung und der abschließende Git-Abgleich werden im jüngsten [Arbeitsstand](ARBEITSSTAND.md) festgehalten. Der Commit dieses Berichts ist über die Git-Historie nachvollziehbar. Fremde ungesicherte Dateien bleiben erhalten; lokale neue Trainingsgewichte und Replay Buffer sind weiterhin nicht Teil des Git-Uploads.
+Die [Abschlussprüfung](../experiments/analysis/autonomous_20261020/closing_checks_20261021.json) und der jüngste [Arbeitsstand](ARBEITSSTAND.md) belegen Gewichtsidentität, Remote-Abgleich vor dem Abschlusscommit, beendete eigene Modelljobs und Wachhaltung sowie deaktivierte Nacht-Automationen. Der Commit dieses Berichts ist über die Git-Historie nachvollziehbar. Fremde ungesicherte Dateien bleiben erhalten; lokale neue Trainingsgewichte und Replay Buffer sind weiterhin nicht Teil des Git-Uploads.
 
 ## Nächster sinnvoller Schritt
 

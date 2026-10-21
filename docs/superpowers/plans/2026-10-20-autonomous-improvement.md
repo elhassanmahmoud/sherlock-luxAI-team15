@@ -24,7 +24,7 @@ Moayed verlängerte die Arbeitsgrenze ausdrücklich auf **09:00 Berlin / 07:00 U
 - Die vier anfänglichen Inferenzvarianten erfüllten die Auswahlregel nicht. Ihre frische Herausfordererbestätigung wurde deshalb übersprungen; V3 wurde stattdessen als einziger Kandidat gegen die alte Abgabe bestätigt.
 - Reward-Pilot (800 Trainingsspiele), drei Explorationspaare (18.000), feste Ensembles und zwei weitere einzelne Inferenzvarianten sind vollständig ausgewertet; kein zusätzlicher Kandidat zur Übernahme.
 - Die spätere unabhängige V4-Bestätigung ist mit 2.400 Spielen vollständig beendet, beide Vorteilsnachweise fehlen. Passive Punktefeld- und Aktionsflussdiagnosen sind geprüft und archiviert. Keine laufende Messreihe und kein Source-Freeze aus diesen Versuchen mehr.
-- Der [nächste Trainingsentwurf](../../NAECHSTER_TRAININGSVERSUCH_20261021.md) ist eine spätere einzelne Hypothese; keine Umsetzung oder neue Studie im Abschlussfenster. Lokale Trainingsgewichte/Buffer bleiben erhalten und ignoriert.
+- Der [nächste Trainingsentwurf](../../NAECHSTER_TRAININGSVERSUCH_20261021.md) wurde in einen [geprüften Studienplan](2026-10-21-early-opponent-curriculum.md) überführt; keine Umsetzung oder neue Studie im Abschlussfenster. Lokale Trainingsgewichte/Buffer bleiben erhalten und ignoriert.
 - Bericht, abschließender Git-Abgleich und Prozess-/Automationsabschluss werden im jüngsten [Arbeitsstand](../../ARBEITSSTAND.md) belegt. Frühere noch offene Checklisten unten werden nur für tatsächlich erledigte Schritte geschlossen.
 
 ## Global Constraints
@@ -125,7 +125,7 @@ Ergebniszusammenfassung unter `experiments/analysis/autonomous_20261020/`.
 - [x] V3 nach erfüllten Kriterien mit Sicherung, Kursprüfung und Rückweg in eigenem Commit übernehmen; alle später ungeklärten Kandidaten ablehnen.
 - [x] Abgeschlossene Versuche getrennt committen und pushen (bis `5dda0a3`); abschließender Berichtscommit und Remote-Nachweis im Arbeitsstand.
 - [x] Weitere begründete Schritte bis zur verlängerten Grenze bearbeiten; offene künftige Trainingsstudie ausdrücklich als ungestartet dokumentieren.
-- [ ] Finalen Repo-/Prozessabgleich, Wachhalteprozess und einmalige Automationen bis 09:00 abschließen; erst nach tatsächlicher Prüfung abhaken.
+- [x] Finalen Repo-/Prozessabgleich, Wachhalteprozess und einmalige Automationen am 09:00-Abschluss geprüft; Nachweis im jüngsten Arbeitsstand und `closing_checks_20261021.json`.
 
 ## Laufendes Protokoll
 
