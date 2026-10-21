@@ -42,7 +42,7 @@ Freeze source commit/hash list, Python/engine, candidate and protected input has
 
 - Development cards **500720–500779**, both sides: candidate120 vsSolution_92 plus120 vsDefault. Baseline can reuse verified matching `experiments/analysis/enemy_tie_energy_20261021/development_v3.csv` (Sol102/120, Default120/120), with disabled smoke and source binding above.
 - Also **120 candidate-vs-V3 development games**, those same60knowncards, regardless of opponent development gate so the user's requested direct test is delivered. This is descriptive, not fresh confirmation. Use unchanged V3 checkpoint as `self:` opponent.
-- Continue to fresh confirmation only if candidate Sol >=108/120, Default120/120, direct development mean result >=0.5 and technical checks pass. No optional sample extension/parameter tweaking. Report wins/draws/losses and exact shared-card bootstrap uncertainty; 5,000 card-pair resamples, NumPy default_rng(0), percentiles2.5/97.5.
+- Continue to fresh confirmation only if candidate Sol >=108/120, Default120/120, direct development mean result >=0.5 and technical checks pass. No optional sample extension/parameter tweaking. Solution/Default gates and their intervals use actual win indicators (result==1); direct comparison uses result0/0.5/1. Report wins/draws/losses and exact shared-card bootstrap uncertainty; 5,000 card-pair resamples, NumPy default_rng(0), percentiles2.5/97.5.
 - If negative, report complete failure of THIS fixed prototype. Inspect bounded activation/decision evidence before choosing a genuinely separate follow-up from the approved strategy. Do not repeatedly loosen thresholds to rescue v1.
 
 ## Task 4: fresh qualification, only if development qualifies

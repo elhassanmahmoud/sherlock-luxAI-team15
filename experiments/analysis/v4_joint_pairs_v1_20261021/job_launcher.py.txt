@@ -1,0 +1,44 @@
+"""One owned, sequential CLI job; data/gate decisions stay with the root."""
+import csv, hashlib, json, os, signal, subprocess, sys, time
+from pathlib import Path
+P=Path('/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/analysis/v4_joint_pairs_v1_20261021/state.json')
+s=json.loads(P.read_text()); label, *args=sys.argv[1:]; process=None
+assert label and args and not s.get('active') and all(j.get('returncode')==0 for j in s['jobs'])
+assert not any(j['label']==label for j in s['jobs'])
+def save():
+ q=P.with_suffix('.tmp');q.write_text(json.dumps(s,indent=2)+'\n');q.replace(P)
+def check():
+ assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=s['root'],text=True).strip()==s['head']
+ for name,h in {**s['source_hashes'],**s['protected_hashes'],s['candidate']:s['candidate_sha256']}.items():
+  assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==h,name
+ assert time.time()<s['deadline'], 'Fixed deadline reached'
+def interrupt(sig,frame):raise InterruptedError(f'Signal {sig}')
+for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(sig,interrupt)
+check(); assert time.time()+s['remaining_games']*1.25*s['max_seconds_per_game']+300<s['deadline'], 'Insufficient remaining admission budget'
+log=P.parent/(label+'.log'); assert not log.exists()
+j={'label':label,'argv':[s['python'],'-B',*args],'started_at':time.time(),'returncode':None,'log':str(log)};s['jobs'].append(j);save()
+try:
+ with log.open('xb') as f:
+  env={**os.environ,**{k:'1' for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS')},'PYTHONDONTWRITEBYTECODE':'1','PYTHONUNBUFFERED':'1','PYTHONPATH':s['root']}
+  process=subprocess.Popen(j['argv'],cwd=s['root'],env=env,start_new_session=True,stdout=f,stderr=subprocess.STDOUT)
+  s['active']=dict(owner_pid=os.getpid(),pid=process.pid,pgid=process.pid);j['pid']=process.pid;save();print(label,process.pid,flush=True)
+  while True:
+   try:j['returncode']=process.wait(timeout=30);break
+   except subprocess.TimeoutExpired:check()
+  assert j['returncode']==0,f'Job failed; inspect {log}'
+ check()
+ if '-m' in args and args[args.index('-m')+1]=='scripts.par_eval':
+  out=Path(args[args.index('--out')+1]);rows=list(csv.DictReader(out.open()));j['output_sha256']=hashlib.sha256(out.read_bytes()).hexdigest();j['rows']=len(rows)
+  s['remaining_games']-=len(rows);s['max_seconds_per_game']=max(s['max_seconds_per_game'],*(float(r['secs']) for r in rows))
+ j['verified_inputs_after']=True
+finally:
+ if process is not None:
+  try:os.killpg(process.pid,0)
+  except ProcessLookupError:pass
+  else:
+   os.killpg(process.pid,signal.SIGTERM)
+   try:process.wait(timeout=2)
+   except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
+  j['returncode']=process.returncode
+ s['active']=None;j['finished_at']=time.time();save()
+print(label,'finished',j['returncode'],flush=True)
