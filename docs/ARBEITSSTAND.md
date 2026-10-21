@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Diagnosewerkzeug geprüft, erste Ursache widerlegt
+
+Observer `4503dba` und Korrektur `525060f` sind in main veröffentlicht. Tests: 231 plus 14 Teilprüfungen bestanden; nach unabhängig gefundenem Koordinatenfehler der Aufzeichnung neun fokussierte Tests bestanden, Review freigegeben. Anschließend genau 20 vorab ausgewählte Partien unveränderter V3 aufgenommen: 6060 Übergänge, alle 460 nichtzeitlichen Referenzwerte und 41 Ergebnisdatei-Hashes geprüft. Das ist Reproduktion, keine Verbesserung; fachliche Auswertung und Rohdatenarchiv folgen.
+
+**Wichtige Korrektur zum ursprünglichen Solution-Review:** Der behauptete unmittelbare Kollisionsnachteil durch Sapkosten war falsch. Die installierte Engine speichert die Energie nach Bewegung, aber vor Sap (`env.py:293`) und nutzt diese gespeicherte Energie zur Kollisionsaggregation (`:462`). Ein Sap ändert daher nicht den Gewinner derselben Kollision. [Ursprünglicher Review mit vorangestellter Rücknahme](../experiments/analysis/continuous_20261021/planning/sherlock-solution-counterplay-20261021.md). Kein Agentenpatch daraus. Eine weitere kurze Engineprüfung wird separat dokumentiert; der Fehler betraf eine Hypothese, nicht Sherlocks ausgeführte Aktionen oder Gewichte.
+
+Lokaler Git-Abruf war durch eine ungültig benannte Zusatzreferenz `refs/remotes/origin/main 2` blockiert. Ihr Inhalt zeigte auf den vorhandenen Commit b008252. Die Datei wurde unverändert außerhalb des Referenzbaums unter `.git/codex-ref-backups/20261021-main-2.txt` gesichert; anschließend Abruf, Fast-forward und Push erfolgreich. Ursache der Zusatzdatei nicht behauptet; keine Projektdateien oder fremden ungesicherten Änderungen entfernt.
+
 ## 21.10.2026 – Codex: neuer autonomer Verbesserungsauftrag
 
 Moayed hat nach dem Abschluss um 09:00 erneut kontinuierliche Arbeit ohne feste Enduhrzeit freigegeben: gezielte Niederlagenanalyse, Gegenstrategien, Training, unabhängige Bestätigung und geprüfte Pushes. [Aktueller Plan](superpowers/plans/2026-10-21-continuous-improvement.md). Die vorigen Abschlussnotizen bleiben historische Belege. V3 bleibt zunächst Abgabe; bisherige Sicherung bleibt erhalten.
