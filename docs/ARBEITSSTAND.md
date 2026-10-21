@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 21.10.2026, ab 18:25 Berlin – Codex: V4-Koordination wird umgesetzt
+
+Moayed hat die selbstständige Umsetzung samt Subagents und Tests bis **22.10.2026 spätestens 06:00 Berlin** beauftragt. [Fester Implementierungs- und Versuchsplan](superpowers/plans/2026-10-21-v4-joint-prototype.md), Arbeitszweig `improvement/v4-joint-20261021` in eigener Arbeitskopie. Implementer baut einen standardmäßig deaktivierten, nur bei Auswertung aktiven Paar-Koordinator; unabhängiges Review folgt. Root prüft Daten, integriert und führt Tests aus; ein eigener Remote-Wächter meldet neue Commits, ohne Quellen zu verändern.
+
+V3-Gewichte und alte Sicherung zu Beginn per Hash unverändert. Keine aktiven Modelljobs aus früheren Versuchen, keine Wiederaufnahme der abgebrochenen Curriculumstudie. 523000–523399 als neuer Bestätigungsbereich vorgeprüft (520 Seed-CSVs ohne Treffer), Nutzung nur nach erneutem Remote-Abgleich und bestandenem Entwicklungsgate. Zunächst neue Entwicklungs- und direkte V3-Spiele, keine bestätigte Verbesserung und noch kein neuer trainierter Kandidat. Deadline-Auftrag und Repo-Abgleich auf den neuen Zeitraum aktualisiert. Nächste Berichte unterscheiden tatsächliche Umsetzung, laufende Versuche und abgeschlossene Ergebnisse.
+
 ## 21.10.2026 – Codex: neue V4-Strategie nach ausbleibendem Zusatzgewinn
 
 Auf Moayeds erneuten Planungswunsch: [V4-Strategie](V4_STRATEGIE_20261021.md). Zwei unabhängige, ausschließlich lesende Reviews prüfen Entscheidungsarchitektur und Lernwege. Priorität ist eine kleine gemeinsame Auswahl von V3-Aktionsvorschlägen für interagierende Schiffe; zunächst Bewegung/STAY, keine neue Trainingsserie. Erst ein positiver Entwicklungsvergleich rechtfertigt eine Bestätigung auf neuen Karten oder einen kleinen lernenden Bewerter. Ziel bleibt 100 % auf einem vorher festgelegten Testsatz, ohne Garantie für alle Karten. Bereits vorhandene, nicht qualifizierte V4-Dateien bleiben getrennt.
