@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: ein separater Gegnermerkmal-Versuch vorbereitet
+
+Der [Repräsentationscheck](../experiments/analysis/continuous_20261021/representation_probe/README.md) bestätigt eine konkrete Informationslücke: nur einer von mehreren gleich nahen sichtbaren Gegnern wird einzeln beschrieben. Zwei nominelle Konvergenzen in den fest ausgewählten84Übergängen zeigen den Kontext, keine Kausalität oder Verbesserung. Root lässt deshalb genau eine standardmäßig ausgeschaltete Auswahlvariante vorbereiten: bei gleicher Entfernung höhere Gegnerenergie bevorzugen.
+
+[Vergleich und Gates vorab festgelegt](superpowers/plans/2026-10-21-enemy-tie-energy.md). Neue reservierte Karten522000–522399, keine Kollision im vorliegenden CSV-Bestand. Umsetzung in separater Arbeitskopie; während der laufenden Curriculumstudie nur leichte Tests/Review, keine zusätzlichen Modelljobs. Gewichte und Curriculum bleiben unverändert. Diese zusätzliche Vorbereitung ist keine bisher ausgeführte Evaluation oder Übernahme.
+
 ## 21.10.2026, 11:44 Berlin – Codex: neue Trainingsstudie läuft
 
 Der freigegebene Vergleich `20261021_early_contact_v1` ist tatsächlich gestartet: 21.10.2026 11:44:34 Europe/Berlin, feste Studienfrist 23:44:34 desselben Tages. Eingefrorener Commit **`a5d2e61b0e8654bad64e31c29447ada1e439174d`** in `sherlock-counterplay`; Supervisor 63520, erster Trainer 63533. Zustand und Joblogs liegen dort unter `experiments/analysis/early_curriculum_20261021_early_contact_v1/`. Prozessnummern sind nur die lokale Momentaufnahme, vor jedem Eingriff erneut mit Kommando/Ownership prüfen.
