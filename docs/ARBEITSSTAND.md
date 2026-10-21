@@ -4,6 +4,17 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 21.10.2026, 20:43 Berlin – Codex: Artillerie-Kandidat in frischer Bestätigung
+
+Vorgeschaltete Prüfung abgeschlossen: 480 Reproduktionsspiele stimmen für V3 und `art_sap=True, art_min_hits=3` in sämtlichen 23 Nichtzeitfeldern mit den historischen Referenzen überein. Solution **108/120 statt 102/120** (Δ+5 pp, gepaartes Kartenintervall[+0,833;+10]); default beide120/120. Direkt auf denselben Entwicklungskarten **80 Siege/40 Niederlagen gegen V3** (66,67%, Kartenintervall[58,33;75]%). Unabhängiger Datenreview der600 Vergleichsspiele bestanden. Zusätzlich acht Kursprüfspiele bestanden: exakte18-Netz-Ladung, frisches Belief,303Schritte; größte p95-Aktionszeit2,326ms, Maximum10,946ms. Der Kurscheck prüft Aktionsformat, keine vollständige semantische Legalitätsgarantie.
+
+Die unveränderten18V3-Netze im Versuchskandidaten wurden rekursiv und nach Laden geprüft; unabhängiger Bytevergleich aller264 Tensor-Speicherblöcke ebenfalls identisch. Kandidat SHA`e392f20c60d51817591ee4c0061bc8150e7ec8aa312b42e704004538ead45497`. Die zwei gespeicherten Configänderungen sind die einzige Veränderung gegenüber V3. **Noch keine Freigabe als stärkere Abgabe.**
+
+Jetzt fester Vergleich auf200neuen Karten523000–523199, beideSeiten, beideGegner, jeweilsV3/Kandidat =1600Spiele. Erst nach vollständiger Auswertung aller vorher festgelegten Gates ggf.400direkte Spiele auf523200–523399. Finaler Seed-Abgleich:2109 zugänglicheCSV-Dateien mit Seedspalte,1.485.640Zeilen, keinTreffer im reservierten Bereich. Mahmouds503220–503819 bleiben frei für seineStudie. Arbeitszweig `improvement/v4-joint-20261021`, eingefroren auf`9c1efc7`; aktuelle Daten dort unter`experiments/analysis/art_sap_confirm_20261021/`. main erhält den fertigen Bericht erst nach Abschluss.
+
+Neue ausdrückliche Budgetgrenze vonMoayed: mindestens30% Codex-Kontingent übriglassen. Root beginnt Abschluss bei35%Rest; keinReset. Bei letzterKontrolle79%Rest. BeideaktivenAutomationen übernehmen dieseGrenze. Die Frist22.10.06Berlin gilt nur, sofern dieBudgetgrenze nichtfrüher greift. V3undalteSicherung bleibenunverändert.
+
+
 ## 21.10.2026, 20:30 Berlin – Codex: gemeinsame Integration geprüft
 
 Mahmouds Artillerie-/Gefahrmerkmale und die Korrektur der Ensemble-Dimensionen sind im Arbeitszweig zusammengeführt. Der erste Gesamtlauf zeigte 14 überholte Testfixtures (517 bestanden): Frühablehnung beschädigter Checkpoints, fehlende Breitenangaben in inerten Curriculum-Mocks und ein Zielpilot-Mock ohne Eingabedimension. Nur die Testverträge angepasst; Produktionsprüfung nicht abgeschwächt. Unabhängiger Review der Korrektur und Fixtures ohne offene Blocker.
