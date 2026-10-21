@@ -1,0 +1,2087 @@
+{
+  "schema": "point_flow_independent_review_v1",
+  "source_head_at_run": "8517f88594e0e909a7d631e197e98b1ed4ca9dcb",
+  "current_head": "d51a790cc73fa74b199e333658b74c946bc4c7ee",
+  "state_sha256": "90a3025c49b717fe8bfb4f77561cac12aee962450d8c7c5c70c65cf9f1b50543",
+  "identity_checks": 104,
+  "identity_mismatches": [],
+  "raw_sha256": {
+    "v3": "b28c6d4686cf4afda8e8c0641eb0c7cc17c181935317e4cc7a5d9e8679cef479",
+    "v4": "afffb6a7e9c45f5865f683d98d633d69471e7fa3baf2c3e132ec66b42a871962"
+  },
+  "models": {
+    "v3": {
+      "games": 20,
+      "known": 8525,
+      "free": 2550,
+      "free_fraction": 0.2991202346041056,
+      "assignment": {
+        "live": 2392,
+        "negative": 119,
+        "none": 39
+      },
+      "live_move_fraction": 0.8653846153846154,
+      "old_map_progress": {
+        "1": 1196,
+        "0": 186,
+        "-1": 58
+      },
+      "bfs_bins": {
+        "3-5": 466,
+        "0-2": 378,
+        "6+": 1241,
+        "unreachable": 307
+      },
+      "counts": {
+        "blocked_live_short": {
+          "count": 147,
+          "fraction_of_free": 0.05764705882352941,
+          "maps": 6,
+          "games": 12,
+          "frequency_threshold_only_not_selection": false
+        },
+        "blocked": {
+          "count": 270,
+          "fraction_of_free": 0.10588235294117647,
+          "maps": 7,
+          "games": 14,
+          "frequency_threshold_only_not_selection": true
+        },
+        "blocked_live": {
+          "count": 261,
+          "fraction_of_free": 0.10235294117647059,
+          "maps": 7,
+          "games": 13,
+          "frequency_threshold_only_not_selection": true
+        },
+        "detour_ge4": {
+          "count": 115,
+          "fraction_of_free": 0.045098039215686274,
+          "maps": 4,
+          "games": 6,
+          "frequency_threshold_only_not_selection": false
+        },
+        "unreachable_live": {
+          "count": 307,
+          "fraction_of_free": 0.1203921568627451,
+          "maps": 8,
+          "games": 15,
+          "frequency_threshold_only_not_selection": true
+        },
+        "unreachable_short": {
+          "count": 158,
+          "fraction_of_free": 0.06196078431372549,
+          "maps": 6,
+          "games": 12,
+          "frequency_threshold_only_not_selection": false
+        },
+        "tight_stay": {
+          "count": 0,
+          "fraction_of_free": 0.0,
+          "maps": 0,
+          "games": 0,
+          "frequency_threshold_only_not_selection": false
+        },
+        "tight_streak_ge3": {
+          "count": 0,
+          "fraction_of_free": 0.0,
+          "maps": 0,
+          "games": 0,
+          "frequency_threshold_only_not_selection": false
+        },
+        "low_energy": {
+          "count": 211,
+          "fraction_of_free": 0.08274509803921569,
+          "maps": 5,
+          "games": 8,
+          "frequency_threshold_only_not_selection": false
+        },
+        "assignment_changed": {
+          "count": 750,
+          "fraction_of_free": 0.29411764705882354,
+          "maps": 9,
+          "games": 18,
+          "frequency_threshold_only_not_selection": true
+        },
+        "target_enemy": {
+          "count": 207,
+          "fraction_of_free": 0.0811764705882353,
+          "maps": 8,
+          "games": 16,
+          "frequency_threshold_only_not_selection": false
+        }
+      },
+      "per_map": [
+        {
+          "seed": 500720,
+          "known": 912,
+          "free": 205,
+          "blocked_live_short": 13,
+          "blocked": 18,
+          "blocked_live": 16,
+          "detour_ge4": 1,
+          "unreachable_live": 35,
+          "unreachable_short": 15,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 18,
+          "assignment_changed": 45,
+          "target_enemy": 54,
+          "blocked_live_fraction": 0.07804878048780488
+        },
+        {
+          "seed": 500721,
+          "known": 1520,
+          "free": 572,
+          "blocked_live_short": 81,
+          "blocked": 104,
+          "blocked_live": 102,
+          "detour_ge4": 0,
+          "unreachable_live": 105,
+          "unreachable_short": 82,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 231,
+          "target_enemy": 14,
+          "blocked_live_fraction": 0.17832167832167833
+        },
+        {
+          "seed": 500722,
+          "known": 1064,
+          "free": 596,
+          "blocked_live_short": 0,
+          "blocked": 17,
+          "blocked_live": 16,
+          "detour_ge4": 57,
+          "unreachable_live": 17,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 191,
+          "target_enemy": 53,
+          "blocked_live_fraction": 0.026845637583892617
+        },
+        {
+          "seed": 500723,
+          "known": 456,
+          "free": 89,
+          "blocked_live_short": 12,
+          "blocked": 12,
+          "blocked_live": 12,
+          "detour_ge4": 0,
+          "unreachable_live": 14,
+          "unreachable_short": 14,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 25,
+          "assignment_changed": 33,
+          "target_enemy": 23,
+          "blocked_live_fraction": 0.1348314606741573
+        },
+        {
+          "seed": 500724,
+          "known": 1345,
+          "free": 414,
+          "blocked_live_short": 25,
+          "blocked": 91,
+          "blocked_live": 88,
+          "detour_ge4": 0,
+          "unreachable_live": 100,
+          "unreachable_short": 29,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 63,
+          "target_enemy": 10,
+          "blocked_live_fraction": 0.21256038647342995
+        },
+        {
+          "seed": 500725,
+          "known": 304,
+          "free": 0,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 0,
+          "target_enemy": 0,
+          "blocked_live_fraction": null
+        },
+        {
+          "seed": 500726,
+          "known": 912,
+          "free": 96,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 2,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 4,
+          "target_enemy": 0,
+          "blocked_live_fraction": 0.0
+        },
+        {
+          "seed": 500727,
+          "known": 304,
+          "free": 52,
+          "blocked_live_short": 12,
+          "blocked": 14,
+          "blocked_live": 14,
+          "detour_ge4": 0,
+          "unreachable_live": 15,
+          "unreachable_short": 12,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 17,
+          "target_enemy": 29,
+          "blocked_live_fraction": 0.2692307692307692
+        },
+        {
+          "seed": 500728,
+          "known": 1100,
+          "free": 394,
+          "blocked_live_short": 4,
+          "blocked": 14,
+          "blocked_live": 13,
+          "detour_ge4": 48,
+          "unreachable_live": 19,
+          "unreachable_short": 6,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 147,
+          "assignment_changed": 133,
+          "target_enemy": 12,
+          "blocked_live_fraction": 0.03299492385786802
+        },
+        {
+          "seed": 500729,
+          "known": 608,
+          "free": 132,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 9,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 6,
+          "assignment_changed": 33,
+          "target_enemy": 12,
+          "blocked_live_fraction": 0.0
+        }
+      ],
+      "median_pair_free": 168.5,
+      "median_pair_blocked_live_fraction": 0.07804878048780488,
+      "trajectories": [
+        {
+          "seed": 500721,
+          "side": "player_0",
+          "tile": [
+            14,
+            8
+          ],
+          "uid": 15,
+          "length": 11,
+          "steps": [
+            {
+              "match_step": 82,
+              "position": [
+                15,
+                5
+              ],
+              "energy": 41.0,
+              "move_cost": 2.0,
+              "action": 4,
+              "manhattan": 4,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 83,
+              "position": [
+                14,
+                5
+              ],
+              "energy": 41.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 84,
+              "position": [
+                14,
+                6
+              ],
+              "energy": 43.0,
+              "move_cost": 2.0,
+              "action": 4,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 85,
+              "position": [
+                13,
+                6
+              ],
+              "energy": 47.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 86,
+              "position": [
+                13,
+                7
+              ],
+              "energy": 51.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 87,
+              "position": [
+                13,
+                8
+              ],
+              "energy": 51.0,
+              "move_cost": 2.0,
+              "action": 1,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 88,
+              "position": [
+                13,
+                7
+              ],
+              "energy": 55.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 89,
+              "position": [
+                13,
+                8
+              ],
+              "energy": 55.0,
+              "move_cost": 2.0,
+              "action": 1,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 90,
+              "position": [
+                13,
+                7
+              ],
+              "energy": 59.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 91,
+              "position": [
+                13,
+                8
+              ],
+              "energy": 25.0,
+              "move_cost": 2.0,
+              "action": 1,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 92,
+              "position": [
+                13,
+                7
+              ],
+              "energy": 17.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            }
+          ]
+        },
+        {
+          "seed": 500720,
+          "side": "player_0",
+          "tile": [
+            3,
+            10
+          ],
+          "uid": 5,
+          "length": 7,
+          "steps": [
+            {
+              "match_step": 26,
+              "position": [
+                1,
+                9
+              ],
+              "energy": 73.0,
+              "move_cost": 4.0,
+              "action": 2,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 27,
+              "position": [
+                2,
+                9
+              ],
+              "energy": 67.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 28,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 65.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 29,
+              "position": [
+                2,
+                11
+              ],
+              "energy": 66.0,
+              "move_cost": 4.0,
+              "action": 1,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 30,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 64.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 31,
+              "position": [
+                2,
+                11
+              ],
+              "energy": 65.0,
+              "move_cost": 4.0,
+              "action": 1,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 32,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 63.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            }
+          ]
+        },
+        {
+          "seed": 500724,
+          "side": "player_0",
+          "tile": [
+            10,
+            12
+          ],
+          "uid": 7,
+          "length": 7,
+          "steps": [
+            {
+              "match_step": 39,
+              "position": [
+                3,
+                6
+              ],
+              "energy": 177.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 13,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 40,
+              "position": [
+                3,
+                7
+              ],
+              "energy": 180.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 12,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 41,
+              "position": [
+                4,
+                7
+              ],
+              "energy": 186.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 11,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 42,
+              "position": [
+                5,
+                7
+              ],
+              "energy": 194.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 10,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 43,
+              "position": [
+                5,
+                8
+              ],
+              "energy": 199.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 9,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 44,
+              "position": [
+                5,
+                9
+              ],
+              "energy": 195.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 8,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 45,
+              "position": [
+                5,
+                10
+              ],
+              "energy": 186.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 7,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            }
+          ]
+        }
+      ],
+      "per_game": [
+        {
+          "seed": 500720,
+          "side": "player_0",
+          "known": 456,
+          "free": 96,
+          "blocked_live_short": 6,
+          "blocked": 8,
+          "blocked_live": 7,
+          "detour_ge4": 1,
+          "unreachable_live": 14,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 3,
+          "assignment_changed": 27,
+          "target_enemy": 25
+        },
+        {
+          "seed": 500720,
+          "side": "player_1",
+          "known": 456,
+          "free": 109,
+          "blocked_live_short": 7,
+          "blocked": 10,
+          "blocked_live": 9,
+          "detour_ge4": 0,
+          "unreachable_live": 21,
+          "unreachable_short": 8,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 18,
+          "target_enemy": 29
+        },
+        {
+          "seed": 500721,
+          "side": "player_0",
+          "known": 760,
+          "free": 282,
+          "blocked_live_short": 42,
+          "blocked": 54,
+          "blocked_live": 53,
+          "detour_ge4": 0,
+          "unreachable_live": 55,
+          "unreachable_short": 43,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 114,
+          "target_enemy": 6
+        },
+        {
+          "seed": 500721,
+          "side": "player_1",
+          "known": 760,
+          "free": 290,
+          "blocked_live_short": 39,
+          "blocked": 50,
+          "blocked_live": 49,
+          "detour_ge4": 0,
+          "unreachable_live": 50,
+          "unreachable_short": 39,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 117,
+          "target_enemy": 8
+        },
+        {
+          "seed": 500722,
+          "side": "player_0",
+          "known": 532,
+          "free": 156,
+          "blocked_live_short": 0,
+          "blocked": 1,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 30,
+          "target_enemy": 9
+        },
+        {
+          "seed": 500722,
+          "side": "player_1",
+          "known": 532,
+          "free": 440,
+          "blocked_live_short": 0,
+          "blocked": 16,
+          "blocked_live": 16,
+          "detour_ge4": 57,
+          "unreachable_live": 17,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 161,
+          "target_enemy": 44
+        },
+        {
+          "seed": 500723,
+          "side": "player_0",
+          "known": 228,
+          "free": 57,
+          "blocked_live_short": 6,
+          "blocked": 6,
+          "blocked_live": 6,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 12,
+          "assignment_changed": 21,
+          "target_enemy": 16
+        },
+        {
+          "seed": 500723,
+          "side": "player_1",
+          "known": 228,
+          "free": 32,
+          "blocked_live_short": 6,
+          "blocked": 6,
+          "blocked_live": 6,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 13,
+          "assignment_changed": 12,
+          "target_enemy": 7
+        },
+        {
+          "seed": 500724,
+          "side": "player_0",
+          "known": 695,
+          "free": 204,
+          "blocked_live_short": 12,
+          "blocked": 47,
+          "blocked_live": 46,
+          "detour_ge4": 0,
+          "unreachable_live": 52,
+          "unreachable_short": 14,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 31,
+          "target_enemy": 3
+        },
+        {
+          "seed": 500724,
+          "side": "player_1",
+          "known": 650,
+          "free": 210,
+          "blocked_live_short": 13,
+          "blocked": 44,
+          "blocked_live": 42,
+          "detour_ge4": 0,
+          "unreachable_live": 48,
+          "unreachable_short": 15,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 32,
+          "target_enemy": 7
+        },
+        {
+          "seed": 500725,
+          "side": "player_0",
+          "known": 152,
+          "free": 0,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 0,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500725,
+          "side": "player_1",
+          "known": 152,
+          "free": 0,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 0,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500726,
+          "side": "player_0",
+          "known": 456,
+          "free": 48,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 1,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 2,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500726,
+          "side": "player_1",
+          "known": 456,
+          "free": 48,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 1,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 2,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500727,
+          "side": "player_0",
+          "known": 152,
+          "free": 20,
+          "blocked_live_short": 6,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 6,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 7,
+          "target_enemy": 12
+        },
+        {
+          "seed": 500727,
+          "side": "player_1",
+          "known": 152,
+          "free": 32,
+          "blocked_live_short": 6,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 0,
+          "unreachable_live": 8,
+          "unreachable_short": 6,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 10,
+          "target_enemy": 17
+        },
+        {
+          "seed": 500728,
+          "side": "player_0",
+          "known": 568,
+          "free": 187,
+          "blocked_live_short": 3,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 24,
+          "unreachable_live": 10,
+          "unreachable_short": 4,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 74,
+          "assignment_changed": 66,
+          "target_enemy": 8
+        },
+        {
+          "seed": 500728,
+          "side": "player_1",
+          "known": 532,
+          "free": 207,
+          "blocked_live_short": 1,
+          "blocked": 7,
+          "blocked_live": 6,
+          "detour_ge4": 24,
+          "unreachable_live": 9,
+          "unreachable_short": 2,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 73,
+          "assignment_changed": 67,
+          "target_enemy": 4
+        },
+        {
+          "seed": 500729,
+          "side": "player_0",
+          "known": 304,
+          "free": 61,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 1,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 6,
+          "assignment_changed": 18,
+          "target_enemy": 5
+        },
+        {
+          "seed": 500729,
+          "side": "player_1",
+          "known": 304,
+          "free": 71,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 8,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 15,
+          "target_enemy": 7
+        }
+      ],
+      "diagonal_primary_window_steps": 608
+    },
+    "v4": {
+      "games": 20,
+      "known": 8574,
+      "free": 2335,
+      "free_fraction": 0.27233496617681363,
+      "assignment": {
+        "live": 2192,
+        "negative": 106,
+        "none": 37
+      },
+      "live_move_fraction": 0.8462591240875912,
+      "old_map_progress": {
+        "1": 1051,
+        "0": 189,
+        "-1": 48
+      },
+      "bfs_bins": {
+        "3-5": 462,
+        "0-2": 360,
+        "6+": 1043,
+        "unreachable": 327
+      },
+      "counts": {
+        "blocked_live_short": {
+          "count": 165,
+          "fraction_of_free": 0.07066381156316917,
+          "maps": 6,
+          "games": 12,
+          "frequency_threshold_only_not_selection": false
+        },
+        "blocked": {
+          "count": 290,
+          "fraction_of_free": 0.12419700214132762,
+          "maps": 7,
+          "games": 13,
+          "frequency_threshold_only_not_selection": true
+        },
+        "blocked_live": {
+          "count": 282,
+          "fraction_of_free": 0.12077087794432548,
+          "maps": 6,
+          "games": 12,
+          "frequency_threshold_only_not_selection": true
+        },
+        "detour_ge4": {
+          "count": 58,
+          "fraction_of_free": 0.024839400428265525,
+          "maps": 4,
+          "games": 6,
+          "frequency_threshold_only_not_selection": false
+        },
+        "unreachable_live": {
+          "count": 327,
+          "fraction_of_free": 0.14004282655246253,
+          "maps": 7,
+          "games": 14,
+          "frequency_threshold_only_not_selection": true
+        },
+        "unreachable_short": {
+          "count": 178,
+          "fraction_of_free": 0.07623126338329765,
+          "maps": 6,
+          "games": 12,
+          "frequency_threshold_only_not_selection": false
+        },
+        "tight_stay": {
+          "count": 0,
+          "fraction_of_free": 0.0,
+          "maps": 0,
+          "games": 0,
+          "frequency_threshold_only_not_selection": false
+        },
+        "tight_streak_ge3": {
+          "count": 0,
+          "fraction_of_free": 0.0,
+          "maps": 0,
+          "games": 0,
+          "frequency_threshold_only_not_selection": false
+        },
+        "low_energy": {
+          "count": 248,
+          "fraction_of_free": 0.10620985010706638,
+          "maps": 5,
+          "games": 8,
+          "frequency_threshold_only_not_selection": true
+        },
+        "assignment_changed": {
+          "count": 681,
+          "fraction_of_free": 0.29164882226980726,
+          "maps": 10,
+          "games": 19,
+          "frequency_threshold_only_not_selection": true
+        },
+        "target_enemy": {
+          "count": 169,
+          "fraction_of_free": 0.07237687366167024,
+          "maps": 10,
+          "games": 18,
+          "frequency_threshold_only_not_selection": false
+        }
+      },
+      "per_map": [
+        {
+          "seed": 500720,
+          "known": 912,
+          "free": 203,
+          "blocked_live_short": 14,
+          "blocked": 17,
+          "blocked_live": 16,
+          "detour_ge4": 0,
+          "unreachable_live": 34,
+          "unreachable_short": 16,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 19,
+          "assignment_changed": 40,
+          "target_enemy": 61,
+          "blocked_live_fraction": 0.07881773399014778
+        },
+        {
+          "seed": 500721,
+          "known": 1520,
+          "free": 579,
+          "blocked_live_short": 73,
+          "blocked": 106,
+          "blocked_live": 104,
+          "detour_ge4": 0,
+          "unreachable_live": 109,
+          "unreachable_short": 76,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 240,
+          "target_enemy": 12,
+          "blocked_live_fraction": 0.17962003454231434
+        },
+        {
+          "seed": 500722,
+          "known": 988,
+          "free": 281,
+          "blocked_live_short": 0,
+          "blocked": 1,
+          "blocked_live": 0,
+          "detour_ge4": 1,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 47,
+          "target_enemy": 10,
+          "blocked_live_fraction": 0.0
+        },
+        {
+          "seed": 500723,
+          "known": 456,
+          "free": 90,
+          "blocked_live_short": 12,
+          "blocked": 12,
+          "blocked_live": 12,
+          "detour_ge4": 0,
+          "unreachable_live": 14,
+          "unreachable_short": 14,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 25,
+          "assignment_changed": 34,
+          "target_enemy": 23,
+          "blocked_live_fraction": 0.13333333333333333
+        },
+        {
+          "seed": 500724,
+          "known": 1388,
+          "free": 433,
+          "blocked_live_short": 43,
+          "blocked": 108,
+          "blocked_live": 104,
+          "detour_ge4": 1,
+          "unreachable_live": 114,
+          "unreachable_short": 46,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 95,
+          "target_enemy": 9,
+          "blocked_live_fraction": 0.24018475750577367
+        },
+        {
+          "seed": 500725,
+          "known": 304,
+          "free": 2,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 1,
+          "target_enemy": 2,
+          "blocked_live_fraction": 0.0
+        },
+        {
+          "seed": 500726,
+          "known": 912,
+          "free": 113,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 2,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 8,
+          "assignment_changed": 7,
+          "target_enemy": 1,
+          "blocked_live_fraction": 0.0
+        },
+        {
+          "seed": 500727,
+          "known": 304,
+          "free": 38,
+          "blocked_live_short": 12,
+          "blocked": 14,
+          "blocked_live": 14,
+          "detour_ge4": 0,
+          "unreachable_live": 15,
+          "unreachable_short": 13,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 12,
+          "target_enemy": 14,
+          "blocked_live_fraction": 0.3684210526315789
+        },
+        {
+          "seed": 500728,
+          "known": 1182,
+          "free": 489,
+          "blocked_live_short": 11,
+          "blocked": 32,
+          "blocked_live": 32,
+          "detour_ge4": 49,
+          "unreachable_live": 39,
+          "unreachable_short": 13,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 181,
+          "assignment_changed": 179,
+          "target_enemy": 18,
+          "blocked_live_fraction": 0.065439672801636
+        },
+        {
+          "seed": 500729,
+          "known": 608,
+          "free": 107,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 7,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 26,
+          "target_enemy": 19,
+          "blocked_live_fraction": 0.0
+        }
+      ],
+      "median_pair_free": 158.0,
+      "median_pair_blocked_live_fraction": 0.07212870339589189,
+      "trajectories": [
+        {
+          "seed": 500724,
+          "side": "player_1",
+          "tile": [
+            7,
+            14
+          ],
+          "uid": 9,
+          "length": 10,
+          "steps": [
+            {
+              "match_step": 53,
+              "position": [
+                6,
+                13
+              ],
+              "energy": 170.0,
+              "move_cost": 1.0,
+              "action": 1,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 54,
+              "position": [
+                6,
+                12
+              ],
+              "energy": 175.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 55,
+              "position": [
+                7,
+                12
+              ],
+              "energy": 183.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 56,
+              "position": [
+                8,
+                12
+              ],
+              "energy": 190.0,
+              "move_cost": 1.0,
+              "action": 4,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 57,
+              "position": [
+                7,
+                12
+              ],
+              "energy": 198.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 58,
+              "position": [
+                8,
+                12
+              ],
+              "energy": 205.0,
+              "move_cost": 1.0,
+              "action": 4,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 59,
+              "position": [
+                7,
+                12
+              ],
+              "energy": 213.0,
+              "move_cost": 1.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 60,
+              "position": [
+                7,
+                13
+              ],
+              "energy": 216.0,
+              "move_cost": 1.0,
+              "action": 4,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 61,
+              "position": [
+                6,
+                13
+              ],
+              "energy": 223.0,
+              "move_cost": 1.0,
+              "action": 2,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 62,
+              "position": [
+                7,
+                13
+              ],
+              "energy": 226.0,
+              "move_cost": 1.0,
+              "action": 4,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            }
+          ]
+        },
+        {
+          "seed": 500721,
+          "side": "player_0",
+          "tile": [
+            14,
+            8
+          ],
+          "uid": 8,
+          "length": 8,
+          "steps": [
+            {
+              "match_step": 82,
+              "position": [
+                8,
+                1
+              ],
+              "energy": 92.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 13,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 83,
+              "position": [
+                8,
+                2
+              ],
+              "energy": 92.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 12,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 84,
+              "position": [
+                8,
+                3
+              ],
+              "energy": 96.0,
+              "move_cost": 2.0,
+              "action": 3,
+              "manhattan": 11,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 85,
+              "position": [
+                8,
+                4
+              ],
+              "energy": 102.0,
+              "move_cost": 2.0,
+              "action": 2,
+              "manhattan": 10,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 86,
+              "position": [
+                9,
+                4
+              ],
+              "energy": 105.0,
+              "move_cost": 2.0,
+              "action": 2,
+              "manhattan": 9,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 87,
+              "position": [
+                10,
+                4
+              ],
+              "energy": 103.0,
+              "move_cost": 2.0,
+              "action": 2,
+              "manhattan": 8,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 88,
+              "position": [
+                11,
+                4
+              ],
+              "energy": 94.0,
+              "move_cost": 2.0,
+              "action": 2,
+              "manhattan": 7,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 89,
+              "position": [
+                12,
+                4
+              ],
+              "energy": 87.0,
+              "move_cost": 2.0,
+              "action": 2,
+              "manhattan": 6,
+              "target_blocked": true,
+              "visible_threat": true,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            }
+          ]
+        },
+        {
+          "seed": 500720,
+          "side": "player_0",
+          "tile": [
+            3,
+            10
+          ],
+          "uid": 5,
+          "length": 7,
+          "steps": [
+            {
+              "match_step": 26,
+              "position": [
+                1,
+                9
+              ],
+              "energy": 73.0,
+              "move_cost": 4.0,
+              "action": 2,
+              "manhattan": 3,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 27,
+              "position": [
+                2,
+                9
+              ],
+              "energy": 67.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 28,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 65.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 29,
+              "position": [
+                2,
+                11
+              ],
+              "energy": 66.0,
+              "move_cost": 4.0,
+              "action": 1,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 30,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 64.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            },
+            {
+              "match_step": 31,
+              "position": [
+                2,
+                11
+              ],
+              "energy": 65.0,
+              "move_cost": 4.0,
+              "action": 1,
+              "manhattan": 2,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": true
+            },
+            {
+              "match_step": 32,
+              "position": [
+                2,
+                10
+              ],
+              "energy": 63.0,
+              "move_cost": 4.0,
+              "action": 3,
+              "manhattan": 1,
+              "target_blocked": true,
+              "visible_threat": false,
+              "target_enemy_occupied": false,
+              "map_changed": false
+            }
+          ]
+        }
+      ],
+      "per_game": [
+        {
+          "seed": 500720,
+          "side": "player_0",
+          "known": 456,
+          "free": 93,
+          "blocked_live_short": 6,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 0,
+          "unreachable_live": 13,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 4,
+          "assignment_changed": 20,
+          "target_enemy": 29
+        },
+        {
+          "seed": 500720,
+          "side": "player_1",
+          "known": 456,
+          "free": 110,
+          "blocked_live_short": 8,
+          "blocked": 10,
+          "blocked_live": 9,
+          "detour_ge4": 0,
+          "unreachable_live": 21,
+          "unreachable_short": 9,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 20,
+          "target_enemy": 32
+        },
+        {
+          "seed": 500721,
+          "side": "player_0",
+          "known": 760,
+          "free": 293,
+          "blocked_live_short": 33,
+          "blocked": 54,
+          "blocked_live": 53,
+          "detour_ge4": 0,
+          "unreachable_live": 55,
+          "unreachable_short": 34,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 120,
+          "target_enemy": 6
+        },
+        {
+          "seed": 500721,
+          "side": "player_1",
+          "known": 760,
+          "free": 286,
+          "blocked_live_short": 40,
+          "blocked": 52,
+          "blocked_live": 51,
+          "detour_ge4": 0,
+          "unreachable_live": 54,
+          "unreachable_short": 42,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 120,
+          "target_enemy": 6
+        },
+        {
+          "seed": 500722,
+          "side": "player_0",
+          "known": 532,
+          "free": 156,
+          "blocked_live_short": 0,
+          "blocked": 1,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 15,
+          "assignment_changed": 30,
+          "target_enemy": 9
+        },
+        {
+          "seed": 500722,
+          "side": "player_1",
+          "known": 456,
+          "free": 125,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 1,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 17,
+          "target_enemy": 1
+        },
+        {
+          "seed": 500723,
+          "side": "player_0",
+          "known": 228,
+          "free": 58,
+          "blocked_live_short": 6,
+          "blocked": 6,
+          "blocked_live": 6,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 12,
+          "assignment_changed": 22,
+          "target_enemy": 16
+        },
+        {
+          "seed": 500723,
+          "side": "player_1",
+          "known": 228,
+          "free": 32,
+          "blocked_live_short": 6,
+          "blocked": 6,
+          "blocked_live": 6,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 13,
+          "assignment_changed": 12,
+          "target_enemy": 7
+        },
+        {
+          "seed": 500724,
+          "side": "player_0",
+          "known": 695,
+          "free": 215,
+          "blocked_live_short": 12,
+          "blocked": 47,
+          "blocked_live": 46,
+          "detour_ge4": 0,
+          "unreachable_live": 52,
+          "unreachable_short": 14,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 35,
+          "target_enemy": 4
+        },
+        {
+          "seed": 500724,
+          "side": "player_1",
+          "known": 693,
+          "free": 218,
+          "blocked_live_short": 31,
+          "blocked": 61,
+          "blocked_live": 58,
+          "detour_ge4": 1,
+          "unreachable_live": 62,
+          "unreachable_short": 32,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 60,
+          "target_enemy": 5
+        },
+        {
+          "seed": 500725,
+          "side": "player_0",
+          "known": 152,
+          "free": 2,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 1,
+          "target_enemy": 2
+        },
+        {
+          "seed": 500725,
+          "side": "player_1",
+          "known": 152,
+          "free": 0,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 0,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500726,
+          "side": "player_0",
+          "known": 456,
+          "free": 65,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 1,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 8,
+          "assignment_changed": 5,
+          "target_enemy": 1
+        },
+        {
+          "seed": 500726,
+          "side": "player_1",
+          "known": 456,
+          "free": 48,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 0,
+          "unreachable_live": 1,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 2,
+          "target_enemy": 0
+        },
+        {
+          "seed": 500727,
+          "side": "player_0",
+          "known": 152,
+          "free": 19,
+          "blocked_live_short": 6,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 0,
+          "unreachable_live": 8,
+          "unreachable_short": 7,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 6,
+          "target_enemy": 7
+        },
+        {
+          "seed": 500727,
+          "side": "player_1",
+          "known": 152,
+          "free": 19,
+          "blocked_live_short": 6,
+          "blocked": 7,
+          "blocked_live": 7,
+          "detour_ge4": 0,
+          "unreachable_live": 7,
+          "unreachable_short": 6,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 6,
+          "target_enemy": 7
+        },
+        {
+          "seed": 500728,
+          "side": "player_0",
+          "known": 624,
+          "free": 246,
+          "blocked_live_short": 4,
+          "blocked": 13,
+          "blocked_live": 13,
+          "detour_ge4": 28,
+          "unreachable_live": 17,
+          "unreachable_short": 5,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 91,
+          "assignment_changed": 105,
+          "target_enemy": 14
+        },
+        {
+          "seed": 500728,
+          "side": "player_1",
+          "known": 558,
+          "free": 243,
+          "blocked_live_short": 7,
+          "blocked": 19,
+          "blocked_live": 19,
+          "detour_ge4": 21,
+          "unreachable_live": 22,
+          "unreachable_short": 8,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 90,
+          "assignment_changed": 74,
+          "target_enemy": 4
+        },
+        {
+          "seed": 500729,
+          "side": "player_0",
+          "known": 304,
+          "free": 68,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 5,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 17,
+          "target_enemy": 14
+        },
+        {
+          "seed": 500729,
+          "side": "player_1",
+          "known": 304,
+          "free": 39,
+          "blocked_live_short": 0,
+          "blocked": 0,
+          "blocked_live": 0,
+          "detour_ge4": 2,
+          "unreachable_live": 0,
+          "unreachable_short": 0,
+          "tight_stay": 0,
+          "tight_streak_ge3": 0,
+          "low_energy": 0,
+          "assignment_changed": 9,
+          "target_enemy": 5
+        }
+      ],
+      "diagonal_primary_window_steps": 608
+    }
+  },
+  "primary_gate": {
+    "indicator": "live unreachable assignment with Manhattan<=2",
+    "require_maps": 3,
+    "require_free_fraction": 0.1,
+    "passed_v3": false,
+    "passed_v4": false,
+    "broader_posthoc_categories_not_eligible": true
+  },
+  "decision": "NO PATCH under strict predeclared short-distance gate: blocked live assignments with Manhattan<=2 are 5.76%/7.07%, below10%; all-distance blocked-goal counts are descriptive only. Do not substitute a broader post-hoc denominator/union."
+}

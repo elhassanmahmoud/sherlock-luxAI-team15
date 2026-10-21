@@ -1,0 +1,13 @@
+# Unabhängiger Point-flow-Gegenreview — 21.10.2026
+
+**Entscheidung: kein Zielpatch.** Reine Quellen-/Stdlib-Auswertung vorhandener40Spiele; keine Modelle geladen, keine Spiele oder Repositoryänderungen.
+
+Das primäre Fenster ist Match3, Schritte20–95, bekannte strikte eigene Hälfte. Der enge Indikator `BFS unerreichbar und Manhattan<=2` beträgt V3 158/2550=6,20%, V4 178/2335=7,62%, jeweils sechs Karten. Davon blockiertes Ziel mit lebender Zuweisung:147/2550=5,76% bzw165/2335=7,07%. Damit wird der10%-Arbeitsfilter nicht erfüllt. Die nachträglich breitere Kategorie aller blockierten lebend zugewiesenen Ziele261/282 enthält114/117 Fälle mit Manhattan>2 und darf den engen Indikator nicht ersetzen.
+
+Die Engine bewegt Units vor dem Kartendrift (`env.py:255–279`, `649–660`), danach zählt sie Relicpunkte ausschließlich anhand Belegung, Relicaktivität und nichtnegativer Energie (`699–704`), ohne Tiletypprüfung. Eine Unit kann auf einem darunter gedrifteten Asteroiden stehen und weiter punkten. Tatsächlich405/404 bereits besetzte blockierte Feldschritte im Primärfenster; ein späterer Filter müsste solche Belegung erhalten.
+
+`belief.passable` ist ausdrücklich letztes Wissen (`belief.py:544–546`). `last_seen` wird auch für symmetrisch gespiegelte Sicht aktualisiert, `tile_type` hingegen nur für direkt sichtbare Sensorfelder (`268–280`). Deshalb ist `last_seen==match_step` kein sicherer Frischebeleg für den Tiletyp. Ein eventueller späterer, gesondert begründeter Versuch müsste aktuelle direkte Sicht aus dem passend kanonisierten `sensor_mask` verwenden, Belegung schützen und Punktwissen unangetastet lassen. Diese Sichtbarkeitsmenge wurde nicht aufgezeichnet; ihre Häufigkeit ist unbekannt. Auch Zielfreigabe durch künftigen Drift kann frühe Anreise sinnvoll machen.
+
+Kanonisierung: Belief spiegelt für Team1 bei canonical=True Sensor/Karte/Positionen zusammen (`belief.py:199–217`); strikte eigene Hälfte dann x+y<W−1, ohne Kanonisierung bei Team1 x+y>W−1. Diagonale getrennt. Ein eventueller Poolfilter dürfte ausgeschlossene Punktkoordinaten nicht über Erkundungs-/Relic-Fallbacks wieder einführen (`features.py:130–163`), aber dafür besteht jetzt kein Umsetzungsauftrag.
+
+Keine enge Stay-Beobachtung, kein optimaler Gegenentwurf und kein Stärke-/Kausalnachweis. Der breite Befund bleibt Diagnose, kein nachträglich bestandenes Vorabgate. Rohdaten-SHAs: V3 b28c6d4686cf4afda8e8c0641eb0c7cc17c181935317e4cc7a5d9e8679cef479; V4 afffb6a7e9c45f5865f683d98d633d69471e7fa3baf2c3e132ec66b42a871962. Historischer Lauf-HEAD8517f88; spätere reine Archivcommits ändern diesen Herkunftsbeleg nicht.

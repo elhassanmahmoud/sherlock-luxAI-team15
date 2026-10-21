@@ -1,0 +1,79 @@
+import copy,importlib.util,sys,unittest
+from pathlib import Path
+from types import SimpleNamespace
+import numpy as np
+p=Path('/tmp/sherlock-point-flow.py')
+spec=importlib.util.spec_from_file_location('flow',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+class Tests(unittest.TestCase):
+ def setUp(self):self.assertTrue(hasattr(m,'Observer'),'Observer not implemented')
+ def ctx(self):
+  points=np.zeros((6,6),bool);points[3,1]=True
+  return dict(step=1,match_idx=2,match_step=30,W=6,H=6,belief=SimpleNamespace(canonical=True,team_id=0),point_tiles=points,passable=np.ones((6,6),bool),ally_ids=np.array([0]),ally_pos=np.array([[2,1]]),ally_ene=np.array([20.]),enemy_coords=np.empty((0,2),int),enemy_energies=np.array([]),assigned={0:(3,1)},move_cost=3,sap_range=2)
+ def test_observation_no_mutation_streak_duplicate_and_reset(self):
+  c=self.ctx();before=copy.deepcopy(c);o=m.Observer();a=np.array([[0,0,0]]);mask={0:np.ones(6,bool)}
+  for step in (1,2,3):c['step']=step;rows=o.observe(c,mask,a,False)
+  self.assertEqual(rows[0]['stall_streak'],3);self.assertEqual(o.observe(c,mask,a,False),[])
+  for key in ('point_tiles','passable','ally_pos','ally_ene'):self.assertTrue(np.array_equal(c[key],before[key]))
+  self.assertEqual(a.tolist(),[[0,0,0]]);o.boundary();c['step']=4
+  self.assertEqual(o.observe(c,mask,a,False)[0]['stall_streak'],1)
+ def test_zero_negative_energy_and_sap(self):
+  c=self.ctx();c['ally_pos'][0]=[3,1];c['ally_ene'][0]=0
+  self.assertTrue(m.Observer().observe(c,{0:np.ones(6,bool)},np.array([[0,0,0]]),False)[0]['occupied'])
+  c['ally_ene'][0]=-1;r=m.Observer().observe(c,{0:np.ones(6,bool)},np.array([[0,0,0]]),False)[0]
+  self.assertFalse(r['occupied']);self.assertEqual(r['assignment'],'negative')
+  c=self.ctx();r=m.Observer().observe(c,{0:np.ones(6,bool)},np.array([[5,1,0]]),False)[0]
+  self.assertFalse(r['tight_stay']);self.assertEqual(r['action'],5)
+ def test_bfs_detour_blocked_and_final_action_mirror(self):
+  c=self.ctx();c['ally_pos'][0]=[1,1];c['passable'][2,:]=False;c['passable'][2,4]=True
+  r=m.Observer().observe(c,{0:np.ones(6,bool)},np.array([[1,0,0]]),True)[0]
+  self.assertEqual(r['action'],2);self.assertEqual(r['manhattan'],2);self.assertEqual(r['bfs'],8)
+  c['passable'][3,1]=False;r=m.Observer().observe(c,{0:np.ones(6,bool)},np.zeros((1,3),int),False)[0]
+  self.assertTrue(r['target_blocked']);self.assertIsNone(r['bfs'])
+ def test_progress_old_target_and_change(self):
+  c=self.ctx();c['ally_pos'][0]=[1,1];o=m.Observer();mask={0:np.ones(6,bool)};a=np.array([[2,0,0]])
+  o.observe(c,mask,a,False);c['step']=2;c['ally_pos'][0]=[2,1]
+  r=o.observe(c,mask,a,False)[0];self.assertEqual(r['old_map_progress'],1);self.assertTrue(r['same_assignment'])
+  c['step']=3;c['assigned']={};r=o.observe(c,mask,a,False)[0];self.assertFalse(r['same_assignment']);self.assertTrue(r['assignment_changed'])
+ def test_diagonal_separate_target_enemy_and_copied_position(self):
+  c=self.ctx();c['point_tiles'][2,3]=True;c['enemy_coords']=np.array([[3,1]]);c['enemy_energies']=np.array([20.])
+  rows=m.Observer().observe(c,{0:np.ones(6,bool)},np.zeros((1,3),int),False)
+  self.assertEqual(len(rows),2)
+  own=next(r for r in rows if r.get('region')=='own');diagonal=next(r for r in rows if r.get('region')=='diagonal')
+  self.assertTrue(own['target_enemy_occupied']);self.assertFalse(diagonal['target_enemy_occupied'])
+  self.assertEqual(own['position'],[2,1]);self.assertEqual(own['move_cost'],3);self.assertFalse(own['energy_below_move_cost'])
+  c['ally_pos'][0]=[0,0];self.assertEqual(own['position'],[2,1])
+  self.assertEqual(m.summary(rows)['known_own_tile_steps'],1)
+ def test_assignment_change_closes_censored_episode(self):
+  c=self.ctx();o=m.Observer();mask={0:np.ones(6,bool)};a=np.zeros((1,3),int)
+  o.observe(c,mask,a,False);c['step']=2;c['assigned']={};o.observe(c,mask,a,False)
+  self.assertEqual(len(o.episodes),1);self.assertEqual(o.episodes[0]['end_reason'],'assignment_changed')
+  self.assertTrue(o.episodes[0]['censored']);self.assertEqual(o.episodes[0]['duration'],1)
+ def test_lifecycle_causes_are_explicit(self):
+  for cause in ('mask_loss','negative_energy','jump_gt1'):
+   c=self.ctx();o=m.Observer();mask={0:np.ones(6,bool)};a=np.zeros((1,3),int);o.observe(c,mask,a,False);c['step']=2
+   if cause=='mask_loss':c['ally_ids']=np.array([],int);c['assigned']={}
+   elif cause=='negative_energy':c['ally_ene'][0]=-1
+   else:c['ally_pos'][0]=[0,1]
+   row=o.observe(c,mask,a,False)[0]
+   self.assertEqual(row.get('lifecycle_break'),cause);self.assertFalse(row['same_assignment'])
+ def test_modified_plan_rejected_before_runtime(self):
+  import tempfile
+  from unittest.mock import patch
+  with tempfile.TemporaryDirectory() as directory:
+   plan=Path(directory)/'plan.md';plan.write_text('reviewed');expected=m.sha(plan);plan.write_text('changed')
+   with patch.object(m,'PLAN',plan),patch.object(m,'PLAN_SHA',expected):
+    with self.assertRaisesRegex(RuntimeError,'Approved observation plan changed'):m.run(True)
+ def test_child_without_parent_never_imports_models(self):
+  import tempfile
+  from unittest.mock import patch
+  with tempfile.TemporaryDirectory() as directory,patch.object(m,'OUT',Path(directory)):
+   with self.assertRaises(RuntimeError):m.child('v3')
+  self.assertNotIn('torch',sys.modules);self.assertNotIn('jax',sys.modules)
+ def test_reference_first_difference_raises(self):
+  expected={'result':'1','steps':'303','secs':'8'}
+  m.check_result({'result':1,'steps':303,'secs':0},expected)
+  with self.assertRaises(RuntimeError):m.check_result({'result':0,'steps':303,'secs':0},expected)
+if __name__=='__main__':
+ result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+ assert 'torch' not in sys.modules and 'jax' not in sys.modules
+ if not result.wasSuccessful():raise SystemExit(1)

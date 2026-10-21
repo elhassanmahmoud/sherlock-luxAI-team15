@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 21.10.2026: 40-Spiel-Punktfeld-Diagnose vollständig geprüft, kein enger Häufigkeitsfilter erfüllt, kein Patch. Siehe [Review](../experiments/analysis/autonomous_20261020/post_exploration_point_flow/point-flow-final-review.md). Neuer einmaliger V4-Vergleich vorab unter [Plan](superpowers/plans/2026-10-21-v4-independent-confirmation.md) festgelegt; Ergebnisse folgen.
+
 Festgelegt am **10.10.2026, vor dem Start der Trainingsläufe** (Commit, mit dem der Batch gestartet wurde: siehe `git` in jeder `manifest.json`).
 Änderungen am Protokoll nach Ansicht der Testergebnisse werden unten im Abschnitt *Änderungen* mit Datum und Grund eingetragen.
 

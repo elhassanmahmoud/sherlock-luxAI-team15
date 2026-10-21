@@ -5,7 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 21.10.2026, 07:35 – Codex: Exploration vollständig, kein Kandidat zur Übernahme
+## 21.10.2026, 07:31 – Codex: Diagnose abgeschlossen, Arbeit bis 09:00 verlängert
+
+Moayed hat die autonome Arbeit bis 09:00 verlängert. Nach der Nutzungslimit-Unterbrechung liefen die bereits gestarteten Programme selbstständig fertig; aktive LLM-Reviews und Pushes wurden erst nach Wiederaufnahme abgeschlossen. Die 40 Beobachtungsspiele reproduzieren sämtliche nichtzeitlichen Referenzwerte. [Punktfeld-Review](../experiments/analysis/autonomous_20261020/post_exploration_point_flow/point-flow-final-review.md): unerreichbare nahe Ziele betreffen 6,20%/7,62% freier bekannter eigener Feld-Schritte bei V3/V4; unter dem vorher gesetzten 10%-Arbeitsfilter. Null enge Stillstandssegmente. Kein Zuweisungspatch. Blockierte Fernziele nicht nachträglich zum Bestehen des Gates hinzurechnen. Bereits besetzte Asteroidenfelder können weiter punkten; ein späterer Filter müsste aktuelle direkte Sicht und Belegung beachten.
+
+Als einmaligen nächsten Schritt V4 gegenüber V3 auf neuen Karten prüfen: [vorab veröffentlichter Plan](superpowers/plans/2026-10-21-v4-independent-confirmation.md). Reserviert 510400–510799 für 800 direkte Spiele und 510800–510999 für 1600 gepaarte Gegner-Spiele. Alte Daten werden nicht gepoolt, keine ergebnisabhängige Stichprobenverlängerung. Übernahme nur bei allen festgelegten Gates und technischen Prüfungen. Bisherige Abgabe und Sicherung unverändert. Dies ist eine Planung, noch kein Testergebnis.
+
+## 21.10.2026, 07:27 – Codex: Exploration vollständig, kein Kandidat zur Übernahme
 
 Die vorab festgelegten Starts47–49 wurden jeweils mit Kontrolle (Epsilon-Abfall60000 Schritte) und langsamem Abfall454500 vollständig trainiert: **18000 Trainingsspiele,1440 Einzelnetz-Auswertungen,1200 Ensemble-Auswertungen**. Gleiches Curriculum und gleiche Anfangstensoren je Paar; kein Start und kein Trainingshorizont nach Ergebnissen ausgewählt. [Aggregation](../experiments/analysis/autonomous_20261020/exploration_aggregate.md): langsamer Abfall gegen Solution_92 im Mittel48,06% statt61,11%, **Δ−13,06pp**, Karten-KI[−19,17;−6,94]; default93,89% statt97,78%, Δ−3,89pp. **0/3 Starts positiv**, Methodengate verfehlt.
 

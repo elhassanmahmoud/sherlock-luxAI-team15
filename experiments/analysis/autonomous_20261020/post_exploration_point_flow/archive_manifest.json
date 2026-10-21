@@ -1,0 +1,129 @@
+{
+  "schema": "point_flow_archive_v1",
+  "historical_run_head": "8517f88594e0e909a7d631e197e98b1ed4ca9dcb",
+  "snapshots": [
+    {
+      "source": "/tmp/sherlock-point-flow.py",
+      "snapshot": "historical_snapshots/sherlock-point-flow.py.txt",
+      "sha256": "ff009a571cd064779d3a7feae824cf7316854133d7f845863619c983d539258f",
+      "bytes": 15354
+    },
+    {
+      "source": "/tmp/test_sherlock_point_flow.py",
+      "snapshot": "historical_snapshots/test_sherlock_point_flow.py.txt",
+      "sha256": "48562f348342d950cd0d481f3a6618946218769725fd574abf3d39b3e2d7d577",
+      "bytes": 5819
+    },
+    {
+      "source": "/tmp/sherlock-post-exploration-plan.md",
+      "snapshot": "historical_snapshots/sherlock-post-exploration-plan.md.txt",
+      "sha256": "c6fca120f42c5d99565aadee87a7163aeff825455e98846eb34d9edfb1c1777f",
+      "bytes": 6909
+    },
+    {
+      "source": "/tmp/exploration_ensemble_eval.py",
+      "snapshot": "historical_snapshots/exploration_ensemble_eval.py.txt",
+      "sha256": "27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e",
+      "bytes": 28165
+    },
+    {
+      "source": "/tmp/point_flow_final_audit.py",
+      "snapshot": "historical_snapshots/point_flow_final_audit.py.txt",
+      "sha256": "5b59d29741477fef5270df419fadb3d29607eeec2c0686c3658faadf9413cbf1",
+      "bytes": 7837
+    }
+  ],
+  "compressed_raw": [
+    {
+      "raw": "v3_observations.jsonl",
+      "gzip": "v3_observations.jsonl.gz",
+      "raw_bytes": 15713000,
+      "gzip_bytes": 325915,
+      "uncompressed_sha256": "b28c6d4686cf4afda8e8c0641eb0c7cc17c181935317e4cc7a5d9e8679cef479"
+    },
+    {
+      "raw": "v4_observations.jsonl",
+      "gzip": "v4_observations.jsonl.gz",
+      "raw_bytes": 15721554,
+      "gzip_bytes": 324467,
+      "uncompressed_sha256": "afffb6a7e9c45f5865f683d98d633d69471e7fa3baf2c3e132ec66b42a871962"
+    }
+  ],
+  "files": {
+    "historical_snapshots/exploration_ensemble_eval.py.txt": {
+      "bytes": 28165,
+      "sha256": "27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e"
+    },
+    "historical_snapshots/point_flow_final_audit.py.txt": {
+      "bytes": 7837,
+      "sha256": "5b59d29741477fef5270df419fadb3d29607eeec2c0686c3658faadf9413cbf1"
+    },
+    "historical_snapshots/sherlock-point-flow.py.txt": {
+      "bytes": 15354,
+      "sha256": "ff009a571cd064779d3a7feae824cf7316854133d7f845863619c983d539258f"
+    },
+    "historical_snapshots/sherlock-post-exploration-plan.md.txt": {
+      "bytes": 6909,
+      "sha256": "c6fca120f42c5d99565aadee87a7163aeff825455e98846eb34d9edfb1c1777f"
+    },
+    "historical_snapshots/test_sherlock_point_flow.py.txt": {
+      "bytes": 5819,
+      "sha256": "48562f348342d950cd0d481f3a6618946218769725fd574abf3d39b3e2d7d577"
+    },
+    "point-flow-final-review.json": {
+      "bytes": 57411,
+      "sha256": "6ce97f39fe8836554ce6f326f178e7cef814fb71994321e62220e5211adf49ab"
+    },
+    "point-flow-final-review.md": {
+      "bytes": 10359,
+      "sha256": "0245d778d8c6cff0bc399e19e893651bceac26d5ef317461eda371a593ad5125"
+    },
+    "state.json": {
+      "bytes": 51796,
+      "sha256": "90a3025c49b717fe8bfb4f77561cac12aee962450d8c7c5c70c65cf9f1b50543"
+    },
+    "v3.json": {
+      "bytes": 27751,
+      "sha256": "ae03713e68236870270ff6765841a0bc77dfc783e9727018016e41baf6a3a47d"
+    },
+    "v3.log": {
+      "bytes": 787,
+      "sha256": "473fd6c331ef574c03d5bea8889fd9fc90ce71c024dcf4692da76a27d1ea62de"
+    },
+    "v3_observations.jsonl": {
+      "bytes": 15713000,
+      "sha256": "b28c6d4686cf4afda8e8c0641eb0c7cc17c181935317e4cc7a5d9e8679cef479"
+    },
+    "v3_observations.jsonl.gz": {
+      "bytes": 325915,
+      "sha256": "527e2f4124240c45704e268efd6040037af2bccd286b6152712a99b3ba4116ec"
+    },
+    "v4.json": {
+      "bytes": 27748,
+      "sha256": "0beb924aa834657349d82dc8931e888e3b575cb3c4eeab4f45fe41a62d61b8ae"
+    },
+    "v4.log": {
+      "bytes": 787,
+      "sha256": "4de1f7e03171d2c8a7d6f7d134b0878893d4eac84f0429880e127351d8539ca1"
+    },
+    "v4_observations.jsonl": {
+      "bytes": 15721554,
+      "sha256": "afffb6a7e9c45f5865f683d98d633d69471e7fa3baf2c3e132ec66b42a871962"
+    },
+    "v4_observations.jsonl.gz": {
+      "bytes": 324467,
+      "sha256": "3931e749447aef67726862b42c06a10610c51d56cd1c804a63b1253e5315b705"
+    },
+    "README.md": {
+      "path": "README.md",
+      "sha256": "e7b966c3c6b51d85ee29bf7c9d92edba4bb1fe83d5dbac9fd8859cc389a22bc3",
+      "bytes": 1296
+    },
+    "counter-review.md": {
+      "path": "counter-review.md",
+      "sha256": "1db4e883debacff2dacdc2943426b8a257bf674b8f0240459d33b2dfc2c50655",
+      "bytes": 2664
+    }
+  },
+  "notes": "Original raw files retained. gzip mtime=0 and empty stored filename; decompressed SHA verified. No runnable source added; snapshots are historical text, not a new run authorization."
+}

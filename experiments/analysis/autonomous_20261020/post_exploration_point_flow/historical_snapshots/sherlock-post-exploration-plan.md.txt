@@ -1,0 +1,41 @@
+# Nach Exploration: bekannte eigene Punktefelder gezielt beobachten
+
+**Entwurf für Root, 21.10.2026. Nur nach Ende der eingefrorenen Pipeline und ausdrücklicher Lauf-Freigabe. Keine Policy-Auswahl, kein Training, keine Repoänderung.**
+
+## Priorität
+
+| Option | Evidenz und Konsequenz |
+|---|---|
+| **1. Zielzuweisung/Wegzeit/Stillstand auf V3/V4 – empfohlen** | Mahmoud: in der Mittelzone 2,7 freie eigene Felder je Schnappschuss, 2,35 zugewiesen, 1,7 mindestens vier Felder entfernt; zugehörige Units bewegen sich zu75–85%. Deshalb keine weitere pauschale Laufregel. Neu messen: zeitlichen Fortschritt zum unveränderten Ziel und **BFS−Manhattan der zugewiesenen Unit**. `assign_targets` verwendet Manhattan plus globale greedy Paarwahl; gescheitertes `pt_walk` änderte erst die Bewegung nach derselben Zuweisung, nicht deren Wegkosten. |
+| **2. Reward-Besitzer-Randfall – nachrangig** | Synthetisch bestätigt: negative erste ID, nichtnegativer Mitbesetzer → −w_stack statt +w_point. Bereits35 Kontextbeobachtungen in15/40Spielen, bei140.245 lebenden Unit-Schritten; null dadurch blockierte `pt_sap`-Gelegenheiten. Keine neue Messung nur desselben Zählers. Reward-Zusatz diesmal ausdrücklich weglassen; kein weiterer Nacht-Trainingspilot. |
+| **3. PPO fortsetzen – derzeit nicht sinnvoll** | Lokales `experiments/ppo/cnn3/` enthält Logs, aber keine `.pth`. `cnn2_ppo0040` ist kein cnn3-Ersatz. CNN3 ppo_0050 frisch73,0% vs Lehrer73,25%, KI der Differenz[−5,0;+4,5]; Valspitze83,5% nicht bestätigt. Zuerst Originalcheckpoint/Hash/Config übertragen und reproduzieren, Modellauswahl separat planen; keine BC-/PPO-Pipeline duplizieren. |
+
+Nicht erneut testen: `pt_walk`/`pt_walk_own` aufV4 (−1,5/−3pp), `explore_quota`1/2 (−8/−9,5pp), `active_targets` (+1,67pp, KI übernull), sticky-/Parametersweep. Active-targets ist nicht der Reward-Besitzerfix.
+
+## Ein fester kleiner Lauf
+
+- **500720–500729, beide Seiten, Solution_92, V3 undV4: insgesamt40Spiele**, 20jeModell. Keine Auswahl nach Niederlage/Reliczahl; bekannte Entwicklungskarten, keine neuen Reservierungen.
+- V3 `experiments/candidates/all18_v3.pth`, SHA `aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935`; V4 `experiments/candidates/all18_v4.pth`, SHA `3465225733bbbfbf05adc577f7af5f76cb2d886ff2ed895498434fac979ededd`. Gespeicherte Config unverändert, unabhängig von einer möglichen neuen Pipeline-Abgabe.
+- Reproduktion gegen V3 `experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv` undV4 `experiments/compare/regeln/T_v4_720.csv`: exakt20passendeSchlüssel jeModell, 303Steps, Punktezählversion2, alle nichtzeitlichen gemeinsamen Kennzahlen numerisch1e−9. Zusätzliche fehlende Felder benennen. Erste zweiKarten jeModell früh prüfen, zählen zum festen Lauf. Abweichung→Stop/Bericht, keine Anpassung der Referenz.
+- Ein serieller Prozess, ein Modell zurZeit, numerischeThreads1; keine parallelen Modelljobs. Kopie des geprüften Diagnosegerüsts in`/tmp`, kein neuer Supervisor. Dessen alte Sap-Diagnose verlangt `contest_sap=False`: beiV4 ausschließlich neuen Observer integrieren, keine Config abschalten/alte Sap-Schattenlogik verwenden.
+- **Start vor05:00Berlin**, nur nach Pipelineende und mit mindestens45Minuten Rest; Richtwert10–20Minuten, noch ungemessen. Nach ersten vierSpielen konservativ hochrechnen; passt Restlauf plus15Minuten Prüfung nicht, unvollständig abbrechen. Laufstopp05:40, Ende aller Arbeit06:00. Keine gekürzte Stichprobe nach Ergebnissen als vollständig deklarieren.
+
+## Messgrößen
+
+Primär Match3, Steps20–95; übrige Matches separat. Nur **bekannte** eigene Punktefelder, strikte eigene Hälfte (kanonisch `x+y<23`), Diagonale separat; lebende Belegung Energie>=0. Keine Ground-Truth-Einspeisung. Unbekannte echte Punktefelder bleiben außerhalb der Aussage.
+
+Pro Feld/Step: Spiel, Seite, Modell, Match, Feld, lebende Belegung, sichtbarer Gegner, bekannte Passierbarkeit, zugewiesene ID/Energie, Manhattan/BFS, finale Aktion, Zahl legaler BFS-verkürzender Züge. Zusammenfassung proSpiel/Match:
+
+1. Bekannte Feld-Schritte, unbesetzte davon; Aufteilung ohneZuweisung / negativeID / lebendeID; absoluteNenner.
+2. Bei lebenderID: BFS0–2/3–5/>=6/unerreichbar, **BFS−Manhattan**, Energie unterBewegungskosten. `rules.PathCache` nur als eigeneObserverinstanz, nie Policycache. `distance_map` setzt sogar blockierteZiele auf0: Ziel-Asteroid separat markieren, nicht als normalen erreichbarenWeg zählen.
+3. Stay/Move/Sap getrennt; Sap ist kein Stillstand. Positions-/BFS-Fortschritt aufeinanderfolgenderSteps zum **gleichen altenZiel**, beidePositionen auf derselben gespeichertenKarte. Zielwechsel, Kartenänderung, Maskenverlust, Sprung>1 und Matchwechsel separat; naheRespawns bleiben bekannteLebenszyklusgrenze.
+4. FreieFeld-Episoden bisBelegung/Zielwechsel/Matchende; unvollständigeEpisoden zensiert. Enger ungeklärterStillstand: BFS<=2, genugEnergie, legalerVerkürzungszug, Stay, kein sichtbarerGegner im Sapquadrat+1, mindestens3aufeinanderfolgendeSteps. Keine sichereFehlentscheidung wegen unsichtbarerGefahren behaupten.
+
+
+## Instrumentierung, Prüfung, Folgeschritt
+
+An `ObservedAgent.act` ansetzen: erst `super().act`, dann einmal gültigen`_cache` lesen; Step0überspringen, realeRückgabeaktion kanonisch spiegeln. Keine zusätzliche `_decide`-/`make_context`-Berechnung, keinRNG, keineSchattenzuweisung. VorherigeWerte als eigeneZahlen/Tupel speichern, keine mutierbarenBeliefreferenzen. Observer bei`new_game` zurücksetzen. KleineFixtures: Null/Negativenergie, Stay/Sap, Spiegelung, festesZiel/Zielwechsel, Reset/Doppelzählung, unveränderteEingabearrays; isolierteDateiladung/AST, niemals `agents`-Paketimport (Auto-Discovery lädtTorch/JAX).
+
+Ergebnistabelle über zehn vollständigeKartenpaare; beideSeiten gemeinsam, Median/Anteil betroffenerSpiele. Unit-Schritte nicht als unabhängigeStichprobe behandeln. KontinuierlicheAnreise ohne häufigen engenStillstand→**keinPatch**. Nur wenn derselbe konkreteBefund auf>=3Karten und>=10%freierFeld-Schritte inMatch3 auftritt, anhand vollständigerTrajektorien einen minimalen Mechanismus-Test für Root vorschlagen (z.B.BFS−Manhattan>=4/unerreichbar trotzkurzerDistanz). Arbeitsfilter, keinSignifikanz-/Stärkegate. Keine automatisch nachWinrate gewähltePolicy.
+
+**Quellen:** `docs/ARBEITSSTAND.md`20.10.22:25/21:11/20:35; `features.py:286`, `reward.py:54`, `main.py:214/520`, `rules.py:20/66`; `experiments/analysis/autonomous_20261020/{target_diagnosis_720_739,diagnosis_summary}.json`; `/tmp/sherlock-reward-edgecase-probe-20261020.json`. Quellen, Logs und Kandidatenhashes nur gelesen. Vorbereitet unter `/tmp/sherlock-point-flow.py`: sechs kleine isolierte Tests bestanden; kein Spiel/Modellimport. Lauf nur nach Roots bedingter Freigabe und vollständig beendeter Pipeline; vorhandener geprüfter Runtimehelper wird wiederverwendet.

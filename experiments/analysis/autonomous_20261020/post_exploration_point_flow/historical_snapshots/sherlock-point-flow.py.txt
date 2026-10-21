@@ -1,0 +1,215 @@
+"""Observation-only point-flow diagnosis. Imports are stdlib until explicit child mode.
+Run only after frozen night pipeline ended and Root approved; no policy changes.
+"""
+from pathlib import Path
+from collections import deque
+from datetime import datetime,timezone
+import argparse,csv,hashlib,importlib.util,json,math,os,selectors,signal,subprocess,sys,time
+ROOT=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+SCRIPT=Path(__file__).resolve()
+PLAN=Path('/tmp/sherlock-post-exploration-plan.md')
+PLAN_SHA='c6fca120f42c5d99565aadee87a7163aeff825455e98846eb34d9edfb1c1777f'
+HELPER=Path('/tmp/exploration_ensemble_eval.py')
+HELPER_SHA='27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e'
+OUT=ROOT/'experiments/analysis/autonomous_20261020/post_exploration_point_flow'
+WEIGHTS={'v3':ROOT/'experiments/candidates/all18_v3.pth','v4':ROOT/'experiments/candidates/all18_v4.pth'}
+HASHES={'v3':'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935','v4':'3465225733bbbfbf05adc577f7af5f76cb2d886ff2ed895498434fac979ededd'}
+REFS={'v3':ROOT/'experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv','v4':ROOT/'experiments/compare/regeln/T_v4_720.csv'}
+CUTOFF=datetime(2026,10,21,3,tzinfo=timezone.utc).timestamp()
+STOP=datetime(2026,10,21,3,39,50,tzinfo=timezone.utc).timestamp()
+DEADLINE=datetime(2026,10,21,4,tzinfo=timezone.utc).timestamp()
+MOVES=((0,0),(0,-1),(1,0),(0,1),(-1,0));MIRROR=(0,2,1,4,3,5)
+def require(ok,message):
+ if not ok:raise RuntimeError(message)
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def distances(passable,target,W,H):
+ """Private measurement BFS: blocked goals are unreachable, unlike policy helper."""
+ if not bool(passable[target]):return {}
+ d={target:0};q=deque([target])
+ while q:
+  x,y=q.popleft()
+  for dx,dy in MOVES[1:]:
+   z=(x+dx,y+dy)
+   if 0<=z[0]<W and 0<=z[1]<H and z not in d and bool(passable[z]):d[z]=d[(x,y)]+1;q.append(z)
+ return d
+class Observer:
+ def __init__(self):self.rows=[];self.episodes=[];self.open={};self.prev={};self.last=None
+ def boundary(self,reason='match_end'):
+  for tile,e in self.open.items():self.episodes.append({**e,'end_reason':reason,'censored':True})
+  self.open={};self.prev={};self.last=None
+ def observe(self,c,masks,actions,mirrored):
+  key=(int(c['match_idx']),int(c['step']))
+  if self.last==key:return []
+  if self.last and self.last[0]!=key[0]:self.boundary()
+  contiguous=self.last is not None and self.last[0]==key[0] and self.last[1]+1==key[1]
+  if not contiguous and self.last is not None:self.boundary('observation_gap')
+  self.last=key;W,H=int(c['W']),int(c['H']);step=int(c['step']);ms=int(c['match_step'])
+  ids=[int(u) for u in c['ally_ids']];live={u for u in ids if float(c['ally_ene'][u])>=0}
+  positions={u:tuple(map(int,c['ally_pos'][u])) for u in ids};occupied={positions[u] for u in live}
+  owners={tuple(map(int,t)):int(u) for u,t in c['assigned'].items()}
+  own_origin=c['belief'].canonical or c['belief'].team_id==0
+  goals={(x,y) for x in range(W) for y in range(H) if bool(c['point_tiles'][x,y]) and ((x+y<=W-1) if own_origin else (x+y>=W-1))}
+  signature=bytes(c['passable'].tobytes());out=[];nextprev={}
+  for tile in sorted(goals):
+   u=owners.get(tile);live_owner=u in live;pos=positions.get(u);ene=float(c['ally_ene'][u]) if u in ids else None
+   d=distances(c['passable'],tile,W,H) if live_owner else {};distance=d.get(pos);old=self.prev.get(tile)
+   lifecycle=None
+   if contiguous and old and old['live']:
+    previous_uid=old['uid']
+    if previous_uid not in ids:lifecycle='mask_loss'
+    elif previous_uid not in live:lifecycle='negative_energy'
+    elif sum(abs(a-b) for a,b in zip(old['pos'],positions[previous_uid]))>1:lifecycle='jump_gt1'
+   same=bool(contiguous and old and live_owner and old['uid']==u and old['live'] and sum(abs(a-b) for a,b in zip(old['pos'],pos))<=1)
+   action=int(actions[u,0]) if live_owner else None
+   if mirrored and action is not None:action=MIRROR[action]
+   progress_moves=0
+   if live_owner and distance is not None:
+    progress_moves=sum(bool(masks[u][a]) and d.get((pos[0]+dx,pos[1]+dy),10**6)<distance for a,(dx,dy) in enumerate(MOVES) if a)
+   threat=live_owner and any(float(e)>=0 and max(abs(int(x)-pos[0]),abs(int(y)-pos[1]))<=float(c['sap_range'])+1 for (x,y),e in zip(c['enemy_coords'],c['enemy_energies']))
+   tight=bool(tile not in occupied and live_owner and distance is not None and 0<distance<=2 and ene>=float(c['move_cost']) and progress_moves and action==0 and not threat)
+   streak=(old['streak']+1 if same else 1) if tight else 0
+   old_progress=old['dist'].get(old['pos'],None) if same else None
+   if old_progress is not None:
+    new_distance=old['dist'].get(pos);old_progress=None if new_distance is None else old_progress-new_distance
+   r=dict(step=step,match=key[0],match_step=ms,tile=list(tile),region='diagonal' if sum(tile)==W-1 else 'own',occupied=tile in occupied,
+      position=list(pos) if pos is not None else None,move_cost=float(c['move_cost']),energy_below_move_cost=bool(live_owner and ene<float(c['move_cost'])),
+      target_enemy_occupied=any(float(e)>=0 and (int(x),int(y))==tile for (x,y),e in zip(c['enemy_coords'],c['enemy_energies'])),lifecycle_break=lifecycle,
+      target_blocked=not bool(c['passable'][tile]),assignment='live' if live_owner else 'negative' if u in ids else 'none',uid=u,
+      energy=ene,manhattan=sum(abs(a-b) for a,b in zip(pos,tile)) if live_owner else None,bfs=distance,
+      action=action,legal_progress_moves=int(progress_moves),visible_threat=bool(threat),tight_stay=tight,stall_streak=streak,
+      same_assignment=same,assignment_changed=bool(contiguous and old and old['uid']!=u),
+      old_map_progress=old_progress,position_changed=bool(same and old['pos']!=pos),map_changed=bool(old and old['signature']!=signature))
+   r['bfs_minus_manhattan']=distance-r['manhattan'] if distance is not None else None
+   out.append(r);nextprev[tile]=dict(uid=u,live=live_owner,pos=pos,dist=d,streak=streak,signature=signature)
+   if tile not in occupied:
+    if tile in self.open and (r['assignment_changed'] or lifecycle):self.episodes.append({**self.open.pop(tile),'end_reason':'assignment_changed' if r['assignment_changed'] else lifecycle,'censored':True})
+    if tile not in self.open:self.open[tile]=dict(match=key[0],tile=list(tile),region=r['region'],start_step=step,last_step=step,duration=0,assignment_changes=0)
+    self.open[tile]['last_step']=step;self.open[tile]['duration']+=1;self.open[tile]['assignment_changes']+=int(r['assignment_changed'])
+   elif tile in self.open:self.episodes.append({**self.open.pop(tile),'end_reason':'occupied','censored':False})
+  for tile in list(self.open):
+   if tile not in goals:self.episodes.append({**self.open.pop(tile),'end_reason':'no_longer_known','censored':True})
+  self.prev=nextprev;self.rows.extend(out);return out
+
+def check_result(actual,expected):
+ for k,v in expected.items():
+  if k=='secs':continue
+  require(k in actual,f'Missing reproduction field {k}')
+  try:ok=math.isclose(float(actual[k]),float(v),rel_tol=0,abs_tol=1e-9)
+  except (ValueError,TypeError):ok=str(actual[k])==str(v)
+  require(ok,f'First baseline mismatch {k}: {actual[k]} vs {v}')
+def references(label):
+ with REFS[label].open(newline='') as f:rows=list(csv.DictReader(f))
+ selected=[r for r in rows if 500720<=int(r['seed'])<=500729 and r['opponent']=='solution92']
+ keys=[(int(r['seed']),r['side']) for r in selected]
+ require(len(keys)==len(set(keys))==20 and set(keys)=={(s,p) for s in range(500720,500730) for p in ('player_0','player_1')},'Reference keys incomplete')
+ require(all(r['steps']=='303' and r['point_counting_version']=='2' for r in selected),'Reference scoring/schema')
+ return dict(zip(keys,selected))
+def summary(rows):
+ selected=[r for r in rows if r['region']=='own' and r['match']==2 and 20<=r['match_step']<=95];free=[r for r in selected if not r['occupied']]
+ return dict(known_own_tile_steps=len(selected),uncovered_tile_steps=len(free),assignment={k:sum(r['assignment']==k for r in free) for k in ('none','negative','live')},
+   bfs_detour_ge4=sum(r['bfs_minus_manhattan'] is not None and r['bfs_minus_manhattan']>=4 for r in free),
+   unreachable_short_manhattan=sum(r['assignment']=='live' and r['manhattan']<=2 and r['bfs'] is None for r in free),
+   tight_stay_steps=sum(r['tight_stay'] for r in free),stall_segments_ge3=sum(r['stall_streak']==3 for r in free),
+   actions={str(k):sum(r['action']==k for r in free) for k in range(6)})
+
+def child(label):
+ # Require the admitted parent's existing exclusive run before any model import.
+ require((OUT/'state.json').is_file(),'No admitted parent state')
+ admission=json.loads((OUT/'state.json').read_text())
+ require(admission.get('coordinator_pid')==os.getppid() and not admission.get('complete')
+         and admission['jobs'][-1]['label']==label,'Child is not owned by admitted coordinator')
+ require(time.time()<STOP,'Child admission deadline')
+ require(all(sha(p)==h for p,h in admission['baseline']['input_sha256'].items()),'Child frozen inputs changed')
+ require(subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()==admission['baseline']['head'],'Child HEAD changed')
+ # Only reached by parent's explicit admitted run after pipeline end.
+ import numpy as np
+ sys.path.insert(0,str(ROOT))
+ from scripts.experiment import limit_threads
+ limit_threads()
+ from agents.sherlock.main import Agent_x
+ from scripts.common import make_opponent,play_game
+ from luxai_s3.wrappers import LuxAIS3GymEnv
+ class Observed(Agent_x):
+  def new_game(self,player=None):super().new_game(player);self.flow=Observer()
+  def act(self,step,obs):
+   actions=super().act(step,obs)
+   if int(np.asarray(obs['match_steps']))==0:self.flow.boundary();return actions
+   require(self._cache is not None and self._cache[0]==int(np.asarray(obs['steps'])),'Post-act cache mismatch')
+   ctx,ids,feats,masks,saps=self._cache[1:]
+   self.flow.observe(ctx,masks,actions,self.belief.mirrored)
+   return actions
+ refs=references(label);started=time.time();agent=Observed('player_0',agent_path=str(WEIGHTS[label]),train=False)
+ agent.set_to_eval_mode();agent.autosave_on_terminate=False;env=LuxAIS3GymEnv(numpy_output=True);games=[]
+ try:
+  with (OUT/f'{label}_observations.jsonl').open('x') as stream:
+   for seed in range(500720,500730):
+    for side in ('player_0','player_1'):
+     require(time.time()<STOP,'Measurement deadline')
+     opponent=make_opponent('solution92','player_1' if side=='player_0' else 'player_0')
+     result=play_game(env,agent,opponent,seed,side,train=False);result.update(seed=seed,side=side,opponent='solution92')
+     check_result(result,refs[seed,side]);agent.flow.boundary('game_end')
+     record=dict(seed=seed,side=side,model=label,result=result,summary=summary(agent.flow.rows),episodes=agent.flow.episodes,observations=agent.flow.rows)
+     stream.write(json.dumps(record,allow_nan=False)+'\n');stream.flush();games.append({k:record[k] for k in ('seed','side','model','result','summary')})
+     print(f'{label} {seed} {side}: reproduced',flush=True)
+     if len(games)==4:
+      remaining=40-(20 if label=='v4' else 0)-len(games)
+      require(time.time()+(time.time()-started)/4*remaining*1.5+60<STOP,'Conservative remaining-run time no longer fits')
+  require(len(games)==20,'Incomplete model observations')
+  with (OUT/f'{label}.json').open('x') as f:json.dump(dict(complete=True,config=vars(agent.cfg),games=games),f,indent=2,allow_nan=False)
+ finally:env.close()
+
+def helper():
+ require(sha(HELPER)==HELPER_SHA,'Frozen helper changed')
+ spec=importlib.util.spec_from_file_location('flow_runtime',HELPER);d=importlib.util.module_from_spec(spec);spec.loader.exec_module(d);return d
+
+def run(confirmed):
+ require(confirmed,'Root must confirm pipeline has ended')
+ require(sha(PLAN)==PLAN_SHA,'Approved observation plan changed')
+ require(time.time()<CUTOFF and DEADLINE-time.time()>=2700,'Insufficient admission time')
+ require(not OUT.exists(),'Exclusive output already exists')
+ d=helper();d.no_other_jobs()
+ night=ROOT/'experiments/analysis/autonomous_20261020/exploration_night_continuation/state.json'
+ require(night.exists() and json.loads(night.read_text())['status'] in ('complete','paused_incomplete'),'Night pipeline not ended')
+ for label in WEIGHTS:require(sha(WEIGHTS[label])==HASHES[label],'Fixed model changed');references(label)
+ d.FROZEN_INPUTS={str(p):sha(p) for p in [SCRIPT,PLAN,HELPER,night,*WEIGHTS.values(),*REFS.values()]}
+ d.BASELINE=d.snapshot();OUT.mkdir(exist_ok=False);state=dict(complete=False,coordinator_pid=os.getpid(),baseline=d.BASELINE,jobs=[])
+ def save():
+  temp=OUT/'state.tmp';temp.write_text(json.dumps(state,indent=2,allow_nan=False)+'\n');os.replace(temp,OUT/'state.json')
+ def interrupted(signum,frame):raise InterruptedError(f'Signal {signum}')
+ for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP):signal.signal(sig,interrupted)
+ save()
+ try:
+  for label in ('v3','v4'):
+   d.invariants();require(time.time()<CUTOFF,'New model cutoff')
+   command=[str(ROOT/'.venv/bin/python'),'-B',str(SCRIPT),'--child',label];job=dict(label=label,command=command,complete=False);state['jobs'].append(job);save()
+   try:
+    with (OUT/f'{label}.log').open('xb') as log,selectors.DefaultSelector() as selector:
+     d.CURRENT=subprocess.Popen(command,cwd=ROOT,env={**os.environ,**d.THREAD_ENV},start_new_session=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+     job['pid']=d.CURRENT.pid;save();selector.register(d.CURRENT.stdout,selectors.EVENT_READ);next_check=time.monotonic()+30
+     while selector.get_map():
+      require(time.time()<STOP,'Hard measurement deadline')
+      for key,_ in selector.select(timeout=1):
+       data=os.read(key.fileobj.fileno(),65536)
+       if data:log.write(data);log.flush();sys.stdout.buffer.write(data);sys.stdout.buffer.flush()
+       else:selector.unregister(key.fileobj)
+      if time.monotonic()>=next_check:d.invariants();next_check=time.monotonic()+30
+     job['returncode']=d.CURRENT.wait(timeout=max(.1,STOP-time.time()));require(job['returncode']==0,'Observation child failed')
+    d.invariants();data=json.loads((OUT/f'{label}.json').read_text());require(data['complete'] and len(data['games'])==20,'Incomplete model result')
+    for g in data['games']:check_result(g['result'],references(label)[g['seed'],g['side']])
+    job['complete']=True
+    for p in (OUT/f'{label}.json',OUT/f'{label}_observations.jsonl'):d.FROZEN_INPUTS[str(p)]=sha(p)
+    d.BASELINE=d.snapshot();state['baseline_after_output']=d.BASELINE
+   finally:
+    if d.CURRENT is not None:
+     if not job['complete']:d.stop_group(d.CURRENT)
+     d.CURRENT.stdout.close();d.CURRENT=None
+    save()
+  d.invariants();state.update(complete=True,final_identity=d.snapshot(),interpretation='Observation only, no new policy or strength selection; known maps and repeated field-steps.')
+ except BaseException as exc:state['error']=f'{type(exc).__name__}: {exc}';raise
+ finally:save()
+
+def main():
+ p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True);g.add_argument('--run',action='store_true');g.add_argument('--child',choices=('v3','v4'));p.add_argument('--confirm-pipeline-ended',action='store_true');a=p.parse_args()
+ if a.child:child(a.child)
+ else:run(a.confirm_pipeline_ended)
+if __name__=='__main__':main()

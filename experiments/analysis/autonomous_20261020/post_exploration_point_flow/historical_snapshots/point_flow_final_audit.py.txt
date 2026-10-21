@@ -1,0 +1,64 @@
+import json,csv,hashlib,math,statistics,collections,pathlib,subprocess
+R=pathlib.Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15');P=R/'experiments/analysis/autonomous_20261020/post_exploration_point_flow'
+def sha(p):
+ h=hashlib.sha256()
+ with pathlib.Path(p).open('rb') as f:
+  for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+ return h.hexdigest()
+s=json.loads((P/'state.json').read_text());assert s['complete'];assert all(j['complete'] and j['returncode']==0 for j in s['jobs']);assert [j['label'] for j in s['jobs']]==['v3','v4']
+f=s['final_identity'];assert all(s['baseline'][k]==f[k] for k in ['head','python_path','python_sha256','python_sources']);assert all(f['input_sha256'][p]==h for p,h in s['baseline']['input_sha256'].items())
+checks={**f['input_sha256'],**f['python_sources'],f['python_path']:f['python_sha256']};mismatch=[p for p,h in checks.items() if sha(p)!=h];assert not mismatch,mismatch
+expected={(seed,side) for seed in range(500720,500730) for side in ['player_0','player_1']}
+metrics={'schema':'point_flow_independent_review_v1','source_head_at_run':f['head'],'current_head':subprocess.check_output(['git','-C',str(R),'rev-parse','HEAD'],text=True).strip(),'state_sha256':sha(P/'state.json'),'identity_checks':len(checks),'identity_mismatches':mismatch,'raw_sha256':{},'models':{}}
+pred={'blocked_live_short':lambda r:r['target_blocked'] and r['assignment']=='live' and r['manhattan']<=2,'blocked':lambda r:r['target_blocked'],'blocked_live':lambda r:r['target_blocked'] and r['assignment']=='live','detour_ge4':lambda r:r['bfs_minus_manhattan'] is not None and r['bfs_minus_manhattan']>=4,'unreachable_live':lambda r:r['assignment']=='live' and r['bfs'] is None,'unreachable_short':lambda r:r['assignment']=='live' and r['bfs'] is None and r['manhattan']<=2,'tight_stay':lambda r:r['tight_stay'],'tight_streak_ge3':lambda r:r['stall_streak']>=3,'low_energy':lambda r:r['energy_below_move_cost'],'assignment_changed':lambda r:r['assignment_changed'],'target_enemy':lambda r:r['target_enemy_occupied']}
+for lab,ref in [('v3','experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv'),('v4','experiments/compare/regeln/T_v4_720.csv')]:
+ raw=P/f'{lab}_observations.jsonl';metrics['raw_sha256'][lab]=sha(raw);games=[json.loads(l) for l in raw.read_text().splitlines()];data=json.loads((P/f'{lab}.json').read_text());assert data['complete'];assert len(games)==20 and {(g['seed'],g['side']) for g in games}==expected
+ with (R/ref).open() as fh:refs={(int(r['seed']),r['side']):r for r in csv.DictReader(fh) if int(r['seed']) in range(500720,500730) and r['opponent']=='solution92'}
+ assert set(refs)==expected
+ allrows=[];pergame=[]
+ for g,stored in zip(games,data['games']):
+  assert all(g[k]==stored[k] for k in ['seed','side','model','result','summary']);assert g['model']==lab
+  for k,v in refs[g['seed'],g['side']].items():
+   if k=='secs':continue
+   assert k in g['result']
+   try:ok=math.isclose(float(g['result'][k]),float(v),rel_tol=0,abs_tol=1e-9)
+   except ValueError:ok=str(g['result'][k])==v
+   assert ok,(lab,g['seed'],g['side'],k)
+  assert g['result']['steps']==303 and g['result']['point_counting_version']==2
+  seen=set()
+  for r in g['observations']:
+   key=(r['match'],r['step'],tuple(r['tile']));assert key not in seen;seen.add(key)
+   assert r['region']==('diagonal' if sum(r['tile'])==23 else 'own') and sum(r['tile'])<=23
+   if r['position'] is not None and r['assignment']=='live':assert r['manhattan']==sum(abs(x-y) for x,y in zip(r['tile'],r['position']))
+   if r['bfs'] is not None:assert r['bfs_minus_manhattan']==r['bfs']-r['manhattan']
+  rows=[dict(r,seed=g['seed'],side=g['side']) for r in g['observations'] if r['region']=='own' and r['match']==2 and 20<=r['match_step']<=95];free=[r for r in rows if not r['occupied']];allrows.extend(rows)
+  recomputed=dict(known_own_tile_steps=len(rows),uncovered_tile_steps=len(free),assignment={k:sum(r['assignment']==k for r in free) for k in ['none','negative','live']},bfs_detour_ge4=sum(pred['detour_ge4'](r) for r in free),unreachable_short_manhattan=sum(pred['unreachable_short'](r) for r in free),tight_stay_steps=sum(r['tight_stay'] for r in free),stall_segments_ge3=sum(r['stall_streak']==3 for r in free),actions={str(k):sum(r['action']==k for r in free) for k in range(6)})
+  assert recomputed==g['summary'];pergame.append(dict(seed=g['seed'],side=g['side'],known=len(rows),free=len(free),**{k:sum(fn(r) for r in free) for k,fn in pred.items()}))
+ free=[r for r in allrows if not r['occupied']];counts={}
+ for name,fn in pred.items():
+  z=[r for r in free if fn(r)];nm=len({r['seed'] for r in z});counts[name]={'count':len(z),'fraction_of_free':len(z)/len(free),'maps':nm,'games':len({(r['seed'],r['side']) for r in z}),'frequency_threshold_only_not_selection':nm>=3 and len(z)*10>=len(free)}
+ permap=[]
+ for seed in range(500720,500730):
+  pair=[g for g in pergame if g['seed']==seed];d={'seed':seed,**{k:sum(g[k] for g in pair) for k in ['known','free',*pred]}};d['blocked_live_fraction']=d['blocked_live']/d['free'] if d['free'] else None;permap.append(d)
+ # Full same-ID consecutive blocked-goal trajectories, never treating rows as independent games.
+ groups=collections.defaultdict(list)
+ for r in free:
+  if pred['blocked_live'](r):groups[(r['seed'],r['side'],tuple(r['tile']),r['uid'])].append(r)
+ segments=[]
+ for key,rs in groups.items():
+  seg=[]
+  for r in rs:
+   if seg and r['step']!=seg[-1]['step']+1:segments.append((key,seg));seg=[]
+   seg.append(r)
+  if seg:segments.append((key,seg))
+ trajectories=[];used=set()
+ for key,rs in sorted(segments,key=lambda kv:-len(kv[1])):
+  if key[0] in used:continue
+  used.add(key[0]);trajectories.append({'seed':key[0],'side':key[1],'tile':list(key[2]),'uid':key[3],'length':len(rs),'steps':[{k:r[k] for k in ['match_step','position','energy','move_cost','action','manhattan','target_blocked','visible_threat','target_enemy_occupied','map_changed']} for r in rs]})
+  if len(trajectories)==3:break
+ live=[r for r in free if r['assignment']=='live'];progress=[r['old_map_progress'] for r in free if r['old_map_progress'] is not None]
+ metrics['models'][lab]={'games':20,'known':len(allrows),'free':len(free),'free_fraction':len(free)/len(allrows),'assignment':dict(collections.Counter(r['assignment'] for r in free)),'live_move_fraction':sum(r['action'] in [1,2,3,4] for r in live)/len(live),'old_map_progress':dict(collections.Counter(progress)),'bfs_bins':dict(collections.Counter('unreachable' if r['bfs'] is None else '0-2' if r['bfs']<=2 else '3-5' if r['bfs']<=5 else '6+' for r in live)),'counts':counts,'per_map':permap,'median_pair_free':statistics.median(d['free'] for d in permap),'median_pair_blocked_live_fraction':statistics.median(d['blocked_live_fraction'] for d in permap if d['blocked_live_fraction'] is not None),'trajectories':trajectories,'per_game':pergame,'diagonal_primary_window_steps':sum(r['region']=='diagonal' and r['match']==2 and 20<=r['match_step']<=95 for g in games for r in g['observations'])}
+metrics['primary_gate']={'indicator':'live unreachable assignment with Manhattan<=2','require_maps':3,'require_free_fraction':0.10,'passed_v3':False,'passed_v4':False,'broader_posthoc_categories_not_eligible':True}
+metrics['decision']='NO PATCH under strict predeclared short-distance gate: blocked live assignments with Manhattan<=2 are 5.76%/7.07%, below10%; all-distance blocked-goal counts are descriptive only. Do not substitute a broader post-hoc denominator/union.'
+pathlib.Path('/tmp/point-flow-final-review.json').write_text(json.dumps(metrics,indent=2,allow_nan=False)+'\n')
+print(json.dumps({k:v for k,v in metrics.items() if k!='models'},indent=2));print('models',[(k,v['known'],v['free'],v['counts']['blocked_live'],v['median_pair_blocked_live_fraction']) for k,v in metrics['models'].items()])
