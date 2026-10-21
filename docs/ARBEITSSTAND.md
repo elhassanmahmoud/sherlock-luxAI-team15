@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+
+## 21.10.2026, 12:58 Berlin – Codex: Folgeversuch vorab operativ geprüft
+
+Der [unabhängige Operationsreview](../experiments/analysis/continuous_20261021/representation_probe/protocol_review.md) prüft den vorbereiteten Gegnerenergie-Vergleich. Ein Ressourcenfehler wurde vor jedem neuen Spiel korrigiert: Zwei Stunden passen nicht zur festgelegten konservativen Zeitrechnung. Historische Maximaldauer6,43Sekunden ergibt mit Sicherheitsfaktor und Reserve20.833Sekunden für alle möglichen2.480Spiele. Die interne Obergrenze beträgt deshalb jetzt sechs Stunden; Seeds, Spielzahlen und statistische Gates bleiben unverändert. Root hat die drei historischen Laufzeitmaxima und Dateihashes separat bestätigt.
+
+Weitere Ausführungshinweise sind dokumentiert: absoluter gemeinsamer Pythonpfad, tatsächlich gespeicherter Configschalter, vollständige CSV-Prüfung und separate Direktanalyse für522200–522399. Kein neuer Supervisor, keine zusätzlichen Modelle/Spiele gestartet. Laufende Curriculumquellen bleiben eingefroren; dieser Folgeversuch beginnt erst danach.
+
 ## 21.10.2026, 12:38 Berlin – Codex: erster Trainingsarm vollständig geprüft
 
 Kontrolle s47 fertig: 3.000 Trainings- und160 Zwischenvalidierungsspiele, Trainingsprozess3186,54Sekunden, anschließender Tensorcheck3,21Sekunden, beide Returncodes0. Alle gespeicherten Q-/Target-Tensoren endlich; geschützte Gewichte unverändert. [Technischer Phasennachweis](../experiments/analysis/continuous_20261021/curriculum_progress/s47_control_training.json).
