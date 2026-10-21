@@ -295,7 +295,7 @@ def test_nebula_avoid_masks_moves_into_harmful_nebula_and_leaves_it():
     obs = mk(10, 10, units=[(5, 5, 100)], relics=[(12, 12)])
     obs["map_features"]["tile_type"] = np.zeros((24, 24), np.int32)
     obs["map_features"]["tile_type"][6, 5] = 1   # Nebel rechts
-    for flag, value, right_ok in ((False, 25, True), (True, 2, True), (True, 25, False)):
+    for flag, value, right_ok in ((False, 25, True), (True, 5, True), (True, 25, False)):
         a = _with_nebula_estimate(_stay_agent(nebula_avoid=flag), value)
         a.act(10, obs)
         assert bool(a._prev_masks[0][geo.RIGHT]) == right_ok, (flag, value)
@@ -304,3 +304,19 @@ def test_nebula_avoid_masks_moves_into_harmful_nebula_and_leaves_it():
     inside["map_features"]["tile_type"][6, 5] = 1
     a = _with_nebula_estimate(_stay_agent(nebula_avoid=True), 25)
     assert int(a.act(11, inside)[0, 0]) != geo.STAY   # verlaesst den Nebel
+
+
+def test_sap_kill_safe_prefers_killable_living_enemy_not_dead_one():
+    def target(enemies, **cfg):
+        a = _stay_agent(pt_sap=True, **cfg)
+        a.belief.point_tiles[5, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=enemies, relics=[(12, 12)]))
+        assert int(act[0, 0]) == geo.SAP
+        return int(act[0, 1]), int(act[0, 2])
+    # nur der schon tote Gegner (5,8) wirkt "toetbar": alte Regel verschwendet den Sap darauf
+    dead_only = [(7, 6, 150), (3, 5, 45), (5, 8, -5)]
+    assert target(dead_only, sap_kill_first=True) == (0, 3)
+    assert target(dead_only, sap_kill_safe=True) == (2, 1) == target(dead_only)
+    # ein lebender, sicher toetbarer Gegner wird bevorzugt
+    killable = [(7, 6, 150), (3, 5, 20), (5, 8, -5)]
+    assert target(killable, sap_kill_safe=True) == (-2, 0)

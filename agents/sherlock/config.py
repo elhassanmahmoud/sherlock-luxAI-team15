@@ -142,7 +142,9 @@ class AgentConfig:
     """True (21.10.2026, nur Auswertung): geschaetzter Nebel-Energieabzug (param_est) >=
     nebula_avoid_min -> keine Zuege in Nebel ohne Punkte-Tile; bei >= 25 verlassen Units den Nebel.
     Analyse 2000 Karten: V3 gegen Solution_92 bei Nebelabzug 25 nur 65,5 % statt ~78 %."""
-    nebula_avoid_min: int = 5
+    nebula_avoid_min: int = 25
+    """Ab diesem geschaetzten Abzug greift nebula_avoid. 22.10.2026: bei 5 auf 60 Karten mit
+    Nebelabzug 5 −16,7 pp (Units erreichen ihre Ziele nicht mehr), bei 25 auf 100 Karten +5,0 pp."""
     siege: bool = False
     """True (21.10.2026, nur Auswertung): Units, deren Ziel ein vom Gegner (sichtbar oder
     wahrscheinlich im Nebel) besetztes Punkte-Tile ist, laufen nicht hinein, sondern zur
@@ -155,6 +157,10 @@ class AgentConfig:
     """Ab dieser Besetzungswahrscheinlichkeit zaehlt ein Nebel-Punkte-Tile zur Festung."""
     sap_kill_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner, die der direkte Treffer zerstoert (Energie < Sap-Kosten)."""
+    sap_kill_safe: bool = False
+    """True (22.10.2026): Sap-Ziel bevorzugt lebende Gegner, die der direkte Treffer sicher toetet
+    (Energie + Feldgewinn < Sap-Kosten). Korrigiert sap_kill_first, das auch schon tote Gegner
+    (Energie < 0, verschwinden vor dem Sap) bevorzugte."""
     sap_pt_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner auf bekannten Punkte-Tiles (_best_sap_target)."""
     sap_geometry: bool = False

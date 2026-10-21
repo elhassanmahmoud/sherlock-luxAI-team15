@@ -673,6 +673,13 @@ class Agent_x:
                 score += 1000.0  # 20.10.2026: Gegner auf Punkte-Tiles zuerst (sie punkten)
             if self.cfg.sap_kill_first and float(energies[direct].sum()) < float(ctx["sap_cost"]):
                 score += 2000.0  # 20.10.2026: Treffer zerstoert die Unit -> Tile wird frei
+            if self.cfg.sap_kill_safe:
+                # 22.10.2026: wie sap_kill_first, aber nur lebende Gegner (negative sind schon tot
+                # und verschwinden vor dem Sap) und inklusive Feldenergie ihres Tiles
+                gain = max(float(ctx["energy_map"][tx, ty]), 0.0)
+                e_dir = energies[direct]
+                if len(e_dir) and e_dir.min() >= 0 and float(e_dir.max()) + gain < float(ctx["sap_cost"]):
+                    score += 2000.0
             hits = int(direct.sum() + splash.sum())
             if score > best_score:
                 best, best_score, best_hits = (tx - x, ty - y), score, hits
