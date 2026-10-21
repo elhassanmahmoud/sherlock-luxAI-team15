@@ -117,6 +117,28 @@ class AgentConfig:
     """True: jede Unit, deren Netz-Aktion 'stehen' ist, sappt ein Ziel in Reichweite,
     wenn danach noch idle_sap_reserve Energie bleibt (auch abseits der Punkte-Tiles)."""
     idle_sap_reserve: int = 30
+    art_sap: bool = False
+    """True (21.10.2026): Unit, die nicht als Erste auf einem Punkte-Tile steht, sappt
+    statt ihrer Netz-Aktion, wenn das Ziel mindestens art_min_hits Gegner trifft,
+    danach art_reserve Energie bleibt und (art_safe) kein sichtbarer Gegner mit
+    Energie >= Sap-Kosten sie in Manhattan-Reichweite hat. Solution_92 prueft die
+    Sap-Reichweite nach Manhattan, die Engine erlaubt das ganze Quadrat (Chebyshev)."""
+    art_min_hits: int = 2
+    art_reserve: int = 0
+    art_safe: bool = True
+    threat_feats: bool = False
+    """True (21.10.2026): Netz-Eingabe um features.THREAT_NAMES erweitert (Gefahr je Tile,
+    bester Sap). Andere Eingabegroesse -> nur fuer neu trainierte Netze."""
+    siege: bool = False
+    """True (21.10.2026, nur Auswertung): Units, deren Ziel ein vom Gegner (sichtbar oder
+    wahrscheinlich im Nebel) besetztes Punkte-Tile ist, laufen nicht hinein, sondern zur
+    naechsten Schussposition ausserhalb seiner Manhattan-Reichweite und sappen von dort
+    (rules.SiegePlan). Fehlt Energie, warten sie dort."""
+    siege_min_score: float = 1.5
+    """Mindestens erwartete getroffene Gegner (direkt 1, daneben 0,5) fuer einen Schuss."""
+    siege_reserve: float = 0.0
+    siege_prob: float = 0.5
+    """Ab dieser Besetzungswahrscheinlichkeit zaehlt ein Nebel-Punkte-Tile zur Festung."""
     sap_kill_first: bool = False
     """True: Sap-Ziel bevorzugt Gegner, die der direkte Treffer zerstoert (Energie < Sap-Kosten)."""
     sap_pt_first: bool = False

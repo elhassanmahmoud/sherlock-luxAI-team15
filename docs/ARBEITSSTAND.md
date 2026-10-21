@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 19:40 Berlin – Claude Code mit Mahmoud: Festungs-Diagnose, zwei Trainings laufen
+
+**Diagnose** ([Mechanismus-Probe](../experiments/analysis/mechanism_probe_20261021/README.md), neues Messwerkzeug `scripts/mechanism_probe.py`, reine Messung, V3 unverändert, Entwicklungskarten 500720–500779): Verlorene Matches 3 liegen auf Karten mit vielen Punkte-Tiles. In den deutlichsten Niederlagen kippt das Sap-Verhältnis in Match 3 (z. B. 500753: 6 : 68 Saps, 23 : 4 Tote): Solution_92 sitzt mit vielen Units auf einem umkämpften Relic-Haufen („Festung“) und sappt alles in **Manhattan**-Reichweite; unsere wiedergeborenen Units laufen einzeln hinein. Die Engine erlaubt Saps im ganzen Quadrat.
+
+**Neue Schalter, alle Default aus, Abgabe unverändert:** `art_sap` (Sap aus Manhattan-sicherer Position bei ≥ n Treffern) und `siege` (Festungsziele aus der Ferne belagern, `rules.SiegePlan`). Auswahl auf Entwicklungskarten gegen V3 (85,0 %): `art_sap` 2/3/4 Treffer +2,5/+5,0 [+0,8; +10,0]/−0,8; Nachbarvarianten ±1 → nicht robust, kein Kandidat. `siege` **−17,5** [−25,8; −10,0] → verworfen (Units geben umkämpfte Tiles auf). Default jeweils 120/120.
+
+**Training (läuft, noch keine Ergebnisse):** (1) PPO `cnn3b`: Start `cnn3/ppo_0060`, 150 Iterationen × 80 Spiele, Gegner 80 % Solution_92 / 15 % V3 / 5 % default, Seed 5, Trainingskarten 250000+ (`experiments/ppo/cnn3b/`), auf Mahmouds Rechner mit dem damaligen `ppo_train` vor `14469f2` gestartet; unabhängig von Codex' begrenztem 10-Iterationen-Lauf `cnn3_sol90_s20` auf Moayeds Rechner. (2) Neuer Schalter `threat_feats` (+22 Netzeingaben: je Tile sapfähige Gegner in Manhattan-/Quadrat-Reichweite, Gegnerenergie auf/neben dem Tile, bester Sap, besetzte Punkte-Tiles), Variante `full_rules_v3_threat` = `full_rules_v3` + Gefahr-Merkmale: 6 Läufe `20261021_full_rules_v3_threat_s40`–`s45_sol70`, je 3000 Spiele, 70 % Solution_92 – gleiche Starts/Einstellungen wie die Kontrolle `v3nets6` vom 20.10. Alte Checkpoints/Abgabe laden unverändert (79 Eingaben).
+
+**Seeds reserviert (Mahmoud):** 503220–503419 Auswahl unter PPO-/Threat-Ständen, 503420–503619 einmalige frische Bestätigung genau eines vorher gewählten Kandidaten, 503620–503819 Reserve. Vor Nutzung in 524 CSVs ohne Treffer geprüft.
+
+**Prüfungen:** gesamte Testsuite 422 Tests + 14 Untertests bestanden (davon 13 neu in `tests/test_rules_2110.py`), Trainings-Probelauf mit 101 Eingaben gespeichert/geladen. Abgabe-Hash unverändert.
+
 ## 21.10.2026, 19:28 Berlin – Codex: begrenztes CNN3-Training läuft
 
 Die geprüfte PPO-Zufallsbindung ist als `14469f2` in main veröffentlicht: 489 Tests plus 14 Untertests im Arbeitszweig, danach acht fokussierte Tests im Hauptcheckout. Vorabplan und unabhängige Reviews unter [CNN3-Fortsetzung](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md). Die V3-Abgabe bleibt unverändert.

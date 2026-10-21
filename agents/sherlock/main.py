@@ -41,7 +41,7 @@ from . import geometry as geo
 from . import rules
 from .belief import Belief, MemorylessBelief
 from .config import AgentConfig
-from .features import FEATURE_DIM, build_features, make_context
+from .features import FEATURE_DIM, THREAT_DIM, build_features, make_context, threat_features
 from .model import N_ACTIONS, QNet
 from .replay_buffer import ReplayBuffer
 from .reward import surviving, unit_rewards
@@ -70,8 +70,10 @@ class Agent_x:
         self.env_cfg: Optional[dict] = None
 
         self.n_actions = N_ACTIONS if self.cfg.use_sap else 5
-        self.q = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
-        self.target_q = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
+        # 21.10.2026: cfg.threat_feats haengt THREAT_DIM Gefahr-Merkmale an (neue Netze)
+        self.feat_dim = FEATURE_DIM + (THREAT_DIM if self.cfg.threat_feats else 0)
+        self.q = QNet(self.feat_dim, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
+        self.target_q = QNet(self.feat_dim, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
         self.opt = optim.Adam(self.q.parameters(), lr=self.cfg.lr)
         # Ensemble: weitere eingefrorene Netze (gleiche Architektur), deren
         # Q-Werte beim Handeln mit q gemittelt werden. Glaettet das Springen
@@ -79,7 +81,7 @@ class Agent_x:
         self.extra_q: list[QNet] = []
         self.cnn_policy = None  # optionale CNN-Policy zum Abstimmen (set_cnn_policy)
         self.cnn_weight, self.cnn_temp = 1.0, 0.2
-        self.buffer = ReplayBuffer(self.cfg.buffer_capacity, FEATURE_DIM)
+        self.buffer = ReplayBuffer(self.cfg.buffer_capacity, self.feat_dim)
         self.rng = np.random.default_rng(seed)
         self._paths = rules.PathCache()
 
@@ -207,6 +209,8 @@ class Agent_x:
         ids = [int(u) for u in ctx["ally_ids"].tolist()]
         saps = {u: self._best_sap_target(ctx, u) for u in ids}
         feats = {u: build_features(fctx, u) for u in ids}
+        if self.cfg.threat_feats:
+            feats = {u: np.concatenate([feats[u], threat_features(fctx, u)]) for u in ids}
         masks = {u: self._action_mask(ctx, u, saps[u]) for u in ids}
         self._cache = (sid, ctx, ids, feats, masks, saps)
         return self._cache[1:]
@@ -251,6 +255,7 @@ class Agent_x:
         planned = np.zeros(len(ctx["enemy_coords"]))
         planned_fog = np.zeros((ctx["W"], ctx["H"]), dtype=bool)
         rammed: set = set()
+        siege = None  # rules.SiegePlan, bei Bedarf einmal pro Step
         stationary = self._enemy_stationary(ctx)
         eps = self.epsilon
         for k, uid in enumerate(ids):
@@ -299,10 +304,30 @@ class Agent_x:
                 if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve:
                     a = geo.SAP
                     self._prev_actions[uid] = a
+            if (self.cfg.art_sap and a != geo.SAP and sap is not None and masks[k][geo.SAP]
+                    and self._artillery_ok(ctx, uid, sap)):
+                a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
+                self._prev_actions[uid] = a
             if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 self._prev_actions[uid] = a
+            if self.cfg.siege and not self.training and float(ctx["ally_ene"][uid]) >= 0:
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                holder = (self.belief.point_tiles[x, y]
+                          and ctx["first_on_tile"].get((x, y)) == uid)
+                if siege is None:
+                    siege = rules.SiegePlan(ctx, self.belief, self.cfg.siege_prob,
+                                            SAP_DROPOFF_ASSUMED)
+                if not holder and siege.target_in_fortress(ctx["assigned"].get(int(uid))):
+                    res = rules.siege_action(siege, ctx, uid, masks[k], self._paths,
+                                             self.cfg.siege_min_score, self.cfg.siege_reserve)
+                    if res is not None:
+                        kind, val = res
+                        a = geo.SAP if kind == "sap" else (val if kind == "move" else geo.STAY)
+                        sap = val if kind == "sap" else sap
+                        self._prev_actions[uid] = a
+                        st["siege_steps"] = st.get("siege_steps", 0) + 1
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:
@@ -399,6 +424,26 @@ class Agent_x:
             return None
         cheb = np.maximum(np.abs(ec[:, 0] - tgt[0]), np.abs(ec[:, 1] - tgt[1]))
         return int(tgt[0]) - x, int(tgt[1]) - y, int((cheb <= 1).sum())
+
+    def _artillery_ok(self, ctx: dict, uid: int, sap) -> bool:
+        """cfg.art_sap: lohnender Sap (>= art_min_hits Gegner) einer Unit, die nicht als
+        Erste auf einem Punkte-Tile steht (dafuer gilt pt_sap), mit Energiereserve und
+        (art_safe) ausserhalb der Manhattan-Reichweite aller sichtbaren sapfaehigen Gegner."""
+        c = self.cfg
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid:
+            return False
+        if int(sap[2]) < c.art_min_hits:
+            return False
+        if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + c.art_reserve:
+            return False
+        if c.art_safe and len(ctx["enemy_coords"]):
+            ec = ctx["enemy_coords"]
+            armed = ctx["enemy_energies"] >= ctx["sap_cost"]
+            d = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
+            if (armed & (d <= ctx["sap_range"])).any():
+                return False
+        return True
 
     def _enemy_stationary(self, ctx: dict) -> np.ndarray:
         """Je sichtbarem Gegner: stand er im letzten Step auf demselben Tile?"""
@@ -535,7 +580,7 @@ class Agent_x:
                                self._prev_actions, self._sap_hits)
 
         alive_next = surviving(self.cfg, prev_ctx, next_ctx)
-        zero = np.zeros(FEATURE_DIM, dtype=np.float32)
+        zero = np.zeros(self.feat_dim, dtype=np.float32)
         dead_mask = np.zeros(self.n_actions, dtype=bool)
         dead_mask[geo.STAY] = True
 
@@ -616,7 +661,7 @@ class Agent_x:
                 "env_steps": self.env_steps,
                 "learn_steps": self.learn_steps,
                 "cfg": self.cfg.to_dict(),
-                "feature_dim": FEATURE_DIM,
+                "feature_dim": self.feat_dim,
                 "n_actions": self.n_actions,
                 "ensemble": [m.state_dict() for m in self.extra_q],
             },
@@ -638,7 +683,7 @@ class Agent_x:
         if not isinstance(ckpt, dict) or "q" not in ckpt:
             self.q.load_state_dict(ckpt)  # reines state_dict (altes Format)
             return
-        if ckpt.get("feature_dim", FEATURE_DIM) != FEATURE_DIM or \
+        if ckpt.get("feature_dim", FEATURE_DIM) != self.feat_dim or \
                 ckpt.get("n_actions", self.n_actions) != self.n_actions:
             print(f"[{self.name}] Checkpoint passt nicht zur aktuellen Architektur "
                   f"(feature_dim/n_actions) - starte untrainiert.")
@@ -652,7 +697,7 @@ class Agent_x:
                 pass
         self.extra_q = []
         for sd in ckpt.get("ensemble", []):
-            m = QNet(FEATURE_DIM, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
+            m = QNet(self.feat_dim, self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)
             m.load_state_dict(sd)
             m.eval()
             self.extra_q.append(m)

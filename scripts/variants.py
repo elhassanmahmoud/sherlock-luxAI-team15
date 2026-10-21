@@ -67,6 +67,12 @@ VARIANTS["full_rules_v3_slowexplore"] = (
     {**VARIANTS["full_rules_v3"][1], "eps_decay_steps": 454500},
 )
 
+# 21.10.2026: wie full_rules_v3, Netz sieht zusaetzlich Gefahr-Merkmale (features.THREAT_NAMES).
+VARIANTS["full_rules_v3_threat"] = (
+    VARIANTS["full_rules_v3"][0],
+    {**VARIANTS["full_rules_v3"][1], "threat_feats": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 
