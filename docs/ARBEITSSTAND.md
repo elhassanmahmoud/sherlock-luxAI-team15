@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Studienrunner geprüft, statistische Auswertung folgt
+
+Der exklusive Studienrunner (`4332d6b`, korrigiert in `0ec929e`) ist unabhängig freigegeben: sechs neue Läufe, feste Reihenfolge, tatsächliche Anfangsidentitäten, vollständige Trainings-/Validierungs-/Auswertungsdateien und eine ursprüngliche Zwölfstundenfrist. Ein globaler Lock für unsere Studien verhindert konkurrierende Modelljobs über Arbeitskopien hinweg; fremde manuell gestartete Werkzeuge werden zusätzlich per Prozessprüfung erkannt, aber nicht durch diesen Lock gesteuert.
+
+Der Review fand zunächst fehlende Spaltenprüfungen, eine Lücke bei der Prozesssperre und vererbte Signalsperren. Alle drei sind korrigiert und nachgeprüft; 62 gezielte Tests bestanden. [Erster Review](../experiments/analysis/continuous_20261021/planning/curriculum_runner_initial_review.md), [Freigabe der Korrektur](../experiments/analysis/continuous_20261021/planning/curriculum_runner_fixed_review.md).
+
+Noch keine neuen Trainingsspiele: Als nächstes werden die festgelegten statistischen Gates und bedingten Ensembleprüfungen umgesetzt. Vorbereitung der technischen Abgabeprüfung ist dokumentiert; sie ist keine bereits durchgeführte Übernahmeprüfung. V3 und die bestehende alte Sicherung bleiben unverändert.
+
 ## 21.10.2026 – Codex: Trainingsvergleich, Eingaben unabhängig geprüft
 
 Der frühe Gegnerplan und die isolierten Zwischenmessungen sind implementiert (`bc7d3b1`) und unabhängig freigegeben. 267 Tests plus 14 Teilprüfungen bestanden. Standardaufrufe behalten ihr bisheriges Verhalten. Neue Studienaufrufe zeichnen die vollständige Gegnerfolge, die tatsächliche Anfangsidentität der Learner und rohe Zwischenvalidierungsspiele auf; die Validierung erhält den relevanten Lern- und Zufallszustand.
