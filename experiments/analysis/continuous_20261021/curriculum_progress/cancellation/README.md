@@ -1,0 +1,13 @@
+# Curriculumstudie: unvollständig beendet
+
+Am 21.10.2026 um 14:39 Berlin wurde der eigene Supervisor kontrolliert beendet, nachdem Moe den Zeitaufwand ohne zusätzlichen Stärkegewinn kritisiert hatte. Die genaue Signalzeit steht in [disposition.json](disposition.json). Der Root entschied nach [unabhängiger Ressourcenprüfung](priority_review.md), den bereits vorbereiteten direkten V3-Vergleich vorzuziehen. Rund zweieinhalb Stunden hätten noch bis zur vollständigen Grundauswertung gefehlt.
+
+**Status: unvollständig, keine abschließende Methodenentscheidung.** Das negative erste Paar war zu diesem Zeitpunkt bekannt. Dies ist ausdrücklich eine nach Ergebnisbeobachtung getroffene Ressourcenentscheidung, keine vorab festgelegte statistische Stopregel. Weder Erfolg noch Ablehnung des vollständigen Drei-Paar-Verfahrens sind damit nachgewiesen. Keine neue Abgabe und keine Auswahl eines Teilcheckpoints.
+
+Tatsächlich abgeschlossen: s47 beide Arme mit je 3.000 Trainings-, 160 Zwischenvalidierungs- und 240 finalen Auswertungsspielen; s48 Kontrolle mit 3.000 Trainings- und 160 Zwischenvalidierungsspielen. Der unterbrochene frühe s48-Arm enthält 750 vollständig protokollierte Trainings- und 64 Validierungsspiele. Insgesamt 9.750 protokollierte Trainings-, 544 Zwischenvalidierungs- und 480 finale Auswertungsspiele. s48 hat keine finale Paar-Auswertung; s49 wurde nicht begonnen. [Zeilenzählung](partial_counts.json).
+
+Der Supervisor hat ausschließlich seine registrierte Prozessgruppe beendet; anschließend waren beide Prozesse weg, `active` leer und alle geschützten Gewichte unverändert. Der ursprüngliche State wurde nicht umetikettiert: Die unterbrochene Phase steht weiterhin auf `running`, ihr Prozess existiert jedoch nicht mehr. **Nicht fortsetzen oder durch manuelle Statuskorrektur als abgeschlossen ausgeben.** Der Runner verweigert das Fortsetzen einer solchen unvollständigen Phase.
+
+[State zum Abbruch](state_at_cancellation.json), [Kopiermanifest](archive_manifest.json), ursprüngliche Joblogs und Supervisor-Traceback sind erhalten. Der Traceback `InterruptedError` stammt vom beabsichtigten Signal. Roh-Checkpoints wurden lokal gesichert, bleiben nach bestehender Git-Regel ausgeschlossen; große Replaybuffer bleiben in der eingefrorenen Arbeitskopie. Diese Arbeitskopie und ihre Quellen werden als Herkunftsbeleg erhalten.
+
+Für die nächste Arbeit gelten der [Gegnerenergie-Plan](../../../../../docs/superpowers/plans/2026-10-21-enemy-tie-energy.md) und der jüngste Arbeitsstand. Der Folgeversuch ändert keine Auswahlregel nach Ergebnisbeobachtung: seine Variante, Karten und Gates waren bereits vor dem ersten Spiel festgelegt. Die aktuelle V3 bleibt bis zu einem qualifizierten Ersatz bestehen.

@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 916, in <module>
+    main()
+    ~~~~^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 911, in main
+    run_pairs(state)
+    ~~~~~~~~~^^^^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 614, in run_pairs
+    train_arm(state, seed, arm)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 577, in train_arm
+    run_phase(state, f'train_{seed}_{arm}', execute, audit)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 544, in run_phase
+    execute(phase)
+    ~~~~~~~^^^^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 563, in execute
+    run_process(state, phase, training_command(state, seed, arm))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 511, in run_process
+    time.sleep(.1)
+    ~~~~~~~~~~^^^^
+  File "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py", line 408, in interrupted
+    raise InterruptedError(f'Received signal {signum}')
+InterruptedError: Received signal 15

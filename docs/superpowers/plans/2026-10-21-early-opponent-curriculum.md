@@ -1,5 +1,8 @@
 # Früher Solution_92-Kontakt Implementation Plan
 
+> Status 21.10.2026, 14:39 Berlin: Diese Studie wurde nach bereits beobachtetem erstem Paar aus Ressourcengründen **unvollständig beendet**. Der ursprüngliche Plan unten bleibt als historische Präregistrierung erhalten. Kein abschließendes Methodenresultat und keine Fortsetzung des unvollständigen States. Details im [Abbrucharchiv](../../../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md).
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Später kontrolliert prüfen, ob 100 frühere Solution_92-Spiele bei unveränderter Gesamtzahl und ursprünglichem Epsilonplan die finalen Einzelnetze verbessern; nur bei bestandenem Screening einen fest definierten Ensemblekandidaten bestätigen.

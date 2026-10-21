@@ -7,6 +7,17 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 21.10.2026, 14:39 Berlin – Codex: Ressourcen neu priorisiert, Curriculum unvollständig beendet
+
+Moe kritisiert den langen Aufwand ohne zusätzlichen Stärkegewinn. Root hat die weitere Priorität nach einer unabhängigen, begrenzten Ressourcenprüfung geändert: Die laufende Curriculumstudie wird **unvollständig beendet**, der bereits vorbereitete direkte V3-Gegnermerkmale-Vergleich vorgezogen. Noch etwa zweieinhalb Stunden wären allein bis zur Grundauswertung angefallen. [Begründung, tatsächliche Spielzahlen und vollständiges Abbrucharchiv](../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md).
+
+Der negative erste Start war bereits bekannt. Deshalb ausdrücklich keine vorgeplante statistische Ablehnung und keine Aussage, dass die vollständige Methode widerlegt sei. Ursprüngliche Gates/Seeds werden nicht umgeschrieben; keine historischen Kontrollen ersetzt, kein Teilcheckpoint ausgewählt. Zwei erneut trainierte Kontrollen reproduzierten sämtliche 3.000 historischen Trainingszeilen außerhalb der Laufzeit exakt ([Beleg](../experiments/analysis/continuous_20261021/curriculum_progress/historical_control_reproduction_s47_s48.json)). Das belegt Reproduzierbarkeit, ist aber kein neuer Stärkegewinn.
+
+Kontrollierter SIGTERM nur an den nach PID/Kommando überprüften eigenen Supervisor; seine registrierte Trainingsgruppe ist beendet, State `active=null`, geschützte Gewichte unverändert. Der alte State bleibt als Original erhalten; `train_48_early` ist unvollständig und darf nicht durch manuelle Statusänderung fortgesetzt werden. Drei vollständige Trainingsarme plus 750 Spiele des vierten: insgesamt 9.750 Trainingsspiele, 544 Zwischenvalidierungen und 480 finale Testspiele. Keine s49-Läufe.
+
+Nächster Schritt: getrennten Gegnerenergie-Zweig mit main abgleichen, einmal passende Modellintegration prüfen, Quellen/Gewichte einfrieren und 480 vorab festgelegte Entwicklungsspiele ausführen. Keine neue Trainingsreihe. Eigene Wachhaltung bleibt für diese aktive Folgearbeit bestehen.
+
 ## 21.10.2026, 13:39 Berlin – Codex: erstes Curriculum-Paar vollständig ausgewertet
 
 [Archiv und Prüfungen](../experiments/analysis/continuous_20261021/curriculum_progress/s47/README.md):6.000 Trainings-,320 Zwischenvalidierungs- und480 finale Testspiele fertig. Früher Gegnerkontakt s47 gegen Solution_92 **62/120 statt86/120** der Kontrolle, Δ−20pp, gepaartes95%-Kartenintervall[−32,5;−7,5]. Default119/120 statt120/120. Die beiden Einzelnetze werden miteinander verglichen, nicht mit der18-Netz-Abgabe.
