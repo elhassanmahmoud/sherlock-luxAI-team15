@@ -218,7 +218,7 @@ class Agent_x:
         return self._cache[1:]
 
     def act(self, step: int, obs) -> np.ndarray:
-        use_est = self.cfg.nebula_avoid and not self.training
+        use_est = (self.cfg.nebula_avoid or self.cfg.dodge_auto) and not self.training
         if use_est:
             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
         actions = self._act(step, obs)
@@ -272,8 +272,9 @@ class Agent_x:
         # 21.10.2026: vorhergesagte Solution_92-Treffer je eigener Unit (opp_model)
         # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
         fight = not self.cfg.tactics_when_behind or ctx["opp_points"] > ctx["own_points"]
+        dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= 0.5)
         incoming = (self._predicted_hits(ctx, stationary)
-                    if self.cfg.dodge and not self.training and fight else {})
+                    if dodge_on and not self.training and fight else {})
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
@@ -476,6 +477,12 @@ class Agent_x:
                 return False
         return True
 
+    def _dropoff(self) -> float:
+        """Sap-Streufaktor: Schaetzung aus param_est (22.10.2026), sonst die alte Annahme 0,5."""
+        if self.cfg.dodge_auto and not self.training:
+            return self.param_est.dropoff(default=SAP_DROPOFF_ASSUMED)
+        return SAP_DROPOFF_ASSUMED
+
     def _harmful_nebula(self) -> float:
         """cfg.nebula_avoid: geschaetzter Nebelabzug, falls >= nebula_avoid_min, sonst 0."""
         if not self.cfg.nebula_avoid or self.training:
@@ -520,7 +527,7 @@ class Agent_x:
         dodge_mode 'lethal': nur wenn Stehenbleiben die Unit vermutlich toetet; ist der Tod
         auch beim Ausweichen sicher, wird stattdessen noch gesappt (falls moeglich)."""
         c = self.cfg
-        cost, drop = float(ctx["sap_cost"]), SAP_DROPOFF_ASSUMED
+        cost, drop = float(ctx["sap_cost"]), self._dropoff()
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         e = float(ctx["ally_ene"][uid])
         n = hits[int(uid)]

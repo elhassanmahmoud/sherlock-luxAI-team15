@@ -44,3 +44,11 @@ Einmalig, genau ein Kandidat: 503420–503619 (Kandidat und V3, beide Gegner, je
 95%-Grenze > 0, default ≥ 99 % und Δ ≥ −1 pp, direkt untere Grenze > 0,5 (gepaarter
 Karten-Bootstrap, 5000 Ziehungen, Seed 0). Vor einer Übernahme V3 sichern, Kurs-Runner-Prüfung,
 Testsuite und Rücksprache mit Mahmoud und Moayed – die Gewichte ersetze ich nicht allein über Nacht.
+
+## Nachtrag vor dem Spielen von E (22.10.2026, ca. 01:00)
+
+Die Online-Schätzung des Sap-Streufaktors (`agents/sherlock/param_est.py`) ist jetzt verlässlich:
+auf 500720–500749 (60 Spiele) **0 Fehlschätzungen**, sicher bekannt bei Schritt 101/202/300 in
+25/41/47 von 60 Spielen (sonst Annahme 0,5); Nebelabzug 60/60 ab Schritt 202. Zusätzlicher
+Kandidat **E: B + `dodge_auto` (dodge always nur bei geschätztem Streufaktor ≤ 0,5)**, gleiche
+Auswahlregel wie A–D. Keine weiteren Kandidaten nach Sichtung der Ergebnisse.

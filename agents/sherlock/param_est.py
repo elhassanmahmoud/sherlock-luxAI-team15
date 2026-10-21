@@ -23,14 +23,16 @@ DROPOFFS = (0.25, 0.5, 1.0)
 NEBULA_REDUCTIONS = (0, 1, 2, 3, 5, 25)
 DIRS = ((0, 0), (0, -1), (1, 0), (0, 1), (-1, 0))
 NOISE = 0.3  # Anteil unerklaerter Verluste in der robusten Likelihood (dropoff)
+MIN_LOSS = 7
 
 
-def _loss_likelihood(loss: int, cost: int, drop: float) -> float:
-    """P(Verlust | Streufaktor) mit geometrischen Prioren fuer direkte Treffer und Streutreffer."""
+def _loss_likelihood(loss: int, cost: int, drop: float, tol: int = 2) -> float:
+    """P(Verlust | Streufaktor) mit geometrischen Prioren fuer direkte Treffer und Streutreffer.
+    tol: Messrauschen der Buchhaltung (22.10.2026: ohne Gegner ~10 % der Faelle |Fehler| <= 6)."""
     p = 0.0
     for nd in range(5):
         for na in range(9):
-            if nd * cost + int(cost * drop * na) == loss:
+            if abs(nd * cost + int(cost * drop * na) - loss) <= tol:
                 p += 0.5 ** nd * 0.5 ** na
     return p
 
@@ -79,6 +81,7 @@ class ParamEstimator:
         sap_cost = int(cfg.get("unit_sap_cost", 30))
         sap_range = int(cfg.get("unit_sap_range", 4))
         W = prev["field"].shape[0]
+        field_now = np.asarray(obs["map_features"]["energy"])
         for u in range(len(mask)):
             if not (mask[u] and prev["mask"][u]):
                 continue
@@ -97,6 +100,8 @@ class ParamEstimator:
             e1 = int(ene[u])
             costs = move_cost * moved + (sap_cost if a == 5 and e0 >= sap_cost else 0)
             gain = int(prev["field"][x1, y1])
+            if int(field_now[x1, y1]) != gain:
+                continue  # Energiefeld wandert gerade: Gewinn dieses Schritts unklar (22.10.2026)
             nebula = prev["tile"][x1, y1] == 1
             if e1 >= 400 or e1 - gain < 0 or e0 - costs < 0:
                 continue
@@ -110,8 +115,10 @@ class ParamEstimator:
                     self.log_neb += np.array([0.0 if r == loss else -6.0 for r in NEBULA_REDUCTIONS])
                     self.n_neb += 1
                 continue  # Nebelverlust unbekannt -> nicht fuer den Streufaktor
-            if loss <= 0:
-                continue
+            if loss < MIN_LOSS:
+                continue  # Rauschen (kleinster moeglicher Streuschaden: int(30 * 0,25) = 7)
+            if not any(max(abs(ex - x1), abs(ey - y1)) <= sap_range + 1 for ex, ey in prev["enemies"]):
+                continue  # kein sichtbarer Schuetze in Reichweite -> Verlust nicht von Saps
             like = np.array([_loss_likelihood(loss, sap_cost, d) for d in DROPOFFS])
             if like.sum() == 0:
                 continue  # nicht durch Saps erklaerbar (z. B. unsichtbarer Void)

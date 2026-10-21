@@ -133,6 +133,10 @@ class AgentConfig:
     """True (21.10.2026, nur Auswertung): Units, die stehen/sappen wuerden und laut
     opp_model von Solution_92 direkt beschossen werden, weichen einen Schritt aus."""
     dodge_mode: str = "lethal"
+    dodge_auto: bool = False
+    """True (22.10.2026, nur Auswertung): dodge (mit dodge_mode) nur, solange der geschaetzte
+    Sap-Streufaktor (param_est, sonst 0,5) <= 0,5 ist. Entwicklung 500720-500779: dodge always
+    bei Streufaktor 0,25 / 0,5 / 1,0: +5,9 / +2,5 / −2,2 pp."""
     """'lethal': nur ausweichen, wenn Stehenbleiben vermutlich toetet; 'always': immer."""
     tactics_when_behind: bool = False
     """True (21.10.2026): dodge und art_sap greifen nur, wenn wir im laufenden Match nach Punkten

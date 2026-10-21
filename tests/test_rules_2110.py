@@ -320,3 +320,16 @@ def test_sap_kill_safe_prefers_killable_living_enemy_not_dead_one():
     # ein lebender, sicher toetbarer Gegner wird bevorzugt
     killable = [(7, 6, 150), (3, 5, 20), (5, 8, -5)]
     assert target(killable, sap_kill_safe=True) == (-2, 0)
+
+
+def test_dodge_auto_follows_estimated_dropoff():
+    import numpy as np
+    from agents.sherlock.param_est import DROPOFFS
+    for drop, want_move in ((None, True), (0.25, True), (1.0, False)):
+        a = _stay_agent(dodge_auto=True, dodge_mode="always")
+        if drop is not None:
+            a.param_est.log_drop = np.array([0.0 if d == drop else -50.0 for d in DROPOFFS])
+            a.param_est.n_drop = 5
+        a.belief.point_tiles[7, 6] = True
+        obs = make_obs(10, 10, units=[(5, 5, 200), (6, 7, 200)], enemies=[(7, 6, 80)], relics=[(8, 8)])
+        assert (int(a.act(10, obs)[1, 0]) != geo.STAY) == want_move, drop
