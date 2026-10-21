@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 00:45 Berlin – Claude Code mit Mahmoud: versteckte Parameter, Entwicklungs-Sets, V5-Kandidaten in Auswahl
+
+**Kartenanalyse** (`experiments/analysis/hard_map_training_20261021/map_features*.{py,csv}`, wahre Startzustände der 2000 gescreenten Karten, reine Analyse): V3 gegen Solution_92 nach verstecktem Parameter – Sap-Streufaktor 0,25/0,5/1,0: **65,9/76,3/85,4 %**; Nebelabzug 25: 65,5 % (sonst ~78 %); Bewegungskosten 1/5: 69,1/84,4 %; ≥ 14 Punkte-Tiles nahe der Diagonale: 54,7 %.
+
+**Schnellere Entwicklung:** deterministische Spiele → feste Entwicklungs-Sets aus der Kartensuche ohne V3-Neumessung: `dev_hard150` (V3 25,0 %), `dev_easy60` (100 %), `dev_neb25_100` (64,5 %), `dev_neb5_60` (71,7 %); `scripts/par_eval.py --seed-list`, Skript `dev_eval.sh`. Kennzahl für das Gesamtbild: 0,33·Δhard + 0,67·Δeasy (Anteil schwerer Karten 660/2000).
+
+**Ergebnisse (alle Schalter aus in der Abgabe):** hard150/easy60 gegen Solution_92 – `art_sap` 3: 37,7/98,3 (≈ +3,0 gesamt); `dodge` always: 35,0/97,5 (≈ +1,6); beides 38,7/96,7 (≈ +2,3); `art_sap` nur bei Rückstand (`tactics_when_behind`): 33,0/100 (≈ +2,6); neues `sap_kill_safe` (korrigiert `sap_kill_first`, das schon tote Gegner mit Energie < 0 bevorzugte): 33,3/98,3; mit `art_sap` 37,3/97,5. `nebula_avoid` (neue Online-Schätzung, Schwelle 25): Nebel-25-Karten 69,5 % statt 64,5 %; mit Schwelle 5 auf Nebel-5-Karten −16,7 pp → Schwelle 25.
+
+**Online-Parameterschätzung** `agents/sherlock/param_est.py` (aus eigenen Energieverläufen, nur Beobachtungen): Nebelabzug 60/60 richtig ab Schritt 202; Streufaktor nach Filtern für wanderndes Energiefeld und fehlende Schützen **0 Fehlschätzungen in 60 Spielen**, sicher bekannt bei Schritt 101/202/300 in 25/41/47 von 60 Spielen (sonst Annahme 0,5). `dodge_auto`: Ausweichen nur bei geschätztem Streufaktor ≤ 0,5 (Entwicklung: always bei 0,25/0,5/1,0: +5,9/+2,5/−2,2).
+
+**V5-Auswahl läuft** nach [vorab festgelegtem Plan](superpowers/plans/2026-10-22-v5-combination.md) (Kandidaten B–E, je hard150/easy60), danach Zufallsblock 503820–504019 und einmalige frische Bestätigung. Training auf schweren Karten (Lauf `_hard`) bei ~2000/3000 Spielen, Auswertung automatisch. Keine Abgabeänderung ohne Rücksprache.
+
 ## 21.10.2026, 22:50 Berlin – Claude Code mit Mahmoud: Solution_92-Modell, Ausweichen, Training auf schweren Karten läuft
 
 Ziel des Users jetzt: 99–100 % gegen Solution_92 und Platz 1 im Kursturnier. Neu (alle Schalter aus, Abgabe unverändert):
