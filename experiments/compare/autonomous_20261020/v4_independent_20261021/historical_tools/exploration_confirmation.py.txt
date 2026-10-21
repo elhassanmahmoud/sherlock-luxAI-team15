@@ -1,0 +1,286 @@
+"""Prepared separate fresh/direct confirmation; no promotion or training.
+Keep beside exploration_ensemble_eval.py. --self-test uses only stdlib fixtures.
+"""
+from pathlib import Path
+import argparse
+import csv
+import hashlib
+import importlib.util
+import io
+import json
+import math
+import os
+import selectors
+import signal
+import subprocess
+import sys
+import time
+
+SCRIPT = Path(__file__).resolve()
+HELPER = SCRIPT.with_name('exploration_ensemble_eval.py')
+HELPER_SHA = '27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e'
+ROOT = SCRIPT.parents[4] if SCRIPT.parent.name == 'tools' else Path.cwd().resolve()
+DEV = ROOT/'experiments/compare/autonomous_20261020/exploration_ensemble_development'
+OUT = ROOT/'experiments/compare/autonomous_20261020/exploration_ensemble_confirmation'
+D = None
+EXTRA = {}
+
+
+def require(ok, message):
+    if not ok: raise RuntimeError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def load_helper():
+    require(sha(HELPER) == HELPER_SHA, 'Reviewed helper changed')
+    spec=importlib.util.spec_from_file_location('confirmation_dev_helper',HELPER)
+    module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return module
+
+
+def selected_from_state(state):
+    require(state.get('complete') is True and state.get('status')=='complete' and not state.get('error'), 'Development incomplete')
+    require(state['baseline']==state['final_identity'], 'Development identity differs')
+    selected=state['selection']['selected']
+    require(selected in ('v3_control3','v3_slow3'), 'No qualified fixed 21-network development winner')
+    require(state['selection']['promotion_authorized'] is False, 'Invalid development scope')
+    return selected
+
+
+def read_rows(path, first, count, opponents):
+    expected={(str(seed),side,opp) for seed in range(first,first+count)
+              for side in ('player_0','player_1') for opp in opponents}
+    with Path(path).open(newline='') as f:
+        reader=csv.DictReader(f); fields=reader.fieldnames; rows=list(reader)
+    require(fields is not None and len(fields)==len(set(fields)), 'Missing/duplicate columns')
+    indexed={}
+    for row in rows:
+        require(None not in row and all(v is not None for v in row.values()), 'Malformed row')
+        key=tuple(row[k] for k in ('seed','side','opponent'))
+        require(key not in indexed, 'Duplicate game key')
+        require(row['steps']=='303' and row['point_counting_version']=='2', 'Wrong game/scoring length')
+        for k,v in row.items():
+            if k not in ('side','opponent'): require(math.isfinite(float(v)), 'Nonfinite numeric field')
+        a,b=float(row['our_wins']),float(row['opp_wins'])
+        require(a.is_integer() and b.is_integer() and 0<=a<=3 and 0<=b<=3 and a+b<=3, 'Invalid match wins')
+        require(float(row['result'])==(1 if a>b else 0 if a<b else .5), 'Invalid result')
+        require(float(row['our_points'])>=0 and float(row['opp_points'])>=0, 'Negative game points')
+        indexed[key]=row
+    require(len(rows)==len(expected) and set(indexed)==expected, 'Incomplete/wrong exact game keys')
+    return indexed
+
+
+def fresh_gate(comparison):
+    sol,default=comparison['solution92'],comparison['default']
+    checks=dict(solution92_delta_positive=sol['half_units']>0,
+                solution92_lower95_positive=sol['ci95'][0]>0,
+                default_loss_at_most_2pp=default['half_units']*100>=-2*800)
+    return dict(passed=all(checks.values()),checks=checks)
+
+
+def direct_gate(stat):
+    return dict(passed=stat['ci95'][0]>.5,lower95_strictly_above_half=stat['ci95'][0]>.5)
+
+
+def bootstrap(values):
+    import numpy as np
+    values=np.asarray(values,dtype=float)
+    require(values.ndim==1 and len(values)>0 and np.isfinite(values).all(), 'Invalid per-card values')
+    draws=np.random.default_rng(0).choice(values,size=(5000,len(values)),replace=True).mean(axis=1)
+    return dict(mean=float(values.mean()),ci95=list(map(float,np.percentile(draws,[2.5,97.5]))),
+                maps=len(values),bootstrap_samples=5000,bootstrap_seed=0)
+
+
+def fresh_comparison(reference,candidate):
+    result={}
+    for opp in ('default','solution92'):
+        per_map=[];units=0;left_total=0.;right_total=0.
+        for seed in range(510200,510400):
+            deltas=[]
+            for side in ('player_0','player_1'):
+                key=(str(seed),side,opp)
+                left=float(reference[key]['result']);right=float(candidate[key]['result'])
+                left_total+=left;right_total+=right
+                deltas.append(right-left); units+=int(2*right)-int(2*left)
+            per_map.append(sum(deltas)/2)
+        stat=bootstrap(per_map);stat.update(delta=stat.pop('mean'),half_units=units,games_per_arm=400,
+            reference_mean=left_total/400,candidate_mean=right_total/400)
+        result[opp]=stat
+    return result
+
+
+def direct_stat(rows,opponent):
+    values=[sum(float(rows[(str(seed),side,opponent)]['result']) for side in ('player_0','player_1'))/2
+            for seed in range(500720,500780)]
+    return {**bootstrap(values),'games':120,'interpretation':'Direct self-play against the frozen installed reference'}
+
+
+def development_decision(state,tables):
+    comparisons=D.compare(tables)
+    require(comparisons==state['comparisons'], 'Development comparisons differ from actual CSVs')
+    require(D.choose(comparisons)==state['selection'], 'Development selection differs from actual CSVs')
+
+
+def preflight():
+    state_path=DEV/'state.json';raw=state_path.read_bytes();state=json.loads(raw)
+    selected=selected_from_state(state)
+    require(D.choose(state['comparisons'])==state['selection'], 'Development selection records inconsistent')
+    require([job['label'] for job in state['jobs']]==list(D.LABELS), 'Wrong development arms')
+    extra={str(state_path):hashlib.sha256(raw).hexdigest(),str(SCRIPT):sha(SCRIPT),str(HELPER):HELPER_SHA}
+    tables={}
+    for job in state['jobs']:
+        path=DEV/f"{job['label']}.csv"
+        require(job.get('returncode')==0 and job.get('complete') is True and job.get('rows')==240 and job.get('exact_keys_valid') is True
+                and job['output']==str(path) and D.digest(path)==job['csv_sha256'], 'Development CSV identity invalid')
+        weights=DEV/'installed_reference.pth' if job['label']=='reference' else D.BUILD/f"{job['label']}.pth"
+        require(job['command']==D.eval_command(weights,path), 'Development command differs from fixed design')
+        tables[job['label']]=D.read_rows(path)[1];extra[str(path)]=job['csv_sha256']
+    D.FROZEN_INPUTS=dict(state['baseline']['input_sha256']);D.BASELINE=state['baseline']
+    require(D.snapshot()==D.BASELINE, 'Current source/model/interpreter/HEAD differs from development')
+    manifest_path=Path(state['builder_manifest']);manifest=json.loads(manifest_path.read_text())
+    require(str(manifest_path) in D.FROZEN_INPUTS and manifest['inference_config']==state['inference_config'], 'Frozen inference config mismatch')
+    require(state['model_groups']==manifest['groups'], 'Development group provenance differs from builder')
+    development_decision(state,tables)
+    candidate=D.BUILD/f'{selected}.pth';reference=DEV/'installed_reference.pth'
+    require(all(str(p) in D.FROZEN_INPUTS for p in (candidate,reference)), 'Missing frozen selected models')
+    require(len(state['model_groups'][selected])==21, 'Winner is not 21 networks')
+    return state,selected,candidate,reference,extra
+
+
+def invariants():
+    require(all(D.digest(p)==expected for p,expected in EXTRA.items()), 'Development evidence/runner changed')
+    D.invariants()
+
+
+def run_job(label,weights,first,count,opponents):
+    require(time.time()<D.CUTOFF, 'No new jobs after 05:00 Berlin')
+    invariants();output=OUT/f'{label}.csv';require(not output.exists(), 'Output already exists')
+    command=D.eval_command(weights,output,first=first-500000,n=count,opponents=','.join(opponents))
+    job=dict(label=label,output=str(output),log=str(OUT/f'{label}.log'),command=command,complete=False,started_at=D.now())
+    D.STATE['jobs'].append(job);D.save_state()
+    try:
+        with Path(job['log']).open('xb') as log,selectors.DefaultSelector() as selector:
+            require(time.time()<D.CUTOFF, 'Cutoff before spawn')
+            D.CURRENT=subprocess.Popen(command,cwd=ROOT,env={**os.environ,**D.THREAD_ENV},start_new_session=True,
+                stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+            job['pid']=D.CURRENT.pid;D.save_state();selector.register(D.CURRENT.stdout,selectors.EVENT_READ)
+            next_check=time.monotonic()+30
+            while selector.get_map():
+                require(time.time()<D.STOP_AT, '06:00 Berlin deadline approaching')
+                for key,_ in selector.select(timeout=1):
+                    data=os.read(key.fileobj.fileno(),65536)
+                    if data:log.write(data);log.flush();sys.stdout.buffer.write(data);sys.stdout.buffer.flush()
+                    else:selector.unregister(key.fileobj)
+                if time.monotonic()>=next_check:invariants();next_check=time.monotonic()+30
+            job['returncode']=D.CURRENT.wait(timeout=max(.1,D.STOP_AT-time.time()))
+            require(job['returncode']==0, 'Evaluation process failed')
+        invariants();rows=read_rows(output,first,count,opponents)
+        job.update(complete=True,rows=len(rows),exact_keys_valid=True,csv_sha256=D.digest(output))
+        return rows
+    finally:
+        if D.CURRENT is not None:
+            if not job['complete']:D.stop_group(D.CURRENT)
+            D.CURRENT.stdout.close();D.CURRENT=None
+        job['finished_at']=D.now();D.save_state()
+
+
+def run():
+    global D,EXTRA
+    D=load_helper();require(time.time()<D.CUTOFF,'No new jobs after 05:00 Berlin')
+    require(not OUT.exists(),'Refusing existing/partial confirmation directory');D.no_other_jobs()
+    development,selected,candidate,reference,EXTRA=preflight()
+    OUT.mkdir(exist_ok=False);D.OUT=OUT;D.STATE_PATH=OUT/'state.json'
+    D.STATE=dict(status='preparing',complete=False,started_at=D.now(),jobs=[],selected=selected,
+        development_state=str(DEV/'state.json'),evidence_sha256=EXTRA,baseline=D.BASELINE,
+        inference_config=development['inference_config'],promotion_authorized=False,
+        deadline_utc='2026-10-21T04:00:00Z',new_work_cutoff_utc='2026-10-21T03:00:00Z')
+    D.save_state()
+    for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP):signal.signal(sig,D.interrupted)
+    try:
+        D.STATE['status']='fresh';D.save_state()
+        left=run_job('fresh_reference',reference,510200,200,('default','solution92'))
+        right=run_job('fresh_candidate',candidate,510200,200,('default','solution92'))
+        require(time.time()<D.STOP_AT,'Deadline before fresh analysis')
+        comparison=fresh_comparison(left,right);gate=fresh_gate(comparison)
+        D.STATE.update(fresh_comparison=comparison,fresh_gate=gate);D.save_state()
+        if gate['passed']:
+            D.STATE['status']='direct';D.save_state();opponent='self:'+str(reference)
+            direct=run_job('direct',candidate,500720,60,(opponent,))
+            require(time.time()<D.STOP_AT,'Deadline before direct analysis')
+            stat=direct_stat(direct,opponent);passed=direct_gate(stat)
+            D.STATE.update(direct_stat=stat,direct_gate=passed,
+                decision='ready_for_technical_review' if passed['passed'] else 'no_promotion_direct_gate_failed')
+        else:D.STATE.update(decision='no_promotion_fresh_gate_failed',direct_skipped=True)
+        invariants();require(time.time()<D.STOP_AT,'Deadline before completion')
+        D.STATE.update(status='complete',complete=True,final_identity=D.snapshot())
+    except BaseException as exc:
+        D.stop_group(D.CURRENT);D.STATE.update(status='incomplete',complete=False,error=f'{type(exc).__name__}: {exc}')
+        raise
+    finally:D.STATE['finished_at']=D.now();D.save_state()
+
+
+def self_test():
+    import unittest
+    from unittest.mock import patch
+    class Tests(unittest.TestCase):
+        def test_selection_scope(self):
+            s=dict(complete=True,status='complete',baseline={'a':1},final_identity={'a':1},selection={'selected':'v3_control3','promotion_authorized':False})
+            self.assertEqual(selected_from_state(s),'v3_control3')
+            for key,val in [('complete',False),('final_identity',{}),('selection',{'selected':'slow3','promotion_authorized':False}),('selection',{'selected':None,'promotion_authorized':False})]:
+                with self.subTest(key=key),self.assertRaises(RuntimeError):selected_from_state({**s,key:val})
+        def test_gates_boundaries(self):
+            c={'solution92':{'half_units':1,'ci95':[.0001,.1]},'default':{'half_units':-16}}
+            self.assertTrue(fresh_gate(c)['passed'])
+            c['default']['half_units']=-17;self.assertFalse(fresh_gate(c)['passed'])
+            c['default']['half_units']=0;c['solution92']['ci95'][0]=0;self.assertFalse(fresh_gate(c)['passed'])
+            c['solution92']['ci95'][0]=.01;c['solution92']['half_units']=0;self.assertFalse(fresh_gate(c)['passed'])
+            self.assertFalse(direct_gate({'ci95':[.5,.8]})['passed']);self.assertTrue(direct_gate({'ci95':[.5001,.8]})['passed'])
+        def csv_text(self,first,n,opps):
+            f=io.StringIO();w=csv.writer(f);w.writerow(['seed','side','opponent','steps','point_counting_version','result','our_wins','opp_wins','our_points','opp_points'])
+            for seed in range(first,first+n):
+                for side in ('player_0','player_1'):
+                    for opp in opps:w.writerow([seed,side,opp,303,2,.5,1,1,0,0])
+            return f.getvalue()
+        def test_fresh_and_direct_exact_schema(self):
+            for first,n,opps,size in [(510200,200,('default','solution92'),800),(500720,60,('self:/frozen.pth',),120)]:
+                text=self.csv_text(first,n,opps)
+                with patch.object(Path,'open',return_value=io.StringIO(text)):self.assertEqual(len(read_rows('fixture',first,n,opps)),size)
+                bad=[text.replace(',303,2,',',302,2,'),text.replace(',0.5,1,1,',',1,1,1,'),text.replace(',0,0',',-1,0'),text.replace(',0,0',',nan,0'),'\n'.join(text.splitlines()[:-1]),text+text.splitlines()[-1]+'\n']
+                for value in bad:
+                    with patch.object(Path,'open',return_value=io.StringIO(value)),self.assertRaises(RuntimeError):read_rows('fixture',first,n,opps)
+        def test_extra_evidence_mutation(self):
+            class Dummy:
+                digest=staticmethod(lambda p:'original')
+                invariants=staticmethod(lambda:None)
+            with patch.dict(globals(),{'D':Dummy,'EXTRA':{'/evidence':'original'}}):invariants()
+            with patch.dict(globals(),{'D':Dummy,'EXTRA':{'/evidence':'changed'}}),self.assertRaises(RuntimeError):invariants()
+        def test_development_comparison_must_match_csv_recomputation(self):
+            from types import SimpleNamespace
+            comparison={'verified':'csv-derived'}; selection={'selected':'v3_control3'}
+            helper=SimpleNamespace(compare=lambda tables:comparison,choose=lambda value:selection)
+            state={'comparisons':comparison,'selection':selection}
+            with patch.dict(globals(),{'D':helper}):
+                development_decision(state,{'reference':{}})
+                for bad in ({**state,'comparisons':{'wrong':1}},{**state,'selection':{'selected':'v3_slow3'}}):
+                    with self.assertRaises(RuntimeError):development_decision(bad,{'reference':{}})
+        def test_helper_and_commands(self):
+            helper=load_helper()
+            command=helper.eval_command('/candidate','/new',first=10200,n=200)
+            self.assertEqual(command[command.index('--workers')+1],'2')
+            self.assertEqual(command[command.index('--first')+1],'10200')
+            self.assertTrue(helper.heavy_python_command('python /tmp/exploration_confirmation.py --run'))
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+    require(not any(k in sys.modules for k in ('torch','jax','numpy')),'Heavy dependency loaded in self-test')
+    if not result.wasSuccessful():raise SystemExit(1)
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True)
+    g.add_argument('--run',action='store_true');g.add_argument('--self-test',action='store_true');args=p.parse_args()
+    if args.self_test:self_test()
+    else:run()
+
+if __name__=='__main__':main()

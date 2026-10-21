@@ -1,0 +1,113 @@
+"""Independent completion audit. No model imports, no games, no partial-result analysis."""
+from pathlib import Path
+import argparse,ast,csv,hashlib,json,math,subprocess,sys,tempfile,unittest
+from datetime import datetime,timezone
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+STATE=ROOT/'experiments/compare/autonomous_20261020/v4_independent_20261021/state.json'
+SEEDS={'direct_v4_vs_v3':range(510400,510800),'fresh_v3':range(510800,511000),'fresh_v4':range(510800,511000)}
+SIDES=('player_0','player_1');OPPS=('default','solution92')
+V3=ROOT/'experiments/candidates/all18_v3.pth';V4=ROOT/'experiments/candidates/all18_v4.pth'
+RUNNER=Path('/tmp/v4_independent_20261021.py');RUNNER_SHA='86fe3fc84d798817f18754f946395a4cec89056aaa312b5134241c3a400c56a1'
+def need(ok,msg):
+ if not ok:raise RuntimeError(msg)
+def sha(p):
+ h=hashlib.sha256()
+ with Path(p).open('rb') as f:
+  for b in iter(lambda:f.read(1048576),b''):h.update(b)
+ return h.hexdigest()
+def fields():
+ for n in ast.parse((ROOT/'scripts/experiment.py').read_text()).body:
+  if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='GAME_FIELDS' for t in n.targets):return ast.literal_eval(n.value)
+ raise RuntimeError('Missing GAME_FIELDS')
+def opponents(label):return ('self:'+str(V3),) if label=='direct_v4_vs_v3' else OPPS
+def read_csv(path,label):
+ with Path(path).open(newline='') as f:
+  reader=csv.DictReader(f);need(reader.fieldnames==fields(),'CSV schema');rows=list(reader)
+ expected={(str(s),side,opp) for s in SEEDS[label] for side in SIDES for opp in opponents(label)};out={}
+ for row in rows:
+  need(None not in row and all(v is not None for v in row.values()),'Malformed row');key=tuple(row[k] for k in ('seed','side','opponent'));need(key not in out,'Duplicate key')
+  need(row['steps']=='303' and row['point_counting_version']=='2','Incomplete/wrong scoring')
+  for k,v in row.items():
+   if k not in ('side','opponent'):need(math.isfinite(float(v)),f'Nonfinite {k}')
+  a,b=float(row['our_wins']),float(row['opp_wins']);need(a.is_integer() and b.is_integer() and 0<=a<=3 and 0<=b<=3 and a+b==3,'Match wins')
+  need(float(row['result'])==(1 if a>b else 0 if a<b else .5),'Result');need(float(row['game_win'])==int(a>b),'game_win')
+  p,q=float(row['our_points']),float(row['opp_points']);need(p.is_integer() and q.is_integer() and p>=0 and q>=0,'Points');need(float(row['point_win'])==(1 if p>q else 0 if p<q else .5),'point_win')
+  out[key]=row
+ need(len(rows)==800 and set(out)==expected,'Exact 800 keys');return out
+def score(table,seed,side,opponent):return float(table[str(seed),side,opponent]['result'])
+def stat(values):
+ a=np.asarray(values,dtype=float);need(a.ndim==1 and len(a)>0 and np.isfinite(a).all(),'Bootstrap input')
+ ix=np.random.default_rng(0).integers(0,len(a),size=(5000,len(a)));low,high=np.quantile(a[ix].mean(axis=1),[.025,.975]);return dict(mean=float(a.mean()),ci95=[float(low),float(high)],maps=len(a),bootstrap_samples=5000,bootstrap_seed=0)
+def calculate(tables):
+ comp={}
+ for opp in OPPS:
+  left=np.array([[score(tables['fresh_v3'],s,p,opp) for p in SIDES] for s in SEEDS['fresh_v3']]);right=np.array([[score(tables['fresh_v4'],s,p,opp) for p in SIDES] for s in SEEDS['fresh_v4']]);z=stat((right-left).mean(axis=1));z.update(delta=z.pop('mean'),half_units=int(np.rint(2*(right-left).sum())),games_per_arm=400,reference_mean=float(left.mean()),candidate_mean=float(right.mean()));comp[opp]=z
+ direct=stat([sum(score(tables['direct_v4_vs_v3'],s,p,opponents('direct_v4_vs_v3')[0]) for p in SIDES)/2 for s in SEEDS['direct_v4_vs_v3']]);direct.update(games=800,interpretation='V4 score against frozen V3 on 400 new paired maps only')
+ return comp,direct
+def decision(comp,direct):
+ checks=dict(solution92_delta_positive=comp['solution92']['half_units']>0,solution92_lower95_positive=comp['solution92']['ci95'][0]>0,default_loss_at_most_2pp=comp['default']['half_units']>=-16);fg=dict(passed=all(checks.values()),checks=checks);dg=dict(passed=direct['ci95'][0]>.5,lower95_strictly_above_half=direct['ci95'][0]>.5)
+ return dict(fresh_gate=fg,direct_gate=dg,decision='eligible_for_technical_review' if fg['passed'] and dg['passed'] else 'no_promotion_gate_failed',promotion_authorized=False)
+def same(actual,expected,path='root'):
+ if isinstance(expected,dict):
+  need(set(actual)==set(expected),f'Fields {path}')
+  for k in expected:same(actual[k],expected[k],path+'.'+k)
+ elif isinstance(expected,list):
+  need(len(actual)==len(expected),f'Length {path}')
+  for i,(a,b) in enumerate(zip(actual,expected)):same(a,b,path+str(i))
+ elif isinstance(expected,float):need(math.isclose(actual,expected,rel_tol=0,abs_tol=1e-14),f'Value {path}')
+ else:need(actual==expected,f'Value {path}')
+def audit():
+ raw=STATE.read_bytes();s=json.loads(raw);need(s.get('complete') is True and s.get('status')=='complete' and not s.get('error'),'Not complete; refusing partial results')
+ need(datetime.fromisoformat(s['finished_at']) < datetime(2026,10,21,6,40,tzinfo=timezone.utc),'Completion after deadline');need(s['deadline_utc']=='2026-10-21T06:40:00Z','Wrong deadline');need(sha(RUNNER)==RUNNER_SHA,'Reviewed runner changed');need(s['baseline']==s['final_identity'],'Final identity differs');base=s['baseline'];head=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip();need(head==base['head'],'Current HEAD differs')
+ for p,h in {**base['python_sources'],**base['input_sha256'],base['python_path']:base['python_sha256']}.items():need(sha(p)==h,f'Frozen input changed: {p}')
+ names=set()
+ for option in ('--cached','--others'):
+  cmd=['git','-C',str(ROOT),'ls-files','-z',option]+(['--exclude-standard'] if option=='--others' else [])+['--','*.py'];names.update(str(ROOT/p.decode()) for p in subprocess.check_output(cmd).split(b'\0') if p)
+ expected={p for p in base['python_sources'] if str(ROOT) in p and '/.venv/' not in p};need(names==expected,'Repository Python inventory changed')
+ need([j['label'] for j in s['jobs']]==list(SEEDS),'Job design/order');need(s['expected_total_games']==2400 and s['inference_overrides']==[] and s['historical_data_pooled'] is False and s['result_dependent_stopping'] is False and s['sample_extension_allowed'] is False,'Design state')
+ tables={};hashes={}
+ for j in s['jobs']:
+  label=j['label'];p=STATE.parent/(label+'.csv');need(j['complete'] is True and j['returncode']==0 and j['rows']==800 and j['exact_keys_valid'] is True and j['output']==str(p),'Incomplete job')
+  need(sha(p)==j['csv_sha256'],'CSV hash');hashes[str(p)]=j['csv_sha256'];w=V3 if label=='fresh_v3' else V4
+  command=[str(ROOT/'.venv/bin/python'),'-B','-m','scripts.par_eval','--weights',str(w),'--first',str(SEEDS[label].start-500000),'--n',str(len(SEEDS[label])),'--workers','2','--opponents',','.join(opponents(label)),'--out',str(p)];need(j['command']==command,'Actual command differs');tables[label]=read_csv(p,label)
+ comp,direct=calculate(tables);same(s['comparison'],comp);same(s['direct_stat'],direct)
+ for k,v in decision(comp,direct).items():same(s[k],v,k)
+ need(STATE.read_bytes()==raw,'State changed during audit');need(all(sha(p)==h for p,h in hashes.items()),'CSV changed during audit')
+ return dict(complete=True,independent_audit=True,state_sha256=hashlib.sha256(raw).hexdigest(),runner_sha256=RUNNER_SHA,source_head=head,rows=2400,csv_sha256=hashes,comparison=comp,direct_stat=direct,**decision(comp,direct),scope='Independent CSV/source/hash/paired index-bootstrap audit only; no model loading, games, promotion or technical installation review.')
+class Tests(unittest.TestCase):
+ def test_bootstrap(self):
+  self.assertEqual(stat([.5]*400)['ci95'],[.5,.5]);self.assertEqual(stat([0]*200)['ci95'],[0,0])
+  with self.assertRaises(RuntimeError):stat([float('nan')])
+ def test_gates(self):
+  c={'solution92':{'half_units':1,'ci95':[.01,.1]},'default':{'half_units':-16}};d={'ci95':[.5001,.8]};self.assertEqual(decision(c,d)['decision'],'eligible_for_technical_review');c['default']['half_units']=-17;self.assertEqual(decision(c,d)['decision'],'no_promotion_gate_failed');c['default']['half_units']=-16;d['ci95'][0]=.5;self.assertFalse(decision(c,d)['direct_gate']['passed'])
+ def test_full_pairing(self):
+  tables={label:{(str(s),p,o):{'result':str(i)} for s in SEEDS[label] for i,p in enumerate(SIDES) for o in opponents(label)} for label in SEEDS};c,d=calculate(tables);self.assertEqual(d['ci95'],[.5,.5]);self.assertEqual(c['default']['ci95'],[0,0]);self.assertEqual(d['maps'],400);self.assertEqual(c['solution92']['maps'],200)
+ def test_keys_schema_and_numeric(self):
+  with tempfile.TemporaryDirectory() as td:
+   p=Path(td)/'x.csv';fs=fields();rows=[]
+   for s in SEEDS['fresh_v3']:
+    for side in SIDES:
+     for o in OPPS:
+      z=dict.fromkeys(fs,0);z.update(seed=s,side=side,opponent=o,steps=303,point_counting_version=2,our_wins=2,opp_wins=1,result=1,game_win=1,our_points=1,point_win=1);rows.append(z)
+   def write(rs):
+    with p.open('w',newline='') as f:w=csv.DictWriter(f,fieldnames=fs);w.writeheader();w.writerows(rs)
+   write(rows);self.assertEqual(len(read_csv(p,'fresh_v3')),800)
+   for mutate in ('missing','duplicate','nan','wrongseed','badresult'):
+    rs=[dict(x) for x in rows]
+    if mutate=='missing':rs.pop()
+    elif mutate=='duplicate':rs[-1]=rs[0]
+    elif mutate=='nan':rs[0]['secs']='nan'
+    elif mutate=='wrongseed':rs[0]['seed']=510000
+    else:rs[0]['result']=0
+    write(rs)
+    with self.assertRaises(RuntimeError):read_csv(p,'fresh_v3')
+if __name__=='__main__':
+ p=argparse.ArgumentParser();g=p.add_mutually_exclusive_group(required=True);g.add_argument('--self-test',action='store_true');g.add_argument('--audit',action='store_true');p.add_argument('--output',type=Path,default=Path('/tmp/v4_independent_final_audit.json'));a=p.parse_args()
+ if a.self_test:
+  result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests));need(result.wasSuccessful(),'Self-test failed')
+ else:
+  result=audit()
+  with a.output.open('x') as f:json.dump(result,f,indent=2,allow_nan=False);f.write('\n')
+  print(json.dumps(result,indent=2))
+ need('torch' not in sys.modules and 'jax' not in sys.modules,'Unexpected model runtime')

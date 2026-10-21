@@ -1,0 +1,246 @@
+"""One prespecified V4/V3 confirmation. Preparation and tests start NO games.
+Run only after root review, from the repository: .venv/bin/python -B /tmp/v4_independent_20261021.py --run
+Reuses reviewed confirmation execution/CSV/bootstrap and ensemble process/freeze primitives.
+No training, promotion, overrides, resume, result-based stopping or sample expansion.
+"""
+from __future__ import annotations
+import argparse
+import ast
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import sys
+import time
+
+SCRIPT = Path(__file__).resolve()
+ROOT = Path.cwd().resolve()
+OUT = ROOT / 'experiments/compare/autonomous_20261020/v4_independent_20261021'
+PLAN = ROOT / 'docs/superpowers/plans/2026-10-21-v4-independent-confirmation.md'
+AUDIT = ROOT / 'experiments/analysis/autonomous_20261020/v4_identity.json'
+V3 = ROOT / 'experiments/candidates/all18_v3.pth'
+V4 = ROOT / 'experiments/candidates/all18_v4.pth'
+V3_SHA = 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+V4_SHA = '3465225733bbbfbf05adc577f7af5f76cb2d886ff2ed895498434fac979ededd'
+CONFIRMATION = SCRIPT.with_name('exploration_confirmation.py')
+CONFIRMATION_SHA = '20d584e2d2f80b46aa82994f433a56f99fcfc7deccbe8a4a0b14267f7fccf225'
+HELPER_SHA = '27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e'
+PLAN_SHA = '9c579d560af28528394caf63f61765b38790cb29abe1f6ddca345b6396cf9ee6'
+AUDIT_SHA = '4c265c633167ba6af0499173de44dd900f8d21b47e48bf61f16418fa6d22522b'
+DEADLINE = datetime(2026, 10, 21, 6, 40, tzinfo=timezone.utc).timestamp()
+STOP_AT = DEADLINE - 10  # reserve time to stop our own process group and persist failure
+SIDES = ('player_0', 'player_1')
+BENCHMARKS = ('default', 'solution92')
+DIRECT_FIRST, DIRECT_COUNT = 510400, 400
+FRESH_FIRST, FRESH_COUNT = 510800, 200
+TOTAL_GAMES = 2400
+
+
+def require(ok, message):
+    if not ok:
+        raise RuntimeError(message)
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def load_confirmation():
+    require(sha(CONFIRMATION) == CONFIRMATION_SHA, 'Reviewed confirmation helper changed')
+    spec = importlib.util.spec_from_file_location('v4_confirmation_primitives', CONFIRMATION)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+C = load_confirmation()
+D = C.load_helper()
+ORIGINAL_READ_ROWS = C.read_rows
+
+
+def literal_assignment(path, name):
+    """Read a source constant without importing the repository/model stack."""
+    for node in ast.parse(Path(path).read_text()).body:
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == name for t in node.targets):
+            return ast.literal_eval(node.value)
+    raise RuntimeError(f'Missing literal source constant {name}')
+
+
+def config_defaults():
+    for node in ast.parse((ROOT / 'agents/sherlock/config.py').read_text()).body:
+        if isinstance(node, ast.ClassDef) and node.name == 'AgentConfig':
+            return {n.target.id: ast.literal_eval(n.value) for n in node.body
+                    if isinstance(n, ast.AnnAssign) and isinstance(n.target, ast.Name)}
+    raise RuntimeError('Missing AgentConfig defaults')
+
+
+def read_rows(path, first, count, opponents):
+    # Existing validator covers finite fields, 303 steps, scoring v2 and exact unique keys.
+    indexed = ORIGINAL_READ_ROWS(path, first, count, opponents)
+    import csv
+    with Path(path).open(newline='') as stream:
+        fields = next(csv.reader(stream))
+    require(fields == literal_assignment(ROOT / 'scripts/experiment.py', 'GAME_FIELDS'), 'Unexpected CSV schema')
+    for row in indexed.values():
+        own, other = float(row['our_wins']), float(row['opp_wins'])
+        require(own + other == 3, 'Completed course game must contain exactly three match wins')
+        require(float(row['game_win']) == float(own > other), 'Inconsistent game_win')
+        points, other_points = float(row['our_points']), float(row['opp_points'])
+        require(points.is_integer() and other_points.is_integer(), 'Nonintegral team points')
+        require(float(row['point_win']) == (1 if points > other_points else 0 if points < other_points else .5),
+                'Inconsistent point_win')
+    return indexed
+
+
+def design():
+    return [
+        ('direct_v4_vs_v3', V4, DIRECT_FIRST, DIRECT_COUNT, ('self:' + str(V3),)),
+        ('fresh_v3', V3, FRESH_FIRST, FRESH_COUNT, BENCHMARKS),
+        ('fresh_v4', V4, FRESH_FIRST, FRESH_COUNT, BENCHMARKS),
+    ]
+
+
+def fresh_comparison(reference, candidate):
+    result = {}
+    for opponent in BENCHMARKS:
+        per_map, units, left_total, right_total = [], 0, 0., 0.
+        for seed in range(FRESH_FIRST, FRESH_FIRST + FRESH_COUNT):
+            deltas = []
+            for side in SIDES:
+                key = (str(seed), side, opponent)
+                left, right = float(reference[key]['result']), float(candidate[key]['result'])
+                left_total += left
+                right_total += right
+                deltas.append(right - left)
+                units += int(2 * right) - int(2 * left)
+            per_map.append(sum(deltas) / 2)
+        stat = C.bootstrap(per_map)
+        stat.update(delta=stat.pop('mean'), half_units=units, games_per_arm=400,
+                    reference_mean=left_total / 400, candidate_mean=right_total / 400)
+        result[opponent] = stat
+    return result
+
+
+def direct_stat(rows):
+    opponent = 'self:' + str(V3)
+    values = [sum(float(rows[(str(seed), side, opponent)]['result']) for side in SIDES) / 2
+              for seed in range(DIRECT_FIRST, DIRECT_FIRST + DIRECT_COUNT)]
+    return {**C.bootstrap(values), 'games': 800,
+            'interpretation': 'V4 score against frozen V3 on 400 new paired maps only'}
+
+
+def decide(comparison, direct):
+    fresh_gate, direct_gate = C.fresh_gate(comparison), C.direct_gate(direct)
+    eligible = fresh_gate['passed'] and direct_gate['passed']
+    return dict(fresh_gate=fresh_gate, direct_gate=direct_gate,
+                decision='eligible_for_technical_review' if eligible else 'no_promotion_gate_failed',
+                promotion_authorized=False)
+
+
+def preflight():
+    require(ROOT.name == 'sherlock-luxAI-team15' and (ROOT / 'scripts/par_eval.py').is_file(), 'Run from project root')
+    require(Path(sys.prefix).resolve() == (ROOT / '.venv').resolve() and sys.version_info[:2] == (3, 13),
+            'Use the project .venv/bin/python (Python 3.13)')
+    require(not OUT.exists(), 'Refusing existing/partial output directory; no resume or sample extension')
+    require(literal_assignment(ROOT / 'scripts/protocol.py', 'VAL_SEED_BASE') == 500000, 'Unexpected seed translation')
+    inputs = {str(V3): V3_SHA, str(V4): V4_SHA, str(PLAN): PLAN_SHA, str(AUDIT): AUDIT_SHA,
+              str(CONFIRMATION): CONFIRMATION_SHA, str(D.SCRIPT): HELPER_SHA,
+              str(SCRIPT): sha(SCRIPT)}
+    for side in (0, 1):
+        inputs[str(ROOT / f'agents/sherlock/weights/agent_p{side}.pth')] = V3_SHA
+        inputs[str(ROOT / f'experiments/releases/20261020_old3_sym3/agent_p{side}.pth')] = '3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158'
+    require(all(D.digest(p) == expected for p, expected in inputs.items()), 'Frozen plan/helper/audit/model changed')
+    audit = json.loads(AUDIT.read_text())
+    require(audit['status'] == 'passed' and audit['sha256'] == {'v3': V3_SHA, 'v4': V4_SHA}
+            and audit['network_count'] == 18 and audit['all_network_tensors_identical'] is True,
+            'Existing identity audit does not bind the fixed candidates')
+    defaults = config_defaults()
+    require(set(audit['configs']) == {'v3', 'v4'} and all(set(cfg) <= set(defaults) for cfg in audit['configs'].values()),
+            'Unexpected audited configuration fields')
+    configs = {key: {**defaults, **cfg} for key, cfg in audit['configs'].items()}
+    differences = {k: [configs['v3'].get(k), configs['v4'].get(k)] for k in configs['v3'].keys() | configs['v4'].keys()
+                   if configs['v3'].get(k) != configs['v4'].get(k)}
+    require(differences == {'contest_sap': [False, True], 'opp_infer': [False, True]}, 'Unexpected config difference')
+    # Exact checkpoint SHA binds saved configurations to the existing reviewed identity audit.
+    require('torch' not in sys.modules and 'jax' not in sys.modules, 'Preflight imported a model runtime')
+    D.FROZEN_INPUTS = inputs
+    D.BASELINE = D.snapshot()  # HEAD frozen now, after root's final archival commit
+    return {'effective': configs, 'source_defaults': defaults, 'audit': str(AUDIT),
+            'verification': 'Existing reviewed configuration audit bound to exact checkpoint SHA256'}
+
+
+def execute_all_jobs():
+    """No gate is evaluated until every fixed job has completed successfully."""
+    tables = {}
+    for label, weights, first, count, opponents in design():
+        D.STATE['status'] = label
+        D.save_state()
+        tables[label] = C.run_job(label, weights, first, count, opponents)
+    return tables
+
+
+def run():
+    require(time.time() < STOP_AT, '08:40 Berlin deadline approaching/passed')
+    D.no_other_jobs()
+    configs = preflight()
+    C.D, C.ROOT, C.OUT = D, ROOT, OUT
+    C.EXTRA = dict(D.FROZEN_INPUTS)
+    C.read_rows = read_rows
+    D.OUT, D.STATE_PATH = OUT, OUT / 'state.json'
+    D.DEADLINE, D.STOP_AT, D.CUTOFF = DEADLINE, STOP_AT, STOP_AT
+    OUT.mkdir(exist_ok=False)
+    D.STATE = dict(status='preparing', complete=False, started_at=D.now(), jobs=[],
+                   baseline=D.BASELINE, configs=configs, inference_overrides=[],
+                   plan=str(PLAN), plan_sha256=PLAN_SHA, expected_total_games=TOTAL_GAMES,
+                   direct_seed_range=[510400, 510799], benchmark_seed_range=[510800, 510999],
+                   deadline_utc='2026-10-21T06:40:00Z', internal_stop_utc='2026-10-21T06:39:50Z',
+                   thread_environment=D.THREAD_ENV, maximum_eval_workers=2,
+                   promotion_authorized=False, decision='incomplete_no_promotion',
+                   historical_data_pooled=False, result_dependent_stopping=False,
+                   sample_extension_allowed=False)
+    D.save_state()
+    for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
+        signal.signal(sig, D.interrupted)
+    try:
+        tables = execute_all_jobs()
+        require(time.time() < STOP_AT, 'Deadline before analysis')
+        require(sum(len(table) for table in tables.values()) == TOTAL_GAMES, 'Wrong total game count')
+        comparison = fresh_comparison(tables['fresh_v3'], tables['fresh_v4'])
+        direct = direct_stat(tables['direct_v4_vs_v3'])
+        D.invariants()
+        require(time.time() < STOP_AT, 'Deadline before completion')
+        D.STATE.update(comparison=comparison, direct_stat=direct, **decide(comparison, direct),
+                       final_identity=D.snapshot(), complete=True, status='complete')
+    except BaseException as exc:
+        D.stop_group(D.CURRENT)
+        # Reused job primitive contains historical deadline wording; normalize any deadline error.
+        message = str(exc) if time.time() < STOP_AT else '08:40 Berlin completion deadline reached'
+        D.STATE.update(status='incomplete', complete=False, decision='incomplete_no_promotion',
+                       promotion_authorized=False, error=f'{type(exc).__name__}: {message}')
+        raise
+    finally:
+        D.STATE['finished_at'] = D.now()
+        D.save_state()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--run', action='store_true')
+    mode.add_argument('--preflight', action='store_true')
+    args = parser.parse_args()
+    if args.run:
+        run()
+    else:
+        configs = preflight()
+        print(json.dumps(dict(preflight='passed', games_started=0, configs=configs, baseline=D.BASELINE,
+                              commands=[D.eval_command(w, OUT / f'{label}.csv', first=s - 500000, n=n,
+                                                        opponents=','.join(opps))
+                                        for label, w, s, n, opps in design()]), indent=2, allow_nan=False))
+
+
+if __name__ == '__main__':
+    main()

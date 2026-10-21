@@ -1,0 +1,495 @@
+"""Prepared only: five sequential ensemble development evaluations (1200 games).
+
+From repository root, after builder and all pair audits, with no heavy work:
+  .venv/bin/python -B /tmp/exploration_ensemble_eval.py --run
+Pure stdlib tests: python3 -B /tmp/exploration_ensemble_eval.py --self-test
+No training or promotion. Fresh/direct commands are recorded, never executed.
+"""
+from __future__ import annotations
+import argparse
+import csv
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import selectors
+import shlex
+import shutil
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+from datetime import datetime, timezone
+SCRIPT = Path(__file__).resolve()
+ROOT = SCRIPT.parents[4] if SCRIPT.parent.name == 'tools' else Path.cwd().resolve()
+PYTHON = ROOT / '.venv/bin/python'
+BUILD = ROOT / 'experiments/candidates/exploration_s47_49_fixed_ensembles'
+OUT = ROOT / 'experiments/compare/autonomous_20261020/exploration_ensemble_development'
+STATE_PATH = OUT / 'state.json'
+REFERENCE = OUT / 'installed_reference.pth'
+LABELS = ('reference', 'control3', 'slow3', 'v3_control3', 'v3_slow3')
+CANDIDATES = ('v3_control3', 'v3_slow3')
+CUTOFF = datetime(2026,10,21,3,tzinfo=timezone.utc).timestamp()
+DEADLINE = datetime(2026,10,21,4,tzinfo=timezone.utc).timestamp()
+STOP_AT = DEADLINE - 10
+THREAD_ENV = {k:'1' for k in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS')}
+THREAD_ENV.update(PYTHONUNBUFFERED='1',PYTHONDONTWRITEBYTECODE='1')
+STATE = CURRENT = BASELINE = None
+FROZEN_INPUTS = {}
+
+def require(ok, message):
+    if not ok:
+        raise RuntimeError(message)
+
+def now():
+    return datetime.now(timezone.utc).isoformat(timespec='seconds')
+
+def digest(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            h.update(block)
+    return h.hexdigest()
+
+def heavy_python_command(command):
+    """Inspect executable and exact invocation, never arbitrary command text."""
+    try:
+        args = shlex.split(command)
+    except ValueError:
+        return False
+    if not args or not re.fullmatch(r'python(?:\d+(?:\.\d+)*)?', Path(args[0]).name, re.I):
+        return False
+    modules = {'scripts.par_eval', 'scripts.experiment', 'scripts.train', 'scripts.ppo_train',
+               'scripts.evaluate', 'scripts.compare_weights', 'scripts.finetune', 'scripts.run_experiments'}
+    scripts = {'exploration_confirmation.py', 'exploration_replication.py', 'exploration_ensemble_eval.py', 'exploration_ensemble_builder.py', 'reward_pilot.py', 'sherlock-reward-pilot-20261020.py',
+               'reward_replication.py', 'sherlock-reward-replication-20261020.py',
+               'inference_development2.py', 'sherlock-inference-development2-20261020.py',
+               'sherlock-target-diagnosis-20261020.py',
+               'par_eval.py', 'experiment.py', 'train.py', 'ppo_train.py',
+               'evaluate.py', 'compare_weights.py', 'finetune.py'}
+    mode_scripts = {'exploration_analysis.py': '--audit-pair',
+                    'sherlock-qmargin-diagnostic-20261020.py': '--run'}
+    def script_target(index):
+        name = Path(args[index]).name
+        return name in scripts or (name in mode_scripts and mode_scripts[name] in args[index + 1:])
+    # Interpreter options can precede the execution target. Stop at that target:
+    # a read-only script's later arguments must never be interpreted as runners.
+    i = 1
+    while i < len(args):
+        value = args[i]
+        if value == '-m':
+            return i + 1 < len(args) and args[i + 1] in modules
+        if value == '-c':
+            # multiprocessing uses -c with this standard bootstrap, not a script.
+            return (i + 1 < len(args) and args[-1] == '--multiprocessing-fork'
+                and re.match(r'^from multiprocessing\.spawn import spawn_main;\s*spawn_main\(',
+                             ' '.join(args[i + 1:-1])) is not None)
+        if value == '--':
+            return i + 1 < len(args) and script_target(i + 1)
+        if value in ('-W', '-X', '--check-hash-based-pycs'):
+            i += 2
+            continue
+        if value.startswith('-') and value != '-':
+            i += 1
+            continue
+        return script_target(i)
+    return False
+
+def no_other_jobs():
+    """Conservative read-only admission check; never terminate another job."""
+    raw = subprocess.check_output(['ps', '-axo', 'pid=,pgid=,args='], text=True)
+    allowed_groups = set()
+    if CURRENT is not None:
+        allowed_groups.add(CURRENT.pid)
+    conflicts = []
+    for line in raw.splitlines():
+        parts = line.strip().split(None, 2)
+        if len(parts) != 3:
+            continue
+        pid, group, command = parts
+        if int(group) in allowed_groups or int(pid) == os.getpid():
+            continue
+        if heavy_python_command(command):
+            conflicts.append({'pid': int(pid), 'command': command})
+    require(not conflicts, f'Other training/evaluation jobs detected: {conflicts}')
+
+def save_state():
+    STATE['updated_at'] = now()
+    with tempfile.NamedTemporaryFile(mode='w', dir=OUT, prefix='state.', suffix='.tmp', delete=False) as f:
+        json.dump(STATE, f, indent=2, allow_nan=False)
+        f.write('\n')
+        temporary = Path(f.name)
+    os.replace(temporary, STATE_PATH)
+
+def read_rows(path):
+    with Path(path).open(newline='') as f:
+        reader = csv.DictReader(f)
+        fields = reader.fieldnames
+        require(fields is not None and len(fields) == len(set(fields)), 'Missing/duplicate CSV columns')
+        rows = list(reader)
+    expected = {(str(seed), side, opp) for seed in range(500720, 500780)
+                for side in ('player_0', 'player_1') for opp in ('default', 'solution92')}
+    indexed = {}
+    for row in rows:
+        require(None not in row and all(v is not None for v in row.values()), 'Malformed CSV row')
+        key = tuple(row[k] for k in ('seed', 'side', 'opponent'))
+        require(key not in indexed, f'Duplicate game key {key}')
+        require(row['steps'] == '303' and row['point_counting_version'] == '2', 'Incomplete/wrong scoring game')
+        for k, value in row.items():
+            if k in ('side', 'opponent'):
+                continue
+            require(math.isfinite(float(value)), f'Nonfinite numeric field {k}')
+        require(float(row['our_points']) >= 0 and float(row['opp_points']) >= 0, 'Negative game points')
+        own, opp = float(row['our_wins']), float(row['opp_wins'])
+        require(own.is_integer() and opp.is_integer() and 0 <= own <= 3 and 0 <= opp <= 3
+                and own + opp <= 3, 'Invalid match wins')
+        require(float(row['result']) == (1 if own > opp else 0 if own < opp else .5), 'Inconsistent result')
+        indexed[key] = row
+    require(len(rows) == 240 and set(indexed) == expected, 'Expected exact 240 development game keys')
+    return fields, indexed
+
+def stop_group(process):
+    if process is None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        return
+    until = time.monotonic() + min(5, max(0, DEADLINE - time.time()))
+    while time.monotonic() < until:
+        process.poll()
+        try:
+            os.killpg(process.pid, 0)
+        except ProcessLookupError:
+            return
+        time.sleep(.1)
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        pass
+
+def interrupted(signum, frame):
+    raise InterruptedError(f'Received signal {signum}')
+
+def eval_command(weights, output, first=720, n=60, opponents='default,solution92'):
+    return [str(PYTHON), '-B', '-m', 'scripts.par_eval', '--weights', str(weights),
+            '--first', str(first), '--n', str(n), '--workers', '2',
+            '--opponents', opponents, '--out', str(output)]
+
+
+def choose(comparisons):
+    detail, eligible = {}, []
+    for name in CANDIDATES:
+        sol, default = comparisons[name]['solution92'], comparisons[name]['default']
+        checks = {'solution92_delta_positive': sol['half_units'] > 0,
+                  'solution92_lower95_positive': sol['ci95'][0] > 0,
+                  'default_loss_at_most_2pp': default['half_units'] * 100 >= -2 * 240}
+        detail[name] = checks
+        if all(checks.values()): eligible.append(name)
+    selected = None
+    if eligible:
+        # CANDIDATES order fixes the prespecified exact-tie preference to control.
+        selected = max(eligible, key=lambda k: comparisons[k]['solution92']['half_units'])
+    return {'selected': selected, 'eligible': eligible, 'checks': detail,
+            'tie_rule': 'control on exact Solution92 delta tie',
+            'diagnostic_only': ['control3','slow3'], 'promotion_authorized': False,
+            'fresh_or_direct_started': False,
+            'scope': 'Development selection only; reused maps, two candidates; no method-strength claim.'}
+
+
+def builder_inputs():
+    manifest_path = BUILD / 'manifest.json'
+    raw = manifest_path.read_bytes(); manifest = json.loads(raw)
+    require(manifest.get('complete') is True and not manifest.get('error'), 'Ensemble builder incomplete')
+    require(set(manifest['outputs']) == set(LABELS[1:]), 'Wrong fixed ensemble set')
+    groups = manifest['groups']
+    require(set(groups) == set(LABELS[1:]), 'Wrong fixed groups')
+    control, slow = groups['control3'], groups['slow3']
+    basis = groups['v3_control3'][:-3]
+    require(len(control) == len(slow) == 3 and len(basis) == 18
+            and groups['v3_control3'] == basis + control
+            and groups['v3_slow3'] == basis + slow
+            and len(set(basis + control + slow)) == 24, 'Wrong/duplicate fixed network membership')
+    inputs = dict(manifest['inputs_sha256'])
+    inputs[str(manifest_path)] = hashlib.sha256(raw).hexdigest()
+    v3 = ROOT / 'experiments/candidates/all18_v3.pth'
+    require(inputs[str(v3)] == 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935', 'Wrong fixed V3 basis')
+    paths = {}
+    for name in LABELS[1:]:
+        item = manifest['outputs'][name]; path = BUILD / f'{name}.pth'
+        require(item['path'] == str(path) and item['q_sha256'] == groups[name]
+                and item['networks'] == len(groups[name]), 'Builder output provenance mismatch')
+        paths[name] = path; inputs[str(path)] = item['sha256']
+    live = [ROOT / f'agents/sherlock/weights/agent_p{i}.pth' for i in (0,1)]
+    installed = manifest['installed_sha256']
+    require(set(installed) == set(map(str,live)) and len(set(installed.values())) == 1, 'Installed comparator sides differ')
+    for path in live:
+        require(inputs[str(path)] == installed[str(path)], 'Installed identity records differ')
+    for side in (0,1):
+        path = ROOT / f'experiments/releases/20261020_old3_sym3/agent_p{side}.pth'
+        inputs[str(path)] = '3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158'
+    require(all(digest(p) == h for p,h in inputs.items()), 'Builder source/model/comparator changed')
+    require(isinstance(manifest['inference_config'],dict) and bool(manifest['inference_config']), 'Missing frozen inference config')
+    return manifest, paths, live[0], inputs
+
+
+def snapshot():
+    require(all(digest(p) == h for p,h in FROZEN_INPUTS.items()), 'Frozen input/model changed')
+    head = subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()
+    names = set()
+    for options in (['--cached'],['--others','--exclude-standard']):
+        raw = subprocess.check_output(['git','-C',str(ROOT),'ls-files','-z',*options,'--','*.py'])
+        names.update(p.decode() for p in raw.split(b'\0') if p)
+    files = {str(ROOT/n):digest(ROOT/n) for n in sorted(names)}
+    for name in ('env.py','params.py','wrappers.py'):
+        p = ROOT / '.venv/lib/python3.13/site-packages/luxai_s3' / name
+        files[str(p)] = digest(p)
+    files[str(SCRIPT)] = digest(SCRIPT)
+    return dict(head=head,python_path=str(PYTHON.resolve()),python_sha256=digest(PYTHON.resolve()),
+                python_sources=files,input_sha256=dict(FROZEN_INPUTS))
+
+
+def completed_csv_integrity():
+    for job in (STATE or {}).get('jobs', []):
+        if job.get('complete'):
+            require(digest(job['output']) == job['csv_sha256'], 'Completed evaluation CSV changed')
+
+
+def invariants():
+    completed_csv_integrity()
+    require(snapshot() == BASELINE, 'Frozen HEAD/Python/source/input changed')
+    no_other_jobs()
+
+
+def run_job(label, weights):
+    global CURRENT
+    require(time.time() < CUTOFF, 'No new evaluations after 05:00 Berlin')
+    invariants()
+    output = OUT / f'{label}.csv'
+    require(not output.exists(), 'Refusing existing CSV')
+    command = eval_command(weights,output)
+    job = dict(label=label,command=command,started_at=now(),complete=False,
+               output=str(output),log=str(OUT/f'{label}.log'))
+    STATE['jobs'].append(job); save_state()
+    try:
+        with Path(job['log']).open('xb') as log, selectors.DefaultSelector() as selector:
+            require(time.time() < CUTOFF, 'Cutoff reached before spawn')
+            CURRENT = subprocess.Popen(command,cwd=ROOT,env={**os.environ,**THREAD_ENV},
+                start_new_session=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+            job['pid'] = CURRENT.pid; save_state()
+            selector.register(CURRENT.stdout,selectors.EVENT_READ)
+            next_check = time.monotonic()+30
+            while selector.get_map():
+                require(time.time() < STOP_AT, '06:00 Berlin deadline approaching')
+                for key,_ in selector.select(timeout=1):
+                    data = os.read(key.fileobj.fileno(),65536)
+                    if data:
+                        log.write(data); log.flush()
+                        sys.stdout.buffer.write(data); sys.stdout.buffer.flush()
+                    else: selector.unregister(key.fileobj)
+                if time.monotonic() >= next_check:
+                    invariants(); next_check = time.monotonic()+30
+            job['returncode'] = CURRENT.wait(timeout=max(.1,STOP_AT-time.time()))
+            require(job['returncode'] == 0,f'{label} evaluation failed')
+        invariants()
+        fields,rows = read_rows(output)
+        require('result' in fields, 'Missing result field')
+        job.update(complete=True,rows=240,exact_keys_valid=True,csv_sha256=digest(output))
+        return rows
+    finally:
+        if CURRENT is not None:
+            if not job['complete']: stop_group(CURRENT)
+            CURRENT.stdout.close(); CURRENT = None
+        job['finished_at'] = now(); save_state()
+
+
+def compare(tables):
+    # Imported only after all five worker groups have exited. Never used by self-test.
+    import numpy as np
+    results = {}
+    pairs = [(name,'reference') for name in LABELS[1:]] + [('slow3','control3'), ('v3_slow3','v3_control3')]
+    for candidate,reference in pairs:
+        label = candidate if reference == 'reference' else f'{candidate}_minus_{reference}_diagnostic'
+        results[label] = {}
+        for opp in ('default','solution92'):
+            keys = [(str(s),side,opp) for s in range(500720,500780) for side in ('player_0','player_1')]
+            left = np.array([float(tables[reference][key]['result']) for key in keys]).reshape(60,2).mean(axis=1)
+            right = np.array([float(tables[candidate][key]['result']) for key in keys]).reshape(60,2).mean(axis=1)
+            delta = right-left
+            draws = np.random.default_rng(0).choice(delta,size=(5000,60),replace=True).mean(axis=1)
+            ci = list(map(float,np.percentile(draws,[2.5,97.5])))
+            units = sum(int(2*float(tables[candidate][k]['result']))-int(2*float(tables[reference][k]['result'])) for k in keys)
+            results[label][opp] = dict(reference=reference,reference_mean=float(left.mean()),candidate_mean=float(right.mean()),
+                delta=float(delta.mean()),half_units=units,ci95=ci,maps=60,games_per_arm=120,bootstrap_samples=5000,bootstrap_seed=0,
+                interpretation='Paired performance against common opponents; not direct self-play')
+    return results
+
+
+def followup_commands(selected, paths):
+    if selected is None: return {'prepared_only':True,'fresh_commands':[],'direct_command_after_fresh_gate':None}
+    # Separate exclusive output paths; no code below executes these commands.
+    fresh = OUT / 'fresh_confirmation'
+    return {'prepared_only':True,'fresh_seed_range':[510200,510399],
+        'fresh_prerequisite':'Reverify all frozen source/model/config hashes and time budget; only this selected candidate, no reuse of cards.',
+        'fresh_commands':[eval_command(REFERENCE,fresh/'reference.csv',first=10200,n=200),
+                          eval_command(paths[selected],fresh/f'{selected}.csv',first=10200,n=200)],
+        'fresh_gate':'Validate both 800-key datasets; paired 200-card bootstrap 5000/seed0, both sides; Solution92 delta>0 and lower95>0, default delta>=-0.02.',
+        'direct_prerequisite':'ONLY after the fresh gate passes, with unchanged selected model and comparator. No automatic launch.',
+        'direct_command_after_fresh_gate':eval_command(paths[selected],OUT/'direct_after_fresh_pass.csv',opponents='self:'+str(REFERENCE)),
+        'direct_gate':'120 complete games on 60 known cards, paired-card bootstrap 5000/seed0; lower95 of mean result >0.5. Technical reproduction/backup/hash checks still required.',
+        'deadline_utc':'2026-10-21T04:00:00Z','new_heavy_cutoff_utc':'2026-10-21T03:00:00Z',
+        'promotion_authorized':False}
+
+
+def run():
+    global STATE,BASELINE,FROZEN_INPUTS
+    require((ROOT/'scripts/par_eval.py').is_file(),'Run from repository or archived tools directory')
+    require(time.time() < CUTOFF,'No new evaluations after 05:00 Berlin')
+    require(not OUT.exists(),'Refusing existing/partial output directory')
+    no_other_jobs()
+    manifest,paths,live,FROZEN_INPUTS = builder_inputs()
+    OUT.mkdir(exist_ok=False)
+    STATE = dict(status='preparing',complete=False,started_at=now(),jobs=[],
+        builder_manifest=str(BUILD/'manifest.json'),inference_config=manifest['inference_config'],
+        model_groups=manifest['groups'],thread_environment=THREAD_ENV,
+        deadline_utc='2026-10-21T04:00:00Z',new_work_cutoff_utc='2026-10-21T03:00:00Z')
+    save_state()
+    for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP): signal.signal(sig,interrupted)
+    try:
+        with live.open('rb') as source, REFERENCE.open('xb') as target: shutil.copyfileobj(source,target)
+        require(digest(REFERENCE) == FROZEN_INPUTS[str(live)],'Frozen comparator copy differs')
+        FROZEN_INPUTS[str(REFERENCE)] = FROZEN_INPUTS[str(live)]
+        paths['reference'] = REFERENCE
+        BASELINE = snapshot(); STATE.update(status='running',baseline=BASELINE); save_state()
+        tables = {label:run_job(label,paths[label]) for label in LABELS}
+        require(time.time() < STOP_AT,'Deadline before complete analysis')
+        comparisons = compare(tables); selection = choose(comparisons)
+        invariants()
+        STATE.update(comparisons=comparisons,selection=selection,
+            prepared_followup=followup_commands(selection['selected'],paths),
+            final_identity=snapshot(),status='complete',complete=True)
+    except BaseException as exc:
+        stop_group(CURRENT); STATE.update(status='incomplete',complete=False,error=f'{type(exc).__name__}: {exc}')
+        raise
+    finally:
+        STATE['finished_at'] = now(); save_state()
+
+
+def self_test():
+    import unittest
+    import io
+    from unittest.mock import patch
+    from types import SimpleNamespace
+    class Tests(unittest.TestCase):
+        def data(self, control=12, slow=18, control_low=.01, slow_low=.01, control_default=0, slow_default=0):
+            return {label: {'solution92': {'half_units': units, 'ci95': [low,.2]}, 'default': {'half_units': default}}
+                    for label,units,low,default in [('v3_control3',control,control_low,control_default),('v3_slow3',slow,slow_low,slow_default)]}
+        def test_only_two_fixed_candidates_and_control_wins_exact_tie(self):
+            self.assertEqual(choose(self.data())['selected'],'v3_slow3')
+            self.assertEqual(choose(self.data(slow=12))['selected'],'v3_control3')
+            data=self.data(control_low=0,slow_low=0)
+            data['slow3']={'solution92':{'half_units':200,'ci95':[.5,.9]},'default':{'half_units':0}}
+            self.assertIsNone(choose(data)['selected'])
+        def test_strict_solution_bounds_and_default_half_result_boundary(self):
+            self.assertEqual(choose(self.data(slow_default=-5))['selected'],'v3_control3')
+            self.assertEqual(choose(self.data(slow_default=-4))['selected'],'v3_slow3')
+            self.assertIsNone(choose(self.data(control=0,slow=0))['selected'])
+            self.assertIsNone(choose(self.data(control_low=0,slow_low=0))['selected'])
+        def test_fixed_evaluation_and_fresh_seed_translation(self):
+            command=eval_command(Path('/weights'),Path('/new.csv'))
+            self.assertEqual(command,[str(PYTHON),'-B','-m','scripts.par_eval','--weights','/weights','--first','720','--n','60','--workers','2','--opponents','default,solution92','--out','/new.csv'])
+            fresh=eval_command('/weights','/fresh.csv',first=10200,n=200)
+            self.assertEqual(fresh[fresh.index('--first')+1],'10200')
+            self.assertEqual(fresh[fresh.index('--n')+1],'200')
+        def csv_text(self):
+            stream=io.StringIO(); writer=csv.writer(stream)
+            writer.writerow(['seed','side','opponent','steps','point_counting_version','result','our_wins','opp_wins','our_points','opp_points','secs'])
+            for seed in range(500720,500780):
+                for side in ('player_0','player_1'):
+                    for opp in ('default','solution92'):
+                        writer.writerow([seed,side,opp,303,2,.5,1,1,100,100,1.2])
+            return stream.getvalue()
+        def test_exact_csv_keys_match_draws_and_invalid_data(self):
+            valid=self.csv_text()
+            with patch.object(Path,'open',return_value=io.StringIO(valid)):
+                self.assertEqual(len(read_rows('/fixture.csv')[1]),240)
+            lines=valid.splitlines()
+            invalid=['\n'.join(lines[:-1]),valid+lines[-1]+'\n',valid.replace('500720','510200'),
+                     valid.replace(',303,2,',',302,2,'),valid.replace(',0.5,1,1,',',1,1,1,'),
+                     valid.replace(',0.5,1,1,',',0.5,2,2,'),valid.replace(',100,100,',',nan,100,'),
+                     valid.replace(',100,100,',',-1,100,'),valid.replace(',100,100,',',100,-1,')]
+            for text in invalid:
+                with self.subTest(text=text[:70]),patch.object(Path,'open',return_value=io.StringIO(text)):
+                    with self.assertRaises((RuntimeError,ValueError)):read_rows('/fixture.csv')
+        def test_heavy_job_admission_preserves_own_worker_group_only(self):
+            for command,expected in [('Python -B /tmp/exploration_replication.py --run',True),
+                ('python -m scripts.par_eval',True),('python /tmp/exploration_ensemble_builder.py --run',True),
+                ('python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=7) --multiprocessing-fork',True),
+                ('/bin/zsh -lc "python reward_pilot.py"',False),('python /tmp/reward_pilot_analysis.py',False),
+                ('python /tmp/exploration_analysis.py --audit-pair 47',True),
+                ('python /tmp/exploration_analysis.py --self-test',False),
+                ('python /tmp/sherlock-qmargin-diagnostic-20261020.py --run',True),
+                ('python /tmp/sherlock-qmargin-diagnostic-20261020.py --self-test',False)]:
+                self.assertEqual(heavy_python_command(command),expected)
+            with patch.dict(globals(),{'CURRENT':SimpleNamespace(pid=30)}),patch.object(os,'getpid',return_value=1):
+                with patch.object(subprocess,'check_output',return_value='77 30 python -m scripts.par_eval'):
+                    no_other_jobs()
+                with patch.object(subprocess,'check_output',return_value='77 40 python -m scripts.par_eval'):
+                    with self.assertRaises(RuntimeError):no_other_jobs()
+        def test_completed_csv_hash_is_rechecked(self):
+            jobs=[dict(complete=True,output='/finished.csv',csv_sha256='original'),
+                  dict(complete=False,output='/running.csv')]
+            with patch.dict(globals(),{'STATE':{'jobs':jobs}}):
+                with patch.dict(globals(),{'digest':lambda p:'original'}): completed_csv_integrity()
+                with patch.dict(globals(),{'digest':lambda p:'mutated'}):
+                    with self.assertRaises(RuntimeError): completed_csv_integrity()
+        def test_fresh_and_direct_are_only_gated_prepared_commands(self):
+            paths={'v3_control3':Path('/candidate.pth')}
+            commands=followup_commands('v3_control3',paths)
+            self.assertTrue(commands['prepared_only']); self.assertFalse(commands['promotion_authorized'])
+            self.assertEqual(commands['fresh_seed_range'],[510200,510399])
+            self.assertEqual(len(commands['fresh_commands']),2)
+            direct=commands['direct_command_after_fresh_gate']
+            self.assertEqual(direct[direct.index('--opponents')+1],'self:'+str(REFERENCE))
+            self.assertIn('ONLY after',commands['direct_prerequisite'])
+            self.assertEqual(followup_commands(None,paths)['fresh_commands'],[])
+        def test_builder_schema_fixed_members_and_hash_mismatch(self):
+            control=['c1','c2','c3']; slow=['s1','s2','s3']; basis=[f'v{i}' for i in range(18)]
+            groups=dict(control3=control,slow3=slow,v3_control3=basis+control,v3_slow3=basis+slow)
+            live={str(ROOT/f'agents/sherlock/weights/agent_p{i}.pth'):'live' for i in (0,1)}
+            manifest=dict(complete=True,groups=groups,inference_config={'canonical':True},installed_sha256=live,
+                inputs_sha256={**live,str(ROOT/'experiments/candidates/all18_v3.pth'):'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'},
+                outputs={name:dict(path=str(BUILD/f'{name}.pth'),q_sha256=hashes,networks=len(hashes),sha256=name) for name,hashes in groups.items()})
+            for change in ('valid','incomplete','duplicate','hash'):
+                item=json.loads(json.dumps(manifest))
+                if change=='incomplete':item['complete']=False
+                if change=='duplicate':item['groups']['control3'][1]='c1'
+                raw=json.dumps(item).encode()
+                hashes={**item['inputs_sha256'],str(BUILD/'manifest.json'):hashlib.sha256(raw).hexdigest(),
+                        **{v['path']:v['sha256'] for v in item['outputs'].values()},
+                        **{str(ROOT/f'experiments/releases/20261020_old3_sym3/agent_p{i}.pth'):'3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158' for i in (0,1)}}
+                if change=='hash':hashes[str(BUILD/'slow3.pth')]='wrong'
+                with self.subTest(change=change),patch.object(Path,'read_bytes',return_value=raw),patch.dict(globals(),{'digest':lambda p:hashes[str(p)]}):
+                    if change=='valid':self.assertEqual(set(builder_inputs()[1]),set(LABELS[1:]))
+                    else:
+                        with self.assertRaises(RuntimeError):builder_inputs()
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+    require(not any(name in sys.modules for name in ('torch','jax','numpy')), 'Self-tests loaded a prohibited dependency')
+    if not result.wasSuccessful(): raise SystemExit(1)
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--run',action='store_true'); mode.add_argument('--self-test',action='store_true')
+    args = parser.parse_args()
+    if args.self_test: self_test()
+    else: run()
+
+if __name__ == '__main__': main()

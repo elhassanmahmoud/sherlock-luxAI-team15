@@ -1,0 +1,70 @@
+{
+  "complete": true,
+  "independent_audit": true,
+  "state_sha256": "d2eeb36ed31c4acb22362662cfc3f46bd4acc3ae0d223975db175e90fbc921f6",
+  "runner_sha256": "86fe3fc84d798817f18754f946395a4cec89056aaa312b5134241c3a400c56a1",
+  "source_head": "6ab3109dec8f584bf3510c9420c8eb8ac9a000e3",
+  "rows": 2400,
+  "csv_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v4_independent_20261021/direct_v4_vs_v3.csv": "951c05281b3db6cc38f3e72b642b8d86fb6bf0de5a26f13db0e5c5e73a5e5765",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v4_independent_20261021/fresh_v3.csv": "71705b366a6012ff56285fd6dfb7964365e6e711439d37f33a6e2875dbdd44e2",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v4_independent_20261021/fresh_v4.csv": "15ef033f634dc6cc4b2d4127ae9eb70ebc5b79cc0dc66f3d624fbda973128e4b"
+  },
+  "comparison": {
+    "default": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "maps": 200,
+      "bootstrap_samples": 5000,
+      "bootstrap_seed": 0,
+      "delta": 0.0,
+      "half_units": 0,
+      "games_per_arm": 400,
+      "reference_mean": 1.0,
+      "candidate_mean": 1.0
+    },
+    "solution92": {
+      "ci95": [
+        -0.03,
+        0.04
+      ],
+      "maps": 200,
+      "bootstrap_samples": 5000,
+      "bootstrap_seed": 0,
+      "delta": 0.005,
+      "half_units": 4,
+      "games_per_arm": 400,
+      "reference_mean": 0.7775,
+      "candidate_mean": 0.7825
+    }
+  },
+  "direct_stat": {
+    "mean": 0.51,
+    "ci95": [
+      0.48125,
+      0.54
+    ],
+    "maps": 400,
+    "bootstrap_samples": 5000,
+    "bootstrap_seed": 0,
+    "games": 800,
+    "interpretation": "V4 score against frozen V3 on 400 new paired maps only"
+  },
+  "fresh_gate": {
+    "passed": false,
+    "checks": {
+      "solution92_delta_positive": true,
+      "solution92_lower95_positive": false,
+      "default_loss_at_most_2pp": true
+    }
+  },
+  "direct_gate": {
+    "passed": false,
+    "lower95_strictly_above_half": false
+  },
+  "decision": "no_promotion_gate_failed",
+  "promotion_authorized": false,
+  "scope": "Independent CSV/source/hash/paired index-bootstrap audit only; no model loading, games, promotion or technical installation review."
+}
