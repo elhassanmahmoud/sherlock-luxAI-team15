@@ -359,6 +359,7 @@ def make_context(agent, obs, belief=None) -> dict:
         belief=belief, W=W, H=H,
         ally_ids=ally_ids, ally_pos=ally_pos, ally_ene=ally_ene,
         enemy_coords=enemy_coords, enemy_energies=enemy_energies, enemy_vis_ids=enemy_vis_ids,
+        enemy_tie_energy=bool(getattr(agent.cfg, "enemy_tie_energy", False)),
         ally_count=ally_count, first_on_tile=first_on_tile,
         point_coords=belief.point_coords(),
         cand_coords=belief.candidate_coords(),
@@ -456,6 +457,9 @@ def build_features(ctx: dict, uid: int) -> np.ndarray:
     if len(ec):
         d = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
         k = int(np.argmin(d))
+        if ctx.get("enemy_tie_energy", False):
+            nearest = np.flatnonzero(d == d[k])
+            k = int(nearest[np.argmax(ctx["enemy_energies"][nearest])])
         f[i] = (ec[k, 0] - x) / W
         f[i + 1] = (ec[k, 1] - y) / H
         f[i + 2] = float(d[k]) / WH

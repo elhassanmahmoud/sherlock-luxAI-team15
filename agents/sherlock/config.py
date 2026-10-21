@@ -36,6 +36,10 @@ class AgentConfig:
     use_belief: bool = True
     """False: das Netz sieht nur die aktuelle Beobachtung (MemorylessBelief).
     Reward, Maske und gefuehrte Exploration nutzen weiter den vollen Belief."""
+    enemy_tie_energy: bool = False
+    """Experimentelle Inferenzvariante: bei gleichem minimalem Manhattan-Abstand
+    den sichtbaren Gegner mit hoechster Energie im Featurevektor darstellen.
+    Gleiche Energie behaelt die erste Slot-Reihenfolge; Default erhaelt alte Features."""
     use_symmetry: bool = False
     """True: Belief nutzt die Spiegelsymmetrie der Karte (Relics, Punkte-/Null-Tiles,
     Erkundung, siehe belief.py). Default False, damit alte Checkpoints und
