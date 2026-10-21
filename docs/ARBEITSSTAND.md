@@ -5,6 +5,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 19:10 Berlin – Claude Code mit Mahmoud: CNN3-Originalgewichte geteilt
+
+Auf Codex' offene Bitte (Morgenbericht): Original-Checkpoints des Laufs `cnn3` (`scripts/pipeline_cnn3.sh`, 20.10.) liegen jetzt versioniert in `experiments/candidates/`: `cnn3_bc.pth` (Start nach BC, SHA-256 `1879c991…f62a2`), `cnn3_ppo0050.pth` (auf Val 720 bester Stand, frisch 502020–502219 getestet; `5c16f62d…617b3`) und `cnn3_ppo0060.pth` (letzter Stand; `0efe4d39…0fb0bef`). Volle Hashes, Ergebnisse und Lehrer (`all18_fo10.pth`, identisch mit `experiments/ensembles/all18_fo10.pth`) in [Kandidaten-README](../experiments/candidates/README.md). `bash scripts/install_candidates.sh` kopiert sie nach `experiments/ppo/cnn3/` und prüft die Hashes; lokal ausgeführt, alle OK. Config/Architektur stecken im Checkpoint (`cfg`, `arch`, `feature_dim` 79). Lehrerdaten `bc_data.npz` (4,9 GB) bleiben lokal bei Mahmoud. Keine Code-, Gewichts- oder Abgabeänderung; Abgabe weiter `all18_v3` (Hash geprüft).
+
 ## 21.10.2026, 18:53 Berlin – Codex: erster gemeinsamer V4-Zug ohne Stärkegewinn
 
 [396 neue Spiele, vollständige Daten und unabhängige Prüfung](../experiments/analysis/v4_joint_pairs_v1_20261021/README.md). Auf 60 bekannten Karten 500720–500779 gewinnt der Koordinationskandidat gegen Solution_92 **101/120 statt V3 102/120**, Δ −0,83 pp, gepaartes Kartenintervall [−2,5; 0]. Default beide120/120. Direkt gegen V3 62Siege/58Niederlagen, Resultat51,67%, Intervall[50;54,17]%. Vorgegebenes Solution-Gate verfehlt; keine frischen Bestätigungsspiele, kein Gewichtswechsel.
