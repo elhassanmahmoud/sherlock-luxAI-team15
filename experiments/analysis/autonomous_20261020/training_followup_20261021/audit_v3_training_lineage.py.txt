@@ -1,0 +1,12 @@
+from pathlib import Path
+import json,csv,collections,hashlib,math
+R=Path.cwd();M=R/'experiments/candidates_20261020.json';m=json.loads(M.read_text());data=[]
+for source in m['all18_fo10']['sources']:
+ run=Path(source).parent.parent;manifest=R/run/'manifest.json';log=R/run/'train.csv';f=json.loads(manifest.read_text())
+ with log.open(newline='') as fp:rows=list(csv.DictReader(fp))
+ n=f['train_games'];assert len(rows)==n and [int(r['game']) for r in rows]==list(range(n))
+ assert f['status']=='done',f['status']
+ config=f['config'];counts=dict(collections.Counter(r['opponent'] for r in rows))
+ data.append({'run':str(run),'train_games':n,'completed_rows':len(rows),'manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),'train_csv_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'opponent_counts':counts,'w_opp_points':config.get('w_opp_points',0),'source_weight_available':(R/source).exists(),'source_weight_declared_sha256':m['all18_fo10']['source_sha256'][source],'final_env_steps':rows[-1]['env_steps'],'final_learn_steps':rows[-1]['learn_steps'],'logged_unit_steps':sum(int(r['unit_steps']) for r in rows)})
+assert len(data)==18 and sum(x['completed_rows'] for x in data)==66000
+print(json.dumps({'complete':True,'scope':'JSON/CSV provenance audit; individual source checkpoint files unavailable locally, so their tensor identity/training-step choice is not newly verified. Shared V3 provenance follows the supplied candidate manifest. Counts are documented completed source-run budgets, not total project cost or necessarily checkpoint training ages. Unit steps are logged action opportunities, not a verified count of replay transitions.','candidate_manifest_sha256':hashlib.sha256(M.read_bytes()).hexdigest(),'source_runs':18,'completed_source_training_games':66000,'groups_by_run_length':dict(collections.Counter(str(x['train_games']) for x in data)),'runs':data},indent=2))

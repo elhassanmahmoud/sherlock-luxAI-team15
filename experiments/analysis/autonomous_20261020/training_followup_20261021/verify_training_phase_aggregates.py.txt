@@ -1,0 +1,21 @@
+"""Read-only reproduction of the descriptive training phase table; no model imports."""
+from pathlib import Path
+import csv,json,math,statistics,hashlib
+R=Path.cwd()
+expected=json.loads((R/'experiments/analysis/autonomous_20261020/training_followup_20261021/training_phase_aggregates.json').read_text())
+inputs={}
+for arm,variant in [('control','full_rules_v3'),('slow','full_rules_v3_slowexplore')]:
+ rows=[]
+ for seed in (47,48,49):
+  path=R/f'experiments/runs/20261020_{variant}_s{seed}_exploration_{arm}/train.csv'
+  inputs[str(path.relative_to(R))]=hashlib.sha256(path.read_bytes()).hexdigest()
+  with path.open(newline='') as f: rows+=list(csv.DictReader(f))
+ assert len(rows)==9000
+ for phase,exp in expected[arm].items():
+  lo,hi=map(int,phase.split('-')); rs=[r for r in rows if lo<=int(r['game'])<=hi]
+  sol=[r for r in rs if r['opponent']=='solution92'];loss=[float(r['mean_loss']) for r in rs if math.isfinite(float(r['mean_loss']))]
+  got=dict(rows=len(rs),sol_rows=len(sol),sol_result=statistics.mean(float(r['result']) for r in sol) if sol else None,mean_loss=statistics.mean(loss),sap_attempts=statistics.mean(float(r['sap_attempts']) for r in rs),finite_loss_rows=len(loss),missing_loss_rows=len(rs)-len(loss))
+  assert set(got)==set(exp)
+  for k,v in got.items():
+   assert (v==exp[k]) if not isinstance(v,float) else math.isclose(v,exp[k],rel_tol=0,abs_tol=1e-12),(arm,phase,k,v,exp[k])
+print(json.dumps({'verified':True,'rows':18000,'phases_per_arm':4,'input_sha256':inputs,'scope':'Descriptive means, not causal evidence or greedy validation. Initial missing loss excluded and counted.'},indent=2))

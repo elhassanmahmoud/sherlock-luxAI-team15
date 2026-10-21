@@ -176,3 +176,10 @@ Warum 3000 Spiele: ε fällt nach ≈ 200 Spielen auf 0,05 (`eps_decay_steps = 6
 Vor Ergebnissen festgelegt in [Plan](superpowers/plans/2026-10-21-v4-independent-confirmation.md), veröffentlicht mit `d51a790`. Quellenstand `6ab3109`, keine Overrides und kein Training. Insgesamt 2.400 Spiele; direkt 400 neue Karten 510400–510799, Gegnervergleich 200 neue Karten 510800–510999 je Kandidat/default/Solution_92, immer beide Seiten. V4 direkt 408/800 (51,0 %, Karten-KI [48,125; 54,0]); Solution_92 V4 313/400 gegen V3 311/400 (+0,5 pp, gepaartes KI [−3,0; +4,0]); default beide 400/400. Beide positiven Vorteils-Gates verfehlt. V3 bleibt Abgabe, keine weiteren Karten nachgelegt und keine alten Daten gepoolt.
 
 [Komplette Daten und unabhängige Prüfungen](../experiments/compare/autonomous_20261020/v4_independent_20261021/README.md). Bootstrap: ganze Kartenpaare, 5.000 Ziehungen, Seed 0. Alle drei Jobs vollständig um 08:04:21 Berlin beendet; Quellen-/Gewichtsidentität bestätigt. Statistische Grenzen und historische Wiederholungsprüfung bleiben ausdrücklich dokumentiert. Keine Agenten-/Gewichtsänderung.
+
+
+## 21.10.2026 – Trainingsdiagnose und späterer Curriculum-Entwurf
+
+[Detail und Grenzen](NAECHSTER_TRAININGSVERSUCH_20261021.md). Gleiche 1.426 Default-/1.574 Solution_92-Spiele je Lauf; die Exploration ändert die tatsächlich besuchten Zustände und auch die Häufigkeit einiger Greedy-Regeln. Trainingsphase 750–1499: Sol-Resultat Kontrolle 37,09 % / langsam 8,52 %; ab 1500 trotz gemeinsamem Epsilonminimum 40,70 % / 32,19 %. Dies sind explorative Trainingsresultate, keine Zwischenvalidierung oder isolierte Ursachenbeweise. [Phasendaten und Stdlib-Prüfung](../experiments/analysis/autonomous_20261020/training_followup_20261021/phase_verification.json) reproduzieren alle acht Phasenaggregate aus 18.000 Zeilen.
+
+Die spätere Hypothese früheren starken Gegnerkontakts ist bislang nur ein Entwurf: gleiche Gesamtgegnerzahlen, ein begrenzter Gegnerlabeltausch. Keine neue Agentenlogik, keine Modelle/Spiele für diese Analyse. Noch kein freigegebener, implementierter Versuchsrunner oder vollständig präregistrierter neuer Lauf.

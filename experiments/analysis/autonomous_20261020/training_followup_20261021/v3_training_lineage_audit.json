@@ -1,0 +1,331 @@
+{
+  "complete": true,
+  "scope": "JSON/CSV provenance audit; individual source checkpoint files unavailable locally, so their tensor identity/training-step choice is not newly verified. Shared V3 provenance follows the supplied candidate manifest. Counts are documented completed source-run budgets, not total project cost or necessarily checkpoint training ages. Unit steps are logged action opportunities, not a verified count of replay transitions.",
+  "candidate_manifest_sha256": "de10ab4fecea40cd5029f446cc6c36432cf7dce68fc4a2507344d939317496fc",
+  "source_runs": 18,
+  "completed_source_training_games": 66000,
+  "groups_by_run_length": {
+    "3000": 6,
+    "4000": 12
+  },
+  "runs": [
+    {
+      "run": "experiments/runs/20261019_full_rules_s0",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "8bb5e1663c2957c2ddda747b1799adcbaeaa782fc5f8000c4575e4eb00f967a3",
+      "train_csv_sha256": "e23d98fe29e30a00547fd8a97e5cd9c54bcfac10684ca2bde577fc43507054aa",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "f4589b737c99cb4860184181af09f55ea3c7ed069f773975bfe0ac032a8d1fa8",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449793",
+      "logged_unit_steps": 11059623
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s1",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "8530092f2617a0ffd1a077c6f2b425a41b57826d0ca87f20d4d57dad001983ee",
+      "train_csv_sha256": "5cb281709fbbcf32ed5568f5380ded8bdabc451b0107b7ffe2a8e55d7b558875",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "008a6ef675f8a26c77acdeaeef975fcbad4fb6e151c2b16bd5d5bc55ff9b443a",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449786",
+      "logged_unit_steps": 11052088
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s2",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "9ff46dcf1945fb5585dfa51530b01e685c8ed3cd1c026684e4a08e4f9f07c8e9",
+      "train_csv_sha256": "43b21c8dfb3ed780bc6348943dc8957ead5cdc6fbacf9379c68511c2d293015a",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "5b83c1b8904a0fc0e4f77b6de2f2cbcf454624e69476d6990e659bdda20099dc",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449786",
+      "logged_unit_steps": 11044030
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s3",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "13dc689bb7b9bb4d6c7a0eb4393c1a089727b76380d3e04dd8556d70f9cf6eed",
+      "train_csv_sha256": "4298bf0cda55b19016f802bc6d64d0fb09a97fa9cb2172eaf4fdb892595eb625",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "948f7465dc24301794a6f81f6bb2a68568229a4e2c33abdf5cd8a7bc85b8dc4c",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449790",
+      "logged_unit_steps": 11057463
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s4",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "15b04423309242d9f3416b3ff4d756bb4f0d44b473a189f306cde58af2c5d41b",
+      "train_csv_sha256": "cea6d9fe3e21cb2191f9339bef7ac2bc56817666c9d5158820c0deb149b7a575",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "d946f55ead3d84001471c5c9eee7abf0290d35a09a67e742cbf0795e0e68e9dd",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449789",
+      "logged_unit_steps": 11046529
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s5",
+      "train_games": 3000,
+      "completed_rows": 3000,
+      "manifest_sha256": "c01b56bb84420d057168cc90c2fa6544bba49a9be09cba9b6f47fd37ef54abec",
+      "train_csv_sha256": "38accbd0ed870f6b14ffc0471328dfb98c1bcdaaa11302945af7d6675480396c",
+      "opponent_counts": {
+        "default": 1874,
+        "solution92": 1126
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "3264c2454a7db2bd7a7697bb9edc95bb20fa9b9edd316ff2076e7207f2ccb09a",
+      "final_env_steps": "909000",
+      "final_learn_steps": "449790",
+      "logged_unit_steps": 11036357
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s10_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "980b2c11b8e9d05b6ce40911f297b1bddb2d528d689cf2a35a9b29d2d28fd950",
+      "train_csv_sha256": "346b513457065320c7369651dee9ca5b5e6b6fd9a8387455c255dced5a545cb1",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "15cb2624ac0e0cfd041881d1c3e1698da87bf75ecfa9e2bee77f930560110f45",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599789",
+      "logged_unit_steps": 14680539
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s11_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "bfe684e17849ae442abb2e21b0c87026a4dc045dd390837e424847094e8bf8da",
+      "train_csv_sha256": "52d67fe5a6ee8a2fab450a6f77484956cace6c61e9f8b20a3582f1ecc58d46ef",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "7c3e0ccd6034fe5cff81b57550f6c0651e39806c3e5987a56817dca8386e95cf",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599779",
+      "logged_unit_steps": 14708670
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s6_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "59d25a9a9c8f1f1263e5bfd160e8e8bdfb57f2daa04919c9a209d20d7085e3f4",
+      "train_csv_sha256": "707f79b26a52c12fe19c365e23cf8bd3beb018eb19a9e627d69180c6b933eba8",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "2914732e3e283a5d6cb443339f9be208141d0234b769f3de344014522acef02b",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599790",
+      "logged_unit_steps": 14688177
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s7_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "b61d17ec603925658a7372dec811238aeee90218a6188ab7c6460264d689c3a2",
+      "train_csv_sha256": "f741618e0127dda893c1bd6ee1142790c197595e12d1231720eac4f3aebdaa29",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "9e3f3e4f70b815757cbb29fe42daf3832d73fbc3cf93630fc336e23cfb0e5f50",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599789",
+      "logged_unit_steps": 14711404
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s8_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "7df1e46619c3961fdd0d35ba10c3759823fc1c0566070c6f4ea6daddf7a0a46a",
+      "train_csv_sha256": "eb592ad3bdf53b544594ee54094abd100337f8ed3083897190c94edaadc3ab1f",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "5366fcfbfe7f9dd993857257ae729938d53e6cd4cee275230ac9ed3e50454994",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599792",
+      "logged_unit_steps": 14724128
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_s9_sol70",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "692e075ec808f9e6f964757a7061ba2246392019dba903f91d0788f83d617f72",
+      "train_csv_sha256": "80004c7b98a6010f08508460608c5daf4635ff8001a34a6ffc5eae6c52d5c99e",
+      "opponent_counts": {
+        "default": 1902,
+        "solution92": 2098
+      },
+      "w_opp_points": 0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "bf0b5b37cf3718db686c48118709d9eef5539ffa83eb4b6cd79f6bc1faddc8f8",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599791",
+      "logged_unit_steps": 14730288
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s12_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "22f35fa06b5cbc9a5196ae1e30afb430e67df98d0a8ff99998078d14089b0826",
+      "train_csv_sha256": "0c12eb082a0f131525823c968fe2aa0d9a5b62c5946b81f2799718d67297bbca",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "270761a06c9595fd80ea85a62d19bdbb12d87a87df34db04dc38d24c020a8e0d",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599793",
+      "logged_unit_steps": 14175024
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s13_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "b8a79a56d1743a078c0bd0394f701047e510165f3ab7af3206863b338642333e",
+      "train_csv_sha256": "4524671a006a89327d1c936c5a0adc040b8373ec2e6fc12f89ffe540fad4d9e2",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "18ffcb0d8ba6c5c2f1dac4a17758bf2540c6997bac558c40181148d2b3d8955b",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599788",
+      "logged_unit_steps": 14274994
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s14_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "065b5037952f12e19c1da4b84d89513e40e56bb0e0d69226d2d0ffc7091676a4",
+      "train_csv_sha256": "ddc464f5ea09c303c9953517fe9383c39aa1e0629782d9760e8b6b036548cd1c",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "68ad0251a0d13d092add284de1ed88cc24b9f03f79fa16e2ac2693aa54fbc7cd",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599789",
+      "logged_unit_steps": 14153698
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s15_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "efd040232360ac1c53e97c01300105870b305387f015b4848ea5ebd0f122218d",
+      "train_csv_sha256": "194361d1869c9e48b1b9d3d6f8ec49593ab7c5da03daf0000ea8aea15545527a",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "12f3f340e8bbfaa1f0747f299d2fd4450b417cfc5026514c47cf3b5bba7c7540",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599792",
+      "logged_unit_steps": 14257005
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s16_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "3caf98b69052ac3f2d95ebc53bf08cf47138b36d98ea533ead11b2c5adced94e",
+      "train_csv_sha256": "01079ab2d53f59541a0b51d3ed81b03c4594944a299a19657ccd0006cc09d348",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "e60bde67e954c0ec27d49c7f8bceba7591cae48182de8bb1bc621d073cc7e56b",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599790",
+      "logged_unit_steps": 14189525
+    },
+    {
+      "run": "experiments/runs/20261019_full_rules_opp_s17_pool",
+      "train_games": 4000,
+      "completed_rows": 4000,
+      "manifest_sha256": "9825b14e1d9da0b5a66bc7eed9d9705379e398499ef8ca31261124cca88dfc3e",
+      "train_csv_sha256": "9bbd580308bfb88cf9be39c8dea9c97cb117a95ea97c5571fffff2ea465002d1",
+      "opponent_counts": {
+        "default": 1600,
+        "solution92": 1800,
+        "pool:rules6": 302,
+        "pool:old3_sym3": 298
+      },
+      "w_opp_points": 1.0,
+      "source_weight_available": false,
+      "source_weight_declared_sha256": "ff32003a3e60672dff45b76d81dcd1b3bf8dbde0695d7e38c52eaacc8d016c00",
+      "final_env_steps": "1212000",
+      "final_learn_steps": "599786",
+      "logged_unit_steps": 14232868
+    }
+  ]
+}
