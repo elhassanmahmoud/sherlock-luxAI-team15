@@ -61,7 +61,7 @@ def test_seed_proxy_matches_runner_numpy_api_without_patching_numpy():
     assert np.random.default_rng is original
 
 
-def test_silent_checkpoint_rejection_cannot_pass_probe(tmp_path):
+def test_checkpoint_load_and_probe_fail_closed(tmp_path):
     import torch
     from agents.sherlock.main import Agent_x
     from agents.sherlock.config import AgentConfig
@@ -77,8 +77,12 @@ def test_silent_checkpoint_rejection_cannot_pass_probe(tmp_path):
         next(loaded.q.parameters()).add_(1)
     with pytest.raises(ValueError, match="weights"):
         verify_loaded(loaded, checkpoint)
+    mismatched_config = dict(checkpoint, cfg=dict(checkpoint["cfg"], gamma=cfg.gamma / 2))
+    with pytest.raises(ValueError, match="config"):
+        verify_loaded(original, mismatched_config)
     checkpoint["feature_dim"] = 1
-    torch.save(checkpoint, path)
-    rejected = Agent_x("player_0", agent_path=str(path), train=False)
     with pytest.raises(ValueError, match="architecture"):
-        verify_loaded(rejected, checkpoint)
+        verify_loaded(original, checkpoint)
+    torch.save(checkpoint, path)
+    with pytest.raises(ValueError, match="q: Eingabedimension"):
+        Agent_x("player_0", agent_path=str(path), train=False)
