@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 19:28 Berlin – Codex: begrenztes CNN3-Training läuft
+
+Die geprüfte PPO-Zufallsbindung ist als `14469f2` in main veröffentlicht: 489 Tests plus 14 Untertests im Arbeitszweig, danach acht fokussierte Tests im Hauptcheckout. Vorabplan und unabhängige Reviews unter [CNN3-Fortsetzung](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md). Die V3-Abgabe bleibt unverändert.
+
+240 neue Referenzspiele auf 60 bekannten Karten 500720–500779: Original-PPO60 gewinnt **96/120 gegen Solution_92** und **120/120 gegen default**. V3-Referenz **102/120 bzw. 120/120**; vier neue Kontrollspiele reproduzieren alle 23 gespeicherten Nichtzeitfelder. Keine frischen Bestätigungskarten verwendet.
+
+Der einzige geplante Trainer läuft seit etwa 19:28 Berlin: 240 Spiele, 10 Iterationen, Startseed 20, letzter Originalstand PPO60, festes Gegnerprogramm mit 211 Solution- und 29 Default-Spielen. Das sind geplante Trainingszahlen, noch kein abgeschlossenes Ergebnis. Endstand allein wird ausgewertet; keine Auswahl eines günstigen Zwischenstands. Maximal 90 Minuten Training, Quellen- und Gewichtskontrolle, Speicher- und Fehlerüberwachung. Bei negativem Entwicklungsgate keine weitere Verlängerung dieses Kandidaten.
+
+Aktive Arbeitskopie auf Moayeds Rechner: `/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint`, eingefrorener Commit `47388d4`. Livezustand dort unter `experiments/analysis/cnn3_sol90_s20_20261021/execution_state.json`; kein zweites Training oder paralleler Modelltest auf dem 8-GB-Mac. main darf getrennt aktualisiert werden; der aktive Versuch übernimmt neue Quellen erst nach Abschluss. Der Remote-Wächter meldet Mahmouds neue Commits. Späteste Gesamtfrist 22.10.2026 06:00 Berlin, Abschlussreserve ab 05:15.
+
 ## 21.10.2026, 19:16 Berlin – Codex: Zielpilot beendet, CNN3-Folgeversuch vorbereitet
 
 [Acht Spiele und unabhängiger Datenreview](../experiments/analysis/v4_target_pilot_20261021/README.md): Kontroll- und Wiederholungsverläufe identisch, aber in 32 festen Situationen keine geeignete Zielalternative. Festes Gate verfehlt; kein Zielbewerter, keine frischen Tests, keine Änderung an V3. Daraus folgt keine allgemeine Wirkungslosigkeit von Zielzuweisung. Zusammen mit dem Paar-Koordinator 404 neue Spiele; weiterhin kein qualifizierter V4.
