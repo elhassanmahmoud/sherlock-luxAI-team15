@@ -1,0 +1,271 @@
+{
+  "kind": "passive funnel; four known-card diagnostics, every tenth helper call",
+  "stages": [
+    "all_legal_moves",
+    "baseline_plus_top_two",
+    "regret_bound",
+    "enemy_guard",
+    "shared_known_point"
+  ],
+  "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v4_joint_pairs_v1_20261021.pth",
+  "protected_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v4_joint_pairs_v1_20261021.pth": "8301c9fdae44a511c91d21946f4ac66536260e6836358fbc300726b801ae8acc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935"
+  },
+  "protected_after": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v4_joint_pairs_v1_20261021.pth": "8301c9fdae44a511c91d21946f4ac66536260e6836358fbc300726b801ae8acc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935"
+  },
+  "rows": [
+    {
+      "seed": 500724,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1317,
+      "opp_points": 863,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.39,
+      "unit_steps": 3421,
+      "wait_frac": 0.3498976907337036,
+      "invalid_frac": 0.0,
+      "sap_attempts": 248,
+      "sap_hits": 248,
+      "stack_frac": 0.16135632855890092,
+      "relics_seen": 6,
+      "relics_found": 6,
+      "known_point_tiles": 22,
+      "greedy_masked_frac": 0.1668140288829944,
+      "belief_contradictions": 0,
+      "funnel": {
+        "calls": 300,
+        "changed_units": 0,
+        "sampled_calls": 30,
+        "no_points": 3,
+        "invalid": 0,
+        "eligible_units": 302,
+        "choices": [
+          1310,
+          597,
+          420,
+          416,
+          416
+        ],
+        "pairs": [
+          320,
+          320,
+          320,
+          320,
+          16
+        ],
+        "gain_pairs": [
+          6,
+          1,
+          0,
+          0,
+          0
+        ],
+        "gain_calls": [
+          3,
+          1,
+          0,
+          0,
+          0
+        ],
+        "no_change_stage5_discrepancies": 0
+      }
+    },
+    {
+      "seed": 500724,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1218,
+      "opp_points": 929,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 1.44,
+      "unit_steps": 3349,
+      "wait_frac": 0.3132278292027471,
+      "invalid_frac": 0.0,
+      "sap_attempts": 255,
+      "sap_hits": 255,
+      "stack_frac": 0.16094356524335623,
+      "relics_seen": 6,
+      "relics_found": 6,
+      "known_point_tiles": 22,
+      "greedy_masked_frac": 0.13331327114053565,
+      "belief_contradictions": 0,
+      "funnel": {
+        "calls": 300,
+        "changed_units": 1,
+        "sampled_calls": 30,
+        "no_points": 3,
+        "invalid": 0,
+        "eligible_units": 294,
+        "choices": [
+          1270,
+          580,
+          417,
+          413,
+          413
+        ],
+        "pairs": [
+          275,
+          275,
+          275,
+          275,
+          22
+        ],
+        "gain_pairs": [
+          10,
+          1,
+          0,
+          0,
+          0
+        ],
+        "gain_calls": [
+          4,
+          1,
+          0,
+          0,
+          0
+        ],
+        "no_change_stage5_discrepancies": 0
+      }
+    },
+    {
+      "seed": 500725,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 349,
+      "opp_points": 231,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 2.14,
+      "unit_steps": 3626,
+      "wait_frac": 0.21869829012686157,
+      "invalid_frac": 0.0,
+      "sap_attempts": 137,
+      "sap_hits": 137,
+      "stack_frac": 0.11307225592939879,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 4,
+      "greedy_masked_frac": 0.257230255839822,
+      "belief_contradictions": 0,
+      "funnel": {
+        "calls": 300,
+        "changed_units": 0,
+        "sampled_calls": 30,
+        "no_points": 14,
+        "invalid": 0,
+        "eligible_units": 205,
+        "choices": [
+          877,
+          413,
+          292,
+          283,
+          283
+        ],
+        "pairs": [
+          123,
+          123,
+          123,
+          123,
+          8
+        ],
+        "gain_pairs": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gain_calls": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "no_change_stage5_discrepancies": 0
+      }
+    },
+    {
+      "seed": 500725,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 353,
+      "opp_points": 158,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 1.47,
+      "unit_steps": 3655,
+      "wait_frac": 0.21559507523939808,
+      "invalid_frac": 0.0,
+      "sap_attempts": 140,
+      "sap_hits": 140,
+      "stack_frac": 0.08180574555403557,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 4,
+      "greedy_masked_frac": 0.22130242825607063,
+      "belief_contradictions": 0,
+      "funnel": {
+        "calls": 300,
+        "changed_units": 0,
+        "sampled_calls": 30,
+        "no_points": 14,
+        "invalid": 0,
+        "eligible_units": 214,
+        "choices": [
+          938,
+          434,
+          291,
+          285,
+          285
+        ],
+        "pairs": [
+          112,
+          112,
+          112,
+          112,
+          4
+        ],
+        "gain_pairs": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gain_calls": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "no_change_stage5_discrepancies": 0
+      }
+    }
+  ]
+}

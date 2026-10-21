@@ -1,0 +1,177 @@
+"""Passive, sampled proposal funnel on four fixed known-card games.
+
+Run only after frozen comparisons. Usage: python funnel_probe.py CANDIDATE OUTPUT
+Funnel gains are against the final baseline plan, before pair reservations.
+"""
+import hashlib
+import itertools
+import json
+import math
+from pathlib import Path
+import sys
+
+CANDIDATE_SHA256 = '8301c9fdae44a511c91d21946f4ac66536260e6836358fbc300726b801ae8acc'
+RELEASE_SHA256 = 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+STAGES = ['all_legal_moves', 'baseline_plus_top_two', 'regret_bound',
+          'enemy_guard', 'shared_known_point']
+DELTAS = [(0, 0), (0, -1), (1, 0), (0, 1), (-1, 0)]
+
+
+def funnel(ctx, ids, q, masks, base):
+    """Observe nested candidate sets; never choose actions or mutate inputs."""
+    result = {'no_points': not bool(ctx['point_tiles'].any()), 'invalid': False,
+              'eligible_units': 0, 'choices': [0] * 5, 'pairs': [0] * 5,
+              'gain_pairs': [0] * 5}
+    if result['no_points'] or len(ids) == 0:
+        return result
+    width, height, cost = ctx['W'], ctx['H'], float(ctx['move_cost'])
+
+    def valid(pos):
+        return (all(math.isfinite(float(v)) and float(v).is_integer() for v in pos)
+                and 0 <= pos[0] < width and 0 <= pos[1] < height)
+
+    if (not math.isfinite(cost) or cost < 0
+            or any(not valid(p) or not math.isfinite(float(e))
+                   for p, e in zip(ctx['enemy_coords'], ctx['enemy_energies']))):
+        result['invalid'] = True
+        return result
+    enemies = [p for p, e in zip(ctx['enemy_coords'], ctx['enemy_energies']) if e >= 0]
+    positions = {u: tuple(int(v) for v in ctx['ally_pos'][u])
+                 for u in ids if valid(ctx['ally_pos'][u])}
+
+    def destination(uid, action):
+        energy = float(ctx['ally_ene'][uid])
+        if uid not in positions or not math.isfinite(energy) or energy < 0:
+            return None
+        if action == 5:
+            return positions[uid]
+        if action not in range(5) or (action != 0 and energy < cost):
+            return None
+        x, y = positions[uid]
+        dx, dy = DELTAS[action]
+        tile = (x + dx, y + dy)
+        return tile if 0 <= tile[0] < width and 0 <= tile[1] < height else None
+
+    def occupied(tiles):
+        return {t for t in tiles if t is not None and ctx['point_tiles'][t]}
+
+    def clear(pos):
+        return all(max(abs(pos[0] - e[0]), abs(pos[1] - e[1])) > 1 for e in enemies)
+
+    destinations = {u: destination(u, base[u]) for u in ids}
+    current = len(occupied(destinations.values()))
+    choices = {}
+    for row, uid in enumerate(ids):
+        action, energy = base[uid], float(ctx['ally_ene'][uid])
+        if (uid not in positions or not math.isfinite(energy) or energy < 0
+                or action not in range(5) or not masks[row, action]
+                or not math.isfinite(float(q[row, action]))):
+            continue
+        legal = [a for a in range(len(q[row]))
+                 if masks[row, a] and math.isfinite(float(q[row, a]))]
+        span = max(max(float(q[row, a]) for a in legal)
+                   - min(float(q[row, a]) for a in legal), 1e-6)
+        if not math.isfinite(span):
+            continue
+        moves = [a for a in legal if a < 5]
+        top = sorted(moves, key=lambda a: (-float(q[row, a]), a))[:2]
+        all_moves = [action] + [a for a in moves if a != action and destination(uid, a) is not None]
+        bounded = [action] + [a for a in top if a != action and destination(uid, a) is not None]
+        regret = [a for a in bounded if a == action
+                  or float(q[row, action]) - float(q[row, a]) <= .15 * span]
+        safe = [a for a in regret if a == action
+                or (clear(positions[uid]) and clear(destination(uid, a)))]
+        choices[uid] = [all_moves, bounded, regret, safe, safe]
+        result['eligible_units'] += 1
+        for stage, options in enumerate(choices[uid]):
+            result['choices'][stage] += len(options)
+    for left, right in itertools.combinations(sorted(choices), 2):
+        if sum(abs(a - b) for a, b in zip(positions[left], positions[right])) > 2:
+            continue
+        outside = occupied(t for u, t in destinations.items() if u not in (left, right))
+        for stage in range(5):
+            left_actions, right_actions = choices[left][stage], choices[right][stage]
+            if stage == 4 and not (occupied(destination(left, a) for a in left_actions)
+                                   & occupied(destination(right, a) for a in right_actions)):
+                continue
+            result['pairs'][stage] += 1
+            gain = any(len(outside | occupied([destination(left, a), destination(right, b)])) > current
+                       for a, b in itertools.product(left_actions, right_actions))
+            result['gain_pairs'][stage] += int(gain)
+    return result
+
+
+def file_hash(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    candidate, output = map(lambda arg: Path(arg).resolve(), sys.argv[1:])
+    if output.exists():
+        raise FileExistsError(output)
+    protected = {candidate: CANDIDATE_SHA256,
+                 Path('agents/sherlock/weights/agent_p0.pth').resolve(): RELEASE_SHA256,
+                 Path('agents/sherlock/weights/agent_p1.pth').resolve(): RELEASE_SHA256}
+    before = {str(path): file_hash(path) for path in protected}
+    if any(before[str(path)] != expected for path, expected in protected.items()):
+        raise RuntimeError('Protected candidate/release hash mismatch before games')
+    from scripts.experiment import limit_threads
+    limit_threads()
+    from agents.sherlock import main as agent_main
+    from scripts.common import make_opponent, play_game
+    from luxai_s3.wrappers import LuxAIS3GymEnv
+    original = agent_main.coordinate_moves
+    counters = None
+
+    def observed(ctx, ids, q, masks, base_actions):
+        changed = original(ctx, ids, q, masks, base_actions)  # exactly once, unchanged inputs
+        counters['calls'] += 1
+        counters['changed_units'] += len(changed)
+        if counters['calls'] % 10 == 0:
+            sample = funnel(ctx, ids, q, masks, base_actions)
+            counters['sampled_calls'] += 1
+            for key in ['no_points', 'invalid', 'eligible_units']:
+                counters[key] += int(sample[key])
+            for key in ['choices', 'pairs', 'gain_pairs']:
+                counters[key] = [a + b for a, b in zip(counters[key], sample[key])]
+            counters['gain_calls'] = [a + int(b > 0)
+                                      for a, b in zip(counters['gain_calls'], sample['gain_pairs'])]
+            counters['no_change_stage5_discrepancies'] += int(not changed and sample['gain_pairs'][4] > 0)
+        return changed
+
+    agent_main.coordinate_moves = observed
+    env = LuxAIS3GymEnv(numpy_output=True)
+    rows = []
+    try:
+        agent = agent_main.Agent_x('player_0', agent_path=str(candidate), train=False)
+        agent.set_to_eval_mode()
+        if not agent.cfg.joint_moves:
+            raise RuntimeError('Candidate joint_moves must be enabled')
+        for seed in (500724, 500725):
+            for side in ('player_0', 'player_1'):
+                counters = dict(calls=0, changed_units=0, sampled_calls=0, no_points=0,
+                                invalid=0, eligible_units=0, choices=[0] * 5, pairs=[0] * 5,
+                                gain_pairs=[0] * 5, gain_calls=[0] * 5,
+                                no_change_stage5_discrepancies=0)
+                opponent = make_opponent('solution92', 'player_1' if side == 'player_0' else 'player_0')
+                row = play_game(env, agent, opponent, seed, side, train=False)
+                row['funnel'] = counters
+                rows.append(row)
+    finally:
+        agent_main.coordinate_moves = original
+        env.close()
+    after = {str(path): file_hash(path) for path in protected}
+    if after != before:
+        raise RuntimeError('Protected candidate/release hash mismatch after games')
+    payload = dict(kind='passive funnel; four known-card diagnostics, every tenth helper call',
+                   stages=STAGES, weights=str(candidate), protected_before=before,
+                   protected_after=after, rows=rows)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open('x') as stream:
+        stream.write(json.dumps(payload, indent=2) + '\n')
+    print(json.dumps(dict(output=str(output), output_sha256=file_hash(output),
+                          protected_readback_ok=True, games=len(rows))))
+
+
+if __name__ == '__main__':
+    main()

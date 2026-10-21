@@ -1,0 +1,24 @@
+"""Copy a known V3 checkpoint, changing only the opt-in config metadata."""
+import copy, hashlib, json, sys
+from pathlib import Path
+import torch
+src=Path(sys.argv[1]); dst=Path(sys.argv[2]); report=Path(sys.argv[3])
+assert not dst.exists() and not report.exists()
+want='aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+assert hashlib.sha256(src.read_bytes()).hexdigest()==want
+base=torch.load(src,map_location='cpu',weights_only=False)
+assert isinstance(base['cfg'],dict) and not base['cfg'].get('joint_moves',False)
+candidate=copy.deepcopy(base);candidate['cfg']['joint_moves']=True
+def same(a,b):
+ if isinstance(a,torch.Tensor): return isinstance(b,torch.Tensor) and a.dtype==b.dtype and a.shape==b.shape and torch.equal(a,b)
+ if isinstance(a,dict): return isinstance(b,dict) and a.keys()==b.keys() and all(same(a[k],b[k]) for k in a)
+ if isinstance(a,(tuple,list)): return type(a) is type(b) and len(a)==len(b) and all(same(x,y) for x,y in zip(a,b))
+ return type(a) is type(b) and a==b
+rest=copy.deepcopy(candidate);rest['cfg']=copy.deepcopy(base['cfg']);assert same(base,rest)
+dst.parent.mkdir(parents=True,exist_ok=True)
+with dst.open('xb') as f: torch.save(candidate,f)
+loaded=torch.load(dst,map_location='cpu',weights_only=False); assert same(candidate,loaded)
+assert hashlib.sha256(src.read_bytes()).hexdigest()==want
+report.parent.mkdir(parents=True,exist_ok=True)
+report.write_text(json.dumps({'baseline_sha256':want,'candidate_sha256':hashlib.sha256(dst.read_bytes()).hexdigest(),'changed_effective_config':['joint_moves'],'candidate_flag':True,'all_other_checkpoint_fields_identical':True,'source_unchanged':True},indent=2)+'\n')
+print(report.read_text())

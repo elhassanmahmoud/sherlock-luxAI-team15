@@ -1,0 +1,32 @@
+"""Eight known-card diagnostic games, observational timing/counters only."""
+import csv, hashlib, json, os, sys, time
+from pathlib import Path
+import numpy as np
+from scripts.experiment import limit_threads
+limit_threads()
+from agents.sherlock.main import Agent_x
+from scripts.common import make_opponent, play_game
+from luxai_s3.wrappers import LuxAIS3GymEnv
+weights=Path(sys.argv[1]).resolve(); out=Path(sys.argv[2]).resolve()
+assert not out.exists(); before=hashlib.sha256(weights.read_bytes()).hexdigest()
+agent=Agent_x('player_0',agent_path=str(weights),train=False)
+agent.set_to_eval_mode(); assert agent.cfg.joint_moves
+original=agent.act; timings=[]
+def timed_act(*args, **kwargs):
+ t=time.perf_counter(); action=original(*args, **kwargs); timings.append(time.perf_counter()-t); return action
+agent.act=timed_act
+env=LuxAIS3GymEnv(numpy_output=True); rows=[]
+try:
+ for seed in range(500720,500724):
+  for side in ('player_0','player_1'):
+   timings.clear(); opp=make_opponent('solution92', 'player_1' if side=='player_0' else 'player_0')
+   r=play_game(env,agent,opp,seed,side,train=False); r['opponent']='solution92'
+   r['diagnostic_counters']=dict(agent.ep_stats)
+   ms=np.asarray(timings[3:])*1000
+   r['act_ms_after_first_three']={'p95':float(np.percentile(ms,95)), 'max':float(ms.max()),'samples':len(ms)}
+   rows.append(r)
+finally: env.close()
+assert hashlib.sha256(weights.read_bytes()).hexdigest()==before
+out.parent.mkdir(parents=True,exist_ok=True)
+out.write_text(json.dumps({'kind':'eight known-card activation games, not independent strength estimate','weights':str(weights),'sha256':before,'rows':rows},indent=2)+'\n')
+print(json.dumps({'games':len(rows),'unit_steps':sum(r['diagnostic_counters']['unit_steps'] for r in rows),'out':str(out)}))

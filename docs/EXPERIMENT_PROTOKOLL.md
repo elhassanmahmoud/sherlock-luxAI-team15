@@ -198,3 +198,8 @@ Der freigegebene Versuch `20261021_early_contact_v1` wurde aus Ressourcengründe
 ## 21.10.2026 – Gegnerenergie bei gleicher Entfernung
 
 Vorab festgelegter direkter V3-Vergleich, kein Training. 60 bekannte Karten 500720–500779, beide Seiten und Default/Solution_92, je 240 Spiele: Kandidat gegen Solution_92 105/120, V3 102/120, +2,5 Prozentpunkte mit gepaartem 95%-Kartenintervall [−2,5; +8,33]; Default beide 120/120. Vorteils-Gate nicht bestanden. Keine Folgespiele auf den reservierten frischen Karten, kein Abgabeersatz. [Rohdaten, vollständige Reproduktion und unabhängige Prüfung](../experiments/analysis/enemy_tie_energy_20261021/README.md). Feature und experimenteller Checkpoint sind auf Branch `improvement/enemy-tie-20261021` erhalten.
+
+
+## 21.10.2026 – Erster V4-Paar-Koordinator beendet
+
+[Plan](superpowers/plans/2026-10-21-v4-joint-prototype.md), [396 neue Spiele und unabhängiger Audit](../experiments/analysis/v4_joint_pairs_v1_20261021/README.md). V3-Netze unverändert, Kandidat mit begrenzter gemeinsamer Bewegungswahl. Solution101/120 vs102/120, Δ−0,83pp, gepaartes Karten-KI[−2,5;0]; Default120beide; direkt62/120, Resultat-KI[50;54,17]%. Entwicklungsgate verfehlt. Kein Training, keine frische Bestätigung, keine Übernahme. 240 historische Referenzspiele nach Quellen-/Hashprüfung und16 reproduzierten Kontrollspielen wiederverwendet;360 neue Vergleiche+16Kontrollen+8Runner+8Aktivierung+4passiveDiagnose=396. Diagnose spricht für starke Einschränkung der Vorschläge, rechtfertigt kein nachträgliches Threshold-Tuning.
