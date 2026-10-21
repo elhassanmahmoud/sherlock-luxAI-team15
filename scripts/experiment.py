@@ -378,6 +378,9 @@ def main(argv=None) -> None:
     ap.add_argument("--sol92-frac", type=float, default=None,
                     help="Anteil Solution_92 nach der Aufwaermphase (Default: Protokoll, 50 %%)")
     ap.add_argument("--opponent-plan", choices=("standard", "early_sol100"), default="standard")
+    ap.add_argument("--seed-file", default=None,
+                    help="JSON-Liste von Env-Seeds fuer die Solution_92-Spiele (21.10.2026: "
+                         "schwere Karten, auf denen V3 verliert); default-Spiele bleiben unveraendert")
     ap.add_argument("--tag", default="")
     ap.add_argument("--out", default=None, help="Run-Ordner (Default: experiments/runs/<datum>_...)")
     ap.add_argument("--date", default=datetime.now().strftime("%Y%m%d"))
@@ -392,6 +395,13 @@ def main(argv=None) -> None:
     if args.isolate_validation and VARIANTS[args.variant][0] != "sherlock":
         ap.error("--isolate-validation requires a Sherlock learner")
     validation_seeds = list(range(args.val_seed_start, args.val_seed_start + args.val_seeds))
+    hard_seeds: list[int] = []
+    if args.seed_file:
+        hard_seeds = [int(s) for s in json.loads(Path(args.seed_file).read_text())]
+        if not hard_seeds:
+            ap.error("--seed-file ist leer")
+        if set(hard_seeds) & set(validation_seeds):
+            ap.error("--seed-file ueberschneidet sich mit den Validierungsseeds")
 
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
@@ -424,6 +434,9 @@ def main(argv=None) -> None:
                     if args.sol92_frac is None else
                     f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann {args.sol92_frac:.0%} solution92"),
         opponent_plan=args.opponent_plan, opponent_schedule=schedule,
+        seed_file=args.seed_file, seed_file_count=len(hard_seeds),
+        seed_file_sha256=(hashlib.sha256(Path(args.seed_file).read_bytes()).hexdigest()
+                          if args.seed_file else None),
         opponent_schedule_sha256=hashlib.sha256(
             json.dumps(schedule, separators=(",", ":")).encode()).hexdigest(),
         isolate_validation=args.isolate_validation,
@@ -488,6 +501,9 @@ def main(argv=None) -> None:
                 side = P.train_side(g)
                 opp_name = schedule[g]
                 seed = P.train_seed(args.run_seed, g)
+                if hard_seeds and opp_name == "solution92":
+                    # beide Seiten eines Paares auf derselben schweren Karte, je Start versetzt
+                    seed = hard_seeds[(g // 2 + 997 * args.run_seed) % len(hard_seeds)]
                 agent = learners.agents[side]
                 opp_side = "player_1" if side == "player_0" else "player_0"
                 if opp_name == "pool":

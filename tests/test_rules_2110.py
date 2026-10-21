@@ -214,3 +214,61 @@ def test_mixed_ensemble_feeds_old_nets_their_first_features(tmp_path, monkeypatc
     resaved = str(tmp_path / "re.pth")
     mix.save_agent(resaved)
     assert torch.load(resaved, weights_only=False)["ensemble_dims"] == [FEATURE_DIM]
+
+
+# --- opp_model + dodge -------------------------------------------------------------
+def test_sol92_model_targets_highest_visible_id_in_manhattan_range():
+    from agents.sherlock.opp_model import predict_sol92_saps
+    a = _stay_agent()
+    a.belief.point_tiles[7, 6] = True
+    # Gegner auf Punkte-Tile (7, 6); unsere Units 0 (5, 5) und 1 (6, 7) in Reichweite 4,
+    # Unit 2 (1, 1) zu weit weg -> Ziel ist Unit 1
+    obs = make_obs(10, 10, units=[(5, 5, 50), (6, 7, 50), (1, 1, 50)], enemies=[(7, 6, 80)],
+                   relics=[(8, 8)])
+    ctx = a._decide(obs)[0]
+    assert predict_sol92_saps(ctx, a.belief) == [(0, 1)]
+    weak = make_obs(11, 11, units=[(5, 5, 50)], enemies=[(7, 6, 30)], relics=[(8, 8)])
+    assert predict_sol92_saps(a._decide(weak)[0], a.belief) == []   # 30 < Sap-Kosten 40
+
+
+def test_dodge_moves_lethally_targeted_unit_to_free_point_tile():
+    for flag, energy, want in ((False, 15, geo.STAY), (True, 15, geo.DOWN), (True, 50, geo.STAY)):
+        a = _stay_agent(dodge=flag)
+        a.belief.point_tiles[7, 6] = True
+        a.belief.point_tiles[5, 5] = True
+        a.belief.point_tiles[5, 6] = True
+        obs = make_obs(10, 10, units=[(5, 5, energy)], enemies=[(7, 6, 80)], relics=[(8, 8)])
+        assert int(a.act(10, obs)[0, 0]) == want, (flag, energy)
+
+
+def test_dodge_always_mode_and_untargeted_units_stay():
+    a = _stay_agent(dodge=True, dodge_mode="always")
+    a.belief.point_tiles[7, 6] = True
+    obs = make_obs(10, 10, units=[(5, 5, 200), (6, 7, 200)], enemies=[(7, 6, 80)], relics=[(8, 8)])
+    act = a.act(10, obs)
+    assert int(act[0, 0]) == geo.STAY       # Unit 0 ist nicht das Ziel
+    assert int(act[1, 0]) != geo.STAY       # Unit 1 (hoechste ID) weicht aus
+
+
+def test_dodge_survives_multi_unit_step_with_saps():
+    # Regression 21.10.: ein Sap einer Unit darf die Trefferliste der naechsten nicht ueberschreiben
+    a = _stay_agent(dodge=True, pt_sap=True)
+    for t in ((7, 6), (5, 5), (5, 6)):
+        a.belief.point_tiles[t] = True
+    obs = make_obs(10, 10, units=[(5, 5, 100), (6, 7, 15)], enemies=[(7, 6, 80)], relics=[(8, 8)])
+    act = a.act(10, obs)
+    assert int(act[0, 0]) == geo.SAP        # Unit 0 sappt vom Punkte-Tile (pt_sap)
+    assert int(act[1, 0]) != geo.STAY       # Unit 1 ist das Ziel und weicht aus
+
+
+def test_seed_file_rejects_validation_overlap(tmp_path):
+    import json
+
+    import pytest
+    from scripts import experiment
+    f = tmp_path / "hard.json"
+    f.write_text(json.dumps([360001, 500003]))
+    with pytest.raises(SystemExit):
+        experiment.main(["--variant", "full_rules_v3", "--games", "4", "--no-test",
+                         "--seed-file", str(f), "--out", str(tmp_path / "run")])
+    assert not (tmp_path / "run").exists()

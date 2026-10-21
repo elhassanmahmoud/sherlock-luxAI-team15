@@ -258,6 +258,8 @@ class Agent_x:
         rammed: set = set()
         siege = None  # rules.SiegePlan, bei Bedarf einmal pro Step
         stationary = self._enemy_stationary(ctx)
+        # 21.10.2026: vorhergesagte Solution_92-Treffer je eigener Unit (opp_model)
+        incoming = self._predicted_hits(ctx, stationary) if self.cfg.dodge and not self.training else {}
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
@@ -313,6 +315,12 @@ class Agent_x:
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 self._prev_actions[uid] = a
+            if incoming.get(int(uid)) and a in (geo.STAY, geo.SAP):
+                a2 = self._dodge(ctx, uid, masks[k], a, sap, incoming)
+                if a2 != a:
+                    a = a2
+                    self._prev_actions[uid] = a
+                    st["dodges"] = st.get("dodges", 0) + 1
             if self.cfg.siege and not self.training and float(ctx["ally_ene"][uid]) >= 0:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 holder = (self.belief.point_tiles[x, y]
@@ -445,6 +453,65 @@ class Agent_x:
             if (armed & (d <= ctx["sap_range"])).any():
                 return False
         return True
+
+    def _predicted_hits(self, ctx: dict, stationary: np.ndarray) -> dict[int, float]:
+        """cfg.dodge: erwartete direkte Solution_92-Saps je eigener Unit-ID (opp_model).
+        Gewicht 0,85 fuer Schuetzen, die schon im letzten Step dort standen, sonst 0,5
+        (gemessen am 21.10. auf 500720-500729: Trefferquote der Vorhersage je Fall)."""
+        from .opp_model import predict_sol92_saps
+        out: dict[int, float] = {}
+        for k, uid in predict_sol92_saps(ctx, self.belief):
+            p = 0.85 if (k < len(stationary) and stationary[k]) else 0.5
+            out[uid] = out.get(uid, 0.0) + p
+        return out
+
+    def _dodge(self, ctx: dict, uid: int, mask: np.ndarray, a: int, sap, hits: dict) -> int:
+        """cfg.dodge: Unit, die stehen oder sappen wuerde und vorhergesagt direkt getroffen
+        wird, weicht einen Schritt aus (Solution_92 zielt auf die aktuelle Position, beim
+        Ausweichen trifft nur der Streuschaden). Bevorzugt ein freies bekanntes Punkte-Tile.
+        dodge_mode 'lethal': nur wenn Stehenbleiben die Unit vermutlich toetet; ist der Tod
+        auch beim Ausweichen sicher, wird stattdessen noch gesappt (falls moeglich)."""
+        c = self.cfg
+        cost, drop = float(ctx["sap_cost"]), SAP_DROPOFF_ASSUMED
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        e = float(ctx["ally_ene"][uid])
+        n = hits[int(uid)]
+        others = [(int(ctx["ally_pos"][v][0]), int(ctx["ally_pos"][v][1]), h)
+                  for v, h in hits.items() if v != int(uid)]
+
+        def damage(tx, ty, moved):
+            d = n * cost * (drop if moved else 1.0)
+            for ox, oy, h in others:
+                cheb = max(abs(ox - tx), abs(oy - ty))
+                d += h * cost * (1.0 if cheb == 0 else drop if cheb == 1 else 0.0)
+            return d
+
+        stay_left = e - damage(x, y, False) - (cost if a == geo.SAP else 0.0)
+        if c.dodge_mode == "lethal" and stay_left >= 0:
+            return a
+        occupied = {(int(ctx["ally_pos"][v][0]), int(ctx["ally_pos"][v][1]))
+                    for v in ctx["ally_ids"].tolist() if int(v) != int(uid)}
+        tgt = ctx["assigned"].get(int(uid))
+        best, best_s = None, -np.inf
+        for d in range(1, 5):
+            if not mask[d]:
+                continue
+            tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+            if e - ctx["move_cost"] - damage(tx, ty, True) < 0:
+                continue  # stirbt auch nach dem Ausweichen
+            s = 0.0
+            if self.belief.point_tiles[tx, ty] and (tx, ty) not in occupied:
+                s += 2.0
+            if tgt is not None and abs(tgt[0] - tx) + abs(tgt[1] - ty) < abs(tgt[0] - x) + abs(tgt[1] - y):
+                s += 1.0
+            s += float(np.clip(ctx["energy_map"][tx, ty], -20, 20)) / 20.0
+            if s > best_s:
+                best, best_s = d, s
+        if best is not None:
+            return best
+        if stay_left < 0 and a != geo.SAP and sap is not None and mask[geo.SAP]:
+            return geo.SAP  # Tod nicht zu vermeiden: vorher noch schiessen
+        return a
 
     def _enemy_stationary(self, ctx: dict) -> np.ndarray:
         """Je sichtbarem Gegner: stand er im letzten Step auf demselben Tile?"""

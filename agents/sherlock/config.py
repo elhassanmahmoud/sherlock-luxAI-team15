@@ -129,6 +129,11 @@ class AgentConfig:
     threat_feats: bool = False
     """True (21.10.2026): Netz-Eingabe um features.THREAT_NAMES erweitert (Gefahr je Tile,
     bester Sap). Andere Eingabegroesse -> nur fuer neu trainierte Netze."""
+    dodge: bool = False
+    """True (21.10.2026, nur Auswertung): Units, die stehen/sappen wuerden und laut
+    opp_model von Solution_92 direkt beschossen werden, weichen einen Schritt aus."""
+    dodge_mode: str = "lethal"
+    """'lethal': nur ausweichen, wenn Stehenbleiben vermutlich toetet; 'always': immer."""
     siege: bool = False
     """True (21.10.2026, nur Auswertung): Units, deren Ziel ein vom Gegner (sichtbar oder
     wahrscheinlich im Nebel) besetztes Punkte-Tile ist, laufen nicht hinein, sondern zur
