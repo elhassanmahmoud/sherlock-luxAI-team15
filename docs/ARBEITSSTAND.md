@@ -4,6 +4,29 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+
+## 21.10.2026, 21:17 Berlin – Codex: V4-Programm ausgewertet, V3 bleibt Abgabe
+
+[Abschlussbericht für den 22.10.](MORGENBERICHT_20261022.md). **Kein qualifizierter stärkerer V4.** Paar-Koordinator, Zielpilot, begrenzte CNN-Fortsetzung und Artillerie-Bestätigung ergeben zusammen **3.336 neue Spiele: 240 Training und 3.096 Auswertungs-/Kontroll-/Kursprüfspiele**. Historische Referenzen und frühere Nachtversuche nicht erneut mitgezählt. Der letzte Kandidat gewinnt frisch gegen Solution **301/400 statt V3 292/400**, Δ +2,25 Prozentpunkte, gepaartes 95%-Kartenintervall [−0,25; +4,75]. Beide Solution-Übernahmegates verfehlt; default jeweils 399/400. Kein direkter frischer Folgetest, kein zusätzlicher Trainingslauf, kein Gewichtswechsel.
+
+[Artillerie-Archiv mit allen 2.208 Spielen](../experiments/analysis/art_sap_confirm_20261021/README.md): unabhängige Abschlussprüfung vollständig, Root-Nachrechnung und erneuter Audit erfolgreich. Originalzustand zum Auditzeitpunkt erhalten; danach `completed_negative`. Alle 83 Quell-/Runtime-, fünf Eingabe- und acht Schutzdatei-Hashes unverändert. Experimentdaten und Kandidat in main; erfolgloser Koordinationscode bleibt auf `improvement/v4-joint-20261021`.
+
+Abgabe unverändert `all18_v3` (`aac1c910…8d935`), alte Sechser-Sicherung unverändert (`3788fb72…d158`). Artillerie-Karten 523000–523199 jetzt verbraucht; 523200–523399 und der finale 100%-Audit wurden in diesem Programm nicht gespielt. Die [unabhängige Abschlussentscheidung](../experiments/analysis/art_sap_confirm_20261021/next_step_review.md) empfiehlt keine weitere unbegründete Variantenrunde. Nächste neue Evidenz sind Mahmouds bereits gestartete 101-Merkmal-DQN-/PPO-Läufe unter ihrem festen Plan und den reservierten Karten 503220–503819. Diese Trainings nicht duplizieren.
+
+Der begrenzte Auftrag wird nach Veröffentlichung vorzeitig abgeschlossen; das Ziel einer deutlich stärkeren V4-Version bleibt offen. Mindestens 30 % Nutzerkontingent erhalten, kein Reset. Tatsächliche Abschlussprozesse, Remote-Stand und Restkontingent stehen im Abschlussbericht.
+
+
+## 21.10.2026, 20:43 Berlin – Codex: Artillerie-Kandidat in frischer Bestätigung
+
+Vorgeschaltete Prüfung abgeschlossen: 480 Reproduktionsspiele stimmen für V3 und `art_sap=True, art_min_hits=3` in sämtlichen 23 Nichtzeitfeldern mit den historischen Referenzen überein. Solution **108/120 statt 102/120** (Δ+5 pp, gepaartes Kartenintervall [+0,833;+10]); default beide 120/120. Direkt auf denselben Entwicklungskarten **80 Siege/40 Niederlagen gegen V3** (66,67%, Kartenintervall [58,33;75]%). Unabhängiger Datenreview der 600 Vergleichsspiele bestanden. Zusätzlich acht Kursprüfspiele bestanden: exakte Ladung aller 18 Netze, frisches Belief, 303 Schritte; größte p95-Aktionszeit 2,326 ms, Maximum 10,946 ms. Der Kurscheck prüft Aktionsformat, keine vollständige semantische Legalitätsgarantie.
+
+Die unveränderten 18 V3-Netze im Versuchskandidaten wurden rekursiv und nach Laden geprüft; unabhängiger Bytevergleich aller 264 Tensor-Speicherblöcke ebenfalls identisch. Kandidat SHA `e392f20c60d51817591ee4c0061bc8150e7ec8aa312b42e704004538ead45497`. Die zwei gespeicherten Configänderungen sind die einzige Veränderung gegenüber V3. **Noch keine Freigabe als stärkere Abgabe.**
+
+Jetzt fester Vergleich auf 200 neuen Karten 523000–523199, beide Seiten, beide Gegner, jeweils V3/Kandidat = 1.600 Spiele. Erst nach vollständiger Auswertung aller vorher festgelegten Gates gegebenenfalls 400 direkte Spiele auf 523200–523399. Finaler Seed-Abgleich: 2.109 zugängliche CSV-Dateien mit Seedspalte, 1.485.640 Zeilen, kein Treffer im reservierten Bereich. Mahmouds 503220–503819 bleiben frei für seine Studie. Arbeitszweig `improvement/v4-joint-20261021`, eingefroren auf `9c1efc7`; aktuelle Daten dort unter `experiments/analysis/art_sap_confirm_20261021/`. main erhält den fertigen Bericht erst nach Abschluss.
+
+Neue ausdrückliche Budgetgrenze von Moayed: mindestens 30 % Codex-Kontingent übriglassen. Root beginnt Abschluss bei 35 % Rest; kein Reset. Bei letzter Kontrolle 79 % Rest. Beide aktiven Automationen übernehmen diese Grenze. Die Frist 22.10. um 06:00 Berlin gilt nur, sofern die Budgetgrenze nicht früher greift. V3 und alte Sicherung bleiben unverändert.
+
+
 ## 21.10.2026, 20:30 Berlin – Codex: gemeinsame Integration geprüft
 
 Mahmouds Artillerie-/Gefahrmerkmale und die Korrektur der Ensemble-Dimensionen sind im Arbeitszweig zusammengeführt. Der erste Gesamtlauf zeigte 14 überholte Testfixtures (517 bestanden): Frühablehnung beschädigter Checkpoints, fehlende Breitenangaben in inerten Curriculum-Mocks und ein Zielpilot-Mock ohne Eingabedimension. Nur die Testverträge angepasst; Produktionsprüfung nicht abgeschwächt. Unabhängiger Review der Korrektur und Fixtures ohne offene Blocker.

@@ -2,6 +2,9 @@
 
 Stand 21.10.2026. Strategie auf Moayeds Wunsch, nach zwei unabhängigen Code-Reviews. **Noch kein implementierter neuer V4-Kandidat und kein neuer Stärkegewinn.** Dieser Entwurf ersetzt weder die abgeschlossenen Resultate noch die eingefrorenen Protokolle. Umsetzung erfolgt in getrennten, kleinen Arbeitsschritten; vor jedem datenabhängigen Versuch werden genaue Parameter und Karten festgeschrieben.
 
+
+**Abschlussstand am Abend des 21.10.:** Der ursprünglich hier entworfene Koordinationsprototyp wurde umgesetzt und geprüft. Zusammen mit Zielpilot, begrenzter CNN-Fortsetzung und unabhängiger Artillerie-Bestätigung sind 3.336 neue Spiele abgeschlossen; keiner der Kandidaten erfüllt die festgelegten Übernahmegates. V3 bleibt Abgabe. [Abschlussbericht](MORGENBERICHT_20261022.md). Der folgende Strategieentwurf dokumentiert die vor den Ergebnissen festgelegten Überlegungen; Aussagen wie „noch kein implementierter Kandidat“ im Eingangssatz beschreiben diesen damaligen Zeitpunkt. Die aktuellen nächsten Schritte stehen im Abschlussbericht.
+
 ## Ziel und Ausgangspunkt
 
 - Ein deutlich stärkerer, vorzeigbarer Agent für das nächste Review/Battle, mit nachvollziehbarem gelerntem Entscheidungsanteil. Ziel: 100 % gegen Solution_92 auf einem vorher festgelegten, unberührten Testsatz. Das wäre keine Garantie für alle Karten oder andere Gegner. Remis zählen nicht als Sieg.
