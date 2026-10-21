@@ -1,0 +1,67 @@
+import importlib.util,sys,unittest,copy,tempfile
+from pathlib import Path
+from unittest.mock import patch
+spec=importlib.util.spec_from_file_location('source_observer','/tmp/v3-action-source-observer.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+class Tests(unittest.TestCase):
+ def setUp(self):self.assertTrue(hasattr(m,'Trace'),'Trace not implemented')
+ def finish(self,t,final=2,world=None,energy=10,mirrored=False,mask=None,sap=None):
+  return t.finish({'step':1,'match_idx':0,'ally_ene':[energy]},[0],{0:mask or [True]*6},{0:sap},{0:final},[world or [final,0,0]],mirrored,True)
+ def test_counts_reversed_changes_not_only_final_difference(self):
+  t=m.Trace();t.hook('explore',0,2,3);t.hook('rule',0,3,2);rows=self.finish(t)
+  self.assertEqual(rows[0]['chain'],[2,3,2,2]);self.assertTrue(rows[0]['explore_reverted']);self.assertTrue(rows[0]['greedy_final_equal'])
+  z=m.summarize(rows);self.assertEqual(z['active_decisions'],1);self.assertEqual(z['changes_explore'],1);self.assertEqual(z['changes_rule'],1);self.assertEqual(z['changed_then_final_greedy'],1)
+ def test_sap_skip_and_mirrored_sap_delta(self):
+  t=m.Trace();t.hook('rule',0,5,5);r=self.finish(t,5,[5,-2,-1],mirrored=True,sap=(1,2,1))[0]
+  self.assertEqual(r['chain'],[5,5,5,5]);self.assertFalse(r['explore_called'])
+ def test_mirror_motion_and_no_input_mutation(self):
+  t=m.Trace();t.hook('explore',0,1,1);t.hook('rule',0,1,1);mask=[True]*6;old=mask.copy()
+  r=self.finish(t,1,[2,0,0],mirrored=True,mask=mask)[0];self.assertEqual(r['chain'],[1]*4);self.assertEqual(mask,old)
+ def test_chain_mismatch_and_duplicate_hooks_rejected(self):
+  t=m.Trace();t.hook('explore',0,2,3);t.hook('rule',0,4,2)
+  with self.assertRaises(RuntimeError):self.finish(t)
+  with self.assertRaises(RuntimeError):t.hook('rule',0,4,2)
+ def test_unobserved_nonsap_greedy_rejected(self):
+  t=m.Trace();t.hook('rule',0,2,2)
+  with self.assertRaises(RuntimeError):self.finish(t)
+ def test_illegal_final_and_bad_world_rejected(self):
+  for mask,world in [([True,True,False,True,True,True],[2,0,0]),([True]*6,[3,0,0])]:
+   t=m.Trace();t.hook('explore',0,1,1);t.hook('rule',0,1,2)
+   with self.assertRaises(RuntimeError):self.finish(t,mask=mask,world=world)
+ def test_zero_energy_active_negative_separate(self):
+  rows=[]
+  for e in [0,-1]:
+   t=m.Trace();t.hook('explore',0,0,0);t.hook('rule',0,0,0);rows+=self.finish(t,0,energy=e)
+  z=m.summarize(rows);self.assertEqual(z['active_decisions'],1);self.assertEqual(z['negative_masked_decisions'],1)
+ def test_late_override_counted(self):
+  t=m.Trace();t.hook('explore',0,0,0);t.hook('rule',0,0,0);z=m.summarize(self.finish(t,5,[5,1,2],sap=(1,2,1)))
+  self.assertEqual(z['changes_late'],1);self.assertEqual(z['by_final_action']['5'],1)
+ def test_matchstart_noops_separate_and_denominator_reconciles(self):
+  self.assertTrue(hasattr(m,'start_noop'),'Match-start accounting missing')
+  z=m.start_noop([[0,0,0],[0,0,0]],[True,True]);self.assertEqual(z,{'env_steps':1,'masked_slots':2})
+  with self.assertRaises(RuntimeError):m.start_noop([[1,0,0]],[True])
+  m.reconcile_decisions({'masked_decisions':3},z,5)
+  with self.assertRaises(RuntimeError):m.reconcile_decisions({'masked_decisions':3},z,3)
+ def test_any_stage_change_includes_reversal(self):
+  t=m.Trace();t.hook('explore',0,1,2);t.hook('rule',0,2,1)
+  self.assertEqual(m.summarize(self.finish(t,1)).get('any_stage_change'),1)
+ def test_forced_and_choice_denominators_exclude_negative(self):
+  rows=[]
+  for energy,mask in [(0,[True,False,False,False,False,False]),(10,[True,True,False,False,False,False]),(-1,[True,False,False,False,False,False])]:
+   t=m.Trace();t.hook('explore',0,0,0);t.hook('rule',0,0,0);rows+=self.finish(t,0,energy=energy,mask=mask)
+  self.assertEqual([r.get('legal_action_count') for r in rows],[1,2,1])
+  z=m.summarize(rows);self.assertEqual(z['forced_active_decisions'],1);self.assertEqual(z['choice_active_decisions'],1);self.assertEqual(z['choice_greedy_final_equal'],1)
+  self.assertEqual(z['choice_by_final_action'],{'0':1});self.assertEqual(z['active_decisions'],2)
+  self.assertEqual(z['legal_count_chains'],{'1|0,0,0,0':1,'2|0,0,0,0':1})
+ def test_choice_changed_final_is_not_greedy_agreement(self):
+  t=m.Trace();t.hook('explore',0,1,2);t.hook('rule',0,2,2);z=m.summarize(self.finish(t,2))
+  self.assertEqual(z.get('choice_active_decisions'),1);self.assertEqual(z.get('choice_greedy_final_equal'),0)
+ def test_reference_reproduction_and_child_guard(self):
+  m.check_result({'result':1,'secs':0},{'result':'1','secs':'99'})
+  with self.assertRaises(RuntimeError):m.check_result({'result':0},{'result':'1'})
+  with tempfile.TemporaryDirectory() as d,patch.object(m,'OUT',Path(d)):
+   with self.assertRaises(RuntimeError):m.child()
+  self.assertNotIn('torch',sys.modules);self.assertNotIn('jax',sys.modules)
+if __name__=='__main__':
+ result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+ assert not {'torch','jax'} & set(sys.modules)
+ raise SystemExit(0 if result.wasSuccessful() else 1)

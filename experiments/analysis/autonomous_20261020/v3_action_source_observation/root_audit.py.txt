@@ -1,0 +1,46 @@
+from pathlib import Path
+from collections import Counter
+import json,hashlib,subprocess,csv,math
+R=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15');O=R/'experiments/analysis/autonomous_20261020/v3_action_source_observation'
+s=json.loads((O/'state.json').read_text());r=json.loads((O/'report.json').read_text())
+assert s['complete'] and s['baseline']==s['final_identity'] and not s.get('error')
+assert subprocess.check_output(['git','-C',str(R),'rev-parse','HEAD'],text=True).strip()==s['baseline']['head']
+for p,h in {**s['baseline']['input_sha256'],**s['baseline']['python_sources'],s['baseline']['python_path']:s['baseline']['python_sha256']}.items(): assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==h,p
+for p,h in s['output_sha256'].items():assert hashlib.sha256((O/p).read_bytes()).hexdigest()==h,p
+assert [json.loads(x) for x in (O/'games.jsonl').read_text().splitlines()]==r['games']
+expected={(x,y) for x in range(500720,500730) for y in ('player_0','player_1')};assert len(r['games'])==20 and {(g['seed'],g['side']) for g in r['games']}==expected
+with (R/'experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv').open(newline='') as f:refs={(int(x['seed']),x['side']):x for x in csv.DictReader(f) if x['opponent']=='solution92'}
+def verify(z):
+ counts=Counter();g_hist=Counter();f_hist=Counter();choice_hist=Counter();chains=Counter()
+ for key,n in z['legal_count_chains'].items():
+  a,ch=key.split('|');legal=int(a);g,e,u,f=map(int,ch.split(','));assert 1<=legal<=6 and n>0 and isinstance(n,int)
+  if legal==1:assert [g,e,u,f]==[0]*4
+  chains[ch]+=n;g_hist[str(g)]+=n;f_hist[str(f)]+=n
+  for k,b in [('active_decisions',True),('forced_active_decisions',legal==1),('choice_active_decisions',legal>=2),('choice_greedy_final_equal',legal>=2 and g==f),('greedy_final_equal',g==f),('changes_explore',g!=e),('changes_rule',e!=u),('changes_late',u!=f),('any_stage_change',len({g,e,u,f})>1),('changed_then_final_greedy',g==f and len({g,e,u,f})>1),('explore_reverted',g!=e and g in (u,f)),('rule_reverted',e!=u and e==f)]:counts[k]+=n*bool(b)
+  if legal>=2:choice_hist[str(f)]+=n
+ for k in ['active_decisions','forced_active_decisions','choice_active_decisions','choice_greedy_final_equal','greedy_final_equal','changes_explore','changes_rule','changes_late','any_stage_change','changed_then_final_greedy','explore_reverted','rule_reverted']:assert z[k]==counts[k],(k,z[k],counts[k])
+ assert z['chains']==dict(chains) and z['by_greedy_action']==dict(g_hist) and z['by_final_action']==dict(f_hist) and z['choice_by_final_action']==dict(choice_hist)
+ assert sum(z['negative_chains'].values())==z['negative_masked_decisions'] and z['masked_decisions']==z['active_decisions']+z['negative_masked_decisions']
+def aggregate(items):
+ out={}
+ for z in items:
+  for k,v in z.items():
+   if isinstance(v,dict):
+    dst=out.setdefault(k,Counter());dst.update(v)
+   else:out[k]=out.get(k,0)+v
+ return {k:dict(v) if isinstance(v,Counter) else v for k,v in out.items()}
+for g in r['games']:
+ z=g['overall'];verify(z);assert set(g['by_match'])=={'1','2','3'}
+ for m in g['by_match'].values():verify(m)
+ assert aggregate(g['by_match'].values())==z
+ assert g['match_start_noops']['env_steps']==3 and g['match_start_noops']['masked_slots']+z['masked_decisions']==int(g['result']['unit_steps'])
+ for k,v in refs[g['seed'],g['side']].items():
+  if k=='secs':continue
+  try:ok=math.isclose(float(g['result'][k]),float(v),rel_tol=0,abs_tol=1e-9)
+  except ValueError:ok=g['result'][k]==v
+  assert ok,(g['seed'],g['side'],k)
+assert aggregate(g['overall'] for g in r['games'])==r['overall'];verify(r['overall'])
+for m in ('1','2','3'):assert aggregate(g['by_match'][m] for g in r['games'])==r['by_match'][m]
+assert aggregate(g['match_start_noops'] for g in r['games'])==r['match_start_noops']
+out={'complete':True,'source_head':s['baseline']['head'],'state_sha256':hashlib.sha256((O/'state.json').read_bytes()).hexdigest(),'games':20,'overall':r['overall'],'limits':'Recomputed from logged joint counts. Individual masks, energies and action vectors checked by runtime observer, not rederived from stored counters. No causal/strength claim.'}
+Path('/tmp/v3_action_source_root_audit.json').write_text(json.dumps(out,indent=2)+'\n');print('PASS:20games,60matchtables,allcounters,references,hashes')

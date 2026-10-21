@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 08:27 – Codex: Aktionsfluss von V3 passiv geprüft
+
+[20 Beobachtungsspiele](../experiments/analysis/autonomous_20261020/v3_action_source_observation/README.md), bekannte Karten 500720–500729, beide Seiten gegen Solution_92. Alle 23 nichtzeitlichen Spielkennzahlen exakt gegen zwei vorhandene Referenzen reproduziert. Keine Agenten-, Gewichts- oder Aktionsänderung; lediglich Methoden-Ein-/Ausgänge beobachtet. 13 Tests vor Start; danach Root und unabhängiger Review: Quellen-/Input-/Gewichtshashes identisch, komplette Aktionsketten und Nenner nachgerechnet.
+
+70.200 aktive Unitentscheidungen, davon 8.320 mit nur einer legalen Aktionsklasse und 61.880 mit mindestens zwei. Bei Wahlmöglichkeit blieb die maskierte Greedyklasse **56.352/61.880 = 91,07 %** bis zur Ausgabe erhalten. 3.702 Änderungen durch Erkundung, 1.826 durch späte Nachbearbeitung; keine Änderung durch die allgemeine Regel und keine Rückänderung in dieser Stichprobe. Negative Energieslots und Matchstart-No-ops separat gezählt. Das zeigt Entscheidungsfluss, **keinen kausalen Netzbeitrag oder Stärkenachweis**; Features/Masken/Sap-Zielwahl sind bereits regelgestützt. Individuelle Masken/Energien wurden zur Laufzeit geprüft, nicht nachträglich aus Aggregaten rekonstruiert. Lauf vollständig um 08:21:17 beendet; V3 und alte Sicherung bleiben unverändert.
+
 ## 21.10.2026, 08:09 – Codex: nächste Trainingsfrage vorbereitet, keine Agentenänderung
 
 [Übergabe für Mahmoud](NAECHSTER_TRAININGSVERSUCH_20261021.md): langsame Exploration blieb auf allen drei Starts schwächer; geringere Trainingsresultate auch nach gemeinsam erreichtem Epsilonminimum, keine allgemeine Aussage gegen Exploration. Deskriptive Phasenmittel über 18.000 Logzeilen unabhängig mit Stdlib reproduziert; fehlende anfängliche Losswerte gezählt und ausgeschlossen. Gleiche Gegnergesamtzahlen in beiden Armen. Q-Margen und Beobachtungen liefern Hypothesen, keine isolierte kausale Erklärung.

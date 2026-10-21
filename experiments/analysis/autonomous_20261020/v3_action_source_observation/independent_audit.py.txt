@@ -1,0 +1,224 @@
+"""Independent stdlib aggregate audit; refuses result access until complete."""
+import csv
+import hashlib
+import json
+import math
+import sys
+from collections import Counter
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+BASE = ROOT/'experiments/analysis/autonomous_20261020'
+OUT = BASE/'v3_action_source_observation'
+DEST = Path('/tmp/v3_action_source_independent_audit.json')
+HEAD = 'e831f087a7cacbde5713f71a2a654981fca0fd47'
+EXPECTED = {(s,p) for s in range(500720,500730) for p in ('player_0','player_1')}
+
+def require(ok, message):
+    if not ok:
+        raise AssertionError(message)
+
+def digest(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda:stream.read(1048576), b''):
+            h.update(block)
+    return h.hexdigest()
+
+def read(path):
+    return json.loads(Path(path).read_text(), parse_constant=lambda x:(_ for _ in ()).throw(ValueError(x)))
+
+def positive_count(n):
+    require(type(n) is int and n > 0, 'Nonpositive/noninteger chain count')
+
+def chain(text):
+    parts = text.split(',')
+    require(len(parts)==4 and all(v in '012345' and len(v)==1 for v in parts), 'Malformed chain')
+    g,e,r,f = map(int, parts)
+    # Frozen V3 has scripted_explore, disabled pt_walk/pt_hold, and only pt_sap late.
+    require(g!=5 or e==5, 'SAP exploration must be skipped')
+    require(g==5 or e!=5, 'Exploration cannot create SAP')
+    require(e==r, 'Disabled general rule changed action')
+    require(r==f or (r,f)==(0,5), 'Unsupported late transition')
+    return g,e,r,f
+
+def rebuild(summary):
+    scalars = {k:0 for k in ('active_decisions','forced_active_decisions','choice_active_decisions',
+        'choice_greedy_final_equal','negative_masked_decisions','masked_decisions','greedy_final_equal',
+        'any_stage_change','changes_explore','changes_rule','changes_late','changed_then_final_greedy',
+        'explore_reverted','rule_reverted')}
+    tables = {k:Counter() for k in ('choice_by_final_action','by_greedy_action','by_final_action','chains')}
+    for entry,n in summary['legal_count_chains'].items():
+        positive_count(n)
+        pieces = entry.split('|')
+        require(len(pieces)==2 and pieces[0] in ('1','2','3','4','5','6'), 'Invalid legal count')
+        count = int(pieces[0]); g,e,r,f = chain(pieces[1])
+        require(len({g,e,r,f})<=count, 'More observed classes than legal actions')
+        if count==1:
+            require(g==e==r==f==0, 'Single legal action must be STAY')
+        tests = dict(active_decisions=True,forced_active_decisions=count==1,choice_active_decisions=count>=2,
+            choice_greedy_final_equal=count>=2 and g==f,greedy_final_equal=g==f,
+            any_stage_change=not(g==e==r==f),changes_explore=g!=e,changes_rule=e!=r,changes_late=r!=f,
+            changed_then_final_greedy=g==f and not(g==e==r==f),
+            explore_reverted=g!=e and (r==g or f==g),rule_reverted=e!=r and e==f)
+        for k,v in tests.items():
+            scalars[k] += n if v else 0
+        tables['chains'][pieces[1]] += n
+        tables['by_greedy_action'][str(g)] += n
+        tables['by_final_action'][str(f)] += n
+        if count>=2:
+            tables['choice_by_final_action'][str(f)] += n
+    for text,n in summary['negative_chains'].items():
+        positive_count(n); chain(text)
+        require(text=='0,0,0,0', 'Negative-energy decision must remain STAY in fixed V3')
+        scalars['negative_masked_decisions'] += n
+    scalars['masked_decisions'] = scalars['active_decisions']+scalars['negative_masked_decisions']
+    result = {**scalars, **{k:dict(v) for k,v in tables.items()},
+              'legal_count_chains':dict(summary['legal_count_chains']),
+              'negative_chains':dict(summary['negative_chains'])}
+    require(result==summary, 'Summary counter differs from chain-derived count')
+    require(result['forced_active_decisions']+result['choice_active_decisions']==result['active_decisions'], 'Choice partition')
+    return result
+
+def aggregate(items):
+    result = {}
+    for item in items:
+        for k,v in item.items():
+            if isinstance(v,dict):
+                bucket=result.setdefault(k,{})
+                for key,n in v.items():
+                    bucket[key]=bucket.get(key,0)+n
+            else:
+                require(type(v) is int and v>=0, 'Invalid aggregate counter')
+                result[k]=result.get(k,0)+v
+    return result
+
+def check_reference(actual, reference):
+    require(set(actual)==set(reference), 'Reference field set differs')
+    for k,v in reference.items():
+        if k=='secs':
+            require(math.isfinite(float(actual[k])), 'Nonfinite duration')
+        elif k in ('side','opponent'):
+            require(actual[k]==v, 'Reference string differs: '+k)
+        else:
+            x,y=float(actual[k]),float(v)
+            require(math.isfinite(x) and math.isfinite(y) and abs(x-y)<=1e-9, 'Reference numeric differs: '+k)
+
+def current_head():
+    git = ROOT/'.git'
+    require(git.is_dir(), 'Unexpected repository layout')
+    value=(git/'HEAD').read_text().strip()
+    if not value.startswith('ref: '):
+        return value
+    ref=value[5:]
+    if (git/ref).is_file():
+        return (git/ref).read_text().strip()
+    for line in (git/'packed-refs').read_text().splitlines():
+        if line and not line.startswith(('#','^')):
+            h,name=line.split(' ',1)
+            if name==ref:
+                return h
+    raise AssertionError('Unresolved HEAD')
+
+def audit():
+    state=read(OUT/'state.json')
+    require(state.get('complete') is True, 'Not complete: results deliberately unread')
+    require(not state.get('error') and state['job']['returncode']==0, 'Unsuccessful run')
+    require(state['games_expected']==20 and state['baseline']==state['final_identity'], 'Freeze mismatch')
+    identity=state['baseline']
+    require(identity['head']==HEAD==current_head(), 'HEAD changed')
+    for paths in (identity['python_sources'],identity['input_sha256']):
+        for path,h in paths.items():
+            require(digest(path)==h, 'Changed frozen file: '+path)
+    require(str((ROOT/'.venv/bin/python').resolve())==identity['python_path'], 'Interpreter path changed')
+    require(digest(identity['python_path'])==identity['python_sha256'], 'Interpreter changed')
+    require(set(state['output_sha256'])=={'games.jsonl','report.json'}, 'Unexpected output files')
+    for name,h in state['output_sha256'].items():
+        require(digest(OUT/name)==h, 'Changed output: '+name)
+    start=datetime.fromisoformat(state['started_at']); finish=datetime.fromisoformat(state['finished_at'])
+    require(start.tzinfo is not None and finish.tzinfo is not None and start<finish<=datetime(2026,10,21,6,40,tzinfo=timezone.utc), 'Deadline failed')
+    report=read(OUT/'report.json')
+    require(report['complete'] is True, 'Report incomplete')
+    lines=[json.loads(line) for line in (OUT/'games.jsonl').read_text().splitlines()]
+    require(lines==report['games'], 'JSONL differs from report')
+    keys=[(g['seed'],g['side']) for g in lines]
+    require(len(keys)==20 and set(keys)==EXPECTED, 'Game keys differ')
+    refpath=ROOT/'experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv'
+    with refpath.open() as f:
+        refs=[r for r in csv.DictReader(f) if (int(r['seed']),r['side']) in EXPECTED and r['opponent']=='solution92']
+    require(len(refs)==20 and {(int(r['seed']),r['side']) for r in refs}==EXPECTED, 'Reference keys differ')
+    refs={(int(r['seed']),r['side']):r for r in refs}
+    flow=read(BASE/'post_exploration_point_flow/v3.json')
+    require(flow['complete'] and len(flow['games'])==20, 'Pointflow incomplete')
+    flows={(g['seed'],g['side']):g['result'] for g in flow['games']}
+    require(set(flows)==EXPECTED and report['config']==flow['config'], 'Pointflow keys/config differ')
+    cfg=report['config']
+    require(cfg['scripted_explore'] and cfg['pt_sap'] and cfg['mask_actions'] and cfg['canonical'], 'Unexpected enabled config')
+    require(not any(cfg[k] for k in ('pt_walk','pt_hold','ram','fog_sap','contest_sap','smart_sap','idle_sap','active_targets','sap_geometry')), 'Unexpected rule configuration')
+    for game in lines:
+        key=game['seed'],game['side']; result=game['result']
+        require((result['seed'],result['side'])==key and result['opponent']=='solution92', 'Inner game keys')
+        require(result['steps']==303 and result['point_counting_version']==2, 'Wrong steps/scoring')
+        check_reference(result,refs[key]);check_reference(result,flows[key])
+        rebuild(game['overall'])
+        require(set(game['by_match'])=={'1','2','3'}, 'Wrong match keys')
+        for summary in game['by_match'].values():
+            rebuild(summary)
+        require(aggregate(game['by_match'].values())==game['overall'], 'Match to game aggregation')
+        noops=game['match_start_noops']
+        require(set(noops)=={'env_steps','masked_slots'} and noops['env_steps']==3, 'Match-start count')
+        require(type(noops['masked_slots']) is int and 0<=noops['masked_slots']<=48, 'Match-start slots')
+        require(game['overall']['masked_decisions']+noops['masked_slots']==result['unit_steps'], 'Tracker denominator')
+    require(aggregate(g['overall'] for g in lines)==report['overall'], 'Game to overall aggregation')
+    rebuild(report['overall'])
+    require(set(report['by_match'])=={'1','2','3'}, 'Overall match keys')
+    for match,summary in report['by_match'].items():
+        rebuild(summary)
+        require(aggregate(g['by_match'][match] for g in lines)==summary, 'Global match aggregation')
+    require(aggregate(report['by_match'].values())==report['overall'], 'Global matches to overall')
+    require(aggregate(g['match_start_noops'] for g in lines)==report['match_start_noops'], 'Noop totals')
+    total=report['overall']
+    stats={k:v for k,v in total.items() if not isinstance(v,dict)}
+    stats.update(by_greedy_action=total['by_greedy_action'],by_final_action=total['by_final_action'],choice_by_final_action=total['choice_by_final_action'])
+    stats['choice_agreement_pct']=100*total['choice_greedy_final_equal']/total['choice_active_decisions']
+    stats['active_agreement_pct']=100*total['greedy_final_equal']/total['active_decisions']
+    stats['explore_change_pct']=100*total['changes_explore']/total['active_decisions']
+    stats['late_change_pct']=100*total['changes_late']/total['active_decisions']
+    return dict(pass_audit=True,audited_at=datetime.now(timezone.utc).isoformat(),head=HEAD,
+        started_at=state['started_at'],finished_at=state['finished_at'],games=20,maps=10,
+        reference_non_time_fields=23,reference_comparisons=920,source_files=len(identity['python_sources']),
+        input_files=len(identity['input_sha256']),outputs_sha256=state['output_sha256'],state_sha256=digest(OUT/'state.json'),
+        audit_script_sha256=digest(__file__),overall=stats,by_match=report['by_match'],
+        match_start_noops=report['match_start_noops'],
+        limitations=['Aggregate chain/count audit; individual masks, energies, UID/time records and world actions were not persisted and cannot be independently reconstructed.',
+        'Original runtime checks validated individual stage legality and canonical/world mapping; this audit checks only static class constraints and frozen observer provenance.',
+        'Known ten maps; no causal rule/net attribution, independent unit sample, confidence interval or strength comparison.'])
+
+def self_test():
+    for text in ('0,0,0,0','1,2,2,2','5,5,5,5','0,0,0,5'):
+        chain(text)
+    for text in ('5,1,1,1','1,5,5,5','1,1,2,2','1,1,1,5','6,0,0,0'):
+        try:chain(text)
+        except AssertionError:pass
+        else:raise AssertionError('Invalid fixture accepted')
+    require(aggregate([{'a':2,'b':{'x':1}},{'a':3,'b':{'y':4}}])=={'a':5,'b':{'x':1,'y':4}}, 'Aggregate fixture')
+    check_reference({'side':'player_0','result':1,'secs':3},{'side':'player_0','result':'1','secs':9})
+    for actual in ({'result':0,'secs':3},{'result':float('nan'),'secs':3},{'result':1,'secs':3,'extra':2}):
+        try:check_reference(actual,{'result':1,'secs':9})
+        except AssertionError:pass
+        else:raise AssertionError('Invalid reference fixture accepted')
+    require(not {'torch','jax','numpy'} & set(sys.modules),'Heavy import')
+    print('Stdlib self-tests PASS')
+
+if __name__=='__main__':
+    if sys.argv[1:]==['--self-test']:
+        self_test()
+    elif sys.argv[1:]==['--audit']:
+        result=audit()
+        with DEST.open('x') as stream:
+            json.dump(result,stream,indent=2,allow_nan=False)
+            stream.write('\n')
+        print(json.dumps({k:result[k] for k in ('pass_audit','finished_at','games','overall')},indent=2))
+    else:
+        raise SystemExit('Choose --self-test or --audit')

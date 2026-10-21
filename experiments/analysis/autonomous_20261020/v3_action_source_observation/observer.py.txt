@@ -1,0 +1,188 @@
+"""Prepared observation-only V3 attribution. Stdlib imports; no run without explicit admission."""
+from pathlib import Path
+from collections import Counter
+from datetime import datetime,timezone
+import argparse,csv,hashlib,importlib.util,json,math,os,selectors,shlex,signal,subprocess,sys,time
+ROOT=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+SCRIPT=Path(__file__).resolve()
+PLAN=ROOT/'docs/superpowers/plans/2026-10-21-v3-action-source-observation.md'
+PLAN_SHA='df0cfc0352d9e1df0aedd38f8204d02111108b5a911ea70a298fdd26232b2d69'
+TESTS=Path('/tmp/test_v3_action_source.py')
+CANDIDATE=ROOT/'experiments/candidates/all18_v3.pth'
+BACKUPS=[ROOT/f'experiments/releases/20261020_old3_sym3/agent_p{i}.pth' for i in (0,1)]
+BACKUP_SHA='3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158'
+HELPER=Path('/tmp/exploration_ensemble_eval.py')
+HELPER_SHA='27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e'
+OUT=ROOT/'experiments/analysis/autonomous_20261020/v3_action_source_observation'
+REF=ROOT/'experiments/compare/autonomous_20261020/inference_development2/phase2_reference.csv'
+FLOW=ROOT/'experiments/analysis/autonomous_20261020/post_exploration_point_flow/v3.json'
+WEIGHTS=[ROOT/f'agents/sherlock/weights/agent_p{i}.pth' for i in (0,1)]
+V3_SHA='aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+STOP=datetime(2026,10,21,6,39,50,tzinfo=timezone.utc).timestamp()
+MIRROR=(0,2,1,4,3,5)
+def require(ok,msg):
+ if not ok:raise RuntimeError(msg)
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+class Trace:
+ def __init__(self):self.explore={};self.rule={}
+ def hook(self,stage,uid,before,after):
+  require(stage in ('explore','rule'),'Unknown stage');d=getattr(self,stage);uid=int(uid)
+  require(uid not in d,'Duplicate stage hook');d[uid]=(int(before),int(after))
+ def finish(self,ctx,ids,masks,saps,prev,actions,mirrored,scripted):
+  ids=[int(u) for u in ids];require(set(self.rule)==set(ids) and set(self.explore)<=set(ids),'Missing/extra stage records');require(set(prev)==set(ids),'Final action IDs differ')
+  rows=[]
+  for u in ids:
+   ri,ro=self.rule[u];called=u in self.explore
+   if called:
+    require(scripted,'Unexpected exploration hook');g,e=self.explore[u];require(g!=5 and e==ri,'Broken explore-to-rule chain')
+   else:
+    g=e=ri;require(not scripted or g==5,'Missing non-SAP exploration hook')
+   final=int(prev[u]);chain=[g,e,ro,final]
+   require(all(0<=a<len(masks[u]) and bool(masks[u][a]) for a in chain),'Illegal stage/final action')
+   if final==5:
+    require(saps[u] is not None,'SAP without target');dx,dy=map(int,saps[u][:2]);expected=[5,-dy,-dx] if mirrored else [5,dx,dy]
+   else:expected=[MIRROR[final] if mirrored else final,0,0]
+   require([int(v) for v in actions[u]]==expected,'Final canonical/world action mismatch')
+   rows.append(dict(step=int(ctx['step']),match=int(ctx['match_idx']),uid=u,active=float(ctx['ally_ene'][u])>=0,legal_action_count=sum(bool(v) for v in masks[u]),chain=chain,explore_called=called,
+    greedy_final_equal=g==final,explore_reverted=g!=e and g in (ro,final),rule_reverted=e!=ro and e==final))
+  return rows
+
+def start_noop(actions,mask):
+ require(all(int(v)==0 for row in actions for v in row),'Nonzero match-start noops')
+ return {'env_steps':1,'masked_slots':sum(bool(v) for v in mask)}
+def reconcile_decisions(totals,noops,tracker_unit_steps):
+ require(totals['masked_decisions']+noops['masked_slots']==int(tracker_unit_steps),'Action denominator differs from game tracker')
+
+def summarize(rows):
+ active=[r for r in rows if r['active']];choice=[r for r in active if r['legal_action_count']>=2];chains=Counter(','.join(map(str,r['chain'])) for r in active)
+ return dict(active_decisions=len(active),forced_active_decisions=sum(r['legal_action_count']==1 for r in active),choice_active_decisions=len(choice),choice_greedy_final_equal=sum(r['greedy_final_equal'] for r in choice),choice_by_final_action=dict(Counter(str(r['chain'][3]) for r in choice)),legal_count_chains=dict(sorted(Counter(str(r['legal_action_count'])+'|'+','.join(map(str,r['chain'])) for r in active).items())),negative_masked_decisions=len(rows)-len(active),masked_decisions=len(rows),
+  greedy_final_equal=sum(r['greedy_final_equal'] for r in active),any_stage_change=sum(len(set(r['chain']))>1 for r in active),changes_explore=sum(r['chain'][0]!=r['chain'][1] for r in active),
+  changes_rule=sum(r['chain'][1]!=r['chain'][2] for r in active),changes_late=sum(r['chain'][2]!=r['chain'][3] for r in active),
+  changed_then_final_greedy=sum(r['greedy_final_equal'] and len(set(r['chain']))>1 for r in active),
+  explore_reverted=sum(r['explore_reverted'] for r in active),rule_reverted=sum(r['rule_reverted'] for r in active),
+  by_greedy_action=dict(Counter(str(r['chain'][0]) for r in active)),by_final_action=dict(Counter(str(r['chain'][3]) for r in active)),
+  chains=dict(sorted(chains.items())),negative_chains=dict(sorted(Counter(','.join(map(str,r['chain'])) for r in rows if not r['active']).items())))
+def merge_summaries(items):
+ result={}
+ for item in items:
+  for k,v in item.items():
+   if isinstance(v,dict):
+    out=result.setdefault(k,{})
+    for a,n in v.items():out[a]=out.get(a,0)+n
+   else:result[k]=result.get(k,0)+v
+ return result
+
+def check_result(actual,expected):
+ for k,v in expected.items():
+  if k=='secs':continue
+  require(k in actual,f'Missing result field {k}')
+  try:ok=math.isclose(float(actual[k]),float(v),rel_tol=0,abs_tol=1e-9)
+  except (ValueError,TypeError):ok=str(actual[k])==str(v)
+  require(ok,f'First reproduction mismatch {k}: {actual[k]} vs {v}')
+def references():
+ with REF.open() as f:rows=[r for r in csv.DictReader(f) if 500720<=int(r['seed'])<=500729 and r['opponent']=='solution92']
+ expected={(s,p) for s in range(500720,500730) for p in ('player_0','player_1')};keys=[(int(r['seed']),r['side']) for r in rows]
+ require(len(keys)==20 and set(keys)==expected,'Incomplete reference keys');flow=json.loads(FLOW.read_text());require(flow['complete'],'Incomplete pointflow')
+ fkeys=[(g['seed'],g['side']) for g in flow['games']];require(len(fkeys)==20 and set(fkeys)==expected,'Incomplete pointflow keys')
+ refs=dict(zip(keys,rows));flows={k:g['result'] for k,g in zip(fkeys,flow['games'])}
+ for k in expected:check_result(flows[k],refs[k]);require(refs[k]['steps']=='303' and refs[k]['point_counting_version']=='2','Wrong reference scoring')
+ return refs,flows,flow['config']
+def helper():
+ require(sha(HELPER)==HELPER_SHA,'Runtime helper changed');spec=importlib.util.spec_from_file_location('action_runtime',HELPER);d=importlib.util.module_from_spec(spec);spec.loader.exec_module(d)
+ d.ROOT=ROOT;d.PYTHON=ROOT/'.venv/bin/python';d.DEADLINE=STOP+10;return d
+
+def child():
+ require((OUT/'state.json').is_file(),'No admitted parent state');state=json.loads((OUT/'state.json').read_text())
+ require(state.get('coordinator_pid')==os.getppid() and not state.get('complete'),'Child not owned by active coordinator');require(time.time()<STOP,'Child deadline')
+ d=helper();d.FROZEN_INPUTS=state['baseline']['input_sha256'];require(d.snapshot()==state['baseline'],'Child frozen inputs/source/HEAD changed')
+ refs,flows,cfg=references()
+ import numpy as np
+ sys.path.insert(0,str(ROOT))
+ from scripts.experiment import limit_threads
+ limit_threads()
+ from agents.sherlock.main import Agent_x
+ from scripts.common import make_opponent,play_game
+ from luxai_s3.wrappers import LuxAIS3GymEnv
+ class Observed(Agent_x):
+  def new_game(self,player=None):
+   super().new_game(player);self.source_rows=[];self.start_noops={'env_steps':0,'masked_slots':0};self.trace=None
+  def _explore_action(self,ctx,uid,mask,greedy):
+   a=super()._explore_action(ctx,uid,mask,greedy);self.trace.hook('explore',uid,greedy,a);return a
+  def _rule_override(self,ctx,uid,mask,a):
+   out=super()._rule_override(ctx,uid,mask,a);self.trace.hook('rule',uid,a,out);return out
+  def act(self,step,obs):
+   self.trace=Trace();actions=super().act(step,obs)
+   if int(np.asarray(obs['match_steps']))==0:
+    require(not self.trace.rule and not self.trace.explore and not self._prev_actions,'Unexpected match-start decisions');self.start_noops=merge_summaries([self.start_noops,start_noop(actions,np.asarray(obs['units_mask'])[self.belief.team_id])]);return actions
+   require(not self.training and self._cache is not None and self._cache[0]==int(np.asarray(obs['steps'])),'Invalid post-act cache/mode')
+   ctx,ids,feats,masks,saps=self._cache[1:]
+   self.source_rows.extend(self.trace.finish(ctx,ids,masks,saps,self._prev_actions,actions,self.belief.mirrored,self.cfg.scripted_explore));return actions
+ agent=Observed('player_0',agent_path=str(WEIGHTS[0]),train=False);agent.set_to_eval_mode();agent.autosave_on_terminate=False
+ require(vars(agent.cfg)==cfg,'Effective V3 config differs from reproduced pointflow');require(agent.cfg.scripted_explore and agent.cfg.canonical and agent.cfg.mask_actions,'Unsupported V3 mode')
+ require(agent.cnn_policy is None and not any(getattr(agent.cfg,k) for k in ('ram','fog_sap','contest_sap','smart_sap','idle_sap','sap_geometry','active_targets')),'Unsupported late-target override/config')
+ env=LuxAIS3GymEnv(numpy_output=True);games=[]
+ try:
+  with (OUT/'games.jsonl').open('x') as stream:
+   for seed in range(500720,500730):
+    for side in ('player_0','player_1'):
+     require(time.time()<STOP,'Observation deadline');require(d.snapshot()==state['baseline'],'Frozen inputs/source/HEAD changed')
+     opponent=make_opponent('solution92','player_1' if side=='player_0' else 'player_0');result=play_game(env,agent,opponent,seed,side,train=False);result.update(seed=seed,side=side,opponent='solution92')
+     check_result(result,refs[seed,side]);check_result(result,flows[seed,side])
+     totals=summarize(agent.source_rows);reconcile_decisions(totals,agent.start_noops,result['unit_steps'])
+     record=dict(seed=seed,side=side,result=result,overall=totals,by_match={str(i+1):summarize([r for r in agent.source_rows if r['match']==i]) for i in range(3)},match_start_noops=agent.start_noops)
+     stream.write(json.dumps(record,allow_nan=False)+'\n');stream.flush();games.append(record);print(f'{seed} {side}: exact reproduction',flush=True)
+  require(len(games)==20,'Incomplete games');require(d.snapshot()==state['baseline'],'Final input/source mutation')
+  report=dict(complete=True,config=vars(agent.cfg),games=games,overall=merge_summaries(g['overall'] for g in games),by_match={str(i):merge_summaries(g['by_match'][str(i)] for g in games) for i in range(1,4)},match_start_noops=merge_summaries(g['match_start_noops'] for g in games),limitations='Active denominator: masked units with energy>=0; negative masked units separate. Equality is action agreement, not learned contribution/strength. Late stage means general post-rule processing, not causal pt_sap attribution. Known maps only.')
+  with (OUT/'report.json').open('x') as f:json.dump(report,f,indent=2,allow_nan=False)
+ finally:env.close()
+
+def run(confirmed):
+ require(confirmed,'Root and independent review approval required');require(time.time()+300<STOP,'Less than five minutes until 08:40 cutoff');require(not OUT.exists(),'Exclusive output exists');require(PLAN.is_file(),'Missing approved plan')
+ require(sha(PLAN)==PLAN_SHA,'Approved plan bytes changed');require(all(sha(p)==V3_SHA for p in [*WEIGHTS,CANDIDATE]),'Installed/candidate V3 weights changed');require(all(sha(p)==BACKUP_SHA for p in BACKUPS),'Old backup changed');references();d=helper()
+ def idle():
+  conflicts=[]
+  for line in subprocess.check_output(['ps','-axo','pid=,pgid=,args='],text=True).splitlines():
+   parts=line.strip().split(None,2)
+   if len(parts)!=3:continue
+   pid,pgid,command=parts
+   if int(pid)==os.getpid() or d.CURRENT is not None and int(pgid)==d.CURRENT.pid:continue
+   try:a=shlex.split(command)
+   except ValueError:continue
+   if a and Path(a[0]).name.lower().startswith('python'):conflicts.append(command)
+  require(not conflicts,f'Other Python processes require review: {conflicts}')
+ idle();d.FROZEN_INPUTS={str(p):sha(p) for p in [SCRIPT,TESTS,PLAN,HELPER,REF,FLOW,CANDIDATE,*WEIGHTS,*BACKUPS]};d.BASELINE=d.snapshot();OUT.mkdir(exist_ok=False)
+ state=dict(complete=False,started_at=datetime.now(timezone.utc).isoformat(timespec='seconds'),coordinator_pid=os.getpid(),baseline=d.BASELINE,deadline='2026-10-21 08:40 Europe/Berlin',games_expected=20,job={})
+ def save():
+  p=OUT/'state.tmp';p.write_text(json.dumps(state,indent=2)+'\n');os.replace(p,OUT/'state.json')
+ def check():require(d.snapshot()==d.BASELINE,'Frozen HEAD/inputs/source changed');idle()
+ def interrupted(signum,frame):raise InterruptedError(f'Signal {signum}')
+ for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP):signal.signal(sig,interrupted)
+ save()
+ try:
+  command=[str(ROOT/'.venv/bin/python'),'-B',str(SCRIPT),'--child'];state['job']['command']=command
+  with (OUT/'run.log').open('xb') as log,selectors.DefaultSelector() as selector:
+   d.CURRENT=subprocess.Popen(command,cwd=ROOT,env={**os.environ,**d.THREAD_ENV},start_new_session=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);state['job']['pid']=d.CURRENT.pid;save();selector.register(d.CURRENT.stdout,selectors.EVENT_READ);next_check=time.monotonic()+30
+   while selector.get_map():
+    require(time.time()<STOP,'08:40 hard stop')
+    for key,_ in selector.select(timeout=1):
+     block=os.read(key.fileobj.fileno(),65536)
+     if block:log.write(block);log.flush();sys.stdout.buffer.write(block);sys.stdout.buffer.flush()
+     else:selector.unregister(key.fileobj)
+    if time.monotonic()>=next_check:check();next_check=time.monotonic()+30
+   state['job']['returncode']=d.CURRENT.wait(timeout=max(.1,STOP-time.time()));require(state['job']['returncode']==0,'Observation child failed')
+  check();report=json.loads((OUT/'report.json').read_text());require(report['complete'] and len(report['games'])==20,'Incomplete report')
+  require({(g['seed'],g['side']) for g in report['games']}==set(references()[0]),'Report keys differ')
+  for g in report['games']:check_result(g['result'],references()[0][g['seed'],g['side']]);check_result(g['result'],references()[1][g['seed'],g['side']])
+  state.update(complete=True,final_identity=d.snapshot(),output_sha256={p.name:sha(p) for p in (OUT/'games.jsonl',OUT/'report.json')})
+ except BaseException as e:state['error']=f'{type(e).__name__}: {e}';raise
+ finally:
+  if d.CURRENT is not None:
+   if not state['complete']:d.stop_group(d.CURRENT)
+   d.CURRENT.stdout.close();d.CURRENT=None
+  state['finished_at']=datetime.now(timezone.utc).isoformat(timespec='seconds');save()
+def main():
+ p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True);g.add_argument('--run',action='store_true');g.add_argument('--child',action='store_true');g.add_argument('--self-test',action='store_true');p.add_argument('--confirm-reviewed',action='store_true');a=p.parse_args()
+ if a.self_test:raise SystemExit(subprocess.call([sys.executable,'-B','/tmp/test_v3_action_source.py']))
+ elif a.child:child()
+ else:run(a.confirm_reviewed)
+if __name__=='__main__':main()
