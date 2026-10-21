@@ -17,3 +17,5 @@ Der Pilot endet hier: kein Zielbewerter trainiert, kein Simulations-Ranking, kei
 Die State-Felder wurden nach dem Audit auf abgeschlossen und null verbleibende Spiele gesetzt; die im Audit genannten alten Statusfelder waren Startmetadaten. Historische Quell-Hashes bleiben an den eingefrorenen Commit gebunden, auch wenn später auf dem Arbeitszweig weitergearbeitet wird.
 
 **Für Mahmoud:** Nach dem negativen Paar-Koordinator (396 neue Spiele einschließlich Diagnosen) sind damit insgesamt 404 neue Spiele dieser V4-Arbeit abgeschlossen. Noch kein nachweislich stärkerer V4 und kein neuer trainierter Kandidat. Die neu bereitgestellten originalen CNN3-Checkpoints sind separat verfügbar und per vollständigem SHA-256 geprüft. Ein begrenzter Fortsetzungsversuch wird getrennt vorab festgelegt; er ist kein Ergebnis dieses Zielpiloten.
+
+Die ausführbaren Probequellen gehören zum eingefrorenen Entwicklungszweig, nicht zum unveränderten V3-Produktionscode in main. Zur Wiederholung diesen Commit in einer separaten Arbeitskopie verwenden; main enthält die Übergabe und Originaldaten.

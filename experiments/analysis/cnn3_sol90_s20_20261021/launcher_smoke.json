@@ -1,0 +1,29 @@
+[
+  {
+    "case": "success",
+    "launcher_exit": 0,
+    "child_exit": 0,
+    "seconds": 0.05759141698945314,
+    "process_group_gone": true,
+    "verified_inputs_after": true,
+    "error": null
+  },
+  {
+    "case": "failure",
+    "launcher_exit": 1,
+    "child_exit": 3,
+    "seconds": 2.1867533750191797,
+    "process_group_gone": true,
+    "verified_inputs_after": false,
+    "error": "AssertionError('Job failed; inspect /private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/sherlock-launcher-smoke-6nquw_jk/experiments/analysis/cnn3_sol90_s20_20261021/failure.log')"
+  },
+  {
+    "case": "timeout",
+    "launcher_exit": 1,
+    "child_exit": -15,
+    "seconds": 1.085628959001042,
+    "process_group_gone": true,
+    "verified_inputs_after": false,
+    "error": "AssertionError('Job deadline reached')"
+  }
+]

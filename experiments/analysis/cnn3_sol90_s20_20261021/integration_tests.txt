@@ -1,0 +1,4 @@
+Root integration check after four-line Torch seeding fix, 21 October 2026
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q
+489 passed, 14 subtests passed in 82.30s (0:01:22); exit 0
+No repeat full suite planned without further source changes.
