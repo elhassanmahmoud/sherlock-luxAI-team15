@@ -548,8 +548,11 @@ def confirmation(all_pairs, study):
     cfg = study.read_json(Path(state['arms']['47']['early']['run']) / 'final_identity.json')['config']
     # Different historical learning configuration is legitimate for V3.
     base_cfg = dict(cfg, gamma=.98)
-    base = dict(cfg=base_cfg, feature_dim=79, n_actions=6, q={'w': torch.tensor([0.])},
-                ensemble=[{'w': torch.tensor([float(i)])} for i in range(1, 18)])
+    def network(index):
+        # Inert audit/build fixture: retain its identity marker and real input width.
+        return {'w': torch.tensor([float(index)]), 'body.0.weight': torch.zeros(1, 79)}
+    base = dict(cfg=base_cfg, feature_dim=79, n_actions=6, q=network(0),
+                ensemble=[network(i) for i in range(1, 18)])
     v3 = Path(state['root']) / 'experiments/candidates/all18_v3.pth'
     v3.parent.mkdir(parents=True)
     torch.save(base, v3)
@@ -557,7 +560,7 @@ def confirmation(all_pairs, study):
     for index, seed in enumerate((47, 48, 49)):
         for arm in ('control', 'early'):
             run = Path(state['arms'][str(seed)][arm]['run'])
-            q = {'w': torch.tensor([float(18 + index)])}
+            q = network(18 + index)
             checkpoint = dict(cfg=cfg, feature_dim=79, n_actions=6, q=q, target_q=q,
                               env_steps=909000, learn_steps=2999)
             torch.save(checkpoint, run / 'weights/agent.pth')

@@ -4,6 +4,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 21.10.2026, 20:23 Berlin – Codex: ältere Ensemble-Testdaten an strikte Ladeprüfung angepasst
+
+Nach Roots Integrationslauf zwei Testverträge korrigiert: Der Kandidatenrunner-Test verlangt jetzt die frühe Ausnahme bei falscher Eingabebreite und prüft weiterhin unabhängig Tensor-/Config-/Architekturabweichungen. Die inerten Curriculum-Prüfnetze erhalten einen Tensor mit der deklarierten Eingabebreite; sämtliche Herkunfts- und Gate-Prüfungen bleiben bestehen. **2 gezielt reproduzierte Fehler vor der Anpassung, danach 98 Tests aus beiden betroffenen Dateien bestanden** (44,30 s). [Nachweis](ENSEMBLE_DIMENSIONEN_20261021.md). Nur Tests und Dokumentation geändert, Rechenplatz freigegeben; erneute vollständige Integrationsprüfung durch Root offen.
+
 ## 21.10.2026, 20:15 Berlin – Codex: Ensemble-Dimensionen gegen stillen Netzverlust abgesichert
 
 [Korrektur und Prüfnachweis](ENSEMBLE_DIMENSIONEN_20261021.md): Beim Erweitern eines gespeicherten homogenen Ensembles blieb bisher eine zu kurze Dimensionsliste bestehen; der Loader ließ dadurch Netze aus. Der Builder schreibt jetzt immer alle Dimensionen. Gemeinsame Prüfung von Listenlänge, ganzzahligen positiven Grenzen und tatsächlichen Tensorbreiten weist fehlerhafte Checkpoints ab. Fehlende/`None`/leere Altformat-Metadaten und gültige 101/79-Ensembles bleiben unterstützt.

@@ -45,3 +45,25 @@ Persistenztest enthält zwei kurze Engine-Testspiele mit Lernschritten.
 Keine Änderung an Aktionsregeln, Konfiguration, Reward, Trainingscode oder
 Abgabegewichten; kein neuer Stärkevergleich. Die vollständige Testsuite und der
 unabhängige abschließende Review sind nach Integration durch Root noch offen.
+
+## Nachtrag: bestehende Testverträge nach Integration angepasst
+
+Roots erster Gesamtlauf deckte zwei ältere Testannahmen auf. Der Kandidatenrunner-
+Test erwartete noch einen zufällig initialisierten Ersatz bei falscher
+`feature_dim`; er verlangt jetzt die frühe Ausnahme. Die unabhängigen
+Probe-Prüfungen gegen veränderte Tensoren, falsche Architektur und abweichende
+Konfiguration bleiben ausdrücklich enthalten. Die inerten 21-Netz-Prüfdaten der
+Curriculumstudie enthalten jetzt zusätzlich `body.0.weight` mit Eingabebreite 79.
+Ihre bisherigen Identitätsmarker, Herkunfts-, Sperr- und Gate-Prüfungen bleiben
+unverändert. Produktionsvalidator und Modellcode wurden nicht gelockert.
+
+Vor den Testanpassungen reproduzierten die zwei gezielt ausgewählten Fälle
+**2 Fehler in 4,34 s**. Danach bestanden beide vollständigen betroffenen Dateien:
+
+```text
+python -m pytest -q tests/test_candidate_runner.py tests/test_early_curriculum_study.py
+98 passed in 44.30s
+```
+
+Dieser Nachtrag enthält nur Test- und Dokumentationsänderungen. Die erneute
+vollständige Prüfung des zusammengeführten Stands bleibt bei Root.
