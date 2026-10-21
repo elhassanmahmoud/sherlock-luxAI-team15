@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 21.10.2026 – Codex: neue V4-Strategie nach ausbleibendem Zusatzgewinn
+
+Auf Moayeds erneuten Planungswunsch: [V4-Strategie](V4_STRATEGIE_20261021.md). Zwei unabhängige, ausschließlich lesende Reviews prüfen Entscheidungsarchitektur und Lernwege. Priorität ist eine kleine gemeinsame Auswahl von V3-Aktionsvorschlägen für interagierende Schiffe; zunächst Bewegung/STAY, keine neue Trainingsserie. Erst ein positiver Entwicklungsvergleich rechtfertigt eine Bestätigung auf neuen Karten oder einen kleinen lernenden Bewerter. Ziel bleibt 100 % auf einem vorher festgelegten Testsatz, ohne Garantie für alle Karten. Bereits vorhandene, nicht qualifizierte V4-Dateien bleiben getrennt.
+
+Begründung aus Code und vorhandenen Daten: eindeutige strategische Ziele werden bereits verteilt, die tatsächlichen Aktionen aber weitgehend pro Einheit gewählt. Das ist eine neue Hypothese, noch kein nachgewiesener Engpass. CNN/PPO übernehmen ebenfalls die sechs Aktionsklassen und lösen die gemeinsame Planung nicht automatisch. Vorhandene Verlusttraces enthalten nicht alle legalen Modellinputs; keine versteckten Zustandsdaten für Lernmerkmale benutzen.
+
+Nur Strategie und Übergabe geändert; Quellenstellen, historische Zahlen und relative Links geprüft. Kein Agentencode, keine Gewichte, keine neuen Spiele oder Trainings in dieser Planung. Letzter aktiver Versuch bleibt der abgeschlossene Gegnerenergie-Vergleich unten. Die zwischenzeitlichen automatischen Git-Abgleiche waren keine kontinuierliche Entwicklungsarbeit; dieser Stillstand wurde Moayed ausdrücklich mitgeteilt. Nächster konkreter Liefergegenstand: begrenzter Koordinationsprototyp samt vollständigem Vergleich. Die bisherige V3 bleibt Abgabe.
+
 
 
 
