@@ -1,0 +1,19 @@
+[01:34] Start v5B (experiments/ensembles/v5B_v3.pth, SHA-256 2c213ca85c8c6a53)
+V5_v5B_3820.csv: default: 0.998 (400 Spiele), solution92: 0.805 (400 Spiele) in 293s
+V5_v5B_3820                  default       200    400  0.998  0.993  +0.005  [+0.000; +0.013]
+V5_v5B_3820                  solution92    200    400  0.805  0.767  +0.037  [-0.003; +0.077]
+GATE Auswahl: Solution_92 0.8050 vs 0.7675 (Δ +3.75 pp, Ziel >= +3), default 0.9975 (Ziel >= 0,99) -> BESTANDEN
+[01:39] Auswahlhuerde bestanden -> frische Bestaetigung
+V5_v3_3420.csv: default: 0.998 (400 Spiele), solution92: 0.710 (400 Spiele) in 393s
+V5_v5B_3420.csv: default: 0.998 (400 Spiele), solution92: 0.757 (400 Spiele) in 411s
+V5_v5B_direct_3620.csv: self:experiments/ensembles/all18_v3.pth: 0.620 (400 Spiele) in 227s
+V5_v5B_3420                  default       200    400  0.998  0.998  +0.000  [+0.000; +0.000]
+V5_v5B_3420                  solution92    200    400  0.757  0.710  +0.048  [+0.010; +0.083]
+GATE Bestaetigung: Solution_92 0.7575 vs V3 0.7100, Δ +4.75 pp [+1.00; +8.25]; default 0.9975 (Δ +0.00); direkt 0.6200 [0.5650; 0.6725] aus 400 Spielen
+  FAIL Solution_92 Δ >= +5 pp
+  OK   Solution_92 untere 95%-Grenze > 0
+  OK   default >= 99 %
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 0,5
+GATE Bestaetigung: NICHT BESTANDEN
+[01:57] Ende v5B

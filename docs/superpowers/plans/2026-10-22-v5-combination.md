@@ -52,3 +52,20 @@ auf 500720–500749 (60 Spiele) **0 Fehlschätzungen**, sicher bekannt bei Schri
 25/41/47 von 60 Spielen (sonst Annahme 0,5); Nebelabzug 60/60 ab Schritt 202. Zusätzlicher
 Kandidat **E: B + `dodge_auto` (dodge always nur bei geschätztem Streufaktor ≤ 0,5)**, gleiche
 Auswahlregel wie A–D. Keine weiteren Kandidaten nach Sichtung der Ergebnisse.
+
+## Ergebnis (22.10.2026, 01:57)
+
+Auswahl auf hard150/easy60: B (`art_sap` 3 + `nebula_avoid` 25) bester Kandidat (≈ +5,8 gesamt;
+A +3,1, C +4,3, D +4,5, E +4,8). Netze: `hard24` verfehlte seine eigene Hürde (+2,5) → V3-Netze.
+Kandidatdatei `v5B_v3.pth` (SHA-256 `2c213ca8…cfd5`): 18 V3-Netze bitgleich, nur Schalter.
+
+- Zufallsblock 503820–504019: Solution_92 80,5 % statt 76,75 % (Δ +3,75 [−0,3; +7,7]), default
+  99,75 % → Auswahlhürde bestanden.
+- Frische Bestätigung 503420–503619: **Solution_92 75,75 % statt V3 71,0 %, Δ +4,75 pp
+  [+1,00; +8,25]**; default 99,75 % (Δ 0); **direkt gegen V3 62,0 % [56,5; 67,25]** (503620–503819).
+- Kurs-Runner (8 Spiele): bestanden, Median 5 ms je Aktion.
+- **Nicht bestanden: Δ ≥ +5 pp um 0,25 pp verfehlt** (alle anderen vier Kriterien erfüllt).
+  Deshalb keine automatische Übernahme; die Hürde wird nicht nachträglich geändert.
+  Entscheidungsvorlage für Mahmoud/Moayed: V5-B ist auf frischen Karten signifikant besser
+  (untere Grenze > 0, direkt 62 %), erreicht aber nicht die vorab verlangte Mindestgröße.
+  Die Blöcke 503420–503819 sind jetzt verbraucht.
