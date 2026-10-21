@@ -150,6 +150,7 @@ class Agent_x:
         self._enemy_prev: dict[int, tuple[int, int]] = {}
         self._cache: Optional[tuple] = None
         self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
+        self._searcher: Optional[tuple] = None  # (match_idx, uid, Ziel) fuer cfg.relic_search
         from .param_est import ParamEstimator
         self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
@@ -218,7 +219,8 @@ class Agent_x:
         return self._cache[1:]
 
     def act(self, step: int, obs) -> np.ndarray:
-        use_est = (self.cfg.nebula_avoid or self.cfg.dodge_auto) and not self.training
+        use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est)
+                   and not self.training)
         if use_est:
             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
         actions = self._act(step, obs)
@@ -479,7 +481,7 @@ class Agent_x:
 
     def _dropoff(self) -> float:
         """Sap-Streufaktor: Schaetzung aus param_est (22.10.2026), sonst die alte Annahme 0,5."""
-        if self.cfg.dodge_auto and not self.training:
+        if (self.cfg.dodge_auto or self.cfg.sap_dropoff_est) and not self.training:
             return self.param_est.dropoff(default=SAP_DROPOFF_ASSUMED)
         return SAP_DROPOFF_ASSUMED
 
@@ -641,6 +643,11 @@ class Agent_x:
                     here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
                     if here.any() and float(ee[here].sum()) >= e - ctx["move_cost"]:
                         mask[d] = False
+        if self.cfg.stack_guard and not self.training:
+            for d in range(1, 5):
+                tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                if mask[d] and self.belief.point_tiles[tx, ty] and ctx["ally_count"][tx, ty] > 0:
+                    mask[d] = False  # 22.10.2026: nicht auf ein schon eigenes Punkte-Tile stapeln
         neb = self._harmful_nebula()
         if neb:
             for d in range(1, 5):
@@ -665,6 +672,8 @@ class Agent_x:
             return None
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         R = int(ctx["sap_range"])
+        # 22.10.2026: cfg.sap_dropoff_est -> geschaetzter Streufaktor statt fester Annahme 0,5
+        drop = self._dropoff() if self.cfg.sap_dropoff_est else SAP_DROPOFF_ASSUMED
         in_range = (np.abs(ec[:, 0] - x) <= R) & (np.abs(ec[:, 1] - y) <= R)
         if not in_range.any():
             return None
@@ -675,7 +684,7 @@ class Agent_x:
             cheb = np.maximum(np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty))
             direct = cheb == 0
             splash = cheb == 1
-            score = float(energies[direct].sum() + SAP_DROPOFF_ASSUMED * energies[splash].sum())
+            score = float(energies[direct].sum() + drop * energies[splash].sum())
             if self.cfg.sap_pt_first and self.belief.point_tiles[tx, ty]:
                 score += 1000.0  # 20.10.2026: Gegner auf Punkte-Tiles zuerst (sie punkten)
             if self.cfg.sap_kill_first and float(energies[direct].sum()) < float(ctx["sap_cost"]):

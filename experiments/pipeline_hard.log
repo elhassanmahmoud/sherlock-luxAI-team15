@@ -1,0 +1,23 @@
+[22:46] Start: Referenzen V3 und Kontrolle zuerst (haengen nicht vom Training ab)
+P21_v3_3820.csv: default: 0.993 (400 Spiele), solution92: 0.767 (400 Spiele) in 797s
+P21_v3nets6_3820.csv: default: 0.998 (400 Spiele), solution92: 0.748 (400 Spiele) in 680s
+[23:11] warte auf 6 Trainingslaeufe
+[01:20] Training fertig
+experiments/ensembles/hard6.pth: 6 Netze
+experiments/ensembles/hard24.pth: 24 Netze
+b21af74359a42d6f4f20de7237aadc96c558fce350153cd75b3f7255f8ce5a34  experiments/ensembles/hard6.pth
+8184e397ca1719845bf870b3cbcd84bbccaaebb4eb2f02b1a419295756629062  experiments/ensembles/hard24.pth
+aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935  agents/sherlock/weights/agent_p0.pth
+P21_hard6_3820.csv: default: 0.993 (400 Spiele), solution92: 0.705 (400 Spiele) in 452s
+P21_hard24_3820.csv: default: 0.993 (400 Spiele), solution92: 0.792 (400 Spiele) in 339s
+[01:34] Vergleich gegen V3
+P21_v3nets6_3820             default       200    400  0.998  0.993  +0.005  [+0.000; +0.015]
+P21_v3nets6_3820             solution92    200    400  0.748  0.767  -0.020  [-0.068; +0.028]
+P21_hard6_3820               default       200    400  0.993  0.993  +0.000  [-0.015; +0.015]
+P21_hard6_3820               solution92    200    400  0.705  0.767  -0.062  [-0.110; -0.015]
+P21_hard24_3820              default       200    400  0.993  0.993  +0.000  [-0.007; +0.007]
+P21_hard24_3820              solution92    200    400  0.792  0.767  +0.025  [-0.015; +0.065]
+[01:34] Methodenfrage: hard6 gegen Kontrolle v3nets6
+P21_hard6_3820               default       200    400  0.993  0.998  -0.005  [-0.018; +0.005]
+P21_hard6_3820               solution92    200    400  0.705  0.748  -0.043  [-0.092; +0.008]
+[01:34] Ende

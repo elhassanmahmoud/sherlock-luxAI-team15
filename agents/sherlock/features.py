@@ -285,6 +285,62 @@ def _explore_quota(belief, unit_ids, unit_pos, out: dict, W: int, H: int, quota:
     return out
 
 
+def relic_search(agent, belief, unit_ids, unit_pos, unit_ene, assigned: dict, W: int, H: int) -> dict:
+    """cfg.relic_search (22.10.2026): in Match 2/3 sucht genau EIN fester Sucher das neue
+    Relic-Paar, solange es fehlen kann (bekannte Paare < Matchindex + 1, bis relic_search_until).
+    Solution_92 durchsucht seine Haelfte in jedem Match erneut; bei uns hat in spaeten Matches
+    jede Unit ein bekanntes Ziel, niemand sucht. Anders als explore_quota (Auswahl jeden Step neu,
+    -8 pp) bleiben Sucher und Ziel fest, bis das Ziel gesehen wurde. Ziel: naechstes Tile der
+    eigenen Haelfte, das seit relic_search_stale Steps nicht gesehen wurde (je 4x4-Block eins);
+    Spiegelung deckt die andere Haelfte mit ab. Nie eine Unit auf einem Punkte-Tile oder mit
+    eigenem Punkte-Tile als Ziel."""
+    cfg = agent.cfg
+    m, ms = belief.match_idx, belief.match_step
+    state = getattr(agent, "_searcher", None)
+    if state is not None and state[0] != m:
+        state = None
+    if m < 1 or ms > cfg.relic_search_until or belief.known_pairs() >= m + 1:
+        agent._searcher = None
+        return assigned
+    pos = {int(u): (int(p[0]), int(p[1])) for u, p in zip(unit_ids, unit_pos)}
+    own = lambda t: t[0] + t[1] <= W - 1  # noqa: E731
+    uid, goal = (state[1], state[2]) if state is not None else (None, None)
+    if uid is not None and (uid not in pos or belief.point_tiles[pos[uid]] or unit_ene[uid] < 0):
+        uid, goal = None, None
+    if uid is None:
+        best = None
+        for u, p in pos.items():
+            if belief.point_tiles[p] or unit_ene[u] < 0:
+                continue
+            t = assigned.get(u)
+            if t is not None and belief.point_tiles[t] and own(t):
+                continue
+            rank = 0 if t is None or not (belief.point_tiles[t] or belief.candidate[t]) else (
+                1 if belief.point_tiles[t] else 2)
+            key = (rank, -float(unit_ene[u]), u)
+            if best is None or key < best[0]:
+                best = (key, u)
+        if best is None:
+            agent._searcher = None
+            return assigned
+        uid = best[1]
+    xs, ys = np.indices((W, H))
+    stale = belief.last_seen < ms - cfg.relic_search_stale
+    if goal is None or not stale[goal]:
+        goals = np.argwhere((xs + ys <= W - 1) & belief.passable & stale)
+        if len(goals) == 0:
+            agent._searcher = None
+            return assigned
+        goals = grid_targets(goals.astype(np.int32), 4)
+        x, y = pos[uid]
+        k = int(np.argmin(np.abs(goals[:, 0] - x) + np.abs(goals[:, 1] - y)))
+        goal = (int(goals[k, 0]), int(goals[k, 1]))
+    agent._searcher = (m, uid, goal)
+    out = dict(assigned)
+    out[uid] = goal
+    return out
+
+
 def _home_penalty(cfg, match_idx: int) -> float:
     """Kosten fuer Ziele in der Gegnerhaelfte (home_first/home_penalty/home_last_only)."""
     if cfg.home_last_only and match_idx < N_MATCHES - 1:
@@ -363,6 +419,10 @@ def make_context(agent, obs, belief=None) -> dict:
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
+    if agent.cfg.relic_search and not agent.training and belief is agent.belief:
+        assigned = relic_search(agent, belief, target_ids,
+                                ally_pos[target_ids] if len(target_ids) else np.zeros((0, 2), np.int32),
+                                ally_ene, assigned, W, H)
 
     return dict(
         belief=belief, W=W, H=H,

@@ -333,3 +333,46 @@ def test_dodge_auto_follows_estimated_dropoff():
         a.belief.point_tiles[7, 6] = True
         obs = make_obs(10, 10, units=[(5, 5, 200), (6, 7, 200)], enemies=[(7, 6, 80)], relics=[(8, 8)])
         assert (int(a.act(10, obs)[1, 0]) != geo.STAY) == want_move, drop
+
+
+def test_stack_guard_masks_move_onto_own_point_tile():
+    for flag, ok in ((False, True), (True, False)):
+        a = _stay_agent(stack_guard=flag)
+        a.belief.point_tiles[6, 5] = True
+        a.act(10, make_obs(10, 10, units=[(5, 5, 100), (6, 5, 100)], relics=[(12, 12)]))
+        assert bool(a._prev_masks[0][geo.RIGHT]) == ok
+
+
+def test_sap_dropoff_est_changes_target_scoring():
+    import numpy as np
+    from agents.sherlock.param_est import DROPOFFS
+    # Zentrum A (7,6): 60 Energie, Nachbarn 2 x 50; Zentrum B (3,5): 100 Energie allein
+    enemies = [(7, 6, 60), (8, 6, 50), (7, 7, 50), (3, 5, 100)]
+    for drop, want in ((1.0, (2, 1)), (0.25, (-2, 0))):
+        a = _stay_agent(pt_sap=True, sap_dropoff_est=True)
+        a.param_est.log_drop = np.array([0.0 if d == drop else -50.0 for d in DROPOFFS])
+        a.param_est.n_drop = 5
+        a.belief.point_tiles[5, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=enemies, relics=[(12, 12)]))
+        assert int(act[0, 0]) == geo.SAP and (int(act[0, 1]), int(act[0, 2])) == want, drop
+
+
+def test_relic_search_assigns_one_sticky_searcher_in_later_matches():
+    a = _stay_agent(relic_search=True)
+    a.belief.point_tiles[3, 3] = True
+    # Match 2 (match_idx 1), nur ein Relic-Paar bekannt -> ein Sucher
+    obs = make_obs(110, 9, units=[(3, 3, 100), (1, 1, 120), (2, 0, 80)], relics=[(4, 4)],
+                   sensor_all=False)
+    a.act(110, obs)
+    st = a._searcher
+    assert st is not None and st[0] == 1 and st[1] == 1   # hoechste Energie, nicht auf Punkte-Tile
+    goal = st[2]
+    assert goal[0] + goal[1] <= 23
+    assert a._prev_ctx["assigned"][1] == goal
+    a.act(111, make_obs(111, 10, units=[(3, 3, 100), (1, 2, 118), (2, 0, 80)], relics=[(4, 4)],
+                        sensor_all=False))
+    assert a._searcher[1] == 1                            # bleibt derselbe Sucher
+    # Match 1 (match_idx 0): keine Suche
+    b = _stay_agent(relic_search=True)
+    b.act(10, make_obs(10, 10, units=[(1, 1, 120)], relics=[(4, 4)], sensor_all=False))
+    assert b._searcher is None

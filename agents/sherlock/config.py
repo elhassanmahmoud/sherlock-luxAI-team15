@@ -149,6 +149,17 @@ class AgentConfig:
     nebula_avoid_min: int = 25
     """Ab diesem geschaetzten Abzug greift nebula_avoid. 22.10.2026: bei 5 auf 60 Karten mit
     Nebelabzug 5 −16,7 pp (Units erreichen ihre Ziele nicht mehr), bei 25 auf 100 Karten +5,0 pp."""
+    sap_dropoff_est: bool = False
+    """True (22.10.2026, nur Auswertung): Sap-Zielwertung mit dem geschaetzten Streufaktor
+    (param_est) statt der festen Annahme 0,5."""
+    stack_guard: bool = False
+    """True (22.10.2026, nur Auswertung): keine Zuege auf ein Punkte-Tile, auf dem schon eine
+    eigene Unit steht (Stapeln bringt keinen Punkt und verdoppelt Sap-Schaden)."""
+    relic_search: bool = False
+    """True (22.10.2026, nur Auswertung): ein fester Sucher sucht in Match 2/3 das neue Relic-Paar
+    (features.relic_search), solange es fehlen kann."""
+    relic_search_until: int = 75
+    relic_search_stale: int = 25
     siege: bool = False
     """True (21.10.2026, nur Auswertung): Units, deren Ziel ein vom Gegner (sichtbar oder
     wahrscheinlich im Nebel) besetztes Punkte-Tile ist, laufen nicht hinein, sondern zur
