@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Gegnerenergie-Tiebreak auf getrenntem Zweig geprüft
+
+Commit `1b3f6a7` auf `improvement/enemy-tie-20261021`: acht Produktionszeilen ergänzen den ausgeschalteten Schalter und seine Auswahl. [Umsetzung](../experiments/analysis/continuous_20261021/representation_probe/implementation.md), [unabhängiger Review](../experiments/analysis/continuous_20261021/representation_probe/code_review.md) ohne wichtigen Befund. 34 leichte Tests bestanden; im selben Prozess keine Torch-/JAX-/Engineimporte. Root hat die505 Bewegungen und beiden Konvergenzereignisse separat aus Rohaktionen reproduziert ([Zählprüfung](../experiments/analysis/continuous_20261021/representation_probe/root_counts.json)).
+
+Code noch nicht in main integriert: vollständige Modellintegration und tatsächliche Spiele warten auf das Ende der laufenden Curriculumstudie. Danach einmal passende Integrationstests, Quellenfreeze und der festgelegte Einzelvergleich. Kein Wirksamkeitsnachweis und keine Gewichtsänderung. Der Zweig erlaubt Mahmoud/Claude bereits die Vorbereitung nachzulesen; keine parallelen Modelljobs auf diesem Rechner starten.
+
 ## 21.10.2026 – Codex: ein separater Gegnermerkmal-Versuch vorbereitet
 
 Der [Repräsentationscheck](../experiments/analysis/continuous_20261021/representation_probe/README.md) bestätigt eine konkrete Informationslücke: nur einer von mehreren gleich nahen sichtbaren Gegnern wird einzeln beschrieben. Zwei nominelle Konvergenzen in den fest ausgewählten84Übergängen zeigen den Kontext, keine Kausalität oder Verbesserung. Root lässt deshalb genau eine standardmäßig ausgeschaltete Auswahlvariante vorbereiten: bei gleicher Entfernung höhere Gegnerenergie bevorzugen.
