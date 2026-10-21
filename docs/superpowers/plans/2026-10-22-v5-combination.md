@@ -45,7 +45,7 @@ Einmalig, genau ein Kandidat: 503420–503619 (Kandidat und V3, beide Gegner, je
 Karten-Bootstrap, 5000 Ziehungen, Seed 0). Vor einer Übernahme V3 sichern, Kurs-Runner-Prüfung,
 Testsuite und Rücksprache mit Mahmoud und Moayed – die Gewichte ersetze ich nicht allein über Nacht.
 
-## Nachtrag vor dem Spielen von E (22.10.2026, ca. 01:00)
+## Nachtrag vor dem Spielen von E (22.10.2026, ca. 00:38)
 
 Die Online-Schätzung des Sap-Streufaktors (`agents/sherlock/param_est.py`) ist jetzt verlässlich:
 auf 500720–500749 (60 Spiele) **0 Fehlschätzungen**, sicher bekannt bei Schritt 101/202/300 in
