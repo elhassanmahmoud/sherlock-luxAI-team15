@@ -196,8 +196,24 @@ def remaining_work(state):
     complete = lambda label: state['phases'].get(label, {}).get('status') == 'complete'
     training = sum(not complete(f'train_{s}_{a}') for s in SEEDS for a in ARMS)
     evaluation = sum(not complete(f'eval_{s}_{a}') for s in SEEDS for a in ARMS)
+    def rejected(label):
+        phase = state['phases'].get(label, {})
+        if not complete(label) or phase.get('audit', {}).get('passed') is not False:
+            return False
+        # Incomplete/unbound decisions may never release future budget.
+        require(phase.get('outputs') and hashes(phase['outputs']) == phase['outputs'], 'Unverified negative gate')
+        path = Path(state['analysis']) / f'{label}.json'
+        require(str(path) in phase['outputs'] and read_json(path) == phase['audit'], 'Unbound negative gate')
+        return True
+    method_no = rejected('method')
+    development_no = rejected('development')
+    fresh_no = rejected('fresh')
+    ensemble = 0 if method_no else sum(240 for who in ('v3', 'candidate') if not complete(f'development_{who}'))
+    if not (method_no or development_no):
+        ensemble += sum(800 for who in ('v3', 'candidate') if not complete(f'fresh_{who}'))
+    direct = 0 if method_no or development_no or fresh_no or complete('direct') else 400
     return dict(training=training, validation_games=training * 160, single_games=evaluation * 240,
-                ensemble_games=2080, direct_games=400)
+                ensemble_games=ensemble, direct_games=direct)
 
 
 def admit_phase(state, remaining, now):
@@ -446,7 +462,7 @@ def check_resources():
     """Admission is exclusive across visible model jobs, not just this runner."""
     text = subprocess.check_output(['ps', '-axo', 'pid=,args='], text=True)
     pattern = re.compile(r'(?:-m\s+scripts\.|scripts/)(?:experiment|par_eval|train|finetune|evaluate|compare_weights|train_ppo|distill)(?:\s|\.py\b)')
-    audit_pattern = re.compile(r'(?:-m\s+scripts\.|scripts/)early_curriculum_study(?:\.py)?\s+.*--checkpoint-audit(?:\s|$)')
+    audit_pattern = re.compile(r'(?:-m\s+scripts\.|scripts/)early_curriculum_study(?:\.py)?\s+.*(?:--checkpoint-audit|--build-candidate)(?:\s|$)')
     foreign = [line for line in text.splitlines() if pattern.search(line) or audit_pattern.search(line)]
     require(not foreign, 'Another model job is active; resource admission refused')
 
@@ -594,13 +610,261 @@ def run_pairs(state):
         finish_pair(state, seed)
 
 
+def frozen_v3(state):
+    path = Path(state['root']) / 'experiments/candidates/all18_v3.pth'
+    require(str(path) in state['protected'] and digest(path) == state['protected'][str(path)],
+            'Frozen V3 is not a protected input')
+    return path
+
+
+def completed_report(state, label, inputs):
+    """Authenticate a completed report and all of its raw/provenance dependencies."""
+    phase = state['phases'].get(label, {})
+    path = Path(state['analysis']) / f'{label}.json'
+    require(phase.get('status') == 'complete', f'Missing completed {label} phase')
+    require(all(job.get('returncode') == 0 for job in phase.get('jobs', [])), 'Unsuccessful phase job')
+    expected = set(map(str, inputs)) | {str(path)}
+    require(set(phase.get('outputs', {})) == expected, 'Incomplete report hash coverage')
+    require(hashes(expected) == phase['outputs'], 'Report or dependency changed')
+    report = read_json(path)
+    require(report == phase.get('audit'), 'Report/state audit differs')
+    require(report.get('run_id') == state['run_id'] and report.get('source') == state['source'],
+            'Wrong report ownership/source')
+    require(report.get('dependency_hashes') == hashes(inputs), 'Report input provenance differs')
+    return report
+
+
+def report_phase(state, label, inputs, calculate):
+    """Reports are exclusive artifacts; resumed decisions must reproduce exactly."""
+    inputs = sorted(set(map(str, inputs)))
+    path = Path(state['analysis']) / f'{label}.json'
+    before = hashes(inputs)
+    report = dict(calculate(), run_id=state['run_id'], source=state['source'], dependency_hashes=before)
+    require(hashes(inputs) == before, 'Inputs changed during statistical analysis')
+    def audit():
+        with new_output(state, path).open('x') as stream:
+            json.dump(report, stream, indent=2, allow_nan=False)
+        return report, [*inputs, path]
+    run_phase(state, label, lambda phase: None, audit)
+    require(completed_report(state, label, inputs) == report, 'Saved decision does not reproduce')
+    return report
+
+
+def method_inputs(state, *, recheck_pairs=True):
+    """Only complete, freshly audited pairs may feed the method decision."""
+    inputs = set()
+    for seed in SEEDS:
+        phase = state['phases'].get(f'pair_{seed}', {})
+        path = Path(state['analysis']) / f'pair_s{seed}_audit.json'
+        require(phase.get('status') == 'complete' and phase.get('outputs') == hashes([path]),
+                'Missing or changed completed pair audit')
+        # The build child authenticates the parent's completed audit bytes while
+        # registered as active; only the idle supervisor re-runs pair auditing.
+        result = audit_pair(state, seed) if recheck_pairs else read_json(path)
+        require(result == phase.get('audit') == read_json(path), 'Completed pair audit differs')
+        inputs.add(str(path))
+        for arm in ARMS:
+            for kind in ('train', 'eval'):
+                inputs.update(state['phases'][f'{kind}_{seed}_{arm}']['outputs'])
+    return sorted(inputs)
+
+
+def build_fixed_candidate(state, out):
+    """Heavy child-only build: V3 followed by every final early network, in order."""
+    check_inputs(state)
+    out = new_output(state, out)
+    require(str(out) == state['candidate'], 'Wrong candidate output path')
+    report_path = new_output(state, Path(state['analysis']) / 'candidate_identity.json')
+    method = completed_report(state, 'method', method_inputs(state, recheck_pairs=False))
+    require(method.get('passed') is True, 'Method gate has not passed')
+    import torch
+    from agents.sherlock.main import AgentConfig
+    from scripts.build_ensemble import PLAY_KEYS, main as build
+    from scripts.experiment import state_sha256
+    sources = [frozen_v3(state), *(Path(state['arms'][str(seed)]['early']['run']) / 'weights/agent.pth'
+                                for seed in SEEDS)]
+    source_hashes = hashes(sources)
+    checkpoints = [torch.load(path, map_location='cpu', weights_only=False) for path in sources]
+    base, *early = checkpoints
+    require(len(base.get('ensemble', [])) == 17, 'Expected exactly 18 frozen V3 networks')
+    require(all(not c.get('ensemble') for c in early), 'Early sources must be final single networks')
+    require(all(c['cfg'] == early[0]['cfg'] for c in early), 'New training configs differ')
+    for seed, checkpoint in zip(SEEDS, early):
+        identity = read_json(Path(state['arms'][str(seed)]['early']['run']) / 'final_identity.json')
+        require(checkpoint['cfg'] == identity['config'] and state_sha256(checkpoint['q']) == identity['q_sha256'],
+                'Final early source identity differs')
+    for c in early:
+        require(all(c.get(k) == base.get(k) and c.get(k) is not None for k in ('feature_dim', 'n_actions')),
+                'Incompatible feature/action dimensions')
+        require(all(c['cfg'].get(k) == base['cfg'].get(k) for k in PLAY_KEYS), 'Incompatible PLAY_KEYS')
+    networks = [base['q'], *base['ensemble'], *(c['q'] for c in early)]
+    def inspect(networks):
+        signature = {k: (tuple(v.shape), v.dtype) for k, v in networks[0].items()}
+        require(signature, 'Empty q network')
+        identities = []
+        for network in networks:
+            require(set(network) == set(signature), 'Incompatible q tensor keys')
+            for key, tensor in network.items():
+                require(isinstance(tensor, torch.Tensor) and bool(torch.isfinite(tensor).all()), 'Non-finite q tensor')
+                require((tuple(tensor.shape), tensor.dtype) == signature[key], 'Incompatible q tensor dimensions')
+            identities.append(state_sha256(network))
+        require(len(identities) == 21 and len(set(identities)) == 21, 'Expected 21 unique q networks')
+        return identities
+    identities = inspect(networks)
+    effective = AgentConfig.from_dict(base['cfg']).to_dict()
+    require(hashes(sources) == source_hashes, 'Candidate source changed during loading')
+    # Existing builder is run inside this owned child, with no second model process.
+    previous = sys.argv
+    try:
+        sys.argv = ['build_ensemble', '--out', str(out), *map(str, sources)]
+        build()
+    finally:
+        sys.argv = previous
+    candidate = torch.load(out, map_location='cpu', weights_only=False)
+    require(inspect([candidate['q'], *candidate.get('ensemble', [])]) == identities,
+            'Candidate q order/identity differs')
+    require(candidate['cfg'] == base['cfg'] and AgentConfig.from_dict(candidate['cfg']).to_dict() == effective,
+            'Effective V3 inference config changed')
+    require(candidate.get('ensemble_sources') == list(map(str, sources)), 'Wrong candidate sources')
+    require(hashes(sources) == source_hashes, 'Candidate source mutated')
+    check_inputs(state)
+    result = dict(run_id=state['run_id'], source=state['source'], sources=list(map(str, sources)),
+                  source_hashes=source_hashes, q_sha256=identities, network_count=21,
+                  config=base['cfg'], effective_config=effective, file_sha256=digest(out))
+    with report_path.open('x') as stream:
+        json.dump(result, stream, indent=2, allow_nan=False)
+    return result
+
+
+def evaluation_command(weights, first, n, opponents, out):
+    require(Path(weights).is_absolute() and Path(out).is_absolute(), 'Evaluation paths must be absolute')
+    return [sys.executable, '-B', '-m', 'scripts.par_eval', '--weights', str(weights),
+            '--first', str(first), '--n', str(n), '--workers', '2', '--opponents', opponents, '--out', str(out)]
+
+
+def run_candidate_build(state):
+    path = Path(state['analysis']) / 'candidate_identity.json'
+    inputs = sorted(set(state['phases']['method']['outputs']) | {str(frozen_v3(state))})
+    outputs = [*inputs, state['candidate'], str(path)]
+    before = hashes(inputs)
+    require(all(before[p] == h for p, h in state['phases']['method']['outputs'].items()),
+            'Candidate build input provenance changed')
+    command = [state['python'], '-B', '-m', 'scripts.early_curriculum_study', '--build-candidate', state['state_path']]
+    def execute(phase):
+        new_output(state, state['candidate'])
+        new_output(state, path)
+        run_process(state, phase, command)
+    def audit():
+        require(hashes(inputs) == before, 'Candidate build inputs changed')
+        report = read_json(path)
+        require(report['file_sha256'] == digest(state['candidate']), 'Candidate hash differs')
+        return report, outputs
+    run_phase(state, 'candidate_build', execute, audit)
+    phase = state['phases']['candidate_build']
+    require(phase.get('jobs') and [j.get('argv') for j in phase['jobs']] == [command]
+            and all(j.get('returncode') == 0 for j in phase['jobs']), 'Candidate build job provenance differs')
+    require(set(phase['outputs']) == set(outputs) and hashes(outputs) == phase['outputs'], 'Candidate outputs changed')
+    report = read_json(path)
+    require(report == phase['audit'] and report['source'] == state['source'] and report['run_id'] == state['run_id'],
+            'Candidate report provenance differs')
+    require(report['file_sha256'] == digest(state['candidate']) and report['network_count'] == 21
+            and len(set(report['q_sha256'])) == 21, 'Candidate identity incomplete')
+    expected_sources = [str(frozen_v3(state)), *(str(Path(state['arms'][str(seed)]['early']['run']) / 'weights/agent.pth')
+                                              for seed in SEEDS)]
+    require(report['sources'] == expected_sources and report['source_hashes'] == hashes(expected_sources),
+            'Candidate source changed')
+    return report
+
+
+def run_confirmation_evaluation(state, label, weights, first, n, opponents):
+    from scripts.early_curriculum_analysis import validate_keys as validate
+    require(label in state['comparisons'], 'Unknown confirmation phase')
+    gate = 'fresh' if label == 'direct' else 'development' if label.startswith('fresh_') else 'method'
+    gate_path = str(Path(state['analysis']) / f'{gate}.json')
+    gate_phase = state['phases'].get(gate, {})
+    gate_inputs = set(gate_phase.get('outputs', {})) - {gate_path}
+    require(completed_report(state, gate, gate_inputs).get('passed') is True, 'Predecessor gate has not passed')
+    out = Path(state['comparisons'][label])
+    candidate_phase = state['phases']['candidate_build']
+    inputs = sorted(set(candidate_phase['outputs']) | set(gate_phase['outputs']))
+    before = hashes(inputs)
+    require(all(before[p] == h for phase in (candidate_phase, gate_phase) for p, h in phase['outputs'].items()),
+            'Evaluation input provenance changed')
+    command = evaluation_command(weights, first, n, opponents, out)
+    command[0] = state['python']
+    def execute(phase):
+        new_output(state, out)
+        run_process(state, phase, command)
+    def audit():
+        require(hashes(inputs) == before, 'Evaluation inputs changed during job')
+        rows = read_rows(out)
+        validate(rows, range(500000 + first, 500000 + first + n), opponents.split(','))
+        job = state['phases'][label]['jobs'][0]
+        rate = 'direct_game' if label == 'direct' else 'ensemble_game'
+        state['timings'][rate].append(max(.001, job['finished_at'] - job['started_at']) / len(rows))
+        result = dict(command=command, input_hashes=before, csv_sha256=digest(out), rows=len(rows))
+        return result, [out, *inputs]
+    run_phase(state, label, execute, audit)
+    phase = state['phases'][label]
+    require(set(phase['outputs']) == set([str(out), *inputs]), 'Evaluation hash coverage differs')
+    require([j.get('argv') for j in phase['jobs']] == [command]
+            and all(j.get('returncode') == 0 for j in phase['jobs']), 'Evaluation job provenance differs')
+    require(phase['audit']['command'] == command and phase['audit']['input_hashes'] == hashes(inputs)
+            and phase['audit']['csv_sha256'] == digest(out), 'Evaluation input/output provenance differs')
+    validate(read_rows(out), range(500000 + first, 500000 + first + n), opponents.split(','))
+    return out
+
+
+def run_gated_confirmation(state):
+    from scripts import early_curriculum_analysis as analysis
+    check_inputs(state)
+    require(CURRENT is None and state.get('active') is None, 'Confirmation requires no active child')
+    inputs = method_inputs(state)
+    pairs = {str(s): {a: state['arms'][str(s)][a]['eval'] for a in ARMS} for s in SEEDS}
+    method = report_phase(state, 'method', inputs, lambda: analysis.summarize_method(pairs))
+    state.update(ready_for_technical_review=False, release_ready=False)
+    def finish(status):
+        state.update(status=status, ready_for_technical_review=status == 'ready_for_technical_review', release_ready=False)
+        save_state(state)
+        return state
+    if not method['passed']:
+        return finish('method_rejected')
+    run_candidate_build(state)
+    for stage, first, n in [('development', 720, 60), ('fresh', 11000, 200)]:
+        for which, weights in [('v3', frozen_v3(state)), ('candidate', Path(state['candidate']))]:
+            run_confirmation_evaluation(state, f'{stage}_{which}', weights, first, n, 'default,solution92')
+        candidate, reference = (state['comparisons'][f'{stage}_{which}'] for which in ('candidate', 'v3'))
+        inputs = set().union(*(state['phases'][f'{stage}_{which}']['outputs'] for which in ('candidate', 'v3')))
+        # A fresh decision also binds the preceding development decision.
+        if stage == 'fresh':
+            inputs.update(state['phases']['development']['outputs'])
+        def compare():
+            result = analysis.compare_evaluations(candidate, reference, range(500000 + first, 500000 + first + n))
+            return dict(comparison=result, passed=analysis.candidate_gate(result))
+        report = report_phase(state, stage, inputs, compare)
+        if not report['passed']:
+            return finish(f'{stage}_rejected')
+    opponent = 'self:' + str(frozen_v3(state))
+    out = run_confirmation_evaluation(state, 'direct', Path(state['candidate']), 11200, 200, opponent)
+    # Keep the raw-evaluation phase separate from the statistical direct decision.
+    inputs = set(state['phases']['direct']['outputs']) | set(state['phases']['fresh']['outputs'])
+    result = report_phase(state, 'direct_decision', inputs,
+        lambda: dict(analysis.direct_gate(read_rows(out), expected_opponent=opponent), input_hashes=hashes([out])))
+    return finish('ready_for_technical_review' if result['passed'] else 'direct_rejected')
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id')
     parser.add_argument('--start', action='store_true')
     parser.add_argument('--resume-audited', metavar='ID')
     parser.add_argument('--checkpoint-audit', nargs=3, metavar=('STATE', 'SEED', 'ARM'), help=argparse.SUPPRESS)
+    parser.add_argument('--build-candidate', metavar='STATE', help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
+    if args.build_candidate:
+        state = read_json(args.build_candidate)
+        build_fixed_candidate(state, Path(state['candidate']))
+        return
     if args.checkpoint_audit:
         path, seed, arm = args.checkpoint_audit
         state = read_json(path)
@@ -638,8 +902,7 @@ def main(argv=None):
             # Re-read under the lock: another supervisor may have advanced meanwhile.
             state = resume_study(state['state_path'])
             run_pairs(state)
-            state['status'] = 'pairs_audited'
-            save_state(state)
+            run_gated_confirmation(state)
 
 
 if __name__ == '__main__':

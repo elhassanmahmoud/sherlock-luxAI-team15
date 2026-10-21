@@ -457,6 +457,7 @@ def test_cli_keeps_shared_lock_during_pair_execution(state, study, monkeypatch):
         contender = subprocess.run([sys.executable, '-c', code, st['root']], capture_output=True, text=True)
         assert contender.returncode != 0 and 'resource lock' in contender.stderr
     monkeypatch.setattr(study, 'run_pairs', pairs)
+    monkeypatch.setattr(study, 'run_gated_confirmation', pairs)
     study.main(['--resume-audited', state['run_id']])
 
 
@@ -501,3 +502,304 @@ def test_child_restores_prelaunch_signal_mask(state, study, prior):
         assert signal.pthread_sigmask(signal.SIG_BLOCK, []) == prior
     finally:
         signal.pthread_sigmask(signal.SIG_SETMASK, original)
+
+
+@pytest.fixture
+def all_pairs(pair, study):
+    import shutil
+    for seed in (48, 49):
+        for arm in ('control', 'early'):
+            original = pair['arms']['47'][arm]
+            paths = pair['arms'][str(seed)][arm]
+            run = Path(paths['run'])
+            shutil.copytree(original['run'], run)
+            shutil.copyfile(original['eval'], paths['eval'])
+            rows = list(csv.DictReader((run / 'train.csv').open()))
+            for row in rows:
+                row['seed'] = str(int(row['seed']) + (seed - 47) * 10000)
+            write_csv(run / 'train.csv', rows)
+            manifest = study.read_json(run / 'manifest.json')
+            manifest.update(run_seed=seed, train_seeds=[seed * 10000, seed * 10000 + 1499],
+                            argv=['experiment.py'] + study.training_command(pair, seed, arm)[4:])
+            write_json(run / 'manifest.json', manifest)
+            owner = study.read_json(run / 'study.json')
+            owner['run_seed'] = seed
+            write_json(run / 'study.json', owner)
+            for kind in ('train', 'eval'):
+                outputs = [p for p in run.rglob('*') if p.is_file()] if kind == 'train' else [Path(paths['eval'])]
+                pair['phases'][f'{kind}_{seed}_{arm}'] = dict(status='complete', jobs=[{'returncode': 0}],
+                    outputs=study.hashes(outputs))
+    return pair
+
+
+def set_wins(path, won, study):
+    rows = study.read_rows(path)
+    for row in rows:
+        row.update(result=str(int(won)), game_win=str(int(won)),
+                   our_wins='2' if won else '1', opp_wins='1' if won else '2')
+    write_csv(path, rows)
+
+
+@pytest.fixture
+def confirmation(all_pairs, study):
+    import torch
+    from scripts.experiment import state_sha256
+    state = all_pairs
+    cfg = study.read_json(Path(state['arms']['47']['early']['run']) / 'final_identity.json')['config']
+    # Different historical learning configuration is legitimate for V3.
+    base_cfg = dict(cfg, gamma=.98)
+    base = dict(cfg=base_cfg, feature_dim=79, n_actions=6, q={'w': torch.tensor([0.])},
+                ensemble=[{'w': torch.tensor([float(i)])} for i in range(1, 18)])
+    v3 = Path(state['root']) / 'experiments/candidates/all18_v3.pth'
+    v3.parent.mkdir(parents=True)
+    torch.save(base, v3)
+    state['protected'].update(study.hashes([v3]))
+    for index, seed in enumerate((47, 48, 49)):
+        for arm in ('control', 'early'):
+            run = Path(state['arms'][str(seed)][arm]['run'])
+            q = {'w': torch.tensor([float(18 + index)])}
+            checkpoint = dict(cfg=cfg, feature_dim=79, n_actions=6, q=q, target_q=q,
+                              env_steps=909000, learn_steps=2999)
+            torch.save(checkpoint, run / 'weights/agent.pth')
+            identity = study.checkpoint_identity(run / 'weights/agent.pth')
+            write_json(run / 'final_identity.json', identity)
+            set_wins(state['arms'][str(seed)][arm]['eval'], arm == 'early', study)
+            for kind in ('train', 'eval'):
+                phase = state['phases'][f'{kind}_{seed}_{arm}']
+                phase['outputs'] = study.hashes(phase['outputs'])
+        study.finish_pair(state, seed)
+    study.save_state(state)
+    return state
+
+
+def fake_confirmation_jobs(study, monkeypatch, *, fail_stage=None, wrong_direct=False):
+    commands = []
+    def process(state, phase, command):
+        commands.append(command)
+        phase['jobs'].append(dict(argv=command, returncode=0, started_at=1., finished_at=2.))
+        if '--build-candidate' in command:
+            study.build_fixed_candidate(state, Path(state['candidate']))
+            return
+        assert command[command.index('-m') + 1] == 'scripts.par_eval'
+        assert command[command.index('--workers') + 1] == '2'
+        out = Path(command[command.index('--out') + 1])
+        first = int(command[command.index('--first') + 1]) + 500000
+        n = int(command[command.index('--n') + 1])
+        opponents = command[command.index('--opponents') + 1].split(',')
+        candidate = command[command.index('--weights') + 1] == state['candidate']
+        won = candidate and not (fail_stage and out.stem.startswith(fail_stage))
+        if wrong_direct and out.stem == 'direct':
+            opponents = ['self:/wrong/frozen.pth']
+        rows = [game(seed, side, opponent) for seed in range(first, first + n)
+                for side in ('player_0', 'player_1') for opponent in opponents]
+        write_csv(out, rows)
+        set_wins(out, won, study)
+    monkeypatch.setattr(study, 'run_process', process)
+    return commands
+
+
+def test_confirmation_refuses_unverified_pair_before_any_summary(all_pairs, study):
+    with pytest.raises(ValueError, match='pair'):
+        study.run_gated_confirmation(all_pairs)
+    assert not Path(all_pairs['candidate']).exists()
+
+
+def test_negative_method_stops_before_candidate_or_fresh_cards(confirmation, study, monkeypatch):
+    state = confirmation
+    for seed in (47, 48, 49):
+        path = state['arms'][str(seed)]['early']['eval']
+        set_wins(path, False, study)
+        phase = state['phases'][f'eval_{seed}_early']
+        phase['outputs'] = study.hashes(phase['outputs'])
+        # Recreate completed pair reports for this distinct synthetic study.
+        state['phases'].pop(f'pair_{seed}')
+        (Path(state['analysis']) / f'pair_s{seed}_audit.json').unlink()
+        study.finish_pair(state, seed)
+    commands = fake_confirmation_jobs(study, monkeypatch)
+    result = study.run_gated_confirmation(state)
+    assert result['status'] == 'method_rejected'
+    assert not result['ready_for_technical_review'] and not result['release_ready']
+    assert commands == [] and not Path(state['candidate']).exists()
+    assert study.remaining_work(state)['ensemble_games'] == 0
+    assert study.remaining_work(state)['direct_games'] == 0
+
+
+@pytest.mark.parametrize('failed,expected_count,status', [
+    ('development', 2, 'development_rejected'), ('fresh', 4, 'fresh_rejected'),
+    ('direct', 5, 'direct_rejected'), (None, 5, 'ready_for_technical_review')])
+def test_confirmation_obeys_gates_counts_and_exact_seed_labels(confirmation, study, monkeypatch, failed, expected_count, status):
+    commands = fake_confirmation_jobs(study, monkeypatch, fail_stage=failed)
+    result = study.run_gated_confirmation(confirmation)
+    evals = [c for c in commands if '--weights' in c]
+    assert len(evals) == expected_count and result['status'] == status
+    assert result['ready_for_technical_review'] == (failed is None)
+    assert result['release_ready'] is False
+    assert [int(c[c.index('--first') + 1]) for c in evals] == [720, 720, 11000, 11000, 11200][:expected_count]
+    assert [int(c[c.index('--n') + 1]) for c in evals] == [60, 60, 200, 200, 200][:expected_count]
+    if expected_count == 5:
+        assert evals[-1][evals[-1].index('--opponents') + 1] == 'self:' + str(Path(confirmation['root']) / 'experiments/candidates/all18_v3.pth')
+    assert study.remaining_work(confirmation) == dict(training=0, validation_games=0,
+        single_games=0, ensemble_games=0, direct_games=0)
+    before = len(commands)
+    study.run_gated_confirmation(study.resume_study(confirmation['state_path']))
+    assert len(commands) == before  # Resume cannot rerun a finished job or consume more cards.
+
+
+def test_direct_confirmation_rejects_other_self_reference(confirmation, study, monkeypatch):
+    fake_confirmation_jobs(study, monkeypatch, wrong_direct=True)
+    with pytest.raises(ValueError):
+        study.run_gated_confirmation(confirmation)
+    assert confirmation.get('ready_for_technical_review') is not True
+
+
+def test_confirmation_detects_changed_report_and_raw_data_on_resume(confirmation, study, monkeypatch):
+    fake_confirmation_jobs(study, monkeypatch)
+    study.run_gated_confirmation(confirmation)
+    phase = confirmation['phases']['fresh']
+    assert confirmation['comparisons']['fresh_candidate'] in phase['outputs']
+    assert confirmation['comparisons']['fresh_v3'] in phase['outputs']
+    path = Path(confirmation['analysis']) / 'fresh.json'
+    assert str(path) in phase['outputs']
+    path.write_text('{}')
+    with pytest.raises(ValueError, match='changed'):
+        study.resume_study(confirmation['state_path'])
+
+
+def test_all_future_jobs_remain_reserved_until_verified_negative_gate(state, study):
+    state['phases']['development_v3'] = dict(status='complete')
+    assert study.remaining_work(state)['ensemble_games'] == 1840
+    state['phases']['method'] = dict(status='running', audit={'passed': False})
+    assert study.remaining_work(state)['direct_games'] == 400
+
+
+@pytest.mark.parametrize('flag', ['--build-candidate'])
+def test_candidate_child_is_detected_as_heavy_work(study, monkeypatch, flag):
+    monkeypatch.setattr(study.subprocess, 'check_output', lambda *a, **k:
+        f'345 /python -B -m scripts.early_curriculum_study {flag} state.json\n')
+    with pytest.raises(ValueError, match='resource admission'):
+        study.check_resources()
+
+
+def test_fixed_candidate_contains_all_21_sources_and_preserves_base_config(confirmation, study, monkeypatch):
+    import torch
+    from scripts.experiment import state_sha256
+    fake_confirmation_jobs(study, monkeypatch, fail_stage='development')
+    study.run_gated_confirmation(confirmation)
+    candidate = torch.load(confirmation['candidate'], weights_only=False)
+    base = torch.load(Path(confirmation['root']) / 'experiments/candidates/all18_v3.pth', weights_only=False)
+    assert candidate['cfg'] == base['cfg']
+    assert [q['w'].item() for q in [candidate['q'], *candidate['ensemble']]] == list(range(21))
+    report = study.read_json(Path(confirmation['analysis']) / 'candidate_identity.json')
+    assert report['q_sha256'] == [state_sha256(q) for q in [candidate['q'], *candidate['ensemble']]]
+    assert report['network_count'] == 21
+    assert len(report['sources']) == 4
+    assert all('control' not in p for p in report['sources'])
+    before = study.digest(confirmation['candidate'])
+    with pytest.raises(ValueError, match='exists'):
+        study.build_fixed_candidate(confirmation, Path(confirmation['candidate']))
+    assert study.digest(confirmation['candidate']) == before
+
+
+@pytest.mark.parametrize('mutation', ['duplicate', 'nonfinite', 'dimension', 'play_key', 'shape'])
+def test_fixed_candidate_rejects_bad_base_before_build(confirmation, study, monkeypatch, mutation):
+    import torch
+    path = Path(confirmation['root']) / 'experiments/candidates/all18_v3.pth'
+    checkpoint = torch.load(path, weights_only=False)
+    if mutation == 'duplicate': checkpoint['ensemble'][0] = checkpoint['q']
+    elif mutation == 'nonfinite': checkpoint['q']['w'][0] = float('nan')
+    elif mutation == 'dimension': checkpoint['feature_dim'] = 80
+    elif mutation == 'play_key': checkpoint['cfg']['canonical'] = not checkpoint['cfg']['canonical']
+    elif mutation == 'shape': checkpoint['q']['w'] = torch.ones(2)
+    torch.save(checkpoint, path)
+    confirmation['protected'].update(study.hashes([path]))
+    fake_confirmation_jobs(study, monkeypatch)
+    with pytest.raises(ValueError):
+        study.run_gated_confirmation(confirmation)
+    assert not Path(confirmation['candidate']).exists()
+
+
+def test_real_owned_child_build_accepts_supervisor_active_registration(confirmation, study):
+    # No training/evaluation: build the tiny synthetic tensors in a real owned child.
+    from scripts import early_curriculum_analysis as analysis
+    pairs = {str(seed): {arm: confirmation['arms'][str(seed)][arm]['eval'] for arm in ('control', 'early')}
+             for seed in (47, 48, 49)}
+    study.report_phase(confirmation, 'method', study.method_inputs(confirmation),
+                       lambda: analysis.summarize_method(pairs))
+    # Fixture source root is deliberately isolated; make this child import the actual code.
+    code = ('import sys; sys.path.insert(0, ' + repr(str(Path(study.__file__).parents[1])) + '); '
+            'from scripts.early_curriculum_study import main; main(["--build-candidate", '
+            + repr(confirmation['state_path']) + '])')
+    phase = {'jobs': []}
+    study.run_process(confirmation, phase, [sys.executable, '-B', '-c', code])
+    assert phase['jobs'][0]['returncode'] == 0
+    assert study.read_json(Path(confirmation['analysis']) / 'candidate_identity.json')['network_count'] == 21
+
+
+def test_resume_rejects_state_only_method_gate_tampering(confirmation, study, monkeypatch):
+    fake_confirmation_jobs(study, monkeypatch, fail_stage='development')
+    study.run_gated_confirmation(confirmation)
+    confirmation['phases']['method']['audit']['passed'] = False
+    study.save_state(confirmation)
+    with pytest.raises(ValueError, match='audit|decision|gate'):
+        study.run_gated_confirmation(study.resume_study(confirmation['state_path']))
+
+
+@pytest.mark.parametrize('stage,first', [('fresh_candidate', 11000), ('direct', 11200)])
+def test_later_evaluation_requires_its_positive_predecessor(confirmation, study, monkeypatch, stage, first):
+    fake_confirmation_jobs(study, monkeypatch, fail_stage='development')
+    study.run_gated_confirmation(confirmation)
+    opponents = 'default,solution92' if stage != 'direct' else 'self:' + str(study.frozen_v3(confirmation))
+    with pytest.raises(ValueError, match='gate|phase'):
+        study.run_confirmation_evaluation(confirmation, stage, Path(confirmation['candidate']), first, 200, opponents)
+    assert not Path(confirmation['comparisons'][stage]).exists()
+
+
+def test_supervisor_method_pipeline_keeps_torch_unloaded(all_pairs, study):
+    for seed in (47, 48, 49):
+        study.finish_pair(all_pairs, seed)
+    code = ('import sys, json; from pathlib import Path; from scripts import early_curriculum_study as s; '
+            'state=json.loads(Path(' + repr(all_pairs['state_path']) + ').read_text()); '
+            'assert s.run_gated_confirmation(state)["status"] == "method_rejected"; '
+            'assert "torch" not in sys.modules; assert "scripts.experiment" not in sys.modules')
+    child = subprocess.run([sys.executable, '-B', '-c', code], capture_output=True, text=True)
+    assert child.returncode == 0, child.stderr
+
+
+def test_fixed_candidate_rejects_different_full_training_configs(confirmation, study, monkeypatch):
+    import torch
+    for arm in ('control', 'early'):
+        run = Path(confirmation['arms']['49'][arm]['run'])
+        initial = study.read_json(run / 'initial_identity.json')
+        initial['learners'][0]['config']['gamma'] = .97
+        write_json(run / 'initial_identity.json', initial)
+        manifest = study.read_json(run / 'manifest.json')
+        manifest['config']['gamma'] = .97
+        write_json(run / 'manifest.json', manifest)
+        checkpoint = torch.load(run / 'weights/agent.pth', weights_only=False)
+        checkpoint['cfg']['gamma'] = .97
+        torch.save(checkpoint, run / 'weights/agent.pth')
+        write_json(run / 'final_identity.json', study.checkpoint_identity(run / 'weights/agent.pth'))
+        phase = confirmation['phases'][f'train_49_{arm}']
+        phase['outputs'] = study.hashes(phase['outputs'])
+    confirmation['phases'].pop('pair_49')
+    (Path(confirmation['analysis']) / 'pair_s49_audit.json').unlink()
+    study.finish_pair(confirmation, 49)
+    fake_confirmation_jobs(study, monkeypatch)
+    with pytest.raises(ValueError, match='training configs'):
+        study.run_gated_confirmation(confirmation)
+    assert not Path(confirmation['candidate']).exists()
+
+
+def test_evaluation_rejects_candidate_changed_while_job_runs(confirmation, study, monkeypatch):
+    fake_confirmation_jobs(study, monkeypatch)
+    original = study.run_process
+    def mutate(state, phase, command):
+        original(state, phase, command)
+        if '--out' in command and command[command.index('--out') + 1].endswith('development_v3.csv'):
+            with Path(state['candidate']).open('ab') as stream:
+                stream.write(b'changed-during-job')
+    monkeypatch.setattr(study, 'run_process', mutate)
+    with pytest.raises(ValueError, match='changed|provenance'):
+        study.run_gated_confirmation(confirmation)
+    assert not Path(confirmation['comparisons']['development_candidate']).exists()
+    assert confirmation['phases']['development_v3']['status'] == 'running'
