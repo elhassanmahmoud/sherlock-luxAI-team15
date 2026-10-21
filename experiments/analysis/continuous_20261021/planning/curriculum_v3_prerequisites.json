@@ -1,0 +1,39 @@
+{
+  "checkpoint": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth",
+  "sha256": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+  "network_count": 18,
+  "distinct_q_networks": 18,
+  "finite_q": true,
+  "feature_dim": 79,
+  "n_actions": 6,
+  "play_keys": {
+    "hidden": 256,
+    "dueling": true,
+    "use_sap": true,
+    "use_belief": true,
+    "canonical": true,
+    "mask_actions": true
+  },
+  "variant_play_keys_match": true,
+  "q_sha256": [
+    "3c3b7b20695b723e622628a25913077385d8911bc9f0bf2652603ebcfd1c5c85",
+    "509ba4cfc5d68d5032e2f627f30e9d0ffd5e4fe979a3d7cd5c0ea289f43111ed",
+    "2b31f9b930d1eab1ce5a0a01288ed4343f6d3b62c813761440ee4dc88a815fe6",
+    "1723eacee8af224509ec24a0ec786af20a181a599f53e835ebb60fc5c8d1af4e",
+    "2720172806399c7e78ff3fc24f52130f56c3a5cdfda0fb3057757427decaf30f",
+    "fcb9e583d83382f05949a737ca4b1c9c1c00a6e7bce42ce761af2a52212551db",
+    "e84f9e3073297b4fa5dea2c42ce7e678ff5162819feb29bb3fa9fb194f98df4a",
+    "9e0c16ab7961382a7e7fd4d8de6699dde9792d181ba7591b5206530a31bf9196",
+    "c59d411326be0d20f966e4eae164cd8b4b346771b15eb21cd2f515ee5d9e64f6",
+    "aa9265da6f18cf60ad2a01976fcbd1df51e9e532be56befb1eb341e0f0c7bc92",
+    "86adcd36ddb73630f522a24f0daf2fbcaf38817ad38bb4252dd65c6a9494b61f",
+    "342d2e533a6d466f57f9ba4ac92bca43429902d0d482547b93ccb08ba76b341e",
+    "deb6f909a00a7be16120d357bd97f103b65e8a0beabf96dc78eec71a3856fe77",
+    "fa5ab96c490b3b057e2e9c081cba67590e41fdb3ecb40b942c489527fa4924e5",
+    "8b9d4dba55ba5f3838f8cc9637831e2411a37d36042575aa095f6a576d5edaa6",
+    "45d7aaf557f7d739559fdc156f1bb9d0cdbc12c162cfd8828a8f34e943a60d72",
+    "638152601326e13df315f389cb00ac62ef48a978b951b997e81f59d6749a77c0",
+    "86f2fd561ba699a5eb3f48af3a8e27a2a57dfe2b6702fc3003b199fd4d98aaf4"
+  ],
+  "scope": "pre-training candidate-composition feasibility only; no game performance claim"
+}

@@ -1,0 +1,150 @@
+{
+  "scope": "Validation of new statistics on historical slow-exploration CSVs; early input slot is deliberately mapped to historical slow arm ONLY in this smoke test. Not new curriculum data, not reused study controls.",
+  "historical_report": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/exploration_aggregate.json",
+  "result": {
+    "per_start": {
+      "47": {
+        "default": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 224,
+          "reference_half_wins": 240,
+          "delta_half_wins": -16,
+          "result_units": 240,
+          "winrate": 0.9333333333333333,
+          "ref_winrate": 1.0,
+          "delta": -0.06666666666666667,
+          "low": -0.13333333333333333,
+          "high": -0.016666666666666666
+        },
+        "solution92": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 114,
+          "reference_half_wins": 172,
+          "delta_half_wins": -58,
+          "result_units": 240,
+          "winrate": 0.475,
+          "ref_winrate": 0.7166666666666667,
+          "delta": -0.24166666666666667,
+          "low": -0.35,
+          "high": -0.13333333333333333
+        }
+      },
+      "48": {
+        "default": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 224,
+          "reference_half_wins": 236,
+          "delta_half_wins": -12,
+          "result_units": 240,
+          "winrate": 0.9333333333333333,
+          "ref_winrate": 0.9833333333333333,
+          "delta": -0.05,
+          "low": -0.11666666666666667,
+          "high": 0.008333333333333333
+        },
+        "solution92": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 118,
+          "reference_half_wins": 136,
+          "delta_half_wins": -18,
+          "result_units": 240,
+          "winrate": 0.49166666666666664,
+          "ref_winrate": 0.5666666666666667,
+          "delta": -0.075,
+          "low": -0.16666666666666666,
+          "high": 0.008333333333333333
+        }
+      },
+      "49": {
+        "default": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 228,
+          "reference_half_wins": 228,
+          "delta_half_wins": 0,
+          "result_units": 240,
+          "winrate": 0.95,
+          "ref_winrate": 0.95,
+          "delta": 0.0,
+          "low": -0.06666666666666667,
+          "high": 0.058333333333333334
+        },
+        "solution92": {
+          "maps": 60,
+          "games": 120,
+          "starts": 1,
+          "candidate_half_wins": 114,
+          "reference_half_wins": 132,
+          "delta_half_wins": -18,
+          "result_units": 240,
+          "winrate": 0.475,
+          "ref_winrate": 0.55,
+          "delta": -0.075,
+          "low": -0.19166666666666668,
+          "high": 0.041666666666666664
+        }
+      }
+    },
+    "mean": {
+      "default": {
+        "maps": 60,
+        "games": 360,
+        "starts": 3,
+        "candidate_half_wins": 676,
+        "reference_half_wins": 704,
+        "delta_half_wins": -28,
+        "result_units": 720,
+        "winrate": 0.9388888888888889,
+        "ref_winrate": 0.9777777777777777,
+        "delta": -0.03888888888888889,
+        "low": -0.08888888888888889,
+        "high": 0.0
+      },
+      "solution92": {
+        "maps": 60,
+        "games": 360,
+        "starts": 3,
+        "candidate_half_wins": 346,
+        "reference_half_wins": 440,
+        "delta_half_wins": -94,
+        "result_units": 720,
+        "winrate": 0.48055555555555557,
+        "ref_winrate": 0.6111111111111112,
+        "delta": -0.13055555555555556,
+        "low": -0.19166666666666668,
+        "high": -0.06944444444444445
+      }
+    },
+    "positive_pairs": 0,
+    "passed": false,
+    "input_hashes": {
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s47_control.csv": "5df89fa720da792e5fca9ee4ca2910dd32bafc34ac97a6b0ab76d40c0a854f40",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s47_slow.csv": "788bc587f7087539b88af8717be7cba510c80367be78266e76ba32b13e247859",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s48_control.csv": "d4cd39c99f92c71a18b48e8c494ca5aa3f8271190a61f732c76359c309fb9bc3",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s48_slow.csv": "0cd50a42583a08dd45cf388f66f93c2f3e1228ccbf029001204f6f2a752ab992",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s49_control.csv": "b334028a8725c48f561d2f1120c9ed75b21ba0490554d0844940931568fffcaf",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/compare/autonomous_20261020/exploration_replication_s49_slow.csv": "175300a7b8088fad12090dd572df73297e8f8edcfb285eb9f69fc4a637f0e1fc"
+    },
+    "bootstrap": {
+      "samples": 5000,
+      "seed": 0,
+      "percentiles": [
+        2.5,
+        97.5
+      ],
+      "unit": "whole map"
+    },
+    "uncertainty": "Explorative screening at three known starts; intervals describe map uncertainty conditional on these fixed starts, not uncertainty over new training starts or general confirmation of the training method."
+  },
+  "historical_deltas_reproduced": true,
+  "historical_intervals_and_exact_counts_reproduced": true
+}

@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Curriculumstudie vollständig geprüft und zum Start bereit
+
+Alle vier Umsetzungsschritte inklusive unabhängiger Nach- und Integrationsprüfung fertig. Statistikauswertung `a5ce6d8`, bedingte Bestätigung `9c5c06d`, periodische Prüfung erzeugter Eingaben `2da04b3`. Vollsuite vor der engen letzten Korrektur: 406 Tests plus 14 Teilprüfungen; danach 88 betroffene Tests. [Nachweise und Grenzen](../experiments/analysis/continuous_20261021/planning/README_CURRICULUM.md).
+
+Nächster tatsächlicher Schritt: sechs frische Läufe (Starts 47–49, je Kontrolle/früher Gegnerkontakt, je 3.000 Spiele), feste Zwischenvalidierungen und abschließende Vergleiche. Genau eine fachliche Änderung: 100 Solution-Spiele früher, Gesamtgegnerzahlen gleich. Keine Auswahl des besten Zwischenstands. Ein 21-Netze-Kandidat entsteht nur nach positivem Methodengate; neue Karten und direkte V3-Prüfung erst nach ihren vorgeschalteten Gates.
+
+Studien-ID `20261021_early_contact_v1`, Quellenfreeze nach dieser Dokumentation in der separaten Arbeitskopie `sherlock-counterplay`. Der Runner setzt die feste 12-Stunden-Frist beim wirklichen Start. Hauptrepo kann getrennt aktuell gehalten werden. Noch kein stärkerer Agent aus dieser Studie nachgewiesen; V3 und alte Sicherung unverändert, Bestätigungskarten unbenutzt. Keine Agenten-/Reward-/Architekturänderung.
+
 ## 21.10.2026 – Codex: lokale Wiederbesetzung als begrenzte Diagnose
 
 Der [Folgecheck](../experiments/analysis/continuous_20261021/loss_observation/locality_followup/README.md) betrachtet ausschließlich die vier größten späten Belegungslücken in vorhandenen Traces. Weit entfernte oder gegnerisch besetzte bekannte Punkte erklären, warum der globale freie-Felder-Zähler sofortige Chancen überschätzt. Konkrete Sequenzen zeigen negative Energie, Maskenverluste und längere erneute Anreise; die verursachenden Schadensquellen und mögliche bessere Aktionen sind damit nicht isoliert.
