@@ -190,6 +190,13 @@ def classify(agent, s0, pt_world, us, st):
     unknown = pt_true & ~b.point_tiles
     xs, ys = np.indices((W, H))
     st["true_pt_unknown_own"] = st.get("true_pt_unknown_own", 0.0) + float((unknown & (xs + ys <= W - 1)).sum())
+    # davon: Relic bekannt (Kandidat ungetestet) oder Relic unbekannt (nie gesehen)
+    near_known = np.zeros((W, H), dtype=bool)
+    for rx, ry in b.relic_positions:
+        near_known[max(0, rx - 2):rx + 3, max(0, ry - 2):ry + 3] = True
+    own = xs + ys <= W - 1
+    st["unknown_own_relic_known"] = st.get("unknown_own_relic_known", 0.0) + float((unknown & own & near_known).sum())
+    st["unknown_own_relic_unseen"] = st.get("unknown_own_relic_unseen", 0.0) + float((unknown & own & ~near_known).sum())
     st["true_pt_own"] = st.get("true_pt_own", 0.0) + float((pt_true & (xs + ys <= W - 1)).sum())
     # Gegner auf wahren Punktfeldern in unserer Haelfte (Wahrheit, kanonisch)
     opp = 1 - us

@@ -150,6 +150,8 @@ class Agent_x:
         self._enemy_prev: dict[int, tuple[int, int]] = {}
         self._cache: Optional[tuple] = None
         self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
+        from .param_est import ParamEstimator
+        self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
                          "sap_attempts": 0, "sap_hits_est": 0}
@@ -216,6 +218,15 @@ class Agent_x:
         return self._cache[1:]
 
     def act(self, step: int, obs) -> np.ndarray:
+        use_est = self.cfg.nebula_avoid and not self.training
+        if use_est:
+            self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
+        actions = self._act(step, obs)
+        if use_est:
+            self.param_est.remember(obs, self.team_id, actions)
+        return actions
+
+    def _act(self, step: int, obs) -> np.ndarray:
         self.belief.observe(obs)
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
@@ -259,7 +270,10 @@ class Agent_x:
         siege = None  # rules.SiegePlan, bei Bedarf einmal pro Step
         stationary = self._enemy_stationary(ctx)
         # 21.10.2026: vorhergesagte Solution_92-Treffer je eigener Unit (opp_model)
-        incoming = self._predicted_hits(ctx, stationary) if self.cfg.dodge and not self.training else {}
+        # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
+        fight = not self.cfg.tactics_when_behind or ctx["opp_points"] > ctx["own_points"]
+        incoming = (self._predicted_hits(ctx, stationary)
+                    if self.cfg.dodge and not self.training and fight else {})
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
@@ -307,7 +321,7 @@ class Agent_x:
                 if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve:
                     a = geo.SAP
                     self._prev_actions[uid] = a
-            if (self.cfg.art_sap and a != geo.SAP and sap is not None and masks[k][geo.SAP]
+            if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
                     and self._artillery_ok(ctx, uid, sap)):
                 a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
                 self._prev_actions[uid] = a
@@ -315,6 +329,14 @@ class Agent_x:
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 self._prev_actions[uid] = a
+            if a == geo.STAY and self._harmful_nebula() >= 25:
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                if ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]:
+                    d = self._leave_nebula(ctx, uid, masks[k])
+                    if d is not None:
+                        a = d
+                        self._prev_actions[uid] = a
+                        st["nebula_exits"] = st.get("nebula_exits", 0) + 1
             if incoming.get(int(uid)) and a in (geo.STAY, geo.SAP):
                 a2 = self._dodge(ctx, uid, masks[k], a, sap, incoming)
                 if a2 != a:
@@ -454,6 +476,32 @@ class Agent_x:
                 return False
         return True
 
+    def _harmful_nebula(self) -> float:
+        """cfg.nebula_avoid: geschaetzter Nebelabzug, falls >= nebula_avoid_min, sonst 0."""
+        if not self.cfg.nebula_avoid or self.training:
+            return 0.0
+        neb = self.param_est.nebula(default=None)
+        return float(neb) if neb is not None and neb >= self.cfg.nebula_avoid_min else 0.0
+
+    def _leave_nebula(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
+        """Unit steht in schaedlichem Nebel (kein Punkte-Tile): Zug auf ein Nicht-Nebel-Tile,
+        bevorzugt Richtung Ziel, sonst mit mehr Feldenergie. None, wenn keiner moeglich ist."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tgt = ctx["assigned"].get(int(uid))
+        best, best_s = None, -np.inf
+        for d in range(1, 5):
+            if not mask[d]:
+                continue
+            tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+            if ctx["nebula"][tx, ty]:
+                continue
+            s = float(np.clip(ctx["energy_map"][tx, ty], -20, 20)) / 20.0
+            if tgt is not None and abs(tgt[0] - tx) + abs(tgt[1] - ty) < abs(tgt[0] - x) + abs(tgt[1] - y):
+                s += 2.0
+            if s > best_s:
+                best, best_s = d, s
+        return best
+
     def _predicted_hits(self, ctx: dict, stationary: np.ndarray) -> dict[int, float]:
         """cfg.dodge: erwartete direkte Solution_92-Saps je eigener Unit-ID (opp_model).
         Gewicht 0,85 fuer Schuetzen, die schon im letzten Step dort standen, sonst 0,5
@@ -586,6 +634,12 @@ class Agent_x:
                     here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
                     if here.any() and float(ee[here].sum()) >= e - ctx["move_cost"]:
                         mask[d] = False
+        neb = self._harmful_nebula()
+        if neb:
+            for d in range(1, 5):
+                tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                if mask[d] and ctx["nebula"][tx, ty] and not self.belief.point_tiles[tx, ty]:
+                    mask[d] = False  # 21.10.2026: geschaetzter Nebelabzug >= nebula_avoid_min
         if self.n_actions > 5:
             mask[geo.SAP] = sap_target is not None and e >= ctx["sap_cost"]
         mask[geo.STAY] = True  # Stay ist immer legal

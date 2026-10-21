@@ -134,6 +134,15 @@ class AgentConfig:
     opp_model von Solution_92 direkt beschossen werden, weichen einen Schritt aus."""
     dodge_mode: str = "lethal"
     """'lethal': nur ausweichen, wenn Stehenbleiben vermutlich toetet; 'always': immer."""
+    tactics_when_behind: bool = False
+    """True (21.10.2026): dodge und art_sap greifen nur, wenn wir im laufenden Match nach Punkten
+    hinten liegen. Entwicklung: beide helfen auf schweren Karten (+10 bis +14 pp), kosten aber
+    auf leichten Karten 2-3 pp."""
+    nebula_avoid: bool = False
+    """True (21.10.2026, nur Auswertung): geschaetzter Nebel-Energieabzug (param_est) >=
+    nebula_avoid_min -> keine Zuege in Nebel ohne Punkte-Tile; bei >= 25 verlassen Units den Nebel.
+    Analyse 2000 Karten: V3 gegen Solution_92 bei Nebelabzug 25 nur 65,5 % statt ~78 %."""
+    nebula_avoid_min: int = 5
     siege: bool = False
     """True (21.10.2026, nur Auswertung): Units, deren Ziel ein vom Gegner (sichtbar oder
     wahrscheinlich im Nebel) besetztes Punkte-Tile ist, laufen nicht hinein, sondern zur

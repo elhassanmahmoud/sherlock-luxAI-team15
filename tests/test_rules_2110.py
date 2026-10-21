@@ -272,3 +272,35 @@ def test_seed_file_rejects_validation_overlap(tmp_path):
         experiment.main(["--variant", "full_rules_v3", "--games", "4", "--no-test",
                          "--seed-file", str(f), "--out", str(tmp_path / "run")])
     assert not (tmp_path / "run").exists()
+
+
+def test_tactics_when_behind_gates_art_sap_on_score():
+    for points, want in (((10, 5), geo.STAY), ((5, 10), geo.SAP)):
+        a = _stay_agent(art_sap=True, tactics_when_behind=True)
+        obs = make_obs(10, 10, units=[(5, 5, 100)], enemies=PAIR, relics=[(12, 12)], points=points)
+        assert int(a.act(10, obs)[0, 0]) == want, points
+
+
+def _with_nebula_estimate(a, value):
+    import numpy as np
+    from agents.sherlock.param_est import NEBULA_REDUCTIONS
+    a.param_est.log_neb = np.array([0.0 if r == value else -50.0 for r in NEBULA_REDUCTIONS])
+    a.param_est.n_neb = 5
+    return a
+
+
+def test_nebula_avoid_masks_moves_into_harmful_nebula_and_leaves_it():
+    import numpy as np
+    from tests.conftest import make_obs as mk
+    obs = mk(10, 10, units=[(5, 5, 100)], relics=[(12, 12)])
+    obs["map_features"]["tile_type"] = np.zeros((24, 24), np.int32)
+    obs["map_features"]["tile_type"][6, 5] = 1   # Nebel rechts
+    for flag, value, right_ok in ((False, 25, True), (True, 2, True), (True, 25, False)):
+        a = _with_nebula_estimate(_stay_agent(nebula_avoid=flag), value)
+        a.act(10, obs)
+        assert bool(a._prev_masks[0][geo.RIGHT]) == right_ok, (flag, value)
+    inside = mk(11, 11, units=[(6, 5, 100)], relics=[(12, 12)])
+    inside["map_features"]["tile_type"] = np.zeros((24, 24), np.int32)
+    inside["map_features"]["tile_type"][6, 5] = 1
+    a = _with_nebula_estimate(_stay_agent(nebula_avoid=True), 25)
+    assert int(a.act(11, inside)[0, 0]) != geo.STAY   # verlaesst den Nebel

@@ -106,8 +106,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--weights", required=True)
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE")
-    ap.add_argument("--first", type=int, required=True, help="erster Val-Seed-Index")
-    ap.add_argument("--n", type=int, required=True, help="Anzahl Karten")
+    ap.add_argument("--first", type=int, default=None, help="erster Val-Seed-Index")
+    ap.add_argument("--n", type=int, default=None, help="Anzahl Karten")
+    ap.add_argument("--seed-list", default=None,
+                    help="JSON-Liste absoluter Env-Seeds statt --first/--n (21.10.2026: Entwicklungs-Sets)")
     ap.add_argument("--workers", type=int, default=14)
     ap.add_argument("--opponents", default=",".join(P.EVAL_OPPONENTS))
     ap.add_argument("--out", required=True)
@@ -117,7 +119,13 @@ def main() -> None:
     out = Path(args.out)
     if out.exists():
         raise SystemExit(f"{out} existiert schon - neuen Namen waehlen")
-    seeds = [P.VAL_SEED_BASE + i for i in range(args.first, args.first + args.n)]
+    if args.seed_list:
+        import json
+        seeds = [int(s) for s in json.loads(Path(args.seed_list).read_text())]
+    elif args.first is not None and args.n is not None:
+        seeds = [P.VAL_SEED_BASE + i for i in range(args.first, args.first + args.n)]
+    else:
+        raise SystemExit("--first/--n oder --seed-list angeben")
     opponents = [o for o in args.opponents.split(",") if o]
     chunks = [seeds[i::args.workers] for i in range(args.workers)]
     jobs = [(args.weights, args.set, c, opponents) for c in chunks if c]
