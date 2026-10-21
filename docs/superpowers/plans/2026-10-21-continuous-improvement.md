@@ -28,7 +28,7 @@ Remote-Check vor Beginn: lokal = origin/main b008252, keine Modelljobs, zwölf v
 ### Task 2: Gezielt testen und trainieren
 
 - [ ] Nach Task 1 Ursache, genaue einzelne Änderung und Entwicklungs-/Bestätigungsgates VOR Ergebnisbeobachtung in eigenem Plan fixieren; TDD, unabhängiger Review, isolierter Kandidat.
-- [ ] Curriculumplan Tasks 1–4 nacheinander implementieren, prüfen, committen. Neuer frischer Implementer je Task; keine parallelen Codeautoren auf denselben Schnittstellen.
+- [x] Curriculumplan Tasks 1–4 nacheinander implementieren, prüfen, committen. Neuer frischer Implementer je Task; keine parallelen Codeautoren auf denselben Schnittstellen.
 - [ ] Training nach Quellenfreeze starten, Paare vollständig auditieren und nach vorab festgelegten Gates auswerten. Kein Austausch der Livegewichte durch Trainingswerkzeuge.
 
 ## Plan-Preflight / Rulings
@@ -38,3 +38,7 @@ Task 1 schreibt nur neue Observerdateien; Curriculum Tasks 1/2/4 teilen experime
 ## Ergebnis der ersten Diagnose
 
 Task 1 mit unveränderter V3 abgeschlossen und archiviert. Alle 20 Referenzen exakt reproduziert. Der postulierte unmittelbare Sap-Kollisionsmechanismus wurde durch die tatsächliche Engine widerlegt; kein Agentenpatch daraus. Späte Belegungsrückstände sind beschrieben, nicht kausal isoliert. Daher nächste Ausführung des unveränderten Curriculumplans, keine neue Inferenzvariante. Siehe loss_observation im Archiv continuous_20261021 und neuesten Arbeitsstand.
+
+## Tatsächliche Ausführung
+
+Curriculumstudie `20261021_early_contact_v1` am 21.10. um 11:44:34 Berlin gestartet, eingefrorener Arbeitszweig `sherlock-counterplay` Commit `a5d2e61`. Geprüfte Implementierung auf main veröffentlicht; Anlaufcheck ohne Befund. Training läuft fortlaufend unter exklusivem Supervisor. Noch kein neuer qualifizierter Kandidat. Hauptcheckout-Dokumentation ist vom eingefrorenen Versuch getrennt; dortiger Plan darf während des Versuchs nicht nachgezogen werden.
