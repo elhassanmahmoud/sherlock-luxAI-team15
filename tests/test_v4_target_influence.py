@@ -84,6 +84,7 @@ class AssignedDxPolicy(torch.nn.Module):
     """Deterministic small policy: RIGHT for right target, LEFT for left target."""
     def __init__(self, fail_left=False, constant_right=False):
         super().__init__()
+        self.feat_dim = FEATURE_DIM
         self.fail_left = fail_left
         self.constant_right = constant_right
 
