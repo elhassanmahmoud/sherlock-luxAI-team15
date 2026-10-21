@@ -19,6 +19,7 @@ Vor dem Lauf Tests für Kettenkonsistenz, ausgelassene Erkundungsregel bei Sap, 
 Pro Spiel und Match erfassen:
 
 - Anzahl aktiver Unitentscheidungen sowie Häufigkeit jeder Aktionsklasse am Greedy- und Endstadium.
+- Vor dem Lauf ergänzt: aktive Entscheidungen mit genau einer legalen Aktionsklasse von denen mit mindestens zwei trennen; für letztere Greedy-/Endgleichheit separat zählen. Erzwungene STAY-Entscheidungen sind keine freie Wahl der Netze.
 - Änderung durch Erkundungsregel, Änderung durch allgemeine Regel, weitere Änderung zwischen Regel-Ausgabe und Endaktion.
 - Greedyklasse gleich Endklasse; mindestens eine Zwischenänderung; Zwischenänderungen, die am Ende zur Greedyklasse zurückführen.
 - Vollständige Übergangszahlen Greedy → Erkundung → Regel → Endaktion, damit die Summen unabhängig nachrechenbar sind. Überlappende Änderungsraten nicht als disjunkte Anteile addieren.
