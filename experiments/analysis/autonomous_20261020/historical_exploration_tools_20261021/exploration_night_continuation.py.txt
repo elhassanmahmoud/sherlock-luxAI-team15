@@ -1,0 +1,364 @@
+"""Prepared fixed night continuation; --run only after audited seed47.
+No promotion, source/Git changes, repair/resume, model imports or adaptive design.
+Existing tools stay in /tmp throughout. Run from the repository root.
+"""
+from pathlib import Path
+import argparse
+from datetime import datetime,timezone
+import hashlib
+import importlib.util
+import json
+import math
+import os
+import selectors
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+
+SCRIPT=Path(__file__).resolve()
+ROOT=Path.cwd().resolve()
+PYTHON=ROOT/'.venv/bin/python'
+ANALYSIS=ROOT/'experiments/analysis/autonomous_20261020'
+COMPARE=ROOT/'experiments/compare/autonomous_20261020'
+OUT=ANALYSIS/'exploration_night_continuation'
+STOP_AT=datetime(2026,10,21,4,tzinfo=timezone.utc).timestamp()-10
+CUTOFF=datetime(2026,10,21,3,tzinfo=timezone.utc).timestamp()
+TECHNICAL_RESERVE=900
+CLEANUP_RESERVE=20
+EXEC_STOP=STOP_AT-TECHNICAL_RESERVE-CLEANUP_RESERVE
+PATHS={
+ 'replication':ANALYSIS/'tools/exploration_replication.py',
+ 'auditor':Path('/tmp/exploration_analysis.py'),
+ 'qmargin':Path('/tmp/sherlock-qmargin-diagnostic-20261020.py'),
+ 'builder':Path('/tmp/exploration_ensemble_builder.py'),
+ 'development':Path('/tmp/exploration_ensemble_eval.py'),
+ 'confirmation':Path('/tmp/exploration_confirmation.py')}
+HASHES={
+ 'replication':'5128c4cd02cc17947d8cdd00ecea63b4ef4a3b45477a3bb0089211a26b62d238',
+ 'auditor':'2f4f1472d5e71e548ec444252e4503cd3691edf289e939b353e719472cda9574',
+ 'qmargin':'cb5cd4d0bc794091ae2001653199d18d4ec51a5acabeac9cb85cd70aecefcd02',
+ 'builder':'f16f228749e066eae57ea7c52daf9c58b62bea45493e946ff227f76fb23413e1',
+ 'development':'27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e',
+ 'confirmation':'20d584e2d2f80b46aa82994f433a56f99fcfc7deccbe8a4a0b14267f7fccf225'}
+STATE=None
+CURRENT=None
+OWNED={}
+FROZEN={}
+BASELINE=None
+A=W=D=None
+
+
+def require(ok,message):
+    if not ok:raise RuntimeError(message)
+
+
+def now():return datetime.now(timezone.utc).isoformat(timespec='seconds')
+
+
+def sha(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+    return h.hexdigest()
+
+
+def read(path):return json.loads(Path(path).read_text())
+
+
+def load(name):
+    require(sha(PATHS[name])==HASHES[name],f'Fixed {name} tool changed')
+    spec=importlib.util.spec_from_file_location('night_'+name,PATHS[name])
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module
+
+
+def phase_order(confirmation):
+    return ['pair48','audit48','pair49','audit49','aggregate','qmargin','builder','development']+(['confirmation'] if confirmation else [])
+
+
+def audit_matches(state,audit,seed):
+    require(audit.get('schema')=='exploration_pair_audit_v1' and audit.get('complete') is True
+        and audit.get('technical_audit_passed') is True and audit.get('run_seed')==seed
+        and audit.get('auditor_sha256')==HASHES['auditor']
+        and audit.get('source_identity')==state['baseline']['code']
+        and audit.get('protected_hashes')==state['baseline']['protected']
+        and audit.get('preflight')==state['preflight'],f's{seed}: matching completed fixed-auditor report required')
+
+
+def confirmation_selected(state):
+    require(state.get('complete') is True and state.get('status')=='complete' and not state.get('error'),'Development incomplete')
+    selected=state['selection']['selected']
+    require(selected is None or selected in ('v3_control3','v3_slow3'),'Invalid development winner')
+    return selected is not None
+
+
+def estimate(evidence):
+    require(bool(evidence),'No completed timing evidence')
+    seen=set()
+    for row in evidence:
+        require(row['seed'] in (47,48,49) and row['arm'] in ('control','slow'),'Unexpected timing arm')
+        key=(row['seed'],row['arm']);require(key not in seen,'Duplicate timing arm');seen.add(key)
+        for key in ('manifest_training_seconds','training_wall_seconds','eval_wall_seconds'):
+            v=row[key];require(type(v) in (int,float) and math.isfinite(v) and v>0,'Invalid completed timing')
+    seeds={seed for seed,arm in seen}
+    require(seen=={(s,a) for s in seeds for a in ('control','slow')},'Only complete timing pairs allowed')
+    train=max(max(r['manifest_training_seconds'],r['training_wall_seconds']) for r in evidence)
+    evaluation=max(r['eval_wall_seconds'] for r in evidence)
+    return dict(max_training_seconds=train,max_eval_seconds=evaluation,pair_seconds=train*2*1.25+evaluation*2*1.25+30,
+        formula='max(training manifest runtime, training child walltime) * 2 * 1.25 + max(eval child walltime) * 2 * 1.25 + 30',evidence=evidence)
+
+
+def admission(timestamp,timing,remaining_pairs=None,phase_seconds=None,stop_at=STOP_AT,cutoff=CUTOFF):
+    require((remaining_pairs is None)!=(phase_seconds is None),'Exactly one admission mode required')
+    if remaining_pairs is not None:
+        require(remaining_pairs in (1,2),'Invalid remaining pair count')
+        needed=remaining_pairs*timing['pair_seconds']+3600
+        formula='remaining_pairs * conservative_pair_seconds + 3600 closing reserve'
+    else:
+        require(math.isfinite(phase_seconds) and phase_seconds>0,'Invalid phase estimate')
+        needed=phase_seconds+TECHNICAL_RESERVE+CLEANUP_RESERVE
+        formula='phase_seconds + 900 technical-review reserve + 20 cleanup reserve'
+    return dict(allowed=timestamp<cutoff and timestamp+needed<stop_at,checked_epoch=timestamp,
+        cutoff_epoch=cutoff,stop_epoch=stop_at,required_seconds=needed,available_seconds=stop_at-timestamp,
+        remaining_pairs=remaining_pairs,phase_seconds=phase_seconds,formula=formula,timing=timing)
+
+
+def pair_evidence(seeds):
+    result=[]
+    for seed in seeds:
+        state=read(A.state_path(seed));A.require_complete(state,seed)
+        jobs={j['label']:j for j in state['jobs']}
+        for arm in ('control','slow'):
+            manifest=read(Path(state['arms'][arm]['run'])/'manifest.json')
+            def duration(label):
+                job=jobs[label]
+                return (datetime.fromisoformat(job['finished_at'])-datetime.fromisoformat(job['started_at'])).total_seconds()
+            result.append(dict(seed=seed,arm=arm,manifest_training_seconds=manifest['runtime_secs'],
+                training_wall_seconds=duration('train_'+arm),eval_wall_seconds=duration('eval_'+arm)))
+    return result
+
+
+def process_table():
+    raw=subprocess.check_output(['ps','-axo','pid=,ppid=,pgid=,args='],text=True)
+    rows={}
+    for line in raw.splitlines():
+        parts=line.strip().split(None,3)
+        if len(parts)==4:rows[int(parts[0])]=(int(parts[1]),int(parts[2]),parts[3])
+    return rows
+
+
+def descendants(rows,root):
+    found={root}
+    while True:
+        more={pid for pid,(parent,group,command) in rows.items() if parent in found}
+        if more<=found:return found
+        found.update(more)
+
+
+def idle_check():
+    global OWNED
+    rows=process_table();owned=descendants(rows,os.getpid())
+    if CURRENT is not None:
+        OWNED.update({pid:rows[pid] for pid in owned if pid in rows and pid!=os.getpid()})
+    conflicts=[]
+    for pid,(parent,group,command) in rows.items():
+        if pid in owned:continue
+        if D.heavy_python_command(command):conflicts.append((pid,command))
+        # A second coordinator itself is also a conflict even between children.
+        elif command.split() and Path(command.split()[0]).name.lower().startswith('python'):
+            import shlex
+            try:args=shlex.split(command)
+            except ValueError:continue
+            if any(Path(arg).name==SCRIPT.name for arg in args[1:]) and '--run' in args:conflicts.append((pid,command))
+    require(not conflicts,f'Unrelated heavy work: {conflicts}')
+
+
+def stop_owned(process,owned):
+    if process is None:return
+    # Signal the wrapper FIRST: it owns children in separate sessions and needs
+    # its full 5-second TERM + KILL + state/hash-finalization window.
+    try:os.kill(process.pid,signal.SIGTERM)
+    except ProcessLookupError:pass
+    until=time.monotonic()+15
+    while time.monotonic()<until:
+        rows=process_table()
+        alive={pid for pid,record in owned.items() if pid in rows and rows[pid][1:]==record[1:]}
+        if process.poll() is not None and not alive:return
+        time.sleep(.2)
+    # Fallback addresses ONLY still-matching processes/groups observed as our
+    # descendants with the same PGID and full command; PPID may change after
+    # reparenting. Never target a foreign job or the coordinator's parent group.
+    rows=process_table();groups=set()
+    for pid,record in owned.items():
+        if pid in rows and rows[pid][1:]==record[1:] and record[1]!=os.getpgrp():groups.add(record[1])
+    for group in groups:
+        try:os.killpg(group,signal.SIGKILL)
+        except ProcessLookupError:pass
+
+
+def invariant():
+    require(all(sha(p)==h for p,h in FROZEN.items()),'Frozen tool/evidence/output changed')
+    require(W.source_identity()==BASELINE['code'] and W.protected_hashes()==BASELINE['protected'],
+        'Pipeline HEAD/Python/source/protected identity changed')
+    idle_check()
+
+
+def save():
+    STATE['updated_at']=now()
+    with tempfile.NamedTemporaryFile(mode='w',dir=OUT,delete=False,prefix='state.',suffix='.tmp') as f:
+        json.dump(STATE,f,indent=2,allow_nan=False);f.write('\n');p=Path(f.name)
+    os.replace(p,OUT/'state.json')
+
+
+def record_admission(label,timing,**kw):
+    record=admission(time.time(),timing,**kw);record['phase']=label
+    STATE['admissions'].append(record);save()
+    require(record['allowed'],f'Paused: insufficient time/start cutoff for {label}')
+    return record
+
+
+def child(label,tool,args):
+    global CURRENT,OWNED
+    invariant();require(time.time()<CUTOFF,'New heavy phase cutoff reached')
+    command=[str(PYTHON),'-B',str(PATHS[tool]),*args]
+    job=dict(label=label,command=command,started_at=now(),complete=False,log=str(OUT/f'{label}.log'))
+    STATE['jobs'].append(job);STATE['phase']=label;save();OWNED={}
+    try:
+        with Path(job['log']).open('xb') as log,selectors.DefaultSelector() as selector:
+            require(time.time()<CUTOFF,'Cutoff before spawn')
+            CURRENT=subprocess.Popen(command,cwd=ROOT,env={**os.environ,**W.THREAD_ENV},start_new_session=True,
+                stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+            job['pid']=CURRENT.pid;save();idle_check()
+            selector.register(CURRENT.stdout,selectors.EVENT_READ);next_check=time.monotonic()+30
+            while selector.get_map():
+                require(time.time()<EXEC_STOP,'Technical-review/cleanup reserve reached')
+                for key,_ in selector.select(timeout=1):
+                    data=os.read(key.fileobj.fileno(),65536)
+                    if data:log.write(data);log.flush();sys.stdout.buffer.write(data);sys.stdout.buffer.flush()
+                    else:selector.unregister(key.fileobj)
+                idle_check()
+                if time.monotonic()>=next_check:invariant();next_check=time.monotonic()+30
+            job['returncode']=CURRENT.wait(timeout=max(.1,EXEC_STOP-time.time()))
+            require(job['returncode']==0,f'{label} failed');invariant();job['complete']=True
+    finally:
+        if CURRENT is not None:
+            if not job['complete']:stop_owned(CURRENT,OWNED)
+            CURRENT.stdout.close();CURRENT=None
+        job['finished_at']=now()
+        job['runtime_seconds']=(datetime.fromisoformat(job['finished_at'])-datetime.fromisoformat(job['started_at'])).total_seconds()
+        save()
+
+
+def protect(paths):
+    for path in paths:FROZEN[str(path)]=sha(path)
+
+
+def freeze_plan(audit):
+    path=str(A.PLAN);actual=sha(A.PLAN)
+    require(actual==audit.get('plan_sha256_at_audit'),'Preregistered plan differs from pair audit')
+    require(path not in FROZEN or FROZEN[path]==actual,'Preregistered plan changed across pair audits')
+    FROZEN[path]=actual
+
+
+def audited_pair(seed):
+    state=read(A.state_path(seed));audit=read(A.audit_path(seed));A.require_complete(state,seed);audit_matches(state,audit,seed)
+    freeze_plan(audit)
+    require(audit['input_sha256'].get(str(A.state_path(seed)))==sha(A.state_path(seed)),'Audit state identity mismatch')
+    A.require_hashes(audit['input_sha256'])
+    require(A.same_code(state['baseline']['code'],BASELINE['code']) and state['baseline']['protected']==BASELINE['protected'],
+        'Pair sources/protected inputs differ')
+    if seed!=47:require(state['baseline']['code']==BASELINE['code'],'New pair HEAD differs from frozen pipeline')
+    FROZEN.update(audit['input_sha256']);protect([A.audit_path(seed),A.audit_path(seed).with_suffix('.md')])
+    return state,audit
+
+
+def absent_targets():
+    paths=[]
+    for seed in (48,49):
+        prefix,state,preflight,arms=W.settings(ROOT,seed,3000)
+        paths.extend([state,preflight,A.audit_path(seed),A.audit_path(seed).with_suffix('.md')])
+        paths.extend(a[k] for a in arms.values() for k in ('run','eval'))
+        paths.extend(ANALYSIS/f'{prefix}_{label}.log' for label in A.JOBS)
+    paths.extend([ANALYSIS/'exploration_aggregate.json',ANALYSIS/'exploration_aggregate.md',
+        ANALYSIS/'exploration_qmargin_diagnostic.json',ROOT/'experiments/candidates/exploration_s47_49_fixed_ensembles',
+        COMPARE/'exploration_ensemble_development',COMPARE/'exploration_ensemble_confirmation'])
+    require(not any(p.exists() for p in paths),'A later target already exists; no automatic resume/overwrite')
+    return list(map(str,paths))
+
+
+def interrupted(signum,frame):raise InterruptedError(f'Received signal {signum}')
+
+
+def run():
+    global A,W,D,STATE,BASELINE,FROZEN
+    require((ROOT/'agents/sherlock/main.py').is_file(),'Run from the repository root')
+    require(not OUT.exists(),'Coordinator state/log directory already exists')
+    require(time.time()<CUTOFF,'Start cutoff already passed')
+    for name,path in PATHS.items():require(sha(path)==HASHES[name],f'Fixed helper changed: {name}')
+    A=load('auditor');W=load('replication');D=load('development');idle_check()
+    BASELINE={'code':W.source_identity(),'protected':W.protected_hashes()}
+    FROZEN={str(p):HASHES[k] for k,p in PATHS.items()};FROZEN[str(SCRIPT)]=sha(SCRIPT)
+    # Exclusive claim even a failed prerequisite so the reason remains reviewable.
+    OUT.mkdir(exist_ok=False);STATE=dict(status='preflight',complete=False,started_at=now(),jobs=[],admissions=[],
+        baseline=BASELINE,tool_sha256=dict(FROZEN),promotion_authorized=False,
+        stop_epoch=STOP_AT,technical_reserve_seconds=TECHNICAL_RESERVE,execution_stop_epoch=EXEC_STOP,
+        fixed_sequence=phase_order(True),automatic_repair=False)
+    save()
+    for sig in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP):signal.signal(sig,interrupted)
+    try:
+        state,audit=audited_pair(47)
+        STATE['initial_head_transition']=A.head_transition(state['baseline']['code']['head'],BASELINE['code']['head'])
+        STATE['absent_targets']=absent_targets();STATE['status']='running';save();invariant()
+        completed=[47]
+        for seed in (48,49):
+            timing=estimate(pair_evidence(completed))
+            check=record_admission('pair'+str(seed),timing,remaining_pairs=50-seed)
+            child('pair'+str(seed),'replication',['--run','--run-seed',str(seed),'--games','3000','--minimum-seconds',str(check['required_seconds'])])
+            record_admission('audit'+str(seed),timing,phase_seconds=180)
+            child('audit'+str(seed),'auditor',['--audit-pair','--run-seed',str(seed),'--confirm-no-heavy-work'])
+            audited_pair(seed);completed.append(seed)
+        timing=estimate(pair_evidence(completed))
+        # Conservative fixed ceilings for small analysis/build phases. They are
+        # estimates for admission, not an authorization to alter the experiment.
+        for label,tool,args,budget,outputs in [
+            ('aggregate','auditor',['--aggregate'],120,[ANALYSIS/'exploration_aggregate.json',ANALYSIS/'exploration_aggregate.md']),
+            ('qmargin','qmargin',['--run','--confirm-no-heavy-work'],300,[ANALYSIS/'exploration_qmargin_diagnostic.json']),
+            ('builder','builder',['--run','--confirm-pair-audits'],300,[ROOT/'experiments/candidates/exploration_s47_49_fixed_ensembles/manifest.json'])]:
+            record_admission(label,timing,phase_seconds=budget);child(label,tool,args);protect(outputs)
+            if label in ('aggregate','builder'):require(read(outputs[0]).get('complete') is True,f'{label} incomplete')
+        dev_budget=timing['max_eval_seconds']*5*1.25+30
+        record_admission('development',timing,phase_seconds=dev_budget);child('development','development',['--run'])
+        devpath=COMPARE/'exploration_ensemble_development/state.json';dev=read(devpath);protect([devpath])
+        if confirmation_selected(dev):
+            # 1600 fresh + at most 120 direct, scaled from complete 240-game arms.
+            confirmation_budget=timing['max_eval_seconds']*(1720/240)*1.25+60
+            record_admission('confirmation',timing,phase_seconds=confirmation_budget)
+            child('confirmation','confirmation',['--run'])
+            path=COMPARE/'exploration_ensemble_confirmation/state.json';result=read(path);protect([path])
+            require(result.get('complete') is True and result.get('status')=='complete','Confirmation incomplete')
+            STATE['decision']=result['decision']
+        else:STATE['decision']='no_promotion_no_development_candidate';STATE['confirmation_skipped']=True
+        invariant();STATE.update(status='complete',complete=True,final_identity={'code':W.source_identity(),'protected':W.protected_hashes()})
+    except BaseException as exc:
+        stop_owned(CURRENT,OWNED)
+        STATE.update(status='paused_incomplete',complete=False,error=f'{type(exc).__name__}: {exc}',requires_root_review=True)
+        raise
+    finally:
+        STATE['frozen_evidence_sha256']=dict(FROZEN);STATE['finished_at']=now();save()
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True)
+    g.add_argument('--run',action='store_true');g.add_argument('--self-test',action='store_true');args=p.parse_args()
+    if args.self_test:
+        import unittest
+        spec=importlib.util.spec_from_file_location('night_tests',SCRIPT.with_name('test_exploration_night_continuation.py'))
+        tests=importlib.util.module_from_spec(spec);spec.loader.exec_module(tests)
+        result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(tests))
+        require(not any(k in sys.modules for k in ('torch','jax','numpy')),'Heavy dependency imported in coordinator tests')
+        if not result.wasSuccessful():raise SystemExit(1)
+    else:run()
+
+if __name__=='__main__':main()

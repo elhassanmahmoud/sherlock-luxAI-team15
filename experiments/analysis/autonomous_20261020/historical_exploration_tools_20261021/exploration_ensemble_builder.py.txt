@@ -1,0 +1,284 @@
+"""Build exactly control3, slow3, v3_control3, v3_slow3 after all pair audits.
+
+Prepared only. From repository root (or archived tools/):
+  .venv/bin/python -B /tmp/exploration_ensemble_builder.py --run --confirm-pair-audits
+Torch is lazy. Never use during training/evaluation. No source checkpoint is written.
+Tests: python3 -B /tmp/test_exploration_ensemble_builder.py (stdlib, abstract states).
+"""
+from __future__ import annotations
+import argparse
+import ast
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import shlex
+import subprocess
+import sys
+from datetime import datetime, timezone
+
+SCRIPT = Path(__file__).resolve()
+ROOT = SCRIPT.parents[4] if SCRIPT.parent.name == 'tools' else Path.cwd().resolve()
+ANALYSIS = ROOT / 'experiments/analysis/autonomous_20261020'
+OUT = ROOT / 'experiments/candidates/exploration_s47_49_fixed_ensembles'
+V3 = ROOT / 'experiments/candidates/all18_v3.pth'
+V3_SHA = 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+PLAY_KEYS = ('hidden', 'dueling', 'use_sap', 'use_belief', 'canonical', 'mask_actions')
+SEEDS = (47, 48, 49)
+
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def sha(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for data in iter(lambda: stream.read(1024 * 1024), b''):
+            h.update(data)
+    return h.hexdigest()
+
+
+def fixed_groups(hashes):
+    require(set(hashes) == {'v3', 'control', 'slow'}, 'Wrong source groups')
+    for name, n in (('v3', 18), ('control', 3), ('slow', 3)):
+        require(len(hashes[name]) == n, f'{name}: expected {n} networks')
+    all_hashes = sum((list(hashes[k]) for k in ('v3', 'control', 'slow')), [])
+    require(len(set(all_hashes)) == 24, 'Duplicate network within/across fixed source groups')
+    return {'control3': list(hashes['control']), 'slow3': list(hashes['slow']),
+            'v3_control3': list(hashes['v3']) + list(hashes['control']),
+            'v3_slow3': list(hashes['v3']) + list(hashes['slow'])}
+
+
+def compatible(checkpoint, reference, cfg):
+    require(not checkpoint.get('cnn_policy'), 'Unaccounted CNN policy')
+    for key in ('feature_dim', 'n_actions'):
+        require(key in checkpoint and checkpoint[key] == reference[key], f'Incompatible {key}')
+    for key in PLAY_KEYS:
+        require(key in checkpoint['cfg'] and key in cfg
+                and checkpoint['cfg'][key] == reference['cfg'][key] == cfg[key], f'Incompatible cfg.{key}')
+
+
+def assemble(base, extras, cfg, sources):
+    # Same flattening/order as scripts.build_ensemble; retain first q/target/optimizer.
+    return {**base, 'ensemble': list(base.get('ensemble', [])) + list(extras),
+            'cfg': dict(cfg), 'ensemble_sources': list(sources)}
+
+
+def no_heavy_jobs():
+    modules = {'scripts.par_eval', 'scripts.experiment', 'scripts.train', 'scripts.ppo_train',
+               'scripts.evaluate', 'scripts.compare_weights', 'scripts.finetune'}
+    scripts = {'reward_pilot.py', 'sherlock-reward-pilot-20261020.py', 'reward_replication.py',
+               'sherlock-reward-replication-20261020.py', 'exploration_replication.py',
+               'inference_development2.py', 'sherlock-inference-development2-20261020.py',
+               'sherlock-target-diagnosis-20261020.py', 'par_eval.py', 'experiment.py',
+               'train.py', 'ppo_train.py', 'evaluate.py', 'compare_weights.py', 'finetune.py'}
+    for line in subprocess.check_output(['ps', '-axo', 'pid=,args='], text=True).splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) != 2 or int(parts[0]) == os.getpid():
+            continue
+        try:
+            args = shlex.split(parts[1])
+        except ValueError:
+            continue
+        if not args or not re.fullmatch(r'python(?:\d+(?:\.\d+)*)?', Path(args[0]).name, re.I):
+            continue
+        i, heavy = 1, False
+        while i < len(args):
+            value = args[i]
+            if value == '-m':
+                heavy = i + 1 < len(args) and args[i + 1] in modules; break
+            if value == '-c':
+                heavy = (args[-1] == '--multiprocessing-fork' and re.match(
+                    r'^from multiprocessing\.spawn import spawn_main;\s*spawn_main\(', ' '.join(args[i + 1:-1])) is not None)
+                break
+            if value == '--':
+                heavy = i + 1 < len(args) and Path(args[i + 1]).name in scripts; break
+            if value in ('-W', '-X', '--check-hash-based-pycs'):
+                i += 2; continue
+            if value.startswith('-') and value != '-':
+                i += 1; continue
+            heavy = Path(value).name in scripts; break
+        require(not heavy, f'Other heavy Python job still active: {parts[0]} {parts[1]}')
+
+
+def audited_inputs():
+    """Validate the existing pair-runner schema; no dependency on a new audit API."""
+    hashes, sources, baseline_code = {}, {'control': [], 'slow': []}, None
+    pair_heads = {}
+    def read(path):
+        data = Path(path).read_bytes()
+        hashes[str(path)] = hashlib.sha256(data).hexdigest()
+        return json.loads(data)
+    for seed in SEEDS:
+        state = read(ANALYSIS / f'exploration_replication_s{seed}_state.json')
+        require(state.get('complete') is True and state.get('status') == 'complete'
+                and state.get('final_integrity_ok') is True and not state.get('error')
+                and not state.get('integrity_error'), f's{seed}: pair not fully audited')
+        require(state['run_seed'] == seed and state['games_per_arm'] == 3000, 'Wrong pair horizon/seed')
+        require(state['controlled_difference'] == {'eps_decay_steps': {'control': 60000, 'slow': 454500}}, 'Wrong controlled difference')
+        code = state['baseline']['code']
+        if baseline_code is None:
+            baseline_code = code
+        require({k: v for k, v in code.items() if k != 'head'} ==
+                {k: v for k, v in baseline_code.items() if k != 'head'}, 'Pair Python/source identities differ')
+        pair_heads[str(seed)] = code['head']
+        jobs = ['preflight', 'train_control', 'checkpoint_control', 'train_slow',
+                'checkpoint_slow', 'eval_control', 'eval_slow']
+        require([j['label'] for j in state['jobs']] == jobs
+                and all(j.get('complete') is True and j.get('returncode') == 0 for j in state['jobs']), 'Incomplete pair jobs')
+        preflight = read(ANALYSIS / f'exploration_replication_s{seed}_preflight.json')
+        require(preflight == state['preflight'] and preflight['seed'] == seed
+                and preflight['games'] == 3000 and preflight['agent_seed'] == 100 * seed, 'Wrong preflight')
+        require(set(state['arms']) == set(preflight['arms']) == {'control', 'slow'}, 'Unexpected arms')
+        left, right = (preflight['arms'][a] for a in ('control', 'slow'))
+        require(left['q_sha256'] == right['q_sha256'] == left['target_q_sha256'] == right['target_q_sha256']
+                and left['rng_state'] == right['rng_state'], 'Initial pair identity mismatch')
+        require({k for k in left['config'].keys() | right['config'].keys()
+                 if left['config'].get(k) != right['config'].get(k)} == {'eps_decay_steps'}, 'Unexpected config diff')
+        for arm, variant, decay in (('control', 'full_rules_v3', 60000), ('slow', 'full_rules_v3_slowexplore', 454500)):
+            record, initial = state['arms'][arm], preflight['arms'][arm]
+            run = ROOT / f'experiments/runs/20261020_{variant}_s{seed}_exploration_{arm}'
+            evaluation = ROOT / f'experiments/compare/autonomous_20261020/exploration_replication_s{seed}_{arm}.csv'
+            require(record['run'] == str(run) and record['eval'] == str(evaluation) and record['variant'] == variant, 'Wrong fixed source path')
+            cfg = initial['config']
+            require(cfg['eps_decay_steps'] == decay and all(cfg[k] is False for k in ('terminal_death_potential', 'active_targets', 'sap_geometry'))
+                    and initial['env_steps'] == initial['learn_steps'] == 0, 'Wrong fresh training config')
+            require(read(run / 'initial_identity.json') == initial, 'Actual initial identity mismatch')
+            final = read(run / 'final_identity.json')
+            train, ev = record['training'], record['evaluation']
+            require(train['complete'] is True and train['rows'] == 3000 and train['map_pairs'] == 1500
+                    and train['final'] == final and ev['complete'] is True and ev['rows'] == 240, 'Incomplete saved audit')
+            require(final['config'] == cfg and final['env_steps'] == 909000 and final['learn_steps'] > 0
+                    and final['q_finite'] is True and final['target_q_finite'] is True, 'Wrong final identity')
+            manifest = read(run / 'manifest.json')
+            require(manifest['status'] == 'done' and manifest['train_games'] == 3000
+                    and manifest['run_seed'] == seed and manifest['variant'] == variant
+                    and manifest['config'] == cfg, 'Wrong training manifest')
+            for path, expected in ((run / 'train.csv', train['train_csv_sha256']),
+                                   (evaluation, ev['csv_sha256']), (run / 'weights/agent.pth', final['file_sha256'])):
+                require(sha(path) == expected, f'Source changed: {path}')
+                hashes[str(path)] = expected
+            sources[arm].append((run / 'weights/agent.pth', final))
+    for path, expected in baseline_code['python_sources'].items():
+        require(sha(path) == expected, f'Training source changed: {path}')
+        hashes[path] = expected
+    require(sha(baseline_code['python_path']) == baseline_code['python_sha256'], 'Python runtime changed')
+    hashes[baseline_code['python_path']] = baseline_code['python_sha256']
+    hashes[str(SCRIPT)] = sha(SCRIPT)
+    return sources, hashes, {**baseline_code, 'pair_heads': pair_heads,
+                            'head_note': 'Historical HEADs; Root pair audits verify permitted data/document commits. Python source sets and interpreter identity are identical.'}
+
+
+def tensor_hash(tensors):
+    h = hashlib.sha256()
+    for name, tensor in sorted(tensors.items()):
+        value = tensor.detach().cpu().contiguous()
+        h.update(json.dumps([name, str(value.dtype), list(value.shape)], separators=(',', ':')).encode())
+        h.update(b'\0'); h.update(value.numpy().tobytes())
+    return h.hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--run', action='store_true', required=True)
+    parser.add_argument('--confirm-pair-audits', action='store_true', required=True)
+    parser.parse_args()
+    require((ROOT / 'scripts/build_ensemble.py').is_file(), 'Run from repository or archived tools path')
+    require(not OUT.exists(), 'Refusing an existing/partial output directory')
+    no_heavy_jobs()
+    sources, inputs, code = audited_inputs()
+    require(sha(V3) == V3_SHA, 'Fixed V3 basis changed')
+    inputs[str(V3)] = V3_SHA
+    live = [ROOT / f'agents/sherlock/weights/agent_p{side}.pth' for side in (0, 1)]
+    live_hashes = [sha(path) for path in live]
+    require(live_hashes[0] == live_hashes[1], 'Installed sides differ; explicit review needed')
+    inputs.update({str(p): h for p, h in zip(live, live_hashes)})
+    # Match existing builder's semantic compatibility contract without importing Torch yet.
+    tree = ast.parse((ROOT / 'scripts/build_ensemble.py').read_text())
+    play = next(n.value for n in tree.body if isinstance(n, ast.Assign)
+                and any(isinstance(t, ast.Name) and t.id == 'PLAY_KEYS' for t in n.targets))
+    require(tuple(ast.literal_eval(play)) == PLAY_KEYS, 'Existing builder compatibility contract changed')
+    for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS'):
+        os.environ[key] = '1'
+    no_heavy_jobs()
+    import torch
+    torch.set_num_threads(1); torch.set_num_interop_threads(1)
+    # Resolve missing legacy cfg fields exactly as the installed AgentConfig does.
+    spec = importlib.util.spec_from_file_location('_ensemble_agent_config', ROOT / 'agents/sherlock/config.py')
+    module = importlib.util.module_from_spec(spec); sys.modules[spec.name] = module; spec.loader.exec_module(module)
+    installed = torch.load(live[0], map_location='cpu', weights_only=False)
+    cfg = module.AgentConfig.from_dict(installed['cfg']).to_dict()
+    base = torch.load(V3, map_location='cpu', weights_only=False)
+    loaded = {'control': [], 'slow': []}
+    provenance = {}
+    def validate(checkpoint, path):
+        compatible(checkpoint, base, cfg)
+        reference = base['q']
+        def finite(value):
+            if isinstance(value, torch.Tensor):
+                require(bool(torch.isfinite(value).all().item()), f'Nonfinite tensor in {path}')
+            elif isinstance(value, dict):
+                for v in value.values(): finite(v)
+            elif isinstance(value, (list, tuple)):
+                for v in value: finite(v)
+        finite(checkpoint)
+        for network in [checkpoint['q'], checkpoint['target_q'], *checkpoint.get('ensemble', [])]:
+            require(set(network) == set(reference), 'Network tensor keys differ')
+            require(all(network[k].shape == reference[k].shape and network[k].dtype == reference[k].dtype for k in reference), 'Network shape/dtype differs')
+        hashes = [tensor_hash(q) for q in [checkpoint['q'], *checkpoint.get('ensemble', [])]]
+        for index, h in enumerate(hashes):
+            provenance.setdefault(h, []).append({'checkpoint': str(path), 'network_index': index})
+        return hashes
+    validate(installed, live[0])
+    groups = {'v3': validate(base, V3)}
+    for arm in ('control', 'slow'):
+        groups[arm] = []
+        for path, final in sources[arm]:
+            checkpoint = torch.load(path, map_location='cpu', weights_only=False)
+            require(checkpoint['cfg'] == final['config'] and not checkpoint.get('ensemble'), 'Wrong training checkpoint config/ensemble')
+            require(all(checkpoint[k] == final[k] for k in ('env_steps', 'learn_steps')), 'Training counters differ')
+            hashes = validate(checkpoint, path)
+            require(hashes == [final['q_sha256']] and tensor_hash(checkpoint['target_q']) == final['target_q_sha256'], 'Final tensor hashes differ')
+            groups[arm].extend(hashes); loaded[arm].append(checkpoint)
+    fixed = fixed_groups(groups)
+    require(all(sha(p) == h for p, h in inputs.items()), 'Input changed before construction')
+    no_heavy_jobs()
+    OUT.mkdir(exist_ok=False)
+    manifest = {'complete': False, 'created_at': datetime.now(timezone.utc).isoformat(),
+                'inputs_sha256': inputs, 'training_source_identity': code, 'inference_config': cfg,
+                'installed_sha256': dict(zip(map(str, live), live_hashes)), 'groups': fixed,
+                'q_state_provenance': provenance, 'outputs': {},
+                'weighting': 'Equal arithmetic mean per network; 3 or 21 networks. No selection.',
+                'builder_sha256': sha(SCRIPT)}
+    try:
+        for name, expected in fixed.items():
+            arm = 'control' if 'control' in name else 'slow'
+            use_base = name.startswith('v3_')
+            first = base if use_base else loaded[arm][0]
+            extras = [c['q'] for c in (loaded[arm] if use_base else loaded[arm][1:])]
+            paths = ([str(V3)] if use_base else []) + [str(p) for p, _ in sources[arm]]
+            checkpoint = assemble(first, extras, cfg, paths)
+            path = OUT / f'{name}.pth'
+            with path.open('xb') as stream: torch.save(checkpoint, stream)
+            check = torch.load(path, map_location='cpu', weights_only=False)
+            require(check['cfg'] == cfg and validate(check, path) == expected, f'{name}: readback mismatch')
+            manifest['outputs'][name] = {'path': str(path), 'sha256': sha(path), 'networks': len(expected), 'q_sha256': expected}
+            del checkpoint, check
+        require(all(sha(p) == h for p, h in inputs.items()), 'Input changed during construction')
+        no_heavy_jobs()
+        manifest['complete'] = True
+    except BaseException as exc:
+        manifest['error'] = f'{type(exc).__name__}: {exc}'
+        raise
+    finally:
+        with (OUT / 'manifest.json').open('x') as stream:
+            json.dump(manifest, stream, indent=2, allow_nan=False); stream.write('\n')
+    print(OUT / 'manifest.json')
+
+
+if __name__ == '__main__':
+    main()

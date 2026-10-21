@@ -1,0 +1,84 @@
+import importlib.util
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+spec=importlib.util.spec_from_file_location('night',Path(__file__).with_name('exploration_night_continuation.py'))
+n=importlib.util.module_from_spec(spec);spec.loader.exec_module(n)
+
+class Tests(unittest.TestCase):
+    def evidence(self):
+        return [dict(seed=47,arm='control',manifest_training_seconds=100,training_wall_seconds=102,eval_wall_seconds=20),
+                dict(seed=47,arm='slow',manifest_training_seconds=90,training_wall_seconds=95,eval_wall_seconds=25)]
+    def test_exact_conservative_pair_formula(self):
+        e=n.estimate(self.evidence())
+        self.assertEqual(e['max_training_seconds'],102)
+        self.assertEqual(e['max_eval_seconds'],25)
+        self.assertEqual(e['pair_seconds'],347.5)
+        self.assertEqual(e['evidence'],self.evidence())
+        for bad in ([],[dict(self.evidence()[0],eval_wall_seconds=float('nan'))],self.evidence()[:1]):
+            with self.assertRaises(RuntimeError):n.estimate(bad)
+    def test_budget_uses_all_remaining_pairs_and_reserve(self):
+        e=n.estimate(self.evidence())
+        d=n.admission(100,e,remaining_pairs=2,stop_at=5000,cutoff=1000)
+        self.assertEqual(d['required_seconds'],4295)
+        self.assertTrue(d['allowed'])
+        self.assertFalse(n.admission(705,e,remaining_pairs=2,stop_at=5000,cutoff=1000)['allowed'])
+        self.assertFalse(n.admission(1000,e,remaining_pairs=1,stop_at=6000,cutoff=1000)['allowed'])
+        self.assertFalse(n.admission(100,e,phase_seconds=4000,stop_at=5000,cutoff=1000)['allowed'])
+    def test_fixed_sequence_and_only_confirmation_is_conditional(self):
+        self.assertEqual(n.phase_order(False),['pair48','audit48','pair49','audit49','aggregate','qmargin','builder','development'])
+        self.assertEqual(n.phase_order(True)[-1],'confirmation')
+    def test_owned_descendants_do_not_include_unrelated_processes(self):
+        rows={10:(1,10,'python night'),11:(10,11,'python wrapper'),12:(11,12,'python train'),
+              13:(12,12,'python spawn'),20:(1,20,'python foreign')}
+        self.assertEqual(n.descendants(rows,10),{10,11,12,13})
+        self.assertNotIn(20,n.descendants(rows,10))
+    def test_s47_audit_must_be_complete_matching_and_fixed_auditor(self):
+        s={'run_seed':47,'games_per_arm':3000,'baseline':{'code':{'head':'h'},'protected':{}},'preflight':{'seed':47}}
+        a={'schema':'exploration_pair_audit_v1','complete':True,'technical_audit_passed':True,'run_seed':47,
+           'auditor_sha256':n.HASHES['auditor'],'source_identity':s['baseline']['code'],
+           'protected_hashes':{},'preflight':s['preflight']}
+        n.audit_matches(s,a,47)
+        for k,v in [('complete',False),('auditor_sha256','wrong'),('run_seed',48),('source_identity',{})]:
+            with self.assertRaises(RuntimeError):n.audit_matches(s,{**a,k:v},47)
+    def test_confirmation_selection_excludes_three_net_diagnostics(self):
+        for value in ('v3_control3','v3_slow3'):
+            self.assertTrue(n.confirmation_selected({'complete':True,'status':'complete','selection':{'selected':value}}))
+        self.assertFalse(n.confirmation_selected({'complete':True,'status':'complete','selection':{'selected':None}}))
+        for value in ('slow3','control3','other'):
+            with self.assertRaises(RuntimeError):n.confirmation_selected({'complete':True,'status':'complete','selection':{'selected':value}})
+    def test_cleanup_signals_wrapper_before_descendant_fallback(self):
+        events=[]
+        class Process:
+            pid=11
+            def poll(self):return None
+        with patch.object(n.os,'kill',side_effect=lambda *a:events.append(('signal',a))),patch.object(n.os,'killpg',side_effect=lambda *a:events.append(('killpg',a))),patch.object(n.time,'sleep'),patch.object(n.time,'monotonic',side_effect=[0,1,16]),patch.object(n,'process_table',return_value={11:(1,11,'wrapper'),12:(11,12,'train')}):
+            n.stop_owned(Process(),{11:(10,11,'wrapper'),12:(11,12,'train')})
+        self.assertEqual(events[0],('signal',(11,n.signal.SIGTERM)))
+        self.assertTrue(any(x[0]=='killpg' and x[1][0]==12 for x in events))
+        self.assertFalse(any(x[0]=='killpg' and x[1][0]==10 for x in events))
+
+    def test_plan_must_match_first_audit_and_remain_frozen(self):
+        from types import SimpleNamespace
+        plan=Path('/fixture/plan.md')
+        with patch.object(n,'A',SimpleNamespace(PLAN=plan)),patch.object(n,'FROZEN',{}):
+            with patch.object(n,'sha',return_value='original'):
+                n.freeze_plan({'plan_sha256_at_audit':'original'})
+                self.assertEqual(n.FROZEN[str(plan)],'original')
+                with self.assertRaises(RuntimeError):n.freeze_plan({'plan_sha256_at_audit':'different'})
+            with patch.object(n,'sha',return_value='different'):
+                with self.assertRaises(RuntimeError):n.freeze_plan({'plan_sha256_at_audit':'original'})
+                with self.assertRaises(RuntimeError):n.freeze_plan({'plan_sha256_at_audit':'different'})
+    def test_cleanup_ignores_reused_pid_group_with_changed_command(self):
+        groups=[]
+        class Process:
+            pid=11
+            def poll(self):return None
+        observed={11:(10,11,'wrapper'),12:(11,12,'python original'),13:(11,13,'python child')}
+        current={11:(1,11,'wrapper'),12:(1,12,'python unrelated'),13:(1,13,'python child')}
+        with patch.object(n.os,'kill'),patch.object(n.os,'killpg',side_effect=lambda group,sig:groups.append(group)),patch.object(n.time,'sleep'),patch.object(n.time,'monotonic',side_effect=[0,1,16]),patch.object(n,'process_table',return_value=current):
+            n.stop_owned(Process(),observed)
+        self.assertNotIn(12,groups)
+        self.assertIn(13,groups)
+
+if __name__=='__main__':unittest.main()

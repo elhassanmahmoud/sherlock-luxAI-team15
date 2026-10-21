@@ -1,0 +1,670 @@
+"""Audit completed exploration pairs, then aggregate all three audited starts.
+
+From the repository, after a pair exits and before any HEAD change:
+  .venv/bin/python -B /tmp/exploration_analysis.py --audit-pair --run-seed 47 --confirm-no-heavy-work
+After all three complete audits:
+  .venv/bin/python -B /tmp/exploration_analysis.py --aggregate
+
+--self-test uses stdlib and synthetic fixtures only. Pair audit loads Torch only
+after completion, current identity, CSV and idle-process gates. Aggregate loads
+NumPy but never Torch, agent modules, or checkpoints. No jobs or promotion.
+All reports use exclusive creation. Keep this script unchanged across audits.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import importlib.util
+import io
+import json
+import math
+import os
+from pathlib import Path
+import re
+import shlex
+import subprocess
+import sys
+from datetime import datetime, timezone
+
+SCRIPT = Path(__file__).resolve()
+ROOT = (SCRIPT.parents[4] if SCRIPT.parent.name == 'tools' else Path.cwd().resolve())
+ANALYSIS = ROOT / 'experiments/analysis/autonomous_20261020'
+WRAPPER = ANALYSIS / 'tools/exploration_replication.py'
+PLAN = ROOT / 'docs/superpowers/plans/2026-10-20-exploration-replication.md'
+SEEDS = (47, 48, 49)
+ARMS = ('control', 'slow')
+OPPONENTS = ('default', 'solution92')
+MAPS = tuple(range(500720, 500780))
+SIDES = ('player_0', 'player_1')
+JOBS = ('preflight', 'train_control', 'checkpoint_control', 'train_slow',
+        'checkpoint_slow', 'eval_control', 'eval_slow')
+
+
+def require(ok, message):
+    if not ok:
+        raise RuntimeError(message)
+
+
+def sha(path):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            h.update(block)
+    return h.hexdigest()
+
+
+def load_json(path):
+    return json.loads(Path(path).read_text())
+
+
+def state_path(seed):
+    return ANALYSIS / f'exploration_replication_s{seed}_state.json'
+
+
+def audit_path(seed):
+    return ANALYSIS / f'exploration_pair_audit_s{seed}.json'
+
+
+def require_complete(state, seed):
+    require(state.get('status') == 'complete' and state.get('complete') is True
+            and state.get('final_integrity_ok') is True, f's{seed}: incomplete state')
+    require(not state.get('error') and not state.get('integrity_error'), f's{seed}: recorded failure')
+    require(seed in SEEDS and state['run_seed'] == seed and state['games_per_arm'] == 3000,
+            'Wrong run seed or horizon')
+    require(state['controlled_difference'] == {'eps_decay_steps': {'control': 60000, 'slow': 454500}},
+            'Wrong controlled difference')
+    require(set(state['arms']) == set(ARMS), 'Wrong arm set')
+    require([j['label'] for j in state['jobs']] == list(JOBS), 'Unexpected/missing jobs')
+    previous_end = None
+    for job in state['jobs']:
+        require(job.get('complete') is True and job.get('returncode') == 0, 'Unfinished/failed job')
+        start, end = (datetime.fromisoformat(job[k]) for k in ('started_at', 'finished_at'))
+        require(end >= start and (previous_end is None or start >= previous_end), 'Overlapping/invalid jobs')
+        previous_end = end
+
+
+def check_initial(preflight, seed):
+    require(preflight['seed'] == seed and preflight['agent_seed'] == seed * 100
+            and preflight['games'] == 3000, 'Wrong preflight seed/horizon')
+    require(set(preflight['arms']) == set(ARMS), 'Wrong preflight arms')
+    left, right = (preflight['arms'][arm] for arm in ARMS)
+    require(left['config'].keys() == right['config'].keys(), 'Config key mismatch')
+    differences = {key for key in left['config'] if left['config'][key] != right['config'][key]}
+    require(differences == {'eps_decay_steps'}, f'Unexpected config difference: {differences}')
+    for arm, record, expected in (('control', left, 60000), ('slow', right, 454500)):
+        cfg = record['config']
+        require(cfg['eps_decay_steps'] == expected, f'{arm}: wrong epsilon decay')
+        require(cfg['eps_start'] == 1.0 and cfg['eps_end'] == .05 and cfg['guided_prob'] == .7,
+                f'{arm}: unexpected exploration settings')
+        require(all(cfg.get(k, False) is False for k in
+                    ('terminal_death_potential', 'active_targets', 'sap_geometry',
+                     'contest_sap', 'opp_infer', 'smart_sap')), 'Unrelated experimental flag enabled')
+        require(all(cfg.get(k) is True for k in ('canonical', 'reward_fix', 'use_shaping')),
+                'Required baseline options absent')
+        require(record['env_steps'] == record['learn_steps'] == 0, 'Initialization is not fresh')
+        require(record['q_sha256'] == record['target_q_sha256'], 'Initial q/target mismatch')
+    require(left['q_sha256'] == right['q_sha256'] and left['rng_state'] == right['rng_state'],
+            'Initial tensors or agent RNG differ')
+
+
+def parse_csv(text, training=False):
+    reader = csv.DictReader(io.StringIO(text))
+    fields = reader.fieldnames
+    require(fields is not None and len(fields) == len(set(fields)), 'Missing/duplicate columns')
+    needed = {'seed', 'side', 'opponent', 'result', 'our_wins', 'opp_wins',
+              'our_points', 'opp_points', 'steps', 'point_counting_version'}
+    if training:
+        needed |= {'game', 'env_steps', 'learn_steps', 'mean_loss'}
+    require(needed <= set(fields), 'Missing required columns')
+    rows = []
+    for row in reader:
+        require(None not in row and all(value is not None for value in row.values()), 'Malformed CSV row')
+        require(int(row['steps']) == 303 and row['point_counting_version'] == '2', 'Incomplete/wrong scoring game')
+        for key, value in row.items():
+            if key in ('side', 'opponent'):
+                continue
+            number = float(value)
+            permitted_nan = (training and key == 'mean_loss' and math.isnan(number)
+                             and int(row['learn_steps']) == 0)
+            require(math.isfinite(number) or permitted_nan, f'Nonfinite CSV field {key}')
+        own, opp = float(row['our_wins']), float(row['opp_wins'])
+        require(own.is_integer() and opp.is_integer() and 0 <= own <= 3 and 0 <= opp <= 3
+                and own + opp <= 3, 'Invalid match totals')
+        require(float(row['result']) == (1 if own > opp else 0 if own < opp else .5), 'Inconsistent result')
+        require(float(row['our_points']) >= 0 and float(row['opp_points']) >= 0, 'Negative points')
+        rows.append(row)
+    return rows
+
+
+def evaluation_table(rows):
+    keys = [(int(r['seed']), r['side'], r['opponent']) for r in rows]
+    expected = {(seed, side, opponent) for seed in MAPS for side in SIDES for opponent in OPPONENTS}
+    require(len(rows) == 240 and len(set(keys)) == 240 and set(keys) == expected,
+            'Evaluation must have exactly all 240 keys')
+    return dict(zip(keys, rows))
+
+
+def map_values(tables, opponent):
+    values = {}
+    for arm in ARMS:
+        values[arm] = [sum(float(tables[arm][seed, side, opponent]['result'])
+                           for side in SIDES) / 2 for seed in MAPS]
+    return values
+
+
+def summarize_maps(control, slow, starts=1):
+    import numpy as np
+    control, slow = np.asarray(control, dtype=np.float64), np.asarray(slow, dtype=np.float64)
+    require(control.shape == slow.shape == (60,) and bool(np.isfinite(control).all())
+            and bool(np.isfinite(slow).all()), 'Invalid map arrays')
+    differences = slow - control
+    rng = np.random.default_rng(0)
+    sampled = rng.choice(differences, size=(5000, 60), replace=True).mean(axis=1)
+    low, high = map(float, np.percentile(sampled, [2.5, 97.5]))
+    return {'control_mean_result': float(control.mean()), 'slow_mean_result': float(slow.mean()),
+            'delta': float(differences.mean()), 'paired_map_bootstrap_95': [low, high],
+            'maps': 60, 'games_per_arm_per_start': 120, 'fixed_training_starts': starts,
+            'bootstrap_samples': 5000, 'bootstrap_seed': 0,
+            'uncertainty_scope': 'Map uncertainty conditional on these fixed trained starts; '
+                                 'does not estimate training-start uncertainty.'}
+
+
+def pair_comparisons(tables):
+    results = {}
+    for opponent in OPPONENTS:
+        values = map_values(tables, opponent)
+        record = summarize_maps(values['control'], values['slow'])
+        record['delta_half_result_units'] = sum(
+            int(2 * float(tables['slow'][seed, side, opponent]['result']))
+            - int(2 * float(tables['control'][seed, side, opponent]['result']))
+            for seed in MAPS for side in SIDES)
+        record['half_result_denominator'] = 240
+        results[opponent] = record
+    return results
+
+
+def method_gate(per_seed):
+    require(set(per_seed) == set(SEEDS), 'Method gate requires all three starts')
+    sol = [per_seed[seed]['solution92']['delta_half_result_units'] for seed in SEEDS]
+    default = [per_seed[seed]['default']['delta_half_result_units'] for seed in SEEDS]
+    # Mean across 3 starts: half-result denominator 3 * 240 = 720.
+    checks = {'mean_solution92_at_least_3pp': sum(sol) * 100 >= 3 * 720,
+              'at_least_two_positive_starts': sum(value > 0 for value in sol) >= 2,
+              'mean_default_loss_at_most_2pp': sum(default) * 100 >= -2 * 720}
+    return {'passed': all(checks.values()), 'checks': checks,
+            'positive_solution92_starts': sum(value > 0 for value in sol),
+            'mean_solution92_delta': sum(sol) / 720,
+            'mean_default_delta': sum(default) / 720,
+            'training_starts': list(SEEDS), 'best_seed_selected': None,
+            'promotion_authorized': False, 'jobs_started': False,
+            'interpretation': 'Prespecified development gate only; no general method superiority claim. '
+                              'Separate fixed ensemble comparisons are outside this script.'}
+
+
+def heavy_command(command):
+    try:
+        args = shlex.split(command)
+    except ValueError:
+        return False
+    if not args or not re.fullmatch(r'python(?:\d+(?:\.\d+)*)?', Path(args[0]).name, re.I):
+        return False
+    modules = {'scripts.par_eval', 'scripts.experiment', 'scripts.train', 'scripts.ppo_train',
+               'scripts.evaluate', 'scripts.compare_weights', 'scripts.finetune', 'scripts.run_experiments'}
+    scripts = {'exploration_replication.py', 'reward_replication.py', 'reward_pilot.py',
+               'inference_development2.py', 'sherlock-reward-replication-20261020.py',
+               'sherlock-reward-pilot-20261020.py', 'sherlock-inference-development2-20261020.py',
+               'sherlock-target-diagnosis-20261020.py', 'par_eval.py', 'experiment.py',
+               'train.py', 'ppo_train.py', 'evaluate.py', 'compare_weights.py', 'finetune.py'}
+    i = 1
+    while i < len(args):
+        value = args[i]
+        if value == '-m':
+            return i + 1 < len(args) and args[i + 1] in modules
+        if value == '-c':
+            return (i + 1 < len(args) and args[-1] == '--multiprocessing-fork'
+                    and re.match(r'^from multiprocessing\.spawn import spawn_main;\s*spawn_main\(',
+                                 ' '.join(args[i + 1:-1])) is not None)
+        if value == '--':
+            return i + 1 < len(args) and Path(args[i + 1]).name in scripts
+        if value in ('-W', '-X', '--check-hash-based-pycs'):
+            i += 2
+            continue
+        if value.startswith('-') and value != '-':
+            i += 1
+            continue
+        return Path(value).name in scripts
+    return False
+
+
+def require_idle():
+    conflicts = []
+    raw = subprocess.check_output(['ps', '-axo', 'pid=,args='], text=True)
+    for line in raw.splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) == 2 and int(parts[0]) != os.getpid() and heavy_command(parts[1]):
+            conflicts.append(line.strip())
+    require(not conflicts, f'Other heavy work detected: {conflicts}')
+
+
+def load_wrapper(state, seed):
+    expected = state['baseline']['code']['python_sources'][str(WRAPPER)]
+    require(sha(WRAPPER) == expected, 'Replication wrapper changed')
+    spec = importlib.util.spec_from_file_location('exploration_audit_wrapper', WRAPPER)
+    wrapper = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(wrapper)  # Reviewed wrapper: module level is stdlib only.
+    wrapper.configure(seed, 3000)
+    return wrapper
+
+
+def validate_pair_records(seed, require_current_head=True):
+    path = state_path(seed)
+    inputs = {str(path): sha(path)}
+    state = load_json(path)
+    require_complete(state, seed)
+    wrapper = load_wrapper(state, seed)
+    current = wrapper.source_identity()
+    if require_current_head:
+        require(current == state['baseline']['code'], 'CURRENT source HEAD/Python identity differs from pair')
+        require(wrapper.protected_hashes() == state['baseline']['protected'], 'CURRENT protected weights changed')
+    else:
+        require(same_code(current, state['baseline']['code']), 'CURRENT Python source/interpreter identity changed')
+    preflight = load_json(wrapper.PREFLIGHT)
+    require(preflight == state['preflight'], 'State/preflight file mismatch')
+    check_initial(preflight, seed)
+    inputs[str(wrapper.PREFLIGHT)] = sha(wrapper.PREFLIGHT)
+    expected_commands = {
+        'preflight': wrapper.child_command('preflight'),
+        **{f'{mode}_{arm}': wrapper.child_command(mode, arm)
+           for arm in ARMS for mode in ('train', 'checkpoint')},
+    }
+    tables, records = {}, {}
+    for arm, spec in wrapper.ARMS.items():
+        saved = state['arms'][arm]
+        require(saved['variant'] == spec['variant'] and saved['run'] == str(spec['run'])
+                and saved['eval'] == str(spec['eval'])
+                and saved['experiment_argv'] == wrapper.experiment_args(arm), 'Wrong arm paths/config arguments')
+        train = wrapper.validate_training(arm)
+        evaluation = wrapper.validate_evaluation(arm)
+        require(train == saved['training'] and evaluation == saved['evaluation'], 'Stored row/checkpoint audit mismatch')
+        parse_csv((spec['run'] / 'train.csv').read_text(), training=True)
+        tables[arm] = evaluation_table(parse_csv(spec['eval'].read_text()))
+        manifest = load_json(spec['run'] / 'manifest.json')
+        require(manifest['git']['commit'] == state['baseline']['code']['head'], 'Manifest HEAD differs from pair')
+        require(manifest['argv'] == wrapper.child_command('train', arm)[2:], 'Manifest child argv mismatch')
+        # The child argv includes SCRIPT followed by --child/mode/seed/games/arm.
+        require(manifest['config'] == preflight['arms'][arm]['config'], 'Manifest config mismatch')
+        require(load_json(spec['run'] / 'initial_identity.json') == preflight['arms'][arm],
+                'Actual training initialization differs from preflight')
+        records[arm] = {'training': train, 'evaluation': evaluation,
+                        'runtime_seconds': manifest['runtime_secs']}
+        weights = spec['run'] / 'weights/agent.pth'
+        expected_commands[f'eval_{arm}'] = [str(wrapper.PYTHON), '-B', '-m', 'scripts.par_eval',
+            '--weights', str(weights), '--first', '720', '--n', '60', '--workers', '2',
+            '--opponents', 'default,solution92', '--out', str(spec['eval'])]
+        for item in (spec['eval'], weights, *(spec['run'] / name for name in
+                     ('train.csv', 'manifest.json', 'initial_identity.json', 'final_identity.json'))):
+            inputs[str(item)] = sha(item)
+    require(all(job['command'] == expected_commands[job['label']] for job in state['jobs']),
+            'Unexpected recorded child/evaluation command')
+    require_hashes(inputs)
+    return wrapper, state, preflight, tables, records, inputs
+
+
+def finite_tensors(wrapper, state):
+    require_idle()
+    for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+                'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS'):
+        os.environ[key] = '1'
+    import torch
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+    summaries = {}
+    for arm, spec in wrapper.ARMS.items():
+        require_idle()
+        final = state['arms'][arm]['training']['final']
+        weights = spec['run'] / 'weights/agent.pth'
+        require(sha(weights) == final['file_sha256'], 'Checkpoint changed before tensor audit')
+        checkpoint = torch.load(weights, map_location='cpu', weights_only=False)
+        require(checkpoint['cfg'] == final['config'] and not checkpoint.get('ensemble'), 'Wrong checkpoint config/kind')
+        require(all(checkpoint[k] == final[k] and final[k] > 0 for k in ('env_steps', 'learn_steps')),
+                'Wrong checkpoint learning counters')
+        require(set(checkpoint['q']) == set(checkpoint['target_q']), 'q/target keys differ')
+        summaries[arm] = {}
+        for network in ('q', 'target_q'):
+            tensors = checkpoint[network]
+            require(bool(tensors), 'Empty learned network')
+            count = 0
+            for name, tensor in tensors.items():
+                require(isinstance(tensor, torch.Tensor) and bool(torch.isfinite(tensor).all().item()),
+                        f'{arm}: nonfinite/invalid {network}.{name}')
+                peer = checkpoint['target_q' if network == 'q' else 'q'][name]
+                require(tensor.shape == peer.shape and tensor.dtype == peer.dtype, 'q/target structure differs')
+                count += tensor.numel()
+            require(wrapper.tensor_hash(tensors) == final[f'{network}_sha256'], 'Tensor identity differs from final record')
+            summaries[arm][network] = {'finite': True, 'tensors': len(tensors), 'elements': count}
+        require(sha(weights) == final['file_sha256'], 'Checkpoint changed during tensor audit')
+        del checkpoint
+    require_idle()
+    return summaries
+
+
+def same_code(left, right):
+    return {k: v for k, v in left.items() if k != 'head'} == {k: v for k, v in right.items() if k != 'head'}
+
+
+def documentation_or_data(path):
+    p = Path(path)
+    # Per-run raw-data attributes preserve CSV bytes under core.autocrlf=input.
+    # Permit only the six exact variant/seed/arm directories in this experiment.
+    if re.fullmatch(r'experiments/runs/20261020_(?:full_rules_v3_s(?:47|48|49)_exploration_control|'
+                    r'full_rules_v3_slowexplore_s(?:47|48|49)_exploration_slow)/\.gitattributes', path):
+        return True
+    if p.suffix.lower() in {'.md', '.rst', '.txt'}:
+        return True
+    if path.startswith('docs/') and p.suffix.lower() in {'.pdf', '.png', '.jpg', '.jpeg', '.svg'}:
+        return True
+    return (path.startswith('experiments/') and p.suffix.lower() in
+            {'.json', '.jsonl', '.csv', '.tsv', '.log', '.npz', '.pth', '.png', '.svg', '.pdf'})
+
+
+def head_transition(old, new):
+    if old == new:
+        return {'from': old, 'to': new, 'changed_paths': []}
+    ancestor = subprocess.run(['git', '-C', str(ROOT), 'merge-base', '--is-ancestor', old, new],
+                              stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+    require(ancestor.returncode == 0, 'Pair HEADs are not an ordered ancestor chain')
+    raw = subprocess.check_output(['git', '-C', str(ROOT), 'diff', '--name-only', '--no-renames', '-z', old, new])
+    paths = [p.decode() for p in raw.split(b'\0') if p]
+    require(all(documentation_or_data(p) for p in paths), f'Non-data/documentation HEAD change: {paths}')
+    return {'from': old, 'to': new, 'changed_paths': paths}
+
+
+def require_hashes(hashes):
+    require(all(sha(path) == expected for path, expected in hashes.items()), 'Recorded input file changed')
+
+
+def table_markdown(comparisons):
+    lines = ['| Opponent | Control | Slow | Slow − control | 95% map interval |',
+             '|---|---:|---:|---:|---:|']
+    for opponent in OPPONENTS:
+        row = comparisons[opponent]
+        low, high = row['paired_map_bootstrap_95']
+        lines.append(f"| {opponent} | {row['control_mean_result']:.2%} | {row['slow_mean_result']:.2%} | "
+                     f"{100*row['delta']:+.2f} pp | [{100*low:+.2f}, {100*high:+.2f}] pp |")
+    return '\n'.join(lines)
+
+
+def write_reports(path, report, markdown):
+    md = path.with_suffix('.md')
+    require(not path.exists() and not md.exists(), 'Refusing existing audit/report')
+    encoded = json.dumps(report, indent=2, allow_nan=False) + '\n'
+    with path.open('x', encoding='utf-8') as stream:
+        stream.write(encoded)
+    with md.open('x', encoding='utf-8') as stream:
+        stream.write(markdown)
+    print(path)
+    print(md)
+
+
+def audit_pair(seed):
+    path = audit_path(seed)
+    require(not path.exists() and not path.with_suffix('.md').exists(), 'Pair audit already exists')
+    require_idle()
+    wrapper, state, preflight, tables, records, inputs = validate_pair_records(seed)
+    tensors = finite_tensors(wrapper, state)
+    comparisons = pair_comparisons(tables)
+    require_hashes(inputs)
+    require(wrapper.source_identity() == state['baseline']['code']
+            and wrapper.protected_hashes() == state['baseline']['protected'], 'Identity changed during pair audit')
+    report = {'schema': 'exploration_pair_audit_v1', 'run_seed': seed, 'complete': True,
+              'created_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+              'technical_audit_passed': True, 'auditor_sha256': sha(SCRIPT),
+              'plan_sha256_at_audit': sha(PLAN), 'source_identity': state['baseline']['code'],
+              'protected_hashes': state['baseline']['protected'], 'input_sha256': inputs,
+              'preflight': preflight, 'arm_records': records, 'finite_tensor_audit': tensors,
+              'comparisons': comparisons,
+              'scope': 'One paired training start; no method verdict or seed selection.'}
+    markdown = (f'# Exploration pair audit — seed {seed}\n\n'
+                'Technical audit passed: 3,000 training and 240 evaluation games per arm; current '
+                'HEAD/source/interpreter/protected identities; equal fresh Q/target/RNG; exact decay-only '
+                'config difference; final checkpoint identities and finite Q/target tensors.\n\n'
+                + table_markdown(comparisons) + '\n\n'
+                'Mean result counts draws as 0.5. Whole-map bootstrap: 5,000 draws, seed 0, both sides together. '
+                'This interval measures map variability for one fixed start, not training-start uncertainty. '
+                'No method verdict, best-start selection, job or promotion.\n')
+    write_reports(path, report, markdown)
+
+
+def aggregate():
+    destination = ANALYSIS / 'exploration_aggregate.json'
+    require(not destination.exists() and not destination.with_suffix('.md').exists(), 'Aggregate already exists')
+    audits, per_seed, table_sets, all_inputs, transitions = {}, {}, {}, {}, []
+    first_code = first_configs = first_versions = None
+    previous_head = None
+    latest_wrapper = latest_state = None
+    for seed in SEEDS:
+        path = audit_path(seed)
+        require(path.is_file(), f'Missing completed pair audit s{seed}; no partial aggregation')
+        audit = load_json(path)
+        require(audit.get('schema') == 'exploration_pair_audit_v1' and audit.get('run_seed') == seed
+                and audit.get('complete') is True and audit.get('technical_audit_passed') is True,
+                'Wrong/incomplete pair audit')
+        require(audit['auditor_sha256'] == sha(SCRIPT), 'Auditor changed across pair audits')
+        require_hashes(audit['input_sha256'])
+        wrapper, state, preflight, tables, records, inputs = validate_pair_records(seed, require_current_head=False)
+        require(audit['input_sha256'] == inputs and audit['source_identity'] == state['baseline']['code']
+                and audit['protected_hashes'] == state['baseline']['protected']
+                and audit['preflight'] == preflight and audit['arm_records'] == records,
+                'Pair audit records differ from original inputs')
+        require(set(audit['finite_tensor_audit']) == set(ARMS)
+                and all(audit['finite_tensor_audit'][arm][network]['finite'] is True
+                        for arm in ARMS for network in ('q', 'target_q')), 'Finite tensor audit absent')
+        code = state['baseline']['code']
+        configs = {arm: preflight['arms'][arm]['config'] for arm in ARMS}
+        if first_code is None:
+            first_code, first_configs, first_versions = code, configs, preflight['versions']
+        else:
+            require(same_code(first_code, code), 'Python source set/hash or interpreter differs across pairs')
+            require(configs == first_configs and preflight['versions'] == first_versions,
+                    'Configs or package versions differ across pairs')
+            transitions.append(head_transition(previous_head, code['head']))
+        previous_head = code['head']
+        per_seed[seed] = pair_comparisons(tables)
+        require(per_seed[seed] == audit['comparisons'], 'Recomputed pair comparisons differ from audit')
+        audits[seed], table_sets[seed] = audit, tables
+        for name, expected in inputs.items():
+            require(name not in all_inputs or all_inputs[name] == expected, 'Conflicting input hashes across pairs')
+            all_inputs[name] = expected
+        all_inputs[str(path)] = sha(path)
+        latest_wrapper, latest_state = wrapper, state
+    current = latest_wrapper.source_identity()
+    require(same_code(first_code, current), 'CURRENT Python sources/interpreter changed')
+    transitions.append(head_transition(previous_head, current['head']))
+    require(latest_wrapper.protected_hashes() == latest_state['baseline']['protected'],
+            'CURRENT protected weights differ from latest pair')
+    means = {}
+    for opponent in OPPONENTS:
+        values = {seed: map_values(table_sets[seed], opponent) for seed in SEEDS}
+        # Shared evaluation maps: average starts first, then resample whole maps.
+        # Do NOT treat 3 * 60 map records as 180 independent maps.
+        arrays = {arm: [sum(values[seed][arm][i] for seed in SEEDS) / 3 for i in range(60)]
+                  for arm in ARMS}
+        means[opponent] = summarize_maps(arrays['control'], arrays['slow'], starts=3)
+        means[opponent]['delta_half_result_units_total'] = sum(
+            per_seed[seed][opponent]['delta_half_result_units'] for seed in SEEDS)
+        means[opponent]['half_result_denominator'] = 720
+    gate = method_gate(per_seed)
+    require_hashes(all_inputs)
+    require(latest_wrapper.source_identity() == current, 'Source identity changed during aggregation')
+    report = {'schema': 'exploration_aggregate_v1', 'complete': True,
+              'created_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+              'auditor_sha256': sha(SCRIPT), 'input_sha256': all_inputs,
+              'training_starts': list(SEEDS), 'pair_audit_paths': [str(audit_path(s)) for s in SEEDS],
+              'source_identity_without_head': {k: v for k, v in first_code.items() if k != 'head'},
+              'head_transitions': transitions, 'current_head': current['head'],
+              'per_seed': per_seed, 'mean_over_three_fixed_starts': means, 'method_gate': gate,
+              'limits': 'All six final single-network CSVs included, no seed selection. Three fixed '
+                        'initializations do not establish general method superiority. Map bootstrap '
+                        'conditions on these starts and reused development maps. No ensemble is built '
+                        'or selected by this report; the separate ensemble pipeline remains out of scope.'}
+    parts = ['# Exploration replication — all three starts', '',
+             'All three completed pair audits and all six 240-game evaluation CSVs verified. '
+             'Python source sets/hashes, interpreter, configs and versions agree across pairs. '
+             'HEAD differences were restricted to documentation/data paths.', '']
+    for seed in SEEDS:
+        parts += [f'## Seed {seed}', '', table_markdown(per_seed[seed]), '']
+    parts += ['## Equal-weight mean of three fixed starts', '', table_markdown(means), '',
+              f"Prespecified method gate: {'passed' if gate['passed'] else 'not passed'}.",
+              f"Positive Solution92 starts: {gate['positive_solution92_starts']}/3.", '',
+              'Gate: mean Solution92 delta at least +3 pp, at least two positive starts, '
+              'mean default delta at least −2 pp. Checks: ' + json.dumps(gate['checks']), '',
+              'The mean bootstrap averages the three starts within each map before drawing 60 whole '
+              'maps (both sides together), 5,000 times with seed 0. These conditional intervals '
+              'do not quantify training-start uncertainty. No best seed, job or promotion is selected.', '',
+              report['limits'], '']
+    write_reports(destination, report, '\n'.join(parts))
+
+
+def self_test():
+    import copy
+    import unittest
+
+    class Fixtures(unittest.TestCase):
+        def results(self, sol=(8, 7, 7), default=(0, 0, 0)):
+            return {seed: {'solution92': {'delta_half_result_units': s},
+                           'default': {'delta_half_result_units': d}}
+                    for seed, s, d in zip(SEEDS, sol, default)}
+
+        def test_method_gate_exact_boundaries_and_all_starts(self):
+            self.assertTrue(method_gate(self.results())['passed'])  # 22/720 > .03
+            self.assertFalse(method_gate(self.results(sol=(7, 7, 7)))['passed'])
+            self.assertFalse(method_gate(self.results(sol=(23, 0, 0)))['passed'])
+            self.assertTrue(method_gate(self.results(default=(-5, -5, -4)))['passed'])
+            self.assertFalse(method_gate(self.results(default=(-5, -5, -5)))['passed'])
+            with self.assertRaises(RuntimeError):
+                method_gate({47: self.results()[47], 48: self.results()[48]})
+
+        def test_source_identity_excludes_only_head(self):
+            source = {'head': 'a', 'python_path': '/python', 'python_sha256': 'p', 'python_sources': {'x.py': 'x'}}
+            other = copy.deepcopy(source)
+            other['head'] = 'b'
+            self.assertTrue(same_code(source, other))
+            for field, value in (('python_path', '/other'), ('python_sha256', 'q'),
+                                 ('python_sources', {'x.py': 'y'}),
+                                 ('python_sources', {'x.py': 'x', 'extra.py': 'z'})):
+                changed = copy.deepcopy(other)
+                changed[field] = value
+                self.assertFalse(same_code(source, changed))
+
+        def test_head_path_policy(self):
+            for name in ('docs/plan.md', 'README.md', 'experiments/runs/run/train.csv',
+                         'experiments/analysis/report.json'):
+                self.assertTrue(documentation_or_data(name))
+            for name in ('scripts/train.py', 'scripts/job.sh', 'pyproject.toml',
+                         'agents/config.json', 'docs/tool.py', 'experiments/run.py'):
+                self.assertFalse(documentation_or_data(name))
+            for seed in SEEDS:
+                for variant, arm in (('full_rules_v3', 'control'), ('full_rules_v3_slowexplore', 'slow')):
+                    self.assertTrue(documentation_or_data(
+                        f'experiments/runs/20261020_{variant}_s{seed}_exploration_{arm}/.gitattributes'))
+            for name in ('.gitattributes', 'agents/.gitattributes', 'scripts/.gitattributes',
+                         'experiments/.gitattributes', 'experiments/runs/.gitattributes',
+                         'experiments/runs/20261020_full_rules_v3_s46_exploration_control/.gitattributes',
+                         'experiments/runs/20261020_full_rules_v3_s47_exploration_slow/.gitattributes',
+                         'experiments/runs/20261020_full_rules_v3_slowexplore_s48_exploration_control/.gitattributes'):
+                self.assertFalse(documentation_or_data(name))
+
+        def fixture_csv(self, training=False, loss='nan', learn=0):
+            text = io.StringIO()
+            writer = csv.writer(text)
+            header = ['seed', 'side', 'opponent', 'result', 'our_wins', 'opp_wins',
+                      'our_points', 'opp_points', 'steps', 'point_counting_version']
+            if training:
+                header += ['game', 'env_steps', 'learn_steps', 'mean_loss']
+            writer.writerow(header)
+            for seed in MAPS:
+                for side in SIDES:
+                    for opponent in OPPONENTS:
+                        row = [seed, side, opponent, .5, 1, 1, 100, 100, 303, 2]
+                        if training:
+                            row += [0, 303, learn, loss]
+                        writer.writerow(row)
+            return text.getvalue()
+
+        def test_exact_eval_keys_pairing_and_nan_policy(self):
+            text = self.fixture_csv()
+            rows = parse_csv(text)
+            table = evaluation_table(rows)
+            self.assertEqual(len(table), 240)
+            values = map_values({'control': table, 'slow': table}, 'solution92')
+            self.assertEqual(values['control'], [.5] * 60)
+            for bad in (rows[:-1], rows + [rows[0]], [dict(r, seed='999') for r in rows]):
+                with self.assertRaises(RuntimeError):
+                    evaluation_table(bad)
+            self.assertEqual(len(parse_csv(self.fixture_csv(training=True), training=True)), 240)
+            for text in (self.fixture_csv(training=True, learn=1),
+                         self.fixture_csv(training=True, loss='inf'),
+                         self.fixture_csv().replace(',100,100,', ',nan,100,')):
+                with self.assertRaises(RuntimeError):
+                    parse_csv(text, training=True if 'mean_loss' in text else False)
+
+        def test_preflight_exact_difference_and_initialization(self):
+            config = dict(eps_decay_steps=60000, eps_start=1.0, eps_end=.05, guided_prob=.7,
+                          canonical=True, reward_fix=True, use_shaping=True)
+            left = dict(config=config, q_sha256='q', target_q_sha256='q',
+                        rng_state={'state': 47}, env_steps=0, learn_steps=0)
+            right = copy.deepcopy(left)
+            right['config']['eps_decay_steps'] = 454500
+            p = dict(seed=47, agent_seed=4700, games=3000, arms={'control': left, 'slow': right})
+            check_initial(p, 47)
+            for mutate in ('config', 'rng', 'weights', 'reward', 'seed'):
+                q = copy.deepcopy(p)
+                if mutate == 'config': q['arms']['slow']['config']['guided_prob'] = .8
+                if mutate == 'rng': q['arms']['slow']['rng_state'] = {'state': 48}
+                if mutate == 'weights': q['arms']['slow']['q_sha256'] = 'other'
+                if mutate == 'reward': q['arms']['slow']['config']['terminal_death_potential'] = True
+                if mutate == 'seed': q['agent_seed'] = 4800
+                with self.assertRaises(RuntimeError): check_initial(q, 47)
+
+        def test_heavy_process_classifier(self):
+            for command in ('python3 -B -m scripts.par_eval',
+                            'Python /repo/tools/exploration_replication.py --child train',
+                            'python3 -m scripts.run_experiments'):
+                self.assertTrue(heavy_command(command))
+            for command in ('python3 /tmp/exploration_analysis.py --audit-pair',
+                            'zsh -c python3 -m scripts.train',
+                            'python3 readonly.py scripts.par_eval'):
+                self.assertFalse(heavy_command(command))
+
+    result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Fixtures))
+    require(not any(name in sys.modules for name in ('torch', 'jax', 'numpy')),
+            'Self-tests imported a prohibited dependency')
+    if not result.wasSuccessful():
+        raise SystemExit(1)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--audit-pair', action='store_true')
+    mode.add_argument('--aggregate', action='store_true')
+    mode.add_argument('--self-test', action='store_true')
+    parser.add_argument('--run-seed', type=int, choices=SEEDS)
+    parser.add_argument('--confirm-no-heavy-work', action='store_true')
+    args = parser.parse_args()
+    if args.self_test:
+        self_test()
+        return
+    require((ROOT / 'scripts/protocol.py').is_file(), 'Run from repository or archived tools directory')
+    if args.audit_pair:
+        require(args.run_seed in SEEDS and args.confirm_no_heavy_work,
+                'Pair audit requires --run-seed and --confirm-no-heavy-work')
+        audit_pair(args.run_seed)
+    else:
+        require(args.run_seed is None, 'Aggregate always includes seeds 47,48,49')
+        aggregate()
+
+
+if __name__ == '__main__':
+    main()

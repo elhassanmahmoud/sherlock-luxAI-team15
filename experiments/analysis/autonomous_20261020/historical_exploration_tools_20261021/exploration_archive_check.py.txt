@@ -1,0 +1,53 @@
+from pathlib import Path
+import json,csv,hashlib,math,sys
+import numpy as np
+R=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15');B=R/'experiments/analysis/autonomous_20261020';C=R/'experiments/compare/autonomous_20261020'
+def load(p):return json.loads(p.read_text())
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def hashes(d):
+ for p,h in d.items():assert sha(p)==h,(p,h)
+def rows(p,n):
+ with p.open(newline='') as f:a=list(csv.DictReader(f))
+ assert len(a)==n
+ for z in a:
+  for k,v in z.items():
+   if k not in ('side','opponent'):assert math.isfinite(float(v)) or (k=='mean_loss' and int(z['learn_steps'])==0),(p,k,v)
+  assert z['steps']=='303' and z['point_counting_version']=='2'
+  u,v=float(z['our_wins']),float(z['opp_wins']);assert u.is_integer() and v.is_integer() and 0<=u<=3 and 0<=v<=3 and u+v<=3
+  assert float(z['result'])==(1 if u>v else 0 if u<v else .5)
+  assert float(z['our_points'])>=0 and float(z['opp_points'])>=0
+ return a
+def ev(p):
+ a=rows(p,240);d={(int(z['seed']),z['side'],z['opponent']):z for z in a};assert len(d)==240 and set(d)=={(x,y,o) for x in range(500720,500780) for y in ('player_0','player_1') for o in ('default','solution92')};return d
+def vector(d,o):return np.array([[float(d[x,y,o]['result']) for y in ('player_0','player_1')] for x in range(500720,500780)]).mean(axis=1)
+def checkstat(delta,stored,ci='paired_map_bootstrap_95'):
+ idx=np.random.default_rng(0).integers(0,60,(5000,60));q=np.quantile(delta[idx].mean(axis=1),[.025,.975]);assert np.allclose(q,stored[ci],rtol=0,atol=1e-14);assert abs(float(delta.mean())-stored['delta'])<1e-14
+allv={};csvhash={};protected={}
+for seed in (47,48,49):
+ a=load(B/f'exploration_pair_audit_s{seed}.json');assert a['complete'] and a['technical_audit_passed'];hashes(a['input_sha256']);hashes(a['protected_hashes']);protected.update(a['protected_hashes']);init={};train={};v={}
+ for arm in ('control','slow'):
+  run=R/'experiments/runs'/f'20261020_full_rules_v3{"_slowexplore" if arm=="slow" else ""}_s{seed}_exploration_{arm}';init[arm]=load(run/'initial_identity.json');tr=rows(run/'train.csv',3000);train[arm]=tr
+  assert [(int(z['game']),int(z['seed']),z['side']) for z in tr]==[(i,seed*10000+i//2,'player_0' if i%2==0 else 'player_1') for i in range(3000)]
+  for name in ('train.csv','val.csv'):csvhash[str(run/name)]=sha(run/name)
+  p=C/f'exploration_replication_s{seed}_{arm}.csv';v[arm]=ev(p);csvhash[str(p)]=sha(p)
+ assert init['control']['q_sha256']==init['slow']['q_sha256'] and init['control']['rng_state']==init['slow']['rng_state']
+ assert {k:(v,init['slow']['config'][k]) for k,v in init['control']['config'].items() if v!=init['slow']['config'][k]}=={'eps_decay_steps':(60000,454500)}
+ assert [z['opponent'] for z in train['control']]==[z['opponent'] for z in train['slow']]
+ allv[seed]={o:vector(v['slow'],o)-vector(v['control'],o) for o in ('default','solution92')}
+ for o in allv[seed]:checkstat(allv[seed][o],a['comparisons'][o])
+agg=load(B/'exploration_aggregate.json');hashes(agg['input_sha256']);assert agg['complete'] and not agg['method_gate']['passed']
+for o in ('default','solution92'):checkstat(np.mean([allv[s][o] for s in (47,48,49)],axis=0),agg['mean_over_three_fixed_starts'][o])
+d=load(C/'exploration_ensemble_development/state.json');assert d['complete'];tables={}
+for j in d['jobs']:
+ assert j['complete'] and j['returncode']==0 and sha(j['output'])==j['csv_sha256'];tables[j['label']]=ev(Path(j['output']));csvhash[j['output']]=j['csv_sha256']
+for label,stats in d['comparisons'].items():
+ candidate={'slow3_minus_control3_diagnostic':'slow3','v3_slow3_minus_v3_control3_diagnostic':'v3_slow3'}.get(label,label)
+ for o,z in stats.items():checkstat(vector(tables[candidate],o)-vector(tables[z['reference']],o),z,'ci95')
+assert all(not(d['comparisons'][x]['solution92']['delta']>0 and d['comparisons'][x]['solution92']['ci95'][0]>0 and d['comparisons'][x]['default']['delta']>=-.02) for x in ('v3_control3','v3_slow3'))
+assert d['selection']['selected'] is None and not d['selection']['eligible']
+ref=ev(C/'inference_development2/phase2_reference.csv')
+for k,z in ref.items():assert {a:b for a,b in z.items() if a!='secs'}=={a:b for a,b in tables['reference'][k].items() if a!='secs'}
+n=load(B/'exploration_night_continuation/state.json');assert n['complete'] and all(j['complete'] and j['returncode']==0 for j in n['jobs']);hashes(n['frozen_evidence_sha256']);hashes(n['tool_sha256']);hashes(n['final_identity']['code']['python_sources']);hashes(n['final_identity']['protected'])
+m=load(R/'experiments/candidates/exploration_s47_49_fixed_ensembles/manifest.json');assert m['complete'];hashes(m['inputs_sha256'])
+report=dict(complete=True,training_rows=18000,single_evaluation_rows=1440,ensemble_evaluation_rows=1200,training_starts=[47,48,49],csv_sha256=csvhash,protected_sha256=protected,head=n['final_identity']['code']['head'],method_gate=agg['method_gate'],selection=d['selection'],checks=['all CSV keys/finite values/result consistency','3000 rows per arm and seed-side pairing/curriculum equality','equal initial tensor hashes and RNG; sole epsilon difference','independent index-bootstrap 5000 seed0 whole-map intervals for all pairs/aggregate/development','reference reproduction all non-time fields','saved input/source/tool/protected hashes'],limits=['No Torch/JAX/model load; finite learned tensor checks are earlier saved auditor evidence.','Known development maps, three fixed starts; map intervals do not estimate training-start uncertainty.'])
+Path('/tmp/exploration_archive_check.json').write_text(json.dumps(report,indent=2)+'\n');print('PASS',report['training_rows'],report['single_evaluation_rows'],report['ensemble_evaluation_rows'],len(csvhash),'CSV hashes; no Torch/JAX', 'torch' not in sys.modules and 'jax' not in sys.modules)

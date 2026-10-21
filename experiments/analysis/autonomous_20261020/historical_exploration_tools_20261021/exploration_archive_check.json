@@ -1,0 +1,100 @@
+{
+  "complete": true,
+  "training_rows": 18000,
+  "single_evaluation_rows": 1440,
+  "ensemble_evaluation_rows": 1200,
+  "training_starts": [
+    47,
+    48,
+    49
+  ],
+  "csv_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s47_exploration_control/train.csv": "830ecec7cea5a70c0fe836497ebfddf071e2de7508b3eb158a12b4f77f28289d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s47_exploration_control/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s47_control.csv": "5df89fa720da792e5fca9ee4ca2910dd32bafc34ac97a6b0ab76d40c0a854f40",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s47_exploration_slow/train.csv": "a92a90329d3a95748b80baa68b9cc4ac3cbb6c99d2a5038ff8a7d56bbe790766",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s47_exploration_slow/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s47_slow.csv": "788bc587f7087539b88af8717be7cba510c80367be78266e76ba32b13e247859",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s48_exploration_control/train.csv": "f970b4b78e9ebcc3f0c3b79b7383c544ebc13c648c29222b89d7a6401688aa74",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s48_exploration_control/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s48_control.csv": "d4cd39c99f92c71a18b48e8c494ca5aa3f8271190a61f732c76359c309fb9bc3",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s48_exploration_slow/train.csv": "3f08ca5349c00b2196610e2cd7f4df3ea7a096bf3d3faa0f56805a90a4c2f569",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s48_exploration_slow/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s48_slow.csv": "0cd50a42583a08dd45cf388f66f93c2f3e1228ccbf029001204f6f2a752ab992",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s49_exploration_control/train.csv": "ec21fd6337c1fe2e1e1529e4137df99a2d23273d71c608ec4b9847e93a8527b5",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_s49_exploration_control/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s49_control.csv": "b334028a8725c48f561d2f1120c9ed75b21ba0490554d0844940931568fffcaf",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s49_exploration_slow/train.csv": "ad8c5a3c79c13f9cf13345013017d08a0bbf802b2c4ca62259d1d54840d48afe",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/runs/20261020_full_rules_v3_slowexplore_s49_exploration_slow/val.csv": "f6e8e02be42dca09be5c05ae9bc8f04e24acf97e7f6406b9dd60d54384aa538e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_replication_s49_slow.csv": "175300a7b8088fad12090dd572df73297e8f8edcfb285eb9f69fc4a637f0e1fc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_ensemble_development/reference.csv": "15f3411abcff08a9e9ebce57205cc6558b98cbde1d3aabd4fc40b4936a160061",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_ensemble_development/control3.csv": "881d787cd59f6e6c1ceb6ee72a1a5b63b6a29d395cd9e6ec8fe42e4d637ef370",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_ensemble_development/slow3.csv": "dd51267c7025f6c19196652dd3b126f9e8aa8e81ea46fe846541368062a041d9",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_ensemble_development/v3_control3.csv": "2f8d60f87afd866bf3b99ebdd0cdf235725dfb6771e1eaeb2cdd6301200ad536",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/exploration_ensemble_development/v3_slow3.csv": "a6ec8c2503a051cfd552409f6ae3b36df4f06398a12c981d3ce10420256b8cda"
+  },
+  "protected_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935"
+  },
+  "head": "8517f88594e0e909a7d631e197e98b1ed4ca9dcb",
+  "method_gate": {
+    "passed": false,
+    "checks": {
+      "mean_solution92_at_least_3pp": false,
+      "at_least_two_positive_starts": false,
+      "mean_default_loss_at_most_2pp": false
+    },
+    "positive_solution92_starts": 0,
+    "mean_solution92_delta": -0.13055555555555556,
+    "mean_default_delta": -0.03888888888888889,
+    "training_starts": [
+      47,
+      48,
+      49
+    ],
+    "best_seed_selected": null,
+    "promotion_authorized": false,
+    "jobs_started": false,
+    "interpretation": "Prespecified development gate only; no general method superiority claim. Separate fixed ensemble comparisons are outside this script."
+  },
+  "selection": {
+    "selected": null,
+    "eligible": [],
+    "checks": {
+      "v3_control3": {
+        "solution92_delta_positive": false,
+        "solution92_lower95_positive": false,
+        "default_loss_at_most_2pp": true
+      },
+      "v3_slow3": {
+        "solution92_delta_positive": false,
+        "solution92_lower95_positive": false,
+        "default_loss_at_most_2pp": true
+      }
+    },
+    "tie_rule": "control on exact Solution92 delta tie",
+    "diagnostic_only": [
+      "control3",
+      "slow3"
+    ],
+    "promotion_authorized": false,
+    "fresh_or_direct_started": false,
+    "scope": "Development selection only; reused maps, two candidates; no method-strength claim."
+  },
+  "checks": [
+    "all CSV keys/finite values/result consistency",
+    "3000 rows per arm and seed-side pairing/curriculum equality",
+    "equal initial tensor hashes and RNG; sole epsilon difference",
+    "independent index-bootstrap 5000 seed0 whole-map intervals for all pairs/aggregate/development",
+    "reference reproduction all non-time fields",
+    "saved input/source/tool/protected hashes"
+  ],
+  "limits": [
+    "No Torch/JAX/model load; finite learned tensor checks are earlier saved auditor evidence.",
+    "Known development maps, three fixed starts; map intervals do not estimate training-start uncertainty."
+  ]
+}

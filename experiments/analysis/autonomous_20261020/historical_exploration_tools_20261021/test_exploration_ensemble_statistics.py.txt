@@ -1,0 +1,59 @@
+"""Independent AST-only extraction; synthetic NumPy data, no repository imports."""
+import ast
+import hashlib
+from pathlib import Path
+import sys
+import numpy as np
+
+SOURCE = Path('/tmp/exploration_ensemble_eval.py')
+raw = SOURCE.read_bytes()
+tree = ast.parse(raw)
+needed = {'compare', 'choose'}
+nodes = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in needed]
+ns = {'LABELS': ('reference','control3','slow3','v3_control3','v3_slow3'),
+      'CANDIDATES': ('v3_control3','v3_slow3')}
+exec(compile(ast.Module(body=nodes,type_ignores=[]),str(SOURCE),'exec'),ns)
+tables = {name:{} for name in ns['LABELS']}
+for i,seed in enumerate(range(500720,500780)):
+    for side_idx,side in enumerate(('player_0','player_1')):
+        for opp in ('default','solution92'):
+            key=(str(seed),side,opp)
+            # Opposite outcomes on both sides cancel exactly within each map.
+            values={'reference':.5,'control3':float(side_idx),
+                    'slow3':float(i<30), 'v3_control3':.5,
+                    'v3_slow3':float(i<36) if opp=='solution92' else .5}
+            for name,value in values.items():tables[name][key]={'result':str(value)}
+results=ns['compare'](tables)
+assert results==ns['compare'](tables), 'RNG not reproducible'
+contrast=results['v3_slow3_minus_v3_control3_diagnostic']
+assert contrast['solution92']['reference']=='v3_control3'
+assert contrast['solution92']['half_units']==24
+assert contrast['solution92']['ci95']==results['v3_slow3']['solution92']['ci95']
+assert results['control3']['solution92']['ci95']==[0.,0.], 'Both sides were independently resampled'
+# Independent explicit index resampling preserves each complete map.
+map_delta=np.array([.5]*30+[-.5]*30)
+indices=np.random.default_rng(0).integers(0,60,size=(5000,60))
+expected=np.percentile(map_delta[indices].mean(1),[2.5,97.5])
+assert np.allclose(results['slow3']['solution92']['ci95'],expected,atol=0,rtol=0)
+assert expected[0]<0<expected[1], 'Synthetic fixture failed to have nonzero map uncertainty'
+for label,opponents in results.items():
+    for opp,record in opponents.items():
+        assert record['maps']==60 and record['games_per_arm']==120
+        assert record['bootstrap_samples']==5000 and record['bootstrap_seed']==0
+        assert abs(record['half_units']/240-record['delta'])<1e-15
+assert results['v3_slow3']['solution92']['half_units']==24
+assert abs(results['v3_slow3']['solution92']['delta']-.1)<1e-15
+# Extremely strong diagnostics must never be selected when both fixed candidates fail.
+for name in ('v3_control3','v3_slow3'):
+    results[name]['solution92'].update(half_units=0,ci95=[0,0])
+for name in set(results)-{'v3_control3','v3_slow3'}:
+    results[name]['solution92'].update(half_units=240,ci95=[1,1])
+assert ns['choose'](results)['selected'] is None
+# Equal positive fixed-candidate deltas select control, regardless of diagnostic values.
+for name in ('v3_control3','v3_slow3'):
+    results[name]['solution92'].update(half_units=24,ci95=[.01,.2])
+    results[name]['default'].update(half_units=0)
+assert ns['choose'](results)['selected']=='v3_control3'
+assert 'torch' not in sys.modules and 'jax' not in sys.modules
+print('Synthetic whole-map/both-side bootstrap, 5000/seed0, delta/half-unit and diagnostic exclusion checks passed.')
+print('Reviewed source SHA256:',hashlib.sha256(raw).hexdigest())

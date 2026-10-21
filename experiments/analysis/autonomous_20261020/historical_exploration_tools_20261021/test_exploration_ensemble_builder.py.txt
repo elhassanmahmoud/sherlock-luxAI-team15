@@ -1,0 +1,148 @@
+"""Pure stdlib schema tests. Does not import Torch or read real checkpoints."""
+import copy
+import importlib.util
+from pathlib import Path
+import unittest
+import json
+from unittest.mock import patch
+from types import SimpleNamespace
+
+spec = importlib.util.spec_from_file_location('builder', Path(__file__).with_name('exploration_ensemble_builder.py'))
+builder = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(builder)
+
+
+class BuilderTests(unittest.TestCase):
+    def hashes(self):
+        return {'v3': [f'v{i}' for i in range(18)],
+                'control': [f'c{i}' for i in range(3)], 'slow': [f's{i}' for i in range(3)]}
+
+    def checkpoint(self):
+        cfg = dict(zip(builder.PLAY_KEYS, (256, True, True, True, True, True)))
+        return dict(q={'w': 'first'}, target_q={'w': 'target'}, opt={'keep': 1},
+                    cfg=cfg, feature_dim=50, n_actions=6, ensemble=[{'w': 'existing'}])
+
+    def test_four_fixed_groups_preserve_order(self):
+        h = self.hashes()
+        self.assertEqual(builder.fixed_groups(h), {
+            'control3': h['control'], 'slow3': h['slow'],
+            'v3_control3': h['v3'] + h['control'], 'v3_slow3': h['v3'] + h['slow']})
+
+    def test_reject_duplicate_or_wrong_counts(self):
+        for change in ('missing', 'duplicate', 'overlap', 'extra'):
+            h = self.hashes()
+            if change == 'missing': h['control'].pop()
+            if change == 'duplicate': h['slow'][1] = h['slow'][0]
+            if change == 'overlap': h['control'][1] = h['v3'][0]
+            if change == 'extra': h['slow'].append('s3')
+            with self.subTest(change=change), self.assertRaises(RuntimeError):
+                builder.fixed_groups(h)
+
+    def test_assemble_preserves_inputs_and_first_network_metadata(self):
+        base = self.checkpoint(); before = copy.deepcopy(base)
+        cfg = {**base['cfg'], 'active_targets': True}
+        result = builder.assemble(base, [{'w': 'new'}], cfg, ['base', 'extra'])
+        self.assertEqual(result['q'], {'w': 'first'})
+        self.assertEqual(result['ensemble'], [{'w': 'existing'}, {'w': 'new'}])
+        self.assertEqual(result['target_q'], base['target_q'])
+        self.assertEqual(result['opt'], base['opt'])
+        self.assertEqual(result['cfg'], cfg)
+        self.assertEqual(result['ensemble_sources'], ['base', 'extra'])
+        result['cfg']['active_targets'] = False
+        self.assertTrue(cfg['active_targets'])
+        self.assertEqual(base, before)
+
+    def test_compatibility_rejects_architecture_semantics_and_hidden_policy(self):
+        base = self.checkpoint()
+        self.assertIsNone(builder.compatible(base, base, base['cfg']))
+        for key in ('feature_dim', 'n_actions', *builder.PLAY_KEYS, 'cnn_policy'):
+            other = copy.deepcopy(base)
+            if key in builder.PLAY_KEYS: other['cfg'][key] = 'wrong'
+            elif key == 'cnn_policy': other[key] = {'state': 'unaccounted'}
+            else: other[key] += 1
+            with self.subTest(key=key), self.assertRaises(RuntimeError):
+                builder.compatible(other, base, base['cfg'])
+        cfg = dict(base['cfg']); cfg['canonical'] = False
+        with self.assertRaises(RuntimeError): builder.compatible(base, base, cfg)
+
+    def test_admission_ignores_analysis_but_rejects_other_training_and_workers(self):
+        commands = [
+            ('77 python -m scripts.par_eval', True),
+            ('77 Python -B /tmp/exploration_replication.py --run', True),
+            ('77 python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=7) --multiprocessing-fork', True),
+            ('77 /bin/zsh -lc "python reward_pilot.py"', False),
+            ('77 python /tmp/reward_pilot_analysis.py', False),
+            ('77 python -c "print(123)"', False),
+            ('77 python read_only.py -m scripts.par_eval', False),
+        ]
+        for line, rejected in commands:
+            with self.subTest(line=line), patch.object(builder.subprocess, 'check_output', return_value=line), patch.object(builder.os, 'getpid', return_value=1):
+                if rejected:
+                    with self.assertRaises(RuntimeError): builder.no_heavy_jobs()
+                else:
+                    builder.no_heavy_jobs()
+
+    def audit_fixture(self):
+        root = Path('/fixture/repo'); analysis = root / 'experiments/analysis/autonomous_20261020'
+        documents, digests = {}, {}
+        code = dict(head='first', python_sources={}, python_path='/fixture/python', python_sha256='python')
+        digests['/fixture/python'] = 'python'; digests['/fixture/builder.py'] = 'builder'
+        for seed in (47, 48, 49):
+            pre = dict(seed=seed, games=3000, agent_seed=100*seed, arms={})
+            arms = {}
+            for arm, variant, decay in [('control', 'full_rules_v3', 60000), ('slow', 'full_rules_v3_slowexplore', 454500)]:
+                cfg = dict(eps_decay_steps=decay, terminal_death_potential=False, active_targets=False, sap_geometry=False)
+                initial = dict(config=cfg, q_sha256='initial', target_q_sha256='initial', rng_state={}, env_steps=0, learn_steps=0)
+                final = dict(config=cfg, env_steps=909000, learn_steps=100, q_finite=True, target_q_finite=True, file_sha256='weights')
+                run = root / f'experiments/runs/20261020_{variant}_s{seed}_exploration_{arm}'
+                ev = root / f'experiments/compare/autonomous_20261020/exploration_replication_s{seed}_{arm}.csv'
+                pre['arms'][arm] = initial
+                documents[str(run/'initial_identity.json')] = initial
+                documents[str(run/'final_identity.json')] = final
+                documents[str(run/'manifest.json')] = dict(status='done', train_games=3000, run_seed=seed, variant=variant, config=cfg)
+                arms[arm] = dict(run=str(run), eval=str(ev), variant=variant,
+                    training=dict(complete=True, rows=3000, map_pairs=1500, final=final, train_csv_sha256='train'),
+                    evaluation=dict(complete=True, rows=240, csv_sha256='eval'))
+                for path, value in [(run/'train.csv','train'),(ev,'eval'),(run/'weights/agent.pth','weights')]:
+                    digests[str(path)] = value
+            labels = ['preflight','train_control','checkpoint_control','train_slow','checkpoint_slow','eval_control','eval_slow']
+            documents[str(analysis/f'exploration_replication_s{seed}_preflight.json')] = pre
+            documents[str(analysis/f'exploration_replication_s{seed}_state.json')] = dict(
+                complete=True, status='complete', final_integrity_ok=True, run_seed=seed, games_per_arm=3000,
+                controlled_difference={'eps_decay_steps': {'control':60000,'slow':454500}},
+                baseline={'code':code}, jobs=[dict(label=l,complete=True,returncode=0) for l in labels],
+                preflight=pre, arms=arms)
+        return root, analysis, documents, digests
+
+    def test_complete_pair_schema_accepts_all_six_fixed_sources(self):
+        root, analysis, docs, digests = self.audit_fixture()
+        with patch.object(builder, 'ROOT', root), patch.object(builder, 'ANALYSIS', analysis), patch.object(builder, 'SCRIPT', Path('/fixture/builder.py')), patch.object(builder, 'sha', side_effect=lambda p: digests[str(p)]), patch.object(Path, 'read_bytes', lambda p: json.dumps(docs[str(p)]).encode()):
+            sources, hashes, _ = builder.audited_inputs()
+        self.assertEqual({k:len(v) for k,v in sources.items()}, {'control':3,'slow':3})
+        self.assertTrue(set(digests) <= set(hashes))
+
+    def test_historical_head_changes_preserve_identical_python_identity(self):
+        root, analysis, docs, digests = self.audit_fixture()
+        state = docs[str(analysis/'exploration_replication_s48_state.json')]
+        state['baseline']['code'] = {**state['baseline']['code'], 'head':'data-document-commit'}
+        with patch.object(builder, 'ROOT', root), patch.object(builder, 'ANALYSIS', analysis), patch.object(builder, 'SCRIPT', Path('/fixture/builder.py')), patch.object(builder, 'sha', side_effect=lambda p: digests[str(p)]), patch.object(Path, 'read_bytes', lambda p: json.dumps(docs[str(p)]).encode()):
+            sources, _, code = builder.audited_inputs()
+        self.assertEqual(len(sources['slow']), 3)
+        self.assertEqual(code['pair_heads']['48'], 'data-document-commit')
+
+    def test_pair_schema_rejects_partial_wrong_horizon_changed_inputs_and_mixed_sources(self):
+        for corruption in ('partial', 'horizon', 'source', 'initial', 'rows', 'checkpoint'):
+            root, analysis, docs, digests = self.audit_fixture()
+            state = docs[str(analysis/'exploration_replication_s48_state.json')]
+            if corruption == 'partial': state['complete'] = False
+            if corruption == 'horizon': state['games_per_arm'] = 2000
+            if corruption == 'source': state['baseline']['code'] = {**state['baseline']['code'], 'python_sha256':'different'}
+            if corruption == 'initial': state['preflight']['arms']['slow']['q_sha256'] = 'different'
+            if corruption == 'rows': state['arms']['slow']['training']['rows'] = 2999
+            if corruption == 'checkpoint': digests[state['arms']['slow']['run']+'/weights/agent.pth'] = 'changed'
+            with self.subTest(corruption=corruption), patch.object(builder, 'ROOT', root), patch.object(builder, 'ANALYSIS', analysis), patch.object(builder, 'SCRIPT', Path('/fixture/builder.py')), patch.object(builder, 'sha', side_effect=lambda p: digests[str(p)]), patch.object(Path, 'read_bytes', lambda p: json.dumps(docs[str(p)]).encode()):
+                with self.assertRaises(RuntimeError): builder.audited_inputs()
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

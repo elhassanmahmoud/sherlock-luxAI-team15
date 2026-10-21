@@ -1,0 +1,215 @@
+"""Read-only Q action-gap diagnostic on one fixed training-buffer sample.
+Prepared for execution after all three paired runs/audits, never during training.
+No normalization, policy modification, evaluation games, or candidate selection.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import os
+import sys
+
+ROOT = Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+OUT = ROOT/'experiments/analysis/autonomous_20261020/exploration_qmargin_diagnostic.json'
+BASE = ROOT/'experiments/candidates/all18_v3.pth'
+BASE_SHA = 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+PLAY_KEYS = ('hidden','dueling','use_sap','use_belief','canonical','mask_actions')
+
+
+def require(ok,message):
+    if not ok:raise ValueError(message)
+
+
+def sha(p):
+    h=hashlib.sha256()
+    with Path(p).open('rb') as f:
+        for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+    return h.hexdigest()
+
+
+def metrics(np,q,mask):
+    require(q.ndim==2 and q.shape==mask.shape and len(q)>0 and mask.dtype==np.bool_
+            and np.isfinite(q).all() and (mask.sum(1)>=2).all(),
+            'Finite nonempty 2D Q and boolean mask with >=2 legal actions per row required')
+    # Accumulate descriptive statistics in float64, avoiding float32 square overflow.
+    q=q.astype(np.float64,copy=False)
+    low=np.where(mask,q,np.inf).min(1); high=np.where(mask,q,-np.inf).max(1)
+    ordered=np.sort(np.where(mask,q,-np.inf),axis=1)
+    gap=ordered[:,-1]-ordered[:,-2]
+    mean=np.where(mask,q,0).sum(1)/mask.sum(1)
+    rms=np.sqrt(np.where(mask,(q-mean[:,None])**2,0).sum(1)/mask.sum(1))
+    return {name:{'mean':float(x.mean()),'median':float(np.median(x)),
+                  'p95':float(np.percentile(x,95))}
+            for name,x in [('legal_span',high-low),('top_two_gap',gap),('centered_rms',rms)]}
+
+
+def select_sample(np,ns,mask,done,limit=1024):
+    require(ns.ndim==2 and ns.dtype==np.float32 and mask.ndim==2
+            and mask.dtype==np.bool_ and len(mask)==len(ns)
+            and done.shape==(len(ns),) and mask.shape[1]>=2,
+            'Replay next-state, boolean next-mask and done arrays are not aligned')
+    require(np.isfinite(done).all() and np.isin(done,[0,1]).all(), 'Done must contain only finite 0/1')
+    require(isinstance(limit,int) and limit>0, 'Positive integer sample limit required')
+    finite=np.isfinite(ns).all(1); enough=mask.sum(1)>=2
+    valid=np.flatnonzero((done==0)&enough&finite)
+    require(len(valid)>0, 'No eligible next-state rows')
+    indices=valid[np.linspace(0,len(valid)-1,min(limit,len(valid)),dtype=int)]
+    counts={'total_rows':len(ns),'eligible_rows':len(valid),
+            'terminal_rows':int((done!=0).sum()),'nonfinite_next_state_rows':int((~finite).sum()),
+            'fewer_than_two_legal_actions_rows':int((~enough).sum()),
+            'exclusion_counts_overlap':True}
+    return indices,ns[indices].copy(),mask[indices].copy(),counts
+
+
+def mean_q(np,outputs):
+    require(len(outputs)>0, 'Empty ensemble')
+    values=np.stack(outputs,axis=0)
+    require(values.ndim==3 and np.isfinite(values).all(), 'Invalid/misaligned network Q arrays')
+    return values.mean(axis=0)
+
+
+def audited_inputs():
+    paths={'base':BASE}; records={}; hashes={}; common_code=None
+    analysis=ROOT/'experiments/analysis/autonomous_20261020'
+    for seed in (47,48,49):
+        state_path=analysis/f'exploration_replication_s{seed}_state.json'
+        audit_path=analysis/f'exploration_pair_audit_s{seed}.json'
+        state=json.loads(state_path.read_text()); audit=json.loads(audit_path.read_text())
+        require(state.get('complete') is True and state.get('status')=='complete'
+                and state.get('final_integrity_ok') is True and not state.get('error')
+                and state['run_seed']==seed and state['games_per_arm']==3000, 'Incomplete/wrong pair')
+        require(audit.get('schema')=='exploration_pair_audit_v1' and audit.get('complete') is True
+                and audit.get('technical_audit_passed') is True and audit['run_seed']==seed
+                and audit['source_identity']==state['baseline']['code']
+                and audit['preflight']==state['preflight'], 'Completed matching pair audit required')
+        require(audit['input_sha256'].get(str(state_path))==sha(state_path), 'Audited pair state changed')
+        require(all(sha(path)==expected for path,expected in audit['input_sha256'].items()),
+                'An audited training/evaluation/checkpoint input changed')
+        hashes.update(audit['input_sha256']); hashes[str(audit_path)]=sha(audit_path)
+        code={k:v for k,v in state['baseline']['code'].items() if k!='head'}
+        require(common_code is None or code==common_code, 'Pair source/interpreter identities differ')
+        common_code=code
+        require(set(state['arms'])=={'control','slow'}, 'Unexpected arm set')
+        for arm,variant in (('control','full_rules_v3'),('slow','full_rules_v3_slowexplore')):
+            run=ROOT/f'experiments/runs/20261020_{variant}_s{seed}_exploration_{arm}'
+            require(state['arms'][arm]['run']==str(run), 'Wrong fixed training source path')
+            path=run/'weights/agent.pth'; final=state['arms'][arm]['training']['final']
+            require(audit['input_sha256'].get(str(path))==final['file_sha256']
+                    and sha(path)==final['file_sha256'], 'Final checkpoint identity mismatch')
+            paths[f'{arm}_{seed}']=path; records[f'{arm}_{seed}']=final
+    require(sha(BASE)==BASE_SHA, 'Fixed V3 basis changed')
+    require(str(Path(sys.executable).resolve())==common_code['python_path'], 'Different Python executable')
+    hashes.update(common_code['python_sources'])
+    hashes[common_code['python_path']]=common_code['python_sha256']
+    hashes[str(BASE)]=BASE_SHA; hashes[str(Path(__file__).resolve())]=sha(__file__)
+    require(all(sha(path)==expected for path,expected in hashes.items()), 'Recorded source/input identity changed')
+    return paths,records,hashes,common_code
+
+
+def self_test():
+    import numpy as np
+    q=np.array([[100.,3.,1.],[5.,5.,-100.]])
+    mask=np.array([[False,True,True],[True,True,False]])
+    a=metrics(np,q,mask)
+    assert a['legal_span']['mean']==1 and a['top_two_gap']['mean']==1
+    assert a['centered_rms']['mean']==.5
+    assert a==metrics(np,q+np.array([[7.],[200.]]),mask)
+    for bad in (np.zeros_like(mask),np.array([[True,False,False],[True,True,False]])):
+        try:metrics(np,q,bad)
+        except ValueError:pass
+        else:raise AssertionError('Invalid masks accepted')
+    try:metrics(np,np.array([[float('nan'),3.,1.],[5.,5.,-100.]]),mask)
+    except ValueError:pass
+    else:raise AssertionError('Nonfinite Q accepted')
+    # Regression: integer [2,1,0] was accepted and corrupted the denominator.
+    try:metrics(np,np.array([[3.,1.,99.]]),np.array([[2,1,0]]))
+    except ValueError:pass
+    else:raise AssertionError('Nonboolean mask accepted')
+    large=metrics(np,np.array([[1e20,-1e20]],np.float32),np.ones((1,2),bool))
+    assert all(np.isfinite(v) for stat in large.values() for v in stat.values())
+    ns=np.arange(18,dtype=np.float32).reshape(6,3)
+    mask=np.array([[1,1,0],[1,0,0],[0,1,1],[1,1,1],[1,0,1],[1,1,0]],bool)
+    done=np.array([0,0,1,0,0,0],np.float32);ns[3,0]=np.nan
+    indices,sample,legal,counts=select_sample(np,ns,mask,done,limit=2)
+    assert indices.tolist()==[0,5] and np.array_equal(sample,ns[[0,5]])
+    assert np.array_equal(legal,mask[[0,5]]) and counts['eligible_rows']==3
+    assert counts['terminal_rows']==1 and counts['fewer_than_two_legal_actions_rows']==1
+    for bad_ns,bad_mask,bad_done in ((ns,mask,done[:,None]),(ns,mask[:-1],done),
+                                    (ns,mask.astype(int),done),(ns.astype(np.float64),mask,done),
+                                    (ns,mask,np.full(6,2.)),(ns,np.zeros_like(mask),done)):
+        try:select_sample(np,bad_ns,bad_mask,bad_done)
+        except ValueError:pass
+        else:raise AssertionError('Invalid replay schema accepted')
+    # 18 base nets plus 3 extra nets must have 21 equal terms, not two equal groups.
+    base=[np.array([[0.,0.]],np.float32) for _ in range(18)]
+    extra=[np.array([[21.,0.]],np.float32) for _ in range(3)]
+    assert np.array_equal(mean_q(np,base+extra),np.array([[3.,0.]],np.float32))
+    assert np.array_equal(mean_q(np,extra),extra[0])
+    assert not np.array_equal(mean_q(np,base+extra),mean_q(np,[mean_q(np,base),mean_q(np,extra)]))
+    require('torch' not in sys.modules and 'jax' not in sys.modules, 'Self-test imported a model dependency')
+    print('Metric/mask RED regression, offset/overflow, next-state alignment/selection, '
+          'invalid replay schemas and 21-network weighting fixtures passed (no Torch/JAX).')
+
+
+def main():
+    ap=argparse.ArgumentParser(description=__doc__);g=ap.add_mutually_exclusive_group(required=True)
+    g.add_argument('--run',action='store_true');g.add_argument('--self-test',action='store_true')
+    ap.add_argument('--confirm-no-heavy-work',action='store_true');args=ap.parse_args()
+    if args.self_test:self_test();return
+    if not args.confirm_no_heavy_work:ap.error('Root must confirm all heavy work is stopped')
+    require(not OUT.exists(),'Refusing existing report')
+    paths,records,hashes,source_identity=audited_inputs()
+    buffer=paths['control_47'].with_suffix('.buffer.npz')
+    hashes[str(buffer)]=sha(buffer)
+    for key in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS'):os.environ[key]='1'
+    sys.path.insert(0,str(ROOT))
+    import numpy as np
+    import torch
+    from agents.sherlock.model import QNet
+    torch.set_num_threads(1);torch.set_num_interop_threads(1)
+    with np.load(buffer,allow_pickle=False) as data:
+        ns=data['ns']; mask=data['mask']; done=data['done']
+    indices,sample,legal,sample_counts=select_sample(np,ns,mask,done)
+    del ns,mask,done
+    x=torch.from_numpy(sample);result={};group_values={};base_outputs=[]
+    base_config=None
+    with torch.no_grad():
+        for label,path in paths.items():
+            c=torch.load(path,map_location='cpu',weights_only=False)
+            states=[c['q'],*c.get('ensemble',[])]
+            require(len(states)==(18 if label=='base' else 1), 'Wrong network count')
+            require(not c.get('cnn_policy'), 'CNN mixing is outside this diagnostic')
+            require(c['feature_dim']==sample.shape[1] and c['n_actions']==legal.shape[1], 'Feature/action dimensions differ')
+            if label=='base':base_config=c['cfg']
+            else:
+                require(c['cfg']==records[label]['config'], 'Checkpoint config differs from audit')
+                require(all(c[k]==records[label][k] for k in ('env_steps','learn_steps')), 'Checkpoint counters differ')
+            require(all(c['cfg'].get(k)==base_config.get(k) for k in PLAY_KEYS), 'Incompatible feature/action encoding')
+            outputs=[]
+            for idx,state in enumerate(states):
+                m=QNet(c['feature_dim'],c['n_actions'],c['cfg']['hidden'],c['cfg']['dueling'])
+                m.load_state_dict(state);m.eval();q=m(x).numpy();outputs.append(q)
+                result[f'{label}/net_{idx}']=metrics(np,q,legal)
+            group_values[label]=mean_q(np,outputs)
+            if label=='base':base_outputs=outputs
+        for arm in ('control','slow'):
+            outputs=[group_values[f'{arm}_{seed}'] for seed in (47,48,49)]
+            group_values[arm+'3']=mean_q(np,outputs)
+            group_values['base_'+arm+'3']=mean_q(np,[*base_outputs,*outputs])
+    ensemble_stats={k:metrics(np,v,legal) for k,v in group_values.items()}
+    reference=np.argmax(np.where(legal,group_values['base'],-np.inf),axis=1)
+    agreement={k:float((np.argmax(np.where(legal,v,-np.inf),axis=1)==reference).mean()) for k,v in group_values.items()}
+    require(all(sha(p)==h for p,h in hashes.items()),'An input changed during diagnosis')
+    report={'purpose':'Descriptive only; no normalization or selection',
+        'sample_source':str(buffer),'sample_selection':'Up to 1024 evenly spaced eligible indices among final control47 replay next-states; nonterminal, finite, >=2 legal next-actions',
+        'sample_indices':indices.tolist(),'sample_count':len(indices),'sample_counts':sample_counts,
+        'input_sha256':hashes,'source_identity_without_head':source_identity,
+        'ensemble_mean':'Equal mean per network: 3 or 18+3=21 terms; no equal weighting of differently sized groups',
+        'argmax_tie_break':'First legal action index, as in numpy.argmax; ties are not evidence of strength',
+        'limitations':'Training-buffer distribution from one control start only; not representative gameplay or fresh validation. Uses stored next-state masks with next-state features. Raw Q argmax agreement excludes heuristic overrides and does not imply strength. NumPy averaging can differ from runtime Torch reduction near floating-point ties. The replay SHA is captured at diagnostic start, not attested by the training-state schema. Eligible-row sampling also excludes terminal and one-action states; ring-buffer age order is preserved, no independent gameplay sample.',
+        'per_network':result,'groups':ensemble_stats,'raw_legal_argmax_agreement_with_base':agreement}
+    with OUT.open('x') as f:json.dump(report,f,indent=2,allow_nan=False);f.write('\n')
+    print(OUT)
+
+
+if __name__=='__main__':main()

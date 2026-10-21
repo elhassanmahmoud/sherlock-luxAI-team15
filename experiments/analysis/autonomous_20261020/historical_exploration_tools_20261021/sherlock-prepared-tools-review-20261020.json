@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-10-20T21:44:11.314348+02:00",
+  "prepared_only": true,
+  "actual_runs_started_by_these_tools": false,
+  "root_static_review": "All implementation files read; issues corrected before any real run; final independent strategy/target reviews without remaining concrete blocker.",
+  "root_test_results": {
+    "pair_auditor_stdlib": 6,
+    "builder_stdlib": 8,
+    "development_stdlib": 8,
+    "confirmation_stdlib": 6,
+    "night_coordinator_stdlib": 9,
+    "development_statistics": "synthetic NumPy passed",
+    "confirmation_statistics": "synthetic NumPy passed",
+    "qmargin": "small synthetic NumPy passed; no Torch/JAX"
+  },
+  "sha256": {
+    "/tmp/exploration_analysis.py": "2f4f1472d5e71e548ec444252e4503cd3691edf289e939b353e719472cda9574",
+    "/tmp/exploration_ensemble_builder.py": "f16f228749e066eae57ea7c52daf9c58b62bea45493e946ff227f76fb23413e1",
+    "/tmp/test_exploration_ensemble_builder.py": "b242b21aa8dd76b8232a95abb58368e2d7185068e02486b9afe38f3833bcc4b6",
+    "/tmp/exploration_ensemble_eval.py": "27faea85202b6149aced00bd4c1cd85fd654101d7cbbcf7567fb713becd8099e",
+    "/tmp/test_exploration_ensemble_statistics.py": "6f4c674b77f475f49dfa0b4a7d0a116b349017d512c7f8d9f5090ec90d794bbd",
+    "/tmp/exploration_confirmation.py": "20d584e2d2f80b46aa82994f433a56f99fcfc7deccbe8a4a0b14267f7fccf225",
+    "/tmp/test_exploration_confirmation_statistics.py": "512f75f52c4e8f31090aa3e8cea8e9e62e1572590e25d7a3327899dd3fc4429f",
+    "/tmp/sherlock-qmargin-diagnostic-20261020.py": "cb5cd4d0bc794091ae2001653199d18d4ec51a5acabeac9cb85cd70aecefcd02",
+    "/tmp/exploration_night_continuation.py": "e182e01da0a9a63adb40d31678da3e853fe3dfbb698b9f80595ea370c222db75",
+    "/tmp/test_exploration_night_continuation.py": "c843af0085b01289826a44666891a98b1e637ac9ae84b62b742774515ee2a10e"
+  },
+  "archive_policy": "Keep all Python helpers outside repository until the complete frozen sequence ends. Archive identical sources and proof thereafter. Do not execute Qmargin/builder/audits alongside a trainer or evaluation."
+}
