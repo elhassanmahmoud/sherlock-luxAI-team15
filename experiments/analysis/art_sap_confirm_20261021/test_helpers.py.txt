@@ -1,0 +1,313 @@
+"""Synthetic data and harmless child-process checks; no Torch or game imports."""
+import copy
+import csv
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+import unittest
+from unittest.mock import patch
+
+HERE = Path(__file__).resolve().parent
+FIELDS = ('seed side opponent result game_win point_win our_wins opp_wins '
+          'our_points opp_points point_counting_version wait_frac invalid_frac '
+          'greedy_masked_frac sap_attempts sap_hits stack_frac relics_found '
+          'relics_seen known_point_tiles belief_contradictions unit_steps steps secs').split()
+
+
+class HelpersTest(unittest.TestCase):
+    def helper(self, name):
+        path = HERE / (name + '.py')
+        self.assertTrue(path.is_file(), f'Missing {name} implementation')
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def rows(self, seeds=range(500720, 500780), opponents=('default', 'solution92')):
+        rows = []
+        for opp in opponents:
+            for seed in seeds:
+                for side in ('player_0', 'player_1'):
+                    row = dict.fromkeys(FIELDS, 0)
+                    row.update(seed=seed, side=side, opponent=opp, result=1,
+                               game_win=1, point_win=1, our_wins=3, our_points=100,
+                               point_counting_version=2, unit_steps=100, steps=303, secs=2)
+                    rows.append(row)
+        return rows
+
+    def test_complete_schema_and_bad_measurements(self):
+        a = self.helper('analyze')
+        with tempfile.TemporaryDirectory(dir=HERE) as tmp:
+            path = Path(tmp) / 'games.csv'
+            good = self.rows()
+            changes = [None, ('invalid_frac', .01), ('secs', 'nan'), ('wait_frac', 1.1),
+                       ('sap_hits', 1), ('our_wins', 2.5), ('opp_wins', 1), ('result', .5),
+                       ('game_win', 0), ('point_win', 0), ('our_points', -1),
+                       ('steps', 302), ('point_counting_version', 1), ('seed', 500721)]
+            for change in changes:
+                with self.subTest(change=change):
+                    rows = copy.deepcopy(good)
+                    if change:
+                        rows[0][change[0]] = change[1]
+                    with path.open('w', newline='') as f:
+                        w = csv.DictWriter(f, FIELDS); w.writeheader(); w.writerows(rows)
+                    if change:
+                        with self.assertRaises(ValueError):
+                            a.read_games(path, range(500720, 500780), ('default', 'solution92'))
+                    else:
+                        parsed = a.read_games(path, range(500720, 500780), ('default', 'solution92'))
+                        self.assertEqual(len(parsed), 240)
+            for rows in (good[:-1], good + [good[0]]):
+                with path.open('w', newline='') as f:
+                    w = csv.DictWriter(f, FIELDS); w.writeheader(); w.writerows(rows)
+                with self.assertRaises(ValueError):
+                    a.read_games(path, range(500720, 500780), ('default', 'solution92'))
+
+    def test_whole_map_bootstrap_and_actual_wins(self):
+        a = self.helper('analyze')
+        c, r = self.rows(range(523000, 523200)), self.rows(range(523000, 523200))
+        for row in r:
+            row['result'] = .5
+        compared = a.compare(c, r)
+        for value in compared.values():
+            self.assertEqual(value['delta'], 1)
+            self.assertEqual(value['ci95'], [1, 1])
+            self.assertEqual(value['reference']['draws'], 400)
+            self.assertEqual(value['reference']['actual_win_rate'], 0)
+        direct = a.direct_summary(c[:400])
+        self.assertEqual(direct['ci95'], [1, 1])
+        # Two maps, each internally identical across its two sides. Resampling
+        # individual games would narrow this 95% interval incorrectly.
+        two = self.rows(range(523200, 523202), ('self:/frozen/v3.pth',))
+        for row in two[2:]:
+            row['result'] = 0
+        self.assertEqual(a.direct_summary(two)['ci95'], [0, 1])
+
+    def test_fresh_gate_boundaries_and_draws(self):
+        a = self.helper('analyze')
+        comparison = {'solution92': {'candidate': {'wins': 360, 'games': 400},
+                                     'reference': {'wins': 340, 'games': 400}, 'ci95': [.001, .1]},
+                      'default': {'candidate': {'wins': 396, 'games': 400},
+                                  'reference': {'wins': 400, 'games': 400}, 'ci95': [-.02, 0]}}
+        self.assertTrue(all(a.fresh_gates(comparison).values()))
+        comparison['solution92']['ci95'][0] = 0
+        self.assertFalse(all(a.fresh_gates(comparison).values()))
+        comparison['solution92']['ci95'][0] = .001
+        comparison['solution92']['candidate']['wins'] = 359
+        self.assertFalse(all(a.fresh_gates(comparison).values()))
+        comparison['solution92']['candidate']['wins'] = 360
+        comparison['default']['candidate']['wins'] = 395
+        self.assertFalse(all(a.fresh_gates(comparison).values()))
+
+    def test_reproduction_checks_every_non_time_field(self):
+        a = self.helper('analyze')
+        reference = self.rows()
+        current = copy.deepcopy(reference)
+        current[0]['secs'] = 999
+        self.assertTrue(a.reproduction(current, reference)['all_non_time_fields_identical'])
+        for field in FIELDS:
+            if field in ('seed', 'side', 'opponent', 'secs'):
+                continue
+            changed = copy.deepcopy(current)
+            changed[0][field] += .125
+            with self.subTest(field=field):
+                result = a.reproduction(changed, reference)
+                self.assertFalse(result['all_non_time_fields_identical'])
+                self.assertEqual(result['different_values'], 1)
+        changed = copy.deepcopy(current)
+        changed[0]['seed'] += 999
+        with self.assertRaises(ValueError):
+            a.reproduction(changed, reference)
+
+    def test_output_job_and_freeze_are_bound(self):
+        a = self.helper('analyze')
+        with tempfile.TemporaryDirectory(dir=HERE) as tmp:
+            output = Path(tmp) / 'development_v3.csv'
+            output.write_text('synthetic complete output')
+            state = dict(root=str(a.ROOT), python='/frozen/python', head='abc', deadline=9999999999,
+                         source_hashes={'/frozen/source': 'f' * 64}, protected_hashes={'/frozen/v3': 'a' * 64},
+                         input_hashes={'/frozen/candidate': 'c' * 64}, v3_weights='/frozen/v3',
+                         candidate_weights='/frozen/candidate', candidate_identity='/frozen/identity',
+                         historical_csvs={'v3': '/historical/v3', 'candidate': '/historical/candidate'},
+                         outputs={'development_v3': str(output)}, job_limits_seconds=dict(a.LIMITS))
+            p = self.helper('protocol')
+            job = dict(label='development_v3', argv=p.job_argv(state, 'development_v3'), returncode=0,
+                       verified_inputs_after=True, cleanup={'group_clear': True}, freeze_id=p.freeze_id(state),
+                       output=str(output), output_sha256=p.digest(output), observed_output_sha256_at_finish=p.digest(output),
+                       started_at=100, finished_at=200, pid=123, pgid=123, owner_pid=456, rows=240)
+            state['jobs'] = [job]
+            a.bound_job(state, 'development_v3')
+            for field, value in [('returncode', 1), ('rows', 239), ('verified_inputs_after', False),
+                                 ('finished_at', 5000), ('pgid', 124), ('output_sha256', 'bad')]:
+                with self.subTest(field=field):
+                    altered = copy.deepcopy(state)
+                    altered['jobs'][0][field] = value
+                    with self.assertRaises(ValueError):
+                        a.bound_job(altered, 'development_v3')
+            altered = copy.deepcopy(state)
+            altered['protected_hashes']['/frozen/v3'] = 'b' * 64
+            with self.assertRaises(ValueError):
+                a.bound_job(altered, 'development_v3')
+            output.write_text('modified after completion')
+            with self.assertRaises(ValueError):
+                a.bound_job(state, 'development_v3')
+
+    def test_course_report_keys_loading_hashes_and_timing(self):
+        a = self.helper('analyze')
+        with tempfile.TemporaryDirectory(dir=HERE) as tmp:
+            output = Path(tmp) / 'course.json'
+            candidate = str(Path(tmp) / 'candidate.pth')
+            source_paths = [str(a.ROOT / 'Paths.csv'), str(a.ROOT / 'lux/runner.py')]
+            protected_paths = [str(a.ROOT / 'agents/sherlock/weights' / f'agent_p{i}.pth') for i in (0, 1)]
+            hashes = {name: 'a' * 64 for name in source_paths + protected_paths + [candidate]}
+            state = dict(outputs={'course': str(output)}, candidate_weights=candidate,
+                         source_hashes={p: hashes[p] for p in source_paths},
+                         protected_hashes={p: hashes[p] for p in protected_paths}, input_hashes={candidate: hashes[candidate]})
+            games = [dict(opponent=opp, seed=seed, side=side, steps=303, fresh_belief=True,
+                          loaded_model_verified=True, act_ms=dict(median=1, p95=50, max=250))
+                     for opp in ('default', 'solution92') for seed in (500720, 500721)
+                     for side in ('player_0', 'player_1')]
+            report = dict(status='passed', games=games, unchanged_sha256=hashes)
+            output.write_text(json.dumps(report))
+            self.assertTrue(a.course_report(state)['passed'])
+            report['games'][0]['act_ms']['p95'] = 50.001
+            output.write_text(json.dumps(report))
+            self.assertFalse(a.course_report(state)['passed'])
+            report['games'][0]['act_ms']['p95'] = 50
+            for mutation in ('loading', 'duplicate', 'hash', 'nonfinite'):
+                changed = copy.deepcopy(report)
+                if mutation == 'loading':
+                    changed['games'][0]['loaded_model_verified'] = False
+                elif mutation == 'duplicate':
+                    changed['games'][1] = changed['games'][0]
+                elif mutation == 'hash':
+                    changed['unchanged_sha256'][candidate] = 'b' * 64
+                else:
+                    changed['games'][0]['act_ms']['max'] = float('nan')
+                output.write_text(json.dumps(changed))
+                with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                    a.course_report(state)
+
+    def test_fixed_cli_rejects_changed_candidate_and_extra_workers(self):
+        p = self.helper('protocol')
+        state = {'python': '/frozen/python', 'v3_weights': '/frozen/v3.pth',
+                 'candidate_weights': '/frozen/art3.pth',
+                 'outputs': {label: '/study/' + label + ('.json' if label == 'course' else '.csv')
+                             for label in p.LIMITS}}
+        args = p.job_argv(state, 'direct_fresh')
+        self.assertIn('self:/frozen/v3.pth', args)
+        self.assertEqual(args[args.index('--first') + 1], '23200')
+        self.assertEqual(args[args.index('--n') + 1], '200')
+        self.assertEqual(args[args.index('--workers') + 1], '2')
+        self.assertNotIn('--set', args)
+        job = {'label': 'direct_fresh', 'argv': args}
+        p.check_job_argv(state, job)
+        for flag, bad in (('--workers', '3'), ('--weights', '/wrong.pth')):
+            modified = copy.deepcopy(job)
+            modified['argv'][modified['argv'].index(flag) + 1] = bad
+            with self.assertRaises(ValueError):
+                p.check_job_argv(state, modified)
+
+    def test_cleanup_kills_term_resistant_descendant(self):
+        launcher = self.helper('job_launcher')
+        with tempfile.TemporaryDirectory(dir=HERE) as tmp:
+            pidfile = Path(tmp) / 'child.pid'
+            child_code = 'import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(30)'
+            leader_code = ('import subprocess,sys,time; '
+                           f'p=subprocess.Popen([sys.executable,"-c",{child_code!r}]); '
+                           f'open({str(pidfile)!r},"w").write(str(p.pid)); time.sleep(30)')
+            proc = subprocess.Popen([sys.executable, '-B', '-c', leader_code], start_new_session=True)
+            try:
+                until = time.monotonic() + 3
+                while not pidfile.exists() and time.monotonic() < until:
+                    time.sleep(.02)
+                self.assertTrue(pidfile.exists())
+                time.sleep(.1)
+                cleaned = launcher.cleanup_group(proc)
+                self.assertTrue(cleaned['sigkill_sent'])
+                self.assertEqual(launcher.live_group(proc.pid), [])
+                self.assertIsNotNone(proc.returncode)
+            finally:
+                try:
+                    os.killpg(proc.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                proc.wait(timeout=5)
+
+    def test_process_guard_rejects_foreign_model_entrypoints(self):
+        launcher = self.helper('job_launcher')
+        mac = '/Library/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python'
+        commands = [
+            f'{mac} -B -m scripts.par_eval --workers 2',
+            '/usr/bin/python3 -m scripts.experiment --games 3000',
+            '/usr/bin/python3 -m scripts.train --games 3000',
+            '/usr/bin/python3 -m scripts.ppo_train ppo --workers 1',
+            '/usr/bin/python3 -m scripts.evaluate --games 20',
+            '/usr/bin/python3 -m scripts.check_candidate_runner --weights candidate.pth',
+            '/usr/bin/python3 -m scripts.compare_weights',
+            '/usr/bin/python3 -m scripts.mechanism_probe',
+            '/usr/bin/python3 -m scripts.record_replay',
+            '/usr/bin/python3 -m scripts.build_ensemble',
+            '/usr/bin/python3 scripts/train.py --games 3000',
+            f'{mac} -B /repo/scripts/experiment.py --games 3000',
+            '/usr/bin/python3 -u /repo/scripts/ppo_train.py ppo',
+            '/usr/bin/python3 -X dev -W ignore /repo/scripts/evaluate.py',
+            '/usr/bin/python3 -Bu -mscripts.par_eval --workers 2',
+            '/usr/bin/python3 -m pytest -q tests/test_ensemble_dimensions.py',
+            f'{mac} -B /venv/bin/pytest -q',
+            '/venv/bin/pytest -q tests/test_ensemble_dimensions.py',
+            '/usr/bin/python3 -m unittest discover -s tests',
+            '/usr/bin/python3 tests/test_ensemble_dimensions.py',
+            '/usr/bin/python3 -m tests.test_ensemble_dimensions',
+            '/usr/bin/python3 main.py',
+            f'{mac} -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=6, pipe_handle=10) --multiprocessing-fork',
+            '/usr/bin/python3 -c from multiprocessing.resource_tracker import main;main(5)',
+            '/usr/bin/python3 -c from multiprocessing.forkserver import main;main(5,6,[])',
+        ]
+        for command in commands:
+            with self.subTest(command=command), patch.object(launcher.subprocess, 'check_output',
+                    return_value=f'98765 98765 {command}\n'):
+                with self.assertRaises(ValueError):
+                    launcher.check_processes(110)
+        # A competing pytest in the launcher's parent group is still foreign;
+        # only the actual current PID and registered child group are exempt.
+        with patch.object(launcher.subprocess, 'check_output', return_value=(
+                f'{os.getpid()} 777 {mac} -B /repo/job_launcher.py development_v3\n'
+                f'98766 777 {mac} -m pytest -q\n')):
+            with self.assertRaises(ValueError):
+                launcher.check_processes(110)
+
+    def test_process_guard_allows_readonly_processes_and_owned_two_workers(self):
+        launcher = self.helper('job_launcher')
+        mac = '/Library/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python'
+        listing = (f'{os.getpid()} 777 {mac} -B /repo/job_launcher.py development_v3\n'
+                   f'110 110 {mac} -B -m scripts.par_eval --workers 2\n'
+                   f'111 110 {mac} -c from multiprocessing.spawn import spawn_main; spawn_main() --multiprocessing-fork\n'
+                   f'112 110 {mac} -c from multiprocessing.spawn import spawn_main; spawn_main() --multiprocessing-fork\n'
+                   f'113 110 {mac} -c from multiprocessing.resource_tracker import main;main(5)\n'
+                   f'601 601 {mac} -B /repo/.superpowers/sdd/study/analyze.py development --source /repo/scripts/train.py\n'
+                   f'602 602 {mac} -m scripts.compare_report\n'
+                   f'603 603 {mac} -B /repo/remote_watch.py\n'
+                   '604 604 /bin/zsh -lc echo python -m scripts.train\n'
+                   '605 605 /usr/bin/python3 -c import json; print("scripts.train")\n')
+        with patch.object(launcher.subprocess, 'check_output', return_value=listing):
+            result = launcher.check_processes(110)
+        self.assertEqual(result, {'foreign_model_jobs': [], 'evaluation_workers': 2})
+        third = f'114 110 {mac} -c from multiprocessing.spawn import spawn_main; spawn_main() --multiprocessing-fork\n'
+        with patch.object(launcher.subprocess, 'check_output', return_value=listing + third):
+            with self.assertRaises(ValueError):
+                launcher.check_processes(110)
+
+    def test_no_model_imports(self):
+        self.helper('analyze'); self.helper('job_launcher')
+        self.assertFalse(any(name in sys.modules for name in ('torch', 'jax', 'luxai_s3')))
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,281 @@
+"""Fixed Art3 phase reports; no state writes, reruns, Torch, or project imports.
+
+Usage: python -B analyze.py {development,pre_fresh,fresh,direct_fresh} --out NEW.json
+Run development after the two reproduction jobs, pre_fresh after direct+course,
+fresh after both 800-game opponent jobs, direct_fresh after the final 400 games.
+Output is exclusively created in the study directory; Root operates all gates.
+"""
+import argparse
+import ast
+import csv
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+
+from protocol import (HISTORICAL_SHA, LIMITS, ROOT, SPEC, STATE, STUDY, check_frozen,
+                      check_job_argv, digest, freeze_id, frozen_hashes, require, validate_state)
+
+GAME_FIELDS = ('seed side opponent result game_win point_win our_wins opp_wins '
+               'our_points opp_points point_counting_version wait_frac invalid_frac '
+               'greedy_masked_frac sap_attempts sap_hits stack_frac relics_found relics_seen '
+               'known_point_tiles belief_contradictions unit_steps steps secs').split()
+SIDES = ('player_0', 'player_1')
+OPPONENTS = ('default', 'solution92')
+PHASES = {'development': ('development_v3', 'development_candidate'),
+          'pre_fresh': ('development_v3', 'development_candidate', 'direct_development', 'course'),
+          'fresh': ('development_v3', 'development_candidate', 'direct_development', 'course',
+                    'fresh_v3', 'fresh_candidate'),
+          'direct_fresh': tuple(LIMITS)}
+
+
+def read_games(path, seeds, opponents):
+    seeds, opponents = tuple(seeds), tuple(opponents)
+    before = digest(path)
+    with Path(path).open(newline='') as file:
+        reader = csv.DictReader(file)
+        require(reader.fieldnames == GAME_FIELDS, f'Wrong 24-column schema: {path}')
+        rows = list(reader)
+    expected = {(opp, seed, side) for opp in opponents for seed in seeds for side in SIDES}
+    keys, parsed = [], []
+    integers = {'seed', 'our_wins', 'opp_wins', 'our_points', 'opp_points', 'point_counting_version',
+                'sap_attempts', 'sap_hits', 'relics_found', 'relics_seen', 'known_point_tiles',
+                'belief_contradictions', 'unit_steps', 'steps'}
+    for index, row in enumerate(rows):
+        require(set(row) == set(GAME_FIELDS) and all(v not in ('', None) for v in row.values()),
+                f'Malformed row {index}: {path}')
+        try:
+            numbers = {key: float(value) for key, value in row.items() if key not in ('side', 'opponent')}
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f'Nonnumeric row {index}: {path}') from exc
+        require(all(math.isfinite(x) and x >= 0 for x in numbers.values()), 'Nonfinite/negative measurement')
+        require(all(numbers[key].is_integer() for key in integers), 'Noninteger game count')
+        require(all(0 <= numbers[key] <= 1 for key in GAME_FIELDS if key.endswith('_frac')), 'Invalid fraction')
+        require(numbers['invalid_frac'] == 0, 'Nonzero invalid_frac')
+        require(numbers['point_counting_version'] == 2 and numbers['steps'] == 303, 'Incomplete/version-mismatched game')
+        our, other = numbers['our_wins'], numbers['opp_wins']
+        require(our <= 3 and other <= 3 and our + other <= 3, 'Invalid match counts')
+        result = 1 if our > other else 0 if our < other else .5
+        require(numbers['result'] == result and numbers['game_win'] == int(our > other), 'Inconsistent match result')
+        ours, theirs = numbers['our_points'], numbers['opp_points']
+        require(numbers['point_win'] == (1 if ours > theirs else 0 if ours < theirs else .5), 'Inconsistent point result')
+        require(numbers['sap_hits'] <= numbers['sap_attempts'] <= numbers['unit_steps'] <= 16 * 303,
+                'Invalid action/unit counts')
+        require(numbers['relics_found'] <= 6 and numbers['relics_seen'] <= 6 and
+                numbers['known_point_tiles'] <= 24 * 24, 'Invalid map counts')
+        require(numbers['secs'] > 0, 'Nonpositive game runtime')
+        key = row['opponent'], int(numbers['seed']), row['side']
+        keys.append(key)
+        parsed.append({**row, **numbers})
+    require(len(rows) == len(expected) and len(set(keys)) == len(keys) and set(keys) == expected,
+            f'Wrong, incomplete, or duplicate opponent/map/side keys: {path}')
+    require(digest(path) == before, f'Input changed during parsing: {path}')
+    return parsed
+
+
+def reproduction(current, historical):
+    def keyed(rows):
+        return {(r['opponent'], int(r['seed']), r['side']): r for r in rows}
+    current, historical = keyed(current), keyed(historical)
+    require(current.keys() == historical.keys(), 'Reproduction keys differ')
+    mismatches = []
+    count = 0
+    for key in sorted(current):
+        for field in GAME_FIELDS:
+            if field != 'secs' and current[key][field] != historical[key][field]:
+                count += 1
+                if len(mismatches) < 20:
+                    mismatches.append(dict(key=list(key), field=field, current=current[key][field],
+                                           historical=historical[key][field]))
+    return dict(games=len(current), checked_fields_per_game=23,
+                all_non_time_fields_identical=count == 0, different_values=count,
+                first_mismatches=mismatches)
+
+
+def counts(rows):
+    wins, draws, losses = (sum(r['result'] == value for r in rows) for value in (1, .5, 0))
+    return dict(games=len(rows), wins=wins, draws=draws, losses=losses,
+                actual_win_rate=wins / len(rows), mean_result=(wins + .5 * draws) / len(rows))
+
+
+def interval(values):
+    samples = np.random.default_rng(0).choice(np.asarray(values, dtype=float),
+                                             size=(5000, len(values)), replace=True)
+    return np.percentile(samples.mean(axis=1), [2.5, 97.5]).tolist()
+
+
+def map_means(rows, wins_only):
+    maps = {}
+    for row in rows:
+        maps.setdefault(int(row['seed']), []).append(float(row['result'] == 1) if wins_only else row['result'])
+    require(all(len(values) == 2 for values in maps.values()), 'Incomplete paired map')
+    return {seed: sum(values) / 2 for seed, values in sorted(maps.items())}
+
+
+def compare(candidate, reference):
+    comparisons = {}
+    for opponent in OPPONENTS:
+        c = [row for row in candidate if row['opponent'] == opponent]
+        r = [row for row in reference if row['opponent'] == opponent]
+        cm, rm = map_means(c, True), map_means(r, True)
+        require(cm.keys() == rm.keys(), 'Unpaired comparison maps')
+        delta = [cm[seed] - rm[seed] for seed in cm]
+        comparisons[opponent] = dict(candidate=counts(c), reference=counts(r), maps=len(cm),
+                                      delta=float(np.mean(delta)), ci95=interval(delta))
+    return comparisons
+
+
+def direct_summary(rows):
+    return {**counts(rows), 'maps': len(rows) // 2,
+            'ci95': interval(list(map_means(rows, False).values()))}
+
+
+def fresh_gates(comparison):
+    sol, default = comparison['solution92'], comparison['default']
+    games = sol['candidate']['games']
+    return dict(solution_delta_at_least_5pp=100 * (sol['candidate']['wins'] - sol['reference']['wins']) >= 5 * games,
+                solution_lower_bound_strictly_positive=sol['ci95'][0] > 0,
+                default_at_least_99pct=100 * default['candidate']['wins'] >= 99 * default['candidate']['games'],
+                default_delta_at_least_minus_1pp=100 * (default['candidate']['wins'] - default['reference']['wins'])
+                >= -default['candidate']['games'])
+
+
+def bound_job(state, label):
+    matches = [job for job in state['jobs'] if job['label'] == label]
+    require(len(matches) == 1, f'Expected one completed job: {label}')
+    job = matches[0]
+    check_job_argv(state, job)
+    require(job.get('returncode') == 0 and job.get('verified_inputs_after') is True and
+            job.get('cleanup', {}).get('group_clear') is True and not job.get('error') and
+            not job.get('cleanup_error'), f'Job incomplete/failed: {label}')
+    require(job['freeze_id'] == freeze_id(state), f'Job belongs to another freeze: {label}')
+    require(job['output'] == state['outputs'][label], 'Job output path differs')
+    require(digest(job['output']) == job['output_sha256'] == job['observed_output_sha256_at_finish'],
+            f'Completed job output changed: {label}')
+    require(all(math.isfinite(job[k]) for k in ('started_at', 'finished_at')) and
+            0 < job['finished_at'] - job['started_at'] <= LIMITS[label] and
+            job['finished_at'] < state['deadline'], f'Invalid job timing: {label}')
+    require(job['pid'] == job['pgid'] and job['pid'] > 0 and job['owner_pid'] > 0, 'Missing process ownership')
+    if label == 'course':
+        require(job['games'] == 8, 'Wrong course game count')
+    else:
+        first, maps, direct = SPEC[label]
+        require(job['rows'] == maps * (2 if direct else 4), 'Wrong recorded CSV row count')
+    return job
+
+
+def course_report(state):
+    report = json.loads(Path(state['outputs']['course']).read_text())
+    require(report['status'] == 'passed', 'Course probe failed')
+    expected = {(o, seed, side) for o in OPPONENTS for seed in (500720, 500721) for side in SIDES}
+    keys, timings = [], []
+    for row in report['games']:
+        keys.append((row['opponent'], row['seed'], row['side']))
+        require(row['steps'] == 303 and row['fresh_belief'] is True and row['loaded_model_verified'] is True,
+                'Incomplete course game or failed loading/freshness')
+        values = row['act_ms']
+        require(set(values) == {'median', 'p95', 'max'} and
+                all(isinstance(v, (float, int)) and math.isfinite(v) and v >= 0 for v in values.values()) and
+                values['median'] <= values['p95'] <= values['max'], 'Invalid course timing')
+        timings.append(values)
+    require(len(keys) == 8 and set(keys) == expected, 'Wrong/duplicate course game keys')
+    expected_paths = [str(ROOT / 'agents/sherlock/weights' / f'agent_p{i}.pth') for i in (0, 1)]
+    expected_paths += [state['candidate_weights'], str(ROOT / 'Paths.csv'), str(ROOT / 'lux/runner.py')]
+    hashes = frozen_hashes(state)
+    require(set(report['unchanged_sha256']) == set(expected_paths), 'Wrong course protected files')
+    require(all(report['unchanged_sha256'][p] == hashes[p] for p in expected_paths), 'Course file binding differs')
+    max_p95, maximum = max(t['p95'] for t in timings), max(t['max'] for t in timings)
+    gates = dict(p95_at_most_50ms=max_p95 <= 50, maximum_at_most_250ms=maximum <= 250)
+    return dict(games=8, max_per_game_p95_ms=max_p95, maximum_ms=maximum,
+                timing_gates=gates, passed=all(gates.values()),
+                scope='Exact loading, fresh state, complete games, action shape/type/finiteness and timing. '
+                      'This probe does not prove all semantic action legality. Evaluation invalid_frac uses its existing metric definition.')
+
+
+def analyze(state, phase):
+    require(state.get('active') is None, 'Cannot analyze during an active job')
+    identity = validate_state(state)
+    check_frozen(state)
+    # Read the literal schema, never import scripts.experiment (which imports Torch).
+    tree = ast.parse((ROOT / 'scripts/experiment.py').read_text())
+    schemas = [ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign)
+               and any(isinstance(target, ast.Name) and target.id == 'GAME_FIELDS' for target in node.targets)]
+    require(schemas == [GAME_FIELDS], 'Production schema changed')
+    jobs = {label: bound_job(state, label) for label in PHASES[phase]}
+    rows = {}
+    for label in jobs:
+        if label != 'course':
+            first, maps, direct = SPEC[label]
+            opponents = ('self:' + state['v3_weights'],) if direct else OPPONENTS
+            rows[label] = read_games(state['outputs'][label], range(500000 + first, 500000 + first + maps), opponents)
+    historical = {label: read_games(path, range(500720, 500780), OPPONENTS)
+                  for label, path in state['historical_csvs'].items()}
+    repro = {key: reproduction(rows['development_' + key], historical[key]) for key in ('v3', 'candidate')}
+    comparison = compare(rows['development_candidate'], rows['development_v3'])
+    dev_gates = dict(solution_at_least_108_wins=comparison['solution92']['candidate']['wins'] >= 108,
+                     solution_at_least_6_more_wins=comparison['solution92']['candidate']['wins'] - comparison['solution92']['reference']['wins'] >= 6,
+                     default_120_wins=comparison['default']['candidate']['wins'] == 120)
+    dev_passed = all(dev_gates.values()) and all(value['all_non_time_fields_identical'] for value in repro.values())
+    report = dict(phase=phase, source_head=state['head'], freeze_id=freeze_id(state),
+                  completed_games=sum(j.get('rows', j.get('games', 0)) for j in jobs.values()),
+                  candidate_identity=identity, protected_hashes_verified=True,
+                  output_sha256={label: job['output_sha256'] for label, job in jobs.items()},
+                  historical_sha256=dict(HISTORICAL_SHA),
+                  bootstrap=dict(draws=5000, rng='numpy.default_rng(0)', percentiles=[2.5, 97.5],
+                                 unit='whole map including both sides'),
+                  development=dict(scope='Known development maps; never independent confirmation.',
+                                   reproduction=repro, paired_actual_wins=comparison, gates=dev_gates, passed=dev_passed),
+                  advance_to_direct_and_course=dev_passed)
+    if phase != 'development':
+        direct = direct_summary(rows['direct_development'])
+        direct['passed'] = 2 * direct['wins'] + direct['draws'] >= direct['games']
+        course = course_report(state)
+        order = min(jobs[k]['started_at'] for k in ('direct_development', 'course')) >= max(
+            jobs[k]['finished_at'] for k in ('development_v3', 'development_candidate'))
+        report.update(direct_development=direct, course=course,
+                      development_followup_order_valid=order,
+                      advance_to_fresh=dev_passed and direct['passed'] and course['passed'] and order)
+    if phase in ('fresh', 'direct_fresh'):
+        fresh = compare(rows['fresh_candidate'], rows['fresh_v3'])
+        gates = fresh_gates(fresh)
+        order = min(jobs[k]['started_at'] for k in ('fresh_v3', 'fresh_candidate')) >= max(
+            jobs[k]['finished_at'] for k in PHASES['pre_fresh'])
+        report.update(fresh=dict(scope='Independent fixed opponent block 523000–523199.',
+                                 paired_actual_wins=fresh, gates=gates, passed=all(gates.values())),
+                      fresh_order_valid=order,
+                      advance_to_direct_fresh=report['advance_to_fresh'] and all(gates.values()) and order)
+    if phase == 'direct_fresh':
+        direct = direct_summary(rows['direct_fresh'])
+        direct['passed'] = direct['ci95'][0] > .5
+        order = jobs['direct_fresh']['started_at'] >= max(jobs[k]['finished_at'] for k in ('fresh_v3', 'fresh_candidate'))
+        report.update(direct_fresh=direct, direct_fresh_order_valid=order,
+                      qualifies_for_independent_release_review=report['advance_to_direct_fresh'] and direct['passed'] and order)
+    check_frozen(state)
+    for label, job in jobs.items():
+        require(digest(state['outputs'][label]) == job['output_sha256'], 'Output changed during analysis')
+    return report
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('phase', choices=PHASES)
+    parser.add_argument('--out', type=Path, required=True)
+    args = parser.parse_args()
+    destination = args.out.resolve()
+    state_bytes = STATE.read_bytes()
+    state = json.loads(state_bytes)
+    require(destination.parent == STUDY and destination.suffix == '.json' and
+            str(destination) not in frozen_hashes(state) and destination != STATE and
+            str(destination) not in state['outputs'].values(), 'Unsafe analysis output path')
+    require(not destination.exists(), 'Refusing report overwrite')
+    report = analyze(state, args.phase)
+    require(STATE.read_bytes() == state_bytes, 'Execution state changed during analysis')
+    with destination.open('x') as file:
+        json.dump(report, file, indent=2, allow_nan=False)
+        file.write('\n')
+    print(json.dumps(report, indent=2, allow_nan=False))
+
+
+if __name__ == '__main__':
+    main()

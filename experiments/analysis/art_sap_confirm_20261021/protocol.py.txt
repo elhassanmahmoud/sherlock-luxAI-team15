@@ -1,0 +1,136 @@
+"""Fixed Art3 study contract; stdlib only, never imports project/model code.
+
+Root creates execution_state.json ONLY after integration and candidate checks.
+Required state: root, python, head, deadline (<= 2026-10-22 03:15 UTC),
+source_hashes, protected_hashes, input_hashes (absolute path -> SHA256),
+v3_weights, candidate_weights, candidate_identity (absolute JSON path),
+historical_csvs={v3: ABS_CSV, candidate: ABS_CSV}, outputs={each label: ABS_OUT},
+job_limits_seconds (exact LIMITS below), jobs=[], active=null.
+source_hashes includes this helper, launcher, analyzer, Python, all agent/scripts/
+lux sources, Paths.csv and engine runtime. input_hashes includes plan, identity,
+candidate and both historical CSVs. protected_hashes includes both current and
+old-backup pairs in both checkouts. All paths must be canonical absolute paths.
+
+candidate_identity JSON supplied by Root's separate Torch check:
+baseline_sha256, candidate_sha256, changed_saved_config={art_sap: true,
+art_min_hits: 3}, all_other_checkpoint_fields_identical=true,
+loaded_network_count=18, loaded_tensors_identical=true,
+effective_config={art_sap:true, art_min_hits:3, art_reserve:0, art_safe:true,
+siege:false, threat_feats:false, joint_moves:false, ...}.
+
+Launcher LABEL builds the exact argv below; it does not select phases or gates.
+Before every launch it uses the historical V3 maximum secs/game, 20% reserve,
+two workers (one for course), and 60s/job startup allowance for ALL still-unrun
+planned jobs. Root owns prior remote/seed checks, candidate creation and gates.
+"""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[3]
+STUDY = ROOT / 'experiments/analysis/art_sap_confirm_20261021'
+STATE = STUDY / 'execution_state.json'
+V3_SHA = 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+OLD_SHA = '3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158'
+HISTORICAL_SHA = {'v3': '355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173',
+                  'candidate': '080488ca48aaf0a405d3b1a6bc70e699d7bcf71a12564ec7fdf5f058cd70687c'}
+LIMITS = dict(development_v3=3600, development_candidate=3600, direct_development=1200,
+              course=600, fresh_v3=3600, fresh_candidate=3600, direct_fresh=2400)
+SPEC = {'development_v3': (720, 60, False), 'development_candidate': (720, 60, False),
+        'direct_development': (720, 60, True), 'fresh_v3': (23000, 200, False),
+        'fresh_candidate': (23000, 200, False), 'direct_fresh': (23200, 200, True)}
+DEADLINE = 1792638900  # 2026-10-22T03:15:00Z
+
+
+def require(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def frozen_hashes(state):
+    combined = {}
+    for group in ('source_hashes', 'protected_hashes', 'input_hashes'):
+        require(isinstance(state[group], dict) and state[group], f'Missing {group}')
+        for name, value in state[group].items():
+            require(name == str(Path(name).absolute()) and len(value) == 64, f'Bad hash entry: {name}')
+            require(name not in combined or combined[name] == value, f'Conflicting hashes: {name}')
+            combined[name] = value
+    return combined
+
+
+def freeze_id(state):
+    keys = ('root', 'python', 'head', 'deadline', 'source_hashes', 'protected_hashes',
+            'input_hashes', 'v3_weights', 'candidate_weights', 'candidate_identity',
+            'historical_csvs', 'outputs', 'job_limits_seconds')
+    return hashlib.sha256(json.dumps({k: state[k] for k in keys}, sort_keys=True,
+                                     separators=(',', ':')).encode()).hexdigest()
+
+
+def job_argv(state, label):
+    require(label in LIMITS, 'Unknown job label')
+    weights = state['v3_weights'] if label in ('development_v3', 'fresh_v3') else state['candidate_weights']
+    argv = [state['python'], '-B', '-m']
+    if label == 'course':
+        return argv + ['scripts.check_candidate_runner', '--weights', weights, '--out', state['outputs'][label]]
+    first, count, direct = SPEC[label]
+    opponents = 'self:' + state['v3_weights'] if direct else 'default,solution92'
+    return argv + ['scripts.par_eval', '--weights', weights, '--first', str(first), '--n', str(count),
+                   '--workers', '2', '--opponents', opponents, '--out', state['outputs'][label]]
+
+
+def check_job_argv(state, job):
+    require(job['argv'] == job_argv(state, job['label']), f"Unexpected job argv: {job['label']}")
+
+
+def check_frozen(state):
+    require(str(ROOT) == state['root'], 'Wrong study checkout')
+    require(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=state['root'],
+                                    text=True, timeout=10).strip() == state['head'], 'Source HEAD changed')
+    for name, expected in frozen_hashes(state).items():
+        require(digest(name) == expected, f'Frozen file changed: {name}')
+
+
+def validate_state(state):
+    require(state['job_limits_seconds'] == LIMITS, 'Unexpected per-job limits')
+    require(0 < state['deadline'] <= DEADLINE, 'Deadline exceeds fixed plan')
+    require(set(state['outputs']) == set(LIMITS), 'Incomplete output paths')
+    outputs = list(state['outputs'].values())
+    require(len(set(outputs)) == len(outputs), 'Repeated output path')
+    hashes = frozen_hashes(state)
+    for label, name in state['outputs'].items():
+        path = Path(name)
+        require(path.parent == STUDY and name == str(path.resolve()), 'Output must be in study directory')
+        require(name not in hashes and path.suffix == ('.json' if label == 'course' else '.csv'), 'Unsafe output')
+    require(state['v3_weights'] != state['candidate_weights'], 'Candidate aliases V3')
+    require(hashes[state['v3_weights']] == V3_SHA, 'Wrong V3 source')
+    require(state['candidate_weights'] in state['input_hashes'], 'Candidate is not frozen')
+    for key, expected in HISTORICAL_SHA.items():
+        require(hashes[state['historical_csvs'][key]] == expected, 'Wrong historical reference')
+    for file in ('protocol.py', 'job_launcher.py', 'analyze.py'):
+        require(str(Path(__file__).parent / file) in state['source_hashes'], f'Unfrozen helper: {file}')
+    for name in (state['python'], str(ROOT / 'Paths.csv'), str(ROOT / 'lux/runner.py'),
+                 str(ROOT / 'scripts/experiment.py'), str(ROOT / 'scripts/par_eval.py'),
+                 str(ROOT / 'scripts/check_candidate_runner.py')):
+        require(name in state['source_hashes'], f'Missing source/runtime binding: {name}')
+    require(str(ROOT / 'docs/superpowers/plans/2026-10-21-art-sap-confirmation.md') in hashes, 'Unfrozen plan')
+    require(list(state['protected_hashes'].values()).count(V3_SHA) >= 4 and
+            list(state['protected_hashes'].values()).count(OLD_SHA) >= 4, 'Missing protected weight pairs')
+    require(state['candidate_identity'] in state['input_hashes'], 'Unfrozen identity receipt')
+    identity = json.loads(Path(state['candidate_identity']).read_text())
+    require(identity['baseline_sha256'] == V3_SHA and
+            identity['candidate_sha256'] == hashes[state['candidate_weights']], 'Identity hashes differ')
+    require(identity['changed_saved_config'] == {'art_sap': True, 'art_min_hits': 3}, 'Unexpected saved config changes')
+    require(identity['all_other_checkpoint_fields_identical'] is True and
+            identity['loaded_tensors_identical'] is True and identity['loaded_network_count'] == 18,
+            'Candidate identity/loading not verified')
+    for key, value in dict(art_sap=True, art_min_hits=3, art_reserve=0, art_safe=True,
+                           siege=False, threat_feats=False, joint_moves=False).items():
+        require(identity['effective_config'][key] == value, f'Unexpected effective config: {key}')
+    labels = [j['label'] for j in state['jobs']]
+    require(len(labels) == len(set(labels)) and set(labels) <= set(LIMITS), 'Repeated/unknown job label')
+    return identity

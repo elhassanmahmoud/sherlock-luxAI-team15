@@ -1,0 +1,245 @@
+"""One bounded root-operated job. Usage: python -B job_launcher.py LABEL.
+
+No phase selection, model import, restart, or execution-state creation. Adapted
+from the tested CNN3 launcher; all actual jobs receive a private process group.
+"""
+import csv
+import fcntl
+import json
+import math
+import os
+from pathlib import Path
+import re
+import signal
+import subprocess
+import sys
+import time
+
+from protocol import (LIMITS, SPEC, STATE, check_frozen, digest, freeze_id,
+                      job_argv, require, validate_state)
+
+
+def live_group(pgid):
+    listing = subprocess.check_output(['ps', '-axo', 'pid=,pgid=,stat='], text=True, timeout=3)
+    return [int(fields[0]) for line in listing.splitlines() if len(fields := line.split()) == 3
+            and fields[1] == str(pgid) and not fields[2].startswith('Z')]
+
+
+def cleanup_group(process):
+    """TERM then KILL the owned group, including children left by a dead leader."""
+    result = {'sigterm_sent': False, 'sigkill_sent': False}
+    for sig, field, wait_seconds in ((signal.SIGTERM, 'sigterm_sent', 2),
+                                     (signal.SIGKILL, 'sigkill_sent', 3)):
+        process.poll()
+        if not live_group(process.pid):
+            break
+        try:
+            os.killpg(process.pid, sig)
+            result[field] = True
+        except ProcessLookupError:
+            break
+        until = time.monotonic() + wait_seconds
+        while time.monotonic() < until:
+            process.poll()
+            if not live_group(process.pid):
+                break
+            time.sleep(.05)
+    process.wait(timeout=3)
+    require(not live_group(process.pid), 'Owned process group still has live members')
+    result['group_clear'] = True
+    return result
+
+
+def compute_process_kind(command):
+    """Identify actual Python entry points, not filenames mentioned as arguments.
+
+    ps uses capital-P Python on macOS. Foreign multiprocessing helpers are
+    rejected even if their model parent has exited; owned resource trackers do
+    not count as evaluation workers. Read-only report/watch scripts are allowed.
+    Root must still inspect arbitrary inline/stdin Python before admission.
+    """
+    words = command.split()
+    if not words:
+        return None
+    executable = Path(words[0]).name.lower()
+    if re.fullmatch(r'(?:pytest|py\.test)(?:-\d+(?:\.\d+)*)?', executable):
+        return 'model'
+    if not re.fullmatch(r'pythonw?(?:\d+(?:\.\d+)*)?t?', executable):
+        return None
+    lowered = command.lower()
+    if re.search(r'\bmultiprocessing\.spawn\b|--multiprocessing-fork\b', lowered):
+        return 'worker'
+    if re.search(r'\bmultiprocessing\.(?:resource_tracker|forkserver)\b', lowered):
+        return 'support'
+    model_entries = {
+        'train', 'experiment', 'ppo_train', 'par_eval', 'evaluate', 'compare_weights',
+        'finetune', 'run_experiments', 'early_curriculum_study', 'check_candidate_runner',
+        'record_replay', 'analyze_losses', 'analyze_timing', 'mechanism_probe',
+        'observe_loss_mechanisms', 'build_ensemble', 'build_cnn_ensemble', 'build_submission',
+        'render_snapshots', 'set_cfg', 'common', 'variants', 'main',
+    }
+    index = 1
+    while index < len(words):
+        arg = words[index]
+        if arg == '--':
+            index += 1
+            break
+        if arg.startswith('-m'):
+            module = (arg[2:] or (words[index + 1] if index + 1 < len(words) else '')).lower()
+            if module.split('.')[0] in ('pytest', '_pytest', 'unittest', 'tests'):
+                return 'model'
+            return 'model' if module.startswith('scripts.') and module[8:] in model_entries else None
+        if arg.startswith('-c') or arg == '-':
+            return None
+        if arg in ('-W', '-X'):
+            index += 2
+        elif arg.startswith('-'):
+            index += 1
+        else:
+            break
+    if index >= len(words):
+        return None
+    entry = Path(words[index]).name.lower()
+    stem = entry.removesuffix('.py')
+    return 'model' if (stem in model_entries or stem.startswith('test_') or
+                       re.fullmatch(r'(?:pytest|py\.test)(?:-\d+(?:\.\d+)*)?', entry)) else None
+
+
+def check_processes(own_pgid=None):
+    listing = subprocess.check_output(['ps', '-axo', 'pid=,pgid=,args='], text=True, timeout=3)
+    rows = [parts for line in listing.splitlines() if len(parts := line.split(None, 2)) == 3]
+    classified = [(row, compute_process_kind(row[2])) for row in rows if row[0] != str(os.getpid())]
+    foreign = [row for row, kind in classified if kind is not None and row[1] != str(own_pgid)]
+    require(not foreign, 'Another model job is active: ' + repr(foreign))
+    workers = [row for row, kind in classified if row[1] == str(own_pgid) and kind == 'worker']
+    require(len(workers) <= 2, 'More than two evaluation workers')
+    return {'foreign_model_jobs': foreign, 'evaluation_workers': len(workers)}
+
+
+def admission(state, started):
+    with Path(state['historical_csvs']['v3']).open(newline='') as file:
+        times = [float(row['secs']) for row in csv.DictReader(file)]
+    require(len(times) == 240 and all(math.isfinite(x) and x > 0 for x in times), 'Bad historical timing')
+    done = {j['label'] for j in state['jobs']}
+    estimates = {}
+    for label in LIMITS:
+        if label in done:
+            continue
+        if label == 'course':
+            games, workers = 8, 1
+        else:
+            _, maps, direct = SPEC[label]
+            games, workers = maps * (2 if direct else 4), 2
+        estimate = math.ceil(games * max(times) / workers * 1.2 + 60)
+        require(estimate <= LIMITS[label], f'Historical projection exceeds job cap: {label}')
+        estimates[label] = estimate
+    require(started + sum(estimates.values()) + 300 < state['deadline'], 'Insufficient complete-study admission budget')
+    return {'historical_v3_sha256': digest(state['historical_csvs']['v3']),
+            'historical_max_secs': max(times), 'reserve_factor': 1.2,
+            'startup_allowance_per_job_seconds': 60, 'remaining_job_estimates_seconds': estimates}
+
+
+def run(label):
+    # flock is held across the entire job; a competing launcher cannot overwrite
+    # a stale state snapshot. A stale active marker is a hard stop, never reset.
+    with STATE.with_suffix('.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        state = json.loads(STATE.read_text())
+        validate_state(state)
+        require(label in LIMITS and state.get('active') is None, 'Unknown job or active study')
+        require(not any(j['label'] == label for j in state['jobs']), 'Label already attempted')
+        require(all(j.get('returncode') == 0 and j.get('verified_inputs_after') and
+                    j.get('cleanup', {}).get('group_clear') and not j.get('error') for j in state['jobs']),
+                'An earlier job did not finish successfully')
+        check_frozen(state)
+        process_check = check_processes()
+        started = time.time()
+        projection = admission(state, started)
+        require(started + LIMITS[label] + 300 < state['deadline'], 'Insufficient individual-job budget')
+        stop_at = min(state['deadline'], started + LIMITS[label]) - 10
+        output = Path(state['outputs'][label])
+        log = STATE.parent / (label + '.log')
+        require(not output.exists() and not log.exists(), 'Refusing output/log overwrite')
+        job = dict(label=label, argv=job_argv(state, label), started_at=started,
+                   returncode=None, log=str(log), output=str(output), freeze_id=freeze_id(state),
+                   admission=projection, process_check_before=process_check)
+        process = None
+
+        def save():
+            temp = STATE.with_suffix('.tmp')
+            temp.write_text(json.dumps(state, indent=2) + '\n')
+            temp.replace(STATE)
+
+        def check():
+            require(time.time() < stop_at, 'Job deadline reached')
+            check_frozen(state)
+            check_processes(process.pid if process else None)
+            require(time.time() < stop_at, 'Job deadline reached during checks')
+
+        def interrupt(sig, frame):
+            raise InterruptedError(f'Signal {sig}')
+
+        state['jobs'].append(job)
+        save()
+        previous = {sig: signal.signal(sig, interrupt) for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP)}
+        try:
+            with log.open('xb') as file:
+                env = {**os.environ, **{k: '1' for k in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS',
+                       'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS')},
+                       'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONUNBUFFERED': '1', 'PYTHONPATH': state['root']}
+                process = subprocess.Popen(job['argv'], cwd=state['root'], env=env, start_new_session=True,
+                                           stdout=file, stderr=subprocess.STDOUT)
+                job.update(pid=process.pid, pgid=process.pid, owner_pid=os.getpid())
+                state['active'] = dict(label=label, owner_pid=os.getpid(), pid=process.pid, pgid=process.pid)
+                save()
+                print(label, process.pid, flush=True)
+                while True:
+                    try:
+                        job['returncode'] = process.wait(timeout=min(15, max(.001, stop_at - time.time())))
+                        break
+                    except subprocess.TimeoutExpired:
+                        check()
+                require(job['returncode'] == 0, f'Job failed; inspect {log}')
+            check()
+            require(output.is_file(), 'Job produced no output')
+            job['output_sha256'] = digest(output)
+            if label == 'course':
+                job['games'] = len(json.loads(output.read_text())['games'])
+            else:
+                with output.open(newline='') as file:
+                    job['rows'] = sum(1 for _ in csv.DictReader(file))
+            job['verified_inputs_after'] = True
+        except BaseException as exc:
+            job['error'] = repr(exc)
+            state['status'] = 'stopped_error_or_budget'
+            raise
+        finally:
+            for sig in previous:
+                signal.signal(sig, signal.SIG_IGN)
+            try:
+                if process is not None:
+                    job['cleanup'] = cleanup_group(process)
+                    job['returncode'] = process.returncode
+                else:
+                    job['cleanup'] = {'group_clear': True, 'no_process_started': True}
+            except BaseException as exc:
+                job['cleanup_error'] = repr(exc)
+                job['error'] = job.get('error', repr(exc))
+                state['status'] = 'stopped_cleanup_error'
+                raise
+            finally:
+                # Retain ownership when cleanup could not be established.
+                if job.get('cleanup', {}).get('group_clear'):
+                    state['active'] = None
+                job['finished_at'] = time.time()
+                if output.exists():
+                    job['observed_output_sha256_at_finish'] = digest(output)
+                save()
+                for sig, handler in previous.items():
+                    signal.signal(sig, handler)
+        print(label, 'finished', job['returncode'], flush=True)
+
+
+if __name__ == '__main__':
+    require(len(sys.argv) == 2, 'Usage: job_launcher.py LABEL')
+    run(sys.argv[1])

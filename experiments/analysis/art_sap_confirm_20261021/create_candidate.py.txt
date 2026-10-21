@@ -1,0 +1,60 @@
+"""Root-operated one-time identity check; never writes submission weights."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+import torch
+from agents.sherlock.main import Agent_x
+from scripts.check_candidate_runner import verify_loaded
+
+ROOT = Path.cwd()
+BASE = ROOT / 'agents/sherlock/weights/agent_p0.pth'
+OUT = ROOT / 'experiments/candidates/v3_art3_20261021.pth'
+RECEIPT = ROOT / 'experiments/analysis/art_sap_confirm_20261021/candidate_identity.json'
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+assert sha(BASE) == 'aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'
+assert not OUT.exists() and not RECEIPT.exists()
+torch.set_num_threads(1)
+original = torch.load(BASE, map_location='cpu', weights_only=False)
+candidate = copy.deepcopy(original)
+changes = {'art_sap': True, 'art_min_hits': 3}
+candidate['cfg'].update(changes)
+
+def equal(a, b):
+    assert type(a) is type(b), (type(a), type(b))
+    if isinstance(a, torch.Tensor):
+        assert a.dtype == b.dtype and a.shape == b.shape and torch.equal(a, b)
+    elif isinstance(a, np.ndarray):
+        assert a.dtype == b.dtype and np.array_equal(a, b)
+    elif isinstance(a, dict):
+        assert a.keys() == b.keys()
+        for key in a: equal(a[key], b[key])
+    elif isinstance(a, (tuple, list)):
+        assert len(a) == len(b)
+        for x, y in zip(a, b): equal(x, y)
+    else:
+        assert a == b
+
+restored = copy.deepcopy(candidate)
+restored['cfg'] = copy.deepcopy(original['cfg'])
+equal(original, restored)
+assert {k: v for k, v in candidate['cfg'].items() if k not in changes} == {
+    k: v for k, v in original['cfg'].items() if k not in changes}
+with OUT.open('xb') as file: torch.save(candidate, file)
+loaded_checkpoint = torch.load(OUT, map_location='cpu', weights_only=False)
+equal(candidate, loaded_checkpoint)
+agent = Agent_x('player_0', agent_path=str(OUT), train=False)
+verify_loaded(agent, loaded_checkpoint)
+assert 1 + len(agent.extra_q) == 18
+effective = agent.cfg.to_dict()
+for key, value in dict(**changes, art_reserve=0, art_safe=True, siege=False,
+                      threat_feats=False, joint_moves=False).items():
+    assert effective[key] == value, (key, effective[key])
+receipt = dict(baseline_sha256=sha(BASE), candidate_sha256=sha(OUT),
+               changed_saved_config=changes, all_other_checkpoint_fields_identical=True,
+               loaded_network_count=18, loaded_tensors_identical=True,
+               effective_config=effective, checkpoint_top_level_keys=sorted(original),
+               source=str(BASE), candidate=str(OUT))
+with RECEIPT.open('x') as file: json.dump(receipt, file, indent=2); file.write('\n')
+print(json.dumps({k: receipt[k] for k in ('baseline_sha256', 'candidate_sha256', 'loaded_network_count')}))
