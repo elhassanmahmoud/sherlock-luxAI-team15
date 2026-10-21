@@ -52,6 +52,25 @@ def train_opponent(game: int, total_games: int, sol92_frac: float | None = None,
     return "pool" if u < sol92_frac + pool_frac else "default"
 
 
+def opponent_schedule(total_games: int, sol92_frac: float | None,
+                      pool_frac: float, mode: str) -> list[str]:
+    """Materialize the original schedule or the fixed order-only study treatment."""
+    if mode not in ("standard", "early_sol100"):
+        raise ValueError(f"Unknown opponent plan: {mode}")
+    if mode == "early_sol100" and (total_games, sol92_frac, pool_frac) != (3000, .7, 0.):
+        raise ValueError("early_sol100 requires 3000 games, sol92_frac=0.7, pool_frac=0")
+    labels = [train_opponent(g, total_games, sol92_frac, pool_frac)
+              for g in range(total_games)]
+    if mode == "early_sol100":
+        # Select from the original sequence, before changing any positions.
+        late_pairs = [g for g in range(750, total_games, 2)
+                      if labels[g] == "solution92"][:50]
+        labels[100:200] = ["solution92"] * 100
+        for g in late_pairs:
+            labels[g:g + 2] = ["default", "default"]
+    return labels
+
+
 def val_seeds(n: int = N_VAL) -> list[int]:
     return [VAL_SEED_BASE + i for i in range(n)]
 

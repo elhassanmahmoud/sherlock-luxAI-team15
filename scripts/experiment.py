@@ -17,10 +17,13 @@ docs/EXPERIMENT_PROTOKOLL.md.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
+import hashlib
 import json
 import os
 import platform
+import random
 import subprocess
 import sys
 import time
@@ -144,6 +147,202 @@ def play_set(env, learners: Learners, seeds, opponents, log=None, writer=None) -
     return rows
 
 
+def state_sha256(value) -> str:
+    """Canonical typed hash of small state trees; never a torch.save container hash.
+
+    Tensor names, dtype, shape and bytes are included. Used for networks,
+    optimizer and RNG state, never for the preallocated replay arrays.
+    """
+    import torch
+
+    digest = hashlib.sha256()
+
+    def emit(data: bytes) -> None:
+        digest.update(len(data).to_bytes(8, "big"))
+        digest.update(data)
+
+    def visit(item):
+        if isinstance(item, torch.Tensor):
+            tensor = item.detach().cpu().contiguous()
+            emit(b"tensor")
+            emit(str(tensor.dtype).encode())
+            visit(list(tensor.shape))
+            emit(tensor.reshape(-1).view(torch.uint8).numpy().tobytes())
+        elif isinstance(item, np.ndarray):
+            emit(b"ndarray")
+            emit(item.dtype.str.encode())
+            visit(list(item.shape))
+            emit(item.tobytes(order="C"))
+        elif isinstance(item, dict):
+            emit(b"dict")
+            emit(str(len(item)).encode())
+            for key in sorted(item, key=lambda k: (type(k).__name__, repr(k))):
+                visit(key)
+                visit(item[key])
+        elif isinstance(item, (list, tuple)):
+            emit(type(item).__name__.encode())
+            emit(str(len(item)).encode())
+            for child in item:
+                visit(child)
+        elif isinstance(item, (str, int, float, bool, type(None))):
+            emit(type(item).__name__.encode())
+            emit(repr(item).encode())
+        elif isinstance(item, np.generic):
+            visit(item.item())
+        else:
+            raise TypeError(f"Unsupported identity state: {type(item).__name__}")
+
+    visit(value)
+    return digest.hexdigest()
+
+
+def _global_rng_state() -> dict:
+    import torch
+    states = {"python": random.getstate(), "numpy": np.random.get_state(),
+              "torch_cpu": torch.get_rng_state().clone()}
+    # Do not initialize a GPU merely to capture state on this CPU study.
+    if torch.cuda.is_initialized():
+        states["torch_cuda"] = torch.cuda.get_rng_state_all()
+    return states
+
+
+def _restore_global_rng(states: dict) -> None:
+    import torch
+    random.setstate(states["python"])
+    np.random.set_state(states["numpy"])
+    torch.set_rng_state(states["torch_cpu"])
+    if "torch_cuda" in states:
+        torch.cuda.set_rng_state_all(states["torch_cuda"])
+
+
+def _replay_metadata(buffer, *, identities: bool = False) -> dict:
+    result = {key: getattr(buffer, key)
+              for key in ("capacity", "obs_dim", "pos", "size", "_mask_dim")}
+    result["arrays"] = {
+        key: {"shape": list(value.shape), "dtype": value.dtype.str,
+              **({"id": id(value)} if identities else {})}
+        for key, value in vars(buffer).items() if isinstance(value, np.ndarray)
+    }
+    if identities:
+        result["id"] = id(buffer)
+    return result
+
+
+def _learning_identity(agent, *, identities: bool = False) -> dict:
+    return dict(
+        q_sha256=state_sha256(agent.q.state_dict()),
+        target_q_sha256=state_sha256(agent.target_q.state_dict()),
+        optimizer_sha256=state_sha256(agent.opt.state_dict()),
+        replay=_replay_metadata(agent.buffer, identities=identities),
+        config=copy.deepcopy(agent.cfg.to_dict()), device=str(agent.device),
+        env_steps=agent.env_steps, learn_steps=agent.learn_steps,
+        learn_enabled=agent.learn_enabled, autosave_on_terminate=agent.autosave_on_terminate,
+        recent_losses=list(agent.recent_losses),
+    )
+
+
+def initial_identity(learners: Learners) -> dict:
+    """Evidence from the actual freshly constructed learners, before validation 0.
+
+    Empty replay content is represented logically: unused allocated slots cannot
+    be sampled. No addresses, timestamps or output paths enter paired identity.
+    """
+    entries = []
+    for _, agent in learners.unique():
+        entry = _learning_identity(agent)
+        if (agent.buffer.size, agent.buffer.pos, agent.buffer._mask_dim) != (0, 0, 1):
+            raise ValueError("Initial identity requires a fresh empty replay buffer")
+        entry["replay"]["logical_content"] = "empty-replay-v1"
+        entry["agent_rng_sha256"] = state_sha256(agent.rng.bit_generator.state)
+        entry["sides"] = [s for s, a in learners.agents.items() if a is agent]
+        entries.append(entry)
+    return {"schema_version": 1, "learners": entries,
+            "rng_sha256": {k: state_sha256(v) for k, v in _global_rng_state().items()}}
+
+
+def run_validation(env, learners: Learners, seeds, opponents, *, isolate: bool) -> list[dict]:
+    """Run diagnostics with optional RNG/context isolation and learning guards.
+
+    The opt-in path supports Sherlock learners and the two fresh fixed opponents.
+    Learning mutations abort the run; they are never silently repaired. Large
+    replay arrays are guarded read-only, with identity/metadata checks, not copied.
+    """
+    if not isolate:
+        # Preserve the historical CLI behavior unless isolation was requested.
+        learners.eval_mode()
+        try:
+            return play_set(env, learners, seeds, opponents)
+        finally:
+            learners.train_mode()
+
+    opponents = tuple(opponents)
+    if any(name not in P.EVAL_OPPONENTS for name in opponents):
+        raise ValueError("Isolated validation supports only default and solution92")
+    global_rng = _global_rng_state()
+    snapshots = []
+    guarded_methods = []
+    guarded_arrays = []
+    missing = object()
+
+    def forbidden(*args, **kwargs):
+        raise RuntimeError("Learning/replay operation forbidden during validation")
+
+    try:
+        for _, agent in learners.unique():
+            snapshot = dict(agent=agent, learning=_learning_identity(agent, identities=True),
+                            rng=copy.deepcopy(agent.rng.bit_generator.state),
+                            training=agent.training, q_training=agent.q.training,
+                            target_training=agent.target_q.training,
+                            player=agent.player, env_cfg=copy.deepcopy(agent.env_cfg))
+            snapshots.append(snapshot)
+            for owner, names in ((agent, ("update", "_learn", "save_agent", "pop_mean_loss")),
+                                 (agent.buffer, ("push", "sample")), (agent.opt, ("step",))):
+                for name in names:
+                    guarded_methods.append((owner, name, vars(owner).get(name, missing)))
+                    setattr(owner, name, forbidden)
+            for array in vars(agent.buffer).values():
+                if isinstance(array, np.ndarray):
+                    guarded_arrays.append((array, array.flags.writeable))
+                    array.flags.writeable = False
+        learners.eval_mode()
+        return play_set(env, learners, seeds, opponents)
+    finally:
+        # Even a failed game must leave guards, episode state, modes and RNG clean.
+        # If the game itself failed, retain that exception instead of masking it
+        # with a secondary invariant diagnostic. In either case training aborts.
+        game_failed = sys.exc_info()[0] is not None
+        changed = []
+        try:
+            for snapshot in snapshots:
+                if _learning_identity(snapshot["agent"], identities=True) != snapshot["learning"]:
+                    changed.append(snapshot["player"])
+        finally:
+            try:
+                for owner, name, original in reversed(guarded_methods):
+                    if original is missing:
+                        delattr(owner, name)
+                    else:
+                        setattr(owner, name, original)
+                for array, writable in guarded_arrays:
+                    array.flags.writeable = writable
+                for snapshot in snapshots:
+                    agent = snapshot["agent"]
+                    agent.set_env_cfg(snapshot["env_cfg"] or {})
+                    agent.env_cfg = snapshot["env_cfg"]
+                    agent.new_game(snapshot["player"])
+                    agent._paths.step = None
+                    agent._paths.maps.clear()
+                    agent.training = snapshot["training"]
+                    agent.q.train(snapshot["q_training"])
+                    agent.target_q.train(snapshot["target_training"])
+            finally:
+                for snapshot in snapshots:
+                    snapshot["agent"].rng.bit_generator.state = snapshot["rng"]
+                _restore_global_rng(global_rng)
+        if changed and not game_failed:
+            raise RuntimeError(f"Learning state changed during validation: {changed}")
+
+
 def summarize(rows: list[dict]) -> dict:
     versions = {r.get("point_counting_version", 1) for r in rows}
     if len(versions) > 1:
@@ -168,16 +367,31 @@ def main(argv=None) -> None:
     ap.add_argument("--games", type=int, default=1200, help="Trainingsspiele")
     ap.add_argument("--val-every", type=int, default=150, help="0 = keine Lernkurve")
     ap.add_argument("--val-seeds", type=int, default=P.N_VAL)
+    ap.add_argument("--val-seed-start", type=int, default=P.VAL_SEED_BASE,
+                    help="Absoluter erster Validierungsseed")
+    ap.add_argument("--isolate-validation", action="store_true",
+                    help="Validierung von Trainings-RNG und Episodenzustand isolieren")
     ap.add_argument("--test-seeds", type=int, default=P.N_TEST)
     ap.add_argument("--no-test", action="store_true", help="Test-Seeds nicht anfassen")
     ap.add_argument("--pool", nargs="*", default=[], help="eigene Checkpoints als Gegner")
     ap.add_argument("--pool-frac", type=float, default=0.0, help="Anteil Pool-Gegner nach der Aufwaermphase")
     ap.add_argument("--sol92-frac", type=float, default=None,
                     help="Anteil Solution_92 nach der Aufwaermphase (Default: Protokoll, 50 %%)")
+    ap.add_argument("--opponent-plan", choices=("standard", "early_sol100"), default="standard")
     ap.add_argument("--tag", default="")
     ap.add_argument("--out", default=None, help="Run-Ordner (Default: experiments/runs/<datum>_...)")
     ap.add_argument("--date", default=datetime.now().strftime("%Y%m%d"))
     args = ap.parse_args(argv)
+
+    trainable = is_trainable(args.variant)
+    games = args.games if trainable else 0
+    try:
+        schedule = P.opponent_schedule(games, args.sol92_frac, args.pool_frac, args.opponent_plan)
+    except ValueError as exc:
+        ap.error(str(exc))
+    if args.isolate_validation and VARIANTS[args.variant][0] != "sherlock":
+        ap.error("--isolate-validation requires a Sherlock learner")
+    validation_seeds = list(range(args.val_seed_start, args.val_seed_start + args.val_seeds))
 
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
@@ -193,10 +407,10 @@ def main(argv=None) -> None:
         logf.write(line + "\n")
         logf.flush()
 
-    trainable = is_trainable(args.variant)
-    games = args.games if trainable else 0
     seed_everything(args.run_seed)
     learners = Learners(args.variant, run_dir, args.run_seed)
+    if args.isolate_validation:
+        (run_dir / "initial_identity.json").write_text(json.dumps(initial_identity(learners), indent=2))
 
     manifest = dict(
         name=name, variant=args.variant, kind=VARIANTS[args.variant][0],
@@ -205,10 +419,15 @@ def main(argv=None) -> None:
         separate_side_networks=learners.split,
         run_seed=args.run_seed, train_games=games,
         train_seeds=[P.train_seed(args.run_seed, 0), P.train_seed(args.run_seed, max(0, games - 1))] if games else [],
-        curriculum=(f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann abwechselnd default/solution92"
+        curriculum=("early_sol100" if args.opponent_plan == "early_sol100" else
+                    f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann abwechselnd default/solution92"
                     if args.sol92_frac is None else
                     f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann {args.sol92_frac:.0%} solution92"),
-        val_seeds=P.val_seeds(args.val_seeds) if args.val_every else [],
+        opponent_plan=args.opponent_plan, opponent_schedule=schedule,
+        opponent_schedule_sha256=hashlib.sha256(
+            json.dumps(schedule, separators=(",", ":")).encode()).hexdigest(),
+        isolate_validation=args.isolate_validation,
+        val_seeds=validation_seeds if args.val_every else [],
         val_every=args.val_every,
         test_seeds=[] if args.no_test else P.test_seeds(args.test_seeds),
         eval_opponents=list(P.EVAL_OPPONENTS), sides=list(P.SIDES), eval_epsilon=0.0,
@@ -216,6 +435,8 @@ def main(argv=None) -> None:
         python=sys.version.split()[0], platform=platform.platform(),
         argv=sys.argv,
     )
+    if args.isolate_validation:
+        manifest["learner_devices"] = [str(agent.device) for _, agent in learners.unique()]
     try:
         import importlib.metadata as md
         manifest["versions"] = {p: md.version(p) for p in ("torch", "numpy", "luxai-s3", "jax")}
@@ -233,19 +454,24 @@ def main(argv=None) -> None:
         learners.train_mode()
         results: list[float] = []
         with open(run_dir / "train.csv", "w", newline="", encoding="utf-8") as fh, \
-                open(run_dir / "val.csv", "w", newline="", encoding="utf-8") as vh:
+                open(run_dir / "val.csv", "w", newline="", encoding="utf-8") as vh, \
+                open(run_dir / "val_games.csv", "w", newline="", encoding="utf-8") as vgh:
             tw = csv.DictWriter(fh, fieldnames=TRAIN_FIELDS)
             tw.writeheader()
             vw = csv.DictWriter(vh, fieldnames=VAL_FIELDS)
             vw.writeheader()
+            vgw = csv.DictWriter(vgh, fieldnames=["after_games"] + GAME_FIELDS)
+            vgw.writeheader()
 
             def validate(after: int) -> None:
                 if not args.val_every:
                     return
                 tv = time.time()
-                learners.eval_mode()
-                rows = play_set(env, learners, P.val_seeds(args.val_seeds), P.EVAL_OPPONENTS)
-                learners.train_mode()
+                rows = run_validation(env, learners, validation_seeds, P.EVAL_OPPONENTS,
+                                      isolate=args.isolate_validation)
+                for row in rows:
+                    vgw.writerow({"after_games": after, **{k: row.get(k) for k in GAME_FIELDS}})
+                vgh.flush()
                 for opp_name in P.EVAL_OPPONENTS:
                     s = summarize([r for r in rows if r["opponent"] == opp_name])
                     s.update(after_games=after, opponent=opp_name, secs=round(time.time() - tv, 1))
@@ -260,7 +486,7 @@ def main(argv=None) -> None:
                 raise SystemExit("--pool-frac braucht --pool")
             for g in range(games):
                 side = P.train_side(g)
-                opp_name = P.train_opponent(g, games, args.sol92_frac, args.pool_frac)
+                opp_name = schedule[g]
                 seed = P.train_seed(args.run_seed, g)
                 agent = learners.agents[side]
                 opp_side = "player_1" if side == "player_0" else "player_0"
