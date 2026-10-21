@@ -67,3 +67,7 @@ python -m pytest -q tests/test_candidate_runner.py tests/test_early_curriculum_s
 
 Dieser Nachtrag enthält nur Test- und Dokumentationsänderungen. Die erneute
 vollständige Prüfung des zusammengeführten Stands bleibt bei Root.
+
+### Gemeinsame Abschlussprüfung
+
+Nach Integration in den V4-Arbeitszweig und der zusätzlichen Breitenangabe im dortigen Zielpilot-Mock bestand Root den vollständigen Lauf: 531 Tests plus 14 Untertests, 82,52 Sekunden. Unabhängiger statischer Follow-up-Review bestätigte unveränderte Identitäts-, Provenienz- und Gate-Assertions; [Review](ENSEMBLE_DIMENSIONEN_REVIEW_20261021.md). Dies ist die Suite des zusammengeführten Arbeitszweigs, kein behaupteter separater Volltest von main.
