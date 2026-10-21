@@ -1,0 +1,154 @@
+import csv, datetime, hashlib, json, math, os, pathlib, subprocess, sys
+from collections import Counter
+import numpy as np
+ROOT=pathlib.Path('/Users/moayedshawesh/Desktop/KI/sherlock-counterplay')
+STATE=ROOT/'experiments/analysis/early_curriculum_20261021_early_contact_v1/state.json'
+OUT=pathlib.Path('/tmp/sherlock-curriculum-s47-audit-20261021')
+G='seed side opponent result game_win point_win our_wins opp_wins our_points opp_points point_counting_version wait_frac invalid_frac greedy_masked_frac sap_attempts sap_hits stack_frac relics_found relics_seen known_point_tiles belief_contradictions unit_steps steps secs'.split()
+T=['game']+G+'epsilon mean_loss env_steps learn_steps winrate_50'.split()
+V='after_games opponent games winrate match_winrate point_winrate avg_points avg_opp_points point_counting_version secs'.split()
+report={'run_id':'20261021_early_contact_v1','run_seed':47,'audit_type':'independent completed-pair data audit','time_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'errors':[], 'checks':{}}
+def check(ok,msg):
+ if not ok: raise ValueError(msg)
+def sha(p):
+ h=hashlib.sha256()
+ with pathlib.Path(p).open('rb') as f:
+  for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+ return h.hexdigest()
+def read(p):return json.loads(pathlib.Path(p).read_text())
+def table(p,fields,game=True):
+ with pathlib.Path(p).open(newline='') as f:
+  reader=csv.DictReader(f);check(reader.fieldnames==fields,f'schema {p}'); rows=list(reader)
+ check(rows,f'empty {p}')
+ for i,r in enumerate(rows):
+  check(None not in r and all(x not in (None,'') for x in r.values()),f'missing row {p}:{i}')
+  for k,v in r.items():
+   if k in ('side','opponent'):continue
+   n=float(v)
+   check(math.isfinite(n) or (k=='mean_loss' and math.isnan(n) and int(r['learn_steps'])==0),f'nonfinite {p}:{i}:{k}')
+  check(r['point_counting_version']=='2',f'point version {p}:{i}')
+  if game:
+   n=lambda k:float(r[k]); a,b=n('our_wins'),n('opp_wins')
+   check(a.is_integer() and b.is_integer() and min(a,b)>=0 and a+b<=3,f'match wins {p}:{i}')
+   check(n('steps')==303 and n('result')==(1 if a>b else 0 if a<b else .5) and n('game_win')==int(a>b),f'game result {p}:{i}')
+   a,b=n('our_points'),n('opp_points')
+   check(min(a,b)>=0 and n('point_win')==(1 if a>b else 0 if a<b else .5),f'point result {p}:{i}')
+ return rows
+def keys(rows,seeds,after=None):
+ expected={(s,side,o) for s in seeds for side in ('player_0','player_1') for o in ('default','solution92')}
+ if after is None:actual=[(int(r['seed']),r['side'],r['opponent']) for r in rows]
+ else:
+  expected={(t,*k) for t in after for k in expected};actual=[(int(r['after_games']),int(r['seed']),r['side'],r['opponent']) for r in rows]
+ check(len(actual)==len(expected) and set(actual)==expected,'duplicate/incomplete keys')
+def non_time(rows):return [{k:v for k,v in r.items() if k!='secs'} for r in rows]
+try:
+ s=read(STATE); phase_names=[f'{kind}_47_{a}' for kind in ('train','eval') for a in ('control','early')]
+ check(all(s['phases'].get(k,{}).get('status')=='complete' for k in phase_names),'Both final s47 evaluations must be audited complete')
+ check(s['deadline']-s['started_at']==43200,'12h deadline differs')
+ check(set(s['arms'])=={'47','48','49'} and all(set(v)=={'control','early'} for v in s['arms'].values()),'fixed arms/starts differ')
+ check(s['source']['head']=='a5d2e61b0e8654bad64e31c29447ada1e439174d','wrong frozen HEAD')
+ check(subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()==s['source']['head'],'HEAD changed')
+ for p,h in s['source']['files'].items():check(sha(p)==h,f'changed frozen source {p}')
+ check(sha(s['python'])==s['source']['executable_sha256'],'interpreter changed')
+ tracked=subprocess.check_output(['git','-C',str(ROOT),'ls-files','-z','--cached','--others','--exclude-standard','--','*.py']).split(b'\0')
+ files={str(ROOT/os.fsdecode(n)) for n in tracked if n}
+ for folder in ('scripts','agents','lux'):files.update(str(p) for p in (ROOT/folder).rglob('*.py'))
+ files.update(s['plans'])
+ for name in ('requirements.txt','pyproject.toml'):
+  if (ROOT/name).is_file():files.add(str(ROOT/name))
+ venv=pathlib.Path(s['python']).parent.parent
+ if (venv/'pyvenv.cfg').is_file():files.add(str(venv/'pyvenv.cfg'))
+ for engine in (venv/'lib').glob('python*/site-packages/luxai_s3'):files.update(str(p) for p in engine.rglob('*.py'))
+ check(files==set(s['source']['files']),'source file inventory changed')
+ for p,h in s['protected'].items():check(sha(p)==h,f'changed protected {p}')
+ report['checks']['freeze']={'head':s['source']['head'],'source_files':len(files),'protected_weights':len(s['protected']),'deadline':s['deadline'],'passed':True}
+ report['input_hashes']={};report['arms']={};trains={};vals={};inits={};finals={};evals={};manifests={}
+ standard=['default' if g<750 or ((g//2)*0.6180339887)%1>=.7 else 'solution92' for g in range(3000)]
+ early=standard.copy();late=[g for g in range(750,3000,2) if standard[g]=='solution92'][:50];early[100:200]=['solution92']*100
+ for g in late:early[g:g+2]=['default']*2
+ expected_schedules={'control':standard,'early':early}
+ for arm in ('control','early'):
+  run=pathlib.Path(s['arms']['47'][arm]['run']); ep=s['arms']['47'][arm]['eval'];trainphase=s['phases']['train_47_'+arm];evalphase=s['phases']['eval_47_'+arm]
+  for kind,phase in [('train',trainphase),('eval',evalphase)]:
+   check(phase['jobs'] and all(j.get('returncode')==0 for j in phase['jobs']),f'nonzero/missing returncode {kind} {arm}')
+   check(phase['protected_before']==s['protected']==phase['protected_after'],f'phase protected weights {kind} {arm}')
+   check(phase['finished_at']>=phase['started_at'],f'phase times {kind} {arm}')
+   check(phase['outputs'],f'no outputs {kind} {arm}')
+   for p,h in phase['outputs'].items():
+    check(sha(p)==h,f'output hash {p}');report['input_hashes'][p]=h
+   for j in phase['jobs']:
+    for p,h in j.get('input_hashes',{}).items():check(sha(p)==h,f'job input hash {p}')
+  check(set(trainphase['outputs'])=={str(p) for p in run.rglob('*') if p.is_file()},'training output hash coverage')
+  check(set(evalphase['outputs'])=={ep},'eval output hash coverage')
+  for p in trainphase['outputs']:
+   p=pathlib.Path(p);check(not p.is_symlink() and p.resolve()==p and p.stat().st_nlink==1,'output alias')
+  check(read(run/'study.json')=={'run_id':s['run_id'],'run_seed':47,'arm':arm,'source':s['source']},'study ownership')
+  t=table(run/'train.csv',T);trains[arm]=t;check(len(t)==3000,'training row count');prev=0
+  for g,r in enumerate(t):
+   check((int(r['game']),int(r['seed']),r['side'],r['opponent'])==(g,470000+g//2,'player_'+str(g%2),expected_schedules[arm][g]),f'train schedule {arm}:{g}')
+   check(int(r['env_steps'])==303*(g+1) and int(r['learn_steps'])>=prev,f'learning counters {arm}:{g}');prev=int(r['learn_steps'])
+  check(prev>0 and math.isfinite(float(t[-1]['mean_loss'])),'no final learning')
+  init=read(run/'initial_identity.json');fin=read(run/'final_identity.json');manifest=read(run/'manifest.json');inits[arm]=init;finals[arm]=fin;manifests[arm]=manifest
+  check(init['schema_version']==1 and len(init['learners'])==1,'initial schema'); learner=init['learners'][0];cfg=learner['config']
+  check(learner['q_sha256']==learner['target_q_sha256'] and learner['env_steps']==learner['learn_steps']==0 and learner['recent_losses']==[],'nonfresh initial')
+  check(set(init['rng_sha256'])>={'python','numpy','torch_cpu'},'initial RNG coverage')
+  check(learner['replay']['size']==learner['replay']['pos']==0 and learner['replay']['logical_content']=='empty-replay-v1','nonempty initial replay')
+  check(cfg['eps_decay_steps']==60000 and not any(cfg.get(k,False) for k in ['terminal_death_potential','active_targets','sap_geometry']),'config drift')
+  check(fin['config']==cfg and fin['env_steps']==909000 and fin['learn_steps']==prev and fin['q_finite'] is True and fin['target_q_finite'] is True,'final metadata')
+  check(fin['file_sha256']==sha(run/'weights/agent.pth'),'final checkpoint hash binding')
+  check(trainphase['audit']['initial']==init and trainphase['audit']['final']==fin,'state identity metadata differs')
+  expected={'status':'done','variant':'full_rules_v3','config':cfg,'run_seed':47,'train_games':3000,'train_seeds':[470000,471499],'separate_side_networks':False,'val_every':750,'val_seeds':list(range(500720,500728)),'isolate_validation':True,'test_seeds':[],'eval_opponents':['default','solution92'],'sides':['player_0','player_1'],'eval_epsilon':0.,'learner_devices':['cpu'],'opponent_plan':'standard' if arm=='control' else 'early_sol100','opponent_schedule':expected_schedules[arm],'opponent_schedule_sha256':hashlib.sha256(json.dumps(expected_schedules[arm],separators=(',',':')).encode()).hexdigest()}
+  check(all(manifest.get(k)==v for k,v in expected.items()),f'manifest {arm}')
+  check(manifest['git']['commit']==s['source']['head'] and manifest.get('finished'),'manifest source/completion')
+  check(manifest['argv'][1:]==trainphase['jobs'][0]['argv'][4:],'manifest command')
+  evargv=evalphase['jobs'][0]['argv'];check(evargv==[s['python'],'-B','-m','scripts.par_eval','--weights',str(run/'weights/agent.pth'),'--first','720','--n','60','--workers','2','--opponents','default,solution92','--out',ep],'final eval command')
+  val=table(run/'val_games.csv',['after_games']+G);vals[arm]=val;keys(val,range(500720,500728),[0,750,1500,2250,3000]);aggs=table(run/'val.csv',V,False)
+  check(len(aggs)==10 and {(int(r['after_games']),r['opponent']) for r in aggs}=={(n,o) for n in [0,750,1500,2250,3000] for o in ['default','solution92']},'validation aggregates')
+  for a in aggs:
+   group=[r for r in val if r['after_games']==a['after_games'] and r['opponent']==a['opponent']];own=sum(float(r['our_wins']) for r in group);total=sum(float(r['our_wins'])+float(r['opp_wins']) for r in group)
+   expected={'games':16,'match_winrate':own/max(total,1)}
+   for k,c in [('winrate','result'),('point_winrate','point_win'),('avg_points','our_points'),('avg_opp_points','opp_points')]:expected[k]=sum(float(r[c]) for r in group)/16
+   check(all(math.isclose(float(a[k]),v,rel_tol=1e-12,abs_tol=1e-12) for k,v in expected.items()),'aggregate mismatch')
+  ev=table(ep,G);keys(ev,range(500720,500780));evals[arm]=ev
+  report['arms'][arm]={'training_rows':len(t),'validation_rows':len(val),'validation_aggregate_rows':len(aggs),'final_rows':len(ev),'training_opponents':dict(Counter(r['opponent'] for r in t)),'nan_losses_before_learning':sum(math.isnan(float(r['mean_loss'])) for r in t),'checkpoint_sha256':fin['file_sha256'],'final_env_steps':fin['env_steps'],'final_learn_steps':fin['learn_steps'],'checkpoint_tensor_metadata_source':'Previously completed supervisor audit; tensors not loaded in this independent data audit.'}
+ check(inits['control']==inits['early'],'initial identities differ')
+ for arm in ('control','early'):
+  cfg=inits[arm]['learners'][0]['config']
+  check(all(float(r['epsilon'])==round(cfg['eps_start']+(cfg['eps_end']-cfg['eps_start'])*min(1,int(r['env_steps'])/cfg['eps_decay_steps']),4) for r in trains[arm]),'epsilon schedule mismatch '+arm)
+ report['checks']['epsilon_schedule']={'both_original_linear_schedule':True,'decay_env_steps':60000}
+ check(non_time(trains['control'][:100])==non_time(trains['early'][:100]),'first 100 differ')
+ check(non_time([r for r in vals['control'] if r['after_games']=='0'])==non_time([r for r in vals['early'] if r['after_games']=='0']),'val0 differs')
+ changed=[i for i,(a,b) in enumerate(zip(standard,early)) if a!=b]
+ check(len(changed)==200 and changed[:100]==list(range(100,200)) and min(changed[100:])==752 and max(changed)==893 and standard[894:]==early[894:],'planned swap difference')
+ check(Counter(standard)==Counter(early)==Counter({'default':1426,'solution92':1574}),'opponent counts')
+ report['checks']['pair']={'initial_identity_equal':True,'validation0_32_non_time_rows_equal':True,'first100_training_non_time_rows_equal':True,'changed_schedule_positions':len(changed),'early_indices':[100,199],'late_indices_bounds':[752,893],'identical_from_index':894,'validation_aggregates_reproduced':True}
+ report['schemas']={'train.csv':T,'val_games.csv':['after_games']+G,'val.csv':V,'final.csv':G}
+ report['comparison']={}
+ for opponent in ('default','solution92'):
+  byarm={a:{(int(r['seed']),r['side']):float(r['result']) for r in evals[a] if r['opponent']==opponent} for a in ('control','early')}
+  d=np.array([sum(byarm['early'][m,side]-byarm['control'][m,side] for side in ('player_0','player_1'))/2 for m in range(500720,500780)])
+  ci=np.percentile(np.random.default_rng(0).choice(d,size=(5000,60),replace=True).mean(axis=1),[2.5,97.5])
+  counts={a:dict(Counter('win' if x==1 else 'draw' if x==.5 else 'loss' for x in byarm[a].values())) for a in byarm}
+  report['comparison'][opponent]={'games_per_arm':120,'maps':60,'counts':counts,'control_result_sum':sum(byarm['control'].values()),'early_result_sum':sum(byarm['early'].values()),'control_rate':sum(byarm['control'].values())/120,'early_rate':sum(byarm['early'].values())/120,'early_minus_control':float(d.mean()),'paired_whole_card_95_percentile_ci':ci.tolist(),'map_delta_frequency':dict(Counter(str(x) for x in d))}
+ report['bootstrap']={'resamples':5000,'seed':0,'unit':'whole paired map, both sides together','percentiles':[2.5,97.5]}
+ # Check immutable phase material remained bound during data analysis.
+ latest=read(STATE)
+ check(all(latest['phases'][k]==s['phases'][k] for k in phase_names),'s47 state phases changed during audit')
+ for p,h in report['input_hashes'].items():check(sha(p)==h,'artifact changed during audit: '+p)
+ check(not any(k.split('.')[0] in ('torch','jax','agents') for k in sys.modules),'forbidden model import')
+ report['complete']=True
+except Exception as e:
+ report['complete']=False;report['errors'].append(str(e))
+report['interpretation']='Single known-start diagnostic on already used development maps. Not a method conclusion, no generalization over new training starts, and no release authority. Fixed starts 47/48/49 and all six final evaluations remain required; no optional stopping or gate alteration based on s47.'
+report['limitations']='No tensor loading or independent tensor finiteness re-audit; verified saved finite-tensor metadata, completed audit return codes, and checkpoint byte-hash binding only. No training, evaluation, test jobs, repository edits, commits or pushes.'
+OUT.with_suffix('.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+lines=['# s47 completed-pair independent data audit','',f"Complete: {report['complete']}. {report['time_utc']}",'',report['interpretation'],'']
+if report['errors']:lines+=['Errors: '+ '; '.join(report['errors'])]
+if report['complete']:
+ lines+=['Both arms have 3,000 training rows, 160 intermediate validation rows, ten reproduced aggregates and 240 final evaluation rows. Schemas, complete unique keys, finite measurements (only initial loss before learning may be NaN), 303-step games, point version 2 and result consistency passed.','', 'Initial identities, all 32 validation-zero games and the first 100 training games agree in every non-time field. Both schedules contain 1,426 Default and 1,574 Solution_92 games; exactly 200 positions differ as planned and schedules are identical from index 894.','', 'Frozen source inventory, HEAD, plans, interpreter, protected weights, output hashes, phase success and final checkpoint metadata/hash bindings passed. Protocol remains fixed.','', '| Opponent | Control W/D/L | Early W/D/L | Early − control | Paired 95% card CI |','|---|---:|---:|---:|---:|']
+ for o,x in report['comparison'].items():
+  c=lambda a:'/'.join(str(x['counts'][a].get(k,0)) for k in ('win','draw','loss'));low,high=x['paired_whole_card_95_percentile_ci'];lines.append(f"| {o} | {c('control')} | {c('early')} | {100*x['early_minus_control']:+.3f} pp | [{100*low:+.3f}, {100*high:+.3f}] pp |")
+ lines+=['','Bootstrap: 5,000 whole-card draws, NumPy default_rng seed 0; two sides and paired arms kept together.']
+lines+=['',report['limitations'],'','Machine-readable evidence: '+str(OUT.with_suffix('.json'))]
+OUT.with_suffix('.md').write_text('\n'.join(lines)+'\n')
+print(json.dumps({k:report.get(k) for k in ('complete','errors','checks','comparison')},indent=2))

@@ -6,6 +6,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 21.10.2026, 13:39 Berlin – Codex: erstes Curriculum-Paar vollständig ausgewertet
+
+[Archiv und Prüfungen](../experiments/analysis/continuous_20261021/curriculum_progress/s47/README.md):6.000 Trainings-,320 Zwischenvalidierungs- und480 finale Testspiele fertig. Früher Gegnerkontakt s47 gegen Solution_92 **62/120 statt86/120** der Kontrolle, Δ−20pp, gepaartes95%-Kartenintervall[−32,5;−7,5]. Default119/120 statt120/120. Die beiden Einzelnetze werden miteinander verglichen, nicht mit der18-Netz-Abgabe.
+
+Unabhängiger Subagent prüfte Daten/Initialidentität/Gegnerplan/Hashbindungen ohne Modellimporte; Root reproduzierte Resultate und Kartenintervalle separat und kontrollierte alle Archivkopien. Laufquellen und Gewichte unverändert. Rohdateien, Prüfbericht und abgeschlossene Phasen archiviert; `.pth`-Laufkopien nur lokal gemäß bestehender Git-Regel, Buffer in der eingefrorenen Arbeitskopie.
+
+Die feste Studie läuft mit s48Kontrolle weiter, anschließend s48früh und s49beide. Ein einzelner negativer Start beendet den vorher festgelegten Vergleich nicht. Keine geänderten Gates, keine nachträgliche Best-Seed-Auswahl und kein Abgabeersatz.
+
 ## 21.10.2026, 12:58 Berlin – Codex: Folgeversuch vorab operativ geprüft
 
 Der [unabhängige Operationsreview](../experiments/analysis/continuous_20261021/representation_probe/protocol_review.md) prüft den vorbereiteten Gegnerenergie-Vergleich. Ein Ressourcenfehler wurde vor jedem neuen Spiel korrigiert: Zwei Stunden passen nicht zur festgelegten konservativen Zeitrechnung. Historische Maximaldauer6,43Sekunden ergibt mit Sicherheitsfaktor und Reserve20.833Sekunden für alle möglichen2.480Spiele. Die interne Obergrenze beträgt deshalb jetzt sechs Stunden; Seeds, Spielzahlen und statistische Gates bleiben unverändert. Root hat die drei historischen Laufzeitmaxima und Dateihashes separat bestätigt.

@@ -1,0 +1,261 @@
+{
+  "run_id": "20261021_early_contact_v1",
+  "run_seed": 47,
+  "audit_type": "independent completed-pair data audit",
+  "time_utc": "2026-10-21T11:34:58.080190+00:00",
+  "errors": [],
+  "checks": {
+    "freeze": {
+      "head": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+      "source_files": 109,
+      "protected_weights": 5,
+      "deadline": 1792619074.547488,
+      "passed": true
+    },
+    "epsilon_schedule": {
+      "both_original_linear_schedule": true,
+      "decay_env_steps": 60000
+    },
+    "pair": {
+      "initial_identity_equal": true,
+      "validation0_32_non_time_rows_equal": true,
+      "first100_training_non_time_rows_equal": true,
+      "changed_schedule_positions": 200,
+      "early_indices": [
+        100,
+        199
+      ],
+      "late_indices_bounds": [
+        752,
+        893
+      ],
+      "identical_from_index": 894,
+      "validation_aggregates_reproduced": true
+    }
+  },
+  "input_hashes": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/final_identity.json": "de0b2312dbff5317d2dbc5210bbc94138988690a014c00c528ce50e66a7a92eb",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/log.txt": "860bdbe2dd5ce2b780e50099b823bddd1de6bd7f05bea53cbe0e62b0ca2d2b58",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/manifest.json": "422b695239e877cead6a835d4d440289cb8aa53c8117afa0b20c6caa75e3f9f3",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/study.json": "52caf6b3c9739ec1e55024e447b75f0c3886ac2b235e0fd80a50c9bb827b2ab2",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/train.csv": "defaddcceba37be9c8557a913e66fa15640152e0c480c2ea1c605ee5148e699d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val.csv": "7a385415fd62d1c0c5ee90ad7c85a9a2d3b6de5670ff205ed0a9e8134470429a",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val_games.csv": "01b30ccdfe8933294bb485f96fd7e83c26cd705ab13ed61e34dcf0c09deff672",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.buffer.npz": "03669a92caaef5987293548185ca66b82b27814de8e12737d3ee7c50a4c73d57",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.pth": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_control_final.csv": "1af8757846e5dc21918d480fefdb573e7801273bda87c6953b0ebe3ca275a59f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/final_identity.json": "2899b3514e4035a26564f7e52ffca7fb43ab131d64c86aebe220709b624e8d27",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/log.txt": "9537cc46dc1a0fb2e5ec77ad1254486193412683f64c54e8a5b8490c88a7cf0f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/manifest.json": "507b3dc09acd79ec09cfc3291b95fbd9582df93babaa30b8bac9859f74454aae",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/study.json": "e7fbca6266619100f9a6425ade40dc2a9e9efe8172e3896801fc92dcd2aa8d8f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/train.csv": "a8b437b54405e1d21de6cecc528bb807904e402babcca02ae0681059205e1ee3",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val.csv": "e0331e7c7d25e77a0b5573df48276bd7e69467f586baefaf4194abac3e15273d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val_games.csv": "c81c0c73c4880ee67f2ac51f0fb65b9b47ee54a338072bd01105dcc8b85a7d25",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.buffer.npz": "308a0e66570db6df2e5f45aeec90711a27f34df4fc094ad1ed18caf518fbb525",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.pth": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_early_final.csv": "690c59d3f26692e5b2add3102c981d63c43a36bf83435f399c54a1669776c45f"
+  },
+  "arms": {
+    "control": {
+      "training_rows": 3000,
+      "validation_rows": 160,
+      "validation_aggregate_rows": 10,
+      "final_rows": 240,
+      "training_opponents": {
+        "default": 1426,
+        "solution92": 1574
+      },
+      "nan_losses_before_learning": 1,
+      "checkpoint_sha256": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442",
+      "final_env_steps": 909000,
+      "final_learn_steps": 449793,
+      "checkpoint_tensor_metadata_source": "Previously completed supervisor audit; tensors not loaded in this independent data audit."
+    },
+    "early": {
+      "training_rows": 3000,
+      "validation_rows": 160,
+      "validation_aggregate_rows": 10,
+      "final_rows": 240,
+      "training_opponents": {
+        "default": 1426,
+        "solution92": 1574
+      },
+      "nan_losses_before_learning": 1,
+      "checkpoint_sha256": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117",
+      "final_env_steps": 909000,
+      "final_learn_steps": 449793,
+      "checkpoint_tensor_metadata_source": "Previously completed supervisor audit; tensors not loaded in this independent data audit."
+    }
+  },
+  "schemas": {
+    "train.csv": [
+      "game",
+      "seed",
+      "side",
+      "opponent",
+      "result",
+      "game_win",
+      "point_win",
+      "our_wins",
+      "opp_wins",
+      "our_points",
+      "opp_points",
+      "point_counting_version",
+      "wait_frac",
+      "invalid_frac",
+      "greedy_masked_frac",
+      "sap_attempts",
+      "sap_hits",
+      "stack_frac",
+      "relics_found",
+      "relics_seen",
+      "known_point_tiles",
+      "belief_contradictions",
+      "unit_steps",
+      "steps",
+      "secs",
+      "epsilon",
+      "mean_loss",
+      "env_steps",
+      "learn_steps",
+      "winrate_50"
+    ],
+    "val_games.csv": [
+      "after_games",
+      "seed",
+      "side",
+      "opponent",
+      "result",
+      "game_win",
+      "point_win",
+      "our_wins",
+      "opp_wins",
+      "our_points",
+      "opp_points",
+      "point_counting_version",
+      "wait_frac",
+      "invalid_frac",
+      "greedy_masked_frac",
+      "sap_attempts",
+      "sap_hits",
+      "stack_frac",
+      "relics_found",
+      "relics_seen",
+      "known_point_tiles",
+      "belief_contradictions",
+      "unit_steps",
+      "steps",
+      "secs"
+    ],
+    "val.csv": [
+      "after_games",
+      "opponent",
+      "games",
+      "winrate",
+      "match_winrate",
+      "point_winrate",
+      "avg_points",
+      "avg_opp_points",
+      "point_counting_version",
+      "secs"
+    ],
+    "final.csv": [
+      "seed",
+      "side",
+      "opponent",
+      "result",
+      "game_win",
+      "point_win",
+      "our_wins",
+      "opp_wins",
+      "our_points",
+      "opp_points",
+      "point_counting_version",
+      "wait_frac",
+      "invalid_frac",
+      "greedy_masked_frac",
+      "sap_attempts",
+      "sap_hits",
+      "stack_frac",
+      "relics_found",
+      "relics_seen",
+      "known_point_tiles",
+      "belief_contradictions",
+      "unit_steps",
+      "steps",
+      "secs"
+    ]
+  },
+  "comparison": {
+    "default": {
+      "games_per_arm": 120,
+      "maps": 60,
+      "counts": {
+        "control": {
+          "win": 120
+        },
+        "early": {
+          "win": 119,
+          "loss": 1
+        }
+      },
+      "control_result_sum": 120.0,
+      "early_result_sum": 119.0,
+      "control_rate": 1.0,
+      "early_rate": 0.9916666666666667,
+      "early_minus_control": -0.008333333333333333,
+      "paired_whole_card_95_percentile_ci": [
+        -0.025,
+        0.0
+      ],
+      "map_delta_frequency": {
+        "0.0": 59,
+        "-0.5": 1
+      }
+    },
+    "solution92": {
+      "games_per_arm": 120,
+      "maps": 60,
+      "counts": {
+        "control": {
+          "win": 86,
+          "loss": 34
+        },
+        "early": {
+          "loss": 58,
+          "win": 62
+        }
+      },
+      "control_result_sum": 86.0,
+      "early_result_sum": 62.0,
+      "control_rate": 0.7166666666666667,
+      "early_rate": 0.5166666666666667,
+      "early_minus_control": -0.2,
+      "paired_whole_card_95_percentile_ci": [
+        -0.325,
+        -0.075
+      ],
+      "map_delta_frequency": {
+        "-1.0": 11,
+        "-0.5": 13,
+        "0.0": 26,
+        "0.5": 9,
+        "1.0": 1
+      }
+    }
+  },
+  "bootstrap": {
+    "resamples": 5000,
+    "seed": 0,
+    "unit": "whole paired map, both sides together",
+    "percentiles": [
+      2.5,
+      97.5
+    ]
+  },
+  "complete": true,
+  "interpretation": "Single known-start diagnostic on already used development maps. Not a method conclusion, no generalization over new training starts, and no release authority. Fixed starts 47/48/49 and all six final evaluations remain required; no optional stopping or gate alteration based on s47.",
+  "limitations": "No tensor loading or independent tensor finiteness re-audit; verified saved finite-tensor metadata, completed audit return codes, and checkpoint byte-hash binding only. No training, evaluation, test jobs, repository edits, commits or pushes."
+}
