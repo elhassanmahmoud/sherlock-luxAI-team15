@@ -1,5 +1,8 @@
 # Kontinuierliche Verbesserung ab 21.10.2026
 
+> Prioritätsänderung 21.10.2026, 14:39 Berlin: Nach Moayeds Kritik am Aufwand wurde die Curriculumstudie unvollständig beendet. Keine Nachinterpretation als vollständige statistische Ablehnung. Nächster aktiver Schritt ist der bereits präregistrierte [Gegnerenergie-Vergleich](2026-10-21-enemy-tie-energy.md), ohne neues Training. Herkunft und Begründung stehen im [Abbrucharchiv](../../../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md). Die allgemeine autonome Arbeit wird fortgesetzt.
+
+
 **Freigabe:** Moayed beauftragt nach dem Abschluss bis 09:00 erneut autonome Arbeit ohne feste Enduhrzeit, mit Subagents, sinnvollen Commits, Pushes und regelmäßigem Remote-Abgleich. Die frühere Uhrzeitbegrenzung ist für diesen neuen Auftrag aufgehoben. Ziel ist eine möglichst robuste Siegquote gegen Solution_92, angestrebt 100 % auf einer vorab festgelegten unabhängigen Stichprobe. Eine universelle Sieg-Garantie ist weder zugesagt noch aus endlichen Tests ableitbar.
 
 **Ausgangspunkt:** main b008252, installierte all18_v3, SHA-256 aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935. Vorhandene Sicherung experiments/releases/20261020_old3_sym3 bleibt unverändert. Jeder spätere Austausch sichert zusätzlich V3. Source/HEAD/Inputs während laufender Reihen eingefroren; Integration fremder Commits nur am sicheren Übergang. Maximal ein Trainer ODER zwei Evalworker. Keine Agenteninformationen aus Engine-Ground-Truth.

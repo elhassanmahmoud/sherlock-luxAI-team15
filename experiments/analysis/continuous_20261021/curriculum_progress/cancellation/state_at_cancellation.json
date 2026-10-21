@@ -1,0 +1,1960 @@
+{
+  "run_id": "20261021_early_contact_v1",
+  "root": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+  "python": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+  "plans": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/superpowers/plans/2026-10-21-early-opponent-curriculum.md",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/NAECHSTER_TRAININGSVERSUCH_20261021.md",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/EXPERIMENT_PROTOKOLL.md"
+  ],
+  "started_at": 1792575874.547488,
+  "deadline": 1792619074.547488,
+  "phases": {
+    "train_47_control": {
+      "status": "complete",
+      "started_at": 1792575874.692487,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.experiment",
+            "--variant",
+            "full_rules_v3",
+            "--run-seed",
+            "47",
+            "--games",
+            "3000",
+            "--sol92-frac",
+            "0.7",
+            "--pool-frac",
+            "0",
+            "--val-every",
+            "750",
+            "--val-seeds",
+            "8",
+            "--val-seed-start",
+            "500720",
+            "--isolate-validation",
+            "--no-test",
+            "--tag",
+            "20261021_early_contact_v1",
+            "--opponent-plan",
+            "standard",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control"
+          ],
+          "input_hashes": {},
+          "started_at": 1792575874.7671008,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_0_0.log",
+          "returncode": 0,
+          "pid": 63533,
+          "pgid": 63533,
+          "finished_at": 1792579061.305374
+        },
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.early_curriculum_study",
+            "--checkpoint-audit",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/state.json",
+            "47",
+            "control"
+          ],
+          "input_hashes": {
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/log.txt": "860bdbe2dd5ce2b780e50099b823bddd1de6bd7f05bea53cbe0e62b0ca2d2b58",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/manifest.json": "422b695239e877cead6a835d4d440289cb8aa53c8117afa0b20c6caa75e3f9f3",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/study.json": "52caf6b3c9739ec1e55024e447b75f0c3886ac2b235e0fd80a50c9bb827b2ab2",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/train.csv": "defaddcceba37be9c8557a913e66fa15640152e0c480c2ea1c605ee5148e699d",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val.csv": "7a385415fd62d1c0c5ee90ad7c85a9a2d3b6de5670ff205ed0a9e8134470429a",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val_games.csv": "01b30ccdfe8933294bb485f96fd7e83c26cd705ab13ed61e34dcf0c09deff672",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.buffer.npz": "03669a92caaef5987293548185ca66b82b27814de8e12737d3ee7c50a4c73d57",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.pth": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442"
+          },
+          "started_at": 1792579061.5678,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_1_1.log",
+          "returncode": 0,
+          "pid": 66740,
+          "pgid": 66740,
+          "finished_at": 1792579064.775902
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "training_rows": 3000,
+        "validation_rows": 160,
+        "initial": {
+          "schema_version": 1,
+          "learners": [
+            {
+              "q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+              "target_q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+              "optimizer_sha256": "2e187c361eb07d154c703dc5c3ee2361d33836b5be35e6b2276fcd8e067e3518",
+              "replay": {
+                "capacity": 300000,
+                "obs_dim": 79,
+                "pos": 0,
+                "size": 0,
+                "_mask_dim": 1,
+                "arrays": {
+                  "s": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "ns": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "a": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<i8"
+                  },
+                  "r": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "done": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "mask": {
+                    "shape": [
+                      300000,
+                      1
+                    ],
+                    "dtype": "|b1"
+                  }
+                },
+                "logical_content": "empty-replay-v1"
+              },
+              "config": {
+                "hidden": 256,
+                "dueling": true,
+                "gamma": 0.99,
+                "lr": 0.0003,
+                "batch_size": 256,
+                "buffer_capacity": 300000,
+                "learn_start": 5000,
+                "train_every": 2,
+                "target_update_every": 500,
+                "grad_clip": 5.0,
+                "double_dqn": true,
+                "eps_start": 1.0,
+                "eps_end": 0.05,
+                "eps_decay_steps": 60000,
+                "guided_prob": 0.7,
+                "use_belief": true,
+                "use_symmetry": true,
+                "home_first": false,
+                "home_penalty": 0.0,
+                "home_last_only": false,
+                "explore_memory": true,
+                "explore_grid": true,
+                "scripted_explore": true,
+                "explore_stale": 20,
+                "early_inference": true,
+                "relic_filter": true,
+                "subset_infer": true,
+                "cand_quota": 0,
+                "sticky": 0.0,
+                "far_opp": 10,
+                "far_cand": true,
+                "cand_boost": 0.0,
+                "contest_sap": false,
+                "energy_pref": 0.0,
+                "explore_quota": 0,
+                "explore_until": 75,
+                "pt_sap": true,
+                "pt_sap_reserve": 0,
+                "pt_sap_zone": false,
+                "safe_moves": false,
+                "idle_sap": false,
+                "idle_sap_reserve": 30,
+                "sap_kill_first": false,
+                "sap_pt_first": false,
+                "sap_geometry": false,
+                "keep_dead": false,
+                "keep_dead_fast": true,
+                "stale_all": false,
+                "opp_infer": false,
+                "pt_walk": false,
+                "pt_walk_own": false,
+                "pt_walk_from_match": 0,
+                "pt_hold": false,
+                "ram": false,
+                "ram_margin": 10.0,
+                "fog_sap": false,
+                "fog_any": false,
+                "fog_reserve": 30.0,
+                "reward_fix": true,
+                "terminal_death_potential": false,
+                "active_targets": false,
+                "smart_sap": false,
+                "use_shaping": true,
+                "canonical": true,
+                "use_sap": true,
+                "mask_actions": true,
+                "w_point": 1.0,
+                "w_shape": 0.5,
+                "w_explore": 0.3,
+                "w_energy": 0.1,
+                "w_stack": 0.3,
+                "w_death": 0.5,
+                "w_match": 2.0,
+                "w_discovery": 0.5,
+                "w_sap_hit": 0.3,
+                "w_opp_points": 0.0
+              },
+              "device": "cpu",
+              "env_steps": 0,
+              "learn_steps": 0,
+              "learn_enabled": true,
+              "autosave_on_terminate": false,
+              "recent_losses": [],
+              "agent_rng_sha256": "ca5e426bf3563964125b1cb8e6823794ad22d2bce4af8bfa8f5eb80fc00cf884",
+              "sides": [
+                "player_0",
+                "player_1"
+              ]
+            }
+          ],
+          "rng_sha256": {
+            "python": "4fdffe189894d97636ed5c149062585e3ec65db5283116580f24debb286012e6",
+            "numpy": "d91d2b5c4918ba36f7b4ead72de63791f797238f63d3ec7eefdad1bed21ad8c5",
+            "torch_cpu": "52ad88da55d315c2795dba9f042534be98259136968210118bccd83e36c77a58"
+          }
+        },
+        "final": {
+          "file_sha256": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442",
+          "q_sha256": "29bbf86e282d9e209ee4e3d351b8c78e0ecff7ad8a643262ea435660c0f190b8",
+          "target_q_sha256": "2e2cf43b70fb77c15d19a4efa73bef25e25fcea0b01f9de7b224584fabb511fd",
+          "config": {
+            "hidden": 256,
+            "dueling": true,
+            "gamma": 0.99,
+            "lr": 0.0003,
+            "batch_size": 256,
+            "buffer_capacity": 300000,
+            "learn_start": 5000,
+            "train_every": 2,
+            "target_update_every": 500,
+            "grad_clip": 5.0,
+            "double_dqn": true,
+            "eps_start": 1.0,
+            "eps_end": 0.05,
+            "eps_decay_steps": 60000,
+            "guided_prob": 0.7,
+            "use_belief": true,
+            "use_symmetry": true,
+            "home_first": false,
+            "home_penalty": 0.0,
+            "home_last_only": false,
+            "explore_memory": true,
+            "explore_grid": true,
+            "scripted_explore": true,
+            "explore_stale": 20,
+            "early_inference": true,
+            "relic_filter": true,
+            "subset_infer": true,
+            "cand_quota": 0,
+            "sticky": 0.0,
+            "far_opp": 10,
+            "far_cand": true,
+            "cand_boost": 0.0,
+            "contest_sap": false,
+            "energy_pref": 0.0,
+            "explore_quota": 0,
+            "explore_until": 75,
+            "pt_sap": true,
+            "pt_sap_reserve": 0,
+            "pt_sap_zone": false,
+            "safe_moves": false,
+            "idle_sap": false,
+            "idle_sap_reserve": 30,
+            "sap_kill_first": false,
+            "sap_pt_first": false,
+            "sap_geometry": false,
+            "keep_dead": false,
+            "keep_dead_fast": true,
+            "stale_all": false,
+            "opp_infer": false,
+            "pt_walk": false,
+            "pt_walk_own": false,
+            "pt_walk_from_match": 0,
+            "pt_hold": false,
+            "ram": false,
+            "ram_margin": 10.0,
+            "fog_sap": false,
+            "fog_any": false,
+            "fog_reserve": 30.0,
+            "reward_fix": true,
+            "terminal_death_potential": false,
+            "active_targets": false,
+            "smart_sap": false,
+            "use_shaping": true,
+            "canonical": true,
+            "use_sap": true,
+            "mask_actions": true,
+            "w_point": 1.0,
+            "w_shape": 0.5,
+            "w_explore": 0.3,
+            "w_energy": 0.1,
+            "w_stack": 0.3,
+            "w_death": 0.5,
+            "w_match": 2.0,
+            "w_discovery": 0.5,
+            "w_sap_hit": 0.3,
+            "w_opp_points": 0.0
+          },
+          "env_steps": 909000,
+          "learn_steps": 449793,
+          "q_finite": true,
+          "target_q_finite": true
+        },
+        "nan_losses_before_learning": 1
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/final_identity.json": "de0b2312dbff5317d2dbc5210bbc94138988690a014c00c528ce50e66a7a92eb",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/log.txt": "860bdbe2dd5ce2b780e50099b823bddd1de6bd7f05bea53cbe0e62b0ca2d2b58",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/manifest.json": "422b695239e877cead6a835d4d440289cb8aa53c8117afa0b20c6caa75e3f9f3",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/study.json": "52caf6b3c9739ec1e55024e447b75f0c3886ac2b235e0fd80a50c9bb827b2ab2",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/train.csv": "defaddcceba37be9c8557a913e66fa15640152e0c480c2ea1c605ee5148e699d",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val.csv": "7a385415fd62d1c0c5ee90ad7c85a9a2d3b6de5670ff205ed0a9e8134470429a",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val_games.csv": "01b30ccdfe8933294bb485f96fd7e83c26cd705ab13ed61e34dcf0c09deff672",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.buffer.npz": "03669a92caaef5987293548185ca66b82b27814de8e12737d3ee7c50a4c73d57",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.pth": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442"
+      },
+      "finished_at": 1792579064.9250948,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "train_47_early": {
+      "status": "complete",
+      "started_at": 1792579065.008789,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.experiment",
+            "--variant",
+            "full_rules_v3",
+            "--run-seed",
+            "47",
+            "--games",
+            "3000",
+            "--sol92-frac",
+            "0.7",
+            "--pool-frac",
+            "0",
+            "--val-every",
+            "750",
+            "--val-seeds",
+            "8",
+            "--val-seed-start",
+            "500720",
+            "--isolate-validation",
+            "--no-test",
+            "--tag",
+            "20261021_early_contact_v1",
+            "--opponent-plan",
+            "early_sol100",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early"
+          ],
+          "input_hashes": {},
+          "started_at": 1792579065.092798,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_2_0.log",
+          "returncode": 0,
+          "pid": 66762,
+          "pgid": 66762,
+          "finished_at": 1792582235.0832691
+        },
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.early_curriculum_study",
+            "--checkpoint-audit",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/state.json",
+            "47",
+            "early"
+          ],
+          "input_hashes": {
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/log.txt": "9537cc46dc1a0fb2e5ec77ad1254486193412683f64c54e8a5b8490c88a7cf0f",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/manifest.json": "507b3dc09acd79ec09cfc3291b95fbd9582df93babaa30b8bac9859f74454aae",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/study.json": "e7fbca6266619100f9a6425ade40dc2a9e9efe8172e3896801fc92dcd2aa8d8f",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/train.csv": "a8b437b54405e1d21de6cecc528bb807904e402babcca02ae0681059205e1ee3",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val.csv": "e0331e7c7d25e77a0b5573df48276bd7e69467f586baefaf4194abac3e15273d",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val_games.csv": "c81c0c73c4880ee67f2ac51f0fb65b9b47ee54a338072bd01105dcc8b85a7d25",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.buffer.npz": "308a0e66570db6df2e5f45aeec90711a27f34df4fc094ad1ed18caf518fbb525",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.pth": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117"
+          },
+          "started_at": 1792582235.343362,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_3_1.log",
+          "returncode": 0,
+          "pid": 68755,
+          "pgid": 68755,
+          "finished_at": 1792582238.8234649
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "training_rows": 3000,
+        "validation_rows": 160,
+        "initial": {
+          "schema_version": 1,
+          "learners": [
+            {
+              "q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+              "target_q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+              "optimizer_sha256": "2e187c361eb07d154c703dc5c3ee2361d33836b5be35e6b2276fcd8e067e3518",
+              "replay": {
+                "capacity": 300000,
+                "obs_dim": 79,
+                "pos": 0,
+                "size": 0,
+                "_mask_dim": 1,
+                "arrays": {
+                  "s": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "ns": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "a": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<i8"
+                  },
+                  "r": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "done": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "mask": {
+                    "shape": [
+                      300000,
+                      1
+                    ],
+                    "dtype": "|b1"
+                  }
+                },
+                "logical_content": "empty-replay-v1"
+              },
+              "config": {
+                "hidden": 256,
+                "dueling": true,
+                "gamma": 0.99,
+                "lr": 0.0003,
+                "batch_size": 256,
+                "buffer_capacity": 300000,
+                "learn_start": 5000,
+                "train_every": 2,
+                "target_update_every": 500,
+                "grad_clip": 5.0,
+                "double_dqn": true,
+                "eps_start": 1.0,
+                "eps_end": 0.05,
+                "eps_decay_steps": 60000,
+                "guided_prob": 0.7,
+                "use_belief": true,
+                "use_symmetry": true,
+                "home_first": false,
+                "home_penalty": 0.0,
+                "home_last_only": false,
+                "explore_memory": true,
+                "explore_grid": true,
+                "scripted_explore": true,
+                "explore_stale": 20,
+                "early_inference": true,
+                "relic_filter": true,
+                "subset_infer": true,
+                "cand_quota": 0,
+                "sticky": 0.0,
+                "far_opp": 10,
+                "far_cand": true,
+                "cand_boost": 0.0,
+                "contest_sap": false,
+                "energy_pref": 0.0,
+                "explore_quota": 0,
+                "explore_until": 75,
+                "pt_sap": true,
+                "pt_sap_reserve": 0,
+                "pt_sap_zone": false,
+                "safe_moves": false,
+                "idle_sap": false,
+                "idle_sap_reserve": 30,
+                "sap_kill_first": false,
+                "sap_pt_first": false,
+                "sap_geometry": false,
+                "keep_dead": false,
+                "keep_dead_fast": true,
+                "stale_all": false,
+                "opp_infer": false,
+                "pt_walk": false,
+                "pt_walk_own": false,
+                "pt_walk_from_match": 0,
+                "pt_hold": false,
+                "ram": false,
+                "ram_margin": 10.0,
+                "fog_sap": false,
+                "fog_any": false,
+                "fog_reserve": 30.0,
+                "reward_fix": true,
+                "terminal_death_potential": false,
+                "active_targets": false,
+                "smart_sap": false,
+                "use_shaping": true,
+                "canonical": true,
+                "use_sap": true,
+                "mask_actions": true,
+                "w_point": 1.0,
+                "w_shape": 0.5,
+                "w_explore": 0.3,
+                "w_energy": 0.1,
+                "w_stack": 0.3,
+                "w_death": 0.5,
+                "w_match": 2.0,
+                "w_discovery": 0.5,
+                "w_sap_hit": 0.3,
+                "w_opp_points": 0.0
+              },
+              "device": "cpu",
+              "env_steps": 0,
+              "learn_steps": 0,
+              "learn_enabled": true,
+              "autosave_on_terminate": false,
+              "recent_losses": [],
+              "agent_rng_sha256": "ca5e426bf3563964125b1cb8e6823794ad22d2bce4af8bfa8f5eb80fc00cf884",
+              "sides": [
+                "player_0",
+                "player_1"
+              ]
+            }
+          ],
+          "rng_sha256": {
+            "python": "4fdffe189894d97636ed5c149062585e3ec65db5283116580f24debb286012e6",
+            "numpy": "d91d2b5c4918ba36f7b4ead72de63791f797238f63d3ec7eefdad1bed21ad8c5",
+            "torch_cpu": "52ad88da55d315c2795dba9f042534be98259136968210118bccd83e36c77a58"
+          }
+        },
+        "final": {
+          "file_sha256": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117",
+          "q_sha256": "707f2a0eab2e2cf9f326dfd4bb0ba7622944dfbdb3fe8d975261eedbfb66a974",
+          "target_q_sha256": "7bd0498695d93f4127b2ec76640325125c598dd07a63f8ec8207b0e3b6dc3e06",
+          "config": {
+            "hidden": 256,
+            "dueling": true,
+            "gamma": 0.99,
+            "lr": 0.0003,
+            "batch_size": 256,
+            "buffer_capacity": 300000,
+            "learn_start": 5000,
+            "train_every": 2,
+            "target_update_every": 500,
+            "grad_clip": 5.0,
+            "double_dqn": true,
+            "eps_start": 1.0,
+            "eps_end": 0.05,
+            "eps_decay_steps": 60000,
+            "guided_prob": 0.7,
+            "use_belief": true,
+            "use_symmetry": true,
+            "home_first": false,
+            "home_penalty": 0.0,
+            "home_last_only": false,
+            "explore_memory": true,
+            "explore_grid": true,
+            "scripted_explore": true,
+            "explore_stale": 20,
+            "early_inference": true,
+            "relic_filter": true,
+            "subset_infer": true,
+            "cand_quota": 0,
+            "sticky": 0.0,
+            "far_opp": 10,
+            "far_cand": true,
+            "cand_boost": 0.0,
+            "contest_sap": false,
+            "energy_pref": 0.0,
+            "explore_quota": 0,
+            "explore_until": 75,
+            "pt_sap": true,
+            "pt_sap_reserve": 0,
+            "pt_sap_zone": false,
+            "safe_moves": false,
+            "idle_sap": false,
+            "idle_sap_reserve": 30,
+            "sap_kill_first": false,
+            "sap_pt_first": false,
+            "sap_geometry": false,
+            "keep_dead": false,
+            "keep_dead_fast": true,
+            "stale_all": false,
+            "opp_infer": false,
+            "pt_walk": false,
+            "pt_walk_own": false,
+            "pt_walk_from_match": 0,
+            "pt_hold": false,
+            "ram": false,
+            "ram_margin": 10.0,
+            "fog_sap": false,
+            "fog_any": false,
+            "fog_reserve": 30.0,
+            "reward_fix": true,
+            "terminal_death_potential": false,
+            "active_targets": false,
+            "smart_sap": false,
+            "use_shaping": true,
+            "canonical": true,
+            "use_sap": true,
+            "mask_actions": true,
+            "w_point": 1.0,
+            "w_shape": 0.5,
+            "w_explore": 0.3,
+            "w_energy": 0.1,
+            "w_stack": 0.3,
+            "w_death": 0.5,
+            "w_match": 2.0,
+            "w_discovery": 0.5,
+            "w_sap_hit": 0.3,
+            "w_opp_points": 0.0
+          },
+          "env_steps": 909000,
+          "learn_steps": 449793,
+          "q_finite": true,
+          "target_q_finite": true
+        },
+        "nan_losses_before_learning": 1
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/final_identity.json": "2899b3514e4035a26564f7e52ffca7fb43ab131d64c86aebe220709b624e8d27",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/log.txt": "9537cc46dc1a0fb2e5ec77ad1254486193412683f64c54e8a5b8490c88a7cf0f",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/manifest.json": "507b3dc09acd79ec09cfc3291b95fbd9582df93babaa30b8bac9859f74454aae",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/study.json": "e7fbca6266619100f9a6425ade40dc2a9e9efe8172e3896801fc92dcd2aa8d8f",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/train.csv": "a8b437b54405e1d21de6cecc528bb807904e402babcca02ae0681059205e1ee3",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val.csv": "e0331e7c7d25e77a0b5573df48276bd7e69467f586baefaf4194abac3e15273d",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val_games.csv": "c81c0c73c4880ee67f2ac51f0fb65b9b47ee54a338072bd01105dcc8b85a7d25",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.buffer.npz": "308a0e66570db6df2e5f45aeec90711a27f34df4fc094ad1ed18caf518fbb525",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.pth": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117"
+      },
+      "finished_at": 1792582238.97827,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "eval_47_control": {
+      "status": "complete",
+      "started_at": 1792582239.063732,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.par_eval",
+            "--weights",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.pth",
+            "--first",
+            "720",
+            "--n",
+            "60",
+            "--workers",
+            "2",
+            "--opponents",
+            "default,solution92",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_control_final.csv"
+          ],
+          "input_hashes": {
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/final_identity.json": "de0b2312dbff5317d2dbc5210bbc94138988690a014c00c528ce50e66a7a92eb",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/log.txt": "860bdbe2dd5ce2b780e50099b823bddd1de6bd7f05bea53cbe0e62b0ca2d2b58",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/manifest.json": "422b695239e877cead6a835d4d440289cb8aa53c8117afa0b20c6caa75e3f9f3",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/study.json": "52caf6b3c9739ec1e55024e447b75f0c3886ac2b235e0fd80a50c9bb827b2ab2",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/train.csv": "defaddcceba37be9c8557a913e66fa15640152e0c480c2ea1c605ee5148e699d",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val.csv": "7a385415fd62d1c0c5ee90ad7c85a9a2d3b6de5670ff205ed0a9e8134470429a",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val_games.csv": "01b30ccdfe8933294bb485f96fd7e83c26cd705ab13ed61e34dcf0c09deff672",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.buffer.npz": "03669a92caaef5987293548185ca66b82b27814de8e12737d3ee7c50a4c73d57",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/weights/agent.pth": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442"
+          },
+          "started_at": 1792582239.3313,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_4_0.log",
+          "returncode": 0,
+          "pid": 68779,
+          "pgid": 68779,
+          "finished_at": 1792582354.447785
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "evaluation_rows": 240
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_control_final.csv": "1af8757846e5dc21918d480fefdb573e7801273bda87c6953b0ebe3ca275a59f"
+      },
+      "finished_at": 1792582354.4923499,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "eval_47_early": {
+      "status": "complete",
+      "started_at": 1792582354.579775,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.par_eval",
+            "--weights",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.pth",
+            "--first",
+            "720",
+            "--n",
+            "60",
+            "--workers",
+            "2",
+            "--opponents",
+            "default,solution92",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_early_final.csv"
+          ],
+          "input_hashes": {
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/final_identity.json": "2899b3514e4035a26564f7e52ffca7fb43ab131d64c86aebe220709b624e8d27",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/initial_identity.json": "f809fd270609ed48edf77b4f85f857a753f99b584b9ad8b8c8944093e617155c",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/log.txt": "9537cc46dc1a0fb2e5ec77ad1254486193412683f64c54e8a5b8490c88a7cf0f",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/manifest.json": "507b3dc09acd79ec09cfc3291b95fbd9582df93babaa30b8bac9859f74454aae",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/study.json": "e7fbca6266619100f9a6425ade40dc2a9e9efe8172e3896801fc92dcd2aa8d8f",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/train.csv": "a8b437b54405e1d21de6cecc528bb807904e402babcca02ae0681059205e1ee3",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val.csv": "e0331e7c7d25e77a0b5573df48276bd7e69467f586baefaf4194abac3e15273d",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/val_games.csv": "c81c0c73c4880ee67f2ac51f0fb65b9b47ee54a338072bd01105dcc8b85a7d25",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.buffer.npz": "308a0e66570db6df2e5f45aeec90711a27f34df4fc094ad1ed18caf518fbb525",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early/weights/agent.pth": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117"
+          },
+          "started_at": 1792582354.8428092,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_5_0.log",
+          "returncode": 0,
+          "pid": 68851,
+          "pgid": 68851,
+          "finished_at": 1792582479.853302
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "evaluation_rows": 240
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_early_final.csv": "690c59d3f26692e5b2add3102c981d63c43a36bf83435f399c54a1669776c45f"
+      },
+      "finished_at": 1792582479.897263,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "pair_47": {
+      "status": "complete",
+      "started_at": 1792582479.984365,
+      "jobs": [],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "run_id": "20261021_early_contact_v1",
+        "run_seed": 47,
+        "complete": true,
+        "arms": {
+          "control": {
+            "training_rows": 3000,
+            "validation_rows": 160,
+            "initial": {
+              "schema_version": 1,
+              "learners": [
+                {
+                  "q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+                  "target_q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+                  "optimizer_sha256": "2e187c361eb07d154c703dc5c3ee2361d33836b5be35e6b2276fcd8e067e3518",
+                  "replay": {
+                    "capacity": 300000,
+                    "obs_dim": 79,
+                    "pos": 0,
+                    "size": 0,
+                    "_mask_dim": 1,
+                    "arrays": {
+                      "s": {
+                        "shape": [
+                          300000,
+                          79
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "ns": {
+                        "shape": [
+                          300000,
+                          79
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "a": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<i8"
+                      },
+                      "r": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "done": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "mask": {
+                        "shape": [
+                          300000,
+                          1
+                        ],
+                        "dtype": "|b1"
+                      }
+                    },
+                    "logical_content": "empty-replay-v1"
+                  },
+                  "config": {
+                    "hidden": 256,
+                    "dueling": true,
+                    "gamma": 0.99,
+                    "lr": 0.0003,
+                    "batch_size": 256,
+                    "buffer_capacity": 300000,
+                    "learn_start": 5000,
+                    "train_every": 2,
+                    "target_update_every": 500,
+                    "grad_clip": 5.0,
+                    "double_dqn": true,
+                    "eps_start": 1.0,
+                    "eps_end": 0.05,
+                    "eps_decay_steps": 60000,
+                    "guided_prob": 0.7,
+                    "use_belief": true,
+                    "use_symmetry": true,
+                    "home_first": false,
+                    "home_penalty": 0.0,
+                    "home_last_only": false,
+                    "explore_memory": true,
+                    "explore_grid": true,
+                    "scripted_explore": true,
+                    "explore_stale": 20,
+                    "early_inference": true,
+                    "relic_filter": true,
+                    "subset_infer": true,
+                    "cand_quota": 0,
+                    "sticky": 0.0,
+                    "far_opp": 10,
+                    "far_cand": true,
+                    "cand_boost": 0.0,
+                    "contest_sap": false,
+                    "energy_pref": 0.0,
+                    "explore_quota": 0,
+                    "explore_until": 75,
+                    "pt_sap": true,
+                    "pt_sap_reserve": 0,
+                    "pt_sap_zone": false,
+                    "safe_moves": false,
+                    "idle_sap": false,
+                    "idle_sap_reserve": 30,
+                    "sap_kill_first": false,
+                    "sap_pt_first": false,
+                    "sap_geometry": false,
+                    "keep_dead": false,
+                    "keep_dead_fast": true,
+                    "stale_all": false,
+                    "opp_infer": false,
+                    "pt_walk": false,
+                    "pt_walk_own": false,
+                    "pt_walk_from_match": 0,
+                    "pt_hold": false,
+                    "ram": false,
+                    "ram_margin": 10.0,
+                    "fog_sap": false,
+                    "fog_any": false,
+                    "fog_reserve": 30.0,
+                    "reward_fix": true,
+                    "terminal_death_potential": false,
+                    "active_targets": false,
+                    "smart_sap": false,
+                    "use_shaping": true,
+                    "canonical": true,
+                    "use_sap": true,
+                    "mask_actions": true,
+                    "w_point": 1.0,
+                    "w_shape": 0.5,
+                    "w_explore": 0.3,
+                    "w_energy": 0.1,
+                    "w_stack": 0.3,
+                    "w_death": 0.5,
+                    "w_match": 2.0,
+                    "w_discovery": 0.5,
+                    "w_sap_hit": 0.3,
+                    "w_opp_points": 0.0
+                  },
+                  "device": "cpu",
+                  "env_steps": 0,
+                  "learn_steps": 0,
+                  "learn_enabled": true,
+                  "autosave_on_terminate": false,
+                  "recent_losses": [],
+                  "agent_rng_sha256": "ca5e426bf3563964125b1cb8e6823794ad22d2bce4af8bfa8f5eb80fc00cf884",
+                  "sides": [
+                    "player_0",
+                    "player_1"
+                  ]
+                }
+              ],
+              "rng_sha256": {
+                "python": "4fdffe189894d97636ed5c149062585e3ec65db5283116580f24debb286012e6",
+                "numpy": "d91d2b5c4918ba36f7b4ead72de63791f797238f63d3ec7eefdad1bed21ad8c5",
+                "torch_cpu": "52ad88da55d315c2795dba9f042534be98259136968210118bccd83e36c77a58"
+              }
+            },
+            "final": {
+              "file_sha256": "57105e95f2dfcd1db17a31301120be1990678dbe6d909641702fd0d14524c442",
+              "q_sha256": "29bbf86e282d9e209ee4e3d351b8c78e0ecff7ad8a643262ea435660c0f190b8",
+              "target_q_sha256": "2e2cf43b70fb77c15d19a4efa73bef25e25fcea0b01f9de7b224584fabb511fd",
+              "config": {
+                "hidden": 256,
+                "dueling": true,
+                "gamma": 0.99,
+                "lr": 0.0003,
+                "batch_size": 256,
+                "buffer_capacity": 300000,
+                "learn_start": 5000,
+                "train_every": 2,
+                "target_update_every": 500,
+                "grad_clip": 5.0,
+                "double_dqn": true,
+                "eps_start": 1.0,
+                "eps_end": 0.05,
+                "eps_decay_steps": 60000,
+                "guided_prob": 0.7,
+                "use_belief": true,
+                "use_symmetry": true,
+                "home_first": false,
+                "home_penalty": 0.0,
+                "home_last_only": false,
+                "explore_memory": true,
+                "explore_grid": true,
+                "scripted_explore": true,
+                "explore_stale": 20,
+                "early_inference": true,
+                "relic_filter": true,
+                "subset_infer": true,
+                "cand_quota": 0,
+                "sticky": 0.0,
+                "far_opp": 10,
+                "far_cand": true,
+                "cand_boost": 0.0,
+                "contest_sap": false,
+                "energy_pref": 0.0,
+                "explore_quota": 0,
+                "explore_until": 75,
+                "pt_sap": true,
+                "pt_sap_reserve": 0,
+                "pt_sap_zone": false,
+                "safe_moves": false,
+                "idle_sap": false,
+                "idle_sap_reserve": 30,
+                "sap_kill_first": false,
+                "sap_pt_first": false,
+                "sap_geometry": false,
+                "keep_dead": false,
+                "keep_dead_fast": true,
+                "stale_all": false,
+                "opp_infer": false,
+                "pt_walk": false,
+                "pt_walk_own": false,
+                "pt_walk_from_match": 0,
+                "pt_hold": false,
+                "ram": false,
+                "ram_margin": 10.0,
+                "fog_sap": false,
+                "fog_any": false,
+                "fog_reserve": 30.0,
+                "reward_fix": true,
+                "terminal_death_potential": false,
+                "active_targets": false,
+                "smart_sap": false,
+                "use_shaping": true,
+                "canonical": true,
+                "use_sap": true,
+                "mask_actions": true,
+                "w_point": 1.0,
+                "w_shape": 0.5,
+                "w_explore": 0.3,
+                "w_energy": 0.1,
+                "w_stack": 0.3,
+                "w_death": 0.5,
+                "w_match": 2.0,
+                "w_discovery": 0.5,
+                "w_sap_hit": 0.3,
+                "w_opp_points": 0.0
+              },
+              "env_steps": 909000,
+              "learn_steps": 449793,
+              "q_finite": true,
+              "target_q_finite": true
+            },
+            "nan_losses_before_learning": 1,
+            "evaluation_rows": 240
+          },
+          "early": {
+            "training_rows": 3000,
+            "validation_rows": 160,
+            "initial": {
+              "schema_version": 1,
+              "learners": [
+                {
+                  "q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+                  "target_q_sha256": "fe570054781d7e65642a50338cebee012156db26fc308e0cd502f5924ace9516",
+                  "optimizer_sha256": "2e187c361eb07d154c703dc5c3ee2361d33836b5be35e6b2276fcd8e067e3518",
+                  "replay": {
+                    "capacity": 300000,
+                    "obs_dim": 79,
+                    "pos": 0,
+                    "size": 0,
+                    "_mask_dim": 1,
+                    "arrays": {
+                      "s": {
+                        "shape": [
+                          300000,
+                          79
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "ns": {
+                        "shape": [
+                          300000,
+                          79
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "a": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<i8"
+                      },
+                      "r": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "done": {
+                        "shape": [
+                          300000
+                        ],
+                        "dtype": "<f4"
+                      },
+                      "mask": {
+                        "shape": [
+                          300000,
+                          1
+                        ],
+                        "dtype": "|b1"
+                      }
+                    },
+                    "logical_content": "empty-replay-v1"
+                  },
+                  "config": {
+                    "hidden": 256,
+                    "dueling": true,
+                    "gamma": 0.99,
+                    "lr": 0.0003,
+                    "batch_size": 256,
+                    "buffer_capacity": 300000,
+                    "learn_start": 5000,
+                    "train_every": 2,
+                    "target_update_every": 500,
+                    "grad_clip": 5.0,
+                    "double_dqn": true,
+                    "eps_start": 1.0,
+                    "eps_end": 0.05,
+                    "eps_decay_steps": 60000,
+                    "guided_prob": 0.7,
+                    "use_belief": true,
+                    "use_symmetry": true,
+                    "home_first": false,
+                    "home_penalty": 0.0,
+                    "home_last_only": false,
+                    "explore_memory": true,
+                    "explore_grid": true,
+                    "scripted_explore": true,
+                    "explore_stale": 20,
+                    "early_inference": true,
+                    "relic_filter": true,
+                    "subset_infer": true,
+                    "cand_quota": 0,
+                    "sticky": 0.0,
+                    "far_opp": 10,
+                    "far_cand": true,
+                    "cand_boost": 0.0,
+                    "contest_sap": false,
+                    "energy_pref": 0.0,
+                    "explore_quota": 0,
+                    "explore_until": 75,
+                    "pt_sap": true,
+                    "pt_sap_reserve": 0,
+                    "pt_sap_zone": false,
+                    "safe_moves": false,
+                    "idle_sap": false,
+                    "idle_sap_reserve": 30,
+                    "sap_kill_first": false,
+                    "sap_pt_first": false,
+                    "sap_geometry": false,
+                    "keep_dead": false,
+                    "keep_dead_fast": true,
+                    "stale_all": false,
+                    "opp_infer": false,
+                    "pt_walk": false,
+                    "pt_walk_own": false,
+                    "pt_walk_from_match": 0,
+                    "pt_hold": false,
+                    "ram": false,
+                    "ram_margin": 10.0,
+                    "fog_sap": false,
+                    "fog_any": false,
+                    "fog_reserve": 30.0,
+                    "reward_fix": true,
+                    "terminal_death_potential": false,
+                    "active_targets": false,
+                    "smart_sap": false,
+                    "use_shaping": true,
+                    "canonical": true,
+                    "use_sap": true,
+                    "mask_actions": true,
+                    "w_point": 1.0,
+                    "w_shape": 0.5,
+                    "w_explore": 0.3,
+                    "w_energy": 0.1,
+                    "w_stack": 0.3,
+                    "w_death": 0.5,
+                    "w_match": 2.0,
+                    "w_discovery": 0.5,
+                    "w_sap_hit": 0.3,
+                    "w_opp_points": 0.0
+                  },
+                  "device": "cpu",
+                  "env_steps": 0,
+                  "learn_steps": 0,
+                  "learn_enabled": true,
+                  "autosave_on_terminate": false,
+                  "recent_losses": [],
+                  "agent_rng_sha256": "ca5e426bf3563964125b1cb8e6823794ad22d2bce4af8bfa8f5eb80fc00cf884",
+                  "sides": [
+                    "player_0",
+                    "player_1"
+                  ]
+                }
+              ],
+              "rng_sha256": {
+                "python": "4fdffe189894d97636ed5c149062585e3ec65db5283116580f24debb286012e6",
+                "numpy": "d91d2b5c4918ba36f7b4ead72de63791f797238f63d3ec7eefdad1bed21ad8c5",
+                "torch_cpu": "52ad88da55d315c2795dba9f042534be98259136968210118bccd83e36c77a58"
+              }
+            },
+            "final": {
+              "file_sha256": "dd55d292faec5e3c46123c7a2a6ce463b7b54718c420b756901e1f0d24e10117",
+              "q_sha256": "707f2a0eab2e2cf9f326dfd4bb0ba7622944dfbdb3fe8d975261eedbfb66a974",
+              "target_q_sha256": "7bd0498695d93f4127b2ec76640325125c598dd07a63f8ec8207b0e3b6dc3e06",
+              "config": {
+                "hidden": 256,
+                "dueling": true,
+                "gamma": 0.99,
+                "lr": 0.0003,
+                "batch_size": 256,
+                "buffer_capacity": 300000,
+                "learn_start": 5000,
+                "train_every": 2,
+                "target_update_every": 500,
+                "grad_clip": 5.0,
+                "double_dqn": true,
+                "eps_start": 1.0,
+                "eps_end": 0.05,
+                "eps_decay_steps": 60000,
+                "guided_prob": 0.7,
+                "use_belief": true,
+                "use_symmetry": true,
+                "home_first": false,
+                "home_penalty": 0.0,
+                "home_last_only": false,
+                "explore_memory": true,
+                "explore_grid": true,
+                "scripted_explore": true,
+                "explore_stale": 20,
+                "early_inference": true,
+                "relic_filter": true,
+                "subset_infer": true,
+                "cand_quota": 0,
+                "sticky": 0.0,
+                "far_opp": 10,
+                "far_cand": true,
+                "cand_boost": 0.0,
+                "contest_sap": false,
+                "energy_pref": 0.0,
+                "explore_quota": 0,
+                "explore_until": 75,
+                "pt_sap": true,
+                "pt_sap_reserve": 0,
+                "pt_sap_zone": false,
+                "safe_moves": false,
+                "idle_sap": false,
+                "idle_sap_reserve": 30,
+                "sap_kill_first": false,
+                "sap_pt_first": false,
+                "sap_geometry": false,
+                "keep_dead": false,
+                "keep_dead_fast": true,
+                "stale_all": false,
+                "opp_infer": false,
+                "pt_walk": false,
+                "pt_walk_own": false,
+                "pt_walk_from_match": 0,
+                "pt_hold": false,
+                "ram": false,
+                "ram_margin": 10.0,
+                "fog_sap": false,
+                "fog_any": false,
+                "fog_reserve": 30.0,
+                "reward_fix": true,
+                "terminal_death_potential": false,
+                "active_targets": false,
+                "smart_sap": false,
+                "use_shaping": true,
+                "canonical": true,
+                "use_sap": true,
+                "mask_actions": true,
+                "w_point": 1.0,
+                "w_shape": 0.5,
+                "w_explore": 0.3,
+                "w_energy": 0.1,
+                "w_stack": 0.3,
+                "w_death": 0.5,
+                "w_match": 2.0,
+                "w_discovery": 0.5,
+                "w_sap_hit": 0.3,
+                "w_opp_points": 0.0
+              },
+              "env_steps": 909000,
+              "learn_steps": 449793,
+              "q_finite": true,
+              "target_q_finite": true
+            },
+            "nan_losses_before_learning": 1,
+            "evaluation_rows": 240
+          }
+        }
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/pair_s47_audit.json": "430636098166f983f03be92c59f687865d317481220a48d231fc9166362d8c59"
+      },
+      "finished_at": 1792582480.3354712,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "train_48_control": {
+      "status": "complete",
+      "started_at": 1792582480.4262972,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.experiment",
+            "--variant",
+            "full_rules_v3",
+            "--run-seed",
+            "48",
+            "--games",
+            "3000",
+            "--sol92-frac",
+            "0.7",
+            "--pool-frac",
+            "0",
+            "--val-every",
+            "750",
+            "--val-seeds",
+            "8",
+            "--val-seed-start",
+            "500720",
+            "--isolate-validation",
+            "--no-test",
+            "--tag",
+            "20261021_early_contact_v1",
+            "--opponent-plan",
+            "standard",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control"
+          ],
+          "input_hashes": {},
+          "started_at": 1792582480.517466,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_6_0.log",
+          "returncode": 0,
+          "pid": 68924,
+          "pgid": 68924,
+          "finished_at": 1792585610.931596
+        },
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.early_curriculum_study",
+            "--checkpoint-audit",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/state.json",
+            "48",
+            "control"
+          ],
+          "input_hashes": {
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/initial_identity.json": "ebd2bb2c071d73b9a750bbb90869285842b66b0fb909b3c81dc5714363635dbc",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/log.txt": "0d56eb2b59d5d10f5cae1f4d19ed58afb315fd3872a0b37f42b0378ffcd6e6bd",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/manifest.json": "4db9b1f2ccead6eb6dd0fb90a3fc66f3f96dbc270bfad8943caea46a78fdbec4",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/study.json": "9cc373dd8b703d535cb3ca6350aa1c197e17a88606120f42b3b861733b5753a5",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/train.csv": "0202dabdd781b37945e48767aa1c9beb95ef0edebaff485c835467645c85de3d",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/val.csv": "0443de455a3b73926094bcc3807fba5e7014500470319dab525b07c921eb1ce9",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/val_games.csv": "a39f0ef3f7eac26c38db28304db2033aab1c5274b98c4feb1846de7d96a33fd9",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/weights/agent.buffer.npz": "d9171a1265e62f76cc46b6bf121104932d040746c63f400c3c51ef8d9606c062",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/weights/agent.pth": "42201344faf7668f5d71f0545e32c40305394606662da5bd9cf3dc6174e3ff0f"
+          },
+          "started_at": 1792585611.1742458,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_7_1.log",
+          "returncode": 0,
+          "pid": 69979,
+          "pgid": 69979,
+          "finished_at": 1792585614.3253021
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      },
+      "audit": {
+        "training_rows": 3000,
+        "validation_rows": 160,
+        "initial": {
+          "schema_version": 1,
+          "learners": [
+            {
+              "q_sha256": "adef01ca19d1f1c3d901a29da4c906408ea527b8b21a69e042d84812c5c3a8c5",
+              "target_q_sha256": "adef01ca19d1f1c3d901a29da4c906408ea527b8b21a69e042d84812c5c3a8c5",
+              "optimizer_sha256": "2e187c361eb07d154c703dc5c3ee2361d33836b5be35e6b2276fcd8e067e3518",
+              "replay": {
+                "capacity": 300000,
+                "obs_dim": 79,
+                "pos": 0,
+                "size": 0,
+                "_mask_dim": 1,
+                "arrays": {
+                  "s": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "ns": {
+                    "shape": [
+                      300000,
+                      79
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "a": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<i8"
+                  },
+                  "r": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "done": {
+                    "shape": [
+                      300000
+                    ],
+                    "dtype": "<f4"
+                  },
+                  "mask": {
+                    "shape": [
+                      300000,
+                      1
+                    ],
+                    "dtype": "|b1"
+                  }
+                },
+                "logical_content": "empty-replay-v1"
+              },
+              "config": {
+                "hidden": 256,
+                "dueling": true,
+                "gamma": 0.99,
+                "lr": 0.0003,
+                "batch_size": 256,
+                "buffer_capacity": 300000,
+                "learn_start": 5000,
+                "train_every": 2,
+                "target_update_every": 500,
+                "grad_clip": 5.0,
+                "double_dqn": true,
+                "eps_start": 1.0,
+                "eps_end": 0.05,
+                "eps_decay_steps": 60000,
+                "guided_prob": 0.7,
+                "use_belief": true,
+                "use_symmetry": true,
+                "home_first": false,
+                "home_penalty": 0.0,
+                "home_last_only": false,
+                "explore_memory": true,
+                "explore_grid": true,
+                "scripted_explore": true,
+                "explore_stale": 20,
+                "early_inference": true,
+                "relic_filter": true,
+                "subset_infer": true,
+                "cand_quota": 0,
+                "sticky": 0.0,
+                "far_opp": 10,
+                "far_cand": true,
+                "cand_boost": 0.0,
+                "contest_sap": false,
+                "energy_pref": 0.0,
+                "explore_quota": 0,
+                "explore_until": 75,
+                "pt_sap": true,
+                "pt_sap_reserve": 0,
+                "pt_sap_zone": false,
+                "safe_moves": false,
+                "idle_sap": false,
+                "idle_sap_reserve": 30,
+                "sap_kill_first": false,
+                "sap_pt_first": false,
+                "sap_geometry": false,
+                "keep_dead": false,
+                "keep_dead_fast": true,
+                "stale_all": false,
+                "opp_infer": false,
+                "pt_walk": false,
+                "pt_walk_own": false,
+                "pt_walk_from_match": 0,
+                "pt_hold": false,
+                "ram": false,
+                "ram_margin": 10.0,
+                "fog_sap": false,
+                "fog_any": false,
+                "fog_reserve": 30.0,
+                "reward_fix": true,
+                "terminal_death_potential": false,
+                "active_targets": false,
+                "smart_sap": false,
+                "use_shaping": true,
+                "canonical": true,
+                "use_sap": true,
+                "mask_actions": true,
+                "w_point": 1.0,
+                "w_shape": 0.5,
+                "w_explore": 0.3,
+                "w_energy": 0.1,
+                "w_stack": 0.3,
+                "w_death": 0.5,
+                "w_match": 2.0,
+                "w_discovery": 0.5,
+                "w_sap_hit": 0.3,
+                "w_opp_points": 0.0
+              },
+              "device": "cpu",
+              "env_steps": 0,
+              "learn_steps": 0,
+              "learn_enabled": true,
+              "autosave_on_terminate": false,
+              "recent_losses": [],
+              "agent_rng_sha256": "a09ec0c0ba2020d4dc91b05bcfa074305ea359813b59c065bee481a10d811960",
+              "sides": [
+                "player_0",
+                "player_1"
+              ]
+            }
+          ],
+          "rng_sha256": {
+            "python": "c931caaae87555f8558eacd92c218597cc9a2bddce17f36c66342396b7324c31",
+            "numpy": "fd527304531832ec3748730a5252835a33e5635a47df0475d2e5cab9f6e8e12e",
+            "torch_cpu": "243915fe26a079f920fade641c759c895bce0d2d9e64f9fd5b8eb111774bad65"
+          }
+        },
+        "final": {
+          "file_sha256": "42201344faf7668f5d71f0545e32c40305394606662da5bd9cf3dc6174e3ff0f",
+          "q_sha256": "296eddb1af072087cb0267a3adecef9384f0be08efd46e21aaf12b38320a5b44",
+          "target_q_sha256": "1baa25e3ea69caec8e465d6ca8ea0d5d2390ed6d85241e525762373ebd537773",
+          "config": {
+            "hidden": 256,
+            "dueling": true,
+            "gamma": 0.99,
+            "lr": 0.0003,
+            "batch_size": 256,
+            "buffer_capacity": 300000,
+            "learn_start": 5000,
+            "train_every": 2,
+            "target_update_every": 500,
+            "grad_clip": 5.0,
+            "double_dqn": true,
+            "eps_start": 1.0,
+            "eps_end": 0.05,
+            "eps_decay_steps": 60000,
+            "guided_prob": 0.7,
+            "use_belief": true,
+            "use_symmetry": true,
+            "home_first": false,
+            "home_penalty": 0.0,
+            "home_last_only": false,
+            "explore_memory": true,
+            "explore_grid": true,
+            "scripted_explore": true,
+            "explore_stale": 20,
+            "early_inference": true,
+            "relic_filter": true,
+            "subset_infer": true,
+            "cand_quota": 0,
+            "sticky": 0.0,
+            "far_opp": 10,
+            "far_cand": true,
+            "cand_boost": 0.0,
+            "contest_sap": false,
+            "energy_pref": 0.0,
+            "explore_quota": 0,
+            "explore_until": 75,
+            "pt_sap": true,
+            "pt_sap_reserve": 0,
+            "pt_sap_zone": false,
+            "safe_moves": false,
+            "idle_sap": false,
+            "idle_sap_reserve": 30,
+            "sap_kill_first": false,
+            "sap_pt_first": false,
+            "sap_geometry": false,
+            "keep_dead": false,
+            "keep_dead_fast": true,
+            "stale_all": false,
+            "opp_infer": false,
+            "pt_walk": false,
+            "pt_walk_own": false,
+            "pt_walk_from_match": 0,
+            "pt_hold": false,
+            "ram": false,
+            "ram_margin": 10.0,
+            "fog_sap": false,
+            "fog_any": false,
+            "fog_reserve": 30.0,
+            "reward_fix": true,
+            "terminal_death_potential": false,
+            "active_targets": false,
+            "smart_sap": false,
+            "use_shaping": true,
+            "canonical": true,
+            "use_sap": true,
+            "mask_actions": true,
+            "w_point": 1.0,
+            "w_shape": 0.5,
+            "w_explore": 0.3,
+            "w_energy": 0.1,
+            "w_stack": 0.3,
+            "w_death": 0.5,
+            "w_match": 2.0,
+            "w_discovery": 0.5,
+            "w_sap_hit": 0.3,
+            "w_opp_points": 0.0
+          },
+          "env_steps": 909000,
+          "learn_steps": 449792,
+          "q_finite": true,
+          "target_q_finite": true
+        },
+        "nan_losses_before_learning": 1
+      },
+      "outputs": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/final_identity.json": "d71f5392f23826bd75e8560af4101be65bdd55a2d834dfc52120bdb4917e253f",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/initial_identity.json": "ebd2bb2c071d73b9a750bbb90869285842b66b0fb909b3c81dc5714363635dbc",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/log.txt": "0d56eb2b59d5d10f5cae1f4d19ed58afb315fd3872a0b37f42b0378ffcd6e6bd",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/manifest.json": "4db9b1f2ccead6eb6dd0fb90a3fc66f3f96dbc270bfad8943caea46a78fdbec4",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/study.json": "9cc373dd8b703d535cb3ca6350aa1c197e17a88606120f42b3b861733b5753a5",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/train.csv": "0202dabdd781b37945e48767aa1c9beb95ef0edebaff485c835467645c85de3d",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/val.csv": "0443de455a3b73926094bcc3807fba5e7014500470319dab525b07c921eb1ce9",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/val_games.csv": "a39f0ef3f7eac26c38db28304db2033aab1c5274b98c4feb1846de7d96a33fd9",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/weights/agent.buffer.npz": "d9171a1265e62f76cc46b6bf121104932d040746c63f400c3c51ef8d9606c062",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control/weights/agent.pth": "42201344faf7668f5d71f0545e32c40305394606662da5bd9cf3dc6174e3ff0f"
+      },
+      "finished_at": 1792585614.4848819,
+      "protected_after": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    },
+    "train_48_early": {
+      "status": "running",
+      "started_at": 1792585614.57115,
+      "jobs": [
+        {
+          "argv": [
+            "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+            "-B",
+            "-m",
+            "scripts.experiment",
+            "--variant",
+            "full_rules_v3",
+            "--run-seed",
+            "48",
+            "--games",
+            "3000",
+            "--sol92-frac",
+            "0.7",
+            "--pool-frac",
+            "0",
+            "--val-every",
+            "750",
+            "--val-seeds",
+            "8",
+            "--val-seed-start",
+            "500720",
+            "--isolate-validation",
+            "--no-test",
+            "--tag",
+            "20261021_early_contact_v1",
+            "--opponent-plan",
+            "early_sol100",
+            "--out",
+            "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_early"
+          ],
+          "input_hashes": {},
+          "started_at": 1792585614.6568,
+          "log": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/job_8_0.log",
+          "returncode": -15,
+          "pid": 70004,
+          "pgid": 70004,
+          "finished_at": 1792586334.513848
+        }
+      ],
+      "protected_before": {
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+      }
+    }
+  },
+  "active": null,
+  "timings": {
+    "training": [
+      3344.0,
+      3063.2382730960844,
+      3046.990471124649,
+      3005.914129972458
+    ],
+    "validation_game": [
+      1.2,
+      0.740625,
+      0.75,
+      0.78125,
+      0.78125,
+      0.8,
+      0.725,
+      0.75,
+      0.784375,
+      0.7875,
+      0.796875,
+      0.7375,
+      0.7875,
+      0.803125,
+      0.76875,
+      0.79375
+    ],
+    "single_game": [
+      0.6,
+      0.47965202033519744,
+      0.5208770533402761
+    ],
+    "ensemble_game": [
+      0.8416666666666667
+    ],
+    "direct_game": [
+      0.8416666666666667
+    ]
+  },
+  "analysis": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1",
+  "state_path": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/state.json",
+  "arms": {
+    "47": {
+      "control": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_control_final.csv"
+      },
+      "early": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_early",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s47_early_final.csv"
+      }
+    },
+    "48": {
+      "control": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_control",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s48_control_final.csv"
+      },
+      "early": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s48_early",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s48_early_final.csv"
+      }
+    },
+    "49": {
+      "control": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s49_control",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s49_control_final.csv"
+      },
+      "early": {
+        "run": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s49_early",
+        "eval": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/s49_early_final.csv"
+      }
+    }
+  },
+  "candidate": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/candidate21.pth",
+  "comparisons": {
+    "development_v3": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/development_v3.csv",
+    "development_candidate": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/development_candidate.csv",
+    "fresh_v3": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/fresh_v3.csv",
+    "fresh_candidate": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/fresh_candidate.csv",
+    "direct": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/early_curriculum_20261021_early_contact_v1/direct.csv"
+  },
+  "protected": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/weights/agent_p1.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/candidates/all18_v3.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p0.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/releases/20261020_old3_sym3/agent_p1.pth": "3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158"
+  },
+  "source": {
+    "head": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "python": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+    "executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+    "executable_sha256": "bdc6b50ebbf1fa5d1fc4ed8f3ab7decb640e60b55088ae0be4bf63bb914a89d5",
+    "files": {
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/DQN/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/DQN/feat_generator.py": "fab42beace7099bbf70ff6a85df9fe5ef027b67ed0bfc162380f5215c77e5128",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/DQN/main.py": "ec26aa60799ed3e4a7ac0238e7b00c64bf111bd5ddc84ff9cadc8f58f1476843",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/Solution_92_Kaggle/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/Solution_92_Kaggle/agent.py": "de835c2cc24960695229b092d7a2fd66627f49e4fe1f99a31d2e03360c1cdcc5",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/Solution_92_Kaggle/base.py": "ec227fc8873ea09c6579cfe28e67f5b7e4e1913e9997c9841c23faeddb9aa33c",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/Solution_92_Kaggle/pathfinding.py": "87307cf0948c78a57f5316cb82e8e29ea4408cb3cd71bf12ac5987f9ef6afeaf",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/__init__.py": "6c326dbf6ca0bf31b95766f311b1b6c24d83529a4485cb887a1fb98ae51e77dc",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/default/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/default/default.py": "07c6b27d3f7c8a3a169deaa0f93ba02ae47b3f0a07659787e00a596225d6d0c0",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/belief.py": "16a42ee1f16c4b98da15ba26a97f41e8b95a8bbe35c1b9f356b7505ead117314",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/config.py": "cf473785507d1176697440cda6f55eb9ed15db3356605a8df7873f354188c2ec",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/features.py": "1ac9fa9f2bc7d74d70e72bf23a44c7d532687adbbadb0b8ba2df6f44c4c082e6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/main.py": "4b53d516485649736f049728f88be1e666e0229c54de59f0819ff8fb353da457",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/model.py": "7f7641784d5d457acbbc998e900cc80abb8336a4f28188d15285909021ebc23e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/reward.py": "76de1da0959f42e5760f4d7e86567d81f1a36e29ba5e8a0136dad0eb42fd3a9c",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/agents/sherlock/rules.py": "730437c9f9c95e54036e019e7e17fc9715766634210bfa52b186b23be946d94e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/EXPERIMENT_PROTOKOLL.md": "7c2eec5925e4cc5edf27aa5fa7a87b3f25849fdf5771068979c801a82d2d4496",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/NAECHSTER_TRAININGSVERSUCH_20261021.md": "e925de89acc28e1f1104a18d2c60e5e41cd1bdb778866b9877cea1b925c74c33",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/docs/superpowers/plans/2026-10-21-early-opponent-curriculum.md": "db42bc80fd8d7789aab994f5aaa9884ab2e00d7d5ac581c36f7b6029280bf087",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/exploration_replication.py": "5128c4cd02cc17947d8cdd00ecea63b4ef4a3b45477a3bb0089211a26b62d238",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/inference_development2.py": "7191c27caf84043f6873b1faf871f72297ff4c910760918d8a99fdc94af7ca06",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/observe_sap_geometry.py": "7bc0d8cf18d078b54de45252f288a76b8eef9ab5b8718517797f0e5e7db2d2ff",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/reward_pilot.py": "398adf9008bf3be694207894993c6575f03c5d088d5929b7c8d00ba485c731c0",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/sap_geometry_helper.py": "f2422b44bd40dd14e03415a2a0fdba3b97651132affcd51908a7ca22817c3767",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/sherlock-target-diagnosis-20261020.py": "eb839a6523dc94451422474c8605463cc71c7bc33ee0141a012407a0408d4d68",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/source_snapshots/inference_development2_analysis_original.py": "f45d1c658499fa64421848c86e832e92c3ca0236ef8fda9037384f28771864c8",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/source_snapshots/proposed_rules.py": "730437c9f9c95e54036e019e7e17fc9715766634210bfa52b186b23be946d94e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/source_snapshots/reward_pilot_analysis_original.py": "7ab4d6ce25707226c9c582041c4eb8bddd18e2a0e813c22be7237058d6e84cca",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/summarize_diagnosis.py": "76ad42ca31d837b8c934972d46c4688fb637483911710dc4836847fdad46b78e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/autonomous_20261020/tools/test_observer_edge_cases.py": "845cd215649d43a87cb79f9f3ad50fe3fb3dec3bccff81ec6767b428cd73f768",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/continuous_20261021/loss_observation/locality_followup/inspect_locality.py": "854ae605850e696ac279675fad0fc9092e62caddb50201b7a5da28eb0f2b2b5a",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/analysis/rules_vs_net_20261019.py": "6628c2ec4472fefbb5db56826a8b09a8366ea8fafcc7095a68e9c97597b19a29",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/lux/__init__.py": "40687d2d1aae048b8e57e8727ee37d64c8e39f542f4fd3b568a32cd6839c5917",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/lux/kit.py": "8ae5f85c57b37de6eeb1f670667c96b844a0325553c7562b3266372bb8584f15",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/lux/runner.py": "8b8a69f18ff8d1d32b84648804803cb798b5bf0a8747a5c9f97259be59816912",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/lux/utils.py": "1ec78a4ad40d85be439a380a77077b8aa5f602e5b6262894ed2c9c1c0b6057f5",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/main.py": "3c988f7c6250ff7bdd0d7052f2b957f9406afc1320360f61fcb75f8146516892",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/requirements.txt": "b5483ca4d0c67b63fd0edc48c483d36a49d9d98ed5f6e6592877a5b5ea648dfd",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/analyze_losses.py": "45600f579e1ec117459267c7608a8944f251e2f67944a001d804471f824682c6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/analyze_timing.py": "691461d7cdd5eb5504c1dd819445c58bd3b04244fb73864acb5bbc62604b2e50",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/build_cnn_ensemble.py": "e9c21299549bce576978fc2ecabf28b79a93d07f24fd3b4e9db348170a165725",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/build_ensemble.py": "d9950379fbfe924d6069fc05f622f6471669a63ac0e9c460175b3354cbe16d9d",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/build_submission.py": "bdca66745a14f3783900c928b6d367a03d1feb7cd26c594b7ae62db0aafb6fbd",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/check_candidate_runner.py": "c79b163b0196c9faf5ed68aeeb446468645d2a077f96715a396ff8c59daa49ca",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/common.py": "83989d9e8b45cc9957e7a2c0acfd9791149724d2a04791b584e471bac8a803e3",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/compare_report.py": "c43355f08fc71a07242e087ce67ec1d2aac2a7d0951fb1150754c60a642eea72",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/compare_weights.py": "f451fbc3fa12f4ff8e9092f9acc352740bac6cac2092be4af3debd6784bbfd43",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_analysis.py": "ccb254c37e3be5e913f856a963c41fc0ffe0a73e69f1804d6780a23198e5d447",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/early_curriculum_study.py": "62a317f634da7db8f1945ccc8a7f69224d87de72751e074e9300144a35926252",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/evaluate.py": "b787f238492e440408593e34f9f2f6e80cd9ab77135e569634fdfe67ba0b24a2",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/experiment.py": "1bf55dbe92504b1fbce0de84bfc61ab447cb7bba95fae1679852dac95d15876d",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/finetune.py": "832ea901d6417f5b3a57e625f3d8a516a7d1cffb35c20c534b2d92573944e8c8",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/metrics.py": "35944cc163617af3d7e63fd6a1da992b60cda6ba28d2e7891c24963f1bb3853e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/observe_loss_mechanisms.py": "2fab40331acc220cf0cfac30641ffb55eff8951f1903625390bbc69f9b1d8a06",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/output_paths.py": "850603ec73be07ae1e26aa00dbd6f4336bc11588dc5cf5f0d585da1f72920893",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/par_eval.py": "9804a09ab8d1d36eb2e0473e1bdcb84740a56b633be6809c61ed38fabd2563c3",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/ppo_train.py": "a97a38cc91c3c96bd4bb26ee1d80a91402a28b7ab3a6403b4259127f4a7bd17d",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/protocol.py": "8ad05ec6141ffa5612e401bbbebc3193b27fb70b117a387665042721adc84162",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/record_replay.py": "94a29e73b7d754e4f9ff43791126d0f05e47f83d2eccbcfc2425a03260106f4c",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/report.py": "12d94c1f97d907e7ef984b3f633217f5cdfffd133ffc2e5963a3e5984a287b89",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/run_experiments.py": "000ef470ed61f651a6f88414bec2d1413e1a0e4845f5c25f00186033da6f788a",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/set_cfg.py": "41eed8354cbfbaa8ccf02fb475c285f555bfbd937789aaf8e83e18501d1fd338",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/set_match_count.py": "8f27a91cf13dfb5b8acdb8ea5a1fcecc94dcae34f9ecb05a4ccabf801b3a6bec",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/train.py": "b2b3e05ac838ad225e23bb92390ba82f8494618dc098eb61f1d6c972f07a4129",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/scripts/variants.py": "9b5560bc65efe8eb9dbb48302be17d227ccccc1bb05d5d85562e131a00503585",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/conftest.py": "278bcbb16ec9c7fff74c3728d2b942b2da0ad5f9b006574de8d4df19a3490048",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_active_targets.py": "d51a263e1eb6b09ea255e4e3e80b413882abbe42ddce69c44d308435c9c3fd18",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_belief.py": "3d44530b8c6e2fe8dc6f6d485d5dbfe31b7487559530a0683352f86327c6b0f2",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_candidate_runner.py": "688c56915a0410a66b3bce64c13940143579be5f53c7b7c19414256142cd90b7",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_cnn_ensemble.py": "c5307df25be46ae8403077792057ea5a86d7642f6e4ea517c8ea90b8d0398381",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_compare_report.py": "4a8f5f80505f42c0773a5ee1b077d033cc2fdec3736f37e2d73798d5fb239b58",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_early_curriculum.py": "24e1f914c0014912cd51fe0b4bc17685dca9f371ddc1f1015d98e83313791d23",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_early_curriculum_analysis.py": "4b596e1d28f68d7e1a6768edb5ccc82f262c9179ea91b6d9580a422779d04ee4",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_early_curriculum_study.py": "09fcba343eba857233639fd295f851a6f7086ec6948b0f125fd819b04cd82657",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_geometry.py": "a31836fb00d1d6ba2270148719bc739040806ef91406c2bb1b3c172d028aa628",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_loss_mechanisms.py": "efabe8b95846806002c428b543d5cc5c38755c8e26206355d92846965d9a180e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_mask_and_act.py": "d9c04e8748155dd702365ab6b6ad633fc67d3ca3f42947a6b947c54442cb207a",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_match1.py": "1db8efa5f15ebbbf191e8661ff303557f68f937f2f73dcafefdf43464a1de8c2",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_persistence.py": "1966c21e11b5227a992b2eff1a017459e51e7c47640d3a9ab11bb31dfc3a84e6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_point_counting.py": "588b3d42c39cd1aca0b8e4ea3a1f3803d4fa7dbe4327d8084958e3119ee01e1f",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_reward.py": "7f82643cc2923205dab2ba8aa6866624d1877ce11eec6dad25645b8c9dbd26d8",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_rules_1910.py": "adfdd9a6ba02fa621d7c30858a94b1cd8e60d4cbba0044c917d519e83d24b1e2",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_runner.py": "6c2bf7864cac8b1643ec23f67c53f20f01de864da45b9ed46cb75b1e769672ec",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_sap_geometry.py": "4a77563612a57511c8c7584be321daeb5acfa4c08c5379e83ad71eaf931bd3d7",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_slow_exploration.py": "a7d528a9173ac85680c0d3776f086c26ac2b86e4a7947fa1c5f55f63d390999e",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_terminal_death_potential.py": "a4fd29b22a3377749e1e67216c227ca2b173edd574b6670427e41c0958fe2bdd",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_validation_isolation.py": "4a01f5e8111a41dafd41a6b9d6fb5027eb4bba6a1b186fd336260327346d2018",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_variants.py": "22d3013c2f549086296ef7e45f54e019765aeda36a6eef9d10c5b316cc3a3e76",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/tests/test_weight_protection.py": "ed13890c8180ffa753372e167fe6f63562d6644df86aab1b3dc5c43736d47472",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/pyvenv.cfg": "3adf01f0317f45285080025f56936cffc5ffdca58b996c4c7cc25018a5e11d12"
+    }
+  }
+}

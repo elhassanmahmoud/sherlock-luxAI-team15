@@ -1,0 +1,338 @@
+{
+  "protocol": {
+    "cases": [
+      [
+        510858,
+        1,
+        2
+      ],
+      [
+        510858,
+        0,
+        2
+      ],
+      [
+        510847,
+        0,
+        3
+      ],
+      [
+        510930,
+        1,
+        2
+      ]
+    ],
+    "local_steps": [
+      65,
+      85
+    ],
+    "own_denominator": "mask at t, energy>=0, final cardinal action1..4",
+    "convergence": "visible-at-t enemy with cardinal action1..4 has same nominal proposed destination; energy eligibility and actual next masks separate",
+    "nearest": "all visible masked enemies including negative energy, ascending UID ties; world and canonical identical UID",
+    "stop": "fixture failure OR omitted-convergence evidence limited to known card510930 => close path",
+    "max_effort_minutes": 30,
+    "only_numpy_and_stdlib": true
+  },
+  "head_before": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+  "source_hashes_before": {
+    "agents/sherlock/features.py": "1ac9fa9f2bc7d74d70e72bf23a44c7d532687adbbadb0b8ba2df6f44c4c082e6",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/main.py": "4b53d516485649736f049728f88be1e666e0229c54de59f0819ff8fb353da457",
+    "scripts/observe_loss_mechanisms.py": "2fab40331acc220cf0cfac30641ffb55eff8951f1903625390bbc69f9b1d8a06"
+  },
+  "script_sha256": "bfc313de5c5382dd7a5abff538640bf7ceaac30968ac43c9c89aebe8777d6567",
+  "ast_nodes": {
+    "features": [
+      "MAX_UNIT_ENERGY",
+      "MAX_TILE_ENERGY",
+      "N_MATCHES",
+      "_DIR_NAMES",
+      "_names",
+      "FEATURE_NAMES",
+      "FEATURE_DIM",
+      "_nearest",
+      "build_features"
+    ],
+    "geometry": [
+      "DIR_DX",
+      "DIR_DY",
+      "mirror_positions"
+    ]
+  },
+  "source_inspection": {
+    "make_context_enemy_order": "np.where(enemy_mask)[0] ascending; filters negative position but NOT negative energy",
+    "nearest_tie": "np.argmin returns first ascending-UID entry; Manhattan invariant under mirror_positions",
+    "observer": "visible_context also iterates ascending mask IDs, excludes invisible coordinates, no energy filter; trace actions and coordinates world frame"
+  },
+  "cases": [
+    {
+      "seed": 510858,
+      "side": 1,
+      "match": 2,
+      "raw_sha256": "a5e5a4543daa85a3efe9b3ae129e263551a69b74a8715fbfeadbdf94174e4d40",
+      "transitions": 21,
+      "recorded_unit_decisions": 160,
+      "nonnegative_own_moves": 93,
+      "own_moves_with_convergence": 1,
+      "convergent_pairs": 1,
+      "own_moves_with_omitted_convergence": 1,
+      "omitted_pairs": 1,
+      "events": [
+        {
+          "local_t": 68,
+          "global_t": 169,
+          "own_uid": 12,
+          "enemy_uid": 12,
+          "own_position": [
+            15,
+            18
+          ],
+          "enemy_position": [
+            14,
+            17
+          ],
+          "own_energy": 88,
+          "enemy_energy": 243,
+          "own_action": [
+            1,
+            0,
+            0
+          ],
+          "enemy_action": [
+            2,
+            0,
+            0
+          ],
+          "nominal_destination": [
+            15,
+            17
+          ],
+          "nearest_feature_uid": 10,
+          "enemy_omitted_from_nearest": true,
+          "nearest_feature_enemy": {
+            "uid": 10,
+            "position": [
+              13,
+              18
+            ],
+            "energy": 3
+          },
+          "visible_enemy_count": 3,
+          "negative_energy_visible_enemy_ids": [
+            11
+          ],
+          "enemy_nonnegative": true,
+          "own_can_pay_move": true,
+          "enemy_can_pay_move": true,
+          "own_after_mask": false,
+          "enemy_after_mask": true,
+          "own_after_position": [
+            15,
+            17
+          ],
+          "enemy_after_position": [
+            15,
+            17
+          ],
+          "own_after_energy_raw": 87,
+          "enemy_after_energy_raw": 243
+        }
+      ]
+    },
+    {
+      "seed": 510858,
+      "side": 0,
+      "match": 2,
+      "raw_sha256": "2e27ae6adc20ea27d0fd35f47f93ad6744a8e85931ff2661eec5729ff7832c61",
+      "transitions": 21,
+      "recorded_unit_decisions": 215,
+      "nonnegative_own_moves": 120,
+      "own_moves_with_convergence": 0,
+      "convergent_pairs": 0,
+      "own_moves_with_omitted_convergence": 0,
+      "omitted_pairs": 0,
+      "events": []
+    },
+    {
+      "seed": 510847,
+      "side": 0,
+      "match": 3,
+      "raw_sha256": "a9420e10f860be98a586ec2dea835fc5c0438a10109f1ac4b3343c863d338bdc",
+      "transitions": 21,
+      "recorded_unit_decisions": 222,
+      "nonnegative_own_moves": 131,
+      "own_moves_with_convergence": 0,
+      "convergent_pairs": 0,
+      "own_moves_with_omitted_convergence": 0,
+      "omitted_pairs": 0,
+      "events": []
+    },
+    {
+      "seed": 510930,
+      "side": 1,
+      "match": 2,
+      "raw_sha256": "299ce25f872c24ab5093e9e50b788e0098c5295a793f1361837a4ad5073d1ce7",
+      "transitions": 21,
+      "recorded_unit_decisions": 220,
+      "nonnegative_own_moves": 161,
+      "own_moves_with_convergence": 1,
+      "convergent_pairs": 1,
+      "own_moves_with_omitted_convergence": 1,
+      "omitted_pairs": 1,
+      "events": [
+        {
+          "local_t": 78,
+          "global_t": 179,
+          "own_uid": 7,
+          "enemy_uid": 7,
+          "own_position": [
+            19,
+            10
+          ],
+          "enemy_position": [
+            19,
+            8
+          ],
+          "own_energy": 125,
+          "enemy_energy": 150,
+          "own_action": [
+            1,
+            0,
+            0
+          ],
+          "enemy_action": [
+            3,
+            0,
+            0
+          ],
+          "nominal_destination": [
+            19,
+            9
+          ],
+          "nearest_feature_uid": 4,
+          "enemy_omitted_from_nearest": true,
+          "nearest_feature_enemy": {
+            "uid": 4,
+            "position": [
+              20,
+              9
+            ],
+            "energy": 89
+          },
+          "visible_enemy_count": 2,
+          "negative_energy_visible_enemy_ids": [],
+          "enemy_nonnegative": true,
+          "own_can_pay_move": true,
+          "enemy_can_pay_move": true,
+          "own_after_mask": false,
+          "enemy_after_mask": true,
+          "own_after_position": [
+            19,
+            9
+          ],
+          "enemy_after_position": [
+            19,
+            9
+          ],
+          "own_after_energy_raw": 101,
+          "enemy_after_energy_raw": 156
+        }
+      ]
+    }
+  ],
+  "fixture": {
+    "world": {
+      "selected_uid": 4,
+      "distances": [
+        2,
+        2
+      ],
+      "feature_dim": 79,
+      "nonselected_uid7_energy_change": [
+        150,
+        50
+      ],
+      "nonselected_whole_vector_identical": true,
+      "positive_control_uid4_energy_change": [
+        89,
+        50
+      ],
+      "positive_control_changed_indices": [
+        72
+      ],
+      "positive_control_changed_features": [
+        "enemy_energy_rel"
+      ],
+      "positive_control_values": [
+        [
+          0.3452140688896179,
+          0.6351490020751953
+        ]
+      ],
+      "base_feature_vector_sha256": "c65bebfc04060eb2ef0e3d5134945eb875b7262f2a08d977dff7dfaabc4ba687"
+    },
+    "canonical": {
+      "selected_uid": 4,
+      "distances": [
+        2,
+        2
+      ],
+      "feature_dim": 79,
+      "nonselected_uid7_energy_change": [
+        150,
+        50
+      ],
+      "nonselected_whole_vector_identical": true,
+      "positive_control_uid4_energy_change": [
+        89,
+        50
+      ],
+      "positive_control_changed_indices": [
+        72
+      ],
+      "positive_control_changed_features": [
+        "enemy_energy_rel"
+      ],
+      "positive_control_values": [
+        [
+          0.3452140688896179,
+          0.6351490020751953
+        ]
+      ],
+      "base_feature_vector_sha256": "e06df2c3d8f09856de8e6b664367824683548e084fa3a035814877167b190bc4"
+    }
+  },
+  "totals": {
+    "transitions": 84,
+    "recorded_unit_decisions": 817,
+    "nonnegative_own_moves": 505,
+    "own_moves_with_convergence": 2,
+    "convergent_pairs": 2,
+    "own_moves_with_omitted_convergence": 2,
+    "omitted_pairs": 2
+  },
+  "omitted_convergence_cards": [
+    510858,
+    510930
+  ],
+  "convergence_cards": [
+    510858,
+    510930
+  ],
+  "decision": "bounded_discussion_only_no_training_authorization",
+  "next_mask_counts": {
+    "own_0_enemy_0": 0,
+    "own_0_enemy_1": 2,
+    "own_1_enemy_0": 0,
+    "own_1_enemy_1": 0
+  },
+  "source_hashes_after": {
+    "agents/sherlock/features.py": "1ac9fa9f2bc7d74d70e72bf23a44c7d532687adbbadb0b8ba2df6f44c4c082e6",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/main.py": "4b53d516485649736f049728f88be1e666e0229c54de59f0819ff8fb353da457",
+    "scripts/observe_loss_mechanisms.py": "2fab40331acc220cf0cfac30641ffb55eff8951f1903625390bbc69f9b1d8a06"
+  },
+  "head_after": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+  "forbidden_imports_loaded": [],
+  "elapsed_compute_seconds": 0.114
+}

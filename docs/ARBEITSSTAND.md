@@ -5,6 +5,51 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+
+
+
+## 21.10.2026, 14:39 Berlin – Codex: Ressourcen neu priorisiert, Curriculum unvollständig beendet
+
+Moe kritisiert den langen Aufwand ohne zusätzlichen Stärkegewinn. Root hat die weitere Priorität nach einer unabhängigen, begrenzten Ressourcenprüfung geändert: Die laufende Curriculumstudie wird **unvollständig beendet**, der bereits vorbereitete direkte V3-Gegnermerkmale-Vergleich vorgezogen. Noch etwa zweieinhalb Stunden wären allein bis zur Grundauswertung angefallen. [Begründung, tatsächliche Spielzahlen und vollständiges Abbrucharchiv](../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md).
+
+Der negative erste Start war bereits bekannt. Deshalb ausdrücklich keine vorgeplante statistische Ablehnung und keine Aussage, dass die vollständige Methode widerlegt sei. Ursprüngliche Gates/Seeds werden nicht umgeschrieben; keine historischen Kontrollen ersetzt, kein Teilcheckpoint ausgewählt. Zwei erneut trainierte Kontrollen reproduzierten sämtliche 3.000 historischen Trainingszeilen außerhalb der Laufzeit exakt ([Beleg](../experiments/analysis/continuous_20261021/curriculum_progress/historical_control_reproduction_s47_s48.json)). Das belegt Reproduzierbarkeit, ist aber kein neuer Stärkegewinn.
+
+Kontrollierter SIGTERM nur an den nach PID/Kommando überprüften eigenen Supervisor; seine registrierte Trainingsgruppe ist beendet, State `active=null`, geschützte Gewichte unverändert. Der alte State bleibt als Original erhalten; `train_48_early` ist unvollständig und darf nicht durch manuelle Statusänderung fortgesetzt werden. Drei vollständige Trainingsarme plus 750 Spiele des vierten: insgesamt 9.750 Trainingsspiele, 544 Zwischenvalidierungen und 480 finale Testspiele. Keine s49-Läufe.
+
+Nächster Schritt: getrennten Gegnerenergie-Zweig mit main abgleichen, einmal passende Modellintegration prüfen, Quellen/Gewichte einfrieren und 480 vorab festgelegte Entwicklungsspiele ausführen. Keine neue Trainingsreihe. Eigene Wachhaltung bleibt für diese aktive Folgearbeit bestehen.
+
+## 21.10.2026, 13:39 Berlin – Codex: erstes Curriculum-Paar vollständig ausgewertet
+
+[Archiv und Prüfungen](../experiments/analysis/continuous_20261021/curriculum_progress/s47/README.md):6.000 Trainings-,320 Zwischenvalidierungs- und480 finale Testspiele fertig. Früher Gegnerkontakt s47 gegen Solution_92 **62/120 statt86/120** der Kontrolle, Δ−20pp, gepaartes95%-Kartenintervall[−32,5;−7,5]. Default119/120 statt120/120. Die beiden Einzelnetze werden miteinander verglichen, nicht mit der18-Netz-Abgabe.
+
+Unabhängiger Subagent prüfte Daten/Initialidentität/Gegnerplan/Hashbindungen ohne Modellimporte; Root reproduzierte Resultate und Kartenintervalle separat und kontrollierte alle Archivkopien. Laufquellen und Gewichte unverändert. Rohdateien, Prüfbericht und abgeschlossene Phasen archiviert; `.pth`-Laufkopien nur lokal gemäß bestehender Git-Regel, Buffer in der eingefrorenen Arbeitskopie.
+
+Die feste Studie läuft mit s48Kontrolle weiter, anschließend s48früh und s49beide. Ein einzelner negativer Start beendet den vorher festgelegten Vergleich nicht. Keine geänderten Gates, keine nachträgliche Best-Seed-Auswahl und kein Abgabeersatz.
+
+## 21.10.2026, 12:58 Berlin – Codex: Folgeversuch vorab operativ geprüft
+
+Der [unabhängige Operationsreview](../experiments/analysis/continuous_20261021/representation_probe/protocol_review.md) prüft den vorbereiteten Gegnerenergie-Vergleich. Ein Ressourcenfehler wurde vor jedem neuen Spiel korrigiert: Zwei Stunden passen nicht zur festgelegten konservativen Zeitrechnung. Historische Maximaldauer6,43Sekunden ergibt mit Sicherheitsfaktor und Reserve20.833Sekunden für alle möglichen2.480Spiele. Die interne Obergrenze beträgt deshalb jetzt sechs Stunden; Seeds, Spielzahlen und statistische Gates bleiben unverändert. Root hat die drei historischen Laufzeitmaxima und Dateihashes separat bestätigt.
+
+Weitere Ausführungshinweise sind dokumentiert: absoluter gemeinsamer Pythonpfad, tatsächlich gespeicherter Configschalter, vollständige CSV-Prüfung und separate Direktanalyse für522200–522399. Kein neuer Supervisor, keine zusätzlichen Modelle/Spiele gestartet. Laufende Curriculumquellen bleiben eingefroren; dieser Folgeversuch beginnt erst danach.
+
+## 21.10.2026, 12:38 Berlin – Codex: erster Trainingsarm vollständig geprüft
+
+Kontrolle s47 fertig: 3.000 Trainings- und160 Zwischenvalidierungsspiele, Trainingsprozess3186,54Sekunden, anschließender Tensorcheck3,21Sekunden, beide Returncodes0. Alle gespeicherten Q-/Target-Tensoren endlich; geschützte Gewichte unverändert. [Technischer Phasennachweis](../experiments/analysis/continuous_20261021/curriculum_progress/s47_control_training.json).
+
+Der frühe Gegnerarm s47 läuft. Root hat seine tatsächliche Anfangsidentität mit der Kontrolle verglichen: vollständig gleich, einschließlich Netzen, Optimizer, leerem Replay und Zufallszuständen. Auch sämtliche Nichtzeitfelder der32 Startvalidierungen und der ersten100 Trainingsspiele sind exakt gleich; erst danach beginnt der geplante Gegnerunterschied. Die finalen240-Spiele-Auswertungen beider Arme und der vollständige Vergleich aller drei Starts stehen noch aus. Keine Stärke-/Übernahmeentscheidung aus diesem Zwischenstand.
+
+## 21.10.2026 – Codex: Gegnerenergie-Tiebreak auf getrenntem Zweig geprüft
+
+Commit `1b3f6a7` auf `improvement/enemy-tie-20261021`: acht Produktionszeilen ergänzen den ausgeschalteten Schalter und seine Auswahl. [Umsetzung](../experiments/analysis/continuous_20261021/representation_probe/implementation.md), [unabhängiger Review](../experiments/analysis/continuous_20261021/representation_probe/code_review.md) ohne wichtigen Befund. 34 leichte Tests bestanden; im selben Prozess keine Torch-/JAX-/Engineimporte. Root hat die505 Bewegungen und beiden Konvergenzereignisse separat aus Rohaktionen reproduziert ([Zählprüfung](../experiments/analysis/continuous_20261021/representation_probe/root_counts.json)).
+
+Code noch nicht in main integriert: vollständige Modellintegration und tatsächliche Spiele warten auf das Ende der laufenden Curriculumstudie. Danach einmal passende Integrationstests, Quellenfreeze und der festgelegte Einzelvergleich. Kein Wirksamkeitsnachweis und keine Gewichtsänderung. Der Zweig erlaubt Mahmoud/Claude bereits die Vorbereitung nachzulesen; keine parallelen Modelljobs auf diesem Rechner starten.
+
+## 21.10.2026 – Codex: ein separater Gegnermerkmal-Versuch vorbereitet
+
+Der [Repräsentationscheck](../experiments/analysis/continuous_20261021/representation_probe/README.md) bestätigt eine konkrete Informationslücke: nur einer von mehreren gleich nahen sichtbaren Gegnern wird einzeln beschrieben. Zwei nominelle Konvergenzen in den fest ausgewählten84Übergängen zeigen den Kontext, keine Kausalität oder Verbesserung. Root lässt deshalb genau eine standardmäßig ausgeschaltete Auswahlvariante vorbereiten: bei gleicher Entfernung höhere Gegnerenergie bevorzugen.
+
+[Vergleich und Gates vorab festgelegt](superpowers/plans/2026-10-21-enemy-tie-energy.md). Neue reservierte Karten522000–522399, keine Kollision im vorliegenden CSV-Bestand. Umsetzung in separater Arbeitskopie; während der laufenden Curriculumstudie nur leichte Tests/Review, keine zusätzlichen Modelljobs. Gewichte und Curriculum bleiben unverändert. Diese zusätzliche Vorbereitung ist keine bisher ausgeführte Evaluation oder Übernahme.
+
 ## 21.10.2026, 11:44 Berlin – Codex: neue Trainingsstudie läuft
 
 Der freigegebene Vergleich `20261021_early_contact_v1` ist tatsächlich gestartet: 21.10.2026 11:44:34 Europe/Berlin, feste Studienfrist 23:44:34 desselben Tages. Eingefrorener Commit **`a5d2e61b0e8654bad64e31c29447ada1e439174d`** in `sherlock-counterplay`; Supervisor 63520, erster Trainer 63533. Zustand und Joblogs liegen dort unter `experiments/analysis/early_curriculum_20261021_early_contact_v1/`. Prozessnummern sind nur die lokale Momentaufnahme, vor jedem Eingriff erneut mit Kommando/Ownership prüfen.
