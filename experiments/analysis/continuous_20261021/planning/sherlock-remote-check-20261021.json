@@ -1,0 +1,498 @@
+{
+  "checked_at_utc": "2026-10-21T08:08:07.369221+00:00",
+  "repository": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+  "fetch_success": true,
+  "baseline": "b008252",
+  "local_head": "b008252b00a5f6f14bcd1a05e431db144d8f7aeb",
+  "remote_head": "b008252b00a5f6f14bcd1a05e431db144d8f7aeb",
+  "new_commits": [],
+  "new_change_classification": {
+    "code": [],
+    "weights": [],
+    "data": [],
+    "seeds": []
+  },
+  "running_model_jobs_detected": [],
+  "process_evidence": "ps snapshot showed no Python/model/training/evaluation process; only unrelated CUA node and inspection shell. No model job started.",
+  "source_freeze_assessment": "Reviewed historical pipeline states complete; no active model job or active measurement freeze evidenced. This is an observation, not authorization to mutate.",
+  "state_inventory": [
+    {
+      "path": "experiments/analysis/autonomous_20261020/development_state.json",
+      "status": "complete",
+      "complete": null,
+      "started_at": null,
+      "finished_at": null,
+      "jobs": [
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/exploration_night_continuation/state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T21:09:58+00:00",
+      "finished_at": "2026-10-21T00:58:31+00:00",
+      "jobs": [
+        {
+          "label": "pair48",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:56:50+00:00"
+        },
+        {
+          "label": "audit48",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:56:51+00:00"
+        },
+        {
+          "label": "pair49",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:51+00:00"
+        },
+        {
+          "label": "audit49",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:52+00:00"
+        },
+        {
+          "label": "aggregate",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:53+00:00"
+        },
+        {
+          "label": "qmargin",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:56+00:00"
+        },
+        {
+          "label": "builder",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:58+00:00"
+        },
+        {
+          "label": "development",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:58:31+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/exploration_replication_s47_state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T19:14:09+00:00",
+      "finished_at": "2026-10-20T21:06:57+00:00",
+      "jobs": [
+        {
+          "label": "preflight",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T19:14:14+00:00"
+        },
+        {
+          "label": "train_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T20:09:58+00:00"
+        },
+        {
+          "label": "checkpoint_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T20:10:02+00:00"
+        },
+        {
+          "label": "train_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T21:02:12+00:00"
+        },
+        {
+          "label": "checkpoint_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T21:02:15+00:00"
+        },
+        {
+          "label": "eval_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T21:04:40+00:00"
+        },
+        {
+          "label": "eval_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T21:06:57+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/exploration_replication_s48_state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T21:09:58+00:00",
+      "finished_at": "2026-10-20T22:56:49+00:00",
+      "jobs": [
+        {
+          "label": "preflight",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T21:10:02+00:00"
+        },
+        {
+          "label": "train_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:00:35+00:00"
+        },
+        {
+          "label": "checkpoint_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:00:38+00:00"
+        },
+        {
+          "label": "train_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:52:18+00:00"
+        },
+        {
+          "label": "checkpoint_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:52:21+00:00"
+        },
+        {
+          "label": "eval_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:54:29+00:00"
+        },
+        {
+          "label": "eval_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:56:49+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/exploration_replication_s49_state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T22:56:51+00:00",
+      "finished_at": "2026-10-21T00:43:50+00:00",
+      "jobs": [
+        {
+          "label": "preflight",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T22:56:55+00:00"
+        },
+        {
+          "label": "train_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T23:47:46+00:00"
+        },
+        {
+          "label": "checkpoint_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T23:47:49+00:00"
+        },
+        {
+          "label": "train_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:39:17+00:00"
+        },
+        {
+          "label": "checkpoint_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:39:21+00:00"
+        },
+        {
+          "label": "eval_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:41:37+00:00"
+        },
+        {
+          "label": "eval_slow",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:43:50+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/post_exploration_point_flow/state.json",
+      "status": null,
+      "complete": true,
+      "started_at": null,
+      "finished_at": null,
+      "jobs": [
+        {
+          "label": "v3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": null
+        },
+        {
+          "label": "v4",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": null
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/release_check_state.json",
+      "status": "complete",
+      "complete": null,
+      "started_at": null,
+      "finished_at": null,
+      "jobs": [
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        },
+        {
+          "label": null,
+          "complete": null,
+          "returncode": null,
+          "finished_at": null
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/reward_pilot_state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T18:36:44+00:00",
+      "finished_at": "2026-10-20T18:55:18+00:00",
+      "jobs": [
+        {
+          "label": "preflight",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:36:48+00:00"
+        },
+        {
+          "label": "train_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:43:29+00:00"
+        },
+        {
+          "label": "checkpoint_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:43:32+00:00"
+        },
+        {
+          "label": "train_fix",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:50:26+00:00"
+        },
+        {
+          "label": "checkpoint_fix",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:50:30+00:00"
+        },
+        {
+          "label": "eval_control",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:52:53+00:00"
+        },
+        {
+          "label": "eval_fix",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T18:55:18+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/analysis/autonomous_20261020/v3_action_source_observation/state.json",
+      "status": null,
+      "complete": true,
+      "started_at": "2026-10-21T06:20:36+00:00",
+      "finished_at": "2026-10-21T06:21:17+00:00",
+      "jobs": []
+    },
+    {
+      "path": "experiments/compare/autonomous_20261020/exploration_ensemble_development/state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-21T00:43:58+00:00",
+      "finished_at": "2026-10-21T00:58:31+00:00",
+      "jobs": [
+        {
+          "label": "reference",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:47:07+00:00"
+        },
+        {
+          "label": "control3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:49:28+00:00"
+        },
+        {
+          "label": "slow3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:51:50+00:00"
+        },
+        {
+          "label": "v3_control3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:55:08+00:00"
+        },
+        {
+          "label": "v3_slow3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T00:58:30+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/compare/autonomous_20261020/inference_development2/state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-20T18:58:03+00:00",
+      "finished_at": "2026-10-20T19:09:35+00:00",
+      "jobs": [
+        {
+          "label": "reference",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T19:01:59+00:00"
+        },
+        {
+          "label": "active",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T19:05:48+00:00"
+        },
+        {
+          "label": "sap",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-20T19:09:35+00:00"
+        }
+      ]
+    },
+    {
+      "path": "experiments/compare/autonomous_20261020/v4_independent_20261021/state.json",
+      "status": "complete",
+      "complete": true,
+      "started_at": "2026-10-21T05:35:38+00:00",
+      "finished_at": "2026-10-21T06:04:21+00:00",
+      "jobs": [
+        {
+          "label": "direct_v4_vs_v3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T05:45:04+00:00"
+        },
+        {
+          "label": "fresh_v3",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T05:54:30+00:00"
+        },
+        {
+          "label": "fresh_v4",
+          "complete": true,
+          "returncode": 0,
+          "finished_at": "2026-10-21T06:04:21+00:00"
+        }
+      ]
+    }
+  ],
+  "seed_collision_check": {
+    "blocks": [
+      [
+        511000,
+        511399
+      ],
+      [
+        520000,
+        520999
+      ]
+    ],
+    "tracked_csv_files_with_seed_columns": 507,
+    "rows_examined": 358716,
+    "matches": [],
+    "errors": [],
+    "reservation_notes": [
+      "511000-511199 and 511200-511399 reserved by Root in docs/ARBEITSSTAND.md for future early-curriculum conditional confirmation/direct comparison.",
+      "520000-520999 proposed only, not reserved by this check.",
+      "No new remote commits; no new Mahmoud reservations."
+    ],
+    "limits": "Scan covers numeric seed-named CSV columns in tracked local files and current documentation, not inaccessible remote work or ignored results."
+  },
+  "mutations": "Fetch updated Git remote metadata; only this report written outside repository."
+}

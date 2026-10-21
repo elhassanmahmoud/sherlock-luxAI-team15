@@ -1,0 +1,361 @@
+{
+  "source_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/v4_independent_20261021/fresh_v3.csv": "71705b366a6012ff56285fd6dfb7964365e6e711439d37f33a6e2875dbdd44e2",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/scripts/analyze_losses.py": "45600f579e1ec117459267c7608a8944f251e2f67944a001d804471f824682c6",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/scripts/analyze_timing.py": "691461d7cdd5eb5504c1dd819445c58bd3b04244fb73864acb5bbc62604b2e50",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/scripts/record_replay.py": "94a29e73b7d754e4f9ff43791126d0f05e47f83d2eccbcfc2425a03260106f4c",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/timing_0.log": "618ab0b7b99c7e0b75aaca1e28f3b78a7845648ee5e00355688428b98b1233da",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/timing_sol92_0.csv": "00e09a391bf0eb4ef866a6af304651f7dab47e22eecc256486314fd5cb577e6e",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/DIAGNOSIS.md": "6e0b7b95a03ede63a0a8568617ea277077bae9cc1e146b32dfff2999c398e366",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/post_exploration_point_flow/point-flow-final-review.md": "0245d778d8c6cff0bc399e19e893651bceac26d5ef317461eda371a593ad5125",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/post_exploration_point_flow/historical_snapshots/sherlock-point-flow.py.txt": "ff009a571cd064779d3a7feae824cf7316854133d7f845863619c983d539258f"
+  },
+  "source_rows": 800,
+  "solution92_games": 400,
+  "maps": 200,
+  "losses": 89,
+  "wins": 311,
+  "side_match_outcomes": {
+    "player_0": {
+      "2:1": 72,
+      "3:0": 83,
+      "1:2": 38,
+      "0:3": 7
+    },
+    "player_1": {
+      "2:1": 58,
+      "3:0": 98,
+      "1:2": 36,
+      "0:3": 8
+    }
+  },
+  "map_outcomes": {
+    "WW": 138,
+    "LW": 18,
+    "LL": 27,
+    "WL": 17
+  },
+  "loss_match_outcomes": {
+    "1:2": 74,
+    "0:3": 15
+  },
+  "loss_total_point_gap": {
+    "min": -685,
+    "median": -142,
+    "max": 371,
+    "positive": 21,
+    "zero": 0,
+    "absolute_le50": 12
+  },
+  "wins_with_negative_total_gap": 19,
+  "endpoint_means": {
+    "loss": {
+      "known_point_tiles": 16.876404494382022,
+      "stack_frac": 0.1780170926845941,
+      "wait_frac": 0.4076580428288357,
+      "sap_attempts": 109.91011235955057,
+      "unit_steps": 3440.303370786517
+    },
+    "win": {
+      "known_point_tiles": 15.40192926045016,
+      "stack_frac": 0.12913187357519426,
+      "wait_frac": 0.4418599703723968,
+      "sap_attempts": 116.30868167202573,
+      "unit_steps": 3568.5916398713825
+    }
+  },
+  "selection_rule": "Purposive outcome-stratified sample; not prevalence estimate. Strata processed in listed order, already selected maps excluded, lower median and seed tie-break. Both sides always retained.",
+  "sample": [
+    {
+      "stratum": "LL 1:2 both: smallest absolute mean total-point gap",
+      "eligible_remaining_maps": 17,
+      "selection": "minimum rank; seed tie-break",
+      "seed": 510862,
+      "category": "LL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "1316",
+          "opp_points": "1385",
+          "known_point_tiles": "20",
+          "stack_frac": "0.14310544611819234",
+          "total_point_gap": -69
+        },
+        {
+          "side": "player_1",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "1295",
+          "opp_points": "1276",
+          "known_point_tiles": "20",
+          "stack_frac": "0.11988304093567251",
+          "total_point_gap": 19
+        }
+      ]
+    },
+    {
+      "stratum": "LL 1:2 both: median total-point gap",
+      "eligible_remaining_maps": 16,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510847,
+      "category": "LL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "641",
+          "opp_points": "880",
+          "known_point_tiles": "15",
+          "stack_frac": "0.09194341943419435",
+          "total_point_gap": -239
+        },
+        {
+          "side": "player_1",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "765",
+          "opp_points": "896",
+          "known_point_tiles": "15",
+          "stack_frac": "0.11090686274509803",
+          "total_point_gap": -131
+        }
+      ]
+    },
+    {
+      "stratum": "LL 0:3 both: median total-point gap",
+      "eligible_remaining_maps": 3,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510930,
+      "category": "LL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "0",
+          "opp_wins": "3",
+          "our_points": "698",
+          "opp_points": "1002",
+          "known_point_tiles": "12",
+          "stack_frac": "0.1755153029356652",
+          "total_point_gap": -304
+        },
+        {
+          "side": "player_1",
+          "our_wins": "0",
+          "opp_wins": "3",
+          "our_points": "701",
+          "opp_points": "1163",
+          "known_point_tiles": "12",
+          "stack_frac": "0.18310301507537688",
+          "total_point_gap": -462
+        }
+      ]
+    },
+    {
+      "stratum": "LW: player0 loses1:2, median absolute losing total-point gap",
+      "eligible_remaining_maps": 18,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510956,
+      "category": "LW",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "789",
+          "opp_points": "882",
+          "known_point_tiles": "16",
+          "stack_frac": "0.17496360989810772",
+          "total_point_gap": -93
+        },
+        {
+          "side": "player_1",
+          "our_wins": "2",
+          "opp_wins": "1",
+          "our_points": "754",
+          "opp_points": "671",
+          "known_point_tiles": "16",
+          "stack_frac": "0.16463595839524517",
+          "total_point_gap": 83
+        }
+      ]
+    },
+    {
+      "stratum": "WL: player1 loses1:2, median absolute losing total-point gap",
+      "eligible_remaining_maps": 15,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510950,
+      "category": "WL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "2",
+          "opp_wins": "1",
+          "our_points": "683",
+          "opp_points": "686",
+          "known_point_tiles": "18",
+          "stack_frac": "0.2764001114516578",
+          "total_point_gap": -3
+        },
+        {
+          "side": "player_1",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "530",
+          "opp_points": "685",
+          "known_point_tiles": "18",
+          "stack_frac": "0.28203677510608205",
+          "total_point_gap": -155
+        }
+      ]
+    },
+    {
+      "stratum": "WL: player1 loses0:3, median losing total-point gap",
+      "eligible_remaining_maps": 2,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510972,
+      "category": "WL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "2",
+          "opp_wins": "1",
+          "our_points": "1319",
+          "opp_points": "1421",
+          "known_point_tiles": "20",
+          "stack_frac": "0.0975609756097561",
+          "total_point_gap": -102
+        },
+        {
+          "side": "player_1",
+          "our_wins": "0",
+          "opp_wins": "3",
+          "our_points": "1146",
+          "opp_points": "1655",
+          "known_point_tiles": "20",
+          "stack_frac": "0.12976860537836146",
+          "total_point_gap": -509
+        }
+      ]
+    },
+    {
+      "stratum": "LL: both total-point gaps positive, smallest sum gap",
+      "eligible_remaining_maps": 1,
+      "selection": "minimum rank; seed tie-break",
+      "seed": 510819,
+      "category": "LL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "1038",
+          "opp_points": "911",
+          "known_point_tiles": "16",
+          "stack_frac": "0.2777321281840592",
+          "total_point_gap": 127
+        },
+        {
+          "side": "player_1",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "961",
+          "opp_points": "955",
+          "known_point_tiles": "18",
+          "stack_frac": "0.2766304347826087",
+          "total_point_gap": 6
+        }
+      ]
+    },
+    {
+      "stratum": "LL mixed 1:2/0:3: median total-point gap",
+      "eligible_remaining_maps": 7,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510858,
+      "category": "LL",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "1",
+          "opp_wins": "2",
+          "our_points": "1590",
+          "opp_points": "1813",
+          "known_point_tiles": "34",
+          "stack_frac": "0.14568345323741008",
+          "total_point_gap": -223
+        },
+        {
+          "side": "player_1",
+          "our_wins": "0",
+          "opp_wins": "3",
+          "our_points": "1485",
+          "opp_points": "1909",
+          "known_point_tiles": "34",
+          "stack_frac": "0.12887903736542114",
+          "total_point_gap": -424
+        }
+      ]
+    },
+    {
+      "stratum": "WW 2:1 both: median total-point gap",
+      "eligible_remaining_maps": 32,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510911,
+      "category": "WW",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "2",
+          "opp_wins": "1",
+          "our_points": "1346",
+          "opp_points": "1135",
+          "known_point_tiles": "20",
+          "stack_frac": "0.1186020913593836",
+          "total_point_gap": 211
+        },
+        {
+          "side": "player_1",
+          "our_wins": "2",
+          "opp_wins": "1",
+          "our_points": "1326",
+          "opp_points": "1242",
+          "known_point_tiles": "23",
+          "stack_frac": "0.10598434004474273",
+          "total_point_gap": 84
+        }
+      ]
+    },
+    {
+      "stratum": "WW 3:0 both: median total-point gap",
+      "eligible_remaining_maps": 70,
+      "selection": "lower median by specified rank; seed tie-break",
+      "seed": 510839,
+      "category": "WW",
+      "games": [
+        {
+          "side": "player_0",
+          "our_wins": "3",
+          "opp_wins": "0",
+          "our_points": "1055",
+          "opp_points": "697",
+          "known_point_tiles": "22",
+          "stack_frac": "0.18767428890128277",
+          "total_point_gap": 358
+        },
+        {
+          "side": "player_1",
+          "our_wins": "3",
+          "opp_wins": "0",
+          "our_points": "1086",
+          "opp_points": "658",
+          "known_point_tiles": "22",
+          "stack_frac": "0.19938650306748465",
+          "total_point_gap": 428
+        }
+      ]
+    }
+  ]
+}
