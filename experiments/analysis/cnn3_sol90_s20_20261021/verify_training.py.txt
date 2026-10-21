@@ -1,0 +1,74 @@
+"""Verify the sole final PPO checkpoint after a fully completed bounded run."""
+import csv
+from dataclasses import asdict
+import hashlib
+import json
+import math
+from pathlib import Path
+import torch
+from agents.sherlock.config import AgentConfig
+from agents.sherlock.ppo_agent import PPOAgent
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = ROOT / 'experiments/analysis/cnn3_sol90_s20_20261021'
+state = json.loads((OUT / 'execution_state.json').read_text())
+assert state['active'] is None
+job = next(j for j in state['jobs'] if j['label'] == 'training')
+assert job['returncode'] == 0 and job.get('verified_inputs_after') and not job.get('error')
+assert 0 < job['finished_at'] - job['started_at'] <= state['job_limits_seconds']['training']
+assert job['finished_at'] < state['deadline']
+for path, digest in {**state['source_hashes'], **state['protected_hashes'], **state['input_hashes']}.items():
+    assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path
+run = Path(state['run'])
+rows = list(csv.DictReader((run / 'ppo.csv').open()))
+assert len(rows) == 10 and [int(r['iter']) for r in rows] == list(range(1, 11))
+assert all(int(r['games']) == 24 and int(r['unit_steps']) > 0 for r in rows)
+for r in rows:
+    assert all(math.isfinite(float(r[k])) for k in ('pi', 'v', 'ent', 'kl', 'clipfrac', 'wr_sol92', 'wr_default', 'secs'))
+    assert math.isnan(float(r['wr_teacher']))
+    assert float(r['secs']) > 0
+    assert all(0 <= float(r[k]) <= 1 for k in ('wr_sol92', 'wr_default', 'clipfrac'))
+start = torch.load(run / 'start.pth', map_location='cpu', weights_only=False)
+final_path = run / 'ppo_0010.pth'
+final = torch.load(final_path, map_location='cpu', weights_only=False)
+current = torch.load(run / 'ppo_current.pth', map_location='cpu', weights_only=False)
+assert start['kind'] == final['kind'] == current['kind'] == 'ppo'
+assert start['stage'] == final['stage'] == current['stage'] == 'ppo'
+assert not any(c.get('ensemble') for c in (start, final, current))
+assert start['iter'] == 60 and final['iter'] == current['iter'] == 10
+assert start['arch'] == final['arch'] == current['arch']
+assert start['feature_dim'] == final['feature_dim'] == current['feature_dim'] == 79
+cfg = AgentConfig.from_dict(start['cfg'])
+cfg.buffer_capacity = 1
+expected_cfg = asdict(cfg)
+assert final['cfg'] == current['cfg'] == expected_cfg
+assert set(final['policy']) == set(start['policy']) == set(current['policy'])
+assert all(torch.isfinite(v).all() for v in final['policy'].values())
+assert all(torch.equal(v, current['policy'][k]) for k, v in final['policy'].items())
+changed = [k for k, v in final['policy'].items() if not torch.equal(v, start['policy'][k])]
+assert changed
+loaded = PPOAgent('player_0', agent_path=str(final_path), train=False)
+assert not loaded.sample and not loaded.training and not loaded.net.training
+assert not loaded.extra_nets and loaded.net.arch == final['arch']
+assert set(loaded.net.state_dict()) == set(final['policy'])
+assert all(torch.equal(v, loaded.net.state_dict()[k]) for k, v in final['policy'].items())
+assert asdict(loaded.cfg) == expected_cfg
+report = {
+    'training_games': 240, 'iterations': 10, 'games_per_iteration': 24,
+    'unit_steps_recorded': sum(int(r['unit_steps']) for r in rows),
+    'training_process_seconds': job['finished_at'] - job['started_at'],
+    'training_csv_sha256': hashlib.sha256((run / 'ppo.csv').read_bytes()).hexdigest(),
+    'finite_losses_and_policy': True, 'checkpoint_stage': final['stage'], 'checkpoint_iteration': final['iter'],
+    'warmstart_sha256': hashlib.sha256((run / 'start.pth').read_bytes()).hexdigest(),
+    'final_checkpoint': str(final_path), 'final_sha256': hashlib.sha256(final_path.read_bytes()).hexdigest(),
+    'changed_policy_tensors': changed, 'policy_tensor_count': len(final['policy']),
+    'architecture_unchanged': True, 'effective_configuration_unchanged': True,
+    'cfg_defaults_added': {k: v for k, v in final['cfg'].items() if k not in start['cfg']},
+    'latest_and_final_policy_identical': True, 'evaluation_loader_exact': True,
+    'protected_hashes_verified': True,
+    'scope': 'technical completion, not a strength claim; fresh Adam warmstart, no historical optimizer resumed',
+}
+p = OUT / 'training_check.json'
+assert not p.exists()
+p.write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps(report, indent=2))
