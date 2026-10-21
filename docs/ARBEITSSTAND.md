@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: lokale Wiederbesetzung als begrenzte Diagnose
+
+Der [Folgecheck](../experiments/analysis/continuous_20261021/loss_observation/locality_followup/README.md) betrachtet ausschließlich die vier größten späten Belegungslücken in vorhandenen Traces. Weit entfernte oder gegnerisch besetzte bekannte Punkte erklären, warum der globale freie-Felder-Zähler sofortige Chancen überschätzt. Konkrete Sequenzen zeigen negative Energie, Maskenverluste und längere erneute Anreise; die verursachenden Schadensquellen und mögliche bessere Aktionen sind damit nicht isoliert.
+
+Keine neuen Spiele, kein Agentenpatch. Root prüfte feste Auswahl, Quellenhashes, Fenster und Partitionen; die Arbeitshypothese bleibt ausdrücklich begrenzt. Vorhandene Energiepuffer-/Zuweisungsvarianten nicht blind wiederholen. Das getrennt festgelegte Curriculumtraining und seine Gates bleiben unverändert.
+
 ## 21.10.2026 – Codex: Studienrunner geprüft, statistische Auswertung folgt
 
 Der exklusive Studienrunner (`4332d6b`, korrigiert in `0ec929e`) ist unabhängig freigegeben: sechs neue Läufe, feste Reihenfolge, tatsächliche Anfangsidentitäten, vollständige Trainings-/Validierungs-/Auswertungsdateien und eine ursprüngliche Zwölfstundenfrist. Ein globaler Lock für unsere Studien verhindert konkurrierende Modelljobs über Arbeitskopien hinweg; fremde manuell gestartete Werkzeuge werden zusätzlich per Prozessprüfung erkannt, aber nicht durch diesen Lock gesteuert.
