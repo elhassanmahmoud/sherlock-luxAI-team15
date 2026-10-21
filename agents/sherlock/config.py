@@ -181,6 +181,9 @@ class AgentConfig:
     canonical: bool = True
     """False: keine Spiegelung; je Seite ein eigenes Netz (agent_p0/agent_p1)."""
 
+    joint_moves: bool = False
+    """True: nur bei Evaluation benachbarte Bewegungen auf Punktebelegung abstimmen."""
+
     # --- Aktionen
     use_sap: bool = True              # 6. Aktion: Sap auf heuristisch bestes Ziel
     mask_actions: bool = True         # Asteroiden/Kartenrand/Sap ohne Ziel maskieren

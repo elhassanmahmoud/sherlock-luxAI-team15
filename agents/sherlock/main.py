@@ -42,6 +42,7 @@ from . import rules
 from .belief import Belief, MemorylessBelief
 from .config import AgentConfig
 from .features import FEATURE_DIM, build_features, make_context
+from .joint_actions import coordinate_moves
 from .model import N_ACTIONS, QNet
 from .replay_buffer import ReplayBuffer
 from .reward import surviving, unit_rewards
@@ -150,7 +151,8 @@ class Agent_x:
         self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
-                         "sap_attempts": 0, "sap_hits_est": 0}
+                         "sap_attempts": 0, "sap_hits_est": 0,
+                         "joint_calls": 0, "joint_changed_units": 0}
 
     def episode_stats(self) -> dict:
         """Agent-spezifische Kennzahlen des laufenden/letzten Spiels."""
@@ -321,6 +323,20 @@ class Agent_x:
                 if self.belief.mirrored:
                     d = geo.mirror_dir(d)
                 actions[uid] = [d, 0, 0]
+        if self.cfg.joint_moves and not self.training:
+            base_actions = {
+                uid: (geo.mirror_dir(actions[uid, 0])
+                      if self.belief.mirrored and actions[uid, 0] < geo.SAP
+                      else int(actions[uid, 0]))
+                for uid in ids
+            }
+            changed = coordinate_moves(ctx, ids, q, masks, base_actions)
+            st["joint_calls"] += 1
+            st["joint_changed_units"] += len(changed)
+            for uid, action in changed.items():
+                direction = geo.mirror_dir(action) if self.belief.mirrored else action
+                actions[uid] = [direction, 0, 0]
+                self._prev_actions[uid] = action
         return actions
 
     def set_cnn_policy(self, net, weight: float = 1.0, temp: float = 0.2) -> None:
