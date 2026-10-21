@@ -11,6 +11,8 @@ Unser Agent ist ein **Double-DQN mit Dueling-Kopf**, das pro Einheit entscheidet
 
 **Aktueller Abgabe-Stand (20.10.2026): `all18_v3`.** Beim Spielen werden die Q-Werte von 18 trainierten Netzen gemittelt (Gruppen `rules6`, `sol70`, `opp`). Gedächtnis, frühere Punktefeld-Inferenz, Zielzuweisung und Aktionsregeln ergänzen die Netze. V3 verwendet unter anderem `far_opp=10`, `far_cand` und `pt_sap`. Beide Spielseiten laden dasselbe Ensemble. [Übernahmevergleich und Prüfungen](experiments/analysis/autonomous_20261020/RELEASE.md) · [gesicherte alte Abgabe mit Rückweg](experiments/releases/20261020_old3_sym3/README.md).
 
+**Ergebnisstand 21.10.:** V3 bleibt Abgabe. Die unabhängige V4-Bestätigung (2.400 Spiele) und 18.800 zusätzliche Trainingsspiele lieferten keinen weiteren qualifizierten Ersatz. [Morgenbericht mit Ergebnissen, Grenzen und Übergabe](docs/MORGENBERICHT_20261021.md) · [nächster begründeter Trainingsversuch](docs/NAECHSTER_TRAININGSVERSUCH_20261021.md).
+
 **Zusammenarbeit:** [CLAUDE.md](CLAUDE.md) enthält die gemeinsamen Regeln für Claude Code und Codex; [AGENTS.md](AGENTS.md) verweist Codex darauf. Änderungen, Prüfungen und offene Aufgaben stehen im [gemeinsamen Arbeitsstand](docs/ARBEITSSTAND.md), Versuche weiterhin im [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md).
 
 **Erste Präsentation am 16.10. abgeschlossen:** laut Moayed Note **1,3**. Nächster Termin ist die Zwischenpräsentation mit Battle am **06.11.** Die frühere [Review-Checkliste](docs/presentation/CHECKLISTE_REVIEW_1610.md) und Präsentation bleiben als historischer Stand erhalten.
@@ -276,15 +278,15 @@ Ergebnis ist `dist/agent.zip`. Das Skript entpackt das Zip anschließend in eine
 
 ## Grenzen und nächste Schritte
 
-Stand: **20.10.2026**. Trainingsausgaben und Paketbau sind gegen das Überschreiben der Abgabe-Gewichte geschützt. Eine geprüfte bessere Abgabe darf nach Moayeds Freigabe separat installiert werden; die alte bleibt gesichert.
+Stand: **21.10.2026**. Trainingsausgaben und Paketbau sind gegen das Überschreiben der Abgabe-Gewichte geschützt. Eine geprüfte bessere Abgabe darf nach Moayeds Freigabe separat installiert werden; die alte bleibt gesichert.
 
 - `all18_v3` erreicht 78,25 % gegen Solution_92 auf dem neuen 200-Karten-Block, verliert dort aber weiterhin 87/400 Spiele. Unbekannte Gegner und Karten bleiben eine eigene Robustheitsprüfung.
-- Frühe Inferenz ist inzwischen aktiviert. Nächste begründete Versuche betreffen die Zielvergabe an aktive Einheiten, Sap-Ziele und einen kontrollierten Vergleich der Trainingsbelohnung. Vorschläge gelten erst nach Messung und unabhängiger Bestätigung als Verbesserung.
+- Frühe Inferenz ist aktiviert. Aktive Zielbesitzer, freiere Sap-Geometrie, ein Potentialterm beim Einheitentod und längere Exploration wurden inzwischen kontrolliert untersucht; kein weiterer Kandidat erfüllte die Übernahmeregeln. Der [nächste Trainingsentwurf](docs/NAECHSTER_TRAININGSVERSUCH_20261021.md) verändert gezielt den Zeitpunkt des Gegnerkontakts bei gleichen Gesamtgegnerzahlen. Er ist noch nicht umgesetzt.
 - Vor aussagekräftigen neuen Trainingsstudien bleiben Korrekturen an Einheiten-Übergängen und Reward-Sonderfällen sinnvoll. Die aktuelle Shaping-Implementierung rechtfertigt keine Garantie einer unveränderten optimalen Policy. Der Speicherschutz behebt diese Lernprobleme nicht.
 - Vor neuen Schlussfolgerungen: historische Punktvergleiche mit Version 2 neu messen, alte Vergleichsintervalle mit der korrigierten Statistik neu berechnen, zeitlich ausgerichtete Erkundungsdiagnose und für November ein neuer zurückgehaltener Testsatz. Es gibt keine Korrektur für Mehrfachvergleiche.
 - „Sap-Treffer“ sind Schätzungen anhand sichtbarer Gegner im Zielbereich, keine Messung des tatsächlichen Energieschadens. Sap-Ziel, Zielzuweisung und ergänzende Aktionsregeln sind heuristisch; die Netze bewerten den Aktionstyp.
 - Weitertraining und Self-Play/Gegner-Pool wurden bereits untersucht und brachten in diesen Versuchen keinen klaren Gewinn. Das beweist keine allgemeine Grenze des Verfahrens.
-- CNN und PPO wurden bereits untersucht; weitere Läufe koordiniert Mahmoud. Keine laufende Pipeline duplizieren. Offene Aufgaben, Seedreservierungen und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).
+- CNN und PPO wurden bereits untersucht; für eine lokale CNN3-Fortsetzung fehlen die Originalcheckpoints. Vor neuen Läufen Dateien und gespeicherte Config bereitstellen, Ergebnisse reproduzieren und die Konsistenz zwischen Aktionsauswahl und PPO-Update messen. Keine Pipeline blind duplizieren. Offene Aufgaben, Seedreservierungen und Freigabestand: [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 ## Quellen
 

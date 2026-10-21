@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 08:43 – Codex: Morgenbericht und gemeinsame Orientierung geprüft
+
+[Morgenbericht](MORGENBERICHT_20261021.md) mit Ergebnisgrafik, Spielzahlen, Grenzen, Abgabe/Sicherung und tatsächlich gepushten Arbeitsschritten erstellt. V3 bleibt installiert; zusätzliche 18.800 Trainingsspiele und der unabhängige 2.400-Spiele-V4-Vergleich liefern keinen weiteren qualifizierten Ersatz. Bericht, Grafikwerte, Quelllaufbudget und nächste Schritte unabhängig geprüft. Zwei sprachliche Übertreibungen, ein relativer Link und veraltete nächste Schritte korrigiert. Historische Erstpräsi-Läufe (`full`/`full_sym`) ausdrücklich von den heutigen 66.000 V3-Quelllaufspielen getrennt; teilweise gleiche Karten bedeuten keine identischen Trainingsläufe.
+
+README, CLAUDE, Experiment-Einstieg und Hauptplan auf den Stand vom 21.10. gebracht. Künftiger Curriculumversuch bislang nur Entwurf; genaue Umsetzung und Studie werden separat geplant. Keine neuen Modellversuche während des Abschlusses. Das Nutzungslimit unterbrach die aktive Koordination nachts; bereits gestartete Programme liefen unabhängig fertig. Der Bericht behauptet keine durchgängige LLM-Arbeit.
+
+Prüfung: Quellen und Gewichte seit dem vollständig getesteten Stand `6ab3109` unverändert; damalige Suite 223 Tests plus 14 Subtests bestanden. Für diesen reinen Dokumentationsschritt Dateilinks, Format, Grafik und Archivhashes geprüft, keine zusätzlichen Modelltests nötig. Aktuelle V3-Dateien und alte Sechser-Sicherung stimmen mit ihren dokumentierten SHA-256 überein. Remote-Beobachter und Root bestätigten vor diesem Berichtscommit lokales `main` = `origin/main` auf `5dda0a3`, ohne neue Mahmoud-Commits. Eigene Trainings-/Evaluationsprozesse sind beendet; Wachhaltung bis 09:00 und Abschlussautomationen werden beim tatsächlichen Abschluss separat geprüft. Fremde ungesicherte Dateien bleiben unangetastet.
+
 ## 21.10.2026, 08:27 – Codex: Aktionsfluss von V3 passiv geprüft
 
 [20 Beobachtungsspiele](../experiments/analysis/autonomous_20261020/v3_action_source_observation/README.md), bekannte Karten 500720–500729, beide Seiten gegen Solution_92. Alle 23 nichtzeitlichen Spielkennzahlen exakt gegen zwei vorhandene Referenzen reproduziert. Keine Agenten-, Gewichts- oder Aktionsänderung; lediglich Methoden-Ein-/Ausgänge beobachtet. 13 Tests vor Start; danach Root und unabhängiger Review: Quellen-/Input-/Gewichtshashes identisch, komplette Aktionsketten und Nenner nachgerechnet.

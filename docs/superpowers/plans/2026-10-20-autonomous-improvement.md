@@ -16,12 +16,23 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 
 **Spec:** [Arbeitsauftrag und Auswahlregeln](../specs/2026-10-20-autonomous-improvement-design.md)
 
+## Aktueller Abschlussstand vom 21.10.2026
+
+Moayed verlängerte die Arbeitsgrenze ausdrücklich auf **09:00 Berlin / 07:00 UTC**. Frühere 06:00-Fristen und damalige Laufzustände im Protokoll unten sind historische Einträge. Der [Morgenbericht](../../MORGENBERICHT_20261021.md) enthält den ausgeführten Umfang, negative Ergebnisse und die Unterbrechung durch das Nutzungslimit; keine lückenlose aktive Nachtkoordination behaupten.
+
+- V3 wurde nach erfolgreichem Vergleich und technischen Prüfungen übernommen (`9d657dc`); alte Sechser-Abgabe dauerhaft gesichert.
+- Die vier anfänglichen Inferenzvarianten erfüllten die Auswahlregel nicht. Ihre frische Herausfordererbestätigung wurde deshalb übersprungen; V3 wurde stattdessen als einziger Kandidat gegen die alte Abgabe bestätigt.
+- Reward-Pilot (800 Trainingsspiele), drei Explorationspaare (18.000), feste Ensembles und zwei weitere einzelne Inferenzvarianten sind vollständig ausgewertet; kein zusätzlicher Kandidat zur Übernahme.
+- Die spätere unabhängige V4-Bestätigung ist mit 2.400 Spielen vollständig beendet, beide Vorteilsnachweise fehlen. Passive Punktefeld- und Aktionsflussdiagnosen sind geprüft und archiviert. Keine laufende Messreihe und kein Source-Freeze aus diesen Versuchen mehr.
+- Der [nächste Trainingsentwurf](../../NAECHSTER_TRAININGSVERSUCH_20261021.md) ist eine spätere einzelne Hypothese; keine Umsetzung oder neue Studie im Abschlussfenster. Lokale Trainingsgewichte/Buffer bleiben erhalten und ignoriert.
+- Bericht, abschließender Git-Abgleich und Prozess-/Automationsabschluss werden im jüngsten [Arbeitsstand](../../ARBEITSSTAND.md) belegt. Frühere noch offene Checklisten unten werden nur für tatsächlich erledigte Schritte geschlossen.
+
 ## Global Constraints
 
-- Abgabe bis zur bestandenen Übernahmeprüfung unverändert; bisher beide SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`. Versionierte Sicherung unter `experiments/releases/20261020_old3_sym3/` dauerhaft erhalten.
+- Aktuelle Abgabe nach bestandener Übernahmeprüfung: V3, beide SHA-256 `aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935`. Versionierte alte Sicherung unter `experiments/releases/20261020_old3_sym3/`, SHA-256 `3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158`, dauerhaft erhalten.
 - Maximal zwei Evaluationsprozesse, höchstens ein Training; keine Cloud-Kosten.
 - Kurs-Runner unverändert; bestehende Kandidaten und Messdateien nicht ersetzen.
-- Neue Arbeitsgrenze: 21.10.2026 04:00 UTC / 06:00 Berlin. Ab 05:30 Berlin nur noch rechtzeitig abschließbare Arbeiten; um 06:00 Morgenbericht und kontrollierter Abschluss.
+- Letzte autorisierte Arbeitsgrenze: 21.10.2026 07:00 UTC / 09:00 Berlin. Abschließende Prüfungen und Übergabe; keine neuen Modellversuche mehr.
 - Entwicklung 500720–500779; Bestätigung 502420–502619 exklusiv reserviert.
 - CNN3 nicht doppelt starten; keine BC-Datensammlung auf dem 8-GB-Rechner.
 - Moayed hat den Austausch am 20.10. ausdrücklich freigegeben, sofern der Kandidat nachweislich besser ist. Übernahmeprüfung gemäß ergänztem Spec; Training überschreibt die Abgabe weiterhin nicht.
@@ -42,7 +53,7 @@ Agenten prüfen, ohne seine Quelldatei oder die Abgabe zu verändern.
 - [x] Aufgabe 3: Begrenzte Entwicklungsmessung.
 - [x] Aufgabe 4: Bestätigung und Gegnervergleich, falls Auswahlregel erfüllt.
 - [x] Aufgabe 5a: Erster Zyklus abgeschlossen; V3 installiert, geprüft, gesichert und gepusht (`9d657dc`).
-- [ ] Aufgabe 5b: Erweiterter Nachtauftrag und Morgenbericht um 06:00.
+- [x] Aufgabe 5b: Erweiterte Messreihen abgeschlossen und Morgenbericht erstellt; Prozess-/Automationsabschluss bis 09:00 siehe jüngsten Arbeitsstand.
 
 ## Aufgabe 1: Referenz und technische Basis
 
@@ -100,37 +111,21 @@ Ergebniszusammenfassung unter `experiments/analysis/autonomous_20261020/`.
   Entscheidung inklusive verworfener Varianten dokumentieren.
 - [x] Zwischenstand samt verwendeten Seeds und unveränderten Gewichtshashes pushen.
 
-## Aufgabe 4: Bestätigung und Gegnervergleich
+## Aufgabe 4: Bestätigung und Gegnervergleich – abgeschlossen
 
-**Files:** neue Referenz-/Herausforderer-CSVs auf Seeds 502420–502619 und
-zusätzliche CSVs gegen alte Abgabe auf Entwicklungskarten.
-
-**Interfaces:** eindeutige Auswahl aus Aufgabe 3; gepaarte Auswertung über Karten.
-
-- [ ] Wenn keine Variante die Auswahlregel erfüllt: Aufgabe begründet überspringen.
-- [ ] Referenz und genau einen Herausforderer auf den reservierten 200 Karten
-  auswerten, beide Seiten, default/Solution_92, je 800 Spielzeilen.
-- [ ] Gegen alte Abgabe (`self:agents/sherlock/weights/agent_p0.pth`) beide
-  Varianten auf den 60 Entwicklungskarten prüfen.
-- [ ] Auswahlregel aus Spec anwenden; bei Unsicherheit Referenz behalten.
-  Nicht nachträglich andere Varianten auf demselben Bestätigungsblock suchen.
-- [ ] Zusätzliche Übernahmeprüfung: alte Abgabe auf 502420–502619 gegen beide Gegner auswerten und gepaart mit dem ausgewählten Stand vergleichen. Ohne erfolgreichen Herausforderer V3 als einzigen Kandidaten gegen die alte Abgabe prüfen; dann diesen Teil trotz übersprungener Variantenbestätigung ausführen.
-- [ ] Für die Übernahme auch direkten Vergleich des ausgewählten Stands gegen die gesicherte alte Abgabe auf den 60 Entwicklungskarten prüfen; Sicherungspfad als Gegner verwenden.
+- [x] Keine Variante aus Aufgabe 3 ausgewählt; deren neue Karten- und Direktbestätigung begründet **übersprungen**, keine entsprechenden Spiele behauptet.
+- [x] V3 als einzigen vorhandenen Kandidaten gegen die gesicherte alte Abgabe auf 200 neuen Karten 502420–502619, beide Seiten/default und Solution_92, bestätigt: je Stand 800 Spiele.
+- [x] Zusätzlich V3 direkt gegen alte Abgabe auf 60 bekannten Karten 500720–500779, beide Seiten: 120 Spiele. Festgelegtes direktes Gate bestanden.
+- [x] Auswahl-, Sicherungs- und technische Prüfungen dokumentiert im [Übernahmebericht](../../../experiments/analysis/autonomous_20261020/RELEASE.md).
 
 ## Aufgabe 5: Abschluss
 
-**Files:** `docs/ARBEITSSTAND.md`, dieser Plan, neuer Ergebnisbericht;
-nur bei Erfolg neue Kandidatendatei und Manifest.
-
-- [ ] Vollständige Ergebnisse und Grenzen zusammenfassen; bei Erfolg Config
-  in neuen Checkpoint schreiben und gespeicherte Config gegen Override
-  auf zwei bereits benutzten Karten prüfen.
-- [ ] Betroffene Tests und Hash-Prüfungen durchführen.
-- [ ] Änderungen unabhängig prüfen lassen, wichtige Befunde beheben.
-- [ ] Nur bei erfüllten Übernahmekriterien: Sicherungsmanifest prüfen, beide Abgabedateien durch den geprüften Kandidaten ersetzen, Hash-Identität, Kursbetrieb und betroffene Tests erneut prüfen; bei Fehlern zurückrollen. Eigenen Übernahme-Commit samt Bericht und Rückweg erstellen. Andernfalls alte Abgabe behalten.
-- [ ] GitHub abgleichen, geprüfte Änderungen pushen; Planstatus aktualisieren.
-- [ ] Nach dem ersten Zyklus begründete weitere Schritte bis zur neuen Arbeitsgrenze bearbeiten; um 06:00 Morgenbericht und Weiterführung beenden.
-  Offene Schritte und laufende Prozesse ausdrücklich benennen.
+- [x] Ergebnisse und Grenzen im [Morgenbericht](../../MORGENBERICHT_20261021.md) zusammenfassen; keine neue Kandidatenconfig ohne qualifizierte Stärkeprüfung.
+- [x] Tests, Referenzreproduktionen, Hashkontrollen und unabhängige Reviews der abgeschlossenen Messreihen durchführen. Spätere reine Dokumentation benötigt keine zusätzlichen Modellspiele.
+- [x] V3 nach erfüllten Kriterien mit Sicherung, Kursprüfung und Rückweg in eigenem Commit übernehmen; alle später ungeklärten Kandidaten ablehnen.
+- [x] Abgeschlossene Versuche getrennt committen und pushen (bis `5dda0a3`); abschließender Berichtscommit und Remote-Nachweis im Arbeitsstand.
+- [x] Weitere begründete Schritte bis zur verlängerten Grenze bearbeiten; offene künftige Trainingsstudie ausdrücklich als ungestartet dokumentieren.
+- [ ] Finalen Repo-/Prozessabgleich, Wachhalteprozess und einmalige Automationen bis 09:00 abschließen; erst nach tatsächlicher Prüfung abhaken.
 
 ## Laufendes Protokoll
 
@@ -148,13 +143,13 @@ nur bei Erfolg neue Kandidatendatei und Manifest.
 - Neue Freigabe: geprüften besseren Stand auch als Abgabe übernehmen. Bisherige Abgabe vorab bytegleich gesichert; ergänzende Vergleichsregel gegen die alte Abgabe vor Sichtung der neuen Karten festgelegt. Keine Änderung laufender Entwicklungsmessungen.
 - Git-Abgleich während Aufgabe 3: origin/main enthält zusätzlich `790997a` und `96bbf6f` von Mahmoud (weitere standardmäßig deaktivierte Sap-/Bewegungsschalter, CNN-Eval-Anpassung und neue Trainingspipeline). Laufenden Batch zunächst mit seinem ursprünglichen Code abschließen. Danach eigenen Sicherungs-/Freigabe-Commit auf origin/main rebasen, neue Tests und Referenzreproduktion prüfen, bevor die nächste Messreihe startet und gepusht wird. Keine zweite V3-Trainingspipeline starten. Die Sicherung ist lokal committet; Push steht bis zu diesem Abgleich aus.
 
-## Weitere Nachtarbeit und Morgenbericht
+## Weitere Nachtarbeit und Morgenbericht (historische Checkliste vor der Verlängerung)
 
-- [ ] Nach dem ersten Zyklus aktuelle Remote-Ergebnisse abgleichen und nächsten begründeten Schritt vorab dokumentieren. Vorrang: belastbare Übernahmeprüfung, Verlustdiagnose auf Entwicklungskarten, Robustheit gegen weitere vorhandene Gegner; neues Training nur mit konkreter Hypothese und ausreichender Laufzeit.
-- [ ] Keine zweite CNN3-/V3-Netz-Pipeline starten; weitere frische Karten erst nach Remote-Abgleich reservieren.
-- [ ] Bis 05:30 Berlin regulär arbeiten; danach Bericht und abschließende Prüfungen priorisieren.
-- [ ] Um 06:00 Berlin Bericht in `docs/MORGENBERICHT_20261021.md` und im Chat: Tests/Spielzahlen, belegter Stärkevergleich, negative Ergebnisse, Abgabe/Sicherung, gepushte Commits, Grenzen und offene Punkte.
-- [ ] Eigene verbleibende Jobs kontrolliert beenden, Wachhalteprozess anhand PID/Kommando beenden und Automation deaktivieren.
+- [x] Nach dem ersten Zyklus aktuelle Remote-Ergebnisse abgleichen und nächsten begründeten Schritt vorab dokumentieren. Vorrang: belastbare Übernahmeprüfung, Verlustdiagnose auf Entwicklungskarten, Robustheit gegen weitere vorhandene Gegner; neues Training nur mit konkreter Hypothese und ausreichender Laufzeit.
+- [x] Keine zweite CNN3-/V3-Netz-Pipeline starten; weitere frische Karten erst nach Remote-Abgleich reservieren.
+- Historische 05:30-Grenze durch den späteren Auftrag bis 09:00 ersetzt; Unterbrechung und tatsächliche Fortsetzung im Morgenbericht dokumentiert.
+- [x] Bericht im verlängerten Auftrag bis 09:00 erstellt in `docs/MORGENBERICHT_20261021.md`; Chat-Zusammenfassung beim Abschluss: Tests/Spielzahlen, belegter Stärkevergleich, negative Ergebnisse, Abgabe/Sicherung, gepushte Commits, Grenzen und offene Punkte.
+- Abschluss von Jobs, Wachhalteprozess und Automationen: aktuelle Aufgabe 5 und jüngster Arbeitsstand, keine zweite Aktion aus dieser historischen Checkliste starten.
 
 Moayed hat diese Verlängerung und selbstständige Fortsetzung ausdrücklich beauftragt; keine erneute Freigabe für gewöhnliche Arbeitsschritte nötig.
 

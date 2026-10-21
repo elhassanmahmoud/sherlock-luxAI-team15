@@ -1,0 +1,48 @@
+{
+  "source_sha256": {
+    "experiments/analysis/autonomous_20261020/exploration_aggregate.json": "f5a841bad9177913170d646c50328d1e59f7d856cfd294cda00249c9a336b27d",
+    "experiments/compare/autonomous_20261020/v4_independent_20261021/independent_root_audit.json": "64797d6e9b2fcdab02894e53964b89d83ea3b4c9b1614a60302087ae22435e4f"
+  },
+  "starts": [
+    "47",
+    "48",
+    "49"
+  ],
+  "control_percent": [
+    71.66666666666667,
+    56.666666666666664,
+    55.00000000000001
+  ],
+  "slow_percent": [
+    47.5,
+    49.166666666666664,
+    47.5
+  ],
+  "v4_solution92": {
+    "ci95": [
+      -0.03,
+      0.04
+    ],
+    "maps": 200,
+    "bootstrap_samples": 5000,
+    "bootstrap_seed": 0,
+    "delta": 0.005,
+    "half_units": 4,
+    "games_per_arm": 400,
+    "reference_mean": 0.7775,
+    "candidate_mean": 0.7825
+  },
+  "v4_direct": {
+    "mean": 0.51,
+    "ci95": [
+      0.48125,
+      0.54
+    ],
+    "maps": 400,
+    "bootstrap_samples": 5000,
+    "bootstrap_seed": 0,
+    "games": 800,
+    "interpretation": "V4 score against frozen V3 on 400 new paired maps only"
+  },
+  "output": "docs/assets/morgenbericht_20261021.png"
+}

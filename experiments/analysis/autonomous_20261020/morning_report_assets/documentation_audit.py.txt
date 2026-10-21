@@ -1,0 +1,37 @@
+from pathlib import Path
+import subprocess,json,hashlib,re,datetime
+r=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def git(*args):return subprocess.check_output(['git',*args],cwd=r,text=True).strip()
+protected={}
+for base,h in [('agents/sherlock/weights','aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935'),('experiments/releases/20261020_old3_sym3','3788fb721d1873b74ec666df34da92eb6af311eed1d8fff6e03b71e59346d158')]:
+ for name in ['agent_p0.pth','agent_p1.pth']:
+  key=base+'/'+name;actual=sha(r/key);assert actual==h,(key,actual);protected[key]=actual
+manifests=[r/'experiments/analysis/autonomous_20261020'/name/'archive_manifest.json' for name in ['training_followup_20261021','v3_action_source_observation','morning_report_assets']]
+manifests.append(r/'experiments/compare/autonomous_20261020/v4_independent_20261021/archive_manifest.json')
+archive_counts={}
+for m in manifests:
+ obj=json.loads(m.read_text());items=obj.get('files',obj.get('file_sha256'));n=0
+ for rel,h in items.items():
+  p=r/rel if m.parent.name=='morning_report_assets' else m.parent/rel
+  assert sha(p)==h,(str(m),rel);n+=1
+ archive_counts[str(m.relative_to(r))]=n
+# Check only new links in edited existing docs plus every link in new report/readme.
+paths=['docs/ARBEITSSTAND.md','docs/NAECHSTER_TRAININGSVERSUCH_20261021.md','README.md','CLAUDE.md','docs/EXPERIMENT_PROTOKOLL.md','docs/superpowers/plans/2026-10-20-autonomous-improvement.md']
+texts=[]
+for path in paths:
+ d=git('diff','--unified=0','--',path)
+ texts.extend((r/path,line[1:]) for line in d.splitlines() if line.startswith('+') and not line.startswith('+++'))
+for path in ['docs/MORGENBERICHT_20261021.md','experiments/analysis/autonomous_20261020/morning_report_assets/README.md']:
+ texts.append((r/path,(r/path).read_text()))
+links=[]
+for p,s in texts:
+ for target in re.findall(r'!?\[[^\]]*\]\(([^)]+)\)',s):
+  target=target.split('#')[0]
+  if not target or '://' in target:continue
+  assert (p.parent/target).exists(),(str(p),target)
+  links.append({'file':str(p.relative_to(r)),'target':target})
+source_diff=git('diff','6ab3109','--name-only','--','*.py','*.pth','lux/runner.py','Paths.csv')
+assert not source_diff,source_diff
+status=git('status','--short')
+print(json.dumps({'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':git('rev-parse','HEAD'),'remote_head':git('rev-parse','origin/main'),'protected_sha256':protected,'archive_file_counts':archive_counts,'new_links_checked':len(links),'python_and_weights_unchanged_since':'6ab3109','status':status,'complete':True},indent=2))
