@@ -59,6 +59,7 @@ def _make_agent(kind: str, weights: str, overrides: list[str], seed: int):
 
 
 def play_recorded(env, agent, opp, seed: int, side: str, teacher: bool):
+    import torch
     from agents.sherlock.ppo_agent import Recorder
 
     rec = Recorder()
@@ -70,6 +71,8 @@ def play_recorded(env, agent, opp, seed: int, side: str, teacher: bool):
         opp.new_game(opp_side)
     random.seed(seed)
     np.random.seed(seed % (2**32))
+    # Jede Spielseite erhaelt ihren eigenen, vom Worker unabhaengigen Torch-Strom.
+    torch.manual_seed(2 * int(seed) + (0 if side == "player_0" else 1))
     obs, info = env.reset(seed=seed)
     for a in (agent, opp):
         if hasattr(a, "set_env_cfg"):
@@ -286,6 +289,7 @@ def cmd_ppo(args, log) -> None:
     import torch
     from agents.sherlock.ppo_agent import PPOAgent, save_policy
 
+    torch.manual_seed(args.seed)
     run = _check_run_dir(args.run)
     start = run / (args.start or "bc.pth")
     base = PPOAgent("player_0", agent_path=str(start), train=False)

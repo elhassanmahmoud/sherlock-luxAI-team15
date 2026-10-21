@@ -1,0 +1,145 @@
+"""One bounded owned job; the root owns fixed gates and candidate selection."""
+import csv
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import signal
+import subprocess
+import sys
+import time
+
+P = Path(__file__).resolve().parents[3] / 'experiments/analysis/cnn3_sol90_s20_20261021/execution_state.json'
+s = json.loads(P.read_text())
+label, *args = sys.argv[1:]
+assert label in s['job_limits_seconds'] and args and not s.get('active')
+assert not any(j['label'] == label for j in s['jobs'])
+assert all(j.get('returncode') == 0 and not j.get('error') for j in s['jobs'])
+process = None
+low_memory_since = None
+started = time.time()
+limit = s['job_limits_seconds'][label]
+assert started + limit + 300 < s['deadline'], 'Insufficient admission budget'
+stop_at = min(s['deadline'], started + limit) - 3  # Reserve for group cleanup.
+
+def save():
+    q = P.with_suffix('.tmp')
+    q.write_text(json.dumps(s, indent=2) + '\n')
+    q.replace(P)
+
+def check():
+    global low_memory_since
+    assert time.time() < stop_at, 'Job deadline reached'
+    assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=s['root'], text=True).strip() == s['head']
+    for name, digest in {**s['source_hashes'], **s['protected_hashes'], **s['input_hashes']}.items():
+        assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
+    assert time.time() < stop_at, 'Job deadline reached during input checks'
+    if label != 'training':
+        return
+    out = subprocess.check_output(['/usr/bin/memory_pressure', '-Q'], text=True,
+                                  timeout=min(10, max(0.001, stop_at - time.time())))
+    match = re.search(r'System-wide memory free percentage:\s*(\d+)%', out)
+    assert match, 'Cannot verify memory pressure'
+    free = int(match.group(1))
+    if free <= 5:
+        if low_memory_since is None:
+            low_memory_since = time.time()
+        assert time.time() - low_memory_since < 60, 'Sustained system memory pressure'
+    else:
+        low_memory_since = None
+    path = Path(s['run']) / 'ppo.csv'
+    if path.exists():
+        with path.open(newline='') as f:
+            rows = list(csv.DictReader(f))
+        # The trainer flushes after each complete iteration. A transient partial row
+        # is ignored here; final completeness is checked after the process exits.
+        rows = [r for r in rows if r.get('secs')]
+        for row in rows:
+            assert all(math.isfinite(float(row[k])) for k in ('pi', 'v', 'ent', 'kl', 'clipfrac')), 'Nonfinite training loss'
+        if rows:
+            if 'training_first_iteration_projection_seconds' not in s:
+                # Include observed startup and completed work; conservatively
+                # allow 20% extra for the remaining iterations.
+                s['training_first_iteration_projection_seconds'] = (
+                    time.time() - started + max(0, 10 - len(rows)) * float(rows[0]['secs']) * 1.2)
+            estimate = s['training_first_iteration_projection_seconds']
+            assert estimate <= limit and started + estimate + 300 < s['deadline'], 'Training projection exceeds fixed budget'
+    assert time.time() < stop_at, 'Job deadline reached during training checks'
+
+def interrupt(sig, frame):
+    raise InterruptedError(f'Signal {sig}')
+
+for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+    signal.signal(sig, interrupt)
+check()
+log = P.parent / (label + '.log')
+assert not log.exists()
+j = dict(label=label, argv=[s['python'], '-B', *args], started_at=started, returncode=None, log=str(log))
+s['jobs'].append(j)
+save()
+try:
+    with log.open('xb') as f:
+        env = {**os.environ, **{k: '1' for k in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS')},
+               'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONUNBUFFERED': '1', 'PYTHONPATH': s['root']}
+        process = subprocess.Popen(j['argv'], cwd=s['root'], env=env, start_new_session=True, stdout=f, stderr=subprocess.STDOUT)
+        s['active'] = dict(owner_pid=os.getpid(), pid=process.pid, pgid=process.pid)
+        j['pid'] = process.pid
+        save()
+        print(label, process.pid, flush=True)
+        while True:
+            try:
+                j['returncode'] = process.wait(timeout=min(30, max(0.001, stop_at - time.time())))
+                break
+            except subprocess.TimeoutExpired:
+                check()
+                save()
+        assert j['returncode'] == 0, f'Job failed; inspect {log}'
+    check()
+    if '-m' in args and args[args.index('-m') + 1] == 'scripts.par_eval':
+        out = Path(args[args.index('--out') + 1])
+        rows = list(csv.DictReader(out.open()))
+        j.update(rows=len(rows), output_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
+    j['verified_inputs_after'] = True
+except BaseException as exc:
+    j['error'] = repr(exc)
+    s['status'] = 'stopped_error_or_budget'
+    raise
+finally:
+    try:
+        if process is not None:
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            else:
+                until = time.time() + 2
+                while time.time() < until:
+                    process.poll()  # Reap the leader before probing its process group.
+                    try:
+                        os.killpg(process.pid, 0)
+                    except ProcessLookupError:
+                        break
+                    except PermissionError:
+                        # macOS may report EPERM for a group containing only
+                        # unreaped zombies; verify rather than assume it is gone.
+                        listing = subprocess.check_output(['ps', '-axo', 'pgid=,stat='], text=True, timeout=2)
+                        states = [line.split()[1] for line in listing.splitlines()
+                                  if len(line.split()) == 2 and line.split()[0] == str(process.pid)]
+                        if not any(not state.startswith('Z') for state in states):
+                            break
+                        raise
+                    time.sleep(0.05)
+                else:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+            process.wait()
+            j['returncode'] = process.returncode
+    finally:
+        s['active'] = None
+        j['finished_at'] = time.time()
+        save()
+print(label, 'finished', j['returncode'], flush=True)
