@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 08:49 – Codex: nächste einzelne Studie verbindlich geplant, nicht gestartet
+
+Der Morgenbericht wurde als `07dbe71` erfolgreich nach `origin/main` gepusht. Danach den [Curriculumplan](superpowers/plans/2026-10-21-early-opponent-curriculum.md) konkretisiert und unabhängig prüfen lassen: drei neue Paare mit bekannten Starts 47–49, gleiche Gegnergesamtzahlen, feste Zwischenmessungen und getrennte Methoden-/Ensemblegates. Neu reserviert 511000–511199 (bedingte Gegnerbestätigung), 511200–511399 (bedingter Direktvergleich); 507 versionierte CSVs mit 358.716 Zeilen ohne Kollision, jüngster Remote-Abgleich ohne neue fremde Commits. Vor einem späteren Start nochmals prüfen.
+
+Planreview korrigiert: Audits eindeutig an Studien-ID/State binden, tatsächliche Initialidentität vor Validierung erfassen, Zwischenvalidierung samt RNG isolieren und Rohschlüssel sichern, exklusive Ausgaben und atomare Phasengrenzen testen. Die heutigen Werkzeuge unterstützen die neuen Optionen noch nicht. Keine Implementierung, kein weiterer Modelllauf und keine Verlängerung des Auftrags über 09:00. [Prüfbelege](../experiments/analysis/autonomous_20261020/early_curriculum_planning/README.md).
+
 ## 21.10.2026, 08:43 – Codex: Morgenbericht und gemeinsame Orientierung geprüft
 
 [Morgenbericht](MORGENBERICHT_20261021.md) mit Ergebnisgrafik, Spielzahlen, Grenzen, Abgabe/Sicherung und tatsächlich gepushten Arbeitsschritten erstellt. V3 bleibt installiert; zusätzliche 18.800 Trainingsspiele und der unabhängige 2.400-Spiele-V4-Vergleich liefern keinen weiteren qualifizierten Ersatz. Bericht, Grafikwerte, Quelllaufbudget und nächste Schritte unabhängig geprüft. Zwei sprachliche Übertreibungen, ein relativer Link und veraltete nächste Schritte korrigiert. Historische Erstpräsi-Läufe (`full`/`full_sym`) ausdrücklich von den heutigen 66.000 V3-Quelllaufspielen getrennt; teilweise gleiche Karten bedeuten keine identischen Trainingsläufe.
