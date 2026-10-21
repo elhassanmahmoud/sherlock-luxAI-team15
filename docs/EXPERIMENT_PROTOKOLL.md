@@ -208,3 +208,15 @@ Vorab festgelegter direkter V3-Vergleich, kein Training. 60 bekannte Karten 5007
 ## 21.10.2026 – Zielpilot nach Koordinationsvergleich
 
 [Plan](superpowers/plans/2026-10-21-v4-target-pilot.md), [acht vollständige Kontroll-/Schattenspiele und Audit](../experiments/analysis/v4_target_pilot_20261021/README.md): 32 registrierte Situationen, keine zulässige Alternative, keine veränderte Aktion. Festes Gate ≥8 nicht erfüllt; beendet ohne Training oder Heldout. Kein allgemeiner Befund zur Einflussmöglichkeit von Zielmerkmalen. V3 und Sicherung unverändert. Der [CNN3-Folgeversuch](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md) ist separat vorab festgelegt, noch kein Ergebnis.
+
+## 21.10.2026 – Festungs-Diagnose, `art_sap`/`siege` (Claude Code mit Mahmoud)
+
+[Mechanismus-Probe](../experiments/analysis/mechanism_probe_20261021/README.md): Match-3-Niederlagen gegen eine Solution_92-„Festung“ auf umkämpften Relic-Haufen (Manhattan-Sap auf alles in Reichweite). Entwicklungskarten 500720–500779 gegen V3 85,0 %: `art_sap` +2,5/+5,0/−0,8 (2/3/4 Treffer), Nachbarvarianten ±1 → nicht robust; `siege` −17,5 [−25,8; −10,0], `siege`+`art_sap` −14,2 → verworfen. Default jeweils 120/120. Alle Schalter aus, keine Abgabeänderung. Folgeversuch Training `full_rules_v3_threat` (Gefahr-Merkmale) und PPO `cnn3b` laufen.
+
+
+
+### 21.10.2026, 20:16 Berlin – Begrenzte CNN-Fortsetzung beendet; separater Artillerie-Plan
+
+Der [feste CNN3-Versuch](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md) ist nach240 Trainings- und484 neuen Auswertungs-/Kontrollspielen abgeschlossen. Endstand89/120 Solution, Original96/120, V3102/120, default jeweils120/120. Entwicklungsgate verfehlt; keine weiteren Qualifikationsspiele oder Gewichtsübernahme. [Rohdaten, technische Prüfung, unabhängiger Audit und Root-Nachrechnung](../experiments/analysis/cnn3_sol90_s20_20261021/README.md). Keine Behauptung eines kausalen Nachweises gegen PPO allgemein.
+
+Mahmouds neuer positiver Entwicklungsbefund art_sap/min_hits3 wird als ein fest gewählter Kandidat im [getrennten Vorabplan](superpowers/plans/2026-10-21-art-sap-confirmation.md) geprüft. Noch keine eigenen neuen Spieldaten dafür. V3-Tensoren bleiben identisch; 480 Reproduktionsspiele,120 direkte und8 Kursprüfspiele vor etwaiger frischer Bestätigung. Reservierungen und alle Übernahmeschwellen bleiben vor Ausführung festgelegt. Keine Verwechslung mit dem unterlegenen Koordinator oder CNN-Kandidaten.

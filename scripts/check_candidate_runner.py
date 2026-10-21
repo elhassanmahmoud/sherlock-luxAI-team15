@@ -76,7 +76,7 @@ def verify_loaded(agent, checkpoint: dict) -> None:
     from agents.sherlock.config import AgentConfig
     from agents.sherlock.features import FEATURE_DIM
     if (not isinstance(checkpoint, dict) or "q" not in checkpoint
-            or checkpoint.get("feature_dim", FEATURE_DIM) != FEATURE_DIM
+            or checkpoint.get("feature_dim", FEATURE_DIM) != agent.feat_dim
             or checkpoint.get("n_actions", agent.n_actions) != agent.n_actions):
         raise ValueError("Unsupported or incompatible checkpoint architecture")
     if agent.cfg.to_dict() != AgentConfig.from_dict(checkpoint["cfg"]).to_dict():

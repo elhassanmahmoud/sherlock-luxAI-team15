@@ -115,7 +115,8 @@ def main() -> None:
         if checkpoint.get("ensemble"):
             ap.error("--resume erwartet ein Einzelnetz, kein Ensemble. Mitglieder separat trainieren und danach neu zusammenbauen.")
         cfg = AgentConfig.from_dict(checkpoint["cfg"])
-        if (checkpoint.get("feature_dim") != FEATURE_DIM
+        from agents.sherlock.features import THREAT_DIM
+        if (checkpoint.get("feature_dim") != FEATURE_DIM + (THREAT_DIM if cfg.threat_feats else 0)
                 or checkpoint.get("n_actions") != (N_ACTIONS if cfg.use_sap else 5)):
             ap.error("Checkpoint passt nicht zur aktuellen Architektur (feature_dim/n_actions).")
 

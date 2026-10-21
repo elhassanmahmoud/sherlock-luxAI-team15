@@ -18,6 +18,7 @@ class QNet(nn.Module):
     def __init__(self, obs_dim: int, n_actions: int = N_ACTIONS,
                  hidden: int = 256, dueling: bool = True):
         super().__init__()
+        self.feat_dim = obs_dim  # Eingabegroesse (gemischte Ensembles, main.py)
         self.dueling = dueling
         self.body = nn.Sequential(
             nn.Linear(obs_dim, hidden), nn.ReLU(),

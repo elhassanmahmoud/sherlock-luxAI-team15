@@ -238,6 +238,106 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
     return a - x, b - y
 
 
+class SiegePlan:
+    """Belagerung einer gegnerischen Punkte-Festung (Schalter `siege`, 21.10.2026).
+
+    Diagnose Match 3 (V3 gegen Solution_92): in den deutlich verlorenen Matches sitzt
+    Solution_92 mit vielen Units auf einem umkaempften Relic-Haufen und sappt jede
+    sichtbare Unit in MANHATTAN-Reichweite (|dx| + |dy| <= R). Unsere Units laufen
+    einzeln hinein und sterben (6 : 68 Saps, 23 : 4 Tote). Die Engine erlaubt Saps im
+    ganzen Quadrat (max(|dx|, |dy|) <= R): aus den Ecken des Quadrats treffen wir,
+    ohne beschossen zu werden.
+
+    Festung = bekannte Punkte-Tiles mit sichtbarem Gegner, dazu nicht sichtbare, nicht
+    von uns besetzte Punkte-Tiles mit Wahrscheinlichkeit versteckte Besetzer / Kandidaten
+    (aus dem Punktgewinn des Gegners). Gefahr geht von sichtbaren sapfaehigen Gegnern und
+    wahrscheinlich besetzten Festungs-Tiles aus. Schussposition: passierbar, ausserhalb
+    der Manhattan-Reichweite aller Gefahrenquellen, mindestens ein Festungs-Tile im
+    Sap-Quadrat.
+    """
+
+    def __init__(self, ctx: dict, belief, min_prob: float = 0.5, dropoff: float = 0.5) -> None:
+        W, H = ctx["W"], ctx["H"]
+        self.R = int(ctx["sap_range"])
+        self.dropoff = dropoff
+        pt = belief.point_tiles
+        ec = ctx["enemy_coords"]
+        ee = ctx["enemy_energies"]
+        visible = belief.last_seen == belief.match_step
+        ours = ctx["ally_count"] > 0
+        weight = np.zeros((W, H), dtype=np.float64)   # erwartete Gegner je Tile
+        for (x, y), e in zip(ec.tolist(), ee.tolist()):
+            if e >= 0:
+                weight[x, y] += 1.0
+        seen_on_pt = int((pt & (weight > 0)).sum())   # Punkte zaehlen je Tile einmal
+        hidden = max(0, int(belief.opp_gain) - seen_on_pt)
+        fog = pt & ~visible & ~ours
+        n_fog = int(fog.sum())
+        p = min(1.0, hidden / n_fog) if n_fog else 0.0
+        if p > 0:
+            weight[fog] += p
+        self.weight = weight
+        self.fortress = pt & (weight >= min_prob)
+        armed = (ee >= float(ctx["sap_cost"])) if len(ec) else np.zeros(0, dtype=bool)
+        danger = [tuple(c) for c in ec[armed].tolist()] if len(ec) else []
+        if p >= min_prob:
+            danger += [tuple(c) for c in np.argwhere(fog).tolist()]
+        xs, ys = np.indices((W, H))
+        if danger:
+            d = np.array(danger)
+            man = (np.abs(xs[..., None] - d[:, 0]) + np.abs(ys[..., None] - d[:, 1])).min(-1)
+            safe = man > self.R
+        else:
+            safe = np.ones((W, H), dtype=bool)
+        f = np.argwhere(self.fortress)
+        if len(f):
+            cheb = np.maximum(np.abs(xs[..., None] - f[:, 0]), np.abs(ys[..., None] - f[:, 1])).min(-1)
+            reach = cheb <= self.R
+        else:
+            reach = np.zeros((W, H), dtype=bool)
+        self.spots = safe & reach & ctx["passable"]
+        self.W, self.H = W, H
+
+    def target_in_fortress(self, tgt) -> bool:
+        return tgt is not None and bool(self.fortress[tgt[0], tgt[1]])
+
+    def best_shot(self, x: int, y: int):
+        """(dx, dy, Score) des besten 3x3-Zentrums in Reichweite oder None."""
+        R, W, H = self.R, self.W, self.H
+        x0, x1, y0, y1 = max(0, x - R), min(W, x + R + 1), max(0, y - R), min(H, y + R + 1)
+        wpad = np.pad(self.weight, 1)
+        best, best_s = None, 0.0
+        for cx in range(x0, x1):
+            for cy in range(y0, y1):
+                block = wpad[cx:cx + 3, cy:cy + 3]
+                s = float(block[1, 1] + self.dropoff * (block.sum() - block[1, 1]))
+                if s > best_s:
+                    best, best_s = (cx - x, cy - y), s
+        return None if best is None else (best[0], best[1], best_s)
+
+
+def siege_action(plan: SiegePlan, ctx: dict, uid: int, mask: np.ndarray, paths: PathCache,
+                 min_score: float, reserve: float):
+    """Aktion fuer eine Unit mit Festungsziel: ('sap', (dx, dy, n)), ('move', d),
+    ('stay', None) oder None (keine Schussposition erreichbar -> Netz entscheidet)."""
+    x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+    if plan.spots[x, y]:
+        shot = plan.best_shot(x, y)
+        if (shot is not None and shot[2] >= min_score
+                and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + reserve):
+            return "sap", (int(shot[0]), int(shot[1]), int(round(shot[2])))
+        return "stay", None
+    dist = distance_map(ctx["passable"], (x, y))
+    cand = np.argwhere(plan.spots & (dist >= 0))
+    if len(cand) == 0:
+        return None
+    d = dist[cand[:, 0], cand[:, 1]]
+    gx, gy = cand[int(np.argmin(d))]
+    step = first_step(paths.get(ctx["step"], ctx["passable"], (int(gx), int(gy))), (x, y), mask,
+                      ctx["energy_map"])
+    return None if step is None else ("move", int(step))
+
+
 def ram_move(ctx: dict, uid: int, mask: np.ndarray, point_tiles: np.ndarray,
              rammed: set, margin: float = 10.0):
     """Schalter `ram`: auf ein Nachbar-Tile mit schwaecherem Gegner fahren.

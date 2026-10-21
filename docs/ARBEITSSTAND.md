@@ -5,6 +5,42 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+
+## 21.10.2026, 20:16 Berlin – Codex: CNN-Fortsetzung beendet, Artillerie-Prüfung vorbereitet
+
+[724 neue registrierte Spiele, Rohdaten und unabhängiger Abschlussreview](../experiments/analysis/cnn3_sol90_s20_20261021/README.md): 240 Trainingsspiele ab Original-PPO60 in 38:50 Minuten, 240 Original-Referenzspiele, vier V3-Kontrollen und 240 Endstand-Spiele. Auf den bekannten 60 Karten gewinnt der einzige finale CNN-Kandidat gegen Solution **89/120**, Original-PPO60 **96/120**, V3 **102/120**; default alle120/120. Gegenüber V3 Δ−10,83 pp, gepaartes95%-Kartenintervall[−20;−2,5]. Vorgegebene Solution-Gates verfehlt; dieser Kandidat ist beendet. Keine frischen Tests, keine Zwischenstand-Auswahl und keine Übernahme. Alle V3-/Sicherungshashes unverändert.
+
+Root-Tensor-/Ladeprüfung und unabhängige CSV-/Hash-/Statistikprüfung bestanden. Quellen während des Versuchs eingefroren auf `47388d4`; 30 von32 Policy-Tensoren geändert, Architektur und effektive Konfiguration erhalten. Neuer kleiner Minibatch und frischer Adam erlauben keine isolierte Aussage über den Gegner-Mix. Die Spielzahlen werden nicht mit den parallel auf Mahmouds Rechner laufenden Trainings vermischt.
+
+Mahmouds Commits `f540da4` bis `baef7a8` gelesen und nach Ende der eigenen Modelljobs ins lokale main übernommen. [Unabhängiger Code-/Datenreview und separater Vorabplan](superpowers/plans/2026-10-21-art-sap-confirmation.md) für genau den bereits ausgewählten Artillerie-Schalter3: historisch108/120 statt102/120, aber sieben Varianten auf bekannten Karten und fehlende vollständige Run-Manifeste. Deshalb zuerst vollständige Reproduktion mit exakt18 unveränderten V3-Netzen, dann direkte/Kursprüfung und nur bei bestandenen Gates frische Karten. Noch keine eigenen Artillerie-Spiele. Mahmouds503220–503819 bleiben für seine Studien reserviert, Root523000–523399 ist noch unbenutzt.
+
+Separater Werkzeugfehler beim Wiederaufbau gespeicherter homogener Ensembles gefunden: veraltete `ensemble_dims` können beim Laden zusätzliche Netze unterschlagen. Gezielte Reproduktion/Korrektur in eigenem Zweig; unabhängiger Review und endgültige gemeinsame Integrationssuite stehen noch aus. Die Artillerie-Kopie verwendet diesen Builder nicht. Nachtauftrag läuft weiter bis spätestens22.10.06Berlin; spätestens05:15 Abschlussreserve. Aktuelle Abgabe bleibt V3.
+
+
+## 21.10.2026, 19:33 Berlin – Claude Code mit Mahmoud: Festungs-Diagnose, zwei Trainings laufen
+
+**Diagnose** ([Mechanismus-Probe](../experiments/analysis/mechanism_probe_20261021/README.md), neues Messwerkzeug `scripts/mechanism_probe.py`, reine Messung, V3 unverändert, Entwicklungskarten 500720–500779): Verlorene Matches 3 liegen auf Karten mit vielen Punkte-Tiles. In den deutlichsten Niederlagen kippt das Sap-Verhältnis in Match 3 (z. B. 500753: 6 : 68 Saps, 23 : 4 Tote): Solution_92 sitzt mit vielen Units auf einem umkämpften Relic-Haufen („Festung“) und sappt alles in **Manhattan**-Reichweite; unsere wiedergeborenen Units laufen einzeln hinein. Die Engine erlaubt Saps im ganzen Quadrat.
+
+**Neue Schalter, alle Default aus, Abgabe unverändert:** `art_sap` (Sap aus Manhattan-sicherer Position bei ≥ n Treffern) und `siege` (Festungsziele aus der Ferne belagern, `rules.SiegePlan`). Auswahl auf Entwicklungskarten gegen V3 (85,0 %): `art_sap` 2/3/4 Treffer +2,5/+5,0 [+0,8; +10,0]/−0,8; Nachbarvarianten ±1 → nicht robust, kein Kandidat. `siege` **−17,5** [−25,8; −10,0] → verworfen (Units geben umkämpfte Tiles auf). Default jeweils 120/120.
+
+**Training (läuft, noch keine Ergebnisse):** (1) PPO `cnn3b`: Start `cnn3/ppo_0060`, 150 Iterationen × 80 Spiele, Gegner 80 % Solution_92 / 15 % V3 / 5 % default, Seed 5, Trainingskarten 250000+ (`experiments/ppo/cnn3b/`), auf Mahmouds Rechner mit dem damaligen `ppo_train` vor `14469f2` gestartet; unabhängig von Codex' begrenztem 10-Iterationen-Lauf `cnn3_sol90_s20` auf Moayeds Rechner. (2) Neuer Schalter `threat_feats` (+22 Netzeingaben: je Tile sapfähige Gegner in Manhattan-/Quadrat-Reichweite, Gegnerenergie auf/neben dem Tile, bester Sap, besetzte Punkte-Tiles), Variante `full_rules_v3_threat` = `full_rules_v3` + Gefahr-Merkmale: 6 Läufe `20261021_full_rules_v3_threat_s40`–`s45_sol70`, je 3000 Spiele, 70 % Solution_92 – gleiche Starts/Einstellungen wie die Kontrolle `v3nets6` vom 20.10. Alte Checkpoints/Abgabe laden unverändert (79 Eingaben).
+
+**Auswertung vorab festgelegt:** [Plan](superpowers/plans/2026-10-21-threat-features.md) mit Auswahl auf 503220–503419, Bestätigung 503420–503619 und direktem Vergleich 503620–503819, Abnahmeregeln wie V4-Strategie. Dazu `build_ensemble --mixed`: V3-Netze (79 Eingaben) und Gefahr-Netze (101) in einem Ensemble, alte Netze bekommen die ersten 79 Merkmale (`ensemble_dims`). Kurs-Runner-Prüfung und `train.py --resume` akzeptieren Gefahr-Checkpoints. Tests zu `92ece27` (während die Trainings liefen): 400 bestanden + 14 Untertests; die 31 Tests in `tests/test_early_curriculum_study.py` verweigern absichtlich, solange `scripts.experiment`-Prozesse laufen (Prozessprüfung „Another model job is active“), Datei unverändert – Wiederholung nach Trainingsende steht aus.
+
+**Seeds reserviert (Mahmoud):** 503220–503419 Auswahl unter PPO-/Threat-Ständen, 503420–503619 einmalige frische Bestätigung genau eines vorher gewählten Kandidaten, 503620–503819 Reserve. Vor Nutzung in 524 CSVs ohne Treffer geprüft.
+
+**Prüfungen:** gesamte Testsuite 422 Tests + 14 Untertests bestanden (davon 13 neu in `tests/test_rules_2110.py`), Trainings-Probelauf mit 101 Eingaben gespeichert/geladen. Abgabe-Hash unverändert.
+
+## 21.10.2026, 19:28 Berlin – Codex: begrenztes CNN3-Training läuft
+
+Die geprüfte PPO-Zufallsbindung ist als `14469f2` in main veröffentlicht: 489 Tests plus 14 Untertests im Arbeitszweig, danach acht fokussierte Tests im Hauptcheckout. Vorabplan und unabhängige Reviews unter [CNN3-Fortsetzung](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md). Die V3-Abgabe bleibt unverändert.
+
+240 neue Referenzspiele auf 60 bekannten Karten 500720–500779: Original-PPO60 gewinnt **96/120 gegen Solution_92** und **120/120 gegen default**. V3-Referenz **102/120 bzw. 120/120**; vier neue Kontrollspiele reproduzieren alle 23 gespeicherten Nichtzeitfelder. Keine frischen Bestätigungskarten verwendet.
+
+Der einzige geplante Trainer läuft seit etwa 19:28 Berlin: 240 Spiele, 10 Iterationen, Startseed 20, letzter Originalstand PPO60, festes Gegnerprogramm mit 211 Solution- und 29 Default-Spielen. Das sind geplante Trainingszahlen, noch kein abgeschlossenes Ergebnis. Endstand allein wird ausgewertet; keine Auswahl eines günstigen Zwischenstands. Maximal 90 Minuten Training, Quellen- und Gewichtskontrolle, Speicher- und Fehlerüberwachung. Bei negativem Entwicklungsgate keine weitere Verlängerung dieses Kandidaten.
+
+Aktive Arbeitskopie auf Moayeds Rechner: `/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint`, eingefrorener Commit `47388d4`. Livezustand dort unter `experiments/analysis/cnn3_sol90_s20_20261021/execution_state.json`; kein zweites Training oder paralleler Modelltest auf dem 8-GB-Mac. main darf getrennt aktualisiert werden; der aktive Versuch übernimmt neue Quellen erst nach Abschluss. Der Remote-Wächter meldet Mahmouds neue Commits. Späteste Gesamtfrist 22.10.2026 06:00 Berlin, Abschlussreserve ab 05:15.
+
 ## 21.10.2026, 19:16 Berlin – Codex: Zielpilot beendet, CNN3-Folgeversuch vorbereitet
 
 [Acht Spiele und unabhängiger Datenreview](../experiments/analysis/v4_target_pilot_20261021/README.md): Kontroll- und Wiederholungsverläufe identisch, aber in 32 festen Situationen keine geeignete Zielalternative. Festes Gate verfehlt; kein Zielbewerter, keine frischen Tests, keine Änderung an V3. Daraus folgt keine allgemeine Wirkungslosigkeit von Zielzuweisung. Zusammen mit dem Paar-Koordinator 404 neue Spiele; weiterhin kein qualifizierter V4.

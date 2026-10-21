@@ -50,6 +50,15 @@ def _names() -> list[str]:
 FEATURE_NAMES = _names()
 FEATURE_DIM = len(FEATURE_NAMES)
 
+# --- Gefahr-Merkmale (Schalter cfg.threat_feats, 21.10.2026), an die 79 angehaengt:
+# je Tile (stehen + 4 Zuege) sapfaehige sichtbare Gegner in Manhattan-Reichweite (so
+# zielt Solution_92) und im Sap-Quadrat (Engine), Gegnerenergie auf dem Tile
+# (Kollision) und daneben (Void); dazu bester Sap-Treffer und besetzte Punkte-Tiles.
+THREAT_NAMES = [f"{d}_{k}" for d in _DIR_NAMES
+                for k in ("threat_man", "threat_sq", "enemy_here", "enemy_adj")]
+THREAT_NAMES += ["best_sap_hits", "enemy_on_points"]
+THREAT_DIM = len(THREAT_NAMES)
+
 
 def _nearest(coords: np.ndarray, x: int, y: int, W: int, H: int):
     """(dx/W, dy/H, dist/(W+H), exists) zum naechsten Punkt in `coords`."""
@@ -475,4 +484,41 @@ def build_features(ctx: dict, uid: int) -> np.ndarray:
     f[i] = min(len(ctx["cand_coords"]) / 50.0, 1.0); i += 1
 
     assert i == FEATURE_DIM, f"Feature-Layout inkonsistent: {i} != {FEATURE_DIM}"
+    return f
+
+
+def threat_features(ctx: dict, uid: int) -> np.ndarray:
+    """Gefahr-Merkmale (THREAT_NAMES) einer Unit; Nullvektor ohne Unit/Gegner."""
+    f = np.zeros(THREAT_DIM, dtype=np.float32)
+    W, H = ctx["W"], ctx["H"]
+    ec = ctx["enemy_coords"]
+    if uid not in set(ctx["ally_ids"].tolist()) or len(ec) == 0:
+        return f
+    x = int(ctx["ally_pos"][uid][0])
+    y = int(ctx["ally_pos"][uid][1])
+    if not (0 <= x < W and 0 <= y < H):
+        return f
+    ee = np.maximum(ctx["enemy_energies"].astype(np.float32), 0.0)
+    R = ctx["sap_range"]
+    armed = ctx["enemy_energies"] >= ctx["sap_cost"]
+    i = 0
+    for d in range(5):
+        tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+        if 0 <= tx < W and 0 <= ty < H:
+            ddx, ddy = np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty)
+            man = ddx + ddy
+            f[i] = min(float((armed & (man <= R)).sum()) / 4.0, 1.0)
+            f[i + 1] = min(float((armed & (np.maximum(ddx, ddy) <= R)).sum()) / 4.0, 1.0)
+            f[i + 2] = min(float(ee[man == 0].sum()) / MAX_UNIT_ENERGY, 1.0)
+            f[i + 3] = min(float(ee[man == 1].sum()) / MAX_UNIT_ENERGY, 1.0)
+        i += 4
+    cheb = np.maximum(np.abs(ec[:, 0] - x), np.abs(ec[:, 1] - y))
+    best = 0
+    for k in np.where(cheb <= R)[0]:
+        near = np.maximum(np.abs(ec[:, 0] - ec[k, 0]), np.abs(ec[:, 1] - ec[k, 1])) <= 1
+        best = max(best, int(near.sum()))
+    f[i] = min(best / 4.0, 1.0); i += 1
+    occupied = {(int(a), int(b)) for a, b in ec if ctx["point_tiles"][a, b]}
+    f[i] = min(len(occupied) / 8.0, 1.0); i += 1
+    assert i == THREAT_DIM
     return f
