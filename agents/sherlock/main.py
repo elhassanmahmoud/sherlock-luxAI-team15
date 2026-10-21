@@ -42,7 +42,7 @@ from . import rules
 from .belief import Belief, MemorylessBelief
 from .config import AgentConfig
 from .features import FEATURE_DIM, THREAT_DIM, build_features, make_context, threat_features
-from .model import N_ACTIONS, QNet
+from .model import N_ACTIONS, QNet, checkpoint_ensemble_dims
 from .replay_buffer import ReplayBuffer
 from .reward import surviving, unit_rewards
 
@@ -685,6 +685,7 @@ class Agent_x:
         if not isinstance(ckpt, dict) or "q" not in ckpt:
             self.q.load_state_dict(ckpt)  # reines state_dict (altes Format)
             return
+        dims = checkpoint_ensemble_dims(ckpt, ckpt.get("feature_dim", FEATURE_DIM))
         if ckpt.get("feature_dim", FEATURE_DIM) != self.feat_dim or \
                 ckpt.get("n_actions", self.n_actions) != self.n_actions:
             print(f"[{self.name}] Checkpoint passt nicht zur aktuellen Architektur "
@@ -698,7 +699,6 @@ class Agent_x:
             except (ValueError, KeyError):
                 pass
         self.extra_q = []
-        dims = ckpt.get("ensemble_dims") or [self.feat_dim] * len(ckpt.get("ensemble", []))
         for sd, dim in zip(ckpt.get("ensemble", []), dims):
             # 21.10.2026: Eingabegroesse je Netz (V3-Netze 79 neben Gefahr-Netzen 101)
             m = QNet(int(dim), self.n_actions, self.cfg.hidden, self.cfg.dueling).to(self.device)

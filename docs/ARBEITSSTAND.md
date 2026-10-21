@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 21.10.2026, 20:15 Berlin – Codex: Ensemble-Dimensionen gegen stillen Netzverlust abgesichert
+
+[Korrektur und Prüfnachweis](ENSEMBLE_DIMENSIONEN_20261021.md): Beim Erweitern eines gespeicherten homogenen Ensembles blieb bisher eine zu kurze Dimensionsliste bestehen; der Loader ließ dadurch Netze aus. Der Builder schreibt jetzt immer alle Dimensionen. Gemeinsame Prüfung von Listenlänge, ganzzahligen positiven Grenzen und tatsächlichen Tensorbreiten weist fehlerhafte Checkpoints ab. Fehlende/`None`/leere Altformat-Metadaten und gültige 101/79-Ensembles bleiben unterstützt.
+
+TDD auf isoliertem Zweig: **23 Fehler/5 bestanden vor der Korrektur**, danach **28 neue Tests bestanden**; abschließend **32 fokussierte Tests bestanden** inklusive bestehender Persistenz- und Mischensemble-Prüfung. Rechenplatz erst nach Freigabe benutzt, anschließend freigegeben. Keine Aktionsregel-, Trainingscode- oder Gewichtsänderung. Vollständige Testsuite und unabhängiger Review des zusammengeführten Stands durch Root noch offen; kein Push aus diesem Arbeitszweig.
+
 
 
 ## 21.10.2026, 20:16 Berlin – Codex: CNN-Fortsetzung beendet, Artillerie-Prüfung vorbereitet

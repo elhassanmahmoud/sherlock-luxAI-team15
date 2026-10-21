@@ -20,6 +20,8 @@ from pathlib import Path
 
 import torch
 
+from agents.sherlock.model import checkpoint_ensemble_dims
+
 # Nur was Netzform und Bedeutung der Eingaben bestimmt; Lernrate & Co. duerfen abweichen.
 PLAY_KEYS = ("hidden", "dueling", "use_sap", "use_belief", "canonical", "mask_actions")
 
@@ -35,12 +37,19 @@ def main() -> None:
     base = torch.load(args.ckpts[0], map_location="cpu", weights_only=False)
     dim0 = base["feature_dim"]
     extra = []
-    dims = list(base.get("ensemble_dims") or [dim0] * len(base.get("ensemble", [])))
+    try:
+        dims = checkpoint_ensemble_dims(base, dim0)
+    except ValueError as exc:
+        raise SystemExit(f"{args.ckpts[0]}: {exc}") from exc
     for p in args.ckpts[1:]:
         c = torch.load(p, map_location="cpu", weights_only=False)
         if c.get("n_actions") != base.get("n_actions"):
             raise SystemExit(f"{p}: n_actions passt nicht zu {args.ckpts[0]}")
         dim = c.get("feature_dim")
+        try:
+            source_dims = checkpoint_ensemble_dims(c, dim)
+        except ValueError as exc:
+            raise SystemExit(f"{p}: {exc}") from exc
         if dim != dim0 and not (args.mixed and dim < dim0):
             raise SystemExit(f"{p}: feature_dim {dim} passt nicht zu {args.ckpts[0]} ({dim0})")
         for k in PLAY_KEYS:
@@ -48,10 +57,9 @@ def main() -> None:
                 raise SystemExit(f"{p}: cfg.{k} passt nicht zu {args.ckpts[0]}")
         extra.append(c["q"])
         extra.extend(c.get("ensemble", []))
-        dims += [dim] + list(c.get("ensemble_dims") or [dim] * len(c.get("ensemble", [])))
+        dims += [dim] + source_dims
     base["ensemble"] = list(base.get("ensemble", [])) + extra
-    if any(d != dim0 for d in dims):
-        base["ensemble_dims"] = dims
+    base["ensemble_dims"] = dims
     base["ensemble_sources"] = [str(p) for p in args.ckpts]
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     torch.save(base, args.out)

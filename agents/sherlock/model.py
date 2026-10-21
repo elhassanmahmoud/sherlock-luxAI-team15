@@ -7,11 +7,44 @@ Aktionswahl oft kaum einen Unterschied macht (A).
 """
 from __future__ import annotations
 
+from numbers import Integral
+
 import torch
 import torch.nn as nn
 
 # 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap
 N_ACTIONS = 6
+
+
+def checkpoint_ensemble_dims(checkpoint: dict, feature_dim: int) -> list[int]:
+    """Validate input widths before loading or combining a DQN checkpoint.
+
+    Missing/None/empty dimensions are the legacy homogeneous format. Explicit
+    dimensions must describe every extra net; never let zip discard a member.
+    """
+    if isinstance(feature_dim, bool) or not isinstance(feature_dim, Integral) or feature_dim <= 0:
+        raise ValueError("feature_dim muss eine positive ganze Zahl sein")
+    ensemble = checkpoint.get("ensemble", [])
+    dims = checkpoint.get("ensemble_dims")
+    if dims is not None and not isinstance(dims, (list, tuple)):
+        raise ValueError("ensemble_dims muss eine Liste von Eingabegroessen sein")
+    if dims is None or len(dims) == 0:
+        dims = [feature_dim] * len(ensemble)
+    if len(dims) != len(ensemble):
+        raise ValueError("ensemble_dims muss genau einen Eintrag pro Ensemble-Netz enthalten")
+    for index, dim in enumerate(dims):
+        if isinstance(dim, bool) or not isinstance(dim, Integral) or not 0 < dim <= feature_dim:
+            raise ValueError(f"ensemble_dims[{index}] muss ganzzahlig und zwischen 1 "
+                             f"und feature_dim ({feature_dim}) sein")
+
+    states = [("q", checkpoint["q"], feature_dim)]
+    states.extend((f"ensemble[{index}]", state, dim)
+                  for index, (state, dim) in enumerate(zip(ensemble, dims)))
+    for name, state, dim in states:
+        weight = state.get("body.0.weight") if isinstance(state, dict) else None
+        if not isinstance(weight, torch.Tensor) or weight.ndim != 2 or weight.shape[1] != dim:
+            raise ValueError(f"{name}: Eingabedimension von body.0.weight passt nicht zu {dim}")
+    return [int(dim) for dim in dims]
 
 
 class QNet(nn.Module):
