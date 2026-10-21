@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026 – Codex: Trainingsvergleich, Eingaben unabhängig geprüft
+
+Der frühe Gegnerplan und die isolierten Zwischenmessungen sind implementiert (`bc7d3b1`) und unabhängig freigegeben. 267 Tests plus 14 Teilprüfungen bestanden. Standardaufrufe behalten ihr bisheriges Verhalten. Neue Studienaufrufe zeichnen die vollständige Gegnerfolge, die tatsächliche Anfangsidentität der Learner und rohe Zwischenvalidierungsspiele auf; die Validierung erhält den relevanten Lern- und Zufallszustand.
+
+Noch kein neues Langtraining gestartet: Der exklusive Studienrunner, seine vollständigen Ergebnisprüfungen und die festgelegten statistischen Gates werden als nächste getrennte Schritte umgesetzt und geprüft. Die abgeschlossene Verlustdiagnose liegt mit Rohdaten unter `experiments/analysis/continuous_20261021/loss_observation/`. Aktuelle V3-Abgabe und alte Sicherung bleiben unverändert. Remote vor Veröffentlichung abgeglichen; keine neuen fremden Commits gefunden.
+
 ## 21.10.2026 – Codex: Verlustdiagnose abgeschlossen, kein neuer Regelpatch
 
 [Archiv und Ergebnis](../experiments/analysis/continuous_20261021/loss_observation/README.md) der 20 fest ausgewählten Partien vollständig: 6060 Übergänge, 60 Matchabschlüsse und 240 zeitlich ausgerichtete Schnappschüsse. Alle 460 nichtzeitlichen Referenzwerte identisch; Root prüfte 41 ursprüngliche Dateihashes sowie Matchsiege und die zentralen Belegungswerte unabhängig nach. Die ergebnisgeschichtete Stichprobe ist keine neue Siegquotenmessung.
