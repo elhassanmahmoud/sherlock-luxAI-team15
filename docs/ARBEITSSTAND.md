@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 11:44 Berlin – Codex: neue Trainingsstudie läuft
+
+Der freigegebene Vergleich `20261021_early_contact_v1` ist tatsächlich gestartet: 21.10.2026 11:44:34 Europe/Berlin, feste Studienfrist 23:44:34 desselben Tages. Eingefrorener Commit **`a5d2e61b0e8654bad64e31c29447ada1e439174d`** in `sherlock-counterplay`; Supervisor 63520, erster Trainer 63533. Zustand und Joblogs liegen dort unter `experiments/analysis/early_curriculum_20261021_early_contact_v1/`. Prozessnummern sind nur die lokale Momentaufnahme, vor jedem Eingriff erneut mit Kommando/Ownership prüfen.
+
+Aktuell beginnt Kontrolle s47; erst danach früher Gegnerkontakt s47 und die vollständigen Paarprüfungen, anschließend Starts48/49. Geplant sind18.000 Trainingsspiele plus960 Zwischenvalidierungs- und1.440 finale Einzelnetzauswertungsspiele; weiterführende Ensemble-/Frisch-/Direktprüfungen sind bedingt. Aus einem laufenden Training lässt sich noch keine Verbesserung ableiten.
+
+Den eingefrorenen Arbeitszweig, seine Pythonquellen, Pläne, Gewichte und die benutzte Venv nicht verändern. Hauptcheckout und Remote dürfen separat abgeglichen werden; fremde Änderungen werden während des Source-Freeze nicht in den Versuch übernommen. Alte Deadlines06/09 gelten nicht mehr, der Benutzer hat kontinuierliche Arbeit ohne feste Enduhrzeit beauftragt. Der konkrete Versuch behält trotzdem seine vorab festgelegte Ressourcenfrist. V3-Abgabe und Sicherungen bleiben unverändert.
+
 ## 21.10.2026 – Codex: Curriculumstudie vollständig geprüft und zum Start bereit
 
 Alle vier Umsetzungsschritte inklusive unabhängiger Nach- und Integrationsprüfung fertig. Statistikauswertung `a5ce6d8`, bedingte Bestätigung `9c5c06d`, periodische Prüfung erzeugter Eingaben `2da04b3`. Vollsuite vor der engen letzten Korrektur: 406 Tests plus 14 Teilprüfungen; danach 88 betroffene Tests. [Nachweise und Grenzen](../experiments/analysis/continuous_20261021/planning/README_CURRICULUM.md).
