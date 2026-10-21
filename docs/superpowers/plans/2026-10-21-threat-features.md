@@ -58,3 +58,12 @@ gegen V3: `mix24` +1,5 [−2,8; +5,8], `threat6` −4,0 [−9,5; +1,3]; `threat6
 [−6,0; +4,8]. Bester Kandidat `mix24` unter der +3-Regel → **beendet**, Bestätigungsblöcke nicht
 benutzt. PPO-Teil (Schritt 4) steht noch aus.
 
+
+## Nachtrag vor neuen Spielen (21.10.2026, 22:00): Kombination `mix24_art3`
+
+Festgelegt, bevor der Kandidat gespielt hat. `mix24_art3` = `mix24` + `art_sap=true`,
+`art_min_hits=3` (frisch bei Codex +2,25 pp auf 523000–523199). Nur auf dem bereits benutzten
+Auswahlblock 503220–503419 (Auswahlverzerrung möglich, deshalb nur Vorauswahl). Weiter auf die
+unbenutzten Bestätigungsblöcke 503420–503819 genau dann, wenn Solution_92 ≥ +3 pp vor V3
+(76,7 %) und default ≥ 99 %; dort unverändert die Übernahme-Gates oben. Keine weiteren
+Varianten oder Schwellen nach Sichtung.
