@@ -203,3 +203,8 @@ Vorab festgelegter direkter V3-Vergleich, kein Training. 60 bekannte Karten 5007
 ## 21.10.2026 – Erster V4-Paar-Koordinator beendet
 
 [Plan](superpowers/plans/2026-10-21-v4-joint-prototype.md), [396 neue Spiele und unabhängiger Audit](../experiments/analysis/v4_joint_pairs_v1_20261021/README.md). V3-Netze unverändert, Kandidat mit begrenzter gemeinsamer Bewegungswahl. Solution101/120 vs102/120, Δ−0,83pp, gepaartes Karten-KI[−2,5;0]; Default120beide; direkt62/120, Resultat-KI[50;54,17]%. Entwicklungsgate verfehlt. Kein Training, keine frische Bestätigung, keine Übernahme. 240 historische Referenzspiele nach Quellen-/Hashprüfung und16 reproduzierten Kontrollspielen wiederverwendet;360 neue Vergleiche+16Kontrollen+8Runner+8Aktivierung+4passiveDiagnose=396. Diagnose spricht für starke Einschränkung der Vorschläge, rechtfertigt kein nachträgliches Threshold-Tuning.
+
+
+## 21.10.2026 – Zielpilot nach Koordinationsvergleich
+
+[Plan](superpowers/plans/2026-10-21-v4-target-pilot.md), [acht vollständige Kontroll-/Schattenspiele und Audit](../experiments/analysis/v4_target_pilot_20261021/README.md): 32 registrierte Situationen, keine zulässige Alternative, keine veränderte Aktion. Festes Gate ≥8 nicht erfüllt; beendet ohne Training oder Heldout. Kein allgemeiner Befund zur Einflussmöglichkeit von Zielmerkmalen. V3 und Sicherung unverändert. Der [CNN3-Folgeversuch](superpowers/plans/2026-10-21-cnn3-bounded-continuation.md) ist separat vorab festgelegt, noch kein Ergebnis.
