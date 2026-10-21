@@ -1,0 +1,75 @@
+{
+  "scope": "known development cards; no fresh confirmation or training",
+  "source_head": "e84b9928f20d24fcfe18d1ccf1d1db5a59cf78f5",
+  "input_hashes": {
+    "candidate": "959d5f58363b0a5ce55c5bd7f6c0b3d04201e5a5bb3c7a2a52875b141f7fd44b",
+    "reference": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173",
+    "direct": "f6d90c1041d2e0903873aff0097ff05d250869dd49c773e0824449af5eb1c357"
+  },
+  "bootstrap": "5000 complete card-pair resamples; numpy default_rng(0); percentile 95%",
+  "opponents_actual_win_indicators": [
+    {
+      "opponent": "default",
+      "maps": 60,
+      "games": 120,
+      "winrate": 1.0,
+      "ref_winrate": 1.0,
+      "delta": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "excluded_candidate": 0,
+      "excluded_reference": 0,
+      "candidate_counts": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0
+      },
+      "reference_counts": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0
+      }
+    },
+    {
+      "opponent": "solution92",
+      "maps": 60,
+      "games": 120,
+      "winrate": 0.8416666666666667,
+      "ref_winrate": 0.85,
+      "delta": -0.008333333333333333,
+      "low": -0.025,
+      "high": 0.0,
+      "excluded_candidate": 0,
+      "excluded_reference": 0,
+      "candidate_counts": {
+        "wins": 101,
+        "draws": 0,
+        "losses": 19
+      },
+      "reference_counts": {
+        "wins": 102,
+        "draws": 0,
+        "losses": 18
+      }
+    }
+  ],
+  "direct_result": {
+    "wins": 62,
+    "draws": 0,
+    "losses": 58,
+    "mean_result": 0.5166666666666667,
+    "cards": 60,
+    "games": 120,
+    "low": 0.5,
+    "high": 0.5416666666666666
+  },
+  "development_gates": {
+    "solution_at_least_108_wins": false,
+    "default_120_wins": true,
+    "direct_result_at_least_half": true
+  },
+  "advance_to_fresh": false,
+  "new_games": 392,
+  "reused_reference_games": 240,
+  "protected_hashes_verified": true
+}
