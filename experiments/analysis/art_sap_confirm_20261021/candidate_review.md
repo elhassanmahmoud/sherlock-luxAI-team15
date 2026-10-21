@@ -1,0 +1,5 @@
+# Candidate creation review
+
+21 October 2026, before games. Independent reviewer art_sap_protocol_review inspected create_candidate.py statically: no blocker for the intended non-optimized Python invocation from the V4 checkout. Only fixed experiment candidate and identity receipt are exclusively created; existing outputs refused. Pinned V3 hash, deep-copy two-key config update, recursive tensor/array/container and all other field equality, serialized round trip, exact config and all inference tensors in verify_loaded, exactly 18 networks and fixed effective flags. Agent constructor has no save.
+
+Limits: assertions require no -O/PYTHONOPTIMIZE; correct cwd is an operator requirement; a failed later check leaves a new experimental file for inspection and refuses rerun overwrite. Reviewer did not execute model code. Root then executed the recorded helper with normal -B and explicit project PYTHONPATH: all assertions and exact loading passed. Hashes and full effective config are in candidate_identity.json. No game was played during identity creation.
