@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 21.10.2026, 22:50 Berlin – Claude Code mit Mahmoud: Solution_92-Modell, Ausweichen, Training auf schweren Karten läuft
+
+Ziel des Users jetzt: 99–100 % gegen Solution_92 und Platz 1 im Kursturnier. Neu (alle Schalter aus, Abgabe unverändert):
+- `agents/sherlock/opp_model.py`: sagt aus unserer Sicht voraus, wen Solution_92 sappt (stehendes Schiff auf Punkte-Tile, Energie ≥ Sap-Kosten, Ziel = unsere höchste sichtbare Unit-ID in Manhattan-Reichweite, aus seinem Code). Gemessen in 20 Spielen (500720–500729): 97,2 % der Saps sichtbarer Schützen vorhergesagt, Ziel zu 98,5 % richtig; 38 % Fehlalarme (nur ziehende Schiffe), 25 % der Saps kommen von unsichtbaren Schützen.
+- `dodge` (`dodge_mode` lethal/always): vorhergesagte Ziele weichen aus. Entwicklungskarten gegen V3 85,0 %: lethal −0,8 [−3,3; +1,7], always +1,7 [−1,7; +5,0]. Mechanismus wirkt (direkter Gegnerschaden Match 3 −41 %), Siegquote kaum.
+- Sichtprüfung verlorener Spiele (`scripts/render_snapshots.py`): drei Fehlerbilder – Wettlauf um nähere Haufen verloren, neues Relic-Paar in Match 2/3 nicht gesucht, überzählige Units ungenutzt.
+- **Training mit Schwerpunkt auf schweren Karten** ([Plan, vorab](superpowers/plans/2026-10-21-hard-map-training.md)): Kartensuche V3 gegen Solution_92 auf 2000 neuen Trainingskarten 360000–361999 (4000 Spiele, V3 76,0 %); 660 Karten mit mindestens einer verlorenen Seite (300 beide verloren) → `hard_seeds.json`. Neue Option `scripts.experiment --seed-file`: Solution_92-Spiele laufen auf diesen Karten. 6 Läufe `20261021_full_rules_v3_s40`–`s45_hard` (je 3000 Spiele) gestartet 22:44; Auswertung automatisch (`scripts/pipeline_hard.sh`) auf neuem Auswahlblock 503820–504019. PPO `cnn3b` läuft mit niedrigster Priorität weiter.
+
+Tests: 376 bestanden + 14 Untertests (ohne die 88 prozessgesperrten Studientests, die bei laufenden Spielen absichtlich verweigern).
+
 ## 21.10.2026, 21:55 Berlin – Claude Code mit Mahmoud: Gefahr-Merkmale ohne Gewinn, PPO läuft weiter
 
 Die 6 Läufe `20261021_full_rules_v3_threat_s40`–`s45_sol70` (je 3000 Spiele, 18.000 insgesamt, je ~116 min, alle fehlerfrei) wurden nach dem [vorab festgelegten Plan](superpowers/plans/2026-10-21-threat-features.md) ausgewertet (`scripts/pipeline_threat.sh`, Log `experiments/pipeline_threat.log`). Auswahlblock 503220–503419, 200 Karten, beide Seiten, je 400 Spiele: V3 Solution_92 76,7 %, default 98,8 %; Kontrolle `v3nets6` 73,3 % (Δ −3,5 [−8,7; +1,5]); `threat6` 72,8 % (Δ −4,0 [−9,5; +1,3]); `mix24` = `threat6` + 18 V3-Netze 78,2 % (**Δ +1,5 [−2,8; +5,8]**), default 99,0 %. Methodenfrage `threat6` gegen Kontrolle: **−0,5 [−6,0; +4,8]** – kein messbarer Effekt der Gefahr-Merkmale. Vorab-Regel (+3 pp vor V3) verfehlt: Versuch beendet, **frische Blöcke 503420–503819 unbenutzt**, keine Abgabeänderung. Hashes `threat6` `7a26f21b…8d53`, `mix24` `ace788eb…8034` (lokal, gitignored).
