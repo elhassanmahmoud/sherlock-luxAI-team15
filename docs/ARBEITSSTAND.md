@@ -8,6 +8,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 21.10.2026, 14:53 Berlin – Codex: direkter Gegnerenergie-Vergleich abgeschlossen
+
+[480 vollständige Vergleichsspiele und unabhängiger Audit](../experiments/analysis/enemy_tie_energy_20261021/README.md). V3 mit `enemy_tie_energy=True` gewinnt gegen Solution_92 **105/120 statt 102/120**; Differenz +2,5 Prozentpunkte, gepaartes 95%-Kartenintervall **[−2,5; +8,33]**. Default jeweils 120/120. Positiver Punktschätzer, aber kein vorab geforderter Vorteilsnachweis: Variante beendet, keine frischen oder direkten Folgespiele, kein Austausch der Abgabe.
+
+Vorher 439 Tests und 14 Untertests sowie acht Kurs-Runner-Spiele bestanden; sämtliche 18 Netze und alle übrigen Checkpointfelder identisch mit V3, nur gespeicherter Schalter verändert. Die 240 V3-Referenzspiele reproduzieren alle Nichtzeitfelder. Root und unabhängiger Reviewer bestätigen vollständige Schlüssel, Rechnung, Quellen- und Gewichtsidentität.
+
+Implementierung und nicht qualifizierter Kandidat bleiben auf `improvement/enemy-tie-20261021`, Ergebniscommit **694eda3**. main erhält ausschließlich Rohdaten/Prüfungen und diesen Bericht; die nicht belegte Funktionsänderung wird nicht in den Abgabe-Agenten übernommen. Nächste begrenzte Diagnose ist die bereits offene Konsistenzfrage von PPO-Aktionswahl und gespeicherten Kartenebenen, zunächst ohne Spiele oder Optimizer-Schritte. Keine neue breite Trainingsreihe.
+
 ## 21.10.2026, 14:39 Berlin – Codex: Ressourcen neu priorisiert, Curriculum unvollständig beendet
 
 Moe kritisiert den langen Aufwand ohne zusätzlichen Stärkegewinn. Root hat die weitere Priorität nach einer unabhängigen, begrenzten Ressourcenprüfung geändert: Die laufende Curriculumstudie wird **unvollständig beendet**, der bereits vorbereitete direkte V3-Gegnermerkmale-Vergleich vorgezogen. Noch etwa zweieinhalb Stunden wären allein bis zur Grundauswertung angefallen. [Begründung, tatsächliche Spielzahlen und vollständiges Abbrucharchiv](../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md).

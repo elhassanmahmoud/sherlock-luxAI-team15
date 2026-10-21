@@ -1,0 +1,49 @@
+{
+  "comparison": {
+    "opponents": {
+      "default": {
+        "maps": 60,
+        "games": 120,
+        "starts": 1,
+        "candidate_half_wins": 240,
+        "reference_half_wins": 240,
+        "delta_half_wins": 0,
+        "result_units": 240,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0
+      },
+      "solution92": {
+        "maps": 60,
+        "games": 120,
+        "starts": 1,
+        "candidate_half_wins": 210,
+        "reference_half_wins": 204,
+        "delta_half_wins": 6,
+        "result_units": 240,
+        "winrate": 0.875,
+        "ref_winrate": 0.85,
+        "delta": 0.025,
+        "low": -0.025,
+        "high": 0.08333333333333333
+      }
+    },
+    "input_hashes": {
+      "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_candidate.csv": "c8986e02548670ce0f0d620b97a6751ee591433b90bc89e0bf685f60b7402a32",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_v3.csv": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173"
+    },
+    "bootstrap": {
+      "samples": 5000,
+      "seed": 0,
+      "percentiles": [
+        2.5,
+        97.5
+      ],
+      "unit": "whole map"
+    },
+    "uncertainty": "Map uncertainty conditional on these fixed candidate/reference agents."
+  },
+  "gate": false
+}

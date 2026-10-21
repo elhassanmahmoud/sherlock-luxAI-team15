@@ -193,3 +193,8 @@ Vorab festgelegt in [Plan](superpowers/plans/2026-10-21-v3-action-source-observa
 ## 21.10.2026 – Curriculum vor vollständiger Auswertung beendet
 
 Der freigegebene Versuch `20261021_early_contact_v1` wurde aus Ressourcengründen unvollständig beendet, nachdem der Nutzer den Aufwand ohne zusätzlichen Stärkegewinn hinterfragt hatte. Erstes Paar s47 gegen Solution_92: früh 62/120, Kontrolle 86/120; dies war bei der Entscheidung bekannt. **Keine abschließende Methodenentscheidung, kein Übernahmekandidat.** Drei Trainingsarme fertig, vierter nach 750 protokollierten Spielen beendet; s49 nicht begonnen. Insgesamt 9.750 Trainings-, 544 Zwischenvalidierungs- und 480 finale Auswertungsspiele. [Originalstate, unabhängige Ressourcenprüfung, Rohdaten und Grenzen](../experiments/analysis/continuous_20261021/curriculum_progress/cancellation/README.md). Der bereits vorab festgelegte, billigere direkte V3-Gegnerenergie-Vergleich wird vorgezogen; keine nachträgliche Änderung seiner statistischen Gates.
+
+
+## 21.10.2026 – Gegnerenergie bei gleicher Entfernung
+
+Vorab festgelegter direkter V3-Vergleich, kein Training. 60 bekannte Karten 500720–500779, beide Seiten und Default/Solution_92, je 240 Spiele: Kandidat gegen Solution_92 105/120, V3 102/120, +2,5 Prozentpunkte mit gepaartem 95%-Kartenintervall [−2,5; +8,33]; Default beide 120/120. Vorteils-Gate nicht bestanden. Keine Folgespiele auf den reservierten frischen Karten, kein Abgabeersatz. [Rohdaten, vollständige Reproduktion und unabhängige Prüfung](../experiments/analysis/enemy_tie_energy_20261021/README.md). Feature und experimenteller Checkpoint sind auf Branch `improvement/enemy-tie-20261021` erhalten.

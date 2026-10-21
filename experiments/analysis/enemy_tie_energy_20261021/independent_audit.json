@@ -1,0 +1,387 @@
+{
+  "status": "Ready within reviewed scope",
+  "created_at": "2026-10-21T12:52:22.438542+00:00",
+  "scope": "Independent development-data audit only; no tests, games, model/tensor/backend imports, source edits or repository mutations. No project analysis helper imported.",
+  "frozen_head": "8281c1c392b92c2660b07f24bc27ac0ce8b703bd",
+  "snapshot_sha256": "8862ca9e34b09da433ac51280e91f1304ac5954ea3dd6578b71442ece194bb74",
+  "freeze_manifest_addendum": {
+    "path": "/tmp/sherlock-enemy-tie-job-20261021.py",
+    "sha256": "f4b55a1658de01f8c47c031020989b21b90f9f1641b242f9214648eceb6e9c37",
+    "mtime": 1792586719.4178681,
+    "observed_at": "2026-10-21T12:48:00.710926+00:00",
+    "reason": "Root added job launcher to freeze after initial data reviewer snapshot; no existing hash changed."
+  },
+  "source_protected_integrity": {
+    "source_hashes": {
+      "files": 111,
+      "all_match": true
+    },
+    "protected_hashes": {
+      "files": 10,
+      "all_match": true
+    }
+  },
+  "candidate_identity_metadata": {
+    "candidate_sha256": "184f596c12d7bc860cd6d78d6196a3b4900ba4c42893cac9ce1200ef8eaab7b3",
+    "baseline_sha256": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "changed_effective_config": [
+      "enemy_tie_energy"
+    ],
+    "candidate_flag": true,
+    "network_count": 18,
+    "all_finite": true,
+    "all_distinct": true,
+    "ordered_q_hashes": [
+      "3c3b7b20695b723e622628a25913077385d8911bc9f0bf2652603ebcfd1c5c85",
+      "509ba4cfc5d68d5032e2f627f30e9d0ffd5e4fe979a3d7cd5c0ea289f43111ed",
+      "2b31f9b930d1eab1ce5a0a01288ed4343f6d3b62c813761440ee4dc88a815fe6",
+      "1723eacee8af224509ec24a0ec786af20a181a599f53e835ebb60fc5c8d1af4e",
+      "2720172806399c7e78ff3fc24f52130f56c3a5cdfda0fb3057757427decaf30f",
+      "fcb9e583d83382f05949a737ca4b1c9c1c00a6e7bce42ce761af2a52212551db",
+      "e84f9e3073297b4fa5dea2c42ce7e678ff5162819feb29bb3fa9fb194f98df4a",
+      "9e0c16ab7961382a7e7fd4d8de6699dde9792d181ba7591b5206530a31bf9196",
+      "c59d411326be0d20f966e4eae164cd8b4b346771b15eb21cd2f515ee5d9e64f6",
+      "aa9265da6f18cf60ad2a01976fcbd1df51e9e532be56befb1eb341e0f0c7bc92",
+      "86adcd36ddb73630f522a24f0daf2fbcaf38817ad38bb4252dd65c6a9494b61f",
+      "342d2e533a6d466f57f9ba4ac92bca43429902d0d482547b93ccb08ba76b341e",
+      "deb6f909a00a7be16120d357bd97f103b65e8a0beabf96dc78eec71a3856fe77",
+      "fa5ab96c490b3b057e2e9c081cba67590e41fdb3ecb40b942c489527fa4924e5",
+      "8b9d4dba55ba5f3838f8cc9637831e2411a37d36042575aa095f6a576d5edaa6",
+      "45d7aaf557f7d739559fdc156f1bb9d0cdbc12c162cfd8828a8f34e943a60d72",
+      "638152601326e13df315f389cb00ac62ef48a978b951b997e81f59d6749a77c0",
+      "86f2fd561ba699a5eb3f48af3a8e27a2a57dfe2b6702fc3003b199fd4d98aaf4"
+    ],
+    "all_other_checkpoint_fields_identical": true,
+    "source_and_protected_inputs_unchanged": true
+  },
+  "candidate_identity_sha256": "4964bddb91fab6eff83065c9df732a200977df9926bd6fd7c71b9a55c74e4457",
+  "candidate_metadata_limit": "The reported 18-network/config identity is bound to existing metadata and unchanged checkpoint bytes; tensors were deliberately not reloaded by this data-only reviewer.",
+  "completed_jobs": [
+    {
+      "label": "development_v3",
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/candidates/all18_v3.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_v3.csv"
+      ],
+      "started_at": 1792586752.146353,
+      "returncode": 0,
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_v3.log",
+      "pid": 72831,
+      "output_sha256": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173",
+      "rows": 240,
+      "verified_inputs_after": true,
+      "finished_at": 1792586911.2479649
+    },
+    {
+      "label": "development_candidate",
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/candidates/all18_v3_enemy_tie_energy_20261021.pth",
+        "--first",
+        "720",
+        "--n",
+        "60",
+        "--workers",
+        "2",
+        "--opponents",
+        "default,solution92",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_candidate.csv"
+      ],
+      "started_at": 1792586941.1866088,
+      "returncode": 0,
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_candidate.log",
+      "pid": 73028,
+      "output_sha256": "c8986e02548670ce0f0d620b97a6751ee591433b90bc89e0bf685f60b7402a32",
+      "rows": 240,
+      "verified_inputs_after": true,
+      "finished_at": 1792587119.739989
+    }
+  ],
+  "job_log_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_v3.log": "ed45332f4e544296d61da2c7c5b26015bce11909a90799ba46393fd2026ecd86",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_candidate.log": "e998ce9b55149b616ec0cc623b1b92b9d18e030839f2b425eec43e55a15f1026"
+  },
+  "csv_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_v3.csv": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie/experiments/analysis/enemy_tie_energy_20261021/development_candidate.csv": "c8986e02548670ce0f0d620b97a6751ee591433b90bc89e0bf685f60b7402a32",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/compare/autonomous_20261020/dev_reference.csv": "678de1da620119f7b5ccae1716d16d5906d978adb4fa0572889881e68ca73d0a"
+  },
+  "strict_csv_validation": {
+    "header": [
+      "seed",
+      "side",
+      "opponent",
+      "result",
+      "game_win",
+      "point_win",
+      "our_wins",
+      "opp_wins",
+      "our_points",
+      "opp_points",
+      "point_counting_version",
+      "wait_frac",
+      "invalid_frac",
+      "greedy_masked_frac",
+      "sap_attempts",
+      "sap_hits",
+      "stack_frac",
+      "relics_found",
+      "relics_seen",
+      "known_point_tiles",
+      "belief_contradictions",
+      "unit_steps",
+      "steps",
+      "secs"
+    ],
+    "rows_each": 240,
+    "unique_keys_each": 240,
+    "seeds": [
+      500720,
+      500779
+    ],
+    "sides": [
+      "player_0",
+      "player_1"
+    ],
+    "opponents": [
+      "default",
+      "solution92"
+    ],
+    "steps": 303,
+    "point_counting_version": 2,
+    "finite_numeric_and_consistent_results": true
+  },
+  "baseline_reproduction": {
+    "passed": true,
+    "fields_excluded": [
+      "secs"
+    ],
+    "numeric_comparisons": 5040,
+    "max_absolute_difference": 0.0,
+    "strict_tolerance": 1e-09
+  },
+  "bootstrap": {
+    "samples": 5000,
+    "seed": 0,
+    "generator": "numpy.random.default_rng",
+    "numpy_version": "2.5.4",
+    "unit": "whole card, both sides and paired candidate/reference",
+    "percentiles": [
+      2.5,
+      97.5
+    ]
+  },
+  "results": {
+    "default": {
+      "candidate": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0,
+        "games": 120,
+        "half_wins": 240,
+        "result_rate": 1.0
+      },
+      "baseline": {
+        "wins": 120,
+        "draws": 0,
+        "losses": 0,
+        "games": 120,
+        "half_wins": 240,
+        "result_rate": 1.0
+      },
+      "maps": 60,
+      "delta_half_wins": 0,
+      "result_units": 240,
+      "delta": 0.0,
+      "bootstrap_interval_total_half_units": [
+        0.0,
+        0.0
+      ],
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "per_card_delta_half_units": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "solution92": {
+      "candidate": {
+        "wins": 105,
+        "draws": 0,
+        "losses": 15,
+        "games": 120,
+        "half_wins": 210,
+        "result_rate": 0.875
+      },
+      "baseline": {
+        "wins": 102,
+        "draws": 0,
+        "losses": 18,
+        "games": 120,
+        "half_wins": 204,
+        "result_rate": 0.85
+      },
+      "maps": 60,
+      "delta_half_wins": 6,
+      "result_units": 240,
+      "delta": 0.025,
+      "bootstrap_interval_total_half_units": [
+        -6.0,
+        20.0
+      ],
+      "ci95": [
+        -0.025,
+        0.08333333333333333
+      ],
+      "per_card_delta_half_units": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    }
+  },
+  "gates": {
+    "positive_solution_delta": true,
+    "solution_lower95_strictly_positive": false,
+    "default_delta_at_least_minus_2_percentage_points": true
+  },
+  "passed": false,
+  "conclusion": "Development gate fails: stop this single variant. No fresh or direct continuation and no promotion is supported.",
+  "limitations": "These known development cards give a conditional screening result, not a universal strength claim or diagnosis of why the feature changed decisions."
+}
