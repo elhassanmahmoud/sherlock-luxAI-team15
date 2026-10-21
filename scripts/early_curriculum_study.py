@@ -467,14 +467,19 @@ def check_resources():
     require(not foreign, 'Another model job is active; resource admission refused')
 
 
-def run_process(state, phase, command):
+def run_process(state, phase, command, *, input_hashes=None):
     global CURRENT
+    # Snapshot caller-authenticated generated inputs; do not adopt later hashes.
+    input_hashes = dict(input_hashes or {})
+    def check_job_inputs():
+        check_inputs(state)
+        require(hashes(input_hashes) == input_hashes, 'Job input hashes changed')
     require(CURRENT is None and state.get('active') is None, 'A child is already active')
-    check_inputs(state)
+    check_job_inputs()
     check_resources()
     require(time.time() < state['deadline'] - 10, 'Study deadline reached')
     log = new_output(state, Path(state['analysis']) / f"job_{sum(len(p.get('jobs', [])) for p in state['phases'].values())}_{len(phase['jobs'])}.log")
-    job = dict(argv=command, started_at=time.time(), log=str(log), returncode=None)
+    job = dict(argv=command, input_hashes=input_hashes, started_at=time.time(), log=str(log), returncode=None)
     phase['jobs'].append(job)
     save_state(state)
     process = None
@@ -501,13 +506,13 @@ def run_process(state, phase, command):
             while process.poll() is None:
                 require(time.time() < state['deadline'] - 10, 'Study deadline reached')
                 if time.monotonic() >= next_check:
-                    check_inputs(state)
+                    check_job_inputs()
                     next_check = time.monotonic() + 30
                 time.sleep(.1)
             job['returncode'] = process.wait()
             require(job['returncode'] == 0, f'Child failed: returncode {job["returncode"]}')
             require(not group_exists(process.pid), 'Child left active workers')
-        check_inputs(state)
+        check_job_inputs()
     finally:
         # A second termination signal must not interrupt our bounded cleanup.
         blocked = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGHUP, signal.SIGINT, signal.SIGTERM})
@@ -557,7 +562,8 @@ def train_arm(state, seed, arm):
             json.dump(dict(run_id=state['run_id'], run_seed=seed, arm=arm, source=state['source']), stream)
         run_process(state, phase, training_command(state, seed, arm))
         run_process(state, phase, [state['python'], '-B', '-m', 'scripts.early_curriculum_study',
-            '--checkpoint-audit', state['state_path'], str(seed), arm])
+            '--checkpoint-audit', state['state_path'], str(seed), arm],
+            input_hashes=hashes(p for p in run.rglob('*') if p.is_file()))
     def audit():
         result = audit_training(state, seed, arm)
         aggregates = read_rows(run / 'val.csv', games=False)
@@ -581,7 +587,8 @@ def evaluate_arm(state, seed, arm):
                 'Final checkpoint has not passed training audit')
         run_process(state, phase, [state['python'], '-B', '-m', 'scripts.par_eval',
             '--weights', str(Path(paths['run']) / 'weights/agent.pth'), '--first', '720', '--n', '60',
-            '--workers', '2', '--opponents', 'default,solution92', '--out', str(out)])
+            '--workers', '2', '--opponents', 'default,solution92', '--out', str(out)],
+            input_hashes=training['outputs'])
     def audit():
         result = audit_evaluation(out)
         job = state['phases'][f'eval_{seed}_{arm}']['jobs'][0]
@@ -753,7 +760,7 @@ def run_candidate_build(state):
     def execute(phase):
         new_output(state, state['candidate'])
         new_output(state, path)
-        run_process(state, phase, command)
+        run_process(state, phase, command, input_hashes=before)
     def audit():
         require(hashes(inputs) == before, 'Candidate build inputs changed')
         report = read_json(path)
@@ -794,7 +801,7 @@ def run_confirmation_evaluation(state, label, weights, first, n, opponents):
     command[0] = state['python']
     def execute(phase):
         new_output(state, out)
-        run_process(state, phase, command)
+        run_process(state, phase, command, input_hashes=before)
     def audit():
         require(hashes(inputs) == before, 'Evaluation inputs changed during job')
         rows = read_rows(out)

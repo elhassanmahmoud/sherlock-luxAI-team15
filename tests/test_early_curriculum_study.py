@@ -574,7 +574,14 @@ def confirmation(all_pairs, study):
 
 def fake_confirmation_jobs(study, monkeypatch, *, fail_stage=None, wrong_direct=False):
     commands = []
-    def process(state, phase, command):
+    def process(state, phase, command, *, input_hashes=None):
+        assert input_hashes and study.hashes(input_hashes) == input_hashes
+        if '--weights' in command:
+            assert command[command.index('--weights') + 1] in input_hashes
+        else:
+            assert str(study.frozen_v3(state)) in input_hashes
+            assert all(str(Path(state['arms'][str(seed)]['early']['run']) / 'weights/agent.pth')
+                       in input_hashes for seed in (47, 48, 49))
         commands.append(command)
         phase['jobs'].append(dict(argv=command, returncode=0, started_at=1., finished_at=2.))
         if '--build-candidate' in command:
@@ -793,8 +800,8 @@ def test_fixed_candidate_rejects_different_full_training_configs(confirmation, s
 def test_evaluation_rejects_candidate_changed_while_job_runs(confirmation, study, monkeypatch):
     fake_confirmation_jobs(study, monkeypatch)
     original = study.run_process
-    def mutate(state, phase, command):
-        original(state, phase, command)
+    def mutate(state, phase, command, *, input_hashes=None):
+        original(state, phase, command, input_hashes=input_hashes)
         if '--out' in command and command[command.index('--out') + 1].endswith('development_v3.csv'):
             with Path(state['candidate']).open('ab') as stream:
                 stream.write(b'changed-during-job')
@@ -803,3 +810,64 @@ def test_evaluation_rejects_candidate_changed_while_job_runs(confirmation, study
         study.run_gated_confirmation(confirmation)
     assert not Path(confirmation['comparisons']['development_candidate']).exists()
     assert confirmation['phases']['development_v3']['status'] == 'running'
+
+
+def test_periodic_check_stops_owned_job_when_generated_dependency_changes(state, study, monkeypatch):
+    from types import SimpleNamespace
+    dependency = Path(state['analysis']) / 'generated-checkpoint.pth'
+    dependency.write_bytes(b'original checkpoint')
+    binding = study.hashes([dependency])
+    completed = Path(state['analysis']) / 'completed.txt'
+    clock = {'now': 0., 'mutated': False}
+    real_sleep = time.sleep
+    def advance(seconds):
+        if not clock['mutated']:
+            dependency.write_bytes(b'changed checkpoint')
+            clock.update(now=31., mutated=True)
+        else:
+            clock['now'] += seconds
+        real_sleep(min(seconds, .01))
+    monkeypatch.setattr(study, 'time', SimpleNamespace(time=time.time,
+        monotonic=lambda: clock['now'], sleep=advance))
+    command = [sys.executable, '-c', 'import time; from pathlib import Path; time.sleep(.5); Path('
+               + repr(str(completed)) + ').write_text("finished")']
+    with pytest.raises(ValueError, match='Job input.*changed'):
+        study.run_phase(state, 'periodic_dependency', lambda phase: study.run_process(
+            state, phase, command, input_hashes=binding), lambda: ({}, [completed]))
+    phase = state['phases']['periodic_dependency']
+    assert clock['mutated'] and phase['status'] == 'running'
+    assert phase['jobs'][0]['input_hashes'] == binding
+    assert phase['jobs'][0]['returncode'] != 0
+    assert not completed.exists()
+    assert state['active'] is None and study.CURRENT is None
+    with pytest.raises(ProcessLookupError):
+        os.kill(phase['jobs'][0]['pid'], 0)
+
+
+def test_single_arm_evaluation_passes_completed_training_bindings(pair, study, monkeypatch):
+    pair['phases'].pop('eval_47_early')
+    Path(pair['arms']['47']['early']['eval']).unlink()
+    observed = []
+    def stop_at_boundary(state, phase, command, *, input_hashes=None):
+        observed.append(input_hashes)
+        raise RuntimeError('Test stops before model job')
+    monkeypatch.setattr(study, 'run_process', stop_at_boundary)
+    with pytest.raises(RuntimeError, match='Test stops'):
+        study.evaluate_arm(pair, 47, 'early')
+    assert observed == [pair['phases']['train_47_early']['outputs']]
+
+
+def test_checkpoint_audit_passes_finalized_run_bindings(state, study, monkeypatch):
+    run = Path(state['arms']['47']['early']['run'])
+    observed = []
+    def stop_at_audit(state, phase, command, *, input_hashes=None):
+        if '--checkpoint-audit' not in command:
+            (run / 'weights').mkdir()
+            (run / 'weights/agent.pth').write_bytes(b'final checkpoint')
+        else:
+            observed.append(input_hashes)
+            raise RuntimeError('Test stops before tensor audit')
+    monkeypatch.setattr(study, 'run_process', stop_at_audit)
+    with pytest.raises(RuntimeError, match='Test stops'):
+        study.train_arm(state, 47, 'early')
+    assert observed == [study.hashes([run / 'study.json', run / 'weights/agent.pth'])]
