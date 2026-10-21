@@ -231,3 +231,8 @@ Entwicklung: Solution 108/120 statt 102/120; direkt 80/120 gegen V3. Frisch auf 
 Alle sechs Jobs vollständig, Rückgabecode 0, eigene Prozessgruppen beendet. Unabhängiger Rohdaten-/Hash-/Statistikreview bestanden; Root prüfte Rechnung und Audit erneut. 83 Quellen, fünf Eingaben, acht geschützte Dateien unverändert. Originalzustand beim Audit erhalten, Studie anschließend negativ geschlossen. Die bekannten Entwicklungszahlen werden nicht mit frischen Ergebnissen gepoolt.
 
 Zusammen mit Paar-Koordinator, Zielpilot und begrenzter CNN-Fortsetzung **3.336 neue Spiele**, davon 240 Training. Kein qualifizierter V4-Ersatz, V3 und alte Sicherung erhalten. [Abschlussbericht](MORGENBERICHT_20261022.md). Die unabhängige Kollisionen-/Strategieprüfung begründet derzeit keinen weiteren Modellversuch; nächster Schritt ist die Auswertung von Mahmouds bereits laufenden Gefahrmerkmale-/PPO-Studien nach deren bestehendem Protokoll.
+
+## 21.10.2026 – Gefahr-Merkmale `threat_feats` (Claude Code mit Mahmoud)
+
+6 × `full_rules_v3_threat` (Starts 40–45, je 3000 Spiele, 70 % Solution_92) gegen die Kontrolle `v3nets6` (gleiche Starts ohne Gefahr-Merkmale, 20.10.). Auswahlblock 503220–503419, je 400 Spiele: `threat6` 72,8 % vs. Kontrolle 73,3 % (Δ −0,5 [−6,0; +4,8]); vs. V3 76,7 %: `threat6` −4,0, `mix24` (+18 V3-Netze) +1,5 [−2,8; +5,8]; default 98,8–100 %. Vorab-Gate +3 pp verfehlt → beendet, frische Blöcke 503420–503819 unbenutzt. [Plan](superpowers/plans/2026-10-21-threat-features.md), Log `experiments/pipeline_threat.log`, Rohdaten `experiments/compare/regeln/T21_*_3220.csv`.
+

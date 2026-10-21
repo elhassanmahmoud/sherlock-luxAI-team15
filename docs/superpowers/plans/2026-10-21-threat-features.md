@@ -49,3 +49,12 @@ Tile, bester Sap) kann das Netz lernen, wann es eine Festung betritt, wartet ode
 - Vor einer Übernahme: aktuelle V3 mit Hash unter `experiments/releases/` sichern (alte
   Sechser-Sicherung bleibt), Kurs-Runner-Prüfung, gesamte Testsuite, Mahmoud fragt Moayed.
   Ergebnis in jedem Fall in Arbeitsstand und Experimentprotokoll.
+
+## Ergebnis (21.10.2026, 21:48 – nach der Festlegung oben ergänzt)
+
+Auswahlblock 503220–503419, je 400 Spiele: V3 76,7 % gegen Solution_92 (default 98,8 %),
+`v3nets6` 73,3 %, `threat6` 72,8 %, `mix24` 78,2 % (default 99,0 %). Gepaarter Karten-Bootstrap
+gegen V3: `mix24` +1,5 [−2,8; +5,8], `threat6` −4,0 [−9,5; +1,3]; `threat6` gegen Kontrolle −0,5
+[−6,0; +4,8]. Bester Kandidat `mix24` unter der +3-Regel → **beendet**, Bestätigungsblöcke nicht
+benutzt. PPO-Teil (Schritt 4) steht noch aus.
+
