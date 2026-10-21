@@ -1,6 +1,7 @@
 """One fixed, passive V3 loss diagnostic; run only after source review.
 
 Uses common.play_game unchanged. All coordinates in records are REAL coordinates.
+Recorded direction classes and legal-mask indices also use the real frame.
 The agent receives only its original observation/params; truth is external. A
 transition's t snapshot precedes env.step, while known tiles reflect act(obs_t).
 Net energy changes are not damage attribution, masks are not unit lifetimes, and
@@ -83,10 +84,15 @@ class ObservedAgent:
         had_instance = '_rule_override' in vars(agent)
         previous_instance = vars(agent).get('_rule_override')
 
+        def world_direction(action):
+            from agents.sherlock.geometry import mirror_dir
+            return mirror_dir(action) if agent.belief.mirrored and action < 5 else int(action)
+
         def record_rule(ctx, uid, mask, action):
             result = original(ctx, uid, mask, action)
-            calls[int(uid)] = dict(before_rule=int(action), after_rule=int(result),
-                                   legal_mask=np.asarray(mask, bool).tolist(),
+            calls[int(uid)] = dict(before_rule=world_direction(action), after_rule=world_direction(result),
+                                   legal_mask=np.asarray(mask, bool)[
+                                       [world_direction(i) for i in range(len(mask))]].tolist(),
                                    first_on_tile=int(ctx['first_on_tile'].get(
                                        tuple(ctx['ally_pos'][uid]), -1)))
             return result
@@ -114,7 +120,7 @@ class ObservedAgent:
             late = call['after_rule'] == 0 and int(actions[uid, 0]) == 5
             xy = tuple(context['position'])
             units.append(dict(uid=uid, **context, **call, final_action=actions[uid].tolist(),
-                              recorded_action_class=int(agent._prev_actions[uid]),
+                              recorded_action_class=world_direction(agent._prev_actions[uid]),
                               on_known_point=bool(known[xy]), late_stay_to_sap=late,
                               inferred_pt_sap=bool(late and getattr(cfg, 'pt_sap', False)
                                                    and not competing)))

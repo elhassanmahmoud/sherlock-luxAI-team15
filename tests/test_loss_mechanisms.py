@@ -209,3 +209,21 @@ def test_competing_override_is_not_attributed_to_pt_sap():
     proxy.act(25, make_obs(25, 25, units=[(5, 5, 100)], enemies=[(6, 5, 80)]))
     assert proxy.decision['units'][0]['late_stay_to_sap']
     assert not proxy.decision['units'][0]['inferred_pt_sap']
+
+
+def test_player_one_direction_trace_and_mask_share_world_frame():
+    """Canonical RIGHT at the mirrored origin is world UP, with no override."""
+    m = observer_module()
+    from agents.sherlock.main import Agent_x
+    from agents.sherlock.config import AgentConfig
+    from tests.test_mask_and_act import FixedQ
+    agent = Agent_x('player_1', train=False, cfg=AgentConfig(scripted_explore=False))
+    agent.set_env_cfg(ENV_CFG)
+    agent.q = FixedQ(2)
+    proxy = m.ObservedAgent(agent, 'player_1')
+    actions = proxy.act(25, make_obs(25, 25, team=1, units=[(23, 23, 100)]))
+    unit = proxy.decision['units'][0]
+    assert actions[0].tolist() == [1, 0, 0]
+    assert unit['before_rule'] == unit['after_rule'] == unit['recorded_action_class'] == 1
+    assert unit['legal_mask'] == [True, True, False, False, True, False]
+    assert unit['legal_mask'][unit['final_action'][0]]
