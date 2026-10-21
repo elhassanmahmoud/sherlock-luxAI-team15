@@ -1,0 +1,242 @@
+{
+  "phase": "pre_fresh",
+  "source_head": "9c1efc7fe4e09e1738ff489292786fa535670174",
+  "freeze_id": "561eef88a5c787431009720ad09a70e2900d1d0e25b1ad212d0310e67f942d43",
+  "completed_games": 608,
+  "candidate_identity": {
+    "baseline_sha256": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "candidate_sha256": "e392f20c60d51817591ee4c0061bc8150e7ec8aa312b42e704004538ead45497",
+    "changed_saved_config": {
+      "art_sap": true,
+      "art_min_hits": 3
+    },
+    "all_other_checkpoint_fields_identical": true,
+    "loaded_network_count": 18,
+    "loaded_tensors_identical": true,
+    "effective_config": {
+      "hidden": 256,
+      "dueling": true,
+      "gamma": 0.99,
+      "lr": 0.0003,
+      "batch_size": 256,
+      "buffer_capacity": 300000,
+      "learn_start": 5000,
+      "train_every": 2,
+      "target_update_every": 500,
+      "grad_clip": 5.0,
+      "double_dqn": true,
+      "eps_start": 1.0,
+      "eps_end": 0.05,
+      "eps_decay_steps": 60000,
+      "guided_prob": 0.7,
+      "use_belief": true,
+      "use_symmetry": true,
+      "home_first": false,
+      "home_penalty": 0.0,
+      "home_last_only": false,
+      "explore_memory": true,
+      "explore_grid": true,
+      "scripted_explore": true,
+      "explore_stale": 20,
+      "early_inference": true,
+      "relic_filter": true,
+      "subset_infer": true,
+      "cand_quota": 0,
+      "sticky": 0.0,
+      "far_opp": 10,
+      "far_cand": true,
+      "cand_boost": 0.0,
+      "contest_sap": false,
+      "energy_pref": 0.0,
+      "explore_quota": 0,
+      "explore_until": 75,
+      "pt_sap": true,
+      "pt_sap_reserve": 0,
+      "pt_sap_zone": false,
+      "safe_moves": false,
+      "idle_sap": false,
+      "idle_sap_reserve": 30,
+      "art_sap": true,
+      "art_min_hits": 3,
+      "art_reserve": 0,
+      "art_safe": true,
+      "threat_feats": false,
+      "siege": false,
+      "siege_min_score": 1.5,
+      "siege_reserve": 0.0,
+      "siege_prob": 0.5,
+      "sap_kill_first": false,
+      "sap_pt_first": false,
+      "sap_geometry": false,
+      "keep_dead": false,
+      "keep_dead_fast": true,
+      "stale_all": false,
+      "opp_infer": false,
+      "pt_walk": false,
+      "pt_walk_own": false,
+      "pt_walk_from_match": 0,
+      "pt_hold": false,
+      "ram": false,
+      "ram_margin": 10.0,
+      "fog_sap": false,
+      "fog_any": false,
+      "fog_reserve": 30.0,
+      "reward_fix": true,
+      "terminal_death_potential": false,
+      "active_targets": false,
+      "smart_sap": false,
+      "use_shaping": true,
+      "canonical": true,
+      "joint_moves": false,
+      "use_sap": true,
+      "mask_actions": true,
+      "w_point": 1.0,
+      "w_shape": 0.5,
+      "w_explore": 0.3,
+      "w_energy": 0.1,
+      "w_stack": 0.3,
+      "w_death": 0.5,
+      "w_match": 2.0,
+      "w_discovery": 0.5,
+      "w_sap_hit": 0.3,
+      "w_opp_points": 0.0
+    },
+    "checkpoint_top_level_keys": [
+      "cfg",
+      "ensemble",
+      "ensemble_sources",
+      "env_steps",
+      "feature_dim",
+      "learn_steps",
+      "n_actions",
+      "opt",
+      "q",
+      "target_q"
+    ],
+    "source": "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/agents/sherlock/weights/agent_p0.pth",
+    "candidate": "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint/experiments/candidates/v3_art3_20261021.pth"
+  },
+  "protected_hashes_verified": true,
+  "output_sha256": {
+    "development_v3": "a8527d4b19009a06f1fcadf7f148ae5e5f2ee8fd6958609dad4b29268b5a7b83",
+    "development_candidate": "a7c5f366e6b790e943b2d6fd83a61f414eca92319ec4948fe19d4c29e5d7e89c",
+    "direct_development": "9817c5feb5ad89d01858bcf5dd009d75102f1f116c37c597fd9e7648215c4aae",
+    "course": "2170da1d780c73927f4f89c877293cc514078f4d7d3d69145948509e938de67d"
+  },
+  "historical_sha256": {
+    "v3": "355f86af5be3f5f4dc755dad877af491a6b764cfce4d7c5db89ddf7dd1f52173",
+    "candidate": "080488ca48aaf0a405d3b1a6bc70e699d7bcf71a12564ec7fdf5f058cd70687c"
+  },
+  "bootstrap": {
+    "draws": 5000,
+    "rng": "numpy.default_rng(0)",
+    "percentiles": [
+      2.5,
+      97.5
+    ],
+    "unit": "whole map including both sides"
+  },
+  "development": {
+    "scope": "Known development maps; never independent confirmation.",
+    "reproduction": {
+      "v3": {
+        "games": 240,
+        "checked_fields_per_game": 23,
+        "all_non_time_fields_identical": true,
+        "different_values": 0,
+        "first_mismatches": []
+      },
+      "candidate": {
+        "games": 240,
+        "checked_fields_per_game": 23,
+        "all_non_time_fields_identical": true,
+        "different_values": 0,
+        "first_mismatches": []
+      }
+    },
+    "paired_actual_wins": {
+      "default": {
+        "candidate": {
+          "games": 120,
+          "wins": 120,
+          "draws": 0,
+          "losses": 0,
+          "actual_win_rate": 1.0,
+          "mean_result": 1.0
+        },
+        "reference": {
+          "games": 120,
+          "wins": 120,
+          "draws": 0,
+          "losses": 0,
+          "actual_win_rate": 1.0,
+          "mean_result": 1.0
+        },
+        "maps": 60,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "solution92": {
+        "candidate": {
+          "games": 120,
+          "wins": 108,
+          "draws": 0,
+          "losses": 12,
+          "actual_win_rate": 0.9,
+          "mean_result": 0.9
+        },
+        "reference": {
+          "games": 120,
+          "wins": 102,
+          "draws": 0,
+          "losses": 18,
+          "actual_win_rate": 0.85,
+          "mean_result": 0.85
+        },
+        "maps": 60,
+        "delta": 0.05,
+        "ci95": [
+          0.008333333333333333,
+          0.1
+        ]
+      }
+    },
+    "gates": {
+      "solution_at_least_108_wins": true,
+      "solution_at_least_6_more_wins": true,
+      "default_120_wins": true
+    },
+    "passed": true
+  },
+  "advance_to_direct_and_course": true,
+  "direct_development": {
+    "games": 120,
+    "wins": 80,
+    "draws": 0,
+    "losses": 40,
+    "actual_win_rate": 0.6666666666666666,
+    "mean_result": 0.6666666666666666,
+    "maps": 60,
+    "ci95": [
+      0.5833333333333334,
+      0.75
+    ],
+    "passed": true
+  },
+  "course": {
+    "games": 8,
+    "max_per_game_p95_ms": 2.3259874898940325,
+    "maximum_ms": 10.945542016997933,
+    "timing_gates": {
+      "p95_at_most_50ms": true,
+      "maximum_at_most_250ms": true
+    },
+    "passed": true,
+    "scope": "Exact loading, fresh state, complete games, action shape/type/finiteness and timing. This probe does not prove all semantic action legality. Evaluation invalid_frac uses its existing metric definition."
+  },
+  "development_followup_order_valid": true,
+  "advance_to_fresh": true
+}

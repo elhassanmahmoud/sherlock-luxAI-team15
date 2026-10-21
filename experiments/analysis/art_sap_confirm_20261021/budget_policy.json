@@ -1,0 +1,18 @@
+{
+  "updated_at_utc": "2026-10-21T18:34:50.579362+00:00",
+  "source": "explicit user message",
+  "minimum_remaining_percent": 30,
+  "begin_closure_at_used_percent": 65,
+  "hard_stop_at_used_percent": 70,
+  "last_observed_used_percent": 20,
+  "last_observed_window_minutes": 10080,
+  "no_reset": true,
+  "checks": "Each phase boundary and before expensive delegated work; at most 15 minutes while active",
+  "actions_at_closure": [
+    "no new experiments",
+    "finish or stop owned processes",
+    "save honest intermediate report",
+    "pause both Sherlock automations",
+    "stop remote watcher and caffeinate"
+  ]
+}
