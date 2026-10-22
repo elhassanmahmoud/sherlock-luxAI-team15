@@ -1,0 +1,89 @@
+{
+  "name": "selection",
+  "jobs": [
+    {
+      "name": "baseline",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92",
+        "--set",
+        "sap_overkill_recovery=false",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_baseline_sol.csv"
+      ]
+    },
+    {
+      "name": "recovery",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92",
+        "--set",
+        "sap_overkill_recovery=true",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_recovery_sol.csv"
+      ]
+    },
+    {
+      "name": "drift",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92",
+        "--set",
+        "sap_overkill_recovery=false",
+        "--set",
+        "nebula_infer_drift_safe=true",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_drift_sol.csv"
+      ]
+    },
+    {
+      "name": "combined",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92",
+        "--set",
+        "sap_overkill_recovery=true",
+        "--set",
+        "nebula_infer_drift_safe=true",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_combined_sol.csv"
+      ]
+    }
+  ]
+}

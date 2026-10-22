@@ -1,0 +1,80 @@
+..FFFF...F                                                               [100%]
+=================================== FAILURES ===================================
+_ test_detected_drift_does_not_relabel_current_asteroid_from_old_sensor[True-2] _
+
+flag = True, want = 2
+
+    @pytest.mark.parametrize("flag,want", [(None, TILE_NEBULA), (False, TILE_NEBULA),
+                                           (True, TILE_ASTEROID)])
+    def test_detected_drift_does_not_relabel_current_asteroid_from_old_sensor(flag, want):
+        a, obs, sensor, current, target = _drift_case(flag)
+        a.belief.observe(obs)
+        assert a.belief.drift_events == 1
+        assert a.belief.drift_votes[1] == 1
+>       assert int(a.belief.tile_type[target]) == want
+E       assert 1 == 2
+E        +  where 1 = int(np.int8(1))
+
+tests/test_v10_mechanics.py:162: AssertionError
+__ test_drift_safe_inference_preserves_canonical_direction_after_reset[0--1] ___
+
+team = 0, direction = -1
+
+    @pytest.mark.parametrize("team,direction", [(0, -1), (1, 1), (1, -1)])
+    def test_drift_safe_inference_preserves_canonical_direction_after_reset(team, direction):
+        a, obs, sensor, current, target = _drift_case(True, direction=direction, team=team)
+        a.belief.observe(obs)
+        assert a.belief.drift_events == 1
+        assert a.belief.drift_votes[direction] == 1
+>       assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+E       assert 1 == 2
+E        +  where 1 = int(np.int8(1))
+
+tests/test_v10_mechanics.py:173: AssertionError
+___ test_drift_safe_inference_preserves_canonical_direction_after_reset[1-1] ___
+
+team = 1, direction = 1
+
+    @pytest.mark.parametrize("team,direction", [(0, -1), (1, 1), (1, -1)])
+    def test_drift_safe_inference_preserves_canonical_direction_after_reset(team, direction):
+        a, obs, sensor, current, target = _drift_case(True, direction=direction, team=team)
+        a.belief.observe(obs)
+        assert a.belief.drift_events == 1
+        assert a.belief.drift_votes[direction] == 1
+>       assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+E       assert 1 == 2
+E        +  where 1 = int(np.int8(1))
+
+tests/test_v10_mechanics.py:173: AssertionError
+__ test_drift_safe_inference_preserves_canonical_direction_after_reset[1--1] ___
+
+team = 1, direction = -1
+
+    @pytest.mark.parametrize("team,direction", [(0, -1), (1, 1), (1, -1)])
+    def test_drift_safe_inference_preserves_canonical_direction_after_reset(team, direction):
+        a, obs, sensor, current, target = _drift_case(True, direction=direction, team=team)
+        a.belief.observe(obs)
+        assert a.belief.drift_events == 1
+        assert a.belief.drift_votes[direction] == 1
+>       assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+E       assert 1 == 2
+E        +  where 1 = int(np.int8(1))
+
+tests/test_v10_mechanics.py:173: AssertionError
+______ test_drift_safe_resumes_inference_on_the_step_after_detected_drift ______
+
+    def test_drift_safe_resumes_inference_on_the_step_after_detected_drift():
+        a, obs, _, _, target = _drift_case(True)
+        a.belief.observe(obs)
+>       assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+E       assert 1 == 2
+E        +  where 1 = int(np.int8(1))
+
+tests/test_v10_mechanics.py:196: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_v10_mechanics.py::test_detected_drift_does_not_relabel_current_asteroid_from_old_sensor[True-2]
+FAILED tests/test_v10_mechanics.py::test_drift_safe_inference_preserves_canonical_direction_after_reset[0--1]
+FAILED tests/test_v10_mechanics.py::test_drift_safe_inference_preserves_canonical_direction_after_reset[1-1]
+FAILED tests/test_v10_mechanics.py::test_drift_safe_inference_preserves_canonical_direction_after_reset[1--1]
+FAILED tests/test_v10_mechanics.py::test_drift_safe_resumes_inference_on_the_step_after_detected_drift
+5 failed, 5 passed, 20 deselected in 3.34s
