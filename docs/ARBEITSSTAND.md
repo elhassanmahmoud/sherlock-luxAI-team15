@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 06:05 Berlin – Claude Code (autonom): nächste Verbesserungen für V8
+
+- Entwicklungsmessungen auf V7 + `reach_assign` (63,6/94,9 %, geschätzt ≈ 84,6 %): `unstack`, `sap_reserve_k=1`, `sym_map` (Spiegelung der Karte im Gedächtnis), `sap_relevant` ohne Gewinn. **`sap_no_overkill`** (keine Saps auf Gegner, die schon durch geplante Saps desselben Steps sterben) **68,5/96,0 % → geschätzt ≈ 86,9 %**. Befund dahinter: Halter feuerten zu dritt auf einen Gegner mit 21 Energie; unsere Halter haben zu wenig Energie und sterben dann an Kollisionen (im Mittel 41 gegen 102 Energie) und Void.
+- Kollisionstode genauer (Verlustspiele, je Spiel): 5,5 Gegner zieht auf unsere stehende Unit, 3,4 beide ziehen auf dasselbe Tile, 1,5 wir ziehen auf einen stärkeren Gegner; Gegner fast immer vorher sichtbar. Neue Schalter `collision_guard`, `sap_still` (Default aus, Tests grün, 42 in `tests/test_rules_2110.py`); Messungen laufen (`D22_Bsnpdr{q,m,c}`, `D22_Bsnpdros`).
+- Erkenntnis Spielregeln: neue Relic-Paare spawnen in Match 2/3 je bei Step 0–49 (`relic_spawn_schedule`). In Match 3 kennen wir ~2,7 echte eigene Punkte-Tiles nicht (37 % ungesehene Relics, 38 % ungetestete freie Kandidaten, 15 % Kandidaten im Nebel); Test `explore_quota=1` läuft.
+- [V8-Plan](superpowers/plans/2026-10-22-v8.md) vorab festgelegt: Referenz V7, 800 frische Karten, Δ ≥ +2 pp mit unterer Grenze > 0, direkt gegen V7.
+- Training: die 6 Netze mit V6-Regeln helfen gemischt nicht (`v6mix24` 53,9/93,9), allein schwach (`v6nets6` 52,0/88,4); weiteres Training gestoppt zugunsten der Regel-/Gedächtnis-Messungen.
+
 ## 22.10.2026, 05:35 Berlin – Claude Code (autonom): **V7 als Abgabe übernommen**
 
 - **V7 (`v7_Bsnpd`) hat alle vorab festgelegten Gates bestanden** ([Plan](superpowers/plans/2026-10-22-v7.md), [Übernahmebericht](../experiments/analysis/release_20261022_v7/RELEASE.md)): frisch 505420–505819 Solution_92 **83,5 % statt 76,5 % (Δ +7,0 pp [+4,0; +10,0])**, default 99,75 % (Δ 0), **direkt gegen V3 68,0 % [61,5; 74,25]**.
