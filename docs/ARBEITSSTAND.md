@@ -9,7 +9,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 - **Zusammenfassung der Nacht für Mahmoud/Moayed: [Nachtbericht V7/V8](NACHT_V7_V8_20261022.md)** (Änderungen in einfacher Sprache, Zahlen, Entscheidungsvorlage V8 mit Übernahmeweg).
 - [V9-Plan](superpowers/plans/2026-10-22-v9.md): `mobile_seen` (−0,2), `obey_target` (−0,8) und `neb_cand`+`idle_approach` (−0,8, Fix für den Nebel-Relic-Fall 361050) verbessern V8 nicht → kein V9-Ablauf, Blöcke 507220–508619 unbenutzt. Kleine Regeländerungen um V8 liegen alle zwischen −2 und +0,2 pp: V8 ist für diesen Ansatz ein Plateau.
-- Läuft: Info-Duelle **nur für die Teamentscheidung** (kein Gate): V8 gegen V7 auf 508620–509019 (800 Spiele), V8 gegen V3 auf 509020–509219 (`scripts/info_duels_v8.sh`, Log `experiments/info_duels_v8.log`).
+- Info-Duelle **nur für die Teamentscheidung** (kein Gate, nach dem V8-Gate erhoben): **V8 gegen V7 59,9 % [55,0; 64,75] aus 800 Spielen**, V8 gegen V3 75,0 % [69,0; 81,0] aus 400 Spielen (`scripts/info_duels_v8.sh`). Empfehlung im [Nachtbericht](NACHT_V7_V8_20261022.md): V8 übernehmen, als bewusste Teamentscheidung.
+- Training läuft: 6 Netze unter V8-Bedingungen (`full_rules_v8`, `rules_in_training`), danach Messung `v8mix24` gegen V8 (`scripts/pipeline_v8nets.sh`).
 - Abgabe: **V7** (`c394acba…95e6`).
 
 ## 22.10.2026, 07:30 Berlin – Claude Code (autonom): V8 knapp nicht übernommen, Testsuite sauber
