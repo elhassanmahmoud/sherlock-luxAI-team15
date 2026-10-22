@@ -93,6 +93,10 @@ def _worker(job: tuple) -> list[dict]:
                 opp_side = "player_1" if side == "player_0" else "player_0"
                 if opp_name.startswith("self:"):  # eigener Checkpoint als Gegner
                     opp = make_opponent("self", opp_side, self_play_path=opp_name[5:])
+                elif opp_name.startswith("ppo:"):  # 22.10.2026: CNN-PPO-Checkpoint als Gegner
+                    from agents.sherlock.ppo_agent import PPOAgent
+                    opp = PPOAgent(opp_side, agent_path=opp_name[4:], train=False)
+                    opp.set_to_eval_mode()
                 else:
                     opp = make_opponent(opp_name, opp_side)
                 r = play_game(env, agent, opp, seed, side, train=False)

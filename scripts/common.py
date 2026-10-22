@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-OPPONENTS = ("default", "solution92", "dqn", "random", "self")
+OPPONENTS = ("default", "solution92", "dqn", "random", "self", "sol92_sq", "sol92_weak", "sol92_sqweak", "rush")
 
 
 class RandomAgent:
@@ -78,6 +78,15 @@ def make_opponent(kind: str, player: str, self_play_path: str | None = None):
         return Agent(player, agent_path="agents/DQN/agent.pth")
     if kind == "random":
         return RandomAgent(player)
+    if kind in ("sol92_sq", "sol92_weak", "sol92_sqweak"):
+        # 22.10.2026: Spielweisen-Varianten fuer Robustheitstests (scripts/style_opponents.py)
+        _reset_solution92()
+        from scripts.style_opponents import Sol92Variant
+        return Sol92Variant(player, square=kind in ("sol92_sq", "sol92_sqweak"),
+                            weakest=kind in ("sol92_weak", "sol92_sqweak"))
+    if kind == "rush":
+        from scripts.style_opponents import RushBot
+        return RushBot(player)
     if kind == "self":
         from agents.sherlock.main import Agent_x
         opp = Agent_x(player, agent_path=self_play_path, name="Self-Play Snapshot", train=False)
