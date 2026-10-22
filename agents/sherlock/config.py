@@ -140,6 +140,9 @@ class AgentConfig:
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
     dodge_auto: bool = False
+    dodge_auto_max: float = 0.5
+    """Hoechster geschaetzter Streufaktor, bei dem dodge_auto ausweicht. 22.10.2026: Gewinn fast
+    nur bei 0,25 (schwere Karten +2,7 pp), bei 0,5 leichte Karten −1,7 pp."""
     """True (22.10.2026, nur Auswertung): dodge (mit dodge_mode) nur, solange der geschaetzte
     Sap-Streufaktor (param_est, sonst 0,5) <= 0,5 ist. Entwicklung 500720-500779: dodge always
     bei Streufaktor 0,25 / 0,5 / 1,0: +5,9 / +2,5 / −2,2 pp."""
@@ -224,6 +227,8 @@ class AgentConfig:
     fog_any: bool = False
     """True: Nebel-Sap fuer jede stehende Unit, nicht nur auf Punkte-Tiles."""
     fog_reserve: float = 30.0
+    fog_sap_max_sensor: int = 4
+    """fog_sap nur bei Sensorreichweite <= diesem Wert (22.10.2026: Schwachstelle Sicht 1-2)."""
     """Energie, die nach einem Nebel-Sap mindestens uebrig bleiben soll."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs

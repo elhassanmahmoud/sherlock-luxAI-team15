@@ -276,7 +276,7 @@ class Agent_x:
         # 21.10.2026: vorhergesagte Solution_92-Treffer je eigener Unit (opp_model)
         # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
         fight = not self.cfg.tactics_when_behind or ctx["opp_points"] > ctx["own_points"]
-        dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= 0.5)
+        dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= self.cfg.dodge_auto_max)
         if self.cfg.dodge_verify and not self.training:
             self._check_predictions(ctx)
             predicted = self._predicted_hits(ctx, stationary)
@@ -311,7 +311,8 @@ class Agent_x:
                 if d is not None:
                     a = d
                     self._prev_actions[uid] = a
-            if self.cfg.fog_sap and a == geo.STAY:
+            if (self.cfg.fog_sap and a == geo.STAY
+                    and ctx["sensor_range"] <= self.cfg.fog_sap_max_sensor):
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
                 if sap is not sap_targets[uid]:
                     a = geo.SAP
