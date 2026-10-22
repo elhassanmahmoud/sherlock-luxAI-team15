@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 13:50 Berlin – Claude Code mit Mahmoud: 12 neue Netze, kein Gewinn gegenüber V10
+
+- Zweite Trainingsreihe `full_rules_v8` (Starts 60–62/90–92, je 3000 Spiele) abgeschlossen; damit 12 Netze unter V8-Bedingungen. Entwicklung (V10-Config): **18 alte + 12 neue (`v10mix30`) 79,2/95,8 % → geschätzt 90,3 % (= V10)**, nur die 12 neuen (`v10nets12`) 76,5/95,2 % → 89,1 % (6 neue: 86,8 %). Mit V8-Config `v8mix24b` siehe `experiments/pipeline_v8nets_b.log`.
+- Schluss: Weder kleine Regeln (Plateau 90–91 %) noch zusätzliche Netze verbessern V10 klar. **V10 bleibt Abgabe.** Für einen weiteren Sprung bräuchte es einen größeren Ansatz für die Kämpfe um gemeinsame Relic-Haufen (z. B. Planung mit dem geprüften Ein-Schritt-Simulator `agents/sherlock/tactics.py`).
+- Für die Präsentation am 06.11. lokal erzeugt, nicht gepusht: `docs/presentation/bild_0611_*.png` (Vorher/Nachher zu Kartenfehler, Sackgasse, Mehrfach-Saps; Fortschrittsbalken), Verweise im lokalen `VORTRAGSPLAN_0611_ENTWURF.md`.
+
 ## 22.10.2026, 12:15 Berlin – Claude Code mit Mahmoud: Plateau um 90–91 % gegen Solution_92
 
 - Auf V10 gemessen (Entwicklung, geschätzt gesamt; V10 90,3 %): `cand_rescue` mit `rescue_after=30` **91,0 %** (bester Einzelschalter, rettet 0-Punkte-Spiele), V10 + 6 neue Netze 90,8 %, beides zusammen 91,0 % (nicht additiv), `dodge` mit Köder 90,5 %, `stage_attack` (gemeinsam in die Schusszone) 90,3 %, `sap_kill_safe` 90,1 %, `art_still` 90,0 %, `sap_reserve_k=0.5` 89,0 %. Kein Bündel liegt um +2 pp vor V10 → **kein Prüflauf, V10 bleibt**.
