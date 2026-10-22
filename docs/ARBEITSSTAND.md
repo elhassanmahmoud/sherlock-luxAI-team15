@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 08:00 Berlin – Claude Code (autonom): kein V9, Bericht der Nacht
+
+- **Zusammenfassung der Nacht für Mahmoud/Moayed: [Nachtbericht V7/V8](NACHT_V7_V8_20261022.md)** (Änderungen in einfacher Sprache, Zahlen, Entscheidungsvorlage V8 mit Übernahmeweg).
+- [V9-Plan](superpowers/plans/2026-10-22-v9.md): `mobile_seen` (−0,2), `obey_target` (−0,8) und `neb_cand`+`idle_approach` (−0,8, Fix für den Nebel-Relic-Fall 361050) verbessern V8 nicht → kein V9-Ablauf, Blöcke 507220–508619 unbenutzt. Kleine Regeländerungen um V8 liegen alle zwischen −2 und +0,2 pp: V8 ist für diesen Ansatz ein Plateau.
+- Läuft: Info-Duelle **nur für die Teamentscheidung** (kein Gate): V8 gegen V7 auf 508620–509019 (800 Spiele), V8 gegen V3 auf 509020–509219 (`scripts/info_duels_v8.sh`, Log `experiments/info_duels_v8.log`).
+- Abgabe: **V7** (`c394acba…95e6`).
+
 ## 22.10.2026, 07:30 Berlin – Claude Code (autonom): V8 knapp nicht übernommen, Testsuite sauber
 
 - **V8** ([Plan und Ergebnis](superpowers/plans/2026-10-22-v8.md)), frisch auf 800 Karten 506220–507019: **Solution_92 89,1 % statt 84,6 % bei V7 (Δ +4,5 [+2,6; +6,4])**, default 100 %. **Direkt gegen V7 56,5 % [49,5; 63,5]** → die vorab festgelegte Hürde „untere Grenze > 50 %“ um 0,5 pp verfehlt → **V7 bleibt Abgabe**. V8 = V7 + `reach_assign` + `sap_no_overkill` + `safe_moves` + `collision_guard`, Checkpoint `experiments/ensembles/v8_Bsnpdroc.pth` (lokal, SHA-256 `13023d74…d60c`, gitignored; bauen mit `python -m scripts.set_cfg experiments/ensembles/v7_Bsnpd.pth <ziel> reach_assign=true sap_no_overkill=true safe_moves=true collision_guard=true`). **Entscheidungsvorlage für Mahmoud/Moayed**: gegen Solution_92 und default nachweislich besser, im direkten Vergleich gegen V7 nicht nachweislich.
