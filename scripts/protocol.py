@@ -26,8 +26,15 @@ CURRICULUM_WARMUP_FRAC = 0.25
 
 
 def train_seed(run_seed: int, game: int) -> int:
-    """Env-Seed fuer Trainingsspiel `game` (zwei Spiele = ein Seed, beide Seiten)."""
-    s = TRAIN_SEED_BASE + run_seed * TRAIN_SEED_STRIDE + game // 2
+    """Env-Seed fuer Trainingsspiel `game` (zwei Spiele = ein Seed, beide Seiten).
+
+    Starts ab 50 (22.10.2026): Block run_seed - 50 ab Kartenindex 5000. Bisher nutzten Trainings
+    nur die Indizes < 2000 jedes Blocks; so bleiben neue Starts unter VAL_SEED_BASE und frisch."""
+    if run_seed >= 50:
+        assert game // 2 < 5000, "zu viele Trainingsspiele fuer einen Block"
+        s = TRAIN_SEED_BASE + (run_seed - 50) * TRAIN_SEED_STRIDE + 5000 + game // 2
+    else:
+        s = TRAIN_SEED_BASE + run_seed * TRAIN_SEED_STRIDE + game // 2
     assert s < VAL_SEED_BASE, "Trainings-Seeds wuerden in die Validierung laufen"
     return s
 

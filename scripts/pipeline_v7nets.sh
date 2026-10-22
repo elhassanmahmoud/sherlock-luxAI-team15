@@ -1,7 +1,7 @@
 #!/bin/bash
 # 22.10.2026: 6 weitere Netze mit V7-Gedaechtnis im Training (Variante full_rules_v7 = V6-Regeln +
 # nebula_infer + drift_track; Starts 57-59 und 67-69, je 3000 Spiele, 70 % Solution_92, Trainingskarten
-# 570000-591499 und 670000-691499). Danach Ensemble mix30 = 18 V3-Netze + 6 V6-Netze + 6 neue mit der
+# laut protocol.train_seed 75000-76499, 85000-86499, 95000-96499, 175000-176499, 185000-186499, 195000-196499). Danach Ensemble mix30 = 18 V3-Netze + 6 V6-Netze + 6 neue mit der
 # Config von RULES_FROM (Regeln/Schalter) und Entwicklungsmessung auf dev_hard330/dev_easy330.
 #   RULES_FROM=experiments/ensembles/<kandidat>.pth bash scripts/pipeline_v7nets.sh
 cd "$(dirname "$0")/.."

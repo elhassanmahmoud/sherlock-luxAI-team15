@@ -521,3 +521,12 @@ def test_sap_reserve_k_keeps_holder_energy():
         a.belief.point_tiles[5, 5] = True
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 60)], enemies=[(7, 7, 80)], relics=[(9, 9)]))
         assert int(act[0, 0]) == want, k
+
+
+def test_train_seed_high_starts_use_fresh_block_tail():
+    import scripts.protocol as P
+    low = {P.train_seed(r, g) for r in range(50) for g in range(0, 4000, 2)}
+    high = {P.train_seed(r, g) for r in range(50, 100) for g in range(0, 3000, 2)}
+    assert not low & high                                   # keine Karte doppelt
+    assert max(high) < P.VAL_SEED_BASE
+    assert all(s % P.TRAIN_SEED_STRIDE >= 5000 for s in high)
