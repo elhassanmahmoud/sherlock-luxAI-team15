@@ -1,0 +1,16 @@
+{
+  "label": "v10_V8st",
+  "status": "installed_and_verified",
+  "installed_at": "2026-10-22T07:21:00.784172+00:00",
+  "code_commit": "f2fd2a16e5b7a0f4d63024a43f0886d92962ff09",
+  "candidate": "experiments/ensembles/v10_V8st.pth",
+  "candidate_sha256": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+  "installed_sha256": {
+    "agents/sherlock/weights/agent_p0.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+    "agents/sherlock/weights/agent_p1.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67"
+  },
+  "rollback_manifest": "experiments/releases/20261022_v7_Bsnpd/manifest.json",
+  "rollback_readme": "experiments/releases/20261022_v7_Bsnpd/README.md",
+  "gate_log": "experiments/pipeline_v10.log",
+  "runner_report": "experiments/analysis/release_v10_V8st_runner_installed.json"
+}

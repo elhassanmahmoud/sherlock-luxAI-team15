@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 09:25 Berlin – Claude Code (autonom): **V10 als Abgabe übernommen – 90,3 % gegen Solution_92**
+
+- **V10 (`v10_V8st`) = V8 + `sap_still`** hat alle vorab festgelegten Gates gegen V7 bestanden ([Plan](superpowers/plans/2026-10-22-v10.md), [Übernahmebericht](../experiments/analysis/release_20261022_v10/RELEASE.md)): frisch auf 800 Karten 507420–508219 **Solution_92 90,3 % statt 82,8 % (Δ +7,5 [+5,4; +9,6])**, default 99,75 % (Δ −0,2), **direkt gegen V7 58,1 % [53,1; 62,75] aus 800 Spielen**.
+- Übernahme per `scripts/release_candidate.py`: V7 bytegleich gesichert (`experiments/releases/20261022_v7_Bsnpd/`, SHA-256 `c394acba…95e6`), V10 installiert (`03cf8bdc…8c67`), **Kurs-Runner unverändert: 8 Spiele bestanden** (`act` max. 11,3 ms).
+- Testsuite nach der Installation: 463 bestanden, 31 Studientests von der Schutzsperre abgewiesen (Training `full_rules_v8` lief). Wiederholung ohne Jobs folgt nach Trainingsende.
+- Damit erledigt: V8-Teamentscheidung (V10 enthält V8). Ziel ≥ 90 % gegen Solution_92 auf frischen Karten erreicht.
+
 ## 22.10.2026, 08:30 Berlin – Claude Code (autonom): V10 in Prüfung gegen V7
 
 - Auf V8 nachgemessen: **`sap_still`** (Halter-Saps nur auf stehende Gegner) **77,9/96,4 % → geschätzt ≈ 90,3 %** gegen Solution_92 (V8 89,5); `art_min_hits=4` 72,1/96,9 (schlechter).

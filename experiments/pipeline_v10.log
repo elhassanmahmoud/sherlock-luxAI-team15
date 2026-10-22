@@ -1,0 +1,20 @@
+[08:24] Start V8st (experiments/ensembles/v10_V8st.pth, SHA-256 03cf8bdc20bef58a) gegen REF experiments/ensembles/v7_Bsnpd.pth (c394acba84f7a298)
+V10_ref_7220.csv: default: 1.000 (400 Spiele), solution92: 0.860 (400 Spiele) in 273s
+V10_V8st_7220.csv: default: 1.000 (400 Spiele), solution92: 0.930 (400 Spiele) in 311s
+V10_V8st_7220                default       200    400  1.000  1.000  +0.000  [+0.000; +0.000]
+V10_V8st_7220                solution92    200    400  0.930  0.860  +0.070  [+0.028; +0.113]
+GATE Auswahl: Solution_92 0.9300 vs 0.8600 (Δ +7.00 pp, Ziel >= +1), default 1.0000 (Ziel >= 0,99) -> BESTANDEN
+[08:34] Auswahlhuerde bestanden -> frische Bestaetigung
+V10_ref_7420.csv: default: 0.999 (1600 Spiele), solution92: 0.828 (1600 Spiele) in 1062s
+V10_V8st_7420.csv: default: 0.998 (1600 Spiele), solution92: 0.903 (1600 Spiele) in 1189s
+V10_V8st_direct_8220.csv: self:experiments/ensembles/v7_Bsnpd.pth: 0.581 (800 Spiele) in 455s
+V10_V8st_7420                default       800   1600  0.998  0.999  -0.002  [-0.005; +0.000]
+V10_V8st_7420                solution92    800   1600  0.903  0.828  +0.075  [+0.054; +0.096]
+GATE Bestaetigung: Solution_92 0.9031 vs Referenz 0.8281, Δ +7.50 pp [+5.44; +9.62]; default 0.9975 (Δ -0.19); direkt 0.5813 [0.5312; 0.6275] aus 800 Spielen
+  OK   Solution_92 Δ >= +2 pp
+  OK   Solution_92 untere 95%-Grenze > 0
+  OK   default >= 99 %
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 0,5
+GATE Bestaetigung: BESTANDEN
+[09:19] Ende V8st
