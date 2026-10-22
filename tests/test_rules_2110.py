@@ -616,3 +616,29 @@ def test_holder_guard_steps_away_from_stronger_mobile_enemy():
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 50)], enemies=[(6, 5, 150)], relics=[(9, 9)]))
         got = int(act[0, 0])
         assert (got == want) if not flag else (got in (geo.LEFT, geo.UP, geo.DOWN) and got != geo.RIGHT), (flag, got)
+
+
+def test_window_infer_proves_tile_in_spawn_window():
+    # Match 2 (Step 101+), Match-Step 9/10 < 50, nur 1 Relic-Paar bekannt -> ohne window_infer keine Inferenz
+    for flag in (False, True):
+        a = _stay_agent(window_infer=flag, use_symmetry=True)
+        a.act(110, make_obs(110, 9, units=[(8, 8, 100)], enemies=[], relics=[(9, 9)], points=(0, 0)))
+        a.act(111, make_obs(111, 10, units=[(8, 8, 100)], enemies=[], relics=[(9, 9)], points=(1, 0)))
+        assert bool(a.belief.point_tiles[8, 8]) == flag, flag
+
+
+def test_window_infer_all_keeps_open_tile_unknown():
+    # Unit A auf Kandidat (8,8) mit sichtbarem Umfeld, Unit B weit weg mit unsichtbarem Umfeld.
+    # Gewinn 1: ohne Fenster-Inferenz nichts; mit window_infer_all bleibt die Gleichung offen (A oder B),
+    # mit Gewinn 0 sind beide sicher keine Punkte-Tiles.
+    for gain, want in ((1, False), (0, False)):
+        a = _stay_agent(window_infer_all=True, use_symmetry=True)
+        sm = np.zeros((24, 24), dtype=bool)
+        sm[5:12, 5:12] = True
+        o1 = make_obs(110, 9, units=[(8, 8, 100), (20, 2, 100)], enemies=[], relics=[(9, 9)], points=(0, 0))
+        o2 = make_obs(111, 10, units=[(8, 8, 100), (20, 2, 100)], enemies=[], relics=[(9, 9)], points=(gain, 0))
+        o1["sensor_mask"] = sm.copy(); o2["sensor_mask"] = sm.copy()
+        a.act(110, o1); a.act(111, o2)
+        assert bool(a.belief.point_tiles[8, 8]) == want
+        if gain == 0:
+            assert bool(a.belief.dead_tiles[8, 8])

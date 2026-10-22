@@ -121,6 +121,13 @@ class Belief:
         # 22.10.2026 (Schalter sym_map): Karte und Energiefeld sind exakt spiegelsymmetrisch
         # (x, y) <-> (W-1-y, H-1-x), auch nach Drift -> jedes sichtbare Tile verraet sein Spiegeltile
         self.sym_map = False
+        # 22.10.2026 (Schalter window_infer): Punkte-Inferenz auch im Relic-Spawnfenster, wenn um
+        # jede eigene Unit das 5x5-Feld sichtbar ist (kein ungesehenes Relic kann den Gewinn erklaeren)
+        self.window_infer = False
+        # 22.10.2026 (Schalter window_infer_all): im Spawnfenster immer schliessen; Tiles, deren 5x5
+        # nicht ganz sichtbar ist (ungesehenes neues Relic moeglich), gehen als offene Unbekannte ein
+        self.window_infer_all = False
+        self._vis_now = None
         self.set_team(team_id)
         self.reset_game()
 
@@ -226,6 +233,7 @@ class Belief:
             relic_pos = geo.mirror_positions(relic_pos, self.W, self.H)
             ally_pos = geo.mirror_positions(ally_pos, self.W, self.H)
 
+        self._vis_now = (sensor | geo.mirror_map(sensor)) if self.symmetry else sensor
         if self.sym_map:
             msensor = geo.mirror_map(sensor)
             tile_type = np.where(sensor, tile_type, geo.mirror_map(tile_type))
@@ -405,8 +413,16 @@ class Belief:
 
     def _infer_point_tiles(self, ally_pos, ally_energy, ally_mask, gain: int,
                            match_step: int) -> None:
+        window = False
+        open_tiles: set = set()
         if not self._stable(match_step):
-            return  # Relic-Spawn-Fenster: Punkte-Schwelle noch instabil
+            if self.window_infer and self._window_ok(ally_pos, ally_energy, ally_mask):
+                window = True
+            elif self.window_infer_all and self._vis_now is not None:
+                window = True
+                open_tiles = self._open_tiles(ally_pos, ally_energy, ally_mask)
+            else:
+                return  # Relic-Spawn-Fenster: Punkte-Schwelle noch instabil
         H = self.H
         occupied = set()
         for i in np.nonzero(ally_mask)[0]:
@@ -418,15 +434,15 @@ class Belief:
             return
 
         if self.relic_filter:
-            zone = self._possible_point_zone()
+            zone = self.relic_zone if window else self._possible_point_zone()
             if zone is not None:
                 # Units ausserhalb jeder moeglichen Relic-Reichweite punkten nie
-                occupied = {f for f in occupied if zone[divmod(f, H)]}
+                occupied = {f for f in occupied if zone[divmod(f, H)] or f in open_tiles}
                 if not occupied:
                     return
 
         known = len(occupied & self._point)
-        unknown = occupied - self._point - self._dead
+        unknown = (occupied - self._point - self._dead) | ((occupied & open_tiles) - self._point)
         rest = gain - known
         if rest < 0 or rest > len(unknown):
             # Widerspruch: der Punktgewinn ist mit dem aktuellen Wissen nicht
@@ -478,6 +494,37 @@ class Belief:
         for d in derived:
             if d not in self.records:
                 self.records.append(d)
+
+    def _window_ok(self, ally_pos, ally_energy, ally_mask) -> bool:
+        """Im Spawnfenster nur schliessen, wenn das 5x5-Feld um jede punktende eigene Unit jetzt
+        sichtbar ist (inkl. Spiegelbild bei Symmetrie): ein Relic, das eines dieser Tiles zum
+        Punkte-Tile macht, waere dann bekannt; ungesehene neue Relics koennen den Gewinn nicht erklaeren."""
+        vis = self._vis_now
+        if vis is None:
+            return False
+        r = RELIC_REWARD_RANGE
+        any_unit = False
+        for i in np.nonzero(ally_mask)[0]:
+            x, y = int(ally_pos[i][0]), int(ally_pos[i][1])
+            if x < 0 or y < 0 or ally_energy[i] < 0:
+                continue
+            any_unit = True
+            if not vis[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1].all():
+                return False
+        return any_unit
+
+    def _open_tiles(self, ally_pos, ally_energy, ally_mask) -> set:
+        """Flache Indizes eigener Unit-Tiles, deren 5x5-Feld jetzt nicht ganz sichtbar ist."""
+        vis = self._vis_now
+        r = RELIC_REWARD_RANGE
+        out = set()
+        for i in np.nonzero(ally_mask)[0]:
+            x, y = int(ally_pos[i][0]), int(ally_pos[i][1])
+            if x < 0 or y < 0 or ally_energy[i] < 0:
+                continue
+            if not vis[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1].all():
+                out.add(x * self.H + y)
+        return out
 
     def _restore_dead(self) -> None:
         """Schalter `keep_dead`: Null-Tiles frueherer Matches wiederherstellen.

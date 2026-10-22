@@ -145,6 +145,13 @@ class AgentConfig:
     collision_guard: bool = False
     """True (22.10.2026): Zuege sperren, wenn ein beweglicher, mindestens gleich starker sichtbarer
     Gegner im selben Step auf dasselbe Tile ziehen kann (Kollisionstod)."""
+    window_infer: bool = False
+    """True (22.10.2026): Punkte-Tile-Inferenz auch in den ersten 50 Steps von Match 2/3 (Spawnfenster
+    neuer Relics), wenn um jede eigene Unit das 5x5-Feld sichtbar ist. Diagnose V8-Verlustspiele: in
+    Match 2/3 bleiben ~2 echte eigene Punkte-Tiles pro Step ungetestete Kandidaten bekannter Relics."""
+    window_infer_all: bool = False
+    """True (22.10.2026): im Spawnfenster immer schliessen; Unit-Tiles ohne ganz sichtbares 5x5-Feld
+    zaehlen als offene Unbekannte (ein ungesehenes neues Relic koennte sie punkten lassen)."""
     sap_still_all: bool = False
     """True (22.10.2026): wie sap_still, aber fuer jedes Sap (Netz, Artillerie, Halter): nur wenn ein
     stehender Gegner direkt oder mindestens zwei stehende im 3x3-Bereich getroffen werden."""
