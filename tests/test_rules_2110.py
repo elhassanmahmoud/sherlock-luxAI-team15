@@ -376,3 +376,41 @@ def test_relic_search_assigns_one_sticky_searcher_in_later_matches():
     b = _stay_agent(relic_search=True)
     b.act(10, make_obs(10, 10, units=[(1, 1, 120)], relics=[(4, 4)], sensor_all=False))
     assert b._searcher is None
+
+
+def test_dodge_verify_waits_for_confirmed_predictions():
+    a = _stay_agent(dodge=True, dodge_mode="always", dodge_verify=True)
+    a.belief.point_tiles[7, 6] = True
+    units = [(5, 5, 200), (6, 7, 200)]
+    act = a.act(10, make_obs(10, 10, units=units, enemies=[(7, 6, 80)], relics=[(8, 8)]))
+    assert int(act[1, 0]) == geo.STAY            # noch keine Bestaetigung -> kein Ausweichen
+    assert a._pred_pending and a._pred_pending[0][0] == 1
+    # drei bestaetigte Treffer (Energie faellt jeweils um die Sap-Kosten 40)
+    e = 200
+    for step in (11, 12, 13):
+        e -= 40
+        a.act(step, make_obs(step, step, units=[(5, 5, 200), (6, 7, e)], enemies=[(7, 6, 80)], relics=[(8, 8)]))
+    assert a._pred_n >= 3 and a._pred_hit >= 3
+    act = a.act(14, make_obs(14, 14, units=[(5, 5, 200), (6, 7, e - 40)], enemies=[(7, 6, 80)], relics=[(8, 8)]))
+    assert int(act[1, 0]) != geo.STAY            # jetzt bestaetigt -> weicht aus
+
+
+def test_nebula_soft_prefers_equal_detour_but_keeps_paths_open():
+    import numpy as np
+    from agents.sherlock.config import AgentConfig  # noqa: F401
+    from tests.conftest import make_obs as mk
+
+    class Right(__import__("torch").nn.Module):
+        def forward(self, x):
+            import torch
+            q = torch.zeros(x.shape[0], 6)
+            q[:, geo.RIGHT] = 1.0
+            return q
+    obs = mk(10, 10, units=[(5, 5, 100)], relics=[(12, 12)])
+    obs["map_features"]["tile_type"] = np.zeros((24, 24), np.int32)
+    obs["map_features"]["tile_type"][6, 5] = 1          # Nebel rechts
+    a = _with_nebula_estimate(_stay_agent(nebula_avoid=True, nebula_avoid_mode="soft"), 25)
+    a.q = Right()
+    act = a.act(10, obs)
+    assert bool(a._prev_masks[0][geo.RIGHT])            # keine Sperre
+    assert int(act[0, 0]) in (geo.RIGHT, geo.UP, geo.DOWN)

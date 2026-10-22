@@ -151,6 +151,8 @@ class Agent_x:
         self._cache: Optional[tuple] = None
         self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
         self._searcher: Optional[tuple] = None  # (match_idx, uid, Ziel) fuer cfg.relic_search
+        self._pred_pending: list = []  # cfg.dodge_verify: vorhergesagte, stehen gebliebene Ziele
+        self._pred_n, self._pred_hit = 0, 0
         from .param_est import ParamEstimator
         self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
@@ -275,8 +277,15 @@ class Agent_x:
         # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
         fight = not self.cfg.tactics_when_behind or ctx["opp_points"] > ctx["own_points"]
         dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= 0.5)
-        incoming = (self._predicted_hits(ctx, stationary)
-                    if dodge_on and not self.training and fight else {})
+        if self.cfg.dodge_verify and not self.training:
+            self._check_predictions(ctx)
+            predicted = self._predicted_hits(ctx, stationary)
+            trusted = self._pred_n >= 3 and self._pred_hit >= 0.6 * self._pred_n
+            incoming = predicted if dodge_on and fight and trusted else {}
+        else:
+            predicted = {}
+            incoming = (self._predicted_hits(ctx, stationary)
+                        if dodge_on and not self.training and fight else {})
         eps = self.epsilon
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
@@ -332,6 +341,13 @@ class Agent_x:
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 self._prev_actions[uid] = a
+            if (self.cfg.nebula_avoid_mode == "soft" and 1 <= a <= 4
+                    and self._harmful_nebula() >= self.cfg.nebula_avoid_min):
+                a2 = self._soft_nebula(ctx, uid, masks[k], a)
+                if a2 != a:
+                    a = a2
+                    self._prev_actions[uid] = a
+                    st["nebula_detours"] = st.get("nebula_detours", 0) + 1
             if a == geo.STAY and self._harmful_nebula() >= 25:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 if ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]:
@@ -346,6 +362,9 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["dodges"] = st.get("dodges", 0) + 1
+            if predicted.get(int(uid), 0.0) >= 0.5 and a in (geo.STAY, geo.SAP):
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                self._pred_pending.append((int(uid), x, y, float(ctx["ally_ene"][uid]), a == geo.SAP))
             if self.cfg.siege and not self.training and float(ctx["ally_ene"][uid]) >= 0:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 holder = (self.belief.point_tiles[x, y]
@@ -485,12 +504,59 @@ class Agent_x:
             return self.param_est.dropoff(default=SAP_DROPOFF_ASSUMED)
         return SAP_DROPOFF_ASSUMED
 
+    def _check_predictions(self, ctx: dict) -> None:
+        """cfg.dodge_verify: Haben die im letzten Step vorhergesagten, stehen gebliebenen Ziele
+        wirklich einen direkten Treffer bekommen (Energieverlust >= 0,7 Sap-Kosten oder tot)?
+        Nur dann verhaelt sich der Gegner wie das Solution_92-Modell (opp_model)."""
+        pending, self._pred_pending = self._pred_pending, []
+        if not pending:
+            return
+        alive = {int(u) for u in ctx["ally_ids"].tolist()}
+        cost = float(ctx["sap_cost"])
+        for uid, x, y, e, sapped in pending:
+            self._pred_n += 1
+            if uid not in alive:
+                self._pred_hit += 1
+                continue
+            px, py = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+            if (px, py) != (x, y):
+                self._pred_n -= 1  # anderer Slot/Respawn: keine Aussage
+                continue
+            loss = e - (cost if sapped else 0.0) - float(ctx["ally_ene"][uid])
+            self._pred_hit += int(loss >= 0.7 * cost)
+
     def _harmful_nebula(self) -> float:
         """cfg.nebula_avoid: geschaetzter Nebelabzug, falls >= nebula_avoid_min, sonst 0."""
         if not self.cfg.nebula_avoid or self.training:
             return 0.0
         neb = self.param_est.nebula(default=None)
         return float(neb) if neb is not None and neb >= self.cfg.nebula_avoid_min else 0.0
+
+    def _soft_nebula(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """nebula_avoid_mode 'soft': Zug in schaedlichen Nebel (kein Punkte-Tile) durch einen
+        gleich guten Zug ohne Nebel ersetzen (gleiche BFS-Verkuerzung zum Ziel); ohne Alternative
+        nur mit genug Energie (>= 2x Nebelabzug) hinein, sonst warten. Keine Maske: Wege durch
+        Nebel bleiben moeglich (22.10.2026: die Maske kostete auf leichten Karten Spiele)."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+        if not ctx["nebula"][tx, ty] or self.belief.point_tiles[tx, ty]:
+            return a
+        tgt = ctx["assigned"].get(int(uid))
+        if tgt is not None:
+            dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+            here = dist[x, y]
+            want = dist[tx, ty]
+            for d in range(1, 5):
+                if d == a or not mask[d]:
+                    continue
+                nx, ny = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                if ctx["nebula"][nx, ny] or dist[nx, ny] < 0:
+                    continue
+                if dist[nx, ny] <= want or (here >= 0 and dist[nx, ny] < here):
+                    return d
+        if float(ctx["ally_ene"][uid]) >= 2 * self._harmful_nebula():
+            return a
+        return geo.STAY if not ctx["nebula"][x, y] else a
 
     def _leave_nebula(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
         """Unit steht in schaedlichem Nebel (kein Punkte-Tile): Zug auf ein Nicht-Nebel-Tile,
@@ -649,7 +715,7 @@ class Agent_x:
                 if mask[d] and self.belief.point_tiles[tx, ty] and ctx["ally_count"][tx, ty] > 0:
                     mask[d] = False  # 22.10.2026: nicht auf ein schon eigenes Punkte-Tile stapeln
         neb = self._harmful_nebula()
-        if neb:
+        if neb and self.cfg.nebula_avoid_mode == "mask":
             for d in range(1, 5):
                 tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
                 if mask[d] and ctx["nebula"][tx, ty] and not self.belief.point_tiles[tx, ty]:

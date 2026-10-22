@@ -133,6 +133,10 @@ class AgentConfig:
     """True (21.10.2026, nur Auswertung): Units, die stehen/sappen wuerden und laut
     opp_model von Solution_92 direkt beschossen werden, weichen einen Schritt aus."""
     dodge_mode: str = "lethal"
+    dodge_verify: bool = False
+    """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
+    Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
+    stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
     dodge_auto: bool = False
     """True (22.10.2026, nur Auswertung): dodge (mit dodge_mode) nur, solange der geschaetzte
     Sap-Streufaktor (param_est, sonst 0,5) <= 0,5 ist. Entwicklung 500720-500779: dodge always
@@ -147,6 +151,8 @@ class AgentConfig:
     nebula_avoid_min -> keine Zuege in Nebel ohne Punkte-Tile; bei >= 25 verlassen Units den Nebel.
     Analyse 2000 Karten: V3 gegen Solution_92 bei Nebelabzug 25 nur 65,5 % statt ~78 %."""
     nebula_avoid_min: int = 25
+    nebula_avoid_mode: str = "mask"
+    """'mask' (Zuege in Nebel gesperrt, V5-B) oder 'soft' (Umweg/Wartezeit statt Sperre)."""
     """Ab diesem geschaetzten Abzug greift nebula_avoid. 22.10.2026: bei 5 auf 60 Karten mit
     Nebelabzug 5 −16,7 pp (Units erreichen ihre Ziele nicht mehr), bei 25 auf 100 Karten +5,0 pp."""
     sap_dropoff_est: bool = False
