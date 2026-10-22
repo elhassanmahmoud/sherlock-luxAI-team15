@@ -685,3 +685,13 @@ def test_idle_approach_steps_to_near_candidate():
     a.belief.candidate[4, 9] = True
     ctx["passable"] = a.belief.passable
     assert a._neb_cand_step(ctx, 0, mask) is None
+
+
+def test_art_still_skips_moving_cluster():
+    # Artillerie-Unit (kein Punkte-Tile), drei schwache Gegner im Haufen; im zweiten Step sind alle
+    # gezogen -> ohne art_still sappt die Regel, mit art_still nicht
+    for flag, want in ((False, geo.SAP), (True, geo.STAY)):
+        a = _stay_agent(art_sap=True, art_min_hits=3, art_still=flag)
+        a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 9, 10), (8, 10, 10), (9, 9, 10)], relics=[(12, 12)]))
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 8, 10), (8, 9, 10), (9, 8, 10)], relics=[(12, 12)]))
+        assert int(act[0, 0]) == want, flag
