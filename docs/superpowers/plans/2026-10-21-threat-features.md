@@ -70,3 +70,17 @@ Varianten oder Schwellen nach Sichtung.
 
 Ergebnis Nachtrag (21:57): `mix24_art3` Solution_92 78,2 % (Δ +1,5 [−3,0; +6,0] gegen V3),
 default 99,3 % → +3-Regel verfehlt, beendet. Bestätigungsblöcke 503420–503819 weiter unbenutzt.
+
+## Nachtrag vor der PPO-Auswertung (22.10.2026, 03:40)
+
+Festgelegt nach Laufende und bevor einer der Stände gespielt hat. `cnn3b` endete am 22.10. um
+03:30 nach 150 Iterationen. Bewertet werden unverändert genau die Stände 50, 100 und 150
+(`experiments/ppo/cnn3b/ppo_0050/0100/0150.pth`, gespeicherte Config, keine Overrides), je 800
+Spiele auf 503220–503419; Referenz V3 76,7 % (`T21_v3_3220.csv`). Der DQN-Weg hat die +3-Regel
+verfehlt, der PPO-Weg darf also bestätigen. Die ursprünglichen Bestätigungsblöcke 503420–503819
+hat inzwischen der V5-Kandidat benutzt; ein PPO-Stand, der die +3-Regel erfüllt (bester der drei
+nach Solution_92-Siegquote), wird stattdessen auf den unbenutzten Blöcken **504820–505019**
+(Kandidat und V3, beide Seiten, Solution_92 + default) und **505020–505219** (direkt gegen V3)
+mit unveränderten Übernahme-Gates bestätigt (`scripts/v5_gates.py confirm`). Ist V6 bis dahin
+übernommen, muss der PPO-Stand die Gates zusätzlich gegen V6 auf denselben Blöcken erfüllen.
+Ablauf: `scripts/pipeline_cnn3b_eval.sh`, Log `experiments/pipeline_cnn3b.log`.
