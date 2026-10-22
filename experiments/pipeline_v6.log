@@ -1,0 +1,20 @@
+[03:13] Start Bs (experiments/ensembles/v6_Bs.pth, SHA-256 821b51ec1d7302e3)
+V6_v3_4020.csv: default: 1.000 (400 Spiele), solution92: 0.770 (400 Spiele) in 308s
+V6_Bs_4020.csv: default: 0.998 (400 Spiele), solution92: 0.805 (400 Spiele) in 353s
+V6_Bs_4020                   default       200    400  0.998  1.000  -0.003  [-0.007; +0.000]
+V6_Bs_4020                   solution92    200    400  0.805  0.770  +0.035  [+0.005; +0.068]
+GATE Auswahl: Solution_92 0.8050 vs 0.7700 (Δ +3.50 pp, Ziel >= +3), default 0.9975 (Ziel >= 0,99) -> BESTANDEN
+[03:24] Auswahlhuerde bestanden -> frische Bestaetigung
+V6_v3_4220.csv: default: 1.000 (800 Spiele), solution92: 0.777 (800 Spiele) in 519s
+V6_Bs_4220.csv: default: 1.000 (800 Spiele), solution92: 0.816 (800 Spiele) in 361s
+V6_Bs_direct_4620.csv: self:experiments/ensembles/all18_v3.pth: 0.675 (400 Spiele) in 105s
+V6_Bs_4220                   default       400    800  1.000  1.000  +0.000  [+0.000; +0.000]
+V6_Bs_4220                   solution92    400    800  0.816  0.777  +0.039  [+0.015; +0.062]
+GATE Bestaetigung: Solution_92 0.8163 vs V3 0.7775, Δ +3.88 pp [+1.50; +6.25]; default 1.0000 (Δ +0.00); direkt 0.6750 [0.6225; 0.7275] aus 400 Spielen
+  FAIL Solution_92 Δ >= +5 pp
+  OK   Solution_92 untere 95%-Grenze > 0
+  OK   default >= 99 %
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 0,5
+GATE Bestaetigung: NICHT BESTANDEN
+[03:41] Ende Bs
