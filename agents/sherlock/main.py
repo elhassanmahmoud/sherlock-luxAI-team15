@@ -393,6 +393,11 @@ class Agent_x:
                         sap = val if kind == "sap" else sap
                         self._prev_actions[uid] = a
                         st["siege_steps"] = st.get("siege_steps", 0) + 1
+            if (a == geo.SAP and sap is not None and self.cfg.sap_still_all and not self.training
+                    and not self._sap_on_still(ctx, uid, sap, stationary)):
+                a = geo.STAY  # 22.10.2026: jedes Sap nur auf stehende Ziele (auch Netz/Artillerie)
+                self._prev_actions[uid] = a
+                st["moving_target_skips"] = st.get("moving_target_skips", 0) + 1
             if a == geo.SAP and sap is not None and self.cfg.sap_no_overkill and not self.training:
                 if self._overkill(ctx, uid, sap, planned_dmg):
                     a = geo.STAY  # 22.10.2026: Ziel ist durch geplante Saps schon tot -> Energie behalten
@@ -723,6 +728,17 @@ class Agent_x:
         on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
         still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
         return bool((direct & still).any())
+
+    def _sap_on_still(self, ctx: dict, uid: int, sap, stationary: np.ndarray) -> bool:
+        """cfg.sap_still_all: Sap lohnt, wenn ein stehender Gegner direkt oder mindestens zwei
+        stehende Gegner im 3x3-Bereich getroffen werden (stehend = unbewegt oder auf Punkte-Tile)."""
+        direct, near = self._sap_cover(ctx, uid, sap)
+        ec = ctx["enemy_coords"]
+        if not len(ec):
+            return False
+        on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
+        return bool((direct & still).any() or int((near & still).sum()) >= 2)
 
     def _sap_relevant(self, ctx: dict, uid: int, sap) -> bool:
         """cfg.sap_relevant (22.10.2026): Halter-Saps (pt_sap) nur auf Gegner auf oder direkt neben

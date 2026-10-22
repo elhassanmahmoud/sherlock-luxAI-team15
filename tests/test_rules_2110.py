@@ -588,3 +588,21 @@ def test_sap_still_skips_moving_target():
         a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
         assert int(act[0, 0]) == want, flag
+
+
+def test_sap_still_all_cancels_network_sap_on_moving_target():
+    # Stub-Netz waehlt Sap; das Ziel zieht -> mit sap_still_all wird gestanden, ohne gesapt
+    import torch
+
+    class SapNet(torch.nn.Module):
+        def forward(self, x):
+            q = torch.zeros(x.shape[0], 6)
+            q[:, geo.SAP] = 1.0
+            return q
+
+    for flag, want in ((False, geo.SAP), (True, geo.STAY)):
+        a = _stay_agent(sap_still_all=flag)
+        a.q = SapNet()
+        a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
+        assert int(act[0, 0]) == want, flag
