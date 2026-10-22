@@ -667,3 +667,21 @@ def test_obey_target_turns_unit_back_to_candidate():
         mask = np.array([True, True, True, True, True, False])
         got = a._obey_target(ctx, 0, mask, geo.RIGHT) if flag else geo.RIGHT
         assert got == want, flag
+
+
+def test_idle_approach_steps_to_near_candidate():
+    ctx = {"assigned": {0: (4, 9)}, "ally_pos": np.array([[6, 9]] + [[-1, -1]] * 15), "step": 5,
+           "enemy_coords": np.zeros((0, 2), dtype=int), "energy_map": np.zeros((24, 24)),
+           "nebula": np.zeros((24, 24), dtype=bool)}
+    mask = np.array([True, True, True, True, True, False])
+    for idle, want in ((False, None), (True, geo.LEFT)):
+        a = _stay_agent(neb_cand=True, idle_approach=idle)
+        a.belief.candidate[4, 9] = True
+        ctx["passable"] = a.belief.passable
+        assert a._neb_cand_step(ctx, 0, mask) == want, idle
+    # Gegner in der Naehe: idle_approach greift nicht
+    ctx["enemy_coords"] = np.array([[7, 10]])
+    a = _stay_agent(neb_cand=True, idle_approach=True)
+    a.belief.candidate[4, 9] = True
+    ctx["passable"] = a.belief.passable
+    assert a._neb_cand_step(ctx, 0, mask) is None
