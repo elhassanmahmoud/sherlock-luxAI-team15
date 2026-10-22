@@ -88,6 +88,14 @@ VARIANTS["full_rules_v7"] = (
     {**VARIANTS["full_rules_v6"][1], "nebula_infer": True, "drift_track": True},
 )
 
+# 22.10.2026: Training unter V8-Bedingungen (korrigiertes Gedaechtnis + V8-Regeln auch im Training)
+VARIANTS["full_rules_v8"] = (
+    VARIANTS["full_rules_v6"][0],
+    {**VARIANTS["full_rules_v6"][1], "nebula_infer": True, "drift_track": True, "path_fix": True,
+     "reach_assign": True, "sap_no_overkill": True, "safe_moves": True, "collision_guard": True,
+     "rules_in_training": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 

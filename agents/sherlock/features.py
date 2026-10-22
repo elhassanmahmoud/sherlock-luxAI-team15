@@ -454,7 +454,7 @@ def make_context(agent, obs, belief=None) -> dict:
         cand_boost=float(agent.cfg.cand_boost),
         explore_quota=int(agent.cfg.explore_quota), explore_until=int(agent.cfg.explore_until),
         energy_pref=float(agent.cfg.energy_pref),
-        reach=bool(agent.cfg.reach_assign) and not agent.training,
+        reach=bool(agent.cfg.reach_assign) and (not agent.training or agent.cfg.rules_in_training),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))

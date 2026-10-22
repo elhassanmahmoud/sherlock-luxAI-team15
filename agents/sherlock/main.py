@@ -307,7 +307,7 @@ class Agent_x:
                 if self.cfg.scripted_explore and a != geo.SAP:
                     a = self._explore_action(ctx, uid, masks[k], a)
                 a = self._rule_override(ctx, uid, masks[k], a)
-                if self.cfg.path_fix and not self.training and 1 <= a <= 4:
+                if self.cfg.path_fix and (not self.training or self.cfg.rules_in_training) and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
                 if self.cfg.obey_target and not self.training and 1 <= a <= 4:
                     a = self._obey_target(ctx, uid, masks[k], a)
@@ -410,7 +410,8 @@ class Agent_x:
                 a = geo.STAY  # 22.10.2026: jedes Sap nur auf stehende Ziele (auch Netz/Artillerie)
                 self._prev_actions[uid] = a
                 st["moving_target_skips"] = st.get("moving_target_skips", 0) + 1
-            if a == geo.SAP and sap is not None and self.cfg.sap_no_overkill and not self.training:
+            if (a == geo.SAP and sap is not None and self.cfg.sap_no_overkill
+                    and (not self.training or self.cfg.rules_in_training)):
                 if self._overkill(ctx, uid, sap, planned_dmg):
                     a = geo.STAY  # 22.10.2026: Ziel ist durch geplante Saps schon tot -> Energie behalten
                     self._prev_actions[uid] = a
@@ -426,7 +427,8 @@ class Agent_x:
                 if sap is None:
                     a = geo.STAY
                     self._prev_actions[uid] = a
-            if a == geo.SAP and sap is not None and self.cfg.sap_no_overkill and not self.training:
+            if (a == geo.SAP and sap is not None and self.cfg.sap_no_overkill
+                    and (not self.training or self.cfg.rules_in_training)):
                 self._plan_damage(ctx, uid, sap, planned_dmg)
             if a == geo.SAP and sap is not None:
                 dx, dy, hits = sap
@@ -973,7 +975,7 @@ class Agent_x:
                     here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
                     if here.any() and float(ee[here].sum()) >= e - ctx["move_cost"]:
                         mask[d] = False
-        if self.cfg.collision_guard and not self.training and len(ctx["enemy_coords"]):
+        if self.cfg.collision_guard and (not self.training or self.cfg.rules_in_training) and len(ctx["enemy_coords"]):
             # 22.10.2026: kein Zug auf ein Tile, auf das ein beweglicher (nicht auf bekanntem
             # Punkte-Tile stehender), mindestens gleich starker sichtbarer Gegner im selben Step
             # ziehen kann. Diagnose: 1/3 der Kollisionstode entstehen, wenn beide auf dasselbe Tile ziehen.

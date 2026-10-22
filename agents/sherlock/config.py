@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    rules_in_training: bool = False
+    """True (22.10.2026): path_fix, reach_assign, sap_no_overkill und collision_guard auch im Training
+    aktiv (sonst nur in der Auswertung), damit neue Netze unter V8-Bedingungen lernen."""
     neb_cand: bool = False
     """True (22.10.2026): Kandidaten-Tiles im schaedlichen Nebel (>= nebula_avoid_min) betreten und
     dort bleiben duerfen; wartende Units mit solchem Ziel in <= 3 Schritten gehen hin."""
