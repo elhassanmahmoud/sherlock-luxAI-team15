@@ -139,6 +139,12 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    neb_cand: bool = False
+    """True (22.10.2026): Kandidaten-Tiles im schaedlichen Nebel (>= nebula_avoid_min) betreten und
+    dort bleiben duerfen; wartende Units mit solchem Ziel in <= 3 Schritten gehen hin."""
+    idle_approach: bool = False
+    """True (22.10.2026, mit neb_cand): wartende Unit ohne nahen Gegner geht zu ihrem Kandidaten-Ziel,
+    wenn es hoechstens 3 BFS-Schritte entfernt ist (auch ausserhalb von Nebel)."""
     obey_target: bool = False
     """True (22.10.2026): ohne nahen Gegner kein Zug weg vom zugewiesenen Punkte-/Kandidaten-Tile
     (BFS-Distanz waechst) -> erster Schritt des kuerzesten Wegs."""

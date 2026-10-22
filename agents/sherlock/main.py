@@ -364,9 +364,17 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["nebula_detours"] = st.get("nebula_detours", 0) + 1
+            if (self.cfg.neb_cand and not self.training and a == geo.STAY
+                    and (self.cfg.idle_approach or self._harmful_nebula() >= self.cfg.nebula_avoid_min)):
+                d = self._neb_cand_step(ctx, uid, masks[k])
+                if d is not None:
+                    a = d
+                    self._prev_actions[uid] = a
+                    st["neb_cand_steps"] = st.get("neb_cand_steps", 0) + 1
             if a == geo.STAY and self._harmful_nebula() >= 25:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
-                if ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]:
+                if (ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]
+                        and not (self.cfg.neb_cand and self.belief.candidate[x, y])):
                     d = self._leave_nebula(ctx, uid, masks[k])
                     if d is not None:
                         a = d
@@ -580,6 +588,8 @@ class Agent_x:
         tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
         if not ctx["nebula"][tx, ty] or self.belief.point_tiles[tx, ty]:
             return a
+        if self.cfg.neb_cand and self.belief.candidate[tx, ty]:
+            return a  # 22.10.2026: Kandidaten im Nebel testen (sonst nie Punkte-Tiles, 361050)
         tgt = ctx["assigned"].get(int(uid))
         if tgt is not None:
             dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
@@ -596,6 +606,28 @@ class Agent_x:
         if float(ctx["ally_ene"][uid]) >= 2 * self._harmful_nebula():
             return a
         return geo.STAY if not ctx["nebula"][x, y] else a
+
+    def _neb_cand_step(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
+        """cfg.neb_cand: wartende Unit (nicht auf Punkte-Tile), deren Ziel ein Kandidat im schaedlichen
+        Nebel ist und hoechstens 3 BFS-Schritte entfernt liegt, geht hin (Energie faellt nur auf 0,
+        Solution_92 sitzt dort ebenso). Diagnose 361050: Relic-Haufen ganz im Nebel 25, 0 Punkte."""
+        tgt = ctx["assigned"].get(int(uid))
+        b = self.belief
+        if tgt is None or not b.candidate[tgt]:
+            return None
+        if not self.cfg.idle_approach and not ctx["nebula"][tgt]:
+            return None
+        ec = ctx["enemy_coords"]
+        x0, y0 = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if self.cfg.idle_approach and len(ec) and (np.maximum(np.abs(ec[:, 0] - x0), np.abs(ec[:, 1] - y0)) <= 2).any():
+            return None
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if b.point_tiles[x, y] or (x, y) == tuple(tgt):
+            return None
+        dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+        if not 0 < int(dist[x, y]) <= 3:
+            return None
+        return rules.first_step(dist, (x, y), mask, ctx["energy_map"])
 
     def _leave_nebula(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
         """Unit steht in schaedlichem Nebel (kein Punkte-Tile): Zug auf ein Nicht-Nebel-Tile,
