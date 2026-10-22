@@ -305,6 +305,8 @@ class Agent_x:
                 a = self._rule_override(ctx, uid, masks[k], a)
                 if self.cfg.path_fix and not self.training and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
+                if self.cfg.unstack and not self.training and a == geo.STAY:
+                    a = self._unstack(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
@@ -715,6 +717,23 @@ class Agent_x:
         if step is None:
             return a
         self.ep_stats["path_fixes"] = self.ep_stats.get("path_fixes", 0) + 1
+        return int(step)
+
+    def _unstack(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """cfg.unstack (22.10.2026): Unit steht gestapelt auf einem Punkte-Tile, das schon eine
+        andere eigene Unit haelt (bringt keinen Punkt) -> BFS-Schritt zum eigenen Ziel statt warten.
+        Diagnose (Verlustspiele V7): 0,5 gestapelte Units pro Step, waehrend eigene Punkte-Tiles frei sind."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if not self.belief.point_tiles[x, y] or ctx["first_on_tile"].get((x, y), int(uid)) == int(uid):
+            return a
+        tgt = ctx["assigned"].get(int(uid))
+        if tgt is None or tuple(tgt) == (x, y):
+            return a
+        dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+        step = rules.first_step(dist, (x, y), mask, ctx["energy_map"])
+        if step is None:
+            return a
+        self.ep_stats["unstacks"] = self.ep_stats.get("unstacks", 0) + 1
         return int(step)
 
     @staticmethod

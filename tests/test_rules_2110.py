@@ -502,3 +502,13 @@ def test_reach_assign_skips_tile_under_asteroid():
         b._coords_dirty = True
         out = assign_targets(b, np.array([0]), np.array([[6, 10]]), 24, 24, reach=reach)
         assert out[0] == want, reach
+
+
+def test_unstack_moves_second_unit_off_held_point_tile():
+    for flag, want in ((False, geo.STAY), (True, geo.RIGHT)):
+        a = _stay_agent(unstack=flag)
+        a.belief.point_tiles[5, 5] = True
+        a.belief.point_tiles[8, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 100), (5, 5, 100)], enemies=[], relics=[(9, 9)]))
+        assert int(act[0, 0]) == geo.STAY                 # Halter bleibt
+        assert int(act[1, 0]) == want, flag

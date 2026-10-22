@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    unstack: bool = False
+    """True (22.10.2026): gestapelte Unit (Punkte-Tile gehoert schon einer anderen eigenen Unit)
+    wartet nicht, sondern geht per BFS-Schritt zu ihrem zugewiesenen Ziel."""
     reach_assign: bool = False
     """True (22.10.2026): Zielzuweisung nach BFS-Weglaenge ueber die Gedaechtniskarte statt
     Luftlinie; unerreichbare Ziele (z. B. Punkte-Tiles unter Asteroiden) nur als letzte Wahl."""
