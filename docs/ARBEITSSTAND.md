@@ -5,6 +5,15 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 13:54 Berlin – Codex mit Moayed: V10-Mechanikkorrekturen vorbereitet, Abgabe bleibt V10
+
+- Auftrag: lokales Repo aktualisieren, zwei im Review reproduzierte Fehler korrigieren und gegen V10 messen. `main` zunächst auf `c78732f`, danach Mahmouds reinen Ergebniscommit `bb7e84b` übernommen (12 neue Netze ohne belegten Gewinn). Fremde unversionierte Dateien erhalten.
+- Zwei getrennte, standardmäßig ausgeschaltete Schalter: `sap_overkill_recovery` berücksichtigt maximale mögliche Feld-Erholung vor dem Absagen weiterer Saps; `nebula_infer_drift_safe` unterbindet zeitlich falsche Nebel-Inferenz bei erkannter Terrain-Drift. Nicht erkannte Drift und bewegte Ziele bleiben dokumentierte Grenzen. Keine Netzparameter geändert.
+- V10 bytegleich unter `experiments/releases/20261022_v10_baseline/` gesichert; beide aktiven Gewichte weiterhin `03cf8bdc…8c67`. Neue Schalter bleiben aus, bis ein Kandidat alle vorab definierten Bedingungen erfüllt.
+- Technische Prüfung: Regressionen zunächst rot, anschließend grün; vollständige Suite **527 Tests + 14 Untertests bestanden**; unabhängiges Code-Review ohne blockierende Befunde. Original und neuer Code mit Schaltern aus: je vier Spiele, **1.212 Schritte**, sämtliche Aktionen beider Spieler und sämtliche Nicht-Zeit-Metriken identisch.
+- [Fester Vergleichsplan](superpowers/plans/2026-10-22-v10-mechanics.md): vier Varianten auf 200 Auswahlkarten 610100–610299, höchstens ein Kandidat. Nur bei bestandener Auswahl: 800 frische Bestätigungskarten 611000–611799, 400 Direktkarten 612000–612399 und 100 Robustheitskarten 613000–613099. Diese Blöcke sind reserviert; nicht parallel verwenden. Höchstens zwei Worker, unveränderter Code über die gesamte Messung. **Noch kein Leistungsnachweis und keine Übernahme.**
+- Prüfbelege und später Rohdaten: `experiments/analysis/v10_mechanics_20261022/`. Der vorhandene `tactics.py`-Entwurf ist durch diese Arbeit nicht validiert oder eingebunden; vor Nutzung sind seine Engine-Abweichungen separat zu prüfen.
+
 ## 22.10.2026, 13:50 Berlin – Claude Code mit Mahmoud: 12 neue Netze, kein Gewinn gegenüber V10
 
 - Zweite Trainingsreihe `full_rules_v8` (Starts 60–62/90–92, je 3000 Spiele) abgeschlossen; damit 12 Netze unter V8-Bedingungen. Entwicklung (V10-Config): **18 alte + 12 neue (`v10mix30`) 79,2/95,8 % → geschätzt 90,3 % (= V10)**, nur die 12 neuen (`v10nets12`) 76,5/95,2 % → 89,1 % (6 neue: 86,8 %). Mit V8-Config `v8mix24b` siehe `experiments/pipeline_v8nets_b.log`.

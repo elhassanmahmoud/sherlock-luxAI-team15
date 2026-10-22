@@ -1,5 +1,8 @@
 # Experiment-Protokoll
 
+- 22.10.2026, vor den Leistungsversuchen: [V10-Mechanikkorrekturen](superpowers/plans/2026-10-22-v10-mechanics.md), zwei opt-in Korrekturen einzeln und gemeinsam gegen unverändertes V10; Seed-Blöcke 610000–610019 (Kompatibilität), 610100–610299 (Auswahl), 611000–611799 (Bestätigung), 612000–612399 (direkt), 613000–613099 (Robustheit) reserviert. Auswahl nominert höchstens eine Variante; keine Übernahme ohne unabhängige Bestätigung. Rohdaten und Prüfbelege unter `experiments/analysis/v10_mechanics_20261022/`. Noch keine Leistungsresultate.
+
+
 - 21.10.2026: 40-Spiel-Punktfeld-Diagnose vollständig geprüft, kein enger Häufigkeitsfilter erfüllt, kein Patch. Siehe [Review](../experiments/analysis/autonomous_20261020/post_exploration_point_flow/point-flow-final-review.md). Neuer einmaliger V4-Vergleich vorab unter [Plan](superpowers/plans/2026-10-21-v4-independent-confirmation.md) festgelegt; Abgeschlossen: kein eindeutiger V4-Vorteil, siehe [Morgenbericht](MORGENBERICHT_20261021.md) und spätere Ergebniseinträge.
 
 Festgelegt am **10.10.2026, vor dem Start der Trainingsläufe** (Commit, mit dem der Batch gestartet wurde: siehe `git` in jeder `manifest.json`).
