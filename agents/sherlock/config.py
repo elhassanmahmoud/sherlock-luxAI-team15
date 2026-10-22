@@ -167,6 +167,9 @@ class AgentConfig:
     window_infer_all: bool = False
     """True (22.10.2026): im Spawnfenster immer schliessen; Unit-Tiles ohne ganz sichtbares 5x5-Feld
     zaehlen als offene Unbekannte (ein ungesehenes neues Relic koennte sie punkten lassen)."""
+    art_still: bool = False
+    """True (22.10.2026): art_sap nur, wenn ein stehender Gegner direkt oder mindestens zwei stehende
+    im 3x3-Bereich getroffen werden (wie sap_still, nur fuer die Artillerie-Regel)."""
     sap_still_all: bool = False
     """True (22.10.2026): wie sap_still, aber fuer jedes Sap (Netz, Artillerie, Halter): nur wenn ein
     stehender Gegner direkt oder mindestens zwei stehende im 3x3-Bereich getroffen werden."""

@@ -350,7 +350,8 @@ class Agent_x:
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
-                    and self._artillery_ok(ctx, uid, sap)):
+                    and self._artillery_ok(ctx, uid, sap)
+                    and (not self.cfg.art_still or self.training or self._sap_on_still(ctx, uid, sap, stationary))):
                 a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
                 self._prev_actions[uid] = a
             if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
