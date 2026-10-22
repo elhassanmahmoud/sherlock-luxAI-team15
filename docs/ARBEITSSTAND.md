@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 15:50 Berlin – Claude Code mit Mahmoud: Präsentation für den 23.10.
+
+- Laut Mahmoud ist die Präsentation am **23.10.** In `CLAUDE.md` steht für die Zwischenpräsentation der 06.11.; Termin bitte im Team bestätigen. Folien und Stichpunkte tragen deshalb das Datum 23.10.
+- Folien `Sherlock_Review_23-10-2026.pdf` (Projektordner, 13 Vortragsfolien + 2 Reservefolien im Design vom 16.10.), Quelle `docs/presentation/Sherlock_Review_23-10-2026.html` mit Bildern `docs/presentation/folie_2310_*.png` und Diagrammskript `docs/presentation/source/fortschritt_2310.py`. Stichpunkte zum Üben `Sherlock_Stichpunkte_23-10-2026.md` (Vorschlag: Moayed Folien 1–4, 8–10 und 13 = 5:10, Mahmoud 5–7 und 11–12 = 4:30). Plan und Belege: `docs/presentation/VORTRAGSPLAN_2310.md`.
+- Kernaussage gegenüber dem Entwurf vom Morgen korrigiert: 47 → 78 % kam aus Regeln, Neutraining mit aktiven Regeln und `reward_fix` sowie 18 statt 6 Netzen (Arbeitsstand 19./20.10.); 78 → 90 % kam aus der Fehlersuche mit denselben 18 Netzen. Danach brachten CNN/PPO, Gefahrmerkmale und weitere Netze keinen Gewinn.
+- Prüfungen: alle 15 Seiten als Bild kontrolliert. Zahlen gegen Übernahmeberichte, Nachtbericht, Arbeitsstand, Checkpoint (79 Merkmale, 18 Netze, Mittelwert der Q-Werte) und Engine-Parameter (Sap-Kosten 30–50, Reichweite 3–7, Drift alle 7–40 Schritte) abgeglichen. Für ein mögliches Battle: unveränderter Kurs-Runner mit installierter V10 auf `main` `de2e95d` **8 Spiele bestanden** (`act` höchstens 11,4 ms), `scripts.build_submission` „Check ok“ (Zip nur in einem temporären Ordner). Gewichte unverändert `03cf8bdc…8c67`. Kein Training, keine neuen Messspiele.
+- Offen: Moayed prüft seine Folien und probt mit Uhr. Keine PowerPoint-Fassung; präsentiert wird das PDF. Nur lokal bei Mahmoud, nicht übertragen: vierteilige Vorversionen `docs/presentation/bild_0611_*.png`.
+
 ## 22.10.2026, 13:54 Berlin – Codex mit Moayed: V10-Mechanikkorrekturen vorbereitet, Abgabe bleibt V10
 
 - Auftrag: lokales Repo aktualisieren, zwei im Review reproduzierte Fehler korrigieren und gegen V10 messen. `main` zunächst auf `c78732f`, danach Mahmouds reinen Ergebniscommit `bb7e84b` übernommen (12 neue Netze ohne belegten Gewinn). Fremde unversionierte Dateien erhalten.

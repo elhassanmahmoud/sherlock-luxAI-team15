@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Sherlock – Review 02</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slide {
+    position: relative; width: 13.333in; height: 7.5in; overflow: hidden;
+    page-break-after: always; break-after: page;
+    background: #F7F6F1; color: #142D35;
+  }
+  .slide.dark { background: #102D35; color: #FFFFFF; }
+  .kicker {
+    position: absolute; left: 0.76in; top: 0.36in; font-size: 13pt; font-weight: 700;
+    letter-spacing: 0.01em; color: #0F7C7A;
+  }
+  .dark .kicker { color: #8DB3AC; }
+  .title { position: absolute; left: 0.76in; top: 0.82in; margin: 0; font-size: 32pt; font-weight: 700; }
+  .footer { position: absolute; left: 0.76in; bottom: 0.24in; font-size: 11pt; color: #5E6E73; }
+  .pageno { position: absolute; right: 0.97in; bottom: 0.24in; font-size: 11pt; color: #5E6E73; }
+  .dark .footer, .dark .pageno { color: #A9C4BE; }
+  .content { position: absolute; left: 0.76in; right: 0.76in; top: 1.95in; bottom: 0.8in; }
+  .teal { color: #0F7C7A; }
+  .grey { color: #56676C; }
+  ul.dash { list-style: none; margin: 0; padding: 0; }
+  ul.dash li { position: relative; padding-left: 0.32in; margin: 0 0 0.16in 0; }
+  ul.dash li::before { content: "–"; position: absolute; left: 0; }
+  .big { font-size: 22pt; }
+  .mid { font-size: 18pt; }
+  .small { font-size: 14pt; }
+  .strong { font-weight: 700; }
+  .cols { display: flex; gap: 0.5in; height: 100%; }
+  .col { flex: 1; }
+  .box {
+    background: #ECF2F1; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.28in 0.32in;
+  }
+  .code { font-family: "Courier New", Courier, monospace; font-size: 15pt; line-height: 1.5; white-space: pre; color: #142D35; }
+  .code .cm { color: #7B8A8E; }
+  .boxtitle { font-size: 15pt; font-weight: 700; color: #4F6066; margin-bottom: 0.16in; }
+  .num { font-size: 24pt; font-weight: 700; color: #0F7C7A; width: 1.0in; flex: none; }
+  .step { display: flex; margin-bottom: 0.34in; }
+  .step h3 { margin: 0 0 0.06in 0; font-size: 20pt; }
+  .step p { margin: 0; font-size: 16pt; color: #56676C; line-height: 1.3; }
+  .imgpair { display: flex; gap: 0.3in; }
+  .imgpair figure { margin: 0; flex: 1; }
+  .imgpair img { width: 100%; border: 1px solid #D3DEDC; background: #fff; display: block; }
+  figcaption { font-size: 13pt; margin-top: 0.07in; }
+  figcaption b { color: #142D35; }
+  .below { position: absolute; left: 0; right: 0; bottom: 0; }
+  table.res { border-collapse: collapse; font-size: 16pt; width: 100%; }
+  table.res td { padding: 0.09in 0.14in; border-bottom: 1px solid #D3DEDC; vertical-align: middle; }
+  table.res td.v { text-align: right; font-weight: 700; color: #0F7C7A; white-space: nowrap; }
+  table.res tr.weak td.v { color: #B5552E; }
+  table.res tr.head td { border-bottom: 2px solid #0F7C7A; font-weight: 700; color: #0F7C7A; font-size: 14pt; padding-top: 0.04in; }
+  table.res tr.head.off td { border-bottom-color: #9AA7A9; color: #56676C; }
+  table.res tr.off td.v { color: #56676C; }
+  table.res.tight td { padding: 0.065in 0.14in; }
+  table.robust td { padding: 0.17in 0.14in; }
+  .note { font-size: 13pt; color: #56676C; }
+  .hero { font-size: 60pt; font-weight: 700; color: #0F7C7A; line-height: 1; }
+  .legend { font-size: 12.5pt; color: #56676C; margin-bottom: 0.1in; }
+  .legend span.k { display: inline-block; width: 0.15in; height: 0.15in; margin: 0 0.06in 0 0.18in; vertical-align: -0.02in; border: 1px solid rgba(0,0,0,0.12); }
+  .legend span.k.first { margin-left: 0; }
+  .legend span.k.dot { border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<!-- 1 Titel -->
+<section class="slide dark">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <div style="position:absolute; left:0.76in; top:2.05in; font-size:66pt; font-weight:700;">Sherlock</div>
+  <div style="position:absolute; left:0.8in; top:3.25in; font-size:30pt; color:#A8D5C8;">Regeln, Training und Fehlersuche</div>
+  <div style="position:absolute; left:0.8in; top:4.35in; font-size:22pt;">Von 47 % auf 90 % gegen Solution_92</div>
+  <div style="position:absolute; left:0.8in; top:5.65in; font-size:18pt; color:#A8D5C8; line-height:1.45;">
+    Mahmoud El-Hassan · Moayed Shawesh<br>HTW Berlin · Anwendungen der KI · 23.10.2026
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">01</div>
+</section>
+
+<!-- 2 Agenda -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Agenda</h1>
+  <div class="content" style="top:2.05in;">
+    <table style="font-size:22pt; border-collapse:collapse; margin-left:0.4in;">
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">1.</td><td style="padding-bottom:0.2in;">Rückblick und Fragen aus dem Review</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">2.</td><td style="padding-bottom:0.2in;">Sherlock heute</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">3.</td><td style="padding-bottom:0.2in;">Training und Regeln: der Weg bis 78 %</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">4.</td><td style="padding-bottom:0.2in;">Wie wir Fehler gefunden haben</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">5.</td><td style="padding-bottom:0.2in;">Drei Fehler und ihre Lösung</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">6.</td><td style="padding-bottom:0.2in;">Ergebnisse und Robustheit</td></tr>
+      <tr><td class="teal strong" style="padding:0 0.55in 0 0;">7.</td><td>Erkenntnisse und Ausblick</td></tr>
+    </table>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">02</div>
+</section>
+
+<!-- 3 Rückblick -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Rückblick auf den 16.10.</h1>
+  <div class="content">
+    <div class="cols">
+      <div class="col" style="flex:1.25;">
+        <div class="mid strong teal" style="margin-bottom:0.12in;">Stand am 16.10.</div>
+        <ul class="dash mid"><li>6 Netze + Gedächtnis</li>
+          <li>28 / 60 Siege gegen Solution_92 (46,7 %)</li></ul>
+        <div class="mid strong teal" style="margin:0.3in 0 0.12in 0;">Fragen aus dem Review</div>
+        <ul class="dash mid"><li>Warum nur 47 % nach 18.000 Trainingsspielen?</li>
+          <li>Belohnung in jedem Schritt oder erst am Ende?</li>
+          <li>Empfehlung: CNN + PPO ausprobieren</li></ul>
+      </div>
+      <div class="col box" style="flex:0.75; display:flex; flex-direction:column; justify-content:center;">
+        <div class="small grey">Heute gegen Solution_92</div>
+        <div class="hero" style="margin:0.12in 0;">90,3 %</div>
+        <div class="small grey">800 neue Karten, beide Seiten</div>
+        <div class="small" style="margin-top:0.35in; line-height:1.35;">Belohnung: <b>in jedem Schritt pro Einheit</b> (Punkte, Annäherung an Ziele) plus Matchsieg</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">03</div>
+</section>
+
+<!-- 4 Sherlock heute -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Sherlock heute</h1>
+  <div class="content" style="top:1.9in;">
+    <div class="cols" style="gap:0.45in;">
+      <div style="width:3.1in; flex:none;">
+        <div class="mid strong teal">Merken</div>
+        <div class="grey" style="margin:0.05in 0 0.3in 0; font-size:16pt;">Gedächtnis für Relics, Punktefelder und die wandernde Karte.</div>
+        <div class="mid strong teal">Bewerten</div>
+        <div class="grey" style="margin:0.05in 0 0.3in 0; font-size:16pt;">18 Double-DQN-Netze schätzen den Nutzen jeder Aktion.</div>
+        <div class="mid strong teal">Absichern</div>
+        <div class="grey" style="margin:0.05in 0 0 0; font-size:16pt;">Regeln verhindern bekannte Fehler.</div>
+      </div>
+      <div class="box" style="flex:1;">
+        <div class="boxtitle">Ablauf beim Spielen · Pseudocode</div>
+        <div class="code">FÜR jeden Spielschritt:
+    Gedächtnis aktualisieren (Drift, Nebel)
+    Ziele zuweisen (Weglänge statt Luftlinie)
+    FÜR jede aktive eigene Einheit:
+        Q = Mittelwert der 18 Netze(79 Merkmale)
+        a = beste erlaubte Aktion aus Q
+        prüfen: Sackgasse? Kollision? Schuss nötig?
+    Aktionen zurückgeben
+<span class="cm"># Netze seit 20.10. unverändert, Regeln neu</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">04</div>
+</section>
+
+<!-- 5 Training und Regeln -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Training und Regeln: der Weg bis 78 %</h1>
+  <div class="content" style="top:1.75in;">
+    <table class="res tight" style="font-size:15.5pt;">
+      <tr class="head"><td colspan="2">Hat geholfen (bis 20.10.)</td></tr>
+      <tr><td>Regeln für Relic-Suche und Erkundung, noch ohne neues Training</td><td class="v">47 → 61 %</td></tr>
+      <tr><td>Neu trainiert mit aktiven Regeln und korrigierter Belohnung (6 Netze)</td><td class="v">61 → 69 %</td></tr>
+      <tr><td>18 statt 6 Netze, zusammen 66.000 Trainingsspiele</td><td class="v">67 → 74 %</td></tr>
+      <tr><td>Regeln für Ziele und Schüsse</td><td class="v">+6 und +7 Punkte</td></tr>
+      <tr class="head off"><td colspan="2" style="padding-top:0.2in;">Kein Gewinn (19.–22.10.)</td></tr>
+      <tr class="off"><td>CNN + PPO (Empfehlung aus dem Review)</td><td class="v">73,0 % · Lehrer 73,25 %</td></tr>
+      <tr class="off"><td>22 neue Merkmale für Schussgefahr (6 Netze)</td><td class="v">72,8 % · ohne 73,3 %</td></tr>
+      <tr class="off"><td>12 weitere Netze mit den neuen Regeln</td><td class="v">kein Gewinn</td></tr>
+    </table>
+    <div class="below" style="bottom:0;">
+      <div class="mid strong">Ab 78 % war Training nicht mehr der Engpass.</div>
+      <div class="note" style="margin-top:0.05in;">Gegen Solution_92, beide Seiten. Jeder Vergleich auf denselben neuen Karten; die Kartenblöcke unterscheiden sich je Zeile.</div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">05</div>
+</section>
+
+<!-- 6 Methode -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Wie wir Fehler gefunden haben</h1>
+  <div class="content" style="top:2.05in;">
+    <div class="step"><div class="num">01</div><div><h3>Verlorene Spiele nachspielen</h3>
+      <p>Gedächtnis, Energie und Todesursachen Schritt für Schritt mit dem wahren Spielzustand vergleichen.</p></div></div>
+    <div class="step"><div class="num">02</div><div><h3>Ursache beheben</h3>
+      <p>Eine gezielte Änderung als Schalter, mit Tests gegen die Spiel-Engine.</p></div></div>
+    <div class="step"><div class="num">03</div><div><h3>Auf neuen Karten prüfen</h3>
+      <p>Erst 1.330 Entwicklungsspiele, dann vorab festgelegte Hürden auf frischen Karten (gepaarter Bootstrap).</p></div></div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">06</div>
+</section>
+
+<!-- 7 Fehler 1 -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Fehler 1: Die Karte im Gedächtnis war veraltet</h1>
+  <div class="content" style="top:1.62in;">
+    <div class="legend"><span class="k dot first" style="background:#3A7FC1"></span>Sherlock<span class="k dot" style="background:#D93A3A"></span>Solution_92<span class="k" style="background:#F6D56A"></span>Punktefeld<span class="k" style="background:#555"></span>Asteroid<span class="k" style="background:#D7C2EF"></span>Nebel<span style="margin-left:0.18in;">★ Relic · Zahl = Energie · Karte 360014, Match 3</span></div>
+    <div class="imgpair">
+      <figure><img src="folie_2310_karte_vorher.png"><figcaption class="grey"><b>Vorher:</b> Einheiten am Start eingesperrt · Schritt 90: 112 : 717</figcaption></figure>
+      <figure><img src="folie_2310_karte_nachher.png"><figcaption class="grey"><b>Nachher:</b> Einheiten verlassen sofort den Start · Schritt 90: 541 : 488</figcaption></figure>
+    </div>
+    <ul class="dash below" style="bottom:-0.05in; font-size:15.5pt;">
+      <li>Asteroiden und Nebel wandern, Nebel ist bei kleiner Sicht unsichtbar → <b>18 % der gemerkten Felder waren falsch</b></li>
+      <li style="margin-bottom:0;">Lösung: Drift erkennen und Karte mitrollen; unsichtbar trotz Sichtweite heißt Nebel → 210 von 210 Drifts erkannt</li>
+    </ul>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">07</div>
+</section>
+
+<!-- 8 Fehler 2 -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Fehler 2: Wege und Ziele</h1>
+  <div class="content" style="top:1.62in;">
+    <div class="legend"><span class="k dot first" style="background:#3A7FC1"></span>Sherlock<span class="k dot" style="background:#D93A3A"></span>Solution_92<span class="k" style="background:#F6D56A"></span>Punktefeld<span class="k" style="background:#555"></span>Asteroid<span class="k" style="background:#D7C2EF"></span>Nebel<span style="margin-left:0.18in;">★ Relic · Zahl = Energie · Karte 360581, Match 3</span></div>
+    <div class="imgpair">
+      <figure><img src="folie_2310_weg_vorher.png"><figcaption class="grey"><b>Vorher:</b> Einheiten pendeln vor einer Sackgasse · Schritt 85: 163 : 550</figcaption></figure>
+      <figure><img src="folie_2310_weg_nachher.png"><figcaption class="grey"><b>Nachher:</b> kürzester Weg um die Wand · Schritt 85: 514 : 519</figcaption></figure>
+    </div>
+    <ul class="dash below" style="bottom:-0.05in; font-size:15.5pt;">
+      <li>Das Netz läuft nach Luftlinie; Ziele lagen teils unter Asteroiden und waren unerreichbar</li>
+      <li style="margin-bottom:0;">Lösung: in Sackgassen den kürzesten Weg nehmen; Ziele nach Weglänge statt Luftlinie verteilen</li>
+    </ul>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">08</div>
+</section>
+
+<!-- 9 Fehler 3 -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Fehler 3: Energie und Kollisionen</h1>
+  <div class="content" style="top:1.62in;">
+    <div class="legend"><span class="k dot first" style="background:#3A7FC1"></span>Sherlock<span class="k dot" style="background:#D93A3A"></span>Solution_92<span style="margin-left:0.18in;">Pfeil = Schuss · Zahl = Energie · Karte 360019, Match 3, Schritt 60 → 61</span></div>
+    <div class="cols" style="gap:0.45in; height:auto;">
+      <figure style="margin:0; flex:1.15;"><img src="folie_2310_energie_vorher.png" style="width:100%; border:1px solid #D3DEDC; background:#fff; display:block;">
+        <figcaption class="grey"><b>Vorher:</b> drei Schüsse auf einen Gegner mit 21 Energie</figcaption></figure>
+      <div style="flex:0.85; padding-top:0.1in;">
+        <ul class="dash" style="font-size:17pt; line-height:1.3;">
+          <li>Ein Schuss kostet 30–50 Energie; oft feuerten mehrere Halter auf denselben Gegner</li>
+          <li>Bei Kollisionstoden hatten unsere Einheiten im Mittel <b>41</b>, die Gegner <b>102</b> Energie</li>
+          <li class="teal strong" style="margin-top:0.3in;">Kein Schuss auf sicher tote Ziele</li>
+          <li class="teal strong">Halter schießen nur auf stehende Gegner</li>
+          <li class="teal strong">Keine Züge in Kollisionen mit stärkeren Gegnern</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">09</div>
+</section>
+
+<!-- 10 Ergebnis -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Ergebnis auf neuen Karten</h1>
+  <div class="content" style="top:1.7in;">
+    <div class="cols" style="gap:0.45in;">
+      <img src="folie_2310_fortschritt.png" style="width:7.2in; height:4.6in; flex:none;">
+      <div style="flex:1; padding-top:0.35in;">
+        <ul class="dash" style="font-size:19pt; line-height:1.3;">
+          <li><b>90,3 %</b> gegen Solution_92 auf 800 neuen Karten</li>
+          <li>+7,5 Punkte gegenüber V7 (95&nbsp;%-Intervall +5,4 bis +9,6)</li>
+          <li>99,75 % gegen default</li>
+          <li>Direkt gegen V7: 58 % von 800 Spielen</li>
+        </ul>
+        <div class="note" style="margin-top:0.25in;">Übernahme nur nach vorab festgelegten Hürden; beide Seiten, gepaarter Karten-Bootstrap.</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">10</div>
+</section>
+
+<!-- 11 Robustheit -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Robust gegen andere Spielweisen?</h1>
+  <div class="content" style="top:1.9in;">
+    <div class="cols" style="gap:0.55in; height:auto; align-items:flex-start;">
+      <table class="res robust" style="flex:1.3; width:auto; font-size:18pt;">
+        <tr><td>Prof-DQN · Zufallsagent · Rush-Bot</td><td class="v">je 100 %</td></tr>
+        <tr><td>Solution_92, zielt auf die schwächste Einheit</td><td class="v">90,5 %</td></tr>
+        <tr><td>Unsere Abgabe vom 16.10.</td><td class="v">89 %</td></tr>
+        <tr><td>Unser CNN-PPO-Agent</td><td class="v">88 %</td></tr>
+        <tr class="weak"><td>Solution_92, schießt im ganzen Quadrat</td><td class="v">74,5–83,5 %</td></tr>
+      </table>
+      <div style="flex:0.7;">
+        <div class="mid strong">Stärkster Gegner</div>
+        <div class="grey" style="margin-top:0.1in; font-size:16pt; line-height:1.35;">Solution_92 schießt nur in einer Raute. Schießt er im ganzen Quadrat, das die Engine erlaubt, wird er deutlich stärker. Unser Stand vom 20.10. fällt dort genauso ab (78 → 62,5 %).</div>
+      </div>
+    </div>
+    <div class="note below">Siegquote von V10, je 100 neue Karten, beide Seiten. Die Abwandlungen von Solution_92 und den Rush-Bot haben wir selbst gebaut.</div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">11</div>
+</section>
+
+<!-- 12 Erkenntnisse -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title">Erkenntnisse und Ausblick</h1>
+  <div class="content" style="top:2.05in;">
+    <div class="step"><div class="num">01</div><div><h3>Training mit Regeln half bis 78 %</h3>
+      <p>Regeln, Neutraining und 18 Netze: <b class="teal">47 % → 78 %</b>. Danach half mehr Training nicht.</p></div></div>
+    <div class="step"><div class="num">02</div><div><h3>Fehlersuche brachte den Rest</h3>
+      <p>Wahrnehmung, Wege und Energie: <b class="teal">78 % → 90 %</b> mit denselben 18 Netzen.</p></div></div>
+    <div class="step"><div class="num">03</div><div><h3>Bis zum 27.11.</h3>
+      <p>Kämpfe um gemeinsame Relic-Felder verbessern, gegen weitere Spielweisen testen, Abgabe vorbereiten.</p></div></div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">12</div>
+</section>
+
+<!-- 13 Fazit -->
+<section class="slide dark">
+  <div class="kicker">SHERLOCK / REVIEW 02</div>
+  <h1 class="title" style="color:#fff;">Fazit und Fragen</h1>
+  <div style="position:absolute; left:0.76in; top:2.55in; font-size:44pt; font-weight:700;">Training + Regeln + Fehlersuche</div>
+  <ul class="dash" style="position:absolute; left:0.85in; top:3.75in; font-size:21pt; color:#CFE3DE;">
+    <li>90,3 % gegen Solution_92, 99,75 % gegen default</li>
+    <li>Jede Änderung vorab festgelegt und auf neuen Karten geprüft</li>
+  </ul>
+  <div style="position:absolute; left:0.76in; top:5.55in; font-size:32pt; font-weight:700;">Fragen?</div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">13</div>
+</section>
+
+<!-- 14 Reserve: Prüfung -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02 · RESERVE</div>
+  <h1 class="title">Reserve: So prüfen wir</h1>
+  <div class="content">
+    <ul class="dash" style="font-size:18pt; line-height:1.3;">
+      <li><b>Entwicklung:</b> 2.000 neue Karten nach dem Ergebnis von V3 in schwer und leicht geteilt; daraus 330 schwere und 335 leichte Karten, beide Seiten (1.330 Spiele). Gesamtschätzung = 0,33&nbsp;·&nbsp;schwer + 0,67&nbsp;·&nbsp;leicht; sie traf die späteren frischen Werte auf etwa einen Punkt.</li>
+      <li><b>Übernahme nur, wenn alle Hürden erfüllt sind</b> (vorab festgelegt): gegen Solution_92 mindestens +2&nbsp;Punkte mit 95&nbsp;%-Untergrenze über 0; default mindestens 99&nbsp;%; direkt gegen die Abgabe mit Untergrenze über 50&nbsp;%.</li>
+      <li><b>Statistik:</b> gepaarter Bootstrap über ganze Karten (beide Seiten zusammen), 5.000 Ziehungen.</li>
+      <li><b>Frische Karten:</b> jeder Block nur einmal benutzt; Abgabe-Gewichte vor jeder Übernahme mit Prüfsumme gesichert.</li>
+    </ul>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">14</div>
+</section>
+
+<!-- 15 Reserve: Engine -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / REVIEW 02 · RESERVE</div>
+  <h1 class="title">Reserve: Spielregeln, die wir nutzen</h1>
+  <div class="content">
+    <table class="res" style="font-size:16.5pt;">
+      <tr><td style="width:2.6in;"><b>Sap (Schuss)</b></td><td>im ganzen Quadrat bis zur Reichweite (3–7); Ziel verliert die Schusskosten, Nachbarfelder einen Anteil (Streufaktor 0,25 / 0,5 / 1)</td></tr>
+      <tr><td><b>Kollision</b></td><td>Stehen Einheiten beider Teams auf einem Feld, überlebt nur das Team mit mehr Gesamtenergie; bei Gleichstand sterben beide</td></tr>
+      <tr><td><b>Energie-Sog</b></td><td>Benachbarte Gegner ziehen Energie ab (Faktor verdeckt, 1/16 bis 3/8)</td></tr>
+      <tr><td><b>Drift</b></td><td>Asteroiden und Nebel verschieben sich alle 7–40 Schritte diagonal</td></tr>
+      <tr><td><b>Relics</b></td><td>bis zu drei Paare; ein neues Paar kann in Match 2 und 3 in den ersten 50 Schritten erscheinen</td></tr>
+    </table>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">15</div>
+</section>
+
+</body>
+</html>
