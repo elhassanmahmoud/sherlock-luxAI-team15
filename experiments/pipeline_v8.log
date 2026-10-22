@@ -1,0 +1,20 @@
+[06:32] Start Bsnpdroc (experiments/ensembles/v8_Bsnpdroc.pth, SHA-256 13023d747d2aa23d) gegen REF experiments/ensembles/v7_Bsnpd.pth (c394acba84f7a298)
+V8_ref_6020.csv: default: 0.998 (400 Spiele), solution92: 0.780 (400 Spiele) in 291s
+V8_Bsnpdroc_6020.csv: default: 1.000 (400 Spiele), solution92: 0.858 (400 Spiele) in 210s
+V8_Bsnpdroc_6020             default       200    400  1.000  0.998  +0.003  [+0.000; +0.007]
+V8_Bsnpdroc_6020             solution92    200    400  0.858  0.780  +0.077  [+0.035; +0.122]
+GATE Auswahl: Solution_92 0.8575 vs 0.7800 (Δ +7.75 pp, Ziel >= +1), default 1.0000 (Ziel >= 0,99) -> BESTANDEN
+[06:41] Auswahlhuerde bestanden -> frische Bestaetigung
+V8_ref_6220.csv: default: 0.998 (1600 Spiele), solution92: 0.846 (1600 Spiele) in 1076s
+V8_Bsnpdroc_6220.csv: default: 1.000 (1600 Spiele), solution92: 0.891 (1600 Spiele) in 1280s
+V8_Bsnpdroc_direct_7020.csv: self:experiments/ensembles/v7_Bsnpd.pth: 0.565 (400 Spiele) in 210s
+V8_Bsnpdroc_6220             default       800   1600  1.000  0.998  +0.002  [+0.000; +0.004]
+V8_Bsnpdroc_6220             solution92    800   1600  0.891  0.846  +0.045  [+0.026; +0.064]
+GATE Bestaetigung: Solution_92 0.8906 vs Referenz 0.8456, Δ +4.50 pp [+2.62; +6.38]; default 1.0000 (Δ +0.19); direkt 0.5650 [0.4950; 0.6350] aus 400 Spielen
+  OK   Solution_92 Δ >= +2 pp
+  OK   Solution_92 untere 95%-Grenze > 0
+  OK   default >= 99 %
+  OK   default Δ >= -1 pp
+  FAIL direkt untere 95%-Grenze > 0,5
+GATE Bestaetigung: NICHT BESTANDEN
+[07:24] Ende Bsnpdroc

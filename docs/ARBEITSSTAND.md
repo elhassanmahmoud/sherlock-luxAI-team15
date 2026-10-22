@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 07:30 Berlin – Claude Code (autonom): V8 knapp nicht übernommen, Testsuite sauber
+
+- **V8** ([Plan und Ergebnis](superpowers/plans/2026-10-22-v8.md)), frisch auf 800 Karten 506220–507019: **Solution_92 89,1 % statt 84,6 % bei V7 (Δ +4,5 [+2,6; +6,4])**, default 100 %. **Direkt gegen V7 56,5 % [49,5; 63,5]** → die vorab festgelegte Hürde „untere Grenze > 50 %“ um 0,5 pp verfehlt → **V7 bleibt Abgabe**. V8 = V7 + `reach_assign` + `sap_no_overkill` + `safe_moves` + `collision_guard`, Checkpoint `experiments/ensembles/v8_Bsnpdroc.pth` (lokal, SHA-256 `13023d74…d60c`, gitignored; bauen mit `python -m scripts.set_cfg experiments/ensembles/v7_Bsnpd.pth <ziel> reach_assign=true sap_no_overkill=true safe_moves=true collision_guard=true`). **Entscheidungsvorlage für Mahmoud/Moayed**: gegen Solution_92 und default nachweislich besser, im direkten Vergleich gegen V7 nicht nachweislich.
+- **Gesamte Testsuite ohne laufende Messung: 491 bestanden** (07:25, V7 installiert). Damit ist der offene Prüfpunkt der V7-Übernahme erledigt.
+- Nach V8 gemessen, ohne Gewinn: `window_infer_all` (72,0/97,3), `dodge` lethal (73,6/97,5, +0,1), `far_opp=6` (69,8/96,0).
+
 ## 22.10.2026, 06:45 Berlin – Claude Code (autonom): V8 in Bestätigung gegen V7
 
 - **V8 = V7 + `reach_assign` + `sap_no_overkill` + `safe_moves` + `collision_guard`** (18 V3-Netze bitgleich; [Plan mit Nachtrag](superpowers/plans/2026-10-22-v8.md)). Entwicklung 73,0/97,6 % → geschätzt **≈ 89,5 %** gegen Solution_92.

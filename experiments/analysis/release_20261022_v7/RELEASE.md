@@ -41,7 +41,7 @@ Log `experiments/pipeline_v7.log`.
 - Testsuite direkt nach der Installation: 452 bestanden. 31 Tests in
   `tests/test_early_curriculum_study.py` wurden von der Schutzsperre „Another model job is active“
   abgewiesen, weil zu dem Zeitpunkt eine Entwicklungsmessung lief. Das ist dasselbe Verhalten wie am
-  21.10. Die Wiederholung ohne laufende Messung steht im Arbeitsstand.
+  21.10. **Wiederholung ohne laufende Messung (22.10., 07:25): gesamte Testsuite 491 bestanden.**
 
 ## Hashes und Rückweg
 
