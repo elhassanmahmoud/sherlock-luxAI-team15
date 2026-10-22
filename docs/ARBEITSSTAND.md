@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 09:50 Berlin – Claude Code (autonom): V10-Feinschliff ohne Gewinn, Training läuft
+
+- Auf V10 ohne Gewinn: `art_still` (Artillerie nur auf stehende Ziele) 77,7/96,0 % (−0,3), `sap_reserve_k=0.5` 76,5/94,9 % (−1,5). V10 bleibt unverändert.
+- Training `full_rules_v8` (6 Netze unter V8-Bedingungen) bei ~2000/3000 Spielen, Ende gegen 10:25. Danach automatisch: `v8mix24` (V8-Config) und `v10mix24` (V10-Config, 18 V3-Netze + 6 neue) auf den Entwicklungs-Sets (`experiments/pipeline_v8nets.log`, `experiments/dev_v10mix24.log`). Ein Nachfolger würde nur über einen neuen, vorab festgelegten Plan gegen V10 geprüft.
+- Vortragsentwurf `docs/presentation/VORTRAGSPLAN_0611_ENTWURF.md` lokal auf V10 aktualisiert (Kernaussage „von 47 % auf 90 %“), **nicht gepusht**, wartet auf Mahmouds OK.
+
 ## 22.10.2026, 09:25 Berlin – Claude Code (autonom): **V10 als Abgabe übernommen – 90,3 % gegen Solution_92**
 
 - **V10 (`v10_V8st`) = V8 + `sap_still`** hat alle vorab festgelegten Gates gegen V7 bestanden ([Plan](superpowers/plans/2026-10-22-v10.md), [Übernahmebericht](../experiments/analysis/release_20261022_v10/RELEASE.md)): frisch auf 800 Karten 507420–508219 **Solution_92 90,3 % statt 82,8 % (Δ +7,5 [+5,4; +9,6])**, default 99,75 % (Δ −0,2), **direkt gegen V7 58,1 % [53,1; 62,75] aus 800 Spielen**.
