@@ -695,3 +695,15 @@ def test_art_still_skips_moving_cluster():
         a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 9, 10), (8, 10, 10), (9, 9, 10)], relics=[(12, 12)]))
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 8, 10), (8, 9, 10), (9, 8, 10)], relics=[(12, 12)]))
         assert int(act[0, 0]) == want, flag
+
+
+def test_cand_rescue_only_without_known_point_tiles():
+    # Relic bekannt, kein Punkte-Tile bekannt, wartende Unit 2 Schritte neben einem Kandidaten:
+    # mit cand_rescue geht sie hin; sobald ein Punkte-Tile bekannt ist, greift die Regel nicht mehr
+    for known_pt, want_move in ((False, True), (True, False)):
+        a = _stay_agent(cand_rescue=True)
+        if known_pt:
+            a.belief.point_tiles[20, 20] = True
+        act = a.act(30, make_obs(30, 30, units=[(5, 9, 100)], enemies=[], relics=[(9, 9)]))
+        moved = int(act[0, 0]) in (geo.RIGHT, geo.DOWN, geo.UP)
+        assert moved == want_move, known_pt

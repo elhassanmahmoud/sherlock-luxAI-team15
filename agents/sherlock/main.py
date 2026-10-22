@@ -294,6 +294,11 @@ class Agent_x:
             incoming = (self._predicted_hits(ctx, stationary)
                         if dodge_on and not self.training and fight else {})
         eps = self.epsilon
+        # 22.10.2026 (cfg.cand_rescue): Notfall, wenn trotz bekannter Relics kein Punkte-Tile bekannt ist
+        # (z. B. 361050: Haufen im Nebel; 361255: Units laufen von Kandidaten weg) -> Kandidaten gezielt
+        # testen (obey_target, neb_cand, idle_approach nur in diesem Fall aktiv)
+        self._rescue = bool(self.cfg.cand_rescue and not self.training and self.belief.relic_positions
+                            and not self.belief.point_tiles.any() and self.belief.match_step >= 10)
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
             if self.training and len(legal) > 0 and self.rng.random() < eps:
@@ -309,7 +314,7 @@ class Agent_x:
                 a = self._rule_override(ctx, uid, masks[k], a)
                 if self.cfg.path_fix and (not self.training or self.cfg.rules_in_training) and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
-                if self.cfg.obey_target and not self.training and 1 <= a <= 4:
+                if (self.cfg.obey_target or self._rescue) and not self.training and 1 <= a <= 4:
                     a = self._obey_target(ctx, uid, masks[k], a)
                 if self.cfg.unstack and not self.training and a == geo.STAY:
                     a = self._unstack(ctx, uid, masks[k], a)
@@ -365,8 +370,9 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["nebula_detours"] = st.get("nebula_detours", 0) + 1
-            if (self.cfg.neb_cand and not self.training and a == geo.STAY
-                    and (self.cfg.idle_approach or self._harmful_nebula() >= self.cfg.nebula_avoid_min)):
+            if ((self.cfg.neb_cand or self._rescue) and not self.training and a == geo.STAY
+                    and (self.cfg.idle_approach or self._rescue
+                         or self._harmful_nebula() >= self.cfg.nebula_avoid_min)):
                 d = self._neb_cand_step(ctx, uid, masks[k])
                 if d is not None:
                     a = d
@@ -375,7 +381,7 @@ class Agent_x:
             if a == geo.STAY and self._harmful_nebula() >= 25:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 if (ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]
-                        and not (self.cfg.neb_cand and self.belief.candidate[x, y])):
+                        and not ((self.cfg.neb_cand or self._rescue) and self.belief.candidate[x, y])):
                     d = self._leave_nebula(ctx, uid, masks[k])
                     if d is not None:
                         a = d
@@ -594,7 +600,7 @@ class Agent_x:
         tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
         if not ctx["nebula"][tx, ty] or self.belief.point_tiles[tx, ty]:
             return a
-        if self.cfg.neb_cand and self.belief.candidate[tx, ty]:
+        if (self.cfg.neb_cand or getattr(self, "_rescue", False)) and self.belief.candidate[tx, ty]:
             return a  # 22.10.2026: Kandidaten im Nebel testen (sonst nie Punkte-Tiles, 361050)
         tgt = ctx["assigned"].get(int(uid))
         if tgt is not None:
@@ -621,11 +627,12 @@ class Agent_x:
         b = self.belief
         if tgt is None or not b.candidate[tgt]:
             return None
-        if not self.cfg.idle_approach and not ctx["nebula"][tgt]:
+        approach = self.cfg.idle_approach or getattr(self, "_rescue", False)
+        if not approach and not ctx["nebula"][tgt]:
             return None
         ec = ctx["enemy_coords"]
         x0, y0 = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
-        if self.cfg.idle_approach and len(ec) and (np.maximum(np.abs(ec[:, 0] - x0), np.abs(ec[:, 1] - y0)) <= 2).any():
+        if approach and len(ec) and (np.maximum(np.abs(ec[:, 0] - x0), np.abs(ec[:, 1] - y0)) <= 2).any():
             return None
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         if b.point_tiles[x, y] or (x, y) == tuple(tgt):
