@@ -543,7 +543,10 @@ class Agent_x:
         if c.art_safe and len(ctx["enemy_coords"]):
             ec = ctx["enemy_coords"]
             armed = ctx["enemy_energies"] >= ctx["sap_cost"]
-            d = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
+            if c.art_safe_cheb:  # 22.10.2026: Engine erlaubt Saps im ganzen Quadrat
+                d = np.maximum(np.abs(ec[:, 0] - x), np.abs(ec[:, 1] - y))
+            else:
+                d = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
             if (armed & (d <= ctx["sap_range"])).any():
                 return False
         return True

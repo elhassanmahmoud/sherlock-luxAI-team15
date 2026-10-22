@@ -167,6 +167,9 @@ class AgentConfig:
     window_infer_all: bool = False
     """True (22.10.2026): im Spawnfenster immer schliessen; Unit-Tiles ohne ganz sichtbares 5x5-Feld
     zaehlen als offene Unbekannte (ein ungesehenes neues Relic koennte sie punkten lassen)."""
+    art_safe_cheb: bool = False
+    """True (22.10.2026): art_safe prueft die Gefahr im ganzen Sap-Quadrat (Chebyshev, wie die Engine)
+    statt in der Manhattan-Raute von Solution_92. Robustheit gegen Gegner, die diagonal sappen."""
     art_still: bool = False
     """True (22.10.2026): art_sap nur, wenn ein stehender Gegner direkt oder mindestens zwei stehende
     im 3x3-Bereich getroffen werden (wie sap_still, nur fuer die Artillerie-Regel)."""
