@@ -546,3 +546,14 @@ def test_sym_map_fills_mirror_tile():
         mx, my = 23 - 2, 23 - 4                       # Spiegeltile von (4, 2)
         assert b.tile_type[mx, my] == (TILE_ASTEROID if flag else TILE_UNKNOWN)
         assert b.energy_map[mx, my] == (7 if flag else 0)
+
+
+def test_sap_no_overkill_second_holder_keeps_energy():
+    # zwei Halter mit pt_sap, ein Gegner mit 21 Energie in Reichweite (Sap-Kosten 40): ohne Absprache
+    # sappen beide, mit sap_no_overkill nur der erste
+    for flag, want in ((False, geo.SAP), (True, geo.STAY)):
+        a = _stay_agent(pt_sap=True, sap_no_overkill=flag)
+        a.belief.point_tiles[5, 5] = a.belief.point_tiles[6, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200), (6, 5, 200)], enemies=[(8, 7, 21)], relics=[(9, 9)]))
+        assert int(act[0, 0]) == geo.SAP
+        assert int(act[1, 0]) == want, flag

@@ -273,6 +273,7 @@ class Agent_x:
         st["greedy_masked"] += int((~masks[np.arange(len(ids)), raw_greedy]).sum())
 
         planned = np.zeros(len(ctx["enemy_coords"]))
+        planned_dmg = np.zeros(len(ctx["enemy_coords"]))  # sap_no_overkill: geplanter Schaden je Gegner
         planned_fog = np.zeros((ctx["W"], ctx["H"]), dtype=bool)
         rammed: set = set()
         siege = None  # rules.SiegePlan, bei Bedarf einmal pro Step
@@ -390,11 +391,18 @@ class Agent_x:
                         sap = val if kind == "sap" else sap
                         self._prev_actions[uid] = a
                         st["siege_steps"] = st.get("siege_steps", 0) + 1
+            if a == geo.SAP and sap is not None and self.cfg.sap_no_overkill and not self.training:
+                if self._overkill(ctx, uid, sap, planned_dmg):
+                    a = geo.STAY  # 22.10.2026: Ziel ist durch geplante Saps schon tot -> Energie behalten
+                    self._prev_actions[uid] = a
+                    st["overkill_skips"] = st.get("overkill_skips", 0) + 1
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:
                     a = geo.STAY
                     self._prev_actions[uid] = a
+            if a == geo.SAP and sap is not None and self.cfg.sap_no_overkill and not self.training:
+                self._plan_damage(ctx, uid, sap, planned_dmg)
             if a == geo.SAP and sap is not None:
                 dx, dy, hits = sap
                 if self.belief.mirrored:
@@ -693,6 +701,32 @@ class Agent_x:
             if step is not None:
                 return step
         return a
+
+    def _sap_cover(self, ctx: dict, uid: int, sap) -> tuple[np.ndarray, np.ndarray]:
+        """Je sichtbarem Gegner: direkt getroffen / daneben getroffen (Chebyshev 0 / 1 vom Zieltile)."""
+        ec = ctx["enemy_coords"]
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tx, ty = x + int(sap[0]), y + int(sap[1])
+        cheb = np.maximum(np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty)) if len(ec) else np.zeros(0)
+        return cheb == 0, cheb == 1
+
+    def _overkill(self, ctx: dict, uid: int, sap, planned_dmg: np.ndarray) -> bool:
+        """cfg.sap_no_overkill (22.10.2026): Sap ist verschwendet, wenn alle direkt getroffenen
+        Gegner durch die in diesem Step schon geplanten Saps sicher sterben und daneben kein noch
+        lebender Gegner steht. Diagnose 360019: drei Halter sappten zugleich einen Gegner mit 21 Energie."""
+        direct, near = self._sap_cover(ctx, uid, sap)
+        if not direct.any():
+            return False
+        rest = ctx["enemy_energies"].astype(np.float64) - planned_dmg
+        alive_direct = direct & (rest >= 0)
+        alive_near = near & (rest >= 0)
+        return not alive_direct.any() and not alive_near.any()
+
+    def _plan_damage(self, ctx: dict, uid: int, sap, planned_dmg: np.ndarray) -> None:
+        direct, near = self._sap_cover(ctx, uid, sap)
+        cost = float(ctx["sap_cost"])
+        drop = self._dropoff() if self.cfg.sap_dropoff_est else SAP_DROPOFF_ASSUMED
+        planned_dmg += np.where(direct, cost, 0.0) + np.where(near, int(cost * min(drop, 0.25)), 0.0)
 
     def _path_fix(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """cfg.path_fix (22.10.2026): Greedy-Falle an Asteroidenwaenden beheben. Netz und
