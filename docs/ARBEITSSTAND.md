@@ -5,6 +5,17 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 03:20 Berlin – Claude Code mit Mahmoud (autonom über Nacht): V5-B knapp unter der Hürde, V6 in Bestätigung
+
+Auftrag des Users: selbstständig weiterarbeiten bis Nachmittag, Ziel ≥ 90 % gegen Solution_92, ganze CPU nutzen; Übernahme nur über vorab festgelegte Tests.
+
+- **V5-B** (`art_sap` 3 + `nebula_avoid` Sperre 25, 18 V3-Netze bitgleich; [Plan/Ergebnis](superpowers/plans/2026-10-22-v5-combination.md)): frisch 503420–503619 Solution_92 **75,75 % statt 71,0 %, Δ +4,75 pp [+1,0; +8,25]**, default 99,75 %, **direkt gegen V3 62,0 % [56,5; 67,25]**, Kurs-Runner bestanden. Hürde Δ ≥ +5 pp um 0,25 pp verfehlt → **nicht übernommen**, Hürde nicht nachträglich geändert. Entscheidungsvorlage für Mahmoud/Moayed.
+- **Training auf schweren Karten** (6 Netze, 660 Karten mit V3-Niederlage): `hard6` 70,5 % (−6,2 gegen V3, −4,3 gegen Kontrolle), `hard24` +2,5 → kein Gewinn.
+- Große Entwicklungs-Sets `dev_hard330`/`dev_easy330`: Bs (V5-B mit **weicher** Nebel-Meidung, `nebula_avoid_mode=soft`) ≈ +5,3 gesamt, beste einfache Variante. Ohne Gewinn bzw. schädlich: `stack_guard` (blockiert Wege, leichte Karten 79 %), `relic_search` (leicht −5), `sap_dropoff_est`, `art_surplus`, `fog_sap` bei Sicht ≤ 2. Neu: `dodge_verify` (Online-Prüfung des Solution_92-Modells), `dodge_auto_max`, `dodge_bait`.
+- **V6 = Bs** läuft nach [vorab festgelegtem Plan](superpowers/plans/2026-10-22-v6.md): Auswahl 504020–504219 (V3 dort 77,0 %), dann 400 frische Karten 504220–504619 + direkt 504620–504819 (`scripts/pipeline_v6.sh`, Log `experiments/pipeline_v6.log`).
+- Training läuft: 6 Netze `full_rules_v6` (Regeln von Bs schon im Training), Starts 27–29/37–39, Auswertung automatisch (`scripts/pipeline_v6nets.sh`). PPO `cnn3b` fast fertig; Prüfung der Stände 50/100/150 folgt laut Plan.
+- Abgabe weiterhin **V3** (`aac1c910…d935`).
+
 ## 22.10.2026, 00:45 Berlin – Claude Code mit Mahmoud: versteckte Parameter, Entwicklungs-Sets, V5-Kandidaten in Auswahl
 
 **Kartenanalyse** (`experiments/analysis/hard_map_training_20261021/map_features*.{py,csv}`, wahre Startzustände der 2000 gescreenten Karten, reine Analyse): V3 gegen Solution_92 nach verstecktem Parameter – Sap-Streufaktor 0,25/0,5/1,0: **65,9/76,3/85,4 %**; Nebelabzug 25: 65,5 % (sonst ~78 %); Bewegungskosten 1/5: 69,1/84,4 %; ≥ 14 Punkte-Tiles nahe der Diagonale: 54,7 %.
