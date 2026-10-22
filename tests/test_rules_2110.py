@@ -606,3 +606,13 @@ def test_sap_still_all_cancels_network_sap_on_moving_target():
         a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
         assert int(act[0, 0]) == want, flag
+
+
+def test_holder_guard_steps_away_from_stronger_mobile_enemy():
+    for flag, want in ((False, geo.STAY), (True, geo.LEFT)):
+        a = _stay_agent(holder_guard=flag)
+        a.belief.point_tiles[5, 5] = True
+        # starker Gegner rechts daneben (6,5), nicht auf Punkte-Tile; links (4,5) ist frei und sicher
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 50)], enemies=[(6, 5, 150)], relics=[(9, 9)]))
+        got = int(act[0, 0])
+        assert (got == want) if not flag else (got in (geo.LEFT, geo.UP, geo.DOWN) and got != geo.RIGHT), (flag, got)

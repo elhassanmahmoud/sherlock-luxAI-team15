@@ -403,6 +403,12 @@ class Agent_x:
                     a = geo.STAY  # 22.10.2026: Ziel ist durch geplante Saps schon tot -> Energie behalten
                     self._prev_actions[uid] = a
                     st["overkill_skips"] = st.get("overkill_skips", 0) + 1
+            if self.cfg.holder_guard and not self.training and a in (geo.STAY, geo.SAP):
+                d = self._holder_guard(ctx, uid, masks[k])
+                if d is not None:
+                    a = d  # 22.10.2026: staerkerer beweglicher Gegner neben dem Halter -> ausweichen
+                    self._prev_actions[uid] = a
+                    st["holder_guards"] = st.get("holder_guards", 0) + 1
             if a == geo.SAP and sap is not None and self.cfg.smart_sap:
                 sap = rules.plan_sap(ctx, uid, planned, stationary, self.belief.point_tiles)
                 if sap is None:
@@ -728,6 +734,35 @@ class Agent_x:
         on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
         still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
         return bool((direct & still).any())
+
+    def _holder_guard(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
+        """cfg.holder_guard (22.10.2026): Steht neben unserer stehenden Unit (kardinal) ein
+        beweglicher, sichtbarer Gegner mit mindestens unserer Energie, zieht er im naechsten Step oft
+        auf unser Tile (Kollision: wir sterben). Diagnose: haeufigste Kollisionsart (5,5 Tote je
+        Verlustspiel). Ausweichen auf ein freies Nachbartile, das an keinen solchen Gegner grenzt;
+        bevorzugt Punkte-Tiles, dann mehr Feldenergie. None, wenn keine Gefahr oder kein Ausweg."""
+        ec, ee = ctx["enemy_coords"], ctx["enemy_energies"]
+        if not len(ec):
+            return None
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        e = float(ctx["ally_ene"][uid])
+        mobile = ~self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        strong = mobile & (ee - ctx["move_cost"] >= e)
+        man = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
+        if not (strong & (man == 1)).any():
+            return None
+        best, best_s = None, -np.inf
+        for d in range(1, 5):
+            if not mask[d]:
+                continue
+            tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+            dt = np.abs(ec[:, 0] - tx) + np.abs(ec[:, 1] - ty)
+            if ((dt == 0) | (strong & (dt <= 1))).any():
+                continue
+            sc = (5.0 if self.belief.point_tiles[tx, ty] else 0.0) + float(np.clip(ctx["energy_map"][tx, ty], -20, 20)) / 20.0
+            if sc > best_s:
+                best, best_s = d, sc
+        return best
 
     def _sap_on_still(self, ctx: dict, uid: int, sap, stationary: np.ndarray) -> bool:
         """cfg.sap_still_all: Sap lohnt, wenn ein stehender Gegner direkt oder mindestens zwei
