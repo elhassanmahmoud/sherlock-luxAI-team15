@@ -829,6 +829,20 @@ class Agent_x:
                     here = (ec[:, 0] == tx) & (ec[:, 1] == ty)
                     if here.any() and float(ee[here].sum()) >= e - ctx["move_cost"]:
                         mask[d] = False
+        if self.cfg.collision_guard and not self.training and len(ctx["enemy_coords"]):
+            # 22.10.2026: kein Zug auf ein Tile, auf das ein beweglicher (nicht auf bekanntem
+            # Punkte-Tile stehender), mindestens gleich starker sichtbarer Gegner im selben Step
+            # ziehen kann. Diagnose: 1/3 der Kollisionstode entstehen, wenn beide auf dasselbe Tile ziehen.
+            ec, ee = ctx["enemy_coords"], ctx["enemy_energies"]
+            pt = self.belief.point_tiles
+            mobile = ~pt[ec[:, 0], ec[:, 1]]
+            e_after = e - ctx["move_cost"]
+            for d in range(1, 5):
+                if mask[d]:
+                    tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                    adj = (np.abs(ec[:, 0] - tx) + np.abs(ec[:, 1] - ty) == 1) & mobile & (ee >= e_after)
+                    if adj.any():
+                        mask[d] = False
         if self.cfg.stack_guard and not self.training:
             for d in range(1, 5):
                 tx, ty = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])

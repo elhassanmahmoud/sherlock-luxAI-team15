@@ -566,3 +566,15 @@ def test_sap_relevant_skips_passing_explorer():
         a.belief.point_tiles[5, 5] = a.belief.point_tiles[9, 5] = True
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[enemy], relics=[(9, 9)]))
         assert int(act[0, 0]) == want, enemy
+
+
+def test_collision_guard_blocks_contested_destination():
+    from agents.sherlock.features import make_context
+    for flag, want in ((False, True), (True, False)):
+        a = _stay_agent(collision_guard=flag)
+        obs = make_obs(10, 10, units=[(5, 5, 50)], enemies=[(7, 5, 120)], relics=[(9, 9)])
+        a.belief.observe(obs)
+        ctx = make_context(a, obs)
+        mask = a._action_mask(ctx, 0, None)
+        assert bool(mask[geo.RIGHT]) == want, flag      # (6,5) liegt neben dem starken Gegner
+        assert bool(mask[geo.LEFT])                      # (4,5) frei

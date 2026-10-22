@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    collision_guard: bool = False
+    """True (22.10.2026): Zuege sperren, wenn ein beweglicher, mindestens gleich starker sichtbarer
+    Gegner im selben Step auf dasselbe Tile ziehen kann (Kollisionstod)."""
     sap_relevant: bool = False
     """True (22.10.2026): pt_sap nur auf Gegner auf/neben bekannten Punkte-Tiles, nicht auf
     durchziehende Erkunder (Energie der Halter schonen)."""
