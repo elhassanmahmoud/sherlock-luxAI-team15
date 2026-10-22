@@ -468,3 +468,24 @@ def test_path_fix_leaves_dead_end():
     assert a._path_fix(ctx, 0, mask, geo.LEFT) == geo.LEFT      # seitlich/abgewandt: bleibt
     ctx["ally_pos"] = np.array([[5, 3]] + [[-1, -1]] * 15)
     assert a._path_fix(ctx, 0, mask, geo.DOWN) == geo.DOWN      # Luecke: Weg wird kuerzer
+
+
+def test_drift_track_rolls_remembered_map():
+    from agents.sherlock.belief import TILE_ASTEROID, TILE_EMPTY
+    for flag in (False, True):
+        a = _stay_agent(drift_track=flag)
+        b = a.belief
+        b.tile_type[:, :] = TILE_EMPTY
+        for t in ((5, 5), (5, 6), (5, 7), (20, 20)):
+            b.tile_type[t] = TILE_ASTEROID
+        # Drift s=+1: (x, y) -> (x+1, y-1); sichtbar nur das Quadrat 2..10
+        obs = make_obs(10, 10, units=[(6, 6, 100)], enemies=[], relics=[(9, 9)],
+                       asteroids=[(6, 4), (6, 5), (6, 6)])
+        sm = np.zeros((24, 24), dtype=bool)
+        sm[2:11, 2:11] = True
+        obs["sensor_mask"] = sm
+        a.act(10, obs)
+        assert b.tile_type[6, 5] == TILE_ASTEROID           # sichtbar: immer aktuell
+        assert b.tile_type[5, 7] == TILE_EMPTY                # sichtbar leer
+        assert b.tile_type[21, 19] == (TILE_ASTEROID if flag else TILE_EMPTY)  # unsichtbar mitgerollt
+        assert b.drift_events == int(flag)

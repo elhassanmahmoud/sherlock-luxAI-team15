@@ -5,6 +5,15 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 04:30 Berlin – Claude Code (autonom): V6 knapp unter der Hürde, zwei Kartenfehler gefunden
+
+- **V6 = Bs** frisch 504220–504619: Solution_92 81,6 % statt 77,75 % (Δ +3,88 pp [+1,5; +6,25]), default 100 %, direkt gegen V3 67,5 % [62,25; 72,75]. Nur die Mindestgröße +5 pp verfehlt → **V3 bleibt**. Bs erfüllt die allgemeine Regel der Spezifikation vom 20.10.; Übernahme wäre eine Teamentscheidung.
+- PPO `cnn3b` Stand 50: 72,0 % gegen V3 76,7 % (−4,8). Stände 100/150 laufen automatisch (`scripts/pipeline_cnn3b_eval.sh`, Log `experiments/pipeline_cnn3b.log`).
+- **Verlustanalyse** (40 Karten, die Bs auf beiden Seiten verliert): Match 1 meist gewonnen, Match 2/3 verloren. (1) Die Gedächtniskarte veraltet durch Drift: im Mittel ~20 falsche und ~20 fehlende Asteroiden, 18 % der bekannten Tiles falsch. Units sitzen hinter vermeintlichen Asteroiden fest (360014: ganzes Match 3 mit 0 Energie am Spawn). (2) Greedy-Falle: Netz läuft nach Luftlinie in Sackgassen an Asteroidenwänden und pendelt (360581).
+- Neu, Default aus, Tests grün (`tests/test_rules_2110.py`, 33): `nebula_infer` (unsichtbar in Sensorreichweite ⇒ Nebel), `path_fix` (BFS-Schritt statt Sackgasse), `drift_track` (Drift erkennen, ganze Karte rollen: 210/210 Drifts in 6 Spielen erkannt, falsche Tiles 78,6 → 13,5 pro Step). Grobcheck auf den 8 schlimmsten Karten (ausgewählt, nur Hinweis): 0/16 → 2/16 Siege, deutlich mehr Punkte.
+- **Läuft** (Ergebnisse `experiments/compare/regeln/D22_{Bsn,Bsnp,Bsnpd}_*`, Vergleich mit `D22_Bs_*`): Bs + `nebula_infer` / + `path_fix` / + `drift_track` auf `dev_hard330`/`dev_easy330`. Training `full_rules_v6` (6 Netze, Auswertung automatisch, `experiments/pipeline_v6nets.log`).
+- **Offen:** Entwicklungsergebnisse auswerten. Den besten Kandidaten (vermutlich Bs + Kartenfixes) vorab mit neuem, noch nicht reserviertem Auswahl- und Bestätigungsblock festlegen und prüfen. `agents/sherlock/tactics.py` (Ein-Schritt-Simulator, gegen die Engine geprüft) ist ein Entwurf, nicht eingebunden. Abgabe weiterhin V3 (`aac1c910…d935`).
+
 ## 22.10.2026, 03:20 Berlin – Claude Code mit Mahmoud (autonom über Nacht): V5-B knapp unter der Hürde, V6 in Bestätigung
 
 Auftrag des Users: selbstständig weiterarbeiten bis Nachmittag, Ziel ≥ 90 % gegen Solution_92, ganze CPU nutzen; Übernahme nur über vorab festgelegte Tests.

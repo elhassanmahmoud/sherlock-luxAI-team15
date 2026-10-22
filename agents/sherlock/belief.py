@@ -115,6 +115,9 @@ class Belief:
         # unsichtbar sind, muessen Nebel sein; sensor_range setzt der Agent aus env_cfg
         self.nebula_infer = False
         self.sensor_range: int | None = None
+        # 22.10.2026 (Schalter drift_track): Asteroiden/Nebel driften global um (s, -s) mit
+        # Umlauf (luxai_s3/env.py, jnp.roll) -> bei erkannter Drift ganze Gedaechtniskarte mitrollen
+        self.drift_track = False
         self.set_team(team_id)
         self.reset_game()
 
@@ -141,6 +144,8 @@ class Belief:
         self.match_step = 0
         self.tile_type = np.full((W, H), TILE_UNKNOWN, dtype=np.int8)
         self.energy_map = np.zeros((W, H), dtype=np.float32)
+        self.drift_events = 0
+        self.drift_votes = {1: 0, -1: 0}
 
         # schnelle Spiegelbilder der Statusmengen (flache Indizes x*H + y)
         self._point: set[int] = set()
@@ -218,6 +223,8 @@ class Belief:
             relic_pos = geo.mirror_positions(relic_pos, self.W, self.H)
             ally_pos = geo.mirror_positions(ally_pos, self.W, self.H)
 
+        if self.drift_track:
+            self._detect_drift(sensor, tile_type)
         self._update_map(sensor, tile_type, energy)
         if self.nebula_infer and self.sensor_range is not None:
             self._infer_nebula(sensor, ally_pos, ally_mask & (ally_energy >= 0))
@@ -284,6 +291,30 @@ class Belief:
         # Asteroiden/Nebel driften (Slides 30/31) -> sichtbare Tiles ueberschreiben
         np.copyto(self.tile_type, tile_type.astype(np.int8), where=sensor)
         np.copyto(self.energy_map, energy, where=sensor)
+
+    def _detect_drift(self, sensor, tile_type) -> None:
+        """Passt die sichtbare Karte zur um (s, -s) gerollten Erinnerung deutlich besser als zur
+        ungerollten, ist eine Drift passiert: ganze Karte rollen (auch unsichtbare Teile). Die
+        Richtung ist pro Spiel fest; nach zwei gleichen Funden nur noch diese pruefen."""
+        bt = self.tile_type
+        seen = sensor & (bt != TILE_UNKNOWN)
+        m0 = int(np.count_nonzero(seen & (tile_type != bt)))
+        if m0 < 2:
+            return
+        dirs = [s for s in (1, -1) if self.drift_votes[-s] < 2 or self.drift_votes[s] >= 2]
+        best = None
+        for s in dirs:
+            rolled = np.roll(bt, (s, -s), axis=(0, 1))
+            seen_r = sensor & (rolled != TILE_UNKNOWN)
+            if np.count_nonzero(seen_r) < 4:
+                continue
+            ms = int(np.count_nonzero(seen_r & (tile_type != rolled)))
+            if ms * 4 <= m0 and (best is None or ms < best[1]):
+                best = (s, ms, rolled)
+        if best is not None:
+            self.tile_type = best[2].astype(np.int8)
+            self.drift_votes[best[0]] += 1
+            self.drift_events += 1
 
     def _infer_nebula(self, sensor, ally_pos, alive) -> None:
         """Engine: jede Unit gibt Sichtkraft >= 1 auf alle Tiles in Chebyshev-Abstand <= sensor_range,

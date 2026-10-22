@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    drift_track: bool = False
+    """True (22.10.2026): Drift von Asteroiden/Nebel erkennen (sichtbare Tiles passen zur um
+    (s, -s) gerollten Erinnerung) und die ganze Gedaechtniskarte mitrollen."""
     path_fix: bool = False
     """True (22.10.2026): Zug, der nach Luftlinie naeher ans Ziel fuehrt, auf dem BFS-Weg aber
     nicht (Sackgasse an Asteroidenwand), durch den ersten Schritt des kuerzesten Wegs ersetzen.
