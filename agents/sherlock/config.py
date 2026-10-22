@@ -167,6 +167,11 @@ class AgentConfig:
     window_infer_all: bool = False
     """True (22.10.2026): im Spawnfenster immer schliessen; Unit-Tiles ohne ganz sichtbares 5x5-Feld
     zaehlen als offene Unbekannte (ein ungesehenes neues Relic koennte sie punkten lassen)."""
+    stage_attack: bool = False
+    """True (22.10.2026): Units warten vor der Schusszone gegnerischer Sammler, bis stage_min eigene Units
+    mit Ziel in der Zone davor stehen (gemeinsam statt einzeln hinein)."""
+    stage_min: int = 3
+    stage_until: int = 70
     cand_rescue: bool = False
     """True (22.10.2026): nur wenn trotz bekannter Relics kein Punkte-Tile bekannt ist, werden obey_target,
     neb_cand und idle_approach aktiv (Kandidaten gezielt testen). Sicherheitsnetz fuer 0-Punkte-Spiele."""

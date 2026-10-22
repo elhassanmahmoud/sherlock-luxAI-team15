@@ -707,3 +707,18 @@ def test_cand_rescue_only_without_known_point_tiles():
         act = a.act(30, make_obs(30, 30, units=[(5, 9, 100)], enemies=[], relics=[(9, 9)]))
         moved = int(act[0, 0]) in (geo.RIGHT, geo.DOWN, geo.UP)
         assert moved == want_move, known_pt
+
+
+def test_stage_attack_waits_alone_before_shooter_zone():
+    from agents.sherlock.features import make_context
+    # Schuetze (Gegner mit Energie >= Sap-Kosten) auf Punkte-Tile (12,12), Reichweite 4 (Manhattan).
+    # Unsere Unit (7,12), Ziel (11,12) in der Zone; der Zug nach (8,12) betritt die Zone (d=4).
+    for stage_min, want in ((3, geo.STAY), (1, geo.RIGHT)):
+        a = _stay_agent(stage_attack=True, stage_min=stage_min)
+        a.belief.point_tiles[12, 12] = a.belief.point_tiles[11, 12] = True
+        obs = make_obs(30, 30, units=[(7, 12, 100)], enemies=[(12, 12, 100)], relics=[(13, 13)])
+        a.belief.observe(obs)
+        ctx = make_context(a, obs)
+        ctx["assigned"] = {0: (11, 12)}
+        info = a._stage_prepare(ctx)
+        assert a._stage(ctx, 0, geo.RIGHT, info) == want, stage_min

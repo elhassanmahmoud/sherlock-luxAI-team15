@@ -294,6 +294,7 @@ class Agent_x:
             predicted = {}
             incoming = (self._predicted_hits(ctx, stationary)
                         if dodge_on and not self.training and fight else {})
+        stage_info = self._stage_prepare(ctx) if self.cfg.stage_attack and not self.training else None
         eps = self.epsilon
         # 22.10.2026 (cfg.cand_rescue): Notfall, wenn trotz bekannter Relics kein Punkte-Tile bekannt ist
         # (z. B. 361050: Haufen im Nebel; 361255: Units laufen von Kandidaten weg) -> Kandidaten gezielt
@@ -318,6 +319,8 @@ class Agent_x:
                 a = self._rule_override(ctx, uid, masks[k], a)
                 if self.cfg.path_fix and (not self.training or self.cfg.rules_in_training) and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
+                if self.cfg.stage_attack and not self.training and 1 <= a <= 4:
+                    a = self._stage(ctx, uid, a, stage_info)
                 if (self.cfg.obey_target or self._rescue) and not self.training and 1 <= a <= 4:
                     a = self._obey_target(ctx, uid, masks[k], a)
                 if self.cfg.unstack and not self.training and a == geo.STAY:
@@ -874,6 +877,56 @@ class Agent_x:
         cost = float(ctx["sap_cost"])
         drop = self._dropoff() if self.cfg.sap_dropoff_est else SAP_DROPOFF_ASSUMED
         planned_dmg += np.where(direct, cost, 0.0) + np.where(near, int(cost * min(drop, 0.25)), 0.0)
+
+    def _stage_prepare(self, ctx: dict):
+        """cfg.stage_attack (22.10.2026): Gefahrenzone = Tiles in Manhattan-Reichweite sichtbarer,
+        sapfaehiger Gegner auf bekannten Punkte-Tiles (Solution_92-Schuetzen). Zaehlt eigene Units, die
+        mit Ziel in der Zone schon nahe davor stehen (Gruppe)."""
+        ec, ee = ctx["enemy_coords"], ctx["enemy_energies"]
+        if not len(ec):
+            return None
+        pt = self.belief.point_tiles
+        shooters = [(int(x), int(y)) for (x, y), e in zip(ec.tolist(), ee.tolist())
+                    if e >= ctx["sap_cost"] and pt[int(x), int(y)]]
+        if not shooters:
+            return None
+        R = int(ctx["sap_range"])
+        W, H = ctx["W"], ctx["H"]
+        xs, ys = np.indices((W, H))
+        zone = np.zeros((W, H), dtype=bool)
+        for sx, sy in shooters:
+            zone |= (np.abs(xs - sx) + np.abs(ys - sy)) <= R
+        near = 0
+        for u in ctx["ally_ids"].tolist():
+            tgt = ctx["assigned"].get(int(u))
+            if tgt is None or not zone[tgt]:
+                continue
+            x, y = int(ctx["ally_pos"][u][0]), int(ctx["ally_pos"][u][1])
+            d = min(abs(x - sx) + abs(y - sy) for sx, sy in shooters)
+            if d <= R + 3:
+                near += 1
+        return zone, near
+
+    def _stage(self, ctx: dict, uid: int, a: int, info) -> int:
+        """Vor dem Betreten der Gefahrenzone warten, bis mindestens cfg.stage_min eigene Units mit Ziel
+        in der Zone davor stehen (sonst laufen sie einzeln hinein und werden einzeln abgeschossen,
+        Diagnose 361038). Ausnahmen: viel Energie (>= 3 Saps) oder spaet im Match (>= stage_until)."""
+        if info is None:
+            return a
+        zone, near = info
+        tgt = ctx["assigned"].get(int(uid))
+        if tgt is None or not zone[tgt]:
+            return a
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+        if zone[x, y] or not zone[tx, ty]:
+            return a
+        if near >= self.cfg.stage_min or self.belief.match_step >= self.cfg.stage_until:
+            return a
+        if float(ctx["ally_ene"][uid]) >= 3 * float(ctx["sap_cost"]):
+            return a
+        self.ep_stats["stage_waits"] = self.ep_stats.get("stage_waits", 0) + 1
+        return geo.STAY
 
     def _obey_target(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """cfg.obey_target (22.10.2026): Zug, der die BFS-Distanz zum zugewiesenen Punkte- oder
