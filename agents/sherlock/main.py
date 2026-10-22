@@ -340,7 +340,8 @@ class Agent_x:
                 on_tile = (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid)
                 if self.cfg.pt_sap_zone:  # auch gestapelt oder auf Kandidaten-Tiles
                     on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
-                if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve:
+                if (on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve
+                        and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))):
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
@@ -709,6 +710,20 @@ class Agent_x:
         tx, ty = x + int(sap[0]), y + int(sap[1])
         cheb = np.maximum(np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty)) if len(ec) else np.zeros(0)
         return cheb == 0, cheb == 1
+
+    def _sap_relevant(self, ctx: dict, uid: int, sap) -> bool:
+        """cfg.sap_relevant (22.10.2026): Halter-Saps (pt_sap) nur auf Gegner auf oder direkt neben
+        bekannten Punkte-Tiles (sie punkten oder greifen gleich an). Durchziehende Erkunder kosten den
+        Halter sonst die Energie, die er gegen Kollision und Void braucht (Diagnose 360019)."""
+        direct, near = self._sap_cover(ctx, uid, sap)
+        ec = ctx["enemy_coords"]
+        pt = self.belief.point_tiles
+        W, H = ctx["W"], ctx["H"]
+        for k in np.nonzero(direct | near)[0]:
+            ex, ey = int(ec[k][0]), int(ec[k][1])
+            if pt[max(0, ex - 1):min(W, ex + 2), max(0, ey - 1):min(H, ey + 2)].any():
+                return True
+        return False
 
     def _overkill(self, ctx: dict, uid: int, sap, planned_dmg: np.ndarray) -> bool:
         """cfg.sap_no_overkill (22.10.2026): Sap ist verschwendet, wenn alle direkt getroffenen

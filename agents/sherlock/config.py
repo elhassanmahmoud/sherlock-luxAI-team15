@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    sap_relevant: bool = False
+    """True (22.10.2026): pt_sap nur auf Gegner auf/neben bekannten Punkte-Tiles, nicht auf
+    durchziehende Erkunder (Energie der Halter schonen)."""
     sap_no_overkill: bool = False
     """True (22.10.2026): kein Sap auf Gegner, die durch schon geplante Saps desselben Steps sicher
     sterben (ohne weiteren lebenden Gegner daneben) -> Energie behalten statt Mehrfach-Treffer."""

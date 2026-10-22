@@ -557,3 +557,12 @@ def test_sap_no_overkill_second_holder_keeps_energy():
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200), (6, 5, 200)], enemies=[(8, 7, 21)], relics=[(9, 9)]))
         assert int(act[0, 0]) == geo.SAP
         assert int(act[1, 0]) == want, flag
+
+
+def test_sap_relevant_skips_passing_explorer():
+    # Halter auf (5,5); Gegner A durchziehend bei (8,8) fern von Punkte-Tiles; Gegner B neben Punkte-Tile (9,5)
+    for enemy, want in (((8, 8, 60), geo.STAY), ((8, 5, 60), geo.SAP)):
+        a = _stay_agent(pt_sap=True, sap_relevant=True)
+        a.belief.point_tiles[5, 5] = a.belief.point_tiles[9, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[enemy], relics=[(9, 9)]))
+        assert int(act[0, 0]) == want, enemy
