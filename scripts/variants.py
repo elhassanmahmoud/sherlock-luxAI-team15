@@ -73,6 +73,14 @@ VARIANTS["full_rules_v3_threat"] = (
     {**VARIANTS["full_rules_v3"][1], "threat_feats": True},
 )
 
+# 22.10.2026: Regelstand V6-Kandidat Bs (art_sap 3 + weiche Nebel-Meidung) schon im Training.
+# art_sap wirkt auch im Training; nebula_avoid/param_est greifen nur in der Auswertung.
+VARIANTS["full_rules_v6"] = (
+    VARIANTS["full_rules_v3"][0],
+    {**VARIANTS["full_rules_v3"][1], "art_sap": True, "art_min_hits": 3, "art_safe": True,
+     "art_reserve": 0, "nebula_avoid": True, "nebula_avoid_min": 25, "nebula_avoid_mode": "soft"},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 
