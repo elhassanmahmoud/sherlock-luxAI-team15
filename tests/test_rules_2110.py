@@ -489,3 +489,16 @@ def test_drift_track_rolls_remembered_map():
         assert b.tile_type[5, 7] == TILE_EMPTY                # sichtbar leer
         assert b.tile_type[21, 19] == (TILE_ASTEROID if flag else TILE_EMPTY)  # unsichtbar mitgerollt
         assert b.drift_events == int(flag)
+
+
+def test_reach_assign_skips_tile_under_asteroid():
+    from agents.sherlock.belief import Belief, TILE_ASTEROID, TILE_EMPTY
+    from agents.sherlock.features import assign_targets
+    for reach, want in ((False, (7, 10)), (True, (9, 12))):
+        b = Belief(0)
+        b.tile_type[:, :] = TILE_EMPTY
+        b.tile_type[7, 10] = TILE_ASTEROID           # Punkte-Tile unter einem Asteroiden
+        b.point_tiles[7, 10] = b.point_tiles[9, 12] = True
+        b._coords_dirty = True
+        out = assign_targets(b, np.array([0]), np.array([[6, 10]]), 24, 24, reach=reach)
+        assert out[0] == want, reach

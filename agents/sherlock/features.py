@@ -87,6 +87,37 @@ def grid_targets(coords: np.ndarray, block: int) -> np.ndarray:
     return coords[order[first]]
 
 
+def bfs_maps(passable: np.ndarray, starts: np.ndarray) -> np.ndarray:
+    """BFS-Schrittzahl von jeder Startposition zu jedem Tile (n x W x H, -1 unerreichbar),
+    alle Starts gleichzeitig als Wellenfront (4er-Nachbarschaft, nur passierbare Tiles)."""
+    starts = np.asarray(starts, dtype=np.int64).reshape(-1, 2)
+    n = len(starts)
+    W, H = passable.shape
+    dist = np.full((n, W, H), -1, dtype=np.int16)
+    if n == 0:
+        return dist
+    idx = np.arange(n)
+    ok = (starts[:, 0] >= 0) & (starts[:, 0] < W) & (starts[:, 1] >= 0) & (starts[:, 1] < H)
+    front = np.zeros((n, W, H), dtype=bool)
+    front[idx[ok], starts[ok, 0], starts[ok, 1]] = True
+    dist[front] = 0
+    seen = front.copy()
+    free = np.asarray(passable, dtype=bool)[None]
+    d = 0
+    while front.any():
+        d += 1
+        nb = np.zeros_like(front)
+        nb[:, 1:, :] |= front[:, :-1, :]
+        nb[:, :-1, :] |= front[:, 1:, :]
+        nb[:, :, 1:] |= front[:, :, :-1]
+        nb[:, :, :-1] |= front[:, :, 1:]
+        nb &= free & ~seen
+        dist[nb] = d
+        seen |= nb
+        front = nb
+    return dist
+
+
 def assign_targets(belief, unit_ids, unit_pos, W, H,
                    enemy_half_penalty: float = 0.0,
                    seen_before_penalty: float = 0.0,
@@ -95,7 +126,7 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    prev: dict | None = None, sticky: float = 0.0,
                    far_cand: bool = False, cand_boost: float = 0.0,
                    explore_quota: int = 0, explore_until: int = 75,
-                   energy_pref: float = 0.0) -> dict[int, tuple[int, int]]:
+                   energy_pref: float = 0.0, reach: bool = False) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -130,6 +161,10 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     weiter als far_opp Felder von der Unit entfernt sind, rangieren hinter den
     Kandidaten-Tiles. Diagnose Match 3: 5,7 Units liefen im Mittel 18 Felder weit
     zu (meist besetzten) Gegner-Tiles, waehrend eigene Kandidaten offen blieben.
+
+    reach (cfg.reach_assign, 22.10.2026): Weglaenge (BFS ueber die Gedaechtniskarte) statt
+    Luftlinie; nach Gedaechtnis unerreichbare Ziele (z. B. Punkte-Tiles unter einem Asteroiden)
+    nur noch als letzte Wahl. Diagnose 360051: Units warteten neben Zielen unter Asteroiden.
     """
     if len(unit_ids) == 0:
         return {}
@@ -183,18 +218,21 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             extra[(prio == 0) & in_enemy] += 200.0
 
     # Kostenmatrix (Units x Ziele); Prioritaet dominiert die Distanz
-    cost = (
-        np.abs(unit_pos[:, None, 0] - tgt[None, :, 0])
-        + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1])
-        + prio[None, :] * 1000
-        + extra[None, :]
-    ).astype(np.float64)
+    if reach:
+        paths = bfs_maps(belief.passable, unit_pos)[:, tgt[:, 0], tgt[:, 1]].astype(np.float64)
+        dist_ut = np.where(paths >= 0, paths, 5000.0)
+    else:
+        dist_ut = (np.abs(unit_pos[:, None, 0] - tgt[None, :, 0])
+                   + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1])).astype(np.float64)
+    cost = dist_ut + prio[None, :] * 1000 + extra[None, :]
     if enemy_half_penalty:
         # eigener Spawn: kanonisch immer (0, 0); ohne Spiegelung fuer Team 1 (W-1, H-1)
         cost += in_enemy[None, :] * float(enemy_half_penalty)
     if far_opp > 0:
         dist = (np.abs(unit_pos[:, None, 0] - tgt[None, :, 0])
                 + np.abs(unit_pos[:, None, 1] - tgt[None, :, 1]))
+        if reach:
+            dist = np.minimum(dist_ut, 999.0)
         # 1500: hinter Kandidaten (1000 + Distanz), vor Erkundung (2000 + Distanz)
         cost += ((dist > far_opp) & ((prio == 0) & in_enemy)[None, :]) * 1500.0
         if far_cand:
@@ -416,6 +454,7 @@ def make_context(agent, obs, belief=None) -> dict:
         cand_boost=float(agent.cfg.cand_boost),
         explore_quota=int(agent.cfg.explore_quota), explore_until=int(agent.cfg.explore_until),
         energy_pref=float(agent.cfg.energy_pref),
+        reach=bool(agent.cfg.reach_assign) and not agent.training,
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
