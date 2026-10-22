@@ -283,6 +283,10 @@ def play(seed, side, weights, overrides=()):
                         if sim["orig"][t, u] < p["sap_cost"]:
                             st["pt_unit_steps_lowE"] += 1
             st["productive"] += len(occ)
+            if occ and st.get("first_point_step") is None:
+                st["first_point_step"] = float(s0["msteps"])  # erster Schritt mit eigenem Punkt-Tile
+            if len(occ) >= 3 and st.get("first_3pt_step") is None:
+                st["first_3pt_step"] = float(s0["msteps"])
             ev = sim["ev"]
             st["sap_fired"] += ev["sap_fired"][t].sum()
             st["sap_hit"] += ev["sap_hit"][t].sum()
