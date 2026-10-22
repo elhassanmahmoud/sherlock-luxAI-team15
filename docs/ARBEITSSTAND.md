@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 11:25 Berlin – Claude Code mit Mahmoud: Robustheit von V10, nächste Kandidaten
+
+- **Robustheit gegen andere Spielweisen** (neue Gegner in `scripts/style_opponents.py`, je 100 frische Karten 509220–509319, nur Information): Prof-DQN, Zufall, RushBot je **100 %**, Solution_92 mit Ziel „schwächster Gegner“ 90,5 %, alte Abgabe `old3_sym3` 89 %, CNN-PPO `cnn3_ppo0050` 88 %, **Solution_92 mit Sap im ganzen Quadrat 74,5 %** (Original auf denselben Karten 89 %). V3 fällt gegen die Quadrat-Variante gleich stark (78 → 62,5 %): dieser Gegner ist stärker, keine V10-spezifische Lücke. Auf 509420–509619 V10 gegen die Quadrat-Variante 83,5 %. `art_safe_cheb` (Artillerie-Sicherheit im Quadrat) ohne Gewinn.
+- **`cand_rescue` mit `rescue_after=30`** (Kandidaten gezielt testen, nur wenn ein Relic seit ≥ 30 Steps bekannt ist und noch kein Punkte-Tile): rettet die 0-Punkte-Spiele 361050/361255, Entwicklung 78,8/97,0 % (geschätzt 91,0 %, V10 90,3 %). Ohne Verzögerung schlechter (78,9/94,9 %).
+- Neue Netze allein (`v10nets6`, 6 Netze mit V10-Config) 73,6/93,3 % (geschätzt 86,8 %); gemischt mit den 18 alten (`v10mix24`) 79,2/96,4 % (90,8 %). Weitere 6 Netze trainieren seit 11:22 (`scripts/pipeline_v8nets_b.sh`); Bündel V10 + neue Netze + `cand_rescue` läuft (`D22_v10mix24cr`).
+- Ein Nachfolger wird erst gegen V10 geprüft, wenn ein Bündel in der Entwicklung klar vorn liegt (die Gates verlangen +2 pp auf 800 frischen Karten).
+
 ## 22.10.2026, 10:40 Berlin – Claude Code (autonom): Training ausgewertet, Testsuite mit V10 sauber
 
 - **Gesamte Testsuite ohne laufende Jobs: 495 bestanden** (V10 installiert, `03cf8bdc…8c67`). Damit ist der offene Prüfpunkt der V10-Übernahme erledigt.
