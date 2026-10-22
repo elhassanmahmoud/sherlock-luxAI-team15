@@ -642,3 +642,16 @@ def test_window_infer_all_keeps_open_tile_unknown():
         assert bool(a.belief.point_tiles[8, 8]) == want
         if gain == 0:
             assert bool(a.belief.dead_tiles[8, 8])
+
+
+def test_mobile_seen_ignores_standing_harvester():
+    from agents.sherlock.features import make_context
+    for flag, want in ((False, False), (True, True)):
+        a = _stay_agent(collision_guard=True, mobile_seen=flag)
+        # Schritt 1: Gegner steht auf (7,5) (Punkte-Tile uns unbekannt); Schritt 2: steht noch dort
+        a.act(9, make_obs(9, 9, units=[(5, 5, 50)], enemies=[(7, 5, 120)], relics=[(9, 9)]))
+        obs = make_obs(10, 10, units=[(5, 5, 50)], enemies=[(7, 5, 120)], relics=[(9, 9)])
+        a.belief.observe(obs)
+        ctx = make_context(a, obs)
+        mask = a._action_mask(ctx, 0, None)
+        assert bool(mask[geo.RIGHT]) == want, flag

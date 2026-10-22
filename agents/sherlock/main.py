@@ -737,6 +737,21 @@ class Agent_x:
         still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
         return bool((direct & still).any())
 
+    def _enemy_mobile(self, ctx: dict) -> np.ndarray:
+        """Je sichtbarem Gegner: kann er sich im naechsten Step bewegen? Nicht beweglich, wer auf
+        einem bekannten Punkte-Tile steht oder (cfg.mobile_seen) im letzten Step am selben Ort stand
+        (Solution_92-Sammler sitzen fest). 22.10.2026: ohne bekannte Punkte-Tiles galt sonst jeder
+        Sammler als beweglich und collision_guard sperrte die Zuege rund um die Relics (361255)."""
+        ec = ctx["enemy_coords"]
+        mobile = ~self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        if self.cfg.mobile_seen:
+            prev = self._enemy_prev
+            same = np.array([prev.get(int(i)) == (int(c[0]), int(c[1]))
+                             for i, c in zip(ctx["enemy_vis_ids"], ec)], dtype=bool)
+            if len(same) == len(mobile):
+                mobile &= ~same
+        return mobile
+
     def _holder_guard(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
         """cfg.holder_guard (22.10.2026): Steht neben unserer stehenden Unit (kardinal) ein
         beweglicher, sichtbarer Gegner mit mindestens unserer Energie, zieht er im naechsten Step oft
@@ -748,7 +763,7 @@ class Agent_x:
             return None
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         e = float(ctx["ally_ene"][uid])
-        mobile = ~self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        mobile = self._enemy_mobile(ctx)
         strong = mobile & (ee - ctx["move_cost"] >= e)
         man = np.abs(ec[:, 0] - x) + np.abs(ec[:, 1] - y)
         if not (strong & (man == 1)).any():
@@ -900,8 +915,7 @@ class Agent_x:
             # Punkte-Tile stehender), mindestens gleich starker sichtbarer Gegner im selben Step
             # ziehen kann. Diagnose: 1/3 der Kollisionstode entstehen, wenn beide auf dasselbe Tile ziehen.
             ec, ee = ctx["enemy_coords"], ctx["enemy_energies"]
-            pt = self.belief.point_tiles
-            mobile = ~pt[ec[:, 0], ec[:, 1]]
+            mobile = self._enemy_mobile(ctx)
             e_after = e - ctx["move_cost"]
             for d in range(1, 5):
                 if mask[d]:

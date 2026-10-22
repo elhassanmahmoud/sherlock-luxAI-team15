@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    mobile_seen: bool = False
+    """True (22.10.2026): collision_guard/holder_guard zaehlen Gegner, die im letzten Step am selben
+    Ort standen, nicht als beweglich (nicht nur Gegner auf bekannten Punkte-Tiles)."""
     holder_guard: bool = False
     """True (22.10.2026): stehende Unit weicht aus, wenn ein beweglicher, mindestens gleich starker
     sichtbarer Gegner kardinal daneben steht (er zieht sonst oft auf unser Tile)."""
