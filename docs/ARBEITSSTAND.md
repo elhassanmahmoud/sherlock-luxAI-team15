@@ -5,6 +5,11 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 15:50 Berlin – Claude Code mit Mahmoud: Demo per Doppelklick
+
+- Neu `scripts/sherlock_demo.applescript`, lokal gebaut als `Sherlock Demo.app` im Projektordner (gitignored; bauen mit `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript`). Doppelklick → Gegner wählen (default, Prof-DQN, Solution_92) → `scripts.play_and_view` läuft → Replay öffnet sich im Browser, Ergebnisfenster mit „Nochmal“.
+- Prüfungen: Kompilieren ohne Fehler; Ordnersuche, Aufruf und Auswertung der App ohne Dialoge per `osascript` getestet (App im Projektordner, App auf dem Schreibtisch mit Standardpfad, Quelltext in `scripts/`), drei Spiele gegen Solution_92, Prof-DQN und default jeweils 3:0 gewonnen. Die Dialoge selbst nicht automatisch geklickt; beim ersten Start fragt macOS nach Zugriff auf „Dokumente“. Gewichte unverändert.
+
 ## 22.10.2026, 15:45 Berlin – Claude Code mit Mahmoud: Live-Demo mit automatischer Visualisierung
 
 - Neu `scripts/play_and_view.py`: spielt ein Spiel über den unveränderten Kurs-Runner (`run_agents`, `train=False`), verpackt das Replay wie `luxai-s3 --output replay.html` in eine HTML-Datei mit dem offiziellen Viewer (s3vis.lux-ai.org, braucht Internet), gibt das Matchergebnis aus und öffnet die Datei im Browser. Optionen `--gegner default|solution|dqn`, `--seite 1`, `--no-open`. Ausgaben nur unter `replays/` (gitignored).

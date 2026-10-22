@@ -187,7 +187,9 @@ Folie 14 erklärt, wie wir prüfen (Hürden, Statistik). Folie 15 zeigt die Spie
 
 ## Live-Demo, falls der Prof fragt
 
-Im Terminal im Projektordner:
+**Am einfachsten:** Im Projektordner doppelt auf **„Sherlock Demo“** klicken, Gegner wählen. Nach etwa 10 Sekunden öffnet sich das Spiel im Browser, und ein Fenster zeigt das Ergebnis („Nochmal“ startet ein neues Spiel). Beim allerersten Start fragt macOS, ob die App auf „Dokumente“ zugreifen darf: „Erlauben“ klicken.
+
+Oder im Terminal im Projektordner:
 
 ```
 cd ~/Documents/AKI_LuxAgent15
