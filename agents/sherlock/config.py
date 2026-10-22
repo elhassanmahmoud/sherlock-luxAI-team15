@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    obey_target: bool = False
+    """True (22.10.2026): ohne nahen Gegner kein Zug weg vom zugewiesenen Punkte-/Kandidaten-Tile
+    (BFS-Distanz waechst) -> erster Schritt des kuerzesten Wegs."""
     mobile_seen: bool = False
     """True (22.10.2026): collision_guard/holder_guard zaehlen Gegner, die im letzten Step am selben
     Ort standen, nicht als beweglich (nicht nur Gegner auf bekannten Punkte-Tiles)."""

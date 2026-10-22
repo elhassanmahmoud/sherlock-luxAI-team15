@@ -309,6 +309,8 @@ class Agent_x:
                 a = self._rule_override(ctx, uid, masks[k], a)
                 if self.cfg.path_fix and not self.training and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
+                if self.cfg.obey_target and not self.training and 1 <= a <= 4:
+                    a = self._obey_target(ctx, uid, masks[k], a)
                 if self.cfg.unstack and not self.training and a == geo.STAY:
                     a = self._unstack(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
@@ -823,6 +825,35 @@ class Agent_x:
         cost = float(ctx["sap_cost"])
         drop = self._dropoff() if self.cfg.sap_dropoff_est else SAP_DROPOFF_ASSUMED
         planned_dmg += np.where(direct, cost, 0.0) + np.where(near, int(cost * min(drop, 0.25)), 0.0)
+
+    def _obey_target(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """cfg.obey_target (22.10.2026): Zug, der die BFS-Distanz zum zugewiesenen Punkte- oder
+        Kandidaten-Tile vergroessert, ohne dass ein sichtbarer Gegner nahe ist (Chebyshev <= 2), durch
+        den ersten Schritt des kuerzesten Wegs ersetzen. Diagnose 361255: sechs Units liefen in Match 1
+        von ihren Kandidaten weg, kein Punkte-Tile wurde bis Match 3 gelernt."""
+        tgt = ctx["assigned"].get(int(uid))
+        b = self.belief
+        if tgt is None or not (b.point_tiles[tgt] or b.candidate[tgt]):
+            return a
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if b.point_tiles[x, y]:
+            return a
+        ec = ctx["enemy_coords"]
+        if len(ec) and (np.maximum(np.abs(ec[:, 0] - x), np.abs(ec[:, 1] - y)) <= 2).any():
+            return a
+        dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+        here = int(dist[x, y])
+        if here <= 0:
+            return a
+        tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+        nd = int(dist[tx, ty])
+        if nd >= 0 and nd <= here:
+            return a
+        step = rules.first_step(dist, (x, y), mask, ctx["energy_map"])
+        if step is None:
+            return a
+        self.ep_stats["obey_fixes"] = self.ep_stats.get("obey_fixes", 0) + 1
+        return int(step)
 
     def _path_fix(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """cfg.path_fix (22.10.2026): Greedy-Falle an Asteroidenwaenden beheben. Netz und

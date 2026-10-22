@@ -655,3 +655,15 @@ def test_mobile_seen_ignores_standing_harvester():
         ctx = make_context(a, obs)
         mask = a._action_mask(ctx, 0, None)
         assert bool(mask[geo.RIGHT]) == want, flag
+
+
+def test_obey_target_turns_unit_back_to_candidate():
+    ctx = {"assigned": {0: (4, 9)}, "ally_pos": np.array([[8, 9]] + [[-1, -1]] * 15), "step": 3,
+           "enemy_coords": np.zeros((0, 2), dtype=int), "energy_map": np.zeros((24, 24))}
+    for flag, want in ((False, geo.RIGHT), (True, geo.LEFT)):
+        a = _stay_agent(obey_target=flag)
+        a.belief.candidate[4, 9] = True
+        ctx["passable"] = a.belief.passable
+        mask = np.array([True, True, True, True, True, False])
+        got = a._obey_target(ctx, 0, mask, geo.RIGHT) if flag else geo.RIGHT
+        assert got == want, flag
