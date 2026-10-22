@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 06:45 Berlin – Claude Code (autonom): V8 in Bestätigung gegen V7
+
+- **V8 = V7 + `reach_assign` + `sap_no_overkill` + `safe_moves` + `collision_guard`** (18 V3-Netze bitgleich; [Plan mit Nachtrag](superpowers/plans/2026-10-22-v8.md)). Entwicklung 73,0/97,6 % → geschätzt **≈ 89,5 %** gegen Solution_92.
+- **Auswahlblock 506020–506219: V8 85,75 % gegen V7 78,0 % (Δ +7,75 [+3,5; +12,2])**, default 100 % → Hürde (+1 pp) bestanden. Läuft: frisch 506220–507019 (800 Karten) + direkt 507020–507219 (`experiments/pipeline_v8.log`).
+- Ohne Gewinn (nicht in V8): `sap_still` +0,40, `safe_moves` allein +0,45, `explore_quota=1` −4,25, `sap_still_all` (schadet), `holder_guard` +0,2.
+- Neu, Default aus: `window_infer`/`window_infer_all` (Punkte-Inferenz im Relic-Spawnfenster von Match 2/3). Prüfung gegen die Wahrheit: keine falschen Punkte-Tiles, etwas mehr bekannte, aber auch etwas mehr fälschlich tote. Entwicklungsmessung läuft (`D22_V8w`), danach `dodge` lethal und `far_opp=6` auf V8.
+- V8-Verlustanalyse (Karten, die V8 beidseitig verliert, 54 von 330 schweren): Match 2 fast immer verloren; pro Match 15–16 eigene Tode gegen 13 bei Solution_92, die meisten durch Saps auf stehende Halter mit wenig Energie; ~2 eigene echte Punkte-Tiles pro Step bleiben ungetestete Kandidaten.
+
 ## 22.10.2026, 06:05 Berlin – Claude Code (autonom): nächste Verbesserungen für V8
 
 - Entwicklungsmessungen auf V7 + `reach_assign` (63,6/94,9 %, geschätzt ≈ 84,6 %): `unstack`, `sap_reserve_k=1`, `sym_map` (Spiegelung der Karte im Gedächtnis), `sap_relevant` ohne Gewinn. **`sap_no_overkill`** (keine Saps auf Gegner, die schon durch geplante Saps desselben Steps sterben) **68,5/96,0 % → geschätzt ≈ 86,9 %**. Befund dahinter: Halter feuerten zu dritt auf einen Gegner mit 21 Energie; unsere Halter haben zu wenig Energie und sterben dann an Kollisionen (im Mittel 41 gegen 102 Energie) und Void.
