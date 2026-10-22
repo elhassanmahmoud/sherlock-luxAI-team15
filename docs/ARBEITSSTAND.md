@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 12:15 Berlin – Claude Code mit Mahmoud: Plateau um 90–91 % gegen Solution_92
+
+- Auf V10 gemessen (Entwicklung, geschätzt gesamt; V10 90,3 %): `cand_rescue` mit `rescue_after=30` **91,0 %** (bester Einzelschalter, rettet 0-Punkte-Spiele), V10 + 6 neue Netze 90,8 %, beides zusammen 91,0 % (nicht additiv), `dodge` mit Köder 90,5 %, `stage_attack` (gemeinsam in die Schusszone) 90,3 %, `sap_kill_safe` 90,1 %, `art_still` 90,0 %, `sap_reserve_k=0.5` 89,0 %. Kein Bündel liegt um +2 pp vor V10 → **kein Prüflauf, V10 bleibt**.
+- Verbleibende Niederlagen sind vor allem Kämpfe: ein gemeinsamer Relic-Haufen, Solution_92 kommt mit mehr Units zuerst an, unsere Units werden einzeln abgeschossen (z. B. 361038). Pro Verlustspiel ~27 Tode durch Saps.
+- Läuft: 6 weitere Netze (`pipeline_v8nets_b.sh`, Ende ~13:45), danach Ensembles aus 18 alten + 12 neuen bzw. 12 neuen Netzen.
+
 ## 22.10.2026, 11:25 Berlin – Claude Code mit Mahmoud: Robustheit von V10, nächste Kandidaten
 
 - **Robustheit gegen andere Spielweisen** (neue Gegner in `scripts/style_opponents.py`, je 100 frische Karten 509220–509319, nur Information): Prof-DQN, Zufall, RushBot je **100 %**, Solution_92 mit Ziel „schwächster Gegner“ 90,5 %, alte Abgabe `old3_sym3` 89 %, CNN-PPO `cnn3_ppo0050` 88 %, **Solution_92 mit Sap im ganzen Quadrat 74,5 %** (Original auf denselben Karten 89 %). V3 fällt gegen die Quadrat-Variante gleich stark (78 → 62,5 %): dieser Gegner ist stärker, keine V10-spezifische Lücke. Auf 509420–509619 V10 gegen die Quadrat-Variante 83,5 %. `art_safe_cheb` (Artillerie-Sicherheit im Quadrat) ohne Gewinn.
