@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 05:05 Berlin – Claude Code (autonom): V7 in Bestätigung, weitere Ursachen gefunden
+
+- **Kartenkorrekturen gemessen** (`dev_hard330`/`dev_easy330`, Solution_92; V3 27,0/100 %): Bs 48,0/97,6; + `nebula_infer` 50,6/96,3; + `path_fix` 57,4/93,9; + `drift_track` **58,3/95,1** → geschätzt gesamt ≈ 82,9 % (Bs 81,2 %, V3 75,9 %).
+- **V7 = Bs + die drei Korrekturen** ([Plan, vorab](superpowers/plans/2026-10-22-v7.md)): Auswahlblock 505220–505419 **82,25 % statt 78,0 % (Δ +4,25 [+0,3; +8,3])**, default 100 % → Hürde bestanden. Frische Bestätigung 505420–505819 + direkt 505820–506019 läuft (`experiments/pipeline_v7.log`). Bei bestandenen Gates Übernahme per `scripts/release_candidate.py`.
+- PPO `cnn3b`: Stände 50/100/150 alle unter V3 (bester 72,0 % gegen 76,7 %) → beendet, Bestätigungsblöcke unbenutzt.
+- 6 Netze mit V6-Regeln trainiert (Starts 27–29/37–39): gemischt mit den 18 V3-Netzen (`v6mix24`, gleiche Regeln wie Bs) `dev_hard330` **53,9 % statt 48,0 %**; leichte Karten laufen.
+- **Neue Diagnosen** auf Karten, die V7 noch beidseitig verliert: Zielzuweisung schickt Units zu Punkte-Tiles unter Asteroiden (unerreichbar) → `reach_assign` (BFS-Weglänge, unerreichbare Ziele zuletzt); gestapelte Units warten → `unstack`; unsere Halter haben 60–84 statt 82–115 Energie, wir sappen 2–3× so oft wie Solution_92, 70 % der Toten auf Punkte-Tiles, 74 % mit weniger Energie als ein Sap kostet (Kollision, Void, direkter Sap) → `sap_reserve_k` (Regel-Saps nur mit Reserve). Alle Default aus, Tests grün (37 in `tests/test_rules_2110.py`). Messungen laufen (`D22_Bsnpdr*`, `D22_Bsnpdru*`, danach `D22_Bsnpdrk*`).
+- Training: 6 Netze `full_rules_v7` (V6-Regeln + Nebel-Inferenz + Drift im Gedächtnis). Erster Start scheiterte an der Schutzprüfung (Starts ≥ 50 lägen über 500000); `protocol.train_seed` nutzt für Starts ≥ 50 jetzt das bisher unbenutzte Blockende ab Index 5000 (Test ergänzt), Neustart 04:59 (`experiments/pipeline_v7nets.log`).
+- Abgabe weiterhin **V3** (`aac1c910…d935`).
+
 ## 22.10.2026, 04:30 Berlin – Claude Code (autonom): V6 knapp unter der Hürde, zwei Kartenfehler gefunden
 
 - **V6 = Bs** frisch 504220–504619: Solution_92 81,6 % statt 77,75 % (Δ +3,88 pp [+1,5; +6,25]), default 100 %, direkt gegen V3 67,5 % [62,25; 72,75]. Nur die Mindestgröße +5 pp verfehlt → **V3 bleibt**. Bs erfüllt die allgemeine Regel der Spezifikation vom 20.10.; Übernahme wäre eine Teamentscheidung.
