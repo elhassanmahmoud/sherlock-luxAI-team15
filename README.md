@@ -217,7 +217,7 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 |---|---|
 | Ein Spiel mit Replay über den Kurs-Runner (Gruppe 15 vs. 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
 | Ein Spiel über den Kurs-Runner spielen und sofort im Browser ansehen (Viewer braucht Internet) | `python -m scripts.play_and_view` (Optionen `--gegner default\|solution\|dqn`, `--seite 1`) → `replays/<p0>_vs_<p1>/*.html` |
-| Dasselbe per Doppelklick (macOS-App „Sherlock Demo“ im Projektordner, einmal bauen) | `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript` |
+| Dasselbe per Doppelklick: macOS-App „Sherlock Demo“ im Projektordner (nach Änderungen am Quelltext neu bauen) | `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript` |
 | Neues Einzelnetz trainieren (automatisch neuer Run-Ordner) | `python -m scripts.train --games 400 --opponent default` |
 | Ausgabeordner selbst benennen (muss neu sein) | `python -m scripts.train --games 400 --output-dir experiments/runs/mein_training` |
 | Einzelnetz fortsetzen, Quelle erhalten und neue Ausgabe anlegen | `python -m scripts.train --games 300 --opponent solution92 --resume experiments/runs/mein_training/weights/agent_p0.pth` |

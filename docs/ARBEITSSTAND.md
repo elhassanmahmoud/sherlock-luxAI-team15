@@ -7,8 +7,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 ## 22.10.2026, 15:50 Berlin – Claude Code mit Mahmoud: Demo per Doppelklick
 
-- Neu `scripts/sherlock_demo.applescript`, lokal gebaut als `Sherlock Demo.app` im Projektordner (gitignored; bauen mit `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript`). Doppelklick → Gegner wählen (default, Prof-DQN, Solution_92) → `scripts.play_and_view` läuft → Replay öffnet sich im Browser, Ergebnisfenster mit „Nochmal“.
-- Prüfungen: Kompilieren ohne Fehler; Ordnersuche, Aufruf und Auswertung der App ohne Dialoge per `osascript` getestet (App im Projektordner, App auf dem Schreibtisch mit Standardpfad, Quelltext in `scripts/`), drei Spiele gegen Solution_92, Prof-DQN und default jeweils 3:0 gewonnen. Die Dialoge selbst nicht automatisch geklickt; beim ersten Start fragt macOS nach Zugriff auf „Dokumente“. Gewichte unverändert.
+- Neu `scripts/sherlock_demo.applescript`, gebaut als `Sherlock Demo.app` im Projektordner (seit 22.10., 15:55 mit im Repo; nach Änderungen am Quelltext neu bauen mit `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript`). Doppelklick → Gegner wählen (default, Prof-DQN, Solution_92) → `scripts.play_and_view` läuft → Replay öffnet sich im Browser, Ergebnisfenster mit „Nochmal“.
+- Prüfungen: Kompilieren ohne Fehler; Ordnersuche, Aufruf und Auswertung der App ohne Dialoge per `osascript` getestet (App im Projektordner, App auf dem Schreibtisch mit Standardpfad, Quelltext in `scripts/`), drei Spiele gegen Solution_92, Prof-DQN und default jeweils 3:0 gewonnen. Die Dialoge selbst nicht automatisch geklickt; beim ersten Start fragt macOS nach Zugriff auf „Dokumente“. **Mahmoud hat die App per Doppelklick erfolgreich ausprobiert.** Gewichte unverändert.
 
 ## 22.10.2026, 15:45 Berlin – Claude Code mit Mahmoud: Live-Demo mit automatischer Visualisierung
 
