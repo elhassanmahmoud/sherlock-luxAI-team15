@@ -195,6 +195,9 @@ class AgentConfig:
     sap_no_overkill: bool = False
     """True (22.10.2026): kein Sap auf Gegner, die durch schon geplante Saps desselben Steps sicher
     sterben (ohne weiteren lebenden Gegner daneben) -> Energie behalten statt Mehrfach-Treffer."""
+    sap_overkill_recovery: bool = False
+    """True (22.10.2026, mit sap_no_overkill): vor einer Sap-Stornierung die maximale positive
+    Feld-Erholung beruecksichtigen. Null Energie ueberlebt; geplante Treffer setzen Zielpositionen voraus."""
     sym_map: bool = False
     """True (22.10.2026): sichtbare Tiles fuellen auch ihr Spiegeltile (Typ und Feldenergie). Die
     Karte ist in allen geprueften Zustaenden exakt symmetrisch (auch nach Drift); Solution_92 nutzt das."""

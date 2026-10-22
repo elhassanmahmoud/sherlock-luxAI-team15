@@ -41,7 +41,7 @@ from . import geometry as geo
 from . import rules
 from .belief import Belief, MemorylessBelief
 from .config import AgentConfig
-from .features import FEATURE_DIM, THREAT_DIM, build_features, make_context, threat_features
+from .features import FEATURE_DIM, THREAT_DIM, MAX_TILE_ENERGY, build_features, make_context, threat_features
 from .model import N_ACTIONS, QNet, checkpoint_ensemble_dims
 from .replay_buffer import ReplayBuffer
 from .reward import surviving, unit_rewards
@@ -862,12 +862,21 @@ class Agent_x:
 
     def _overkill(self, ctx: dict, uid: int, sap, planned_dmg: np.ndarray) -> bool:
         """cfg.sap_no_overkill (22.10.2026): Sap ist verschwendet, wenn alle direkt getroffenen
-        Gegner durch die in diesem Step schon geplanten Saps sicher sterben und daneben kein noch
-        lebender Gegner steht. Diagnose 360019: drei Halter sappten zugleich einen Gegner mit 21 Energie."""
+        Gegner laut geplanter Treffer sterben und daneben kein noch lebender Gegner steht.
+        Trefferplanung setzt unveraenderte Zielpositionen voraus; mit sap_overkill_recovery
+        wird auch die maximal moegliche Feld-Erholung nach den Saps beruecksichtigt."""
         direct, near = self._sap_cover(ctx, uid, sap)
         if not direct.any():
             return False
         rest = ctx["enemy_energies"].astype(np.float64) - planned_dmg
+        if self.cfg.sap_overkill_recovery:
+            # Beobachtete Feldenergie ist kein sicherer Wert fuer den naechsten Step:
+            # Energieknoten koennen inzwischen gedriftet sein. Oeffentliche Obergrenze
+            # nutzen (Engine-Default 20), ohne versteckte Parameter/Zustaende zu lesen.
+            # Nebel/Void reduzieren Energie nur; nichtpositive Felder beleben negative
+            # Energie nicht wieder. Genau null bleibt am Leben (Engine clippt bei 0).
+            max_gain = max(0.0, float((self.env_cfg or {}).get("max_energy_per_tile", MAX_TILE_ENERGY)))
+            rest += max_gain
         alive_direct = direct & (rest >= 0)
         alive_near = near & (rest >= 0)
         return not alive_direct.any() and not alive_near.any()
