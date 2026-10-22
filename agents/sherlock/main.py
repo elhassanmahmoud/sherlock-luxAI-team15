@@ -486,6 +486,11 @@ class Agent_x:
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         if self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid:
             return False
+        if c.art_surplus:
+            # 22.10.2026: Units auf dem Weg zu einem eigenen Punkte-Tile nicht aufhalten
+            tgt = ctx["assigned"].get(int(uid))
+            if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
+                return False
         if int(sap[2]) < c.art_min_hits:
             return False
         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + c.art_reserve:

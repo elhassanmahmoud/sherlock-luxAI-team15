@@ -414,3 +414,11 @@ def test_nebula_soft_prefers_equal_detour_but_keeps_paths_open():
     act = a.act(10, obs)
     assert bool(a._prev_masks[0][geo.RIGHT])            # keine Sperre
     assert int(act[0, 0]) in (geo.RIGHT, geo.UP, geo.DOWN)
+
+
+def test_art_surplus_does_not_stop_units_heading_to_own_point_tile():
+    for flag, want in ((False, geo.SAP), (True, geo.STAY)):
+        a = _stay_agent(art_sap=True, art_min_hits=2, art_surplus=flag)
+        a.belief.point_tiles[4, 4] = True   # eigenes Punkte-Tile -> Ziel der Unit
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=PAIR, relics=[(12, 12)]))
+        assert int(act[0, 0]) == want, flag

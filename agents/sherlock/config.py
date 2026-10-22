@@ -126,6 +126,8 @@ class AgentConfig:
     art_min_hits: int = 2
     art_reserve: int = 0
     art_safe: bool = True
+    art_surplus: bool = False
+    """True (22.10.2026): art_sap nicht fuer Units, deren Ziel ein Punkte-Tile der eigenen Haelfte ist."""
     threat_feats: bool = False
     """True (21.10.2026): Netz-Eingabe um features.THREAT_NAMES erweitert (Gefahr je Tile,
     bester Sap). Andere Eingabegroesse -> nur fuer neu trainierte Netze."""
