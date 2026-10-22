@@ -338,7 +338,7 @@ class Agent_x:
                 on_tile = (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid)
                 if self.cfg.pt_sap_zone:  # auch gestapelt oder auf Kandidaten-Tiles
                     on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
-                if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.pt_sap_reserve:
+                if on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve:
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
@@ -501,7 +501,7 @@ class Agent_x:
                 return False
         if int(sap[2]) < c.art_min_hits:
             return False
-        if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + c.art_reserve:
+        if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] * (1 + c.sap_reserve_k) + c.art_reserve:
             return False
         if c.art_safe and len(ctx["enemy_coords"]):
             ec = ctx["enemy_coords"]

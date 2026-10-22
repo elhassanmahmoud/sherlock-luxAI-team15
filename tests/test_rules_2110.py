@@ -512,3 +512,12 @@ def test_unstack_moves_second_unit_off_held_point_tile():
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 100), (5, 5, 100)], enemies=[], relics=[(9, 9)]))
         assert int(act[0, 0]) == geo.STAY                 # Halter bleibt
         assert int(act[1, 0]) == want, flag
+
+
+def test_sap_reserve_k_keeps_holder_energy():
+    # Halter auf Punkte-Tile mit 60 Energie, Sap-Kosten 40, Gegner in Reichweite: pt_sap feuert nur ohne Reserve
+    for k, want in ((0.0, geo.SAP), (1.0, geo.STAY)):
+        a = _stay_agent(pt_sap=True, sap_reserve_k=k)
+        a.belief.point_tiles[5, 5] = True
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 60)], enemies=[(7, 7, 80)], relics=[(9, 9)]))
+        assert int(act[0, 0]) == want, k

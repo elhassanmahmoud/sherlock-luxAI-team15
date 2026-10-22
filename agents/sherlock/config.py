@@ -139,6 +139,10 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    sap_reserve_k: float = 0.0
+    """22.10.2026: Regel-Saps (pt_sap, art_sap) nur mit Energie >= Sap-Kosten * (1 + k) (+ alte
+    absolute Reserven). Diagnose V7-Verlustspiele: Halter haben 60-84 statt 82-115 Energie, wir
+    sappen 2-3x so oft wie Solution_92; 74 % der Toten hatten weniger Energie als ein Sap kostet."""
     unstack: bool = False
     """True (22.10.2026): gestapelte Unit (Punkte-Tile gehoert schon einer anderen eigenen Unit)
     wartet nicht, sondern geht per BFS-Schritt zu ihrem zugewiesenen Ziel."""
