@@ -118,6 +118,9 @@ class Belief:
         # 22.10.2026 (Schalter drift_track): Asteroiden/Nebel driften global um (s, -s) mit
         # Umlauf (luxai_s3/env.py, jnp.roll) -> bei erkannter Drift ganze Gedaechtniskarte mitrollen
         self.drift_track = False
+        # 22.10.2026 (Schalter sym_map): Karte und Energiefeld sind exakt spiegelsymmetrisch
+        # (x, y) <-> (W-1-y, H-1-x), auch nach Drift -> jedes sichtbare Tile verraet sein Spiegeltile
+        self.sym_map = False
         self.set_team(team_id)
         self.reset_game()
 
@@ -223,6 +226,11 @@ class Belief:
             relic_pos = geo.mirror_positions(relic_pos, self.W, self.H)
             ally_pos = geo.mirror_positions(ally_pos, self.W, self.H)
 
+        if self.sym_map:
+            msensor = geo.mirror_map(sensor)
+            tile_type = np.where(sensor, tile_type, geo.mirror_map(tile_type))
+            energy = np.where(sensor, energy, geo.mirror_map(energy))
+            sensor = sensor | msensor
         if self.drift_track:
             self._detect_drift(sensor, tile_type)
         self._update_map(sensor, tile_type, energy)
@@ -328,6 +336,9 @@ class Belief:
                 in_range[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
         hidden = in_range & ~sensor
         if hidden.any():
+            if self.sym_map:
+                from . import geometry as geo
+                hidden = hidden | geo.mirror_map(hidden)
             self.tile_type[hidden] = TILE_NEBULA
 
     def _update_relics(self, relic_pos, relic_mask) -> None:

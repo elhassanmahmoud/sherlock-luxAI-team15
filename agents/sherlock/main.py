@@ -102,6 +102,7 @@ class Agent_x:
                              stale_all=self.cfg.stale_all)
         self.belief.nebula_infer = bool(self.cfg.nebula_infer)
         self.belief.drift_track = bool(self.cfg.drift_track)
+        self.belief.sym_map = bool(self.cfg.sym_map)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,

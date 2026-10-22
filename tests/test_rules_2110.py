@@ -530,3 +530,19 @@ def test_train_seed_high_starts_use_fresh_block_tail():
     assert not low & high                                   # keine Karte doppelt
     assert max(high) < P.VAL_SEED_BASE
     assert all(s % P.TRAIN_SEED_STRIDE >= 5000 for s in high)
+
+
+def test_sym_map_fills_mirror_tile():
+    from agents.sherlock.belief import TILE_ASTEROID, TILE_UNKNOWN
+    for flag in (False, True):
+        a = _stay_agent(sym_map=flag)
+        obs = make_obs(10, 10, units=[(3, 3, 100)], enemies=[], relics=[(9, 9)], asteroids=[(4, 2)])
+        sm = np.zeros((24, 24), dtype=bool)
+        sm[0:7, 0:7] = True
+        obs["sensor_mask"] = sm
+        obs["map_features"]["energy"][4, 2] = 7
+        a.act(10, obs)
+        b = a.belief
+        mx, my = 23 - 2, 23 - 4                       # Spiegeltile von (4, 2)
+        assert b.tile_type[mx, my] == (TILE_ASTEROID if flag else TILE_UNKNOWN)
+        assert b.energy_map[mx, my] == (7 if flag else 0)

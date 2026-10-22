@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    sym_map: bool = False
+    """True (22.10.2026): sichtbare Tiles fuellen auch ihr Spiegeltile (Typ und Feldenergie). Die
+    Karte ist in allen geprueften Zustaenden exakt symmetrisch (auch nach Drift); Solution_92 nutzt das."""
     sap_reserve_k: float = 0.0
     """22.10.2026: Regel-Saps (pt_sap, art_sap) nur mit Energie >= Sap-Kosten * (1 + k) (+ alte
     absolute Reserven). Diagnose V7-Verlustspiele: Halter haben 60-84 statt 82-115 Energie, wir
