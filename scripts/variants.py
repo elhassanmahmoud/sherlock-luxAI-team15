@@ -81,6 +81,13 @@ VARIANTS["full_rules_v6"] = (
      "art_reserve": 0, "nebula_avoid": True, "nebula_avoid_min": 25, "nebula_avoid_mode": "soft"},
 )
 
+# 22.10.2026: V6-Regeln + Kartenkorrekturen im Gedaechtnis (Nebel-Inferenz, Drift) schon im
+# Training; path_fix/reach_assign wirken nur in der Auswertung.
+VARIANTS["full_rules_v7"] = (
+    VARIANTS["full_rules_v6"][0],
+    {**VARIANTS["full_rules_v6"][1], "nebula_infer": True, "drift_track": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 
