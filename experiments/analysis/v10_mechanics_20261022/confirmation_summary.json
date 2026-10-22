@@ -1,0 +1,64 @@
+{
+  "phase": "confirmation",
+  "audited_at": "2026-10-22T15:32:12.283667+00:00",
+  "nominee": "recovery",
+  "files": {
+    "confirmation_baseline.csv": "3f88403e9a99536a643e06798af09d0575cf74a59e32192299ad49d0088df595",
+    "confirmation_recovery.csv": "68f8ab32a46d5726914a25c6bbe0ddd75ad930f4e70bcb95c6b85894812aa5fd"
+  },
+  "opponents": {
+    "default": {
+      "maps": 800,
+      "games_per_arm": 1600,
+      "baseline": {
+        "wins": 1599,
+        "draws": 0,
+        "losses": 1,
+        "half_score_units": 3198,
+        "score": 0.999375
+      },
+      "recovery": {
+        "wins": 1599,
+        "draws": 0,
+        "losses": 1,
+        "half_score_units": 3198,
+        "score": 0.999375
+      },
+      "delta_units": 0,
+      "denominator": 3200,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "gate_passed": true
+    },
+    "solution92": {
+      "maps": 800,
+      "games_per_arm": 1600,
+      "baseline": {
+        "wins": 1448,
+        "draws": 0,
+        "losses": 152,
+        "half_score_units": 2896,
+        "score": 0.905
+      },
+      "recovery": {
+        "wins": 1437,
+        "draws": 0,
+        "losses": 163,
+        "half_score_units": 2874,
+        "score": 0.898125
+      },
+      "delta_units": -22,
+      "denominator": 3200,
+      "delta": -0.006875,
+      "ci95": [
+        -0.015,
+        0.00125
+      ],
+      "gate_passed": false
+    }
+  },
+  "all_phase_gates_passed": false
+}

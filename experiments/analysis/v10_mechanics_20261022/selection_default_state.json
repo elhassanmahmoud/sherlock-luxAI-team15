@@ -1,0 +1,115 @@
+{
+  "started_at": "2026-10-22T12:44:12.416849+00:00",
+  "phase": {
+    "name": "selection_default",
+    "jobs": [
+      {
+        "name": "baseline",
+        "args": [
+          "--weights",
+          "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+          "--first",
+          "110100",
+          "--n",
+          "200",
+          "--workers",
+          "2",
+          "--opponents",
+          "default",
+          "--set",
+          "sap_overkill_recovery=false",
+          "--set",
+          "nebula_infer_drift_safe=false",
+          "--out",
+          "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_baseline_default.csv"
+        ]
+      },
+      {
+        "name": "recovery",
+        "args": [
+          "--weights",
+          "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+          "--first",
+          "110100",
+          "--n",
+          "200",
+          "--workers",
+          "2",
+          "--opponents",
+          "default",
+          "--set",
+          "sap_overkill_recovery=true",
+          "--set",
+          "nebula_infer_drift_safe=false",
+          "--out",
+          "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_recovery_default.csv"
+        ]
+      }
+    ]
+  },
+  "phase_sha256": "fd2579e44ba4b8a6422aa18897591ef3264dae35d5d9062e086e410052a4815a",
+  "jobs": [
+    {
+      "name": "baseline",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default",
+        "--set",
+        "sap_overkill_recovery=false",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_baseline_default.csv"
+      ],
+      "started_at": "2026-10-22T12:44:12.461357+00:00",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_default_baseline.log",
+      "finished_at": "2026-10-22T12:51:17.142752+00:00",
+      "exit_code": 0,
+      "output_sha256": "329c203b4d7e47b4a4a94e84d4877c9f6d2900af478d79283f64f948daff4547"
+    },
+    {
+      "name": "recovery",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default",
+        "--set",
+        "sap_overkill_recovery=true",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_recovery_default.csv"
+      ],
+      "started_at": "2026-10-22T12:51:17.287306+00:00",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_default_recovery.log",
+      "finished_at": "2026-10-22T12:58:41.333741+00:00",
+      "exit_code": 0,
+      "output_sha256": "a270df4f9b1ab2a403c3fbdfb28f58ff3fac0a9d0d170d3f45256bbc8f19e1aa"
+    }
+  ],
+  "finished_at": "2026-10-22T12:58:41.448817+00:00",
+  "status": "complete"
+}

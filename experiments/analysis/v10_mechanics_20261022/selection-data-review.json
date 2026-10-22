@@ -1,0 +1,69 @@
+{
+  "reviewed_at": "2026-10-22T12:46:35.137921+00:00",
+  "errors": [],
+  "variants": {
+    "baseline": {
+      "games": 400,
+      "maps": 200,
+      "wins": 363,
+      "draws": 0,
+      "losses": 37,
+      "half_score_units": 726,
+      "score_rate": 0.9075,
+      "sha256": "ed16e24a19b8405f6cc59bc79a8c5413d3019c629e2079bd4e6006848fc2e4d8"
+    },
+    "recovery": {
+      "games": 400,
+      "maps": 200,
+      "wins": 367,
+      "draws": 0,
+      "losses": 33,
+      "half_score_units": 734,
+      "score_rate": 0.9175,
+      "sha256": "12275c54c81dff0d96714aa90d9d5c3387013a1f8b4feba8f876aac59a52190a",
+      "delta_units": 8,
+      "delta": 0.01,
+      "low": -0.0075,
+      "high": 0.03
+    },
+    "drift": {
+      "games": 400,
+      "maps": 200,
+      "wins": 359,
+      "draws": 0,
+      "losses": 41,
+      "half_score_units": 718,
+      "score_rate": 0.8975,
+      "sha256": "5f7a4452baca69b92229bcd782301d2e528db52df0e227a6f6869c359956a73b",
+      "delta_units": -8,
+      "delta": -0.01,
+      "low": -0.025,
+      "high": 0.0025
+    },
+    "combined": {
+      "games": 400,
+      "maps": 200,
+      "wins": 362,
+      "draws": 0,
+      "losses": 38,
+      "half_score_units": 724,
+      "score_rate": 0.905,
+      "sha256": "e430a26508df4488237a3d652cbcf6d792d6e8727435a78d6ee92cf0c2c62349",
+      "delta_units": -2,
+      "delta": -0.0025,
+      "low": -0.025,
+      "high": 0.02
+    }
+  },
+  "nominee": "recovery",
+  "source_head": "de2e95d451a22643a3f7351636d3348f7770a1aa",
+  "frozen_file_count": 128,
+  "weight_file_count": 4,
+  "changed_files": [],
+  "source_inventory_equal": true,
+  "default_jobs_valid": true,
+  "source_freeze_sha256": "482b1908cde0f5d2969e54d960c33b832f8ead4836efa14ff1ccb5e70a356907",
+  "selection_summary_sha256": "ec1f1c29357469b2556fd0eecdc3a11385ee8d1e0f2707cbff523eb87224c991",
+  "selection_default_jobs_sha256": "fd2579e44ba4b8a6422aa18897591ef3264dae35d5d9062e086e410052a4815a",
+  "selection_jobs_sha256": "6755ed1a4e1c9f23f80812eb3721c7722cd1f5fe485d868db80081c6ad94b737"
+}

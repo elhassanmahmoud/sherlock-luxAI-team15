@@ -1,0 +1,47 @@
+{
+  "name": "selection_default",
+  "jobs": [
+    {
+      "name": "baseline",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default",
+        "--set",
+        "sap_overkill_recovery=false",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_baseline_default.csv"
+      ]
+    },
+    {
+      "name": "recovery",
+      "args": [
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "--first",
+        "110100",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "default",
+        "--set",
+        "sap_overkill_recovery=true",
+        "--set",
+        "nebula_infer_drift_safe=false",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/v10_mechanics_20261022/selection_recovery_default.csv"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "checked_at": "2026-10-22T15:34:03.207455+00:00",
+  "errors": [],
+  "verdict": "valid_confirmation_no_qualifying_improvement",
+  "total_games": 6400,
+  "results": {
+    "default": {
+      "maps": 800,
+      "games_per_arm": 1600,
+      "baseline": {
+        "wins": 1599,
+        "draws": 0,
+        "losses": 1,
+        "half_score_units": 3198,
+        "score": 0.999375
+      },
+      "recovery": {
+        "wins": 1599,
+        "draws": 0,
+        "losses": 1,
+        "half_score_units": 3198,
+        "score": 0.999375
+      },
+      "delta_units": 0,
+      "denominator": 3200,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "gate_passed": true
+    },
+    "solution92": {
+      "maps": 800,
+      "games_per_arm": 1600,
+      "baseline": {
+        "wins": 1448,
+        "draws": 0,
+        "losses": 152,
+        "half_score_units": 2896,
+        "score": 0.905
+      },
+      "recovery": {
+        "wins": 1437,
+        "draws": 0,
+        "losses": 163,
+        "half_score_units": 2874,
+        "score": 0.898125
+      },
+      "delta_units": -22,
+      "denominator": 3200,
+      "delta": -0.006875,
+      "ci95": [
+        -0.015,
+        0.00125
+      ],
+      "gate_passed": false
+    }
+  },
+  "csv_identity": {
+    "baseline": {
+      "csv_sha256": "3f88403e9a99536a643e06798af09d0575cf74a59e32192299ad49d0088df595",
+      "csv_size": 456326,
+      "csv_mtime_utc": "2026-10-22T14:16:08.120644+00:00"
+    },
+    "recovery": {
+      "csv_sha256": "68f8ab32a46d5726914a25c6bbe0ddd75ad930f4e70bcb95c6b85894812aa5fd",
+      "csv_size": 456783,
+      "csv_mtime_utc": "2026-10-22T15:32:04.565017+00:00"
+    }
+  },
+  "source_head": "de2e95d451a22643a3f7351636d3348f7770a1aa",
+  "frozen_source_files": 128,
+  "frozen_weights": 4,
+  "frozen_changes": [],
+  "source_inventory_equal": true,
+  "source_freeze_sha256": "482b1908cde0f5d2969e54d960c33b832f8ead4836efa14ff1ccb5e70a356907",
+  "confirmation_jobs_sha256": "375e2cce34b0bcf6fe88972a68399ff423f28454e49996216c7e5ff897becb84",
+  "confirmation_state_sha256": "8dcdc0e0b0f0b934ef0f04937369c12f61d5d32481ea8f26c3210369a8300672",
+  "confirmation_summary_sha256": "ad1952cb12b3a194c427e340e93ec673a13e9759545843cf6d2c80b855fae2be",
+  "closing_scope_sha256": "40d0db0d7a6c8eca17a09c59e0e8ab71a07d08821360dc247c712c4fdcb47118",
+  "closing_recorded_at": "2026-10-22T14:24:29.572224+00:00",
+  "candidate_finished_at": "2026-10-22T15:32:05.821407+00:00",
+  "direct_robustness": "not run; closing scope prohibited new phases; not failed gates",
+  "later_phase_artifacts": [],
+  "decision": "Keep installed V10 unchanged. No promotion; Solution confirmation gates fail independently of closing scope."
+}

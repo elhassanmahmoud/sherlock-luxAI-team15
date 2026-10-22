@@ -1,0 +1,84 @@
+{
+  "status": "selection_solution_complete",
+  "reference": "baseline",
+  "nominee": "recovery",
+  "requires_default_guard": true,
+  "variants": {
+    "baseline": {
+      "games": 400,
+      "maps": 200,
+      "wins": 363,
+      "draws": 0,
+      "losses": 37,
+      "half_score_units": 726,
+      "score_rate": 0.9075,
+      "sha256": "ed16e24a19b8405f6cc59bc79a8c5413d3019c629e2079bd4e6006848fc2e4d8"
+    },
+    "recovery": {
+      "games": 400,
+      "maps": 200,
+      "wins": 367,
+      "draws": 0,
+      "losses": 33,
+      "half_score_units": 734,
+      "score_rate": 0.9175,
+      "sha256": "12275c54c81dff0d96714aa90d9d5c3387013a1f8b4feba8f876aac59a52190a",
+      "comparison": {
+        "opponent": "solution92",
+        "maps": 200,
+        "games": 400,
+        "winrate": 0.9175,
+        "ref_winrate": 0.9075,
+        "delta": 0.01,
+        "low": -0.0075,
+        "high": 0.03,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    },
+    "drift": {
+      "games": 400,
+      "maps": 200,
+      "wins": 359,
+      "draws": 0,
+      "losses": 41,
+      "half_score_units": 718,
+      "score_rate": 0.8975,
+      "sha256": "5f7a4452baca69b92229bcd782301d2e528db52df0e227a6f6869c359956a73b",
+      "comparison": {
+        "opponent": "solution92",
+        "maps": 200,
+        "games": 400,
+        "winrate": 0.8975,
+        "ref_winrate": 0.9075,
+        "delta": -0.01,
+        "low": -0.025,
+        "high": 0.0025,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    },
+    "combined": {
+      "games": 400,
+      "maps": 200,
+      "wins": 362,
+      "draws": 0,
+      "losses": 38,
+      "half_score_units": 724,
+      "score_rate": 0.905,
+      "sha256": "e430a26508df4488237a3d652cbcf6d792d6e8727435a78d6ee92cf0c2c62349",
+      "comparison": {
+        "opponent": "solution92",
+        "maps": 200,
+        "games": 400,
+        "winrate": 0.905,
+        "ref_winrate": 0.9075,
+        "delta": -0.0025,
+        "low": -0.025,
+        "high": 0.02,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    }
+  }
+}
