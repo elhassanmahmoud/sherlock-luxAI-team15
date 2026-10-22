@@ -160,6 +160,7 @@ class Agent_x:
         self._pred_n, self._pred_hit = 0, 0
         from .param_est import ParamEstimator
         self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
+        self._first_relic_step = None  # 22.10.2026: fuer cand_rescue/rescue_after
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
                          "sap_attempts": 0, "sap_hits_est": 0}
@@ -297,8 +298,11 @@ class Agent_x:
         # 22.10.2026 (cfg.cand_rescue): Notfall, wenn trotz bekannter Relics kein Punkte-Tile bekannt ist
         # (z. B. 361050: Haufen im Nebel; 361255: Units laufen von Kandidaten weg) -> Kandidaten gezielt
         # testen (obey_target, neb_cand, idle_approach nur in diesem Fall aktiv)
+        if self.belief.relic_positions and getattr(self, "_first_relic_step", None) is None:
+            self._first_relic_step = int(ctx["step"])
         self._rescue = bool(self.cfg.cand_rescue and not self.training and self.belief.relic_positions
-                            and not self.belief.point_tiles.any() and self.belief.match_step >= 10)
+                            and not self.belief.point_tiles.any() and self.belief.match_step >= 10
+                            and int(ctx["step"]) - self._first_relic_step >= self.cfg.rescue_after)
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
             if self.training and len(legal) > 0 and self.rng.random() < eps:

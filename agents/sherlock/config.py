@@ -170,6 +170,8 @@ class AgentConfig:
     cand_rescue: bool = False
     """True (22.10.2026): nur wenn trotz bekannter Relics kein Punkte-Tile bekannt ist, werden obey_target,
     neb_cand und idle_approach aktiv (Kandidaten gezielt testen). Sicherheitsnetz fuer 0-Punkte-Spiele."""
+    rescue_after: int = 0
+    """cand_rescue greift erst, wenn das erste Relic seit mindestens so vielen Steps bekannt ist."""
     art_safe_cheb: bool = False
     """True (22.10.2026): art_safe prueft die Gefahr im ganzen Sap-Quadrat (Chebyshev, wie die Engine)
     statt in der Manhattan-Raute von Solution_92. Robustheit gegen Gegner, die diagonal sappen."""
