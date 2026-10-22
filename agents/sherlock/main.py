@@ -589,9 +589,12 @@ class Agent_x:
         (gemessen am 21.10. auf 500720-500729: Trefferquote der Vorhersage je Fall)."""
         from .opp_model import predict_sol92_saps
         out: dict[int, float] = {}
+        self._shooters: dict[int, list] = {}
         for k, uid in predict_sol92_saps(ctx, self.belief):
             p = 0.85 if (k < len(stationary) and stationary[k]) else 0.5
             out[uid] = out.get(uid, 0.0) + p
+            self._shooters.setdefault(uid, []).append(
+                (int(ctx["enemy_coords"][k][0]), int(ctx["enemy_coords"][k][1])))
         return out
 
     def _dodge(self, ctx: dict, uid: int, mask: np.ndarray, a: int, sap, hits: dict) -> int:
@@ -634,6 +637,17 @@ class Agent_x:
             if tgt is not None and abs(tgt[0] - tx) + abs(tgt[1] - ty) < abs(tgt[0] - x) + abs(tgt[1] - y):
                 s += 1.0
             s += float(np.clip(ctx["energy_map"][tx, ty], -20, 20)) / 20.0
+            if c.dodge_bait:
+                # 22.10.2026: Koeder - in Reichweite der eigenen Schuetzen bleiben, solange dort andere
+                # eigene Units stehen (sie haben niedrigere IDs und bleiben so unbeschossen); nicht
+                # neben eigene Units ziehen (Streuschaden)
+                R = int(ctx["sap_range"])
+                shooters = getattr(self, "_shooters", {}).get(int(uid), [])
+                guarded = any(abs(sx - ox) + abs(sy - oy) <= R for sx, sy in shooters for ox, oy in occupied)
+                if guarded and all(abs(sx - tx) + abs(sy - ty) <= R for sx, sy in shooters):
+                    s += 3.5
+                if any(max(abs(ox - tx), abs(oy - ty)) <= 1 for ox, oy in occupied):
+                    s -= 2.0
             if s > best_s:
                 best, best_s = d, s
         if best is not None:

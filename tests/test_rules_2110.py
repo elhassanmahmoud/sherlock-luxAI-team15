@@ -422,3 +422,15 @@ def test_art_surplus_does_not_stop_units_heading_to_own_point_tile():
         a.belief.point_tiles[4, 4] = True   # eigenes Punkte-Tile -> Ziel der Unit
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=PAIR, relics=[(12, 12)]))
         assert int(act[0, 0]) == want, flag
+
+
+def test_dodge_bait_stays_in_shooter_range():
+    # Schuetze (7,7) auf Punkte-Tile; Halter Unit 0 auf (6,8), Koeder-Kandidat Unit 1 (hoechste ID)
+    # auf (5,5). Links (4,5) ist ein freies Punkte-Tile, aber ausser Manhattan-Reichweite 4.
+    for bait, want in ((False, geo.LEFT), (True, geo.RIGHT)):
+        a = _stay_agent(dodge=True, dodge_mode="always", dodge_bait=bait)
+        for t in ((7, 7), (4, 5), (6, 8)):
+            a.belief.point_tiles[t] = True
+        act = a.act(10, make_obs(10, 10, units=[(6, 8, 200), (5, 5, 200)], enemies=[(7, 7, 80)],
+                                 relics=[(9, 9)]))
+        assert int(act[1, 0]) == want, bait

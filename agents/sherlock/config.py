@@ -139,6 +139,9 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    dodge_bait: bool = False
+    """True (22.10.2026): beim Ausweichen in Manhattan-Reichweite der Schuetzen bleiben (Koeder:
+    Solution_92 zielt auf unsere hoechste ID in Reichweite) und nicht neben eigene Units ziehen."""
     dodge_auto: bool = False
     dodge_auto_max: float = 0.5
     """Hoechster geschaetzter Streufaktor, bei dem dodge_auto ausweicht. 22.10.2026: Gewinn fast
