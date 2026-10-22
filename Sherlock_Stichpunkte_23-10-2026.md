@@ -14,7 +14,7 @@ Folien 14 und 15 sind Reserve für Fragen. Jeder Punkt ist ein Satz, den man bei
 
 **Kernaussage:** **Von 47 % auf 90 % gegen Solution_92: Regeln und Training brachten uns auf 78 %, die Fehlersuche gegen den wahren Spielzustand auf 90 %.**
 
-**Inhalt:** Vortrag (Folien 1–13) · Bei Fragen · Wörterbuch
+**Inhalt:** Vortrag (Folien 1–13) · Bei Fragen · Live-Demo · Wörterbuch
 
 ---
 
@@ -182,6 +182,23 @@ Die 18 Netze der Abgabe wurden zusammen mit 66.000 Trainingsspielen trainiert.
 
 **Was passiert in den Reservefolien?**
 Folie 14 erklärt, wie wir prüfen (Hürden, Statistik). Folie 15 zeigt die Spielregeln, die wir nutzen.
+
+---
+
+## Live-Demo, falls der Prof fragt
+
+Im Terminal im Projektordner:
+
+```
+cd ~/Documents/AKI_LuxAgent15
+.venv/bin/python -m scripts.play_and_view
+```
+
+- Startet ein Spiel Sherlock gegen Solution_92 über den unveränderten Kurs-Runner (etwa 6 Sekunden) und öffnet das Replay automatisch im Browser (Lux-Viewer, braucht Internet). Im Viewer auf ▶ klicken.
+- Im Terminal steht das Ergebnis, z. B. „Sherlock (player_0) gewinnt 3:0 Matches gegen Solution_92_Kaggle“.
+- Gegen default: `--gegner default`, gegen das Prof-DQN: `--gegner dqn`, Sherlock auf der anderen Seite: `--seite 1`.
+- Jede Karte ist neu und zufällig. Wir gewinnen etwa 9 von 10 Spielen gegen Solution_92, eine Niederlage ist also möglich.
+- Ohne Internet: `.venv/bin/python main.py` spielt dasselbe Spiel; das Replay liegt dann als JSON in `replays/15_vs_2/` und kann später auf https://s3vis.lux-ai.org/ hochgeladen werden.
 
 ---
 

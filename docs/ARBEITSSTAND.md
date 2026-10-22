@@ -5,7 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 22.10.2026, 15:50 Berlin – Claude Code mit Mahmoud: Präsentation für den 23.10.
+## 22.10.2026, 15:45 Berlin – Claude Code mit Mahmoud: Live-Demo mit automatischer Visualisierung
+
+- Neu `scripts/play_and_view.py`: spielt ein Spiel über den unveränderten Kurs-Runner (`run_agents`, `train=False`), verpackt das Replay wie `luxai-s3 --output replay.html` in eine HTML-Datei mit dem offiziellen Viewer (s3vis.lux-ai.org, braucht Internet), gibt das Matchergebnis aus und öffnet die Datei im Browser. Optionen `--gegner default|solution|dqn`, `--seite 1`, `--no-open`. Ausgaben nur unter `replays/` (gitignored).
+- Prüfungen: `tests/test_play_and_view.py` 2 bestanden; zwei echte Spiele (gegen Solution_92 als player_0, gegen default als player_1), beide 3:0 gewonnen; erzeugte HTML-Datei in Headless-Chrome mit geladenem Viewer kontrolliert; Abgabe-Gewichte unverändert `03cf8bdc…8c67`. README und Stichpunkte (Abschnitt „Live-Demo“) ergänzt.
+
+## 22.10.2026, 15:25 Berlin – Claude Code mit Mahmoud: Präsentation für den 23.10.
 
 - Laut Mahmoud ist die Präsentation am **23.10.** In `CLAUDE.md` steht für die Zwischenpräsentation der 06.11.; Termin bitte im Team bestätigen. Folien und Stichpunkte tragen deshalb das Datum 23.10.
 - Folien `Sherlock_Review_23-10-2026.pdf` (Projektordner, 13 Vortragsfolien + 2 Reservefolien im Design vom 16.10.), Quelle `docs/presentation/Sherlock_Review_23-10-2026.html` mit Bildern `docs/presentation/folie_2310_*.png` und Diagrammskript `docs/presentation/source/fortschritt_2310.py`. Stichpunkte zum Üben `Sherlock_Stichpunkte_23-10-2026.md` (Vorschlag: Moayed Folien 1–4, 8–10 und 13 = 5:10, Mahmoud 5–7 und 11–12 = 4:30). Plan und Belege: `docs/presentation/VORTRAGSPLAN_2310.md`.

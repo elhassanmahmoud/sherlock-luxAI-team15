@@ -216,6 +216,7 @@ Alle Befehle aus dem Projekt-Root mit aktiviertem venv.
 | Zweck | Befehl |
 |---|---|
 | Ein Spiel mit Replay über den Kurs-Runner (Gruppe 15 vs. 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
+| Ein Spiel über den Kurs-Runner spielen und sofort im Browser ansehen (Viewer braucht Internet) | `python -m scripts.play_and_view` (Optionen `--gegner default\|solution\|dqn`, `--seite 1`) → `replays/<p0>_vs_<p1>/*.html` |
 | Neues Einzelnetz trainieren (automatisch neuer Run-Ordner) | `python -m scripts.train --games 400 --opponent default` |
 | Ausgabeordner selbst benennen (muss neu sein) | `python -m scripts.train --games 400 --output-dir experiments/runs/mein_training` |
 | Einzelnetz fortsetzen, Quelle erhalten und neue Ausgabe anlegen | `python -m scripts.train --games 300 --opponent solution92 --resume experiments/runs/mein_training/weights/agent_p0.pth` |
@@ -237,7 +238,7 @@ Mit `--output-dir` lässt sich der Run-Ordner benennen. Bereits vorhandene Ordne
 
 **Geltungsbereich:** Dieser Schutz gilt für `scripts.train` und den Paketbau mit `scripts.build_submission`. Agenten-Speichermethode und Kurs-Runner bleiben unverändert. `main.py` für Vorführungen weiterhin mit `train=False` betreiben; direktes Runner-Training und andere Schreibwerkzeuge wie `set_cfg`/`build_ensemble` niemals auf die Abgabe-Gewichte richten. Das ist ein Schutz der genannten Arbeitsabläufe, keine allgemeine Dateisystemsperre. Für systematische Vergleichsläufe bleibt `scripts.experiment` mit eigenem Run-Namen vorgesehen.
 
-**Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`.
+**Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und die JSON-Datei hochladen, z. B. aus `replays/` oder `docs/presentation/replays/`. `scripts.play_and_view` erzeugt stattdessen eine HTML-Datei mit eingebettetem Replay und demselben Viewer (Format wie `luxai-s3 --output replay.html`) und öffnet sie direkt.
 
 > Warum ein eigenes `train.py`? Der Kurs-Runner (`lux/runner.py`) erzeugt die Agenten in jedem Spiel neu und ruft `save_agent()` vor dem Spiel auf. Gelerntes würde damit nie gespeichert. Unsere Skripte nutzen das Env direkt; zur Abgabe bleibt der Agent trotzdem voll runner-kompatibel (`tests/test_runner.py`).
 
