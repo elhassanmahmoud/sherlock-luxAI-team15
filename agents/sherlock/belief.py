@@ -100,7 +100,8 @@ class Belief:
                  symmetry: bool = False, early_inference: bool = False,
                  relic_filter: bool = False, subset_infer: bool = False,
                  keep_dead: bool = False, keep_dead_fast: bool = False,
-                 opp_infer: bool = False, stale_all: bool = False):
+                 opp_infer: bool = False, stale_all: bool = False,
+                 nebula_infer_drift_safe: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
@@ -114,6 +115,7 @@ class Belief:
         # 22.10.2026 (Schalter nebula_infer): Tiles in unserer Sensorreichweite, die trotzdem
         # unsichtbar sind, muessen Nebel sein; sensor_range setzt der Agent aus env_cfg
         self.nebula_infer = False
+        self.nebula_infer_drift_safe = bool(nebula_infer_drift_safe)
         self.sensor_range: int | None = None
         # 22.10.2026 (Schalter drift_track): Asteroiden/Nebel driften global um (s, -s) mit
         # Umlauf (luxai_s3/env.py, jnp.roll) -> bei erkannter Drift ganze Gedaechtniskarte mitrollen
@@ -239,10 +241,15 @@ class Belief:
             tile_type = np.where(sensor, tile_type, geo.mirror_map(tile_type))
             energy = np.where(sensor, energy, geo.mirror_map(energy))
             sensor = sensor | msensor
+        drift_events_before = self.drift_events
         if self.drift_track:
             self._detect_drift(sensor, tile_type)
         self._update_map(sensor, tile_type, energy)
-        if self.nebula_infer and self.sensor_range is not None:
+        # Die Engine berechnet den Sensor VOR der Terrain-Drift und zeigt damit
+        # die Karte NACH der Drift. Hidden-in-range belegt auf solchen Steps nur
+        # alten Nebel, nicht den aktuellen Tile-Typ. Unerkannte Drift bleibt offen.
+        skip_nebula = self.nebula_infer_drift_safe and self.drift_events != drift_events_before
+        if self.nebula_infer and self.sensor_range is not None and not skip_nebula:
             self._infer_nebula(sensor, ally_pos, ally_mask & (ally_energy >= 0))
         self._update_relics(relic_pos, relic_mask)
         if self.keep_dead and self._dead_hist:

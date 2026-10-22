@@ -222,6 +222,9 @@ class AgentConfig:
     """True (22.10.2026): Tiles in Sensorreichweite eigener Units, die unsichtbar sind, sind Nebel.
     Behebt veraltete Asteroiden im Gedaechtnis (Drift), die bei kleiner Sicht Wege sperren
     (z. B. Units eingesperrt am Spawn, 360014)."""
+    nebula_infer_drift_safe: bool = False
+    """True (22.10.2026, mit nebula_infer): auf erkannter Drift keine Nebel-Inferenz aus dem
+    Sensor vor der Drift. Nicht erkannte Drift bleibt eine Grenze der Inferenz."""
     dodge_bait: bool = False
     """True (22.10.2026): beim Ausweichen in Manhattan-Reichweite der Schuetzen bleiben (Koeder:
     Solution_92 zielt auf unsere hoechste ID in Reichweite) und nicht neben eigene Units ziehen."""

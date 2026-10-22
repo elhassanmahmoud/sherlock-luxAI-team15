@@ -99,7 +99,8 @@ class Agent_x:
                              keep_dead=self.cfg.keep_dead,
                              keep_dead_fast=self.cfg.keep_dead_fast,
                              opp_infer=self.cfg.opp_infer,
-                             stale_all=self.cfg.stale_all)
+                             stale_all=self.cfg.stale_all,
+                             nebula_infer_drift_safe=self.cfg.nebula_infer_drift_safe)
         self.belief.nebula_infer = bool(self.cfg.nebula_infer)
         self.belief.drift_track = bool(self.cfg.drift_track)
         self.belief.sym_map = bool(self.cfg.sym_map)

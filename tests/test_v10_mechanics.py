@@ -3,6 +3,7 @@ import numpy as np
 import pytest
 
 from agents.sherlock import geometry as geo
+from agents.sherlock.belief import TILE_ASTEROID, TILE_NEBULA, TILE_UNKNOWN
 from agents.sherlock.config import AgentConfig
 from tests.conftest import ENV_CFG, make_obs
 from tests.test_rules_1910 import _stay_agent
@@ -118,3 +119,92 @@ def test_recovery_actions_against_one_engine_step(env, flag, want_energy):
     env.step({"player_0": actions.astype(np.int16),
               "player_1": np.zeros((16, 3), dtype=np.int16)})
     assert int(env.state.units.energy[1, 0, 0]) == want_energy
+
+
+def _drift_case(flag, direction=1, team=0, infer=True):
+    cfg = {"nebula_infer": infer, "drift_track": True}
+    if flag is not None:
+        cfg["nebula_infer_drift_safe"] = flag
+    a = _stay_agent(**AgentConfig.from_dict(cfg).to_dict())
+    a.set_env_cfg({**ENV_CFG, "unit_sensor_range": 1})
+    a.new_game(f"player_{team}")  # The option must survive game/player resets.
+    old = np.zeros((24, 24), dtype=np.int8)
+    old[5, 6] = old[4, 4] = TILE_ASTEROID
+    old[6, 5] = TILE_NEBULA
+    if direction == -1:
+        old = old.T.copy()
+    a.belief.tile_type[:] = old
+    x, y = np.indices(old.shape)
+    distance = np.maximum(abs(x - 5), abs(y - 5))
+    power = np.where(distance <= 1, 2 - distance, 0)
+    power[5, 5] += 10
+    # Engine order: sensor power uses OLD terrain, then the terrain rolls.
+    sensor = power - 2 * (old == TILE_NEBULA) > 0
+    current = np.roll(old, (direction, -direction), axis=(0, 1))
+    unit = geo.mirror_xy(5, 5) if team else (5, 5)
+    obs = make_obs(10, 10, team=team, units=[(*unit, 100)])
+    obs["sensor_mask"] = geo.mirror_map(sensor) if team else sensor
+    terrain = geo.mirror_map(current) if team else current
+    obs["map_features"]["tile_type"] = np.where(obs["sensor_mask"], terrain, TILE_UNKNOWN)
+    obs["map_features"]["energy"] = np.where(obs["sensor_mask"], 0, -1)
+    target = (6, 5) if direction == 1 else (5, 6)
+    assert not sensor[target] and current[target] == TILE_ASTEROID
+    return a, obs, sensor, current, target
+
+
+@pytest.mark.parametrize("flag,want", [(None, TILE_NEBULA), (False, TILE_NEBULA),
+                                       (True, TILE_ASTEROID)])
+def test_detected_drift_does_not_relabel_current_asteroid_from_old_sensor(flag, want):
+    a, obs, sensor, current, target = _drift_case(flag)
+    a.belief.observe(obs)
+    assert a.belief.drift_events == 1
+    assert a.belief.drift_votes[1] == 1
+    assert int(a.belief.tile_type[target]) == want
+    assert bool(a.belief.passable[target]) == (want != TILE_ASTEROID)
+    np.testing.assert_array_equal(a.belief.tile_type[sensor], current[sensor])
+
+
+@pytest.mark.parametrize("team,direction", [(0, -1), (1, 1), (1, -1)])
+def test_drift_safe_inference_preserves_canonical_direction_after_reset(team, direction):
+    a, obs, sensor, current, target = _drift_case(True, direction=direction, team=team)
+    a.belief.observe(obs)
+    assert a.belief.drift_events == 1
+    assert a.belief.drift_votes[direction] == 1
+    assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+    np.testing.assert_array_equal(a.belief.tile_type[sensor], current[sensor])
+
+
+@pytest.mark.parametrize("flag,infer,want", [(False, True, TILE_NEBULA),
+                                             (True, True, TILE_NEBULA),
+                                             (True, False, TILE_ASTEROID)])
+def test_drift_safe_keeps_normal_hidden_in_range_inference(flag, infer, want):
+    a, obs, sensor, current, target = _drift_case(flag, infer=infer)
+    # No drift: one stale hidden asteroid can still be corrected as before.
+    current = a.belief.tile_type.copy()
+    obs["map_features"]["tile_type"] = np.where(sensor, current, TILE_UNKNOWN)
+    a.belief.tile_type[target] = TILE_ASTEROID
+    a.belief.tile_type[20, 20] = TILE_UNKNOWN
+    a.belief.observe(obs)
+    assert a.belief.drift_events == 0
+    assert int(a.belief.tile_type[target]) == want
+    assert int(a.belief.tile_type[20, 20]) == TILE_UNKNOWN  # No global hidden-state inference.
+    np.testing.assert_array_equal(a.belief.tile_type[sensor], current[sensor])
+
+
+def test_drift_safe_resumes_inference_after_detected_drift():
+    a, obs, _, current, target = _drift_case(True)
+    a.belief.observe(obs)
+    assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+    # A later observation sees the same terrain from a reachable empty tile.
+    # Remove one remembered tile to make resumed inference observable.
+    a.belief.tile_type[7, 4] = TILE_UNKNOWN
+    assert current[7, 4] == TILE_NEBULA
+    obs = make_obs(12, 12, units=[(6, 4, 100)], sensor_all=False)
+    obs["sensor_mask"][5:8, 3:6] = True
+    obs["sensor_mask"][7, 4] = False
+    obs["map_features"]["tile_type"] = np.where(obs["sensor_mask"], current, TILE_UNKNOWN)
+    obs["map_features"]["energy"] = np.where(obs["sensor_mask"], 0, -1)
+    a.belief.observe(obs)
+    assert a.belief.drift_events == 1
+    assert int(a.belief.tile_type[target]) == TILE_ASTEROID
+    assert int(a.belief.tile_type[7, 4]) == TILE_NEBULA
