@@ -37,7 +37,8 @@ Einordnung über die ganze Nacht (gegen Solution_92, frische Karten): V3 76,5 % 
   (`experiments/analysis/release_v10_V8st_runner_installed.json`).
 - Testsuite direkt nach der Installation: 463 bestanden. 31 Tests in
   `tests/test_early_curriculum_study.py` wurden von der Schutzsperre „Another model job is active“
-  abgewiesen, weil gleichzeitig ein Training lief. Wiederholung ohne laufende Jobs: siehe Arbeitsstand.
+  abgewiesen, weil gleichzeitig ein Training lief. **Wiederholung ohne laufende Jobs (22.10., 10:39):
+  gesamte Testsuite 495 bestanden.**
 - `agent.zip`-Bau mit `scripts/build_submission` am 22.10. mit V7 geprüft („Check ok“). Der Code ist
   derselbe, nur die Gewichtsdatei ist neu.
 

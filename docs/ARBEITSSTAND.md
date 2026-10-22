@@ -5,6 +5,11 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 10:40 Berlin – Claude Code (autonom): Training ausgewertet, Testsuite mit V10 sauber
+
+- **Gesamte Testsuite ohne laufende Jobs: 495 bestanden** (V10 installiert, `03cf8bdc…8c67`). Damit ist der offene Prüfpunkt der V10-Übernahme erledigt.
+- 6 Netze unter V8-Bedingungen trainiert (`full_rules_v8`, `rules_in_training`, Starts 70–72/80–82, je 3000 Spiele). Entwicklung gemischt mit den 18 V3-Netzen: `v8mix24` 75,3/96,4 % (V8 73,0/97,6, gesamt gleich), **`v10mix24` 79,2/96,4 % (geschätzt 90,8 %, V10 90,3 %)**, also +0,45 pp und damit unter der üblichen Schwelle von +0,5. Kein neuer Prüflauf. V10 bleibt.
+
 ## 22.10.2026, 09:50 Berlin – Claude Code (autonom): V10-Feinschliff ohne Gewinn, Training läuft
 
 - Auf V10 ohne Gewinn: `art_still` (Artillerie nur auf stehende Ziele) 77,7/96,0 % (−0,3), `sap_reserve_k=0.5` 76,5/94,9 % (−1,5). V10 bleibt unverändert.
