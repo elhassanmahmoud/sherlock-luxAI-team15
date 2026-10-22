@@ -22,6 +22,7 @@ from scripts.compare_report import compare_results  # noqa: E402
 
 
 MIN_DELTA = float(os.environ.get("MIN_DELTA", "0.05"))
+MIN_SEL_DELTA = float(os.environ.get("MIN_SEL_DELTA", "0.03"))  # Auswahlblock (Default wie V5-V7)
 
 
 def direct_interval(path: str) -> tuple[float, float, float, int]:
@@ -38,9 +39,9 @@ def main() -> int:
     rows = {r["opponent"]: r for r in compare_results(pd.read_csv(sys.argv[3]), pd.read_csv(sys.argv[2]))}
     sol, dfl = rows["solution92"], rows["default"]
     if mode == "selection":
-        ok = sol["delta"] >= 0.03 and dfl["winrate"] >= 0.99
+        ok = sol["delta"] >= MIN_SEL_DELTA and dfl["winrate"] >= 0.99
         print(f"GATE Auswahl: Solution_92 {sol['winrate']:.4f} vs {sol['ref_winrate']:.4f} "
-              f"(Δ {sol['delta'] * 100:+.2f} pp, Ziel >= +3), default {dfl['winrate']:.4f} (Ziel >= 0,99) "
+              f"(Δ {sol['delta'] * 100:+.2f} pp, Ziel >= +{MIN_SEL_DELTA * 100:.0f}), default {dfl['winrate']:.4f} (Ziel >= 0,99) "
               f"-> {'BESTANDEN' if ok else 'NICHT BESTANDEN'}")
         return 0 if ok else 1
     mean, low, high, n = direct_interval(sys.argv[4])
