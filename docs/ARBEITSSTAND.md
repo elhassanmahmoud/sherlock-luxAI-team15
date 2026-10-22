@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 05:35 Berlin – Claude Code (autonom): **V7 als Abgabe übernommen**
+
+- **V7 (`v7_Bsnpd`) hat alle vorab festgelegten Gates bestanden** ([Plan](superpowers/plans/2026-10-22-v7.md), [Übernahmebericht](../experiments/analysis/release_20261022_v7/RELEASE.md)): frisch 505420–505819 Solution_92 **83,5 % statt 76,5 % (Δ +7,0 pp [+4,0; +10,0])**, default 99,75 % (Δ 0), **direkt gegen V3 68,0 % [61,5; 74,25]**.
+- Übernahme per `scripts/release_candidate.py`: V3 bytegleich gesichert (`experiments/releases/20261022_all18_v3/`, SHA-256 `aac1c910…d935`, Wiederherstellung im README dort), V7 in `agent_p0.pth`/`agent_p1.pth` (SHA-256 `c394acba…95e6`), **Kurs-Runner unverändert: 8 Spiele bestanden** (beide Seiten, default + Solution_92, `act` max. 10,5 ms).
+- Testsuite nach der Installation: 452 bestanden; 31 Studientests (`tests/test_early_curriculum_study.py`) von der Schutzsperre „Another model job is active“ abgewiesen, weil gleichzeitig eine Entwicklungsmessung lief (wie am 21.10.). Wiederholung ohne laufende Messung folgt.
+- `scripts/v5_gates.py`: Mindest-Δ über `MIN_DELTA` einstellbar (Default 0,05 unverändert, V6-Entscheidung damit reproduziert); Meldung „vs Referenz“ statt „vs V3“.
+- Weiter: `reach_assign` (Zielzuweisung nach BFS-Weglänge) auf V7 in der Entwicklung 63,6/94,9 % (geschätzt ≈ 84,6 %); `unstack` ohne Zusatznutzen (63,8/94,6); `sap_reserve_k=1` läuft. Nächster Kandidat V8 wird vorab gegen **V7 als neue Referenz** festgelegt.
+
 ## 22.10.2026, 05:05 Berlin – Claude Code (autonom): V7 in Bestätigung, weitere Ursachen gefunden
 
 - **Kartenkorrekturen gemessen** (`dev_hard330`/`dev_easy330`, Solution_92; V3 27,0/100 %): Bs 48,0/97,6; + `nebula_infer` 50,6/96,3; + `path_fix` 57,4/93,9; + `drift_track` **58,3/95,1** → geschätzt gesamt ≈ 82,9 % (Bs 81,2 %, V3 75,9 %).

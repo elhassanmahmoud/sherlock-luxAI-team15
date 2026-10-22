@@ -1,0 +1,20 @@
+[04:45] Start Bsnpd (experiments/ensembles/v7_Bsnpd.pth, SHA-256 c394acba84f7a298)
+V7_v3_5220.csv: default: 1.000 (400 Spiele), solution92: 0.780 (400 Spiele) in 205s
+V7_Bsnpd_5220.csv: default: 1.000 (400 Spiele), solution92: 0.823 (400 Spiele) in 500s
+V7_Bsnpd_5220                default       200    400  1.000  1.000  +0.000  [+0.000; +0.000]
+V7_Bsnpd_5220                solution92    200    400  0.823  0.780  +0.043  [+0.003; +0.083]
+GATE Auswahl: Solution_92 0.8225 vs 0.7800 (Δ +4.25 pp, Ziel >= +3), default 1.0000 (Ziel >= 0,99) -> BESTANDEN
+[04:57] Auswahlhuerde bestanden -> frische Bestaetigung
+V7_v3_5420.csv: default: 0.998 (800 Spiele), solution92: 0.765 (800 Spiele) in 686s
+V7_Bsnpd_5420.csv: default: 0.998 (800 Spiele), solution92: 0.835 (800 Spiele) in 850s
+V7_Bsnpd_direct_5820.csv: self:experiments/ensembles/all18_v3.pth: 0.680 (400 Spiele) in 167s
+V7_Bsnpd_5420                default       400    800  0.998  0.998  +0.000  [+0.000; +0.000]
+V7_Bsnpd_5420                solution92    400    800  0.835  0.765  +0.070  [+0.040; +0.100]
+GATE Bestaetigung: Solution_92 0.8350 vs Referenz 0.7650, Δ +7.00 pp [+4.00; +10.00]; default 0.9975 (Δ +0.00); direkt 0.6800 [0.6150; 0.7425] aus 400 Spielen
+  OK   Solution_92 Δ >= +5 pp
+  OK   Solution_92 untere 95%-Grenze > 0
+  OK   default >= 99 %
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 0,5
+GATE Bestaetigung: BESTANDEN
+[05:26] Ende Bsnpd

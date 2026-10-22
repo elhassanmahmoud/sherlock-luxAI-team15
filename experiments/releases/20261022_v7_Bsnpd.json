@@ -1,0 +1,16 @@
+{
+  "label": "v7_Bsnpd",
+  "status": "installed_and_verified",
+  "installed_at": "2026-10-22T03:27:03.223538+00:00",
+  "code_commit": "b76b1529ae4accba2e72c669998b07beda0e163a",
+  "candidate": "experiments/ensembles/v7_Bsnpd.pth",
+  "candidate_sha256": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+  "installed_sha256": {
+    "agents/sherlock/weights/agent_p0.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+    "agents/sherlock/weights/agent_p1.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6"
+  },
+  "rollback_manifest": "experiments/releases/20261022_all18_v3/manifest.json",
+  "rollback_readme": "experiments/releases/20261022_all18_v3/README.md",
+  "gate_log": "experiments/pipeline_v7.log",
+  "runner_report": "experiments/analysis/release_v7_Bsnpd_runner_installed.json"
+}

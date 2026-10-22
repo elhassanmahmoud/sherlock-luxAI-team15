@@ -2,12 +2,15 @@
 
     python scripts/v5_gates.py selection REF.csv KAND.csv
     python scripts/v5_gates.py confirm REF.csv KAND.csv DIREKT.csv
+Umgebungsvariable MIN_DELTA (22.10.2026, Default 0.05): Mindest-Δ der Bestaetigung gegen die Referenz
+(fuer einen vorab festgelegten Plan mit anderer Referenz als V3).
 
 Exit-Code 0 = bestanden, 1 = nicht bestanden. Gepaarter Karten-Bootstrap wie
 scripts.compare_report (5000 Ziehungen, Seed 0, 95-%-Perzentile).
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -16,6 +19,9 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from scripts.compare_report import compare_results  # noqa: E402
+
+
+MIN_DELTA = float(os.environ.get("MIN_DELTA", "0.05"))
 
 
 def direct_interval(path: str) -> tuple[float, float, float, int]:
@@ -39,13 +45,13 @@ def main() -> int:
         return 0 if ok else 1
     mean, low, high, n = direct_interval(sys.argv[4])
     checks = {
-        "Solution_92 Δ >= +5 pp": sol["delta"] >= 0.05,
+        f"Solution_92 Δ >= +{MIN_DELTA * 100:.0f} pp": sol["delta"] >= MIN_DELTA,
         "Solution_92 untere 95%-Grenze > 0": sol["low"] > 0,
         "default >= 99 %": dfl["winrate"] >= 0.99,
         "default Δ >= -1 pp": dfl["delta"] >= -0.01,
         "direkt untere 95%-Grenze > 0,5": low > 0.5,
     }
-    print(f"GATE Bestaetigung: Solution_92 {sol['winrate']:.4f} vs V3 {sol['ref_winrate']:.4f}, "
+    print(f"GATE Bestaetigung: Solution_92 {sol['winrate']:.4f} vs Referenz {sol['ref_winrate']:.4f}, "
           f"Δ {sol['delta'] * 100:+.2f} pp [{sol['low'] * 100:+.2f}; {sol['high'] * 100:+.2f}]; "
           f"default {dfl['winrate']:.4f} (Δ {dfl['delta'] * 100:+.2f}); direkt {mean:.4f} "
           f"[{low:.4f}; {high:.4f}] aus {n} Spielen")
