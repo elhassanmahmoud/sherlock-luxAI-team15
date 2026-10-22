@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sherlock Demo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect width='26' height='26' rx='6' fill='%23102D35'/%3E%3Ccircle cx='11' cy='11' r='6' fill='none' stroke='%23A8D5C8' stroke-width='2.4'/%3E%3Cpath d='M15.6 15.6 21 21' stroke='%232BB3A8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --dark: #102D35; --teal: #0F7C7A; --teal-hover: #0B6967; --teal-soft: #E8F3F1; --mint: #A8D5C8;
+    --cream: #F7F6F1; --ink: #142D35; --grey: #56676C; --muted: #7B8A8E; --line: #DDE3E1;
+    --blue: #228BE6; --red: #FA5252; --loss: #B5552E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; }
+  code { font-family: Menlo, monospace; font-size: 12.5px; }
+  [hidden] { display: none !important; }
+
+  header { height: 60px; background: var(--dark); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand b { letter-spacing: .08em; font-size: 17px; }
+  .brand .sep { width: 1px; height: 22px; background: rgba(255,255,255,.25); }
+  .brand .sub { color: var(--mint); font-size: 15px; }
+  .brand .team { color: rgba(255,255,255,.55); font-size: 13px; margin-left: 4px; }
+  .hdr { display: flex; align-items: center; gap: 14px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.08); font-size: 13px; }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: #3CC4A6; }
+  .pill.busy .dot { background: #F2A541; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .ghost { background: transparent; border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 8px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+  .ghost:hover { border-color: #fff; }
+  .ghost.armed { background: var(--loss); border-color: var(--loss); }
+
+  #setup { max-width: 1200px; margin: 32px auto; padding: 0 28px; display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr); gap: 24px; align-items: start; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; box-shadow: 0 1px 2px rgba(16,45,53,.04), 0 8px 24px rgba(16,45,53,.05); }
+  h2 { margin: 0; font-size: 24px; }
+  .lead { margin: 6px 0 0; color: var(--grey); font-size: 15px; line-height: 1.45; }
+  .step { display: flex; align-items: center; gap: 10px; margin: 28px 0 12px; font-weight: 700; font-size: 15px; }
+  .step .n { width: 26px; height: 26px; border-radius: 50%; background: var(--teal); color: #fff; display: grid; place-items: center; font-size: 13px; }
+  .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .sides { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .opt { position: relative; text-align: left; background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 16px; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
+  .opt:hover { border-color: #9CC9C3; }
+  .opt[aria-pressed="true"] { border-color: var(--teal); background: var(--teal-soft); box-shadow: 0 0 0 3px rgba(15,124,122,.12); }
+  .opt .name { font-weight: 700; font-size: 17px; }
+  .opt .tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: #EEF1F0; color: var(--grey); }
+  .opt .tag.strong { background: #FCE9DF; color: #9A4521; }
+  .opt .desc { margin-top: 6px; color: var(--grey); font-size: 13.5px; line-height: 1.4; }
+  .opt .check { position: absolute; top: 12px; right: 12px; width: 20px; height: 20px; border-radius: 50%; background: var(--teal); color: #fff; display: none; place-items: center; font-size: 12px; }
+  .opt[aria-pressed="true"] .check { display: grid; }
+  .side { display: flex; align-items: center; gap: 14px; }
+  .side .desc { margin-top: 2px; }
+  .swatch { width: 20px; height: 20px; border-radius: 50%; flex: none; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line); }
+  .start { margin-top: 28px; width: 100%; height: 58px; border: 0; border-radius: 12px; background: var(--teal); color: #fff; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background .15s; }
+  .start:hover { background: var(--teal-hover); }
+  .start:disabled { cursor: progress; background: #5E9B98; }
+  .hint { margin-top: 10px; color: var(--muted); font-size: 13px; text-align: center; }
+  .progress { height: 4px; border-radius: 4px; background: #E3EDEB; overflow: hidden; margin-top: 12px; }
+  .progress i { display: block; height: 100%; width: 35%; background: var(--teal); border-radius: 4px; animation: slide 1.2s ease-in-out infinite; }
+  @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+  .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error { margin-top: 16px; background: #FBEDE7; border: 1px solid #EBC3B2; color: #7A3418; border-radius: 10px; padding: 14px 16px; font-size: 14px; line-height: 1.45; }
+  .error pre { white-space: pre-wrap; margin: 8px 0; font-size: 12px; color: #8A4A30; max-height: 140px; overflow: auto; }
+
+  .stack { display: grid; gap: 24px; }
+  .score { background: var(--dark); color: #fff; border: 0; }
+  .label { color: var(--mint); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .score .big { font-size: 44px; font-weight: 700; margin: 6px 0 2px; }
+  .score .small { color: rgba(255,255,255,.7); font-size: 14px; }
+  .score hr { border: 0; border-top: 1px solid rgba(255,255,255,.12); margin: 18px 0; }
+  .facts { display: grid; gap: 10px; margin-top: 10px; }
+  .fact { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; color: rgba(255,255,255,.85); }
+  .fact b { color: #fff; font-size: 17px; }
+  .hist h3 { margin: 0 0 12px; font-size: 17px; }
+  .hist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .row { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; background: #fff; border: 1px solid transparent; border-radius: 10px; padding: 8px 10px; cursor: pointer; }
+  .row:hover { background: var(--teal-soft); border-color: #CFE4E1; }
+  .badge { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; flex: none; font-size: 14px; }
+  .badge.win { background: var(--teal); }
+  .badge.loss { background: var(--loss); }
+  .row .t { font-weight: 700; font-size: 14.5px; }
+  .row .m { color: var(--grey); font-size: 12.5px; margin-top: 2px; }
+  .row .chev { margin-left: auto; color: var(--muted); font-size: 20px; }
+  .empty { margin: 0; color: var(--grey); font-size: 14px; line-height: 1.45; }
+
+  #viewer { display: flex; flex-direction: column; height: calc(100vh - 60px); }
+  .bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 10px 28px; background: #fff; border-bottom: 1px solid var(--line); }
+  .verdict { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .verdict .v { font-size: 22px; font-weight: 700; }
+  .verdict .v.win { color: var(--teal); }
+  .verdict .v.loss { color: var(--loss); }
+  .chips { display: flex; gap: 6px; }
+  .chip { font-size: 12.5px; font-weight: 700; padding: 5px 9px; border-radius: 8px; }
+  .chip.win { background: var(--teal-soft); color: var(--teal); }
+  .chip.loss { background: #FBEDE7; color: var(--loss); }
+  .chip.na { background: #EEF1F0; color: var(--grey); }
+  .tip { font-size: 12.5px; color: var(--teal); background: var(--teal-soft); padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+  .meta { color: var(--grey); font-size: 13.5px; }
+  .actions { display: flex; align-items: center; gap: 10px; flex: none; }
+  .btn { height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
+  .btn:hover { border-color: #9CC9C3; }
+  .btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; min-width: 118px; justify-content: center; }
+  .btn.primary:hover { background: var(--teal-hover); }
+  .btn:disabled { opacity: .65; cursor: progress; }
+  .stage { position: relative; flex: 1; background: var(--cream); overflow: hidden; }
+  .stage iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; background: #fff; transform-origin: 0 0; }
+  .overlay { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(247,246,241,.93); text-align: center; color: var(--grey); font-size: 15px; }
+  .overlay .box { max-width: 440px; line-height: 1.5; }
+  .ring { width: 34px; height: 34px; margin: 0 auto 12px; border: 3px solid #D7E6E3; border-top-color: var(--teal); border-radius: 50%; animation: spin .8s linear infinite; }
+
+  #ended { position: fixed; inset: 0; z-index: 20; background: rgba(16,45,53,.88); display: grid; place-items: center; color: #fff; text-align: center; }
+  #ended .box { max-width: 440px; }
+  #ended h2 { font-size: 26px; margin-bottom: 10px; }
+  #ended p { color: var(--mint); line-height: 1.5; }
+
+  @media (max-width: 960px) {
+    #setup { grid-template-columns: 1fr; }
+    .opts { grid-template-columns: 1fr; }
+    .bar { flex-direction: column; align-items: flex-start; }
+    .brand .team { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="11" cy="11" r="7.5" fill="none" stroke="#A8D5C8" stroke-width="2.6"/><path d="M16.6 16.6 23 23" stroke="#2BB3A8" stroke-width="3.2" stroke-linecap="round"/></svg>
+    <b>SHERLOCK</b><span class="sep"></span><span class="sub">Live-Demo</span><span class="team">Team 15 · Lux AI Season 3</span>
+  </div>
+  <div class="hdr">
+    <span id="status" class="pill"><span class="dot"></span><span id="statusText">Bereit</span></span>
+    <button id="quit" class="ghost">Demo beenden</button>
+  </div>
+</header>
+
+<main id="setup">
+  <section class="card">
+    <h2>Neues Spiel</h2>
+    <p class="lead">Sherlock spielt über den unveränderten Kurs-Runner: drei Matches à 100 Schritte auf einer neuen, zufälligen Karte.</p>
+
+    <div class="step"><span class="n">1</span>Gegner</div>
+    <div class="opts" id="opponents">
+      <button class="opt" data-gegner="solution" aria-pressed="true"><span class="check">✓</span><div class="name">Solution_92</div><span class="tag strong">Hauptgegner</span><div class="desc">Starker regelbasierter Kaggle-Agent</div></button>
+      <button class="opt" data-gegner="default" aria-pressed="false"><span class="check">✓</span><div class="name">default</div><span class="tag">Kurs-Beispiel</span><div class="desc">Einfacher Beispielagent aus dem Kurs</div></button>
+      <button class="opt" data-gegner="dqn" aria-pressed="false"><span class="check">✓</span><div class="name">Prof-DQN</div><span class="tag">Baseline</span><div class="desc">DQN-Agent aus dem Kurs-Template</div></button>
+    </div>
+
+    <div class="step"><span class="n">2</span>Seite von Sherlock</div>
+    <div class="sides" id="sides">
+      <button class="opt side" data-seite="0" aria-pressed="true"><span class="check">✓</span><span class="swatch" style="background: var(--blue)"></span><span><div class="name">Spieler 1</div><div class="desc">blau · startet oben links</div></span></button>
+      <button class="opt side" data-seite="1" aria-pressed="false"><span class="check">✓</span><span class="swatch" style="background: var(--red)"></span><span><div class="name">Spieler 2</div><div class="desc">rot · startet unten rechts</div></span></button>
+    </div>
+
+    <button id="start" class="start">
+      <svg id="startIcon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 2.5v13l11-6.5z" fill="currentColor"/></svg>
+      <span id="startSpin" class="spinner" hidden></span>
+      <span id="startText">Spiel starten</span>
+    </button>
+    <div id="progress" class="progress" hidden><i></i></div>
+    <div class="hint">Dauert etwa 10 Sekunden · jede Karte ist neu und zufällig</div>
+    <div id="error" class="error" hidden>
+      <b>Das Spiel konnte nicht gestartet werden.</b>
+      <pre id="errorText"></pre>
+      Notfalls im Terminal: <code>.venv/bin/python -m scripts.play_and_view</code>
+    </div>
+  </section>
+
+  <aside class="stack">
+    <section class="card score">
+      <div class="label">Heute live</div>
+      <div class="big" id="today">–</div>
+      <div class="small" id="todaySub">Noch keine Spiele</div>
+      <hr>
+      <div class="label">Gemessen auf neuen Karten</div>
+      <div class="facts">
+        <div class="fact"><span>gegen Solution_92 · 800 Karten</span><b>90,3 %</b></div>
+        <div class="fact"><span>gegen default</span><b>99,75 %</b></div>
+      </div>
+    </section>
+    <section class="card hist">
+      <h3>Letzte Spiele</h3>
+      <ul id="history"></ul>
+      <p class="empty" id="historyEmpty">Noch keine Spiele. Wähle Gegner und Seite und starte das erste Spiel.</p>
+    </section>
+  </aside>
+</main>
+
+<section id="viewer" hidden>
+  <div class="bar">
+    <div class="verdict"><span class="v" id="verdict"></span><span class="chips" id="chips"></span><span class="meta" id="meta"></span></div>
+    <div class="actions">
+      <span class="tip">Im Viewer auf ▶ klicken</span>
+      <button class="btn primary" id="again">↻ Nochmal</button>
+      <button class="btn" id="back">Neues Spiel</button>
+      <a class="btn" id="newtab" target="_blank" rel="noopener">Groß öffnen ↗</a>
+    </div>
+  </div>
+  <div class="stage" id="stage">
+    <iframe id="frame" title="Lux-Viewer"></iframe>
+    <div class="overlay" id="loading"><div class="box"><div class="ring"></div><span id="loadingText">Viewer lädt …</span></div></div>
+    <div class="overlay" id="offline" hidden><div class="box"><b>Der Viewer lädt nicht.</b><br>Er kommt von s3vis.lux-ai.org und braucht Internet. Bitte die Verbindung prüfen und „Groß öffnen“ versuchen.</div></div>
+  </div>
+</section>
+
+<div id="ended" hidden><div class="box"><h2>Demo beendet</h2><p>Du kannst dieses Fenster schließen.<br>Neu starten: Doppelklick auf „Sherlock Demo“.</p></div></div>
+
+<script>
+const NAMES = { solution: 'Solution_92', default: 'default', dqn: 'Prof-DQN' };
+const SIDES = ['Spieler 1 (blau)', 'Spieler 2 (rot)'];
+// Der Lux-Viewer richtet die Kartengröße nach der Breite. Bis unter Steuerung und Seed-Zeile
+// braucht er etwa 0,55 × Breite an Höhe; unter 1100 px Breite stapelt er seine Spalten.
+const VIEWER_RATIO = 0.55;
+const VIEWER_MIN_WIDTH = 1100;
+const $ = (id) => document.getElementById(id);
+const state = { gegner: 'solution', seite: 0, running: false, last: null, timer: null, viewerTimer: null };
+
+function store(key, value) { try { localStorage.setItem('sherlockDemo.' + key, value); } catch (e) {} }
+function load(key) { try { return localStorage.getItem('sherlockDemo.' + key); } catch (e) { return null; } }
+function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function today() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function shortDate(iso) { const [y, m, d] = String(iso).split('-'); return d + '.' + m + '.'; }
+
+function choose(group, key, value) {
+  for (const b of $(group).querySelectorAll('[data-' + key + ']')) b.setAttribute('aria-pressed', String(b.dataset[key] === String(value)));
+}
+function setGegner(g) { state.gegner = g; choose('opponents', 'gegner', g); store('gegner', g); }
+function setSeite(s) { state.seite = s; choose('sides', 'seite', s); store('seite', String(s)); }
+
+async function api(path, body) {
+  const options = body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
+  let response;
+  try { response = await fetch(path, options); }
+  catch (e) { throw new Error('Keine Verbindung zur Demo. Bitte die App „Sherlock Demo“ neu starten.'); }
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || 'Fehler ' + response.status);
+  return data;
+}
+
+function setBusy(on) {
+  state.running = on;
+  $('status').classList.toggle('busy', on);
+  $('statusText').textContent = on ? 'Spiel läuft' : 'Bereit';
+  $('start').disabled = on;
+  $('again').disabled = on;
+  $('progress').hidden = !on;
+  $('startIcon').style.display = on ? 'none' : '';
+  $('startSpin').hidden = !on;
+  clearInterval(state.timer);
+  if (!on) {
+    $('startText').textContent = 'Spiel starten';
+    $('again').textContent = '↻ Nochmal';
+    return;
+  }
+  const t0 = Date.now();
+  const tick = () => {
+    const s = Math.round((Date.now() - t0) / 1000);
+    $('startText').textContent = 'Spiel läuft … ' + s + ' s';
+    $('again').textContent = 'Läuft … ' + s + ' s';
+    $('loadingText').textContent = 'Neues Spiel läuft … ' + s + ' s';
+  };
+  tick();
+  state.timer = setInterval(tick, 500);
+}
+
+async function play(gegner, seite) {
+  if (state.running) return;
+  $('error').hidden = true;
+  setBusy(true);
+  if (!$('viewer').hidden) { $('offline').hidden = true; $('loading').hidden = false; }
+  try {
+    const game = await api('/api/play', { gegner, seite });
+    setBusy(false);
+    show(game);
+    refreshHistory();
+  } catch (e) {
+    setBusy(false);
+    showSetup();
+    $('errorText').textContent = e.message;
+    $('error').hidden = false;
+  }
+}
+
+function show(game) {
+  state.last = game;
+  const won = game.ours > game.theirs;
+  $('verdict').textContent = 'Sherlock ' + (won ? 'gewinnt ' : 'verliert ') + game.ours + ':' + game.theirs;
+  $('verdict').className = 'v ' + (won ? 'win' : 'loss');
+  $('chips').innerHTML = (game.matches || []).map((m, i) => {
+    const cls = m === true ? 'win' : m === false ? 'loss' : 'na';
+    return '<span class="chip ' + cls + '">Match ' + (i + 1) + ' ' + (m === true ? '✓' : m === false ? '✗' : '–') + '</span>';
+  }).join('');
+  const when = game.zeit + ' Uhr' + (game.datum !== today() ? ', ' + shortDate(game.datum) : '');
+  $('meta').textContent = 'gegen ' + (NAMES[game.gegner] || game.gegner_name) + ' · Sherlock als ' + SIDES[game.seite] + ' · Seed ' + game.seed + ' · ' + when;
+  $('newtab').href = game.url;
+  $('setup').hidden = true;
+  $('viewer').hidden = false;
+  $('loadingText').textContent = 'Viewer lädt …';
+  fitViewer();
+  watchViewer(game.url);
+}
+
+// Viewer so einpassen, dass Karte und Steuerung ohne Scrollen sichtbar sind (auch am Beamer)
+function fitViewer() {
+  const stage = $('stage'), frame = $('frame');
+  const W = stage.clientWidth, H = stage.clientHeight;
+  if (!W || !H) return;
+  const shown = Math.min(W, H / VIEWER_RATIO);
+  const width = Math.max(shown, VIEWER_MIN_WIDTH);
+  const scale = shown / width;
+  frame.style.width = width + 'px';
+  frame.style.height = H / scale + 'px';
+  frame.style.transform = scale < 1 ? 'scale(' + scale + ')' : 'none';
+  frame.style.left = (W - shown) / 2 + 'px';
+}
+window.addEventListener('resize', fitViewer);
+
+function watchViewer(url) {
+  const frame = $('frame');
+  clearTimeout(state.viewerTimer);
+  $('offline').hidden = true;
+  $('loading').hidden = false;
+  frame.onload = () => {
+    let tries = 0;
+    const check = () => {
+      let ready = true;
+      try { const root = frame.contentDocument.getElementById('root'); ready = !!root && root.childElementCount > 0; } catch (e) { ready = true; }
+      if (ready) { $('loading').hidden = true; return; }
+      if (++tries > 30) { $('loading').hidden = true; $('offline').hidden = false; return; }
+      state.viewerTimer = setTimeout(check, 500);
+    };
+    check();
+  };
+  frame.src = url;
+}
+
+function showSetup() {
+  $('viewer').hidden = true;
+  $('setup').hidden = false;
+}
+
+async function refreshHistory() {
+  let data;
+  try { data = await api('/api/history'); } catch (e) { return; }
+  const h = data.heute || { spiele: 0, siege: 0 };
+  $('today').textContent = h.spiele ? h.siege + ' / ' + h.spiele : '–';
+  $('todaySub').textContent = h.spiele ? 'Spiele heute gewonnen' : 'Noch keine Spiele';
+  const list = $('history');
+  list.innerHTML = '';
+  $('historyEmpty').hidden = data.games.length > 0;
+  for (const g of data.games) {
+    const won = g.ours > g.theirs;
+    const when = g.zeit + ' Uhr' + (g.datum !== today() ? ', ' + shortDate(g.datum) : '');
+    const li = document.createElement('li');
+    li.innerHTML = '<button class="row"><span class="badge ' + (won ? 'win' : 'loss') + '">' + (won ? '✓' : '✗') + '</span>'
+      + '<span><div class="t">' + esc(g.ours + ':' + g.theirs + ' gegen ' + (NAMES[g.gegner] || g.gegner_name)) + '</div>'
+      + '<div class="m">' + esc((g.seite === 0 ? 'Sherlock blau' : 'Sherlock rot') + ' · ' + when) + '</div></span>'
+      + '<span class="chev">›</span></button>';
+    li.querySelector('button').addEventListener('click', () => show(g));
+    list.appendChild(li);
+  }
+}
+
+let armed = null;
+$('quit').addEventListener('click', async () => {
+  if (!armed) {
+    $('quit').classList.add('armed');
+    $('quit').textContent = 'Wirklich beenden?';
+    armed = setTimeout(() => { armed = null; $('quit').classList.remove('armed'); $('quit').textContent = 'Demo beenden'; }, 3000);
+    return;
+  }
+  clearTimeout(armed);
+  try { await api('/api/quit', {}); } catch (e) {}
+  $('ended').hidden = false;
+});
+
+for (const b of document.querySelectorAll('[data-gegner]')) b.addEventListener('click', () => setGegner(b.dataset.gegner));
+for (const b of document.querySelectorAll('[data-seite]')) b.addEventListener('click', () => setSeite(Number(b.dataset.seite)));
+$('start').addEventListener('click', () => play(state.gegner, state.seite));
+$('again').addEventListener('click', () => { if (state.last) play(state.last.gegner, state.last.seite); });
+$('back').addEventListener('click', showSetup);
+
+const savedGegner = load('gegner');
+if (savedGegner && NAMES[savedGegner]) setGegner(savedGegner);
+const savedSeite = load('seite');
+if (savedSeite === '0' || savedSeite === '1') setSeite(Number(savedSeite));
+refreshHistory();
+api('/api/ping').then((p) => { if (p.busy) $('statusText').textContent = 'Spiel läuft gerade'; }).catch(() => {});
+</script>
+</body>
+</html>

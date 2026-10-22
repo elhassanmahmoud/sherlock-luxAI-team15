@@ -187,7 +187,14 @@ Folie 14 erklärt, wie wir prüfen (Hürden, Statistik). Folie 15 zeigt die Spie
 
 ## Live-Demo, falls der Prof fragt
 
-**Am einfachsten:** Im Projektordner doppelt auf **„Sherlock Demo“** klicken, Gegner wählen. Nach etwa 10 Sekunden öffnet sich das Spiel im Browser, und ein Fenster zeigt das Ergebnis („Nochmal“ startet ein neues Spiel). Beim allerersten Start fragt macOS, ob die App auf „Dokumente“ zugreifen darf: „Erlauben“ klicken.
+**Am einfachsten:** Im Projektordner doppelt auf **„Sherlock Demo“** klicken. Im Browser öffnet sich die Demo-Seite:
+
+1. Gegner wählen (Solution_92, default oder Prof-DQN) und die Seite von Sherlock (Spieler 1 blau, startet oben links; Spieler 2 rot, startet unten rechts).
+2. „Spiel starten“. Nach etwa 10 Sekunden steht oben das Ergebnis mit allen drei Matches, darunter das Spiel im Lux-Viewer. Dort auf ▶ klicken, „1x“ ändert das Tempo.
+3. „Nochmal“ spielt eine neue Karte mit denselben Einstellungen, „Neues Spiel“ führt zurück zur Auswahl. Unter „Letzte Spiele“ lassen sich frühere Spiele wieder öffnen, auch ohne neu zu spielen.
+4. Am Ende oben rechts „Demo beenden“ (zweimal klicken).
+
+Beim allerersten Start fragt macOS, ob die App auf „Dokumente“ zugreifen darf: „Erlauben“ klicken. Der Viewer braucht Internet.
 
 Oder im Terminal im Projektordner:
 

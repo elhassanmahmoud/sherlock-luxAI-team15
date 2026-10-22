@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 22.10.2026, 16:20 Berlin – Claude Code mit Mahmoud: Demo-Seite statt Dialogfenster
+
+- Auf Mahmouds Wunsch die App „Sherlock Demo“ übersichtlicher gestaltet. Ein Doppelklick startet `scripts/demo_server.py` (nur 127.0.0.1:8615) und öffnet die Demo-Seite `scripts/demo_page.html` im Design der Folien. Dort Gegner (Solution_92, default, Prof-DQN) und Seite (Spieler 1 blau, startet oben links; Spieler 2 rot, unten rechts) wählen. Jedes Spiel läuft als eigener Prozess über `scripts.play_and_view` (unveränderter Kurs-Runner, `train=False`).
+- Ergebnisleiste mit Sieger je Match, eingebetteter Lux-Viewer (an die Fenstergröße angepasst, Karte und Steuerung ohne Scrollen sichtbar), „Nochmal“, Verlauf aus `replays/demo_verlauf.jsonl` (gitignored), „Demo beenden“; sonst endet der Server nach zwei Stunden ohne Anfrage. Startet die Seite nicht, bietet die App das bisherige Spiel mit Dialogfenstern an. Eigenes App-Symbol; Bau mit `sh scripts/build_demo_app.sh`.
+- `scripts.play_and_view`: neu `--json` und Sieger je Match; die bisherige Ausgabe bleibt gleich.
+- Prüfungen: `tests/test_demo_server.py` (4) und `tests/test_play_and_view.py` (3) bestanden; **gesamte Testsuite 534 bestanden** (+14 Untertests). Echtes Spiel über die Schnittstelle (7 s). In Chrome durchgeklickt: Auswahl, Spiel starten, Ergebnis mit Viewer, Abspielen, „Nochmal“, Verlauf, „Demo beenden“; keine Konsolenfehler. Startlogik der App per `osascript` auf Ersatzport geprüft (Start in 1 s, zweiter Start nutzt laufenden Server). Dabei behoben: Der erste Startbefehl hielt `do shell script` bis zum Serverende fest. Gewichte unverändert `03cf8bdc…8c67`.
+- Hinweis: Der erste Start der neu gebauten App fragt wieder nach Zugriff auf „Dokumente“.
+
 ## 22.10.2026, 15:50 Berlin – Claude Code mit Mahmoud: Demo per Doppelklick
 
 - Neu `scripts/sherlock_demo.applescript`, gebaut als `Sherlock Demo.app` im Projektordner (seit 22.10., 15:55 mit im Repo; nach Änderungen am Quelltext neu bauen mit `osacompile -o "Sherlock Demo.app" scripts/sherlock_demo.applescript`). Doppelklick → Gegner wählen (default, Prof-DQN, Solution_92) → `scripts.play_and_view` läuft → Replay öffnet sich im Browser, Ergebnisfenster mit „Nochmal“.
