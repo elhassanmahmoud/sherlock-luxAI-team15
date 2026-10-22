@@ -100,6 +100,7 @@ class Agent_x:
                              keep_dead_fast=self.cfg.keep_dead_fast,
                              opp_infer=self.cfg.opp_infer,
                              stale_all=self.cfg.stale_all)
+        self.belief.nebula_infer = bool(self.cfg.nebula_infer)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,
@@ -178,6 +179,7 @@ class Agent_x:
             if (W, H) != (b.W, b.H):
                 b.W, b.H = W, H
                 b.reset_game()
+            b.sensor_range = int(env_cfg["unit_sensor_range"]) if "unit_sensor_range" in env_cfg else None
 
     def set_to_eval_mode(self) -> None:
         self.training = False
@@ -300,6 +302,8 @@ class Agent_x:
                 if self.cfg.scripted_explore and a != geo.SAP:
                     a = self._explore_action(ctx, uid, masks[k], a)
                 a = self._rule_override(ctx, uid, masks[k], a)
+                if self.cfg.path_fix and not self.training and 1 <= a <= 4:
+                    a = self._path_fix(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
@@ -685,6 +689,32 @@ class Agent_x:
             if step is not None:
                 return step
         return a
+
+    def _path_fix(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """cfg.path_fix (22.10.2026): Greedy-Falle an Asteroidenwaenden beheben. Netz und
+        scripted_explore ziehen nach Luftlinie (dx/dy-Merkmale); fuehrt der Zug nach Luftlinie
+        naeher ans zugewiesene Ziel, auf dem BFS-Weg aber nicht (Sackgasse), stattdessen den
+        ersten Schritt des kuerzesten Wegs nehmen. Seitliche/abgewandte Zuege bleiben (Absicht)."""
+        tgt = ctx["assigned"].get(int(uid))
+        if tgt is None:
+            return a
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+        dist = self._paths.get(ctx["step"], ctx["passable"], tgt)
+        here = int(dist[x, y])
+        if here <= 0:
+            return a  # Ziel erreicht oder (nach Gedaechtnis) unerreichbar
+        nd = int(dist[tx, ty])
+        if 0 <= nd < here:
+            return a
+        gx, gy = int(tgt[0]), int(tgt[1])
+        if abs(gx - tx) + abs(gy - ty) >= abs(gx - x) + abs(gy - y):
+            return a
+        step = rules.first_step(dist, (x, y), mask, ctx["energy_map"])
+        if step is None:
+            return a
+        self.ep_stats["path_fixes"] = self.ep_stats.get("path_fixes", 0) + 1
+        return int(step)
 
     @staticmethod
     def _step_toward(ctx: dict, uid: int, mask: np.ndarray, tgt) -> Optional[int]:

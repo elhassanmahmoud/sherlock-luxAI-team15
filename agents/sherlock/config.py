@@ -139,6 +139,14 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    path_fix: bool = False
+    """True (22.10.2026): Zug, der nach Luftlinie naeher ans Ziel fuehrt, auf dem BFS-Weg aber
+    nicht (Sackgasse an Asteroidenwand), durch den ersten Schritt des kuerzesten Wegs ersetzen.
+    Diagnose 360581: Units pendeln zwischen Wand und Sackgasse und verlieren alle Energie."""
+    nebula_infer: bool = False
+    """True (22.10.2026): Tiles in Sensorreichweite eigener Units, die unsichtbar sind, sind Nebel.
+    Behebt veraltete Asteroiden im Gedaechtnis (Drift), die bei kleiner Sicht Wege sperren
+    (z. B. Units eingesperrt am Spawn, 360014)."""
     dodge_bait: bool = False
     """True (22.10.2026): beim Ausweichen in Manhattan-Reichweite der Schuetzen bleiben (Koeder:
     Solution_92 zielt auf unsere hoechste ID in Reichweite) und nicht neben eigene Units ziehen."""

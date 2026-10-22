@@ -111,6 +111,10 @@ class Belief:
         self.keep_dead_fast = bool(keep_dead_fast)
         self.opp_infer = bool(opp_infer)
         self.stale_all = bool(stale_all)
+        # 22.10.2026 (Schalter nebula_infer): Tiles in unserer Sensorreichweite, die trotzdem
+        # unsichtbar sind, muessen Nebel sein; sensor_range setzt der Agent aus env_cfg
+        self.nebula_infer = False
+        self.sensor_range: int | None = None
         self.set_team(team_id)
         self.reset_game()
 
@@ -215,6 +219,8 @@ class Belief:
             ally_pos = geo.mirror_positions(ally_pos, self.W, self.H)
 
         self._update_map(sensor, tile_type, energy)
+        if self.nebula_infer and self.sensor_range is not None:
+            self._infer_nebula(sensor, ally_pos, ally_mask & (ally_energy >= 0))
         self._update_relics(relic_pos, relic_mask)
         if self.keep_dead and self._dead_hist:
             self._restore_dead()
@@ -278,6 +284,20 @@ class Belief:
         # Asteroiden/Nebel driften (Slides 30/31) -> sichtbare Tiles ueberschreiben
         np.copyto(self.tile_type, tile_type.astype(np.int8), where=sensor)
         np.copyto(self.energy_map, energy, where=sensor)
+
+    def _infer_nebula(self, sensor, ally_pos, alive) -> None:
+        """Engine: jede Unit gibt Sichtkraft >= 1 auf alle Tiles in Chebyshev-Abstand <= sensor_range,
+        nur Nebel zieht Sichtkraft ab. Unsichtbar trotz Reichweite => Nebel (auch wo das Gedaechtnis
+        noch einen laengst weggedrifteten Asteroiden fuehrt)."""
+        r = int(self.sensor_range)
+        in_range = np.zeros((self.W, self.H), dtype=bool)
+        for i in np.nonzero(alive)[0]:
+            x, y = int(ally_pos[i][0]), int(ally_pos[i][1])
+            if 0 <= x < self.W and 0 <= y < self.H:
+                in_range[max(0, x - r):x + r + 1, max(0, y - r):y + r + 1] = True
+        hidden = in_range & ~sensor
+        if hidden.any():
+            self.tile_type[hidden] = TILE_NEBULA
 
     def _update_relics(self, relic_pos, relic_mask) -> None:
         for i in np.nonzero(relic_mask)[0]:

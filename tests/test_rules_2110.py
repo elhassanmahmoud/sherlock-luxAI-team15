@@ -1,4 +1,6 @@
 """Regel vom 21.10.2026: art_sap (Sap aus sicherer Position in einen Gegnerhaufen)."""
+import numpy as np
+
 from agents.sherlock import geometry as geo
 from tests.conftest import make_obs
 from tests.test_rules_1910 import _stay_agent
@@ -434,3 +436,35 @@ def test_dodge_bait_stays_in_shooter_range():
         act = a.act(10, make_obs(10, 10, units=[(6, 8, 200), (5, 5, 200)], enemies=[(7, 7, 80)],
                                  relics=[(9, 9)]))
         assert int(act[1, 0]) == want, bait
+
+
+def test_nebula_infer_clears_stale_asteroid():
+    from agents.sherlock.belief import TILE_ASTEROID, TILE_NEBULA
+    for flag, want in ((False, TILE_ASTEROID), (True, TILE_NEBULA)):
+        a = _stay_agent(nebula_infer=flag)
+        a.set_env_cfg({"map_width": 24, "map_height": 24, "unit_sensor_range": 1})
+        a.belief.tile_type[2, 0] = TILE_ASTEROID  # veraltete Erinnerung (Asteroid weggedriftet)
+        obs = make_obs(10, 10, units=[(1, 0, 100)], enemies=[], relics=[(9, 9)])
+        obs["sensor_mask"][2, 0] = False           # Nebel in Reichweite -> unsichtbar
+        a.act(10, obs)
+        assert a.belief.tile_type[2, 0] == want, flag
+        assert a.belief.passable[2, 0] == flag
+
+
+def test_path_fix_leaves_dead_end():
+    # Wand bei y=4 ausser Luecke x=5; Ziel (2, 9) unterhalb. Greedy "down" von (2,3) fuehrt in die
+    # Sackgasse (2,4) [darunter Asteroid], path_fix nimmt den Weg nach rechts zur Luecke.
+    from agents.sherlock.belief import TILE_ASTEROID
+    a = _stay_agent(path_fix=True)
+    for xx in range(0, 5):
+        if xx != 2:
+            a.belief.tile_type[xx, 4] = TILE_ASTEROID
+    for xx in range(0, 5):
+        a.belief.tile_type[xx, 5] = TILE_ASTEROID
+    ctx = {"assigned": {0: (2, 9)}, "ally_pos": np.array([[2, 3]] + [[-1, -1]] * 15), "step": 7,
+           "passable": a.belief.passable, "energy_map": np.zeros((24, 24))}
+    mask = np.array([True, True, True, True, True, False])
+    assert a._path_fix(ctx, 0, mask, geo.DOWN) == geo.RIGHT
+    assert a._path_fix(ctx, 0, mask, geo.LEFT) == geo.LEFT      # seitlich/abgewandt: bleibt
+    ctx["ally_pos"] = np.array([[5, 3]] + [[-1, -1]] * 15)
+    assert a._path_fix(ctx, 0, mask, geo.DOWN) == geo.DOWN      # Luecke: Weg wird kuerzer
