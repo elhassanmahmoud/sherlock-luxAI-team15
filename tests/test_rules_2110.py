@@ -578,3 +578,13 @@ def test_collision_guard_blocks_contested_destination():
         mask = a._action_mask(ctx, 0, None)
         assert bool(mask[geo.RIGHT]) == want, flag      # (6,5) liegt neben dem starken Gegner
         assert bool(mask[geo.LEFT])                      # (4,5) frei
+
+
+def test_sap_still_skips_moving_target():
+    # Halter (5,5); Gegner zieht von (8,8) nach (8,7): ohne sap_still sappt pt_sap, mit nicht
+    for flag, want in ((False, geo.SAP), (True, geo.STAY)):
+        a = _stay_agent(pt_sap=True, sap_still=flag)
+        a.belief.point_tiles[5, 5] = True
+        a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
+        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
+        assert int(act[0, 0]) == want, flag

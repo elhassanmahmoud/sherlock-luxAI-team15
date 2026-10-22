@@ -142,6 +142,9 @@ class AgentConfig:
     collision_guard: bool = False
     """True (22.10.2026): Zuege sperren, wenn ein beweglicher, mindestens gleich starker sichtbarer
     Gegner im selben Step auf dasselbe Tile ziehen kann (Kollisionstod)."""
+    sap_still: bool = False
+    """True (22.10.2026): pt_sap nur auf stehende Gegner (unbewegt im letzten Step oder auf bekanntem
+    Punkte-Tile); ziehende Ziele weichen dem direkten Treffer aus."""
     sap_relevant: bool = False
     """True (22.10.2026): pt_sap nur auf Gegner auf/neben bekannten Punkte-Tiles, nicht auf
     durchziehende Erkunder (Energie der Halter schonen)."""

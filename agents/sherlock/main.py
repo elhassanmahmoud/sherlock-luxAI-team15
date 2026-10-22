@@ -341,7 +341,8 @@ class Agent_x:
                 if self.cfg.pt_sap_zone:  # auch gestapelt oder auf Kandidaten-Tiles
                     on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
                 if (on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve
-                        and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))):
+                        and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))
+                        and (not self.cfg.sap_still or self.training or self._sap_still(ctx, uid, sap, stationary))):
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
@@ -710,6 +711,18 @@ class Agent_x:
         tx, ty = x + int(sap[0]), y + int(sap[1])
         cheb = np.maximum(np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty)) if len(ec) else np.zeros(0)
         return cheb == 0, cheb == 1
+
+    def _sap_still(self, ctx: dict, uid: int, sap, stationary: np.ndarray) -> bool:
+        """cfg.sap_still (22.10.2026): Halter-Saps (pt_sap) nur, wenn ein direkt getroffener Gegner
+        steht (letzter Step unbewegt oder auf bekanntem Punkte-Tile). Ziehende Erkunder weichen dem
+        direkten Treffer aus; Diagnose: unser direkter Treffer je Sap ~30 % der Kosten, Solution_92 ~43 %."""
+        direct, _ = self._sap_cover(ctx, uid, sap)
+        if not direct.any():
+            return False
+        ec = ctx["enemy_coords"]
+        on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
+        return bool((direct & still).any())
 
     def _sap_relevant(self, ctx: dict, uid: int, sap) -> bool:
         """cfg.sap_relevant (22.10.2026): Halter-Saps (pt_sap) nur auf Gegner auf oder direkt neben
