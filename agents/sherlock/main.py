@@ -230,7 +230,7 @@ class Agent_x:
 
     def act(self, step: int, obs) -> np.ndarray:
         use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est)
-                   and not self.training)
+                   and (not self.training or self.cfg.rules_in_training_all))
         if use_est:
             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
         actions = self._act(step, obs)
@@ -359,7 +359,8 @@ class Agent_x:
                     on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
                 if (on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve
                         and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))
-                        and (not self.cfg.sap_still or self.training or self._sap_still(ctx, uid, sap, stationary))):
+                        and (not self.cfg.sap_still or (self.training and not self.cfg.rules_in_training_all)
+                             or self._sap_still(ctx, uid, sap, stationary))):
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
@@ -594,7 +595,7 @@ class Agent_x:
 
     def _harmful_nebula(self) -> float:
         """cfg.nebula_avoid: geschaetzter Nebelabzug, falls >= nebula_avoid_min, sonst 0."""
-        if not self.cfg.nebula_avoid or self.training:
+        if not self.cfg.nebula_avoid or (self.training and not self.cfg.rules_in_training_all):
             return 0.0
         neb = self.param_est.nebula(default=None)
         return float(neb) if neb is not None and neb >= self.cfg.nebula_avoid_min else 0.0

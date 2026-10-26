@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 26.10.2026, 12:45 Berlin – Claude Code mit Mahmoud: Gegner-Liga-Training gestartet (läuft)
+
+- Auftrag Mahmoud („ja los beginn“): weiter trainieren, damit Sherlock gegen die Agents der anderen Teams robuster wird. [Fester Plan mit Hürden](superpowers/plans/2026-10-26-league.md), Ablauf `bash scripts/pipeline_league.sh`, Log `experiments/pipeline_league.log`.
+- Neu und getestet:
+  - Gegnerplan `league` (`scripts/protocol.py`, `--opponent-plan league`).
+  - Frühe Prüfung fehlender Pool-Dateien. Vorher spielte ein fehlender Checkpoint still untrainiert. Bei gleichen Dateinamen heißen Pool-Gegner nach ihrem Ordner, Pfad und SHA-256 stehen im Manifest.
+  - Variante `full_rules_v10` und Schalter `rules_in_training_all`: `sap_still` und Nebel-Meidung jetzt auch im Training.
+  - Prüfskript `scripts/league_gates.py`.
+  - Tests `tests/test_league.py` (9) und `tests/test_league_gates.py` (6). Die zwei Trainings-Regeltests sind ohne die Änderung rot und mit ihr grün.
+- Prüfungen: gesamte Testsuite **552 bestanden** (+14 Untertests). V10-Spielverhalten unverändert: Die 10 Diagnosespiele 690000–690004 lieferten mit dem neuen Code bitgleich dieselbe Auswertung (36.258 Entscheidungen samt Beispiel-Q-Werten). Probelauf mit je einem Trainingsspiel gegen `sol92_sq`, RushBot, V10-Pool und Solution_92 (Karten 495000–495003, nur Scratchpad). Panel-Messung, Direktduell und Prüfskript auf 2 Karten durchlaufen (nur Scratchpad).
+- Läuft: Training (6 Prozesse) und parallel mit niedriger Priorität die V10-Referenz auf den Blöcken 700000–700199 und 701000–701799. Code bleibt bis Studienende eingefroren. Abgabe unverändert V10 `03cf8bdc…8c67`.
+
 ## 26.10.2026 Berlin – Claude Code mit Mahmoud: Review-Feedback, Erklärung des Entscheidungsablaufs
 
 - **Feedback des Profs aus der Review (laut Mahmoud):** beim nächsten Mal genau erklären, (1) was Action Masking ist, (2) wie der Entscheidungsprozess abläuft (wer was bekommt und was liefert) und (3) wie die 18 Netze auf die Spiele verteilt werden. Außerdem weiter trainieren; bald folgen Kämpfe gegen die Agents der anderen Teams, dafür muss Sherlock stärker werden.

@@ -96,6 +96,13 @@ VARIANTS["full_rules_v8"] = (
      "rules_in_training": True},
 )
 
+# 26.10.2026: Training unter allen V10-Regeln (V8 + sap_still, dazu Nebel-Meidung im Training);
+# Config entspricht der Abgabe V10, fuer die Gegner-Liga (docs/superpowers/plans/2026-10-26-league.md)
+VARIANTS["full_rules_v10"] = (
+    VARIANTS["full_rules_v8"][0],
+    {**VARIANTS["full_rules_v8"][1], "sap_still": True, "rules_in_training_all": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 

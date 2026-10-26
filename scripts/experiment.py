@@ -377,7 +377,7 @@ def main(argv=None) -> None:
     ap.add_argument("--pool-frac", type=float, default=0.0, help="Anteil Pool-Gegner nach der Aufwaermphase")
     ap.add_argument("--sol92-frac", type=float, default=None,
                     help="Anteil Solution_92 nach der Aufwaermphase (Default: Protokoll, 50 %%)")
-    ap.add_argument("--opponent-plan", choices=("standard", "early_sol100"), default="standard")
+    ap.add_argument("--opponent-plan", choices=("standard", "early_sol100", "league"), default="standard")
     ap.add_argument("--seed-file", default=None,
                     help="JSON-Liste von Env-Seeds fuer die Solution_92-Spiele (21.10.2026: "
                          "schwere Karten, auf denen V3 verliert); default-Spiele bleiben unveraendert")
@@ -392,6 +392,12 @@ def main(argv=None) -> None:
         schedule = P.opponent_schedule(games, args.sol92_frac, args.pool_frac, args.opponent_plan)
     except ValueError as exc:
         ap.error(str(exc))
+    # 26.10.2026: Pool frueh pruefen; ein fehlender Checkpoint spielte sonst still untrainiert
+    if (args.pool_frac or "pool" in schedule) and not args.pool:
+        ap.error("Pool-Gegner brauchen --pool")
+    missing = [p for p in args.pool if not Path(p).is_file()]
+    if missing:
+        ap.error(f"--pool-Datei nicht gefunden: {missing}")
     if args.isolate_validation and VARIANTS[args.variant][0] != "sherlock":
         ap.error("--isolate-validation requires a Sherlock learner")
     validation_seeds = list(range(args.val_seed_start, args.val_seed_start + args.val_seeds))
@@ -430,10 +436,14 @@ def main(argv=None) -> None:
         run_seed=args.run_seed, train_games=games,
         train_seeds=[P.train_seed(args.run_seed, 0), P.train_seed(args.run_seed, max(0, games - 1))] if games else [],
         curriculum=("early_sol100" if args.opponent_plan == "early_sol100" else
+                    f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann Liga "
+                    + ", ".join(f"{name} {frac:.0%}" for name, frac in P.LEAGUE_MIX)
+                    if args.opponent_plan == "league" else
                     f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann abwechselnd default/solution92"
                     if args.sol92_frac is None else
                     f"erste {P.CURRICULUM_WARMUP_FRAC:.0%} default, dann {args.sol92_frac:.0%} solution92"),
         opponent_plan=args.opponent_plan, opponent_schedule=schedule,
+        pool=[dict(path=p, sha256=hashlib.sha256(Path(p).read_bytes()).hexdigest()) for p in args.pool],
         seed_file=args.seed_file, seed_file_count=len(hard_seeds),
         seed_file_sha256=(hashlib.sha256(Path(args.seed_file).read_bytes()).hexdigest()
                           if args.seed_file else None),
@@ -495,8 +505,10 @@ def main(argv=None) -> None:
 
             validate(0)
             pool_cache: dict = {}
-            if args.pool_frac and not args.pool:
-                raise SystemExit("--pool-frac braucht --pool")
+            # 26.10.2026: gleiche Dateinamen (agent_p0.pth der Sicherungen) nach Ordner benennen
+            pool_labels = {p: f"pool:{Path(p).stem}" for p in args.pool}
+            if len(set(pool_labels.values())) < len(pool_labels):
+                pool_labels = {p: f"pool:{Path(p).parent.name}" for p in args.pool}
             for g in range(games):
                 side = P.train_side(g)
                 opp_name = schedule[g]
@@ -512,7 +524,7 @@ def main(argv=None) -> None:
                     if path not in pool_cache:
                         pool_cache[path] = make_opponent("self", opp_side, self_play_path=path)
                     opp = pool_cache[path]
-                    opp_name = f"pool:{Path(path).stem}"
+                    opp_name = pool_labels[path]
                 else:
                     opp = make_opponent(opp_name, opp_side)
                 row = play_game(env, agent, opp, seed, side, train=True)

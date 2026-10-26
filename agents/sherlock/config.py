@@ -142,6 +142,9 @@ class AgentConfig:
     rules_in_training: bool = False
     """True (22.10.2026): path_fix, reach_assign, sap_no_overkill und collision_guard auch im Training
     aktiv (sonst nur in der Auswertung), damit neue Netze unter V8-Bedingungen lernen."""
+    rules_in_training_all: bool = False
+    """True (26.10.2026): zusaetzlich sap_still und die Nebel-Meidung (mit Parameterschaetzung) im
+    Training aktiv. Mit rules_in_training lernen neue Netze dann unter allen V10-Regeln."""
     neb_cand: bool = False
     """True (22.10.2026): Kandidaten-Tiles im schaedlichen Nebel (>= nebula_avoid_min) betreten und
     dort bleiben duerfen; wartende Units mit solchem Ziel in <= 3 Schritten gehen hin."""

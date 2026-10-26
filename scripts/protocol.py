@@ -59,11 +59,34 @@ def train_opponent(game: int, total_games: int, sol92_frac: float | None = None,
     return "pool" if u < sol92_frac + pool_frac else "default"
 
 
+# 26.10.2026: Gegner-Liga nach der Aufwaermphase (Robustheit gegen andere Spielweisen, Plan
+# docs/superpowers/plans/2026-10-26-league.md). Anteile je Spielpaar; "pool" = eigene alte Abgaben.
+LEAGUE_MIX = (("solution92", 0.40), ("sol92_sq", 0.20), ("pool", 0.20), ("rush", 0.05),
+              ("default", 0.15))
+
+
+def league_opponent(game: int, total_games: int) -> str:
+    """Wie train_opponent, aber nach der Aufwaermphase nach LEAGUE_MIX verteilt."""
+    if game < int(CURRICULUM_WARMUP_FRAC * total_games):
+        return "default"
+    u = ((game // 2) * 0.6180339887) % 1.0
+    acc = 0.0
+    for name, frac in LEAGUE_MIX:
+        acc += frac
+        if u < acc:
+            return name
+    return LEAGUE_MIX[-1][0]
+
+
 def opponent_schedule(total_games: int, sol92_frac: float | None,
                       pool_frac: float, mode: str) -> list[str]:
     """Materialize the original schedule or the fixed order-only study treatment."""
-    if mode not in ("standard", "early_sol100"):
+    if mode not in ("standard", "early_sol100", "league"):
         raise ValueError(f"Unknown opponent plan: {mode}")
+    if mode == "league":
+        if sol92_frac is not None or pool_frac:
+            raise ValueError("league sets its own opponent shares (no sol92_frac/pool_frac)")
+        return [league_opponent(g, total_games) for g in range(total_games)]
     if mode == "early_sol100" and (total_games, sol92_frac, pool_frac) != (3000, .7, 0.):
         raise ValueError("early_sol100 requires 3000 games, sol92_frac=0.7, pool_frac=0")
     labels = [train_opponent(g, total_games, sol92_frac, pool_frac)
