@@ -271,6 +271,19 @@ Ja, über zwei Wege: Die Zielzuweisung gibt jeder Unit ein eigenes Ziel, und bei
 
 ---
 
+## Folien und Sprechtext (etwa 3:30 Minuten)
+
+Folien: `Sherlock_Entscheidungsablauf_Folien.pdf` im Projektordner (6 Folien und 1 Reserve), Quelle `docs/presentation/Sherlock_Entscheidungsablauf.html`. Für die nächste Präsentation lassen sie sich in den Hauptfoliensatz übernehmen. Vorschlag: Sie ersetzen dort die Pseudocode-Folie „Sherlock heute“.
+
+1. **Was Sherlock bekommt und zurückgibt (30 s):** „In jedem Schritt bekommt Sherlock nur, was gerade sichtbar ist: Einheiten, Felder, Relics und den Punktestand. Welche Felder Punkte bringen, sieht niemand, das muss der Agent selbst herausfinden. Zurück gibt er für jede seiner 16 Einheiten eine Aktion. Das dauert höchstens 11 Millisekunden.“
+2. **Ein Spielschritt (45 s):** „Ein Schritt läuft in sechs Stufen. Das Gedächtnis merkt sich Karte und Punktefelder. Jede Einheit bekommt ein eigenes Ziel. Daraus bauen wir 79 Zahlen je Einheit. Gelernt ist nur Stufe 4: 18 Netze bewerten die sechs Aktionen. Die Maske streicht Verbotenes, Regeln korrigieren wenige Fehler. Beim Sap entscheidet das Netz, ob geschossen wird. Wohin, berechnet eine Formel.“
+3. **Action Masking (40 s):** „Action Masking heißt: Bevor das Netz wählt, streichen wir alle Aktionen, die gerade nicht gehen oder gefährlich sind. Hier wollten die Netze am liebsten nach unten, dort liegt aber ein Asteroid. Also wird die beste erlaubte Aktion gespielt: rechts. Das passiert in jeder fünften Entscheidung. Im Training gilt dieselbe Maske.“
+4. **18 Netze (40 s):** „Die 18 Netze werden nicht auf Spiele verteilt. Alle 18 bewerten jede Einheit in jedem Schritt, und wir mitteln ihre Q-Werte. Oft sind sie uneinig: Hier wollten 8 Netze nach unten und 6 nach rechts. Der Mittelwert wählt trotzdem rechts, weil er zählt, wie sicher jedes Netz ist. Mehr als 18 Netze haben nicht geholfen.“
+5. **Training (30 s):** „Alle 18 Netze haben dieselbe Bauart und dasselbe Verfahren, Double DQN. Sie unterscheiden sich durch Zufallsstart, Karten und Gegner, zusammen 66.000 Trainingsspiele. Belohnt wird jede Einheit in jedem Schritt, nicht nur am Ende.“
+6. **Netz und Regeln (30 s):** „92 Prozent der Entscheidungen spielt Sherlock genau so, wie die Netze sie getroffen haben. Die Regeln greifen selten ein, aber an wichtigen Stellen. Eine einfache Regel statt der Netze gewann nur 3 Prozent gegen Solution_92.“
+
+Die Reservefolie zum Gedächtnis zeigen wir nur, wenn jemand fragt, wie Sherlock Punktefelder findet.
+
 ## 11. Belege und Nachprüfung
 
 ```

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Sherlock – Entscheidungsablauf</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .slide {
+    position: relative; width: 13.333in; height: 7.5in; overflow: hidden;
+    page-break-after: always; break-after: page;
+    background: #F7F6F1; color: #142D35;
+  }
+  .kicker {
+    position: absolute; left: 0.76in; top: 0.36in; font-size: 13pt; font-weight: 700;
+    letter-spacing: 0.01em; color: #0F7C7A;
+  }
+  .title { position: absolute; left: 0.76in; top: 0.82in; margin: 0; font-size: 32pt; font-weight: 700; }
+  .footer { position: absolute; left: 0.76in; bottom: 0.24in; font-size: 11pt; color: #5E6E73; }
+  .pageno { position: absolute; right: 0.97in; bottom: 0.24in; font-size: 11pt; color: #5E6E73; }
+  .content { position: absolute; left: 0.76in; right: 0.76in; top: 1.95in; bottom: 0.8in; }
+  .teal { color: #0F7C7A; }
+  .grey { color: #56676C; }
+  ul.dash { list-style: none; margin: 0; padding: 0; }
+  ul.dash li { position: relative; padding-left: 0.32in; margin: 0 0 0.16in 0; }
+  ul.dash li::before { content: "–"; position: absolute; left: 0; }
+  ul.dash.tight li { margin-bottom: 0.08in; }
+  .mid { font-size: 18pt; }
+  .small { font-size: 14pt; }
+  .strong { font-weight: 700; }
+  .cols { display: flex; gap: 0.5in; height: 100%; }
+  .col { flex: 1; }
+  .box { background: #ECF2F1; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.28in 0.32in; }
+  .boxtitle { font-size: 15pt; font-weight: 700; color: #4F6066; margin-bottom: 0.16in; }
+  .below { position: absolute; left: 0; right: 0; bottom: 0; }
+  .note { font-size: 13pt; color: #56676C; }
+  .hero { font-size: 60pt; font-weight: 700; color: #0F7C7A; line-height: 1; }
+  table.res { border-collapse: collapse; font-size: 16pt; width: 100%; }
+  table.res td { padding: 0.09in 0.14in; border-bottom: 1px solid #D3DEDC; vertical-align: middle; }
+  table.res td.v { text-align: right; font-weight: 700; color: #0F7C7A; white-space: nowrap; }
+  table.res tr.head td { border-bottom: 2px solid #0F7C7A; font-weight: 700; color: #0F7C7A; font-size: 14pt; padding-top: 0.04in; }
+  /* Ablauf eines Schritts */
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .fbox { flex: 1; background: #FFFFFF; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.18in 0.16in; }
+  .fbox.learned { background: #E3F0EE; border: 2px solid #0F7C7A; }
+  .fbox .n { font-size: 20pt; font-weight: 700; color: #0F7C7A; }
+  .fbox h3 { margin: 0.06in 0 0.1in 0; font-size: 17pt; }
+  .fbox p { margin: 0; font-size: 15pt; color: #56676C; line-height: 1.3; min-height: 1.3in; }
+  .fbox .who { margin-top: 0.14in; font-size: 11.5pt; font-weight: 700; letter-spacing: 0.02em; color: #56676C; }
+  .fbox.learned .who { color: #0F7C7A; }
+  .arrow { width: 0.3in; flex: none; display: flex; align-items: center; justify-content: center; font-size: 20pt; color: #9AA7A9; }
+  /* Q-Werte-Tabelle */
+  table.q { border-collapse: collapse; font-size: 16pt; width: 100%; }
+  table.q td { padding: 0.075in 0.12in; border-bottom: 1px solid #D3DEDC; }
+  table.q td.qv { text-align: right; font-variant-numeric: tabular-nums; width: 1.1in; }
+  table.q td.why { font-size: 13pt; color: #56676C; }
+  table.q tr.off td { color: #9AA7A9; }
+  table.q tr.off td.qv { text-decoration: line-through; }
+  table.q tr.pick td { color: #0F7C7A; font-weight: 700; }
+  table.q tr.pick td.why { color: #0F7C7A; }
+  /* 18 Netz-Stimmen */
+  .votes { display: grid; grid-template-columns: repeat(9, 0.52in); gap: 0.09in; }
+  .vote { height: 0.52in; border-radius: 6px; border: 1px solid #C9D3D5; background: #FFFFFF;
+          display: flex; align-items: center; justify-content: center; font-size: 19pt; color: #56676C; }
+  .vote.win { background: #E3F0EE; border: 2px solid #0F7C7A; color: #0F7C7A; font-weight: 700; }
+  .kv { display: flex; gap: 0.35in; margin-top: 0.2in; font-size: 15pt; }
+  .kv b { color: #0F7C7A; }
+</style>
+</head>
+<body>
+
+<!-- 1 Ein- und Ausgang -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">Was Sherlock bekommt und zurückgibt</h1>
+  <div class="content" style="top:1.8in;">
+    <div class="cols" style="gap:0.35in; height:auto; align-items:stretch;">
+      <div class="box" style="flex:1.2;">
+        <div class="boxtitle">Eingang in jedem Schritt</div>
+        <ul class="dash tight" style="font-size:15.5pt; line-height:1.2;">
+          <li>Sichtbare Einheiten beider Teams: Position, Energie</li>
+          <li>Sichtbare Felder: Energie, Nebel, Asteroid</li>
+          <li>Sichtbare Relics</li>
+          <li>Punkte im Match, gewonnene Matches, Schrittzähler</li>
+          <li class="strong" style="margin-bottom:0;">Unsichtbar: welche Felder Punkte bringen</li>
+        </ul>
+      </div>
+      <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
+      <div style="flex:0.5; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        <div style="font-size:30pt; font-weight:700;">Sherlock</div>
+        <div class="grey" style="font-size:14pt; margin-top:0.08in; text-align:center;">höchstens 11,4 ms<br>pro Schritt</div>
+      </div>
+      <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
+      <div class="box" style="flex:1.2;">
+        <div class="boxtitle">Ausgang</div>
+        <div style="font-size:16pt; line-height:1.35;">16 × 3 Zahlen, je Einheit <b>[Aktion, dx, dy]</b></div>
+        <table class="res" style="font-size:15pt; margin-top:0.14in;">
+          <tr><td style="width:0.9in;" class="teal strong">0</td><td>stehen</td></tr>
+          <tr><td class="teal strong">1–4</td><td>hoch, rechts, runter, links</td></tr>
+          <tr><td class="teal strong" style="border-bottom:none;">5</td><td style="border-bottom:none;">Sap (Schuss) auf Feld (dx, dy)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="note below">Einmal pro Spiel kommen Zugkosten, Sap-Kosten, Sap-Reichweite und Sichtweite dazu. Verdeckte Werte wie den Energieabzug im Nebel schätzt Sherlock aus den Energieverläufen der eigenen Einheiten.</div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">01</div>
+</section>
+
+<!-- 2 Ablauf eines Schritts -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">Ein Spielschritt: wer macht was?</h1>
+  <div class="content" style="top:1.85in;">
+    <div class="flow">
+      <div class="fbox"><div class="n">1</div><h3>Gedächtnis</h3>
+        <p>Karte, Relics und Punktefelder über alle 3 Matches</p>
+        <div class="who">PROGRAMMIERT</div></div>
+      <div class="arrow">→</div>
+      <div class="fbox"><div class="n">2</div><h3>Ziele</h3>
+        <p>jede Einheit ein eigenes Ziel, nach Weglänge verteilt</p>
+        <div class="who">PROGRAMMIERT</div></div>
+      <div class="arrow">→</div>
+      <div class="fbox"><div class="n">3</div><h3>Merkmale</h3>
+        <p>79 Zahlen je Einheit: Lage, Ziel, Umgebung, Gegner</p>
+        <div class="who">PROGRAMMIERT</div></div>
+      <div class="arrow">→</div>
+      <div class="fbox learned"><div class="n">4</div><h3>18 Netze</h3>
+        <p>bewerten die 6 Aktionen mit Q-Werten, wir mitteln</p>
+        <div class="who">GELERNT (DQN)</div></div>
+      <div class="arrow">→</div>
+      <div class="fbox"><div class="n">5</div><h3>Maske</h3>
+        <p>verbotene Aktionen streichen, beste erlaubte nehmen</p>
+        <div class="who">PROGRAMMIERT</div></div>
+      <div class="arrow">→</div>
+      <div class="fbox"><div class="n">6</div><h3>Regeln</h3>
+        <p>korrigieren Sackgassen, Nebel, doppelte Schüsse</p>
+        <div class="who">PROGRAMMIERT</div></div>
+    </div>
+    <div style="margin-top:0.5in;">
+      <div class="mid"><b>→ 16 × 3 Aktionen ans Spiel.</b> Das Netz entscheidet <b class="teal">was</b> eine Einheit tut, beim Sap auch <b class="teal">ob</b> geschossen wird. <b>Wohin</b> geschossen wird, berechnet eine Formel: das Feld mit der meisten getroffenen Gegnerenergie.</div>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">02</div>
+</section>
+
+<!-- 3 Action Masking -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">Action Masking: nur erlaubte Aktionen</h1>
+  <div class="content" style="top:1.85in;">
+    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
+      <div style="flex:1.05;">
+        <table class="res" style="font-size:15.5pt;">
+          <tr class="head"><td>Aktion</td><td>erlaubt, wenn …</td></tr>
+          <tr><td class="strong">Stehen</td><td>immer</td></tr>
+          <tr><td class="strong">Zug</td><td>genug Energie, Zielfeld auf der Karte, kein Asteroid</td></tr>
+          <tr><td class="strong">Zug, im Spiel</td><td>zusätzlich kein mindestens gleich starker Gegner auf oder neben dem Zielfeld</td></tr>
+          <tr><td class="strong">Sap</td><td>Gegner in Reichweite und genug Energie</td></tr>
+        </table>
+        <ul class="dash" style="font-size:15.5pt; line-height:1.3; margin-top:0.25in;">
+          <li>Verboten heißt: Q-Wert = −∞, die Aktion wird nie gewählt</li>
+          <li>Im Training gilt dasselbe für Zufallszüge und das Lernziel</li>
+        </ul>
+      </div>
+      <div class="box" style="flex:0.95;">
+        <div class="boxtitle">Echtes Beispiel: Einheit vor einem Asteroiden</div>
+        <table class="q">
+          <tr><td>stehen</td><td class="qv">47,4</td><td class="why"></td></tr>
+          <tr><td>hoch</td><td class="qv">47,8</td><td class="why"></td></tr>
+          <tr class="pick"><td>rechts</td><td class="qv">48,6</td><td class="why">✓ gespielt</td></tr>
+          <tr class="off"><td>runter</td><td class="qv">50,4</td><td class="why">✗ Asteroid</td></tr>
+          <tr class="off"><td>links</td><td class="qv">47,4</td><td class="why">✗ Kartenrand</td></tr>
+          <tr class="off"><td style="border-bottom:none;">Sap</td><td class="qv" style="border-bottom:none;">42,2</td><td class="why" style="border-bottom:none;">✗ kein Gegner</td></tr>
+        </table>
+        <div class="small grey" style="margin-top:0.14in;">Mittel der 18 Netze. Am liebsten „runter“, das ist aber verboten.</div>
+      </div>
+    </div>
+    <div class="note below">Gemessen in 36.258 Entscheidungen: im Mittel 4,3 von 6 Aktionen erlaubt; in 20 % war die Lieblingsaktion der Netze verboten (10 Spiele gegen Solution_92, 5 Karten × beide Seiten).</div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">03</div>
+</section>
+
+<!-- 4 Ensemble -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">18 Netze entscheiden gemeinsam</h1>
+  <div class="content" style="top:1.85in;">
+    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
+      <div style="flex:1;">
+        <ul class="dash" style="font-size:17pt; line-height:1.3;">
+          <li><b>Keine Aufteilung auf Spiele:</b> alle 18 Netze bewerten jede Einheit in jedem Schritt</li>
+          <li>Gleiche Bauart: 79 → 256 → 256 → 6 Q-Werte (Dueling-DQN, 153.000 Parameter je Netz)</li>
+          <li>Ein Netz für alle Einheiten und beide Seiten: die Karte wird für Spieler 2 gespiegelt</li>
+          <li>Q-Werte je Aktion mitteln → beste erlaubte Aktion</li>
+          <li><b>Warum 18?</b> Einzelne Netze schwanken stark, der Mittelwert glättet. 30 Netze waren nicht besser.</li>
+        </ul>
+      </div>
+      <div class="box" style="flex:1;">
+        <div class="boxtitle">Echtes Beispiel: die 18 Netze sind uneinig</div>
+        <div class="votes">
+          <div class="vote win">→</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">●</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote win">→</div><div class="vote">↓</div>
+          <div class="vote">●</div><div class="vote win">→</div><div class="vote win">→</div><div class="vote">●</div><div class="vote">↓</div><div class="vote">●</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote">↓</div>
+        </div>
+        <div class="kv"><span>→ rechts <b>6</b></span><span>↓ runter <b>8</b></span><span>● stehen <b>4</b></span></div>
+        <div style="font-size:15pt; margin-top:0.2in; line-height:1.35;">Mehrheit wäre <b>runter</b>. Der Mittelwert wählt <b class="teal">rechts</b> (25,9 vor 25,8), weil er zählt, <b>wie sicher</b> sich jedes Netz ist.</div>
+      </div>
+    </div>
+    <div class="note below">In den 36.258 gemessenen Entscheidungen: alle 18 Netze einig in 32 %; im Mittel wählen 13,4 von 18 Netzen einzeln dieselbe Aktion wie das Ensemble; Mittelwert und Mehrheitswahl unterscheiden sich in 8 %.</div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">04</div>
+</section>
+
+<!-- 5 Training -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">So wurden die 18 Netze trainiert</h1>
+  <div class="content" style="top:1.85in;">
+    <table class="res" style="font-size:16pt;">
+      <tr class="head"><td>Gruppe</td><td>Netze</td><td>Spiele je Netz</td><td>Gegner nach 25 % Aufwärmen gegen default</td></tr>
+      <tr><td class="strong">A</td><td>6</td><td>3.000</td><td>abwechselnd default und Solution_92</td></tr>
+      <tr><td class="strong">B</td><td>6</td><td>4.000</td><td>70 % Solution_92, Rest default</td></tr>
+      <tr><td class="strong">C</td><td>6</td><td>4.000</td><td>60 % Solution_92, 20 % eigene alte Agenten; Strafe für Gegnerpunkte</td></tr>
+    </table>
+    <div class="cols" style="gap:0.5in; height:auto; margin-top:0.35in;">
+      <ul class="dash col" style="font-size:16pt; line-height:1.3;">
+        <li><b>66.000 Trainingsspiele</b>, je Netz eigener Zufallsstart und eigene Karten</li>
+        <li>Double DQN mit Target-Netz und Replay Buffer (300.000 Übergänge)</li>
+      </ul>
+      <ul class="dash col" style="font-size:16pt; line-height:1.3;">
+        <li>Belohnung <b>in jedem Schritt pro Einheit</b>: Punktefeld halten, Annäherung ans Ziel, Erkunden, Matchsieg; Strafe für Tod</li>
+        <li>Verwendet wird der Endstand jedes Laufs</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">05</div>
+</section>
+
+<!-- 6 Netz und Regeln -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div>
+  <h1 class="title">Das Netz entscheidet, Regeln sichern ab</h1>
+  <div class="content" style="top:1.85in;">
+    <div class="cols" style="gap:0.55in; height:auto; align-items:flex-start;">
+      <div class="box" style="flex:0.75;">
+        <div class="hero">92 %</div>
+        <div style="font-size:17pt; margin-top:0.15in; line-height:1.35;">der Entscheidungen spielt Sherlock genau so, wie die Netze sie getroffen haben</div>
+        <div class="small grey" style="margin-top:0.3in; line-height:1.35;">Eine einfache Regel statt der Netze gewann am 19.10. nur 3 % gegen Solution_92, mit Netzen 38 %.</div>
+      </div>
+      <table class="res" style="flex:1.25; width:auto; font-size:15.5pt;">
+        <tr class="head"><td>Regel greift ein</td><td style="text-align:right;">Anteil</td></tr>
+        <tr><td>Nur Erkundungsziel: direkt hinlaufen statt warten</td><td class="v">4,3 %</td></tr>
+        <tr><td>Schädlichen Nebel umgehen</td><td class="v">1,2 %</td></tr>
+        <tr><td>Kein Schuss auf ein schon sicher getroffenes Ziel</td><td class="v">0,9 %</td></tr>
+        <tr><td>Sackgasse: kürzesten Weg nehmen</td><td class="v">0,6 %</td></tr>
+        <tr><td>Auf dem Punktefeld stehen und schießen</td><td class="v">0,5 %</td></tr>
+        <tr><td>Aus sicherer Entfernung in eine Gruppe schießen</td><td class="v">0,25 %</td></tr>
+      </table>
+    </div>
+    <div class="note below">Anteile an 36.258 Entscheidungen in 10 Spielen gegen Solution_92. Zusammen ändern die Regeln 7,3 % der Aktionen.</div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">06</div>
+</section>
+
+<!-- 7 Reserve: Gedächtnis -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF · RESERVE</div>
+  <h1 class="title">Reserve: Wie das Gedächtnis Punktefelder findet</h1>
+  <div class="content" style="top:1.95in;">
+    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
+      <div class="box" style="flex:1;">
+        <div class="boxtitle">Beispiel für einen Schritt</div>
+        <table class="res" style="font-size:16.5pt;">
+          <tr><td>Punktezuwachs in diesem Schritt</td><td class="v">3</td></tr>
+          <tr><td>besetzte Felder</td><td class="v">4</td></tr>
+          <tr><td>davon schon bewiesene Punktefelder</td><td class="v">2</td></tr>
+          <tr><td style="border-bottom:none;"><b>Also:</b> von den 2 übrigen Feldern bringt genau 1 einen Punkt</td><td class="v" style="border-bottom:none;"></td></tr>
+        </table>
+      </div>
+      <ul class="dash" style="flex:1; font-size:16.5pt; line-height:1.3;">
+        <li>Solche Gleichungen werden gesammelt, bis sie eindeutig sind</li>
+        <li>Die Karte ist spiegelsymmetrisch: ein bewiesenes Feld gilt auch für sein Spiegelfeld</li>
+        <li>Gezählt wird erst, wenn die Relics sicher erschienen sind, sonst entstehen falsche Schlüsse</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">07</div>
+</section>
+
+</body>
+</html>
