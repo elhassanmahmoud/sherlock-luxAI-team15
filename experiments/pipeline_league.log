@@ -1,0 +1,26 @@
+[12:44] Start (Commit 6f5cde7, V10 03cf8bdc20bef58a)
+V10_ref_S.csv: default: 1.000 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.895 (400 Spiele), sol92_sq: 0.807 (400 Spiele), sol92_weak: 0.917 (400 Spiele), solution92: 0.887 (400 Spiele) in 790s
+V10_ref_C.csv: default: 1.000 (1600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.899 (1600 Spiele), sol92_sq: 0.789 (1600 Spiele), sol92_weak: 0.905 (1600 Spiele), solution92: 0.902 (1600 Spiele) in 3206s
+[13:50] V10-Referenz fertig, warte auf Training
+[21:27] Training: Fertig: 6 ok, 0 Fehler
+experiments/ensembles/league_mix24.pth: 24 Netze
+experiments/ensembles/league_nets6.pth: 6 Netze
+e3cc8c6459d8982ba3b79629b1ebc6ed98c0175f8b332fee498c0515b21a7149  experiments/ensembles/league_mix24.pth
+357c3daa8d819aa7caf90e90a6fec666cb3120321662dbc50b638dcb130e3f1e  experiments/ensembles/league_nets6.pth
+L_mix24_S.csv: default: 1.000 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.920 (400 Spiele), sol92_sq: 0.825 (400 Spiele), sol92_weak: 0.900 (400 Spiele), solution92: 0.895 (400 Spiele) in 525s
+L_mix24_S_direct.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.525 (400 Spiele) in 163s
+L_nets6_S.csv: default: 0.995 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.890 (400 Spiele), sol92_sq: 0.785 (400 Spiele), sol92_weak: 0.863 (400 Spiele), solution92: 0.880 (400 Spiele) in 468s
+
+L_nets6_S_direct.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.400 (400 Spiele) in 151s
+L24: R 0.8850 vs 0.8769 (Δ +0.81 pp [-1.44; +3.12], 200 Karten); Solution_92 0.8950 (Δ +0.75 [-2.75; +4.25]); default 1.0000 (Δ +0.00); direkt 0.5250 [0.4550; 0.5950] aus 400 Spielen
+  FAIL R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+L6: R 0.8544 vs 0.8769 (Δ -2.25 pp [-5.44; +0.75], 200 Karten); Solution_92 0.8800 (Δ -0.75 [-5.00; +3.25]); default 0.9950 (Δ -0.50); direkt 0.4000 [0.3350; 0.4700] aus 400 Spielen
+  FAIL R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  FAIL direkt >= 50%
+AUSWAHL: keine
+[21:49] Kein Kandidat -> Ende; Bestaetigungs- und Direktblock fuer Kandidaten unberuehrt, V10 bleibt

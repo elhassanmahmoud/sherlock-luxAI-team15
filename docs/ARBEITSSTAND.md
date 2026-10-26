@@ -5,7 +5,20 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 26.10.2026, 12:45 Berlin – Claude Code mit Mahmoud: Gegner-Liga-Training gestartet (läuft)
+## 26.10.2026, 21:50 Berlin – Claude Code mit Mahmoud: Gegner-Liga abgeschlossen, kein Kandidat, V10 bleibt
+
+- Die Studie lief vollständig nach dem [festen Plan](superpowers/plans/2026-10-26-league.md), der Code blieb durchgehend auf `6f5cde7`. Training: 6 × 4.000 Spiele `full_rules_v10` (Starts 73–78), 6 ok, 0 Fehler. Laufzeit 12:44–21:27 einschließlich der Zeit, in der der Laptop zugeklappt war; die Prozesse waren dann nur angehalten. Zeitangaben (`secs`, Laufdauer) enthalten deshalb Pausen.
+- Trainingsverlauf der einzelnen Netze (ε = 0,05; Siege in den Spielen 1.000–1.999 / 2.000–2.999 / ab 3.000): Solution_92 57 / 60 / 62 %, `sol92_sq` 45 / 47 / 44 %, Pool V10 12 / 14 / 14 %, Pool V7 16 / 17 / 20 %, default 98–99 %, RushBot 100 %. Validierung nach 4.000 Spielen (16 Spiele je Netz): Solution_92 0,50–0,81, default 1,0.
+- **Auswahl** auf 700000–700199 (200 Karten, beide Seiten). V10-Referenz: Solution_92 88,75 %, `sol92_sq` 80,75 %, `sol92_weak` 91,75 %, `old3_sym3` 89,5 %, default 100 %, R 87,69 %.
+  - **L24** (V10 + 6 neue): R 88,50 %, Δ **+0,81 pp [−1,44; +3,12]** → Hürde +1,5 pp verfehlt. Je Gegner: Solution_92 +0,75 [−2,75; +4,25], `sol92_sq` +1,75 [−1,75; +5,25], `sol92_weak` −1,75 [−4,75; +1,25], `old3_sym3` +2,5 [−2,0; +7,0], default 100 %. Direkt gegen V10 52,5 % [45,5; 59,5] aus 400 Spielen.
+  - **L6** (nur die 6 neuen): R 85,44 %, Δ −2,25 [−5,44; +0,75]; Solution_92 88,0 % (−0,75 [−5,0; +3,25]), `sol92_weak` −5,5 [−9,5; −1,75], default 99,5 %, direkt 40,0 % [33,5; 47,0] → R- und Direkthürde verfehlt.
+- **Ergebnis nach Plan: kein Kandidat, Studie beendet, V10 bleibt Abgabe.** Abgabe-Dateien vorher und nachher `03cf8bdc…8c67`. Bestätigungsblock 701000–701799 und Direktblock 702000–702399 für Kandidaten unbenutzt. Auf 701000–701799 lief nur die V10-Referenz (je 1.600 Spiele: Solution_92 90,2 %, `sol92_sq` 78,9 %, `sol92_weak` 90,5 %, `old3_sym3` 89,9 %, default 100 %). Reserve 703000–703999 unbenutzt.
+- Einordnung: Das Training gegen die gemischte Liga hat die Netze nicht messbar robuster gemacht. Die 6 neuen Netze allein liegen gegen Solution_92 fast gleichauf mit den 18 V3-Netzen, sind aber gegen `sol92_weak` und im Direktduell schwächer. Zusammen mit dem 22.10.: Zusätzliche DQN-Netze heben V10 nicht über das Plateau von rund 90 %. Schwächster Gegner bleibt `sol92_sq` mit 79–81 %.
+- Daten im Repo: `experiments/pipeline_league.log`, `experiments/batch_20261026_league.log`, `experiments/compare/league/*.csv`, Logs, CSVs und Manifeste der 6 Läufe. Nur lokal (gitignored): Netzgewichte und die Ensembles `experiments/ensembles/league_mix24.pth` (`e3cc8c64…`) und `league_nets6.pth` (`357c3daa…`).
+- Prüfungen: Pipeline mit Exit 0, alle Messdateien ohne ausgeschlossene Karten, Hürden mit `scripts/league_gates.py`, Werte je Gegner mit `compare_report.compare_results` nachgerechnet. Kein neuer Code.
+- Offen, noch nicht begonnen: Vorschlag für den nächsten Schritt sind die Niederlagen von V10 gegen `sol92_sq` gezielt zu untersuchen, wie beim Weg von V3 zu V10.
+
+## 26.10.2026, 12:45 Berlin – Claude Code mit Mahmoud: Gegner-Liga-Training gestartet (abgeschlossen, Ergebnis 21:50)
 
 - Auftrag Mahmoud („ja los beginn“): weiter trainieren, damit Sherlock gegen die Agents der anderen Teams robuster wird. [Fester Plan mit Hürden](superpowers/plans/2026-10-26-league.md), Ablauf `bash scripts/pipeline_league.sh`, Log `experiments/pipeline_league.log`.
 - Neu und getestet:
