@@ -131,11 +131,17 @@ def readme_text(group: int, imp: str, lp0: str, lp1: str, nets: int | None = Non
                "- Beim Start erscheint: [Sherlock Agent_X] geladen: ...\n"))
 
 
-def frozen_bytes(path: Path) -> bytes:
+def frozen_bytes(path: Path, half: bool = False) -> bytes:
     """Checkpoint mit cfg.frozen = True (29.10.2026): Der Kurs-Runner startet Agenten mit train=True,
     wenn man es nicht abschaltet; eingefroren spielt Sherlock dann trotzdem wie mit train=False.
-    Gewichte und alle anderen Eintraege bleiben gleich. Dateien ohne Config unveraendert."""
+    Gewichte und alle anderen Eintraege bleiben gleich. Dateien ohne Config unveraendert.
+
+    half=True (29.10.2026, nur fuer eine Moodle-Groessengrenze): Netzgewichte als float16 und ohne
+    Optimierer-Zustand, die Datei wird etwa halb so gross (36 Netze 24 statt 12 MB). Der Agent rechnet
+    weiter in float32, load_state_dict wandelt beim Laden um. Auf 50.000 Zustaenden aus einem Replay-Buffer
+    aenderte das die beste erlaubte Aktion von mix36 in 0,008 % der Faelle (mix54 0,006 %)."""
     import io
+    from collections import OrderedDict
 
     import torch
     try:
@@ -145,12 +151,24 @@ def frozen_bytes(path: Path) -> bytes:
     if not isinstance(ck, dict) or not isinstance(ck.get("cfg"), dict):
         return path.read_bytes()
     ck["cfg"] = {**ck["cfg"], "frozen": True}
+    if half:
+        def to_half(sd):
+            out = OrderedDict((k, v.half() if v.is_floating_point() else v) for k, v in sd.items())
+            if hasattr(sd, "_metadata"):
+                out._metadata = sd._metadata
+            return out
+        for key in ("q", "target_q"):
+            if key in ck:
+                ck[key] = to_half(ck[key])
+        ck["ensemble"] = [to_half(sd) for sd in ck.get("ensemble", [])]
+        ck.pop("opt", None)
     buf = io.BytesIO()
     torch.save(ck, buf)
     return buf.getvalue()
 
 
-def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[Path, tuple[str, str, str]]:
+def build_battle(group: int, out: Path, from_run: Path | None = None,
+                 half: bool = False) -> tuple[Path, tuple[str, str, str]]:
     files, weights, out = sources(out, from_run)
     pkg = f"Gruppe{group}"
     same = weights[0].read_bytes() == weights[1].read_bytes()
@@ -161,7 +179,7 @@ def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[P
         for f in files:
             z.write(f, f"{pkg}/{f.name}")
         for w, lp in ([(weights[0], lp0)] if same else [(weights[0], lp0), (weights[1], lp1)]):
-            z.writestr(lp, frozen_bytes(w))
+            z.writestr(lp, frozen_bytes(w, half))
         z.writestr(f"{pkg}/agents.yaml", yaml_text(imp, lp0, lp1))
         z.writestr(f"{pkg}/LIESMICH.txt", readme_text(group, imp, lp0, lp1, net_count(weights[0])))
     return out, (imp, lp0, lp1)
@@ -245,11 +263,16 @@ def main() -> None:
     ap.add_argument("--battle", action="store_true", help="Format aus der Battle-Mail: Gruppe<N>.zip")
     ap.add_argument("--out", default=None, help="Standard: dist/agent.zip bzw. Gruppe<N>.zip im Projektordner")
     ap.add_argument("--no-check", action="store_true")
+    ap.add_argument("--half", action="store_true",
+                    help="nur --battle: Netzgewichte als float16, halbe Dateigroesse (fuer eine Moodle-Grenze)")
     args = ap.parse_args()
+    if args.half and not args.battle:
+        ap.error("--half gibt es nur mit --battle")
 
     from_run = Path(args.from_run).expanduser() if args.from_run else None
     if args.battle:
-        out, paths = build_battle(args.group, Path(args.out or ROOT / f"Gruppe{args.group}.zip"), from_run)
+        out, paths = build_battle(args.group, Path(args.out or ROOT / f"Gruppe{args.group}.zip"), from_run,
+                                  args.half)
     else:
         out = build(args.team_name, args.group, Path(args.out or ROOT / "dist" / "agent.zip"), from_run)
     with zipfile.ZipFile(out) as z:

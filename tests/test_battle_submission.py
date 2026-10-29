@@ -130,3 +130,24 @@ def test_frozen_bytes_keeps_weights_and_ignores_non_checkpoints(tmp_path):
     raw = tmp_path / "raw.pth"
     raw.write_bytes(b"same-weights")
     assert build_submission.frozen_bytes(raw) == b"same-weights"
+
+
+def test_half_bytes_store_float16_and_load_as_float32(tmp_path):
+    import io
+
+    import torch
+    path = small_checkpoint(tmp_path / "agent.pth")
+    data = build_submission.frozen_bytes(path, half=True)
+    ck = torch.load(io.BytesIO(data), map_location="cpu", weights_only=True)
+    assert ck["cfg"]["frozen"] and "opt" not in ck
+    assert all(v.dtype == torch.float16 for v in ck["q"].values())
+    assert len(data) < len(build_submission.frozen_bytes(path))
+    small = tmp_path / "half.pth"
+    small.write_bytes(data)
+    a = Agent_x("player_0", agent_path=str(small))
+    b = Agent_x("player_0", agent_path=str(path))
+    assert a.cfg.frozen and not a.training
+    assert next(a.q.parameters()).dtype == torch.float32
+    x = torch.randn(64, a.feat_dim)
+    with torch.no_grad():
+        assert torch.allclose(a.q(x), b.q(x), atol=1e-2)
