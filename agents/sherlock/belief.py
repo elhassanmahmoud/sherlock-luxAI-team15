@@ -298,22 +298,32 @@ class Belief:
         steht; die Punkte-Tiles sind fuer beide Teams dieselben. Ist JEDES Tile, das ueberhaupt
         punkten kann (_possible_point_zone), in diesem Step wirklich sichtbar, steht kein punktender
         Gegner unsichtbar -> opp_gain = Summe punkt(t) ueber die sichtbar besetzten Tiles. Das ist
-        dieselbe Gleichung, die wir aus eigenen Units bilden. Diagnose Dev A (800051): Solution_92
+        dieselbe Gleichung, die wir aus eigenen Units bilden. Sonst erklaert jedes unsichtbare, nicht
+        tote Zonen-Tile hoechstens einen Punkt: Reicht der Rest danach noch fuer alle sichtbar besetzten
+        offenen Tiles, sind sie alle Punkte-Tiles (typisch fuer eine Gegnerfestung). Diagnose Dev A (800051): Solution_92
         besetzt einen gemeinsamen Haufen zuerst, wir kennen dort das ganze Match kein Punkte-Tile;
         mit wahren Punkte-Tiles (Orakel) gewinnt V10 auf Dev A +4 bis +6 pp.
         """
         if not self._stable(match_step) or self._sensor_now is None:
             return
         zone = self._possible_point_zone()
-        if zone is None or (zone & ~self._sensor_now).any():
-            return  # ein unsichtbarer Gegner koennte punkten
+        if zone is None:
+            return
         occ = {f for f in self._enemy_tiles(obs) if zone[divmod(f, self.H)]}
         known = len(occ & self._point)
         unknown = occ - self._point - self._dead
         rest = self.opp_gain - known
-        if not unknown or rest < 0 or rest > len(unknown):
-            return  # keine neue Information oder nicht erklaerbar (dann lieber nichts schliessen)
-        new = (tuple(sorted(unknown)), rest)
+        if not unknown or rest < 0:
+            return
+        # Unsichtbare moegliche Punkte-Tiles (nicht als tot bekannt): jedes kann hoechstens einen
+        # Punkt eines unsichtbaren Gegners erklaeren -> rest - hidden ist eine untere Schranke
+        hidden = int((zone & ~self._sensor_now & ~self.dead_tiles).sum())
+        if hidden == 0 and rest <= len(unknown):
+            new = (tuple(sorted(unknown)), rest)            # Gleichung
+        elif rest - hidden >= len(unknown):
+            new = (tuple(sorted(unknown)), len(unknown))    # alle sichtbar besetzten sind Punkte-Tiles
+        else:
+            return  # keine sichere Aussage
         if new in self.records:
             return
         if self.subset_infer:

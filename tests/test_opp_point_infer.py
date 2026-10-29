@@ -43,3 +43,12 @@ def test_zero_gain_marks_enemy_tiles_dead_and_ignores_tiles_outside_zone():
 def test_negative_energy_enemy_does_not_count():
     b = _steps(_belief(), [(10, 10, -5), (10, 11, 40)], 1)
     assert b.point_tiles[10, 11] and not b.point_tiles[10, 10]
+
+
+def test_lower_bound_with_hidden_tiles_proves_all_visible_enemy_tiles():
+    # 3 Gegner auf offenen Tiles, Gegnergewinn 4, nur ein Zonen-Tile unsichtbar -> alle 3 sind Punkte
+    b = _steps(_belief(), [(10, 10, 50), (10, 11, 50), (11, 10, 50)], 4, hide=(13, 9))
+    assert b.point_tiles[10, 10] and b.point_tiles[10, 11] and b.point_tiles[11, 10]
+    # Gewinn 3 reicht nicht: das unsichtbare Tile koennte einen der Punkte erklaeren
+    b = _steps(_belief(), [(10, 10, 50), (10, 11, 50), (11, 10, 50)], 3, hide=(13, 9))
+    assert not b.point_tiles.any()
