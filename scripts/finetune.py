@@ -93,6 +93,8 @@ def main() -> None:
                     help="alle n Spiele Schnappschuss des Lerners in den Pool (0 = aus)")
     ap.add_argument("--max-snapshots", type=int, default=4)
     ap.add_argument("--variant", default=None, help="Config des Lerners (Default: Variante des Init-Laufs)")
+    ap.add_argument("--map-offset", type=int, default=0,
+                    help="Trainingskarten ab FT_SEED_BASE + seed*10000 + map_offset (zweite Runde: neue Karten)")
     ap.add_argument("--keep-final", action="store_true",
                     help="Endstand behalten statt des besten Checkpoints nach Validierung")
     args = ap.parse_args()
@@ -108,6 +110,7 @@ def main() -> None:
         raise SystemExit(f"{run_dir} existiert schon - neuen Namen waehlen")
     assert FT_SEED_BASE + args.seed * 10_000 + 5_000 + args.games // 2 < P.VAL_SEED_BASE, \
         "Trainings-Seeds wuerden in die Validierung laufen"
+    assert args.map_offset + args.games // 2 <= 5_000, "Trainingskarten wuerden in die Auffuell-Karten laufen"
     (run_dir / "weights").mkdir(parents=True, exist_ok=True)
     for pat in ("*.pth", "*.buffer.npz"):
         for f in (init / "weights").glob(pat):
@@ -120,7 +123,7 @@ def main() -> None:
         logf.write(line + "\n")
         logf.flush()
 
-    seed_everything(args.seed)
+    seed_everything(args.seed + args.map_offset)
     learners = Learners(variant, run_dir, args.seed, load=True)
     if args.lr:
         for _, a in learners.unique():
@@ -128,7 +131,7 @@ def main() -> None:
                 g["lr"] = args.lr
             a.cfg.lr = args.lr
 
-    rng = np.random.default_rng(args.seed)
+    rng = np.random.default_rng(args.seed + args.map_offset)
     mix = parse_mix(args.mix, args.sol92_frac)
     assert abs(sum(mix.values()) - 1.0) < 1e-6, mix
     assert mix.get("pool", 0) == 0 or args.pool or args.snapshot_every, "pool ohne Gegner"
@@ -154,8 +157,8 @@ def main() -> None:
         run_seed=args.seed, train_games=args.games, sol92_frac=args.sol92_frac,
         lr=args.lr or None, mix=mix, pool=pool, snapshot_every=args.snapshot_every,
         prefill_games=args.prefill_games, buffer_loaded=0,
-        train_seeds=[FT_SEED_BASE + args.seed * 10_000,
-                                 FT_SEED_BASE + args.seed * 10_000 + args.games // 2],
+        train_seeds=[FT_SEED_BASE + args.seed * 10_000 + args.map_offset,
+                     FT_SEED_BASE + args.seed * 10_000 + args.map_offset + args.games // 2],
         selection=("Endstand (--keep-final)" if args.keep_final else
                    "bester Checkpoint nach val_score (Validierung), siehe Docstring"),
         val_seeds=P.val_seeds(args.n_val), val_every=args.val_every,
@@ -216,7 +219,7 @@ def main() -> None:
         validate(0, vw)
         for g in range(args.games):
             side = P.SIDES[g % 2]
-            seed = FT_SEED_BASE + args.seed * 10_000 + g // 2
+            seed = FT_SEED_BASE + args.seed * 10_000 + args.map_offset + g // 2
             agent = learners.agents[side]
             opp_name, opp = pick_opponent("player_1" if side == "player_0" else "player_0")
             row = play_game(env, agent, opp, seed, side, train=True)
