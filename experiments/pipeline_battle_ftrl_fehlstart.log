@@ -1,0 +1,25 @@
+[29.10. 20:55] Start RL-Liga: 18 Netze, 1500 Spiele, 6 parallel, Kartenversatz 5000, Mix solution92=0.20,sol92_sq=0.20,sol92_weak=0.05,pool=0.50,default=0.05, Pool experiments/releases/20261022_v10_baseline/agent_p0.pth experiments/releases/20261020_old3_sym3/agent_p0.pth experiments/ensembles/battle_mix36.pth experiments/releases/20261022_all18_v3/agent_p0.pth experiments/releases/20261022_v7_Bsnpd/agent_p0.pth
+[29.10. 20:55] s11 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s10 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s14 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s15 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s12 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s13 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s16 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s18 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s21 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s17 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s19 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s20 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s22 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s25 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s24 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s26 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s23 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+[29.10. 20:55] s27 fertig (exit 0): AssertionError: Trainingskarten wuerden in die Auffuell-Karten laufen
+usage: python -m scripts.build_ensemble [-h] --out OUT [--mixed]
+                                        [--cfg-from CFG_FROM]
+                                        ckpts [ckpts ...]
+python -m scripts.build_ensemble: error: the following arguments are required: ckpts
+[29.10. 20:55] Ende RL-Liga: 
+[29.10. 20:56] Fehlstart oben: Kartenversatz 5000 verletzt map_offset + games/2 <= 5000 (finetune-Schutz), keine Laeufe angelegt; Neustart mit Kartenversatz 4000

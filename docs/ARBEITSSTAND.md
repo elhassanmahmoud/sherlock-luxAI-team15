@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 21:05 Berlin – Claude Code mit Mahmoud: Runde 2 ohne Zusatznutzen, zweite Trainingslinie „RL-Liga“ gestartet
+
+- **Runde 2 auf denselben 6 Netzen** (Dev A, gepaart): `ft2_6` gegen `ft6` (Runde 1) `sol92_sq` 79,8 statt 82,2 % (−2,3 [−5,8; +1,0]), Solution_92 89,0 statt 89,2 % (−0,2 [−3,2; +2,8]); gegen V10 +2,0 / −0,3. Weitere 2.000 Spiele derselben Art verbessern das Ensemble also nicht messbar, obwohl die Trainingskurven der Einzelnetze steigen.
+- Deshalb **zweite Trainingslinie** (`scripts/pipeline_battle_ftrl.sh`, Plan-Nachtrag 21:00): dieselben 18 V3-Quellnetze wie Runde 1, je 1.500 Spiele, Kartenversatz 4000. **Die Hälfte der Spiele läuft gegen eigene RL-Abgaben** (V10, `old3_sym3`, `battle_mix36`, V3, V7), der Rest gegen Solution_92 0,20, `sol92_sq` 0,20, `sol92_weak` 0,05 und default 0,05. Ziel: vielfältigere Netze, und mehr Stärke gegen Agenten aus Netz und Regeln, wie sie andere Teams haben dürften. Seit 20:56 laufen 6 Netze, Ensemble `battle_ftrl18` voraussichtlich gegen 06:00.
+- Erster Start um 20:55 abgebrochen: Kartenversatz 5000 verletzt die Schutzregel in `finetune` (`map_offset + games/2 <= 5000`, Grenze zu den Auffüllkarten). Es wurden keine Läufe angelegt. Log `experiments/pipeline_battle_ftrl_fehlstart.log`.
+- Runde 4 startet nicht mehr automatisch. Die Entscheidung fällt nach der Auswahl Runde 1, die zeigt, ob `ft2_18` mehr bringt als Runde 1. Runde 3 läuft weiter.
+
 ## 29.10.2026, 19:45 Berlin – Claude Code mit Mahmoud: Gegenprobe Dev B für mix36, Runde 4 vorbereitet
 
 - **`mix36` auf Dev B** (801000–801299, ganzes Panel, je Gegner 600 Spiele, gepaart gegen V10): `sol92_sq` 84,8 % (V10 83,2 %, +1,7 [−1,2; +4,7]), Solution_92 92,7 % (91,2 %, +1,5 [−1,0; +3,8]), `sol92_weak` 92,3 % (±0), `old3_sym3` 92,7 % (91,7 %, +1,0 [−2,7; +5,0]), default 100 %. Die Schwäche gegen `old3_sym3` auf Dev A (−3,3) bestätigt sich nicht. Der Vorsprung gegen `sol92_sq` ist kleiner als auf Dev A (+5,2). Gesamtbild beider Blöcke: R etwa +1,3 pp. Für die Bestätigungshürde (+2 pp) reicht das voraussichtlich nicht; deshalb weiteres Nachtraining.
