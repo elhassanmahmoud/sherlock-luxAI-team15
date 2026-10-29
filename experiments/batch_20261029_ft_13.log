@@ -1,0 +1,71 @@
+[sherlock[full_rules_v10]] geladen: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/runs/20261029_ft_v10_s13/weights/agent.pth (env_steps=909000, eps=0.050, Ensemble=1 Netze)
+[13:25:25] Buffer aus Init-Lauf geladen: 300000 Transitions
+[13:27:13]   VAL nach 0: default 1.000 | sol92 0.812 (Matches 0.583, Punkte 1051:966) -> score 1.198
+[13:27:13]     neuer bester Checkpoint (nach 0 Spielen)
+[Self-Play Snapshot] geladen: experiments/releases/20261020_old3_sym3/agent_p0.pth (env_steps=909000, eps=0.000, Ensemble=6 Netze)
+[Self-Play Snapshot] geladen: experiments/releases/20261022_v10_baseline/agent_p0.pth (env_steps=909000, eps=0.000, Ensemble=18 Netze)
+[13:28:52] [25/1500] default 3-0 P 2390:773 loss=0.61345
+[13:30:33] [50/1500] sol92_weak 1-2 P 624:791 loss=0.70801
+[13:32:30] [75/1500] sol92_sq 1-2 P 1307:1572 loss=0.76282
+[13:34:24] [100/1500] solution92 0-3 P 853:914 loss=0.76933
+[13:36:09] [125/1500] rush 3-0 P 2006:201 loss=0.74009
+[13:37:49] [150/1500] default 3-0 P 2066:315 loss=0.7477
+[13:39:29] [175/1500] solution92 3-0 P 983:765 loss=0.71224
+[13:41:12] [200/1500] sol92_sq 1-2 P 1851:1946 loss=0.71429
+[13:42:34] [225/1500] solution92 1-2 P 1624:1650 loss=0.72162
+[13:44:38] [250/1500] pool:releases/agent_p0.pth 0-3 P 1401:1657 loss=0.75588
+[13:46:49] [275/1500] sol92_weak 2-1 P 796:1056 loss=0.71796
+[13:48:51] [300/1500] pool:releases/agent_p0.pth 1-2 P 666:841 loss=0.68717
+[13:50:52] [325/1500] sol92_sq 1-2 P 925:998 loss=0.6997
+[13:52:28] [350/1500] solution92 3-0 P 750:257 loss=0.69529
+[13:53:52] [375/1500] solution92 2-1 P 1781:1390 loss=0.68881
+[13:55:30] [400/1500] solution92 3-0 P 2396:2260 loss=0.72343
+[13:57:15] [425/1500] sol92_sq 3-0 P 1009:284 loss=0.69495
+[13:59:03] [450/1500] sol92_sq 2-1 P 933:987 loss=0.70218
+[14:00:44] [475/1500] pool:releases/agent_p0.pth 1-2 P 917:1096 loss=0.69127
+[14:02:21] [500/1500] solution92 2-1 P 1674:1596 loss=0.74092
+[14:03:45]   VAL nach 500: default 1.000 | sol92 0.750 (Matches 0.625, Punkte 1044:963) -> score 1.188
+[14:05:24] [525/1500] sol92_sq 3-0 P 520:276 loss=0.80184
+[14:07:36] [550/1500] sol92_sq 3-0 P 1006:280 loss=0.79616
+[14:09:16] [575/1500] sol92_weak 2-1 P 997:1007 loss=0.7563
+[14:10:50] [600/1500] solution92 3-0 P 1519:1027 loss=0.67002
+[14:12:18] [625/1500] solution92 1-2 P 1032:1523 loss=0.67559
+[14:13:52] [650/1500] pool:releases/agent_p0.pth 2-1 P 978:801 loss=0.66546
+[14:15:35] [675/1500] sol92_sq 0-3 P 687:1379 loss=0.63952
+[14:17:10] [700/1500] solution92 0-3 P 1314:1612 loss=0.70424
+[14:18:49] [725/1500] solution92 1-2 P 1843:1555 loss=0.79397
+[14:20:28] [750/1500] sol92_sq 0-3 P 0:1840 loss=0.72299
+[14:22:01] [775/1500] sol92_sq 1-2 P 695:1003 loss=0.76342
+[14:23:31] [800/1500] solution92 1-2 P 1282:1280 loss=0.72246
+[14:25:00] [825/1500] solution92 1-2 P 1316:1333 loss=0.72117
+[14:26:31] [850/1500] sol92_sq 1-2 P 1396:1432 loss=0.71871
+[14:27:57] [875/1500] solution92 2-1 P 1717:1416 loss=0.74206
+[14:29:25] [900/1500] rush 3-0 P 510:12 loss=0.74114
+[14:30:47] [925/1500] pool:releases/agent_p0.pth 0-3 P 569:742 loss=0.68251
+[14:32:07] [950/1500] solution92 3-0 P 913:585 loss=0.67663
+[14:33:37] [975/1500] pool:releases/agent_p0.pth 0-3 P 656:1090 loss=0.69003
+[14:35:08] [1000/1500] rush 3-0 P 1309:80 loss=0.73025
+[14:36:50]   VAL nach 1000: default 1.000 | sol92 0.938 (Matches 0.812, Punkte 1130:919) -> score 1.375
+[14:36:50]     neuer bester Checkpoint (nach 1000 Spielen)
+[14:38:24] [1025/1500] sol92_sq 3-0 P 1440:902 loss=0.68351
+[14:39:54] [1050/1500] sol92_sq 2-1 P 1192:1006 loss=0.70779
+[14:41:21] [1075/1500] solution92 3-0 P 682:201 loss=0.66421
+[14:42:45] [1100/1500] solution92 1-2 P 657:788 loss=0.72979
+[14:44:08] [1125/1500] sol92_sq 1-2 P 1364:1457 loss=0.67631
+[14:45:37] [1150/1500] pool:releases/agent_p0.pth 3-0 P 890:84 loss=0.68488
+[14:47:03] [1175/1500] sol92_sq 1-2 P 693:716 loss=0.67697
+[14:48:33] [1200/1500] pool:releases/agent_p0.pth 1-2 P 444:349 loss=0.66452
+[14:50:06] [1225/1500] solution92 3-0 P 737:446 loss=0.7411
+[14:51:33] [1250/1500] sol92_weak 1-2 P 418:356 loss=0.72799
+[14:52:57] [1275/1500] solution92 3-0 P 637:263 loss=0.75473
+[14:54:22] [1300/1500] solution92 1-2 P 1166:1272 loss=0.79202
+[14:55:53] [1325/1500] default 3-0 P 2333:25 loss=0.7079
+[14:57:17] [1350/1500] sol92_sq 0-3 P 1391:1502 loss=0.75148
+[14:58:48] [1375/1500] sol92_sq 3-0 P 1099:734 loss=0.7842
+[15:00:13] [1400/1500] sol92_sq 1-2 P 1102:1093 loss=0.77517
+[15:01:42] [1425/1500] sol92_weak 0-3 P 1621:1768 loss=0.7756
+[15:03:12] [1450/1500] solution92 1-2 P 1329:1631 loss=0.77116
+[15:04:39] [1475/1500] pool:releases/agent_p0.pth 2-1 P 892:607 loss=0.77786
+[15:06:11] [1500/1500] solution92 3-0 P 797:360 loss=0.77448
+[15:07:35]   VAL nach 1500: default 1.000 | sol92 0.750 (Matches 0.667, Punkte 1115:887) -> score 1.208
+[15:07:35] Fertig, bester Checkpoint nach 1000 Spielen (score 1.375)
