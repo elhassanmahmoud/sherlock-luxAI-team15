@@ -55,3 +55,19 @@ def test_reserve_sap_defends_from_reserve_tile():
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 100), (3, 5, 100)], enemies=[(4, 8, 80)]))
         assert a._cache[1]["assigned"][1] == (3, 5)
         assert int(act[1, 0]) == want, flag
+
+
+def test_relic_scout_sends_spare_unit_to_stale_own_tiles_in_match_two():
+    b = _belief()
+    b.match_idx, b.match_step = 1, 20
+    b.last_seen[:, :] = 19                                   # alles frisch gesehen ...
+    b.last_seen[0:4, 12:16] = -1                             # ... ausser einem Block der eigenen Haelfte
+    units = np.array([[5, 5], [1, 10]])
+    kw = dict(far_opp=10, home_reserve=True)
+    assert assign_targets(b, np.array([0, 1]), units, 24, 24, **kw)[1] == (3, 7)   # nur Reserve
+    out = assign_targets(b, np.array([0, 1]), units, 24, 24, relic_scout=1, **kw)
+    assert out[0] == (5, 5) and out[1][0] < 4 and 12 <= out[1][1] < 16
+    b.match_idx = 0                                          # Match 1: keine Suche
+    assert assign_targets(b, np.array([0, 1]), units, 24, 24, relic_scout=1, **kw)[1] == (3, 7)
+    b.match_idx, b.match_step = 1, 70                        # Spawnfenster vorbei
+    assert assign_targets(b, np.array([0, 1]), units, 24, 24, relic_scout=1, **kw)[1] == (3, 7)

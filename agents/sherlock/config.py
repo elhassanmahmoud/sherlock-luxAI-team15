@@ -339,6 +339,12 @@ class AgentConfig:
     (begehbar, kein Nebel, viel Feldenergie). Diagnose Dev A: Kennt der Belief mehr Punkte-Tiles als wir
     Units haben, liefen die uebrigen Units 25 Felder in die besetzte Gegnerfestung, starben und
     liefen nach dem Respawn wieder los (800070, Match 3). Faellt ein Halter, ist eine Reserve nah dran."""
+    relic_scout: int = 0
+    """29.10.2026: so viele ueberzaehlige Units (Ziel weit in der Gegnerhaelfte) suchen in Match 2/3 bis
+    scout_until das neue Relic-Paar, solange es fehlen kann (features._relic_scout). Diagnose 800004: ein
+    Paar aus Match 2 wurde nie gefunden, wir kannten 38-44 % der Punkte-Tiles. Units mit eigenem Ziel nie."""
+    scout_until: int = 60
+    scout_stale: int = 20
     reserve_sap: bool = False
     """29.10.2026: Reserve-Units (home_reserve) auf ihrem Reservetile sappen wie Halter (pt_sap-Regeln)."""
     active_targets: bool = False

@@ -127,7 +127,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    far_cand: bool = False, cand_boost: float = 0.0,
                    explore_quota: int = 0, explore_until: int = 75,
                    energy_pref: float = 0.0, reach: bool = False,
-                   home_reserve: bool = False) -> dict[int, tuple[int, int]]:
+                   home_reserve: bool = False, relic_scout: int = 0, scout_until: int = 60,
+                   scout_stale: int = 20) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -165,6 +166,10 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
 
     home_reserve (cfg.home_reserve, 29.10.2026): Units mit Ziel auf einem Punkte-Tile der Gegnerhaelfte
     weiter als far_opp bekommen stattdessen ein Reservetile nahe den eigenen Punkte-Tiles (reserve_tiles).
+
+    relic_scout > 0 (cfg.relic_scout, 29.10.2026): In Match 2/3 bis scout_until, solange ein Relic-Paar
+    fehlen kann, suchen hoechstens relic_scout dieser ueberzaehligen Units (Ziel weit in der Gegnerhaelfte)
+    die eigene Haelfte nach dem neuen Paar ab (_relic_scout). Nie Units mit eigenem Ziel.
 
     reach (cfg.reach_assign, 22.10.2026): Weglaenge (BFS ueber die Gedaechtniskarte) statt
     Luftlinie; nach Gedaechtnis unerreichbare Ziele (z. B. Punkte-Tiles unter einem Asteroiden)
@@ -273,12 +278,16 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
         out[int(unit_ids[ui])] = (int(tgt[ti, 0]), int(tgt[ti, 1]))
         cost[ui, :] = np.inf
         cost[:, ti] = np.inf
-    if home_reserve and far_opp > 0:
+    if (home_reserve or relic_scout > 0) and far_opp > 0:
         col = {(int(x), int(y)): j for j, (x, y) in enumerate(tgt.tolist())}
         far = [i for i, uid in enumerate(unit_ids)
                if (t := out.get(int(uid))) is not None and belief.point_tiles[t] and in_enemy[col[t]]
                and dist_ut[i, col[t]] > far_opp]
-        if far:
+        if (far and relic_scout > 0 and belief.match_idx >= 1 and belief.match_step <= scout_until
+                and belief.known_pairs() < belief.match_idx + 1):
+            out, far = _relic_scout(belief, unit_ids, unit_pos, out, far, W, H, own_origin,
+                                    relic_scout, scout_stale)
+        if far and home_reserve:
             out = _home_reserve(belief, unit_ids, unit_pos, out, far, W, H, own_origin)
     if (explore_quota > 0 and belief.match_idx >= 1 and belief.match_step < explore_until
             and belief.known_pairs() < belief.match_idx + 1):
@@ -298,6 +307,41 @@ def reserve_tiles(belief, W: int, H: int, own_origin: bool = True) -> np.ndarray
         return np.zeros((W, H), dtype=bool)
     ring = _dilate(pts, 2) & ~_dilate(pts, 1)
     return ring & own & belief.passable & ~belief.nebula & ~belief.point_tiles & ~belief.candidate
+
+
+def _relic_scout(belief, unit_ids, unit_pos, out: dict, far: list, W: int, H: int, own_origin: bool,
+                 n: int, stale: int) -> tuple[dict, list]:
+    """Bis zu n Units aus `far` (Indizes) auf eigene Tiles schicken, die ein neues Relic verbergen
+    koennen: begehbar, in diesem Match nicht in den letzten `stale` Steps und nicht ab Step 49
+    gesehen (wie Belief.explore_coords), je 4x4-Block eins. Liefert (Zuweisung, restliche far)."""
+    xs, ys = np.indices((W, H))
+    own = (xs + ys <= W - 1) if own_origin else (xs + ys >= W - 1)
+    ls = belief.last_seen
+    fresh = (ls >= belief.match_step - stale) | (ls >= 49)
+    goals = np.argwhere(own & belief.passable & ~fresh)
+    if len(goals) == 0:
+        return out, far
+    goals = grid_targets(goals.astype(np.int32), 4)
+    out, rest = dict(out), list(far)
+    taken: set = set(out.values())
+    pos = np.asarray(unit_pos)
+    for _ in range(n):
+        best = None
+        for i in rest:
+            d = np.abs(goals[:, 0] - pos[i][0]) + np.abs(goals[:, 1] - pos[i][1])
+            for k in np.argsort(d, kind="stable"):
+                g = (int(goals[k, 0]), int(goals[k, 1]))
+                if g not in taken:
+                    if best is None or (int(d[k]), int(unit_ids[i])) < best[:2]:
+                        best = (int(d[k]), int(unit_ids[i]), i, g)
+                    break
+        if best is None:
+            break
+        _, uid, i, g = best
+        out[uid] = g
+        taken.add(g)
+        rest.remove(i)
+    return out, rest
 
 
 def _home_reserve(belief, unit_ids, unit_pos, out: dict, far: list, W: int, H: int,
@@ -503,6 +547,8 @@ def make_context(agent, obs, belief=None) -> dict:
         energy_pref=float(agent.cfg.energy_pref),
         reach=bool(agent.cfg.reach_assign) and (not agent.training or agent.cfg.rules_in_training),
         home_reserve=bool(agent.cfg.home_reserve) and (not agent.training or agent.cfg.rules_in_training),
+        relic_scout=int(agent.cfg.relic_scout) if (not agent.training or agent.cfg.rules_in_training) else 0,
+        scout_until=int(agent.cfg.scout_until), scout_stale=int(agent.cfg.scout_stale),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
