@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 19:45 Berlin – Claude Code mit Mahmoud: Gegenprobe Dev B für mix36, Runde 4 vorbereitet
+
+- **`mix36` auf Dev B** (801000–801299, ganzes Panel, je Gegner 600 Spiele, gepaart gegen V10): `sol92_sq` 84,8 % (V10 83,2 %, +1,7 [−1,2; +4,7]), Solution_92 92,7 % (91,2 %, +1,5 [−1,0; +3,8]), `sol92_weak` 92,3 % (±0), `old3_sym3` 92,7 % (91,7 %, +1,0 [−2,7; +5,0]), default 100 %. Die Schwäche gegen `old3_sym3` auf Dev A (−3,3) bestätigt sich nicht. Der Vorsprung gegen `sol92_sq` ist kleiner als auf Dev A (+5,2). Gesamtbild beider Blöcke: R etwa +1,3 pp. Für die Bestätigungshürde (+2 pp) reicht das voraussichtlich nicht; deshalb weiteres Nachtraining.
+- Trainingskurven (Einzelnetz, ε = 0,05): gegen Solution_92 61 → 72 %, `sol92_weak` 64 → 74 %, `sol92_sq` 48 → 52–56 %; gegen den Pool aus eigenen Ensembles bleibt es bei etwa 41–48 % ohne Anstieg. **Runde 4** (`scripts/pipeline_battle_ftn.sh 4 …`, startet automatisch nach dem Ende von Runde 2) deshalb mit mehr und vielfältigeren RL-Gegnern: Mix Solution_92 0,30, `sol92_sq` 0,25, `sol92_weak` 0,10, **Pool 0,25** (V10, `old3_sym3`, `battle_mix36`, **V3- und V7-Abgabe**), RushBot 0,05, default 0,05.
+- Läuft (4 Worker, Dev A): V10 und `mix36` gegen die früheren Abgaben V3 und V7 als zusätzliche RL-Gegner, dazu `mix36` direkt gegen V10. Dient nur der Einschätzung, keine Auswahl.
+- Auslastung: 12 Trainings- und 8 Messprozesse auf 15 Kernen (5 Leistungs-, 10 Effizienzkerne). Training 115 statt 92 Spiele/min, Messung 86 statt 105 Spiele/min. Insgesamt etwa gleich, die Überbelegung kostet also nichts.
+
 ## 29.10.2026, 19:15 Berlin – Claude Code mit Mahmoud: 18 nachtrainierte Netze gemessen, Nachtablauf geplant, Battle-Abgabe gegen train=True abgesichert
 
 - **Erste Nachtrainingsrunde fertig** (alle 18 Netze, je 1.500 Spiele). Dev A, alle mit V10-Config:
