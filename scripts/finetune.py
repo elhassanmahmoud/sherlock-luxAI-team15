@@ -23,6 +23,10 @@ Unterschiede zu scripts/experiment.py:
     besser ist. Score = mittlere Winrate ueber beide Gegner + 0.5 * Match-Winrate
     gegen Solution_92 (dort sind Spielsiege selten, Matches sind feiner).
   * Test nur mit dem nach Validierung besten Checkpoint.
+  * 29.10.2026 (Battle-Vorbereitung): --variant setzt die Config des Lerners (z. B. full_rules_v10:
+    alle V10-Regeln schon im Training), --mix erlaubt alle Gegner aus scripts.common (z. B.
+    sol92_sq, sol92_weak, rush), --keep-final behaelt den Endstand statt des Validierungs-Besten
+    (16 Validierungskarten waehlen sonst leicht einen Zufallstreffer oder den unveraenderten Start).
 Ausgabeformat (train/val/eval.csv, manifest.json) wie experiment.py, damit
 scripts/report.py die Laeufe mit auswertet.
 """
@@ -52,6 +56,21 @@ def val_score(by_opp: dict) -> float:
         + 0.5 * by_opp["solution92"]["match_winrate"]
 
 
+def parse_mix(text: str | None, sol92_frac: float) -> dict[str, float]:
+    """Gegner-Anteile pruefen; erlaubt sind alle Gegner aus scripts.common ausser self, dazu pool."""
+    from scripts.common import OPPONENTS
+    if text:
+        mix = {k: float(v) for k, v in (kv.split("=") for kv in text.split(","))}
+    else:
+        mix = {"solution92": sol92_frac, "default": 1.0 - sol92_frac}
+    allowed = (set(OPPONENTS) - {"self"}) | {"pool"}
+    if not set(mix) <= allowed:
+        raise SystemExit(f"Unbekannte Gegner im Mix: {sorted(set(mix) - allowed)}")
+    if abs(sum(mix.values()) - 1.0) > 1e-6:
+        raise SystemExit(f"Anteile ergeben nicht 1: {mix}")
+    return mix
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--init", required=True, help="Run-Ordner mit Startgewichten")
@@ -73,6 +92,9 @@ def main() -> None:
     ap.add_argument("--snapshot-every", type=int, default=0,
                     help="alle n Spiele Schnappschuss des Lerners in den Pool (0 = aus)")
     ap.add_argument("--max-snapshots", type=int, default=4)
+    ap.add_argument("--variant", default=None, help="Config des Lerners (Default: Variante des Init-Laufs)")
+    ap.add_argument("--keep-final", action="store_true",
+                    help="Endstand behalten statt des besten Checkpoints nach Validierung")
     args = ap.parse_args()
 
     limit_threads()
@@ -80,8 +102,12 @@ def main() -> None:
 
     init = Path(args.init)
     src_man = json.loads((init / "manifest.json").read_text())
-    variant = src_man.get("base_variant", src_man["variant"])  # Kette: ft eines ft-Laufs
+    variant = args.variant or src_man.get("base_variant", src_man["variant"])  # Kette: ft eines ft-Laufs
     run_dir = RUNS / args.name
+    if run_dir.exists():
+        raise SystemExit(f"{run_dir} existiert schon - neuen Namen waehlen")
+    assert FT_SEED_BASE + args.seed * 10_000 + 5_000 + args.games // 2 < P.VAL_SEED_BASE, \
+        "Trainings-Seeds wuerden in die Validierung laufen"
     (run_dir / "weights").mkdir(parents=True, exist_ok=True)
     for pat in ("*.pth", "*.buffer.npz"):
         for f in (init / "weights").glob(pat):
@@ -103,11 +129,7 @@ def main() -> None:
             a.cfg.lr = args.lr
 
     rng = np.random.default_rng(args.seed)
-    if args.mix:
-        mix = {k: float(v) for k, v in (kv.split("=") for kv in args.mix.split(","))}
-    else:
-        mix = {"solution92": args.sol92_frac, "default": 1.0 - args.sol92_frac}
-    assert set(mix) <= {"solution92", "default", "pool"}, mix
+    mix = parse_mix(args.mix, args.sol92_frac)
     assert abs(sum(mix.values()) - 1.0) < 1e-6, mix
     assert mix.get("pool", 0) == 0 or args.pool or args.snapshot_every, "pool ohne Gegner"
     for p in args.pool:
@@ -134,7 +156,8 @@ def main() -> None:
         prefill_games=args.prefill_games, buffer_loaded=0,
         train_seeds=[FT_SEED_BASE + args.seed * 10_000,
                                  FT_SEED_BASE + args.seed * 10_000 + args.games // 2],
-        selection="bester Checkpoint nach val_score (Validierung), siehe Docstring",
+        selection=("Endstand (--keep-final)" if args.keep_final else
+                   "bester Checkpoint nach val_score (Validierung), siehe Docstring"),
         val_seeds=P.val_seeds(args.n_val), val_every=args.val_every,
         test_seeds=[] if args.no_test else P.test_seeds(),
         eval_opponents=list(P.EVAL_OPPONENTS), eval_epsilon=0.0,
@@ -226,8 +249,11 @@ def main() -> None:
 
     # bester Checkpoint -> weights/ (fuer Test, Replays, Abgabe). Der Buffer
     # (Stand Trainingsende) kommt daneben, damit der Lauf weitertrainierbar ist.
-    shutil.rmtree(run_dir / "weights")
-    shutil.copytree(best_dir, run_dir / "weights")
+    if args.keep_final:
+        learners.save()
+    else:
+        shutil.rmtree(run_dir / "weights")
+        shutil.copytree(best_dir, run_dir / "weights")
     learners.save_buffers()
     if not args.no_test:
         learners = Learners(variant, run_dir, args.seed, load=True)
