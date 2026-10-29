@@ -49,6 +49,23 @@ from .reward import surviving, unit_rewards
 SAP_DROPOFF_ASSUMED = 0.5  # unit_sap_dropoff_factor ist nicht beobachtbar
 
 
+def resolve_weights(path: Optional[str]) -> Optional[str]:
+    """Gewichte neben main.py finden, wenn der Pfad vom Arbeitsverzeichnis aus fehlt.
+
+    Abgabe 06.11.2026: Der Prof legt unseren Ordner an eine Stelle, die wir nicht
+    kennen (agents/ oder Projektwurzel), und uebergibt z. B. 'Gruppe15/agent.pth'.
+    Ohne diesen Rueckfall spielte der Agent still untrainiert und mit Standard-Config.
+    Im Repo liegen keine .pth direkt neben main.py, dort aendert sich also nichts.
+    """
+    if not path or os.path.isfile(path):
+        return path
+    local = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.path.basename(path))
+    if os.path.isfile(local):
+        print(f"[Sherlock] {path} nicht gefunden - nutze {local}")
+        return local
+    return path
+
+
 class Agent_x:
     """DQN-Agent mit Gedaechtnis, Reward Shaping und Action Masking."""
 
@@ -62,6 +79,7 @@ class Agent_x:
         seed: Optional[int] = None,
     ) -> None:
         self.name = name
+        agent_path = resolve_weights(agent_path)
         self.agent_path = agent_path
         # Ohne explizite Config die des Checkpoints uebernehmen - so laedt der
         # Runner jede Ablations-Variante mit passender Architektur.
@@ -1284,3 +1302,7 @@ class Agent_x:
         print(f"[{self.name}] geladen: {load_path} "
               f"(env_steps={self.env_steps}, eps={self.epsilon:.3f}, "
               f"Ensemble={1 + len(self.extra_q)} Netze)")
+
+
+# Beispiel des Profs fuer die Battle-Abgabe lautet 'Gruppe21.main.Agent'; beide Namen gehen.
+Agent = Agent_x

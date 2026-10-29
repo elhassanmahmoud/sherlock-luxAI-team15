@@ -40,7 +40,7 @@
 ## Termine
 - 16.10. Review (benotet): erster lauffähiger, trainierter Agent + Präsi (Pseudocode, Architektur, Features, Training, Replays, Erkenntnisse)
 - Submission 1: ungefähr **10 Minuten Vortrag**, Upload der Präsentation bis **16.10.2026, 08:00 Uhr** (Moodle-Aufgabe). Laut Moayed sind die Slots **20 Minuten** lang; Fragen/Puffer in der übrigen Zeit sind eine plausible, noch nicht bestätigte Aufteilung. Die genaue Vortragsdauer späterer Termine ist noch zu bestätigen.
-- 06.11. Zwischenpräsi + Battle (benotet)
+- 06.11. Zwischenpräsi + Battle (benotet): 10 Minuten Vortrag für die Kommilitonen (wie der Agent funktioniert und trainiert wurde, Neues der letzten Woche, Bewertungsschema Kursfolie 11). Agent laut Prof-Mail (von Mahmoud am 29.10. weitergegeben) **bis Mittwoch Nacht auf Moodle**, vermutlich 04.11., der Prof testet am Donnerstag: `Gruppe15.zip`, Agent-Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth` (eine Datei für beide Seiten).
 - 27.11. Finale + Turnier + Abgabe agent.zip (benotet)
 
 ## Historische Probleme im Dozenten-Template
@@ -97,6 +97,7 @@ Punkte 1 und 2 wurden im Projekt bereits behoben; Punkt 3 wird durch die eigene 
 - Neue Punktemessungen tragen `point_counting_version=2`: vollständige Matchpunkte einschließlich des letzten Zuwachses vor dem Reset. CSVs ohne diese Spalte sind historische Version 1 und bleiben unverändert. Punktevergleiche nur innerhalb derselben Version; alte Spiele mit denselben Gewichten, Seeds und Gegnern in neue Dateien auswerten. Die Rekonstruktion aus `info["final_state"]` ist reine externe Messung und darf nicht als Agentenwissen oder Reward verwendet werden.
 
 - `scripts.train` schreibt pro Aufruf in einen neuen Run-Ordner; ein optionales `--output-dir` darf noch nicht existieren. `--resume CHECKPOINT` liest ein vorhandenes Einzelnetz und schreibt in einen neuen Lauf. Ensemble-Resume wird abgewiesen. Quelle und Abgabe-Dateien nicht ersetzen; der einfache Trainer stellt den Replay Buffer nicht wieder her.
+- `scripts.build_submission --battle` baut `Gruppe15.zip` im Projektordner (gitignored) im Format der Battle-Mail und prüft es mit dem Ordner unter `agents/` und in der Projektwurzel. Findet der Agent den übergebenen Gewichte-Pfad nicht, lädt er die gleichnamige `.pth` direkt neben `main.py` (`resolve_weights`); im Repo liegen dort keine `.pth`.
 - `scripts.build_submission --from-run` verpackt die angegebenen Gewichte direkt, ohne sie in `agents/sherlock/weights/` zu installieren. Eine neue Version der Abgabe-Gewichte muss separat ausdrücklich beauftragt werden.
 - Der Schutz gilt für diese beiden Skripte, nicht für beliebige Dateioperationen. `main.py` zur Vorführung bei `train=False` belassen; direkten Runner-Trainingsaufrufen oder anderen Schreibwerkzeugen niemals die Abgabe-Dateien als Ausgabe geben.
 - Arrays `[x][y]`, unsichtbare Werte = -1, Aktionen Shape `(max_units, 3)`: 0 stay, 1 up, 2 right, 3 down, 4 left, 5 sap(dx, dy).

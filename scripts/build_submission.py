@@ -3,6 +3,7 @@
     python -m scripts.build_submission
     python -m scripts.build_submission --team-name sherlock --group 15
     python -m scripts.build_submission --from-run experiments/runs/20261010_full_s1
+    python -m scripts.build_submission --battle          # Gruppe15.zip im Projektordner
 
 Inhalt von dist/agent.zip:
 
@@ -15,10 +16,16 @@ Inhalt von dist/agent.zip:
         agents.yaml          Import-Pfad + Lade-Pfade
     paths.csv                Moodle-Gruppe;Import_Path;Load_Path_P0;Load_Path_P1
 
+--battle folgt der Mail des Profs zum Battle (erhalten 29.10.2026): Gruppe<N>.zip
+mit Ordner Gruppe<N>/, Import-Pfad 'Gruppe<N>.main.Agent_x' und Gewichten direkt im
+Ordner. Gleiche Gewichte fuer beide Seiten stehen einmal als agent.pth darin, sonst
+als agent_0.pth und agent_1.pth. Dazu LIESMICH.txt mit den Pfaden fuer den Prof.
+
 --from-run liest die Gewichte eines Experiment-Laufs direkt ins Zip.
 agents/sherlock/weights/ bleibt unveraendert. Danach prueft das Skript
 das entpackte Zip: Import ueber lux/runner.load_class_from_path, Pflichtmethoden,
-Laden beider Seiten und ein Aktionsschritt auf einer echten Beobachtung.
+Laden beider Seiten und ein Aktionsschritt auf einer echten Beobachtung. Das
+Battle-Zip wird zweimal geprueft: Ordner unter agents/ und in der Projektwurzel.
 """
 from __future__ import annotations
 
@@ -49,7 +56,8 @@ def run_weights(run_dir: Path) -> list[Path]:
     return [p0, p1]
 
 
-def build(team: str, group: int, out: Path, from_run: Path | None = None) -> Path:
+def sources(out: Path, from_run: Path | None) -> tuple[list[Path], list[Path], Path]:
+    """Quelldateien, Gewichte beider Seiten und geprueftes Ausgabeziel."""
     files = sorted(p for p in SRC.glob("*.py") if p.name != "__init__.py")
     weights = (run_weights(from_run) if from_run is not None else
                [SRC / "weights" / "agent_p0.pth", SRC / "weights" / "agent_p1.pth"])
@@ -62,58 +70,129 @@ def build(team: str, group: int, out: Path, from_run: Path | None = None) -> Pat
             raise ValueError(f"Zip-Ausgabe darf keine Eingabe-Gewichte ersetzen: {out}")
     except (ValueError, OSError) as exc:
         raise SystemExit(str(exc)) from exc
+    out.parent.mkdir(parents=True, exist_ok=True)
+    return files, weights, out
+
+
+def yaml_text(imp: str, lp0: str, lp1: str) -> str:
+    return (f"%YAML 1.2\n---\n\nIMPORT_PATH: '{imp}'\n"
+            f"LOAD_PATH_P0: '{lp0}'\nLOAD_PATH_P1: '{lp1}'\n")
+
+
+def build(team: str, group: int, out: Path, from_run: Path | None = None) -> Path:
+    files, weights, out = sources(out, from_run)
     imp = f"agents.{team}.main.Agent_x"
     lp0, lp1 = f"agents/{team}/weights/agent_p0.pth", f"agents/{team}/weights/agent_p1.pth"
-    yaml = (f"%YAML 1.2\n---\n\nIMPORT_PATH: '{imp}'\n"
-            f"LOAD_PATH_P0: '{lp0}'\nLOAD_PATH_P1: '{lp1}'\n")
     csv = f"Moodle Gruppe;Import_Path;Load_Path_P0;Load_Path_P1\n{group};{imp};{lp0};{lp1}\n"
 
-    out.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr(f"{team}/__init__.py", "")
         for f in files:
             z.write(f, f"{team}/{f.name}")
         for i, w in enumerate(weights):
             z.write(w, f"{team}/weights/agent_p{i}.pth")
-        z.writestr(f"{team}/agents.yaml", yaml)
+        z.writestr(f"{team}/agents.yaml", yaml_text(imp, lp0, lp1))
         z.writestr("paths.csv", csv)
     return out
+
+
+def battle_paths(group: int, same: bool) -> tuple[str, str, str]:
+    pkg = f"Gruppe{group}"
+    if same:
+        return f"{pkg}.main.Agent_x", f"{pkg}/agent.pth", f"{pkg}/agent.pth"
+    return f"{pkg}.main.Agent_x", f"{pkg}/agent_0.pth", f"{pkg}/agent_1.pth"
+
+
+def readme_text(group: int, imp: str, lp0: str, lp1: str) -> str:
+    pth = (f"Pfad zum trainierten Agenten:  {lp0}   (gleiche Datei fuer Player 0 und Player 1)"
+           if lp0 == lp1 else f"Pfad Player 0:  {lp0}\nPfad Player 1:  {lp1}")
+    return (f"Gruppe {group} - Agent Sherlock\n\n"
+            f"Pfad zur Agent-Klasse (act, update):  {imp}\n{pth}\n\n"
+            f"Zeile fuer Paths.csv:\n{group};{imp};{lp0};{lp1}\n\n"
+            "Hinweise:\n"
+            f"- Den Ordner Gruppe{group} nach agents/ oder in die Projektwurzel legen, beides geht.\n"
+            "  Findet der Agent den Gewichte-Pfad vom Arbeitsverzeichnis aus nicht, laedt er die\n"
+            "  gleichnamige .pth-Datei direkt neben main.py.\n"
+            "- Fuer das Battle bitte mit train=False spielen. Mit train=True lernt der Agent weiter\n"
+            "  (Epsilon-Exploration) und ueberschreibt seine .pth-Datei.\n"
+            "- Benoetigt nur die Kurs-Pakete (torch, numpy); CPU reicht.\n"
+            "- Beim Start erscheint: [Sherlock Agent_X] geladen: ... Ensemble=18 Netze\n")
+
+
+def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[Path, tuple[str, str, str]]:
+    files, weights, out = sources(out, from_run)
+    pkg = f"Gruppe{group}"
+    same = weights[0].read_bytes() == weights[1].read_bytes()
+    imp, lp0, lp1 = battle_paths(group, same)
+
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr(f"{pkg}/__init__.py", "")
+        for f in files:
+            z.write(f, f"{pkg}/{f.name}")
+        for w, lp in ([(weights[0], lp0)] if same else [(weights[0], lp0), (weights[1], lp1)]):
+            z.write(w, lp)
+        z.writestr(f"{pkg}/agents.yaml", yaml_text(imp, lp0, lp1))
+        z.writestr(f"{pkg}/LIESMICH.txt", readme_text(group, imp, lp0, lp1))
+    return out, (imp, lp0, lp1)
 
 
 CHECK = r'''
 import sys, numpy as np
 sys.path.insert(0, sys.argv[1])
-import pandas as pd
+import agents  # wie beim Prof: agents/__init__.py importiert alle Unterpakete
 from lux.runner import load_class_from_path
 from luxai_s3.wrappers import LuxAIS3GymEnv
-row = pd.read_csv(sys.argv[2], sep=";").iloc[0]
-cls = load_class_from_path(row["Import_Path"])
-missing = [m for m in sys.argv[3].split(",") if not callable(getattr(cls, m, None))]
+imp, p0, p1 = sys.argv[2:5]
+cls = load_class_from_path(imp)
+missing = [m for m in sys.argv[5].split(",") if not callable(getattr(cls, m, None))]
 assert not missing, f"Pflichtmethoden fehlen: {missing}"
 env = LuxAIS3GymEnv(numpy_output=True)
 obs, info = env.reset(seed=1)
-for side, col in (("player_0", "Load_Path_P0"), ("player_1", "Load_Path_P1")):
-    a = cls(side, agent_path=row[col])
+for side, path in (("player_0", p0), ("player_1", p1)):
+    a = cls(side, agent_path=path)
     a.set_to_eval_mode(); a.set_env_cfg(info["params"])
     act = a.act(0, obs[side])
     assert np.asarray(act).shape == (16, 3), act.shape
     assert a.env_steps > 0, "Gewichte nicht geladen (env_steps == 0)"
-    print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}")
+    print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={1 + len(a.extra_q)}")
 print("Check ok")
 '''
+
+
+def project_copy(tmp: Path) -> None:
+    """Frische Kursvorlage nachbauen: lux/, agents/__init__.py (Auto-Import), default."""
+    skip = shutil.ignore_patterns("__pycache__")
+    shutil.copytree(ROOT / "lux", tmp / "lux", ignore=skip)
+    shutil.copytree(ROOT / "agents" / "default", tmp / "agents" / "default", ignore=skip)
+    shutil.copy(ROOT / "agents" / "__init__.py", tmp / "agents" / "__init__.py")
+
+
+def run_check(tmp: Path, imp: str, lp0: str, lp1: str) -> None:
+    subprocess.run([sys.executable, "-c", CHECK, str(tmp), imp, lp0, lp1, ",".join(REQUIRED)],
+                   cwd=tmp, check=True)
 
 
 def check(zip_path: Path, team: str) -> None:
     """Zip in eine frische Projektkopie (nur lux/ + agents/<team>) entpacken und laden."""
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
-        shutil.copytree(ROOT / "lux", tmp / "lux", ignore=shutil.ignore_patterns("__pycache__"))
-        (tmp / "agents").mkdir()
-        (tmp / "agents" / "__init__.py").write_text("")
+        project_copy(tmp)
         with zipfile.ZipFile(zip_path) as z:
             z.extractall(tmp / "agents")
-        subprocess.run([sys.executable, "-c", CHECK, str(tmp), str(tmp / "agents" / "paths.csv"),
-                        ",".join(REQUIRED)], cwd=tmp, check=True)
+        row = (tmp / "agents" / "paths.csv").read_text().splitlines()[1].split(";")
+        run_check(tmp, row[1], row[2], row[3])
+
+
+def check_battle(zip_path: Path, paths: tuple[str, str, str]) -> None:
+    """Battle-Zip so pruefen, wie der Prof es nutzen kann: unter agents/ und in der Wurzel."""
+    for place in ("agents", "."):
+        print(f"Ordner in {'agents/' if place == 'agents' else 'Projektwurzel'}:")
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            project_copy(tmp)
+            with zipfile.ZipFile(zip_path) as z:
+                z.extractall(tmp / place)
+            run_check(tmp, *paths)
 
 
 def main() -> None:
@@ -121,19 +200,28 @@ def main() -> None:
     ap.add_argument("--team-name", default="sherlock", help="Ordnername im Zip (= Teamname)")
     ap.add_argument("--group", type=int, default=15, help="Moodle-Gruppennummer")
     ap.add_argument("--from-run", default=None, help="Gewichte dieses Runs direkt verpacken; Abgabe-Dateien unveraendert lassen")
-    ap.add_argument("--out", default=str(ROOT / "dist" / "agent.zip"))
+    ap.add_argument("--battle", action="store_true", help="Format aus der Battle-Mail: Gruppe<N>.zip")
+    ap.add_argument("--out", default=None, help="Standard: dist/agent.zip bzw. Gruppe<N>.zip im Projektordner")
     ap.add_argument("--no-check", action="store_true")
     args = ap.parse_args()
 
-    out = build(args.team_name, args.group, Path(args.out),
-                from_run=Path(args.from_run).expanduser() if args.from_run else None)
+    from_run = Path(args.from_run).expanduser() if args.from_run else None
+    if args.battle:
+        out, paths = build_battle(args.group, Path(args.out or ROOT / f"Gruppe{args.group}.zip"), from_run)
+    else:
+        out = build(args.team_name, args.group, Path(args.out or ROOT / "dist" / "agent.zip"), from_run)
     with zipfile.ZipFile(out) as z:
         names = z.namelist()
     print(f"{out} ({out.stat().st_size / 1e6:.1f} MB):")
     for n in names:
         print("  ", n)
+    if args.battle:
+        print("Fuer den Prof:\n  Agent-Klasse: {}\n  Gewichte P0:  {}\n  Gewichte P1:  {}".format(*paths))
     if not args.no_check:
-        check(out, args.team_name)
+        if args.battle:
+            check_battle(out, paths)
+        else:
+            check(out, args.team_name)
 
 
 if __name__ == "__main__":
