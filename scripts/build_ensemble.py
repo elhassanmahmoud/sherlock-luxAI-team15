@@ -9,6 +9,8 @@ Der erste Checkpoint bleibt das Hauptnetz (inkl. Target/Optimizer/Config), die
 uebrigen landen unter "ensemble". Agent_x mittelt beim Spielen die Q-Werte aller
 Netze. Eine einzelne .pth -> Runner und Abgabe brauchen keine Aenderung.
 
+--cfg-from (29.10.2026): Regel-Config eines anderen Checkpoints uebernehmen (z. B. V10 fuer nachtrainierte Netze).
+
 --mixed (21.10.2026): weitere Netze duerfen weniger Eingaben haben als das Hauptnetz
 (V3-Netze mit 79 neben Netzen mit Gefahr-Merkmalen, cfg.threat_feats). Sie bekommen die
 ersten Merkmale; ihre Eingabegroessen stehen unter "ensemble_dims".
@@ -31,6 +33,8 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--mixed", action="store_true",
                     help="kleinere Eingabegroessen der weiteren Netze erlauben")
+    ap.add_argument("--cfg-from", default=None,
+                    help="Config (Regel-Schalter) aus diesem Checkpoint uebernehmen, z. B. der V10-Abgabe")
     ap.add_argument("ckpts", nargs="+")
     args = ap.parse_args()
 
@@ -61,6 +65,12 @@ def main() -> None:
     base["ensemble"] = list(base.get("ensemble", [])) + extra
     base["ensemble_dims"] = dims
     base["ensemble_sources"] = [str(p) for p in args.ckpts]
+    if args.cfg_from:  # 29.10.2026: Netze mit exakt den Regeln eines anderen Standes spielen
+        ref = torch.load(args.cfg_from, map_location="cpu", weights_only=False)
+        for k in PLAY_KEYS:
+            if ref["cfg"].get(k) != base["cfg"].get(k):
+                raise SystemExit(f"--cfg-from: cfg.{k} passt nicht zu den Netzen")
+        base["cfg"] = dict(ref["cfg"])
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     torch.save(base, args.out)
     print(f"{args.out}: {1 + len(base['ensemble'])} Netze")
