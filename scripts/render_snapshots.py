@@ -1,4 +1,7 @@
-"""Spielfeld-Schnappschuesse eines Spiels Sherlock vs Solution_92 als PNG."""
+"""Spielfeld-Schnappschuesse eines Spiels Sherlock gegen Solution_92 (oder einen anderen Gegner) als PNG.
+
+    python scripts/render_snapshots.py SEED SIDE MATCH STEP,STEP OUT.png [WEIGHTS] [GEGNER]
+"""
 from __future__ import annotations
 
 import random
@@ -19,6 +22,7 @@ def main():
     seed, side, match, steps, out = int(sys.argv[1]), sys.argv[2], int(sys.argv[3]), \
         [int(s) for s in sys.argv[4].split(",")], sys.argv[5]
     weights = sys.argv[6] if len(sys.argv) > 6 else str(ROOT / "agents/sherlock/weights/agent_p0.pth")
+    opponent = sys.argv[7] if len(sys.argv) > 7 else "solution92"  # 29.10.2026: auch sol92_sq usw.
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from agents.sherlock.main import Agent_x
     from scripts.common import make_opponent
@@ -27,7 +31,7 @@ def main():
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
     opp_side = "player_1" if side == "player_0" else "player_0"
-    opp = make_opponent("solution92", opp_side)
+    opp = make_opponent(opponent, opp_side)
     agent.new_game(side)
     random.seed(seed)
     np.random.seed(seed % (2 ** 32))
