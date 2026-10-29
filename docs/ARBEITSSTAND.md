@@ -5,6 +5,17 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 23:55 Berlin – Claude Code mit Mahmoud: Runde 2 fertig, Auswahl Runde 1 läuft, Morgen-Screen mit zurückgehaltenen RL-Gegnern vorbereitet
+
+- **Runde 2 vollständig** (18 Netze, je 2.000 Spiele, Ende 23:29), Ensemble `battle_ft2_18` (`0a05d938…`). Der Nachtablauf hat `mix36b` (V10 + ft2_18, 24,0 MB) und `mix54` (V10 + ft18 + ft2_18, 35,1 MB) gebaut und um 23:30 die **Auswahl Runde 1** gestartet. V10-Referenz auf 802000–802199 (je Gegner 400 Spiele): Solution_92 89,5 %, `sol92_sq` 81,2 %, `sol92_weak` 92,0 %, `old3_sym3` 91,2 %, default 99,5 %, also R 88,5 %. Tempo etwa 98 Spiele/min mit 8 Workern neben 12 Trainingsprozessen. Die Auswahl ist voraussichtlich gegen 02:00 fertig, danach folgt die Bestätigung des gewählten Kandidaten.
+- **Trainingsverlauf der Einzelnetze** (ε = 0,05; erstes / mittleres / letztes Drittel der Spiele):
+  - RL-Liga (6 von 18 Netzen fertig): Solution_92 59 / 64 / 67 %, `sol92_sq` 45 / 49 / 50 %, eigene Abgaben im Pool 29 / 34 / 35 %, `battle_mix36` 15 / 13 / 17 %.
+  - Runde 3 (6 von 18 fertig): Solution_92 71 / 69 / 70 %, `sol92_sq` 56 / 59 / 54 %, Pool 46 / 51 / 47 %. Kein weiterer Anstieg gegenüber Runde 2 (Solution_92 66 / 67 / 66 %).
+- **Neu, nur Entwicklung:** `scripts/battle_screen.sh` und `scripts/pipeline_battle_morning.sh` (Plan-Nachtrag 29.10., 23:55). Der Screen misst zusätzlich gegen zwei **zurückgehaltene RL-Gegner, gegen die nie trainiert wurde**: `league_nets6` (6 Netze vom 26.10., V10-Regeln) und `threat6` (6 Gefahr-Netze, V3-Regeln). Er startet automatisch nach Ende von Runde 3 mit V10 und `mix36`. Nach Ende der RL-Liga folgen `mixrl36` (V10 + ftrl18) und `mixrl54` (V10 + ft18 + ftrl18).
+- Prüfungen: Auswertungscode des Screens auf vorhandenen Dev-A-Daten durchgelaufen (umbenannte Kopie im Scratchpad). Rauchtest V10 gegen beide zurückgehaltenen Gegner auf Karte 999990: beide laden mit 6 Netzen, 4/4 Spiele ohne Fehler. `bash -n` für beide Skripte.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+- **Offen:** Ergebnis von Auswahl und Bestätigung. Moodle-Dateigrenze klären (36 Netze ≈ 22 MB Zip, 54 Netze ≈ 33 MB).
+
 ## 29.10.2026, 21:05 Berlin – Claude Code mit Mahmoud: Runde 2 ohne Zusatznutzen, zweite Trainingslinie „RL-Liga“ gestartet
 
 - **Runde 2 auf denselben 6 Netzen** (Dev A, gepaart): `ft2_6` gegen `ft6` (Runde 1) `sol92_sq` 79,8 statt 82,2 % (−2,3 [−5,8; +1,0]), Solution_92 89,0 statt 89,2 % (−0,2 [−3,2; +2,8]); gegen V10 +2,0 / −0,3. Weitere 2.000 Spiele derselben Art verbessern das Ensemble also nicht messbar, obwohl die Trainingskurven der Einzelnetze steigen.
