@@ -103,7 +103,17 @@ def battle_paths(group: int, same: bool) -> tuple[str, str, str]:
     return f"{pkg}.main.Agent_x", f"{pkg}/agent_0.pth", f"{pkg}/agent_1.pth"
 
 
-def readme_text(group: int, imp: str, lp0: str, lp1: str) -> str:
+def net_count(path: Path) -> int | None:
+    """Anzahl Netze im Checkpoint (Hauptnetz + Ensemble); None, wenn nicht lesbar."""
+    try:
+        import torch
+        ck = torch.load(path, map_location="cpu", weights_only=True)
+        return 1 + len(ck.get("ensemble", []))
+    except Exception:
+        return None
+
+
+def readme_text(group: int, imp: str, lp0: str, lp1: str, nets: int | None = None) -> str:
     pth = (f"Pfad zum trainierten Agenten:  {lp0}   (gleiche Datei fuer Player 0 und Player 1)"
            if lp0 == lp1 else f"Pfad Player 0:  {lp0}\nPfad Player 1:  {lp1}")
     return (f"Gruppe {group} - Agent Sherlock\n\n"
@@ -116,7 +126,8 @@ def readme_text(group: int, imp: str, lp0: str, lp1: str) -> str:
             "- Fuer das Battle bitte mit train=False spielen. Mit train=True lernt der Agent weiter\n"
             "  (Epsilon-Exploration) und ueberschreibt seine .pth-Datei.\n"
             "- Benoetigt nur die Kurs-Pakete (torch, numpy); CPU reicht.\n"
-            "- Beim Start erscheint: [Sherlock Agent_X] geladen: ... Ensemble=18 Netze\n")
+            + (f"- Beim Start erscheint: [Sherlock Agent_X] geladen: ... Ensemble={nets} Netze\n" if nets else
+               "- Beim Start erscheint: [Sherlock Agent_X] geladen: ...\n"))
 
 
 def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[Path, tuple[str, str, str]]:
@@ -132,7 +143,7 @@ def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[P
         for w, lp in ([(weights[0], lp0)] if same else [(weights[0], lp0), (weights[1], lp1)]):
             z.write(w, lp)
         z.writestr(f"{pkg}/agents.yaml", yaml_text(imp, lp0, lp1))
-        z.writestr(f"{pkg}/LIESMICH.txt", readme_text(group, imp, lp0, lp1))
+        z.writestr(f"{pkg}/LIESMICH.txt", readme_text(group, imp, lp0, lp1, net_count(weights[0])))
     return out, (imp, lp0, lp1)
 
 

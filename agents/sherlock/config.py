@@ -330,6 +330,14 @@ class AgentConfig:
     """True: auch beim bereits erkannten Unit-Tod den terminalen Potentialterm
     -w_shape * phi(s) addieren. Keine neue Done-Regel; fuer den geplanten Pilot
     zusammen mit reward_fix=True. Default False erhaelt bisherige Rewards."""
+    home_reserve: bool = False
+    """29.10.2026 (Battle-Vorbereitung): Units, deren Ziel ein Punkte-Tile der Gegnerhaelfte weiter als
+    far_opp Felder ist, warten stattdessen als Reserve im Ring mit Abstand 2 um die eigenen Punkte-Tiles
+    (begehbar, kein Nebel, viel Feldenergie). Diagnose Dev A: Kennt der Belief mehr Punkte-Tiles als wir
+    Units haben, liefen die uebrigen Units 25 Felder in die besetzte Gegnerfestung, starben und
+    liefen nach dem Respawn wieder los (800070, Match 3). Faellt ein Halter, ist eine Reserve nah dran."""
+    reserve_sap: bool = False
+    """29.10.2026: Reserve-Units (home_reserve) auf ihrem Reservetile sappen wie Halter (pt_sap-Regeln)."""
     active_targets: bool = False
     """True: nur Units mit Energie >= 0 erhalten Ziele; sonstige Features bleiben
     unveraendert. Default False erhaelt das Verhalten alter Checkpoints."""

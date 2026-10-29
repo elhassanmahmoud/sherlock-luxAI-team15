@@ -299,6 +299,7 @@ class Agent_x:
         planned_fog = np.zeros((ctx["W"], ctx["H"]), dtype=bool)
         rammed: set = set()
         siege = None  # rules.SiegePlan, bei Bedarf einmal pro Step
+        reserve = None  # cfg.reserve_sap: Reservetiles, bei Bedarf einmal pro Step
         stationary = self._enemy_stationary(ctx)
         # 21.10.2026: vorhergesagte Solution_92-Treffer je eigener Unit (opp_model)
         # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
@@ -375,6 +376,11 @@ class Agent_x:
                 on_tile = (self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid)
                 if self.cfg.pt_sap_zone:  # auch gestapelt oder auf Kandidaten-Tiles
                     on_tile = bool(self.belief.point_tiles[x, y] or self.belief.candidate[x, y])
+                if self.cfg.reserve_sap and not on_tile and ctx["assigned"].get(int(uid)) == (x, y):
+                    if reserve is None:  # 29.10.2026: Reserve auf ihrem Tile verteidigt wie ein Halter
+                        from .features import reserve_tiles
+                        reserve = reserve_tiles(self.belief, ctx["W"], ctx["H"])
+                    on_tile = bool(reserve[x, y])
                 if (on_tile and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] * (1 + self.cfg.sap_reserve_k) + self.cfg.pt_sap_reserve
                         and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))
                         and (not self.cfg.sap_still or (self.training and not self.cfg.rules_in_training_all)

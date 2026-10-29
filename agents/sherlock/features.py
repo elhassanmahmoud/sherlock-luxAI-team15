@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 
 from . import geometry as geo
-from .belief import TILE_ASTEROID
+from .belief import TILE_ASTEROID, _dilate
 
 MAX_UNIT_ENERGY = 400.0   # feste Engine-Konstante (nicht randomisiert)
 MAX_TILE_ENERGY = 20.0
@@ -126,7 +126,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    prev: dict | None = None, sticky: float = 0.0,
                    far_cand: bool = False, cand_boost: float = 0.0,
                    explore_quota: int = 0, explore_until: int = 75,
-                   energy_pref: float = 0.0, reach: bool = False) -> dict[int, tuple[int, int]]:
+                   energy_pref: float = 0.0, reach: bool = False,
+                   home_reserve: bool = False) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -161,6 +162,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     weiter als far_opp Felder von der Unit entfernt sind, rangieren hinter den
     Kandidaten-Tiles. Diagnose Match 3: 5,7 Units liefen im Mittel 18 Felder weit
     zu (meist besetzten) Gegner-Tiles, waehrend eigene Kandidaten offen blieben.
+
+    home_reserve (cfg.home_reserve, 29.10.2026): Units mit Ziel auf einem Punkte-Tile der Gegnerhaelfte
+    weiter als far_opp bekommen stattdessen ein Reservetile nahe den eigenen Punkte-Tiles (reserve_tiles).
 
     reach (cfg.reach_assign, 22.10.2026): Weglaenge (BFS ueber die Gedaechtniskarte) statt
     Luftlinie; nach Gedaechtnis unerreichbare Ziele (z. B. Punkte-Tiles unter einem Asteroiden)
@@ -269,10 +273,53 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
         out[int(unit_ids[ui])] = (int(tgt[ti, 0]), int(tgt[ti, 1]))
         cost[ui, :] = np.inf
         cost[:, ti] = np.inf
+    if home_reserve and far_opp > 0:
+        col = {(int(x), int(y)): j for j, (x, y) in enumerate(tgt.tolist())}
+        far = [i for i, uid in enumerate(unit_ids)
+               if (t := out.get(int(uid))) is not None and belief.point_tiles[t] and in_enemy[col[t]]
+               and dist_ut[i, col[t]] > far_opp]
+        if far:
+            out = _home_reserve(belief, unit_ids, unit_pos, out, far, W, H, own_origin)
     if (explore_quota > 0 and belief.match_idx >= 1 and belief.match_step < explore_until
             and belief.known_pairs() < belief.match_idx + 1):
         out = _explore_quota(belief, unit_ids, unit_pos, out, W, H, explore_quota,
                              grid or 4, own_origin)
+    return out
+
+
+def reserve_tiles(belief, W: int, H: int, own_origin: bool = True) -> np.ndarray:
+    """Reservetiles (cfg.home_reserve): eigene Haelfte, Chebyshev-Abstand genau 2 zum naechsten
+    eigenen Punkte-Tile (ausserhalb des Streuschadens eines Saps auf den Halter), begehbar, kein
+    Nebel, kein Punkte- oder Kandidaten-Tile."""
+    xs, ys = np.indices((W, H))
+    own = (xs + ys <= W - 1) if own_origin else (xs + ys >= W - 1)
+    pts = belief.point_tiles & own
+    if not pts.any():
+        return np.zeros((W, H), dtype=bool)
+    ring = _dilate(pts, 2) & ~_dilate(pts, 1)
+    return ring & own & belief.passable & ~belief.nebula & ~belief.point_tiles & ~belief.candidate
+
+
+def _home_reserve(belief, unit_ids, unit_pos, out: dict, far: list, W: int, H: int,
+                  own_origin: bool) -> dict:
+    """Units mit fernem Gegnerziel (Indizes `far`) auf freie Reservetiles verteilen: naechstes
+    Tile nach Luftlinie, je 10 Feldenergie ein Feld Umweg; ohne Reservetiles bleibt das Ziel."""
+    tiles = np.argwhere(reserve_tiles(belief, W, H, own_origin))
+    if len(tiles) == 0:
+        return out
+    energy = np.clip(np.asarray(belief.energy_map, dtype=np.float64)[tiles[:, 0], tiles[:, 1]], -20, 20)
+    out = dict(out)
+    taken: set = set(out.values())
+    pos = np.asarray(unit_pos)
+    order = sorted(far, key=lambda i: int(unit_ids[i]))
+    for i in order:
+        d = np.abs(tiles[:, 0] - pos[i][0]) + np.abs(tiles[:, 1] - pos[i][1]) - energy / 10.0
+        for k in np.argsort(d, kind="stable"):
+            t = (int(tiles[k, 0]), int(tiles[k, 1]))
+            if t not in taken:
+                out[int(unit_ids[i])] = t
+                taken.add(t)
+                break
     return out
 
 
@@ -455,6 +502,7 @@ def make_context(agent, obs, belief=None) -> dict:
         explore_quota=int(agent.cfg.explore_quota), explore_until=int(agent.cfg.explore_until),
         energy_pref=float(agent.cfg.energy_pref),
         reach=bool(agent.cfg.reach_assign) and (not agent.training or agent.cfg.rules_in_training),
+        home_reserve=bool(agent.cfg.home_reserve) and (not agent.training or agent.cfg.rules_in_training),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))

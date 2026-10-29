@@ -5,6 +5,7 @@ Engine-Schritt aus dem wahren Zustand vor/nach dem Schritt (Engine-Logik aus
 luxai_s3/env.py nachgebaut). Reine Messung, keine Aktion wird veraendert.
 
     .venv/bin/python scripts/mechanism_probe.py --weights W --seeds 500720-500779 [--set k=v] --out X.json
+    29.10.2026: --opponent (z. B. sol92_sq) und --games CSV --which lost (Spiele aus einer par_eval-CSV)
 """
 from __future__ import annotations
 
@@ -209,7 +210,7 @@ def classify(agent, s0, pt_world, us, st):
             st[k] = st.get(k, 0.0) + 1
 
 
-def play(seed, side, weights, overrides=()):
+def play(seed, side, weights, overrides=(), opponent="solution92"):
     import random
 
     import torch
@@ -225,7 +226,10 @@ def play(seed, side, weights, overrides=()):
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
     opp_side = "player_1" if side == "player_0" else "player_0"
-    opp = make_opponent("solution92", opp_side)
+    if opponent.startswith("self:"):
+        opp = make_opponent("self", opp_side, self_play_path=opponent.split(":", 1)[1])
+    else:
+        opp = make_opponent(opponent, opp_side)
     agent.new_game(side)
     random.seed(seed)
     np.random.seed(seed % (2 ** 32))
@@ -328,11 +332,11 @@ def play(seed, side, weights, overrides=()):
 
 
 def worker(job):
-    weights, items, overrides = job
+    weights, items, overrides, opponent = job
     out = []
     for seed, side in items:
         t0 = time.time()
-        r = play(seed, side, weights, overrides)
+        r = play(seed, side, weights, overrides, opponent)
         r["secs"] = round(time.time() - t0, 1)
         out.append(r)
     return out
@@ -346,18 +350,29 @@ def main():
     ap.add_argument("--workers", type=int, default=7)
     ap.add_argument("--out", required=True)
     ap.add_argument("--set", action="append", default=[])
+    ap.add_argument("--opponent", default="solution92")
+    ap.add_argument("--games", default=None, help="par_eval-CSV; spielt deren Spiele gegen --opponent nach")
+    ap.add_argument("--which", choices=("all", "lost", "won"), default="lost")
+    ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
-    if args.seed_list:
+    if args.games:
+        import pandas as pd
+
+        from scripts.par_losses import select_games
+        items = [(s, side) for s, side, _ in select_games(pd.read_csv(args.games), args.opponent, args.which)]
+        items = items[:args.limit] if args.limit else items
+    elif args.seed_list:
         seeds = [int(s) for s in json.loads(Path(args.seed_list).read_text())]
     else:
         a, b = (int(x) for x in args.seeds.split("-"))
         seeds = list(range(a, b + 1))
-    items = [(s, side) for s in seeds for side in ("player_0", "player_1")]
+    if not args.games:
+        items = [(s, side) for s in seeds for side in ("player_0", "player_1")]
     chunks = [items[i::args.workers] for i in range(args.workers)]
     ctx = mp.get_context("spawn")
     t0 = time.time()
     with ctx.Pool(len(chunks)) as pool:
-        res = pool.map(worker, [(args.weights, c, args.set) for c in chunks if c])
+        res = pool.map(worker, [(args.weights, c, args.set, args.opponent) for c in chunks if c])
     games = sorted((g for r in res for g in r), key=lambda g: (g["seed"], g["side"]))
     Path(args.out).write_text(json.dumps(games, default=float))
     print(f"{len(games)} Spiele in {time.time() - t0:.0f}s -> {args.out}")
