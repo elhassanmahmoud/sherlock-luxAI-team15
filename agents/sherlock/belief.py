@@ -129,7 +129,12 @@ class Belief:
         # 22.10.2026 (Schalter window_infer_all): im Spawnfenster immer schliessen; Tiles, deren 5x5
         # nicht ganz sichtbar ist (ungesehenes neues Relic moeglich), gehen als offene Unbekannte ein
         self.window_infer_all = False
+        # 29.10.2026 (Schalter opp_point_infer): Gleichungen auch aus dem Punktgewinn des Gegners, wenn
+        # jedes Tile, das ueberhaupt punkten kann, gerade wirklich sichtbar ist (_infer_points_from_enemy)
+        self.opp_point_infer = False
+        self.opp_point_records = 0
         self._vis_now = None
+        self._sensor_now = None
         self.set_team(team_id)
         self.reset_game()
 
@@ -235,6 +240,7 @@ class Belief:
             relic_pos = geo.mirror_positions(relic_pos, self.W, self.H)
             ally_pos = geo.mirror_positions(ally_pos, self.W, self.H)
 
+        self._sensor_now = sensor  # wirklich sichtbar (kanonisch), ohne Spiegelbild
         self._vis_now = (sensor | geo.mirror_map(sensor)) if self.symmetry else sensor
         if self.sym_map:
             msensor = geo.mirror_map(sensor)
@@ -264,7 +270,59 @@ class Belief:
         self._infer_point_tiles(ally_pos, ally_energy, ally_mask, gain, match_step)
         if self.opp_infer:
             self._infer_from_enemy(obs, match_step)
+        if self.opp_point_infer:
+            self._infer_points_from_enemy(obs, match_step)
         self._refresh_candidates()
+
+    def _enemy_tiles(self, obs) -> set:
+        """Flache Indizes (kanonisch) der Tiles sichtbarer Gegner mit Energie >= 0."""
+        from . import geometry as geo
+        pos = np.asarray(obs["units"]["position"], dtype=np.int32)[self.opp_team_id]
+        mask = np.asarray(obs["units_mask"], dtype=bool)[self.opp_team_id]
+        ene = np.asarray(obs["units"]["energy"], dtype=np.int32)[self.opp_team_id]
+        if ene.ndim == 2 and ene.shape[-1] == 1:
+            ene = ene[:, 0]
+        if self.mirrored:
+            pos = geo.mirror_positions(pos, self.W, self.H)
+        occ = set()
+        for i in np.nonzero(mask)[0]:
+            x, y = int(pos[i][0]), int(pos[i][1])
+            if 0 <= x < self.W and 0 <= y < self.H and ene[i] >= 0:
+                occ.add(x * self.H + y)
+        return occ
+
+    def _infer_points_from_enemy(self, obs, match_step: int) -> None:
+        """Schalter `opp_point_infer` (29.10.2026): Gleichung aus dem Punktgewinn des Gegners.
+
+        Der Gegner punktet mit genau den Punkte-Tiles, auf denen eine seiner Units (Energie >= 0)
+        steht; die Punkte-Tiles sind fuer beide Teams dieselben. Ist JEDES Tile, das ueberhaupt
+        punkten kann (_possible_point_zone), in diesem Step wirklich sichtbar, steht kein punktender
+        Gegner unsichtbar -> opp_gain = Summe punkt(t) ueber die sichtbar besetzten Tiles. Das ist
+        dieselbe Gleichung, die wir aus eigenen Units bilden. Diagnose Dev A (800051): Solution_92
+        besetzt einen gemeinsamen Haufen zuerst, wir kennen dort das ganze Match kein Punkte-Tile;
+        mit wahren Punkte-Tiles (Orakel) gewinnt V10 auf Dev A +4 bis +6 pp.
+        """
+        if not self._stable(match_step) or self._sensor_now is None:
+            return
+        zone = self._possible_point_zone()
+        if zone is None or (zone & ~self._sensor_now).any():
+            return  # ein unsichtbarer Gegner koennte punkten
+        occ = {f for f in self._enemy_tiles(obs) if zone[divmod(f, self.H)]}
+        known = len(occ & self._point)
+        unknown = occ - self._point - self._dead
+        rest = self.opp_gain - known
+        if not unknown or rest < 0 or rest > len(unknown):
+            return  # keine neue Information oder nicht erklaerbar (dann lieber nichts schliessen)
+        new = (tuple(sorted(unknown)), rest)
+        if new in self.records:
+            return
+        if self.subset_infer:
+            self._add_differences(new)
+        self.records.append(new)
+        if len(self.records) > MAX_RECORDS:
+            del self.records[: len(self.records) - MAX_RECORDS]
+        self.opp_point_records += 1
+        self._propagate()
 
     def _infer_from_enemy(self, obs, match_step: int) -> None:
         """Schalter `opp_infer`: Null-Tiles aus dem Punktgewinn des Gegners.

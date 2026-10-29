@@ -124,6 +124,7 @@ class Agent_x:
         self.belief.sym_map = bool(self.cfg.sym_map)
         self.belief.window_infer = bool(self.cfg.window_infer)
         self.belief.window_infer_all = bool(self.cfg.window_infer_all)
+        self.belief.opp_point_infer = bool(self.cfg.opp_point_infer)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,

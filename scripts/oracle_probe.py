@@ -5,7 +5,8 @@
 
 Nach jeder Beobachtung bekommt das Gedaechtnis die WAHREN gespawnten Relics und Punktefelder aus
 env.state (Formel wie scripts.mechanism_probe.point_tiles): alle Punktefelder bewiesen, alle uebrigen
-Felder der Relic-Zonen als tot markiert. Das ist Wissen, das kein Agent hat. Reine Obergrenze, nie
+Felder der Relic-Zonen als tot markiert. --mode relics: nur die Relics (Punktefelder muss der Agent
+selbst finden); --mode points: nur Punktefelder und tote Felder um Relics, die der Agent schon kennt. Das ist Wissen, das kein Agent hat. Reine Obergrenze, nie
 fuer Training oder Abgabe. Ausgabe wie par_eval (eine Zeile pro Spiel) -> scripts.compare_report.
 """
 from __future__ import annotations
@@ -30,7 +31,7 @@ def truth_maps(state) -> tuple[np.ndarray, list[tuple[int, int]]]:
     return pts, relics
 
 
-def install_oracle(agent, env) -> None:
+def install_oracle(agent, env, mode: str = "full") -> None:
     from agents.sherlock import geometry as geo
     b = agent.belief
     original = b.observe
@@ -45,19 +46,22 @@ def install_oracle(agent, env) -> None:
         if b.mirrored:
             pts = geo.mirror_map(pts)
             relics = [geo.mirror_xy(x, y, W, H) for x, y in relics]
-        for x, y in relics:
-            b._add_relic(int(x), int(y))
-        for x, y in np.argwhere(pts):
-            b._mark_point(int(x) * H + int(y))
-        for x, y in np.argwhere(b.relic_zone & ~pts):
-            b._mark_dead(int(x) * H + int(y))
+        if mode in ("full", "relics"):
+            for x, y in relics:
+                b._add_relic(int(x), int(y))
+        if mode in ("full", "points"):
+            for x, y in np.argwhere(pts & b.relic_zone):
+                b._mark_point(int(x) * H + int(y))
+            for x, y in np.argwhere(b.relic_zone & ~pts):
+                b._mark_dead(int(x) * H + int(y))
+        b._cand_dirty = True
         b._refresh_candidates()
 
     b.observe = observe
 
 
 def _worker(job):
-    weights, overrides, seeds, opponents = job
+    weights, overrides, seeds, opponents, mode = job
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
@@ -69,7 +73,7 @@ def _worker(job):
     agent = Agent_x("player_0", agent_path=weights, cfg=build_cfg(weights, overrides), train=False, seed=0)
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
-    install_oracle(agent, env)
+    install_oracle(agent, env, mode)
     rows = []
     for opp_name in opponents:
         for seed in seeds:
@@ -92,6 +96,7 @@ def main() -> None:
     ap.add_argument("--n", type=int, required=True)
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--opponents", default="solution92,sol92_sq")
+    ap.add_argument("--mode", choices=("full", "relics", "points"), default="full")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = Path(args.out)
@@ -99,7 +104,7 @@ def main() -> None:
         raise SystemExit(f"{out} existiert schon - neuen Namen waehlen")
     seeds = [P.VAL_SEED_BASE + i for i in range(args.first, args.first + args.n)]
     opponents = [o for o in args.opponents.split(",") if o]
-    jobs = [(args.weights, args.set, seeds[i::args.workers], opponents) for i in range(args.workers)]
+    jobs = [(args.weights, args.set, seeds[i::args.workers], opponents, args.mode) for i in range(args.workers)]
     with mp.get_context("spawn").Pool(len(jobs)) as pool:
         results = pool.map(_worker, [j for j in jobs if j[2]])
     rows = sorted((r for rs in results for r in rs), key=lambda r: (r["opponent"], r["seed"], r["side"]))

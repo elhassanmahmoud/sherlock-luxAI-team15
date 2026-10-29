@@ -297,6 +297,9 @@ class AgentConfig:
     Gebieten)."""
     opp_infer: bool = False
     """True: Null-Tiles auch aus dem Punktgewinn des Gegners (Belief._infer_from_enemy)."""
+    opp_point_infer: bool = False
+    """True (29.10.2026): Punkte-Gleichungen auch aus dem Punktgewinn des Gegners, wenn jedes moegliche
+    Punkte-Tile gerade sichtbar ist (Belief._infer_points_from_enemy). Hilft auf Haufen, die der Gegner zuerst besetzt."""
     # --- Regel-Schalter (19.10.2026, rules.py). Default aus.
     pt_walk: bool = False
     """True: Units, deren Ziel ein bewiesenes Punkte-Tile ist, laufen auf dem
