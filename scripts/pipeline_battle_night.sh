@@ -1,6 +1,7 @@
 #!/bin/bash
 # 29.10.2026: Nachtablauf nach Runde 2 (Plan docs/superpowers/plans/2026-10-29-battle-push.md, Nachtrag 29.10.).
-# 1. wartet auf das Ende von Runde 2 (pipeline_battle_ft2.sh) und startet sofort Runde 3 (pipeline_battle_ft3.sh)
+# 1. wartet auf das Ende von Runde 2 (pipeline_battle_ft2.sh) und startet Runde 3 (pipeline_battle_ft3.sh),
+#    falls sie nicht schon laeuft (seit 29.10., 18:55 vorab gestartet: ihre Netze warten einzeln auf Runde 2)
 # 2. baut mix36b (V10 + ft2_18) und mix54 (V10 + ft18 + ft2_18), beide mit V10-Config
 # 3. Auswahl Runde 1 (802000-802399) fuer das vorab festgelegte Buendel mix36, ft2_18, mix36b, mix54;
 #    Wahl hoechstens eines Kandidaten nach scripts/league_gates.py
@@ -15,7 +16,7 @@ E=experiments/ensembles
 V10=experiments/releases/20261022_v10_baseline/agent_p0.pth
 export WORKERS=${WORKERS:-8}
 until grep -q "Ende Runde 2" experiments/pipeline_battle_ft2.log 2>/dev/null; do sleep 60; done
-nohup caffeinate -i bash scripts/pipeline_battle_ft3.sh > /dev/null 2>&1 &
+pgrep -f pipeline_battle_ft3.sh > /dev/null || nohup caffeinate -i bash scripts/pipeline_battle_ft3.sh > /dev/null 2>&1 &
 $PY -m scripts.build_ensemble --cfg-from $V10 --out $E/battle_mix36b.pth $V10 $E/battle_ft2_18.pth
 $PY -m scripts.build_ensemble --cfg-from $V10 --out $E/battle_mix54.pth $V10 $E/battle_ft18.pth $E/battle_ft2_18.pth
 CANDS="mix36 ft2_18 mix36b mix54"

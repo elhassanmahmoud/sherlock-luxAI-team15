@@ -123,11 +123,31 @@ def readme_text(group: int, imp: str, lp0: str, lp1: str, nets: int | None = Non
             f"- Den Ordner Gruppe{group} nach agents/ oder in die Projektwurzel legen, beides geht.\n"
             "  Findet der Agent den Gewichte-Pfad vom Arbeitsverzeichnis aus nicht, laedt er die\n"
             "  gleichnamige .pth-Datei direkt neben main.py.\n"
-            "- Fuer das Battle bitte mit train=False spielen. Mit train=True lernt der Agent weiter\n"
-            "  (Epsilon-Exploration) und ueberschreibt seine .pth-Datei.\n"
+            "- Fuer das Battle am besten mit train=False spielen (nur dann schreibt der Runner Replays).\n"
+            "  Die Battle-Version ist eingefroren: Auch mit train=True spielt Sherlock in voller Staerke,\n"
+            "  lernt nicht weiter und ueberschreibt seine .pth-Datei nicht.\n"
             "- Benoetigt nur die Kurs-Pakete (torch, numpy); CPU reicht.\n"
             + (f"- Beim Start erscheint: [Sherlock Agent_X] geladen: ... Ensemble={nets} Netze\n" if nets else
                "- Beim Start erscheint: [Sherlock Agent_X] geladen: ...\n"))
+
+
+def frozen_bytes(path: Path) -> bytes:
+    """Checkpoint mit cfg.frozen = True (29.10.2026): Der Kurs-Runner startet Agenten mit train=True,
+    wenn man es nicht abschaltet; eingefroren spielt Sherlock dann trotzdem wie mit train=False.
+    Gewichte und alle anderen Eintraege bleiben gleich. Dateien ohne Config unveraendert."""
+    import io
+
+    import torch
+    try:
+        ck = torch.load(path, map_location="cpu", weights_only=True)
+    except Exception:
+        return path.read_bytes()
+    if not isinstance(ck, dict) or not isinstance(ck.get("cfg"), dict):
+        return path.read_bytes()
+    ck["cfg"] = {**ck["cfg"], "frozen": True}
+    buf = io.BytesIO()
+    torch.save(ck, buf)
+    return buf.getvalue()
 
 
 def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[Path, tuple[str, str, str]]:
@@ -141,7 +161,7 @@ def build_battle(group: int, out: Path, from_run: Path | None = None) -> tuple[P
         for f in files:
             z.write(f, f"{pkg}/{f.name}")
         for w, lp in ([(weights[0], lp0)] if same else [(weights[0], lp0), (weights[1], lp1)]):
-            z.write(w, lp)
+            z.writestr(lp, frozen_bytes(w))
         z.writestr(f"{pkg}/agents.yaml", yaml_text(imp, lp0, lp1))
         z.writestr(f"{pkg}/LIESMICH.txt", readme_text(group, imp, lp0, lp1, net_count(weights[0])))
     return out, (imp, lp0, lp1)
@@ -166,6 +186,17 @@ for side, path in (("player_0", p0), ("player_1", p1)):
     assert np.asarray(act).shape == (16, 3), act.shape
     assert a.env_steps > 0, "Gewichte nicht geladen (env_steps == 0)"
     print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={1 + len(a.extra_q)}")
+if sys.argv[6] == "frozen":
+    # Runner mit train=True: kein set_to_eval_mode, save_agent() vor dem Spiel, update() bis Spielende
+    for side, path in (("player_0", p0), ("player_1", p1)):
+        b = cls(side, agent_path=path)
+        data = open(b.agent_path, "rb").read()
+        b.set_env_cfg(info["params"]); b.save_agent()
+        act = b.act(0, obs[side])
+        b.update(0, obs[side], 0.0, act, True, obs[side])
+        assert b.cfg.frozen and not b.training and b.epsilon == 0.0, "train=True schaltet die Abgabe um"
+        assert open(b.agent_path, "rb").read() == data, "train=True hat die .pth ueberschrieben"
+        print(f"  {side}: train=True eingefroren ok (Netze={1 + len(b.extra_q)}, .pth unveraendert)")
 print("Check ok")
 '''
 
@@ -178,9 +209,9 @@ def project_copy(tmp: Path) -> None:
     shutil.copy(ROOT / "agents" / "__init__.py", tmp / "agents" / "__init__.py")
 
 
-def run_check(tmp: Path, imp: str, lp0: str, lp1: str) -> None:
-    subprocess.run([sys.executable, "-c", CHECK, str(tmp), imp, lp0, lp1, ",".join(REQUIRED)],
-                   cwd=tmp, check=True)
+def run_check(tmp: Path, imp: str, lp0: str, lp1: str, frozen: bool = False) -> None:
+    subprocess.run([sys.executable, "-c", CHECK, str(tmp), imp, lp0, lp1, ",".join(REQUIRED),
+                    "frozen" if frozen else "-"], cwd=tmp, check=True)
 
 
 def check(zip_path: Path, team: str) -> None:
@@ -203,7 +234,7 @@ def check_battle(zip_path: Path, paths: tuple[str, str, str]) -> None:
             project_copy(tmp)
             with zipfile.ZipFile(zip_path) as z:
                 z.extractall(tmp / place)
-            run_check(tmp, *paths)
+            run_check(tmp, *paths, frozen=True)
 
 
 def main() -> None:

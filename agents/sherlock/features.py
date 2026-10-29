@@ -547,7 +547,8 @@ def make_context(agent, obs, belief=None) -> dict:
         energy_pref=float(agent.cfg.energy_pref),
         reach=bool(agent.cfg.reach_assign) and (not agent.training or agent.cfg.rules_in_training),
         home_reserve=bool(agent.cfg.home_reserve) and (not agent.training or agent.cfg.rules_in_training),
-        relic_scout=int(agent.cfg.relic_scout) if (not agent.training or agent.cfg.rules_in_training) else 0,
+        relic_scout=(int(agent.cfg.relic_scout)
+                     if agent.cfg.relic_scout and (not agent.training or agent.cfg.rules_in_training) else 0),
         scout_until=int(agent.cfg.scout_until), scout_stale=int(agent.cfg.scout_stale),
     )
     if sticky and belief is agent.belief:

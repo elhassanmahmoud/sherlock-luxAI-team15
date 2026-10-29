@@ -103,7 +103,7 @@ class Agent_x:
         self.rng = np.random.default_rng(seed)
         self._paths = rules.PathCache()
 
-        self.training = bool(train)
+        self.training = bool(train) and not self.cfg.frozen
         self.learn_enabled = True  # False: nur Transitions sammeln (Buffer auffuellen)
         self.autosave_on_terminate = True
         self.env_steps = 0
@@ -211,6 +211,8 @@ class Agent_x:
         self.q.eval()
 
     def set_to_train_mode(self) -> None:
+        if self.cfg.frozen:  # Battle-Abgabe bleibt im Spielmodus
+            return
         self.training = True
         self.q.train()
 
@@ -1241,6 +1243,8 @@ class Agent_x:
 
     # ------------------------------------------------------- persistenz
     def save_agent(self, path: Optional[str] = None) -> None:
+        if self.cfg.frozen and not path:  # Runner-Aufruf: Battle-Abgabe nicht ueberschreiben
+            return
         path = path or self.agent_path
         if not path:
             return

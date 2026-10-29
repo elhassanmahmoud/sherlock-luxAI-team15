@@ -377,6 +377,14 @@ class AgentConfig:
     w_opp_points: float = 0.0
     """> 0: Strafe je Gegner-Punkt in diesem Step, auf das Team verteilt (19.10.)."""
 
+    # --- Abgabe
+    frozen: bool = False
+    """True (29.10.2026, nur in der Battle-Abgabe gesetzt): Der Kurs-Runner erzeugt Agenten ohne
+    train-Argument (Default True) und ruft bei train=True update() und save_agent() auf. Dann spielte
+    Sherlock mit nur einem Netz, ohne die meisten Regeln und mit Epsilon und ueberschriebe seine .pth.
+    Eingefroren spielt er immer wie mit train=False (alle Netze, alle Regeln, kein Epsilon), lernt
+    nicht und schreibt ohne ausdruecklichen Pfad nichts."""
+
     def to_dict(self) -> dict:
         return asdict(self)
 

@@ -93,3 +93,40 @@ def test_battle_zip_cannot_overwrite_released_weight(sandbox, monkeypatch):
     with pytest.raises(SystemExit):
         build(monkeypatch, sandbox / "agent_p0.pth")
     assert (sandbox / "agent_p0.pth").read_bytes() == b"released"
+
+
+def test_frozen_checkpoint_plays_like_eval_when_runner_trains(tmp_path):
+    """Kurs-Runner mit train=True: Default train=True, kein set_to_eval_mode, save_agent(), update()."""
+    from tests.conftest import make_obs
+    path = tmp_path / "agent.pth"
+    small_checkpoint(path)
+    path.write_bytes(build_submission.frozen_bytes(path))
+    data = path.read_bytes()
+    a = Agent_x("player_0", agent_path=str(path))
+    assert a.cfg.frozen and a.env_steps == 123 and a.cfg.hidden == 32
+    assert not a.training and a.epsilon == 0.0
+    a.set_to_train_mode()
+    assert not a.training
+    a.save_agent()
+    obs0 = make_obs(1, 1, units=[(0, 0, 100)])
+    obs1 = make_obs(2, 2, units=[(1, 0, 99)])
+    act = a.act(1, obs0)
+    a.update(1, obs0, 0.0, act, True, obs1)
+    assert path.read_bytes() == data          # nichts ueberschrieben
+    a.save_agent(str(tmp_path / "copy.pth"))  # ausdruecklicher Pfad bleibt moeglich
+    assert (tmp_path / "copy.pth").exists()
+
+
+def test_frozen_bytes_keeps_weights_and_ignores_non_checkpoints(tmp_path):
+    import io
+
+    import torch
+    path = small_checkpoint(tmp_path / "agent.pth")
+    before = torch.load(path, map_location="cpu", weights_only=True)
+    after = torch.load(io.BytesIO(build_submission.frozen_bytes(path)), map_location="cpu", weights_only=True)
+    assert after["cfg"] == {**before["cfg"], "frozen": True} and not before["cfg"]["frozen"]
+    assert all(torch.equal(before["q"][k], after["q"][k]) for k in before["q"])
+    assert after["env_steps"] == before["env_steps"]
+    raw = tmp_path / "raw.pth"
+    raw.write_bytes(b"same-weights")
+    assert build_submission.frozen_bytes(raw) == b"same-weights"
