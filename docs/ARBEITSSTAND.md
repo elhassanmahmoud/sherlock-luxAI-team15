@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 15:00 Berlin – Claude Code mit Mahmoud: erste Entwicklungsergebnisse der Battle-Vorbereitung
+
+Alle Werte auf Dev A (800000–800299, je Gegner 600 Spiele), gepaart gegen die V10-Basis; nur Entwicklung, keine Übernahmeentscheidung.
+
+| Variante | `sol92_sq` | Solution_92 |
+|---|---|---|
+| `opp_infer` | +0,3 [−1,8; +2,5] | −1,5 [−3,3; +0,3] |
+| `contest_sap` | +1,2 [−1,3; +3,8] | −0,2 [−2,2; +2,0] |
+| beide | +1,8 [−0,7; +4,5] | −1,8 [−4,3; +0,5] |
+| **`home_reserve`** | **−24,0** [−28,7; −19,3] | **−23,8** [−28,3; −19,2] |
+| Orakel: wahre Relics und Punktefelder | **+6,3** [+2,7; +10,0] | **+4,0** [+0,8; +7,2] |
+
+- **`home_reserve` ist ein klarer Fehlschlag** und bleibt aus. Die Diagnose aus einem Einzelspiel (Einheiten laufen in die besetzte Festung) war nicht verallgemeinerbar: Punktefelder der Gegnerhälfte sind oft noch frei, dort holen wir viele Punkte (gewonnene Matches: mehr Einheiten auf dem Weg dorthin als verlorene). Die Tests `hrs`/`hrat` mit diesem Schalter wurden abgebrochen.
+- **Orakel** (`scripts/oracle_probe.py`): Perfektes Wissen ist 4–6 pp wert. Teil-Orakel (nur Relics bzw. nur Punktefelder) laufen.
+- **Gedächtnis gegen Wahrheit** (`scripts/belief_truth_check.py`, 60 Spiele, 18.000 Schritte): V10 hat nie falsche Punktefelder, aber in 553 Schritten echte Punktefelder als tot markiert. Ursache: Ein in Match 2 neu gespawntes Relic-Paar wird nicht gefunden (800004: 38–44 % der Punktefelder bekannt). Neue Schalter, alle Standard aus und getestet: `opp_point_infer` (Gleichungen aus dem Punktgewinn des Gegners, wenn jedes mögliche Punktefeld sichtbar ist; 299 Anwendungen ohne falsches Feld) und `relic_scout` (überzählige Einheiten suchen in Match 2/3 bis Schritt 60 das fehlende Paar).
+- Weitere Einzelspiele: Gegnerfestung auf einem gemeinsamen Haufen (800180, 81:908 Punkte), unsere Einheiten treffen einzeln ein und schießen nicht zurück (`art_safe` verhindert Artillerie innerhalb gegnerischer Reichweite); Pendeln vor einem Haufen ohne bekanntes Punktefeld, weil `collision_guard` jeden Gegner für beweglich hält (800051).
+- Warteschlange `scripts/battle_queue.sh` (`experiments/battle_queue.txt`): `active_targets`, `mobile_seen`, `art_safe=false` (±`art_min_hits=2`), `cand_rescue`, Teil-Orakel, `opp_point_infer`, `relic_scout` 1/2, sauberer Trainingsvergleich 6 Netze vor/nach dem Nachtraining.
+
 ## 29.10.2026, 14:30 Berlin – Claude Code mit Mahmoud: Battle-Vorbereitung gestartet (läuft bis 04.11.)
 
 - **Auftrag Mahmoud:** bis 04.11. Sherlock „perfekt trainieren“ und vieles ausprobieren, damit wir die Agents der anderen Teams schlagen. [Plan mit Testkarten und Hürden](superpowers/plans/2026-10-29-battle-push.md) vor den Messungen festgelegt (Commit `b02ef7b`). Übernahme nur über `scripts/league_gates.py` auf frischen Karten, sonst bleibt V10.
