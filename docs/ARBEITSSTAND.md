@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 16:30 Berlin – Claude Code mit Mahmoud: Nachtraining wirkt, zweite Runde gestartet
+
+- **Sauberer Trainingsvergleich auf Dev A** (gleiche 6 Netze, beide mit exakt der V10-Config, `scripts/build_ensemble.py --cfg-from`): vorher (`battle_orig6`) `sol92_sq` 77,5 %, Solution_92 86,0 %; **nach 1.500 Nachtrainingsspielen (`battle_ft6`) 82,2 % / 89,2 %**, gepaart **+4,7 pp [+1,0; +8,5]** und **+3,2 pp [0,0; +6,7]**. Schon diese 6 Netze liegen gegen Solution_92 gleichauf mit dem 18-Netz-V10 und gegen `sol92_sq` +4,3 pp [+0,7; +8,2] darüber. Erstmals bringt Training wieder messbar etwas: Die V3-Netze waren nie unter den späteren V10-Regeln und dem korrigierten Gedächtnis trainiert worden.
+- Trainingskurven (ε = 0,05, je 500 Spiele) steigen am Ende noch: Solution_92 im Mittel 60 → 64 → 66 %, `sol92_sq` 48 → 51 → 53 %. Deshalb **zweite Runde** (`scripts/pipeline_battle_ft2.sh`): +2.000 Spiele je Netz ab dem Endstand der ersten Runde (Gewichte und Buffer), neue Trainingskarten (`finetune --map-offset 1000`), gleiche Gegnermischung. s10–s15 laufen seit 16:16, die übrigen starten jeweils nach ihrer ersten Runde; Ensemble `battle_ft2_18` voraussichtlich nachts.
+- Erste Runde: Wellen 2/3 laufen, `battle_ft18` und `battle_mix36` (V10 + ft18) werden danach automatisch auf Dev A gemessen. V10-Basis auf **Dev B** (801000–801299, ganzes Panel) für die Gegenprobe in der Warteschlange.
+- Regeln ohne Gewinn (Dev A, `sol92_sq` / Solution_92): `active_targets` −0,5 / +0,2, `mobile_seen` +0,3 / −0,3, `art_safe=false` +0,8 / −1,0, mit `art_min_hits=2` 0,0 / −0,5, `opp_point_infer` +0,5 / −1,0, `relic_scout=1` −1,3 / −1,0. Teil-Orakel: nur Relics +3,7 [+0,8; +6,5] / +1,0, nur Punktefelder +2,5 / +1,3. Relic-Entdeckung (60 Spiele): Verzögerung im Mittel 10 Schritte, in Match 2 drei von 40 neuen Paaren nie gefunden.
+- Plan für 30.10. früh: bestes Ensemble (ft18, ft2_18, mix36) mit vollem Panel auf Dev A und Dev B prüfen, danach Auswahl Runde 1 (802000–802399) und bei Erfolg Bestätigung (803000–804399).
+
 ## 29.10.2026, 15:00 Berlin – Claude Code mit Mahmoud: erste Entwicklungsergebnisse der Battle-Vorbereitung
 
 Alle Werte auf Dev A (800000–800299, je Gegner 600 Spiele), gepaart gegen die V10-Basis; nur Entwicklung, keine Übernahmeentscheidung.
