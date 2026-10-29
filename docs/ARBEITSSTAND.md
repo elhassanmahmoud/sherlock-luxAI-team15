@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 29.10.2026, 13:40 Berlin – Claude Code mit Mahmoud: Entwurf Präsentation Battle Session 06.11.
+
+- Auftrag aus der Prof-Mail: 10 Minuten für die Kommilitonen, wie Sherlock funktioniert und trainiert wurde, dazu die Entwicklungen der letzten Woche; Bewertungsschema Kursfolie 11. Das Prof-Feedback vom 23.10. (Action Masking, Entscheidungsablauf, Rolle der 18 Netze) ist eingearbeitet.
+- `Sherlock_Battle_06-11-2026.pdf` (Projektordner): 13 Vortragsfolien + 3 Reserve im Design vom 23.10. Quelle `docs/presentation/Sherlock_Battle_06-11-2026.html`, zusammengesetzt aus den geprüften Folien „Entscheidungsablauf“ (26.10.) und vom 23.10. Neu: Titel/Kernaussage, Agenda, Gedächtnis (aus der Reserve nach vorn), „Von 47 % auf 90 %“, „Neu seit letzter Woche“ (Liga-Training, Robustheitstabelle, Ladefehler), Erkenntnisse, Fazit mit Hinweisen fürs Replay.
+- `Sherlock_Stichpunkte_06-11-2026.md` (Projektordner): Sprechtext je Folie, Vorschlag Moayed 5:10 (Folien 1–5, 10, 12–13), Mahmoud 4:20 (6–9, 11), zusammen 9:30; Rückfragen, Text für Moodle, Belege.
+- Prüfungen: alle 16 Seiten als Bild angesehen, Umbrüche korrigiert. Zahlen aus Arbeitsstand 22./26.10., Übernahmeberichten V7/V10, `v10_mechanics_20261022/RESULTS.md` und `Sherlock_Entscheidungsprozess.md` übernommen. Keine neuen Spiele.
+- Offen: Moayed prüft Aufteilung und Folien; Folie 11 vor dem 06.11. auf den neuesten Stand bringen; zweimal mit Uhr proben.
+
 ## 29.10.2026, 13:10 Berlin – Claude Code mit Mahmoud: Battle-Abgabe `Gruppe15.zip` gebaut und in der Original-Vorlage geprüft
 
 - **Auftrag (Prof-Mail, von Mahmoud weitergegeben):** Agent bis Mittwoch Nacht auf Moodle (vermutlich 04.11.), der Prof bringt ihn am Donnerstag auf seinem Laptop zum Laufen. Gezippter Ordner mit Gruppennamen, Pfad zur Agent-Klasse, Pfad zu den Gewichten, dazu 10 Minuten Vortrag für die Battle Session.
