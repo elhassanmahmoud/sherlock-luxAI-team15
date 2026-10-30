@@ -2,6 +2,7 @@
 
     python -m scripts.league_gates select REF.csv NAME KAND.csv DIREKT.csv [NAME KAND.csv DIREKT.csv ...]
     python -m scripts.league_gates confirm REF.csv KAND.csv DIREKT.csv
+    ... [--direct-opponent self:PFAD]   (30.10.2026: Direktduell gegen eine andere Referenz als V10)
 
 Robustheitsmittel R = mittlere Siegquote gegen die PANEL-Gegner; nur Karten, auf denen Referenz
 und Kandidat jeden Panel-Gegner von beiden Seiten gespielt haben. Gepaarter Karten-Bootstrap wie
@@ -73,10 +74,11 @@ def _by_opponent(candidate: pd.DataFrame, reference: pd.DataFrame) -> dict:
     return {r["opponent"]: r for r in compare_results(candidate, reference)}
 
 
-def selection_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.DataFrame) -> dict:
+def selection_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.DataFrame,
+                     direct_opponent: str = V10_REF) -> dict:
     p = panel_delta(candidate, reference)
     rows = _by_opponent(candidate, reference)
-    d = direct_result(direct)
+    d = direct_result(direct, direct_opponent)
     checks = {
         f"R Δ >= +{SEL_PANEL_DELTA * 100:.1f} pp": p["delta"] >= SEL_PANEL_DELTA,
         f"Solution_92 Δ >= {SEL_SOL92_DELTA * 100:+.1f} pp": rows["solution92"]["delta"] >= SEL_SOL92_DELTA,
@@ -87,11 +89,12 @@ def selection_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: p
                 passed=all(checks.values()))
 
 
-def confirm_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.DataFrame) -> dict:
+def confirm_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.DataFrame,
+                   direct_opponent: str = V10_REF) -> dict:
     p = panel_delta(candidate, reference)
     rows = _by_opponent(candidate, reference)
     sol, dfl = rows["solution92"], rows["default"]
-    d = direct_result(direct)
+    d = direct_result(direct, direct_opponent)
     checks = {
         f"R Δ >= +{CONF_PANEL_DELTA * 100:.0f} pp": p["delta"] >= CONF_PANEL_DELTA,
         "R untere 95%-Grenze > 0": p["low"] > 0,
@@ -122,6 +125,11 @@ def _report(name: str, r: dict) -> None:
 
 
 def main(argv: list[str]) -> int:
+    argv, opp = list(argv), V10_REF
+    if "--direct-opponent" in argv:
+        i = argv.index("--direct-opponent")
+        opp = argv[i + 1]
+        del argv[i:i + 2]
     mode, ref = argv[0], pd.read_csv(argv[1])
     if mode == "select":
         rest = argv[2:]
@@ -130,13 +138,13 @@ def main(argv: list[str]) -> int:
         results = {}
         for i in range(0, len(rest), 3):
             name, cand, direct = rest[i], pd.read_csv(rest[i + 1]), pd.read_csv(rest[i + 2])
-            results[name] = selection_checks(ref, cand, direct)
+            results[name] = selection_checks(ref, cand, direct, opp)
             _report(name, results[name])
         chosen = pick(results)
         print(f"AUSWAHL: {chosen or 'keine'}")
         return 0 if chosen else 1
     if mode == "confirm":
-        r = confirm_checks(ref, pd.read_csv(argv[2]), pd.read_csv(argv[3]))
+        r = confirm_checks(ref, pd.read_csv(argv[2]), pd.read_csv(argv[3]), opp)
         _report("Bestaetigung", r)
         print("GATE Bestaetigung:", "BESTANDEN" if r["passed"] else "NICHT BESTANDEN")
         return 0 if r["passed"] else 1

@@ -78,3 +78,15 @@ def test_cli_select_reports_choice(tmp_path, capsys):
     direct([1.0] * 6 + [0.0] * 4).to_csv(d, index=False)
     assert G.main(["select", str(ref), "L24", str(cand), str(d)]) == 0
     assert "AUSWAHL: L24" in capsys.readouterr().out
+
+
+def test_direct_opponent_option_checks_against_another_reference(tmp_path, capsys):
+    v11 = "self:experiments/releases/20261030_v11_baseline/agent_p0.pth"
+    ref, cand, d = tmp_path / "ref.csv", tmp_path / "cand.csv", tmp_path / "d.csv"
+    frame(base(value=0.5) | {"default": [1.0] * 10}).to_csv(ref, index=False)
+    frame(base(value=0.5) | {"default": [1.0] * 10, "sol92_sq": [1.0] * 10}).to_csv(cand, index=False)
+    direct([1.0] * 6 + [0.0] * 4, opponent=v11).to_csv(d, index=False)
+    with pytest.raises(ValueError):  # ohne Option wird weiter gegen V10 verlangt
+        G.main(["select", str(ref), "X", str(cand), str(d)])
+    assert G.main(["select", str(ref), "X", str(cand), str(d), "--direct-opponent", v11]) == 0
+    assert "AUSWAHL: X" in capsys.readouterr().out
