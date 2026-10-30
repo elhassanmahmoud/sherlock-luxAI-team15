@@ -146,3 +146,19 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   nicht mit diesen Kandidaten.
 - Ablauf: Auswahl 805000–805399 für jeden zugelassenen Kandidaten genau einmal, Wahl höchstens eines Kandidaten
   (größtes R-Δ unter den bestandenen), Bestätigung 806000–807399 nur für ihn.
+
+## Nachtrag 30.10.2026, 05:45 (vierte Trainingslinie, bevor ein Screen von `mix36c`, `mixrl54`, `mix30v8` oder `mix48` vorliegt)
+
+- Die Bestätigung von `mix36b` ist nicht bestanden (R +1,77 pp [+0,64; +2,95], Hürde +2 pp). Referenz in Runde 2
+  bleibt V10, wie im Nachtrag 04:09 vorgesehen.
+- **Linie 4 „Altnetze“** (`scripts/pipeline_battle_ftold.sh`): 12 Quellnetze, die nie in einer Abgabe waren und
+  keine zurückgehaltenen Gegner sind: `20261022_full_rules_v6_s{27,28,29,37,38,39}_sol70` (V6-Regeln, je 3.000
+  Spiele) und `20261020_full_rules_fo_s{30..35}_sol70` (`far_opp`-Regeln, je 4.000 Spiele). Grund: Die Gewinne
+  kamen bisher aus der Mischung unterschiedlich trainierter Netze; diese Netze haben eigene Initialisierungen
+  und eigene Trainingsregeln.
+- Einstellungen wie die v8-Linie (alle V10-Regeln, je 1.500 Spiele, derselbe Gegnermix und Pool). Seeds 0–5
+  (v6) und 6–9, 28, 29 (fo), Kartenversatz 0. Start automatisch nach dem Ende der v8-Linie, 12 parallel.
+- Danach `battle_ftold12` und `mix30old` (V10 + ftold12) mit V10-Config, Dev-A-Screen mit
+  `scripts/battle_screen.sh`.
+- Kandidaten für eine Runde 3 (Seeds 808000–809599, `pipeline_battle_gate.sh` Runde 3, dieselben Hürden)
+  werden in einem eigenen Nachtrag festgelegt, bevor Runde 3 startet.
