@@ -5,6 +5,27 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 19:21 Berlin – Claude Code mit Mahmoud: Neue Regeln auf V11 getestet, Bündel `v11b` geht in die Zulassung
+
+Alle Werte auf Dev A (800000–800299, je Gegner 600 Spiele), gepaart gegen die V11-Spiele derselben Karten; nur Entwicklung.
+
+| Variante (V11 + …) | `sol92_sq` | Solution_92 | Bemerkung |
+|---|---|---|---|
+| `stage_attack` | +0,33 [+0,00; +0,83] | ±0 | greift kaum |
+| `art_safe_cheb` | +0,83 [−0,83; +2,50] | +0,33 | n. s. |
+| `dodge_auto` + **`dodge_shape`** (neu) | +1,00 [−0,33; +2,50] | +0,83 [−0,33; +2,17] | Gewinn bei Streufaktor 0,25 (+4,2 / +1,6), bei 0,5 −1,5 / ±0 |
+| dasselbe mit `dodge_mode=always` | +1,33 [−1,00; +3,50] | +0,33 | ähnlich, mehr Streuung |
+| dasselbe mit `dodge_verify` | +0,17 | +0,33 | zu vorsichtig |
+| **dasselbe nur bei Streufaktor 0,25** (`dodge_auto_max=0.25`) | **+1,33 [+0,50; +2,50]** | +0,50 [−0,33; +1,33] | nur 15 von 1.200 Spielen ändern sich, alle auf 0,25-Karten |
+
+- **`dodge_shape`** (Commit `a912b9f`, Standard aus): Das Gegnermodell für das Ausweichen sagt die Ziele für Raute und Quadrat voraus. Wird eine Einheit getroffen, die nur eine der beiden Formen als Ziel hatte und stehen blieb, zählt das für diese Form; das Quadrat gilt, sobald es mehr Treffer hat. Auch die Köder-Reichweite (`dodge_bait`) folgt dem Modell. 5 neue Tests, darunter eine Gegenprobe, dass der Ködertest die alte Manhattan-Reichweite erkennt.
+- **`splash_min_drop`** (Commit `a912b9f`, Standard 1,0 = V11): R auch bei sicher geschätztem Streufaktor 0,5. Auf Dev A (Messung vom Nachmittag) Mittel über 6 Gegner +0,8 pp [−0,2; +1,9], nach Streufaktor: 0,25 −0,4, **0,5 +2,6** (`sol92_sq` +3,0, Solution_92 −1,5, V7 +4,0, `league6`/`threat6` zusammen +4,5), 1,0 +0,1.
+- Mit beiden Schaltern aus spielt der neue Code 48 V11-Spiele identisch nach (Ergebnis, Punkte, Saps, bekannte Felder, Einheitenschritte). Regeltests 94 bestanden.
+- **Bündel `v11b`** = V11-Netze und -Config + `dodge_auto` + `dodge_shape` + `dodge_auto_max=0.25` + `splash_min_drop=0.5` (`experiments/ensembles/battle_v11b.pth`, SHA-256 `a185232d…`, Netze bytegleich mit V11). Die beiden Teile wirken auf getrennten Karten (0,25 bzw. 0,5). In der Warteschlange: Zulassung nach Plan-Nachtrag 18:31 (`scripts/battle_admit.sh v11b`: 6 Gegner + direkt gegen V11). Erwartung aus den Einzelwerten etwa +1 pp im Mittel, also knapp an der Zulassungshürde. Für die Auswahlhürde von Runde 3 (R +1,5 pp gegen V11) reicht das allein vermutlich nicht.
+- Weitere Tests in der Warteschlange: Köder bei 0,25 (`dodge_bait`), `sap_dropoff_est`, `dodge_auto` ohne Formerkennung, `holder_guard`, `cand_rescue`, `window_infer`, `relic_scout=1`.
+- **Keine Ursache gefunden in der Punktefeld-Inferenz:** In einem nachgemessenen Verlustspiel gibt es an allen Messpunkten 0–1 offene Gleichungen, eine exakte Lösung würde nichts zusätzlich finden. Die fehlenden Felder wurden nie betreten.
+- Abgabe unverändert **V11**.
+
 ## 30.10.2026, 18:36 Berlin – Claude Code mit Mahmoud: Runde 4 ohne Zulassung, Verlustanalyse V11, Runde 5 und neue Regeltests laufen
 
 - **Runde 4 der Hauptlinie fertig** (14:21–17:05, 18 Netze je +2.000 Spiele, `ft4_18`). Einzelnetze in der Validierung gegen Solution_92 (je 16 Spiele, Mittel über 18 Netze): Ende Runde 2 77,8 %, Runde 3 81,2 %, Runde 4 83,0 %.
