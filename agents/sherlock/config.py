@@ -140,6 +140,10 @@ class AgentConfig:
     """30.10.2026: art_splash und sap_still_splash greifen ab diesem sicher geschaetzten Streufaktor
     (Standard 1,0 wie in V11; 0,5 nimmt den Streufaktor 0,5 dazu). V11 mit 0,5 auf Dev A gepaart gegen V11:
     Mittel ueber 6 Gegner +0,8 pp [-0,2; +1,9], Karten mit Streufaktor 0,5 +2,6 [-0,8; +5,9]."""
+    splash_safe_below: float = 0.0
+    """30.10.2026: art_splash verzichtet erst ab diesem sicher geschaetzten Streufaktor auf art_safe (0,0 = immer
+    wie V11; 1,0 = bei 0,5 mit splash_min_drop=0.5 bleibt die Sicherheitspruefung). Diagnose: die Halbstreuung
+    kostet gegen Solution_92 bei 0,5 -1,5 pp, Artillerie ohne Sicherheit steht dort in dessen Reichweite."""
     art_surplus: bool = False
     """True (22.10.2026): art_sap nicht fuer Units, deren Ziel ein Punkte-Tile der eigenen Haelfte ist."""
     threat_feats: bool = False

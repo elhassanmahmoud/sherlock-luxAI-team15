@@ -53,3 +53,10 @@ def test_splash_min_drop_extends_the_rules_to_half_splash():
     assert _act(0.5, art_splash=True, splash_min_drop=0.5) == geo.SAP
     assert _act(0.25, art_splash=True, splash_min_drop=0.5) == geo.STAY
     assert _act(None, art_splash=True, splash_min_drop=0.5) == geo.STAY  # default 0,0 bleibt darunter
+
+
+def test_splash_safe_below_keeps_safety_at_half_splash():
+    half = dict(art_splash=True, splash_min_drop=0.5)
+    assert _act(0.5, **half) == geo.SAP                                    # V11-Logik: ohne Sicherheit
+    assert _act(0.5, splash_safe_below=1.0, **half) == geo.STAY            # bewaffneter Gegner in Reichweite
+    assert _act(1.0, splash_safe_below=1.0, **half) == geo.SAP             # voller Streuschaden wie bisher

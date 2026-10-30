@@ -602,8 +602,10 @@ class Agent_x:
             if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
                 return False
         min_hits, safe = c.art_min_hits, c.art_safe
-        if c.art_splash and not self.training and self.param_est.dropoff(default=0.0) >= c.splash_min_drop:
-            min_hits, safe = c.art_splash_hits, False  # 30.10.2026: voller Streuschaden
+        drop_est = self.param_est.dropoff(default=0.0) if c.art_splash and not self.training else 0.0
+        if c.art_splash and not self.training and drop_est >= c.splash_min_drop:
+            # 30.10.2026: voller Streuschaden; unter splash_safe_below bleibt die Sicherheitspruefung
+            min_hits, safe = c.art_splash_hits, safe and drop_est < c.splash_safe_below
         if int(sap[2]) < min_hits:
             return False
         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] * (1 + c.sap_reserve_k) + c.art_reserve:
