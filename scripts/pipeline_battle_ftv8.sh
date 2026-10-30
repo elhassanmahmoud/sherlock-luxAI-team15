@@ -1,5 +1,5 @@
 #!/bin/bash
-# 30.10.2026, 02:10: dritte Nachtrainings-Linie "v8-Linie" (Plan-Nachtrag 30.10., 02:10 in
+# 30.10.2026, 01:50: dritte Nachtrainings-Linie "v8-Linie" (Plan-Nachtrag 30.10., 01:50 in
 # docs/superpowers/plans/2026-10-29-battle-push.md). Die 12 Netze full_rules_v8 vom 22.10. (Quellen von
 # v10nets12; nie in einer Abgabe und keine zurueckgehaltenen Gegner) unter allen V10-Regeln nachtrainieren,
 # mit dem Gegnermix der gestrichenen Runde 4. Grund: Die Gewinne kamen bisher aus der Mischung unterschiedlich
