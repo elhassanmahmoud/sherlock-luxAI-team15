@@ -222,3 +222,23 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   V11 (`league_gates --direct-opponent`, `pipeline_battle_gate.sh` mit `REF`/`REFNAME`; Werkzeuge vor Runde 3 mit
   Tests).
 - Ohne bestandene Bestätigung keine Übernahme. Bei unklarem Vorteil bleibt V11.
+
+## Nachtrag 30.10.2026, 18:35 (nach der Zulassung zu Runde 3, vor jeder Messung mit `ft5_18` oder neuen Regeln auf V11)
+
+- **Zulassung zu Runde 3 nach Nachtrag 14:21: keiner zugelassen** (`mix36d_as` Mittel über 6 Gegner +0,81 pp über
+  V11, direkt gegen V11 48,3 %; `mix54d_as` −0,61 pp, direkt 57,7 %). Der Block 808000–809599 bleibt unbenutzt.
+- **Runde 5 der Hauptlinie** (`scripts/pipeline_battle_ft5.sh`): die 18 Netze von `ft4_18` je weitere 2.000 Spiele
+  (Gewichte und Buffer aus Runde 4), Kartenversatz 4000, Gegnermix und Pool wie in Runde 4, 6 parallel. Danach
+  `battle_ft5_18` und die Kandidaten `mix36e_as` (V10 + ft5_18) und `mix54e_as` (V10 + ft3_18 + ft5_18), beide mit R.
+- **Entwicklung auf V11** (nur Dev A 800000–800299; `REF=V11 bash scripts/battle_dev.sh`, gepaart gegen die
+  V11-Spiele derselben Karten): frühere Schalter erneut auf V11 (seit 18:27 in der Warteschlange: `stage_attack`, `art_safe_cheb`, `dodge_auto`,
+  `holder_guard`, `cand_rescue`, `window_infer`, `relic_scout=1`) und neue Schalter (zuerst ein Gegnermodell, das die
+  Sap-Form des Gegners, Raute oder Quadrat, im Spiel erkennt). Neue Schalter Standard aus, mit Tests.
+- **Zulassung zu Runde 3 unverändert wie 14:21** für jeden Kandidaten, auch Regelbündel auf den V11-Netzen:
+  Dev-A-Screen über die 6 Gegner mindestens +1,0 pp über V11 und Direktduell gegen V11 auf Dev A mindestens 52 %
+  (Punktschätzungen). Bei mehreren zugelassenen der mit dem höheren Mittel.
+- **Neuer Block Runde 4** (falls Runde 3 benutzt ist und ein weiterer Kandidat die Zulassung schafft): Auswahl
+  810000–810199 (direkt 810200–810399), Bestätigung 810400–811199 (direkt 811200–811599). Geprüft: Keine CSV unter
+  `experiments/compare/` enthält Seeds 810000–819999; Trainingskarten liegen unter 500000. Hürden unverändert,
+  Referenz V11.
+- Zeitplan unverändert: letzte Bestätigung spätestens 04.11., 12:00 starten. Ohne bestandene Bestätigung bleibt V11.
