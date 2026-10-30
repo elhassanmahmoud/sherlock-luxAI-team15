@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 09:45 Berlin – Claude Code mit Mahmoud: Regelsatz R (`art_splash` + `sap_still_splash`) besteht beide Gegenproben und geht in die Runde-2-Kandidaten
+
+Nach dem Plan-Nachtrag 30.10., 08:13 (Commit `288f17a`, vor den folgenden Ergebnissen). Alles auf Dev B (801000–801299), gepaart, Code aus der getrennten Arbeitskopie:
+
+| Lauf | gegen | Δ (pp) |
+|---|---|---|
+| `art_splash` + `art_low_off` | `art_splash` allein, Solution_92/`sol92_sq` | ±0,0 [−0,8; +0,8] → `art_low_off` entfällt |
+| `art_splash` + `sap_still_splash` | `art_splash` allein | **+0,7 [+0,1; +1,3]**, bei Streufaktor 1,0 +2,7 [+0,3; +5,5] → kommt dazu (Regel: ≥ +0,5) |
+| V10 + R | V10, Solution_92/`sol92_sq` | **+1,4 [+0,6; +2,3]** (Solution_92 +1,0, `sol92_sq` +1,8; Streufaktor 1,0 +5,8 [+2,7; +9,2]; umkämpfte Karten +2,7 [+1,3; +4,2]) |
+| Gegenprobe 1: V10 + R | V10, übriges Panel | `sol92_weak` +0,5, `old3_sym3` +0,7, default ±0,0 → hält (keiner unter −1) |
+| Gegenprobe 2: `mix36` + `art_splash` | `mix36`, Solution_92/`sol92_sq` | +0,5 [+0,0; +1,1] → hält (nicht darunter) |
+
+- Bei Streufaktor 0,25 und 0,5 ändert R in keinem der 2.270 betroffenen Dev-B-Spiele das Ergebnis. Die Regeln greifen nur bei sicher geschätztem 1,0.
+- **Gleichheitsprüfung:** Mit ausgeschalteten Schaltern liefert der neue Code auf 48 Dev-A-Spielen (800000–800011, Solution_92 und `sol92_sq`) in allen Kennzahlen dieselben Werte wie die V10-Basis `B_V10_dev800.csv`.
+- Screens: `mix30v8` Mittel 76,8 %, direkt nur 55,7 % (< 59,5 %) → nicht zugelassen. `mixrl54` 76,3 % / 62,3 % → zugelassen. Zugelassen sind damit bisher `mix36c` und `mixrl54`; `mix48` läuft noch (bis etwa 10:45).
+- **Ablauf bis Runde 2:** Nach dem `mix48`-Screen kommt der Code in den Hauptstand. Danach werden die zugelassenen Mischungen mit eingebranntem R gebaut (`battle_<name>_as.pth`) und Runde 2 gestartet. Der `mix30old`-Screen der Linie 4 startet gegen 10:30 und läuft dann teils mit dem neuen Code; laut Gleichheitsprüfung spielt der mit ausgeschalteten Schaltern genau wie der alte.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+
 ## 30.10.2026, 07:55 Berlin – Claude Code mit Mahmoud: Wo V10 verliert, neue Regel `art_splash` auf Dev B bestätigt, `mix36c` für Runde 2 zugelassen
 
 - **v8-Linie fertig** (06:47): 12 Netze je 1.500 Spiele, `battle_ftv8_12` SHA-256 `515760dd885b8282`; `mix30v8` und `mix48` gebaut, ihre Screens laufen. Validierung gegen Solution_92 (je 16 Spiele, nur Hinweis): Mittel der 12 Netze 76,6 % am Start, 81,2 % nach 1.500 Spielen. Laufdaten im Repo (Commit `9d66897`). **Linie 4** läuft seit 06:47 sauber (12 Prozesse, keine Fehler, um 07:01 bei Spiel 75 von 1.500).
