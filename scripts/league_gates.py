@@ -2,6 +2,7 @@
 
     python -m scripts.league_gates select REF.csv NAME KAND.csv DIREKT.csv [NAME KAND.csv DIREKT.csv ...]
     python -m scripts.league_gates confirm REF.csv KAND.csv DIREKT.csv
+    python -m scripts.league_gates battle REF.csv KAND.csv DIREKT.csv   (30.10.2026: Mittel ueber BATTLE_SIX statt R)
     ... [--direct-opponent self:PFAD]   (30.10.2026: Direktduell gegen eine andere Referenz als V10)
 
 Robustheitsmittel R = mittlere Siegquote gegen die PANEL-Gegner; nur Karten, auf denen Referenz
@@ -34,6 +35,12 @@ CONF_SOL92_LOW = -0.025
 CONF_DEFAULT = 0.99
 CONF_DEFAULT_DELTA = -0.01
 CONF_DIRECT_LOW = 0.50
+# Battle-Bestaetigung (Plan battle-push, Nachtrag 30.10.2026, 23:01): wie die Bestaetigung, aber Mittel ueber die
+# 6 Gegner des Dev-A-Screens (Solution_92-Familie und vier RL-Agents) statt R, Hoehe +1 pp
+BATTLE_SIX = ("solution92", "sol92_sq", "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+              "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+              "self:experiments/ensembles/league_nets6.pth", "self:experiments/ensembles/threat6.pth")
+BATTLE_DELTA = 0.01
 
 
 def _bootstrap(values: np.ndarray) -> tuple[float, float]:
@@ -90,14 +97,15 @@ def selection_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: p
 
 
 def confirm_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.DataFrame,
-                   direct_opponent: str = V10_REF) -> dict:
-    p = panel_delta(candidate, reference)
+                   direct_opponent: str = V10_REF, panel=PANEL, min_delta: float = CONF_PANEL_DELTA,
+                   label: str = "R") -> dict:
+    p = panel_delta(candidate, reference, panel)
     rows = _by_opponent(candidate, reference)
     sol, dfl = rows["solution92"], rows["default"]
     d = direct_result(direct, direct_opponent)
     checks = {
-        f"R Δ >= +{CONF_PANEL_DELTA * 100:.0f} pp": p["delta"] >= CONF_PANEL_DELTA,
-        "R untere 95%-Grenze > 0": p["low"] > 0,
+        f"{label} Δ >= +{min_delta * 100:.0f} pp": p["delta"] >= min_delta,
+        f"{label} untere 95%-Grenze > 0": p["low"] > 0,
         f"Solution_92 Δ >= {CONF_SOL92_DELTA * 100:+.1f} pp": sol["delta"] >= CONF_SOL92_DELTA,
         f"Solution_92 untere 95%-Grenze > {CONF_SOL92_LOW * 100:+.1f} pp": sol["low"] > CONF_SOL92_LOW,
         f"default >= {CONF_DEFAULT:.0%}": dfl["winrate"] >= CONF_DEFAULT,
@@ -113,9 +121,9 @@ def pick(results: dict[str, dict]) -> str | None:
     return max(ok)[2] if ok else None
 
 
-def _report(name: str, r: dict) -> None:
+def _report(name: str, r: dict, label: str = "R") -> None:
     p, s, dfl, d = r["panel"], r["solution92"], r["default"], r["direct"]
-    print(f"{name}: R {p['winrate']:.4f} vs {p['ref_winrate']:.4f} (Δ {p['delta'] * 100:+.2f} pp "
+    print(f"{name}: {label} {p['winrate']:.4f} vs {p['ref_winrate']:.4f} (Δ {p['delta'] * 100:+.2f} pp "
           f"[{p['low'] * 100:+.2f}; {p['high'] * 100:+.2f}], {p['maps']} Karten); Solution_92 "
           f"{s['winrate']:.4f} (Δ {s['delta'] * 100:+.2f} [{s['low'] * 100:+.2f}; {s['high'] * 100:+.2f}]); "
           f"default {dfl['winrate']:.4f} (Δ {dfl['delta'] * 100:+.2f}); direkt {d['winrate']:.4f} "
@@ -147,6 +155,11 @@ def main(argv: list[str]) -> int:
         r = confirm_checks(ref, pd.read_csv(argv[2]), pd.read_csv(argv[3]), opp)
         _report("Bestaetigung", r)
         print("GATE Bestaetigung:", "BESTANDEN" if r["passed"] else "NICHT BESTANDEN")
+        return 0 if r["passed"] else 1
+    if mode == "battle":
+        r = confirm_checks(ref, pd.read_csv(argv[2]), pd.read_csv(argv[3]), opp, BATTLE_SIX, BATTLE_DELTA, "Mittel 6")
+        _report("Battle-Bestaetigung", r, "Mittel 6")
+        print("GATE Battle-Bestaetigung:", "BESTANDEN" if r["passed"] else "NICHT BESTANDEN")
         return 0 if r["passed"] else 1
     raise SystemExit(f"unbekannter Modus {mode}")
 

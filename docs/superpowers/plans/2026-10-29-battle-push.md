@@ -242,3 +242,28 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   `experiments/compare/` enthält Seeds 810000–819999; Trainingskarten liegen unter 500000. Hürden unverändert,
   Referenz V11.
 - Zeitplan unverändert: letzte Bestätigung spätestens 04.11., 12:00 starten. Ohne bestandene Bestätigung bleibt V11.
+
+## Nachtrag 30.10.2026, 23:01 (Battle-Bestätigung, vor jeder Messung auf 810000–811599)
+
+- **Zulassung `v11e`** (Dev A, gepaart gegen V11): Mittel über 6 Gegner +0,89 pp, direkt gegen V11 54,0 % → nicht
+  zugelassen. Nach Streufaktor: Ausweichen bei 0,25 im Mittel ±0, direkt 47,4 %; Halbstreuung bei 0,5 +2,6, direkt 64,6 %.
+- **`V11_halfsafe`** = V11 + `splash_min_drop=0.5` + `splash_safe_below=1.0` (R auch bei sicher geschätztem
+  Streufaktor 0,5, Artillerie behält dort die Sicherheitsprüfung), Dev A gegen V11: Solution_92 +0,33, `sol92_sq` +2,17,
+  V3 +0,67, V7 −0,67, `league_nets6` +4,00, `threat6` ±0; **Mittel 6 +1,08 pp [−0,08; +2,39]**, **direkt gegen V11
+  55,5 % [52,8; 58,3]** → nach der Regel von 14:21/18:31 zugelassen. Ohne Sicherheitsprüfung (Messung vom Nachmittag)
+  Mittel 6 +0,78, Solution_92 −0,50.
+- **Kandidat `v11h`** = `experiments/ensembles/battle_v11h.pth`: Netze bytegleich mit V11, Config V11 + die beiden
+  Schalter (SHA-256 `13c73cce…`), Code im Hauptstand seit `7c52545`.
+- **Statt Runde 3 eine Battle-Bestätigung.** R misst nur die Solution_92-Familie und `old3_sym3`. Im Battle spielen aber
+  RL-Agents anderer Teams, und der Gewinn von `v11h` entsteht vor allem gegen RL-Gegner (bei Streufaktor 0,5 gegen
+  `league_nets6` +13). Gilt nur für diesen einen Kandidaten und nur einmal:
+  - Karten: 810400–811199 gegen die 6 Gegner des Dev-A-Screens und default (V11 und `v11h`, je 800 Karten, beide
+    Seiten), direkt gegen V11 auf 811200–811599 (800 Spiele). 810000–810399 und Runde 3 (808000–809599) bleiben unbenutzt.
+  - Hürden (`scripts/league_gates.py battle`, gepaarter Karten-Bootstrap, 5000 Ziehungen, Seed 0): Mittel über die
+    6 Gegner Δ ≥ +1 pp **und** untere 95-%-Grenze > 0; Solution_92 Δ ≥ −0,5 pp **und** untere Grenze > −2,5 pp;
+    default ≥ 99 % und Δ ≥ −1 pp; direkt gegen V11 untere 95-%-Grenze > 50 %.
+  - Ablauf `scripts/battle_confirm.sh v11h`. Runde 4 in `scripts/pipeline_battle_gate.sh` ist gesperrt.
+- Bestanden → Übernahme als V12 mit `scripts/release_candidate.py` (Sicherung von V11, Kurs-Runner, Bericht), danach
+  neues `Gruppe15.zip`. Nicht bestanden → V11 bleibt, kein weiterer Versuch auf diesem Block.
+- **Runde 5 der Hauptlinie entfällt** (Runde 4 brachte im Ensemble nichts, Zeit bis 04.11.). Ebenso die Tests
+  `V11_dropest` und `V11_rescue` (`cand_rescue` greift nur, wenn kein Punktefeld bekannt ist).

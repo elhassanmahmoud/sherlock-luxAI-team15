@@ -90,3 +90,26 @@ def test_direct_opponent_option_checks_against_another_reference(tmp_path, capsy
         G.main(["select", str(ref), "X", str(cand), str(d)])
     assert G.main(["select", str(ref), "X", str(cand), str(d), "--direct-opponent", v11]) == 0
     assert "AUSWAHL: X" in capsys.readouterr().out
+
+
+def test_battle_confirm_uses_mean_over_six_opponents(tmp_path, capsys):
+    six = G.BATTLE_SIX + ("default",)
+    v11 = "self:experiments/releases/20261030_v11_baseline/agent_p0.pth"
+    n = 40
+    ref = {o: [0.5] * n for o in six} | {"default": [1.0] * n}
+    cand = ref | {"self:experiments/ensembles/league_nets6.pth": [1.0] * n}   # +50 pp gegen einen der 6
+    d = direct([1.0] * 30 + [0.0] * 10, opponent=v11)
+    r = G.confirm_checks(frame(ref, six), frame(cand, six), d, v11, G.BATTLE_SIX, G.BATTLE_DELTA, "Mittel 6")
+    assert r["passed"] and r["panel"]["delta"] == pytest.approx(0.5 / 6)
+    worse_sol = cand | {"solution92": [0.0] * 4 + [0.5] * (n - 4)}             # Solution_92 -5 pp
+    assert not G.confirm_checks(frame(ref, six), frame(worse_sol, six), d, v11, G.BATTLE_SIX,
+                                G.BATTLE_DELTA, "Mittel 6")["passed"]
+    small = ref | {"sol92_sq": [0.5] * (n - 2) + [1.0] * 2}                    # +0,4 pp < +1 pp
+    assert not G.confirm_checks(frame(ref, six), frame(small, six), d, v11, G.BATTLE_SIX,
+                                G.BATTLE_DELTA, "Mittel 6")["passed"]
+    paths = [tmp_path / f for f in ("ref.csv", "cand.csv", "d.csv")]
+    for f, df in zip(paths, (frame(ref, six), frame(cand, six), d)):
+        df.to_csv(f, index=False)
+    assert G.main(["battle", *map(str, paths), "--direct-opponent", v11]) == 0
+    out = capsys.readouterr().out
+    assert "Mittel 6" in out and "GATE Battle-Bestaetigung: BESTANDEN" in out

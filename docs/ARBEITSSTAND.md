@@ -5,6 +5,15 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 23:01 Berlin – Claude Code mit Mahmoud: weiter nach der Pause; `v11h` (Halbstreuung mit Sicherheitsprüfung) zugelassen, Battle-Bestätigung auf frischen Karten läuft
+
+- Auftrag Mahmoud (22:09): nur noch das Wichtigste, was weiterbringt. Deshalb **entfällt Runde 5** (Runde 4 brachte im Ensemble nichts), ebenso `V11_dropest` und `V11_rescue`. Die alten Zeilen der Warteschlange sind als erledigt markiert, der Poller läuft nicht.
+- **Zulassung `v11e` fertig** (Dev A, gepaart gegen V11): Mittel über 6 Gegner +0,89 pp, direkt gegen V11 54,0 % → nicht zugelassen. Je Streufaktor: Ausweichen (0,25) im Mittel ±0 und direkt 47,4 %, Halbstreuung (0,5) +2,6 und direkt 64,6 %. Das Ausweichen fällt deshalb weg.
+- **`V11_halfsafe`** = V11 + `splash_min_drop=0.5` + `splash_safe_below=1.0` (Dev A gegen V11, alle 6 Gegner und direkt): Solution_92 +0,33, `sol92_sq` +2,17 [+0,67; +3,83], V3 +0,67, V7 −0,67, `league_nets6` +4,00 [+0,33; +7,67], `threat6` ±0; **Mittel 6 +1,08 pp [−0,08; +2,39]**, **direkt 55,5 % [52,8; 58,3]**. Bei Streufaktor 0,5 +3,5 (`league_nets6` +13,1, `sol92_sq` +6,1), direkt 65,7 %. Ohne Sicherheitsprüfung (Messung vom Nachmittag) +0,78, Solution_92 −0,50.
+- **Neu:** `python -m scripts.league_gates battle` (Mittel über die 6 Screen-Gegner statt R, sonst dieselben Bedingungen wie die Bestätigung; neuer Test, 10 Gate-/Screen-Tests bestanden), `scripts/battle_confirm.sh`, Runde 4 in `scripts/pipeline_battle_gate.sh` gesperrt. [Plan-Nachtrag 23:01](superpowers/plans/2026-10-29-battle-push.md): `v11h` geht statt in Runde 3 in eine Battle-Bestätigung auf 810400–811599. Vorher geprüft: Keine der 657 CSVs unter `experiments/compare/` enthält diese Seeds.
+- Bündel `experiments/ensembles/battle_v11h.pth` (SHA-256 `13c73cce…`, V11-Netze, Config V11 + die beiden Schalter) und `battle_v11f.pth` (`v11e` + Sicherheitsprüfung, wird nicht geprüft).
+- **Läuft:** `WORKERS=14 bash scripts/battle_confirm.sh v11h`, etwa 2 Stunden, Ergebnis in `experiments/pipeline_battle_gate.log`. Bis dahin bleibt die Abgabe **V11**.
+
 ## 30.10.2026, 20:48 Berlin – Claude Code mit Mahmoud: **Pause** (Akku leer, Mac soll abkühlen) – Stand gesichert, Weitermachen erst auf Mahmouds Zeichen
 
 **Um 20:46 auf Mahmouds Wunsch gestoppt:** Training Runde 5, Zulassungstest `v11e`, Warteschlange (`scripts/battle_queue.sh`) und `caffeinate`. Es läuft nichts mehr.
