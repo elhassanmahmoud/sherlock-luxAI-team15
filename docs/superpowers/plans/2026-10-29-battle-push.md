@@ -223,7 +223,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   Tests).
 - Ohne bestandene Bestätigung keine Übernahme. Bei unklarem Vorteil bleibt V11.
 
-## Nachtrag 30.10.2026, 18:35 (nach der Zulassung zu Runde 3, vor jeder Messung mit `ft5_18` oder neuen Regeln auf V11)
+## Nachtrag 30.10.2026, 18:31 (nach der Zulassung zu Runde 3, vor jeder Messung mit `ft5_18` oder neuen Regeln auf V11)
 
 - **Zulassung zu Runde 3 nach Nachtrag 14:21: keiner zugelassen** (`mix36d_as` Mittel über 6 Gegner +0,81 pp über
   V11, direkt gegen V11 48,3 %; `mix54d_as` −0,61 pp, direkt 57,7 %). Der Block 808000–809599 bleibt unbenutzt.
