@@ -1,0 +1,16 @@
+bash scripts/battle_dev.sh at --set active_targets=true
+bash scripts/battle_dev.sh ms --set mobile_seen=true
+bash scripts/battle_dev.sh as0 --set art_safe=false
+bash scripts/battle_dev.sh as0h2 --set art_safe=false --set art_min_hits=2
+.venv/bin/python -m scripts.oracle_probe --mode points --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_points.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_points.csv 2>&1 | grep O_V10
+.venv/bin/python -m scripts.oracle_probe --mode relics --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_relics.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_relics.csv 2>&1 | grep O_V10
+bash scripts/battle_dev.sh orig6 experiments/ensembles/battle_orig6.pth
+until [ $(grep -l '"status": "done"' experiments/runs/20261029_ft_v10_s1[0-5]/manifest.json 2>/dev/null | wc -l) -ge 6 ]; do sleep 60; done; .venv/bin/python -m scripts.build_ensemble --cfg-from experiments/releases/20261022_v10_baseline/agent_p0.pth --out experiments/ensembles/battle_ft6.pth experiments/runs/20261029_ft_v10_s1[0-5]/weights/agent.pth; bash scripts/battle_dev.sh ft6 experiments/ensembles/battle_ft6.pth; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/D_orig6.csv experiments/compare/battle/D_ft6.csv 2>&1 | grep -E "D_ft6|Kandidat"
+bash scripts/battle_dev.sh opi --set opp_point_infer=true
+bash scripts/battle_dev.sh rs1 --set relic_scout=1
+bash scripts/battle_dev.sh rs2 --set relic_scout=2
+.venv/bin/python -m scripts.par_eval --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 301000 --n 300 --workers 8 --opponents "solution92,sol92_sq,sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" --out experiments/compare/battle/B_V10_devB.csv 2>&1 | grep -v geladen | tail -1
+OPP="sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" bash scripts/battle_dev.sh mix36r experiments/ensembles/battle_mix36.pth
+DEVB=1 PANEL=1 bash scripts/battle_dev.sh mix36 experiments/ensembles/battle_mix36.pth
+bash scripts/pipeline_battle_night.sh
+until grep -q "V10-Basis gegen zurueckgehaltene" experiments/battle_dev.log; do sleep 60; done; WORKERS=6 bash scripts/battle_screen.sh mix36c experiments/ensembles/battle_mix36c.pth

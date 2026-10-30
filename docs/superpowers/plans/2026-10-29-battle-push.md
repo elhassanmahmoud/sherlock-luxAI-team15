@@ -187,3 +187,18 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   gleich in Runde 2.
 - Der Code mit den neuen Schaltern (Standard aus, V10 unverändert) kommt nach den laufenden Screens und vor
   Runde 2 in den Hauptstand. Der Gate-Log hält den Commit fest.
+
+## Nachtrag 30.10.2026, 10:35 (Ausführung der Nachträge 04:09 und 08:13, vor jeder Messung auf 805000–807399)
+
+- Alle Screens fertig (10:28, `python -m scripts.screen_table`). Zulassung nach 04:09 (`--admit`, mechanisch):
+  **`mix36c`, `mix48`, `mixrl54`** (Mittel über 6 Gegner 77,8 / 77,1 / 76,3 %, direkt gegen V10 61,7 / 63,7 /
+  62,3 %; Maßstab `mix36b` 76,2 / 59,5 %). Nicht zugelassen: `mixrl36` (76,1 / 59,3) und `mix30v8` (76,8 / 55,7).
+- Beide Gegenproben aus 08:13 halten (Arbeitsstand 30.10., 09:45), R = `art_splash` + `sap_still_splash`.
+  Code im Hauptstand seit Commit `f34f9c4` (Schalter Standard aus).
+- **Kandidaten Runde 2** (Netze bitgleich mit den Screens, Config der Mischung + R, `scripts.set_cfg`):
+  - `mix36c_as` = `experiments/ensembles/battle_mix36c_as.pth`, SHA-256 `2ab463e9034357a40cb721b34286ad1f9bad250629bf9f9f17b1d175157cd2e0`
+  - `mix48_as` = `experiments/ensembles/battle_mix48_as.pth`, SHA-256 `088b0280aba348bdf30d6364fc67a0eb4a5d2d5ad506ed0f7f125c00c7d89324`
+  - `mixrl54_as` = `experiments/ensembles/battle_mixrl54_as.pth`, SHA-256 `e0970b37b9a008509b715befd3af98e4ab5f8149f772a573c705d1f42cd0f712`
+- Start mit `WORKERS=9 bash scripts/pipeline_battle_round.sh 2 mix36c_as mix48_as mixrl54_as`: Auswahl je Kandidat
+  auf 805000–805399, Wahl höchstens eines Kandidaten (größtes R-Δ unter den bestandenen), Bestätigung auf
+  806000–807399 nur für ihn. Referenz V10, Hürden unverändert (`scripts/league_gates.py`).

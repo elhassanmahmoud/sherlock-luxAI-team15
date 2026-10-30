@@ -1,0 +1,101 @@
+[29.10. 14:43] START bash scripts/battle_dev.sh at --set active_targets=true
+    solution92                   0.6550 (V10 0.8933, Δ -23.83 [-28.33; -19.17])
+[29.10. 14:52] at (experiments/releases/20261022_v10_baseline/agent_p0.pth --set active_targets=true)
+    sol92_sq                     0.7733 (V10 0.7783, Δ -0.50 [-3.33; +2.33])
+    solution92                   0.8950 (V10 0.8933, Δ +0.17 [-2.17; +2.50])
+[29.10. 14:52] ENDE (exit 0) bash scripts/battle_dev.sh at --set active_targets=true
+[29.10. 14:52] START bash scripts/battle_dev.sh ms --set mobile_seen=true
+    solution92                   0.8950 (V10 0.8933, Δ +0.17 [-2.17; +2.50])
+[29.10. 15:02] ms (experiments/releases/20261022_v10_baseline/agent_p0.pth --set mobile_seen=true)
+    sol92_sq                     0.7817 (V10 0.7783, Δ +0.33 [-0.83; +1.50])
+    solution92                   0.8900 (V10 0.8933, Δ -0.33 [-1.17; +0.50])
+[29.10. 15:02] ENDE (exit 0) bash scripts/battle_dev.sh ms --set mobile_seen=true
+[29.10. 15:02] START bash scripts/battle_dev.sh as0 --set art_safe=false
+    solution92                   0.8900 (V10 0.8933, Δ -0.33 [-1.17; +0.50])
+[29.10. 15:11] as0 (experiments/releases/20261022_v10_baseline/agent_p0.pth --set art_safe=false)
+    sol92_sq                     0.7867 (V10 0.7783, Δ +0.83 [-1.50; +3.17])
+    solution92                   0.8833 (V10 0.8933, Δ -1.00 [-3.00; +0.83])
+[29.10. 15:11] ENDE (exit 0) bash scripts/battle_dev.sh as0 --set art_safe=false
+[29.10. 15:11] START bash scripts/battle_dev.sh as0h2 --set art_safe=false --set art_min_hits=2
+    solution92                   0.8833 (V10 0.8933, Δ -1.00 [-3.00; +0.83])
+[29.10. 15:21] as0h2 (experiments/releases/20261022_v10_baseline/agent_p0.pth --set art_safe=false --set art_min_hits=2)
+    sol92_sq                     0.7783 (V10 0.7783, Δ +0.00 [-3.17; +3.33])
+    solution92                   0.8883 (V10 0.8933, Δ -0.50 [-3.00; +2.00])
+[29.10. 15:21] ENDE (exit 0) bash scripts/battle_dev.sh as0h2 --set art_safe=false --set art_min_hits=2
+[29.10. 15:21] START .venv/bin/python -m scripts.oracle_probe --mode points --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_points.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_points.csv 2>&1 | grep O_V10
+O_V10_points.csv: solution92: 0.907 (600 Spiele)
+O_V10_points.csv: sol92_sq: 0.803 (600 Spiele)
+O_V10_points                 sol92_sq      300    600  0.803  0.778  +0.025  [-0.010; +0.060]
+O_V10_points                 solution92    300    600  0.907  0.893  +0.013  [-0.015; +0.042]
+[29.10. 15:30] ENDE (exit 0) .venv/bin/python -m scripts.oracle_probe --mode points --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_points.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_points.csv 2>&1 | grep O_V10
+[29.10. 15:30] START .venv/bin/python -m scripts.oracle_probe --mode relics --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_relics.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_relics.csv 2>&1 | grep O_V10
+O_V10_relics.csv: solution92: 0.903 (600 Spiele)
+O_V10_relics.csv: sol92_sq: 0.815 (600 Spiele)
+O_V10_relics                 sol92_sq      300    600  0.815  0.778  +0.037  [+0.008; +0.065]
+O_V10_relics                 solution92    300    600  0.903  0.893  +0.010  [-0.015; +0.035]
+[29.10. 15:39] ENDE (exit 0) .venv/bin/python -m scripts.oracle_probe --mode relics --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --opponents solution92,sol92_sq --workers 8 --out experiments/compare/battle/O_V10_relics.csv 2>&1 | grep -v geladen | tail -2; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/B_V10_dev800.csv experiments/compare/battle/O_V10_relics.csv 2>&1 | grep O_V10
+[29.10. 15:39] START bash scripts/battle_dev.sh orig6 experiments/ensembles/battle_orig6.pth
+    solution92                   0.8883 (V10 0.8933, Δ -0.50 [-3.00; +2.00])
+[29.10. 15:47] orig6 (experiments/ensembles/battle_orig6.pth )
+    sol92_sq                     0.7750 (V10 0.7783, Δ -0.33 [-4.17; +3.50])
+    solution92                   0.8600 (V10 0.8933, Δ -3.33 [-6.83; -0.16])
+[29.10. 15:47] ENDE (exit 0) bash scripts/battle_dev.sh orig6 experiments/ensembles/battle_orig6.pth
+[29.10. 15:47] START until [ $(grep -l '"status": "done"' experiments/runs/20261029_ft_v10_s1[0-5]/manifest.json 2>/dev/null | wc -l) -ge 6 ]; do sleep 60; done; .venv/bin/python -m scripts.build_ensemble --cfg-from experiments/releases/20261022_v10_baseline/agent_p0.pth --out experiments/ensembles/battle_ft6.pth experiments/runs/20261029_ft_v10_s1[0-5]/weights/agent.pth; bash scripts/battle_dev.sh ft6 experiments/ensembles/battle_ft6.pth; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/D_orig6.csv experiments/compare/battle/D_ft6.csv 2>&1 | grep -E "D_ft6|Kandidat"
+experiments/ensembles/battle_ft6.pth: 6 Netze
+    solution92                   0.8600 (V10 0.8933, Δ -3.33 [-6.83; -0.16])
+[29.10. 15:56] ft6 (experiments/ensembles/battle_ft6.pth )
+    sol92_sq                     0.8217 (V10 0.7783, Δ +4.33 [+0.67; +8.17])
+    solution92                   0.8917 (V10 0.8933, Δ -0.17 [-3.17; +3.00])
+Kandidat                     Gegner     Karten Spiele     WR Ref-WR   Delta  95-%-KI fuer Delta
+D_ft6                        sol92_sq      300    600  0.822  0.775  +0.047  [+0.010; +0.085]
+D_ft6                        solution92    300    600  0.892  0.860  +0.032  [+0.000; +0.067]
+[29.10. 15:56] ENDE (exit 0) until [ $(grep -l '"status": "done"' experiments/runs/20261029_ft_v10_s1[0-5]/manifest.json 2>/dev/null | wc -l) -ge 6 ]; do sleep 60; done; .venv/bin/python -m scripts.build_ensemble --cfg-from experiments/releases/20261022_v10_baseline/agent_p0.pth --out experiments/ensembles/battle_ft6.pth experiments/runs/20261029_ft_v10_s1[0-5]/weights/agent.pth; bash scripts/battle_dev.sh ft6 experiments/ensembles/battle_ft6.pth; .venv/bin/python -m scripts.compare_report --ref experiments/compare/battle/D_orig6.csv experiments/compare/battle/D_ft6.csv 2>&1 | grep -E "D_ft6|Kandidat"
+[29.10. 15:56] START bash scripts/battle_dev.sh opi --set opp_point_infer=true
+    solution92                   0.8917 (V10 0.8933, Δ -0.17 [-3.17; +3.00])
+[29.10. 16:05] opi (experiments/releases/20261022_v10_baseline/agent_p0.pth --set opp_point_infer=true)
+    sol92_sq                     0.7833 (V10 0.7783, Δ +0.50 [-1.33; +2.50])
+    solution92                   0.8833 (V10 0.8933, Δ -1.00 [-2.83; +0.83])
+[29.10. 16:05] ENDE (exit 0) bash scripts/battle_dev.sh opi --set opp_point_infer=true
+[29.10. 16:05] START bash scripts/battle_dev.sh rs1 --set relic_scout=1
+    solution92                   0.8833 (V10 0.8933, Δ -1.00 [-2.83; +0.83])
+[29.10. 16:14] rs1 (experiments/releases/20261022_v10_baseline/agent_p0.pth --set relic_scout=1)
+    sol92_sq                     0.7650 (V10 0.7783, Δ -1.33 [-4.33; +1.67])
+    solution92                   0.8833 (V10 0.8933, Δ -1.00 [-3.00; +1.00])
+[29.10. 16:14] ENDE (exit 0) bash scripts/battle_dev.sh rs1 --set relic_scout=1
+[29.10. 16:14] START bash scripts/battle_dev.sh rs2 --set relic_scout=2
+scripts/battle_dev.sh: line 20: syntax error near unexpected token `fi'
+scripts/battle_dev.sh: line 20: `NAME}.csv; fi'
+[29.10. 16:26] ENDE (exit 0) bash scripts/battle_dev.sh rs2 --set relic_scout=2
+[29.10. 16:26] START .venv/bin/python -m scripts.par_eval --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 301000 --n 300 --workers 8 --opponents "solution92,sol92_sq,sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" --out experiments/compare/battle/B_V10_devB.csv 2>&1 | grep -v geladen | tail -1
+B_V10_devB.csv: default: 1.000 (600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.917 (600 Spiele), sol92_sq: 0.832 (600 Spiele), sol92_weak: 0.923 (600 Spiele), solution92: 0.912 (600 Spiele) in 1717s
+[29.10. 16:54] ENDE (exit 0) .venv/bin/python -m scripts.par_eval --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 301000 --n 300 --workers 8 --opponents "solution92,sol92_sq,sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" --out experiments/compare/battle/B_V10_devB.csv 2>&1 | grep -v geladen | tail -1
+[29.10. 18:41] START OPP="sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" bash scripts/battle_dev.sh mix36r experiments/ensembles/battle_mix36.pth
+[29.10. 18:57] mix36r (experiments/ensembles/battle_mix36.pth )
+    default                      1.0000 (V10 0.9983, Δ +0.17 [+0.00; +0.50])
+    self:experiments/releases/20 0.8600 (V10 0.8933, Δ -3.33 [-7.67; +1.00])
+    sol92_weak                   0.9200 (V10 0.8950, Δ +2.50 [-0.17; +5.33])
+[29.10. 18:57] ENDE (exit 0) OPP="sol92_weak,self:experiments/releases/20261020_old3_sym3/agent_p0.pth,default" bash scripts/battle_dev.sh mix36r experiments/ensembles/battle_mix36.pth
+[29.10. 18:57] START DEVB=1 PANEL=1 bash scripts/battle_dev.sh mix36 experiments/ensembles/battle_mix36.pth
+    self:experiments/releases/20 0.9267 (V10 0.9167, Δ +1.00 [-2.67; +5.00])
+    sol92_sq                     0.8483 (V10 0.8317, Δ +1.67 [-1.17; +4.67])
+    sol92_weak                   0.9233 (V10 0.9233, Δ +0.00 [-2.33; +2.17])
+    solution92                   0.9267 (V10 0.9117, Δ +1.50 [-1.00; +3.83])
+[29.10. 19:32] ENDE (exit 0) DEVB=1 PANEL=1 bash scripts/battle_dev.sh mix36 experiments/ensembles/battle_mix36.pth
+[29.10. 19:32] START bash scripts/pipeline_battle_night.sh
+experiments/ensembles/battle_mix36b.pth: 36 Netze
+experiments/ensembles/battle_mix54.pth: 54 Netze
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: mix36b
+[30.10. 05:32] ENDE (exit 0) bash scripts/pipeline_battle_night.sh
+[30.10. 05:32] START until grep -q "V10-Basis gegen zurueckgehaltene" experiments/battle_dev.log; do sleep 60; done; WORKERS=6 bash scripts/battle_screen.sh mix36c experiments/ensembles/battle_mix36c.pth
+[30.10. 07:09] Screen mix36c (experiments/ensembles/battle_mix36c.pth, SHA-256 e8b0de223fee12f3), Dev A, gepaart gegen V10
+    league_nets6                 0.5900 (V10 0.5200, Δ +7.00 [+0.00; +14.00])
+    threat6                      0.8567 (V10 0.8133, Δ +4.33 [+0.00; +8.67])
+    20261022_all18_v3            0.8133 (V10 0.7217, Δ +9.17 [+3.17; +15.50])
+    20261022_v7_Bsnpd            0.6667 (V10 0.6017, Δ +6.50 [-0.17; +13.00])
+    sol92_sq                     0.8150 (V10 0.7783, Δ +3.67 [+0.33; +7.17])
+    solution92                   0.9267 (V10 0.8933, Δ +3.33 [+0.33; +6.33])
+    Mittel ueber 6 Gegner: 0.7781 (V10 0.7214, Δ +5.67 [+3.14; +8.11], 300 Karten)
+    direkt gegen V10: 0.6167 [0.5600; 0.6700] aus 600 Spielen
+[30.10. 07:09] ENDE (exit 0) until grep -q "V10-Basis gegen zurueckgehaltene" experiments/battle_dev.log; do sleep 60; done; WORKERS=6 bash scripts/battle_screen.sh mix36c experiments/ensembles/battle_mix36c.pth

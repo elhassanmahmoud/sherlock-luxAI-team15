@@ -60,3 +60,71 @@
 [29.10. 20:53] ft2_6 (experiments/ensembles/battle_ft2_6.pth )
     sol92_sq                     0.7983 (V10 0.7783, Δ +2.00 [-2.00; +6.00])
     solution92                   0.8900 (V10 0.8933, Δ -0.33 [-3.33; +2.50])
+[30.10. 03:16] Morgen-Screen: Start (Runde 3 fertig)
+[30.10. 03:46] V10-Basis gegen zurueckgehaltene RL-Gegner (league_nets6, threat6), Dev A: experiments/compare/battle/B_V10_hold.csv
+[30.10. 04:21] Screen mix36 (experiments/ensembles/battle_mix36.pth, SHA-256 ff77aefd3f2c4452), Dev A, gepaart gegen V10
+    league_nets6                 0.5900 (V10 0.5200, Δ +7.00 [-0.33; +14.33])
+    threat6                      0.8633 (V10 0.8133, Δ +5.00 [-0.33; +10.33])
+    20261022_all18_v3            0.7567 (V10 0.7217, Δ +3.50 [-2.67; +9.33])
+    20261022_v7_Bsnpd            0.6667 (V10 0.6017, Δ +6.50 [-0.50; +13.17])
+    sol92_sq                     0.8300 (V10 0.7783, Δ +5.17 [+1.67; +8.67])
+    solution92                   0.9083 (V10 0.8933, Δ +1.50 [-1.50; +4.50])
+    Mittel ueber 6 Gegner: 0.7692 (V10 0.7214, Δ +4.78 [+2.14; +7.33], 300 Karten)
+    direkt gegen V10: 0.5800 [0.5267; 0.6367] aus 600 Spielen
+experiments/ensembles/battle_mixrl36.pth: 36 Netze
+experiments/ensembles/battle_mixrl54.pth: 54 Netze
+[30.10. 05:48] Screen mix36b (experiments/ensembles/battle_mix36b.pth, SHA-256 dd04a7c0f94b1738), Dev A, gepaart gegen V10
+    league_nets6                 0.5900 (V10 0.5200, Δ +7.00 [+0.00; +14.00])
+    threat6                      0.8233 (V10 0.8133, Δ +1.00 [-4.00; +6.00])
+    20261022_all18_v3            0.8067 (V10 0.7217, Δ +8.50 [+2.83; +14.17])
+    20261022_v7_Bsnpd            0.6367 (V10 0.6017, Δ +3.50 [-3.33; +10.67])
+    sol92_sq                     0.8083 (V10 0.7783, Δ +3.00 [-0.50; +6.67])
+    solution92                   0.9067 (V10 0.8933, Δ +1.33 [-1.67; +4.33])
+    Mittel ueber 6 Gegner: 0.7619 (V10 0.7214, Δ +4.06 [+1.75; +6.39], 300 Karten)
+    direkt gegen V10: 0.5950 [0.5400; 0.6483] aus 600 Spielen
+[30.10. 06:12] Screen mixrl36 (experiments/ensembles/battle_mixrl36.pth, SHA-256 173d97f0255f23f0), Dev A, gepaart gegen V10
+    league_nets6                 0.5900 (V10 0.5200, Δ +7.00 [+0.00; +13.67])
+    threat6                      0.8533 (V10 0.8133, Δ +4.00 [-1.33; +9.33])
+    20261022_all18_v3            0.7867 (V10 0.7217, Δ +6.50 [+0.17; +12.67])
+    20261022_v7_Bsnpd            0.6200 (V10 0.6017, Δ +1.83 [-5.17; +8.50])
+    sol92_sq                     0.8017 (V10 0.7783, Δ +2.33 [-1.17; +5.83])
+    solution92                   0.9117 (V10 0.8933, Δ +1.83 [-0.67; +4.33])
+    Mittel ueber 6 Gegner: 0.7606 (V10 0.7214, Δ +3.92 [+1.55; +6.28], 300 Karten)
+    direkt gegen V10: 0.5933 [0.5400; 0.6500] aus 600 Spielen
+[30.10. 07:09] Screen mix36c (experiments/ensembles/battle_mix36c.pth, SHA-256 e8b0de223fee12f3), Dev A, gepaart gegen V10
+    league_nets6                 0.5900 (V10 0.5200, Δ +7.00 [+0.00; +14.00])
+    threat6                      0.8567 (V10 0.8133, Δ +4.33 [+0.00; +8.67])
+    20261022_all18_v3            0.8133 (V10 0.7217, Δ +9.17 [+3.17; +15.50])
+    20261022_v7_Bsnpd            0.6667 (V10 0.6017, Δ +6.50 [-0.17; +13.00])
+    sol92_sq                     0.8150 (V10 0.7783, Δ +3.67 [+0.33; +7.17])
+    solution92                   0.9267 (V10 0.8933, Δ +3.33 [+0.33; +6.33])
+    Mittel ueber 6 Gegner: 0.7781 (V10 0.7214, Δ +5.67 [+3.14; +8.11], 300 Karten)
+    direkt gegen V10: 0.6167 [0.5600; 0.6700] aus 600 Spielen
+[30.10. 08:08] Screen mixrl54 (experiments/ensembles/battle_mixrl54.pth, SHA-256 1c00a9126abccdc7), Dev A, gepaart gegen V10
+    league_nets6                 0.6433 (V10 0.5200, Δ +12.33 [+4.67; +20.00])
+    threat6                      0.8200 (V10 0.8133, Δ +0.67 [-4.33; +6.00])
+    20261022_all18_v3            0.7767 (V10 0.7217, Δ +5.50 [-1.17; +12.17])
+    20261022_v7_Bsnpd            0.6367 (V10 0.6017, Δ +3.50 [-3.67; +10.50])
+    sol92_sq                     0.8033 (V10 0.7783, Δ +2.50 [-1.17; +6.33])
+    solution92                   0.8967 (V10 0.8933, Δ +0.33 [-2.17; +2.83])
+    Mittel ueber 6 Gegner: 0.7628 (V10 0.7214, Δ +4.14 [+1.58; +6.70], 300 Karten)
+    direkt gegen V10: 0.6233 [0.5700; 0.6767] aus 600 Spielen
+[30.10. 08:08] Morgen-Screen fertig
+[30.10. 08:34] Screen mix30v8 (experiments/ensembles/battle_mix30v8.pth, SHA-256 a8da3e582ac68c9c), Dev A, gepaart gegen V10
+    league_nets6                 0.5733 (V10 0.5200, Δ +5.33 [-2.33; +12.33])
+    threat6                      0.8267 (V10 0.8133, Δ +1.33 [-3.67; +6.33])
+    20261022_all18_v3            0.7933 (V10 0.7217, Δ +7.17 [+1.17; +13.17])
+    20261022_v7_Bsnpd            0.6633 (V10 0.6017, Δ +6.17 [-1.17; +13.17])
+    sol92_sq                     0.8150 (V10 0.7783, Δ +3.67 [+0.17; +7.33])
+    solution92                   0.9350 (V10 0.8933, Δ +4.17 [+1.50; +7.00])
+    Mittel ueber 6 Gegner: 0.7678 (V10 0.7214, Δ +4.64 [+2.08; +7.14], 300 Karten)
+    direkt gegen V10: 0.5567 [0.5000; 0.6133] aus 600 Spielen
+[30.10. 10:27] Screen mix48 (experiments/ensembles/battle_mix48.pth, SHA-256 16a5272f2c277f6e), Dev A, gepaart gegen V10
+    league_nets6                 0.6100 (V10 0.5200, Δ +9.00 [+1.67; +16.33])
+    threat6                      0.8533 (V10 0.8133, Δ +4.00 [-0.67; +9.00])
+    20261022_all18_v3            0.7800 (V10 0.7217, Δ +5.83 [-0.33; +12.00])
+    20261022_v7_Bsnpd            0.6600 (V10 0.6017, Δ +5.83 [-1.50; +13.00])
+    sol92_sq                     0.8200 (V10 0.7783, Δ +4.17 [+0.50; +7.83])
+    solution92                   0.9050 (V10 0.8933, Δ +1.17 [-1.67; +4.00])
+    Mittel ueber 6 Gegner: 0.7714 (V10 0.7214, Δ +5.00 [+2.44; +7.47], 300 Karten)
+    direkt gegen V10: 0.6367 [0.5833; 0.6900] aus 600 Spielen
