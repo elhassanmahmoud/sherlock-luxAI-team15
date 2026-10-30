@@ -162,3 +162,28 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   `scripts/battle_screen.sh`.
 - Kandidaten für eine Runde 3 (Seeds 808000–809599, `pipeline_battle_gate.sh` Runde 3, dieselben Hürden)
   werden in einem eigenen Nachtrag festgelegt, bevor Runde 3 startet.
+
+## Nachtrag 30.10.2026, 08:13 (Regel `art_splash` für Runde 2, vor jeder Messung auf 805000–807399 und vor den Ergebnissen der Gegenproben)
+
+- Neue Regel `art_splash`: Ist der Sap-Streufaktor laut `param_est` sicher 1,0, sappt die Artillerie schon ab
+  2 Treffern und auch in gegnerischer Reichweite. Dev B (801000–801299): +0,8 pp [+0,2; +1,3] gegen
+  Solution_92/`sol92_sq`, bei Streufaktor 1,0 +3,1 [+1,0; +5,5], sonst unverändert (Arbeitsstand 30.10., 07:55).
+  `art_low_off` brachte auf denselben Spielen nichts zusätzlich (±0,0) und entfällt.
+- **Regelsatz R** = `art_splash=true`. `sap_still_splash=true` kommt dazu, wenn `art_splash` + `sap_still_splash`
+  auf denselben 1.200 Dev-B-Spielen mindestens +0,5 pp über `art_splash` allein liegt (Punktschätzung) und bei
+  Streufaktor 1,0 nicht darunter.
+- **R geht in die Runde-2-Kandidaten**, wenn beide Gegenproben halten (Punktschätzungen, gepaart):
+  1. V10 + R auf Dev B gegen `sol92_weak`, `old3_sym3` und default je höchstens 1 pp unter V10. Kommt
+     `sap_still_splash` dazu, gilt das für den ganzen Regelsatz (eigener Lauf).
+  2. `mix36` + `art_splash` auf Dev B gegen Solution_92/`sol92_sq` nicht unter `mix36` (`DB_mix36.csv`;
+     Stellvertreter für die Mischungen, weil dort schon eine Dev-B-Basis existiert).
+- Dann laufen in Runde 2 statt der zugelassenen Mischungen dieselben Mischungen mit eingebranntem R
+  (`scripts.set_cfg`, Dateien `experiments/ensembles/battle_<name>_as.pth`, Netze und übrige Config bitgleich).
+  Zulassung (aus den Screens ohne R), Auswahl, Wahl und Bestätigung wie im Nachtrag 04:09. Referenz bleibt V10
+  ohne R, Hürden unverändert.
+- Hält eine Gegenprobe nicht, läuft Runde 2 mit den zugelassenen Mischungen ohne R wie im Nachtrag 04:09.
+- Grund: Ein Kandidat, der in einer Runde scheitert, wird nicht mit kleinen Änderungen auf neuen Karten
+  wiederholt. Die Regel greift nur bei sicher geschätztem Streufaktor 1,0, deshalb geht die bessere Fassung
+  gleich in Runde 2.
+- Der Code mit den neuen Schaltern (Standard aus, V10 unverändert) kommt nach den laufenden Screens und vor
+  Runde 2 in den Hauptstand. Der Gate-Log hält den Commit fest.
