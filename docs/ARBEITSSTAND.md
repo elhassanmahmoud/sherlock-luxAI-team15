@@ -5,6 +5,17 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 20:30 Berlin – Claude Code mit Mahmoud: `v11b` knapp nicht zugelassen, Ursache gefunden, `v11e` mit Schutzschaltung in der Zulassung
+
+- **Zulassung `v11b`** (Dev A gepaart gegen V11, `scripts/battle_admit.sh`): Mittel über 6 Gegner 82,69 statt 81,83 % (**+0,86 pp** [−0,31; +2,11], Hürde +1,0), direkt gegen V11 **54,3 %** (Hürde 52 %) → **nicht zugelassen**. Je Gegner: Solution_92 ±0, `sol92_sq` +2,5, V3 ±0, V7 +0,7, `league6` +3,7, `threat6` −1,7. Direkt gegen V10 74,3 % (V11 67,7 %).
+- **Nach Streufaktor** (gegen V11): bei **0,5** (Halbstreuung) +2,6 im Mittel, `league6` +11,1, V7 +4,0, `sol92_sq` +3,0, direkt gegen V11 64,6 %. Bei **0,25** (Ausweichen) gegen die Solution_92-Familie +4,2 / +1,6, gegen die RL-Gegner aber −1 bis −3 (V3 −1,0, V7 −2,1, `threat6` −3,1), direkt 48,4 %. Das Modell sagt die Schüsse von RL-Agents falsch voraus, die Einheiten weichen umsonst aus. Bei 1,0 keine Änderung.
+- **Neu im Hauptstand** (Commit `c967cf4`, Standard aus, 32 V11-Spiele identisch):
+  - **`dodge_distrust`**: Das Gegnermodell gilt zunächst. Es wird für den Rest des Spiels abgeschaltet, wenn nach mindestens 6 stehen gebliebenen vorhergesagten Zielen weniger als dieser Anteil direkt getroffen wurde. Das gilt auch für das Streu-Ausweichen.
+  - **`splash_dodge`**: Bei sicher geschätztem Streufaktor ≥ 0,5 treten Einheiten neben einem vorhergesagten Ziel aus dem Streuschaden und laufen nicht zurück hinein, solange die Gefahr besteht. Diagnose: In verlorenen Matches ist der Streuschaden auf uns dreimal so groß wie der direkte Schaden (bei 1,0: 2.016 zu 651).
+  - 4 neue Tests, Regeltests 98 bestanden.
+- **Bündel `v11e`** = `v11b` + `dodge_distrust=0.35` (`experiments/ensembles/battle_v11e.pth`, SHA-256 `49eaf3ea…`) ersetzt `v11c` (Köder) in der Zulassung, denn der Köder würde gegen RL-Gegner noch öfter umsonst ausweichen. Vorher läuft der Test `splash_dodge` gegen Solution_92/`sol92_sq`.
+- Abgabe unverändert **V11**.
+
 ## 30.10.2026, 19:21 Berlin – Claude Code mit Mahmoud: Neue Regeln auf V11 getestet, Bündel `v11b` geht in die Zulassung
 
 Alle Werte auf Dev A (800000–800299, je Gegner 600 Spiele), gepaart gegen die V11-Spiele derselben Karten; nur Entwicklung.
