@@ -3,7 +3,8 @@
     .venv/bin/python -m scripts.release_candidate --candidate experiments/ensembles/v6_Bs.pth \
         --label v6_Bs --gate-log experiments/pipeline_v6.log --gate-name Bs [--dry-run]
 
-Bricht ab, wenn im Gate-Log fuer den Kandidaten nicht "GATE Bestaetigung: BESTANDEN" steht.
+Bricht ab, wenn im Gate-Log fuer den Kandidaten nicht "GATE Bestaetigung: BESTANDEN" (bzw. "GATE Battle-
+Bestaetigung: BESTANDEN") steht.
 1. bisherige Abgabe (beide Dateien) bytegleich nach experiments/releases/<datum>_<alt>/ sichern
    (Manifest + Wiederherstellungsanleitung), 2. Kandidat installieren und Hashes pruefen,
 3. Kurs-Runner-Pruefung der installierten Datei, 4. Uebernahme-Manifest schreiben.
@@ -13,6 +14,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -32,7 +34,13 @@ def gate_passed(log: Path, name: str) -> bool:
     start = max((i for i, ln in enumerate(lines) if f"Start {name} (" in ln), default=None)
     if start is None:
         return False
-    return any("GATE Bestaetigung: BESTANDEN" in ln for ln in lines[start:])
+    # 30.10.2026: nur bis zum Start des naechsten Kandidaten; auch die Battle-Bestaetigung (scripts/battle_confirm.sh)
+    for ln in lines[start + 1:]:
+        if re.search(r"\bStart \S+ \(", ln):
+            return False
+        if "GATE Bestaetigung: BESTANDEN" in ln or "GATE Battle-Bestaetigung: BESTANDEN" in ln:
+            return True
+    return False
 
 
 def main() -> int:
