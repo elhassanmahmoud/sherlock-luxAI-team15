@@ -170,3 +170,22 @@ D_mix54d_as_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent
     Zulassung Runde 3: mix36d_as Mittel 6 0.8264 vs V11 0.8183 (Δ +0.81 pp), direkt gegen V11 0.4833 -> nicht zugelassen
     Zulassung Runde 3: mix54d_as Mittel 6 0.8122 vs V11 0.8183 (Δ -0.61 pp), direkt gegen V11 0.5767 -> nicht zugelassen
 [30.10. 18:04] Runde-3-Zulassung: keine
+[30.10. 18:34] V11_stage (experiments/releases/20261030_v11_baseline/agent_p0.pth --set stage_attack=true)
+    sol92_sq                     0.8517 (V11 0.8483, Δ +0.33 [+0.00; +0.83])
+    solution92                   0.9383 (V11 0.9383, Δ +0.00 [-0.50; +0.50])
+[30.10. 18:42] V11_cheb (experiments/releases/20261030_v11_baseline/agent_p0.pth --set art_safe_cheb=true)
+    sol92_sq                     0.8567 (V11 0.8483, Δ +0.83 [-0.83; +2.50])
+    solution92                   0.9417 (V11 0.9383, Δ +0.33 [-0.83; +1.50])
+[30.10. 19:22] Nachtrag aus der Arbeitskopie (Code wie Commit a912b9f, dort damals noch nicht im Hauptstand): Ergebnisse V11_dshape*
+[30.10. 18:53] V11_dshape (experiments/releases/20261030_v11_baseline/agent_p0.pth --set dodge_auto=true --set dodge_shape=true)
+    sol92_sq                     0.8583 (V11 0.8483, Δ +1.00 [-0.33; +2.50])
+    solution92                   0.9467 (V11 0.9383, Δ +0.83 [-0.33; +2.17])
+[30.10. 19:02] V11_dshape_always (experiments/releases/20261030_v11_baseline/agent_p0.pth --set dodge_auto=true --set dodge_shape=true --set dodge_mode=always)
+    sol92_sq                     0.8617 (V11 0.8483, Δ +1.33 [-1.00; +3.50])
+    solution92                   0.9417 (V11 0.9383, Δ +0.33 [-1.67; +2.33])
+[30.10. 19:11] V11_dshape_verify (experiments/releases/20261030_v11_baseline/agent_p0.pth --set dodge_auto=true --set dodge_shape=true --set dodge_verify=true)
+    sol92_sq                     0.8500 (V11 0.8483, Δ +0.17 [-1.00; +1.17])
+    solution92                   0.9417 (V11 0.9383, Δ +0.33 [-0.50; +1.33])
+[30.10. 19:20] V11_dshape25 (experiments/releases/20261030_v11_baseline/agent_p0.pth --set dodge_auto=true --set dodge_shape=true --set dodge_auto_max=0.25)
+    sol92_sq                     0.8617 (V11 0.8483, Δ +1.33 [+0.50; +2.50])
+    solution92                   0.9433 (V11 0.9383, Δ +0.50 [-0.33; +1.33])
