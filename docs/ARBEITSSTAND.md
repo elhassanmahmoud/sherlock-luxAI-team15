@@ -5,6 +5,25 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 18:36 Berlin – Claude Code mit Mahmoud: Runde 4 ohne Zulassung, Verlustanalyse V11, Runde 5 und neue Regeltests laufen
+
+- **Runde 4 der Hauptlinie fertig** (14:21–17:05, 18 Netze je +2.000 Spiele, `ft4_18`). Einzelnetze in der Validierung gegen Solution_92 (je 16 Spiele, Mittel über 18 Netze): Ende Runde 2 77,8 %, Runde 3 81,2 %, Runde 4 83,0 %.
+- **Zulassung zu Runde 3 (Dev A, gepaart gegen V11): keiner zugelassen.**
+
+| Kandidat | Sol92 | `sol92_sq` | V3 | V7 | `league6` | `threat6` | Mittel 6 | Δ gegen V11 | direkt gegen V11 |
+|---|---|---|---|---|---|---|---|---|---|
+| V11 (`mix36c_as`) | 93,8 | 84,8 | 85,7 | 74,0 | 65,0 | 87,7 | 81,8 | – | – |
+| `mix36d_as` (V10 + ft4_18 + R) | 92,8 | 84,3 | 87,3 | 75,3 | 68,0 | 88,0 | 82,6 | +0,81 [−1,14; +2,81] | 48,3 % |
+| `mix54d_as` (V10 + ft3_18 + ft4_18 + R) | 91,5 | 84,5 | 80,0 | 75,7 | 69,0 | 86,7 | 81,2 | −0,61 [−2,64; +1,47] | 57,7 % |
+
+- **Warum V11 noch verliert** (Dev-A-Spiele mit dem wahren Spielzustand nachgemessen, `experiments/analysis/battle/L_V11_*`, `M_V11_*`, Auswertung `v11_loss_matches.py`/`v11_loss_mechanisms.py`): Gegen `sol92_sq` gehen 91 verlorene Spiele fast immer in Match 2 und 3 verloren (Match 1 gewinnen wir dort zu 77 %). Diese Matches haben mehr Punktefelder (19–22 statt 15–17 in gewonnenen Spielen). Wir kennen am Matchende 83–84 % davon (gewonnen 96–98 %), verlieren 16–17 statt 9 Einheiten durch Energieverlust, und der Gegner feuert doppelt so oft (37–40 statt 20 Saps, Streuschaden auf uns 1.300 statt 550). Gegen `league_nets6` sind die Matches knapp (Punkte 392:441 bzw. 461:515), dort fehlen nur kleine Vorteile.
+- Einzelbilder verlorener Spiele (800207, 800196, 800061) zeigen dasselbe Muster: ein umkämpfter Relic-Haufen nahe der Mittellinie, der Gegner kommt mit mehr Einheiten an und schießt unsere einzeln ab. Einmal (800061) fanden wir ein neues Relic-Paar in Match 2 gar nicht.
+- **Relic-Lage** (aus dem Spielcode `luxai_s3/state.py`, 6.200 Karten): Relics sind die höchsten Werte eines Perlin-Rauschens. 59 % der neuen Paare liegen höchstens 1 Feld, 69 % höchstens 2 Felder neben einem früheren Relic oder dessen Spiegelbild. Auf Dev A übersieht V11 nahe neue Paare in 7,4 %, ferne in 17,2 % der Fälle.
+- **Runde 5 der Hauptlinie läuft seit 18:31** (`scripts/pipeline_battle_ft5.sh`, Plan-Nachtrag 18:31): `ft4_18` je +2.000 Spiele, 6 parallel, Kandidaten danach `mix36e_as` und `mix54e_as`.
+- **Entwicklung auf V11** (`REF=V11 bash scripts/battle_dev.sh`, Dev A gepaart gegen V11): `stage_attack` `sol92_sq` +0,33 [+0,00; +0,83], Solution_92 ±0. Es folgen `art_safe_cheb`, `dodge_auto`, `holder_guard`, `cand_rescue`, `window_infer`, `relic_scout=1` und der neue Schalter **`dodge_shape`** (in der getrennten Arbeitskopie, noch nicht im Hauptstand): Das Gegnermodell für das Ausweichen erkennt im Spiel, ob der Gegner in der Raute (Solution_92) oder im ganzen Quadrat (`sol92_sq`) schießt. 4 neue Tests bestanden, 88 bestehende Regeltests ebenfalls.
+- **Neuer frischer Block für eine Runde 4** festgelegt: 810000–811599 (Plan-Nachtrag 18:31).
+- Abgabe unverändert **V11** (`2ab463e9…`).
+
 ## 30.10.2026, 14:25 Berlin – Claude Code mit Mahmoud: Was V11 noch schwer fällt, Runde 4 des Nachtrainings läuft, Runde 3 gegen V11 vorbereitet
 
 - **Wo V11 noch verliert** (Bestätigungsspiele gegen Solution_92/`sol92_sq`, 89,1 % auf 800 Karten): Sichtweite 1/2/3/4 84,6/87,3/90,2/94,4 %; umkämpfte Relics nahe der Mittellinie etwa 84 statt 94–95 %; Sap-Reichweite 6–7 86 statt 92,5 % bei Reichweite 3; 2–3 Relic-Paare 86–87 statt 93,5 %. Bei Sichtweite 1 und 2 Paaren nur 75,5 %. In 40 nachgespielten Spielen mit Sichtweite 1 kennt V11 in verlorenen Spielen im 3. Match nur etwa 84 % der Punktefelder, in gewonnenen fast alle. Die früher getestete Erkundung `relic_scout` war genau bei Sichtweite 1 schädlich, deshalb gibt es dafür keinen schnellen Ansatz.
