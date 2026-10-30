@@ -22,7 +22,8 @@ case $ROUND in
     1) SEL=302000; SELDIR=302200; CONF=303000; CONFDIR=304000 ;;
     2) SEL=305000; SELDIR=305200; CONF=306000; CONFDIR=307000 ;;
     3) SEL=308000; SELDIR=308200; CONF=308400; CONFDIR=309200 ;;  # Reserveblock, nur nach Plan-Nachtrag
-    *) echo "Runde 1, 2 oder 3"; exit 1 ;;
+    4) SEL=310000; SELDIR=310200; CONF=310400; CONFDIR=311200 ;;  # Plan-Nachtrag 30.10., 18:31
+    *) echo "Runde 1 bis 4"; exit 1 ;;
 esac
 log() { echo "[$(date '+%d.%m. %H:%M')] $*" >> $LOG; }
 run() {  # run WEIGHTS FIRST N OPPONENTS OUT
