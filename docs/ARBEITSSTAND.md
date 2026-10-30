@@ -5,6 +5,27 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 02:15 Berlin – Claude Code mit Mahmoud: Auswahl Runde 1 wählt `mix36b`, Bestätigung läuft; dritte Trainingslinie vorbereitet
+
+- **Auswahl Runde 1** (802000–802399, je Gegner 400 Spiele, direkt 400 Spiele auf 802200–802399; Hürden `scripts/league_gates.py`, Log `experiments/pipeline_battle_gate.log`):
+
+| Kandidat | R (Δ zu V10) | Solution_92 | `sol92_sq` | `sol92_weak` | `old3_sym3` | default | direkt gegen V10 | Ergebnis |
+|---|---|---|---|---|---|---|---|---|
+| V10 (Referenz) | 88,5 % | 89,5 | 81,2 | 92,0 | 91,2 | 99,5 | – | – |
+| `mix36` (V10 + ft18) | 89,9 (+1,44 [−0,62; +3,50]) | 94,8 | 82,3 | 92,5 | 90,2 | 99,8 | 58,5 [52,0; 65,0] | R-Hürde um 0,06 pp verfehlt |
+| `ft2_18` (Runde 2 allein) | 90,0 (+1,50 [−0,69; +3,69]) | 90,0 | 85,3 | 91,7 | 93,0 | 99,5 | 63,5 [57,0; 70,0] | bestanden |
+| **`mix36b`** (V10 + ft2_18) | **91,4 (+2,88 [+0,69; +5,06])** | 93,5 | 85,3 | 95,5 | 91,2 | 99,5 | 55,5 [48,5; 62,5] | **bestanden, gewählt** |
+| `mix54` (V10 + ft18 + ft2_18) | 90,6 (+2,12 [+0,19; +4,00]) | 91,5 | 84,5 | 92,7 | 93,8 | 100 | 65,0 [58,5; 71,5] | bestanden |
+
+  Gewählt wird nach der Regel der Kandidat mit dem größten R unter den bestandenen. Gegen Solution_92 liegt `mix36b` bei +4,0 pp [+0,75; +7,50]. Direkt gegen V10 sind Mischungen mit den V10-Netzen näher an 50 % als `ft2_18` oder `mix54`, weil sie V10 ähnlicher spielen.
+- Die Code-Kennung im Log wechselt nach `mix36` von `cc8dba4` auf `1de55a8` (Commits während des Laufs). `git diff cc8dba4 1de55a8` für `agents/`, `lux/`, `par_eval`, `common` und `league_gates` ist leer; spielrelevant also derselbe Code.
+- **Bestätigung `mix36b`** (803000–804399: 8.000 Spiele V10, 8.000 `mix36b`, 800 direkt) läuft seit 01:43, Ergebnis gegen 05:00. Die Abgabe bleibt V10, bis sie bestanden ist und die Übernahme mit `scripts/release_candidate.py` dokumentiert ist.
+- **Wo die Gewinne entstehen** (Auswertung vorhandener Dev-A-Daten, keine neuen Spiele): Auf Karten mit 4 gefundenen Relics bringt das Orakel mit wahren Relics und Punktefeldern +11,5 / +8,9 pp (`sol92_sq` / Solution_92), nur Punktefelder +6,7 / +6,7, nur Relics +4,7 / +4,2. Auf Karten mit 2 Relics bringt das Orakel etwa nichts. `mix36` holt seinen Vorsprung an derselben Stelle: +9,6 / +6,8 auf 4-Relic-Karten, 0 auf 2-Relic-Karten. Die bisher getesteten Regeln für dieses Problem (`opp_point_infer`, `relic_scout`) brachten nichts; die nachtrainierten Netze schon.
+- **Runde 4 der Hauptlinie entfällt** (Runde 2 ohne Zusatznutzen, Runde 3 mit flachen Trainingskurven). Stattdessen **dritte Trainingslinie „v8-Linie“** (Plan-Nachtrag 30.10., 02:10; `scripts/pipeline_battle_ftv8.sh`): die 12 Netze `full_rules_v8` vom 22.10. unter allen V10-Regeln, je 1.500 Spiele, Seeds 10–21, Kartenversatz 3000 (Bereich der gestrichenen Runde 4), Gegnermix der geplanten Runde 4. Startet automatisch nach Ende von Runde 3, 12 parallel. Danach `mix30v8` (V10 + ftv8_12) und `mix48` (V10 + ft2_18 + ftv8_12) im Dev-A-Screen; zusätzlich `mix36b` als Vergleich. Maßstab für Runde 2 ist jetzt `mix36b` statt `mix36` (festgelegt vor allen diesen Screens).
+- Prüfungen: `bash -n`; Rauchtest `finetune` mit dem Init-Lauf `20261022_full_rules_v8_s70_sol70` und genau diesen Argumenten über 2 Spiele: lädt 300.000 Transitions, V10-Regeln an (`sap_still`, `reach_assign`), Trainingskarten 303000–303001, Status `done`. Der Rauchtest-Ordner wurde danach gelöscht. Die Startgrenze von `finetune` (Seed ≤ 29) erlaubt keine Seeds 30–41, deshalb Seeds 10–21 mit eigenem Kartenversatz.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+- **Offen:** Ergebnis der Bestätigung (gegen 05:00). Morgen-Screen (V10/`mix36` gegen die zurückgehaltenen Gegner, `mixrl36`, `mixrl54`). v8-Linie bis etwa 07:30, danach ihre Screens. Nachtrag mit höchstens 3 Kandidaten für Runde 2 vor deren Start.
+
 ## 29.10.2026, 23:55 Berlin – Claude Code mit Mahmoud: Runde 2 fertig, Auswahl Runde 1 läuft, Morgen-Screen mit zurückgehaltenen RL-Gegnern vorbereitet
 
 - **Runde 2 vollständig** (18 Netze, je 2.000 Spiele, Ende 23:29), Ensemble `battle_ft2_18` (`0a05d938…`). Der Nachtablauf hat `mix36b` (V10 + ft2_18, 24,0 MB) und `mix54` (V10 + ft18 + ft2_18, 35,1 MB) gebaut und um 23:30 die **Auswahl Runde 1** gestartet. V10-Referenz auf 802000–802199 (je Gegner 400 Spiele): Solution_92 89,5 %, `sol92_sq` 81,2 %, `sol92_weak` 92,0 %, `old3_sym3` 91,2 %, default 99,5 %, also R 88,5 %. Tempo etwa 98 Spiele/min mit 8 Workern neben 12 Trainingsprozessen. Die Auswahl ist voraussichtlich gegen 02:00 fertig, danach folgt die Bestätigung des gewählten Kandidaten.
