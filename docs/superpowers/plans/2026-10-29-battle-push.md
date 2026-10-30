@@ -131,3 +131,18 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - Grund: In der Auswahl Runde 1 lag `mix36b` (V10 + Runde 2) vor `mix36` (V10 + Runde 1). Ob Runde 3 weiter
   hilft, zeigt der gepaarte Vergleich `mix36c` gegen `mix36b` auf denselben Dev-A-Karten. Keine Mischung aus
   `ft2_18` und `ft3_18`: Runde 3 setzt dieselben Netze fort, das bringt kaum neue Vielfalt.
+
+## Nachtrag 30.10.2026, 04:09 (Regeln für Runde 2, bevor ein Screen von `mix36b`, `mix36c`, `mixrl*`, `mix30v8` oder `mix48` vorliegt)
+
+- **Referenz in Runde 2:** `mix36b`, falls es die Bestätigung besteht und mit `scripts/release_candidate.py`
+  übernommen ist; sonst weiter V10. Das Direktduell läuft immer gegen die Referenz (`pipeline_battle_gate.sh`
+  bekommt dafür `REF`/`REFNAME`, `league_gates.py` die Option `--direct-opponent`; Änderung erst nach dem
+  Ende der laufenden Bestätigung). Hürden unverändert (`scripts/league_gates.py`).
+- `mix36b` selbst geht nicht in Runde 2. Scheitert es in der Bestätigung, wird es nicht auf neuen Karten
+  wiederholt.
+- **Zulassung zur Auswahl Runde 2** (Dev-A-Screen, `scripts/screen_table.py`): Mittel über die 6 Gegner und
+  Direktduell gegen V10 jeweils mindestens so hoch wie bei `mix36b` (Punktschätzungen). Erfüllen mehr als 3
+  Kandidaten das, gehen die 3 mit dem höchsten Mittel über die 6 Gegner. Erfüllt keiner das, startet Runde 2
+  nicht mit diesen Kandidaten.
+- Ablauf: Auswahl 805000–805399 für jeden zugelassenen Kandidaten genau einmal, Wahl höchstens eines Kandidaten
+  (größtes R-Δ unter den bestandenen), Bestätigung 806000–807399 nur für ihn.
