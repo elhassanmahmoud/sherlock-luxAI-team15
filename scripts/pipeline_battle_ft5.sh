@@ -1,6 +1,6 @@
 #!/bin/bash
-# 30.10.2026, 18:35: fuenfte Nachtrainingsrunde der Hauptlinie (Plan docs/superpowers/plans/2026-10-29-battle-push.md,
-# Nachtrag 30.10., 18:35). Weiter ab experiments/runs/20261030_ft4_v10_s<seed> (Gewichte + Buffer), je 2.000 Spiele,
+# 30.10.2026, 18:31: fuenfte Nachtrainingsrunde der Hauptlinie (Plan docs/superpowers/plans/2026-10-29-battle-push.md,
+# Nachtrag 30.10., 18:31). Weiter ab experiments/runs/20261030_ft4_v10_s<seed> (Gewichte + Buffer), je 2.000 Spiele,
 # Kartenversatz 4000 (letzter freier Block je Seed). Gegnermix und Pool wie Runde 4 (V10 + old3 + V11).
 # PAR=6 statt 18, damit daneben Entwicklungsmessungen laufen koennen.
 # Danach battle_ft5_18 (V10-Config) und die Kandidaten mit eingebranntem Regelsatz R:
