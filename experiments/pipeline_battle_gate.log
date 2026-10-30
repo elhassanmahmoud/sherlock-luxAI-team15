@@ -125,3 +125,17 @@ mixrl54_as: R 0.9100 vs 0.8962 (Δ +1.38 pp [-1.19; +3.88], 200 Karten); Solutio
   OK   direkt >= 50%
 AUSWAHL: mix36c_as
 [30.10. 11:49] Start mix36c_as (experiments/ensembles/battle_mix36c_as.pth, SHA-256 2ab463e9034357a4), Bestaetigung Runde 2, Code e8904d2
+G2_V10_conf.csv: default: 0.999 (1600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.861 (1600 Spiele), sol92_sq: 0.791 (1600 Spiele), sol92_weak: 0.915 (1600 Spiele), solution92: 0.896 (1600 Spiele) in 3004s
+G2_mix36c_as_conf.csv: default: 1.000 (1600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.929 (1600 Spiele), sol92_sq: 0.841 (1600 Spiele), sol92_weak: 0.938 (1600 Spiele), solution92: 0.941 (1600 Spiele) in 2816s
+G2_mix36c_as_confdir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.595 (800 Spiele) in 403s
+Bestaetigung: R 0.9123 vs 0.8658 (Δ +4.66 pp [+3.45; +5.88], 800 Karten); Solution_92 0.9413 (Δ +4.50 [+2.88; +6.25]); default 1.0000 (Δ +0.06); direkt 0.5950 [0.5450; 0.6425] aus 800 Spielen
+  OK   R Δ >= +2 pp
+  OK   R untere 95%-Grenze > 0
+  OK   Solution_92 Δ >= -0.5 pp
+  OK   Solution_92 untere 95%-Grenze > -2.5 pp
+  OK   default >= 99%
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 50 %
+GATE Bestaetigung: BESTANDEN
+[30.10. 13:33] Ende mix36c_as
+[30.10. 13:33] Runde 2 fertig (Wahl: mix36c_as)
