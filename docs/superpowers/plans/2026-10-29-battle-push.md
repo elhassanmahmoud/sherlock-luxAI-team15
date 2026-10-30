@@ -202,3 +202,23 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - Start mit `WORKERS=9 bash scripts/pipeline_battle_round.sh 2 mix36c_as mix48_as mixrl54_as`: Auswahl je Kandidat
   auf 805000–805399, Wahl höchstens eines Kandidaten (größtes R-Δ unter den bestandenen), Bestätigung auf
   806000–807399 nur für ihn. Referenz V10, Hürden unverändert (`scripts/league_gates.py`).
+
+## Nachtrag 30.10.2026, 14:35 (Runde 4 der Hauptlinie und Regeln für Runde 3, vor jeder Messung mit `ft4_18`)
+
+- Seit 13:36 ist V11 (`v11_mix36c_as`) die Abgabe. **Referenz für Runde 3 ist V11**: feste Kopie
+  `experiments/releases/20261030_v11_baseline/agent_p0.pth` (bytegleich mit der Abgabe, SHA-256 `2ab463e9…cd2e0`).
+  Das Direktduell läuft gegen V11.
+- **Runde 4 der Hauptlinie** (`scripts/pipeline_battle_ft4.sh`): die 18 Netze von `ft3_18` je weitere 2.000 Spiele
+  (Gewichte und Buffer aus Runde 3), Kartenversatz 3000, Gegnermix wie in den Runden 1–3, Pool V10 + old3 + V11.
+  Danach `battle_ft4_18` und die Kandidaten `mix36d_as` (V10 + ft4_18) und `mix54d_as` (V10 + ft3_18 + ft4_18),
+  beide mit eingebranntem R (`art_splash` + `sap_still_splash`).
+- **Zulassung zu Runde 3** (Dev A 800000–800299, gepaart gegen V11 auf denselben Karten): Screen gegen die 6 Gegner
+  wie `scripts/battle_screen.sh` und zusätzlich ein Direktduell gegen V11 auf Dev A. Zugelassen ist, wer im Mittel
+  über die 6 Gegner mindestens +1,0 pp über V11 liegt und das Direktduell gegen V11 mit mindestens 52 % gewinnt
+  (Punktschätzungen). Erfüllen das beide, geht der mit dem höheren Mittel. Erfüllt es keiner, gibt es keine Runde 3
+  mit diesen Kandidaten.
+- **Runde 3:** Auswahl 808000–808199 (direkt 808200–808399), Bestätigung 808400–809199 (direkt 809200–809599), nur
+  für den zugelassenen Kandidaten. Hürden unverändert (`scripts/league_gates.py`), Referenz V11, Direktduell gegen
+  V11 (`league_gates --direct-opponent`, `pipeline_battle_gate.sh` mit `REF`/`REFNAME`; Werkzeuge vor Runde 3 mit
+  Tests).
+- Ohne bestandene Bestätigung keine Übernahme. Bei unklarem Vorteil bleibt V11.
