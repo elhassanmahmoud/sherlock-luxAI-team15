@@ -5,6 +5,27 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 10:40 Berlin – Claude Code mit Mahmoud: Runde 2 läuft mit `mix36c_as`, `mix48_as`, `mixrl54_as`; Linie 4 fertig
+
+- **Screens fertig** (10:28). Zulassung nach dem Nachtrag 04:09 (mechanisch, `python -m scripts.screen_table --admit`): `mix36c`, `mix48`, `mixrl54`.
+
+| Kandidat (Dev A) | Solution_92 | `sol92_sq` | V3 | V7 | `league_nets6` | `threat6` | Mittel 6 | direkt V10 |
+|---|---|---|---|---|---|---|---|---|
+| V10 | 89,3 | 77,8 | 72,2 | 60,2 | 52,0 | 81,3 | 72,1 | – |
+| `mix36b` (Maßstab) | 90,7 | 80,8 | 80,7 | 63,7 | 59,0 | 82,3 | 76,2 | 59,5 |
+| **`mix36c`** | 92,7 | 81,5 | 81,3 | 66,7 | 59,0 | 85,7 | **77,8** | 61,7 |
+| **`mix48`** | 90,5 | 82,0 | 78,0 | 66,0 | 61,0 | 85,3 | **77,1** | 63,7 |
+| **`mixrl54`** | 89,7 | 80,3 | 77,7 | 63,7 | 64,3 | 82,0 | **76,3** | 62,3 |
+| `mix30v8` | 93,5 | 81,5 | 79,3 | 66,3 | 57,3 | 82,7 | 76,8 | 55,7 |
+| `mixrl36` | 91,2 | 80,2 | 78,7 | 62,0 | 59,0 | 85,3 | 76,1 | 59,3 |
+
+- **Code im Hauptstand:** `art_splash` und `sap_still_splash` (Commit `f34f9c4`, Standard aus). Tests: 488 bestanden plus 14 Untertests, ohne die Studientests mit Ressourcensperre.
+- **Kandidaten** (Nachtrag 10:35): die drei zugelassenen Mischungen mit eingebranntem R, Netze bitgleich. `mix36c_as` `2ab463e9…`, `mix48_as` `088b0280…`, `mixrl54_as` `e0970b37…`. Kurztest: Die Datei lädt R (`art_splash`, `sap_still_splash` an, 36 Netze), 2 Spiele gegen Solution_92 laufen fehlerfrei.
+- **Runde 2 gestartet um 10:32** (`WORKERS=9 bash scripts/pipeline_battle_round.sh 2 mix36c_as mix48_as mixrl54_as`, Code `fb60655`, Log `experiments/pipeline_battle_gate.log`): Auswahl 805000–805399 je Kandidat, Wahl höchstens eines, Bestätigung 806000–807399.
+- **Linie 4 fertig** (10:23): 12 Netze je 1.500 Spiele, `battle_ftold12` SHA-256 `82e2806e3de57a7a`, `mix30old` gebaut. Validierung gegen Solution_92 (je 16 Spiele, nur Hinweis): 70,3 % am Start, 78,1 % nach 1.500 Spielen. Laufdaten im Repo (`70806a8`). Der `mix30old`-Screen läuft seit 10:23. Seine ersten Teile liefen noch mit dem alten Code, die späteren laufen mit `f34f9c4`. Mit ausgeschalteten Schaltern spielen beide gleich (Gleichheitsprüfung 09:45).
+- Kopfzeile von `scripts/pipeline_battle_ftv8.sh` nach dessen Ende korrigiert (01:50 statt 02:10).
+- Abgabe unverändert V10 (`03cf8bdc…`).
+
 ## 30.10.2026, 09:45 Berlin – Claude Code mit Mahmoud: Regelsatz R (`art_splash` + `sap_still_splash`) besteht beide Gegenproben und geht in die Runde-2-Kandidaten
 
 Nach dem Plan-Nachtrag 30.10., 08:13 (Commit `288f17a`, vor den folgenden Ergebnissen). Alles auf Dev B (801000–801299), gepaart, Code aus der getrennten Arbeitskopie:
