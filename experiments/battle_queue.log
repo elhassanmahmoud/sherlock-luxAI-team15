@@ -137,3 +137,21 @@ D_mix36c_as_extra.csv: dqn: 1.000 (600 Spiele), rush: 1.000 (600 Spiele), sol92_
     solution92                   0.9433 (V11 0.9383, Δ +0.50 [-0.33; +1.33])
 [30.10. 19:20] ENDE (exit 0) REF=V11 WORKERS=14 bash /private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/c0514663-17e9-42f2-a328-f9106695849f/scratchpad/wt/scripts/battle_dev.sh V11_dshape25 --set dodge_auto=true --set dodge_shape=true --set dodge_auto_max=0.25
 [30.10. 19:20] START REF=V11 WORKERS=14 bash /private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/c0514663-17e9-42f2-a328-f9106695849f/scratchpad/wt/scripts/battle_dev.sh V11_dbait25 --set dodge_auto=true --set dodge_shape=true --set dodge_auto_max=0.25 --set dodge_mode=always --set dodge_bait=true
+    solution92                   0.9433 (V11 0.9383, Δ +0.50 [-0.33; +1.33])
+[30.10. 19:29] V11_dbait25 (experiments/releases/20261030_v11_baseline/agent_p0.pth --set dodge_auto=true --set dodge_shape=true --set dodge_auto_max=0.25 --set dodge_mode=always --set dodge_bait=true)
+    sol92_sq                     0.8650 (V11 0.8483, Δ +1.67 [+0.33; +3.17])
+    solution92                   0.9450 (V11 0.9383, Δ +0.67 [+0.00; +1.50])
+[30.10. 19:29] ENDE (exit 0) REF=V11 WORKERS=14 bash /private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/c0514663-17e9-42f2-a328-f9106695849f/scratchpad/wt/scripts/battle_dev.sh V11_dbait25 --set dodge_auto=true --set dodge_shape=true --set dodge_auto_max=0.25 --set dodge_mode=always --set dodge_bait=true
+[30.10. 19:29] START REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_unstack --set unstack=true
+    solution92                   0.9433 (V11 0.9383, Δ +0.50 [-0.33; +1.33])
+[30.10. 19:38] V11_unstack (experiments/releases/20261030_v11_baseline/agent_p0.pth --set unstack=true)
+    sol92_sq                     0.8400 (V11 0.8483, Δ -0.83 [-2.00; +0.33])
+    solution92                   0.9400 (V11 0.9383, Δ +0.17 [+0.00; +0.50])
+[30.10. 19:38] ENDE (exit 0) REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_unstack --set unstack=true
+[30.10. 19:38] START REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_ash1 --set art_splash_hits=1
+    solution92                   0.9400 (V11 0.9383, Δ +0.17 [+0.00; +0.50])
+[30.10. 19:47] V11_ash1 (experiments/releases/20261030_v11_baseline/agent_p0.pth --set art_splash_hits=1)
+    sol92_sq                     0.8533 (V11 0.8483, Δ +0.50 [-0.83; +1.83])
+    solution92                   0.9400 (V11 0.9383, Δ +0.17 [-0.67; +1.00])
+[30.10. 19:47] ENDE (exit 0) REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_ash1 --set art_splash_hits=1
+[30.10. 19:47] START WORKERS=14 bash scripts/battle_admit.sh v11b
