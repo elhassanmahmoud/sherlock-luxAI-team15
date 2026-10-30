@@ -212,3 +212,8 @@ D_mix54d_as_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent
 D_v11b_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.pth: 0.543 (600 Spiele) in 386s
     Zulassung: v11b Mittel 6 0.8269 vs V11 0.8183 (Δ +0.86 pp, 3600 Spiele), direkt gegen V11 0.5433 -> nicht zugelassen
 [30.10. 20:28] Zulassung: keine
+[30.10. 20:36] Zulassung: Start Screens v11e (Referenz V11)
+[30.10. 20:38] Nachtrag aus der Arbeitskopie (Code wie c967cf4):
+[30.10. 20:36] V11_sdodge (experiments/releases/20261030_v11_baseline/agent_p0.pth --set splash_dodge=true --set dodge_shape=true)
+    sol92_sq                     0.8550 (V11 0.8483, Δ +0.67 [-0.50; +2.00])
+    solution92                   0.9417 (V11 0.9383, Δ +0.33 [-0.67; +1.33])

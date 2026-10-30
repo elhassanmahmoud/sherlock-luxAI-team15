@@ -29,9 +29,6 @@ REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_ash1 --set art_splash_hits=1
 WORKERS=14 bash scripts/battle_admit.sh v11b
 REF=V11 WORKERS=14 bash /private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/c0514663-17e9-42f2-a328-f9106695849f/scratchpad/wt2/scripts/battle_dev.sh V11_sdodge --set splash_dodge=true --set dodge_shape=true
 WORKERS=14 bash scripts/battle_admit.sh v11e
+REF=V11 WORKERS=14 bash /private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/c0514663-17e9-42f2-a328-f9106695849f/scratchpad/wt2/scripts/battle_dev.sh V11_halfsafe --set splash_min_drop=0.5 --set splash_safe_below=1.0
 REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_dropest --set sap_dropoff_est=true
-REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_dodgeauto --set dodge_auto=true
-REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_hguard --set holder_guard=true
 REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_rescue --set cand_rescue=true --set rescue_after=30
-REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_winf --set window_infer=true
-REF=V11 WORKERS=14 bash scripts/battle_dev.sh V11_scout1 --set relic_scout=1
