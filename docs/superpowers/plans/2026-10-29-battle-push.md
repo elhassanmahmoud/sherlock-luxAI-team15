@@ -203,7 +203,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   auf 805000–805399, Wahl höchstens eines Kandidaten (größtes R-Δ unter den bestandenen), Bestätigung auf
   806000–807399 nur für ihn. Referenz V10, Hürden unverändert (`scripts/league_gates.py`).
 
-## Nachtrag 30.10.2026, 14:35 (Runde 4 der Hauptlinie und Regeln für Runde 3, vor jeder Messung mit `ft4_18`)
+## Nachtrag 30.10.2026, 14:21 (Runde 4 der Hauptlinie und Regeln für Runde 3, vor jeder Messung mit `ft4_18`)
 
 - Seit 13:36 ist V11 (`v11_mix36c_as`) die Abgabe. **Referenz für Runde 3 ist V11**: feste Kopie
   `experiments/releases/20261030_v11_baseline/agent_p0.pth` (bytegleich mit der Abgabe, SHA-256 `2ab463e9…cd2e0`).
