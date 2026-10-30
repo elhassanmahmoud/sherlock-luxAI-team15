@@ -250,8 +250,8 @@ class Agent_x:
         return self._cache[1:]
 
     def act(self, step: int, obs) -> np.ndarray:
-        use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est)
-                   and (not self.training or self.cfg.rules_in_training_all))
+        use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est or self.cfg.art_splash
+                    or self.cfg.sap_still_splash) and (not self.training or self.cfg.rules_in_training_all))
         if use_est:
             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
         actions = self._act(step, obs)
@@ -578,11 +578,14 @@ class Agent_x:
             tgt = ctx["assigned"].get(int(uid))
             if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
                 return False
-        if int(sap[2]) < c.art_min_hits:
+        min_hits, safe = c.art_min_hits, c.art_safe
+        if c.art_splash and not self.training and self.param_est.dropoff(default=0.0) == 1.0:
+            min_hits, safe = c.art_splash_hits, False  # 30.10.2026: voller Streuschaden
+        if int(sap[2]) < min_hits:
             return False
         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] * (1 + c.sap_reserve_k) + c.art_reserve:
             return False
-        if c.art_safe and len(ctx["enemy_coords"]):
+        if safe and len(ctx["enemy_coords"]):
             ec = ctx["enemy_coords"]
             armed = ctx["enemy_energies"] >= ctx["sap_cost"]
             if c.art_safe_cheb:  # 22.10.2026: Engine erlaubt Saps im ganzen Quadrat
@@ -815,6 +818,8 @@ class Agent_x:
         direct, _ = self._sap_cover(ctx, uid, sap)
         if not direct.any():
             return False
+        if self.cfg.sap_still_splash and self.param_est.dropoff(default=0.0) == 1.0:
+            return True  # 30.10.2026: voller Streuschaden trifft auch nach einem Schritt
         ec = ctx["enemy_coords"]
         on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
         still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt

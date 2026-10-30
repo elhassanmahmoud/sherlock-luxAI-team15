@@ -126,6 +126,16 @@ class AgentConfig:
     art_min_hits: int = 2
     art_reserve: int = 0
     art_safe: bool = True
+    art_splash: bool = False
+    """True (30.10.2026): Ist der Sap-Streufaktor laut param_est sicher 1,0, gilt fuer art_sap
+    art_min_hits=art_splash_hits und kein art_safe (voller Streuschaden: zwei Treffer im 3x3 lohnen auch
+    in gegnerischer Reichweite). Dev A, V10 gegen Solution_92/sol92_sq, art_safe=false + art_min_hits=2
+    nach Streufaktor 0,25/0,5/1,0: −6,5/−0,8/+6,0 pp. Dev B mit art_splash: +0,8 pp, bei 1,0 +3,1 pp."""
+    art_splash_hits: int = 2
+    sap_still_splash: bool = False
+    """True (30.10.2026, mit sap_still): Ist der Streufaktor laut param_est sicher 1,0, duerfen Halter auch
+    ziehende Gegner direkt sappen: Die Engine bewegt vor dem Sap, ein Gegner einen Schritt neben dem Zieltile
+    bekommt dann den vollen Schaden. Dev B zusaetzlich zu art_splash: +0,7 pp, bei 1,0 +2,7 pp."""
     art_surplus: bool = False
     """True (22.10.2026): art_sap nicht fuer Units, deren Ziel ein Punkte-Tile der eigenen Haelfte ist."""
     threat_feats: bool = False
