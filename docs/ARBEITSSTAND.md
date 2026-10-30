@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 05:35 Berlin – Claude Code mit Mahmoud: Bestätigung von `mix36b` nicht bestanden, Abgabe bleibt V10
+
+- **Bestätigung Runde 1** (803000–803799, je Gegner 1.600 Spiele; direkt 804000–804399, 800 Spiele; Ende 05:32, Log `experiments/pipeline_battle_gate.log`): R 88,7 statt 86,9 %, **Δ +1,77 pp [+0,64; +2,95]**. Die Hürde verlangt Δ ≥ +2 pp, deshalb **nicht bestanden**. Alle übrigen Hürden sind erfüllt: untere Grenze > 0, Solution_92 Δ +0,38 [−1,19; +2,00], default 99,9 % (Δ +0,06), direkt gegen V10 56,6 % [51,75; 61,5].
+
+| Gegner (gepaart, 800 Karten) | V10 | `mix36b` | Δ (pp) |
+|---|---|---|---|
+| Solution_92 | 90,6 | 90,9 | +0,38 [−1,19; +2,00] |
+| `sol92_sq` | 77,6 | 82,1 | +4,44 [+2,44; +6,50] |
+| `sol92_weak` | 90,9 | 91,1 | +0,25 [−1,31; +1,75] |
+| `old3_sym3` | 88,6 | 90,6 | +2,00 [−0,38; +4,50] |
+| default | 99,8 | 99,9 | +0,06 |
+
+- Einordnung: In der Auswahl lag `mix36b` bei +2,88. Dass der gewählte Kandidat auf frischen Karten schwächer abschneidet, war zu erwarten (der beste von vier Kandidaten wird überschätzt). Der Vorteil ist echt, aber kleiner als die vorab verlangte Mindestgröße, und er entsteht vor allem gegen `sol92_sq`. Gegen Solution_92 selbst ist kein Unterschied messbar.
+- **Folgen laut Plan-Nachtrag 30.10., 04:09:** Referenz in Runde 2 bleibt V10. `mix36b` wird nicht auf neuen Karten wiederholt. Die für eine `mix36b`-Referenz vorgesehenen Änderungen (`--direct-opponent` in `league_gates.py`, `REF`/`REFNAME` im Gate-Skript) entfallen. `pipeline_battle_gate.sh` deckt Runde 2 mit V10 als Referenz schon ab (805000–807399).
+- **Dev-A-Screen, nur Information** (300 Karten, gepaart gegen V10; `python -m scripts.screen_table`): Gegen den zurückgehaltenen RL-Gegner `league_nets6` gewinnen `mix36` und `mix36b` je **59,0 % statt 52,0 %** (V10). Mittel über die 6 Gegner: V10 72,1, `mix36` 76,9 (Δ +4,78 [+2,14; +7,33]), `mix36b` 76,2 (Δ +4,06 [+1,75; +6,39]). Gegen RL-Gegner bringen die Mischungen also mehr als gegen die Solution_92-Familie, die das Gate-Panel prägt. Das ist eine Beobachtung auf Entwicklungskarten, kein Nachweis.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+- **Offen:** Screens von `mix36b` (Direktduell), `mixrl36`, `mixrl54`, `mix36c`, `mix30v8`, `mix48` bis etwa 10:30. Danach Zulassung zu Runde 2 nach den Regeln vom 04:09, Auswahl 805000–805399, Bestätigung 806000–807399.
+
 ## 30.10.2026, 03:24 Berlin – Claude Code mit Mahmoud: Runde 3 fertig, v8-Linie und Morgen-Screen gestartet, `mix36c` als weiterer Screen-Kandidat
 
 - **Runde 3 des Nachtrainings** ist um 03:15 fertig (18 Netze je +2.000 Spiele, Kartenversatz 2000): `battle_ft3_18`, SHA-256 `c556cd6cb0161708`, wie in Runde 1/2 aus den Endständen. Laufdaten (Manifest, Log, Trainings- und Validierungskurven) und `experiments/pipeline_battle_ft3.log` jetzt im Repo.

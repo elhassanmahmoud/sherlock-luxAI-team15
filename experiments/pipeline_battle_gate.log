@@ -62,3 +62,17 @@ mix54: R 0.9062 vs 0.8850 (Δ +2.12 pp [+0.19; +4.00], 200 Karten); Solution_92 
   OK   direkt >= 50%
 AUSWAHL: mix36b
 [30.10. 01:43] Start mix36b (experiments/ensembles/battle_mix36b.pth, SHA-256 dd04a7c0f94b1738), Bestaetigung Runde 1, Code 1de55a8
+G1_V10_conf.csv: default: 0.998 (1600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.886 (1600 Spiele), sol92_sq: 0.776 (1600 Spiele), sol92_weak: 0.909 (1600 Spiele), solution92: 0.906 (1600 Spiele) in 4576s
+G1_mix36b_conf.csv: default: 0.999 (1600 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.906 (1600 Spiele), sol92_sq: 0.821 (1600 Spiele), sol92_weak: 0.911 (1600 Spiele), solution92: 0.909 (1600 Spiele) in 7941s
+G1_mix36b_confdir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.566 (800 Spiele) in 1247s
+Bestaetigung: R 0.8869 vs 0.8692 (Δ +1.77 pp [+0.64; +2.95], 800 Karten); Solution_92 0.9094 (Δ +0.38 [-1.19; +2.00]); default 0.9988 (Δ +0.06); direkt 0.5663 [0.5175; 0.6150] aus 800 Spielen
+  FAIL R Δ >= +2 pp
+  OK   R untere 95%-Grenze > 0
+  OK   Solution_92 Δ >= -0.5 pp
+  OK   Solution_92 untere 95%-Grenze > -2.5 pp
+  OK   default >= 99%
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 50 %
+GATE Bestaetigung: NICHT BESTANDEN
+[30.10. 05:32] Ende mix36b
+[30.10. 05:32] Nachtablauf fertig (Wahl: mix36b)
