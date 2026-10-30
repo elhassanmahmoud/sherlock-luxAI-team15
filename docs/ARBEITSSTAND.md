@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 03:24 Berlin – Claude Code mit Mahmoud: Runde 3 fertig, v8-Linie und Morgen-Screen gestartet, `mix36c` als weiterer Screen-Kandidat
+
+- **Runde 3 des Nachtrainings** ist um 03:15 fertig (18 Netze je +2.000 Spiele, Kartenversatz 2000): `battle_ft3_18`, SHA-256 `c556cd6cb0161708`, wie in Runde 1/2 aus den Endständen. Laufdaten (Manifest, Log, Trainings- und Validierungskurven) und `experiments/pipeline_battle_ft3.log` jetzt im Repo.
+- **v8-Linie** um 03:16 automatisch gestartet: 12 Trainingsprozesse laufen, Pool-Gegner werden geladen, erste Validierung geschrieben. Der **Morgen-Screen** startete ebenfalls um 03:16 (zuerst V10 gegen die zurückgehaltenen Gegner).
+- **Neuer Screen-Kandidat `mix36c`** = V10 + `ft3_18` mit V10-Config (SHA-256 `e8b0de223fee12f3`), festgelegt im Plan-Nachtrag 30.10., 03:23, vor jeder Messung mit `ft3_18`. Der Screen steht in der Entwicklungs-Warteschlange (`experiments/battle_queue.txt`) und läuft erst nach dem Nachtablauf, damit die Bestätigung nicht gebremst wird.
+- Der Rechner ist voll ausgelastet (32 Rechenprozesse auf 15 Kernen). Das Ergebnis der Bestätigung von `mix36b` kommt deshalb eher gegen 06:00–07:00 als gegen 05:00. Die V10-Hälfte der Bestätigung (8.000 Spiele) war um 02:59 fertig.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+
 ## 30.10.2026, 01:50 Berlin – Claude Code mit Mahmoud: Auswahl Runde 1 wählt `mix36b`, Bestätigung läuft; dritte Trainingslinie vorbereitet
 
 - **Auswahl Runde 1** (802000–802399, je Gegner 400 Spiele, direkt 400 Spiele auf 802200–802399; Hürden `scripts/league_gates.py`, Log `experiments/pipeline_battle_gate.log`):
