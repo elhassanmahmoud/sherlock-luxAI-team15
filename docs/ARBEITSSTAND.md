@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 14:25 Berlin – Claude Code mit Mahmoud: Was V11 noch schwer fällt, Runde 4 des Nachtrainings läuft, Runde 3 gegen V11 vorbereitet
+
+- **Wo V11 noch verliert** (Bestätigungsspiele gegen Solution_92/`sol92_sq`, 89,1 % auf 800 Karten): Sichtweite 1/2/3/4 84,6/87,3/90,2/94,4 %; umkämpfte Relics nahe der Mittellinie etwa 84 statt 94–95 %; Sap-Reichweite 6–7 86 statt 92,5 % bei Reichweite 3; 2–3 Relic-Paare 86–87 statt 93,5 %. Bei Sichtweite 1 und 2 Paaren nur 75,5 %. In 40 nachgespielten Spielen mit Sichtweite 1 kennt V11 in verlorenen Spielen im 3. Match nur etwa 84 % der Punktefelder, in gewonnenen fast alle. Die früher getestete Erkundung `relic_scout` war genau bei Sichtweite 1 schädlich, deshalb gibt es dafür keinen schnellen Ansatz.
+- **Gegen RL-Gegner (Dev A):** `league_nets6` 65 % (bei Streufaktor 0,25 nur 55 %), V7 74 %, V3 85,7 %, `threat6` 87,7 %.
+- **Versuche ohne Übernahme** (Dev A, gepaart gegen V11 auf denselben Karten): R auch bei Streufaktor 0,5 (`splash_min_drop=0.5`, nur in der getrennten Arbeitskopie) **+0,8 pp [−0,2; +1,9]**, bei 0,5 +2,6 [−0,8; +5,9]. Das ist nicht sicher besser und reicht nicht für die Hürde. Nicht im Hauptstand.
+- **Runde 4 der Hauptlinie** läuft seit 14:21 (`scripts/pipeline_battle_ft4.sh`, Plan-Nachtrag 30.10., 14:21): die 18 `ft3`-Netze je weitere 2.000 Spiele mit V11 im Gegner-Pool, 18 parallel, Ende etwa 20–21 Uhr. Ein Probelauf (2 Spiele gegen den Pool-Gegner V11) lief fehlerfrei.
+- **Runde 3 vorab festgelegt** (Nachtrag 14:21): Referenz V11 (feste Kopie `experiments/releases/20261030_v11_baseline/`, bytegleich mit der Abgabe). Kandidaten `mix36d_as` (V10 + ft4_18 + R) und `mix54d_as` (V10 + ft3_18 + ft4_18 + R). Zugelassen wird, wer auf Dev A im Mittel über 6 Gegner mindestens +1,0 pp über V11 liegt und direkt gegen V11 mindestens 52 % gewinnt. Danach Auswahl 808000–808399 und Bestätigung 808400–809599 mit unveränderten Hürden. `scripts/pipeline_battle_r3.sh` läuft und startet das automatisch nach dem Ende der Runde 4.
+- **Werkzeuge** (Commit `bfdbd59`): `league_gates --direct-opponent`, `pipeline_battle_gate.sh` mit `REF`/`REFNAME` (Standard V10, für die Runden 1–2 unverändert). Tests für Gates, Screen-Tabelle, Entscheidungsdiagnose und Regeln: 16 bestanden.
+- Abgabe unverändert **V11** (`2ab463e9…`).
+
 ## 30.10.2026, 13:55 Berlin – Claude Code mit Mahmoud: Präsentation 06.11. auf V11 umgestellt
 
 - `Sherlock_Battle_06-11-2026.pdf` (Projektordner, 16 Seiten) und die Quelle `docs/presentation/Sherlock_Battle_06-11-2026.html` sind umgestellt. Geändert sind die Folien 1–4 und 6–14 sowie Folie 16: 36 statt 18 Netze, 94 statt 90 %, Schrittzeit 8,8 ms (Kurs-Runner-Prüfung nach der Installation).
