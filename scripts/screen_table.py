@@ -4,6 +4,7 @@ und 30.10.): Siegquote je Gegner, Mittel ueber die 6 Gegner gepaart gegen V10 un
 scripts/battle_screen.sh aus und spielt nichts. Ausgabe als Markdown-Tabelle.
 
     python -m scripts.screen_table mix36b mix36c mixrl36 mixrl54 mix30v8 mix48 [--base mix36b]
+    python -m scripts.screen_table --admit mix36c mixrl36 mixrl54 mix30v8 mix48   (Zulassung Runde 2)
 """
 from __future__ import annotations
 
@@ -72,12 +73,29 @@ def table(names: list[str], base: str = "mix36b", d: Path = DIR) -> list[str]:
     return lines
 
 
+def admitted(names: list[str], base: str = "mix36b", k: int = 3, d: Path = DIR) -> list[str]:
+    """Zulassung zur Auswahl Runde 2 (Plan-Nachtrag 30.10., 04:09): Mittel ueber die 6 Gegner und Direktduell
+    gegen V10 jeweils mindestens wie beim Massstab (Punktschaetzungen); hoechstens k mit dem hoechsten Mittel."""
+    score = {}
+    for name in [base, *names]:
+        cand, direct = screen(name, d), d / f"D_{name}_direct.csv"
+        if cand is None or not direct.exists():
+            raise SystemExit(f"Screen von {name} unvollstaendig")
+        score[name] = (cand["result"].mean(), direct_result(pd.read_csv(direct))["winrate"])
+    ok = [n for n in names if score[n][0] >= score[base][0] and score[n][1] >= score[base][1]]
+    return sorted(ok, key=lambda n: -score[n][0])[:k]
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("names", nargs="+")
     ap.add_argument("--base", default="mix36b", help="Massstab fuer den gepaarten Vergleich")
     ap.add_argument("--dir", type=Path, default=DIR)
+    ap.add_argument("--admit", action="store_true", help="nur die zugelassenen Kandidaten ausgeben")
     args = ap.parse_args()
+    if args.admit:
+        print(" ".join(admitted(args.names, args.base, d=args.dir)) or "keine")
+        return
     print("\n".join(table(args.names, args.base, args.dir)))
 
 

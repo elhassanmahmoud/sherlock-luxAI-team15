@@ -1,5 +1,6 @@
 """Dev-A-Screens nebeneinander (scripts/screen_table.py, 30.10.2026)."""
 import pandas as pd
+import pytest
 
 from scripts import league_gates as G
 from scripts import screen_table as S
@@ -13,10 +14,10 @@ def write(path, opponents, value, n=4):
                   for o in opponents for i in range(n) for side in ("player_0", "player_1")]).to_csv(path, index=False)
 
 
-def screen_files(d, prefix, value):
+def screen_files(d, prefix, value, rl=None, hold=None):
     write(d / f"{prefix}.csv", ["solution92", "sol92_sq"], value)
-    write(d / f"{prefix}_rl.csv", RL, value)
-    write(d / f"{prefix}_hold.csv", HOLD, value)
+    write(d / f"{prefix}_rl.csv", RL, value if rl is None else rl)
+    write(d / f"{prefix}_hold.csv", HOLD, value if hold is None else hold)
 
 
 def test_table_pairs_against_v10_and_base_and_marks_missing_screens(tmp_path):
@@ -33,3 +34,18 @@ def test_table_pairs_against_v10_and_base_and_marks_missing_screens(tmp_path):
     assert rows["x"] == ["100.0"] * 7 + ["+100.00 [+100.00; +100.00]", "+50.00 [+50.00; +50.00]",
                                          "100.0 [100.0; 100.0] |"]
     assert rows["fehlend"] == ["fehlt"] * 9 + ["fehlt |"]
+
+
+def test_admission_needs_both_point_estimates_and_keeps_the_best_three(tmp_path):
+    # (Sol92/sq, RL, zurueckgehalten) -> Mittel 6; Massstab mix36b: Mittel 0,5, direkt 0,5
+    for name, parts, direct in [("mix36b", (0.5, 0.5, 0.5), 0.5), ("hoch", (1, 1, 0.5), 0.5),
+                                ("gleich", (0.5, 0.5, 0.5), 0.5), ("schwach_direkt", (1, 1, 1), 0.0),
+                                ("schwach_mittel", (0, 0.5, 0.5), 1.0), ("a", (1, 1, 1), 1.0),
+                                ("b", (1, 0.5, 0.5), 1.0)]:
+        screen_files(tmp_path, f"D_{name}", *parts)
+        write(tmp_path / f"D_{name}_direct.csv", [G.V10_REF], direct)
+    names = ["hoch", "gleich", "schwach_direkt", "schwach_mittel", "a", "b"]
+    assert S.admitted(names, d=tmp_path) == ["a", "hoch", "b"]
+    assert S.admitted(["gleich", "schwach_mittel"], d=tmp_path) == ["gleich"]
+    with pytest.raises(SystemExit, match="unvollstaendig"):
+        S.admitted(["hoch", "fehlend"], d=tmp_path)

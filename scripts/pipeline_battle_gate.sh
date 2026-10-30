@@ -18,7 +18,8 @@ PANEL="solution92,sol92_sq,sol92_weak,self:experiments/releases/20261020_old3_sy
 case $ROUND in
     1) SEL=302000; SELDIR=302200; CONF=303000; CONFDIR=304000 ;;
     2) SEL=305000; SELDIR=305200; CONF=306000; CONFDIR=307000 ;;
-    *) echo "Runde 1 oder 2"; exit 1 ;;
+    3) SEL=308000; SELDIR=308200; CONF=308400; CONFDIR=309200 ;;  # Reserveblock, nur nach Plan-Nachtrag
+    *) echo "Runde 1, 2 oder 3"; exit 1 ;;
 esac
 log() { echo "[$(date '+%d.%m. %H:%M')] $*" >> $LOG; }
 run() {  # run WEIGHTS FIRST N OPPONENTS OUT
