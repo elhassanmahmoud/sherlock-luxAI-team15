@@ -1,0 +1,64 @@
+[29.10. 23:30] Auswahl Runde 1: mix36 (experiments/ensembles/battle_mix36.pth, SHA-256 ff77aefd3f2c4452), Code cc8dba4
+G1_V10_sel.csv: default: 0.995 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.912 (400 Spiele), sol92_sq: 0.812 (400 Spiele), sol92_weak: 0.920 (400 Spiele), solution92: 0.895 (400 Spiele) in 1222s
+G1_mix36_sel.csv: default: 0.998 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.902 (400 Spiele), sol92_sq: 0.823 (400 Spiele), sol92_weak: 0.925 (400 Spiele), solution92: 0.948 (400 Spiele) in 1331s
+G1_mix36_seldir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.585 (400 Spiele) in 386s
+mix36: R 0.8994 vs 0.8850 (Δ +1.44 pp [-0.62; +3.50], 200 Karten); Solution_92 0.9475 (Δ +5.25 [+2.50; +8.25]); default 0.9975 (Δ +0.25); direkt 0.5850 [0.5199; 0.6500] aus 400 Spielen
+  FAIL R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: keine
+[30.10. 00:19] Auswahl mix36 fertig
+[30.10. 00:19] Auswahl Runde 1: ft2_18 (experiments/ensembles/battle_ft2_18.pth, SHA-256 0a05d938d24c6f8c), Code 1de55a8
+G1_ft2_18_sel.csv: default: 0.995 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.930 (400 Spiele), sol92_sq: 0.853 (400 Spiele), sol92_weak: 0.917 (400 Spiele), solution92: 0.900 (400 Spiele) in 1126s
+G1_ft2_18_seldir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.635 (400 Spiele) in 345s
+ft2_18: R 0.9000 vs 0.8850 (Δ +1.50 pp [-0.69; +3.69], 200 Karten); Solution_92 0.9000 (Δ +0.50 [-2.50; +3.75]); default 0.9950 (Δ +0.00); direkt 0.6350 [0.5700; 0.7000] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: ft2_18
+[30.10. 00:44] Auswahl ft2_18 fertig
+[30.10. 00:44] Auswahl Runde 1: mix36b (experiments/ensembles/battle_mix36b.pth, SHA-256 dd04a7c0f94b1738), Code 1de55a8
+G1_mix36b_sel.csv: default: 0.995 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.912 (400 Spiele), sol92_sq: 0.853 (400 Spiele), sol92_weak: 0.955 (400 Spiele), solution92: 0.935 (400 Spiele) in 1274s
+G1_mix36b_seldir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.555 (400 Spiele) in 377s
+mix36b: R 0.9137 vs 0.8850 (Δ +2.88 pp [+0.69; +5.06], 200 Karten); Solution_92 0.9350 (Δ +4.00 [+0.75; +7.50]); default 0.9950 (Δ +0.00); direkt 0.5550 [0.4850; 0.6250] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: mix36b
+[30.10. 01:11] Auswahl mix36b fertig
+[30.10. 01:11] Auswahl Runde 1: mix54 (experiments/ensembles/battle_mix54.pth, SHA-256 a3abe66f3d2baa8e), Code 1de55a8
+G1_mix54_sel.csv: default: 1.000 (400 Spiele), self:experiments/releases/20261020_old3_sym3/agent_p0.pth: 0.938 (400 Spiele), sol92_sq: 0.845 (400 Spiele), sol92_weak: 0.927 (400 Spiele), solution92: 0.915 (400 Spiele) in 1452s
+G1_mix54_seldir.csv: self:experiments/releases/20261022_v10_baseline/agent_p0.pth: 0.650 (400 Spiele) in 412s
+mix54: R 0.9062 vs 0.8850 (Δ +2.12 pp [+0.19; +4.00], 200 Karten); Solution_92 0.9150 (Δ +2.00 [-1.00; +5.25]); default 1.0000 (Δ +0.50); direkt 0.6500 [0.5850; 0.7150] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: mix54
+[30.10. 01:42] Auswahl mix54 fertig
+[30.10. 01:42] Wahl Runde 1 unter: mix36 ft2_18 mix36b mix54
+mix36: R 0.8994 vs 0.8850 (Δ +1.44 pp [-0.62; +3.50], 200 Karten); Solution_92 0.9475 (Δ +5.25 [+2.50; +8.25]); default 0.9975 (Δ +0.25); direkt 0.5850 [0.5199; 0.6500] aus 400 Spielen
+  FAIL R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+ft2_18: R 0.9000 vs 0.8850 (Δ +1.50 pp [-0.69; +3.69], 200 Karten); Solution_92 0.9000 (Δ +0.50 [-2.50; +3.75]); default 0.9950 (Δ +0.00); direkt 0.6350 [0.5700; 0.7000] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+mix36b: R 0.9137 vs 0.8850 (Δ +2.88 pp [+0.69; +5.06], 200 Karten); Solution_92 0.9350 (Δ +4.00 [+0.75; +7.50]); default 0.9950 (Δ +0.00); direkt 0.5550 [0.4850; 0.6250] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+mix54: R 0.9062 vs 0.8850 (Δ +2.12 pp [+0.19; +4.00], 200 Karten); Solution_92 0.9150 (Δ +2.00 [-1.00; +5.25]); default 1.0000 (Δ +0.50); direkt 0.6500 [0.5850; 0.7150] aus 400 Spielen
+  OK   R Δ >= +1.5 pp
+  OK   Solution_92 Δ >= -1.0 pp
+  OK   default >= 99%
+  OK   direkt >= 50%
+AUSWAHL: mix36b
+[30.10. 01:43] Start mix36b (experiments/ensembles/battle_mix36b.pth, SHA-256 dd04a7c0f94b1738), Bestaetigung Runde 1, Code 1de55a8
