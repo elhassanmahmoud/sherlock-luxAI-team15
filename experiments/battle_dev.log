@@ -217,3 +217,26 @@ D_v11b_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.p
 [30.10. 20:36] V11_sdodge (experiments/releases/20261030_v11_baseline/agent_p0.pth --set splash_dodge=true --set dodge_shape=true)
     sol92_sq                     0.8550 (V11 0.8483, Δ +0.67 [-0.50; +2.00])
     solution92                   0.9417 (V11 0.9383, Δ +0.33 [-0.67; +1.33])
+[30.10. 22:11] Zulassung: Start Screens v11e (Referenz V11)
+[30.10. 22:29] Screen v11e (experiments/ensembles/battle_v11e.pth, SHA-256 49eaf3eaa3bb7c2c), Dev A, gepaart gegen V10
+    league_nets6                 0.6933 (V10 0.5200, Δ +17.33 [+10.33; +24.33])
+    threat6                      0.8600 (V10 0.8133, Δ +4.67 [+0.00; +9.67])
+    20261022_all18_v3            0.8567 (V10 0.7217, Δ +13.50 [+7.66; +19.67])
+    20261022_v7_Bsnpd            0.7433 (V10 0.6017, Δ +14.17 [+7.00; +21.17])
+    sol92_sq                     0.8717 (V10 0.7783, Δ +9.33 [+5.83; +12.83])
+    solution92                   0.9383 (V10 0.8933, Δ +4.50 [+1.83; +7.33])
+    Mittel ueber 6 Gegner: 0.8272 (V10 0.7214, Δ +10.58 [+8.42; +12.86], 300 Karten)
+    direkt gegen V10: 0.7333 [0.6833; 0.7800] aus 600 Spielen
+D_v11e_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.pth: 0.540 (600 Spiele) in 289s
+    Zulassung: v11e Mittel 6 0.8272 vs V11 0.8183 (Δ +0.89 pp, 3600 Spiele), direkt gegen V11 0.5400 -> nicht zugelassen
+[30.10. 22:34] Zulassung: keine
+[30.10. 22:40] V11_halfsafe (experiments/releases/20261030_v11_baseline/agent_p0.pth --set splash_min_drop=0.5 --set splash_safe_below=1.0)
+    sol92_sq                     0.8700 (V11 0.8483, Δ +2.17 [+0.67; +3.83])
+    solution92                   0.9417 (V11 0.9383, Δ +0.33 [-1.00; +1.67])
+[30.10. 22:59] V11_halfsafe Rest (par_eval von Hand, gleiche Schalter): D_V11_halfsafe_rl.csv, _hold.csv, _directv11.csv, gepaart gegen V11
+    league_nets6                 0.6900 (V11 0.6500, Δ +4.00 [+0.33; +7.67])
+    threat6                      0.8767 (V11 0.8767, Δ +0.00 [-2.00; +1.67])
+    20261022_all18_v3            0.8633 (V11 0.8567, Δ +0.67 [-2.00; +3.33])
+    20261022_v7_Bsnpd            0.7333 (V11 0.7400, Δ -0.67 [-4.00; +2.67])
+    Mittel ueber 6 Gegner (mit D_V11_halfsafe.csv): 0.8292 (V11 0.8183, Δ +1.08 [-0.08; +2.39], 300 Karten)
+    direkt gegen V11: 0.5550 [0.5283; 0.5833] aus 600 Spielen -> nach Regel 14:21/18:31 zugelassen (Bündel battle_v11h.pth)
