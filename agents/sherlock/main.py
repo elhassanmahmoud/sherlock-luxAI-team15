@@ -274,6 +274,7 @@ class Agent_x:
         if int(np.asarray(obs["match_steps"])) == 0:
             self._prev_ctx = None
             self._shape_pending = []  # Units verschwinden beim Match-Reset, das ist kein Treffer
+            self._pred_pending = []
             return actions
 
         ctx, ids, feat_map, mask_map, sap_targets = self._decide(obs)
@@ -313,15 +314,24 @@ class Agent_x:
         dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= self.cfg.dodge_auto_max)
         if self.cfg.dodge_shape and not self.training:
             self._check_shapes(ctx)  # 30.10.2026: Treffer des letzten Steps -> Sap-Form des Gegners
-        if self.cfg.dodge_verify and not self.training:
+        trusted = True
+        if (self.cfg.dodge_verify or self.cfg.dodge_distrust > 0) and not self.training:
             self._check_predictions(ctx)
             predicted = self._predicted_hits(ctx, stationary)
-            trusted = self._pred_n >= 3 and self._pred_hit >= 0.6 * self._pred_n
+            if self.cfg.dodge_distrust > 0:
+                # 30.10.2026: Modell gilt, bis es sich in diesem Spiel als falsch erweist
+                trusted = not (self._pred_n >= 6 and self._pred_hit < self.cfg.dodge_distrust * self._pred_n)
+            else:
+                trusted = self._pred_n >= 3 and self._pred_hit >= 0.6 * self._pred_n
             incoming = predicted if dodge_on and fight and trusted else {}
         else:
             predicted = {}
             incoming = (self._predicted_hits(ctx, stationary)
                         if dodge_on and not self.training and fight else {})
+        # 30.10.2026: cfg.splash_dodge -> Nachbarn vorhergesagter Ziele bei sicherem Streufaktor >= 0,5
+        splash_drop = self.param_est.dropoff(default=0.0) if self.cfg.splash_dodge and not self.training else 0.0
+        splash_hits = ((incoming or predicted or self._predicted_hits(ctx, stationary))
+                       if splash_drop >= 0.5 and fight and trusted else {})
         stage_info = self._stage_prepare(ctx) if self.cfg.stage_attack and not self.training else None
         eps = self.epsilon
         # 22.10.2026 (cfg.cand_rescue): Notfall, wenn trotz bekannter Relics kein Punkte-Tile bekannt ist
@@ -434,6 +444,12 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["dodges"] = st.get("dodges", 0) + 1
+            if splash_hits and 0 <= a <= 4 and not splash_hits.get(int(uid)):
+                a2 = self._splash_dodge(ctx, uid, masks[k], a, splash_hits, splash_drop)
+                if a2 != a:
+                    a = a2
+                    self._prev_actions[uid] = a
+                    st["splash_dodges"] = st.get("splash_dodges", 0) + 1
             if predicted.get(int(uid), 0.0) >= 0.5 and a in (geo.STAY, geo.SAP):
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 self._pred_pending.append((int(uid), x, y, float(ctx["ally_ene"][uid]), a == geo.SAP))
@@ -755,6 +771,52 @@ class Agent_x:
             self._shooters.setdefault(uid, []).append(
                 (int(ctx["enemy_coords"][k][0]), int(ctx["enemy_coords"][k][1])))
         return out
+
+    def _splash_dodge(self, ctx: dict, uid: int, mask: np.ndarray, a: int, hits: dict, drop: float) -> int:
+        """cfg.splash_dodge (30.10.2026): Unit, die selbst kein vorhergesagtes Ziel ist, aber am Ende dieses
+        Steps (stehend oder nach ihrem Zug) neben oder auf dem Tile vorhergesagter Ziele stuende, bekaeme bei
+        sicher geschaetztem Streufaktor >= 0,5 mindestens splash_dodge_min ihrer Energie als Streuschaden ->
+        stattdessen Stehen oder der Zug mit dem geringsten vorhergesagten Schaden (bevorzugt freie Punkte-Tiles,
+        Richtung Ziel). Auch das Zurueckgehen in die Streuzone wird so verhindert, solange die Gefahr besteht.
+        Diagnose V11 gegen sol92_sq (Dev A, verlorene Matches 2/3): Streuschaden auf uns 2.016 bei Streufaktor
+        1,0 und 1.190 bei 0,5, direkter Schaden nur 651 bzw. 688."""
+        cost = float(ctx["sap_cost"])
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        e = float(ctx["ally_ene"][uid])
+        shots = [(int(ctx["ally_pos"][v][0]), int(ctx["ally_pos"][v][1]), h)
+                 for v, h in hits.items() if v != int(uid)]
+
+        def damage(tx, ty):
+            d = 0.0
+            for ox, oy, h in shots:
+                cheb = max(abs(ox - tx), abs(oy - ty))
+                d += h * cost * (1.0 if cheb == 0 else drop if cheb == 1 else 0.0)
+            return d
+
+        dest = (x, y) if a == geo.STAY else (x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a]))
+        planned = damage(*dest)
+        if planned < self.cfg.splash_dodge_min * max(e, 1.0):
+            return a
+        occupied = {(int(ctx["ally_pos"][v][0]), int(ctx["ally_pos"][v][1]))
+                    for v in ctx["ally_ids"].tolist() if int(v) != int(uid)}
+        tgt = ctx["assigned"].get(int(uid))
+        best, best_s = a, -np.inf
+        for d in range(0, 5):
+            if d != geo.STAY and not mask[d]:
+                continue
+            tx, ty = (x, y) if d == geo.STAY else (x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d]))
+            dmg = damage(tx, ty)
+            if dmg >= planned or e - (0 if d == geo.STAY else ctx["move_cost"]) - dmg < 0:
+                continue
+            s = -dmg / cost
+            if self.belief.point_tiles[tx, ty] and (tx, ty) not in occupied:
+                s += 2.0
+            if tgt is not None and abs(tgt[0] - tx) + abs(tgt[1] - ty) < abs(tgt[0] - x) + abs(tgt[1] - y):
+                s += 1.0
+            s += float(np.clip(ctx["energy_map"][tx, ty], -20, 20)) / 20.0
+            if s > best_s:
+                best, best_s = d, s
+        return best
 
     def _dodge(self, ctx: dict, uid: int, mask: np.ndarray, a: int, sap, hits: dict) -> int:
         """cfg.dodge: Unit, die stehen oder sappen wuerde und vorhergesagt direkt getroffen

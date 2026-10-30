@@ -153,6 +153,10 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    dodge_distrust: float = 0.0
+    """> 0 (30.10.2026): wie dodge_verify, aber umgekehrt - das Gegnermodell gilt von Anfang an und wird erst
+    abgeschaltet (auch fuer splash_dodge), wenn nach >= 6 stehen gebliebenen vorhergesagten Zielen weniger als
+    dieser Anteil direkt getroffen wurde (Gegner zielt anders als Solution_92, z. B. RL-Agents)."""
     dodge_shape: bool = False
     """True (30.10.2026): opp_model fuer dodge/dodge_auto erkennt die Sap-Form des Gegners im Spiel.
     Solution_92 zielt in der Manhattan-Raute, die Variante sol92_sq (wie die Engine erlaubt) im ganzen
@@ -160,6 +164,12 @@ class AgentConfig:
     zeigen im naechsten Step mit einem direkten Treffer, welche Form stimmt. Das Quadrat gilt, sobald
     es mehr Treffer hat als die Raute (vorher Raute wie bisher). Diagnose V11 gegen sol92_sq (Dev A):
     in verlorenen Matches 2/3 feuert der Gegner doppelt so oft, wir verlieren 16-17 statt 9 Units."""
+    splash_dodge: bool = False
+    """True (30.10.2026): Bei sicher geschaetztem Streufaktor >= 0,5 weichen stehende Units, die neben
+    vorhergesagten Zielen (opp_model, mit dodge_shape auch Quadrat) stehen und mindestens splash_dodge_min
+    ihrer Energie als Streuschaden bekaemen, einen Schritt aus. Diagnose V11 gegen sol92_sq (Dev A,
+    verlorene Matches 2/3): Streuschaden auf uns 2.016 (Streufaktor 1,0) bzw. 1.190 (0,5), direkt 651/688."""
+    splash_dodge_min: float = 0.5
     rules_in_training: bool = False
     """True (22.10.2026): path_fix, reach_assign, sap_no_overkill und collision_guard auch im Training
     aktiv (sonst nur in der Auswertung), damit neue Netze unter V8-Bedingungen lernen."""
