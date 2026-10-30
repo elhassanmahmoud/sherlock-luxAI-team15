@@ -15,3 +15,5 @@ DEVB=1 PANEL=1 bash scripts/battle_dev.sh mix36 experiments/ensembles/battle_mix
 bash scripts/pipeline_battle_night.sh
 until grep -q "V10-Basis gegen zurueckgehaltene" experiments/battle_dev.log; do sleep 60; done; WORKERS=6 bash scripts/battle_screen.sh mix36c experiments/ensembles/battle_mix36c.pth
 WORKERS=6 bash scripts/battle_screen.sh mix36c_as experiments/ensembles/battle_mix36c_as.pth
+.venv/bin/python -m scripts.par_eval --weights experiments/releases/20261022_v10_baseline/agent_p0.pth --first 300000 --n 300 --workers 6 --opponents dqn,rush,sol92_sqweak --out experiments/compare/battle/B_V10_extra.csv 2>&1 | grep -v geladen | tail -1
+.venv/bin/python -m scripts.par_eval --weights experiments/ensembles/battle_mix36c_as.pth --first 300000 --n 300 --workers 6 --opponents dqn,rush,sol92_sqweak --out experiments/compare/battle/D_mix36c_as_extra.csv 2>&1 | grep -v geladen | tail -1
