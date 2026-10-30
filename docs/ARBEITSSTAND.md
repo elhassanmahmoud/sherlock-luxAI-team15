@@ -5,6 +5,23 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 11:55 Berlin – Claude Code mit Mahmoud: Auswahl Runde 2 wählt `mix36c_as`, Bestätigung läuft
+
+- **Auswahl Runde 2** (805000–805199, je Gegner 400 Spiele, gepaart gegen V10; direkt 805200–805399, 400 Spiele; Log `experiments/pipeline_battle_gate.log`):
+
+| Kandidat | R (Δ pp) | Solution_92 | `sol92_sq` | `sol92_weak` | `old3_sym3` | default | direkt | Hürden |
+|---|---|---|---|---|---|---|---|---|
+| V10 (Referenz) | 89,62 % | 90,75 | 83,25 | 92,5 | 92,0 | 100 | – | – |
+| **`mix36c_as`** | **+2,19 [−0,25; +4,69]** | 96,0 (+5,25 [+1,75; +9,00]) | 85,0 | 95,75 | 90,5 | 100 | 65,5 % [59,0; 72,0] | **bestanden → gewählt** |
+| `mix48_as` | +1,31 [−1,06; +3,69] | 95,25 (+4,50) | 82,75 | 94,75 | 91,0 | 100 | 65,75 % | R < +1,5 |
+| `mixrl54_as` | +1,38 [−1,19; +3,88] | 94,5 (+3,75) | 82,75 | 94,75 | 92,0 | 99,5 | 66,0 % | R < +1,5 |
+
+- Gegen `old3_sym3` liegt `mix36c_as` auf diesen 200 Karten 1,5 pp unter V10. Auf Dev B lag V10 + R dort bei +0,7, `mix36` auf Dev A bei −3,3. Das ist im Rahmen der Streuung, wird aber in der Bestätigung mitgemessen.
+- **Bestätigung `mix36c_as` läuft seit 11:49** (806000–806799, je Gegner 1.600 Spiele; direkt 807000–807399, 800 Spiele). Ergebnis gegen 14 Uhr. Hürden: R Δ ≥ +2 pp mit unterer Grenze > 0, Solution_92 Δ ≥ −0,5 mit unterer Grenze > −2,5, default ≥ 99 % und Δ ≥ −1, direkt untere Grenze > 50 %.
+- Der Gate-Log nennt je Schritt den aktuellen Commit (`fb60655`, `46232fc`, `e8904d2`). Dazwischen kamen nur Dokumentation und Messdaten dazu. `git diff fb60655 e8904d2 -- agents/ scripts/league_gates.py scripts/par_eval.py scripts/pipeline_battle_gate.sh` ist leer.
+- Dev-A-Screen von `mix36c_as` läuft parallel (Warteschlange, 6 Prozesse): Wirkung von R auch gegen die RL-Gegner.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+
 ## 30.10.2026, 10:40 Berlin – Claude Code mit Mahmoud: Runde 2 läuft mit `mix36c_as`, `mix48_as`, `mixrl54_as`; Linie 4 fertig
 
 - **Screens fertig** (10:28). Zulassung nach dem Nachtrag 04:09 (mechanisch, `python -m scripts.screen_table --admit`): `mix36c`, `mix48`, `mixrl54`.
