@@ -46,3 +46,10 @@ def test_sap_still_splash_lets_holder_hit_moving_target_only_with_full_splash():
         a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
         act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
         assert int(act[0, 0]) == want, dropoff
+
+
+def test_splash_min_drop_extends_the_rules_to_half_splash():
+    assert _act(0.5, art_splash=True) == geo.STAY
+    assert _act(0.5, art_splash=True, splash_min_drop=0.5) == geo.SAP
+    assert _act(0.25, art_splash=True, splash_min_drop=0.5) == geo.STAY
+    assert _act(None, art_splash=True, splash_min_drop=0.5) == geo.STAY  # default 0,0 bleibt darunter

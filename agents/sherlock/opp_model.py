@@ -7,19 +7,24 @@ Unit (Schleife ueber die Unit-IDs, kein `break`) mit Manhattan-Abstand <= Sap-Re
 und zwar auf deren aktuelle Position. Alle Schiffe in Reichweite feuern also auf
 unsere Unit mit der hoechsten ID - Fokusfeuer, ohne Vorhersage der Bewegung.
 
-Alles im kanonischen Raum unseres Agenten (Manhattan-Abstaende bleiben unter der
-Spiegelung gleich). Nur sichtbare Gegner lassen sich vorhersagen.
+Alles im kanonischen Raum unseres Agenten (Manhattan- und Chebyshev-Abstaende bleiben unter
+der Spiegelung gleich). Nur sichtbare Gegner lassen sich vorhersagen.
+
+30.10.2026: shape="cheb" fuer Gegner, die wie die Engine im ganzen Sap-Quadrat zielen
+(scripts/style_opponents.Sol92Variant(square=True), sonst gleiche Zielwahl).
 """
 from __future__ import annotations
 
 import numpy as np
 
 
-def predict_sol92_saps(ctx: dict, belief, visibility: str = "sensor") -> list[tuple[int, int]]:
+def predict_sol92_saps(ctx: dict, belief, visibility: str = "sensor",
+                       shape: str = "man") -> list[tuple[int, int]]:
     """Vorhergesagte Saps: Liste (Index in ctx['enemy_coords'], Ziel-Unit-ID).
 
     Schuetze = sichtbarer Gegner auf einem bekannten Punkte-Tile mit Energie >= Sap-Kosten.
-    Ziel = unsere Unit mit der hoechsten ID in Manhattan-Reichweite, die der Gegner sieht.
+    Ziel = unsere Unit mit der hoechsten ID in Reichweite (shape "man": Manhattan-Raute wie
+    Solution_92, "cheb": ganzes Quadrat), die der Gegner sieht.
     visibility="sensor": sichtbar, wenn irgendein sichtbarer Gegner sie im Sensor-Quadrat
     hat (Naeherung, Nebel und unsichtbare Gegner ignoriert); "all": alle unsere Units.
     """
@@ -42,8 +47,11 @@ def predict_sol92_saps(ctx: dict, belief, visibility: str = "sensor") -> list[tu
     for k, (x, y) in enumerate(ec.tolist()):
         if ee[k] < cost or not belief.point_tiles[x, y]:
             continue
-        man = np.abs(pos[:, 0] - x) + np.abs(pos[:, 1] - y)
-        cand = seen & (man <= R)
+        if shape == "cheb":
+            dist = np.maximum(np.abs(pos[:, 0] - x), np.abs(pos[:, 1] - y))
+        else:
+            dist = np.abs(pos[:, 0] - x) + np.abs(pos[:, 1] - y)
+        cand = seen & (dist <= R)
         if cand.any():
             out.append((k, int(ids[cand].max())))
     return out

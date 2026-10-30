@@ -136,6 +136,10 @@ class AgentConfig:
     """True (30.10.2026, mit sap_still): Ist der Streufaktor laut param_est sicher 1,0, duerfen Halter auch
     ziehende Gegner direkt sappen: Die Engine bewegt vor dem Sap, ein Gegner einen Schritt neben dem Zieltile
     bekommt dann den vollen Schaden. Dev B zusaetzlich zu art_splash: +0,7 pp, bei 1,0 +2,7 pp."""
+    splash_min_drop: float = 1.0
+    """30.10.2026: art_splash und sap_still_splash greifen ab diesem sicher geschaetzten Streufaktor
+    (Standard 1,0 wie in V11; 0,5 nimmt den Streufaktor 0,5 dazu). V11 mit 0,5 auf Dev A gepaart gegen V11:
+    Mittel ueber 6 Gegner +0,8 pp [-0,2; +1,9], Karten mit Streufaktor 0,5 +2,6 [-0,8; +5,9]."""
     art_surplus: bool = False
     """True (22.10.2026): art_sap nicht fuer Units, deren Ziel ein Punkte-Tile der eigenen Haelfte ist."""
     threat_feats: bool = False
@@ -149,6 +153,13 @@ class AgentConfig:
     """True (22.10.2026, nur Auswertung): dodge/dodge_auto erst, wenn sich die Vorhersage des
     Solution_92-Modells in diesem Spiel bestaetigt (>= 3 Faelle, >= 60 % direkte Treffer bei
     stehen gebliebenen vorhergesagten Zielen). Gegen anders zielende Gegner bleibt es aus."""
+    dodge_shape: bool = False
+    """True (30.10.2026): opp_model fuer dodge/dodge_auto erkennt die Sap-Form des Gegners im Spiel.
+    Solution_92 zielt in der Manhattan-Raute, die Variante sol92_sq (wie die Engine erlaubt) im ganzen
+    Quadrat. Eigene Units, die nur eine der beiden Formen als Ziel vorhersagt und die stehen bleiben,
+    zeigen im naechsten Step mit einem direkten Treffer, welche Form stimmt. Das Quadrat gilt, sobald
+    es mehr Treffer hat als die Raute (vorher Raute wie bisher). Diagnose V11 gegen sol92_sq (Dev A):
+    in verlorenen Matches 2/3 feuert der Gegner doppelt so oft, wir verlieren 16-17 statt 9 Units."""
     rules_in_training: bool = False
     """True (22.10.2026): path_fix, reach_assign, sap_no_overkill und collision_guard auch im Training
     aktiv (sonst nur in der Auswertung), damit neue Netze unter V8-Bedingungen lernen."""

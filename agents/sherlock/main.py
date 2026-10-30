@@ -178,6 +178,8 @@ class Agent_x:
         self._searcher: Optional[tuple] = None  # (match_idx, uid, Ziel) fuer cfg.relic_search
         self._pred_pending: list = []  # cfg.dodge_verify: vorhergesagte, stehen gebliebene Ziele
         self._pred_n, self._pred_hit = 0, 0
+        self._shape_pending: list = []  # cfg.dodge_shape: Ziele nur einer Form, stehen geblieben
+        self._shape_ev = {"man": 0, "cheb": 0}
         from .param_est import ParamEstimator
         self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
         self._first_relic_step = None  # 22.10.2026: fuer cand_rescue/rescue_after
@@ -271,6 +273,7 @@ class Agent_x:
         # kein Lern-Uebergang (sonst falsche Tod-Strafe fuer alle Units).
         if int(np.asarray(obs["match_steps"])) == 0:
             self._prev_ctx = None
+            self._shape_pending = []  # Units verschwinden beim Match-Reset, das ist kein Treffer
             return actions
 
         ctx, ids, feat_map, mask_map, sap_targets = self._decide(obs)
@@ -308,6 +311,8 @@ class Agent_x:
         # 21.10.2026: cfg.tactics_when_behind -> Kampftaktiken (dodge, art_sap) nur bei Rueckstand
         fight = not self.cfg.tactics_when_behind or ctx["opp_points"] > ctx["own_points"]
         dodge_on = self.cfg.dodge or (self.cfg.dodge_auto and self._dropoff() <= self.cfg.dodge_auto_max)
+        if self.cfg.dodge_shape and not self.training:
+            self._check_shapes(ctx)  # 30.10.2026: Treffer des letzten Steps -> Sap-Form des Gegners
         if self.cfg.dodge_verify and not self.training:
             self._check_predictions(ctx)
             predicted = self._predicted_hits(ctx, stationary)
@@ -486,6 +491,8 @@ class Agent_x:
                 if self.belief.mirrored:
                     d = geo.mirror_dir(d)
                 actions[uid] = [d, 0, 0]
+        if self.cfg.dodge_shape and not self.training:
+            self._record_shapes(ctx)
         return actions
 
     def set_cnn_policy(self, net, weight: float = 1.0, temp: float = 0.2) -> None:
@@ -579,7 +586,7 @@ class Agent_x:
             if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
                 return False
         min_hits, safe = c.art_min_hits, c.art_safe
-        if c.art_splash and not self.training and self.param_est.dropoff(default=0.0) == 1.0:
+        if c.art_splash and not self.training and self.param_est.dropoff(default=0.0) >= c.splash_min_drop:
             min_hits, safe = c.art_splash_hits, False  # 30.10.2026: voller Streuschaden
         if int(sap[2]) < min_hits:
             return False
@@ -622,6 +629,40 @@ class Agent_x:
                 continue
             loss = e - (cost if sapped else 0.0) - float(ctx["ally_ene"][uid])
             self._pred_hit += int(loss >= 0.7 * cost)
+
+    def _sap_shape(self) -> str:
+        """cfg.dodge_shape: Sap-Form des Gegners, Quadrat erst bei mehr Belegen als fuer die Raute."""
+        return "cheb" if self._shape_ev["cheb"] > self._shape_ev["man"] else "man"
+
+    def _record_shapes(self, ctx: dict) -> None:
+        """cfg.dodge_shape: eigene Units merken, die nur die Raute oder nur das Quadrat als Ziel
+        vorhersagt und die in diesem Step stehen bleiben (stehen oder sappen)."""
+        from .opp_model import predict_sol92_saps
+        man = {u for _, u in predict_sol92_saps(ctx, self.belief, shape="man")}
+        cheb = {u for _, u in predict_sol92_saps(ctx, self.belief, shape="cheb")}
+        for uid, form in [(u, "man") for u in man - cheb] + [(u, "cheb") for u in cheb - man]:
+            a = self._prev_actions.get(uid)
+            if a in (geo.STAY, geo.SAP):
+                x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+                self._shape_pending.append((uid, x, y, float(ctx["ally_ene"][uid]), a == geo.SAP, form))
+
+    def _check_shapes(self, ctx: dict) -> None:
+        """cfg.dodge_shape: Hat eine gemerkte Unit einen direkten Treffer bekommen (Energieverlust
+        >= 0,7 Sap-Kosten oder tot), zaehlt das fuer ihre Form. Bei sicherem Streufaktor 1,0 sieht
+        der Streuschaden wie ein direkter Treffer aus, dann keine Aussage."""
+        pending, self._shape_pending = self._shape_pending, []
+        if not pending or self.param_est.dropoff(default=0.5) >= 1.0:
+            return
+        alive = {int(u) for u in ctx["ally_ids"].tolist()}
+        cost = float(ctx["sap_cost"])
+        for uid, x, y, e, sapped, form in pending:
+            if uid not in alive:
+                self._shape_ev[form] += 1
+                continue
+            if (int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])) != (x, y):
+                continue  # anderer Slot/Respawn: keine Aussage
+            loss = e - (cost if sapped else 0.0) - float(ctx["ally_ene"][uid])
+            self._shape_ev[form] += int(loss >= 0.7 * cost)
 
     def _harmful_nebula(self) -> float:
         """cfg.nebula_avoid: geschaetzter Nebelabzug, falls >= nebula_avoid_min, sonst 0."""
@@ -707,7 +748,8 @@ class Agent_x:
         from .opp_model import predict_sol92_saps
         out: dict[int, float] = {}
         self._shooters: dict[int, list] = {}
-        for k, uid in predict_sol92_saps(ctx, self.belief):
+        shape = self._sap_shape() if self.cfg.dodge_shape else "man"
+        for k, uid in predict_sol92_saps(ctx, self.belief, shape=shape):
             p = 0.85 if (k < len(stationary) and stationary[k]) else 0.5
             out[uid] = out.get(uid, 0.0) + p
             self._shooters.setdefault(uid, []).append(
@@ -760,8 +802,13 @@ class Agent_x:
                 # neben eigene Units ziehen (Streuschaden)
                 R = int(ctx["sap_range"])
                 shooters = getattr(self, "_shooters", {}).get(int(uid), [])
-                guarded = any(abs(sx - ox) + abs(sy - oy) <= R for sx, sy in shooters for ox, oy in occupied)
-                if guarded and all(abs(sx - tx) + abs(sy - ty) <= R for sx, sy in shooters):
+                cheb = c.dodge_shape and self._sap_shape() == "cheb"  # 30.10.2026: Reichweite wie das Modell
+
+                def reach(sx, sy, ox, oy):
+                    return (max(abs(sx - ox), abs(sy - oy)) if cheb else abs(sx - ox) + abs(sy - oy)) <= R
+
+                guarded = any(reach(sx, sy, ox, oy) for sx, sy in shooters for ox, oy in occupied)
+                if guarded and all(reach(sx, sy, tx, ty) for sx, sy in shooters):
                     s += 3.5
                 if any(max(abs(ox - tx), abs(oy - ty)) <= 1 for ox, oy in occupied):
                     s -= 2.0
@@ -818,7 +865,7 @@ class Agent_x:
         direct, _ = self._sap_cover(ctx, uid, sap)
         if not direct.any():
             return False
-        if self.cfg.sap_still_splash and self.param_est.dropoff(default=0.0) == 1.0:
+        if self.cfg.sap_still_splash and self.param_est.dropoff(default=0.0) >= self.cfg.splash_min_drop:
             return True  # 30.10.2026: voller Streuschaden trifft auch nach einem Schritt
         ec = ctx["enemy_coords"]
         on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
