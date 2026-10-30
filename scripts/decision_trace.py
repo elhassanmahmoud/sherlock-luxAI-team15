@@ -8,7 +8,7 @@ Gewichte werden nur gelesen. Pro Unit und Step wird festgehalten:
   raw        argmax des Ensemble-Mittels OHNE Maske (was die Netze am liebsten taeten)
   greedy     argmax des Ensemble-Mittels MIT Maske (was das Netz waehlt)
   final      Aktion nach allen Regeln (was wirklich gespielt wird)
-  agree      wie viele der 18 Netze einzeln (mit Maske) dieselbe Aktion wie das Mittel waehlen
+  agree      wie viele der Netze einzeln (mit Maske) dieselbe Aktion wie das Mittel waehlen
   rules      Regeln, die die Aktion in diesem Step geaendert haben
 Dazu je Kategorie ein echtes Beispiel mit Merkmalen und den Q-Werten aller Netze.
 Kein Leistungsnachweis: die Spiele dienen nur der Beschreibung des Ablaufs.
@@ -42,18 +42,19 @@ def _group(a: int) -> str:
     return "move" if 1 <= a <= 4 else ACTION_NAMES[a]
 
 
-def example_kind(r: dict, n_units: int) -> str | None:
-    """Kategorie eines Datensatzes fuer die Beispielsammlung (None: kein Beispiel)."""
+def example_kind(r: dict, n_units: int, n_nets: int = 18) -> str | None:
+    """Kategorie eines Datensatzes fuer die Beispielsammlung (None: kein Beispiel). Schwellen fuer 18 Netze
+    (alle, mindestens 9, hoechstens 8), seit 30.10.2026 anteilig fuer andere Ensemblegroessen (V11: 36)."""
     late = r["match"] >= 1
-    if r["agree"] == 18 and 1 <= r["greedy"] <= 4 and r["n_legal"] >= 5 and not r["rules"] and late:
+    if r["agree"] == n_nets and 1 <= r["greedy"] <= 4 and r["n_legal"] >= 5 and not r["rules"] and late:
         return "einig"
-    if r["masked_raw"] and 1 <= r["raw"] <= 4 and not r["rules"] and r["agree"] >= 9 and late:
+    if r["masked_raw"] and 1 <= r["raw"] <= 4 and not r["rules"] and r["agree"] >= n_nets // 2 and late:
         return "maske"
     if "pt_sap" in r["rules"] and r["on_point"]:
         return "regel_pt_sap"
     if "path_fix" in r["rules"]:
         return "regel_path_fix"
-    if r["agree"] <= 8 and not r["rules"] and late and n_units >= 4:
+    if r["agree"] <= n_nets * 8 // 18 and not r["rules"] and late and n_units >= 4:
         return "uneinig"
     return None
 
@@ -134,7 +135,7 @@ def trace(seeds: list[int], opponent: str = "solution92", weights: str = WEIGHTS
                      masked_raw=bool(not mk[k][raw[k]]), rules=list(fired.get(int(u), [])),
                      on_point=bool(ctx["point_tiles"][x, y]))
             rec.append(r)
-            kind = example_kind(r, len(ids))
+            kind = example_kind(r, len(ids), len(nets))
             if kind and kind not in examples:
                 examples[kind] = dict(
                     seed=game["seed"], side=game["side"], step=r["step"], match=r["match"] + 1,

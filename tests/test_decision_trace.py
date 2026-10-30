@@ -37,6 +37,15 @@ def test_example_kind_categories():
     assert example_kind(_r(agree=6, n_legal=4), 8) == "uneinig"
 
 
+def test_example_kind_scales_with_ensemble_size():
+    assert example_kind(_r(), 8, 36) is None  # 18 von 36 sind nicht alle
+    assert example_kind(_r(agree=36, top_vote=36), 8, 36) == "einig"
+    assert example_kind(_r(raw=3, greedy=2, masked_raw=True, agree=17), 8, 36) is None
+    assert example_kind(_r(raw=3, greedy=2, masked_raw=True, agree=18), 8, 36) == "maske"
+    assert example_kind(_r(agree=16, n_legal=4), 8, 36) == "uneinig"
+    assert example_kind(_r(agree=17, n_legal=4), 8, 36) is None
+
+
 def test_seed_list():
     assert _seed_list("690000-690002") == [690000, 690001, 690002]
     assert _seed_list("5,7") == [5, 7]
