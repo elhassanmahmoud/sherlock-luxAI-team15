@@ -1,6 +1,8 @@
 # Wie Sherlock entscheidet – Erklärung für die nächste Präsentation
 
-Stand 26.10.2026, Abgabe **V10** (18 Netze, SHA-256 `03cf8bdc…8c67`). Geschrieben für Mahmoud und Moayed nach der Review. Der Prof wollte genauer wissen:
+Stand 26.10.2026, Abgabe **V10** (18 Netze, SHA-256 `03cf8bdc…8c67`). Geschrieben für Mahmoud und Moayed nach der Review.
+
+> **Nachtrag 30.10.2026:** Seit 30.10. ist **V11** die Abgabe: 36 Netze (die 18 V10-Netze und dieselben 18 nach 5.500 Spielen Nachtraining unter allen V10-Regeln) plus die Regeln `art_splash` und `sap_still_splash`, die nur bei sicher geschätztem Sap-Streufaktor 1,0 greifen. Der Ablauf unten gilt unverändert, nur sind es 36 statt 18 Netze. Die Zahlen für V11 auf denselben 10 Diagnosespielen stehen in `experiments/analysis/decision_trace_20261030_v11.json`: 92 % der Entscheidungen wie die Netze, Regeln ändern 7,5 %, alle 36 Netze einig in 31 %, Lieblingsaktion in 22 % verboten. Übernahmebericht: `experiments/analysis/release_20261030_v11/RELEASE.md`. Der Prof wollte genauer wissen:
 
 1. Was ist **Action Masking**?
 2. Wie läuft der **Entscheidungsprozess** ab: wer macht was, wer bekommt was?

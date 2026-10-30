@@ -5,6 +5,17 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 13:55 Berlin – Claude Code mit Mahmoud: Präsentation 06.11. auf V11 umgestellt
+
+- `Sherlock_Battle_06-11-2026.pdf` (Projektordner, 16 Seiten) und die Quelle `docs/presentation/Sherlock_Battle_06-11-2026.html` sind umgestellt. Geändert sind die Folien 1–4 und 6–14 sowie Folie 16: 36 statt 18 Netze, 94 statt 90 %, Schrittzeit 8,8 ms (Kurs-Runner-Prüfung nach der Installation).
+- **Folie 11 neu:** Nachtraining und Mischen, verlorene Spiele nach dem verdeckten Streuschaden sortiert (V10 gegen V11 auf denselben 800 Bestätigungskarten gegen Solution_92: 25 % 91,4 → 94,5; 50 % 91,0 → 95,4; 100 % 86,7 → 92,5), die neuen Regeln und das Bestätigungsergebnis.
+- **Folie 12:** Punkt 2 heißt jetzt „Erst Fehler suchen, dann passend trainieren“ (78 → 90 → 94 %). Punkt 3 nimmt als Beispiel die knapp gescheiterte Mischung (+1,8 statt +2).
+- **Folie 10:** neues Diagramm `docs/presentation/folie_0611_fortschritt.png` (Skript `docs/presentation/source/fortschritt_0611.py`) mit V11 bei 94,1 %.
+- **Entscheidungsstatistik für V11 neu gemessen** (`python -m scripts.decision_trace`, dieselben 10 Diagnosespiele 690000–690004 wie am 26.10., `experiments/analysis/decision_trace_20261030_v11.json`): 36.209 Entscheidungen; wie die Netze 92,3 % (V10 92,4), Regeln ändern 7,5 % (7,3), alle 36 Netze einig 30,7 % (alle 18: 31,9), Lieblingsaktion verboten 22,3 % (20,4), Mittelwert und Mehrheit verschieden 5,9 % (7,7). Die Beispiele auf den Folien 6 und 7 stammen aus diesen Spielen. Der Asteroid unter dem Maskenbeispiel ist im Spielzustand nachgeprüft (Spiel 690000, Schritt 114, Feld (0,13)). `decision_trace.py` wählt Beispiele jetzt mit Schwellen, die zur Ensemblegröße passen; Test ergänzt.
+- `Sherlock_Stichpunkte_06-11-2026.md`: Sprechtexte angepasst, neue Rückfrage „Wie schätzt Sherlock den Streuschaden?“, Belege ergänzt. `Sherlock_Entscheidungsprozess.md` hat einen Nachtrag zu V11 bekommen.
+- Prüfung: alle geänderten Seiten als Bild angesehen. Einen zu langen Punkt auf Folie 7 gekürzt.
+- **Offen:** Moayed bitte seine Folien 1–5, 10, 12 und 13 gegenlesen (Zahlen und Punkt 2 auf Folie 12 geändert). Zweimal mit Uhr proben, Folie 11 hat etwa 1:05 Sprechtext.
+
 ## 30.10.2026, 13:45 Berlin – Claude Code mit Mahmoud: Bestätigung bestanden, **V11 `v11_mix36c_as` ist die neue Abgabe**
 
 - **Bestätigung Runde 2** (806000–806799, je Gegner 1.600 Spiele; direkt 807000–807399, 800 Spiele; Ende 13:33): R **91,2 statt 86,6 % (Δ +4,66 pp [+3,45; +5,88])**, Solution_92 **94,1 statt 89,6 % (+4,50 [+2,88; +6,25])**, `sol92_sq` 84,1 statt 79,1, `sol92_weak` 93,8 statt 91,5, `old3_sym3` 92,9 statt 86,1, default 100 % (+0,06), **direkt gegen V10 59,5 % [54,5; 64,25]**. Alle Hürden erfüllt, „GATE Bestaetigung: BESTANDEN“.
