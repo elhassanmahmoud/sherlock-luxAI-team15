@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 13:45 Berlin – Claude Code mit Mahmoud: Bestätigung bestanden, **V11 `v11_mix36c_as` ist die neue Abgabe**
+
+- **Bestätigung Runde 2** (806000–806799, je Gegner 1.600 Spiele; direkt 807000–807399, 800 Spiele; Ende 13:33): R **91,2 statt 86,6 % (Δ +4,66 pp [+3,45; +5,88])**, Solution_92 **94,1 statt 89,6 % (+4,50 [+2,88; +6,25])**, `sol92_sq` 84,1 statt 79,1, `sol92_weak` 93,8 statt 91,5, `old3_sym3` 92,9 statt 86,1, default 100 % (+0,06), **direkt gegen V10 59,5 % [54,5; 64,25]**. Alle Hürden erfüllt, „GATE Bestaetigung: BESTANDEN“.
+- **Übernahme** mit `scripts/release_candidate.py` (Freigabe vom 20.10.) um 13:36. Neue Dateien `agents/sherlock/weights/agent_p0.pth`/`agent_p1.pth` SHA-256 `2ab463e9…cd2e0`. V10 liegt bytegleich mit Wiederherstellungsanleitung in `experiments/releases/20261030_v10_V8st/`, Manifest `experiments/releases/20261030_v11_mix36c_as.json`. [Übernahmebericht](../experiments/analysis/release_20261030_v11/RELEASE.md).
+- **V11** besteht aus 36 Netzen: den 18 V10-Netzen und denselben 18 nach 5.500 Spielen Nachtraining unter allen V10-Regeln. Dazu kommen die Regeln `art_splash` und `sap_still_splash`. Beide greifen nur, wenn der Sap-Streufaktor sicher auf 1,0 geschätzt ist.
+- **Prüfungen nach der Installation:** unveränderter Kurs-Runner 8 Spiele bestanden, `act` im Median 5,4 ms, höchstens 8,8 ms. Gesamte Testsuite ohne laufende Jobs: 576 bestanden plus 14 Untertests. `Gruppe15.zip` neu gebaut, 22,2 MB, „Check ok“ in beiden Ordnerlagen. Unter Python 3.10 (torch 2.14/numpy 2.2 sowie torch 2.2/numpy 1.26) gibt es 0 abweichende Aktionen in einem aufgezeichneten Spiel. Bei einer Moodle-Größengrenze baut `python -m scripts.build_submission --battle --half` eine 10,7-MB-Fassung. Auch sie hatte 0 Abweichungen, gemessen in den Hürden wurde aber die volle Fassung.
+- **Zusatzmessungen** (Dev A, nur Information): DQN-Beispiel des Profs und Rush-Bot je 100 % (V10 ebenso), `sol92_sqweak` 87,7 statt 79,2 %.
+- **Offen:**
+  - Präsentation auf V11 umstellen: Folien 1, 4, 7–13 (18 → 36 Netze, 90 → 94 %) sowie Folie 11 „Neu seit letzter Woche“ mit Nachtraining, Mischung, Analyse der Verlustspiele und den neuen Regeln. Moayeds Folien 1–5, 10, 12–13 ändern sich mit, bitte gegenlesen.
+  - Upload von `Gruppe15.zip` durch Mahmoud erst am Ende (04.11.). Vorher die Moodle-Größengrenze klären.
+  - Runde 3 (808000–809599) nur mit einem eigenen Plan-Nachtrag. Referenz wäre jetzt V11.
+
 ## 30.10.2026, 11:55 Berlin – Claude Code mit Mahmoud: Auswahl Runde 2 wählt `mix36c_as`, Bestätigung läuft
 
 - **Auswahl Runde 2** (805000–805199, je Gegner 400 Spiele, gepaart gegen V10; direkt 805200–805399, 400 Spiele; Log `experiments/pipeline_battle_gate.log`):
