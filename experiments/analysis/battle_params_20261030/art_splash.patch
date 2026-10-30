@@ -1,0 +1,139 @@
+diff --git a/agents/sherlock/config.py b/agents/sherlock/config.py
+index 1ed4be4..effcf27 100644
+--- a/agents/sherlock/config.py
++++ b/agents/sherlock/config.py
+@@ -126,6 +126,19 @@ class AgentConfig:
+     art_min_hits: int = 2
+     art_reserve: int = 0
+     art_safe: bool = True
++    art_splash: bool = False
++    """True (30.10.2026): Ist der Sap-Streufaktor laut param_est sicher 1,0, gilt fuer art_sap
++    art_min_hits=art_splash_hits und kein art_safe (voller Streuschaden: zwei Treffer im 3x3 lohnen auch
++    in gegnerischer Reichweite). Dev A, V10 gegen Solution_92/sol92_sq, art_safe=false + art_min_hits=2
++    nach Streufaktor 0,25/0,5/1,0: −6,5/−0,8/+6,0 pp. Sonst unveraendert."""
++    art_splash_hits: int = 2
++    sap_still_splash: bool = False
++    """True (30.10.2026, mit sap_still): Ist der Streufaktor laut param_est sicher 1,0, duerfen Halter auch
++    ziehende Gegner direkt sappen: Die Engine bewegt vor dem Sap, ein Gegner einen Schritt neben dem Zieltile
++    bekommt dann den vollen Schaden."""
++    art_low_off: bool = False
++    """True (30.10.2026): keine art_sap, solange der Streufaktor laut param_est sicher 0,25 ist (wenig
++    Streuschaden: Dev A, art_safe=false bzw. zusaetzlich art_min_hits=2 dort −3,1 bzw. −6,5 pp)."""
+     art_surplus: bool = False
+     """True (22.10.2026): art_sap nicht fuer Units, deren Ziel ein Punkte-Tile der eigenen Haelfte ist."""
+     threat_feats: bool = False
+diff --git a/agents/sherlock/main.py b/agents/sherlock/main.py
+index bb5b0e9..91411cc 100644
+--- a/agents/sherlock/main.py
++++ b/agents/sherlock/main.py
+@@ -250,7 +250,8 @@ class Agent_x:
+         return self._cache[1:]
+ 
+     def act(self, step: int, obs) -> np.ndarray:
+-        use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est)
++        use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est or self.cfg.art_splash
++                    or self.cfg.art_low_off or self.cfg.sap_still_splash)
+                    and (not self.training or self.cfg.rules_in_training_all))
+         if use_est:
+             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
+@@ -578,11 +579,18 @@ class Agent_x:
+             tgt = ctx["assigned"].get(int(uid))
+             if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
+                 return False
+-        if int(sap[2]) < c.art_min_hits:
++        min_hits, safe = c.art_min_hits, c.art_safe
++        if (c.art_splash or c.art_low_off) and not self.training:
++            drop = self.param_est.dropoff(default=0.0)  # 0,0: noch nicht sicher geschaetzt
++            if c.art_splash and drop == 1.0:
++                min_hits, safe = c.art_splash_hits, False  # 30.10.2026: voller Streuschaden
++            if c.art_low_off and drop == 0.25:
++                return False  # 30.10.2026: wenig Streuschaden
++        if int(sap[2]) < min_hits:
+             return False
+         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] * (1 + c.sap_reserve_k) + c.art_reserve:
+             return False
+-        if c.art_safe and len(ctx["enemy_coords"]):
++        if safe and len(ctx["enemy_coords"]):
+             ec = ctx["enemy_coords"]
+             armed = ctx["enemy_energies"] >= ctx["sap_cost"]
+             if c.art_safe_cheb:  # 22.10.2026: Engine erlaubt Saps im ganzen Quadrat
+@@ -815,6 +823,8 @@ class Agent_x:
+         direct, _ = self._sap_cover(ctx, uid, sap)
+         if not direct.any():
+             return False
++        if self.cfg.sap_still_splash and self.param_est.dropoff(default=0.0) == 1.0:
++            return True  # 30.10.2026: voller Streuschaden trifft auch nach einem Schritt
+         ec = ctx["enemy_coords"]
+         on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+         still = (stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)) | on_pt
+diff --git a/tests/test_art_splash.py b/tests/test_art_splash.py
+new file mode 100644
+index 0000000..a999594
+--- /dev/null
++++ b/tests/test_art_splash.py
+@@ -0,0 +1,65 @@
++"""Regel vom 30.10.2026: art_splash (Artillerie wie art_safe=false + art_min_hits=2, nur bei sicher
++geschaetztem Streufaktor 1,0)."""
++import numpy as np
++
++from agents.sherlock import geometry as geo
++from tests.conftest import make_obs
++from tests.test_rules_1910 import _stay_agent
++from tests.test_rules_2110 import PAIR
++
++NEAR = PAIR + [(7, 6, 60)]  # bewaffneter Gegner in Manhattan-Reichweite 4 von (5, 5)
++V10_ART = dict(art_sap=True, art_min_hits=3)  # art_safe bleibt True
++
++
++def _act(dropoff, **cfg):
++    a = _stay_agent(**V10_ART, **cfg)
++    if dropoff is not None:  # Schaetzung sicher auf einem Wert
++        a.param_est.log_drop = np.array([0.0 if d == dropoff else -50.0 for d in (0.25, 0.5, 1.0)])
++        a.param_est.n_drop = 5
++    return int(a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=NEAR, relics=[(12, 12)]))[0, 0])
++
++
++def test_art_splash_only_with_confident_full_splash():
++    assert _act(1.0) == geo.STAY  # Schalter aus: 3 Treffer noetig und art_safe
++    assert _act(1.0, art_splash=True) == geo.SAP
++    for dropoff in (None, 0.25, 0.5):
++        assert _act(dropoff, art_splash=True) == geo.STAY
++
++
++def test_art_splash_keeps_one_hit_minimum():
++    a = _stay_agent(**V10_ART, art_splash=True)
++    a.param_est.log_drop = np.array([-50.0, -50.0, 0.0])
++    a.param_est.n_drop = 5
++    act = a.act(10, make_obs(10, 10, units=[(5, 5, 100)], enemies=PAIR[:1] + [(7, 6, 60)], relics=[(12, 12)]))
++    # (8, 8) und (7, 6) liegen nicht im selben 3x3 -> hoechstens ein Treffer je Sap
++    assert int(act[0, 0]) == geo.STAY
++
++
++def test_art_low_off_only_with_confident_low_splash():
++    pair = dict(units=[(5, 5, 100)], enemies=PAIR + [(9, 9, 80)], relics=[(12, 12)])  # 3 Treffer, sicher
++
++    def act(dropoff, **cfg):
++        a = _stay_agent(**V10_ART, **cfg)
++        if dropoff is not None:
++            a.param_est.log_drop = np.array([0.0 if d == dropoff else -50.0 for d in (0.25, 0.5, 1.0)])
++            a.param_est.n_drop = 5
++        return int(a.act(10, make_obs(10, 10, **pair))[0, 0])
++
++    assert act(0.25) == geo.SAP  # Schalter aus
++    assert act(0.25, art_low_off=True) == geo.STAY
++    for dropoff in (None, 0.5, 1.0):
++        assert act(dropoff, art_low_off=True) == geo.SAP
++
++
++def test_sap_still_splash_lets_holder_hit_moving_target_only_with_full_splash():
++    # wie test_sap_still_skips_moving_target: Halter (5,5), Gegner zieht von (8,8) nach (8,7)
++    for dropoff, want in ((1.0, geo.SAP), (0.5, geo.STAY), (None, geo.STAY)):
++        a = _stay_agent(pt_sap=True, sap_still=True, sap_still_splash=True)
++        a.belief.point_tiles[5, 5] = True
++        if dropoff is not None:
++            a.param_est.log_drop = np.array([0.0 if d == dropoff else -50.0 for d in (0.25, 0.5, 1.0)])
++            a.param_est.n_drop = 5
++        a.act(9, make_obs(9, 9, units=[(5, 5, 200)], enemies=[(8, 8, 60)], relics=[(9, 9)]))
++        act = a.act(10, make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 7, 60)], relics=[(9, 9)]))
++        assert int(act[0, 0]) == want, dropoff
++

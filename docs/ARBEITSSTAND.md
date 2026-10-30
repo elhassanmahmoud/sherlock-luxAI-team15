@@ -5,6 +5,31 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 30.10.2026, 07:55 Berlin – Claude Code mit Mahmoud: Wo V10 verliert, neue Regel `art_splash` auf Dev B bestätigt, `mix36c` für Runde 2 zugelassen
+
+- **v8-Linie fertig** (06:47): 12 Netze je 1.500 Spiele, `battle_ftv8_12` SHA-256 `515760dd885b8282`; `mix30v8` und `mix48` gebaut, ihre Screens laufen. Validierung gegen Solution_92 (je 16 Spiele, nur Hinweis): Mittel der 12 Netze 76,6 % am Start, 81,2 % nach 1.500 Spielen. Laufdaten im Repo (Commit `9d66897`). **Linie 4** läuft seit 06:47 sauber (12 Prozesse, keine Fehler, um 07:01 bei Spiel 75 von 1.500).
+- **Screen `mix36c`** (Dev A, gepaart gegen V10): Mittel über 6 Gegner 77,8 statt 72,1 % (Δ +5,67 [+3,14; +8,11]); Solution_92 +3,33 [+0,33; +6,33], `sol92_sq` +3,67 [+0,33; +7,17], `league_nets6` 59,0 % (+7,0), `threat6` 85,7 % (+4,3), V3 +9,2, V7 +6,5; direkt gegen V10 61,7 % [56,0; 67,0]. Beide Werte liegen über `mix36b` (76,2 % / 59,5 %), also ist `mix36c` nach der Regel von 04:09 zugelassen. `mixrl36` (76,1 % / 59,3 %) liegt knapp darunter und ist nicht zugelassen. `mixrl54`, `mix30v8` und `mix48` laufen noch.
+- **Wo V10 verliert** (keine neuen Spiele): 5.200 Spiele V10 gegen Solution_92 und `sol92_sq` (Dev A, Auswahl und Bestätigung Runde 1, zusammen 1.300 Karten), verknüpft mit den versteckten Spielparametern und der Relic-Lage jeder Karte aus `env.reset`. Skripte und Daten liegen unter `experiments/analysis/battle_params_20261030/`.
+
+| Merkmal der Karte | Siegquote V10 |
+|---|---|
+| Sap-Streufaktor 0,25 / 0,5 / 1,0 (versteckt) | 89,1 / 84,5 / 78,9 % |
+| Sap-Reichweite 3 / 4 / 5 / 6 / 7 | 91,7 / 87,7 / 79,8 / 82,2 / 79,3 % |
+| Relic höchstens 5 Felder von der Mittellinie x + y = 23 (658 Karten, gleich weit von beiden Starts) / sonst | 76,4 / 92,1 % |
+| Bewegungskosten 1 / 5 | 79,0 / 88,6 % |
+| Sichtweite 1 / 2 / 3 / 4 | 81,4 / 81,5 / 84,3 / 89,8 % |
+| Relic-Paare 1 / 2 / 3 | 90,7 / 81,2 / 80,4 % |
+
+  Umkämpfte Karte mit starkem Sap (Streufaktor 1,0 oder Reichweite ≥ 5): 73 %. Keines von beiden: 97 %.
+- **40 dieser Spiele nachgespielt** (gegen Solution_92 auf umkämpften Karten mit starkem Sap, je 20 verloren und gewonnen, Wahrheit aus dem Env-Zustand, `contested_probe.py`). Verlorene Spiele kippen in Match 2 und 3: Match 1 gewinnen wir dort noch in 60 %, Match 2 und 3 nur in 10 und 15 %. Je Match verlieren wir 16,6 und 15,9 Einheiten, der Gegner 11,8 und 12,0. Wir besetzen im Mittel 2,0 und 2,8 Punktefelder, der Gegner 3,2 und 4,1.
+- **Frühere Dev-A-Tests nach Streufaktor neu ausgewertet** (keine neuen Spiele, gepaart gegen V10, Solution_92 und `sol92_sq`): aggressivere Artillerie (`art_safe=false` + `art_min_hits=2`) bei Streufaktor 0,25 / 0,5 / 1,0 **−6,5 [−10,9; −2,3] / −0,8 / +6,0 [+2,4; +9,5]** pp, insgesamt −0,2. Ihre Wirkung kehrt sich also mit dem Streufaktor um. Er steht nicht in `env_cfg`, `param_est` schätzt ihn aber aus den Energieverläufen der eigenen Einheiten. Nach Sichtweite, Bewegungskosten und Reichweite zeigt keiner der früheren Tests ein solches Muster.
+- **Neue Regel `art_splash`** (Standard aus): Ist der Streufaktor laut `param_est` sicher 1,0, sappt die Artillerie schon ab 2 Treffern und auch in gegnerischer Reichweite, sonst wie V10. **Dev B** (801000–801299, von dieser Analyse unberührt, 1.200 Spiele gepaart gegen V10): **+0,8 pp [+0,2; +1,3]** (87,9 statt 87,2 %); Solution_92 +0,7 [−0,2; +1,5], `sol92_sq` +0,8 [+0,2; +1,7]. Bei Streufaktor 1,0 **+3,1 [+1,0; +5,5]**, bei 0,25 und 0,5 genau 0: Die Regel hat dort in 908 Spielen nie eingegriffen, es gab also keine falsche Schätzung „1,0“.
+- **Wann die Schätzung sicher ist** (20 Spiele auf Dev-B-Karten mit Streufaktor 1,0): 4-mal in Match 1, 9-mal in Match 2, einmal in Match 3, 6-mal nie. Die Regel wirkt also vor allem in Match 2 und 3, wo die Spiele kippen. Ein Entwurf, der zusätzlich den Streuschaden eigener Saps an Gegnern auswertet, war nur in 4 von 48 Spielen früher sicher und wurde verworfen. Nebenbefund aus diesen 48 Spielen: Auch der heutige Schätzer ist in 3 Spielen zeitweise sicher falsch (zweimal 0,25 statt 0,5, einmal 0,5 statt 1,0), aber nie fälschlich 1,0. V10 nutzt die Streufaktor-Schätzung nicht.
+- **Entwickelt in einer getrennten Arbeitskopie** (Basis `9d66897`), damit die laufenden Screens im Hauptstand unverändert bleiben. Patch `experiments/analysis/battle_params_20261030/art_splash.patch`, Tests `tests/test_art_splash.py` (89 Regeltests grün). Mit ausgeschalteten Schaltern ändert der Patch nichts am Verhalten: Er liest nur zusätzliche Schalter. Die Messungen auf Dev B liefen aus der Arbeitskopie (`DB_artsplash.csv`).
+- **Laufen auf Dev B:** `art_low_off` (keine Artillerie, solange der Streufaktor sicher 0,25 ist), `sap_still_splash` (bei sicher 1,0 dürfen Halter auch ziehende Gegner sappen; die Engine bewegt vor dem Sap, ein Schritt neben dem Zieltile bekommt den vollen Schaden) und `art_splash` gegen den Rest des Panels (`sol92_weak`, `old3_sym3`, default).
+- **Nächste Schritte:** Code nach dem Ende der Screens und vor Runde 2 in den Hauptstand übernehmen. Ob die Runde-2-Kandidaten mit eingebranntem `art_splash` laufen, legt ein Plan-Nachtrag fest, bevor auf 805000–807399 gemessen wird.
+- Abgabe unverändert V10 (`03cf8bdc…`).
+
 ## 30.10.2026, 05:35 Berlin – Claude Code mit Mahmoud: Bestätigung von `mix36b` nicht bestanden, Abgabe bleibt V10
 
 - **Bestätigung Runde 1** (803000–803799, je Gegner 1.600 Spiele; direkt 804000–804399, 800 Spiele; Ende 05:32, Log `experiments/pipeline_battle_gate.log`): R 88,7 statt 86,9 %, **Δ +1,77 pp [+0,64; +2,95]**. Die Hürde verlangt Δ ≥ +2 pp, deshalb **nicht bestanden**. Alle übrigen Hürden sind erfüllt: untere Grenze > 0, Solution_92 Δ +0,38 [−1,19; +2,00], default 99,9 % (Δ +0,06), direkt gegen V10 56,6 % [51,75; 61,5].
