@@ -21,6 +21,8 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 ## Vor dem Vortrag
 
 1. **Bis Mittwoch Nacht** `Gruppe15.zip` auf Moodle hochladen und die Pfade schicken (Text im Abschnitt „Für Moodle“ unten).
+   Die Zip mit V11 ist 22,2 MB groß. Lehnt Moodle die Größe ab, baut `python -m scripts.build_submission --battle --half`
+   eine 10,7-MB-Fassung mit demselben Namen. Sie spielte in der Prüfung gleich, gemessen wurde aber die volle Fassung.
 2. **Folie 11 aktualisieren**, falls bis zum 06.11. noch etwas Neues dazukommt. Der Prof will ausdrücklich die Entwicklungen der letzten Woche hören.
 3. Zweimal mit Uhr proben. Ziel 9:30, damit Luft bleibt.
 
