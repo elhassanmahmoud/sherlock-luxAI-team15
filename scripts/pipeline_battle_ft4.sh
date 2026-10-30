@@ -1,6 +1,6 @@
 #!/bin/bash
-# 30.10.2026, 14:35: vierte Nachtrainingsrunde der Hauptlinie (Plan docs/superpowers/plans/2026-10-29-battle-push.md,
-# Nachtrag 30.10., 14:35). Weiter ab experiments/runs/20261029_ft3_v10_s<seed> (Gewichte + Buffer), je 2.000 Spiele,
+# 30.10.2026, 14:21: vierte Nachtrainingsrunde der Hauptlinie (Plan docs/superpowers/plans/2026-10-29-battle-push.md,
+# Nachtrag 30.10., 14:21). Weiter ab experiments/runs/20261029_ft3_v10_s<seed> (Gewichte + Buffer), je 2.000 Spiele,
 # Kartenversatz 3000. Gegnermix wie Runden 1-3; der Pool enthaelt statt mix36 jetzt die Abgabe V11
 # (battle_mix36c_as.pth, mit art_splash/sap_still_splash), damit die Netze gegen den staerksten RL-Gegner lernen.
 # Danach battle_ft4_18 (V10-Config) und die Kandidaten fuer Runde 3 mit eingebranntem Regelsatz R:
