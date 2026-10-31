@@ -139,3 +139,16 @@ Bestaetigung: R 0.9123 vs 0.8658 (Δ +4.66 pp [+3.45; +5.88], 800 Karten); Solut
 GATE Bestaetigung: BESTANDEN
 [30.10. 13:33] Ende mix36c_as
 [30.10. 13:33] Runde 2 fertig (Wahl: mix36c_as)
+[30.10. 23:01] Battle-Bestaetigung: Start v11h (experiments/ensembles/battle_v11h.pth, SHA-256 13c73cce94b41041), Referenz V11, Code e3195de
+GB_v11h_conf.csv: default: 0.997 (1600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.698 (1600 Spiele), self:experiments/ensembles/threat6.pth: 0.873 (1600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.841 (1600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.721 (1600 Spiele), sol92_sq: 0.839 (1600 Spiele), solution92: 0.932 (1600 Spiele) in 3448s
+GB_v11h_confdir.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.pth: 0.550 (800 Spiele) in 347s
+Battle-Bestaetigung: Mittel 6 0.8174 vs 0.8079 (Δ +0.95 pp [+0.33; +1.57], 800 Karten); Solution_92 0.9325 (Δ +0.06 [-0.44; +0.56]); default 0.9969 (Δ +0.00); direkt 0.5500 [0.5225; 0.5763] aus 800 Spielen
+  FAIL Mittel 6 Δ >= +1 pp
+  OK   Mittel 6 untere 95%-Grenze > 0
+  OK   Solution_92 Δ >= -0.5 pp
+  OK   Solution_92 untere 95%-Grenze > -2.5 pp
+  OK   default >= 99%
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 50 %
+GATE Battle-Bestaetigung: NICHT BESTANDEN
+[31.10. 01:02] Battle-Bestaetigung v11h fertig

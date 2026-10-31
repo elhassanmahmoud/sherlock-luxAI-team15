@@ -5,6 +5,26 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 01:05 Berlin – Claude Code mit Mahmoud: Battle-Bestätigung `v11h` knapp nicht bestanden, **V11 bleibt**
+
+- **Ergebnis** (`scripts/battle_confirm.sh v11h`, Code `e3195de`, 23:01–01:02): Karten 810400–811199, je Gegner 1.600 Spiele, gepaart gegen V11. **Mittel über die 6 Gegner 81,74 statt 80,79 % (Δ +0,95 pp [+0,33; +1,57])**. Die Hürde lag bei +1,0 pp und ist damit um 0,05 pp verfehlt. Alle übrigen Bedingungen sind erfüllt:
+  - untere Grenze > 0;
+  - Solution_92 93,25 % (Δ +0,06 [−0,44; +0,56]);
+  - default 99,69 % (±0);
+  - **direkt gegen V11 55,0 % [52,25; 57,63]** aus 800 Spielen auf 811200–811599.
+  - `GATE Battle-Bestaetigung: NICHT BESTANDEN` in `experiments/pipeline_battle_gate.log`.
+- **Je Gegner** (Δ in pp): Solution_92 +0,06, `sol92_sq` +0,38, V3 +1,00, V7 +1,38, `league_nets6` +2,12 [+0,12; +4,25], `threat6` +0,75, default ±0. Kein Gegner ist schlechter.
+- **Nach Streufaktor** (Kartenparameter neu in `experiments/analysis/battle_params_20261030/map_params_810400.csv`):
+  - 0,25: +0,03, direkt 50,4 %;
+  - **0,5: +2,81 [+0,95; +4,67], direkt 64,2 % [56,9; 71,5]**;
+  - 1,0: +0,03, direkt 50,0 %.
+  - Die Halbstreuung wirkt also genau dort, wo sie es auf Dev A tat, und sonst ändert sich nichts. Weil nur ein Drittel der Karten den Streufaktor 0,5 hat, bleibt im Gesamtmittel knapp +1 pp.
+- **Entscheidung nach Nachtrag 23:01:** V11 bleibt, kein weiterer Versuch auf diesem Block. `scripts/release_candidate.py` würde `v11h` ohnehin abweisen. Eine Übernahme wäre nur als ausdrückliche Teamentscheidung gegen die vorab festgelegte Hürde möglich; Claude Code übernimmt nicht selbstständig.
+- **Seeds:** 810400–811599 sind jetzt verbraucht. Unbenutzt sind noch 810000–810399 und Runde 3 (808000–809599).
+- **Daten:** `experiments/compare/battle/GB_V11_conf.csv`, `GB_v11h_conf.csv`, `GB_v11h_confdir.csv`.
+- **Abgabe unverändert V11** (`2ab463e9…`, beide Dateien um 01:05 geprüft), `Gruppe15.zip` vom 30.10., 13:38 unverändert.
+- **Nächste Schritte:** Folie „Neu seit letzter Woche“ mit diesem Ergebnis ergänzen und eine kurze Upload-Anleitung für den 04.11. schreiben. Weitere Agent-Experimente sind nach Mahmouds Auftrag („nur das Wichtigste“) nicht geplant.
+
 ## 30.10.2026, 23:01 Berlin – Claude Code mit Mahmoud: weiter nach der Pause; `v11h` (Halbstreuung mit Sicherheitsprüfung) zugelassen, Battle-Bestätigung auf frischen Karten läuft
 
 - Auftrag Mahmoud (22:09): nur noch das Wichtigste, was weiterbringt. Deshalb **entfällt Runde 5** (Runde 4 brachte im Ensemble nichts), ebenso `V11_dropest` und `V11_rescue`. Die alten Zeilen der Warteschlange sind als erledigt markiert, der Poller läuft nicht.
