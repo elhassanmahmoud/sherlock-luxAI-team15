@@ -19,7 +19,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB), gebaut mit `python -m scripts.build_submission --battle` |
 | Tests | 604 (`python -m pytest -q`) |
-| Gespielte Spiele | rund **1,16 Millionen**: 616.000 Trainingsspiele, 64.000 Zwischenprüfungen, 485.000 Bewertungsspiele ([Aufschlüsselung](#umfang-spiele-und-training)) |
+| Gespielte Spiele | rund **1,16 Millionen**: 616.000 Trainingsspiele, 64.000 Zwischenprüfungen, 485.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Inhalt
 
@@ -27,7 +27,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 - [Ergebnisse der Abgabe V12](#ergebnisse-der-abgabe-v12)
 - [Wie Sherlock entscheidet](#wie-sherlock-entscheidet)
 - [Training](#training)
-- [Umfang: Spiele und Training](#umfang-spiele-und-training)
+- [Zahlen und Fakten](#zahlen-und-fakten)
 - [Wie wir testen](#wie-wir-testen)
 - [Projektstruktur](#projektstruktur)
 - [Installation](#installation)
@@ -158,9 +158,11 @@ für jedes Spiel:
 - **Eigenes Trainingsskript:** Der Kurs-Runner (`lux/runner.py`) erzeugt die Agenten in jedem Spiel neu und ruft `save_agent()` vor dem Spiel auf, Gelerntes würde nie gespeichert. `scripts/train.py` und `scripts/finetune.py` nutzen das Env direkt; zur Abgabe bleibt der Agent voll runner-kompatibel (`tests/test_runner.py`).
 - **Ohne Gewinn untersucht:** Self-Play und Gegner-Pool, CNN mit PPO, weitere Nachtrainings-Runden und mehr als 36 Netze. Das sind Ergebnisse unserer Versuche, keine allgemeinen Aussagen über diese Verfahren.
 
-## Umfang: Spiele und Training
+## Zahlen und Fakten
 
-Stand 31.10.2026, gezählt aus den gespeicherten Dateien im Repository mit `python experiments/analysis/count_games.py`:
+Stand 31.10.2026, alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
+
+### Spiele
 
 | Art | Läufe | Spiele |
 |---|---:|---:|
@@ -174,8 +176,40 @@ Stand 31.10.2026, gezählt aus den gespeicherten Dateien im Repository mit `pyth
 | **Alle Spiele zusammen** | | **1.164.835** |
 
 - In den 36 Netzen der Abgabe stecken **165.000 Trainingsspiele**: 66.000 der 18 Grundnetze und 18 × 5.500 = 99.000 Spiele Nachtraining.
-- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. 8.549 doppelt gespeicherte Bewertungszeilen sind nicht mitgezählt.
-- Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
+- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. 8.549 doppelt gespeicherte Bewertungszeilen sind nicht mitgezählt. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
+
+### Rechenzeit
+
+| | Prozess-Stunden |
+|---|---:|
+| Training DQN | 532 |
+| Training CNN/PPO | 29 |
+| Bewertung | 574 |
+| **Zusammen** | **rund 1.135** |
+
+Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozesse gleichzeitig, die echte Laufzeit war also viel kürzer.
+
+### Karten und Gegner
+
+- **18.890 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
+- **25 verschiedene Gegner:** Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
+
+### Agent und Code
+
+| | |
+|---|---|
+| Netze der Abgabe | 36 × 152.967 Parameter = **5,5 Millionen Parameter** |
+| Eingabe und Ausgabe | 79 Merkmale je Einheit, 6 Aktionen (stehen, 4 Richtungen, Sap) |
+| Einstellungen | 154 in `AgentConfig`, davon 91 Schalter; in V12 sind 33 eingeschaltet |
+| Agent (`agents/sherlock/`) | 15 Python-Dateien, 4.957 Zeilen |
+| Skripte (`scripts/`) | 45 Python-Dateien mit 7.803 Zeilen, 44 Shell-Skripte |
+| Tests (`tests/`) | 46 Dateien mit 6.491 Zeilen, **604 Tests** |
+
+### Versionen und Verlauf
+
+- **7 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12. Die früheren Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert (Gewichte lokal, Hashes und Anleitung zur Wiederherstellung im Repository), `full_s0` als Git-Tag `abgabe-review-full_s0`. Zu V3, V7, V10, V11 und V12 gibt es je einen Übernahmebericht.
+- **403 Commits** seit dem 10.10.2026 (Mahmoud 299, Moayed 104).
+- **Dokumentation:** 138 Einträge im Arbeitsstand, 23 Testpläne; allein in der Battle-Woche wurden 16 Tests vorab im Plan festgelegt, bevor gemessen wurde.
 
 ## Wie wir testen
 
