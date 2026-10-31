@@ -7,7 +7,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Ein Netz genügt für beide Seiten, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
 
-## Auf einen Blick (Stand 31.10.2026)
+## Auf einen Blick (Stand 01.11.2026)
 
 | | |
 |---|---|
@@ -18,8 +18,8 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB), gebaut mit `python -m scripts.build_submission --battle` |
-| Tests | 604 (`python -m pytest -q`) |
-| Gespielte Spiele | rund **1,16 Millionen**: 616.000 Trainingsspiele, 64.000 Zwischenprüfungen, 485.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
+| Tests | 609 (`python -m pytest -q`) |
+| Gespielte Spiele | rund **1,2 Millionen**: 616.000 Trainingsspiele, 64.000 Zwischenprüfungen, 516.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Inhalt
 
@@ -160,7 +160,7 @@ für jedes Spiel:
 
 ## Zahlen und Fakten
 
-Stand 31.10.2026, alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
+Stand 01.11.2026, alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
 
 ### Spiele
 
@@ -172,11 +172,11 @@ Stand 31.10.2026, alles aus den Dateien im Repository nachgezählt (Spiele mit `
 | CNN mit PPO | 7 | 35.600 |
 | **Training zusammen** | **251** | **616.104** |
 | Zwischenprüfungen während des Trainings | | 63.904 |
-| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 484.827 |
-| **Alle Spiele zusammen** | | **1.164.835** |
+| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 516.025 |
+| **Alle Spiele zusammen** | | **1.196.033** |
 
 - In den 36 Netzen der Abgabe stecken **165.000 Trainingsspiele**: 66.000 der 18 Grundnetze und 18 × 5.500 = 99.000 Spiele Nachtraining.
-- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. 8.549 doppelt gespeicherte Bewertungszeilen sind nicht mitgezählt. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
+- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. Zeilen, die in allen Spalten einschließlich der Laufzeit einer anderen gleichen, zählen nur einmal (8.951 Zeilen); darunter sind auch verschiedene Läufe mit genau gleichem Spielverlauf, die Zahl ist also eher zu niedrig. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
 
 ### Rechenzeit
 
@@ -184,14 +184,14 @@ Stand 31.10.2026, alles aus den Dateien im Repository nachgezählt (Spiele mit `
 |---|---:|
 | Training DQN | 532 |
 | Training CNN/PPO | 29 |
-| Bewertung | 574 |
-| **Zusammen** | **rund 1.135** |
+| Bewertung | 608 |
+| **Zusammen** | **rund 1.170** |
 
 Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozesse gleichzeitig, die echte Laufzeit war also viel kürzer.
 
 ### Karten und Gegner
 
-- **18.890 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
+- **20.090 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
 - **25 verschiedene Gegner:** Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
 
 ### Agent und Code
@@ -200,16 +200,16 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 |---|---|
 | Netze der Abgabe | 36 × 152.967 Parameter = **5,5 Millionen Parameter** |
 | Eingabe und Ausgabe | 79 Merkmale je Einheit, 6 Aktionen (stehen, 4 Richtungen, Sap) |
-| Einstellungen | 154 in `AgentConfig`, davon 91 Schalter; in V12 sind 33 eingeschaltet |
-| Agent (`agents/sherlock/`) | 15 Python-Dateien, 4.957 Zeilen |
+| Einstellungen | 156 in `AgentConfig`, davon 91 Schalter; in V12 sind 33 eingeschaltet |
+| Agent (`agents/sherlock/`) | 15 Python-Dateien, 5.013 Zeilen |
 | Skripte (`scripts/`) | 45 Python-Dateien mit 7.803 Zeilen, 44 Shell-Skripte |
-| Tests (`tests/`) | 46 Dateien mit 6.491 Zeilen, **604 Tests** |
+| Tests (`tests/`) | 47 Dateien mit 6.559 Zeilen, **609 Tests** |
 
 ### Versionen und Verlauf
 
 - **7 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12. Die früheren Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert (Gewichte lokal, Hashes und Anleitung zur Wiederherstellung im Repository), `full_s0` als Git-Tag `abgabe-review-full_s0`. Zu V3, V7, V10, V11 und V12 gibt es je einen Übernahmebericht.
-- **403 Commits** seit dem 10.10.2026 (Mahmoud 299, Moayed 104).
-- **Dokumentation:** 138 Einträge im Arbeitsstand, 23 Testpläne; allein in der Battle-Woche wurden 16 Tests vorab im Plan festgelegt, bevor gemessen wurde.
+- **408 Commits** seit dem 10.10.2026 (Mahmoud 304, Moayed 104).
+- **Dokumentation:** 141 Einträge im Arbeitsstand, 23 Testpläne; allein in der Battle-Woche wurden 16 Tests vorab im Plan festgelegt, bevor gemessen wurde.
 
 ## Wie wir testen
 
@@ -260,7 +260,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
 │   ├── play_and_view.py, demo_server.py   Spiel ansehen, Demo-Seite
 │   └── common.py, metrics.py, protocol.py, …   Spiel-Schleife, Kennzahlen, Seeds
-├── tests/                        pytest (604 Tests)
+├── tests/                        pytest (609 Tests)
 ├── experiments/
 │   ├── compare/                  Ergebnisse je Spiel als CSV
 │   ├── analysis/                 Auswertungen, Übernahmeberichte (release_*/RELEASE.md)
@@ -327,7 +327,7 @@ Vorgaben laut Kursfolie 51: Ordner mit Teamnamen, leere `__init__.py`, `main.py`
 
 ## Grenzen und nächste Schritte
 
-Stand **31.10.2026**:
+Stand **01.11.2026**:
 
 - **Die Gegner im Battle sind unbekannt.** Gemessen wurde gegen Solution_92 und zwei Varianten, gegen unsere früheren Abgaben, zwei zurückgehaltene RL-Ensembles und einfache Agenten. Für deutlich stärkere Agenten, etwa die Spitzenlösungen von Kaggle, gibt es keine Messung.
 - **100 % sind nicht erreichbar:** Karten und Spielparameter sind zufällig, vieles ist verborgen. Am schwächsten ist Sherlock bei Sichtweite 1 (85,6 % im Mittel über die 6 Gegner) und beim Streufaktor 0,25 gegen RL-Gegner (`league_nets6` 65,5 %). Bei 0,25 ist das Schussduell ausgeglichen. Alle naheliegenden Gegenmittel wurden getestet und haben dort geschadet.

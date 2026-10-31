@@ -6,7 +6,8 @@
 - Validierung im Training: Spalte "games" aller experiments/runs/*/val.csv.
 - Training CNN/PPO: Spalte "games" aller experiments/ppo/*/ppo.csv.
 - Bewertung: Zeilen aller CSVs unter experiments/compare/ mit den Spalten seed, side, result (eine Zeile je Spiel),
-  exakt doppelt gespeicherte Zeilen nur einmal; dazu experiments/runs/*/eval.csv.
+  Zeilen, die in allen Spalten (auch secs) gleich sind, nur einmal; das trifft auch verschiedene Laeufe mit
+  genau gleichem Spielverlauf, die Zahl ist also eine untere Grenze. Dazu experiments/runs/*/eval.csv.
 """
 import glob
 import hashlib
@@ -42,7 +43,7 @@ def main():
     print(f"Training DQN: {train:,} Spiele in {runs} Laeufen, nach Art {kinds}")
     print(f"Training CNN/PPO: {ppo:,} Spiele")
     print(f"Validierung im Training: {val:,} Spiele")
-    print(f"Bewertung: {evals:,} Spiele ({rows - len(seen):,} doppelt gespeicherte Zeilen nicht gezaehlt)")
+    print(f"Bewertung: {evals:,} Spiele ({rows - len(seen):,} in allen Spalten gleiche Zeilen nur einmal gezaehlt)")
     print(f"Zusammen: {train + ppo + val + evals:,} Spiele")
 
 
