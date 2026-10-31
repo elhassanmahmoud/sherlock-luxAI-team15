@@ -447,6 +447,12 @@ class Agent_x:
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 self._prev_actions[uid] = a
+            if self.cfg.end_sap > 0 and not self.training and sap is not None and masks[k][geo.SAP]:
+                t = self._end_sap(ctx, uid, a, planned_dmg, stationary)
+                if t is not None:
+                    sap, a = t, geo.SAP  # 31.10.2026: Restenergie am Matchende auf gegnerische Halter
+                    self._prev_actions[uid] = a
+                    st["end_saps"] = st.get("end_saps", 0) + 1
             if (self.cfg.nebula_avoid_mode == "soft" and 1 <= a <= 4
                     and self._harmful_nebula() >= self.cfg.nebula_avoid_min):
                 a2 = self._soft_nebula(ctx, uid, masks[k], a)
@@ -608,6 +614,45 @@ class Agent_x:
         if t is None:
             return None
         return t[0], t[1], 0
+
+    def _end_sap(self, ctx: dict, uid: int, a: int, planned_dmg: np.ndarray, stationary: np.ndarray):
+        """cfg.end_sap (31.10.2026): Sap-Ziel (dx, dy, Treffer) in den letzten end_sap Schritten eines Matches
+        oder None. Ziel ist der sichtbare Gegner in Reichweite mit der geringsten Restenergie nach den in diesem
+        Step schon geplanten Saps (planned_dmg): zuerst auf bekannten Punkte-Tiles, dann im letzten Step
+        unbewegte, dann alle uebrigen."""
+        c = self.cfg
+        left = int(ctx["max_match_steps"]) - int(ctx["match_step"])  # Schritte inklusive diesem
+        if left > c.end_sap or left < 1:
+            return None
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        cost, energy = float(ctx["sap_cost"]), float(ctx["ally_ene"][uid])
+        if energy < cost:
+            return None
+        if self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid:
+            if left > 1 and energy - cost < c.end_sap_hold * cost:
+                return None  # Halter: genug Energie behalten, um bis zum Matchende zu punkten
+        elif 1 <= a <= 4:
+            tgt = ctx["assigned"].get(int(uid))
+            if (tgt is not None and (self.belief.point_tiles[tgt] or self.belief.candidate[tgt])
+                    and abs(tgt[0] - x) + abs(tgt[1] - y) < left):
+                return None  # erreicht ein Punkte- oder Kandidaten-Tile noch rechtzeitig: weiterlaufen
+        ec = ctx["enemy_coords"]
+        if not len(ec):
+            return None
+        R = int(ctx["sap_range"])
+        in_range = (np.abs(ec[:, 0] - x) <= R) & (np.abs(ec[:, 1] - y) <= R)
+        on_pt = self.belief.point_tiles[ec[:, 0], ec[:, 1]]
+        still = stationary[: len(ec)] if len(stationary) >= len(ec) else np.zeros(len(ec), dtype=bool)
+        rest = ctx["enemy_energies"].astype(np.float64) - planned_dmg
+        cand = np.where(in_range & (rest >= 0))[0]
+        if not len(cand):
+            return None
+        # Halter zuerst (Abschuss kostet den Gegner Punkte), dann jeder andere Gegner in Reichweite: die Energie
+        # verfaellt am Matchende ohnehin; jeweils der mit der geringsten Restenergie
+        i = min(cand, key=lambda j: (not on_pt[j], not still[j], rest[j]))
+        tx, ty = int(ec[i, 0]), int(ec[i, 1])
+        cheb = np.maximum(np.abs(ec[:, 0] - tx), np.abs(ec[:, 1] - ty))
+        return tx - x, ty - y, int((cheb <= 1).sum())
 
     def _contest_sap(self, ctx: dict, uid: int):
         """(dx, dy, Treffer) auf das zugewiesene Ziel-Tile, wenn dort ein sichtbarer

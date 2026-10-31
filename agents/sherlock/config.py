@@ -378,6 +378,17 @@ class AgentConfig:
     fog_drop_est: bool = False
     """True (31.10.2026): Zielwahl des Nebel-Saps mit dem sicher geschaetzten Streufaktor (param_est) statt fest
     0,5. Offline mit fog_prior bei Streufaktor 0,25: direkte Treffer 52 statt 36 %, bei 1,0 mehr Saps."""
+    end_sap: int = 0
+    """> 0 (31.10.2026): In den letzten end_sap Schritten eines Matches schiessen Units ihre Energie auf sichtbare
+    Gegner: zuerst Halter (auf bekanntem Punkte-Tile, dann im letzten Step unbewegt), dann alle uebrigen, jeweils
+    die mit der geringsten Restenergie nach den schon geplanten Saps: Abschuesse vor dem Matchende kosten den
+    Gegner Punkte, Schaden an den uebrigen schwaecht Angreifer auf unsere Halter. Die
+    Engine entfernt am Matchende alle Units, Restenergie zaehlt nur bei Punktgleichstand. Probe V12 (Dev A,
+    120 Spiele gegen league_nets6/Solution_92): am Matchende verfallen im Mittel etwa 1.100 Energie je Match, in
+    den letzten 10 Schritten 14-20 Unit-Schritte je Match mit Energie und sichtbarem Gegner in Reichweite ohne
+    Sap. Units, die ein Punkte- oder Kandidaten-Tile noch rechtzeitig erreichen, laufen weiter; Halter behalten end_sap_hold
+    Sap-Kosten Energie (ausser im letzten Schritt)."""
+    end_sap_hold: float = 1.0
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0
