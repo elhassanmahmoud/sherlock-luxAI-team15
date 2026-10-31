@@ -158,6 +158,9 @@ class Belief:
         self.explored_ever = np.zeros((W, H), dtype=bool)
         # match_step, an dem ein Tile (oder sein Spiegeltile) zuletzt gesehen wurde
         self.last_seen = np.full((W, H), NEVER_SEEN, dtype=np.int16)
+        # 31.10.2026 (fog_prior): match_step der letzten eigenen Beobachtung je Tile mit / ohne Gegner, -1 = nie
+        self.enemy_seen_at = np.full((W, H), -1, dtype=np.int16)
+        self.empty_seen_at = np.full((W, H), -1, dtype=np.int16)
         self.match_step = 0
         self.tile_type = np.full((W, H), TILE_UNKNOWN, dtype=np.int8)
         self.energy_map = np.zeros((W, H), dtype=np.float32)
@@ -191,6 +194,10 @@ class Belief:
         # -> Erkundungswissen pro Match zuruecksetzen, Relic-/Punktewissen behalten.
         self.explored[:] = False
         self.last_seen[:] = NEVER_SEEN
+        # fog_prior: die Zeitstempel sind match_steps und beginnen neu, alte Beobachtungen wuerden sonst
+        # (z. B. Schritt 95 des vorigen Matches) frischer wirken als neue
+        self.enemy_seen_at[:] = -1
+        self.empty_seen_at[:] = -1
         self._coords_dirty = True
         # Neues Match => moeglicherweise neues Relic-Paar => Punkte-Regel aendert sich
         if self.keep_dead:
@@ -242,6 +249,15 @@ class Belief:
 
         self._sensor_now = sensor  # wirklich sichtbar (kanonisch), ohne Spiegelbild
         self._vis_now = (sensor | geo.mirror_map(sensor)) if self.symmetry else sensor
+        enemy_pos = np.asarray(obs["units"]["position"], dtype=np.int32)[self.opp_team_id]
+        enemy_mask = np.asarray(obs["units_mask"], dtype=bool)[self.opp_team_id]
+        if self.mirrored:
+            enemy_pos = geo.mirror_positions(enemy_pos, self.W, self.H)
+        occ = np.zeros((self.W, self.H), dtype=bool)
+        for i in np.nonzero(enemy_mask)[0]:
+            occ[enemy_pos[i][0], enemy_pos[i][1]] = True
+        self.enemy_seen_at[occ] = match_step
+        self.empty_seen_at[sensor & ~occ] = match_step
         if self.sym_map:
             msensor = geo.mirror_map(sensor)
             tile_type = np.where(sensor, tile_type, geo.mirror_map(tile_type))

@@ -564,7 +564,15 @@ class Agent_x:
             return None
         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + self.cfg.fog_reserve:
             return None
-        t = rules.fog_sap(ctx, uid, self.belief, planned_fog, v2=self.cfg.fog_v2)
+        prior = None
+        if self.cfg.fog_prior:
+            b = self.belief
+            prior = np.ones(b.point_tiles.shape)
+            prior[b.enemy_seen_at > b.empty_seen_at] = self.cfg.fog_w_occ
+            prior[b.empty_seen_at > b.enemy_seen_at] = self.cfg.fog_w_empty
+        drop = (self.param_est.dropoff(default=SAP_DROPOFF_ASSUMED)
+                if self.cfg.fog_drop_est and not self.training else SAP_DROPOFF_ASSUMED)
+        t = rules.fog_sap(ctx, uid, self.belief, planned_fog, dropoff=drop, v2=self.cfg.fog_v2, prior=prior)
         if t is None:
             return None
         return t[0], t[1], 0

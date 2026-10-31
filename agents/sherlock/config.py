@@ -367,6 +367,17 @@ class AgentConfig:
     Sicht 1: 97 % der gegnerischen Halter unsichtbar, 28-343 Unit-Steps je Spiel mit unsichtbarem Halter in
     Reichweite, dort nie ein Sap."""
     """Energie, die nach einem Nebel-Sap mindestens uebrig bleiben soll."""
+    fog_prior: bool = False
+    """True (31.10.2026, mit fog_sap/fog_v2): Kandidaten des Nebel-Saps nach der letzten eigenen Beobachtung
+    gewichtet statt gleich wahrscheinlich: zuletzt mit Gegner gesehen x fog_w_occ, zuletzt leer gesehen
+    x fog_w_empty, in diesem Match nie gesehen x 1. Halter bleiben meist stehen. Offline auf 1.800 Dev-A-Spielen
+    von V12 (21.170 Nebel-Saps, Wahrheit nach der Bewegung): direkte Treffer 41 statt 34 %, Schaden je Sap 45
+    statt 40."""
+    fog_w_occ: float = 4.0
+    fog_w_empty: float = 0.25
+    fog_drop_est: bool = False
+    """True (31.10.2026): Zielwahl des Nebel-Saps mit dem sicher geschaetzten Streufaktor (param_est) statt fest
+    0,5. Offline mit fog_prior bei Streufaktor 0,25: direkte Treffer 52 statt 36 %, bei 1,0 mehr Saps."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0

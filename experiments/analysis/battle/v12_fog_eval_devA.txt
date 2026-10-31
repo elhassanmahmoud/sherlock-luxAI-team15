@@ -1,0 +1,37 @@
+194838 Ereignisse, 21170 gefeuert; R0 = Agent in 0.9993
+                           shots_per_game  direct_rate  any_rate  dmg_per_shot  dmg_per_game  net_per_game
+rule                                                                                                      
+R0 jetzt (gleich, 0,5)             12.272        0.341     0.727        39.970       490.508        13.004
+R1 Schaetzung Streufaktor          15.104        0.272     0.690        39.500       596.617        12.227
+R2 zuletzt gesehen 4/0,25          11.435        0.406     0.782        44.919       513.629        67.799
+R2b zuletzt gesehen 8/0,1          11.323        0.409     0.761        43.962       497.776        55.868
+R2c zuletzt gesehen 2/0,5          11.565        0.396     0.796        45.198       522.703        72.085
+R3 = R2 + R1                       13.005        0.330     0.773        46.468       604.331       100.006
+R3 jede Unit (fog_any)             17.733        0.398     0.813        51.380       911.124       220.828
+R3 Reserve 0                       45.317        0.378     0.819        51.316      2325.474       549.288
+R3 Schwelle 0,4                    19.668        0.259     0.723        39.682       780.452        10.148
+R3 Schwelle 0,8                    10.590        0.357     0.807        50.078       530.307       120.637
+
+Streufaktor 0.25:
+                           shots_per_game  direct_rate  any_rate  dmg_per_shot  dmg_per_game  net_per_game
+rule                                                                                                      
+R0 jetzt (gleich, 0,5)             13.732        0.359     0.774        29.839       409.759      -140.547
+R1 Schaetzung Streufaktor          11.371        0.470     0.763        33.057       375.878       -77.974
+R2 zuletzt gesehen 4/0,25          12.563        0.416     0.804        32.469       407.916       -96.656
+R3 = R2 + R1                       10.312        0.519     0.789        35.059       361.530       -51.129
+
+Streufaktor 0.5:
+                           shots_per_game  direct_rate  any_rate  dmg_per_shot  dmg_per_game  net_per_game
+rule                                                                                                      
+R0 jetzt (gleich, 0,5)             10.856        0.361     0.709        37.015       401.825       -14.378
+R1 Schaetzung Streufaktor          10.808        0.361     0.709        37.033       400.240       -14.068
+R2 zuletzt gesehen 4/0,25           9.512        0.439     0.781        41.847       398.046        30.698
+R3 = R2 + R1                        9.486        0.438     0.781        41.805       396.570        30.365
+
+Streufaktor 1.0:
+                           shots_per_game  direct_rate  any_rate  dmg_per_shot  dmg_per_game  net_per_game
+rule                                                                                                      
+R0 jetzt (gleich, 0,5)             12.319        0.305     0.695        52.731       649.612       178.765
+R1 Schaetzung Streufaktor          22.651        0.141     0.648        43.573       986.958       119.486
+R2 zuletzt gesehen 4/0,25          12.273        0.372     0.762        58.782       721.419       252.859
+R3 = R2 + R1                       18.855        0.183     0.761        54.399      1025.702       304.498

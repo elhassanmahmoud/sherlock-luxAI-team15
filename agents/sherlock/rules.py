@@ -185,7 +185,7 @@ def plan_sap(ctx: dict, uid: int, planned: np.ndarray, stationary: np.ndarray,
 
 
 def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float = 0.5,
-            min_frac: float = 0.6, v2: bool = False):
+            min_frac: float = 0.6, v2: bool = False, prior: np.ndarray | None = None):
     """Sap auf unsichtbare Gegner auf ihren Punkte-Tiles (Schalter `fog_sap`).
 
     Der Gegner punktet pro Step mit jedem besetzten Punkte-Tile. Bringt er mehr
@@ -197,6 +197,8 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
     `planned_fog` merkt sich bereits beschossene Tiles dieses Steps.
     v2 (Schalter `fog_v2`, 31.10.2026): sichtbar = aktueller Sensor ohne Spiegelbild, Kandidaten in beiden
     Haelften ohne eigene Unit, sichtbare Besetzer je Tile einmal gezaehlt.
+    prior (Schalter `fog_prior`, 31.10.2026): Gewicht je Tile; die versteckten Besetzer verteilen sich
+    anteilig zu diesen Gewichten auf die Kandidaten statt gleichmaessig.
     Rueckgabe (dx, dy) oder None.
     """
     W, H = ctx["W"], ctx["H"]
@@ -226,6 +228,11 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
     cost = float(ctx["sap_cost"])
     best, best_v = None, 0.0
     cx, cy = np.nonzero(cand)
+    if prior is not None:
+        w = prior[cx, cy].astype(float)
+        if w.sum() <= 0:
+            return None
+        pw = np.minimum(1.0, hidden * w / w.sum())
     targets = set()
     for tx, ty in zip(cx, cy):
         for dx in (-1, 0, 1):
@@ -235,7 +242,10 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
                     targets.add((a, b))
     for a, b in targets:
         cheb = np.maximum(np.abs(cx - a), np.abs(cy - b))
-        v = p * cost * (float((cheb == 0).sum()) + dropoff * float((cheb == 1).sum()))
+        if prior is not None:
+            v = cost * float((pw * ((cheb == 0) + dropoff * (cheb == 1))).sum())
+        else:
+            v = p * cost * (float((cheb == 0).sum()) + dropoff * float((cheb == 1).sum()))
         if v > best_v:
             best, best_v = (a, b), v
     if best is None or best_v < min_frac * cost:

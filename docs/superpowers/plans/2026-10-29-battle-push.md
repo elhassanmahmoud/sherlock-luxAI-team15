@@ -289,3 +289,35 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   direkt gegen V11 auf 808800–809199 (800 Spiele). Spätester Start 03.11., 12:00. Bestanden → Übernahme mit
   `scripts/release_candidate.py` und neues `Gruppe15.zip`; nicht bestanden → V11 bleibt. Wird `fog_v2` nicht
   aufgenommen, entfällt die Prüfung (V11 bleibt; über `v11h` allein entscheidet nur das Team).
+
+## Nachtrag 31.10.2026, 18:50 (Zielwahl des Nebel-Saps und V13-Prüfung, vor jeder Messung mit `fog_prior`/`fog_drop_est` auf Dev A oder 812000–813199)
+
+- **Befund** (offline, nur vorhandene Gelegenheiten; `experiments/analysis/battle/v12_fog_hits.py` und `v12_fog_eval.py`):
+  V12 auf Dev A gegen Solution_92, `sol92_sq` und `league_nets6` (1.800 Spiele, davon 1.728 mit Gelegenheiten,
+  194.838 Gelegenheiten, 21.170 Nebel-Saps), bewertet mit den gegnerischen Positionen nach der Bewegung:
+  - V12 (gleich gewichtet, Streufaktor fest 0,5): direkte Treffer 34,1 %, Schaden je Sap 40,0, netto +13 je Spiel.
+  - Gewichte nach der letzten eigenen Beobachtung im laufenden Match (Gegner ×4, leer ×0,25, nie gesehen ×1):
+    40,6 %, 44,9, netto +68.
+  - Zusätzlich sicher geschätzter Streufaktor: 33,0 %, 46,5, netto +100 (Streufaktor 0,25: direkte Treffer 51,9 statt
+    35,9 %; Streufaktor 1,0: 18,9 statt 12,3 Saps je Spiel).
+  - Offline fehlen die Folgen im Spiel (Gegner weicht aus, Energie fehlt später). Deshalb entscheidet nur der Test.
+- **Neue Schalter** (Standard aus): `fog_prior` (mit `fog_w_occ` 4,0 und `fog_w_empty` 0,25) und `fog_drop_est`. Der
+  erste Entwurf setzte die Zeitstempel beim Matchwechsel nicht zurück (alte Beobachtungen wirkten frischer); behoben.
+  3 neue Tests in `tests/test_fog_sap.py`, alle 601 Tests bestanden. V12 mit dem neuen Code: 16 Spiele auf
+  808000–808003 (bereits verbraucht) in allen Kennzahlen identisch mit der Battle-Bestätigung.
+- **Kandidaten** (Netze bytegleich mit V12, nur die Config weicht ab):
+  - `v13p` = V12 + `fog_prior` (`experiments/ensembles/battle_v13p.pth`, SHA-256 `21087234…`);
+  - `v13pd` = V12 + `fog_prior` + `fog_drop_est` (`battle_v13pd.pth`, SHA-256 `572f24b7…`).
+- **Screen** (`bash scripts/battle_v13.sh admit v13p v13pd`): Dev A gegen die 6 Gegner, gepaart gegen V12 auf denselben
+  Karten (V12-Basis einmalig), dazu direkt gegen V12 auf Dev A (600 Spiele). **Zugelassen** wird, wer im Mittel über
+  die 6 Gegner Δ ≥ +0,5 pp, direkt gegen V12 ≥ 50 % und gegen Solution_92 Δ ≥ −1,0 pp erreicht (Punktschätzungen wie
+  Nachtrag 14:40). Bei zwei zugelassenen der mit dem höheren Mittel.
+- **Battle-Bestätigung** genau einmal und nur für den zugelassenen Kandidaten (`bash scripts/battle_v13.sh confirm
+  NAME`): V12 und Kandidat auf **812000–812799** gegen die 6 Gegner und default (je Gegner 1.600 Spiele), direkt gegen
+  V12 auf **812800–813199** (800 Spiele). Hürden unverändert `scripts/league_gates.py battle`: Mittel 6 Δ ≥ +1,0 pp
+  und untere Grenze > 0, Solution_92 Δ ≥ −0,5 pp und untere Grenze > −2,5 pp, default ≥ 99 % und Δ ≥ −1 pp, direkt
+  untere Grenze > 50 %. Geprüft: Keine CSV unter `experiments/` enthält Seeds 812000–813199; Trainingskarten liegen
+  unter 500000.
+- Bestanden → Übernahme als V13 mit `scripts/release_candidate.py` (V12 bytegleich gesichert), neues `Gruppe15.zip`,
+  Kurs-Runner, Tests, Nachspielen unter Python 3.10. Kein Kandidat zugelassen oder Bestätigung nicht bestanden →
+  **V12 bleibt**. Spätester Start der Bestätigung 03.11., 12:00.
