@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 20:05 Berlin – Claude Code mit Mahmoud: bessere Zielwahl für den Nebel-Sap bringt im Spiel nichts, V12 bleibt
+
+- **Screen** (`WORKERS=12 bash scripts/battle_v13.sh admit v13p v13pd`, Code `5a5510f`, 18:50–19:59), Dev A 800000–800299, je Gegner 600 Spiele, gepaart gegen V12 auf denselben Karten:
+  - `v13p`: Mittel über 6 Gegner 85,64 statt 85,56 % (Δ +0,08 pp [−0,53; +0,69]), Solution_92 +1,00 [−0,33; +2,33], direkt gegen V12 50,7 % [48,0; 53,3] aus 600 Spielen → **nicht zugelassen**.
+  - `v13pd`: Mittel 85,64 % (Δ +0,08 [−0,72; +0,89]), Solution_92 +1,67 [+0,33; +3,17], direkt 50,2 % [47,2; 53,0] → **nicht zugelassen**.
+  - Je Gegner (Δ pp, `v13p` / `v13pd`): Solution_92 +1,00 / +1,67, `sol92_sq` +0,83 / +0,50, V3 −1,00 / −2,00, V7 ±0 / +1,33, `league_nets6` −0,33 / −1,00, `threat6` ±0 / ±0.
+- **Aufschlüsselung** (`PYTHONPATH=. .venv/bin/python experiments/analysis/battle/v13_by_param.py dev NAME`, neu): Das Ergebnis ändert sich nur in 103 bzw. 153 von 3.600 Spielen. Nach Sichtweite 1–4 liegen alle Δ zwischen −0,8 und +0,8 pp. Nach Streufaktor 0,25 / 0,5 / 1,0: −0,5 / +0,5 / +0,2 (`v13p`) und −0,7 / +0,6 / +0,3 (`v13pd`). Punkte je Spiel praktisch gleich.
+- **Deutung:** Die bessere Trefferquote aus der Offline-Auswertung (34 → 41 % direkte Treffer) entscheidet kaum ein Spiel. Der Gewinn von V12 kam offenbar daher, dass im Nebel überhaupt geschossen wird, nicht von der Wahl zwischen den versteckten Feldern. Der Solution_92-Wert von `v13pd` ist nach der vorab festgelegten Regel kein Übernahmegrund: V3 und `league_nets6` verlieren im Gegenzug, das Mittel bleibt flach.
+- **Folgen:** Keine Battle-Bestätigung, die Karten **812000–813199 bleiben unbenutzt**. Abgabe unverändert **V12** (`b258dc99…`), `Gruppe15.zip` vom 31.10., 17:07 unverändert. Die Schalter `fog_prior`/`fog_drop_est` bleiben im Code (Standard aus, getestet).
+- Daten: `experiments/compare/battle/D_v12*.csv`, `D_v13p*.csv`, `D_v13pd*.csv`; Log `experiments/battle_dev.log`.
+- **Nächster Schritt:** Absicherung gegen Abstürze im Battle. Der Kurs-Runner fängt Fehler in `act()` nicht ab; ein einziger unerwarteter Fehler würde das Spiel abbrechen.
+
 ## 31.10.2026, 18:55 Berlin – Claude Code mit Mahmoud: bessere Zielwahl für den Nebel-Sap fertig, Testlauf gegen V12 startet
 
 - **Vorgeschichte:** Zwischen 17:40 und 17:51 haben zwei Claude-Sitzungen gleichzeitig an derselben Idee in `agents/sherlock/` geschrieben. Die eine hat ihre Zeilen wieder entfernt, die andere verlor um 17:51 den Zugriff auf den Ordner. Mahmoud hat beide Sitzungen geschlossen. Übrig war der unfertige Stand `fog_prior`/`fog_drop_est`. Ich habe ihn vollständig durchgesehen und mit der Offline-Auswertung abgeglichen.

@@ -321,3 +321,6 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - Bestanden → Übernahme als V13 mit `scripts/release_candidate.py` (V12 bytegleich gesichert), neues `Gruppe15.zip`,
   Kurs-Runner, Tests, Nachspielen unter Python 3.10. Kein Kandidat zugelassen oder Bestätigung nicht bestanden →
   **V12 bleibt**. Spätester Start der Bestätigung 03.11., 12:00.
+- **Ergebnis (31.10., 19:59): kein Kandidat zugelassen.** `v13p` Mittel 6 Δ +0,08 pp [−0,53; +0,69], direkt 50,7 %;
+  `v13pd` Δ +0,08 pp [−0,72; +0,89], direkt 50,2 %. Die Battle-Bestätigung entfällt, **812000–813199 bleiben
+  unbenutzt**, V12 bleibt (Arbeitsstand 31.10., 20:05).
