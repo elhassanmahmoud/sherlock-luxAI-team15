@@ -381,7 +381,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - Bestanden → Übernahme wie Nachtrag 18:50 (Sicherung der Basis, neue Zip, Kurs-Runner, Tests, Nachspielen unter
   Python 3.10). Nicht zugelassen oder nicht bestanden → die Basis bleibt. Danach keine weiteren Regeltests vor dem
   Battle (Absprache mit Mahmoud, 31.10. abends).
-- **Ausführung (31.10., 23:58):** Basis **V12**, da `v13r0` nicht bestanden hat. Vorher ganze Testsuite (609
+- **Ausführung (31.10., 23:54):** Basis **V12**, da `v13r0` nicht bestanden hat. Vorher ganze Testsuite (609
   bestanden) und V12 mit dem neuen Code in 16 Spielen auf 812000–812003 identisch mit der Battle-Bestätigung.
   Kandidaten `battle_v14e10.pth` (SHA-256 `57d50b21…`) und `battle_v14e20.pth` (`16600f07…`), sonst bytegleich mit
   V12. Screen `REF=v12 bash scripts/battle_v14.sh admit v14e10 v14e20` gestartet.

@@ -5,7 +5,7 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 31.10.2026, 23:58 Berlin – Claude Code mit Mahmoud: Regel `end_sap` (Restenergie am Matchende) im Hauptstand, Screen gegen V12 läuft
+## 31.10.2026, 23:54 Berlin – Claude Code mit Mahmoud: Regel `end_sap` (Restenergie am Matchende) im Hauptstand, Screen gegen V12 läuft
 
 - **Neu** (Standard aus, [Plan-Nachtrag 22:05](superpowers/plans/2026-10-29-battle-push.md)): Schalter `end_sap` (Zahl der letzten Schritte eines Matches) und `end_sap_hold` (1,0) in `config.py`, Methode `_end_sap` in `main.py` direkt nach `idle_sap`.
   - In den letzten `end_sap` Schritten schießen Units auf sichtbare Gegner in Reichweite: zuerst auf Gegner auf bekannten Punkte-Tiles, dann auf unbewegte, dann auf alle übrigen, jeweils den mit der geringsten Restenergie nach den schon geplanten Saps.
@@ -16,7 +16,7 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
   - V12 mit dem neuen Code (Schalter aus): 16 Spiele auf 812000–812003 gegen Solution_92 und `league_nets6` (schon verbraucht) in allen 20 Kennzahlen außer der Laufzeit identisch mit der Battle-Bestätigung.
 - **Kandidaten** (`scripts/set_cfg`; Netze und alle übrigen Felder identisch mit V12, nur `end_sap` gesetzt): `experiments/ensembles/battle_v14e10.pth` (10 Schritte, SHA-256 `57d50b21…`) und `battle_v14e20.pth` (20 Schritte, `16600f07…`).
 - **Basis V12**, weil `v13r0` nicht bestanden hat (Eintrag 23:50).
-- **Läuft:** `REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v14e10 v14e20`. Dev A wird gepaart gegen die vorhandenen `D_v12*.csv` ausgewertet, dazu kommen 600 Spiele direkt gegen V12. Ende etwa 1:00. Wird ein Kandidat zugelassen, folgt genau eine Battle-Bestätigung auf 813200–814399.
+- **Läuft seit 23:54** (Code `2924b53`): `REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v14e10 v14e20`. Dev A wird gepaart gegen die vorhandenen `D_v12*.csv` ausgewertet, dazu kommen 600 Spiele direkt gegen V12. Ende etwa 1:00. Wird ein Kandidat zugelassen, folgt genau eine Battle-Bestätigung auf 813200–814399.
 - Abgabe unverändert **V12**.
 
 ## 31.10.2026, 23:50 Berlin – Claude Code mit Mahmoud: `v13r0` in der Battle-Bestätigung nicht bestanden, V12 bleibt
