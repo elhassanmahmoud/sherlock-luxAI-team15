@@ -5,7 +5,7 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 31.10.2026, 20:15 Berlin – Claude Code mit Mahmoud: Absturzschutz für die Battle-Abgabe, `Gruppe15.zip` neu gebaut (spielt identisch)
+## 31.10.2026, 20:10 Berlin – Claude Code mit Mahmoud: Absturzschutz für die Battle-Abgabe, `Gruppe15.zip` neu gebaut (spielt identisch)
 
 - **Grund:** Der Kurs-Runner (`lux/runner.py`, Zeile 178) ruft `act()` und bei `train=True` auch `update()` ohne Fehlerbehandlung auf. Ein einziger unerwarteter Fehler in Sherlock würde das Battle-Spiel abbrechen. In unseren Testspielen ist das nie passiert, aber im Battle gibt es keinen zweiten Versuch.
 - **Änderung** (`agents/sherlock/main.py`): Nur mit `cfg.frozen` fangen `act()` und `update()` Fehler ab; `frozen` setzt allein `build_submission --battle` in der Zip. Die Units bleiben dann einen Schritt stehen, die erste Meldung samt Traceback geht einmal nach stderr, `caught_errors` zählt mit. Im nächsten Schritt spielt der Agent normal weiter. Ohne `frozen` (Training, alle Messungen, die installierten Abgabe-Gewichte) werden Fehler wie bisher weitergereicht.

@@ -325,7 +325,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   `v13pd` Δ +0,08 pp [−0,72; +0,89], direkt 50,2 %. Die Battle-Bestätigung entfällt, **812000–813199 bleiben
   unbenutzt**, V12 bleibt (Arbeitsstand 31.10., 20:05).
 
-## Nachtrag 31.10.2026, 20:45 (Wie oft der Nebel-Sap schießt, vor jeder Messung mit `fog_reserve`/`fog_any` abweichend von V12)
+## Nachtrag 31.10.2026, 20:10 (Wie oft der Nebel-Sap schießt, vor jeder Messung mit `fog_reserve`/`fog_any` abweichend von V12)
 
 - **Befund:** Die Zielwahl (`fog_prior`) brachte offline +6,5 pp direkte Treffer, im Spiel aber nur +0,08 pp (Nachtrag
   18:50, Ergebnis). Auch V12 selbst bringt offline netto nur +13 Energie je Spiel, im Spiel aber +5,9 pp gegenüber V11.
