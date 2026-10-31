@@ -5,6 +5,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 22:10 Berlin – Claude Code mit Mahmoud: README und Entscheidungsdokument auf den aktuellen Stand
+
+- **Auftrag Mahmoud:** die md-Dateien auf GitHub an den jetzigen Stand anpassen, die README „perfekt“ machen.
+- **`README.md`** neu gegliedert, vorher Stand 22.10. (`all18_v3`): „Auf einen Blick“, Fortschritt gegen Solution_92 von V3 bis V12 (jeweils mit dem Vorgänger auf denselben Karten), Ergebnisse von V12 je Gegner und nach Sichtweite, Entscheidungsablauf mit 36 Netzen und den Regeln der Abgabe, Training, Testverfahren, Projektstruktur, Nutzung, Battle-Abgabe mit Absturzschutz und `--half`-Rückfall, Grenzen. Die historischen Ergebnisse (Review 16.10., Ablation 10.10.) stehen in einem eigenen Abschnitt.
+- **Prüfungen:** alle Zahlen gegen Übernahmeberichte, CLAUDE.md, Arbeitsstand, Entscheidungsmessung und die gespeicherten Configs abgeglichen, dabei zwei eigene Formulierungen korrigiert (`sap_still` gilt nur für Halter-Saps; Nebel-Meidung erst ab geschätztem Abzug 25). Alle relativen Links und Anker automatisch geprüft, keine Fehler.
+- **`Sherlock_Entscheidungsprozess.md`:** Nachtrag V12 mit den neu gemessenen Anteilen; ein Satz, der in den Kasten des V11-Nachtrags gerutscht war, steht wieder davor.
+- Datierte Berichte und Pläne bleiben als Verlauf unverändert. Besteht die laufende Bestätigung von `v13r0`, werden README („Auf einen Blick“, Fortschritt, Grenzen) und CLAUDE.md nachgezogen.
+
 ## 31.10.2026, 21:50 Berlin – Claude Code mit Mahmoud: `v13r0` (Nebel-Sap ohne Energiereserve) zugelassen, Battle-Bestätigung läuft; Ursachensuche bei Streufaktor 0,25; neue Regel `end_sap` in Arbeit
 
 - **Screen** (`WORKERS=12 bash scripts/battle_v13.sh admit v13r0 v13r15 v13any`, Code `98f687d`, 20:19–21:40), Dev A gepaart gegen V12:
