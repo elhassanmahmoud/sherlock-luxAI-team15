@@ -1,0 +1,16 @@
+{
+  "label": "v12_fog",
+  "status": "installed_and_verified",
+  "installed_at": "2026-10-31T16:07:52.553533+00:00",
+  "code_commit": "72c0b792ad2c2113d5f95fac8667314013d152c4",
+  "candidate": "experiments/ensembles/battle_v12.pth",
+  "candidate_sha256": "b258dc9927a7094f3d4b83bf4de251b03c3ccc57d69a1da23080c27e806c924b",
+  "installed_sha256": {
+    "agents/sherlock/weights/agent_p0.pth": "b258dc9927a7094f3d4b83bf4de251b03c3ccc57d69a1da23080c27e806c924b",
+    "agents/sherlock/weights/agent_p1.pth": "b258dc9927a7094f3d4b83bf4de251b03c3ccc57d69a1da23080c27e806c924b"
+  },
+  "rollback_manifest": "experiments/releases/20261031_v11_mix36c_as/manifest.json",
+  "rollback_readme": "experiments/releases/20261031_v11_mix36c_as/README.md",
+  "gate_log": "experiments/pipeline_battle_gate.log",
+  "runner_report": "experiments/analysis/release_v12_fog_runner_installed.json"
+}

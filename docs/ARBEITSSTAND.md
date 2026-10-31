@@ -5,6 +5,28 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 17:15 Berlin – Claude Code mit Mahmoud: **V12 bestanden und als Abgabe übernommen**
+
+- **Battle-Bestätigung V12** (`BLOCK=3 WORKERS=14 bash scripts/battle_confirm.sh v12`, Code `96a4833`, 15:08–17:06), Karten 808000–808799, je Gegner 1.600 Spiele, gepaart gegen V11:
+  - **Mittel über die 6 Gegner 87,08 statt 81,19 % (Δ +5,90 pp [+4,75; +7,08])**, Hürde +1,0;
+  - **Solution_92 94,38 statt 93,00 %** (Δ +1,38 [+0,06; +2,75]);
+  - default 99,88 % (±0);
+  - **direkt gegen V11 61,0 % [57,75; 64,38]** aus 800 Spielen auf 808800–809199.
+  - `GATE Battle-Bestaetigung: BESTANDEN` in `experiments/pipeline_battle_gate.log`.
+- **Je Gegner** (V11 → V12): `sol92_sq` 85,1 → 89,3, V3 83,4 → 88,9, V7 70,6 → 79,8, `league_nets6` 66,4 → 77,3, `threat6` 88,8 → 93,0. Jeder Gegner ist mit unterer Grenze > 0 besser.
+- **Nach Sichtweite** (Mittel 6): 1 +8,4, 2 +6,7, 3 +5,2, 4 +3,5 pp. Nach Streufaktor 0,25 / 0,5 / 1,0: +1,8 / +8,8 / +7,1. Umkämpfte Relics nahe der Mittellinie +9,3, sonst +2,0. V12 sappt 101,5 statt 83,8 Mal je Spiel.
+- **Übernahme** nach Plan-Nachtrag 14:40 und der Freigabe vom 20.10. mit `scripts/release_candidate.py` (Probelauf, dann echt, 17:07):
+  - V11 bytegleich gesichert in `experiments/releases/20261031_v11_mix36c_as/` (Manifest, Wiederherstellungsanleitung).
+  - Beide Abgabe-Dateien jetzt SHA-256 `b258dc9927a7094f3d4b83bf4de251b03c3ccc57d69a1da23080c27e806c924b`, Manifest `experiments/releases/20261031_v12_fog.json`.
+  - Kurs-Runner: 8 Spiele bestanden, `act` im Median 5,5 ms, höchstens 8,7 ms.
+- **Prüfungen danach:**
+  - Testsuite: 598 bestanden, 14 Untertests.
+  - `Gruppe15.zip` neu gebaut (17:07, 22,2 MB, „Check ok“ in beiden Ordnerlagen, auch mit `train=True` eingefroren). `Gruppe15/agent.pth` hat dieselben Tensoren und dieselbe Config wie die Abgabe, nur `frozen=True`. Alle 15 Python-Dateien sind bytegleich mit `agents/sherlock/`.
+  - Nachspielen unter Python 3.10 (torch 2.14.1/numpy 2.2.6 und torch 2.2.2/numpy 1.26.4): Karten 800004 (Sicht 1) und 4242, **0 abweichende Aktionen**. In diesen Spielen gab es 20 bzw. 4 Saps auf Felder außerhalb des Sensors.
+- [Übernahmebericht](../experiments/analysis/release_20261031_v12/RELEASE.md). CLAUDE.md „Aktuelle Abgabe“ ist aktualisiert.
+- **Seeds:** 808000–809199 sind jetzt verbraucht. Unbenutzt sind noch 809200–809599 und 810000–810399.
+- **Offen:** Folien 11, 12 und 14, Sprechtext und Rückfragen auf V12 bringen (folgt im nächsten Eintrag). Upload am 04.11.: `Gruppe15.zip` wie gehabt; die Zip vom 30.10. ist überholt.
+
 ## 31.10.2026, 15:10 Berlin – Claude Code mit Mahmoud: Nebel-Sap `fog_v2` auf Dev A klar besser, V12 in der letzten Prüfung
 
 - **Screen `v11fog`** (V11 + `fog_sap` + `fog_v2`, Dev A gepaart gegen V11, 14:37–15:07): **Mittel über 6 Gegner 84,61 statt 81,83 % (Δ +2,78 pp [+1,25; +4,36])**, **direkt gegen V11 57,8 % [54,3; 61,5]** aus 600 Spielen.
