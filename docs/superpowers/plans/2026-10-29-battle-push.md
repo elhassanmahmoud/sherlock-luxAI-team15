@@ -324,3 +324,26 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Ergebnis (31.10., 19:59): kein Kandidat zugelassen.** `v13p` Mittel 6 Δ +0,08 pp [−0,53; +0,69], direkt 50,7 %;
   `v13pd` Δ +0,08 pp [−0,72; +0,89], direkt 50,2 %. Die Battle-Bestätigung entfällt, **812000–813199 bleiben
   unbenutzt**, V12 bleibt (Arbeitsstand 31.10., 20:05).
+
+## Nachtrag 31.10.2026, 20:45 (Wie oft der Nebel-Sap schießt, vor jeder Messung mit `fog_reserve`/`fog_any` abweichend von V12)
+
+- **Befund:** Die Zielwahl (`fog_prior`) brachte offline +6,5 pp direkte Treffer, im Spiel aber nur +0,08 pp (Nachtrag
+  18:50, Ergebnis). Auch V12 selbst bringt offline netto nur +13 Energie je Spiel, im Spiel aber +5,9 pp gegenüber V11.
+  Die Offline-Kennzahl sagt also wenig. **Hypothese:** Es zählt, dass und wie oft im Nebel geschossen wird. Offline
+  (`v12_fog_eval_devA.txt`, auf R3) feuert der Nebel-Sap mit Reserve 0 45 statt 13 Mal je Spiel, mit `fog_any`
+  17,7 Mal. Risiko: Halter mit wenig Energie sterben leichter durch gegnerische Saps, Kollisionen oder Nebel.
+- **Kandidaten** (Netze bytegleich mit V12, nur ein Schalter weicht ab):
+  - `v13r0` = V12 + `fog_reserve` 0 statt 30 (`experiments/ensembles/battle_v13r0.pth`, SHA-256 `98b9ba5c…`);
+  - `v13r15` = V12 + `fog_reserve` 15 (`battle_v13r15.pth`, `a69a3056…`);
+  - `v13any` = V12 + `fog_any` (Nebel-Sap für jede stehende Unit, nicht nur auf Punkte-Tiles; `battle_v13any.pth`,
+    `d08a4936…`).
+- **Screen und Zulassung** unverändert wie Nachtrag 18:50 (`bash scripts/battle_v13.sh admit v13r0 v13r15 v13any`):
+  Dev A gegen die 6 Gegner, gepaart gegen die V12-Basis vom 31.10. (dieselben Dateien `D_v12*.csv`, der Code ist für
+  nicht eingefrorene Gewichte unverändert), direkt gegen V12 600 Spiele. Zugelassen: Mittel 6 Δ ≥ +0,5 pp, direkt
+  ≥ 50 %, Solution_92 Δ ≥ −1,0 pp; bei mehreren der mit dem höchsten Mittel.
+- **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf dem im Nachtrag 18:50 reservierten, dort
+  unbenutzten Block **812000–812799**, direkt **812800–813199** (`bash scripts/battle_v13.sh confirm NAME`), Hürden
+  unverändert `scripts/league_gates.py battle`. Spätester Start 03.11., 12:00.
+- Bestanden → Übernahme als V13 wie im Nachtrag 18:50 beschrieben (Sicherung von V12, neue Zip, Kurs-Runner, Tests,
+  Nachspielen unter Python 3.10). Kein Kandidat zugelassen oder nicht bestanden → **V12 bleibt**, und an der
+  Nebel-Sap-Menge wird vor dem Battle nicht weiter gedreht.
