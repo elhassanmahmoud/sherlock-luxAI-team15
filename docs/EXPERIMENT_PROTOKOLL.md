@@ -1,5 +1,11 @@
 # Experiment-Protokoll
 
+- 31.10.2026, Nebel-Sap `fog_v2` und letzte V12-Prüfung ([Plan](superpowers/plans/2026-10-29-battle-push.md), Nachtrag 14:40). Ausgangsbefund auf den Daten der verbrauchten Battle-Bestätigung: V11 bei Sicht 1 gegen Solution_92 87,9 statt 94,9–97,0 % (Sicht 3/4), gegen V3 72,4 statt 88,7–88,8 %. 97 % der gegnerischen Halter-Schritte unsichtbar, je Spiel 28–343 Unit-Schritte mit unsichtbarem Halter in Sap-Reichweite ohne Sap. Ursache: Mit `use_symmetry` galt das Spiegelbild des Sensors als gesehen, deshalb schoss der alte `fog_sap` kaum.
+  - **Zulassung auf Dev A** (`v11fog` = V11 + `fog_sap` + `fog_v2`, je Gegner 600 Spiele, gepaart gegen V11): **Mittel 6 +2,78 pp [+1,25; +4,36], direkt 57,8 % [54,3; 61,5] → zugelassen** (Hürde ≥ +0,5 pp, direkt ≥ 50 %, Solution_92 ≥ −1,0).
+  - Je Gegner: Solution_92 ±0, `sol92_sq` +5,00, V3 +1,67, V7 +2,00, `league_nets6` +4,33, `threat6` +3,67. Nach Sensorreichweite: 1 +3,0, **2 +7,0 [+3,4; +11,5]**, 3 +1,5, 4 −0,6.
+  - **V12** = `v11h` + `fog_sap` + `fog_v2` (Netze bytegleich mit V11). **Battle-Bestätigung** auf 808000–808799 (je Gegner 1.600 Spiele, gepaart gegen V11), direkt auf 808800–809199 (800 Spiele): **Mittel 6 87,08 statt 81,19 % (+5,90 pp [+4,75; +7,08]), Solution_92 94,38 statt 93,00 % (+1,38 [+0,06; +2,75]), default 99,88 % (±0), direkt gegen V11 61,0 % [57,75; 64,38] → bestanden, als V12 `v12_fog` übernommen** (31.10., 17:07).
+  - Je Gegner: `sol92_sq` +4,2, V3 +5,5, V7 +9,2, `league_nets6` +10,9, `threat6` +4,2 (alle mit unterer Grenze > 0). Nach Sichtweite 1/2/3/4: +8,4/+6,7/+5,2/+3,5; nach Streufaktor 0,25/0,5/1,0: +1,8/+8,8/+7,1.
+  - [Übernahmebericht](../experiments/analysis/release_20261031_v12/RELEASE.md), Details im [Arbeitsstand](ARBEITSSTAND.md) vom 31.10., 17:15. Daten `experiments/compare/battle/GC_*.csv`.
 - 30./31.10.2026, Regelkandidaten auf V11 und Battle-Bestätigung ([Plan](superpowers/plans/2026-10-29-battle-push.md), Nachträge 18:31 und 23:01). **Zulassung auf Dev A** gepaart gegen V11; Hürde: Mittel über 6 Gegner +1,0 pp und direkt ≥ 52 %.
   - `v11b`: +0,86 pp, direkt 54,3 % → nicht zugelassen.
   - `v11e`: +0,89 pp, direkt 54,0 % → nicht zugelassen.

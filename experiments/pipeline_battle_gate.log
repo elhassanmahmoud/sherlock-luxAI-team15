@@ -152,3 +152,17 @@ Battle-Bestaetigung: Mittel 6 0.8174 vs 0.8079 (Δ +0.95 pp [+0.33; +1.57], 800 
   OK   direkt untere 95%-Grenze > 50 %
 GATE Battle-Bestaetigung: NICHT BESTANDEN
 [31.10. 01:02] Battle-Bestaetigung v11h fertig
+[31.10. 15:08] Battle-Bestaetigung: Start v12 (experiments/ensembles/battle_v12.pth, SHA-256 b258dc9927a7094f), Referenz V11, Karten ab 808000, Code 96a4833
+GC_V11_conf.csv: default: 0.999 (1600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.664 (1600 Spiele), self:experiments/ensembles/threat6.pth: 0.887 (1600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.834 (1600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.706 (1600 Spiele), sol92_sq: 0.851 (1600 Spiele), solution92: 0.930 (1600 Spiele) in 3420s
+GC_v12_conf.csv: default: 0.999 (1600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.772 (1600 Spiele), self:experiments/ensembles/threat6.pth: 0.930 (1600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.889 (1600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.797 (1600 Spiele), sol92_sq: 0.892 (1600 Spiele), solution92: 0.944 (1600 Spiele) in 3275s
+GC_v12_confdir.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.pth: 0.610 (800 Spiele) in 373s
+Battle-Bestaetigung: Mittel 6 0.8708 vs 0.8119 (Δ +5.90 pp [+4.75; +7.08], 800 Karten); Solution_92 0.9437 (Δ +1.38 [+0.06; +2.75]); default 0.9988 (Δ +0.00); direkt 0.6100 [0.5775; 0.6438] aus 800 Spielen
+  OK   Mittel 6 Δ >= +1 pp
+  OK   Mittel 6 untere 95%-Grenze > 0
+  OK   Solution_92 Δ >= -0.5 pp
+  OK   Solution_92 untere 95%-Grenze > -2.5 pp
+  OK   default >= 99%
+  OK   default Δ >= -1 pp
+  OK   direkt untere 95%-Grenze > 50 %
+GATE Battle-Bestaetigung: BESTANDEN
+[31.10. 17:06] Battle-Bestaetigung v12 fertig
