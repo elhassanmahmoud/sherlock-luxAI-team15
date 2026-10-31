@@ -4,7 +4,9 @@
 # 6 Gegner des Dev-A-Screens und default, Direktduell gegen V11 auf 811200-811599 (800 Spiele). Huerden:
 # scripts/league_gates.py battle. Der Block gilt fuer genau einen Kandidaten. Die Abgabe aendert dieses Skript
 # nicht; Uebernahme nach bestandener Bestaetigung mit scripts/release_candidate.py.
-#   bash scripts/battle_confirm.sh NAME        (WORKERS, Default 12)
+# 31.10.2026 (Plan-Nachtrag 14:40): BLOCK=3 nimmt fuer die letzte V12-Pruefung 808000-808799 und direkt 808800-809199,
+# Ausgaben GC_* statt GB_*; ohne BLOCK unveraendert der Block vom 30.10.
+#   bash scripts/battle_confirm.sh NAME        (WORKERS, Default 12; BLOCK=3)
 cd "$(dirname "$0")/.."
 NAME=$1
 PY=.venv/bin/python
@@ -16,8 +18,10 @@ V11=$R/20261030_v11_baseline/agent_p0.pth
 CAND=$E/battle_$NAME.pth
 OPP="solution92,sol92_sq,self:$R/20261022_all18_v3/agent_p0.pth,self:$R/20261022_v7_Bsnpd/agent_p0.pth"
 OPP="$OPP,self:$E/league_nets6.pth,self:$E/threat6.pth,default"
+P=GB; FIRST=310400; DFIRST=311200
+[ "$BLOCK" = 3 ] && { P=GC; FIRST=308000; DFIRST=308800; }
 [ -n "$NAME" ] && [ -f $CAND ] || { echo "fehlt: $CAND"; exit 1; }
-other=$(ls $D/GB_*_conf.csv 2>/dev/null | grep -v "/GB_V11_conf.csv" | grep -v "/GB_${NAME}_conf.csv")
+other=$(ls $D/${P}_*_conf.csv 2>/dev/null | grep -v "/${P}_V11_conf.csv" | grep -v "/${P}_${NAME}_conf.csv")
 [ -n "$other" ] && { echo "Der Block hat schon eine Battle-Bestaetigung: $other"; exit 1; }
 run() {  # run GEWICHTE FIRST N GEGNER AUSGABE
     [ -f "$5" ] && return 0
@@ -25,11 +29,11 @@ run() {  # run GEWICHTE FIRST N GEGNER AUSGABE
         2>&1 | grep -v geladen | tail -1 >> $LOG
 }
 echo "[$(date '+%d.%m. %H:%M')] Battle-Bestaetigung: Start $NAME ($CAND, SHA-256 $(shasum -a 256 $CAND | cut -c1-16))," \
-    "Referenz V11, Code $(git rev-parse --short HEAD)" >> $LOG
-run $V11 310400 800 "$OPP" $D/GB_V11_conf.csv
-run $CAND 310400 800 "$OPP" $D/GB_${NAME}_conf.csv
-run $CAND 311200 400 "self:$V11" $D/GB_${NAME}_confdir.csv
-$PY -m scripts.league_gates battle $D/GB_V11_conf.csv $D/GB_${NAME}_conf.csv $D/GB_${NAME}_confdir.csv \
+    "Referenz V11, Karten ab $((FIRST + 500000)), Code $(git rev-parse --short HEAD)" >> $LOG
+run $V11 $FIRST 800 "$OPP" $D/${P}_V11_conf.csv
+run $CAND $FIRST 800 "$OPP" $D/${P}_${NAME}_conf.csv
+run $CAND $DFIRST 400 "self:$V11" $D/${P}_${NAME}_confdir.csv
+$PY -m scripts.league_gates battle $D/${P}_V11_conf.csv $D/${P}_${NAME}_conf.csv $D/${P}_${NAME}_confdir.csv \
     --direct-opponent "self:$V11" >> $LOG 2>&1
 echo "[$(date '+%d.%m. %H:%M')] Battle-Bestaetigung $NAME fertig" >> $LOG
 tail -14 $LOG
