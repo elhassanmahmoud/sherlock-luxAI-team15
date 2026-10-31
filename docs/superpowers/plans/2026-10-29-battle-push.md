@@ -267,3 +267,25 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   neues `Gruppe15.zip`. Nicht bestanden → V11 bleibt, kein weiterer Versuch auf diesem Block.
 - **Runde 5 der Hauptlinie entfällt** (Runde 4 brachte im Ensemble nichts, Zeit bis 04.11.). Ebenso die Tests
   `V11_dropest` und `V11_rescue` (`cand_rescue` greift nur, wenn kein Punktefeld bekannt ist).
+
+## Nachtrag 31.10.2026, 14:40 (Nebel-Sap `fog_v2` und letzte V12-Prüfung, vor jeder Messung mit `fog_v2` auf Dev A oder 808000–809599)
+
+- **Befund** (Daten der verbrauchten Battle-Bestätigung, 810400–811199): V11 gewinnt bei Sensorreichweite 1 deutlich
+  seltener, gegen Solution_92 87,9 % (Reichweite 3/4: 94,9/97,0 %), gegen V3 72,4 % (88,8/88,7 %), und sappt dort nur
+  53 statt 89–100 Mal je Spiel. Funktionsprobe (V11 gegen Solution_92, 4 Karten mit Sicht 1 aus demselben verbrauchten
+  Block): 97 % der gegnerischen Halter-Schritte sind für uns unsichtbar, je Spiel 28–343 Unit-Schritte mit
+  unsichtbarem Halter in Sap-Reichweite (Energie ≥ Kosten + 30), dort nie ein Sap.
+- **Ursache in der alten Regel `fog_sap`:** Mit `use_symmetry` gilt das Spiegelbild des Sensors in `belief.last_seen`
+  als gesehen; die gegnerischen Punkte-Tiles sind das Spiegelbild unserer und fielen aus den Kandidaten. Neuer
+  Schalter **`fog_v2`** (Standard aus, Tests `tests/test_fog_sap.py`, alle 594 Tests bestanden, 6 V11-Spiele
+  identisch): echte Sicht, Kandidaten in beiden Hälften ohne eigene Unit, kein Nebel-Sap bei sichtbarem Ziel.
+- **Screen:** `battle_v11fog` = V11 + `fog_sap` + `fog_v2` (sonst Standardwerte: nur Halter, Reserve 30, alle
+  Sensorreichweiten) mit `scripts/battle_admit.sh` auf Dev A gegen V11 (6 Gegner, direkt 600 Spiele).
+  **In V12 kommt `fog_v2`, wenn:** Mittel über 6 Gegner Δ ≥ +0,5 pp, direkt gegen V11 ≥ 50 %, Solution_92 Δ ≥ −1,0 pp
+  (Punktschätzungen). Scheitert das nur an Karten mit Sicht ≥ 3, darf genau eine Variante mit
+  `fog_sap_max_sensor=2` mit denselben Bedingungen geprüft werden.
+- **V12** = `v11h` + die aufgenommene Nebel-Variante. Letzte Prüfung genau einmal, wie die Battle-Bestätigung vom
+  30.10. (`league_gates battle`, Hürden unverändert): V11 und V12 auf 808000–808799 gegen die 6 Gegner und default,
+  direkt gegen V11 auf 808800–809199 (800 Spiele). Spätester Start 03.11., 12:00. Bestanden → Übernahme mit
+  `scripts/release_candidate.py` und neues `Gruppe15.zip`; nicht bestanden → V11 bleibt. Wird `fog_v2` nicht
+  aufgenommen, entfällt die Prüfung (V11 bleibt; über `v11h` allein entscheidet nur das Team).

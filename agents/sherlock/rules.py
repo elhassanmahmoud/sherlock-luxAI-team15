@@ -185,7 +185,7 @@ def plan_sap(ctx: dict, uid: int, planned: np.ndarray, stationary: np.ndarray,
 
 
 def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float = 0.5,
-            min_frac: float = 0.6):
+            min_frac: float = 0.6, v2: bool = False):
     """Sap auf unsichtbare Gegner auf ihren Punkte-Tiles (Schalter `fog_sap`).
 
     Der Gegner punktet pro Step mit jedem besetzten Punkte-Tile. Bringt er mehr
@@ -195,21 +195,28 @@ def fog_sap(ctx: dict, uid: int, belief, planned_fog: np.ndarray, dropoff: float
     mit Wahrscheinlichkeit versteckt / Kandidaten als besetzt angenommen.
     Gewaehlt wird das Zieltile mit dem groessten erwarteten Schaden (3x3).
     `planned_fog` merkt sich bereits beschossene Tiles dieses Steps.
+    v2 (Schalter `fog_v2`, 31.10.2026): sichtbar = aktueller Sensor ohne Spiegelbild, Kandidaten in beiden
+    Haelften ohne eigene Unit, sichtbare Besetzer je Tile einmal gezaehlt.
     Rueckgabe (dx, dy) oder None.
     """
     W, H = ctx["W"], ctx["H"]
     pt = belief.point_tiles
-    visible = belief.last_seen == belief.match_step
     xs, ys = np.meshgrid(np.arange(W), np.arange(H), indexing="ij")
-    enemy_half = xs + ys > W - 1
-    seen_occ = 0
-    for ex, ey in ctx["enemy_coords"]:
-        if pt[ex, ey]:
-            seen_occ += 1
+    if v2:
+        visible = belief._sensor_now
+        allowed = ctx["ally_count"] == 0
+        seen_occ = len({(int(ex), int(ey)) for ex, ey in ctx["enemy_coords"] if pt[ex, ey]})
+    else:
+        visible = belief.last_seen == belief.match_step
+        allowed = xs + ys > W - 1  # Gegnerhaelfte
+        seen_occ = 0
+        for ex, ey in ctx["enemy_coords"]:
+            if pt[ex, ey]:
+                seen_occ += 1
     hidden = int(belief.opp_gain) - seen_occ
     if hidden <= 0:
         return None
-    cand = pt & ~visible & enemy_half & ~planned_fog
+    cand = pt & ~visible & allowed & ~planned_fog
     n = int(cand.sum())
     if n == 0:
         return None

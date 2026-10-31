@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 14:40 Berlin – Claude Code mit Mahmoud: letzter Anlauf V12, Schwachstelle Sicht 1, Fehler im Nebel-Sap behoben (`fog_v2`)
+
+- **Auftrag Mahmoud (14:20):** Sherlock so stark wie möglich machen. Mehr Netztraining bringt nach Runde 4 nichts Messbares, deshalb gezielt an der größten Schwachstelle.
+- **Stärke V11 zum Vergleich** (Dev A, 600 Spiele je Gegner): DQN der Kursvorlage 100 %, Rush-Bot 100 %, default 99,7 %, Solution_92 94 %. Nur unsere älteren Sherlock-Versionen holen Spiele (68–87 %).
+- **Schwachstelle Sicht 1** (Daten der verbrauchten Battle-Bestätigung, je Gegner 1.600 Spiele):
+  - V11 gegen Solution_92 87,9 % statt 94,9–97,0 % bei Sicht 3/4, gegen V3 72,4 % statt 88,7–88,8 %;
+  - V11 sappt dort nur 53 statt 89–100 Mal je Spiel.
+  - Funktionsprobe auf 4 Karten (`experiments/analysis/battle/v11_fog_probe.py`): 97 % der gegnerischen Halter-Schritte sind unsichtbar. Je Spiel stehen 28–343 Mal unsichtbare Halter in Sap-Reichweite einer Unit mit genug Energie, dort sappt V11 nie.
+- **Fehler in der alten Regel `fog_sap`:** Mit `use_symmetry` zählt das Spiegelbild des Sensors als gesehen. Die gegnerischen Punkte-Tiles sind das Spiegelbild unserer, fielen deshalb aus den Kandidaten, und die Regel schoss kaum. Das erklärt die Nullergebnisse vom 20.–22.10.
+- **Neu: Schalter `fog_v2`** (Standard aus): echte Sicht, Kandidaten in beiden Hälften ohne eigene Unit, kein Nebel-Sap bei sichtbarem Ziel.
+  - Prüfungen: 3 neue Tests (`tests/test_fog_sap.py`), alle 594 Tests bestanden, 6 V11-Spiele identisch zum Stand der Battle-Bestätigung.
+  - Mit `fog_v2` sappen die Halter auf denselben Karten in 7–33 % dieser Gelegenheiten.
+- **[Plan-Nachtrag 14:40](superpowers/plans/2026-10-29-battle-push.md)** (vor jeder Messung festgelegt):
+  - Screen `battle_v11fog` (V11 + `fog_sap` + `fog_v2`, SHA-256 `64eb1620…`) auf Dev A gegen V11.
+  - Aufnahme in V12 bei Mittel über 6 Gegner ≥ +0,5 pp, direkt ≥ 50 % und Solution_92 ≥ −1,0 pp.
+  - V12 = `v11h` + Nebel-Regel, einmalige Prüfung auf 808000–809199 mit den Hürden der Battle-Bestätigung, spätester Start 03.11., 12:00.
+- **Läuft:** `WORKERS=12 bash scripts/battle_admit.sh v11fog`, etwa 1 Stunde. Abgabe unverändert **V11**.
+
 ## 31.10.2026, 01:05 Berlin – Claude Code mit Mahmoud: Battle-Bestätigung `v11h` knapp nicht bestanden, **V11 bleibt**
 
 - **Ergebnis** (`scripts/battle_confirm.sh v11h`, Code `e3195de`, 23:01–01:02): Karten 810400–811199, je Gegner 1.600 Spiele, gepaart gegen V11. **Mittel über die 6 Gegner 81,74 statt 80,79 % (Δ +0,95 pp [+0,33; +1,57])**. Die Hürde lag bei +1,0 pp und ist damit um 0,05 pp verfehlt. Alle übrigen Bedingungen sind erfüllt:

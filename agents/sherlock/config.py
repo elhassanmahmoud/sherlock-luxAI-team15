@@ -359,6 +359,13 @@ class AgentConfig:
     fog_reserve: float = 30.0
     fog_sap_max_sensor: int = 4
     """fog_sap nur bei Sensorreichweite <= diesem Wert (22.10.2026: Schwachstelle Sicht 1-2)."""
+    fog_v2: bool = False
+    """True (31.10.2026, mit fog_sap): Sichtbar ist nur, was der Sensor gerade wirklich zeigt. Mit use_symmetry
+    gilt das Spiegelbild des Sensors in belief.last_seen als gesehen, die gegnerischen Punkte-Tiles (Spiegelbild
+    unserer) fielen deshalb aus den Kandidaten. Dazu Kandidaten in beiden Haelften ohne eigene Unit, sichtbare
+    Besetzer je Tile einmal gezaehlt, und kein Nebel-Sap, wenn die Unit ein sichtbares Ziel hat. Diagnose V11 bei
+    Sicht 1: 97 % der gegnerischen Halter unsichtbar, 28-343 Unit-Steps je Spiel mit unsichtbarem Halter in
+    Reichweite, dort nie ein Sap."""
     """Energie, die nach einem Nebel-Sap mindestens uebrig bleiben soll."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs

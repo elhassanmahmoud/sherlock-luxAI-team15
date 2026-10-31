@@ -375,7 +375,8 @@ class Agent_x:
                     a = d
                     self._prev_actions[uid] = a
             if (self.cfg.fog_sap and a == geo.STAY
-                    and ctx["sensor_range"] <= self.cfg.fog_sap_max_sensor):
+                    and ctx["sensor_range"] <= self.cfg.fog_sap_max_sensor
+                    and not (self.cfg.fog_v2 and sap_targets[uid] is not None)):
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
                 if sap is not sap_targets[uid]:
                     a = geo.SAP
@@ -563,7 +564,7 @@ class Agent_x:
             return None
         if float(ctx["ally_ene"][uid]) < ctx["sap_cost"] + self.cfg.fog_reserve:
             return None
-        t = rules.fog_sap(ctx, uid, self.belief, planned_fog)
+        t = rules.fog_sap(ctx, uid, self.belief, planned_fog, v2=self.cfg.fog_v2)
         if t is None:
             return None
         return t[0], t[1], 0
