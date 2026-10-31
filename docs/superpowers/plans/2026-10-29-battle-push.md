@@ -350,6 +350,9 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Ergebnis Screen (31.10., 21:40):** `v13r0` zugelassen (Mittel 6 Δ +0,94 pp [−0,08; +1,97], direkt 58,5 %
   [55,0; 61,8], Solution_92 +0,17); `v13r15` (+0,08, direkt 53,5 %) und `v13any` (+0,39, direkt 49,2 %) nicht.
   Battle-Bestätigung `v13r0` auf 812000–813199 gestartet 21:42.
+- **Ergebnis Battle-Bestätigung (31.10., 23:46): nicht bestanden, V12 bleibt.** Mittel 6 Δ +0,45 pp [−0,24; +1,10]
+  (Hürde +1,0 und untere Grenze > 0 verfehlt), Solution_92 Δ −0,75 [−1,69; +0,19] (Hürde −0,5 verfehlt), default
+  ±0, direkt gegen V12 59,4 % [56,5; 62,3] aus 800 Spielen (bestanden).
 
 ## Nachtrag 31.10.2026, 22:05 (Restenergie am Matchende, vor jeder Messung mit `end_sap` auf Dev A oder 813200–814399)
 

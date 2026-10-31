@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 23:50 Berlin – Claude Code mit Mahmoud: `v13r0` in der Battle-Bestätigung nicht bestanden, V12 bleibt
+
+- **Lauf:** `WORKERS=12 bash scripts/battle_v13.sh confirm v13r0` (Code `294942d`, 21:41–23:46). V12 und `v13r0` auf 812000–812799 gegen die 6 Gegner und default, je Gegner 1.600 Spiele; direkt gegen V12 auf 812800–813199, 800 Spiele. Hürden `scripts/league_gates.py battle`.
+- **Ergebnis:**
+  - Mittel über 6 Gegner 86,96 statt 86,51 % (**Δ +0,45 pp [−0,24; +1,10]**): Hürde +1,0 pp und untere Grenze > 0 verfehlt.
+  - Solution_92 94,25 statt 95,00 % (**Δ −0,75 [−1,69; +0,19]**): Hürde −0,5 verfehlt.
+  - default 99,94 % (±0); direkt gegen V12 **59,4 % [56,5; 62,3]** aus 800 Spielen (bestanden).
+  - Je Gegner: `league_nets6` +1,50 [−0,50; +3,50], `threat6` −0,25 [−1,75; +1,25], V3 +0,62, V7 +1,00, `sol92_sq` +0,56, Solution_92 −0,75.
+- **Entscheidung: nicht bestanden, V12 bleibt Abgabe.** Abgabe-Dateien unverändert (`b258dc99…`), Upload-Datei weiter `Gruppe15.zip` von 20:07. `v13r0` gewinnt zwar direkt gegen V12, verbessert die übrigen Gegner aber kaum. Laut Plan wird an der Nebel-Sap-Menge vor dem Battle nicht weiter gedreht.
+- **Daten:** `experiments/compare/battle/GD_V12_conf.csv`, `GD_v13r0_conf.csv`, `GD_v13r0_confdir.csv`, Hürdenprotokoll `experiments/pipeline_battle_gate.log`. README („Grenzen“), Plan und Experiment-Protokoll nachgetragen.
+- **Nächster Schritt laut Plan-Nachtrag 22:05:** Test der Regel `end_sap` mit **V12 als Basis**.
+
 ## 31.10.2026, 22:10 Berlin – Claude Code mit Mahmoud: README und Entscheidungsdokument auf den aktuellen Stand
 
 - **Auftrag Mahmoud:** die md-Dateien auf GitHub an den jetzigen Stand anpassen, die README „perfekt“ machen.
