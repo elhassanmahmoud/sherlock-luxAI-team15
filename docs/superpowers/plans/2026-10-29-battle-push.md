@@ -350,3 +350,31 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Ergebnis Screen (31.10., 21:40):** `v13r0` zugelassen (Mittel 6 Δ +0,94 pp [−0,08; +1,97], direkt 58,5 %
   [55,0; 61,8], Solution_92 +0,17); `v13r15` (+0,08, direkt 53,5 %) und `v13any` (+0,39, direkt 49,2 %) nicht.
   Battle-Bestätigung `v13r0` auf 812000–813199 gestartet 21:42.
+
+## Nachtrag 31.10.2026, 22:05 (Restenergie am Matchende, vor jeder Messung mit `end_sap` auf Dev A oder 813200–814399)
+
+- **Befund** (nur Zuschauen, `experiments/analysis/battle/v12_end_probe.py`, V12 auf Dev A 800000–800029, beide
+  Seiten, gegen `league_nets6` und Solution_92, 120 Spiele): Die Engine entfernt am Matchende alle Units, Restenergie
+  zählt nur bei Punktgleichstand. Bei Schritt 99 haben unsere Units im Mittel etwa 1.100 Energie je Match. In den
+  letzten 10 Schritten gibt es je Match 14–20 Unit-Schritte mit Energie und sichtbarem Gegner in Reichweite ohne Sap.
+  Verlorene Matches sind oft knapp (gegen `league_nets6` 14–21 % mit höchstens 5 Punkten), und 1.123 der 1.240
+  Niederlagen der V12-Bestätigung endeten 1:2.
+- **Neue Regel `end_sap`** (Standard aus): In den letzten `end_sap` Schritten eines Matches schießen Units auf
+  sichtbare Gegner in Reichweite: zuerst auf Gegner auf bekannten Punkte-Tiles, dann auf im letzten Schritt
+  unbewegte, dann auf alle übrigen, jeweils den mit der geringsten Restenergie nach den schon geplanten Saps (so
+  verteilen mehrere Units ihr Feuer). Eigene Halter behalten eine Sap-Kosten Energie, außer im letzten Schritt. Units,
+  die ein Punkte- oder Kandidaten-Tile noch rechtzeitig erreichen, laufen weiter. Tests `tests/test_end_sap.py`.
+- **Basis** ist die Abgabe nach der laufenden Battle-Bestätigung: `v13r0`, wenn sie besteht, sonst V12. Für beide
+  liegen die Dev-A-Dateien schon vor (`D_v13r0*.csv` bzw. `D_v12*.csv`, gleicher Code für nicht eingefrorene Gewichte).
+- **Kandidaten** (Netze und Config der Basis, nur `end_sap` gesetzt): `v14e10` (`end_sap` 10) und `v14e20` (20).
+  Vor der Messung: ganze Testsuite im Projektordner, und die Basis spielt mit dem neuen Code (Schalter aus) in
+  16 vorhandenen Spielen identisch.
+- **Screen** `REF=<Basis> bash scripts/battle_v14.sh admit v14e10 v14e20`, Zulassung unverändert wie Nachtrag 18:50
+  (Mittel 6 Δ ≥ +0,5 pp, direkt gegen die Basis ≥ 50 %, Solution_92 Δ ≥ −1,0 pp; bei zwei das höhere Mittel).
+- **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten: `REF=<Basis> bash scripts/battle_v14.sh confirm
+  NAME`, Basis und Kandidat auf **813200–813999** gegen die 6 Gegner und default, direkt gegen die Basis auf
+  **814000–814399** (800 Spiele). Hürden unverändert `scripts/league_gates.py battle`. Vor dem Start prüfen, dass keine
+  CSV diese Seeds enthält. Spätester Start 03.11., 12:00.
+- Bestanden → Übernahme wie Nachtrag 18:50 (Sicherung der Basis, neue Zip, Kurs-Runner, Tests, Nachspielen unter
+  Python 3.10). Nicht zugelassen oder nicht bestanden → die Basis bleibt. Danach keine weiteren Regeltests vor dem
+  Battle (Absprache mit Mahmoud, 31.10. abends).
