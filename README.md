@@ -19,6 +19,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB), gebaut mit `python -m scripts.build_submission --battle` |
 | Tests | 604 (`python -m pytest -q`) |
+| Gespielte Spiele | rund **1,16 Millionen**: 616.000 Trainingsspiele, 64.000 Zwischenprüfungen, 485.000 Bewertungsspiele ([Aufschlüsselung](#umfang-spiele-und-training)) |
 
 ## Inhalt
 
@@ -26,6 +27,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 - [Ergebnisse der Abgabe V12](#ergebnisse-der-abgabe-v12)
 - [Wie Sherlock entscheidet](#wie-sherlock-entscheidet)
 - [Training](#training)
+- [Umfang: Spiele und Training](#umfang-spiele-und-training)
 - [Wie wir testen](#wie-wir-testen)
 - [Projektstruktur](#projektstruktur)
 - [Installation](#installation)
@@ -155,6 +157,25 @@ für jedes Spiel:
 - **Lernen** (`main.py`, `replay_buffer.py`): Double DQN, Replay Buffer mit 300.000 Übergängen, Target-Netz, Huber-Loss, Gradient Clipping, ε linear 1,0 → 0,05 über 60.000 Schritte. 70 % der Explorationszüge gehen heuristisch zum zugewiesenen Ziel (geführte Exploration, off-policy erlaubt).
 - **Eigenes Trainingsskript:** Der Kurs-Runner (`lux/runner.py`) erzeugt die Agenten in jedem Spiel neu und ruft `save_agent()` vor dem Spiel auf, Gelerntes würde nie gespeichert. `scripts/train.py` und `scripts/finetune.py` nutzen das Env direkt; zur Abgabe bleibt der Agent voll runner-kompatibel (`tests/test_runner.py`).
 - **Ohne Gewinn untersucht:** Self-Play und Gegner-Pool, CNN mit PPO, weitere Nachtrainings-Runden und mehr als 36 Netze. Das sind Ergebnisse unserer Versuche, keine allgemeinen Aussagen über diese Verfahren.
+
+## Umfang: Spiele und Training
+
+Stand 31.10.2026, gezählt aus den gespeicherten Dateien im Repository mit `python experiments/analysis/count_games.py`:
+
+| Art | Läufe | Spiele |
+|---|---:|---:|
+| Neue DQN-Netze trainiert (Ablation, Grundnetze, weitere Versuche) | 112 | 337.904 |
+| Nachtraining vorhandener DQN-Netze | 129 | 233.600 |
+| Prof-DQN zum Vergleich gleich lang neu trainiert | 3 | 9.000 |
+| CNN mit PPO | 7 | 35.600 |
+| **Training zusammen** | **251** | **616.104** |
+| Zwischenprüfungen während des Trainings | | 63.904 |
+| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 484.827 |
+| **Alle Spiele zusammen** | | **1.164.835** |
+
+- In den 36 Netzen der Abgabe stecken **165.000 Trainingsspiele**: 66.000 der 18 Grundnetze und 18 × 5.500 = 99.000 Spiele Nachtraining.
+- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. 8.549 doppelt gespeicherte Bewertungszeilen sind nicht mitgezählt.
+- Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
 
 ## Wie wir testen
 
