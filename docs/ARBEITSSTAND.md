@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 00:50 Berlin – Claude Code mit Mahmoud: `end_sap` nicht zugelassen, V12 bleibt die Battle-Abgabe; Ende der Regeltests
+
+- **Screen** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v14e10 v14e20`, Code `2924b53`, 23:54–00:44), Dev A 800000–800299 gepaart gegen V12, je Gegner 600 Spiele, direkt gegen V12 600 Spiele:
+  - **`v14e10`** (`end_sap` 10): Mittel 6 86,67 statt 85,56 % (**Δ +1,11 pp [+0,22; +2,00]**), Solution_92 −0,33, **direkt gegen V12 45,7 % [40,8; 50,5]** → nicht zugelassen (Hürde direkt ≥ 50 %). Je Gegner: `league_nets6` +3,00 [−0,33; +6,33], `threat6` ±0, V3 −0,67, V7 +4,33 [+1,67; +7,33], `sol92_sq` +0,33, Solution_92 −0,33.
+  - **`v14e20`** (`end_sap` 20): Mittel 6 +0,14 [−1,03; +1,31], Solution_92 −0,33, direkt 54,0 % [48,7; 59,3] → nicht zugelassen.
+  - Gegen die 6 Gegner gibt es 4 bis 11 Saps je Spiel mehr. Der Gegner macht 1 bis 11 Punkte je Spiel weniger, die eigenen Punkte ändern sich um −10 bis +3. Direkt gegen V12 hat `v14e10` gleich viele Punkte (1.026 : 1.024 je Spiel), gewinnt aber weniger Matches (863 : 937).
+- **Entscheidung laut Plan: V12 bleibt die Abgabe.** Keine Battle-Bestätigung, 813200–814399 bleiben unbenutzt. Wie mit Mahmoud vereinbart, werden vor dem Battle keine weiteren Regeln getestet.
+- **Code:** `end_sap` bleibt im Hauptstand, Standard aus. Die Upload-Datei `Gruppe15.zip` von 31.10., 20:07 enthält den Code davor; V12 spielt mit beiden identisch (16 Spiele, Eintrag 23:54). Sie bleibt die Upload-Datei.
+- **Daten:** `experiments/compare/battle/D_v14e10*.csv`, `D_v14e20*.csv`, Protokoll `experiments/battle_dev.log`. README („Grenzen“), Plan und Experiment-Protokoll nachgetragen.
+
 ## 31.10.2026, 23:54 Berlin – Claude Code mit Mahmoud: Regel `end_sap` (Restenergie am Matchende) im Hauptstand, Screen gegen V12 läuft
 
 - **Neu** (Standard aus, [Plan-Nachtrag 22:05](superpowers/plans/2026-10-29-battle-push.md)): Schalter `end_sap` (Zahl der letzten Schritte eines Matches) und `end_sap_hold` (1,0) in `config.py`, Methode `_end_sap` in `main.py` direkt nach `idle_sap`.

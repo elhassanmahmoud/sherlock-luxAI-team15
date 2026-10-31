@@ -333,7 +333,7 @@ Stand **31.10.2026**:
 - **100 % sind nicht erreichbar:** Karten und Spielparameter sind zufällig, vieles ist verborgen. Am schwächsten ist Sherlock bei Sichtweite 1 (85,6 % im Mittel über die 6 Gegner) und beim Streufaktor 0,25 gegen RL-Gegner (`league_nets6` 65,5 %). Bei 0,25 ist das Schussduell ausgeglichen. Alle naheliegenden Gegenmittel wurden getestet und haben dort geschadet.
 - Sap-Ziele, Zielzuweisung und Regeln sind Heuristiken; die Netze entscheiden die Art der Aktion.
 - **Geprüft, nicht übernommen (31.10.):** Nebel-Sap ohne Energiereserve (`v13r0`). Auf 800 frischen Karten gewann er direkt 59,4 % gegen V12, im Mittel über die 6 Gegner aber nur +0,45 Prozentpunkte (Hürde +1,0) und gegen Solution_92 94,3 statt 95,0 %. V12 bleibt.
-- **In Prüfung:** die neue Regel „Restenergie am Matchende verschießen“ (`end_sap`). Übernommen wird nur, was die Hürden besteht; der aktuelle Stand steht im [Arbeitsstand](docs/ARBEITSSTAND.md).
+- **Geprüft, nicht übernommen (01.11.):** die Regel „Restenergie am Matchende verschießen“ (`end_sap`, im Code, Standard aus). Auf den Entwicklungskarten war sie mit 10 Schritten im Mittel über die 6 Gegner +1,1 Prozentpunkte besser, verlor aber direkt gegen V12 mit 45,7 % (Hürde mindestens 50 %). Mit 20 Schritten: +0,1. **V12 ist damit die Battle-Abgabe**; vor dem Battle werden keine weiteren Regeln getestet.
 - **Termine:** Zwischenpräsentation und Battle am 06.11., Finale mit Turnier am 27.11.
 
 ## Historische Ergebnisse

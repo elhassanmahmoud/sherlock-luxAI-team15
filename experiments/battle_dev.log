@@ -320,3 +320,29 @@ D_v13any_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.492 (600 Sp
       Sol92    0.9433 (V12 0.9400, Δ +0.33 [-1.17; +1.83])
     Zulassung: v13any Mittel 6 0.8594 vs V12 0.8556 (Δ +0.39 [-0.69; +1.50], 300 Karten), Solution_92 Δ +0.33, direkt gegen V12 0.4917 [0.4650; 0.5200] aus 600 Spielen -> nicht zugelassen
 [31.10. 21:40] V13-Zulassung: v13r0
+[31.10. 23:54] V14-Zulassung: Start v14e10 v14e20 (Referenz v12, SHA-256 b258dc9927a7094f, Code 2924b53)
+D_v14e10.csv: sol92_sq: 0.910 (600 Spiele), solution92: 0.937 (600 Spiele) in 395s
+D_v14e10_rl.csv: self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.873 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.800 (600 Spiele) in 431s
+D_v14e10_hold.csv: self:experiments/ensembles/league_nets6.pth: 0.763 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.917 (600 Spiele) in 410s
+D_v14e10_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.457 (600 Spiele) in 278s
+D_v14e20.csv: sol92_sq: 0.908 (600 Spiele), solution92: 0.937 (600 Spiele) in 390s
+D_v14e20_rl.csv: self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.877 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.787 (600 Spiele) in 418s
+D_v14e20_hold.csv: self:experiments/ensembles/league_nets6.pth: 0.727 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.907 (600 Spiele) in 404s
+D_v14e20_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.540 (600 Spiele) in 281s
+    Screen v14e10, Dev A, gepaart gegen v12:
+      league6  0.7633 (v12 0.7333, Δ +3.00 [-0.33; +6.33])
+      threat6  0.9167 (v12 0.9167, Δ +0.00 [-2.00; +2.00])
+      V3       0.8733 (v12 0.8800, Δ -0.67 [-2.67; +1.33])
+      V7       0.8000 (v12 0.7567, Δ +4.33 [+1.67; +7.33])
+      sq       0.9100 (v12 0.9067, Δ +0.33 [-0.83; +1.67])
+      Sol92    0.9367 (v12 0.9400, Δ -0.33 [-1.33; +0.67])
+    Zulassung: v14e10 Mittel 6 0.8667 vs v12 0.8556 (Δ +1.11 [+0.22; +2.00], 300 Karten), Solution_92 Δ -0.33, direkt gegen v12 0.4567 [0.4083; 0.5050] aus 600 Spielen -> nicht zugelassen
+    Screen v14e20, Dev A, gepaart gegen v12:
+      league6  0.7267 (v12 0.7333, Δ -0.67 [-5.00; +3.67])
+      threat6  0.9067 (v12 0.9167, Δ -1.00 [-3.67; +1.67])
+      V3       0.8767 (v12 0.8800, Δ -0.33 [-2.67; +2.00])
+      V7       0.7867 (v12 0.7567, Δ +3.00 [-0.67; +7.00])
+      sq       0.9083 (v12 0.9067, Δ +0.17 [-1.50; +1.83])
+      Sol92    0.9367 (v12 0.9400, Δ -0.33 [-1.83; +1.17])
+    Zulassung: v14e20 Mittel 6 0.8569 vs v12 0.8556 (Δ +0.14 [-1.03; +1.31], 300 Karten), Solution_92 Δ -0.33, direkt gegen v12 0.5400 [0.4867; 0.5933] aus 600 Spielen -> nicht zugelassen
+[01.11. 00:44] V14-Zulassung: keine

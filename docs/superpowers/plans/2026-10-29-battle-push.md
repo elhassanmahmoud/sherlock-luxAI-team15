@@ -385,3 +385,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   bestanden) und V12 mit dem neuen Code in 16 Spielen auf 812000–812003 identisch mit der Battle-Bestätigung.
   Kandidaten `battle_v14e10.pth` (SHA-256 `57d50b21…`) und `battle_v14e20.pth` (`16600f07…`), sonst bytegleich mit
   V12. Screen `REF=v12 bash scripts/battle_v14.sh admit v14e10 v14e20` gestartet.
+- **Ergebnis Screen (01.11., 00:44): kein Kandidat zugelassen, V12 bleibt.** `v14e10` Mittel 6 Δ +1,11 pp [+0,22;
+  +2,00], Solution_92 −0,33, aber direkt gegen V12 nur 45,7 % [40,8; 50,5] (Hürde ≥ 50 %); `v14e20` Mittel 6
+  +0,14 [−1,03; +1,31], Solution_92 −0,33, direkt 54,0 %. Keine Battle-Bestätigung; 813200–814399 bleiben unbenutzt.
+  Wie vereinbart keine weiteren Regeltests vor dem Battle.
