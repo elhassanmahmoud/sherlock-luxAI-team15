@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 15:10 Berlin – Claude Code mit Mahmoud: Nebel-Sap `fog_v2` auf Dev A klar besser, V12 in der letzten Prüfung
+
+- **Screen `v11fog`** (V11 + `fog_sap` + `fog_v2`, Dev A gepaart gegen V11, 14:37–15:07): **Mittel über 6 Gegner 84,61 statt 81,83 % (Δ +2,78 pp [+1,25; +4,36])**, **direkt gegen V11 57,8 % [54,3; 61,5]** aus 600 Spielen.
+  - Je Gegner (Δ pp): Solution_92 ±0 [−2,0; +2,0], `sol92_sq` +5,00 [+2,50; +7,67], V3 +1,67, V7 +2,00, `league_nets6` +4,33 [0,00; +8,67], `threat6` +3,67 [+0,67; +6,67].
+  - Nach Sensorreichweite: 1 +3,0 [−0,7; +6,7], **2 +7,0 [+3,4; +11,5]**, 3 +1,5, 4 −0,6. Die Wirkung liegt also wie erwartet bei schlechter Sicht.
+  - Nach Plan-Nachtrag 14:40 aufgenommen (≥ +0,5 pp, direkt ≥ 50 %, Solution_92 ≥ −1,0 pp). Die alte Hürde (+1,0 und 52 %) wäre ebenfalls erfüllt.
+- **V12** = `v11h` + `fog_sap` + `fog_v2`: `experiments/ensembles/battle_v12.pth`, SHA-256 `b258dc99…`. Die Netze sind bytegleich mit V11, die Config weicht nur in diesen vier Schaltern ab. Kurzprobe mit 8 Spielen fehlerfrei.
+- Block 808000–809199 vorher geprüft: keine der 669 CSVs unter `experiments/compare/` enthält diese Seeds.
+- **Läuft seit 15:08:** `BLOCK=3 WORKERS=14 bash scripts/battle_confirm.sh v12` (V11 und V12 auf 808000–808799 gegen 6 Gegner und default, direkt 808800–809199). Ende etwa 17:15, Hürden wie die Battle-Bestätigung vom 30.10. Bis dahin bleibt die Abgabe **V11**.
+
 ## 31.10.2026, 14:40 Berlin – Claude Code mit Mahmoud: letzter Anlauf V12, Schwachstelle Sicht 1, Fehler im Nebel-Sap behoben (`fog_v2`)
 
 - **Auftrag Mahmoud (14:20):** Sherlock so stark wie möglich machen. Mehr Netztraining bringt nach Runde 4 nichts Messbares, deshalb gezielt an der größten Schwachstelle.

@@ -240,3 +240,16 @@ D_v11e_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.p
     20261022_v7_Bsnpd            0.7333 (V11 0.7400, Δ -0.67 [-4.00; +2.67])
     Mittel ueber 6 Gegner (mit D_V11_halfsafe.csv): 0.8292 (V11 0.8183, Δ +1.08 [-0.08; +2.39], 300 Karten)
     direkt gegen V11: 0.5550 [0.5283; 0.5833] aus 600 Spielen -> nach Regel 14:21/18:31 zugelassen (Bündel battle_v11h.pth)
+[31.10. 14:37] Zulassung: Start Screens v11fog (Referenz V11)
+[31.10. 15:02] Screen v11fog (experiments/ensembles/battle_v11fog.pth, SHA-256 64eb16207132391a), Dev A, gepaart gegen V10
+    league_nets6                 0.6933 (V10 0.5200, Δ +17.33 [+10.67; +24.33])
+    threat6                      0.9133 (V10 0.8133, Δ +10.00 [+5.67; +14.67])
+    20261022_all18_v3            0.8733 (V10 0.7217, Δ +15.17 [+9.16; +21.50])
+    20261022_v7_Bsnpd            0.7600 (V10 0.6017, Δ +15.83 [+9.00; +22.83])
+    sol92_sq                     0.8983 (V10 0.7783, Δ +12.00 [+8.50; +15.67])
+    solution92                   0.9383 (V10 0.8933, Δ +4.50 [+1.67; +7.50])
+    Mittel ueber 6 Gegner: 0.8461 (V10 0.7214, Δ +12.47 [+9.83; +15.03], 300 Karten)
+    direkt gegen V10: 0.7267 [0.6767; 0.7767] aus 600 Spielen
+D_v11fog_directv11.csv: self:experiments/releases/20261030_v11_baseline/agent_p0.pth: 0.578 (600 Spiele) in 298s
+    Zulassung: v11fog Mittel 6 0.8461 vs V11 0.8183 (Δ +2.78 pp, 3600 Spiele), direkt gegen V11 0.5783 -> zugelassen
+[31.10. 15:07] Zulassung: v11fog
