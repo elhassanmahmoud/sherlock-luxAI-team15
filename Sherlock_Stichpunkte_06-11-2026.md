@@ -2,7 +2,7 @@
 
 > **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist nur zum **Üben**. Ziel: Die **fett gedruckten Kernsätze** jeder Folie frei sagen können. Die Folie selbst ist die Gedächtnisstütze.
 
-**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
+**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). **31.10.:** Folien 11, 12 und 14 um die letzte Prüfung ergänzt (Regel für 50 % Streuschaden knapp nicht übernommen). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
 
 | Wer | Folien | Zeit |
 |---|---|---|
@@ -136,6 +136,7 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 - *(Rechte Box)* **Zweitens haben wir die verlorenen Spiele nach verdeckten Spielwerten sortiert.** Einer davon ist der Streuschaden beim Sap: Wie viel verlieren die Einheiten neben dem Zielfeld? Bei 100 % hat V10 deutlich öfter verloren.
 - Sherlock schätzt diesen Wert während des Spiels aus den eigenen Energieverlusten. **Ist er sicher 100 %, schießt Sherlock aggressiver:** schon bei 2 getroffenen Gegnern und auch auf Gegner, die gerade ziehen. Die treffen wir dann trotzdem voll, weil die Engine erst bewegt und dann schießt.
 - *(Unten)* **Ergebnis auf 1.600 neuen Spielen je Gegner: 94,1 statt 89,6 % gegen Solution_92**, direkt gegen V10 59,5 %. Damit ist V11 unsere Abgabe für heute.
+- **Danach haben wir dieselbe Regel auch für sicher 50 % Streuschaden geprüft.** Auf diesen Karten war sie klar besser: +2,8 Punkte, direkt gegen V11 64 %. Über alle Karten und 6 Gegner waren es aber nur +0,95 statt der vorher festgelegten +1,0 Punkte. **Deshalb bleibt V11.**
 
 ---
 
@@ -145,7 +146,7 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 - Drei Dinge haben wir gelernt.
 - **Erstens: Das Gelernte trägt.** Ohne die Netze verlieren wir fast jedes Spiel.
 - **Zweitens: Erst Fehler suchen, dann passend trainieren.** Fehlersuche brachte 78 → 90 %. Danach half Training wieder, aber erst, als wir unter den heutigen Regeln weitertrainiert haben: 90 → 94 %.
-- **Drittens: Jede Idee auf neuen Karten prüfen.** Eine Mischung lag in der Auswahl vorn und brachte auf 1.600 neuen Spielen nur +1,8 statt der verlangten +2 Punkte. Also haben wir sie nicht übernommen.
+- **Drittens: Jede Idee auf neuen Karten prüfen, mit Hürden, die vorher feststehen.** Zwei Kandidaten lagen auf 1.600 neuen Spielen je Gegner knapp darunter: eine Mischung mit +1,8 statt +2 Punkten und die Regel für 50 % Streuschaden mit +0,95 statt +1,0. **Beide haben wir nicht übernommen, auch wenn es knapp war.** Sonst wären unsere Tests nichts wert.
 
 ---
 
@@ -184,6 +185,9 @@ Wer auf einem Punktefeld steht, muss stehen bleiben, um zu punkten. Rund die Hä
 **„Woher wisst ihr, dass 94 % stimmt?“**
 800 neue Karten, beide Seiten, also 1.600 Spiele gegen Solution_92, auf denselben Karten wie V10 (89,6 %). Statistik mit gepaartem Bootstrap über ganze Karten (Reservefolie 14).
 
+**„Warum nehmt ihr die Regel für 50 % nicht, wenn sie besser war?“**
+Die Hürde stand vorher fest: +1,0 Punkte im Mittel über 6 Gegner. Es waren +0,95. Würden wir die Hürde nach dem Ergebnis senken, wären unsere Tests wertlos. Außerdem ist der Unterschied klein: etwa 1 Punkt, und nur auf einem Drittel der Karten gilt 50 %.
+
 **„Was ist ein Halter?“**
 Eine eigene Einheit, die auf einem Punktefeld steht und es hält.
 
@@ -210,4 +214,5 @@ Bitte mit train=False starten. Der Ordner Gruppe15 kann unter agents/ oder in de
 - 47 → 94 %: Übernahmeberichte `experiments/analysis/release_20261022_v7/RELEASE.md`, `release_20261022_v10/RELEASE.md` und `release_20261030_v11/RELEASE.md`, Diagramm `docs/presentation/folie_0611_fortschritt.png`.
 - Folie 11: Bestätigung Runde 2 (806000–806799, je Gegner 1.600 Spiele) in `experiments/pipeline_battle_gate.log`; Tabelle nach Streufaktor aus denselben Spielen und `experiments/analysis/battle_params_20261030/map_params.csv`; Arbeitsstand 30.10.
 - Mischung ohne neue Regeln (+1,8 statt +2): Bestätigung Runde 1 von `mix36b` in `experiments/pipeline_battle_gate.log`, Arbeitsstand 30.10., 05:35.
+- Regel für 50 % Streuschaden (`v11h`, +0,95 statt +1,0): Battle-Bestätigung auf 810400–811599 in `experiments/pipeline_battle_gate.log`, Daten `experiments/compare/battle/GB_*.csv`, nach Streufaktor mit `experiments/analysis/battle_params_20261030/map_params_810400.csv`; Arbeitsstand 31.10., 01:05.
 - Ladefehler und Abgabetest: `docs/ARBEITSSTAND.md`, Eintrag 29.10.

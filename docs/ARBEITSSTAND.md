@@ -23,7 +23,9 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 - **Seeds:** 810400–811599 sind jetzt verbraucht. Unbenutzt sind noch 810000–810399 und Runde 3 (808000–809599).
 - **Daten:** `experiments/compare/battle/GB_V11_conf.csv`, `GB_v11h_conf.csv`, `GB_v11h_confdir.csv`.
 - **Abgabe unverändert V11** (`2ab463e9…`, beide Dateien um 01:05 geprüft), `Gruppe15.zip` vom 30.10., 13:38 unverändert.
-- **Nächste Schritte:** Folie „Neu seit letzter Woche“ mit diesem Ergebnis ergänzen und eine kurze Upload-Anleitung für den 04.11. schreiben. Weitere Agent-Experimente sind nach Mahmouds Auftrag („nur das Wichtigste“) nicht geplant.
+- **Präsentation (01:09):** Das Ergebnis steht auf Folie 11 (unten), Folie 12 (Punkt 3: zwei knapp verfehlte Hürden, beide nicht übernommen) und Reservefolie 14 (Hürde der Battle-Prüfung). Stichpunkte: Sprechtext zu Folie 11/12, neue Rückfrage „Warum nehmt ihr die Regel für 50 % nicht?“, Beleg. `Sherlock_Battle_06-11-2026.pdf` ist neu gebaut (16 Seiten); die Seiten 11, 12 und 14 habe ich als Bild geprüft.
+- **Upload 04.11.:** Der Text steht in `Sherlock_Stichpunkte_06-11-2026.md` unter „Für Moodle“. `Gruppe15.zip` habe ich um 01:08 geprüft: `Gruppe15/agent.pth` hat dieselben 36 Netze (Tensoren identisch) und dieselbe Config wie die Abgabe, nur `frozen=True`, wie es `build_submission --battle` vorsieht.
+- Weitere Agent-Experimente sind nach Mahmouds Auftrag („nur das Wichtigste“) nicht geplant.
 
 ## 30.10.2026, 23:01 Berlin – Claude Code mit Mahmoud: weiter nach der Pause; `v11h` (Halbstreuung mit Sicherheitsprüfung) zugelassen, Battle-Bestätigung auf frischen Karten läuft
 
