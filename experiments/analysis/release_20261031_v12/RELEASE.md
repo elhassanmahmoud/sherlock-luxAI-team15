@@ -129,3 +129,7 @@ Rohdaten: `experiments/compare/battle/GC_V11_conf.csv`, `GC_v12_conf.csv`, `GC_v
   nachgespielt, in drei Umgebungen (Python 3.14.6; Python 3.10.15 mit torch 2.14.1/numpy 2.2.6 und mit torch
   2.2.2/numpy 1.26.4) jeweils 0 abweichende Aktionen. Testsuite 604 bestanden. Details im
   [Arbeitsstand](../../../docs/ARBEITSSTAND.md) vom 31.10., 20:10.
+- Gegen schwächere Gegner (Dev A 800000–800299, je 600 Spiele, nur Information, `D_v12_weak.csv`): DQN-Beispiel
+  der Kursvorlage, Rush-Bot und Zufallsspieler je 600/600, `sol92_sqweak` 90,2 %. Damit ist der erste Punkt unter
+  „Grenzen“ für V12 nachgemessen.
+- Rückfall `--half` (10,7 MB): in denselben 3 Spielen 1 abweichende Aktion von 1.818.

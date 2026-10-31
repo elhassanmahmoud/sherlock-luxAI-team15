@@ -5,6 +5,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 20:25 Berlin – Claude Code mit Mahmoud: V12 gegen schwächere Gegner, Rückfall-Zip geprüft, Test „öfter im Nebel schießen“ läuft
+
+- **V12 gegen schwächere Gegner** (nur Information, Dev A 800000–800299, je Gegner 600 Spiele, `experiments/compare/battle/D_v12_weak.csv`): DQN-Beispiel der Kursvorlage, Rush-Bot und Zufallsspieler je **600/600**, `sol92_sqweak` 90,2 % (V11 87,7 %, V10 79,2 %, Eintrag 30.10., 13:45). Damit ist der offene Punkt aus dem V12-Übernahmebericht erledigt.
+- **Rückfall-Zip `--half`** für den Fall, dass Moodle 22 MB ablehnt (nur im Scratchpad gebaut, nicht im Projektordner): 10,7 MB, „Check ok“ in beiden Ordnerlagen. Die 3 mit der Zip von 17:07 aufgezeichneten Spiele nachgespielt: **1 abweichende Aktion von 1.818** (Karte 4242, Schritt 294), gleich unter Python 3.14.6 und Python 3.10.15 mit torch 2.2.2/numpy 1.26.4. Bei Bedarf baut `python -m scripts.build_submission --battle --half` sie unter demselben Namen `Gruppe15.zip` (ersetzt dann die volle Fassung).
+- **Läuft seit 20:19:** `WORKERS=12 bash scripts/battle_v13.sh admit v13r0 v13r15 v13any` (Code `98f687d`, [Plan-Nachtrag 20:10](superpowers/plans/2026-10-29-battle-push.md)): Nebel-Sap mit Reserve 0 bzw. 15 statt 30 und für jede stehende Unit. Ende etwa 21:40. Abgabe unverändert **V12**, Upload-Datei `Gruppe15.zip` von 20:07.
+
 ## 31.10.2026, 20:10 Berlin – Claude Code mit Mahmoud: Absturzschutz für die Battle-Abgabe, `Gruppe15.zip` neu gebaut (spielt identisch)
 
 - **Grund:** Der Kurs-Runner (`lux/runner.py`, Zeile 178) ruft `act()` und bei `train=True` auch `update()` ohne Fehlerbehandlung auf. Ein einziger unerwarteter Fehler in Sherlock würde das Battle-Spiel abbrechen. In unseren Testspielen ist das nie passiert, aber im Battle gibt es keinen zweiten Versuch.
