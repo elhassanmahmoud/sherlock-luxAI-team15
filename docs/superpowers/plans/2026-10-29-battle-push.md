@@ -347,3 +347,6 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - Bestanden → Übernahme als V13 wie im Nachtrag 18:50 beschrieben (Sicherung von V12, neue Zip, Kurs-Runner, Tests,
   Nachspielen unter Python 3.10). Kein Kandidat zugelassen oder nicht bestanden → **V12 bleibt**, und an der
   Nebel-Sap-Menge wird vor dem Battle nicht weiter gedreht.
+- **Ergebnis Screen (31.10., 21:40):** `v13r0` zugelassen (Mittel 6 Δ +0,94 pp [−0,08; +1,97], direkt 58,5 %
+  [55,0; 61,8], Solution_92 +0,17); `v13r15` (+0,08, direkt 53,5 %) und `v13any` (+0,39, direkt 49,2 %) nicht.
+  Battle-Bestätigung `v13r0` auf 812000–813199 gestartet 21:42.

@@ -282,3 +282,41 @@ D_v13pd_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.502 (600 Spi
       Sol92    0.9567 (V12 0.9400, Δ +1.67 [+0.33; +3.17])
     Zulassung: v13pd Mittel 6 0.8564 vs V12 0.8556 (Δ +0.08 [-0.72; +0.89], 300 Karten), Solution_92 Δ +1.67, direkt gegen V12 0.5017 [0.4717; 0.5300] aus 600 Spielen -> nicht zugelassen
 [31.10. 19:59] V13-Zulassung: keine
+[31.10. 20:19] V13-Zulassung: Start v13r0 v13r15 v13any (Referenz V12, Code 98f687d)
+D_v13r0.csv: sol92_sq: 0.915 (600 Spiele), solution92: 0.942 (600 Spiele) in 416s
+D_v13r0_rl.csv: self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.873 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.770 (600 Spiele) in 564s
+D_v13r0_hold.csv: self:experiments/ensembles/league_nets6.pth: 0.760 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.930 (600 Spiele) in 498s
+D_v13r0_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.585 (600 Spiele) in 290s
+D_v13r15.csv: sol92_sq: 0.910 (600 Spiele), solution92: 0.962 (600 Spiele) in 390s
+D_v13r15_rl.csv: self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.877 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.747 (600 Spiele) in 414s
+D_v13r15_hold.csv: self:experiments/ensembles/league_nets6.pth: 0.730 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.913 (600 Spiele) in 405s
+D_v13r15_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.535 (600 Spiele) in 329s
+D_v13any.csv: sol92_sq: 0.917 (600 Spiele), solution92: 0.943 (600 Spiele) in 400s
+D_v13any_rl.csv: self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.880 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.793 (600 Spiele) in 470s
+D_v13any_hold.csv: self:experiments/ensembles/league_nets6.pth: 0.703 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.920 (600 Spiele) in 411s
+D_v13any_directv12.csv: self:experiments/ensembles/battle_v12.pth: 0.492 (600 Spiele) in 277s
+    Screen v13r0, Dev A, gepaart gegen V12:
+      league6  0.7600 (V12 0.7333, Δ +2.67 [-0.67; +6.00])
+      threat6  0.9300 (V12 0.9167, Δ +1.33 [-0.67; +3.33])
+      V3       0.8733 (V12 0.8800, Δ -0.67 [-3.00; +1.67])
+      V7       0.7700 (V12 0.7567, Δ +1.33 [-2.00; +4.67])
+      sq       0.9150 (V12 0.9067, Δ +0.83 [-1.17; +2.83])
+      Sol92    0.9417 (V12 0.9400, Δ +0.17 [-1.83; +2.00])
+    Zulassung: v13r0 Mittel 6 0.8650 vs V12 0.8556 (Δ +0.94 [-0.08; +1.97], 300 Karten), Solution_92 Δ +0.17, direkt gegen V12 0.5850 [0.5500; 0.6183] aus 600 Spielen -> zugelassen
+    Screen v13r15, Dev A, gepaart gegen V12:
+      league6  0.7300 (V12 0.7333, Δ -0.33 [-3.33; +2.67])
+      threat6  0.9133 (V12 0.9167, Δ -0.33 [-2.67; +1.67])
+      V3       0.8767 (V12 0.8800, Δ -0.33 [-2.67; +2.00])
+      V7       0.7467 (V12 0.7567, Δ -1.00 [-3.67; +1.67])
+      sq       0.9100 (V12 0.9067, Δ +0.33 [-1.50; +2.17])
+      Sol92    0.9617 (V12 0.9400, Δ +2.17 [+0.33; +4.17])
+    Zulassung: v13r15 Mittel 6 0.8564 vs V12 0.8556 (Δ +0.08 [-0.83; +1.00], 300 Karten), Solution_92 Δ +2.17, direkt gegen V12 0.5350 [0.5017; 0.5667] aus 600 Spielen -> nicht zugelassen
+    Screen v13any, Dev A, gepaart gegen V12:
+      league6  0.7033 (V12 0.7333, Δ -3.00 [-6.33; +0.33])
+      threat6  0.9200 (V12 0.9167, Δ +0.33 [-2.00; +2.67])
+      V3       0.8800 (V12 0.8800, Δ +0.00 [-2.67; +2.67])
+      V7       0.7933 (V12 0.7567, Δ +3.67 [+0.33; +7.00])
+      sq       0.9167 (V12 0.9067, Δ +1.00 [-0.83; +3.00])
+      Sol92    0.9433 (V12 0.9400, Δ +0.33 [-1.17; +1.83])
+    Zulassung: v13any Mittel 6 0.8594 vs V12 0.8556 (Δ +0.39 [-0.69; +1.50], 300 Karten), Solution_92 Δ +0.33, direkt gegen V12 0.4917 [0.4650; 0.5200] aus 600 Spielen -> nicht zugelassen
+[31.10. 21:40] V13-Zulassung: v13r0
