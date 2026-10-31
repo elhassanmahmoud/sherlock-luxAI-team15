@@ -35,6 +35,7 @@ RULE_HOOKS = {
     "_artillery_ok": ("art_sap", lambda args, out: bool(out)),
     "_sap_still": ("pt_sap", lambda args, out: bool(out)),  # letzte Bedingung von pt_sap
     "_overkill": ("no_overkill", lambda args, out: bool(out)),
+    "_fog_sap": ("fog_sap", lambda args, out: out is not None),  # 31.10.2026, V12
 }
 
 

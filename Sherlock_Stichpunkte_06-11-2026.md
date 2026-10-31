@@ -2,13 +2,13 @@
 
 > **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist nur zum **Üben**. Ziel: Die **fett gedruckten Kernsätze** jeder Folie frei sagen können. Die Folie selbst ist die Gedächtnisstütze.
 
-**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). **31.10.:** Folien 11, 12 und 14 um die letzte Prüfung ergänzt (Regel für 50 % Streuschaden knapp nicht übernommen). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
+**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). **31.10.:** erst Folien 11, 12 und 14 um die knapp verfehlte Prüfung ergänzt, um 17:30 auf die neue Abgabe **V12** umgestellt (Folien 9 und 11–14, Sprechtext, Rückfragen, Belege). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
 
 | Wer | Folien | Zeit |
 |---|---|---|
 | Moayed | 1–5 · 10 · 12–13 | 5:10 |
-| Mahmoud | 6–9 · 11 | 4:20 |
-| **Gesamt** | | **9:30** (höchstens 10:00) |
+| Mahmoud | 6–9 · 11 | 4:30 |
+| **Gesamt** | | **9:40** (höchstens 10:00) |
 
 Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis, nicht sagen.
 
@@ -21,10 +21,10 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 ## Vor dem Vortrag
 
 1. **Bis Mittwoch Nacht** `Gruppe15.zip` auf Moodle hochladen und die Pfade schicken (Text im Abschnitt „Für Moodle“ unten).
-   Die Zip mit V11 ist 22,2 MB groß. Lehnt Moodle die Größe ab, baut `python -m scripts.build_submission --battle --half`
-   eine 10,7-MB-Fassung mit demselben Namen. Sie spielte in der Prüfung gleich, gemessen wurde aber die volle Fassung.
+   Die Zip mit V12 ist 22,2 MB groß. Lehnt Moodle die Größe ab, baut `python -m scripts.build_submission --battle --half`
+   eine Fassung mit etwa 10,7 MB und demselben Namen. Bei V11 spielte sie im Nachspieltest gleich, gemessen wurde aber die volle Fassung.
 2. **Folie 11 aktualisieren**, falls bis zum 06.11. noch etwas Neues dazukommt. Der Prof will ausdrücklich die Entwicklungen der letzten Woche hören.
-3. Zweimal mit Uhr proben. Ziel 9:30, damit Luft bleibt.
+3. Zweimal mit Uhr proben. Ziel 9:40, damit Luft bleibt.
 
 ---
 
@@ -112,8 +112,8 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 ## Folie 9 – Das Netz entscheidet, Regeln sichern ab
 ### Mahmoud · 0:40
 
-- Wie viel entscheiden die Netze wirklich? **92 % der Aktionen spielt Sherlock genau so, wie die Netze sie wollen.**
-- Regeln greifen nur bei 7,5 % ein, zum Beispiel um schädlichen Nebel zu umgehen oder nicht zweimal auf denselben Gegner zu schießen.
+- Wie viel entscheiden die Netze wirklich? **91 % der Aktionen spielt Sherlock genau so, wie die Netze sie wollen.**
+- Regeln greifen nur bei 8 % ein, zum Beispiel um schädlichen Nebel zu umgehen oder nicht zweimal auf denselben Gegner zu schießen.
 - Nur mit einer einfachen Regel, ohne Netze, gewannen wir 3 % statt 38 %. Das Gelernte ist der Kern.
 
 ---
@@ -128,15 +128,15 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 
 ---
 
-## Folie 11 – Neu seit letzter Woche: V11
-### Mahmoud · 1:00
+## Folie 11 – Neu seit letzter Woche: V11 und V12
+### Mahmoud · 1:10
 
-- Zwei Dinge haben wir diese Woche verändert.
-- *(Linke Box)* **Erstens: Die 18 Netze vom 20.10. kannten unsere späteren Regeln nicht.** Wir haben Kopien davon je 5.500 Spiele weitertrainiert, mit allen Regeln aktiv. Alte und neue Netze gemischt, also 36, sind besser als jede Hälfte allein.
-- *(Rechte Box)* **Zweitens haben wir die verlorenen Spiele nach verdeckten Spielwerten sortiert.** Einer davon ist der Streuschaden beim Sap: Wie viel verlieren die Einheiten neben dem Zielfeld? Bei 100 % hat V10 deutlich öfter verloren.
-- Sherlock schätzt diesen Wert während des Spiels aus den eigenen Energieverlusten. **Ist er sicher 100 %, schießt Sherlock aggressiver:** schon bei 2 getroffenen Gegnern und auch auf Gegner, die gerade ziehen. Die treffen wir dann trotzdem voll, weil die Engine erst bewegt und dann schießt.
-- *(Unten)* **Ergebnis auf 1.600 neuen Spielen je Gegner: 94,1 statt 89,6 % gegen Solution_92**, direkt gegen V10 59,5 %. Damit ist V11 unsere Abgabe für heute.
-- **Danach haben wir dieselbe Regel auch für sicher 50 % Streuschaden geprüft.** Auf diesen Karten war sie klar besser: +2,8 Punkte, direkt gegen V11 64 %. Über alle Karten und 6 Gegner waren es aber nur +0,95 statt der vorher festgelegten +1,0 Punkte. **Deshalb bleibt V11.**
+- Diese Woche gab es zwei neue Versionen.
+- *(Linke Box)* **V11: Die 18 Netze vom 20.10. kannten unsere späteren Regeln nicht.** Wir haben Kopien davon je 5.500 Spiele mit allen Regeln weitertrainiert und alte und neue gemischt, also 36 Netze. Außerdem schätzt Sherlock den verdeckten Streuschaden beim Sap aus den eigenen Energieverlusten. Ist er sicher hoch, schießt Sherlock schon bei 2 getroffenen Gegnern. Gegen Solution_92 ging es von 89,6 auf 94,1 %.
+- *(Rechte Box)* **V12: Wir haben die verlorenen Spiele nach der verdeckten Sichtweite sortiert. Bei Sichtweite 1 verlor V11 viel öfter.** Dann sind 97 % der gegnerischen Halter unsichtbar.
+- **Sherlock sieht aber den Punktestand. Steigen die Gegnerpunkte, obwohl kein Gegner auf einem Punktefeld zu sehen ist, steht dort jemand unsichtbar. Dann schießt Sherlock auf ein verdecktes Punktefeld in Reichweite.**
+- Diese Regel gab es schon, sie schoss aber fast nie. Wegen der Spiegelsymmetrie galt das Spiegelbild unseres Sichtfelds als gesehen, und die gegnerischen Punktefelder sind genau dieses Spiegelbild.
+- *(Unten)* **Ergebnis auf 1.600 neuen Spielen je Gegner: im Mittel über 6 Gegner 87,1 statt 81,2 %, direkt gegen V11 61 %.** Damit ist V12 unsere Abgabe für heute.
 
 ---
 
@@ -145,8 +145,8 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 
 - Drei Dinge haben wir gelernt.
 - **Erstens: Das Gelernte trägt.** Ohne die Netze verlieren wir fast jedes Spiel.
-- **Zweitens: Erst Fehler suchen, dann passend trainieren.** Fehlersuche brachte 78 → 90 %. Danach half Training wieder, aber erst, als wir unter den heutigen Regeln weitertrainiert haben: 90 → 94 %.
-- **Drittens: Jede Idee auf neuen Karten prüfen, mit Hürden, die vorher feststehen.** Zwei Kandidaten lagen auf 1.600 neuen Spielen je Gegner knapp darunter: eine Mischung mit +1,8 statt +2 Punkten und die Regel für 50 % Streuschaden mit +0,95 statt +1,0. **Beide haben wir nicht übernommen, auch wenn es knapp war.** Sonst wären unsere Tests nichts wert.
+- **Zweitens: Erst Fehler suchen, dann passend trainieren.** Fehlersuche brachte 78 → 90 % und diese Woche mit V12 noch einmal 5,9 Punkte über 6 Gegner. Training half erst, als wir unter den heutigen Regeln weitertrainiert haben: 90 → 94 %.
+- **Drittens: Jede Idee auf neuen Karten prüfen, mit Hürden, die vorher feststehen.** Zwei Kandidaten lagen auf 1.600 neuen Spielen je Gegner knapp darunter: eine Mischung mit +1,8 statt +2 Punkten und die Regel für 50 % Streuschaden mit +0,95 statt +1,0. **Beide haben wir nicht übernommen, auch wenn es knapp war.** Sonst wären unsere Tests nichts wert. V12 bestand dann mit +5,9 statt der verlangten +1,0.
 
 ---
 
@@ -154,7 +154,7 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 ### Moayed · 0:25
 
 - **Kurz gesagt: Sherlock entscheidet gelernt und sichert programmiert ab.**
-- Gleich im Battle könnt ihr darauf achten: Die Einheiten verteilen sich auf verschiedene Ziele, Einheiten auf Punktefeldern bleiben stehen und schießen, bei vollem Streuschaden auch auf ziehende Gegner, und Sherlock umgeht schädlichen Nebel.
+- Gleich im Battle könnt ihr darauf achten: Die Einheiten verteilen sich auf verschiedene Ziele, Einheiten auf Punktefeldern bleiben stehen und schießen, bei kleiner Sicht auch auf Gegner, die sie gar nicht sehen, und Sherlock umgeht schädlichen Nebel.
 - Danke! Habt ihr Fragen?
 
 ---
@@ -162,7 +162,7 @@ Die Folien 14–16 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis,
 ## Bei Fragen
 
 **„Ist das noch Reinforcement Learning, wenn Regeln eingreifen?“**
-Ja. 92 % der Aktionen kommen unverändert aus den Netzen, Regeln ändern rund 7 %. Ohne Netze, nur mit einer einfachen Regel: 3 % statt 38 % gegen Solution_92.
+Ja. 91 % der Aktionen kommen unverändert aus den Netzen, Regeln ändern rund 8 %. Ohne Netze, nur mit einer einfachen Regel: 3 % statt 38 % gegen Solution_92.
 
 **„Warum nicht PPO?“**
 Haben wir probiert, das war auch die Empfehlung des Profs: CNN auf Kartenebenen, erst Nachahmung des Ensembles, dann PPO. Es erreichte die Netze (73,0 % gegen 73,25 %), war aber nicht besser. Deshalb bleibt das DQN-Ensemble.
@@ -183,10 +183,16 @@ Ja, aber programmiert: Die Zielzuweisung gibt jeder Einheit ein eigenes Ziel, na
 Wer auf einem Punktefeld steht, muss stehen bleiben, um zu punkten. Rund die Hälfte aller Aktionen ist „stehen“.
 
 **„Woher wisst ihr, dass 94 % stimmt?“**
-800 neue Karten, beide Seiten, also 1.600 Spiele gegen Solution_92, auf denselben Karten wie V10 (89,6 %). Statistik mit gepaartem Bootstrap über ganze Karten (Reservefolie 14).
+800 neue Karten, beide Seiten, also 1.600 Spiele gegen Solution_92, auf denselben Karten wie V10 (89,6 %): V11 94,1 %. V12 auf weiteren 800 neuen Karten 94,4 %. Statistik mit gepaartem Bootstrap über ganze Karten (Reservefolie 14).
 
-**„Warum nehmt ihr die Regel für 50 % nicht, wenn sie besser war?“**
-Die Hürde stand vorher fest: +1,0 Punkte im Mittel über 6 Gegner. Es waren +0,95. Würden wir die Hürde nach dem Ergebnis senken, wären unsere Tests wertlos. Außerdem ist der Unterschied klein: etwa 1 Punkt, und nur auf einem Drittel der Karten gilt 50 %.
+**„Die Regel für 50 % Streuschaden lag knapp unter der Hürde. Warum ist sie in V12 drin?“**
+Allein verfehlte sie die Hürde knapp: +0,95 statt +1,0 Punkte, deshalb blieb V11. Vor der nächsten Messung haben wir festgelegt: V12 ist diese Regel plus die Nebel-Regel, einmal geprüft auf neuen, unbenutzten Karten und mit denselben Hürden. V12 bestand mit +5,9. Den größten Teil bringt die Nebel-Regel, allein brachte sie in der Entwicklung +2,8.
+
+**„Woher weiß Sherlock, wo unsichtbare Gegner stehen?“**
+Sherlock kennt die Punktefelder aus dem Gedächtnis und sieht den Punktestand des Gegners. Steigt der um 3, aber nur 1 Gegner steht sichtbar auf einem Punktefeld, stehen 2 unsichtbar auf Punktefeldern. Sherlock schießt dann auf ein Punktefeld in Reichweite, das gerade nicht im Sichtfeld liegt und auf dem keine eigene Einheit steht. Der Schütze bleibt dabei auf seinem Feld stehen und punktet weiter. Geschossen wird nur mit genug Energiereserve.
+
+**„Was war der Fehler in der Nebel-Regel?“**
+Die Karte ist spiegelsymmetrisch, deshalb trägt das Gedächtnis alles Gesehene auch gespiegelt ein, auch als „gesehen“. Die gegnerischen Punktefelder sind genau das Spiegelbild unserer. Sie galten deshalb als gesehen und leer, und die Regel schoss fast nie. Jetzt zählt nur, was der Sensor in diesem Schritt wirklich zeigt.
 
 **„Was ist ein Halter?“**
 Eine eigene Einheit, die auf einem Punktefeld steht und es hält.
@@ -210,9 +216,10 @@ Bitte mit train=False starten. Der Ordner Gruppe15 kann unter agents/ oder in de
 
 ## Belege
 
-- Entscheidungsablauf, Maske, Ensemble, Regelanteile: `Sherlock_Entscheidungsprozess.md`, Messung für V11 `experiments/analysis/decision_trace_20261030_v11.json` (dieselben 10 Diagnosespiele wie am 26.10., 36.209 Entscheidungen, kein Leistungsnachweis; V10: `decision_trace_20261026.json`).
-- 47 → 94 %: Übernahmeberichte `experiments/analysis/release_20261022_v7/RELEASE.md`, `release_20261022_v10/RELEASE.md` und `release_20261030_v11/RELEASE.md`, Diagramm `docs/presentation/folie_0611_fortschritt.png`.
-- Folie 11: Bestätigung Runde 2 (806000–806799, je Gegner 1.600 Spiele) in `experiments/pipeline_battle_gate.log`; Tabelle nach Streufaktor aus denselben Spielen und `experiments/analysis/battle_params_20261030/map_params.csv`; Arbeitsstand 30.10.
+- Entscheidungsablauf, Maske, Ensemble, Regelanteile: `Sherlock_Entscheidungsprozess.md`, Messung für V12 `experiments/analysis/decision_trace_20261031_v12.json` (dieselben 10 Diagnosespiele wie am 26.10., 36.204 Entscheidungen, kein Leistungsnachweis; V11: `decision_trace_20261030_v11.json`, daraus die Beispiele auf Folie 6 und 7 mit denselben Netzen; V10: `decision_trace_20261026.json`).
+- 47 → 94 %: Übernahmeberichte `experiments/analysis/release_20261022_v7/RELEASE.md`, `release_20261022_v10/RELEASE.md`, `release_20261030_v11/RELEASE.md` und `release_20261031_v12/RELEASE.md`, Diagramm `docs/presentation/folie_0611_fortschritt.png`.
+- Folie 11, V11: Bestätigung Runde 2 (806000–806799, je Gegner 1.600 Spiele) in `experiments/pipeline_battle_gate.log`; Arbeitsstand 30.10.
+- Folie 11, V12: Battle-Bestätigung auf 808000–809199 in `experiments/pipeline_battle_gate.log`, Daten `experiments/compare/battle/GC_*.csv`, Tabelle nach Sichtweite mit `experiments/analysis/battle_params_20261030/map_params.csv`; Schwachstelle Sicht 1 und Fehler: Arbeitsstand 31.10., 14:40; Ergebnis: Arbeitsstand 31.10., 17:15 und Übernahmebericht.
 - Mischung ohne neue Regeln (+1,8 statt +2): Bestätigung Runde 1 von `mix36b` in `experiments/pipeline_battle_gate.log`, Arbeitsstand 30.10., 05:35.
 - Regel für 50 % Streuschaden (`v11h`, +0,95 statt +1,0): Battle-Bestätigung auf 810400–811599 in `experiments/pipeline_battle_gate.log`, Daten `experiments/compare/battle/GB_*.csv`, nach Streufaktor mit `experiments/analysis/battle_params_20261030/map_params_810400.csv`; Arbeitsstand 31.10., 01:05.
 - Ladefehler und Abgabetest: `docs/ARBEITSSTAND.md`, Eintrag 29.10.
