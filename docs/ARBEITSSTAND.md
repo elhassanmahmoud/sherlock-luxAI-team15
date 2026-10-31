@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 31.10.2026, 20:15 Berlin – Claude Code mit Mahmoud: Absturzschutz für die Battle-Abgabe, `Gruppe15.zip` neu gebaut (spielt identisch)
+
+- **Grund:** Der Kurs-Runner (`lux/runner.py`, Zeile 178) ruft `act()` und bei `train=True` auch `update()` ohne Fehlerbehandlung auf. Ein einziger unerwarteter Fehler in Sherlock würde das Battle-Spiel abbrechen. In unseren Testspielen ist das nie passiert, aber im Battle gibt es keinen zweiten Versuch.
+- **Änderung** (`agents/sherlock/main.py`): Nur mit `cfg.frozen` fangen `act()` und `update()` Fehler ab; `frozen` setzt allein `build_submission --battle` in der Zip. Die Units bleiben dann einen Schritt stehen, die erste Meldung samt Traceback geht einmal nach stderr, `caught_errors` zählt mit. Im nächsten Schritt spielt der Agent normal weiter. Ohne `frozen` (Training, alle Messungen, die installierten Abgabe-Gewichte) werden Fehler wie bisher weitergereicht.
+- **Prüfungen:**
+  - 3 neue Tests in `tests/test_crash_guard.py`: Eingefroren stehen alle Units, es gibt eine Meldung, und der Zähler steht nach 2× `act` und 1× `update` auf 3. Nach einem einmaligen Fehler kommt wieder der normale Nebel-Sap. Ohne `frozen` kommt der Fehler durch. Gegenprobe mit dem alten Code: alle 3 scheitern. **Ganze Suite: 604 bestanden**, 14 Untertests.
+  - `Gruppe15.zip` neu gebaut (20:07, 22,2 MB), „Check ok“ in beiden Ordnerlagen, auch mit `train=True` eingefroren. `Gruppe15/agent.pth` ist bytegleich mit der Zip von 17:07 (SHA-256 `17477a98…`), alle 15 Python-Dateien sind bytegleich mit `agents/sherlock/`.
+  - **Spielt identisch:** 3 ganze Spiele mit der alten Zip von 17:07 aufgezeichnet und mit der neuen Zip nachgespielt. Karten: 800004 mit Sicht 1, 4242, 800009 mit Sicht 2 und Streufaktor 0,25; je 303 Schritte, Sherlock gegen Sherlock wie im Kurs-Runner mit `train=True`. Geprüft in der Projektumgebung (Python 3.14.6) und unter Python 3.10.15 mit torch 2.14.1/numpy 2.2.6 sowie torch 2.2.2/numpy 1.26.4: jeweils **0 abweichende Aktionen**.
+- **Abgabe:** Gewichte unverändert V12 (`b258dc99…`). **Hochzuladen ist die neue `Gruppe15.zip` von 20:07.** Die Zip von 17:07 spielt gleich, hat den Schutz aber nicht.
+
 ## 31.10.2026, 20:05 Berlin – Claude Code mit Mahmoud: bessere Zielwahl für den Nebel-Sap bringt im Spiel nichts, V12 bleibt
 
 - **Screen** (`WORKERS=12 bash scripts/battle_v13.sh admit v13p v13pd`, Code `5a5510f`, 18:50–19:59), Dev A 800000–800299, je Gegner 600 Spiele, gepaart gegen V12 auf denselben Karten:

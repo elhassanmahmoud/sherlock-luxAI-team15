@@ -30,6 +30,8 @@ Pseudocode (fuer die Praesentation):
 from __future__ import annotations
 
 import os
+import sys
+import traceback
 from typing import Optional
 
 import numpy as np
@@ -109,6 +111,7 @@ class Agent_x:
         self.env_steps = 0
         self.learn_steps = 0
         self.recent_losses: list[float] = []
+        self.caught_errors = 0  # nur die eingefrorene Abgabe faengt Fehler ab (act/update)
 
         self.belief = Belief(0, canonical=self.cfg.canonical, symmetry=self.cfg.use_symmetry,
                              early_inference=self.cfg.early_inference,
@@ -252,6 +255,35 @@ class Agent_x:
         return self._cache[1:]
 
     def act(self, step: int, obs) -> np.ndarray:
+        # 31.10.2026: Der Kurs-Runner faengt Fehler des Agenten nicht ab, ein einziger unerwarteter Fehler wuerde das
+        # Battle-Spiel abbrechen. Die eingefrorene Abgabe (cfg.frozen) laesst ihre Units dann einen Schritt stehen und
+        # spielt weiter. Training und Messungen laufen ohne frozen: dort bleiben Fehler sichtbar.
+        if not self.cfg.frozen:
+            return self._act_est(step, obs)
+        try:
+            return self._act_est(step, obs)
+        except Exception:
+            self._caught("act")
+            return self._all_stay()
+
+    def _caught(self, where: str) -> None:
+        self.caught_errors += 1
+        if self.caught_errors == 1:  # einmal melden, nicht in jedem Schritt
+            try:
+                print(f"[Sherlock] Fehler in {where}() abgefangen, die Units bleiben in diesem Schritt stehen:",
+                      file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+            except Exception:
+                pass
+
+    def _all_stay(self) -> np.ndarray:
+        try:
+            n = int((self.env_cfg or {}).get("max_units", 16))
+        except Exception:
+            n = 16
+        return np.zeros((n, 3), dtype=int)
+
+    def _act_est(self, step: int, obs) -> np.ndarray:
         use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est or self.cfg.art_splash
                     or self.cfg.sap_still_splash) and (not self.training or self.cfg.rules_in_training_all))
         if use_est:
@@ -1286,6 +1318,15 @@ class Agent_x:
 
     # ------------------------------------------------------------- lernen
     def update(self, step: int, obs, reward, action, terminated: bool, next_obs) -> None:
+        # Der Kurs-Runner ruft update() bei train=True nach jedem Schritt auf; Absicherung wie in act()
+        if not self.cfg.frozen:
+            return self._update(step, obs, reward, action, terminated, next_obs)
+        try:
+            self._update(step, obs, reward, action, terminated, next_obs)
+        except Exception:
+            self._caught("update")
+
+    def _update(self, step: int, obs, reward, action, terminated: bool, next_obs) -> None:
         self.env_steps += 1
         prev_ctx = self._prev_ctx
         self.belief.observe(next_obs)  # Belief weiterdrehen (act() ist idempotent)

@@ -118,3 +118,14 @@ Rohdaten: `experiments/compare/battle/GC_V11_conf.csv`, `GC_v12_conf.csv`, `GC_v
 - Eine `--half`-Fassung (float16, etwa 10,7 MB) für eine mögliche Moodle-Größengrenze gibt es für V12 noch nicht.
   Bei Bedarf: `python -m scripts.build_submission --battle --half`. Sie wäre nicht die in den Hürden gemessene
   Fassung.
+
+## Nachtrag 31.10.2026, 20:15: Zip mit Absturzschutz neu gebaut
+
+- `Gruppe15.zip` (20:07, 22,2 MB) enthält zusätzlich den Absturzschutz in `agents/sherlock/main.py`: Nur mit
+  `frozen` (also nur in der Zip) fangen `act()` und `update()` Fehler ab, die Units bleiben dann einen Schritt
+  stehen. Außerdem sind die abgeschalteten Schalter `fog_prior`/`fog_drop_est` vom Abend im Code. Gewichte und
+  Config sind unverändert, `Gruppe15/agent.pth` ist bytegleich (SHA-256 `17477a98…`).
+- Nachweis: 3 mit der alten Zip aufgezeichnete Spiele (Karten 800004, 4242, 800009) mit der neuen Zip
+  nachgespielt, in drei Umgebungen (Python 3.14.6; Python 3.10.15 mit torch 2.14.1/numpy 2.2.6 und mit torch
+  2.2.2/numpy 1.26.4) jeweils 0 abweichende Aktionen. Testsuite 604 bestanden. Details im
+  [Arbeitsstand](../../../docs/ARBEITSSTAND.md) vom 31.10., 20:15.
