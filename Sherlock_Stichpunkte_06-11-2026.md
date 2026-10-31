@@ -2,7 +2,7 @@
 
 > **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist nur zum **Üben**. Ziel: Die **fett gedruckten Kernsätze** jeder Folie frei sagen können. Die Folie selbst ist die Gedächtnisstütze.
 
-**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). **31.10.:** erst Folien 11, 12 und 14 um die knapp verfehlte Prüfung ergänzt, um 17:30 auf die neue Abgabe **V12** umgestellt (Folien 9 und 11–14, Sprechtext, Rückfragen, Belege). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
+**Entwurf vom 29.10.2026, am 30.10. auf die neue Abgabe V11 umgestellt** (Claude Code mit Mahmoud; geändert: Folien 1–4, 6–14, 16). **31.10.:** erst Folien 11, 12 und 14 um die knapp verfehlte Prüfung ergänzt, um 17:20 auf die neue Abgabe **V12** umgestellt (Folien 9 und 11–14, Sprechtext, Rückfragen, Belege). Folien: `Sherlock_Battle_06-11-2026.pdf` im Projektordner, Quelle: `docs/presentation/Sherlock_Battle_06-11-2026.html`. Die Aufteilung ist ein Vorschlag, Moayed bitte einmal durchgehen.
 
 | Wer | Folien | Zeit |
 |---|---|---|

@@ -5,7 +5,7 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 31.10.2026, 17:35 Berlin – Claude Code mit Mahmoud: Präsentation 06.11. auf V12 umgestellt
+## 31.10.2026, 17:20 Berlin – Claude Code mit Mahmoud: Präsentation 06.11. auf V12 umgestellt
 
 - **Entscheidungsstatistik für V12 neu gemessen** (`python -m scripts.decision_trace`, dieselben 10 Diagnosespiele 690000–690004, `experiments/analysis/decision_trace_20261031_v12.json`): 36.204 Entscheidungen; wie die Netze 91,2 % (V11 92,3), Regeln ändern 8,3 % (7,5). Mehr Eingriffe kommen vor allem von `pt_sap` (1,3 statt 0,5 %) und `art_sap` (0,6 statt 0,35 %), weil 4 der 5 Karten den Streufaktor 0,5 haben. Der Nebel-Sap greift hier nur bei 0,1 %, denn diese Karten haben Sichtweite 2–4. `decision_trace.py` zählt `fog_sap` jetzt als eigene Regel; die 4 Tests in `tests/test_decision_trace.py` bestehen.
 - **Folien** (`docs/presentation/Sherlock_Battle_06-11-2026.html`, PDF im Projektordner neu gebaut, 16 Seiten; Seiten 9 und 11–14 als Bild geprüft):
