@@ -613,3 +613,11 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   v19s v19sr`. Zulassung unverändert. Von den zugelassenen bekommt der mit dem höchsten Mittel die einzige
   Battle-Bestätigung auf 822000–822799, direkt 823000–823399. Ist `v18r` die Referenz, entfallen `v19c` und `v19s`.
 - Sonst unverändert wie Nachtrag 12:17.
+- **Ergebnis Screen (01.11., 15:21, gepaart gegen V13 = `v15cx`, Dev A 300 Karten): `v19cr` gewählt.**
+  - `v19cr`: Mittel 6 +1,81 pp [+0,25; +3,42], Solution_92 +2,17, direkt 51,7 % [46,7; 56,8] → zugelassen, höchstes Mittel.
+    Je Gegner: V7 +3,67, `league_nets6` +3,00, Solution_92 +2,17, V3 +1,67, `sol92_sq` +0,33, `threat6` ±0.
+  - `v19c`: +1,22 [−0,36; +2,86], Solution_92 +2,17, direkt 51,0 % → zugelassen.
+  - `v19s`: −0,28 [−0,58; −0,06], direkt 50,0 % → nicht zugelassen. `v19sr`: +0,22, direkt 52,3 % → nicht zugelassen.
+  - Der Gewinn kommt also von `cand_post`, nicht von `spawn_proof`.
+- **Battle-Bestätigung `v19cr` gestartet (15:22):** gegen V13 auf 822000–822799, direkt 823000–823399, Dateien `GG_*`, Code
+  `49a82ec` (Schalter seit `9a34ffa`).
