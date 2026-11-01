@@ -65,11 +65,17 @@ def main() -> int:
     ap.add_argument("--gate-log", type=Path, required=True)
     ap.add_argument("--gate-name", required=True)
     ap.add_argument("--dry-run", action="store_true")
+    # 01.11.2026: ausdrueckliche Teamentscheidung ohne bestandene Bestaetigung (Wortlaut und Belege angeben);
+    # die Begruendung steht im Uebernahme-Manifest, das Gate-Ergebnis bleibt unveraendert im Log.
+    ap.add_argument("--team-decision", default="", help="Begruendung einer Teamentscheidung ohne bestandenes Gate")
     args = ap.parse_args()
 
-    if not gate_passed(args.gate_log, args.gate_name):
+    passed = gate_passed(args.gate_log, args.gate_name)
+    if not passed and len(args.team_decision.strip()) < 20:
         print("ABBRUCH: keine bestandene Bestaetigung im Gate-Log")
         return 1
+    if not passed:
+        print(f"Teamentscheidung ohne bestandenes Gate: {args.team_decision.strip()}")
     p0, p1 = WEIGHTS / "agent_p0.pth", WEIGHTS / "agent_p1.pth"
     old = sha(p0)
     if sha(p1) != old:
@@ -119,7 +125,8 @@ def main() -> int:
         installed_sha256={str(p.relative_to(ROOT)): sha(p) for p in (p0, p1)},
         rollback_manifest=str((backup / "manifest.json").relative_to(ROOT)),
         rollback_readme=str((backup / "README.md").relative_to(ROOT)),
-        gate_log=str(args.gate_log), runner_report=str(out.relative_to(ROOT)))
+        gate_log=str(args.gate_log), runner_report=str(out.relative_to(ROOT)),
+        gate_passed=bool(passed), team_decision=args.team_decision.strip() or None)
     (ROOT / "experiments" / "releases" / f"{day}_{args.label}.json").write_text(json.dumps(manifest, indent=2))
     print(json.dumps(manifest, indent=2))
     return rc

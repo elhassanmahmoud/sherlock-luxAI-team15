@@ -59,3 +59,23 @@ def test_gate_passed_skips_summary_lines_of_old_logs(tmp_path):
                    "GATE Bestaetigung: Solution_92 0.9031 vs Referenz 0.8281, Δ +7.50 pp\n"
                    "GATE Bestaetigung: BESTANDEN\n", encoding="utf-8")
     assert gate_passed(log, "V8st")
+
+
+def test_release_refuses_a_failed_gate_without_a_written_team_decision(tmp_path, monkeypatch):
+    import sys
+
+    from scripts import release_candidate as rc
+    log = tmp_path / "gate.log"
+    log.write_text("[01.11. 11:33] Battle-Bestaetigung: Start v18r (a.pth)\nGATE Battle-Bestaetigung: NICHT BESTANDEN\n",
+                   encoding="utf-8")
+    cand = tmp_path / "c.pth"
+    cand.write_bytes(b"x")
+    base = ["release_candidate", "--candidate", str(cand), "--label", "x", "--gate-log", str(log), "--gate-name", "v18r",
+            "--dry-run"]
+    monkeypatch.setattr(sys, "argv", base)
+    assert rc.main() == 1
+    monkeypatch.setattr(sys, "argv", base + ["--team-decision", "kurz"])
+    assert rc.main() == 1
+    # mit ausfuehrlicher Begruendung laeuft der Trockenlauf durch (Abgabe-Dateien werden nur gelesen)
+    monkeypatch.setattr(sys, "argv", base + ["--team-decision", "Teamentscheidung Mahmoud 01.11.: zwei Messungen positiv"])
+    assert rc.main() == 0
