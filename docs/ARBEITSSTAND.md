@@ -5,6 +5,29 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 02:25 Berlin – Claude Code (autonom, Auftrag Mahmoud): Fehler in der Nebel-Schätzung gefunden und behoben (Schalter), Screen gegen V12 startet
+
+- **Auftrag Mahmoud (gegen 1 Uhr):** „codiere doch einfach neue Regeln und teste diese … alles was geht“, Ziel Platz 1 gegen alle Agenten im Kurs, „hast alle Genehmigungen“. Die Absprache „keine Regeltests mehr vor dem Battle“ ist damit aufgehoben.
+- **Suche** (nur verbrauchte Karten, nichts für Gates):
+  - V12 nach versteckten Parametern auf 808000–808799 und 812000–812799, 19.200 Spiele.
+  - Verlorene und gewonnene Spiele mit Wahrheit nachgemessen (`scripts/par_losses`, gegen `league_nets6`, V7 und Solution_92).
+  - Probe für einen exakten Löser der Punkte-Gleichungen: Er bringt nichts, nach der Propagation bleiben kaum offene Gleichungen.
+  - Abstimmung der 36 Netze: Die Q-Werte beider Hälften sind gleich groß, kein Problem.
+- **Gefundener Fehler:** Ein Spielbild von 812584 zeigte das Problem (Nebelabzug 25, Bewegungskosten 5; V12 verliert gegen Solution_92 beide Seiten, 272:1112 und 259:1074).
+  - Die Schätzung des Nebelabzugs (`param_est`) kippt in Match 1 bei Schritt 33 von 25 auf 0. Die Nebel-Meidung ist danach für das ganze Spiel aus.
+  - Grund: Die Engine kappt die Energie bei 0. Eine Unit mit 0 Energie auf einem Nebel-Tile ohne Feldenergie zeigt „Verlust 0“, und jeder Schritt zählt als neuer Beleg für Abzug 0.
+  - In Match 2 standen 3 von 4 verfolgten Units mit 0 Energie im Nebel fest (16:629 Punkte).
+- **Neue Schalter** (Standard aus):
+  - `est_censor`: Beobachtungen mit Energie 0 zählen in der Schätzung nicht.
+  - `neb_cross`: Nebel nur mit Energie für die ganze Durchquerung betreten, statt pauschal mit 2 × Abzug.
+  - 6 neue Tests in `tests/test_nebula_fix.py`, darunter die Nachstellung des Fehlers.
+  - **Ganze Suite 615 bestanden.** Ein erster Lauf direkt nach der Gleichheitsprüfung meldete Fehler in `test_early_curriculum_study`, weil dessen Ressourcensperre noch Prozesse sah; der Lauf danach war grün.
+  - V12 mit dem neuen Code (Schalter aus): 16 Spiele auf 812000–812003 in allen 20 Kennzahlen identisch.
+- **Rauchtest** 812584 (verbraucht, kein Gate): Mit beiden Schaltern gewinnt V12 beide Seiten, 994:342 und 825:337.
+- **Kandidaten:** `battle_v15c.pth` (`est_censor`, SHA-256 `16a5c53a…`) und `battle_v15cx.pth` (beide Schalter, `6d00b6c5…`); sonst bytegleich mit V12. Vorab festgelegt im [Plan-Nachtrag 01.11., 02:20](superpowers/plans/2026-10-29-battle-push.md).
+- **Startet jetzt:** `REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v15c v15cx`. Wird ein Kandidat zugelassen, folgt genau eine Battle-Bestätigung auf 813200–814399.
+- Abgabe bis dahin unverändert **V12**.
+
 ## 01.11.2026, 00:46 Berlin – Claude Code mit Mahmoud: `end_sap` nicht zugelassen, V12 bleibt die Battle-Abgabe; Ende der Regeltests
 
 - **Screen** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v14e10 v14e20`, Code `2924b53`, 23:54–00:44), Dev A 800000–800299 gepaart gegen V12, je Gegner 600 Spiele, direkt gegen V12 600 Spiele:

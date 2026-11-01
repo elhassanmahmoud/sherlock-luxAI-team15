@@ -389,3 +389,36 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   +2,00], Solution_92 −0,33, aber direkt gegen V12 nur 45,7 % [40,8; 50,5] (Hürde ≥ 50 %); `v14e20` Mittel 6
   +0,14 [−1,03; +1,31], Solution_92 −0,33, direkt 54,0 %. Keine Battle-Bestätigung; 813200–814399 bleiben unbenutzt.
   Wie vereinbart keine weiteren Regeltests vor dem Battle.
+
+## Nachtrag 01.11.2026, 02:20 (Nebel-Korrekturen, vor jeder Messung mit `est_censor`/`neb_cross` auf Dev A oder 813200–814399)
+
+- **Auftrag Mahmoud (01.11., gegen 1 Uhr):** neue Regeln bauen und testen, „alles was geht“, Ziel Platz 1 gegen alle
+  Agenten im Kurs. Die Absprache „keine weiteren Regeltests vor dem Battle“ (Nachtrag 22:05) ist damit aufgehoben.
+- **Befund** (nur Zuschauen auf verbrauchten Karten): V12 verliert gegen Solution_92 auf 812584 beide Seiten
+  (272:1112, 259:1074). Karte mit Nebelabzug 25 und Bewegungskosten 5.
+  - Die Schätzung des Nebelabzugs (`param_est`) kippt in Match 1 bei Schritt 33 von 25 auf 0, die Nebel-Meidung ist
+    danach für das ganze Spiel aus.
+  - Ursache: Die Engine kappt die Energie nach Feld und Nebel bei 0 (`luxai_s3/env.py`, `clip(..., min_unit_energy=0, ...)`).
+    Eine Unit mit 0 Energie auf einem Nebel-Tile mit Feldenergie 0 zeigt „Verlust 0“. Das zählt als Beleg für
+    Abzug 0, und jeder weitere Schritt verstärkt es.
+  - In Match 2 stehen 3 von 4 verfolgten Units mit 0 Energie im Nebel fest (16:629 Punkte). Schon vorher gingen Units
+    mit pauschal 2 × Abzug Energie in breite Nebel und blieben darin stecken.
+- **Neue Schalter** (Standard aus, Tests `tests/test_nebula_fix.py`):
+  - `est_censor`: Beobachtungen mit Energie 0 wertet die Parameterschätzung nicht aus, auch beim Streufaktor.
+  - `neb_cross`: Nebel nur mit Energie für die ganze Durchquerung betreten, also k Nebel-Tiles auf dem kürzesten Weg
+    × (Zugkosten + Abzug) + ein Zug hinaus. Ist das Ziel ein Punkte-Tile im Nebel, genügt es, das Ziel zu erreichen.
+    Sonst Energie sammeln; im Nebel den nächsten Ausgang nehmen.
+- **Rauchtest** (812584, kein Gate, Karte verbraucht): Mit beiden Schaltern gewinnt V12 beide Seiten (994:342,
+  825:337).
+- **Kandidaten** (Netze und Config von V12, nur die Schalter gesetzt): `v15c` (`est_censor`) und `v15cx`
+  (`est_censor` + `neb_cross`).
+- **Vor der Messung:** ganze Testsuite; V12 spielt mit dem neuen Code (Schalter aus) 16 vorhandene Spiele identisch.
+- **Screen:** `REF=v12 bash scripts/battle_v14.sh admit v15c v15cx`. Zulassung unverändert: Mittel 6 Δ ≥ +0,5 pp,
+  direkt gegen V12 ≥ 50 %, Solution_92 Δ ≥ −1,0 pp; bei zwei der mit dem höheren Mittel.
+- **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten: `REF=v12 bash scripts/battle_v14.sh confirm
+  NAME` auf **813200–813999**, direkt **814000–814399** (um 23:58 und 01.11., 00:46 unbenutzt), Hürden unverändert
+  `scripts/league_gates.py battle`. Spätester Start 03.11., 12:00.
+- **Bestanden** → Übernahme wie Nachtrag 18:50 (Sicherung von V12, neue Zip, Kurs-Runner, Tests, Nachspielen unter
+  Python 3.10). **Nicht zugelassen oder nicht bestanden** → V12 bleibt.
+- Weitere Kandidaten nur mit eigenem Nachtrag vor ihrer Messung. Höchstens eine weitere Battle-Bestätigung, auf
+  814400–815199 und direkt 815200–815599.

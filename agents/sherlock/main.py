@@ -184,7 +184,7 @@ class Agent_x:
         self._shape_pending: list = []  # cfg.dodge_shape: Ziele nur einer Form, stehen geblieben
         self._shape_ev = {"man": 0, "cheb": 0}
         from .param_est import ParamEstimator
-        self.param_est = ParamEstimator()  # 21.10.2026: versteckte Parameter (Nebel, Streuschaden)
+        self.param_est = ParamEstimator(censor=bool(self.cfg.est_censor))  # 21.10.2026: versteckte Parameter
         self._first_relic_step = None  # 22.10.2026: fuer cand_rescue/rescue_after
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
@@ -799,9 +799,68 @@ class Agent_x:
                     continue
                 if dist[nx, ny] <= want or (here >= 0 and dist[nx, ny] < here):
                     return d
+        if self.cfg.neb_cross:
+            return self._neb_cross(ctx, uid, mask, a, (tx, ty), tgt)
         if float(ctx["ally_ene"][uid]) >= 2 * self._harmful_nebula():
             return a
         return geo.STAY if not ctx["nebula"][x, y] else a
+
+    def _neb_run(self, ctx: dict, start: tuple[int, int], tgt, a: int) -> tuple[int, bool]:
+        """Nebel-Tiles ab `start` auf dem kuerzesten Weg zum Ziel (ohne Ziel: geradeaus in Richtung a), bis
+        zum ersten Tile ohne Nebel. Rueckgabe (Anzahl, endet auf dem Ziel)."""
+        W, H = ctx["W"], ctx["H"]
+        x, y = start
+        dist = self._paths.get(ctx["step"], ctx["passable"], tgt) if tgt is not None else None
+        k = 0
+        for _ in range(W + H):
+            if not ctx["nebula"][x, y]:
+                return k, False
+            k += 1
+            if tgt is not None and (x, y) == (int(tgt[0]), int(tgt[1])):
+                return k, True
+            nxt = None
+            if dist is not None and dist[x, y] > 0:
+                for d in range(1, 5):
+                    nx, ny = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                    if 0 <= nx < W and 0 <= ny < H and dist[nx, ny] == dist[x, y] - 1:
+                        if nxt is None or not ctx["nebula"][nx, ny]:
+                            nxt = (nx, ny)
+            elif dist is None:
+                nx, ny = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+                if 0 <= nx < W and 0 <= ny < H and ctx["passable"][nx, ny]:
+                    nxt = (nx, ny)
+            if nxt is None:
+                return k, False
+            x, y = nxt
+        return k, False
+
+    def _neb_cross(self, ctx: dict, uid: int, mask: np.ndarray, a: int, nxt: tuple[int, int], tgt) -> int:
+        """cfg.neb_cross (01.11.2026): in den Nebel nur mit Energie fuer die ganze Durchquerung. Jeder Zug kostet
+        Zugkosten, jedes Schrittende im Nebel den Abzug, unter 0 kappt die Engine (Unit steht dann fest, 812584).
+        Ein Punkte-Tile als Ziel im Nebel genuegt es zu erreichen (mit 0 Energie punktet die Unit weiter)."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        e = float(ctx["ally_ene"][uid])
+        mc = float(ctx["move_cost"])
+        k, ends_on_target = self._neb_run(ctx, nxt, tgt, a)
+        need = (k - 1 if ends_on_target else k) * (mc + self._harmful_nebula()) + mc
+        if e >= need:
+            return a
+        self.ep_stats["neb_waits"] = self.ep_stats.get("neb_waits", 0) + 1
+        if ctx["nebula"][x, y]:
+            d = self._leave_nebula(ctx, uid, mask)  # schon drin: naechster Ausgang statt tiefer hinein
+            return a if d is None else d
+        here = float(ctx["energy_map"][x, y])
+        best, best_e = geo.STAY, here
+        if here <= 0:
+            for d in range(1, 5):
+                if not mask[d]:
+                    continue
+                nx, ny = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                if ctx["nebula"][nx, ny] or not ctx["passable"][nx, ny]:
+                    continue
+                if float(ctx["energy_map"][nx, ny]) > best_e:
+                    best, best_e = d, float(ctx["energy_map"][nx, ny])
+        return best  # Energie sammeln
 
     def _neb_cand_step(self, ctx: dict, uid: int, mask: np.ndarray) -> Optional[int]:
         """cfg.neb_cand: wartende Unit (nicht auf Punkte-Tile), deren Ziel ein Kandidat im schaedlichen

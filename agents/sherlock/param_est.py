@@ -38,7 +38,8 @@ def _loss_likelihood(loss: int, cost: int, drop: float, tol: int = 2) -> float:
 
 
 class ParamEstimator:
-    def __init__(self) -> None:
+    def __init__(self, censor: bool = False) -> None:
+        self.censor = censor  # 01.11.2026 (cfg.est_censor): Energie 0 ist gekappt, Verlust unbekannt
         self.reset()
 
     def reset(self) -> None:
@@ -105,6 +106,8 @@ class ParamEstimator:
             nebula = prev["tile"][x1, y1] == 1
             if e1 >= 400 or e1 - gain < 0 or e0 - costs < 0:
                 continue
+            if self.censor and e1 <= 0:
+                continue  # 01.11.2026: Engine kappt bei 0 (clip min_unit_energy), wahrer Verlust unbekannt
             if any((x1 + dx, y1 + dy) in enemies for dx, dy in DIRS[1:]):
                 continue  # Void moeglich
             loss = e0 - costs + gain - e1

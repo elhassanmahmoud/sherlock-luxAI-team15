@@ -389,6 +389,19 @@ class AgentConfig:
     Sap. Units, die ein Punkte- oder Kandidaten-Tile noch rechtzeitig erreichen, laufen weiter; Halter behalten end_sap_hold
     Sap-Kosten Energie (ausser im letzten Schritt)."""
     end_sap_hold: float = 1.0
+    est_censor: bool = False
+    """True (01.11.2026): Die Parameterschaetzung (param_est) wertet keine Beobachtung mit Energie 0 aus. Die
+    Engine kappt die Energie nach Feld und Nebel bei 0 (luxai_s3/env.py: clip(..., min_unit_energy=0, ...)). Eine
+    Unit, die mit 0 Energie auf einem Nebel-Tile mit Feldenergie 0 steht, zeigte "Verlust 0" und galt als Beleg
+    fuer Nebelabzug 0, jeder weitere Schritt verstaerkte das. Diagnose 812584 (Abzug 25, Bewegung 5, V12 gegen
+    Solution_92): Die Schaetzung kippte in Match 1 bei Schritt 33 von 25 auf 0, die Nebel-Meidung war danach fuer
+    das ganze Spiel aus, in Match 2 standen 3 von 4 verfolgten Units mit 0 Energie im Nebel fest (16:629)."""
+    neb_cross: bool = False
+    """True (01.11.2026): Die weiche Nebel-Meidung betritt Nebel nur mit Energie fuer die ganze Durchquerung:
+    k Nebel-Tiles auf dem kuerzesten Weg zum Ziel x (Zugkosten + Nebelabzug) + ein Zug hinaus, statt pauschal
+    2x Nebelabzug. Sonst Energie sammeln (stehen bleiben, auf negativem Feld zum besten Nachbarfeld ohne Nebel).
+    Steckt die Unit schon im Nebel und reicht die Energie nicht bis zum Ausgang Richtung Ziel, nimmt sie den
+    naechsten Ausgang."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0
