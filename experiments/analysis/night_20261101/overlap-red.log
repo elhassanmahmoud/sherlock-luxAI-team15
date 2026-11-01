@@ -1,0 +1,46 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_partial_overlap_proves_both_exclusive_tiles[False] ____________
+
+reverse = False
+
+    @pytest.mark.parametrize("reverse", [False, True])
+    def test_partial_overlap_proves_both_exclusive_tiles(reverse):
+        belief = _enabled(subset_infer=True)
+        equations = [((100, 101, 102), 2), ((101, 102, 103), 1)]
+        for tiles, gain in reversed(equations) if reverse else equations:
+            _infer(belief, tiles, gain)
+>       assert 100 in belief._point
+E       assert 100 in set()
+E        +  where set() = <agents.sherlock.belief.Belief object at 0x11edcde80>._point
+
+tests/test_overlap_inference.py:34: AssertionError
+____________ test_partial_overlap_proves_both_exclusive_tiles[True] ____________
+
+reverse = True
+
+    @pytest.mark.parametrize("reverse", [False, True])
+    def test_partial_overlap_proves_both_exclusive_tiles(reverse):
+        belief = _enabled(subset_infer=True)
+        equations = [((100, 101, 102), 2), ((101, 102, 103), 1)]
+        for tiles, gain in reversed(equations) if reverse else equations:
+            _infer(belief, tiles, gain)
+>       assert 100 in belief._point
+E       assert 100 in set()
+E        +  where set() = <agents.sherlock.belief.Belief object at 0x11ed0bed0>._point
+
+tests/test_overlap_inference.py:34: AssertionError
+____________________ test_config_roundtrip_and_agent_wiring ____________________
+
+    def test_config_roundtrip_and_agent_wiring():
+        cfg = AgentConfig.from_dict({"overlap_infer": True})
+>       assert getattr(cfg, "overlap_infer", False) is True
+E       AssertionError: assert False is True
+E        +  where False = getattr(AgentConfig(hidden=256, dueling=True, gamma=0.99, lr=0.0003, batch_size=256, buffer_capacity=300000, learn_start=5000,...3, w_energy=0.1, w_stack=0.3, w_death=0.5, w_match=2.0, w_discovery=0.5, w_sap_hit=0.3, w_opp_points=0.0, frozen=False), 'overlap_infer', False)
+
+tests/test_overlap_inference.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_overlap_inference.py::test_partial_overlap_proves_both_exclusive_tiles[False]
+FAILED tests/test_overlap_inference.py::test_partial_overlap_proves_both_exclusive_tiles[True]
+FAILED tests/test_overlap_inference.py::test_config_roundtrip_and_agent_wiring
+3 failed, 20 deselected in 2.65s

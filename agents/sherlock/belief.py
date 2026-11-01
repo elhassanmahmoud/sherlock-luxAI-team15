@@ -101,13 +101,14 @@ class Belief:
                  relic_filter: bool = False, subset_infer: bool = False,
                  keep_dead: bool = False, keep_dead_fast: bool = False,
                  opp_infer: bool = False, stale_all: bool = False,
-                 nebula_infer_drift_safe: bool = False):
+                 nebula_infer_drift_safe: bool = False, overlap_infer: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
         self.early_inference = bool(early_inference)
         self.relic_filter = bool(relic_filter)
         self.subset_infer = bool(subset_infer)
+        self.overlap_infer = bool(overlap_infer)
         self.keep_dead = bool(keep_dead)
         self.keep_dead_fast = bool(keep_dead_fast)
         self.opp_infer = bool(opp_infer)
@@ -350,8 +351,10 @@ class Belief:
             return  # keine sichere Aussage
         if new in self.records:
             return
+        overlap = self._overlap_differences(new) if self.overlap_infer else []
         if self.subset_infer:
             self._add_differences(new)
+        self.records.extend(overlap)
         self.records.append(new)
         if len(self.records) > MAX_RECORDS:
             del self.records[: len(self.records) - MAX_RECORDS]
@@ -583,10 +586,12 @@ class Belief:
         if not unknown:
             return  # keine neue Information
         new = (tuple(sorted(unknown)), rest)
+        if self.subset_infer and new in self.records:
+            return  # dieselbe Gleichung schon bekannt
+        overlap = self._overlap_differences(new) if self.overlap_infer and not window else []
         if self.subset_infer:
-            if new in self.records:
-                return  # dieselbe Gleichung schon bekannt
             self._add_differences(new)
+        self.records.extend(overlap)
         self.records.append(new)
         if len(self.records) > MAX_RECORDS:
             del self.records[: len(self.records) - MAX_RECORDS]
@@ -619,6 +624,63 @@ class Belief:
         for d in derived:
             if d not in self.records:
                 self.records.append(d)
+
+    def _overlap_differences(self, new: tuple[tuple[int, ...], int]) -> list:
+        """Exakte Extremfaelle: sum(A\\B)-sum(B\\A) = rest_A-rest_B.
+
+        Der neue Record wird nur mit MAX_RECORDS alten verglichen, niemals mit
+        den hier abgeleiteten Fakten. Rohmengen ueber 16 Tiles werden ausgelassen:
+        eigene/gegnerische Beobachtungen haben hoechstens 16 besetzte Tiles,
+        aggregierte Schlussmengen koennen groesser sein. Damit O(400*16) Arbeit
+        und hoechstens zwei aggregierte Extremgleichungen, keine Abschlusskaskade.
+        """
+        if len(new[0]) > 16:
+            return []
+        raw = set(new[0])
+        tiles_n = raw - self._point - self._dead
+        rest_n = new[1] - len(raw & self._point)
+        if not 0 <= rest_n <= len(tiles_n):
+            return []
+        points, dead = set(), set()
+        for raw_o, old_rest in self.records[:MAX_RECORDS]:
+            if len(raw_o) > 16:
+                continue
+            raw = set(raw_o)
+            tiles_o = raw - self._point - self._dead
+            rest_o = old_rest - len(raw & self._point)
+            if not 0 <= rest_o <= len(tiles_o):
+                return []
+            common = tiles_n & tiles_o
+            only_n, only_o = tiles_n - tiles_o, tiles_o - tiles_n
+            # Die gemeinsame Summe z muss beide Restgleichungen erfuellen.
+            lo = max(0, rest_n - len(only_n), rest_o - len(only_o))
+            hi = min(len(common), rest_n, rest_o)
+            if lo > hi:
+                return []  # inkompatible Records beweisen nichts
+            if not common or not only_n or not only_o:
+                continue  # echte Teilmengen bleiben beim bisherigen Schalter
+            delta = rest_n - rest_o
+            if delta == len(only_n):
+                points.update(only_n)
+                dead.update(only_o)
+            elif delta == -len(only_o):
+                dead.update(only_n)
+                points.update(only_o)
+        # Auch ueber die bereits verwendete Symmetrie darf kein Widerspruch
+        # an _propagate gelangen (diese Routine validiert keine Gleichungen).
+        implied_points, implied_dead = points, dead
+        if self.symmetry:
+            implied_points = points | {self._mirror_idx(f) for f in points}
+            implied_dead = dead | {self._mirror_idx(f) for f in dead}
+        if (implied_points & implied_dead or implied_points & self._dead
+                or implied_dead & self._point):
+            return []
+        derived = []
+        if points:
+            derived.append((tuple(sorted(points)), len(points)))
+        if dead:
+            derived.append((tuple(sorted(dead)), 0))
+        return derived
 
     def _window_ok(self, ally_pos, ally_energy, ally_mask) -> bool:
         """Im Spawnfenster nur schliessen, wenn das 5x5-Feld um jede punktende eigene Unit jetzt

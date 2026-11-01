@@ -77,6 +77,9 @@ class AgentConfig:
     subset_infer: bool = False
     """True: zusaetzlich Differenzen von Teilmengen-Beobachtungen auswerten
     (Belief._add_differences) und doppelte Gleichungen nicht speichern."""
+    overlap_infer: bool = False
+    """True: sichere Extremfaelle teilweise ueberlappender Punkte-Gleichungen
+    auswerten; nur neue gegen hoechstens 400 vorhandene Gleichungen zu je 16 Tiles."""
     cand_quota: int = 0
     """> 0: so viele eigene Kandidaten-Tiles rangieren vor den Punkte-Tiles der
     Gegnerhaelfte (features.assign_targets)."""
