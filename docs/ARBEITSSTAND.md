@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 09:10 Berlin – Claude Code (autonom): Nebel-Bestätigung bestanden, `cand_rescue` zugelassen (Rundungsfehler im Skript)
+
+- **Gezielte Nebel-Bestätigung `v15cx`** (Nachtrag 04:45, `scripts/battle_neb25.sh`, Code `eeaaddb`, 04:27–09:04): **alle 7 Hürden bestanden.**
+  - 300 frische Karten mit Nebelabzug 25: Mittel 6 87,17 statt 84,78 % (Δ +2,39 pp [+0,31; +4,36]), Solution_92 +0,83, default 100 %, direkt gegen V12 56,0 % [50,8; 61,3].
+  - Je Gegner: `league_nets6` +10,3 [+4,0; +16,3], V7 +3,2, V3 +1,8, `sol92_sq` −0,7, `threat6` −1,2.
+  - 60 übrige Karten: 720 von 720 Ergebnissen gleich.
+  - Zählt laut Plan nur, falls `v17a` die Battle-Bestätigung nicht besteht; dann wird V13 `v13_neb`. `v17a` enthält die Korrektur schon.
+- **Screen `v18r`** (`cand_rescue` + `rescue_after=30` auf `v15cx`, Code `518f289`, 07:16–09:05):
+  - Mittel 6 Δ **+0,50 pp [+0,14; +0,94]**, Solution_92 +0,17, direkt gegen `v15cx` **52,3 % [51,0; 53,7]**.
+  - Exakt 18 Siege mehr in 3.600 Spielen (Δ = 1/200 = +0,50 pp). Die Regel verlangt Δ ≥ +0,5 pp, also **zugelassen**.
+  - `battle_v14.sh` meldete trotzdem „nicht zugelassen“: In Gleitkomma ergab sich 0,004999999999999999 statt 0,005. Das Skript läuft gerade für `v17a` und wird deshalb erst danach korrigiert, mit Test.
+  - Je Gegner: Solution_92 +1, `sol92_sq` +1, V3 +4, V7 +10, `league_nets6` ±0, `threat6` +2 Siege; 26 Ergebnisse verändert.
+  - Battle-Bestätigung wie vorab festgelegt nach der Entscheidung über `v17a`, auf 820000–820799, direkt 821000–821399, gegen die dann aktuelle Abgabe.
+- **Läuft:**
+  - Battle-Bestätigung `v17a` (seit 07:56, 12 Prozesse).
+  - Orakel-Diagnose ohne Gate (`scripts/oracle_probe.py`, 3 Prozesse): `v18r` mit den wahren Relics und Punkte-Tiles auf Dev A gegen die 6 Gegner, gepaart gegen `D_v18r*.csv`. Sie zeigt, wie viel Information noch fehlt; bei V10 waren es +4 bis +6 pp.
+- Abgabe unverändert **V12**.
+
 ## 01.11.2026, 08:00 Berlin – Claude Code (autonom): `v17a` zugelassen, Battle-Bestätigung läuft; `cand_rescue` als `v18r` im Screen
 
 - **Screen Runde 6** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v17a v17b`, Code `59da48b`, 06:44–07:56), Dev A gepaart gegen V12:

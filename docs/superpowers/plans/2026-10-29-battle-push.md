@@ -502,6 +502,11 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - Nicht bestanden → V12 bleibt.
   - `scripts/release_candidate.py` erkennt dafür auch „GATE Nebel-25-Bestaetigung: BESTANDEN“ (Test in
     `tests/test_release_gate.py`).
+- **Ergebnis (01.11., 09:04): bestanden, alle 7 Hürden.** N25: Mittel 6 87,17 statt 84,78 % (Δ +2,39 pp [+0,31;
+  +4,36], 300 Karten), Solution_92 95,0 statt 94,2 % (Δ +0,83 [−1,17; +2,83]), default 100 %, direkt gegen V12 56,0 %
+  [50,8; 61,3] aus 600 Spielen. Je Gegner: `league_nets6` +10,3 [+4,0; +16,3], V7 +3,2, V3 +1,8, `sol92_sq` −0,7,
+  `threat6` −1,2. Rest: 720 von 720 Ergebnissen gleich. Lief parallel zu Runde 6; nach der Reihenfolge oben zählt es
+  nur, falls `v17a` die Battle-Bestätigung nicht besteht (dann V13 `v13_neb`).
 
 ## Nachtrag 01.11.2026, 07:15 (`cand_rescue` auf der Nebel-Korrektur, vor jeder Messung von `v18r`)
 
@@ -528,3 +533,12 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - Karten: 813200–813999, direkt 814000–814399, falls Runde 6 sie nicht braucht; sonst **820000–820799**, direkt
     **821000–821399**. Vorher prüfen, dass keine CSV diese Seeds enthält.
   - Bestanden → Übernahme wie Nachtrag 18:50, sonst bleibt die Abgabe.
+- **Ergebnis Screen (01.11., 09:05): nach der Regel zugelassen, das Skript meldete wegen eines Rundungsfehlers „nicht
+  zugelassen“.** Mittel 6 86,47 statt 85,97 % (Δ +0,50 pp [+0,14; +0,94], 300 Karten), Solution_92 +0,17, direkt gegen
+  `v15cx` 52,3 % [51,0; 53,7] aus 600 Spielen.
+  - Exakt: 18 Siege mehr in 3.600 Spielen, Δ = 1/200 = +0,50 pp; die Regel verlangt Δ ≥ +0,5 pp. `battle_v14.sh`
+    rechnete in Gleitkomma 0,004999999999999999 und verglich mit `>= 0.005`.
+  - Je Gegner (Siege von 600): Solution_92 567 statt 566, `sol92_sq` 546/545, V3 534/530, V7 470/460, `league_nets6`
+    440/440 (4 gewonnen, 4 verloren), `threat6` 556/554. 26 von 3.600 Ergebnissen verändert, 22 davon zu Siegen.
+  - Die Battle-Bestätigung läuft wie oben festgelegt erst nach der Entscheidung über `v17a` (dann aktuelle Abgabe als
+    Referenz) auf 820000–820799, direkt 821000–821399.
