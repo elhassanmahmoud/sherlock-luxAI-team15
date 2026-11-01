@@ -30,6 +30,7 @@ Battle-Zip wird zweimal geprueft: Ordner unter agents/ und in der Projektwurzel.
 from __future__ import annotations
 
 import argparse
+import keyword
 import shutil
 import subprocess
 import sys
@@ -58,7 +59,8 @@ def run_weights(run_dir: Path) -> list[Path]:
 
 def sources(out: Path, from_run: Path | None) -> tuple[list[Path], list[Path], Path]:
     """Quelldateien, Gewichte beider Seiten und geprueftes Ausgabeziel."""
-    files = sorted(p for p in SRC.glob("*.py") if p.name != "__init__.py")
+    files = sorted(p for p in SRC.glob("*.py")
+                   if p.name != "__init__.py" and p.stem.isidentifier() and not keyword.iskeyword(p.stem))
     weights = (run_weights(from_run) if from_run is not None else
                [SRC / "weights" / "agent_p0.pth", SRC / "weights" / "agent_p1.pth"])
     for w in weights:
