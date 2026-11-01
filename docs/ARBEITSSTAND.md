@@ -5,6 +5,32 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 12:23 Berlin – Claude Code (autonom): neue Schalter `cand_post` + `spawn_proof`, Probe gegen Solution_92 +2,9 pp; `v19c`/`v19cr` vorab festgelegt
+
+- **Auftrag Mahmoud (11:4x):** weiter trainieren und neue Regeln coden, Folien erst am Ende; Ziel Platz 1 im Kurs.
+- **Verluste gegen `league_nets6`** (Energiebilanz `scripts/mechanism_probe.py`, Dev A, je 120 verlorene/gewonnene Spiele von V13):
+  - In verlorenen Spielen ist das Sap-Duell ausgeglichen: Sap-Kills 10,0 zu 10,5 je Match, in gewonnenen 14,1 zu 9,8.
+  - 47 % der verlorenen Spiele haben Streufaktor 0,25 (sonst ein Drittel). Das ist die bekannte Schwäche, keine neue Regel daraus.
+- **Spur „Units punkten, bevor sie das Relic sehen“** (Sichtweite 1, 268 Paare):
+  - In 67 % der Fälle steht eine Unit vorher schon auf einem Punkte-Feld, im Mittel 6,5 Schritte früher. Mit Nebel am Relic hat das nichts zu tun.
+  - Bewiesene Punkte-Tiles ohne bekanntes Relic gibt es aber fast nie (3 % der Spiele, nur Match 2/3). Eine Suchregel dafür lohnt nicht.
+- **Neue Schalter** (Standard aus, Tests in `tests/test_relic_prior.py`, 9 Tests):
+  - `cand_post`: Kandidaten mit höherer Punkte-Wahrscheinlichkeit zuerst testen. Ein Tile in 1/2/3/4+ Relic-Zonen ist zu 20/34/49/57 % ein Punkte-Tile (1.500 Karten); offene Gleichungen geben rest/n.
+  - `spawn_proof`: Im 2./3. Match beweist ein Punkt, den keine bekannte Zone erklärt, dass das neue Paar gespawnt ist (alle früheren Paare bekannt). Die Inferenz darf dann vor Schritt 50 schließen.
+- **Entwicklungsprobe** V13 + `cand_post=15` + `spawn_proof` (Dev A, nur Auswahl, kein Gate):
+  - gegen Solution_92 auf 221 Karten (442 Spiele) **95,7 statt 92,8 %**: Sichtweite 1 91,7 statt 85,4 %, Sichtweite 2 95,5 statt 94,2 %, Sichtweite 3/4 100 statt 98,6 %; 21 Spiele neu gewonnen, 8 neu verloren;
+  - gegen V7 bei Sichtweite 1 unverändert 76,4 % (je 12 gewonnen und verloren).
+- **Plan-Nachtrag 12:17** (Commit `f24a96e`): Kandidaten `v19c` (V13 + beide Schalter) und `v19cr` (+ `cand_rescue`, `rescue_after=30`). Screen nach dem Ende der `v18r`-Bestätigung, danach genau eine Battle-Bestätigung auf 822000–822799, direkt 823000–823399 (vorher geprüft: unbenutzt).
+- **Code und laufende Messung (offen dokumentiert):**
+  - Die beiden Schalter standen von etwa 11:40 bis 12:18 unversioniert im Hauptordner, während die `v18r`-Bestätigung lief.
+  - Ihr erster Teil (V13 auf 820000–820799) hatte den Code beim Start um 11:33 geladen. Die weiteren Teile starten erst später.
+  - Um 12:18 wurde der Hauptordner auf den Code beim Start (`961a93a`) zurückgesetzt. Die neuen Schalter liegen bis zum Ende der Messung in einer Arbeitskopie im Scratchpad.
+  - Die Messreihe läuft also vollständig mit demselben Code.
+- **Läuft:**
+  - `v18r`-Bestätigung (12 Prozesse, Ende etwa 14:20);
+  - aus der Arbeitskopie die Screen-Dateien `D_v19c.csv`/`D_v19cr.csv` (Solution_92, `sol92_sq`) mit 3 Prozessen. Die Ergebnisse sind deterministisch und kommen nach dem Commit der Schalter in den Hauptordner.
+- Abgabe unverändert **V13 `v13_neb`**.
+
 ## 01.11.2026, 11:35 Berlin – Claude Code (autonom): Relic-Gitter gefunden, `relic_prior` ohne klaren Gewinn; Gate-Rundung behoben; Bestätigung `v18r` läuft
 
 - **Warum Sherlock bei Sichtweite 1 Information fehlt** (Dev A, V13 gegen Solution_92, nur Diagnose, Skripte im Scratchpad):
