@@ -1,0 +1,237 @@
+{
+  "review": "Independent training data acceptance before B/C selection",
+  "reviewed_at_utc": "2026-11-01T21:03:41.133146+00:00",
+  "accepted": true,
+  "checks": 18369,
+  "failures": [],
+  "shared_supervisor_wall_secs": 2441.8286,
+  "total_training_games": 1200,
+  "total_prefill_games": 240,
+  "total_validation_games": 192,
+  "total_simulated_games": 1632,
+  "actual_config_difference": {
+    "w_discovery": [
+      0.5,
+      2.0
+    ]
+  },
+  "init_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+  "source_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "arms": {
+    "control": {
+      "name": "20261101_nov_info_control_s9",
+      "training_games": 600,
+      "prefill_games": 120,
+      "validation_games": 96,
+      "total_simulated_games": 816,
+      "train_csv_sha256": "d8d4a1f1222e7e2e5074f904fe5de2aa7c9b47d60d227e486277ca32af81e476",
+      "val_csv_sha256": "be418418dbcae212ec4ff6b5d708fcf4eaaacc09c65996d1ee1f33bd7a1b78fb",
+      "manifest_sha256": "60d77513c8a2f0f4deb55f7ab679fb7456570468c2d0f6860c4449cef8f227fb",
+      "checkpoint_sha256": "f30a40e103c6e5b5f8bb8f54984fafea5999f5c1873d21b0150e88186ca0212b",
+      "q_tensor_sha256": "68b0adac2eea45ada0ef9aad10bf214a3d504f1d06f2d9dddd1584ff5438c2be",
+      "target_tensor_sha256": "68b0adac2eea45ada0ef9aad10bf214a3d504f1d06f2d9dddd1584ff5438c2be",
+      "best_q_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer_states": 12,
+      "adam_steps": [
+        90000.0
+      ],
+      "env_steps": 278160,
+      "learn_steps": 90000,
+      "loss": {
+        "min": 0.61405,
+        "max": 0.78437,
+        "mean": 0.7045432333333334
+      },
+      "training_seconds": 1903.78,
+      "manifest_runtime_secs": 2435.7,
+      "opponents": {
+        "solution92": 348,
+        "rush": 69,
+        "sol92_sq": 128,
+        "default": 55
+      },
+      "validation": [
+        {
+          "after_games": "0",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "0.9583333333333334",
+          "point_winrate": "1.0",
+          "avg_points": "1538.5625",
+          "avg_opp_points": "119.375",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "0",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.9375",
+          "match_winrate": "0.8333333333333334",
+          "point_winrate": "0.9375",
+          "avg_points": "1140.5",
+          "avg_opp_points": "773.9375",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "300",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "0.9375",
+          "point_winrate": "1.0",
+          "avg_points": "1526.4375",
+          "avg_opp_points": "113.125",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "300",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.875",
+          "match_winrate": "0.8125",
+          "point_winrate": "0.9375",
+          "avg_points": "1067.8125",
+          "avg_opp_points": "799.0",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "600",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "0.9791666666666666",
+          "point_winrate": "1.0",
+          "avg_points": "1529.75",
+          "avg_opp_points": "109.5625",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "600",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.9375",
+          "match_winrate": "0.7916666666666666",
+          "point_winrate": "0.875",
+          "avg_points": "1088.6875",
+          "avg_opp_points": "831.0625",
+          "point_counting_version": "2",
+          "secs": ""
+        }
+      ]
+    },
+    "discovery": {
+      "name": "20261101_nov_info_discovery_s9",
+      "training_games": 600,
+      "prefill_games": 120,
+      "validation_games": 96,
+      "total_simulated_games": 816,
+      "train_csv_sha256": "85666d586c9e67ac27588f25b2e2b89a6fd9e158f2863eeec9c677ee30526bc3",
+      "val_csv_sha256": "bb4d4d1e3ecd9ce2d1b473684b126074ffbc0fb5d4993069185ca30f4f8bf997",
+      "manifest_sha256": "191e7cac39a8bf2fc5b9bbd1ebe9abf84beac2a9aa4fef3672a20e5acadb1eb8",
+      "checkpoint_sha256": "8f8d150d6a4ba0b0e7ce139b6e90e229fed332366f9c9ca553a0239112388cc2",
+      "q_tensor_sha256": "382706f2145c6b25857db35f7c01d821ec391aecff304ff515519e6b1a134a0b",
+      "target_tensor_sha256": "382706f2145c6b25857db35f7c01d821ec391aecff304ff515519e6b1a134a0b",
+      "best_q_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer_states": 12,
+      "adam_steps": [
+        90000.0
+      ],
+      "env_steps": 278160,
+      "learn_steps": 90000,
+      "loss": {
+        "min": 0.62028,
+        "max": 0.80686,
+        "mean": 0.70741035
+      },
+      "training_seconds": 1889.11,
+      "manifest_runtime_secs": 2420.7,
+      "opponents": {
+        "solution92": 348,
+        "rush": 69,
+        "sol92_sq": 128,
+        "default": 55
+      },
+      "validation": [
+        {
+          "after_games": "0",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "0.9583333333333334",
+          "point_winrate": "1.0",
+          "avg_points": "1538.5625",
+          "avg_opp_points": "119.375",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "0",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.9375",
+          "match_winrate": "0.8333333333333334",
+          "point_winrate": "0.9375",
+          "avg_points": "1140.5",
+          "avg_opp_points": "773.9375",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "300",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "0.9583333333333334",
+          "point_winrate": "1.0",
+          "avg_points": "1452.0625",
+          "avg_opp_points": "108.0",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "300",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.875",
+          "match_winrate": "0.7708333333333334",
+          "point_winrate": "0.875",
+          "avg_points": "1106.9375",
+          "avg_opp_points": "807.4375",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "600",
+          "opponent": "default",
+          "games": "16",
+          "winrate": "1.0",
+          "match_winrate": "1.0",
+          "point_winrate": "1.0",
+          "avg_points": "1541.5625",
+          "avg_opp_points": "128.0625",
+          "point_counting_version": "2",
+          "secs": ""
+        },
+        {
+          "after_games": "600",
+          "opponent": "solution92",
+          "games": "16",
+          "winrate": "0.875",
+          "match_winrate": "0.8125",
+          "point_winrate": "0.9375",
+          "avg_points": "1126.3125",
+          "avg_opp_points": "794.8125",
+          "point_counting_version": "2",
+          "secs": ""
+        }
+      ]
+    }
+  },
+  "limitation": "One paired initialization; known 8-card validation is not strength/generalization evidence. No games or training run by reviewer."
+}

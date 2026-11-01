@@ -1,0 +1,66 @@
+{
+  "started_at": "2026-11-01T20:18:10.797993+00:00",
+  "pid": 68434,
+  "status": "complete",
+  "jobs": [
+    {
+      "arm": "control",
+      "name": "20261101_nov_info_control_s9",
+      "pid": 68455,
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.night_train_pilot",
+        "runarm",
+        "--init",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261101_nov_info_init18",
+        "--arm",
+        "control",
+        "--name",
+        "20261101_nov_info_control_s9"
+      ],
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/training_control.log",
+      "started_at": "2026-11-01T20:18:10.812276+00:00",
+      "exit_code": 0,
+      "manifest_sha256": "60d77513c8a2f0f4deb55f7ab679fb7456570468c2d0f6860c4449cef8f227fb",
+      "weights_sha256": "f30a40e103c6e5b5f8bb8f54984fafea5999f5c1873d21b0150e88186ca0212b"
+    },
+    {
+      "arm": "discovery",
+      "name": "20261101_nov_info_discovery_s9",
+      "pid": 68456,
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.night_train_pilot",
+        "runarm",
+        "--init",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261101_nov_info_init18",
+        "--arm",
+        "discovery",
+        "--name",
+        "20261101_nov_info_discovery_s9"
+      ],
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/training_discovery.log",
+      "started_at": "2026-11-01T20:18:10.813530+00:00",
+      "exit_code": 0,
+      "manifest_sha256": "191e7cac39a8bf2fc5b9bbd1ebe9abf84beac2a9aa4fef3672a20e5acadb1eb8",
+      "weights_sha256": "8f8d150d6a4ba0b0e7ce139b6e90e229fed332366f9c9ca553a0239112388cc2"
+    }
+  ],
+  "validated_training_csvs": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261101_nov_info_control_s9/train.csv",
+      "games": 600,
+      "sha256": "d8d4a1f1222e7e2e5074f904fe5de2aa7c9b47d60d227e486277ca32af81e476"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261101_nov_info_discovery_s9/train.csv",
+      "games": 600,
+      "sha256": "85666d586c9e67ac27588f25b2e2b89a6fd9e158f2863eeec9c677ee30526bc3"
+    }
+  ],
+  "finished_at": "2026-11-01T20:58:52.626593+00:00"
+}

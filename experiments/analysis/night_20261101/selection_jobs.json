@@ -1,0 +1,173 @@
+{
+  "name": "selection",
+  "status": "admitted_before_selection_results",
+  "prepared_at": "2026-11-01T20:32:38.208437+00:00",
+  "manifest_path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_jobs.json",
+  "deadline_utc": "2026-11-02T04:30:00+00:00",
+  "panel": [
+    "solution92",
+    "sol92_sq",
+    "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+    "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+    "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth"
+  ],
+  "direct_opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+  "candidates": [
+    "overlap",
+    "control",
+    "discovery"
+  ],
+  "frozen_weights": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p1.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_all18_v3/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v13_neb/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_overlap.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_control.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_discovery.pth"
+  ],
+  "jobs": [
+    {
+      "name": "baseline",
+      "args": [
+        "--weights",
+        "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_baseline.csv"
+      ]
+    },
+    {
+      "name": "overlap",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_overlap.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_overlap.csv"
+      ]
+    },
+    {
+      "name": "overlap_direct",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_overlap.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_overlap_direct.csv"
+      ]
+    },
+    {
+      "name": "control",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_control.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_control.csv"
+      ]
+    },
+    {
+      "name": "control_direct",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_control.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_control_direct.csv"
+      ]
+    },
+    {
+      "name": "discovery",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_discovery.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_discovery.csv"
+      ]
+    },
+    {
+      "name": "discovery_direct",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_discovery.pth",
+        "--first",
+        "331000",
+        "--n",
+        "50",
+        "--workers",
+        "2",
+        "--opponents",
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/selection_discovery_direct.csv"
+      ]
+    }
+  ],
+  "admitted_at": "2026-11-01T21:07:35.897035+00:00",
+  "admission_proof_sha256": {
+    "training-data-review.json": "9bb8dd3f834b3145e747dc6ba4e490c2a3ebc3e1e616433fad47041619474a68",
+    "overlap_checkpoint.json": "da573666e589ff4b23c570a9a84b9deec79073ec1e415a35eead8a2c29209cd0",
+    "trained_candidate_checks.json": "8ea47dd0657c51d940bb5559ed4911b8bfe802d74f1a6468dcb91fdab67d3c05",
+    "probe_full.json": "5e0f002c9b3617841d91265b8adce214ab2a1d65c473636d2d874e9e83abeeb4"
+  },
+  "weight_sha256_before_selection": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_all18_v3/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v13_neb/agent_p0.pth": "6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_overlap.pth": "ea7de4b22d81163e6e2cb7efe45aff78978827879c9707092f406035369e756d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_control.pth": "7a05e43f7ccc85ac9380c7140f94edf67d45c0bd50225f3dfdae4eb3d5c99600",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_discovery.pth": "765d8ff758548c41929097e52db364377c9f3d99b251a2a2bb1adbe0a4ab31ab"
+  }
+}
