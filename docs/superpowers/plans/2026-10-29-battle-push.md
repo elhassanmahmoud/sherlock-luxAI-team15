@@ -555,6 +555,10 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   `961a93a`). Vorher geprüft: Keine der 1.166 CSVs mit Seed-Spalte unter `experiments/` enthält diese Seeds. Hürden
   unverändert `league_gates battle`, seit Commit `e6d4624` mit Toleranz 1e-9 bei den Vergleichen (die vier früheren
   Battle-Entscheidungen bleiben gleich).
+- **Ergebnis (01.11., 13:56): nicht bestanden.** Mittel 6 87,59 statt 86,73 % (Δ +0,86 pp [+0,48; +1,28], 800 Karten),
+  Solution_92 95,44 % (Δ +0,50 [+0,12; +0,88]), default 100 %, direkt gegen V13 50,6 % [49,25; 52,0] aus 800 Spielen.
+  Verfehlt: Mittel 6 ≥ +1 pp und direkt untere Grenze > 50 %. Alle 6 Gegner +0,5 bis +1,3 pp (`league_nets6` +1,25, V7
+  +1,12, `threat6` +0,88, V3 +0,75, `sol92_sq` +0,69, Solution_92 +0,50). V13 bleibt die Abgabe.
 
 ## Nachtrag 01.11.2026, 12:17 (Kandidaten-Reihenfolge und Spawn-Beweis, vor jeder Messung von `v19c`/`v19cr` auf Dev A oder 822000–823399)
 
