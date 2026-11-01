@@ -43,6 +43,11 @@ höchstens ein Kandidat erhält eine unabhängige Bestätigung.
   Nur Endcheckpoint; Validierung unverändert 8 Karten, keine Optimierung danach.
   Höchstens zwei Stunden für beide Arme ab Trainingsstart. Bei unvollständigem
   Arm kein trainierter Kandidat für diese Nacht; Zwischenstände ehrlich sichern.
+  Der Supervisorstatus `complete` bezeichnet nur den technischen Abschluss.
+  Vor B/C-Zulassung prüft ein unabhängiger Datenreview zusätzlich Starttensor/
+  Arm-Provenienz, tatsächliche Configs (einziger Unterschied Entdeckungsreward),
+  Seed-/Gegnerplan, Prefill/Lernrate/Endstandwahl, vollständige Trainings- und
+  Validierungsdaten, endlichen Loss und tatsächlichen Lernfortschritt.
 - [ ] 5. Kompatibilität mit Opt-in aus (4 Spiele) und Diagnosetrace (40 Karten)
   prüfen; ohne zusätzliche sichere Fakten im Trace keinen Inferenzkandidaten.
 - [ ] 6. Festen Auswahlsatz vollständig spielen; genau einen zugelassenen

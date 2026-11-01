@@ -8,6 +8,12 @@ from scripts.compare_report import compare_results
 from scripts.league_gates import panel_delta,direct_result,EPS
 from run_jobs import validate_output
 
+PANEL=('solution92','sol92_sq',
+       'self:experiments/releases/20261022_all18_v3/agent_p0.pth',
+       'self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth',
+       'self:experiments/releases/20261022_v10_baseline/agent_p0.pth',
+       'self:experiments/releases/20261101_v13_neb/agent_p0.pth')
+REFERENCE='self:experiments/releases/20261101_v14_baseline/agent_p0.pth'
 
 def counts(frame,opponent):
     r=frame.loc[frame.opponent==opponent,'result']
@@ -22,12 +28,30 @@ def main():
     state=json.loads((D/f'{phase}_state.json').read_text())
     assert state['status']=='complete'
     spec=state['phase'];panel=tuple(spec['panel']);ref_opp=spec['direct_opponent']
-    assert len(panel)==6 and len(set(panel))==6
+    assert panel==PANEL and ref_opp==REFERENCE
     original=Path(spec['manifest_path'])
     assert hashlib.sha256(original.read_bytes()).hexdigest()==state['phase_sha256']
+    assert spec==json.loads(original.read_text()), 'Journal differs from preregistered phase'
+    if phase=='selection':
+        assert spec['candidates']==[n for n in ('overlap','control','discovery') if n in spec['candidates']]
+    else:
+        selection=D/'selection_summary.json'
+        assert hashlib.sha256(selection.read_bytes()).hexdigest()==spec['selection_sha256']
+        assert json.loads(selection.read_text())['nominee']==spec['candidate']
+    expected_names=['baseline']
+    for name in (spec['candidates'] if phase=='selection' else [spec['candidate']]):
+        expected_names += [name,name+'_direct']
+    assert [j['name'] for j in spec['jobs']]==expected_names
+    assert [j['name'] for j in state['jobs']]==expected_names
     frames={};csv_hashes={}
-    for job in state['jobs']:
+    for job,planned in zip(state['jobs'],spec['jobs']):
         args=job['command'];path=Path(args[args.index('--out')+1])
+        assert args[1:]==['-B','-m','scripts.par_eval',*planned['args']], 'Actual command differs from planned job'
+        direct=job['name'].endswith('_direct')
+        assert int(args[args.index('--n')+1])==(50 if phase=='selection' else 300)
+        expected_first=331000 if phase=='selection' else (333000 if direct else 332000)
+        assert int(args[args.index('--first')+1])==expected_first
+        assert args[args.index('--opponents')+1]==(REFERENCE if direct else ','.join((*PANEL,'default')))
         assert job['exit_code']==0 and hashlib.sha256(path.read_bytes()).hexdigest()==job['output_sha256']
         validate_output(path,args)
         frames[job['name']]=pd.read_csv(path);csv_hashes[path.name]=job['output_sha256']
