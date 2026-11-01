@@ -555,3 +555,40 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   `961a93a`). Vorher geprüft: Keine der 1.166 CSVs mit Seed-Spalte unter `experiments/` enthält diese Seeds. Hürden
   unverändert `league_gates battle`, seit Commit `e6d4624` mit Toleranz 1e-9 bei den Vergleichen (die vier früheren
   Battle-Entscheidungen bleiben gleich).
+
+## Nachtrag 01.11.2026, 12:17 (Kandidaten-Reihenfolge und Spawn-Beweis, vor jeder Messung von `v19c`/`v19cr` auf Dev A oder 822000–823399)
+
+- **Grund** (Diagnose nur auf Dev A und verbrauchten Karten, kein Gate):
+  - Mit den wahren Punkte-Tiles um bekannte Relics gewinnt V13 bei Sichtweite 1 gegen Solution_92 94,4 statt 85,4 %
+    (Orakel `points`).
+  - Bis alle Punkte-Tiles einer neuen Zone bewiesen sind, vergehen 30–40 Schritte; die Units testen etwa ein Kandidaten-Feld
+    pro Schritt.
+  - Ein Tile in k Relic-Zonen ist zu 20 / 34 / 49 / 57 % ein Punkte-Tile (k = 1 / 2 / 3 / 4+, 1.500 Karten). Spätere Paare
+    liegen meist neben früheren, Überlappungen sind deshalb häufig.
+  - Im 2./3. Match ist die Inferenz im Mittel 41–47 Schritte gesperrt (Spawnfenster), auch wenn ein Punkt schon beweist,
+    dass das neue Paar gespawnt ist.
+- **Schalter** (Standard aus, Commit vor dieser Messung, Tests in `tests/test_relic_prior.py`):
+  - `cand_post` (Gewicht 15): Kandidaten mit höherer Punkte-Wahrscheinlichkeit werden zuerst getestet. Die Wahrscheinlichkeit
+    kommt aus der Zonen-Überlappung und aus offenen Gleichungen des Gedächtnisses.
+  - `spawn_proof`: Kann im Match j ≥ 1 kein bekanntes Relic einen Punkt erklären (alle früheren Paare bekannt), ist Paar j
+    gespawnt, und die Inferenz darf vor match_step 50 schließen.
+- **Entwicklungsprobe** (V13 + beide Schalter, Dev A, nur zur Auswahl der Kandidaten):
+  - gegen Solution_92 auf 221 der 300 Dev-A-Karten 95,7 statt 92,8 % (Sichtweite 1: 91,7 statt 85,4 %);
+  - gegen V7 bei Sichtweite 1 unverändert (76,4 %, je 12 Spiele gewonnen und verloren).
+  - Der Screen wiederholt diese Spiele. Sein Solution_92-Teil ist daher nicht unabhängig; unabhängig ist erst die
+    Battle-Bestätigung.
+- **Kandidaten** (Netze und Config von V13 = `v15cx`, Netze bytegleich):
+  - `v19c` = V13 + `cand_post=15` + `spawn_proof=true`;
+  - `v19cr` = `v19c` + `cand_rescue=true` + `rescue_after=30`.
+- **Screen:** `REF=<aktuelle Abgabe> bash scripts/battle_v15.sh admit v19c v19cr`.
+  - Referenz ist `v15cx` (V13); besteht `v18r` seine laufende Bestätigung, ist es `v18r`.
+  - Zulassung unverändert: Mittel 6 Δ ≥ +0,5 pp, direkt gegen die Referenz ≥ 50 %, Solution_92 Δ ≥ −1,0 pp. Bei zwei
+    zugelassenen der mit dem höheren Mittel.
+  - Ist `v18r` die Referenz, ist `v19cr` = `v18r` + die beiden neuen Schalter, und `v19c` (ohne `cand_rescue`) entfällt.
+- **Battle-Bestätigung** genau einmal für den gewählten Kandidaten gegen die Referenz auf **822000–822799**, direkt
+  **823000–823399** (`REF=<Referenz> CONF_FIRST=322000 DIR_FIRST=323000 PFX=GG bash scripts/battle_v15.sh confirm NAME`).
+  - Um 12:17 in keiner der 1.166 CSVs mit Seed-Spalte.
+  - Hürden unverändert `league_gates battle`.
+  - Bestanden → Übernahme als V14 wie Nachtrag 18:50 (Sicherung der Abgabe, neue Zip, Kurs-Runner, Tests, Nachspielen
+    unter Python 3.10); sonst bleibt die Abgabe.
+  - Start nach dem Ende der laufenden `v18r`-Bestätigung.
