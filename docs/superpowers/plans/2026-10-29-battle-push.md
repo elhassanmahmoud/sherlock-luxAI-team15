@@ -497,3 +497,29 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - Nicht bestanden → V12 bleibt.
   - `scripts/release_candidate.py` erkennt dafür auch „GATE Nebel-25-Bestaetigung: BESTANDEN“ (Test in
     `tests/test_release_gate.py`).
+
+## Nachtrag 01.11.2026, 07:20 (`cand_rescue` auf der Nebel-Korrektur, vor jeder Messung von `v18r`)
+
+- **Grund** (nur verbrauchte Karten 812000–812149, V12 gegen Solution_92, 900 Matches mit Endstand je Match):
+  - Gleichstand nach Punkten entscheidet nur 0,9 % der Matches (alle gewonnen). Die Regel `tie_save` (Energie sparen
+    bei drohendem Gleichstand) wird deshalb nicht verfolgt.
+  - V12 verliert Match 2 und 3 dreimal so oft wie Match 1 (16,7/15,7 statt 5,7 %), 102 von 114 verlorenen Matches mit
+    mehr als 10 Punkten Rückstand. 14 Matches mit weniger als 20 % der Gegnerpunkte stecken in 13 der 21 verlorenen
+    Spiele.
+  - Ursachen: der Nebel-Fehler (812049, 812081) und 812121: Relics seit Match 1 bekannt, in Match 2 über 140 Schritte
+    kein Punkte-Tile; die Units pendeln auf Energiefeldern im Nebel, ihr Ziel-Kandidat wechselt jeden Schritt (0:202).
+- **Schalter `cand_rescue`** (seit 22.10. im Code): Ist ein Relic seit `rescue_after` Schritten bekannt und noch kein
+  Punkte-Tile, gehen die Units gezielt auf Kandidaten (`obey_target`, `neb_cand`, `idle_approach`). Auf V10 bester
+  Einzelschalter (+0,7 pp, Entwicklung), auf V11/V12 aus Zeitgründen nie gemessen.
+- **Diagnose** (9 verbrauchte, gezielt gewählte Karten, 18 Spiele, kein Gate): V12 10/18, `v15cx` 12/18,
+  `v15cx` + `cand_rescue` (`rescue_after=30`) 14/18.
+- **Kandidat** `v18r` = `v15cx` (V12-Netze, Config V12 + `est_censor` + `neb_cross`) + `cand_rescue=true` +
+  `rescue_after=30`.
+- **Screen:** `REF=v15cx bash scripts/battle_v14.sh admit v18r` (Dev A, gepaart gegen die vorhandenen
+  `D_v15cx*.csv`, misst nur `cand_rescue`). Zulassung unverändert: Mittel 6 Δ ≥ +0,5 pp, direkt gegen `v15cx` ≥ 50 %,
+  Solution_92 Δ ≥ −1,0 pp.
+- **Battle-Bestätigung** (nur nach Zulassung, genau einmal): `cand_rescue` + `rescue_after=30` auf der dann aktuellen
+  Abgabe gegen genau diese Abgabe, Hürden unverändert `league_gates battle`.
+  - Karten: 813200–813999, direkt 814000–814399, falls Runde 6 sie nicht braucht; sonst **820000–820799**, direkt
+    **821000–821399**. Vorher prüfen, dass keine CSV diese Seeds enthält.
+  - Bestanden → Übernahme wie Nachtrag 18:50, sonst bleibt die Abgabe.
