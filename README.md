@@ -11,21 +11,21 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 
 | | |
 |---|---|
-| **Aktuelle Abgabe** | **V13 `v13_neb`** seit 01.11.2026, 10:46 · [Übernahmebericht](experiments/analysis/release_20261101_v13/RELEASE.md) |
-| Was V13 ist | V12 (dieselben 36 Netze) + Nebel-Korrektur; ändert nur Spiele auf Karten mit Nebelabzug 25, etwa jede sechste Karte |
-| Gegen Solution_92 | **94,4 %** mit V12 (1.600 Spiele auf 800 frischen Karten, beide Seiten); auf Karten mit Nebelabzug 25 V13 95,0 statt 94,2 % |
-| Mittel über 6 starke Gegner | **87,1 %** mit V12 (Vorgänger V11 auf denselben Karten: 81,2 %); auf Karten mit Nebelabzug 25 V13 +2,4 Punkte |
-| Gegen `default` | 99,9 % |
+| **Aktuelle Abgabe** | **V14 `v14_rescue`** seit 01.11.2026, 17:51 · [Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md) |
+| Was V14 ist | dieselben 36 Netze wie V11–V13; Regeln von V13 (Nebel-Korrektur) plus Kandidaten-Rettung `cand_rescue` |
+| Gegen Solution_92 | **95,4 %** (1.600 Spiele auf 800 frischen Karten, beide Seiten; V13 auf denselben Karten 94,9 %) |
+| Mittel über 6 starke Gegner | **87,6 %** (V13 auf denselben Karten: 86,7 %) |
+| Gegen `default` | 100 % |
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
-| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V13, gebaut am 01.11., 10:46) mit `python -m scripts.build_submission --battle` |
-| Tests | 621 (`python -m pytest -q`) |
-| Gespielte Spiele | rund **1,29 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 582.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
+| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, gebaut am 01.11., 17:51) mit `python -m scripts.build_submission --battle` |
+| Tests | 632 (`python -m pytest -q`) |
+| Gespielte Spiele | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Inhalt
 
 - [Fortschritt gegen Solution_92](#fortschritt-gegen-solution_92)
-- [Ergebnisse der Abgabe V13](#ergebnisse-der-abgabe-v13)
+- [Ergebnisse der Abgabe V14](#ergebnisse-der-abgabe-v14)
 - [Wie Sherlock entscheidet](#wie-sherlock-entscheidet)
 - [Training](#training)
 - [Zahlen und Fakten](#zahlen-und-fakten)
@@ -51,13 +51,34 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | 22.10. | V10 `v10_V8st` | Ziele nach Weglänge, keine Mehrfach-Saps, sichere Züge, Kollisionsschutz, Halter schießen nur auf stehende Gegner | 90,3 % | 82,8 % | 800 |
 | 30.10. | V11 `v11_mix36c_as` | 36 Netze (18 davon nachtrainiert), Streuschaden-Saps bei Streufaktor 1,0 | 94,1 % | 89,6 % | 800 |
 | 31.10. | V12 `v12_fog` | **Nebel-Sap** auf unsichtbare Halter, Halbstreuung bei Streufaktor 0,5 | 94,4 % | 93,0 % | 800 |
-| 01.11. | **V13 `v13_neb`** | **Nebel-Korrektur:** Abzugsschätzung ohne Fehlbelege bei Energie 0, Nebel nur mit Energie für die ganze Durchquerung | **95,0 %**¹ | 94,2 % | 300¹ |
+| 01.11. | V13 `v13_neb` | **Nebel-Korrektur:** Abzugsschätzung ohne Fehlbelege bei Energie 0, Nebel nur mit Energie für die ganze Durchquerung | 95,0 %¹ | 94,2 % | 300¹ |
+| 01.11. | **V14 `v14_rescue`** | **Kandidaten-Rettung:** Kein Punkte-Feld 30 Schritte nach einem Relic → Units testen gezielt Kandidaten (Teamentscheidung²) | **95,4 %** | 94,9 % | 800 |
 
 ¹ Nur Karten mit Nebelabzug 25: Nur dort ändert V13 etwas, deshalb wurde gezielt dort gemessen. Auf den übrigen Karten spielte V13 in 720 von 720 Spielen genau wie V12.
 
+² V14 war in zwei unabhängigen Messungen besser als V13 (+0,50 und +0,86 Punkte im Mittel über 6 Gegner, jeder Gegner im Plus), verfehlte aber unsere Hürde von +1 Punkt knapp. Mahmoud hat die Übernahme ausdrücklich entschieden.
+
 Die Zeilen stammen aus verschiedenen Kartenblöcken und sind untereinander nur grob vergleichbar. Belastbar ist jeweils der gepaarte Vergleich mit dem Vorgänger auf denselben Karten. Die 46,7 % des Reviews beruhen auf 60 mehrfach verwendeten Testspielen. Von V3 bis V10 blieben die 18 Netze gleich: Der Sprung von 78 auf 90 % kam allein aus Korrekturen an Gedächtnis, Wegfindung, Zielwahl und Sap-Regeln.
 
-## Ergebnisse der Abgabe V13
+## Ergebnisse der Abgabe V14
+
+V14 = V13 plus Kandidaten-Rettung `cand_rescue`: Ist ein Relic seit 30 Schritten bekannt und noch kein Punkte-Feld bewiesen, gehen die Einheiten gezielt auf Kandidaten-Felder. Battle-Bestätigung auf 800 frischen Karten **820000–820799**, beide Seiten, je Gegner 1.600 Spiele, gepaart gegen V13:
+
+| Gegner | V13 | **V14** | Δ (pp) |
+|---|---:|---:|---:|
+| Solution_92 | 94,9 % | **95,4 %** | +0,5 |
+| `sol92_sq` | 89,4 % | **90,1 %** | +0,7 |
+| V3 | 87,8 % | **88,5 %** | +0,8 |
+| V7 | 80,5 % | **81,6 %** | +1,1 |
+| `league_nets6` | 75,1 % | **76,4 %** | +1,3 |
+| `threat6` | 92,6 % | **93,5 %** | +0,9 |
+| **Mittel über die 6** | **86,7 %** | **87,6 %** | **+0,86** [+0,48; +1,28] |
+| `default` | 99,9 % | 100 % | ±0 |
+
+- **Direkt gegen V13:** 50,6 % [49,25; 52,0] aus 800 Spielen.
+- **Teamentscheidung:** Die Hürde von +1 Punkt im Mittel wurde knapp verfehlt. Weil schon der Screen auf den Entwicklungskarten +0,50 [+0,14; +0,94] gezeigt hatte und kein Gegner schlechter wurde, hat Mahmoud die Übernahme ausdrücklich entschieden ([Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md)).
+
+### V13: Nebel-Korrektur
 
 V13 = V12 mit denselben 36 Netzen plus Nebel-Korrektur (`est_censor`, `neb_cross`). Bei Nebelabzug 25 kippte in V12 die Schätzung des Abzugs auf 0, weil die Engine die Energie bei 0 kappt. Danach war die Nebel-Meidung aus, und Einheiten blieben mit 0 Energie im Nebel stecken. Gezielte Bestätigung auf 300 frischen Karten mit Nebelabzug 25 (816000–817792), beide Seiten, je Gegner 600 Spiele, gepaart gegen V12:
 
@@ -137,7 +158,7 @@ Ausführliche Erklärung mit Beispielen: [Wie Sherlock entscheidet](Sherlock_Ent
 | Aktionsmaske | `main.py` | Sperrt Rand, Asteroiden, Züge ohne Energie und Sap ohne Ziel, dazu tödliche Felder (`safe_moves`) und Kollisionen mit stärkeren Gegnern (`collision_guard`). |
 | Regeln | `main.py`, `rules.py` | Siehe nächste Tabelle. |
 
-### Regeln der Abgabe V13
+### Regeln der Abgabe V14
 
 | Regel | Was sie tut |
 |---|---|
@@ -149,6 +170,7 @@ Ausführliche Erklärung mit Beispielen: [Wie Sherlock entscheidet](Sherlock_Ent
 | `reach_assign` | Ziele nach echter Weglänge statt Luftlinie verteilen. |
 | `path_fix` | Züge korrigieren, die in Sackgassen führen. |
 | `nebula_avoid` | Ist der geschätzte Energieabzug im Nebel hoch (ab 25), umgehen Einheiten Nebel-Felder ohne Punkte-Feld oder verlassen sie. |
+| `cand_rescue` | Neu in V14: Ist ein Relic seit 30 Schritten bekannt, aber noch kein Punkte-Feld bewiesen, laufen die Einheiten gezielt auf Kandidaten-Felder statt auf Energiefeldern zu warten. |
 | `est_censor` + `neb_cross` | Neu in V13: Die Abzugsschätzung wertet keine Beobachtung mit Energie 0 aus, und Einheiten betreten Nebel nur mit genug Energie für die ganze Durchquerung. Sonst sammeln sie erst Energie. |
 | `scripted_explore` | Erkunder laufen direkt zu ihrem Erkundungsziel. |
 
@@ -184,7 +206,7 @@ für jedes Spiel:
 
 ## Zahlen und Fakten
 
-Stand 01.11.2026, 11:00, alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
+Stand 01.11.2026, 17:56, alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
 
 ### Spiele
 
@@ -196,11 +218,11 @@ Stand 01.11.2026, 11:00, alles aus den Dateien im Repository nachgezählt (Spiel
 | CNN mit PPO | 7 | 35.600 |
 | **Training zusammen** | **263** | **640.104** |
 | Zwischenprüfungen während des Trainings | | 65.824 |
-| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 581.701 |
-| **Alle Spiele zusammen** | | **1.287.629** |
+| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 644.419 |
+| **Alle Spiele zusammen** | | **1.350.347** |
 
 - In den 36 Netzen der Abgabe stecken **165.000 Trainingsspiele**: 66.000 der 18 Grundnetze und 18 × 5.500 = 99.000 Spiele Nachtraining.
-- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. Zeilen, die in allen Spalten einschließlich der Laufzeit einer anderen gleichen, zählen nur einmal (9.915 Zeilen); darunter sind auch verschiedene Läufe mit genau gleichem Spielverlauf, die Zahl ist also eher zu niedrig. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
+- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. Zeilen, die in allen Spalten einschließlich der Laufzeit einer anderen gleichen, zählen nur einmal (10.397 Zeilen); darunter sind auch verschiedene Läufe mit genau gleichem Spielverlauf, die Zahl ist also eher zu niedrig. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
 
 ### Rechenzeit
 
@@ -208,14 +230,14 @@ Stand 01.11.2026, 11:00, alles aus den Dateien im Repository nachgezählt (Spiel
 |---|---:|
 | Training DQN | 558 |
 | Training CNN/PPO | 29 |
-| Bewertung | 701 |
-| **Zusammen** | **rund 1.290** |
+| Bewertung | 780 |
+| **Zusammen** | **rund 1.370** |
 
 Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozesse gleichzeitig, die echte Laufzeit war also viel kürzer.
 
 ### Karten und Gegner
 
-- **21.650 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
+- **24.050 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
 - **25 verschiedene Gegner:** Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
 
 ### Agent und Code
@@ -224,16 +246,16 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 |---|---|
 | Netze der Abgabe | 36 × 152.967 Parameter = **5,5 Millionen Parameter** |
 | Eingabe und Ausgabe | 79 Merkmale je Einheit, 6 Aktionen (stehen, 4 Richtungen, Sap) |
-| Einstellungen | 159 in `AgentConfig`, davon 94 Schalter; in V13 sind 35 eingeschaltet |
-| Agent (`agents/sherlock/`) | 15 Python-Dateien, 5.133 Zeilen |
-| Skripte (`scripts/`) | 45 Python-Dateien mit 7.825 Zeilen, 48 Shell-Skripte |
-| Tests (`tests/`) | 49 Dateien mit 6.742 Zeilen, **621 Tests** |
+| Einstellungen | 162 in `AgentConfig`, davon 95 Schalter; in V14 sind 36 eingeschaltet |
+| Agent (`agents/sherlock/`) | 15 Python-Dateien, 5.318 Zeilen |
+| Skripte (`scripts/`) | 45 Python-Dateien mit 7.843 Zeilen, 48 Shell-Skripte |
+| Tests (`tests/`) | 50 Dateien mit 6.920 Zeilen, **632 Tests** |
 
 ### Versionen und Verlauf
 
-- **8 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13. Die früheren Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert (Gewichte lokal, Hashes und Anleitung zur Wiederherstellung im Repository), `full_s0` als Git-Tag `abgabe-review-full_s0`. Zu V3, V7, V10, V11, V12 und V13 gibt es je einen Übernahmebericht.
-- **Über 420 Commits** seit dem 10.10.2026 (Mahmoud über 316, Moayed 104).
-- **Dokumentation:** 148 Einträge im Arbeitsstand, 23 Testpläne; allein in der Battle-Woche wurden über 20 Tests vorab im Plan festgelegt, bevor gemessen wurde.
+- **9 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13, V14. Die früheren Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert (Gewichte lokal, Hashes und Anleitung zur Wiederherstellung im Repository), `full_s0` als Git-Tag `abgabe-review-full_s0`. Zu V3, V7, V10, V11, V12, V13 und V14 gibt es je einen Übernahmebericht.
+- **436 Commits** seit dem 10.10.2026 (Mahmoud 332, Moayed 104).
+- **Dokumentation:** 154 Einträge im Arbeitsstand, 23 Testpläne; allein in der Battle-Woche wurden über 20 Tests vorab im Plan festgelegt, bevor gemessen wurde.
 
 ## Wie wir testen
 
@@ -257,7 +279,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   │   ├── features.py           79 Merkmale pro Einheit, Zielzuweisung
 │   │   ├── rules.py              Regel-Bausteine (Nebel-Sap, Wege, Saps)
 │   │   ├── param_est.py          Schätzung versteckter Spielparameter
-│   │   ├── opp_model.py          Gegnermodell (Ausweichen, nicht aktiv in V13)
+│   │   ├── opp_model.py          Gegnermodell (Ausweichen, nicht aktiv in V14)
 │   │   ├── reward.py             Reward Shaping pro Einheit
 │   │   ├── model.py              Dueling-Q-Netz
 │   │   ├── replay_buffer.py      Ringpuffer mit Aktionsmasken
@@ -265,7 +287,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   │   ├── config.py             alle Schalter und Hyperparameter (AgentConfig)
 │   │   ├── cnn_model.py, ppo_agent.py   CNN/PPO-Versuche
 │   │   ├── agents.yaml           Import-/Lade-Pfade (Folie 51)
-│   │   └── weights/              Abgabe-Gewichte agent_p0.pth / agent_p1.pth (V13)
+│   │   └── weights/              Abgabe-Gewichte agent_p0.pth / agent_p1.pth (V14)
 │   ├── DQN/                      Baseline des Dozenten (unverändert)
 │   ├── default/                  schwacher Benchmark-Gegner
 │   └── Solution_92_Kaggle/       starker regelbasierter Gegner
@@ -284,7 +306,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
 │   ├── play_and_view.py, demo_server.py   Spiel ansehen, Demo-Seite
 │   └── common.py, metrics.py, protocol.py, …   Spiel-Schleife, Kennzahlen, Seeds
-├── tests/                        pytest (621 Tests)
+├── tests/                        pytest (632 Tests)
 ├── experiments/
 │   ├── compare/                  Ergebnisse je Spiel als CSV
 │   ├── analysis/                 Auswertungen, Übernahmeberichte (release_*/RELEASE.md)
@@ -342,7 +364,7 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 - **Format laut Prof-Mail:** `Gruppe15.zip` mit Ordner `Gruppe15/`, Agent-Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth` (eine Datei für beide Seiten). Upload auf Moodle bis Mittwoch, 04.11., nachts.
 - **Bauen:** `python -m scripts.build_submission --battle` erzeugt `Gruppe15.zip` im Projektordner (nicht im Repository). In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kurs-Runner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. Das Skript prüft das Paket in einer frischen Kursvorlage, einmal unter `agents/` und einmal in der Projektwurzel („Check ok“).
 - **Absturzschutz:** Der Kurs-Runner fängt Fehler des Agenten nicht ab. Nur in der eingefrorenen Abgabe fängt Sherlock deshalb Fehler in `act()` und `update()` ab; die Einheiten bleiben dann einen Schritt stehen, und das Spiel läuft weiter. In Training und Messungen bleiben Fehler sichtbar.
-- **Andere Python-Versionen:** Mit `scripts/xversion_replay.py` aufgezeichnete Spiele spielt die Zip unter Python 3.10 mit torch 2.2/numpy 1.26 und mit torch 2.14/numpy 2.2 ohne eine einzige abweichende Aktion nach (V13: 3 Spiele, darunter eines mit Nebelabzug 25 und eines mit Sichtweite 1).
+- **Andere Python-Versionen:** Mit `scripts/xversion_replay.py` aufgezeichnete Spiele spielt die Zip unter Python 3.10 mit torch 2.2/numpy 1.26 und mit torch 2.14/numpy 2.2 ohne eine einzige abweichende Aktion nach (V14: 3 Spiele, darunter eines mit Nebelabzug 25 und eines mit Sichtweite 1).
 - **Falls Moodle 22 MB ablehnt:** `python -m scripts.build_submission --battle --half` speichert die Gewichte als float16 (10,7 MB). Mit V12 wich dabei in drei nachgespielten Spielen 1 von 1.818 Zügen ab.
 
 ### Finale am 27.11.
@@ -360,7 +382,8 @@ Stand **01.11.2026**:
 - **Geprüft, nicht übernommen (31.10.):** Nebel-Sap ohne Energiereserve (`v13r0`). Auf 800 frischen Karten gewann er direkt 59,4 % gegen V12, im Mittel über die 6 Gegner aber nur +0,45 Prozentpunkte (Hürde +1,0) und gegen Solution_92 94,3 statt 95,0 %. V12 bleibt.
 - **Geprüft, nicht übernommen (01.11.):** die Regel „Restenergie am Matchende verschießen“ (`end_sap`, im Code, Standard aus). Auf den Entwicklungskarten war sie mit 10 Schritten im Mittel über die 6 Gegner +1,1 Prozentpunkte besser, verlor aber direkt gegen V12 mit 45,7 % (Hürde mindestens 50 %). Mit 20 Schritten: +0,1.
 - **Geprüft, nicht übernommen (01.11.):** Nachtraining Runde 6 (`v17a`: V12-Netze + 12 nachtrainierte Netze + Nebel-Korrektur). Auf 800 frischen Karten +0,41 Punkte (Hürde +1,0), direkt 53,8 % gegen V12. Der Gewinn kam aus der Nebel-Korrektur; sie wurde allein als V13 übernommen.
-- **Zugelassen, Bestätigung offen:** `cand_rescue`. Ist ein Relic seit 30 Schritten bekannt und noch kein Punkte-Feld, laufen die Einheiten gezielt Kandidaten-Felder an. Screen auf V13: +0,50 Punkte [+0,14; +0,94], direkt 52,3 %.
+- **Übernommen als V14 (01.11., Teamentscheidung):** `cand_rescue`, +0,86 Punkte auf 800 frischen Karten, jeder Gegner im Plus, Hürde +1 knapp verfehlt.
+- **Geprüft, nicht übernommen (01.11.):** `cand_post` (wahrscheinliche Punkte-Felder zuerst testen) mit `spawn_proof` und `cand_rescue` (`v19cr`). Auf den Entwicklungskarten +1,81 Punkte, auf 800 frischen Karten −0,35. Der Gewinn auf den Entwicklungskarten kam aus der Auswahl auf denselben Karten. Auch die Relic-Suche nach dem Lage-Gitter der Relics (`relic_prior`, Wachposten) brachte nichts.
 - **Termine:** Zwischenpräsentation und Battle am 06.11., Finale mit Turnier am 27.11.
 
 ## Historische Ergebnisse
@@ -401,7 +424,7 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 - [Arbeitsstand](docs/ARBEITSSTAND.md): jede abgeschlossene Arbeit mit Grund, Prüfungen und offenen Punkten, neueste oben.
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): alle Versuche und Auswahlentscheidungen.
 - [Plan der Battle-Woche](docs/superpowers/plans/2026-10-29-battle-push.md): vorab festgelegte Tests und Hürden.
-- Übernahmeberichte: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md).
+- Übernahmeberichte: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
 - Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · 23.10. ([HTML](docs/presentation/Sherlock_Review_23-10-2026.html)) · Battle 06.11. ([HTML](docs/presentation/Sherlock_Battle_06-11-2026.html), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)).
 
 ## Quellen

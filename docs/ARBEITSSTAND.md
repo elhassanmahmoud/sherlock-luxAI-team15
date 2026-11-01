@@ -5,6 +5,23 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 17:56 Berlin – Claude Code mit Mahmoud: **V14 `v14_rescue` ist die neue Abgabe** (Teamentscheidung)
+
+- **Entscheidung:** Mahmoud hat um 17:51 ausdrücklich zugestimmt („ja lets go“), `cand_rescue` trotz der knapp verfehlten Hürde zu übernehmen. Empfehlung von Claude Code: Der Gewinn ist klein, aber in zwei unabhängigen Messungen belegt.
+  - Dev A: +0,50 pp [+0,14; +0,94].
+  - Frische Karten 820000–820799: +0,86 pp [+0,48; +1,28], alle 6 Gegner im Plus, Solution_92 95,44 statt 94,94 %, direkt 50,6 %.
+  - Vorher hatte das Übernahmeskript die Übernahme ohne bestandenes Gate verweigert. Ein erster Versuch mit Mahmouds Antwort „wie du willst“ wurde vom System als nicht ausdrücklich genug blockiert. Danach kam das ausdrückliche Ja.
+- **Werkzeug:** `scripts/release_candidate.py --team-decision` (Commit `95a9627`, Test): Die Übernahme ohne bestandenes Gate verlangt eine schriftliche Begründung; sie steht mit `gate_passed: false` im Manifest `experiments/releases/20261101_v14_rescue.json`.
+- **Übernahme** (17:51): V13 bytegleich gesichert in `experiments/releases/20261101_v13_neb/`; beide Abgabe-Dateien jetzt SHA-256 `98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8` (Quelle `experiments/ensembles/battle_v18r.pth`).
+- **Prüfungen:**
+  - Kurs-Runner 8 Spiele bestanden (act Median 4,7–5,7 ms, max 11,6 ms).
+  - `Gruppe15.zip` neu gebaut (17:51, 22,2 MB, SHA-256 `50c188b1…`), „Check ok“ an beiden Orten. `Gruppe15/agent.pth` hat dieselben Tensoren und dieselbe Config plus `frozen=True`; alle 15 Python-Dateien sind bytegleich.
+  - 3 Spiele (800000, 800004, 4242) unter Python 3.10.15 mit torch 2.14.1/numpy 2.2.6 und torch 2.2.2/numpy 1.26.4 nachgespielt: 0 abweichende Aktionen.
+  - Testsuite 632 bestanden.
+- **Doku:** [Übernahmebericht](../experiments/analysis/release_20261101_v14/RELEASE.md); CLAUDE.md und README auf V14, README-Zahlen neu gezählt (1.350.347 Spiele).
+- Die V13-Zip vom Vormittag liegt als Kopie im Scratchpad und lässt sich aus der Sicherung jederzeit neu bauen.
+- **Abgabe: V14 `v14_rescue`.** Upload `Gruppe15.zip` bis Mittwoch, 04.11., nachts (Mahmoud lädt einmal am Ende hoch).
+
 ## 01.11.2026, 17:29 Berlin – Claude Code (autonom): `v19cr` auf frischen Karten durchgefallen (−0,35 statt +1,81 auf Dev A); V13 bleibt
 
 - **Battle-Bestätigung `v19cr`** (15:22–17:28, 822000–823399, Code `49a82ec`): **nicht bestanden.**

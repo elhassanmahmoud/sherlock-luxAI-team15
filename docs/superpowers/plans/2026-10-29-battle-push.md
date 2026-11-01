@@ -559,6 +559,9 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   Solution_92 95,44 % (Δ +0,50 [+0,12; +0,88]), default 100 %, direkt gegen V13 50,6 % [49,25; 52,0] aus 800 Spielen.
   Verfehlt: Mittel 6 ≥ +1 pp und direkt untere Grenze > 50 %. Alle 6 Gegner +0,5 bis +1,3 pp (`league_nets6` +1,25, V7
   +1,12, `threat6` +0,88, V3 +0,75, `sol92_sq` +0,69, Solution_92 +0,50). V13 bleibt die Abgabe.
+- **Teamentscheidung (01.11., 17:51):** Mahmoud übernimmt `v18r` ausdrücklich trotzdem als V14 `v14_rescue`
+  (Empfehlung Claude Code: zwei unabhängige Messungen positiv, kein Gegner schlechter). Abweichung von der Regel „Bestanden →
+  Übernahme“, offen dokumentiert: `release_candidate.py --team-decision`, Manifest mit `gate_passed: false`.
 
 ## Nachtrag 01.11.2026, 12:17 (Kandidaten-Reihenfolge und Spawn-Beweis, vor jeder Messung von `v19c`/`v19cr` auf Dev A oder 822000–823399)
 

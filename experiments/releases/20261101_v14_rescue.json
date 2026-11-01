@@ -1,0 +1,18 @@
+{
+  "label": "v14_rescue",
+  "status": "installed_and_verified",
+  "installed_at": "2026-11-01T16:51:36.221147+00:00",
+  "code_commit": "95a9627e7b9b77b512597c6f4cc3313fe20ae3ff",
+  "candidate": "experiments/ensembles/battle_v18r.pth",
+  "candidate_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "installed_sha256": {
+    "agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "rollback_manifest": "experiments/releases/20261101_v13_neb/manifest.json",
+  "rollback_readme": "experiments/releases/20261101_v13_neb/README.md",
+  "gate_log": "experiments/pipeline_battle_gate.log",
+  "runner_report": "experiments/analysis/release_v14_rescue_runner_installed.json",
+  "gate_passed": false,
+  "team_decision": "Teamentscheidung Mahmoud (01.11.2026, 17:51, ausdruecklich: 'ja lets go'): cand_rescue trotz verfehlter +1-pp-Huerde als V14 uebernommen, auf Empfehlung von Claude Code. Belege: Dev A +0,50 pp [+0,14; +0,94]; frische Karten 820000-820799 +0,86 pp [+0,48; +1,28], alle 6 Gegner im Plus, Solution_92 +0,50 [+0,12; +0,88], direkt 50,6 %."
+}
