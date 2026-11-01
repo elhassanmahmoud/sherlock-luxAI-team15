@@ -38,7 +38,8 @@ def gate_passed(log: Path, name: str) -> bool:
     for ln in lines[start + 1:]:
         if re.search(r"\bStart \S+ \(", ln):
             return False
-        if "GATE Bestaetigung: BESTANDEN" in ln or "GATE Battle-Bestaetigung: BESTANDEN" in ln:
+        # 01.11.2026: auch die gezielte Nebel-25-Bestaetigung (scripts/battle_neb25.sh)
+        if any(f"GATE {k}: BESTANDEN" in ln for k in ("Bestaetigung", "Battle-Bestaetigung", "Nebel-25-Bestaetigung")):
             return True
     return False
 

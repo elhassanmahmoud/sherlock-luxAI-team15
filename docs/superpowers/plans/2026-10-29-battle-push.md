@@ -472,3 +472,28 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf **813200–813999**, direkt **814000–814399**
   (`REF=v12 bash scripts/battle_v14.sh confirm NAME`). Hürden unverändert `league_gates battle`; vorher prüfen, dass
   keine CSV diese Seeds enthält. Spätester Start 03.11., 12:00. Bestanden → Übernahme wie Nachtrag 18:50, sonst V12.
+
+## Nachtrag 01.11.2026, 04:45 (gezielte Bestätigung der Nebel-Korrektur, vor jeder Messung auf 816000–819999)
+
+- **Grund:** `v15cx` (`est_censor` + `neb_cross`) wirkt nur auf Karten mit Nebelabzug 25.
+  - Dev A: 84 der 87 veränderten Ergebnisse liegen dort, +2,68 pp, jeder der 6 Gegner +1,8 bis +5,4 pp, direkt 57,1 %
+    gegen V12. Die übrigen Karten spielt `v15cx` praktisch gleich (direkt 50,2 %).
+  - Eine Hürde von +1 pp im Mittel über alle Karten kann eine solche Korrektur kaum erreichen (erwartet etwa +0,45 pp),
+    obwohl sie nirgends schadet. Deshalb ein Test genau dort, wo sie wirkt, und ein Gleichheitstest für den Rest.
+- **Karten** (nur nach Kartenparametern aus `env.reset` gewählt, vor jedem Spiel festgelegt; 815600–819999 um 04:40 in
+  keiner CSV, `experiments/analysis/neb25_20261101/`):
+  - **N25:** die ersten 300 Karten mit Abzug 25 aus 816000–819999, `seeds_n25.json` (816000–817792).
+  - **Rest:** die ersten 60 übrigen Karten, `seeds_rest.json`.
+- **Lauf** `WORKERS=12 bash scripts/battle_neb25.sh v15cx`:
+  - V12 und `v15cx` auf N25 gegen die 6 Gegner und default, je Gegner 600 Spiele.
+  - Direkt `v15cx` gegen V12 auf N25, 600 Spiele.
+  - V12 und `v15cx` auf Rest gegen die 6 Gegner, je 120 Spiele.
+- **Hürden** (alle müssen halten):
+  - N25: Mittel 6 Δ ≥ +1 pp und untere 95%-Grenze > 0; Solution_92 Δ ≥ −0,5 pp; default ≥ 99 %; direkt gegen V12 ≥ 50 %.
+  - Rest: ≥ 98 % gleiche Ergebnisse und Mittel 6 Δ ≥ −0,5 pp.
+- **Reihenfolge:** erst Runde 6 (Nachtrag 04:25). Besteht `v17a`/`v17b` die Battle-Bestätigung, enthält die Abgabe die
+  Korrektur schon, und dieser Test entfällt. Sonst läuft er.
+  - Bestanden → Übernahme als V13 `v13_neb` (V12-Netze, Config V12 + `est_censor` + `neb_cross`) wie Nachtrag 18:50.
+  - Nicht bestanden → V12 bleibt.
+  - `scripts/release_candidate.py` erkennt dafür auch „GATE Nebel-25-Bestaetigung: BESTANDEN“ (Test in
+    `tests/test_release_gate.py`).
