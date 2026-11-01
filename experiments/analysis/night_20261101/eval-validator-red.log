@@ -1,0 +1,100 @@
+..........FFF                                                            [100%]
+=================================== FAILURES ===================================
+_____ test_incomplete_or_incoherent_measurement_is_rejected[negative_time] _____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-107/test_incomplete_or_incoherent_9')
+defect = 'negative_time'
+
+    @pytest.mark.parametrize('defect', ['missing', 'duplicate', 'wrong_seed', 'wrong_opponent',
+                                      'unfinished', 'old_points', 'result', 'points', 'nonfinite',
+                                      'negative_time', 'negative_count', 'invalid_fraction'])
+    def test_incomplete_or_incoherent_measurement_is_rejected(tmp_path, defect):
+        data = rows()
+        if defect == 'missing':
+            data.pop()
+        elif defect == 'duplicate':
+            data[1] = dict(data[0])
+        else:
+            key, value = {
+                'wrong_seed': ('seed', 832001), 'wrong_opponent': ('opponent', 'default'),
+                'unfinished': ('steps', 302), 'old_points': ('point_counting_version', 1),
+                'result': ('result', 0), 'points': ('point_win', 0),
+                'nonfinite': ('secs', float('nan')),
+                'negative_time': ('secs', -1), 'negative_count': ('unit_steps', -1),
+                'invalid_fraction': ('wait_frac', 2),
+            }[defect]
+            data[0][key] = value
+        path = tmp_path / 'invalid.csv'
+        write(path, data)
+>       with pytest.raises(AssertionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_night_eval_journal.py:67: Failed
+____ test_incomplete_or_incoherent_measurement_is_rejected[negative_count] _____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-107/test_incomplete_or_incoherent_10')
+defect = 'negative_count'
+
+    @pytest.mark.parametrize('defect', ['missing', 'duplicate', 'wrong_seed', 'wrong_opponent',
+                                      'unfinished', 'old_points', 'result', 'points', 'nonfinite',
+                                      'negative_time', 'negative_count', 'invalid_fraction'])
+    def test_incomplete_or_incoherent_measurement_is_rejected(tmp_path, defect):
+        data = rows()
+        if defect == 'missing':
+            data.pop()
+        elif defect == 'duplicate':
+            data[1] = dict(data[0])
+        else:
+            key, value = {
+                'wrong_seed': ('seed', 832001), 'wrong_opponent': ('opponent', 'default'),
+                'unfinished': ('steps', 302), 'old_points': ('point_counting_version', 1),
+                'result': ('result', 0), 'points': ('point_win', 0),
+                'nonfinite': ('secs', float('nan')),
+                'negative_time': ('secs', -1), 'negative_count': ('unit_steps', -1),
+                'invalid_fraction': ('wait_frac', 2),
+            }[defect]
+            data[0][key] = value
+        path = tmp_path / 'invalid.csv'
+        write(path, data)
+>       with pytest.raises(AssertionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_night_eval_journal.py:67: Failed
+___ test_incomplete_or_incoherent_measurement_is_rejected[invalid_fraction] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-107/test_incomplete_or_incoherent_11')
+defect = 'invalid_fraction'
+
+    @pytest.mark.parametrize('defect', ['missing', 'duplicate', 'wrong_seed', 'wrong_opponent',
+                                      'unfinished', 'old_points', 'result', 'points', 'nonfinite',
+                                      'negative_time', 'negative_count', 'invalid_fraction'])
+    def test_incomplete_or_incoherent_measurement_is_rejected(tmp_path, defect):
+        data = rows()
+        if defect == 'missing':
+            data.pop()
+        elif defect == 'duplicate':
+            data[1] = dict(data[0])
+        else:
+            key, value = {
+                'wrong_seed': ('seed', 832001), 'wrong_opponent': ('opponent', 'default'),
+                'unfinished': ('steps', 302), 'old_points': ('point_counting_version', 1),
+                'result': ('result', 0), 'points': ('point_win', 0),
+                'nonfinite': ('secs', float('nan')),
+                'negative_time': ('secs', -1), 'negative_count': ('unit_steps', -1),
+                'invalid_fraction': ('wait_frac', 2),
+            }[defect]
+            data[0][key] = value
+        path = tmp_path / 'invalid.csv'
+        write(path, data)
+>       with pytest.raises(AssertionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AssertionError
+
+tests/test_night_eval_journal.py:67: Failed
+=========================== short test summary info ============================
+FAILED tests/test_night_eval_journal.py::test_incomplete_or_incoherent_measurement_is_rejected[negative_time]
+FAILED tests/test_night_eval_journal.py::test_incomplete_or_incoherent_measurement_is_rejected[negative_count]
+FAILED tests/test_night_eval_journal.py::test_incomplete_or_incoherent_measurement_is_rejected[invalid_fraction]
+3 failed, 10 passed in 2.50s
