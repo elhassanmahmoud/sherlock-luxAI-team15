@@ -41,6 +41,17 @@ BATTLE_SIX = ("solution92", "sol92_sq", "self:experiments/releases/20261022_all1
               "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
               "self:experiments/ensembles/league_nets6.pth", "self:experiments/ensembles/threat6.pth")
 BATTLE_DELTA = 0.01
+# 01.11.2026: Vergleiche mit Toleranz. Siegquoten sind Brueche ganzer Zahlen; 18 Siege mehr in 3.600 Spielen
+# (genau +0,5 pp) ergaben in Gleitkomma 0,004999999999999999 und galten in scripts/battle_v14.sh als < 0,005.
+EPS = 1e-9
+
+
+def _ge(x: float, threshold: float) -> bool:
+    return x >= threshold - EPS
+
+
+def _gt(x: float, threshold: float) -> bool:
+    return x > threshold + EPS
 
 
 def _bootstrap(values: np.ndarray) -> tuple[float, float]:
@@ -87,10 +98,10 @@ def selection_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: p
     rows = _by_opponent(candidate, reference)
     d = direct_result(direct, direct_opponent)
     checks = {
-        f"R Δ >= +{SEL_PANEL_DELTA * 100:.1f} pp": p["delta"] >= SEL_PANEL_DELTA,
-        f"Solution_92 Δ >= {SEL_SOL92_DELTA * 100:+.1f} pp": rows["solution92"]["delta"] >= SEL_SOL92_DELTA,
-        f"default >= {SEL_DEFAULT:.0%}": rows["default"]["winrate"] >= SEL_DEFAULT,
-        f"direkt >= {SEL_DIRECT:.0%}": d["winrate"] >= SEL_DIRECT,
+        f"R Δ >= +{SEL_PANEL_DELTA * 100:.1f} pp": _ge(p["delta"], SEL_PANEL_DELTA),
+        f"Solution_92 Δ >= {SEL_SOL92_DELTA * 100:+.1f} pp": _ge(rows["solution92"]["delta"], SEL_SOL92_DELTA),
+        f"default >= {SEL_DEFAULT:.0%}": _ge(rows["default"]["winrate"], SEL_DEFAULT),
+        f"direkt >= {SEL_DIRECT:.0%}": _ge(d["winrate"], SEL_DIRECT),
     }
     return dict(panel=p, solution92=rows["solution92"], default=rows["default"], direct=d, checks=checks,
                 passed=all(checks.values()))
@@ -104,13 +115,13 @@ def confirm_checks(reference: pd.DataFrame, candidate: pd.DataFrame, direct: pd.
     sol, dfl = rows["solution92"], rows["default"]
     d = direct_result(direct, direct_opponent)
     checks = {
-        f"{label} Δ >= +{min_delta * 100:.0f} pp": p["delta"] >= min_delta,
-        f"{label} untere 95%-Grenze > 0": p["low"] > 0,
-        f"Solution_92 Δ >= {CONF_SOL92_DELTA * 100:+.1f} pp": sol["delta"] >= CONF_SOL92_DELTA,
-        f"Solution_92 untere 95%-Grenze > {CONF_SOL92_LOW * 100:+.1f} pp": sol["low"] > CONF_SOL92_LOW,
-        f"default >= {CONF_DEFAULT:.0%}": dfl["winrate"] >= CONF_DEFAULT,
-        f"default Δ >= {CONF_DEFAULT_DELTA * 100:+.0f} pp": dfl["delta"] >= CONF_DEFAULT_DELTA,
-        "direkt untere 95%-Grenze > 50 %": d["low"] > CONF_DIRECT_LOW,
+        f"{label} Δ >= +{min_delta * 100:.0f} pp": _ge(p["delta"], min_delta),
+        f"{label} untere 95%-Grenze > 0": _gt(p["low"], 0.0),
+        f"Solution_92 Δ >= {CONF_SOL92_DELTA * 100:+.1f} pp": _ge(sol["delta"], CONF_SOL92_DELTA),
+        f"Solution_92 untere 95%-Grenze > {CONF_SOL92_LOW * 100:+.1f} pp": _gt(sol["low"], CONF_SOL92_LOW),
+        f"default >= {CONF_DEFAULT:.0%}": _ge(dfl["winrate"], CONF_DEFAULT),
+        f"default Δ >= {CONF_DEFAULT_DELTA * 100:+.0f} pp": _ge(dfl["delta"], CONF_DEFAULT_DELTA),
+        "direkt untere 95%-Grenze > 50 %": _gt(d["low"], CONF_DIRECT_LOW),
     }
     return dict(panel=p, solution92=sol, default=dfl, direct=d, checks=checks, passed=all(checks.values()))
 

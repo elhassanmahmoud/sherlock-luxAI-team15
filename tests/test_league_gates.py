@@ -113,3 +113,13 @@ def test_battle_confirm_uses_mean_over_six_opponents(tmp_path, capsys):
     assert G.main(["battle", *map(str, paths), "--direct-opponent", v11]) == 0
     out = capsys.readouterr().out
     assert "Mittel 6" in out and "GATE Battle-Bestaetigung: BESTANDEN" in out
+
+
+def test_gate_comparisons_tolerate_float_rounding():
+    from scripts.league_gates import _ge, _gt
+    assert 18 / 3600 == 0.005 and (0.8647222222222222 - 0.8597222222222223) < 0.005  # Gleitkomma wie bei v18r
+    assert _ge(0.8647222222222222 - 0.8597222222222223, 0.005)
+    assert not _ge(0.0049, 0.005)
+    assert _gt(0.001, 0.0) and not _gt(1e-17, 0.0) and not _gt(0.0, 0.0)
+    assert _gt(0.5013, 0.50) and not _gt(0.50 + 1e-12, 0.50)
+
