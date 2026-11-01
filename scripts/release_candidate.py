@@ -29,18 +29,31 @@ def sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+START = re.compile(r"(?:([\w-]+): )?Start (\S+) \(")
+
+
 def gate_passed(log: Path, name: str) -> bool:
+    """Letzter Start von NAME; zaehlt nur die erste GATE-Zeile derselben Art danach.
+
+    Arten: alte Form "Start NAME (" -> "GATE Bestaetigung", "Battle-Bestaetigung: Start NAME (" -> "GATE Battle-
+    Bestaetigung", "Nebel-25-Bestaetigung: Start NAME (" -> "GATE Nebel-25-Bestaetigung" (01.11.2026). Zeilen
+    anderer Arten werden uebersprungen: am 01.11. lief die Battle-Bestaetigung von v17a parallel zur Nebel-25-
+    Bestaetigung von v15cx, ihre Zeilen stehen gemischt im selben Log. Ein weiterer Start derselben Art vor der
+    GATE-Zeile bricht ab (nicht zuordenbar).
+    """
     lines = log.read_text(encoding="utf-8").splitlines()
-    start = max((i for i, ln in enumerate(lines) if f"Start {name} (" in ln), default=None)
-    if start is None:
+    starts = [(i, m.group(1) or "Bestaetigung") for i, ln in enumerate(lines)
+              for m in [START.search(ln)] if m and m.group(2) == name]
+    if not starts:
         return False
-    # 30.10.2026: nur bis zum Start des naechsten Kandidaten; auch die Battle-Bestaetigung (scripts/battle_confirm.sh)
+    start, kind = starts[-1]
     for ln in lines[start + 1:]:
-        if re.search(r"\bStart \S+ \(", ln):
+        m = START.search(ln)
+        if m and (m.group(1) or "Bestaetigung") == kind:
             return False
-        # 01.11.2026: auch die gezielte Nebel-25-Bestaetigung (scripts/battle_neb25.sh)
-        if any(f"GATE {k}: BESTANDEN" in ln for k in ("Bestaetigung", "Battle-Bestaetigung", "Nebel-25-Bestaetigung")):
-            return True
+        # nur die Urteilszeile; alte Logs haben davor eine Zusammenfassung "GATE Bestaetigung: Solution_92 ..."
+        if ln.strip() in (f"GATE {kind}: BESTANDEN", f"GATE {kind}: NICHT BESTANDEN"):
+            return ln.strip() == f"GATE {kind}: BESTANDEN"
     return False
 
 
