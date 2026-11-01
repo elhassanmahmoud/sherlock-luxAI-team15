@@ -5,6 +5,24 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 04:25 Berlin – Claude Code (autonom): `no_strand` ohne Gewinn; Nachtraining unter den V12-Regeln gestartet
+
+- **Screen** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v16s v16all`, Code `c9fe79b`, 03:28–04:19), Dev A gepaart gegen V12:
+  - `v16s` (`no_strand`): Mittel 6 Δ −0,28 pp [−1,50; +0,92], direkt 50,8 %.
+  - `v16all` (alle drei Schalter): Mittel 6 Δ −0,06 [−1,33; +1,22], direkt 51,0 %.
+  - Beide **nicht zugelassen**. Gegen `league_nets6` −3,0 bzw. −3,7, gegen V3, V7 und Solution_92 +0,7 bis +1,7. 280 von 3.600 Ergebnissen ändern sich, ohne klares Muster. `no_strand` bleibt im Code (aus), wird aber nicht weiter verfolgt.
+- **Weitere Spur** (verbrauchte Karte 812618 gegen `league_nets6`, Bewegung 5, Sicht 1, Spielbild):
+  - Beide Seiten haben Units mit 0 Energie; `league_nets6` erobert die Punkte-Tiles um unser Relic.
+  - Ein einzelner Fehler ist das nicht, sondern ein Zusammenspiel vieler Entscheidungen der Netze.
+- **Deshalb Nachtraining** ([Plan-Nachtrag 01.11., 04:25](superpowers/plans/2026-10-29-battle-push.md)):
+  - Die Netze haben die V11/V12-Regeln nie im Training gesehen; V11 entstand aus genau so einem Nachtraining (R +4,66 pp).
+  - `scripts/pipeline_battle_ft6.sh`, neue Variante `full_rules_v12` (V12-Config + Nebel-Korrekturen, alle Regeln im Training).
+  - 12 der V12-Netze je 2.000 Spiele, 12 parallel, Kartenversatz 4000.
+  - Gegner: Solution_92-Varianten 60 %, Pool aus V10, old3, V11 und V12 30 %, rush und default je 5 %.
+  - Danach die Kandidaten `v17a` (48 Netze) und `v17b` (36 Netze, die 12 neuen ersetzen ihre Vorgänger), Screen wie bisher.
+  - Ende des Trainings etwa 07:30–08:00.
+- Abgabe unverändert **V12**.
+
 ## 01.11.2026, 03:30 Berlin – Claude Code (autonom): Nebel-Korrektur knapp nicht zugelassen (auf Nebel-25-Karten +2,7 pp); neue Regel `no_strand`, Screen läuft
 
 - **Screen** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v15c v15cx`, Code `2e4eee7`, 02:24–03:21), Dev A gepaart gegen V12:

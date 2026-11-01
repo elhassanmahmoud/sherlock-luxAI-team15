@@ -103,6 +103,14 @@ VARIANTS["full_rules_v10"] = (
     {**VARIANTS["full_rules_v8"][1], "sap_still": True, "rules_in_training_all": True},
 )
 
+# 01.11.2026: Training unter allen V12-Regeln (V10 + art_splash/sap_still_splash mit Halbstreuung + Nebel-Sap)
+# und den Nebel-Korrekturen vom 01.11. (est_censor, neb_cross). Plan-Nachtrag 01.11., 04:25.
+VARIANTS["full_rules_v12"] = (
+    VARIANTS["full_rules_v10"][0],
+    {**VARIANTS["full_rules_v10"][1], "art_splash": True, "sap_still_splash": True, "splash_min_drop": 0.5,
+     "splash_safe_below": 1.0, "fog_sap": True, "fog_v2": True, "est_censor": True, "neb_cross": True},
+)
+
 ABLATIONS = [v for v, (k, _) in VARIANTS.items() if k == "sherlock" and not v.startswith("full")]
 
 

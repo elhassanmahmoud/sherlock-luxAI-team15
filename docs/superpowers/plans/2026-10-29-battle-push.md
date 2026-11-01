@@ -448,3 +448,27 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf **813200–813999**, direkt
   **814000–814399** (`REF=v12 bash scripts/battle_v14.sh confirm NAME`). Hürden unverändert `league_gates battle`;
   vorher prüfen, dass keine CSV diese Seeds enthält. Bestanden → Übernahme wie Nachtrag 18:50, sonst V12.
+- **Ergebnis Screen (01.11., 04:19): kein Kandidat zugelassen.** `v16s` Mittel 6 Δ −0,28 pp [−1,50; +0,92], direkt
+  50,8 %; `v16all` −0,06 [−1,33; +1,22], direkt 51,0 %. Gegen `league_nets6` −3,0 bzw. −3,7, gegen V3/V7/Solution_92
+  +0,7 bis +1,7. 280 von 3.600 Ergebnissen verändert, ohne klares Muster (Bewegungskosten 4: +1,0, 1–3: −0,6 bis
+  −1,2). `no_strand` wird nicht weiter verfolgt.
+
+## Nachtrag 01.11.2026, 04:25 (Nachtraining unter den V12-Regeln, vor jeder Messung mit den neuen Netzen)
+
+- **Grund:** Die 36 Netze von V12 haben die Regeln von V11/V12 (Halbstreuung, Nebel-Sap) und die Nebel-Korrekturen nie
+  im Training gesehen. V11 entstand aus genau so einem Nachtraining unter den damaligen Regeln (R +4,66 pp). Die
+  Regeltests dieser Nacht brachten höchstens +0,42 pp (`v15cx`).
+- **Lauf** `scripts/pipeline_battle_ft6.sh`:
+  - 12 der V12-Netze (Runde 3, Seeds s16–s27; Gewichte und Buffer) spielen je 2.000 Spiele, 12 parallel.
+  - Neue Variante `full_rules_v12`: V12-Config + `est_censor` + `neb_cross`, alle Regeln im Training.
+  - Kartenversatz 4000, für s16–s27 noch unbenutzt.
+  - Gegner: solution92 0,30, sol92_sq 0,20, sol92_weak 0,10, Pool 0,30 (V10, old3, V11, V12), rush 0,05, default 0,05.
+    Die zurückgehaltenen Ensembles `league_nets6`/`threat6` und die Abgaben V3/V7 sind nicht im Pool.
+- **Kandidaten** (beide Config V12 + `est_censor` + `neb_cross`):
+  - `v17a`: die 36 V12-Netze + 12 neue = 48 Netze.
+  - `v17b`: V10-Netze + Runde-3-Netze s10–s15 + 12 neue = 36 Netze; die 12 neuen ersetzen ihre Vorgänger.
+- **Screen:** `REF=v12 bash scripts/battle_v14.sh admit v17a v17b`, Zulassung unverändert (Mittel 6 Δ ≥ +0,5 pp,
+  direkt ≥ 50 %, Solution_92 Δ ≥ −1,0 pp; bei zwei der mit dem höheren Mittel).
+- **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf **813200–813999**, direkt **814000–814399**
+  (`REF=v12 bash scripts/battle_v14.sh confirm NAME`). Hürden unverändert `league_gates battle`; vorher prüfen, dass
+  keine CSV diese Seeds enthält. Spätester Start 03.11., 12:00. Bestanden → Übernahme wie Nachtrag 18:50, sonst V12.
