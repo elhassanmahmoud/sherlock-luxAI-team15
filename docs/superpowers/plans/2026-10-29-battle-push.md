@@ -472,6 +472,11 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
 - **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf **813200–813999**, direkt **814000–814399**
   (`REF=v12 bash scripts/battle_v14.sh confirm NAME`). Hürden unverändert `league_gates battle`; vorher prüfen, dass
   keine CSV diese Seeds enthält. Spätester Start 03.11., 12:00. Bestanden → Übernahme wie Nachtrag 18:50, sonst V12.
+- **Ergebnis Screen (01.11., 07:56): `v17a` zugelassen.** Mittel 6 Δ +1,22 pp [−0,64; +3,17], Solution_92 ±0,
+  direkt gegen V12 60,3 % [55,0; 66,0] (je Gegner: V7 +8,0, `league_nets6` +2,0, V3 −1,3, `sol92_sq` −1,3, `threat6`
+  und Solution_92 ±0). `v17b` ebenfalls zugelassen (Δ +0,69 [−1,33; +2,75], Solution_92 −0,83, direkt 56,0 %), aber
+  mit dem niedrigeren Mittel. Battle-Bestätigung von `v17a` gestartet 07:56; 813200–814399 vorher in keiner der 1.157
+  CSVs mit Seed-Spalte (die einzigen Treffer der Suche waren Trainingskarten 313000–314749).
 
 ## Nachtrag 01.11.2026, 04:45 (gezielte Bestätigung der Nebel-Korrektur, vor jeder Messung auf 816000–819999)
 
@@ -498,7 +503,7 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - `scripts/release_candidate.py` erkennt dafür auch „GATE Nebel-25-Bestaetigung: BESTANDEN“ (Test in
     `tests/test_release_gate.py`).
 
-## Nachtrag 01.11.2026, 07:20 (`cand_rescue` auf der Nebel-Korrektur, vor jeder Messung von `v18r`)
+## Nachtrag 01.11.2026, 07:15 (`cand_rescue` auf der Nebel-Korrektur, vor jeder Messung von `v18r`)
 
 - **Grund** (nur verbrauchte Karten 812000–812149, V12 gegen Solution_92, 900 Matches mit Endstand je Match):
   - Gleichstand nach Punkten entscheidet nur 0,9 % der Matches (alle gewonnen). Die Regel `tie_save` (Energie sparen

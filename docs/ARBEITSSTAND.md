@@ -5,6 +5,28 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 08:00 Berlin – Claude Code (autonom): `v17a` zugelassen, Battle-Bestätigung läuft; `cand_rescue` als `v18r` im Screen
+
+- **Screen Runde 6** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v17a v17b`, Code `59da48b`, 06:44–07:56), Dev A gepaart gegen V12:
+  - **`v17a`** (48 Netze, Config V12 + Nebel-Korrektur): Mittel 6 **+1,22 pp** [−0,64; +3,17], Solution_92 ±0, **direkt gegen V12 60,3 %** [55,0; 66,0] → **zugelassen**. Je Gegner: V7 +8,0 [+3,0; +13,0], `league_nets6` +2,0, `threat6` ±0, V3 −1,3, `sol92_sq` −1,3, Solution_92 ±0.
+  - `v17b` (36 Netze): +0,69 [−1,33; +2,75], Solution_92 −0,83, direkt 56,0 % → ebenfalls zugelassen, aber niedrigeres Mittel.
+- **Battle-Bestätigung `v17a`** läuft seit 07:56 (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh confirm v17a`, Code `518f289`): 813200–813999 gegen die 6 Gegner und default, direkt 814000–814399. Die Karten waren vorher in keiner der 1.157 CSVs mit Seed-Spalte; die einzigen Suchtreffer waren Trainingskarten 313000–314749. Hürden `league_gates battle`. Ende etwa 11:30–12:00, weil parallel noch zwei Messungen laufen.
+- **Gleichstand-Probe** (verbrauchte Karten 812000–812149, V12 gegen Solution_92, 300 Spiele, Endstand je Match; Skript nur im Scratchpad):
+  - Bei Punktgleichstand gewinnt laut Engine das Team mit mehr Gesamtenergie. Das entschied nur 8 von 900 Matches (0,9 %), alle für V12.
+  - Die vorbereitete Regel `tie_save` (Energie sparen bei drohendem Gleichstand) kommt deshalb nicht in den Hauptstand. Sie liegt nur in einer Arbeitskopie im Scratchpad, mit 3 Tests.
+- **Wichtiger Befund dieser Probe:**
+  - V12 verliert Match 2 und 3 dreimal so oft wie Match 1 (16,7/15,7 statt 5,7 %).
+  - 102 von 114 verlorenen Matches gehen mit mehr als 10 Punkten Rückstand verloren.
+  - 14 Matches mit weniger als 20 % der Gegnerpunkte stecken in 13 der 21 verlorenen Spiele.
+  - Ursachen: der Nebel-Fehler (812049, 812081) und Kandidaten, die nicht getestet werden. Auf 812121 sind die Relics seit Match 1 bekannt, aber über 140 Schritte bleibt kein Punkte-Tile bekannt. Die Units pendeln auf Energiefeldern im Nebel, ihr Ziel-Kandidat wechselt jeden Schritt; Match 2 endet 0:202. Auf 812036 dasselbe Muster bei Sichtweite 1.
+- **`cand_rescue` als Kandidat `v18r`** ([Plan-Nachtrag 07:15](superpowers/plans/2026-10-29-battle-push.md)):
+  - `v18r` = `v15cx` + `cand_rescue` + `rescue_after=30`, SHA-256 `98a07350…`, Netze bytegleich mit V12.
+  - Diagnose ohne Gate (9 verbrauchte, gezielt gewählte Karten, 18 Spiele): V12 10/18, `v15cx` 12/18, `v18r` 14/18.
+  - Screen gegen `v15cx` läuft seit 07:16 mit 4 Prozessen. Bisher Solution_92 94,5 %, `sol92_sq` 91,0 %.
+- **Gezielte Nebel-Bestätigung** (seit 04:27) läuft weiter. Sie zählt nur, wenn `v17a` die Battle-Bestätigung nicht besteht.
+- Den Zeitstempel des Plan-Nachtrags zu `v18r` habe ich von 07:20 auf 07:15 korrigiert (Commit um 07:16).
+- Abgabe unverändert **V12**.
+
 ## 01.11.2026, 06:45 Berlin – Claude Code (autonom): Nachtraining Runde 6 fertig, Screen von `v17a`/`v17b` läuft
 
 - **Training** (`scripts/pipeline_battle_ft6.sh`, Code `e3cd0fc`, 04:23–06:43): 12 Netze (s16–s27) je 2.000 Spiele, zusammen **24.000 Trainingsspiele** plus 1.920 Validierungsspiele, alle Läufe mit exit 0. `--keep-final`: Jedes Netz ist der Endstand nach 2.000 Spielen.
