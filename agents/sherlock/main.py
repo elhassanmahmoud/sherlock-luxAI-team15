@@ -477,6 +477,12 @@ class Agent_x:
                         a = d
                         self._prev_actions[uid] = a
                         st["nebula_exits"] = st.get("nebula_exits", 0) + 1
+            if self.cfg.no_strand and not self.training and 1 <= a <= 4:
+                a2 = self._no_strand(ctx, uid, masks[k], a)
+                if a2 != a:
+                    a = a2  # 01.11.2026: nicht mit der letzten Zugenergie auf ein Feld ohne Energiegewinn
+                    self._prev_actions[uid] = a
+                    st["strand_saves"] = st.get("strand_saves", 0) + 1
             if incoming.get(int(uid)) and a in (geo.STAY, geo.SAP):
                 a2 = self._dodge(ctx, uid, masks[k], a, sap, incoming)
                 if a2 != a:
@@ -804,6 +810,39 @@ class Agent_x:
         if float(ctx["ally_ene"][uid]) >= 2 * self._harmful_nebula():
             return a
         return geo.STAY if not ctx["nebula"][x, y] else a
+
+    def _no_strand(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
+        """cfg.no_strand (01.11.2026): Zug, nach dem die Unit nicht mehr ziehen kann (Energie danach < Zugkosten)
+        und auf einem Feld ohne Energiegewinn (Feld - Nebelabzug <= 0) festsaesse, durch Energiesammeln ersetzen:
+        stehen bleiben, wenn das eigene Feld Energie bringt, sonst auf das beste Nachbarfeld mit Energiegewinn.
+        Punkte- und Kandidaten-Tiles bleiben erlaubt (dort zaehlt die Unit auch mit 0 Energie). Die Engine kappt
+        die Energie bei 0; Diagnose 812256 (Bewegung 4, Sicht 1): Units auf dem Weg zur Relic-Ecke blieben 3-5
+        Felder davor mit 0 Energie liegen, Solution_92 gewann das Match 297:1."""
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+        e, mc = float(ctx["ally_ene"][uid]), float(ctx["move_cost"])
+        if e - mc >= mc:
+            return a
+        b = self.belief
+        if b.point_tiles[tx, ty] or b.candidate[tx, ty]:
+            return a
+        drain = float(self.param_est.nebula(default=None) or 0.0)
+
+        def net(px: int, py: int) -> float:
+            return float(ctx["energy_map"][px, py]) - (drain if ctx["nebula"][px, py] else 0.0)
+
+        if net(tx, ty) > 0:
+            return a
+        best, best_v = geo.STAY, net(x, y)
+        for d in range(1, 5):
+            if not mask[d]:
+                continue
+            nx, ny = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+            if not (0 <= nx < ctx["W"] and 0 <= ny < ctx["H"]) or not ctx["passable"][nx, ny]:
+                continue
+            if net(nx, ny) > max(best_v, 0.0):
+                best, best_v = d, net(nx, ny)
+        return best
 
     def _neb_run(self, ctx: dict, start: tuple[int, int], tgt, a: int) -> tuple[int, bool]:
         """Nebel-Tiles ab `start` auf dem kuerzesten Weg zum Ziel (ohne Ziel: geradeaus in Richtung a), bis

@@ -422,3 +422,29 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   Python 3.10). **Nicht zugelassen oder nicht bestanden** → V12 bleibt.
 - Weitere Kandidaten nur mit eigenem Nachtrag vor ihrer Messung. Höchstens eine weitere Battle-Bestätigung, auf
   814400–815199 und direkt 815200–815599.
+- **Ergebnis Screen (01.11., 03:21): kein Kandidat zugelassen.** `v15c` Mittel 6 Δ +0,08 pp [−0,36; +0,53], direkt
+  49,8 %. `v15cx` Mittel 6 Δ +0,42 [−0,36; +1,28], Solution_92 +0,33, direkt 51,5 %; die Hürde +0,5 ist knapp
+  verfehlt. Die Wirkung liegt fast ganz auf Karten mit Nebelabzug 25: dort `v15cx` 88,39 statt 85,71 % (+2,68 pp,
+  672 Spiele, 84 von 87 veränderten Ergebnissen); auf allen anderen Karten ist es praktisch gleich.
+
+## Nachtrag 01.11.2026, 03:25 (Regel `no_strand`, vor jeder Messung mit `no_strand` auf Dev A oder 813200–814399)
+
+- **Befund** (verbrauchte Karte 812256, Bewegungskosten 4, Sicht 1, V12 gegen Solution_92 0:3, Match 2 1:297):
+  - Die Relics liegen in der Ecke unten links, 20 Felder vom eigenen Start; unser Gedächtnis findet sie nie.
+  - Units, die dorthin erkunden sollen (Ziele (0, 21), (0, 19), (4, 23)), bleiben 3–5 Felder davor mit 0 Energie auf
+    Feldern ohne Energiegewinn liegen, bis zum Matchende. Die Engine kappt die Energie bei 0.
+  - Zeitweise haben 11 von 15 Units kein Ziel mehr, weil die übrigen Erkundungsziele vergeben sind.
+- **Neue Regel `no_strand`** (Standard aus, Tests `tests/test_no_strand.py`): kein Zug mit der letzten Zugenergie
+  (Energie danach < Zugkosten) auf ein Feld ohne Energiegewinn (Feld minus geschätzter Nebelabzug ≤ 0). Ausnahmen
+  sind Punkte- und Kandidaten-Tiles. Stattdessen sammelt die Unit Energie: stehen bleiben, oder auf das beste
+  Nachbarfeld mit Gewinn.
+- **Rauchtest** (verbrauchte, gezielt ausgewählte Niederlagen 812256, 812584, 812036, 812229, beide Seiten gegen
+  Solution_92, kein Gate): V12 2/8 Siege, mit `no_strand` 3/8, mit `est_censor` + `neb_cross` + `no_strand` 6/8.
+- **Kandidaten** (Netze und Config von V12, nur die Schalter gesetzt): `v16s` (`no_strand`) und `v16all`
+  (`est_censor` + `neb_cross` + `no_strand`).
+- **Vor der Messung:** ganze Testsuite; V12 spielt mit dem neuen Code (Schalter aus) 16 vorhandene Spiele identisch.
+- **Screen:** `REF=v12 bash scripts/battle_v14.sh admit v16s v16all`. Zulassung unverändert: Mittel 6 Δ ≥ +0,5 pp,
+  direkt gegen V12 ≥ 50 %, Solution_92 Δ ≥ −1,0 pp; bei zwei der mit dem höheren Mittel.
+- **Battle-Bestätigung** genau einmal für den zugelassenen Kandidaten auf **813200–813999**, direkt
+  **814000–814399** (`REF=v12 bash scripts/battle_v14.sh confirm NAME`). Hürden unverändert `league_gates battle`;
+  vorher prüfen, dass keine CSV diese Seeds enthält. Bestanden → Übernahme wie Nachtrag 18:50, sonst V12.

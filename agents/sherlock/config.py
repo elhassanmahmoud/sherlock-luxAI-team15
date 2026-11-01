@@ -402,6 +402,12 @@ class AgentConfig:
     2x Nebelabzug. Sonst Energie sammeln (stehen bleiben, auf negativem Feld zum besten Nachbarfeld ohne Nebel).
     Steckt die Unit schon im Nebel und reicht die Energie nicht bis zum Ausgang Richtung Ziel, nimmt sie den
     naechsten Ausgang."""
+    no_strand: bool = False
+    """True (01.11.2026): Kein Zug mit der letzten Zugenergie (danach Energie < Zugkosten) auf ein Feld ohne
+    Energiegewinn (Feld minus geschaetzter Nebelabzug <= 0), ausser auf Punkte- und Kandidaten-Tiles. Stattdessen
+    Energie sammeln (stehen bleiben oder bestes Nachbarfeld mit Gewinn). Die Engine kappt die Energie bei 0, eine
+    solche Unit stand sonst bis zum Matchende fest (Diagnose 812256: Bewegung 4, Units 3-5 Felder vor der
+    Relic-Ecke mit 0 Energie)."""
     reward_fix: bool = False
     """True: drei Reward-Korrekturen (Pruefung 14.10.): wiederverwendete Unit-IDs
     nach Tod gelten als Tod, kein Punkte-Reward bei negativer Energie, phi = 0
