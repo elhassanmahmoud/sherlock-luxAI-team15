@@ -68,3 +68,81 @@ def test_assign_targets_unchanged_without_relic_prior_and_prefers_cores_with_it(
 
 def test_relic_prior_is_off_by_default():
     assert AgentConfig().relic_prior == 0.0
+
+
+def test_cand_probs_from_zone_overlap_and_open_equations():
+    from agents.sherlock.features import OVERLAP_POINT_P, cand_probs
+    b = Belief(0)
+    b.relic_positions = {(5, 5), (7, 5)}
+    c = np.array([[3, 5], [6, 5], [9, 5]])
+    p = cand_probs(b, c)
+    assert p[0] == OVERLAP_POINT_P[1] and p[1] == OVERLAP_POINT_P[2] and p[2] == OVERLAP_POINT_P[1]
+    b.records = [((3 * 24 + 5, 4 * 24 + 5), 1)]
+    p = cand_probs(b, c)
+    assert p[0] == 0.5 and p[1] == OVERLAP_POINT_P[2]
+
+
+def test_cand_post_prefers_the_likelier_candidate_and_is_off_by_default():
+    assert AgentConfig().cand_post == 0.0
+    b = Belief(0)
+    b._add_relic(10, 10)
+    b._add_relic(12, 10)   # Tiles mit x in 10..12 liegen in beiden Zonen
+    b._refresh_candidates()
+    unit = np.array([[7, 10]])
+    base = assign_targets(b, np.array([0]), unit, 24, 24)
+    assert assign_targets(b, np.array([0]), unit, 24, 24, cand_post=0.0) == base
+    assert base[0] == (8, 10)   # naechster Kandidat, nur in einer Zone
+    post = assign_targets(b, np.array([0]), unit, 24, 24, cand_post=30.0)
+    assert 10 <= post[0][0] <= 12   # doppelt ueberdeckt, 34 % statt 20 %
+
+
+def _obs_points(team_points, units, energies=None, match_steps=60, steps=None):
+    """Minimale Beobachtung fuer Belief.observe (Team 0, kanonisch, nichts sichtbar ausser den eigenen Units)."""
+    n = 16
+    pos = -np.ones((2, n, 2), dtype=np.int32)
+    mask = np.zeros((2, n), dtype=bool)
+    ene = np.zeros((2, n), dtype=np.int32)
+    for i, (x, y) in enumerate(units):
+        pos[0, i] = (x, y)
+        mask[0, i] = True
+        ene[0, i] = 50 if energies is None else energies[i]
+    return {"steps": steps, "match_steps": match_steps, "sensor_mask": np.zeros((24, 24), dtype=bool),
+            "map_features": {"tile_type": -np.ones((24, 24), dtype=np.int32), "energy": np.zeros((24, 24), dtype=np.int32)},
+            "relic_nodes": -np.ones((6, 2), dtype=np.int32), "relic_nodes_mask": np.zeros(6, dtype=bool),
+            "units": {"position": pos, "energy": ene}, "units_mask": mask,
+            "team_points": np.array(team_points), "team_wins": np.array([0, 0])}
+
+
+def test_spawn_proof_unblocks_the_inference_after_an_unexplainable_point():
+    b = Belief(0, symmetry=True, early_inference=True, relic_filter=True, subset_infer=True, keep_dead_fast=True)
+    b.spawn_proof = True
+    # Match 1 (Index 1): Paar 0 bekannt, Paar 1 nicht; Schritt 110 = match_step 9
+    b.observe(_obs_points([0, 0], [(1, 1)], match_steps=0, steps=101))
+    b._add_relic(5, 5)
+    b._add_relic(23 - 5, 23 - 5)
+    assert b.match_idx == 1 and b.known_pairs() == 1
+    assert not b._stable(9)
+    # Unit weit weg von jeder bekannten Zone punktet -> Paar 1 muss gespawnt sein
+    b.observe(_obs_points([0, 0], [(1, 1)], match_steps=8, steps=109))
+    b.observe(_obs_points([1, 0], [(1, 1)], match_steps=9, steps=110))
+    assert b._spawn_proven and b._stable(9)
+    # neues Match: Beweis verfaellt
+    b.observe(_obs_points([0, 0], [(1, 1)], match_steps=0, steps=202))
+    assert not b._spawn_proven
+
+
+def test_spawn_proof_ignores_points_that_known_zones_can_explain():
+    b = Belief(0, symmetry=True, early_inference=True, relic_filter=True, subset_infer=True, keep_dead_fast=True)
+    b.spawn_proof = True
+    b.observe(_obs_points([0, 0], [(5, 6)], match_steps=0, steps=101))
+    b._add_relic(5, 5)
+    b._add_relic(18, 18)
+    b.observe(_obs_points([0, 0], [(5, 6)], match_steps=8, steps=109))
+    b.observe(_obs_points([1, 0], [(5, 6)], match_steps=9, steps=110))   # (5, 6) liegt in der bekannten Zone
+    assert not b._spawn_proven and not b._stable(9)
+    # aus: nie
+    c = Belief(0, symmetry=True, early_inference=True)
+    c.observe(_obs_points([0, 0], [(1, 1)], match_steps=0, steps=101))
+    c._add_relic(5, 5)
+    c.observe(_obs_points([1, 0], [(1, 1)], match_steps=9, steps=110))
+    assert not c._spawn_proven

@@ -128,6 +128,7 @@ class Agent_x:
         self.belief.window_infer = bool(self.cfg.window_infer)
         self.belief.window_infer_all = bool(self.cfg.window_infer_all)
         self.belief.opp_point_infer = bool(self.cfg.opp_point_infer)
+        self.belief.spawn_proof = bool(self.cfg.spawn_proof) and (not self.training or self.cfg.rules_in_training)
         # Sicht fuer die Features: voller Belief oder (Ablation) ohne Gedaechtnis
         self.feat_belief = (self.belief if self.cfg.use_belief
                             else MemorylessBelief(0, canonical=self.cfg.canonical,
@@ -214,12 +215,14 @@ class Agent_x:
     def set_to_eval_mode(self) -> None:
         self.training = False
         self.q.eval()
+        self.belief.spawn_proof = bool(self.cfg.spawn_proof)
 
     def set_to_train_mode(self) -> None:
         if self.cfg.frozen:  # Battle-Abgabe bleibt im Spielmodus
             return
         self.training = True
         self.q.train()
+        self.belief.spawn_proof = bool(self.cfg.spawn_proof) and bool(self.cfg.rules_in_training)
 
     @property
     def epsilon(self) -> float:

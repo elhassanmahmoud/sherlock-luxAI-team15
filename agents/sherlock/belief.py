@@ -133,6 +133,11 @@ class Belief:
         # jedes Tile, das ueberhaupt punkten kann, gerade wirklich sichtbar ist (_infer_points_from_enemy)
         self.opp_point_infer = False
         self.opp_point_records = 0
+        # 01.11.2026 (Schalter spawn_proof): Punkt, den kein bekanntes Relic erklaeren kann, beweist im Match >= 1
+        # den Spawn des Paars dieses Matches, wenn alle frueheren Paare bekannt sind (_check_spawn_proof)
+        self.spawn_proof = False
+        self._spawn_proven = False
+        self.spawn_proofs = 0
         self._vis_now = None
         self._sensor_now = None
         self.set_team(team_id)
@@ -190,6 +195,7 @@ class Belief:
         """Matchwechsel: Punktestand faellt auf 0, Relics koennen neu erscheinen."""
         self.last_points = 0
         self.last_opp_points = 0
+        self._spawn_proven = False
         # Relics erscheinen in den ersten k Matches noch nachtraeglich (Slide 38)
         # -> Erkundungswissen pro Match zuruecksetzen, Relic-/Punktewissen behalten.
         self.explored[:] = False
@@ -283,6 +289,8 @@ class Belief:
         opp_points = int(np.asarray(obs["team_points"])[self.opp_team_id])
         self.opp_gain = max(0, opp_points - self.last_opp_points)  # Gegner-Punkte dieses Steps
         self.last_opp_points = opp_points
+        if self.spawn_proof:
+            self._check_spawn_proof(ally_pos, ally_energy, ally_mask, gain)
         self._infer_point_tiles(ally_pos, ally_energy, ally_mask, gain, match_step)
         if self.opp_infer:
             self._infer_from_enemy(obs, match_step)
@@ -493,7 +501,33 @@ class Belief:
         """
         if self.known_pairs() >= self.match_idx + 1:
             return True
+        if self._spawn_proven:
+            return True
         return self.match_idx == 0 and (self.last_points > 0 or self.last_opp_points > 0)
+
+    def _check_spawn_proof(self, ally_pos, ally_energy, ally_mask, gain: int) -> None:
+        """Schalter spawn_proof (01.11.2026): Im Match j >= 1 sind alle frueheren Paare bekannt (known_pairs == j),
+        das Paar j nicht. Punkten kann dann nur, was in einer bekannten Zone liegt und nicht als Null-Tile bewiesen
+        ist, solange Paar j nicht gespawnt ist. Ist der Gewinn groesser als die Zahl der besetzten Tiles, die so
+        punkten koennen, muss Paar j gespawnt sein: Die Punkte-Schwelle aendert sich in diesem Match nicht mehr
+        (hoechstens ein Paar je Match), und die Inferenz darf vor match_step 50 schliessen.
+        Diagnose (V13, Dev A, Sichtweite 1): Im 2./3. Match ist die Inferenz im Mittel 41-47 Schritte gesperrt;
+        unsere Units stehen bei Paar 1 im Median schon beim Spawn auf seinen Punkte-Tiles."""
+        j = self.match_idx
+        if self._spawn_proven or j < 1 or gain <= 0 or self.known_pairs() != j:
+            return
+        H = self.H
+        can = set()
+        for i in np.nonzero(ally_mask)[0]:
+            x, y = int(ally_pos[i][0]), int(ally_pos[i][1])
+            if x < 0 or y < 0 or ally_energy[i] < 0:
+                continue
+            f = x * H + y
+            if f in self._point or (self.relic_zone[x, y] and f not in self._dead):
+                can.add(f)
+        if gain > len(can):
+            self._spawn_proven = True
+            self.spawn_proofs += 1
 
     def _stable(self, match_step: int) -> bool:
         """Darf aus dem Punktgewinn geschlossen werden? Nach dem (einzigen) Spawn

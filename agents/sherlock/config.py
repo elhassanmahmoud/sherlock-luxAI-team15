@@ -438,6 +438,17 @@ class AgentConfig:
     ohne solche entfallen. Ziele mit mehr sichtbarer Wahrscheinlichkeit kosten bis zu relic_prior Felder
     weniger. Diagnose (V13 gegen Solution_92, Dev A, Sichtweite 1): das erste Relic-Paar ist im Median erst
     9 Schritte nach dem Spawn bekannt (Sicht 3/4: 1), ein Orakel mit allen Relics bringt dort +4,9 pp."""
+    spawn_proof: bool = False
+    """True (01.11.2026, nur Auswertung): Im Match j >= 1 beweist ein Punkt, den kein bekanntes Relic erklaeren kann,
+    den Spawn des Paars j (alle frueheren Paare bekannt); die Punkte-Inferenz darf dann vor match_step 50 schliessen
+    (Belief._check_spawn_proof). Sonst ist sie im 2./3. Match im Mittel 41-47 Schritte gesperrt."""
+    cand_post: float = 0.0
+    """> 0 (01.11.2026, nur Auswertung): Kandidaten-Tiles mit hoeherer Punkte-Wahrscheinlichkeit zuerst testen. Ein
+    Tile in k Relic-Zonen ist auf 1.500 Karten zu 20 / 34 / 49 / 57 % (k = 1 / 2 / 3 / 4+) ein Punkte-Tile; offene
+    Gleichungen des Gedaechtnisses (rest Punkte auf n Tiles) geben rest / n. Kosten je Kandidat minus cand_post mal
+    Wahrscheinlichkeit (features.cand_probs). Diagnose: Bis alle Punkte-Tiles einer neuen Zone bewiesen sind,
+    vergehen 30-40 Schritte; mit den wahren Punkte-Tiles gewinnt V13 bei Sichtweite 1 gegen Solution_92 94,4 statt
+    85,4 % (Orakel nur Punkte-Tiles, Dev A)."""
     reserve_sap: bool = False
     """29.10.2026: Reserve-Units (home_reserve) auf ihrem Reservetile sappen wie Halter (pt_sap-Regeln)."""
     active_targets: bool = False

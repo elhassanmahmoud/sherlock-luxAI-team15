@@ -155,6 +155,42 @@ def prior_targets(unexp: np.ndarray, passable: np.ndarray, sensor: int, block: i
     return np.array(goals, dtype=np.int32), np.array(frac, dtype=np.float64)
 
 
+# 01.11.2026 (Schalter cand_post): Anteil Punkte-Tiles nach Zahl der Relic-Zonen, in denen ein Tile liegt, gezaehlt
+# auf 1.500 Karten (Seeds 1100000-1101499, alle gespawnten Relics): 1 Zone 0,200, 2 Zonen 0,342, 3 Zonen 0,489,
+# 4 und mehr 0,574. Jedes Relic markiert in seinem 5x5-Feld je Tile mit 20 % (luxai_s3/state.py gen_map: randint(0, 10)
+# >= 7,5); ein Tile in mehreren Feldern punktet, wenn eines davon es markiert.
+OVERLAP_POINT_P = (0.0, 0.200, 0.342, 0.489, 0.574)
+
+
+def cand_probs(belief, coords: np.ndarray) -> np.ndarray:
+    """Punkte-Wahrscheinlichkeit je Kandidat: aus der Zahl bekannter Relics in Chebyshev-Abstand <= 2
+    (OVERLAP_POINT_P) und aus offenen Gleichungen des Gedaechtnisses (Summe = rest ueber die offenen Tiles,
+    also rest / Zahl der Tiles), das Maximum von beidem."""
+    coords = np.asarray(coords, dtype=np.int64).reshape(-1, 2)
+    if len(coords) == 0:
+        return np.zeros(0)
+    rel = np.array(sorted(belief.relic_positions), dtype=np.int64).reshape(-1, 2)
+    if len(rel):
+        d = np.maximum(np.abs(coords[:, None, 0] - rel[None, :, 0]), np.abs(coords[:, None, 1] - rel[None, :, 1]))
+        k = np.minimum((d <= 2).sum(axis=1), len(OVERLAP_POINT_P) - 1)
+    else:
+        k = np.ones(len(coords), dtype=np.int64)
+    p = np.asarray(OVERLAP_POINT_P)[np.maximum(k, 1)]
+    if belief.records:
+        H = belief.H
+        post: dict[int, float] = {}
+        for tiles, rest in belief.records:
+            if tiles:
+                q = float(rest) / float(len(tiles))
+                for f in tiles:
+                    if q > post.get(f, 0.0):
+                        post[f] = q
+        if post:
+            flat = coords[:, 0] * H + coords[:, 1]
+            p = np.maximum(p, np.array([post.get(int(f), 0.0) for f in flat]))
+    return np.clip(p, 0.0, 1.0)
+
+
 def bfs_maps(passable: np.ndarray, starts: np.ndarray) -> np.ndarray:
     """BFS-Schrittzahl von jeder Startposition zu jedem Tile (n x W x H, -1 unerreichbar),
     alle Starts gleichzeitig als Wellenfront (4er-Nachbarschaft, nur passierbare Tiles)."""
@@ -197,7 +233,7 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    energy_pref: float = 0.0, reach: bool = False,
                    home_reserve: bool = False, relic_scout: int = 0, scout_until: int = 60,
                    scout_stale: int = 20, relic_prior: float = 0.0,
-                   sensor: int = 2) -> dict[int, tuple[int, int]]:
+                   sensor: int = 2, cand_post: float = 0.0) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -246,6 +282,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
 
     relic_prior > 0 (cfg.relic_prior, 01.11.2026): Erkundungsziele je Block nach sichtbarer, noch unerkundeter
     Relic-Wahrscheinlichkeit (prior_targets, Sichtweite `sensor`), bis zu relic_prior Felder Bonus.
+
+    cand_post > 0 (cfg.cand_post, 01.11.2026): Kandidaten mit hoeherer Punkte-Wahrscheinlichkeit (cand_probs)
+    kosten cand_post * Wahrscheinlichkeit Felder weniger, werden also zuerst getestet.
     """
     if len(unit_ids) == 0:
         return {}
@@ -327,6 +366,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
         if far_cand:
             # ebenso entfernte Kandidaten der Gegnerhaelfte hinter die eigenen Kandidaten
             cost += ((dist > far_opp) & ((prio == 1) & in_enemy)[None, :]) * 500.0
+    if cand_post > 0 and (prio == 1).any():
+        ci = np.where(prio == 1)[0]
+        cost[:, ci] -= float(cand_post) * cand_probs(belief, tgt[ci])[None, :]
     if cand_boost > 0:
         # 20.10.2026: eigene Kandidaten zaehlen wie Punkte-Tiles mit cand_boost Feldern
         # Umweg (vor Punkte-Tiles der Gegnerhaelfte). Diagnose: in Match 3 bleiben bis
@@ -633,6 +675,8 @@ def make_context(agent, obs, belief=None) -> dict:
         relic_prior=(float(agent.cfg.relic_prior)
                      if agent.cfg.relic_prior and (not agent.training or agent.cfg.rules_in_training) else 0.0),
         sensor=int(cfg.get("unit_sensor_range", 2)),
+        cand_post=(float(agent.cfg.cand_post)
+                   if agent.cfg.cand_post and (not agent.training or agent.cfg.rules_in_training) else 0.0),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
