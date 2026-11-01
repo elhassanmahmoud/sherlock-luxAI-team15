@@ -621,3 +621,10 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - Der Gewinn kommt also von `cand_post`, nicht von `spawn_proof`.
 - **Battle-Bestätigung `v19cr` gestartet (15:22):** gegen V13 auf 822000–822799, direkt 823000–823399, Dateien `GG_*`, Code
   `49a82ec` (Schalter seit `9a34ffa`).
+- **Ergebnis (01.11., 17:28): nicht bestanden.** Mittel 6 87,06 statt 87,42 % (Δ −0,35 pp [−1,30; +0,59], 800 Karten),
+  Solution_92 94,69 % (Δ −0,50 [−1,50; +0,50]), default 99,88 %, direkt gegen V13 50,6 % [46,5; 54,9] aus 800 Spielen.
+  Je Gegner: V3 −2,00, `league_nets6` −1,62, Solution_92 −0,50, V7 +0,50, `sol92_sq` +0,50, `threat6` +1,00.
+  - Auf Dev A waren es +1,81 pp. Der Gewinn dort war Auswahl auf denselben Karten: `cand_post` wurde auf Dev A entwickelt,
+    die Gewichtung dort geprüft und der beste von vier Kandidaten gewählt.
+  - Zum Vergleich `v18r` (`cand_rescue` ohne die neuen Schalter) auf 820000–820799: +0,86 pp. `cand_post` + `spawn_proof`
+    haben auf frischen Karten also eher geschadet. V13 bleibt die Abgabe.
