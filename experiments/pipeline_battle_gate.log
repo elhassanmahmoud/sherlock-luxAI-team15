@@ -180,3 +180,33 @@ Battle-Bestaetigung: Mittel 6 0.8696 vs 0.8651 (Δ +0.45 pp [-0.24; +1.10], 800 
   OK   direkt untere 95%-Grenze > 50 %
 GATE Battle-Bestaetigung: NICHT BESTANDEN
 [31.10. 23:46] Battle-Bestaetigung v13r0 fertig
+[01.11. 04:27] Nebel-25-Bestaetigung: Start v15cx (experiments/ensembles/battle_v15cx.pth, SHA-256 6d00b6c52366a613), Referenz V12 (b258dc9927a7094f), Karten experiments/analysis/neb25_20261101/seeds_n25.json und seeds_rest.json, Code eeaaddb
+GN_V12_n25.csv: default: 1.000 (600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.657 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.948 (600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.895 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.728 (600 Spiele), sol92_sq: 0.917 (600 Spiele), solution92: 0.942 (600 Spiele) in 5703s
+GN_v15cx_n25.csv: default: 1.000 (600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.760 (600 Spiele), self:experiments/ensembles/threat6.pth: 0.937 (600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.913 (600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.760 (600 Spiele), sol92_sq: 0.910 (600 Spiele), solution92: 0.950 (600 Spiele) in 6508s
+[01.11. 07:56] Battle-Bestaetigung: Start v17a (experiments/ensembles/battle_v17a.pth, SHA-256 0f860b0b3accad04), Referenz v12 (b258dc9927a7094f), Karten ab 813200, direkt ab 814000, Code 518f289
+GN_v15cx_n25dir.csv: self:experiments/ensembles/battle_v12.pth: 0.560 (600 Spiele) in 1551s
+GN_V12_rest.csv: self:experiments/ensembles/league_nets6.pth: 0.750 (120 Spiele), self:experiments/ensembles/threat6.pth: 0.883 (120 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.883 (120 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.750 (120 Spiele), sol92_sq: 0.942 (120 Spiele), solution92: 0.942 (120 Spiele) in 1451s
+GN_v15cx_rest.csv: self:experiments/ensembles/league_nets6.pth: 0.750 (120 Spiele), self:experiments/ensembles/threat6.pth: 0.883 (120 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.883 (120 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.750 (120 Spiele), sol92_sq: 0.942 (120 Spiele), solution92: 0.942 (120 Spiele) in 1416s
+Nebel-25-Bestaetigung v15cx: Abzug-25-Karten Mittel 6 0.8717 vs 0.8478 (Δ +2.39 pp [+0.31; +4.36], 300 Karten); Solution_92 Δ +0.83 [-1.17; +2.83]; default 1.0000; direkt 0.5600 [0.5083; 0.6133] aus 600 Spielen; uebrige Karten: gleiches Ergebnis in 100.0 % von 720 Spielen, Mittel 6 Δ +0.00 pp
+  OK   Abzug 25: Mittel 6 Δ >= +1 pp
+  OK   Abzug 25: Mittel 6 untere 95%-Grenze > 0
+  OK   Abzug 25: Solution_92 Δ >= -0.5 pp
+  OK   Abzug 25: default >= 99%
+  OK   Abzug 25: direkt gegen V12 >= 50 %
+  OK   uebrige Karten: >= 98 % gleiche Ergebnisse
+  OK   uebrige Karten: Mittel 6 Δ >= -0.5 pp
+GATE Nebel-25-Bestaetigung: BESTANDEN
+[01.11. 09:04] Nebel-25-Bestaetigung v15cx fertig
+GE_v12_conf.csv: default: 0.998 (1600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.757 (1600 Spiele), self:experiments/ensembles/threat6.pth: 0.938 (1600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.885 (1600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.814 (1600 Spiele), sol92_sq: 0.908 (1600 Spiele), solution92: 0.939 (1600 Spiele) in 5023s
+GE_v17a_conf.csv: default: 0.999 (1600 Spiele), self:experiments/ensembles/league_nets6.pth: 0.785 (1600 Spiele), self:experiments/ensembles/threat6.pth: 0.925 (1600 Spiele), self:experiments/releases/20261022_all18_v3/agent_p0.pth: 0.877 (1600 Spiele), self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth: 0.815 (1600 Spiele), sol92_sq: 0.911 (1600 Spiele), solution92: 0.952 (1600 Spiele) in 4330s
+GE_v17a_confdir.csv: self:experiments/ensembles/battle_v12.pth: 0.537 (800 Spiele) in 430s
+Battle-Bestaetigung: Mittel 6 0.8775 vs 0.8734 (Δ +0.41 pp [-0.68; +1.52], 800 Karten); Solution_92 0.9519 (Δ +1.31 [+0.19; +2.50]); default 0.9988 (Δ +0.06); direkt 0.5375 [0.4900; 0.5875] aus 800 Spielen
+  FAIL Mittel 6 Δ >= +1 pp
+  FAIL Mittel 6 untere 95%-Grenze > 0
+  OK   Solution_92 Δ >= -0.5 pp
+  OK   Solution_92 untere 95%-Grenze > -2.5 pp
+  OK   default >= 99%
+  OK   default Δ >= -1 pp
+  FAIL direkt untere 95%-Grenze > 50 %
+GATE Battle-Bestaetigung: NICHT BESTANDEN
+[01.11. 10:40] Battle-Bestaetigung v17a fertig
