@@ -592,3 +592,20 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   - Bestanden → Übernahme als V14 wie Nachtrag 18:50 (Sicherung der Abgabe, neue Zip, Kurs-Runner, Tests, Nachspielen
     unter Python 3.10); sonst bleibt die Abgabe.
   - Start nach dem Ende der laufenden `v18r`-Bestätigung.
+
+## Nachtrag 01.11.2026, 13:20 (zwei weitere Kandidaten nur mit `spawn_proof`, vor jeder Messung von `v19s`/`v19sr`)
+
+- **Grund:**
+  - Die vorab gerechneten Screen-Dateien `D_v19c.csv`/`D_v19cr.csv` (Solution_92, `sol92_sq`) zeigen gegen Solution_92
+    +2,2 pp [+0,2; +4,3], gegen `sol92_sq` +0,2/+0,3. Der Gewinn liegt auf Karten mit 2–3 Relic-Paaren.
+  - Auf Karten mit nur einem Paar wirkt allein `cand_post` (`spawn_proof` greift dort nie). Dort: Solution_92 −0,5,
+    `sol92_sq` −1,5 pp.
+  - Diagnose 800060: `cand_post` allein kippt beide Spiele, `spawn_proof` allein spielt identisch zu V13.
+  - Möglich ist also, dass nur `spawn_proof` hilft und `cand_post` Rauschen oder Schaden bringt.
+- **Zusätzliche Kandidaten** (Netze und Config von V13):
+  - `v19s` = V13 + `spawn_proof=true`;
+  - `v19sr` = `v19s` + `cand_rescue=true` + `rescue_after=30`.
+- **Screen** wie im Nachtrag 12:17, jetzt mit allen vier: `REF=<aktuelle Abgabe> bash scripts/battle_v15.sh admit v19c v19cr
+  v19s v19sr`. Zulassung unverändert. Von den zugelassenen bekommt der mit dem höchsten Mittel die einzige
+  Battle-Bestätigung auf 822000–822799, direkt 823000–823399. Ist `v18r` die Referenz, entfallen `v19c` und `v19s`.
+- Sonst unverändert wie Nachtrag 12:17.
