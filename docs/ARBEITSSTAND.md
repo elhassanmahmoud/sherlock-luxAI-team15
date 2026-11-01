@@ -5,7 +5,7 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 01.11.2026, 12:23 Berlin – Claude Code (autonom): neue Schalter `cand_post` + `spawn_proof`, Probe gegen Solution_92 +2,9 pp; `v19c`/`v19cr` vorab festgelegt
+## 01.11.2026, 12:19 Berlin – Claude Code (autonom): neue Schalter `cand_post` + `spawn_proof`, Probe gegen Solution_92 +2,9 pp; `v19c`/`v19cr` vorab festgelegt
 
 - **Auftrag Mahmoud (11:4x):** weiter trainieren und neue Regeln coden, Folien erst am Ende; Ziel Platz 1 im Kurs.
 - **Verluste gegen `league_nets6`** (Energiebilanz `scripts/mechanism_probe.py`, Dev A, je 120 verlorene/gewonnene Spiele von V13):
