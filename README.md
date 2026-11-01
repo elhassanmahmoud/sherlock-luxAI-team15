@@ -384,7 +384,7 @@ Stand **01.11.2026**:
 - **Geprüft, nicht übernommen (01.11.):** Nachtraining Runde 6 (`v17a`: V12-Netze + 12 nachtrainierte Netze + Nebel-Korrektur). Auf 800 frischen Karten +0,41 Punkte (Hürde +1,0), direkt 53,8 % gegen V12. Der Gewinn kam aus der Nebel-Korrektur; sie wurde allein als V13 übernommen.
 - **Übernommen als V14 (01.11., Teamentscheidung):** `cand_rescue`, +0,86 Punkte auf 800 frischen Karten, jeder Gegner im Plus, Hürde +1 knapp verfehlt.
 - **Geprüft, nicht übernommen (01.11.):** `cand_post` (wahrscheinliche Punkte-Felder zuerst testen) mit `spawn_proof` und `cand_rescue` (`v19cr`). Auf den Entwicklungskarten +1,81 Punkte, auf 800 frischen Karten −0,35. Der Gewinn auf den Entwicklungskarten kam aus der Auswahl auf denselben Karten. Auch die Relic-Suche nach dem Lage-Gitter der Relics (`relic_prior`, Wachposten) brachte nichts.
-- **Termine:** Zwischenpräsentation und Battle am 06.11., Finale mit Turnier am 27.11.
+- **Termine:** Upload `Gruppe15.zip` (V14) bis Mittwoch, 04.11., nachts; Zwischenpräsentation und Battle am 06.11. ([Folien](Sherlock_Battle_06-11-2026.pdf)); Finale mit Turnier am 27.11.
 
 ## Historische Ergebnisse
 
@@ -425,7 +425,7 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): alle Versuche und Auswahlentscheidungen.
 - [Plan der Battle-Woche](docs/superpowers/plans/2026-10-29-battle-push.md): vorab festgelegte Tests und Hürden.
 - Übernahmeberichte: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
-- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · 23.10. ([HTML](docs/presentation/Sherlock_Review_23-10-2026.html)) · Battle 06.11. ([HTML](docs/presentation/Sherlock_Battle_06-11-2026.html), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)).
+- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · 23.10. ([HTML](docs/presentation/Sherlock_Review_23-10-2026.html)) · Battle 06.11., Stand V14 vom 01.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [HTML-Quelle](docs/presentation/Sherlock_Battle_06-11-2026.html), [Stichpunkte zum Üben](Sherlock_Stichpunkte_06-11-2026.md)): 13 Vortragsfolien und 4 Reservefolien, 9:50 Minuten (Moayed 5:20, Mahmoud 4:30).
 
 ## Quellen
 
