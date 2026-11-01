@@ -5,7 +5,7 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
-## 01.11.2026, 14:02 Berlin – Claude Code (autonom): `v18r` knapp nicht bestanden (+0,86 statt +1,0); Screen von vier `v19`-Kandidaten läuft
+## 01.11.2026, 13:59 Berlin – Claude Code (autonom): `v18r` knapp nicht bestanden (+0,86 statt +1,0); Screen von vier `v19`-Kandidaten läuft
 
 - **Battle-Bestätigung `v18r`** (V13 + `cand_rescue`, 11:33–13:56, Code `961a93a`, 820000–821399): **nicht bestanden.**
   - Mittel 6 +0,86 pp [+0,48; +1,28], Solution_92 +0,50 [+0,12; +0,88], default 100 %, direkt gegen V13 50,6 % [49,25; 52,0].
