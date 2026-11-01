@@ -5,6 +5,16 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 21:00 Berlin – Codex mit Moayed: neue Verbesserungsnacht bis 02.11., 06:00
+
+- Moayed autorisiert erneute selbstständige Weiterarbeit, tatsächlichen Trainingspilot, Subagents und Remote-Überwachung. Aktueller Ausgang nach Remote-Abgleich **V14** (`93a2ddd`), Gewichte `98a07350…d3d8`; V14-Teamentscheidung bleibt erhalten. Präsentation erst auf späteren Auftrag bearbeiten; Prof-Feedback zur Reihenfolge Zielzuweisung/Netz/Maske/Regelüberschreibung für die spätere Erklärung beachten.
+- **Eigene Arbeitskopie:** `sherlock-v10-mechanics`, neuer Branch `improvement/november-battle-20261101`; der alte Ordnername bezeichnet keinen V10-Ausgang. Hauptcheckout auf Mahmouds aktuellem Stand, fremde lokale Duplikate unverändert erhalten. Lokale Gegnersnapshots `league_nets6` und `threat6` fehlen: kein Auswerten mit stillschweigend zufälligem Ersatz.
+- [Vorab festgelegter Nachtplan](superpowers/plans/2026-11-01-night-improvement.md), [Design](superpowers/specs/2026-11-01-night-improvement-design.md): sichere Überlappungsschlüsse aus Beobachtungen prüfen; begrenzter kontrollierter Trainingspilot mit Entdeckungsreward 0,5 gegen 2,0. Kein blindes Wiederholen der wirkungslosen Runde 6. **Noch keine neuen Trainings-/Leistungsresultate.**
+- Neues lokales Sechserpanel Solution, Quadrat-Solution, V3, V7, V10, V13; ausdrücklich anderes Panel als Mahmouds historische sechs Gegner. Eigene Nachtbestätigung mit **300 statt 800 Karten**, um vollständig in die Frist zu passen; entsprechend geringere statistische Präzision, gleiche Mindestgröße +1 pp, zusätzliche konservative Solution-Bedingung. Keine Ausnahme ohne Nachweis.
+- Seedreservierung: Diagnose 830000–830039, Auswahl 831000–831049, Bestätigung 832000–832299, direkt 833000–833299, Technikreserve 834000–834099. Training 294200–294499, Prefill 295000–295059. Audits ohne Überschneidung archiviert unter `experiments/analysis/night_20261101/`; nicht parallel belegen.
+- Technischer Ausgang auf Moayeds Rechner: **628 Tests + 14 Untertests bestanden**, 129,51 s, ohne laufende Modelljobs. Netzbetrieb bestätigt. Höchstens zwei Rechenworker, keine Quell-/Gewichtswechsel während Messreihen. Remote-Watch führt nur Fetch aus, Integration an Phasengrenzen. Mindestens 30 % Codex-Kontingent erhalten.
+- Abgabe laut Moodle-Screenshot bestätigt: **Mittwoch 04.11., 23:59**, Battle-Präsentation Freitag 06.11., zehn Minuten. `Gruppe15.zip` liegt bisher nur auf Mahmouds Rechner; lokaler sauberer Neubau aus getrenntem Checkout folgt samt Prüfung. Interne Doku bleibt im Repo, gehört nicht ins Laufzeitpaket.
+
 ## 01.11.2026, 18:48 Berlin – Claude Code mit Mahmoud: Präsentation 06.11. auf V14 umgestellt
 
 - **Auftrag Mahmoud:** „mach die folien fertig“ und „readme anpassen immer“.
