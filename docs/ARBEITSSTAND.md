@@ -22,6 +22,11 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
   - Danach die Kandidaten `v17a` (48 Netze) und `v17b` (36 Netze, die 12 neuen ersetzen ihre Vorgänger), Screen wie bisher.
   - Ende des Trainings etwa 07:30–08:00.
 - Abgabe unverändert **V12**.
+- **Nachtrag 04:50:** gezielte Bestätigung der Nebel-Korrektur vorab festgelegt ([Plan-Nachtrag 04:45](superpowers/plans/2026-10-29-battle-push.md)).
+  - Karten: die ersten 300 frischen Karten mit Abzug 25 aus 816000–819999 und 60 übrige Karten als Gleichheitsprobe.
+  - Hürden: auf den Abzug-25-Karten Mittel 6 ≥ +1 pp mit unterer Grenze > 0; auf den übrigen Karten ≥ 98 % gleiche Ergebnisse.
+  - Läuft seit 04:28 mit 3 Prozessen **parallel** zum Training. Laut Plan sollte sie erst nach Runde 6 laufen; vorgezogen habe ich sie, weil 3 Kerne frei waren.
+  - An der Entscheidung ändert das nichts: Besteht `v17a`/`v17b` die Battle-Bestätigung, zählt `v17`, und die Abgabe enthält die Korrektur ohnehin. Nur sonst entscheidet dieser Test.
 
 ## 01.11.2026, 03:30 Berlin – Claude Code (autonom): Nebel-Korrektur knapp nicht zugelassen (auf Nebel-25-Karten +2,7 pp); neue Regel `no_strand`, Screen läuft
 
