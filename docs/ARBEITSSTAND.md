@@ -5,6 +5,23 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 11:35 Berlin – Claude Code (autonom): Relic-Gitter gefunden, `relic_prior` ohne klaren Gewinn; Gate-Rundung behoben; Bestätigung `v18r` läuft
+
+- **Warum Sherlock bei Sichtweite 1 Information fehlt** (Dev A, V13 gegen Solution_92, nur Diagnose, Skripte im Scratchpad):
+  - Relics findet Sherlock dort nicht langsamer als Solution_92. Paar 0: erster eigener Punkt im Mittel 10,3 Schritte nach dem Spawn, Solution_92 13,2.
+  - Langsam ist das Erschließen einer Zone: Bis alle Punkte-Tiles bewiesen sind, dauert es 30–40 Schritte, bei jeder Sichtweite. Die Units testen etwa ein Kandidaten-Feld pro Schritt; die Laufwege begrenzen das.
+  - Im 2. und 3. Match ist die Inferenz die ersten ~45 Schritte gesperrt (Spawnfenster). Unbewiesene Punkte-Tiles häufen sich bis Schritt 40–50 auf etwa 2 an.
+  - Bei Sichtweite 1 entscheidet dieses Tempo enge Spiele. Mit den wahren Punkte-Tiles gewinnt V13 alle drei Matches häufiger (Match 1/2/3: 92 → 97, 78 → 83, 76 → 84 %).
+- **Relic-Gitter:** Die Engine setzt Relics auf die höchsten Werte eines Perlin-Rauschens (Zellen zu 6 Tiles). Auf 10.000 Karten liegen 96,8 % aller Relics auf Streifen mit x%6 oder y%6 in {2, 3}, 30 % in 2×2-Kernen und keine bei x%6 und y%6 in {0, 5}. Spätere Paare liegen meist direkt neben früheren (Paar 1 zu 64 % höchstens 2 Felder entfernt).
+- **Neuer Schalter `relic_prior`** (Standard aus, Commit `961a93a`, 5 Tests): Erkundungsziele nach dieser Verteilung.
+  - Probe gegen Solution_92: Sichtweite 1 +0,7, 2 +0,6, 3/4 −4,8 pp. Die Relics werden kaum schneller gefunden.
+  - Damit kein Kandidat. V13 spielt mit dem neuen Code nachweislich gleich (16 Spiele identisch zu `D_v15cx.csv`).
+- **Gate-Rundung behoben** (Commit `e6d4624`): `scripts/league_gates.py` vergleicht mit Toleranz 1e-9, neuer Test. `scripts/battle_v15.sh` = `battle_v14.sh` mit derselben Toleranz in der Zulassung und wählbarem Bestätigungsblock. Die vier früheren Battle-Entscheidungen (`v11h`, V12, `v13r0`, `v17a`) bleiben gleich.
+- **Läuft seit 11:33:** Battle-Bestätigung `v18r` (V13 + `cand_rescue`, `rescue_after=30`) gegen V13 auf 820000–820799, direkt 821000–821399, wie im Plan-Nachtrag 07:15 festgelegt. 12 Prozesse, Ende etwa 14:15.
+  - Keine der 1.166 CSVs enthält diese Seeds.
+  - Erwartung ehrlich: Der Screen zeigte +0,50 pp; die Hürde liegt bei +1 pp. Bestehen ist unwahrscheinlich, aber die Rechner wären sonst ungenutzt.
+- Testsuite 627 bestanden. Abgabe unverändert **V13 `v13_neb`**.
+
 ## 01.11.2026, 10:55 Berlin – Claude Code (autonom): `v17a` nicht bestanden, **V13 `v13_neb` ist die neue Abgabe**; Orakel: bei Sichtweite 1 fehlt Information
 
 - **Battle-Bestätigung `v17a`** (813200–813999, direkt 814000–814399, Code `518f289`, 07:56–10:40): **nicht bestanden.**

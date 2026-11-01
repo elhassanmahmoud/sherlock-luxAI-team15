@@ -550,3 +550,8 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
     440/440 (4 gewonnen, 4 verloren), `threat6` 556/554. 26 von 3.600 Ergebnissen verändert, 22 davon zu Siegen.
   - Die Battle-Bestätigung läuft wie oben festgelegt erst nach der Entscheidung über `v17a` (dann aktuelle Abgabe als
     Referenz) auf 820000–820799, direkt 821000–821399.
+- **Battle-Bestätigung gestartet (01.11., 11:33):** `v18r` gegen die aktuelle Abgabe V13 (= `v15cx`) auf 820000–820799,
+  direkt 821000–821399 (`REF=v15cx WORKERS=12 bash scripts/battle_v15.sh confirm v18r`, Dateien `GF_*`, Code
+  `961a93a`). Vorher geprüft: Keine der 1.166 CSVs mit Seed-Spalte unter `experiments/` enthält diese Seeds. Hürden
+  unverändert `league_gates battle`, seit Commit `e6d4624` mit Toleranz 1e-9 bei den Vergleichen (die vier früheren
+  Battle-Entscheidungen bleiben gleich).
