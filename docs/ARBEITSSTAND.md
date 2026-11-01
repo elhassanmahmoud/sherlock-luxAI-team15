@@ -20,7 +20,8 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 - **Läuft seit 11:33:** Battle-Bestätigung `v18r` (V13 + `cand_rescue`, `rescue_after=30`) gegen V13 auf 820000–820799, direkt 821000–821399, wie im Plan-Nachtrag 07:15 festgelegt. 12 Prozesse, Ende etwa 14:15.
   - Keine der 1.166 CSVs enthält diese Seeds.
   - Erwartung ehrlich: Der Screen zeigte +0,50 pp; die Hürde liegt bei +1 pp. Bestehen ist unwahrscheinlich, aber die Rechner wären sonst ungenutzt.
-- Testsuite 627 bestanden. Abgabe unverändert **V13 `v13_neb`**.
+- **Tests:** Vor dem Start der Bestätigung (11:31) 626 bestanden; der neue Gate-Test läuft einzeln grün. Ein voller Lauf während der Messung (11:34): 596 bestanden, 31 Tests in `tests/test_early_curriculum_study.py` brechen ab mit „Another model job is active; resource admission refused“. Das ist die Schutzschaltung der Studie gegen parallele Modelljobs, ausgelöst durch die laufende Bestätigung, kein Codefehler. Nach dem Ende der Messung wird der volle Lauf wiederholt.
+- Abgabe unverändert **V13 `v13_neb`**.
 
 ## 01.11.2026, 10:55 Berlin – Claude Code (autonom): `v17a` nicht bestanden, **V13 `v13_neb` ist die neue Abgabe**; Orakel: bei Sichtweite 1 fehlt Information
 
