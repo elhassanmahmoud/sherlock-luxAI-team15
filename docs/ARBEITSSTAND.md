@@ -5,6 +5,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 06:45 Berlin – Claude Code (autonom): Nachtraining Runde 6 fertig, Screen von `v17a`/`v17b` läuft
+
+- **Training** (`scripts/pipeline_battle_ft6.sh`, Code `e3cd0fc`, 04:23–06:43): 12 Netze (s16–s27) je 2.000 Spiele, zusammen **24.000 Trainingsspiele** plus 1.920 Validierungsspiele, alle Läufe mit exit 0. `--keep-final`: Jedes Netz ist der Endstand nach 2.000 Spielen.
+  - Einzelnetz-Validierung (je 16 Spiele, nur grobe Richtung): gegen Solution_92 im Mittel 77,1 % vor und 77,1 % nach dem Training, gegen default 95,8 % → 94,8 %. Einzelne Netze schwanken stark (s22 50 → 75 %, s24 44 → 38 %, s20 88 → 69 %).
+  - Läufe: `experiments/runs/20261101_ft6_v12_s16` bis `_s27` (Gewichte und Buffer gitignored), Log `experiments/pipeline_battle_ft6.log`.
+- **Kandidaten** (gitignored, Config = V12 + `est_censor` + `neb_cross`, sonst identisch):
+  - `battle_ft6_12.pth`, die 12 neuen Netze, SHA-256 `9a705547…`.
+  - `battle_v17a.pth`, V12-Netze + 12 neue = 48 Netze, `0f860b0b…`.
+  - `battle_v17b.pth`, V10-Netze + ft3 s10–s15 + 12 neue = 36 Netze, `a8fa16c8…`.
+- **Läuft:** `REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v17a v17b` (Start 06:44, Code `59da48b`), Zulassung wie bisher. Parallel weiter die gezielte Nebel-Bestätigung mit 3 Prozessen: V12 auf den Abzug-25-Karten ist fertig (Solution_92 94,2 %, `league_nets6` 65,7 %), jetzt läuft `v15cx`.
+- Abgabe unverändert **V12**.
+
 ## 01.11.2026, 04:25 Berlin – Claude Code (autonom): `no_strand` ohne Gewinn; Nachtraining unter den V12-Regeln gestartet
 
 - **Screen** (`REF=v12 WORKERS=12 bash scripts/battle_v14.sh admit v16s v16all`, Code `c9fe79b`, 03:28–04:19), Dev A gepaart gegen V12:
