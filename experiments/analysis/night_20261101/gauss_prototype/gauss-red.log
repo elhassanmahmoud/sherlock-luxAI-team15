@@ -1,0 +1,51 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_five_tile_fact_is_new_beyond_subset_and_overlap[1-0] ___________
+
+last = 1, want = 0
+
+    @pytest.mark.parametrize("last,want", [(1, 0), (2, 1)])
+    def test_five_tile_fact_is_new_beyond_subset_and_overlap(last, want):
+        baseline = Belief(0, subset_infer=True, overlap_infer=True)
+        enabled = Belief(0, subset_infer=True, overlap_infer=True)
+        enabled.gauss_infer = True
+        for i, (tiles, gain) in enumerate(_records(last)):
+            for belief in (baseline, enabled):
+                _infer(belief, tiles, gain, i * 8)
+        assert not baseline._point and not baseline._dead
+>       assert 4 in (enabled._point if want else enabled._dead)
+E       assert 4 in set()
+
+tests/test_exact_inference.py:40: AssertionError
+__________ test_five_tile_fact_is_new_beyond_subset_and_overlap[2-1] ___________
+
+last = 2, want = 1
+
+    @pytest.mark.parametrize("last,want", [(1, 0), (2, 1)])
+    def test_five_tile_fact_is_new_beyond_subset_and_overlap(last, want):
+        baseline = Belief(0, subset_infer=True, overlap_infer=True)
+        enabled = Belief(0, subset_infer=True, overlap_infer=True)
+        enabled.gauss_infer = True
+        for i, (tiles, gain) in enumerate(_records(last)):
+            for belief in (baseline, enabled):
+                _infer(belief, tiles, gain, i * 8)
+        assert not baseline._point and not baseline._dead
+>       assert 4 in (enabled._point if want else enabled._dead)
+E       assert 4 in set()
+
+tests/test_exact_inference.py:40: AssertionError
+___________________ test_config_and_constructor_default_off ____________________
+
+    def test_config_and_constructor_default_off():
+>       assert getattr(AgentConfig.from_dict({"gauss_infer": True}), "gauss_infer", False)
+E       AssertionError: assert False
+E        +  where False = getattr(AgentConfig(hidden=256, dueling=True, gamma=0.99, lr=0.0003, batch_size=256, buffer_capacity=300000, learn_start=5000,...3, w_energy=0.1, w_stack=0.3, w_death=0.5, w_match=2.0, w_discovery=0.5, w_sap_hit=0.3, w_opp_points=0.0, frozen=False), 'gauss_infer', False)
+E        +    where AgentConfig(hidden=256, dueling=True, gamma=0.99, lr=0.0003, batch_size=256, buffer_capacity=300000, learn_start=5000,...3, w_energy=0.1, w_stack=0.3, w_death=0.5, w_match=2.0, w_discovery=0.5, w_sap_hit=0.3, w_opp_points=0.0, frozen=False) = from_dict({'gauss_infer': True})
+E        +      where from_dict = AgentConfig.from_dict
+
+tests/test_exact_inference.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_exact_inference.py::test_five_tile_fact_is_new_beyond_subset_and_overlap[1-0]
+FAILED tests/test_exact_inference.py::test_five_tile_fact_is_new_beyond_subset_and_overlap[2-1]
+FAILED tests/test_exact_inference.py::test_config_and_constructor_default_off
+3 failed, 19 deselected in 4.41s

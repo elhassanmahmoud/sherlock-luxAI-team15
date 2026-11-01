@@ -101,7 +101,8 @@ class Belief:
                  relic_filter: bool = False, subset_infer: bool = False,
                  keep_dead: bool = False, keep_dead_fast: bool = False,
                  opp_infer: bool = False, stale_all: bool = False,
-                 nebula_infer_drift_safe: bool = False, overlap_infer: bool = False):
+                 nebula_infer_drift_safe: bool = False, overlap_infer: bool = False,
+                 gauss_infer: bool = False):
         self.W, self.H = W, H
         self.canonical = bool(canonical)
         self.symmetry = bool(symmetry)
@@ -109,6 +110,7 @@ class Belief:
         self.relic_filter = bool(relic_filter)
         self.subset_infer = bool(subset_infer)
         self.overlap_infer = bool(overlap_infer)
+        self.gauss_infer = bool(gauss_infer)
         self.keep_dead = bool(keep_dead)
         self.keep_dead_fast = bool(keep_dead_fast)
         self.opp_infer = bool(opp_infer)
@@ -191,9 +193,17 @@ class Belief:
         self._last_step = -1
         self._coords_dirty = True
         self._cache: dict[str, np.ndarray] = {}
+        self._gauss_seen: set = set()
+        self._gauss_attempts = 0
+        self._gauss_observations = 0
+        self._gauss_last_observation = -8
 
     def reset_match(self) -> None:
         """Matchwechsel: Punktestand faellt auf 0, Relics koennen neu erscheinen."""
+        self._gauss_seen.clear()
+        self._gauss_attempts = 0
+        self._gauss_observations = 0
+        self._gauss_last_observation = -8
         self.last_points = 0
         self.last_opp_points = 0
         self._spawn_proven = False
@@ -233,6 +243,7 @@ class Belief:
         if match_step == 0:
             self.reset_match()
             return  # zu Matchbeginn existieren noch keine Units
+        self._gauss_observations += 1
 
         from . import geometry as geo  # lokal: vermeidet Zyklus
 
@@ -360,6 +371,7 @@ class Belief:
             del self.records[: len(self.records) - MAX_RECORDS]
         self.opp_point_records += 1
         self._propagate()
+        self._try_gauss(new, match_step)
 
     def _infer_from_enemy(self, obs, match_step: int) -> None:
         """Schalter `opp_infer`: Null-Tiles aus dem Punktgewinn des Gegners.
@@ -463,6 +475,7 @@ class Belief:
     def _add_relic(self, x: int, y: int) -> None:
         if (x, y) in self.relic_positions:
             return
+        self._gauss_seen.clear()
         self.relic_positions.add((x, y))
         self.relic_match[(x, y)] = self.match_idx
         if self.keep_dead_fast and self._dead:
@@ -596,6 +609,32 @@ class Belief:
         if len(self.records) > MAX_RECORDS:
             del self.records[: len(self.records) - MAX_RECORDS]
         self._propagate()
+
+        self._try_gauss(new, match_step)
+
+    def _try_gauss(self, new, match_step: int) -> None:
+        """One atomic, rate-limited component solve; never alter spawn validity."""
+        if (not self.gauss_infer or self.window_infer or self.window_infer_all
+                or not self._stable(match_step) or new in self._gauss_seen):
+            return
+        if len(self._gauss_seen) >= MAX_RECORDS:
+            return
+        self._gauss_seen.add(new)
+        if (self._gauss_attempts >= 8
+                or self._gauss_observations - self._gauss_last_observation < 8):
+            return
+        touched = set(new[0]) - self._point - self._dead
+        if not touched:
+            return
+        self._gauss_attempts += 1
+        self._gauss_last_observation = self._gauss_observations
+        from .exact_infer import exact_facts
+        facts = exact_facts(self.records, touched, point=self._point, dead=self._dead,
+                            mirror=self._mirror_idx if self.symmetry else None)
+        for tile, value in facts.items():
+            (self._mark_point if value else self._mark_dead)(tile)
+        if facts:
+            self._propagate()
 
     def _add_differences(self, new: tuple[tuple[int, ...], int]) -> None:
         """Schalter `subset_infer`: Differenzen von Teilmengen-Gleichungen.
@@ -770,6 +809,8 @@ class Belief:
         relic_nodes_mask.sum()//2 waechst monoton, ein Tile das einmal punktet
         punktet immer weiter.
         """
+        # Invalidate equation identities, but only a new match/game refills work.
+        self._gauss_seen.clear()
         if not self._dead and not self.records:
             return
         self._dead.clear()

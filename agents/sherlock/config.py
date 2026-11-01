@@ -80,6 +80,9 @@ class AgentConfig:
     overlap_infer: bool = False
     """True: sichere Extremfaelle teilweise ueberlappender Punkte-Gleichungen
     auswerten; nur neue gegen hoechstens 400 vorhandene Gleichungen zu je 16 Tiles."""
+    gauss_infer: bool = False
+    """True: begrenzte exakte Fraction-Inferenz kleiner Beobachtungskomponenten;
+    hoechstens acht Versuche je Match mit acht frischen Beobachtungen Abstand."""
     cand_quota: int = 0
     """> 0: so viele eigene Kandidaten-Tiles rangieren vor den Punkte-Tiles der
     Gegnerhaelfte (features.assign_targets)."""

@@ -65,7 +65,7 @@ Vorschlag für den ersten technischen Pilot, vor jeglicher Stärkenmessung unver
 | Matrix | höchstens 24 Orbit-/Tilevariablen und 40 verschiedene gültige Gleichungen |
 | Überschreitung | ganze betreffende Komponente überspringen; kein ergebnisabhängig gewählter 24er-/40er-Ausschnitt |
 | Aufwand pro Aufruf | höchstens 4096 rationale Zelloperationen, danach kompletter ergebnisloser Abbruch |
-| Bruchgröße | Zähler und Nenner höchstens 256 Bit; bei Überschreitung kompletter ergebnisloser Abbruch |
+| Bruchgröße | Eingabe- und gespeicherte Matrixwerte: Zähler/Nenner höchstens 256 Bit; bei Überschreitung kompletter ergebnisloser Abbruch. Explizite Fraction-Produkte vor der Subtraktion werden nicht separat geprüft, bleiben durch begrenzte Operanden strukturell beschränkt (Review-P3). |
 | Aufrufrate | neue unterschiedliche gültige Gleichung, mindestens 8 Beobachtungsschritte Abstand, höchstens 8 Versuche je Match |
 | Auswahl bei mehreren berührten Komponenten | maximal eine, vorab deterministische Reihenfolge (z. B. kleinste Repräsentanten-ID) |
 | Zusatzabschluss | keine Gauß-Rekursion auf gerade bewiesenen Fakten; nur vorhandene Propagation danach |

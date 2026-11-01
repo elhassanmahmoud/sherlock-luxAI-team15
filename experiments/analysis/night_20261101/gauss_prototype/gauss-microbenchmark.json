@@ -1,0 +1,31 @@
+{
+  "kind": "pure_fraction_helper_under_two_active_eval_workers_not_realtime_guarantee",
+  "cpu_secs": 1.0046179999999998,
+  "wall_secs": 1.0066194590181112,
+  "cases": {
+    "five_tile": {
+      "calls": 162,
+      "min_ms": 0.07095799082890153,
+      "median_ms": 0.07922900840640068,
+      "max_ms": 0.21787500008940697
+    },
+    "dense24": {
+      "calls": 162,
+      "min_ms": 1.8247080151923,
+      "median_ms": 1.9903539796359837,
+      "max_ms": 3.6036669625900686
+    },
+    "400_raw_records": {
+      "calls": 162,
+      "min_ms": 3.6193340201862156,
+      "median_ms": 4.0129794797394425,
+      "max_ms": 4.752250039018691
+    },
+    "oversize25": {
+      "calls": 162,
+      "min_ms": 0.06533402483910322,
+      "median_ms": 0.07299950812011957,
+      "max_ms": 0.13170804595574737
+    }
+  }
+}

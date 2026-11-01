@@ -17,7 +17,7 @@ separate fresh comparison plan. First study's outcome/nomination must remain ind
   At most400 records, raw record16 physical tiles, whole component24 canonical variables,
   40 distinct rows; skip oversize components completely. Symmetric tiles contribute
   multiplicity2, not set-deduplicated coefficients.
-- [ ] Hard deterministic4096 cell updates and256-bit numerator/denominator limits;
+- [ ] Hard deterministic4096 cell updates and256-bit numerator/denominator limits on input/stored matrix values;
   abort atomically with no facts. No wallclock-dependent production decisions.
 - [ ] At most8 attempts per match and at least8 observed steps between attempts.
   Match reset/new game resets attempt limits. Reopening dead knowledge clears solver
