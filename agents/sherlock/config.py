@@ -428,6 +428,16 @@ class AgentConfig:
     Paar aus Match 2 wurde nie gefunden, wir kannten 38-44 % der Punkte-Tiles. Units mit eigenem Ziel nie."""
     scout_until: int = 60
     scout_stale: int = 20
+    relic_prior: float = 0.0
+    """> 0 (01.11.2026, nur Auswertung): Erkundungsziele nach der Lage-Verteilung der Relics. Die Engine setzt
+    die Relics auf die hoechsten Werte eines Perlin-Rauschens aus 4x4 Zellen zu je 6 Tiles (luxai_s3/state.py,
+    gen_map). Auf 10.000 Karten (39.762 Knoten) liegen 96,8 % aller Relic-Knoten auf Tiles mit x%6 oder y%6 in
+    {2, 3} (56 % der Karte), 30 % in den 2x2-Kernen (x%6, y%6) in {2, 3}^2 und keiner bei x%6 und y%6 in {0, 5}
+    (features.RELIC_P6). Statt des unerkundeten Tiles naechst der Blockmitte wird je 4x4-Block das begehbare
+    Tile Ziel, von dem aus in Sichtweite am meisten noch unerkundete Relic-Wahrscheinlichkeit liegt; Bloecke
+    ohne solche entfallen. Ziele mit mehr sichtbarer Wahrscheinlichkeit kosten bis zu relic_prior Felder
+    weniger. Diagnose (V13 gegen Solution_92, Dev A, Sichtweite 1): das erste Relic-Paar ist im Median erst
+    9 Schritte nach dem Spawn bekannt (Sicht 3/4: 1), ein Orakel mit allen Relics bringt dort +4,9 pp."""
     reserve_sap: bool = False
     """29.10.2026: Reserve-Units (home_reserve) auf ihrem Reservetile sappen wie Halter (pt_sap-Regeln)."""
     active_targets: bool = False

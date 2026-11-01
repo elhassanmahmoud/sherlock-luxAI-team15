@@ -87,6 +87,74 @@ def grid_targets(coords: np.ndarray, block: int) -> np.ndarray:
     return coords[order[first]]
 
 
+# 01.11.2026 (Schalter relic_prior): Lage-Verteilung der Relic-Knoten nach (x % 6, y % 6) in Promille, gezaehlt
+# auf 10.000 Karten (Seeds 1000000-1009999, 39.762 gespawnte Knoten). luxai_s3/state.py gen_map setzt die Relics
+# auf die hoechsten Werte eines Perlin-Rauschens aus 4x4 Zellen zu je 6 Tiles, die Lage innerhalb einer Zelle ist
+# also fuer alle Zellen gleich verteilt. Die Tabelle ist symmetrisch zur Antidiagonale (Spiegel-Relics) und gilt
+# damit auch im kanonischen Raum.
+RELIC_P6 = np.array([
+    [0.0, 0.2, 38.3, 33.4, 0.1, 0.0],
+    [0.4, 14.9, 44.2, 50.9, 0.4, 0.1],
+    [38.0, 44.5, 60.3, 88.2, 50.9, 33.4],
+    [34.3, 52.4, 87.3, 60.3, 44.2, 38.3],
+    [0.1, 0.1, 52.4, 44.5, 14.9, 0.2],
+    [0.0, 0.1, 34.3, 38.0, 0.4, 0.0],
+]) / 1000.0
+
+
+def prior_mass(W: int, H: int) -> np.ndarray:
+    """Relic-Wahrscheinlichkeit je Tile nach RELIC_P6 (Summe ueber die Karte = Zahl der 6x6-Zellen)."""
+    xs, ys = np.indices((W, H))
+    return RELIC_P6[xs % 6, ys % 6]
+
+
+def box_sum(a: np.ndarray, r: int) -> np.ndarray:
+    """Summe von `a` ueber das (2r+1)x(2r+1)-Quadrat um jedes Tile (am Rand nur die Tiles im Feld)."""
+    W, H = a.shape
+    c = np.zeros((W + 1, H + 1))
+    c[1:, 1:] = np.asarray(a, dtype=np.float64).cumsum(0).cumsum(1)
+    x0 = np.clip(np.arange(W) - r, 0, W)
+    x1 = np.clip(np.arange(W) + r + 1, 0, W)
+    y0 = np.clip(np.arange(H) - r, 0, H)
+    y1 = np.clip(np.arange(H) + r + 1, 0, H)
+    return c[x1][:, y1] - c[x0][:, y1] - c[x1][:, y0] + c[x0][:, y0]
+
+
+def prior_targets(unexp: np.ndarray, passable: np.ndarray, sensor: int, block: int,
+                  nebula: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:
+    """Schalter relic_prior: je block x block-Feld das begehbare Tile, von dem aus in Sichtweite `sensor` am
+    meisten unerkundete Relic-Wahrscheinlichkeit liegt. Felder, von denen aus keine sichtbar ist, entfallen.
+    Liefert (Ziele n x 2, Anteil n) mit Anteil = sichtbare Masse / groesstmoegliche bei dieser Sichtweite.
+
+    `nebula` (Gedaechtnis): Nebel-Tiles zaehlen weder als Masse noch als Ziel. Bei starkem Sichtabzug bleiben sie
+    trotz Sichtweite unsichtbar und damit unerkundet; ohne diesen Ausschluss blieben Units vor ihnen stehen
+    (Probe 800112, Sicht 3, Abzug 5: erstes Relic 29 Schritte spaeter, erster Punkt erst in Match 2)."""
+    W, H = passable.shape
+    r = max(0, int(sensor))
+    full = prior_mass(W, H)
+    open_ = np.zeros((W, H), dtype=bool)
+    if len(unexp):
+        open_[unexp[:, 0], unexp[:, 1]] = True
+    ok = passable if nebula is None else (passable & ~nebula)
+    if nebula is not None:
+        open_ &= ~nebula
+    vis = np.where(ok, box_sum(full * open_, r), 0.0)
+    vmax = float(box_sum(full, r).max()) or 1.0
+    goals, frac = [], []
+    for bx in range(0, W, block):
+        for by in range(0, H, block):
+            sub = vis[bx:bx + block, by:by + block]
+            k = int(np.argmax(sub))
+            v = float(sub.flat[k])
+            if v > 1e-9:
+                dx, dy = divmod(k, sub.shape[1])
+                goals.append((bx + dx, by + dy))
+                frac.append(v / vmax)
+    if not goals:
+        return np.zeros((0, 2), dtype=np.int32), np.zeros(0)
+    return np.array(goals, dtype=np.int32), np.array(frac, dtype=np.float64)
+
+
 def bfs_maps(passable: np.ndarray, starts: np.ndarray) -> np.ndarray:
     """BFS-Schrittzahl von jeder Startposition zu jedem Tile (n x W x H, -1 unerreichbar),
     alle Starts gleichzeitig als Wellenfront (4er-Nachbarschaft, nur passierbare Tiles)."""
@@ -128,7 +196,8 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
                    explore_quota: int = 0, explore_until: int = 75,
                    energy_pref: float = 0.0, reach: bool = False,
                    home_reserve: bool = False, relic_scout: int = 0, scout_until: int = 60,
-                   scout_stale: int = 20) -> dict[int, tuple[int, int]]:
+                   scout_stale: int = 20, relic_prior: float = 0.0,
+                   sensor: int = 2) -> dict[int, tuple[int, int]]:
     """Greedy-Zuweisung: jede Unit bekommt ein EIGENES Ziel.
 
     Prioritaet: bewiesene Punkte-Tiles < Kandidaten-Tiles < unerkundete Tiles.
@@ -174,6 +243,9 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
     reach (cfg.reach_assign, 22.10.2026): Weglaenge (BFS ueber die Gedaechtniskarte) statt
     Luftlinie; nach Gedaechtnis unerreichbare Ziele (z. B. Punkte-Tiles unter einem Asteroiden)
     nur noch als letzte Wahl. Diagnose 360051: Units warteten neben Zielen unter Asteroiden.
+
+    relic_prior > 0 (cfg.relic_prior, 01.11.2026): Erkundungsziele je Block nach sichtbarer, noch unerkundeter
+    Relic-Wahrscheinlichkeit (prior_targets, Sichtweite `sensor`), bis zu relic_prior Felder Bonus.
     """
     if len(unit_ids) == 0:
         return {}
@@ -185,9 +257,15 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             targets.append(pool)
             prios.append(np.full(len(pool), prio, dtype=np.int32))
     n_hard = int(sum(len(t) for t in targets))
+    prior_frac = None
     if n_hard < len(unit_ids):
         unexp = belief.explore_coords(stale) if stale else belief.unexplored_coords()
-        if grid:
+        goals = np.zeros((0, 2), dtype=np.int32)
+        if relic_prior > 0 and len(unexp):
+            goals, frac = prior_targets(unexp, belief.passable, sensor, grid or 4, belief.nebula)
+        if len(goals):
+            unexp, prior_frac = goals, frac
+        elif grid:
             unexp = grid_targets(unexp, grid)
         if len(unexp) == 0:
             unexp = belief.relic_coords()
@@ -199,16 +277,18 @@ def assign_targets(belief, unit_ids, unit_pos, W, H,
             if seen_before_penalty:
                 seen = belief.explored_ever[unexp[:, 0], unexp[:, 1]] * float(seen_before_penalty)
             order = np.argsort(d + seen, kind="stable") if seen_before_penalty else np.argsort(d)
-            keep = order if grid else order[: max(len(unit_ids) * 4, 16)]
+            keep = order if (grid or prior_frac is not None) else order[: max(len(unit_ids) * 4, 16)]
             targets.append(unexp[keep])
             prios.append(np.full(len(keep), 2, dtype=np.int32))
             extra_seen = seen[keep]
+            if prior_frac is not None:
+                extra_seen = extra_seen - float(relic_prior) * prior_frac[keep]
     if not targets:
         return {}
     tgt = np.concatenate(targets, axis=0)
     prio = np.concatenate(prios, axis=0)
     extra = np.zeros(len(tgt))
-    if seen_before_penalty and prio[-1] == 2:
+    if (seen_before_penalty or prior_frac is not None) and prio[-1] == 2:
         extra[len(tgt) - len(extra_seen):] = extra_seen
     own_origin = belief.canonical or belief.team_id == 0
     s_sum = tgt[:, 0] + tgt[:, 1]
@@ -550,6 +630,9 @@ def make_context(agent, obs, belief=None) -> dict:
         relic_scout=(int(agent.cfg.relic_scout)
                      if agent.cfg.relic_scout and (not agent.training or agent.cfg.rules_in_training) else 0),
         scout_until=int(agent.cfg.scout_until), scout_stale=int(agent.cfg.scout_stale),
+        relic_prior=(float(agent.cfg.relic_prior)
+                     if agent.cfg.relic_prior and (not agent.training or agent.cfg.rules_in_training) else 0.0),
+        sensor=int(cfg.get("unit_sensor_range", 2)),
     )
     if sticky and belief is agent.belief:
         agent._sticky_prev = (belief.match_idx, dict(assigned))
