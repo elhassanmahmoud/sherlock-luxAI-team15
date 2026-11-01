@@ -477,6 +477,10 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   und Solution_92 ±0). `v17b` ebenfalls zugelassen (Δ +0,69 [−1,33; +2,75], Solution_92 −0,83, direkt 56,0 %), aber
   mit dem niedrigeren Mittel. Battle-Bestätigung von `v17a` gestartet 07:56; 813200–814399 vorher in keiner der 1.157
   CSVs mit Seed-Spalte (die einzigen Treffer der Suche waren Trainingskarten 313000–314749).
+- **Ergebnis Battle-Bestätigung (01.11., 10:40): `v17a` nicht bestanden.** Mittel 6 87,75 statt 87,34 % (Δ +0,41 pp
+  [−0,68; +1,52]), Solution_92 +1,31 [+0,19; +2,50], default 99,88 %, direkt gegen V12 53,75 % [49,0; 58,75] aus
+  800 Spielen. Verfehlt: Mittel 6 ≥ +1 pp, untere Grenze > 0, direkt untere Grenze > 50 %. Nachträglich getrennt (nur
+  Beschreibung): Karten mit Nebelabzug 25 +3,26 pp, übrige 685 Karten −0,07 pp. Weiter mit Nachtrag 04:45.
 
 ## Nachtrag 01.11.2026, 04:45 (gezielte Bestätigung der Nebel-Korrektur, vor jeder Messung auf 816000–819999)
 
@@ -507,6 +511,10 @@ bzw. gleiche Schritte: Sicherung mit Hash, Installation, Kurs-Runner, Bericht).
   [50,8; 61,3] aus 600 Spielen. Je Gegner: `league_nets6` +10,3 [+4,0; +16,3], V7 +3,2, V3 +1,8, `sol92_sq` −0,7,
   `threat6` −1,2. Rest: 720 von 720 Ergebnissen gleich. Lief parallel zu Runde 6; nach der Reihenfolge oben zählt es
   nur, falls `v17a` die Battle-Bestätigung nicht besteht (dann V13 `v13_neb`).
+- **Übernahme (01.11., 10:46):** `v17a` fiel durch, also **V13 `v13_neb`** mit `scripts/release_candidate.py`
+  (V12 gesichert in `experiments/releases/20261101_v12_fog/`). Vorher wurde `gate_passed` korrigiert (Commit
+  `a5d6dd6`): Durch die parallelen Läufe stehen die Zeilen gemischt im Gate-Log; das alte Skript erkannte `v15cx` nicht
+  und hätte `v17a` fälschlich als bestanden gewertet. [Übernahmebericht](../../../experiments/analysis/release_20261101_v13/RELEASE.md).
 
 ## Nachtrag 01.11.2026, 07:15 (`cand_rescue` auf der Nebel-Korrektur, vor jeder Messung von `v18r`)
 

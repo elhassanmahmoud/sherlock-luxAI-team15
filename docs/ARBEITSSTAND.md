@@ -5,6 +5,32 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+## 01.11.2026, 10:55 Berlin – Claude Code (autonom): `v17a` nicht bestanden, **V13 `v13_neb` ist die neue Abgabe**; Orakel: bei Sichtweite 1 fehlt Information
+
+- **Battle-Bestätigung `v17a`** (813200–813999, direkt 814000–814399, Code `518f289`, 07:56–10:40): **nicht bestanden.**
+  - Mittel 6 87,75 statt 87,34 % (Δ +0,41 pp [−0,68; +1,52]), Solution_92 95,19 % (Δ +1,31 [+0,19; +2,50]), default 99,88 %, direkt gegen V12 53,75 % [49,0; 58,75] aus 800 Spielen.
+  - Verfehlt: Mittel 6 ≥ +1 pp, untere Grenze > 0, direkt untere Grenze > 50 %.
+  - Nachträglich nach Kartenparametern getrennt (nur Beschreibung): 115 Karten mit Nebelabzug 25 +3,26 pp [−0,29; +6,74], übrige 685 Karten −0,07 pp [−1,24; +1,08]. Die 12 nachtrainierten Netze brachten also nichts Messbares; der Gewinn kam aus der Nebel-Korrektur.
+- **Übernahme V13 `v13_neb`** (10:46) nach Plan, Nachtrag 04:45: Die Nebel-Bestätigung zählt, weil `v17a` durchfiel. Quelle `experiments/ensembles/battle_v15cx.pth` = V12-Netze (alle Tensoren identisch) + `est_censor` + `neb_cross`.
+  - **Vorher Prüfskript korrigiert** (Commit `a5d6dd6`): `gate_passed` las das gemischte Gate-Log falsch. `v15cx` wurde nicht erkannt, und `v17a` hätte fälschlich als bestanden gegolten. Jetzt zählt nur die Urteilszeile derselben Art. Auf allen alten Gate-Logs gibt es dieselben Antworten außer diesen zwei Fällen. 2 neue Tests.
+  - `scripts/release_candidate.py`: V12 bytegleich gesichert in `experiments/releases/20261101_v12_fog/`. Beide Abgabe-Dateien jetzt SHA-256 `6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62`. Kurs-Runner 8 Spiele bestanden, `act` im Median 5,4–6,7 ms, höchstens 10,3 ms.
+  - `Gruppe15.zip` neu gebaut (10:46, 22,2 MB, SHA-256 `dad66c4d…`), „Check ok“ unter `agents/` und in der Projektwurzel. `Gruppe15/agent.pth` (SHA-256 `93451fb0…`) hat dieselben Tensoren und dieselbe Config wie die Abgabe, nur zusätzlich `frozen=True`. Alle 15 Python-Dateien sind bytegleich. Die V12-Zip vom 31.10. liegt als Kopie im Scratchpad und lässt sich jederzeit neu bauen.
+  - 3 Spiele mit der Zip aufgezeichnet: 800000 (Nebelabzug 25), 800004 (Sichtweite 1), 4242. Unter Python 3.10.15 mit torch 2.14.1/numpy 2.2.6 und mit torch 2.2.2/numpy 1.26.4 nachgespielt: **0 abweichende Aktionen**.
+  - Testsuite vor und nach der Installation: 621 bestanden, 14 Untertests.
+  - [Übernahmebericht](../experiments/analysis/release_20261101_v13/RELEASE.md). CLAUDE.md und README stehen auf V13; die Zahlen im README sind neu gezählt (1.287.629 Spiele, davon 640.104 Trainingsspiele).
+- **Orakel-Diagnose `v18r`** (Dev A, alle 6 Gegner, `O_v18r_full.csv`, nur Diagnose, kein Gate): Mit den wahren Relics und Punkte-Tiles Mittel 6 91,0 statt 86,5 % (+4,53 pp [+2,42; +6,67]), Solution_92 97,5 statt 94,5 %.
+  - Nach Sichtweite, alle 6 Gegner: 1: +8,9, 2: +1,0, 3: +5,1, 4: +3,3 pp.
+  - Gegen Solution_92: Sichtweite 1 **96,5 statt 85,4 %**, Sichtweite 2–4 −0,7 bis +1,3 pp. Die Schwäche bei Sichtweite 1 gegen Solution_92 ist also fast ganz eine Informationslücke.
+  - Aufgeteilt auf den 72 Karten mit Sichtweite 1 (je 144 Spiele, Skript im Scratchpad):
+    - gegen Solution_92: normal 85,4 %, nur Relics 90,3 %, nur Punkte-Tiles um schon bekannte Relics 94,4 %, beides 96,5 %;
+    - gegen V7: 77,8 / 90,3 / 87,5 / 88,9 %.
+  - Am Spielende kennt Sherlock fast gleich viele Punkte-Tiles (15,6 statt 17,0). Es fehlt also vor allem Tempo.
+- **Nächste Schritte:**
+  - Herausfinden, warum Sherlock bei Sichtweite 1 die Punkte-Tiles langsamer erschließt. Daraus eine Regel bauen und vor der Messung im Plan festlegen.
+  - `cand_rescue` (zugelassen, +0,50 pp) möglichst nicht allein bestätigen: Bei erwarteten +0,5 pp ist die Hürde von +1 pp kaum erreichbar. Besser zusammen mit einer Sichtweite-1-Regel auf 820000–820799. Dafür braucht es einen Plan-Nachtrag vor der Messung.
+  - Nachtraining Runde 7 (`scripts/pipeline_battle_ft7.sh`, nicht gestartet, nicht versioniert) zurückgestellt: Runde 6 brachte auf Karten ohne Nebelabzug 25 nichts.
+- Abgabe: **V13 `v13_neb`**.
+
 ## 01.11.2026, 09:10 Berlin – Claude Code (autonom): Nebel-Bestätigung bestanden, `cand_rescue` zugelassen (Rundungsfehler im Skript)
 
 - **Gezielte Nebel-Bestätigung `v15cx`** (Nachtrag 04:45, `scripts/battle_neb25.sh`, Code `eeaaddb`, 04:27–09:04): **alle 7 Hürden bestanden.**
