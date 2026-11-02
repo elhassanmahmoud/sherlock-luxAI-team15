@@ -1,0 +1,182 @@
+[
+  {
+    "phase": "selection",
+    "job": "baseline",
+    "games": 700,
+    "workers": 2,
+    "wall_seconds": 1532.182588,
+    "wall_per_game": 2.1888322685714283,
+    "row_secs_by_class": {
+      "default": {
+        "n": 100,
+        "mean": 2.5496,
+        "sum": 254.96
+      },
+      "panel": {
+        "n": 600,
+        "mean": 4.6032,
+        "sum": 2761.92
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "overlap",
+    "games": 700,
+    "workers": 2,
+    "wall_seconds": 1536.639415,
+    "wall_per_game": 2.1951991642857145,
+    "row_secs_by_class": {
+      "default": {
+        "n": 100,
+        "mean": 2.5729,
+        "sum": 257.29
+      },
+      "panel": {
+        "n": 600,
+        "mean": 4.616616666666666,
+        "sum": 2769.97
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "overlap_direct",
+    "games": 100,
+    "workers": 2,
+    "wall_seconds": 288.532012,
+    "wall_per_game": 2.8853201200000003,
+    "row_secs_by_class": {
+      "direct": {
+        "n": 100,
+        "mean": 5.5582,
+        "sum": 555.82
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "control",
+    "games": 700,
+    "workers": 2,
+    "wall_seconds": 1490.521159,
+    "wall_per_game": 2.129315941428571,
+    "row_secs_by_class": {
+      "default": {
+        "n": 100,
+        "mean": 2.5595,
+        "sum": 255.95
+      },
+      "panel": {
+        "n": 600,
+        "mean": 4.47015,
+        "sum": 2682.09
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "control_direct",
+    "games": 100,
+    "workers": 2,
+    "wall_seconds": 287.198296,
+    "wall_per_game": 2.8719829600000004,
+    "row_secs_by_class": {
+      "direct": {
+        "n": 100,
+        "mean": 5.510800000000001,
+        "sum": 551.08
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "discovery",
+    "games": 700,
+    "workers": 2,
+    "wall_seconds": 1423.465271,
+    "wall_per_game": 2.033521815714286,
+    "row_secs_by_class": {
+      "default": {
+        "n": 100,
+        "mean": 2.5099,
+        "sum": 250.99
+      },
+      "panel": {
+        "n": 600,
+        "mean": 4.257516666666667,
+        "sum": 2554.51
+      }
+    }
+  },
+  {
+    "phase": "selection",
+    "job": "discovery_direct",
+    "games": 100,
+    "workers": 2,
+    "wall_seconds": 298.479108,
+    "wall_per_game": 2.98479108,
+    "row_secs_by_class": {
+      "direct": {
+        "n": 100,
+        "mean": 5.7553,
+        "sum": 575.53
+      }
+    }
+  },
+  {
+    "phase": "confirmation200",
+    "job": "baseline",
+    "games": 2800,
+    "workers": 2,
+    "wall_seconds": 5724.378126,
+    "wall_per_game": 2.044420759285714,
+    "row_secs_by_class": {
+      "default": {
+        "n": 400,
+        "mean": 2.527825,
+        "sum": 1011.13
+      },
+      "panel": {
+        "n": 2400,
+        "mean": 4.300954166666667,
+        "sum": 10322.29
+      }
+    }
+  },
+  {
+    "phase": "confirmation200",
+    "job": "control",
+    "games": 2800,
+    "workers": 2,
+    "wall_seconds": 5875.459071,
+    "wall_per_game": 2.0983782396428574,
+    "row_secs_by_class": {
+      "default": {
+        "n": 400,
+        "mean": 2.5669999999999997,
+        "sum": 1026.8
+      },
+      "panel": {
+        "n": 2400,
+        "mean": 4.4174750000000005,
+        "sum": 10601.94
+      }
+    }
+  },
+  {
+    "phase": "confirmation200",
+    "job": "control_direct",
+    "games": 400,
+    "workers": 2,
+    "wall_seconds": 1122.240925,
+    "wall_per_game": 2.8056023125,
+    "row_secs_by_class": {
+      "direct": {
+        "n": 400,
+        "mean": 5.472125,
+        "sum": 2188.85
+      }
+    }
+  }
+]

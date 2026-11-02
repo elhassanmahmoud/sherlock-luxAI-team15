@@ -1,0 +1,175 @@
+P/PT evaluation tooling handoff — 02 Nov 2026
+
+Prepared only. No real evaluation, model load, game, training, promotion or
+repository write/commit was performed by this tooling task. All new files and
+synthetic fixture repositories are under /tmp/sherlock-continue-20261102/.
+The performance worktree remained on 8e4720ca224f3cdf61693d5e5c4b4ef422ac6d8d.
+
+FILES
+
+  evaluation_runner/targeting_eval_driver.py
+    SHA256 69ef238fd17d180b432f5fd4f58a1b0b6a33a4fd67a8166ae0768c01d7a5e3d7
+  evaluation_runner/test_targeting_eval_driver.py
+    SHA256 a657f15371f931bc4344fc52e3d463aa1aace7fa8b88f22cc149be7274403b0c
+  test_targeting_stats.py
+    SHA256 9abcf60a22f70c2992237064bd0445f16304e936c5f54a053c99a2ebbc652d13
+  test_build_targeting_candidates.py
+    SHA256 157c01cd1901b5e67052dee00caee2232a916d5eafac3ea7380d42cd5d034dbd
+
+The two latter files are siblings of Root's targeting_stats.py and
+build_targeting_candidates.py. Those Root modules were only read/imported,
+never edited here. Tests import sibling modules; the stats test finds the driver
+either as a sibling (future common performance/ directory) or in the current
+evaluation_runner/ subdirectory. Production driver paths derive from --root,
+the common master freeze, and the driver's actual __file__, never fixed /tmp
+imports. Move/commit the reviewed tools BEFORE creating the real study freeze.
+
+FIXED EXECUTION
+
+Selection has five sequential jobs: baseline_panel (1400), P_panel (1400),
+P_direct (200), PT_panel (1400), PT_direct (200), total 4600. All use
+841000–841099 and both sides. Each *_panel job contains PANEL6 plus default.
+
+Confirmation has three jobs: baseline combined panel/default (4200), the single
+explicit nominee combined panel/default (4200), nominee direct (600), total 9000.
+Panel/default maps are 842000–842299; direct maps 843000–843299.
+
+The exact six panel labels match targeting-performance-protocol.md, with full
+relative historical release paths. Default is a separate metric/gate within the
+same seven-opponent CSV, not an extra serial job. Direct label is exactly
+self:experiments/releases/20261101_v14_baseline/agent_p0.pth.
+
+Every job reuses unmodified scripts.par_eval with two workers, one job at a time.
+Its existing common.make_opponent('default') constructs DefaultAgent explicitly.
+The temporary default adapter and worker CLI were removed completely after
+Root identified the unnecessary split. No evaluation monkeypatches remain.
+The existing evaluator uses the same two P flags, seed 0, epsilon 0, train=False
+and autosave disabled for all seven opponents.
+The old run_jobs.validate_inputs helper rejects missing/unfrozen model inputs.
+The existing early_curriculum_study source_identity, hashes, read_rows, schemas,
+thread environment, shared resource lock, process checks and owned group stop
+are reused. No random or substitute opponent is provided by the wrapper.
+
+COMMON FREEZE / PHASE / RECEIPT INTERFACE
+
+One master study_freeze.json pins root, interpreter, reviewed full HEAD, all
+model paths/hashes (baseline/P/PT, historical panel, direct V14, active released
+weights), protocols and the driver's actual path/SHA. source_identity includes
+source trees/engine/interpreter hashes. V14 inputs must have the fixed SOURCE_SHA.
+The identical master JSON SHA is required for selection AND confirmation;
+phase plans and receipts are deliberately not folded into that shared identity.
+
+plan.json fields: schema_version=1, phase, candidate, study_freeze_path,
+study_freeze_sha256, initial_seconds_per_game (class dict),
+prior_observed_seconds_per_game (class lists), deadline_utc, reserve_seconds,
+future_confirmation_games (class counts), jobs[]. Each job has root, name, role, engine, timing_class,
+weights, first_seed (REAL environment seed), n_maps, opponents, overrides,
+workers, games, out, log. Commands are reconstructed from these fixed bindings.
+
+state.json fields: schema_version=1, phase, status, plan_path, plan_sha256,
+study_freeze_sha256, source_before/source_after, projection, jobs[]. Successful
+job receipts carry name, timing_class, status, command/launch_command, owner_pid/pid/pgid,
+start/finish timestamps, exit_code, out/log, wall_seconds, actual_games and
+output_sha256. Errors are incomplete, with owned process groups stopped.
+Every completed CSV has exact unique keys, 303 steps, v2 points and finite,
+consistent result/counter/range values. Public validate_output(target, job) is
+the statistical audit's integrity entry point.
+
+Confirmation additionally requires selection_state_path/SHA and
+selection_summary_path/SHA. The summary must be status='complete',
+phase='selection', nominee==candidate, bind the selection plan SHA and common
+freeze SHA, and have csv_sha256 equal to ALL unchanged selection CSV hashes.
+Numeric gates and tie choice remain entirely in Root's targeting_stats module.
+The supervisor prints no win rates or nomination; it audits row integrity only.
+
+ADMISSION / SAFETY
+
+Rates are WALL seconds per game at two workers, already parallelized; never /2.
+Two fixed timing classes have initial costs combined_panel=2.22, direct=3.0.
+observedmax_c is the maximum of every completed observed class rate; global
+slowdown=max(1,max_c(observedmax_c/initial_c)); effective_c=max(observedmax_c,
+initial_c*slowdown). The projection is 1.20*sum(remaining_games_c*effective_c).
+Before every selection job, remaining selection work PLUS future confirmation
+{combined_panel:8400,direct:600} is included. Confirmation automatically carries
+ALL pinned selection class observations forward and has zero additional future
+work. Later fast jobs cannot erase earlier slow measurements. No class mixing,
+extra division by worker count or compounded double application of slowdown.
+The deadline is 2026-11-03T04:30Z (05:30 Berlin), with 3600 seconds
+closing reserve, so actual managed game work must finish before 03:30Z.
+Initial class rates imply latest starts ~18:10:34 selection / ~21:41:02
+confirmation Berlin. Slower observed throughput only moves these earlier.
+
+Battery use is permitted: below35% no new long job, <=25% active owned group
+stopped; AC permits lower charge. Polling is bounded at <=15 seconds plus checks.
+Unknown power state fails closed. Runtime/source/weights/driver/HEAD are checked
+before, during and after jobs. Final phase/summary/plan hashes are rechecked.
+
+HUP/INT/TERM are masked while spawning and registering ownership, and during
+bounded cleanup. A stdlib exec launcher restores the child's original mask;
+the parent restores its own mask after registration. This follows the existing
+early_curriculum_study pattern. The receipt is atomically reserved with open('x')
+UNDER the shared resource lock; only an invocation owning that reservation may
+write an error receipt. A concurrent runner's existing receipt is never adopted
+or overwritten. macOS system /tmp aliases are canonicalized; user output
+symlinks remain rejected. No resume of an old/partial output directory.
+
+FUTURE CLI (NOT RUN HERE)
+
+  python -B REVIEWED_DRIVER freeze --root FROZEN_ROOT --out NEW_BASE/study_freeze.json
+    --python SHARED_PYTHON --expected-head REVIEWED_FULL_HEAD
+    --protocol PERFORMANCE_PROTOCOL --protocol ADAPTATION_PROTOCOL
+    --baseline BASELINE_V14 --p P_FILE --pt PT_FILE
+
+  python -B REVIEWED_DRIVER prepare --freeze NEW_BASE/study_freeze.json
+    --out NEW_BASE/selection --phase selection
+
+  python -B REVIEWED_DRIVER run --plan NEW_BASE/selection/plan.json --start
+
+Only after complete independent selection audit and Root nomination:
+
+  python -B REVIEWED_DRIVER prepare --freeze NEW_BASE/study_freeze.json
+    --out NEW_BASE/confirmation --phase confirmation --candidate P_OR_PT
+    --selection-state NEW_BASE/selection/state.json
+    --selection-summary ACCEPTED_SELECTION_SUMMARY
+
+  python -B REVIEWED_DRIVER run --plan NEW_BASE/confirmation/plan.json --start
+
+NEW_BASE must exist and its master freeze file must be new; each phase output
+directory must be new. These lines are illustrative, not shell-ready commands.
+
+VERIFICATION / RED-GREEN LOGS
+
+Shared interpreter was used with -B. Only these new external unittest files ran;
+no repository test suite, real game environment or real checkpoint was loaded.
+
+  Runner: 19 tests passed in 0.258s (evaluation_runner/final-combined-unittest.log).
+  Stats+Builder: 21 tests passed in 0.846s, NO SKIPS
+    (targeting_combined_stats_builder_green.log; TARGETING_SOURCE_ROOT set).
+
+Stats includes the 13 required numerical/tie checks and a genuine complete-file
+synthetic 4600/9000 CSV→hash→freeze→summary pipeline with the existing 5000-draw
+bootstrap; a tiny temporary Git fixture and dummy byte files are used. No torch
+is imported and no models are loaded. All game rows/results are invented test
+fixtures; they are not performance observations from the reserved maps.
+
+Runner RED logs cover missing implementation, lost failed-child receipts,
+last-job plan tampering, unsafe spawn registration, both receipt-ownership races,
+and the macOS logical /tmp plan alias. red-combined-two-class.log proves the
+old8/5-job adapter layout failed the requested5/3-job and class-rate contracts.
+targeting_stats_red_combined.log captures the unchanged Root statistics module
+rejecting the new seven-opponent CSV; Root then applied its own narrow combined
+frame split and the full file pipeline passed again. Root modules were not
+edited here. Corresponding green logs are retained.
+CLI --help succeeds. The independent reviewer found the spawn/receipt races;
+both were independently reproduced before the narrow fixes. Latest driver SHA
+was sent back for final independent review; no real run is authorized by tests.
+
+LIMITS / ROOT FOLLOW-UP
+
+Root must finish independent review, real loaded-model/config/component audits,
+actual preflight and resource admission before any fresh-map evaluation. The
+driver checks real file identities but does not itself load/inspect tensor
+membership in the supervisor. P/PT eligibility/build proofs are separate.
+The actual par_eval/engine combination has not been exercised against real
+games in this task. No promotion, ZIP, remote integration
+or study phase was started. The shared quota reserve is coordinator-managed.
