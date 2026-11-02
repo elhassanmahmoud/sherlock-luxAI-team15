@@ -15,6 +15,7 @@ import csv
 import gzip
 import hashlib
 import importlib.metadata
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -33,7 +34,7 @@ PLAN = 'docs/superpowers/plans/2026-11-02-gauss-admission.md'
 RESULT_FIELDS = ('seed', 'side', 'steps', 'our_wins', 'opp_wins', 'result',
                  'our_points', 'opp_points', 'point_counting_version')
 ROLES = ('reference', 'prototype')
-RUNTIME_PATHS = ('agents/__init__.py', 'agents/sherlock', 'agents/Solution_92_Kaggle', 'lux', 'scripts')
+RUNTIME_PATHS = ('agents', 'lux', 'scripts')
 BITSET = dict(bits=576, index='x*24+y', bitorder='little', encoding='hex')
 
 
@@ -211,6 +212,13 @@ def reconstruct(frames, seed, side):
     timing = {}
     previous_match = previous_truth = None
     last_attempt = None
+
+    def censor(lead, reason):
+        if lead['key'][-1] == 'dead':
+            for role in 'VA':
+                if lead[role] is None and lead['censored'][role] is None:
+                    lead['censored'][role] = reason
+
     for frame in frames:
         pre, post = ({k: {kind: unpack_tiles(value) for kind, value in f.items()}
                       for k, f in frame[phase].items()} for phase in ('pre', 'post'))
@@ -226,8 +234,7 @@ def reconstruct(frames, seed, side):
         if previous_truth is not None and truth != previous_truth:
             first = {k: v for k, v in first.items() if k[2] == 'point'}
             for lead in leads:
-                if lead['key'][-1] == 'dead' and not lead.get('censored_reason'):
-                    lead['censored_reason'] = 'truth_regime_change'
+                censor(lead, 'truth_regime_change')
         previous_truth = truth
         if previous_match != match:
             # Zero knowledge is scoped to the actual acquisition match; point knowledge persists.
@@ -242,8 +249,7 @@ def reconstruct(frames, seed, side):
                 totals['positive_carryovers'] += len(post['G']['point'] - post['V']['point'])
             previous_match = match
             for lead in leads:
-                if lead['key'][-1] == 'dead':
-                    lead.setdefault('censored_reason', 'match_reset')
+                censor(lead, 'match_reset')
             continue
         previous_match = match
         for role in post:
@@ -267,17 +273,19 @@ def reconstruct(frames, seed, side):
                 key = (seed, side, match, tile, kind)
                 if key not in strict:
                     strict.add(key)
-                    leads.append(dict(key=list(key), step=step, V=None, A=None))
+                    leads.append(dict(key=list(key), step=step, V=None, A=None,
+                                      censored={'V': None, 'A': None}))
         for lead in leads:
             _, _, acquisition_match, tile, kind = lead['key']
-            if kind == 'dead' and tile not in post['G']['dead']:
-                lead.setdefault('censored_reason', 'knowledge_lost')
-            if lead.get('censored_reason') or (kind == 'dead' and acquisition_match != match):
+            if kind == 'dead' and acquisition_match != match:
                 continue
             for role in 'VA':
                 known = first.get((role, tile, kind))
-                if lead[role] is None and known is not None and known >= lead['step']:
+                if (lead[role] is None and lead['censored'][role] is None
+                        and known is not None and known >= lead['step']):
                     lead[role] = known - lead['step']
+            if kind == 'dead' and tile not in post['G']['dead']:
+                censor(lead, 'knowledge_lost')
         before, after = (frame['attempts']['G'][p] for p in ('pre', 'post'))
         delta = after[0] - before[0]
         if delta < 0 or delta > 1 or after[0] > 8:
@@ -371,10 +379,32 @@ def environment_identity():
                 for p in ('luxai-s3', 'numpy', 'torch', 'jax', 'jaxlib')}, engine=engine_files)
 
 
+def select_agent_package(root):
+    """Bind selected-root imports without the initializer's recursive discovery.
+
+    Discovery also imports historical untracked duplicates in the primary tree.
+    Neither source executes that initializer; Sherlock/Solution imports execute
+    their normal files, each still checked against the full tracked inventory.
+    """
+    if any(name == 'agents' or name.startswith('agents.') for name in sys.modules):
+        raise ValueError('agent package already imported before source selection')
+    package = Path(root).resolve() / 'agents'
+    spec = importlib.util.spec_from_file_location('agents', package / '__init__.py',
+                                                submodule_search_locations=[str(package)])
+    sys.modules['agents'] = importlib.util.module_from_spec(spec)
+    return dict(package='agents', path=str(package), initializer_executed=False,
+                reason='skip recursive autodiscovery; import selected modules directly')
+
+
 def check_imports(root, identity):
     root = Path(root).resolve()
     imported = {}
     for name, module in list(sys.modules.items()):
+        if name == 'agents' or name.startswith('agents.'):
+            paths = getattr(module, '__path__', None)
+            expected = root.joinpath(*name.split('.'))
+            if paths is not None and [Path(p).resolve() for p in paths] != [expected]:
+                raise ValueError(f'cross-root package path: {name}: {paths}')
         path = getattr(module, '__file__', None)
         if not path or not name.startswith(('agents', 'scripts', 'lux.', 'luxai_s3')):
             continue
@@ -527,6 +557,7 @@ def child(out, stage, role):
     # Invoked with -I. No checkout, current directory or ambient PYTHONPATH imports.
     sys.path.insert(0, str(root))
     os.chdir(root)
+    import_strategy = select_agent_package(root)
     from scripts.experiment import limit_threads
     limit_threads()
     import torch
@@ -540,6 +571,7 @@ def child(out, stage, role):
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
     loaded = check_loaded(agent, checkpoint, torch)
+    loaded['import_strategy'] = import_strategy
     trace = ShadowTrace(agent, shadows=stage == 'S' and role == 'prototype')
     capture = NativeAct(agent)
     env = LuxAIS3GymEnv(numpy_output=True)
@@ -645,6 +677,11 @@ def audit_stage(out, stage, manifest):
                 or len(proof.get('tensor_sha256', [])) != 36
                 or any(not re.fullmatch('[0-9a-f]{64}', h) for h in proof['tensor_sha256'])):
             raise ValueError('loaded-model proof incomplete or invalid')
+        strategy = dict(package='agents', path=str(Path(manifest['sources'][role]['root']) / 'agents'),
+                        initializer_executed=False,
+                        reason='skip recursive autodiscovery; import selected modules directly')
+        if proof.get('import_strategy') != strategy:
+            raise ValueError('loaded-model import strategy differs from selected root')
         proofs.append(proof)
         rows = json.loads((directory / 'rows.json').read_text())
         for row in rows:
@@ -682,7 +719,8 @@ def audit_stage(out, stage, manifest):
                 raise ValueError('false additional shadow fact')
         rows_by_role.append(rows)
     compare_stage(stage, *rows_by_role, manifest['known_results'])
-    if proofs[0] != proofs[1]:
+    if {k: v for k, v in proofs[0].items() if k != 'import_strategy'} != {
+            k: v for k, v in proofs[1].items() if k != 'import_strategy'}:
         raise ValueError('paired loaded-model proofs differ')
     return rows_by_role
 

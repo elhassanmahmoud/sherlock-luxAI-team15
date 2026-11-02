@@ -245,7 +245,7 @@ def test_dead_lead_is_censored_after_truth_regime_changes():
               raw_frame(a, 3, v_dead={7}, truth={8})]
     m = a.reconstruct(frames, 840000, 'player_0')
     assert m['lead'][0]['V'] is None
-    assert m['lead'][0]['censored_reason'] == 'truth_regime_change'
+    assert m['lead'][0]['censored'] == {'V': 'truth_regime_change', 'A': 'truth_regime_change'}
 
 
 def test_attempt_audit_rejects_observation_counter_gaps_and_bad_match_reset():
@@ -357,7 +357,10 @@ def test_raw_audit_rejects_absent_native_opponent_bytes(tmp_path):
     directory = tmp_path / 'C/reference'
     directory.mkdir(parents=True)
     (directory / 'loaded.json').write_text(json.dumps(dict(nets=36, features=79, actions=6,
-        overlap=False, gauss=False, train=False, epsilon=0, autosave=False, tensor_sha256=['0' * 64] * 36)))
+        overlap=False, gauss=False, train=False, epsilon=0, autosave=False, tensor_sha256=['0' * 64] * 36,
+        import_strategy={'package': 'agents', 'path': str(tmp_path / 'agents'),
+                         'initializer_executed': False,
+                         'reason': 'skip recursive autodiscovery; import selected modules directly'})))
     (directory / 'rows.json').write_text(json.dumps([row]))
     with gzip.open(directory / '831006-player_1.jsonl.gz', 'wt') as stream:
         for step in range(303):
@@ -372,7 +375,7 @@ def test_raw_audit_rejects_absent_native_opponent_bytes(tmp_path):
             frame.update(seed=831006, side='player_1', action={})
             stream.write(json.dumps(frame) + '\n')
     with pytest.raises(ValueError, match='native.*sides'):
-        a.audit_stage(tmp_path, 'C', {'known_results': []})
+        a.audit_stage(tmp_path, 'C', {'known_results': [], 'sources': {'reference': {'root': str(tmp_path)}}})
 
 
 def test_compatibility_gate_rejects_caught_policy_errors():
@@ -424,3 +427,106 @@ def test_audit_rejects_incomplete_loaded_model_proof_before_accepting_rows(tmp_p
     (directory / 'loaded.json').write_text(json.dumps({'nets': 35}))
     with pytest.raises(ValueError, match='loaded.model'):
         a.audit_stage(tmp_path, 'C', {'known_results': []})
+
+
+def test_actual_agent_discovery_is_in_pinned_inventory_without_importing_packages():
+    a = tool()
+    import pkgutil
+    root = TOOL.parents[3].resolve()
+    pending = [(root / 'agents', 'agents.')]
+    discovered = {'agents/__init__.py'}
+    while pending:
+        directory, prefix = pending.pop()
+        for module in pkgutil.iter_modules([str(directory)], prefix):
+            short = module.name.rsplit('.', 1)[1]
+            path = directory / short / '__init__.py' if module.ispkg else directory / f'{short}.py'
+            discovered.add(path.relative_to(root).as_posix())
+            if module.ispkg:
+                pending.append((directory / short, module.name + '.'))
+    assert {'agents/DQN/main.py', 'agents/default/default.py'} <= discovered
+    identity = a.source_identity(root, 'prototype')
+    assert discovered <= set(identity['files'])
+
+
+def test_selected_agent_package_skips_discovery_but_preserves_selected_root(tmp_path, monkeypatch):
+    a = tool()
+    import importlib
+    import sys
+    package = tmp_path / 'agents'
+    package.mkdir()
+    (package / '__init__.py').write_text("raise AssertionError('broad discovery must not execute')\n")
+    (package / 'selected.py').write_text('value = 17\n')
+    for name in list(sys.modules):
+        if name == 'agents' or name.startswith('agents.'):
+            monkeypatch.delitem(sys.modules, name)
+    try:
+        strategy = a.select_agent_package(tmp_path)
+        module = importlib.import_module('agents.selected')
+        assert module.value == 17
+        assert sys.modules['agents'].__path__ == [str(package)]
+        assert strategy == {'package': 'agents', 'path': str(package), 'initializer_executed': False,
+                            'reason': 'skip recursive autodiscovery; import selected modules directly'}
+    finally:
+        sys.modules.pop('agents.selected', None)
+        sys.modules.pop('agents', None)
+
+
+def test_import_guard_rejects_foreign_namespace_path_even_without_file(tmp_path, monkeypatch):
+    a = tool()
+    import sys
+    root = tmp_path / 'selected'
+    root.mkdir()
+    monkeypatch.setattr(sys, 'modules', {'agents': SimpleNamespace(__path__=[str(tmp_path / 'foreign')])})
+    with pytest.raises(ValueError, match='cross-root package path'):
+        a.check_imports(root, {'environment': {'engine': {}}, 'sources': {}})
+
+
+@pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+def test_completed_dead_lead_delays_survive_later_censor_events(event):
+    a = tool()
+    frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+    frames[1]['post']['A']['dead'] = a.pack_tiles({7})
+    final = raw_frame(a, 101 if event == 'match_reset' else 3,
+                      dead={7} if event == 'truth_regime_change' else (),
+                      truth={8} if event == 'truth_regime_change' else ())
+    if final['reset']:
+        final['attempts']['G']['post'] = [0, 0, -8]
+    frames.append(final)
+    lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+    assert lead['V'] == lead['A'] == 1
+    assert lead.get('censored_reason') is None
+    assert lead['censored'] == {'V': None, 'A': None}
+
+
+@pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+def test_dead_lead_censors_only_comparator_that_has_not_caught_up(event):
+    a = tool()
+    frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+    boundary = 101 if event == 'match_reset' else 3
+    final = raw_frame(a, boundary, dead={7} if event == 'truth_regime_change' else (),
+                      truth={8} if event == 'truth_regime_change' else ())
+    if final['reset']:
+        final['attempts']['G']['post'] = [0, 0, -8]
+    later = raw_frame(a, boundary + 1, dead={7}, v_dead={7},
+                      truth={8} if event == 'truth_regime_change' else ())
+    later['post']['A']['dead'] = a.pack_tiles({7})
+    frames.extend([final, later])
+    lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+    assert lead['V'] == 1
+    assert lead['A'] is None
+    assert lead.get('censored_reason') is None
+    assert lead['censored'] == {'V': None, 'A': event}
+
+
+def test_audit_rejects_import_strategy_pointing_to_other_source(tmp_path):
+    a = tool()
+    directory = tmp_path / 'C/reference'
+    directory.mkdir(parents=True)
+    proof = dict(nets=36, features=79, actions=6, overlap=False, gauss=False,
+                 train=False, epsilon=0, autosave=False, tensor_sha256=['0' * 64] * 36,
+                 import_strategy={'package': 'agents', 'path': str(tmp_path / 'foreign'),
+                                  'initializer_executed': False,
+                                  'reason': 'skip recursive autodiscovery; import selected modules directly'})
+    (directory / 'loaded.json').write_text(json.dumps(proof))
+    with pytest.raises(ValueError, match='import strategy'):
+        a.audit_stage(tmp_path, 'C', {'sources': {'reference': {'root': str(tmp_path)}}})
