@@ -6,6 +6,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 13:22 Berlin – Codex mit Moayed: gezielte Fortsetzung bis 03.11., 06:00
+
+- Neuer autonomer Auftrag nach dem abgeschlossenen Nachtbericht. Frischer Remote-Abgleich: main/origin/main `3a7e782`, keine neuen Mahmoud-Commits. V14 und alle Sicherungen unverändert; keine neuen Stärke- oder Trainingsergebnisse.
+- [Plan](superpowers/plans/2026-11-02-targeting-continuation.md), [Design](superpowers/specs/2026-11-02-targeting-continuation-design.md), [Trace-Schema](superpowers/plans/2026-11-02-targeting-trace-schema.md). Zuerst unveränderte V14-Entscheidungen beobachten: Zielvergabe, Netz/Masken, Endaktionen und Energie unterscheiden; freie bekannte Felder sind allein kein Fehlernachweis. Pauschale Heimprioritäten/Reserven/Sticky-Ziele wegen früherer negativer Befunde nicht wiederholen.
+- Separat prüfbarer Gauß-Prototyp weiterhin außerhalb der Abgabe; echte Agenten-/Shadow-Zulassung noch offen. Training nur mit begründeter Fragestellung, nicht erneut ein beliebiges 37. Netz nach einer gescheiterten Bestätigung nachschieben.
+- Reserviert nach Audit: Diagnose 840000–840039, Auswahl 841000–841099, Bestätigung 842000–842299, direkt 843000–843299, Technik 844000–844099. Konkrete Kandidaten/Umfänge werden vor neuen Leistungsresultaten fixiert. Zuerst 12 verbrauchte Verlust-/Kontrollschlüssel, jeweils beobachtet/unbeobachtet (maximal 24 Nachspiele), qualitative Diagnose ohne neue Stärkeaussage. [Audit/Designreview/Schlüssel](../experiments/analysis/continuation_20261102/).
+- Eigene isolierte Arbeitskopie `sherlock-v10-mechanics`, Branch `improvement/targeting-20261102`; Remote-Watch ruft nur ab, keine Integration während eingefrorener Studien. Fremde lokale Dateien bleiben erhalten. Maximal zwei schwere Worker, mindestens 30 % Codex-Kontingent erhalten, kein Reset. Nutzer erlaubt ausdrücklich Akkuarbeit und schließt später an: unter 35 % keine neue lange Phase, bei 25 % eigene schwere Jobs sichern/beenden. Schlussreserve vor 06:00; Präsentation unverändert.
+
 ## 02.11.2026, 03:56 Berlin – Codex mit Moayed: November-Nacht bestätigt keinen V14-Nachfolger
 
 - **Entscheidung:** V14 `v14_rescue` bleibt unverändert. Beide aktiven Gewichte und die Sicherung `experiments/releases/20261101_v14_baseline/` haben SHA-256 `98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8`. Kein Abgabetausch und kein nachrückender Kandidat. [Entscheidung und Intervalle](../experiments/analysis/night_20261101/DECISION.md), [Morgenbericht](MORGENBERICHT_20261102.md).

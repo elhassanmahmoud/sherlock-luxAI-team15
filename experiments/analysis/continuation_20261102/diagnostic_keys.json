@@ -1,0 +1,104 @@
+{
+  "created_utc": "2026-11-02T12:12:44.416005+00:00",
+  "source": "experiments/analysis/night_20261101/selection_baseline.csv",
+  "scope": "6 consumed losses and first 6 winning rows in original CSV order; qualitative controls, not representative prevalence or matched controls",
+  "keys": [
+    {
+      "seed": 831006,
+      "side": "player_1",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831029,
+      "side": "player_0",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831042,
+      "side": "player_0",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831042,
+      "side": "player_1",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831043,
+      "side": "player_0",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831043,
+      "side": "player_1",
+      "result": 0.0,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "group": "loss"
+    },
+    {
+      "seed": 831000,
+      "side": "player_0",
+      "result": 1.0,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "group": "control"
+    },
+    {
+      "seed": 831000,
+      "side": "player_1",
+      "result": 1.0,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "group": "control"
+    },
+    {
+      "seed": 831001,
+      "side": "player_0",
+      "result": 1.0,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "group": "control"
+    },
+    {
+      "seed": 831001,
+      "side": "player_1",
+      "result": 1.0,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "group": "control"
+    },
+    {
+      "seed": 831002,
+      "side": "player_0",
+      "result": 1.0,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "group": "control"
+    },
+    {
+      "seed": 831002,
+      "side": "player_1",
+      "result": 1.0,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "group": "control"
+    }
+  ],
+  "passivity": "Replay every key once unobserved and once observed; compare full action SHA, wins, v2 points and 303 steps. 24 games max."
+}

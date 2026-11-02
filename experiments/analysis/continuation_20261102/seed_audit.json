@@ -1,0 +1,184 @@
+{
+  "audited_at_utc": "2026-11-02T12:12:27.950095+00:00",
+  "origin_main": "3a7e7825b614a30bc85c7895a38e6b9fc62efdd5",
+  "worktrees_scanned": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint"
+  ],
+  "protected_range": {
+    "start": 840000,
+    "end_inclusive": 844999
+  },
+  "requested_reservations": [
+    {
+      "purpose": "diagnosis",
+      "start": 840000,
+      "end_inclusive": 840039,
+      "maps": 40
+    },
+    {
+      "purpose": "selection",
+      "start": 841000,
+      "end_inclusive": 841099,
+      "maps": 100
+    },
+    {
+      "purpose": "confirmation",
+      "start": 842000,
+      "end_inclusive": 842299,
+      "maps": 300
+    },
+    {
+      "purpose": "direct",
+      "start": 843000,
+      "end_inclusive": 843299,
+      "maps": 300
+    },
+    {
+      "purpose": "technical",
+      "start": 844000,
+      "end_inclusive": 844099,
+      "maps": 100
+    }
+  ],
+  "status": "NO_PRIOR_USE_FOUND_RESERVED_FOR_ROOT_20261102_STUDY",
+  "csv_summary": {
+    "files_across_worktrees": 6869,
+    "unique_file_contents": 1465,
+    "unique_seed_files": 1206,
+    "rows_in_unique_seed_files": 1565574,
+    "invalid_seed_values": 0,
+    "compressed_csv_files": 9
+  },
+  "csv_overlaps": [],
+  "doc_files_scanned": 267,
+  "doc_declaration_candidates": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 81,
+      "kind": "explicit range",
+      "start": 840000,
+      "end_inclusive": 840039,
+      "context": "Neue Reservierung (nach Seed-Audit): Diagnose 840000\u2013840039,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 82,
+      "kind": "explicit range",
+      "start": 841000,
+      "end_inclusive": 841099,
+      "context": "Auswahl 841000\u2013841099, Best\u00e4tigung 842000\u2013842299,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 82,
+      "kind": "explicit range",
+      "start": 842000,
+      "end_inclusive": 842299,
+      "context": "Auswahl 841000\u2013841099, Best\u00e4tigung 842000\u2013842299,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 83,
+      "kind": "explicit range",
+      "start": 843000,
+      "end_inclusive": 843299,
+      "context": "Direkt 843000\u2013843299, Technik 844000\u2013844099.",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 83,
+      "kind": "explicit range",
+      "start": 844000,
+      "end_inclusive": 844099,
+      "context": "Direkt 843000\u2013843299, Technik 844000\u2013844099.",
+      "classification": "current_root_authorized_self_reservation"
+    }
+  ],
+  "json_files_scanned": 2801,
+  "json_seed_value_overlaps": [],
+  "json_declared_range_overlaps": [],
+  "scan_errors": [],
+  "limitations": [
+    "No unpublished remote-computer data can be certified; check before actual jobs and after new remote commits.",
+    "Reservation is recorded here only; root must publish exact blocks in shared preregistration/work log before jobs.",
+    "No games, env.reset, parameter generation, training or candidate evaluation was run.",
+    "Hex-hash substrings and arbitrary six-digit decimal fragments are not treated as seed evidence."
+  ],
+  "self_reservation_declarations": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 81,
+      "kind": "explicit range",
+      "start": 840000,
+      "end_inclusive": 840039,
+      "context": "Neue Reservierung (nach Seed-Audit): Diagnose 840000\u2013840039,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 82,
+      "kind": "explicit range",
+      "start": 841000,
+      "end_inclusive": 841099,
+      "context": "Auswahl 841000\u2013841099, Best\u00e4tigung 842000\u2013842299,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 82,
+      "kind": "explicit range",
+      "start": 842000,
+      "end_inclusive": 842299,
+      "context": "Auswahl 841000\u2013841099, Best\u00e4tigung 842000\u2013842299,",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 83,
+      "kind": "explicit range",
+      "start": 843000,
+      "end_inclusive": 843299,
+      "context": "Direkt 843000\u2013843299, Technik 844000\u2013844099.",
+      "classification": "current_root_authorized_self_reservation"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-continuation-design.md",
+      "line": 83,
+      "kind": "explicit range",
+      "start": 844000,
+      "end_inclusive": 844099,
+      "context": "Direkt 843000\u2013843299, Technik 844000\u2013844099.",
+      "classification": "current_root_authorized_self_reservation"
+    }
+  ],
+  "other_doc_declarations": [],
+  "doc_rescanned_at_utc": "2026-11-02T12:17:01.018124+00:00",
+  "reservation_owner": "Root-authorized 02/03 November study; current root-authored spec declarations are self-reservation, not previous evidence use.",
+  "limits_preserved": true,
+  "supplemental_json_range_audit": {
+    "checked_json_files": 2803,
+    "range_forms": [
+      "explicit seed-key string start-end",
+      "explicit seed-key dictionary start/end or first/last or min/max or low/high or start/stop"
+    ],
+    "overlaps": [],
+    "checked_at_utc": "2026-11-02T12:19:47.685850+00:00"
+  },
+  "full_inventory": {
+    "path": "seed_audit_full.json.gz",
+    "gzip_sha256": "75b271c46e93fc39c3b06306fdd604c0f8066ecef68f705f3368356ec65ec635",
+    "uncompressed_sha256": "8be49755b29f45b2358110c6260df518bc21252e06bf99b021adce87bc537dec",
+    "csv_file_records": 6869,
+    "note": "Complete original audit preserved losslessly; summary omits duplicated per-worktree CSV inventory."
+  }
+}
