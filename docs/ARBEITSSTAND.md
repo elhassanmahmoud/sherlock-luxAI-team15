@@ -10,6 +10,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 02.11.2026, 17:29 Berlin – Codex: frische P-only-Auswahl läuft, Entscheidungsablauf dokumentiert
+
+- Der Mac meldet seit16:12:57UTC tatsächlich AC und lädt. Nach erneuter Quotenprüfung (17%verbraucht/83%frei), vollständiger Zeitprojektion und unabhängiger Prüfung der tatsächlichen Modelle/Argumente/Quellen wurde die Auswahl am **17:16:14Berlin** gestartet. Zwei schwere Evaluationsworker, keine parallelen Trainings.
+- Gemeinsamer Source-Freeze der Performancekopie bleibt **03e54e267242ff642c126313fe5f512ed9d959ac**, Master-SHA `e1731478088ec7bdaa2b63a51a6ae60f0c7ecedc4522fbedfbcfbb0f1517ba03`. Laufbasis: `experiments/analysis/continuation_20261102/performance/study_P_only_20261102/`; Status unter `selection/state.json`, später ggf. `confirmation/state.json`. Genau baseline/P; erster Job misst die Referenz. Noch keine vollständigen frischen Ergebnisse und keine neue Stärkequote.
+- Auswahl3.000Spiele auf100Karten, beide Seiten; nur bei vollständiger Datenabnahme und allen Auswahlbedingungen folgt einmalige Bestätigung9.000Spiele auf300Vergleichs- und300getrenntenDirektkarten. **Auch zwischen Auswahl und Bestätigung HEAD/Quellen/Gewichte der Performancekopie nicht ändern**: identischer Master gilt über beide Phasen. Neue Commits dort erst nach Gesamtabschluss bzw. wenn die Auswahl keinen Nominee ergibt übernehmen. Primärer Checkout darf getrennte Dokumentationscommits erhalten.
+- Fachliche Dokumentation für Mahmoud: [Entscheidungsablauf V14/P](ENTSCHEIDUNGSABLAUF_V14_P.md), unabhängig quellengeprüft. Enthält Mermaid, Pseudocode,79Features/36×6Q-Werte, heuristische Zielwahl, NN-Maske und sieben nachgelagerte Regelstufen. Präzisiert beide neuen Eingriffspunkte, Fog-SAP-Ausnahme, fehlenden zweitenArgmax nachVeto und verschiedene Lern-/Battle-Gates. Keine Präsentationsdatei geändert.
+- Unabhängiger vollständiger Daten-/Statistikauditor außerhalb der eingefrorenen Kopie vorbereitet, tatsächliche CSVs noch nicht gelesen. Sechs zusätzliche synthetische PCG64-/Perzentil-Gegenprüfungen bestanden; keine echten Spiele darin. Eigene Prozesse/Guards und bestehende Sicherheitsautomationen auf den aktuellen Freeze hingewiesen. Abgabe V14 und Sicherungen unverändert.
+
 ## 02.11.2026, 17:06 Berlin – Codex: tatsächliche P-Datei technisch zugelassen, Leistungstest wartet auf AC
 
 - Experimentdatei P gebaut: `experiments/ensembles/20261102_targeting_P_only/P.pth` in der Performancekopie, SHA-256 `dbb15222848b9ce8530080e128fa9ca66309c9900e98f50de5cce1d73e5b7f5a`. Sie enthält alle 36 ursprünglichen V14-Netze und nur die neuen Configwerte `point_pair_swap=true`/`art_move_guard=true`. Die teilweise nachtrainierten Netze werden nicht verwendet. P ist kein freigegebener Ersatz der Abgabe.
