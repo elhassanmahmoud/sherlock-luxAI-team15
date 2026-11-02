@@ -405,6 +405,58 @@ def test_cli_manifest_checks_both_passivity_and_original_baseline(tmp_path, monk
     assert manifest["games"][0]["baseline_reproduction"]["our_points"] is (failure != "baseline")
 
 
+@pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+@pytest.mark.parametrize("key_count", [1, 2])
+def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+        tmp_path, monkeypatch, changed_input, key_count):
+    """Disk/HEAD drift after a pair must fail without starting another pair."""
+    import gzip
+    p = probe()
+    weights = tmp_path / "weights.pth"
+    weights.write_bytes(b"disposable weights; game boundary is replaced")
+    baseline = tmp_path / "baseline.csv"
+    baseline.write_text(
+        "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+        "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+        "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+    keys = tmp_path / "keys.json"
+    keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+        dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+    head = {"value": "pinned-head"}
+    monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+    calls = []
+
+    def controlled_game(seed, side, path, trace_path=None):
+        calls.append((seed, trace_path is not None))
+        if trace_path:
+            with gzip.open(trace_path, "xt") as stream:
+                stream.write('{"status":"decision"}\n')
+            if seed == 831000:
+                if changed_input == "keys":
+                    keys.write_text(keys.read_text() + "\n")
+                elif changed_input == "baseline":
+                    baseline.write_text(baseline.read_text() + "\n")
+                elif changed_input == "head":
+                    head["value"] = "changed-head"
+        return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                    decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                    opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                    caught_errors=0, action_sha256="same-native-actions",
+                    statuses={"reset": 3, "decision": 300} if trace_path else {})
+
+    monkeypatch.setattr(p, "_play", controlled_game)
+    output = tmp_path / "output"
+    if changed_input:
+        with pytest.raises(RuntimeError, match="changed during the run"):
+            p.run_probe(weights, keys, output)
+    else:
+        p.run_probe(weights, keys, output)
+    manifest = json.loads((output / "manifest.json").read_text())
+    assert manifest["status"] == ("failed" if changed_input else "complete")
+    assert len(calls) == (2 if changed_input else 2 * key_count)
+    assert manifest["completed_games"] == len(calls)
+
+
 def test_cli_rejects_existing_output_missing_weights_and_unknown_opponent_before_games(tmp_path):
     keys = tmp_path / "keys.json"
     keys.write_text(json.dumps(dict(keys=[dict(seed=831000, side="player_0", group="control")],

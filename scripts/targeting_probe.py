@@ -607,9 +607,23 @@ def run_probe(weights, keys_path, out):
     out.mkdir(parents=True, exist_ok=False)
     def save():
         (out / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=False) + "\n")
+
+    def check_integrity():
+        pinned = [("weights", weights, manifest["weights"]["sha256"]),
+                  ("keys", keys_path, manifest["keys_sha256"]),
+                  ("baseline", source, manifest["baseline"]["sha256"])]
+        pinned.extend((f"source {path}", path, digest) for path, digest in manifest["sources"].items())
+        changed = [label for label, path, digest in pinned if _sha(path) != digest]
+        head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        if head != manifest["git_head"]:
+            changed.append("Git HEAD")
+        if changed:
+            raise RuntimeError("Pinned inputs changed during the run: " + ", ".join(changed))
+
     save()
     try:
         for key in keys:
+            check_integrity()
             seed, side = key["seed"], key["side"]
             trace_path = out / f"{seed}_{side}.jsonl.gz"
             unobserved = _play(seed, side, weights)
@@ -633,8 +647,7 @@ def run_probe(weights, keys_path, out):
             if (not all(record["passivity"].values()) or not all(record["baseline_reproduction"].values())
                     or not record["complete"]):
                 raise RuntimeError(f"Passivity/completeness/baseline gate failed for {seed}/{side}")
-        if _sha(weights) != manifest["weights"]["sha256"] or any(_sha(p) != digest for p, digest in manifest["sources"].items()):
-            raise RuntimeError("Source or weights changed during the run")
+        check_integrity()
         manifest["status"] = "complete"
         save()
     except BaseException as exc:
