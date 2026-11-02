@@ -6,6 +6,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 15:26 Berlin – Codex: P technisch geprüft, kontrolliertes Nachtraining vorbereitet
+
+- Zwei Default-off-Prototypen in main: `point_pair_swap` tauscht höchstens ein streng besseres Paar eigener bekannter Punktziele vor der Merkmalsbildung; `art_move_guard` verdrängt einen Zug nicht durch schon als überflüssig erkannten Artillerie-Sap. Aktive V14-Config lässt beide aus, alle Gewichte unverändert.
+- Code unabhängig geprüft, 792 Tests + 14 Untertests; 24 bekannte technische Spiele unabhängig abgenommen. Zwölf Default-off-Streams bytegleich zu V14, aktive Einzelzähler Artillerie 9 / Zieltausch 28. Das sind Funktionsnachweise, keine Siegverbesserung. [Datenabnahme](../experiments/analysis/continuation_20261102/prototype_technical_audit.md).
+- Gaußstudie beendet: 168 Spiele / 84 identische Quellenpaare, 751 Tests + 14 Untertests, 1.318.342 unabhängige Datenprüfungen. Technisch bestanden, praktisch nur zwei positive Weltfelder für einen Schritt in einem Spiel; feste Hürde verfehlt. Bleibt außerhalb von main/Abgabe auf [separatem Branch](https://github.com/elhassanmahmoud/sherlock-luxAI-team15/blob/improvement/gauss-admission-20261102/experiments/analysis/gauss_admission_20261102/RESULTS.md). Keine aktiven Gaußspiele oder Stärkequoten.
+- Gewählte nächste Route [P/PT-Anpassungspilot](superpowers/plans/2026-11-02-targeting-adaptation.md): vier feste Arme aus V14-Komponenten18/19, gleiche Trainingskarten/Seiten/Gegner je Paar, alte gegen neue Planung, unveränderter Reward. Je Arm120Prefill+600Training+96bekannteVal, nur Endstand; danach höchstens P und PT (genau zwei von36Netzen ersetzt) als frische Leistungskandidaten. Noch keine neuen841/842/843er-Auswahl-/Bestätigungszahlen.
+- Wrapper `scripts/targeting_adapt.py` unabhängig geprüft; 42 fokussierte Tests und gemeinsame Vollsuite 834 Tests + 14 Untertests bestanden. Reale Extraktion/Ladeprüfung und Start folgen; **bei diesem Eintrag noch kein Trainingsspiel dieses Piloten ausgeführt**. Source/HEAD/Protokoll und Eingabegewichte werden für beide Wellen eingefroren; bitte in dieser Zeit keine parallele Integration in die Performancekopie. Remoteabruf läuft weiter, Integration an Phasengrenzen. Mindestens30%Kontingent erhalten, Akku35/25-Grenzen beachten.
+- Primärer Checkout nach Ende der Gaußreferenzprüfung verlustfrei aktualisiert; fremde config2/reward2/DS_Store/altesAwakeJSON unverändert. Aktuelle V14-/Baseline-SHA weiter `98a07350…d3d8`; 218 tatsächliche Spielausführungen dieser Fortsetzung bisher, sämtlich technische Diagnose/Shadow/Smoke, noch keine Übernahme.
+
 ## 02.11.2026, 14:03 Berlin – Codex: unveränderten V14 passiv diagnostiziert, zwei enge Ansatzpunkte
 
 - Externes Werkzeug `scripts/targeting_probe.py`, 42 fokussierte Tests nach einer Provenienzkorrektur grün; vorheriger gemeinsamer Volltest 728 Tests + 14 Untertests. Unabhängiger Code-/Fixreview sauber. Agentenlogik und Gewichte unverändert.

@@ -1,5 +1,8 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
+Stand02.11.: Abgabe weiter **V14**, Gewichte unverändert. Zwei abschaltbare Planungsprototypen sind technisch geprüft; kontrolliertes Nachtraining und frischer Vergleich folgen. [Aktueller Arbeitsstand](docs/ARBEITSSTAND.md) · [Protokoll des P/PT-Piloten](docs/superpowers/plans/2026-11-02-targeting-adaptation.md). Noch kein nachgewiesen stärkerer Nachfolger.
+
+
 **HTW Berlin · Anwendungen der KI · WS 26/27**
 Team 15 (Moodle-Gruppe `15`) · Mahmoud El-Hassan, Moayed Shawesh · Agent **Sherlock** (`agents/sherlock/`, Klasse `Agent_x`)
 
