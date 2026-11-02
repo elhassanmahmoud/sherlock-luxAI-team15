@@ -126,6 +126,9 @@ class AgentConfig:
     danach art_reserve Energie bleibt und (art_safe) kein sichtbarer Gegner mit
     Energie >= Sap-Kosten sie in Manhattan-Reichweite hat. Solution_92 prueft die
     Sap-Reichweite nach Manhattan, die Engine erlaubt das ganze Quadrat (Chebyshev)."""
+    art_move_guard: bool = False
+    """Unnoetigen erzwungenen Artillerie-Sap vorab abweisen und den erlaubten Zug
+    durch die normale Bewegungssicherung weiterpruefen (nur mit sap_no_overkill)."""
     art_min_hits: int = 2
     art_reserve: int = 0
     art_safe: bool = True
@@ -252,6 +255,9 @@ class AgentConfig:
     reach_assign: bool = False
     """True (22.10.2026): Zielzuweisung nach BFS-Weglaenge ueber die Gedaechtniskarte statt
     Luftlinie; unerreichbare Ziele (z. B. Punkte-Tiles unter Asteroiden) nur als letzte Wahl."""
+    point_pair_swap: bool = False
+    """Hoechstens einen strikt besseren BFS-Eigentuermertausch zwischen bereits
+    zugewiesenen eigenen Punktzielen vor den Features pruefen (voller Belief)."""
     drift_track: bool = False
     """True (22.10.2026): Drift von Asteroiden/Nebel erkennen (sichtbare Tiles passen zur um
     (s, -s) gerollten Erinnerung) und die ganze Gedaechtniskarte mitrollen."""

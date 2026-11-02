@@ -42,6 +42,7 @@ import torch.optim as optim
 from . import geometry as geo
 from . import rules
 from .belief import Belief, MemorylessBelief
+from .assignment import improve_point_assignment
 from .config import AgentConfig
 from .features import FEATURE_DIM, THREAT_DIM, MAX_TILE_ENERGY, build_features, make_context, threat_features
 from .model import N_ACTIONS, QNet, checkpoint_ensemble_dims
@@ -251,10 +252,19 @@ class Agent_x:
             fctx = make_context(self, obs, belief=self.feat_belief)
         ids = [int(u) for u in ctx["ally_ids"].tolist()]
         saps = {u: self._best_sap_target(ctx, u) for u in ids}
+        pair_swap = (self.cfg.point_pair_swap and self.feat_belief is self.belief
+                     and (not self.training or self.cfg.rules_in_training))
+        if pair_swap:
+            masks = {u: self._action_mask(ctx, u, saps[u]) for u in ids}
+            ctx["assigned"], gain = improve_point_assignment(ctx, masks, self.cfg)
+            if gain:
+                self.ep_stats["point_pair_swaps"] = self.ep_stats.get("point_pair_swaps", 0) + 1
+                self.ep_stats["point_pair_bfs_gain"] = self.ep_stats.get("point_pair_bfs_gain", 0) + gain
         feats = {u: build_features(fctx, u) for u in ids}
         if self.cfg.threat_feats:
             feats = {u: np.concatenate([feats[u], threat_features(fctx, u)]) for u in ids}
-        masks = {u: self._action_mask(ctx, u, saps[u]) for u in ids}
+        if not pair_swap:
+            masks = {u: self._action_mask(ctx, u, saps[u]) for u in ids}
         self._cache = (sid, ctx, ids, feats, masks, saps)
         return self._cache[1:]
 
@@ -445,8 +455,14 @@ class Agent_x:
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
                     and self._artillery_ok(ctx, uid, sap)
                     and (not self.cfg.art_still or self.training or self._sap_on_still(ctx, uid, sap, stationary))):
-                a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
-                self._prev_actions[uid] = a
+                if (self.cfg.art_move_guard and 1 <= a <= 4 and masks[k][a]
+                        and self.cfg.sap_no_overkill and (not self.training or self.cfg.rules_in_training)
+                        and self._overkill(ctx, uid, sap, planned_dmg)):
+                    # Only retain the pre-artillery move; the normal safety chain still follows.
+                    st["art_move_kept"] = st.get("art_move_kept", 0) + 1
+                else:
+                    a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
+                    self._prev_actions[uid] = a
             if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
