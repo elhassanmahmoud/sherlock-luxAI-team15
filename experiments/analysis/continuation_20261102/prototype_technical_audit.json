@@ -1,0 +1,644 @@
+{
+  "verdict": "ACCEPTED",
+  "audit_kind": "standard-library receipt and source audit; no models, imports of project code, tests or games",
+  "manifest_sha256": "f13e3a6874f6af635d3565217e9e0e32af9568c80f547960ee494d49ff593d16",
+  "head": "755fa26451c8a28f12ac6a9518281001e8e1458c",
+  "checked_file_hashes": 207,
+  "checked_protected_hashes": 5,
+  "checks_total": 151,
+  "failed": [],
+  "counts": {
+    "off": 12,
+    "art": 4,
+    "swap": 4,
+    "pair": 4
+  },
+  "duration_seconds": 120.521781,
+  "standalone_triggers": {
+    "art": 9,
+    "swap": 28
+  },
+  "combined_triggers": {
+    "art": 8,
+    "swap": 32
+  },
+  "checks": [
+    {
+      "name": "manifest_complete",
+      "passed": true
+    },
+    {
+      "name": "frozen_head",
+      "passed": true
+    },
+    {
+      "name": "all_207_pinned_file_hashes_current",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "interpreter_identity",
+      "passed": true
+    },
+    {
+      "name": "all_five_protected_weight_hashes_current",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "v14_current_and_baseline_hash",
+      "passed": true
+    },
+    {
+      "name": "plans_keys_reference_executed_driver_pinned",
+      "passed": true
+    },
+    {
+      "name": "complete_source_inventory_unchanged",
+      "passed": true,
+      "detail": {
+        "added": [],
+        "missing": []
+      }
+    },
+    {
+      "name": "runtime_matches_reviewed_3152fed_assignment.py",
+      "passed": true
+    },
+    {
+      "name": "runtime_matches_reviewed_3152fed_config.py",
+      "passed": true
+    },
+    {
+      "name": "runtime_matches_reviewed_3152fed_main.py",
+      "passed": true
+    },
+    {
+      "name": "exact_predeclared_24_jobs_and_order",
+      "passed": true
+    },
+    {
+      "name": "only_spent_831_seed_domains",
+      "passed": true
+    },
+    {
+      "name": "old_reference_complete",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_00_off_831006_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_01_off_831029_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_02_off_831042_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_03_off_831042_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_04_off_831043_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_05_off_831043_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_06_off_831000_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_07_off_831000_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_08_off_831001_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_09_off_831001_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_10_off_831002_player_0_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_11_off_831002_player_1_independent_reference_parity",
+      "passed": true
+    },
+    {
+      "name": "game_12_art_831006_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_12_art_831006_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_12_art_831006_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_12_art_831006_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_12_art_831006_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_13_art_831029_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_13_art_831029_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_13_art_831029_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_13_art_831029_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_13_art_831029_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_14_art_831042_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_14_art_831042_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_14_art_831042_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_14_art_831042_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_14_art_831042_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_15_art_831043_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_15_art_831043_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_15_art_831043_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_15_art_831043_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_15_art_831043_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_16_swap_831006_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_16_swap_831006_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_16_swap_831006_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_16_swap_831006_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_16_swap_831006_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_17_swap_831029_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_17_swap_831029_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_17_swap_831029_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_17_swap_831029_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_17_swap_831029_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_18_swap_831042_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_18_swap_831042_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_18_swap_831042_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_18_swap_831042_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_18_swap_831042_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_19_swap_831043_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_19_swap_831043_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_19_swap_831043_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_19_swap_831043_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_19_swap_831043_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_20_pair_831006_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_20_pair_831006_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_20_pair_831006_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_20_pair_831006_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_20_pair_831006_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_21_pair_831029_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_21_pair_831029_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_21_pair_831029_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_21_pair_831029_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_21_pair_831029_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_22_pair_831042_player_0_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_22_pair_831042_player_0_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_22_pair_831042_player_0_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_22_pair_831042_player_0_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_22_pair_831042_player_0_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "game_23_pair_831043_player_1_303_v2_identity",
+      "passed": true
+    },
+    {
+      "name": "game_23_pair_831043_player_1_exact_config",
+      "passed": true
+    },
+    {
+      "name": "game_23_pair_831043_player_1_valid_result_arithmetic",
+      "passed": true
+    },
+    {
+      "name": "game_23_pair_831043_player_1_digest_and_reported_tensor_status",
+      "passed": true
+    },
+    {
+      "name": "game_23_pair_831043_player_1_no_disabled_trigger",
+      "passed": true
+    },
+    {
+      "name": "standalone_triggers_exact",
+      "passed": true
+    },
+    {
+      "name": "log_exact_jobs",
+      "passed": true
+    },
+    {
+      "name": "within_20min_before_deadline",
+      "passed": true
+    },
+    {
+      "name": "one_worker_driver_structure",
+      "passed": true
+    },
+    {
+      "name": "no_python_optimization_env_in_current_shell",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "No raw action arrays are stored: stored native stream digests were independently compared to the old digests, not recomputed from actions.",
+    "36-network tensor equality, 79 features / 6 actions, epsilon zero, no caught errors and unchanged learn_steps are checked by assertions in the pinned executed driver; this stdlib audit does not load checkpoints or independently recompute tensor digests.",
+    "The receipt stores aggregate steps and v2 results rather than every reset/end-point record.",
+    "No archived numeric battery samples or process-tree snapshots exist in this receipt; driver checks battery above 25% before each game. One-worker behavior follows sequential driver and logged order.",
+    "No strength admission or causal point-gain inference from these spent keys."
+  ]
+}

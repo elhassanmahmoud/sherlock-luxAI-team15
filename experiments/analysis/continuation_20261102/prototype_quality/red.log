@@ -1,0 +1,1279 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFF.F.F...FFF......FFF                         [100%]
+=================================== FAILURES ===================================
+_ test_pair_swap_improves_five_to_three_without_mutating_inputs_or_target_set __
+
+    def test_pair_swap_improves_five_to_three_without_mutating_inputs_or_target_set():
+        ctx, masks = _pair_context()
+        before, mask_before = deepcopy(ctx), deepcopy(masks)
+>       assigned, gain = _improve(ctx, masks)
+                         ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x106f87380>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+____________ test_pair_swap_selects_one_best_pair_without_iterating ____________
+
+    def test_pair_swap_selects_one_best_pair_without_iterating():
+        ctx, masks = _pair_context(((0, 0), (3, 0), (6, 0), (9, 0)),
+                                   ((10, 0), (7, 0), (4, 0), (1, 0)))
+>       assert _improve(ctx, masks) == ({0: (1, 0), 1: (7, 0), 2: (4, 0), 3: (10, 0)}, 16)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x107012d50>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1, 2, 3]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True...(2): array([ True,  True,  True,  True,  True,  True]), np.int64(3): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+________ test_pair_swap_ties_use_sorted_unit_ids_even_for_stacked_units ________
+
+    def test_pair_swap_ties_use_sorted_unit_ids_even_for_stacked_units():
+        ctx, masks = _pair_context(((0, 0), (0, 0), (3, 0)), ((4, 0), (5, 0), (2, 0)))
+        ctx["ally_ids"] = np.array([2, 1, 0])
+>       assert _improve(ctx, masks) == ({0: (2, 0), 1: (5, 0), 2: (4, 0)}, 2)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79c550>, 'W': 24, 'H': 24, 'ally_ids': array([2, 1, 0]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True]), np.int64(2): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+________ test_pair_swap_allows_live_stacker_but_keeps_productive_holder ________
+
+    def test_pair_swap_allows_live_stacker_but_keeps_productive_holder():
+        ctx, masks = _pair_context(((0, 0), (0, 0), (3, 0)), ((0, 0), (4, 0), (2, 0)))
+>       assert _improve(ctx, masks) == ({0: (0, 0), 1: (2, 0), 2: (4, 0)}, 2)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79ccd0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1, 2]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True]), np.int64(2): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+______________ test_pair_swap_gain_uses_routes_around_known_wall _______________
+
+    def test_pair_swap_gain_uses_routes_around_known_wall():
+        ctx, masks = _pair_context(((0, 0), (4, 0)), ((3, 0), (1, 0)))
+        ctx["passable"][2, :4] = False
+        # Each original route is 11 steps around the wall; the swapped routes are 1 each.
+>       assert _improve(ctx, masks) == ({0: (1, 0), 1: (3, 0)}, 20)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d090>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes0] _
+
+changes = {'use_belief': False}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d1d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'use_belief': False}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes1] _
+
+changes = {'reach_assign': False}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d450>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'reach_assign': False}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes2] _
+
+changes = {'home_first': True}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d590>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'home_first': True}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes3] _
+
+changes = {'home_penalty': 1}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d310>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'home_penalty': 1}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes4] _
+
+changes = {'home_penalty': -1}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d6d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'home_penalty': -1}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes5] _
+
+changes = {'energy_pref': 1}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d810>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'energy_pref': 1}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_pair_swap_preserves_assignment_for_incompatible_configuration[changes6] _
+
+changes = {'sticky': 1}
+
+    @pytest.mark.parametrize("changes", [dict(use_belief=False), dict(reach_assign=False),
+        dict(home_first=True), dict(home_penalty=1), dict(home_penalty=-1),
+        dict(energy_pref=1), dict(sticky=1)])
+    def test_pair_swap_preserves_assignment_for_incompatible_configuration(changes):
+        ctx, masks = _pair_context()
+>       assert _improve(ctx, masks, **changes) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d950>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {'sticky': 1}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+________ test_pair_swap_rejects_ineligible_or_unusable_pairs[negative] _________
+
+case = 'negative'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79da90>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+________ test_pair_swap_rejects_ineligible_or_unusable_pairs[immobile] _________
+
+case = 'immobile'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x107012d50>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_________ test_pair_swap_rejects_ineligible_or_unusable_pairs[holder] __________
+
+case = 'holder'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d810>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+___ test_pair_swap_rejects_ineligible_or_unusable_pairs[dead_legacy_holder] ____
+
+case = 'dead_legacy_holder'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d310>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1, 2]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True]), 2: array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+______ test_pair_swap_rejects_ineligible_or_unusable_pairs[unknown_goal] _______
+
+case = 'unknown_goal'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d1d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_______ test_pair_swap_rejects_ineligible_or_unusable_pairs[enemy_goal] ________
+
+case = 'enemy_goal'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79ccd0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_____ test_pair_swap_rejects_ineligible_or_unusable_pairs[blocked_origin] ______
+
+case = 'blocked_origin'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79c550>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+______ test_pair_swap_rejects_ineligible_or_unusable_pairs[blocked_goal] _______
+
+case = 'blocked_goal'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79dd10>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_______ test_pair_swap_rejects_ineligible_or_unusable_pairs[unreachable] _______
+
+case = 'unreachable'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79d450>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+____ test_pair_swap_rejects_ineligible_or_unusable_pairs[masked_swap_step] _____
+
+case = 'masked_swap_step'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e0d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True, False,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+__ test_pair_swap_rejects_ineligible_or_unusable_pairs[masked_original_step] ___
+
+case = 'masked_original_step'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e350>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True, False,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+________ test_pair_swap_rejects_ineligible_or_unusable_pairs[same_goal] ________
+
+case = 'same_goal'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e5d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_________ test_pair_swap_rejects_ineligible_or_unusable_pairs[no_gain] _________
+
+case = 'no_gain'
+
+    @pytest.mark.parametrize("case", ["negative", "immobile", "holder", "dead_legacy_holder",
+        "unknown_goal", "enemy_goal", "blocked_origin", "blocked_goal", "unreachable",
+        "masked_swap_step", "masked_original_step", "same_goal", "no_gain"])
+    def test_pair_swap_rejects_ineligible_or_unusable_pairs(case):
+        ctx, masks = _pair_context()
+        if case in ("negative", "immobile"):
+            ctx["ally_ene"][0] = -1 if case == "negative" else 2
+        elif case in ("holder", "dead_legacy_holder"):
+            ctx["point_tiles"][0, 0] = True
+            if case == "dead_legacy_holder":
+                ctx["ally_ids"] = np.array([0, 1, 2])
+                ctx["ally_pos"] = np.array([[0, 0], [0, 0], [3, 0]])
+                ctx["ally_ene"] = np.array([-1, 100, 100])
+                ctx["assigned"] = {0: (0, 0), 1: (4, 0), 2: (2, 0)}
+                ctx["first_on_tile"] = {(0, 0): 0}
+                masks[2] = np.ones(6, bool)
+        elif case == "unknown_goal":
+            ctx["point_tiles"][4, 0] = False
+        elif case == "enemy_goal":
+            ctx["assigned"][0] = (23, 23)
+            ctx["point_tiles"][23, 23] = True
+        elif case.startswith("blocked_"):
+            ctx["passable"][(0, 0) if case == "blocked_origin" else (4, 0)] = False
+        elif case == "unreachable":
+            ctx["passable"][1, :] = False
+        elif case.startswith("masked_"):
+            # Unit 1 needs RIGHT for the swapped goal, LEFT for its current goal.
+            masks[1][geo.RIGHT if case == "masked_swap_step" else geo.LEFT] = False
+        elif case == "same_goal":
+            ctx["assigned"][1] = (4, 0)
+        elif case == "no_gain":
+            ctx["assigned"] = {0: (2, 0), 1: (4, 0)}
+>       out, gain = _improve(ctx, masks)
+                    ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e850>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_______ test_pair_swap_uses_belief_orientation[0-True-positions0-goals0] _______
+
+team = 0, canonical = True, positions = ((0, 0), (3, 0))
+goals = ((4, 0), (2, 0))
+
+    @pytest.mark.parametrize("team,canonical,positions,goals", [
+        (0, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, False, ((23, 23), (23, 20)), ((23, 19), (23, 21))),
+    ])
+    def test_pair_swap_uses_belief_orientation(team, canonical, positions, goals):
+        ctx, masks = _pair_context(positions, goals, team, canonical)
+>       assert _improve(ctx, masks) == ({0: goals[1], 1: goals[0]}, 2)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x107012d50>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_______ test_pair_swap_uses_belief_orientation[1-True-positions1-goals1] _______
+
+team = 1, canonical = True, positions = ((0, 0), (3, 0))
+goals = ((4, 0), (2, 0))
+
+    @pytest.mark.parametrize("team,canonical,positions,goals", [
+        (0, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, False, ((23, 23), (23, 20)), ((23, 19), (23, 21))),
+    ])
+    def test_pair_swap_uses_belief_orientation(team, canonical, positions, goals):
+        ctx, masks = _pair_context(positions, goals, team, canonical)
+>       assert _improve(ctx, masks) == ({0: goals[1], 1: goals[0]}, 2)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e710>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+______ test_pair_swap_uses_belief_orientation[1-False-positions2-goals2] _______
+
+team = 1, canonical = False, positions = ((23, 23), (23, 20))
+goals = ((23, 19), (23, 21))
+
+    @pytest.mark.parametrize("team,canonical,positions,goals", [
+        (0, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, True, ((0, 0), (3, 0)), ((4, 0), (2, 0))),
+        (1, False, ((23, 23), (23, 20)), ((23, 19), (23, 21))),
+    ])
+    def test_pair_swap_uses_belief_orientation(team, canonical, positions, goals):
+        ctx, masks = _pair_context(positions, goals, team, canonical)
+>       assert _improve(ctx, masks) == ({0: goals[1], 1: goals[0]}, 2)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e5d0>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_________ test_pair_swap_skips_bfs_with_fewer_than_two_eligible_units __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11b52ab10>
+
+    def test_pair_swap_skips_bfs_with_fewer_than_two_eligible_units(monkeypatch):
+        from agents.sherlock import features
+        ctx, masks = _pair_context(energies=[-1, 100])
+        def forbidden(*args):
+            pytest.fail("BFS must not run for fewer than two eligible units")
+        monkeypatch.setattr(features, "bfs_maps", forbidden)
+>       assert _improve(ctx, masks) == (ctx["assigned"], 0)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_targeting_prototypes.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ctx = {'belief': <agents.sherlock.belief.Belief object at 0x11b79e490>, 'W': 24, 'H': 24, 'ally_ids': array([0, 1]), ...}
+masks = {np.int64(0): array([ True,  True,  True,  True,  True,  True]), np.int64(1): array([ True,  True,  True,  True,  True,  True])}
+changes = {}
+
+    def _improve(ctx, masks, **changes):
+>       from agents.sherlock.assignment import improve_point_assignment
+E       ModuleNotFoundError: No module named 'agents.sherlock.assignment'
+
+tests/test_targeting_prototypes.py:58: ModuleNotFoundError
+_ test_decide_swaps_before_features_with_training_and_memory_gates[True-False-False-True-want1] _
+
+enabled = True, training = False, rules = False, use_belief = True
+want = {0: (2, 0), 1: (4, 0)}
+
+    @pytest.mark.parametrize("enabled,training,rules,use_belief,want", [
+        (False, False, False, True, {0: (4, 0), 1: (2, 0)}),
+        (True, False, False, True, {0: (2, 0), 1: (4, 0)}),
+        (True, True, False, True, {0: (4, 0), 1: (2, 0)}),
+        (True, True, True, True, {0: (2, 0), 1: (4, 0)}),
+        (True, False, False, False, {0: (4, 0), 1: (2, 0)}),
+    ])
+    def test_decide_swaps_before_features_with_training_and_memory_gates(enabled, training, rules, use_belief, want):
+        a = _agent(train=training, point_pair_swap=enabled, rules_in_training=rules, use_belief=use_belief)
+        a.belief.point_tiles[4, 0] = a.belief.point_tiles[2, 0] = True
+        obs = make_obs(10, 10, units=[(0, 0, 100), (3, 0, 100)])
+        a.belief.observe(obs)
+        rng_before = deepcopy(a.rng.bit_generator.state)
+        ctx, ids, feats, masks, _ = a._decide(obs)
+>       assert ctx["assigned"] == want
+E       assert {1: (2, 0), 0: (4, 0)} == {0: (2, 0), 1: (4, 0)}
+E         
+E         Differing items:
+E         {0: (4, 0)} != {0: (2, 0)}
+E         {1: (2, 0)} != {1: (4, 0)}
+E         Use -v to get more diff
+
+tests/test_targeting_prototypes.py:178: AssertionError
+_ test_decide_swaps_before_features_with_training_and_memory_gates[True-True-True-True-want3] _
+
+enabled = True, training = True, rules = True, use_belief = True
+want = {0: (2, 0), 1: (4, 0)}
+
+    @pytest.mark.parametrize("enabled,training,rules,use_belief,want", [
+        (False, False, False, True, {0: (4, 0), 1: (2, 0)}),
+        (True, False, False, True, {0: (2, 0), 1: (4, 0)}),
+        (True, True, False, True, {0: (4, 0), 1: (2, 0)}),
+        (True, True, True, True, {0: (2, 0), 1: (4, 0)}),
+        (True, False, False, False, {0: (4, 0), 1: (2, 0)}),
+    ])
+    def test_decide_swaps_before_features_with_training_and_memory_gates(enabled, training, rules, use_belief, want):
+        a = _agent(train=training, point_pair_swap=enabled, rules_in_training=rules, use_belief=use_belief)
+        a.belief.point_tiles[4, 0] = a.belief.point_tiles[2, 0] = True
+        obs = make_obs(10, 10, units=[(0, 0, 100), (3, 0, 100)])
+        a.belief.observe(obs)
+        rng_before = deepcopy(a.rng.bit_generator.state)
+        ctx, ids, feats, masks, _ = a._decide(obs)
+>       assert ctx["assigned"] == want
+E       assert {1: (2, 0), 0: (4, 0)} == {0: (2, 0), 1: (4, 0)}
+E         
+E         Differing items:
+E         {0: (4, 0)} != {0: (2, 0)}
+E         {1: (2, 0)} != {1: (4, 0)}
+E         Use -v to get more diff
+
+tests/test_targeting_prototypes.py:178: AssertionError
+______ test_decide_preserves_default_order_and_reuses_enabled_masks[True] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11e103410>
+enabled = True
+
+    @pytest.mark.parametrize("enabled", [False, True])
+    def test_decide_preserves_default_order_and_reuses_enabled_masks(monkeypatch, enabled):
+        import agents.sherlock.main as main
+        a = _agent(point_pair_swap=enabled)
+        a.belief.point_tiles[4, 0] = a.belief.point_tiles[2, 0] = True
+        obs = make_obs(10, 10, units=[(0, 0, 100), (3, 0, 100)])
+        a.belief.observe(obs)
+        events, made_masks = [], {}
+        real_features, real_mask, real_sap = main.build_features, a._action_mask, a._best_sap_target
+        def features(ctx, uid):
+            events.append(("feature", uid))
+            return real_features(ctx, uid)
+        def mask(ctx, uid, sap):
+            events.append(("mask", uid))
+            made_masks[uid] = real_mask(ctx, uid, sap)
+            return made_masks[uid]
+        def sap(ctx, uid):
+            events.append(("sap", uid))
+            return real_sap(ctx, uid)
+        monkeypatch.setattr(main, "build_features", features)
+        monkeypatch.setattr(a, "_action_mask", mask)
+        monkeypatch.setattr(a, "_best_sap_target", sap)
+        _, _, _, masks, _ = a._decide(obs)
+        middle = [("mask", 0), ("mask", 1), ("feature", 0), ("feature", 1)] if enabled else [
+            ("feature", 0), ("feature", 1), ("mask", 0), ("mask", 1)]
+>       assert events == [("sap", 0), ("sap", 1)] + middle
+E       AssertionError: assert [('sap', 0), ..., ('mask', 1)] == [('sap', 0), ...'feature', 1)]
+E         
+E         At index 2 diff: ('feature', 0) != ('mask', 0)
+E         Use -v to get more diff
+
+tests/test_targeting_prototypes.py:226: AssertionError
+_____ test_point_swap_features_reach_q_in_one_forward_and_one_observation ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11b7a48d0>
+
+    def test_point_swap_features_reach_q_in_one_forward_and_one_observation(monkeypatch):
+        a = _agent(point_pair_swap=True)
+        a.belief.point_tiles[4, 0] = a.belief.point_tiles[2, 0] = True
+        obs = make_obs(10, 10, units=[(0, 0, 100), (3, 0, 100)])
+        observed = []
+        real_observe = a.belief.observe
+        def observe(value):
+            observed.append(value)
+            return real_observe(value)
+        monkeypatch.setattr(a.belief, "observe", observe)
+        a.act(10, obs)
+        assert len(observed) == 1
+        assert a.q.calls == 1
+>       np.testing.assert_allclose(a.q.inputs[:, 30], [2 / 24, 1 / 24])
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=0
+E       
+E       Mismatched elements: 2 / 2 (100%)
+E       Mismatch at indices:
+E        [0]: 0.1666666716337204 (ACTUAL), 0.08333333333333333 (DESIRED)
+E        [1]: -0.0416666679084301 (ACTUAL), 0.041666666666666664 (DESIRED)
+E       Max absolute difference among violations: 0.08333334
+E       Max relative difference among violations: 2.00000003
+E        ACTUAL: array([ 0.166667, -0.041667], dtype=float32)
+E        DESIRED: array([0.083333, 0.041667])
+
+tests/test_targeting_prototypes.py:245: AssertionError
+_ test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots[True-2-35-False-False-True-2-1] _
+
+flag = True, action = 2, energy = 35, training = False, rules = False
+overkill = True, want = 2, kept = 1
+
+    @pytest.mark.parametrize("flag,action,energy,training,rules,overkill,want,kept", [
+        (True, geo.RIGHT, 35, False, False, True, geo.RIGHT, 1),
+        (False, geo.RIGHT, 35, False, False, True, geo.STAY, 0),
+        (True, geo.RIGHT, 100, False, False, True, geo.SAP, 0),
+        (True, geo.SAP, 35, False, False, True, geo.STAY, 0),
+        (True, geo.STAY, 35, False, False, True, geo.STAY, 0),
+        (True, geo.RIGHT, 35, False, False, False, geo.SAP, 0),
+        (True, geo.RIGHT, 35, True, False, True, geo.SAP, 0),
+        (True, geo.RIGHT, 35, True, True, True, geo.RIGHT, 1),
+    ])
+    def test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots(flag, action, energy, training, rules, overkill, want, kept):
+        a, obs = _art_case(flag, action, energy, training, rules, overkill)
+        actions = a.act(10, obs)
+        assert actions[0, 0] == geo.SAP
+>       assert actions[1, 0] == want
+E       assert np.int64(0) == 2
+
+tests/test_targeting_prototypes.py:269: AssertionError
+_ test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots[True-2-35-True-True-True-2-1] _
+
+flag = True, action = 2, energy = 35, training = True, rules = True
+overkill = True, want = 2, kept = 1
+
+    @pytest.mark.parametrize("flag,action,energy,training,rules,overkill,want,kept", [
+        (True, geo.RIGHT, 35, False, False, True, geo.RIGHT, 1),
+        (False, geo.RIGHT, 35, False, False, True, geo.STAY, 0),
+        (True, geo.RIGHT, 100, False, False, True, geo.SAP, 0),
+        (True, geo.SAP, 35, False, False, True, geo.STAY, 0),
+        (True, geo.STAY, 35, False, False, True, geo.STAY, 0),
+        (True, geo.RIGHT, 35, False, False, False, geo.SAP, 0),
+        (True, geo.RIGHT, 35, True, False, True, geo.SAP, 0),
+        (True, geo.RIGHT, 35, True, True, True, geo.RIGHT, 1),
+    ])
+    def test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots(flag, action, energy, training, rules, overkill, want, kept):
+        a, obs = _art_case(flag, action, energy, training, rules, overkill)
+        actions = a.act(10, obs)
+        assert actions[0, 0] == geo.SAP
+>       assert actions[1, 0] == want
+E       assert np.int64(0) == 2
+
+tests/test_targeting_prototypes.py:269: AssertionError
+________ test_art_guard_kept_move_still_runs_through_real_nebula_safety ________
+
+    def test_art_guard_kept_move_still_runs_through_real_nebula_safety():
+        a, obs = _art_case()
+        a.cfg.nebula_avoid = True
+        a.cfg.nebula_avoid_mode = "soft"
+        from agents.sherlock.param_est import NEBULA_REDUCTIONS
+        a.param_est.log_neb = np.array([0 if v == 25 else -50 for v in NEBULA_REDUCTIONS], float)
+        a.param_est.n_neb = 5
+        obs["units"]["energy"][0, 1] = 45  # enough to sap; not enough for the nebula
+        obs["map_features"]["tile_type"][6, 6] = TILE_NEBULA
+        for tile in ((4, 6), (5, 5), (5, 7)):
+            obs["map_features"]["tile_type"][tile] = 2
+        actions = a.act(10, obs)
+        assert actions[1, 0] == geo.STAY
+>       assert a.ep_stats.get("art_move_kept", 0) == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <built-in method get of dict object at 0x11e344740>('art_move_kept', 0)
+E        +    where <built-in method get of dict object at 0x11e344740> = {'unit_steps': 2, 'greedy_masked': 0, 'explore_steps': 0, 'sap_attempts': 1, ...}.get
+E        +      where {'unit_steps': 2, 'greedy_masked': 0, 'explore_steps': 0, 'sap_attempts': 1, ...} = <agents.sherlock.main.Agent_x object at 0x11e278410>.ep_stats
+
+tests/test_targeting_prototypes.py:288: AssertionError
+__________ test_checkpoint_without_new_flags_keeps_baseline_behavior ___________
+
+    def test_checkpoint_without_new_flags_keeps_baseline_behavior():
+        cfg = AgentConfig.from_dict({"art_sap": True, "reach_assign": True})
+>       assert getattr(cfg, "art_move_guard", None) is False
+E       AssertionError: assert None is False
+E        +  where None = getattr(AgentConfig(hidden=256, dueling=True, gamma=0.99, lr=0.0003, batch_size=256, buffer_capacity=300000, learn_start=5000,...3, w_energy=0.1, w_stack=0.3, w_death=0.5, w_match=2.0, w_discovery=0.5, w_sap_hit=0.3, w_opp_points=0.0, frozen=False), 'art_move_guard', None)
+
+tests/test_targeting_prototypes.py:295: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_improves_five_to_three_without_mutating_inputs_or_target_set
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_selects_one_best_pair_without_iterating
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_ties_use_sorted_unit_ids_even_for_stacked_units
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_allows_live_stacker_but_keeps_productive_holder
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_gain_uses_routes_around_known_wall
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes0]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes1]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes2]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes3]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes4]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes5]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_preserves_assignment_for_incompatible_configuration[changes6]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[negative]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[immobile]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[holder]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[dead_legacy_holder]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[unknown_goal]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[enemy_goal]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[blocked_origin]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[blocked_goal]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[unreachable]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[masked_swap_step]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[masked_original_step]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[same_goal]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_rejects_ineligible_or_unusable_pairs[no_gain]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_uses_belief_orientation[0-True-positions0-goals0]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_uses_belief_orientation[1-True-positions1-goals1]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_uses_belief_orientation[1-False-positions2-goals2]
+FAILED tests/test_targeting_prototypes.py::test_pair_swap_skips_bfs_with_fewer_than_two_eligible_units
+FAILED tests/test_targeting_prototypes.py::test_decide_swaps_before_features_with_training_and_memory_gates[True-False-False-True-want1]
+FAILED tests/test_targeting_prototypes.py::test_decide_swaps_before_features_with_training_and_memory_gates[True-True-True-True-want3]
+FAILED tests/test_targeting_prototypes.py::test_decide_preserves_default_order_and_reuses_enabled_masks[True]
+FAILED tests/test_targeting_prototypes.py::test_point_swap_features_reach_q_in_one_forward_and_one_observation
+FAILED tests/test_targeting_prototypes.py::test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots[True-2-35-False-False-True-2-1]
+FAILED tests/test_targeting_prototypes.py::test_art_guard_only_keeps_pre_art_moves_for_already_rejected_shots[True-2-35-True-True-True-2-1]
+FAILED tests/test_targeting_prototypes.py::test_art_guard_kept_move_still_runs_through_real_nebula_safety
+FAILED tests/test_targeting_prototypes.py::test_checkpoint_without_new_flags_keeps_baseline_behavior
+37 failed, 11 passed in 3.02s
