@@ -1,0 +1,19 @@
+....................F                                                    [100%]
+=================================== FAILURES ===================================
+__________ test_manifest_seal_detects_changed_key_or_source_manifest ___________
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-137/test_manifest_seal_detects_cha0')
+
+    def test_manifest_seal_detects_changed_key_or_source_manifest(tmp_path):
+        a = tool()
+        path = tmp_path / 'manifest.json'
+        path.write_text('{}')
+        (tmp_path / 'manifest.sha256').write_text('44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a')
+>       assert a.read_manifest(tmp_path) == {}
+               ^^^^^^^^^^^^^^^
+E       AttributeError: module 'gauss_admission' has no attribute 'read_manifest'. Did you mean: 'check_manifest'?
+
+tests/test_gauss_admission.py:407: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_manifest_seal_detects_changed_key_or_source_manifest
+1 failed, 20 passed in 2.34s

@@ -1,0 +1,63 @@
+................FF                                                       [100%]
+=================================== FAILURES ===================================
+____ test_prototype_descendant_cannot_silently_change_fixed_solver_runtime _____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-129/test_prototype_descendant_cann0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b67dc70>
+
+    def test_prototype_descendant_cannot_silently_change_fixed_solver_runtime(tmp_path, monkeypatch):
+        a = tool()
+        import subprocess
+        def git(*args):
+            return subprocess.check_output(['git', '-C', str(tmp_path), *args], text=True).strip()
+        git('init', '-q')
+        git('config', 'user.email', 'fixture@example.invalid')
+        git('config', 'user.name', 'Fixture')
+        (tmp_path / 'scripts').mkdir()
+        path = tmp_path / 'scripts/common.py'
+        path.write_text('value = 1\n')
+        git('add', '.')
+        git('commit', '-qm', 'prototype basis')
+        monkeypatch.setattr(a, 'PROTOTYPE', git('rev-parse', 'HEAD'))
+        path.write_text('value = 2\n')
+        git('add', '.')
+        git('commit', '-qm', 'changed runtime')
+>       with pytest.raises(ValueError, match='runtime differs'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gauss_admission.py:344: Failed
+_____________ test_raw_audit_rejects_absent_native_opponent_bytes ______________
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-129/test_raw_audit_rejects_absent_0')
+
+    def test_raw_audit_rejects_absent_native_opponent_bytes(tmp_path):
+        a = tool()
+        # Independently hand-written raw record: even a matching digest cannot admit an absent side.
+        row = dict(seed=831006, side='player_1', metrics={})
+        directory = tmp_path / 'C/reference'
+        directory.mkdir(parents=True)
+        (directory / 'rows.json').write_text(json.dumps([row]))
+        with gzip.open(directory / '831006-player_1.jsonl.gz', 'wt') as stream:
+            for step in range(303):
+                frame = raw_frame(a, step)
+                if frame['reset']:
+                    for attempt in frame['attempts'].values():
+                        attempt['post'] = [0, 0, -8]
+                else:
+                    for attempt in frame['attempts'].values():
+                        attempt['pre'][1] = frame['match_step'] - 1
+                        attempt['post'][1] = frame['match_step']
+                frame.update(seed=831006, side='player_1', action={})
+                stream.write(json.dumps(frame) + '\n')
+>       with pytest.raises(ValueError, match='native.*sides'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'native.*sides'
+E         Actual message: 'raw metric reconstruction mismatch'
+
+tests/test_gauss_admission.py:367: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_prototype_descendant_cannot_silently_change_fixed_solver_runtime
+FAILED tests/test_gauss_admission.py::test_raw_audit_rejects_absent_native_opponent_bytes
+2 failed, 16 passed in 2.35s

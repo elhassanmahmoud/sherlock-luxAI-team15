@@ -1,0 +1,228 @@
+......................FFFFFFFFF                                          [100%]
+=================================== FAILURES ===================================
+_ test_actual_agent_discovery_is_in_pinned_inventory_without_importing_packages _
+
+    def test_actual_agent_discovery_is_in_pinned_inventory_without_importing_packages():
+        a = tool()
+        import pkgutil
+        root = TOOL.parents[3].resolve()
+        pending = [(root / 'agents', 'agents.')]
+        discovered = {'agents/__init__.py'}
+        while pending:
+            directory, prefix = pending.pop()
+            for module in pkgutil.iter_modules([str(directory)], prefix):
+                short = module.name.rsplit('.', 1)[1]
+                path = directory / short / '__init__.py' if module.ispkg else directory / f'{short}.py'
+                discovered.add(path.relative_to(root).as_posix())
+                if module.ispkg:
+                    pending.append((directory / short, module.name + '.'))
+        assert {'agents/DQN/main.py', 'agents/default/default.py'} <= discovered
+        identity = a.source_identity(root, 'prototype')
+>       assert discovered <= set(identity['files'])
+E       AssertionError: assert {'agents/DQN/...base.py', ...} <= {'agents/Solu...it__.py', ...}
+E         
+E         Extra items in the left set:
+E         'agents/default/default.py'
+E         'agents/DQN/feat_generator.py'
+E         'agents/DQN/main.py'
+E         'agents/default/__init__.py'
+E         'agents/DQN/__init__.py'
+
+tests/test_gauss_admission.py:445: AssertionError
+___ test_selected_agent_package_skips_discovery_but_preserves_selected_root ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-143/test_selected_agent_package_sk0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106e68af0>
+
+    def test_selected_agent_package_skips_discovery_but_preserves_selected_root(tmp_path, monkeypatch):
+        a = tool()
+        import importlib
+        import sys
+        package = tmp_path / 'agents'
+        package.mkdir()
+        (package / '__init__.py').write_text("raise AssertionError('broad discovery must not execute')\n")
+        (package / 'selected.py').write_text('value = 17\n')
+        for name in list(sys.modules):
+            if name == 'agents' or name.startswith('agents.'):
+                monkeypatch.delitem(sys.modules, name)
+>       strategy = a.select_agent_package(tmp_path)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gauss_admission' has no attribute 'select_agent_package'
+
+tests/test_gauss_admission.py:459: AttributeError
+______ test_import_guard_rejects_foreign_namespace_path_even_without_file ______
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-143/test_import_guard_rejects_fore0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11b0fbb50>
+
+    def test_import_guard_rejects_foreign_namespace_path_even_without_file(tmp_path, monkeypatch):
+        a = tool()
+        import sys
+        root = tmp_path / 'selected'
+        root.mkdir()
+        monkeypatch.setitem(sys.modules, 'agents', SimpleNamespace(__path__=[str(tmp_path / 'foreign')]))
+>       with pytest.raises(ValueError, match='cross-root package path'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'cross-root package path'
+E         Actual message: 'cross-root import: scripts: /Users/moayedshawesh/Desktop/KI/sherlock-november-followup/scripts/__init__.py'
+
+tests/test_gauss_admission.py:475: AssertionError
+_ test_completed_dead_lead_delays_survive_later_censor_events[truth_regime_change] _
+
+event = 'truth_regime_change'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_completed_dead_lead_delays_survive_later_censor_events(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        frames[1]['post']['A']['dead'] = a.pack_tiles({7})
+        final = raw_frame(a, 101 if event == 'match_reset' else 3,
+                          dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        frames.append(final)
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == lead['A'] == 1
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'truth_regime_change' is None
+E        +  where 'truth_regime_change' = <built-in method get of dict object at 0x11b59ac80>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b59ac80> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': 1, ...}.get
+
+tests/test_gauss_admission.py:492: AssertionError
+___ test_completed_dead_lead_delays_survive_later_censor_events[match_reset] ___
+
+event = 'match_reset'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_completed_dead_lead_delays_survive_later_censor_events(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        frames[1]['post']['A']['dead'] = a.pack_tiles({7})
+        final = raw_frame(a, 101 if event == 'match_reset' else 3,
+                          dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        frames.append(final)
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == lead['A'] == 1
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'match_reset' is None
+E        +  where 'match_reset' = <built-in method get of dict object at 0x11b5752c0>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b5752c0> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': 1, ...}.get
+
+tests/test_gauss_admission.py:492: AssertionError
+_ test_completed_dead_lead_delays_survive_later_censor_events[knowledge_lost] __
+
+event = 'knowledge_lost'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_completed_dead_lead_delays_survive_later_censor_events(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        frames[1]['post']['A']['dead'] = a.pack_tiles({7})
+        final = raw_frame(a, 101 if event == 'match_reset' else 3,
+                          dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        frames.append(final)
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == lead['A'] == 1
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'knowledge_lost' is None
+E        +  where 'knowledge_lost' = <built-in method get of dict object at 0x11b36bbc0>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b36bbc0> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': 1, ...}.get
+
+tests/test_gauss_admission.py:492: AssertionError
+_ test_dead_lead_censors_only_comparator_that_has_not_caught_up[truth_regime_change] _
+
+event = 'truth_regime_change'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_dead_lead_censors_only_comparator_that_has_not_caught_up(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        boundary = 101 if event == 'match_reset' else 3
+        final = raw_frame(a, boundary, dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        later = raw_frame(a, boundary + 1, dead={7}, v_dead={7},
+                          truth={8} if event == 'truth_regime_change' else ())
+        later['post']['A']['dead'] = a.pack_tiles({7})
+        frames.extend([final, later])
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == 1
+        assert lead['A'] is None
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'truth_regime_change' is None
+E        +  where 'truth_regime_change' = <built-in method get of dict object at 0x11b59d5c0>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b59d5c0> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': None, ...}.get
+
+tests/test_gauss_admission.py:512: AssertionError
+__ test_dead_lead_censors_only_comparator_that_has_not_caught_up[match_reset] __
+
+event = 'match_reset'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_dead_lead_censors_only_comparator_that_has_not_caught_up(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        boundary = 101 if event == 'match_reset' else 3
+        final = raw_frame(a, boundary, dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        later = raw_frame(a, boundary + 1, dead={7}, v_dead={7},
+                          truth={8} if event == 'truth_regime_change' else ())
+        later['post']['A']['dead'] = a.pack_tiles({7})
+        frames.extend([final, later])
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == 1
+        assert lead['A'] is None
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'match_reset' is None
+E        +  where 'match_reset' = <built-in method get of dict object at 0x11b3b5940>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b3b5940> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': None, ...}.get
+
+tests/test_gauss_admission.py:512: AssertionError
+_ test_dead_lead_censors_only_comparator_that_has_not_caught_up[knowledge_lost] _
+
+event = 'knowledge_lost'
+
+    @pytest.mark.parametrize('event', ['truth_regime_change', 'match_reset', 'knowledge_lost'])
+    def test_dead_lead_censors_only_comparator_that_has_not_caught_up(event):
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, dead={7}, v_dead={7})]
+        boundary = 101 if event == 'match_reset' else 3
+        final = raw_frame(a, boundary, dead={7} if event == 'truth_regime_change' else (),
+                          truth={8} if event == 'truth_regime_change' else ())
+        if final['reset']:
+            final['attempts']['G']['post'] = [0, 0, -8]
+        later = raw_frame(a, boundary + 1, dead={7}, v_dead={7},
+                          truth={8} if event == 'truth_regime_change' else ())
+        later['post']['A']['dead'] = a.pack_tiles({7})
+        frames.extend([final, later])
+        lead = a.reconstruct(frames, 840000, 'player_0')['lead'][0]
+        assert lead['V'] == 1
+        assert lead['A'] is None
+>       assert lead.get('censored_reason') is None
+E       AssertionError: assert 'knowledge_lost' is None
+E        +  where 'knowledge_lost' = <built-in method get of dict object at 0x11b39fc00>('censored_reason')
+E        +    where <built-in method get of dict object at 0x11b39fc00> = {'key': [840000, 'player_0', 0, 7, 'dead'], 'step': 1, 'V': 1, 'A': None, ...}.get
+
+tests/test_gauss_admission.py:512: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_actual_agent_discovery_is_in_pinned_inventory_without_importing_packages
+FAILED tests/test_gauss_admission.py::test_selected_agent_package_skips_discovery_but_preserves_selected_root
+FAILED tests/test_gauss_admission.py::test_import_guard_rejects_foreign_namespace_path_even_without_file
+FAILED tests/test_gauss_admission.py::test_completed_dead_lead_delays_survive_later_censor_events[truth_regime_change]
+FAILED tests/test_gauss_admission.py::test_completed_dead_lead_delays_survive_later_censor_events[match_reset]
+FAILED tests/test_gauss_admission.py::test_completed_dead_lead_delays_survive_later_censor_events[knowledge_lost]
+FAILED tests/test_gauss_admission.py::test_dead_lead_censors_only_comparator_that_has_not_caught_up[truth_regime_change]
+FAILED tests/test_gauss_admission.py::test_dead_lead_censors_only_comparator_that_has_not_caught_up[match_reset]
+FAILED tests/test_gauss_admission.py::test_dead_lead_censors_only_comparator_that_has_not_caught_up[knowledge_lost]
+9 failed, 22 passed in 4.27s

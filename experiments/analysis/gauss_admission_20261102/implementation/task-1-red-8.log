@@ -1,0 +1,33 @@
+...............F......                                                   [100%]
+=================================== FAILURES ===================================
+_________ test_source_guard_rejects_tracked_runtime_edit_and_repinning _________
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-141/test_source_guard_rejects_trac0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10713b6f0>
+
+    def test_source_guard_rejects_tracked_runtime_edit_and_repinning(tmp_path, monkeypatch):
+        a = tool()
+        import subprocess
+        def git(*args):
+            return subprocess.check_output(['git', '-C', str(tmp_path), *args], text=True).strip()
+        git('init', '-q')
+        git('config', 'user.email', 'fixture@example.invalid')
+        git('config', 'user.name', 'Fixture')
+        (tmp_path / 'scripts').mkdir()
+        path = tmp_path / 'scripts/common.py'
+        path.write_text('value = 1\n')
+        git('add', '.')
+        git('commit', '-qm', 'fixture')
+        head = git('rev-parse', 'HEAD')
+        monkeypatch.setattr(a, 'REFERENCE', head)
+        monkeypatch.setattr(a, 'RUNTIME', head)
+        snap = a.source_identity(tmp_path, 'reference')
+        assert snap['head'] == head
+>       a.check_source(snap)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'gauss_admission' has no attribute 'check_source'
+
+tests/test_gauss_admission.py:318: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_source_guard_rejects_tracked_runtime_edit_and_repinning
+1 failed, 21 passed in 1.93s

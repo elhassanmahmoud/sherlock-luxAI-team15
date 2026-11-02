@@ -1,0 +1,28 @@
+...........FF...                                                         [100%]
+=================================== FAILURES ===================================
+____________ test_dead_lead_is_censored_after_truth_regime_changes _____________
+
+    def test_dead_lead_is_censored_after_truth_regime_changes():
+        a = tool()
+        frames = [raw_frame(a, 1, dead={7}), raw_frame(a, 2, truth={8}),
+                  raw_frame(a, 3, v_dead={7}, truth={8})]
+        m = a.reconstruct(frames, 840000, 'player_0')
+>       assert m['lead'][0]['V'] is None
+E       assert 2 is None
+
+tests/test_gauss_admission.py:247: AssertionError
+___ test_attempt_audit_rejects_observation_counter_gaps_and_bad_match_reset ____
+
+    def test_attempt_audit_rejects_observation_counter_gaps_and_bad_match_reset():
+        a = tool()
+        frame = raw_frame(a, 1)
+        frame['attempts']['G']['post'][1] = 2
+>       with pytest.raises(ValueError, match='observation'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gauss_admission.py:255: Failed
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_dead_lead_is_censored_after_truth_regime_changes
+FAILED tests/test_gauss_admission.py::test_attempt_audit_rejects_observation_counter_gaps_and_bad_match_reset
+2 failed, 14 passed in 2.84s

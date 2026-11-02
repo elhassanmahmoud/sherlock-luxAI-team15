@@ -1,0 +1,7 @@
+# Preserve historical evidence bytes, including original CSV line endings.
+evidence/** -text
+execution/** -text
+execution/selection_baseline.csv -text -whitespace
+independent/** -text
+# Original review diffs and captured test output retain their whitespace.
+implementation/** -text -whitespace

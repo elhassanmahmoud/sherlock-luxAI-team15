@@ -1,0 +1,176 @@
+{
+  "budgets_passed": true,
+  "fact_steps": {
+    "A-G_dead": 168,
+    "A-G_point": 86,
+    "A-V_dead": 192,
+    "A-V_point": 113,
+    "G-A_dead": 2,
+    "G-A_point": 2,
+    "G-V_dead": 26,
+    "G-V_point": 29,
+    "V-A_dead": 0,
+    "V-A_point": 0,
+    "V-G_dead": 0,
+    "V-G_point": 0
+  },
+  "false_extra_fact_steps": {
+    "A": 0,
+    "G": 0
+  },
+  "false_v_fact_steps": 946,
+  "games": 168,
+  "games_with_strict": 1,
+  "leads": [
+    {
+      "A": 1,
+      "V": 1,
+      "censored": {
+        "A": null,
+        "V": null
+      },
+      "key": [
+        840011,
+        "player_0",
+        0,
+        62,
+        "point"
+      ],
+      "step": 80
+    },
+    {
+      "A": 1,
+      "V": 1,
+      "censored": {
+        "A": null,
+        "V": null
+      },
+      "key": [
+        840011,
+        "player_0",
+        0,
+        237,
+        "point"
+      ],
+      "step": 80
+    },
+    {
+      "A": 1,
+      "V": 1,
+      "censored": {
+        "A": null,
+        "V": null
+      },
+      "key": [
+        840011,
+        "player_0",
+        0,
+        38,
+        "dead"
+      ],
+      "step": 80
+    },
+    {
+      "A": 1,
+      "V": 1,
+      "censored": {
+        "A": null,
+        "V": null
+      },
+      "key": [
+        840011,
+        "player_0",
+        0,
+        238,
+        "dead"
+      ],
+      "step": 80
+    }
+  ],
+  "limits": "Shadow observe only; fixed V/A/G order; no active-G latency, strength, promotion or merge.",
+  "maps_with_strict": 1,
+  "status": "technically_passed_not_strength_candidate",
+  "strict_dead": 2,
+  "strict_facts": 4,
+  "strict_point": 2,
+  "timing": {
+    "A_cpu_ns": {
+      "max": 238000,
+      "median": 51000.0,
+      "n": 24000,
+      "p95": 97000.0
+    },
+    "A_wall_ns": {
+      "max": 285375,
+      "median": 52250.0,
+      "n": 24000,
+      "p95": 98291.05
+    },
+    "G_cpu_ns": {
+      "max": 704000,
+      "median": 48000.0,
+      "n": 24000,
+      "p95": 92000.0
+    },
+    "G_minus_V_cpu_ns": {
+      "max": 616000,
+      "median": -17000.0,
+      "n": 24000,
+      "p95": -10000.0
+    },
+    "G_wall_ns": {
+      "max": 1321250,
+      "median": 48958.0,
+      "n": 24000,
+      "p95": 93375.0
+    },
+    "V_cpu_ns": {
+      "max": 312000,
+      "median": 66000.0,
+      "n": 24000,
+      "p95": 119000.0
+    },
+    "V_wall_ns": {
+      "max": 369833,
+      "median": 67083.0,
+      "n": 24000,
+      "p95": 120000.0
+    },
+    "act_cpu_ns": {
+      "max": 19154000,
+      "median": 7634000.0,
+      "n": 24000,
+      "p95": 11360149.999999998
+    },
+    "act_wall_ns": {
+      "max": 20141167,
+      "median": 7639208.0,
+      "n": 24000,
+      "p95": 11382181.6
+    },
+    "copies_cpu_ns": {
+      "max": 107000,
+      "median": 33000.0,
+      "n": 24000,
+      "p95": 36000.0
+    },
+    "copies_wall_ns": {
+      "max": 178958,
+      "median": 33916.0,
+      "n": 24000,
+      "p95": 36750.0
+    },
+    "truth_cpu_ns": {
+      "max": 205000,
+      "median": 22000.0,
+      "n": 24000,
+      "p95": 29000.0
+    },
+    "truth_wall_ns": {
+      "max": 1227708,
+      "median": 22917.0,
+      "n": 24000,
+      "p95": 30125.0
+    }
+  }
+}

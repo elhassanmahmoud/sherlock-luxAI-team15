@@ -1,0 +1,21 @@
+..................F                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_compatibility_gate_rejects_caught_policy_errors _____________
+
+    def test_compatibility_gate_rejects_caught_policy_errors():
+        a = tool()
+        rows = [dict(seed=seed, side=side, steps=303, fresh=300, resets=3,
+                     our_wins=2, opp_wins=1, result=1., our_points=50, opp_points=40,
+                     point_counting_version=2, action_sha256='a', v_attempts=0, caught_errors=0)
+                for seed, side in a.stage_keys('C')]
+        known = [{k: row[k] for k in a.RESULT_FIELDS} for row in rows]
+        other = copy.deepcopy(rows)
+        other[0]['caught_errors'] = 1
+>       with pytest.raises(ValueError, match='caught'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gauss_admission.py:380: Failed
+=========================== short test summary info ============================
+FAILED tests/test_gauss_admission.py::test_compatibility_gate_rejects_caught_policy_errors
+1 failed, 18 passed in 2.06s

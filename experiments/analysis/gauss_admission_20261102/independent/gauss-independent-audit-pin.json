@@ -1,0 +1,38 @@
+{
+  "evidence": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/gauss_admission_20261102/evidence",
+  "frozen_inputs": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/gauss_admission_20261102/admission.py",
+      "sha256": "e87267d59cb29841039cd65e93e774484dbea59892e130655a80bc26b49e4f0b"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/docs/superpowers/plans/2026-11-02-gauss-admission.md",
+      "sha256": "6886f02fcb17f34e319f1f73de2438f6d82ba7ca244d67df646a580c48876204"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/superpowers/specs/2026-11-02-targeting-prototypes-design.md",
+      "sha256": "09032f831c374441c298642b60390864dab18e596256f13bf270832166b2d720"
+    }
+  ],
+  "historical_correction": "Earlier CSV/manifest-only train/prefill proposal did not establish freshness: seed29 prefill495000\u2013495003 already recorded at ARBEITSSTAND:870. No 841+ holdout impact; no new training authorized by this audit.",
+  "prepared_utc": "2026-11-02T13:39:20.869166+00:00",
+  "routing": {
+    "additional_positive_fact_steps": 100,
+    "fact_steps": "Each fresh decision frame: G_point minus (V_point union A_point); world tiles unique within frame. Persistent advantage counts.",
+    "games_acquiring_strict_positive": 5,
+    "maps_acquiring_strict_positive": 3,
+    "physical_fact_key": [
+      "seed",
+      "world_x",
+      "world_y",
+      "kind"
+    ],
+    "side1_inverse": "(x,y) -> (23-y,23-x)",
+    "strict_positive_world_facts": 20,
+    "technical_admission_required": true
+  },
+  "routing_clarification_recorded_utc": "2026-11-02T13:34:36Z",
+  "routing_clarified_before_any_S_outcome_or_novelty_read": true,
+  "script_sha256": "471c46194d3b9c55dbf127ac700a2724a0e10928f610dac3bb2fbdde91bc2d68",
+  "supervisor_sha256": "e563040d597d9d687b5b383f082fd230baabfd5793047e8ef94cdd21d574ec60"
+}

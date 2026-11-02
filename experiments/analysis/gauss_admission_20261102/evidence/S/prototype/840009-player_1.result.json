@@ -1,0 +1,104 @@
+{
+  "action_sha256": "c94b4ea68b925521907e4d74f05cb940077ccadd06a1901c58ff78cec0d464bb",
+  "caught_errors": 0,
+  "fresh": 300,
+  "io_cpu_ns": {
+    "max": 280000,
+    "median": 154000.0,
+    "n": 303,
+    "p95": 211699.99999999994
+  },
+  "io_wall_ns": {
+    "max": 1220625,
+    "median": 155750.0,
+    "n": 303,
+    "p95": 213296.5
+  },
+  "metrics": {
+    "attempts": [],
+    "conflicts": 0,
+    "extra_current": {
+      "dead": 109,
+      "point": 6
+    },
+    "fact_steps": {
+      "A-G_dead": 0,
+      "A-G_point": 0,
+      "A-V_dead": 0,
+      "A-V_point": 0,
+      "G-A_dead": 0,
+      "G-A_point": 0,
+      "G-V_dead": 0,
+      "G-V_point": 0,
+      "V-A_dead": 0,
+      "V-A_point": 0,
+      "V-G_dead": 0,
+      "V-G_point": 0
+    },
+    "false_extra": {
+      "A": 0,
+      "G": 0
+    },
+    "false_v": 0,
+    "lead": [],
+    "measurement_limits": "Fixed V/A/G order; process CPU includes scheduling effects; shadow observe is not active-agent latency.",
+    "positive_carryovers": 0,
+    "strict_facts": [],
+    "timing": {
+      "A_cpu_ns": {
+        "max": 130000,
+        "median": 61000.0,
+        "n": 300,
+        "p95": 107050.00000000001
+      },
+      "A_wall_ns": {
+        "max": 131167,
+        "median": 61917.0,
+        "n": 300,
+        "p95": 108179.5
+      },
+      "G_cpu_ns": {
+        "max": 113000,
+        "median": 57000.0,
+        "n": 300,
+        "p95": 101000.0
+      },
+      "G_minus_V_cpu_ns": {
+        "max": -5000,
+        "median": -19000.0,
+        "n": 300,
+        "p95": -11000.0
+      },
+      "G_wall_ns": {
+        "max": 113541,
+        "median": 58166.5,
+        "n": 300,
+        "p95": 101795.2
+      },
+      "V_cpu_ns": {
+        "max": 168000,
+        "median": 78000.0,
+        "n": 300,
+        "p95": 128000.0
+      },
+      "V_wall_ns": {
+        "max": 168667,
+        "median": 79333.5,
+        "n": 300,
+        "p95": 129258.35
+      }
+    }
+  },
+  "opp_points": 254,
+  "opp_wins": 0,
+  "opponent_setup_wall_ns": 208417,
+  "our_points": 837,
+  "our_wins": 3,
+  "point_counting_version": 2,
+  "resets": 3,
+  "result": 1.0,
+  "seed": 840009,
+  "side": "player_1",
+  "steps": 303,
+  "v_attempts": 0
+}

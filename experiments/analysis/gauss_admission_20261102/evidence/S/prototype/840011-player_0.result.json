@@ -1,0 +1,219 @@
+{
+  "action_sha256": "b9ce1dd548fc127020f176fb9d87ec542599ef05f397c528090e2140d1db024f",
+  "caught_errors": 0,
+  "fresh": 300,
+  "io_cpu_ns": {
+    "max": 422000,
+    "median": 158000.0,
+    "n": 303,
+    "p95": 214799.99999999994
+  },
+  "io_wall_ns": {
+    "max": 443750,
+    "median": 158000.0,
+    "n": 303,
+    "p95": 220653.6
+  },
+  "metrics": {
+    "attempts": [
+      {
+        "match": 0,
+        "observation": 53,
+        "step": 53
+      },
+      {
+        "match": 0,
+        "observation": 63,
+        "step": 63
+      },
+      {
+        "match": 0,
+        "observation": 72,
+        "step": 72
+      },
+      {
+        "match": 0,
+        "observation": 80,
+        "step": 80
+      }
+    ],
+    "conflicts": 0,
+    "extra_current": {
+      "dead": 35,
+      "point": 14
+    },
+    "fact_steps": {
+      "A-G_dead": 5,
+      "A-G_point": 2,
+      "A-V_dead": 5,
+      "A-V_point": 2,
+      "G-A_dead": 2,
+      "G-A_point": 2,
+      "G-V_dead": 2,
+      "G-V_point": 2,
+      "V-A_dead": 0,
+      "V-A_point": 0,
+      "V-G_dead": 0,
+      "V-G_point": 0
+    },
+    "false_extra": {
+      "A": 0,
+      "G": 0
+    },
+    "false_v": 0,
+    "lead": [
+      {
+        "A": 1,
+        "V": 1,
+        "censored": {
+          "A": null,
+          "V": null
+        },
+        "key": [
+          840011,
+          "player_0",
+          0,
+          62,
+          "point"
+        ],
+        "step": 80
+      },
+      {
+        "A": 1,
+        "V": 1,
+        "censored": {
+          "A": null,
+          "V": null
+        },
+        "key": [
+          840011,
+          "player_0",
+          0,
+          237,
+          "point"
+        ],
+        "step": 80
+      },
+      {
+        "A": 1,
+        "V": 1,
+        "censored": {
+          "A": null,
+          "V": null
+        },
+        "key": [
+          840011,
+          "player_0",
+          0,
+          38,
+          "dead"
+        ],
+        "step": 80
+      },
+      {
+        "A": 1,
+        "V": 1,
+        "censored": {
+          "A": null,
+          "V": null
+        },
+        "key": [
+          840011,
+          "player_0",
+          0,
+          238,
+          "dead"
+        ],
+        "step": 80
+      }
+    ],
+    "measurement_limits": "Fixed V/A/G order; process CPU includes scheduling effects; shadow observe is not active-agent latency.",
+    "positive_carryovers": 0,
+    "strict_facts": [
+      [
+        840011,
+        "player_0",
+        0,
+        38,
+        "dead"
+      ],
+      [
+        840011,
+        "player_0",
+        0,
+        62,
+        "point"
+      ],
+      [
+        840011,
+        "player_0",
+        0,
+        237,
+        "point"
+      ],
+      [
+        840011,
+        "player_0",
+        0,
+        238,
+        "dead"
+      ]
+    ],
+    "timing": {
+      "A_cpu_ns": {
+        "max": 117000,
+        "median": 44000.0,
+        "n": 300,
+        "p95": 88000.0
+      },
+      "A_wall_ns": {
+        "max": 127750,
+        "median": 44417.0,
+        "n": 300,
+        "p95": 87927.1
+      },
+      "G_cpu_ns": {
+        "max": 153000,
+        "median": 41500.0,
+        "n": 300,
+        "p95": 80000.0
+      },
+      "G_minus_V_cpu_ns": {
+        "max": 90000,
+        "median": -17000.0,
+        "n": 300,
+        "p95": -10000.0
+      },
+      "G_wall_ns": {
+        "max": 154000,
+        "median": 42041.5,
+        "n": 300,
+        "p95": 82141.7
+      },
+      "V_cpu_ns": {
+        "max": 172000,
+        "median": 60000.0,
+        "n": 300,
+        "p95": 133000.0
+      },
+      "V_wall_ns": {
+        "max": 275667,
+        "median": 61229.5,
+        "n": 300,
+        "p95": 133033.35
+      }
+    }
+  },
+  "opp_points": 357,
+  "opp_wins": 0,
+  "opponent_setup_wall_ns": 211084,
+  "our_points": 1313,
+  "our_wins": 3,
+  "point_counting_version": 2,
+  "resets": 3,
+  "result": 1.0,
+  "seed": 840011,
+  "side": "player_0",
+  "steps": 303,
+  "v_attempts": 0
+}

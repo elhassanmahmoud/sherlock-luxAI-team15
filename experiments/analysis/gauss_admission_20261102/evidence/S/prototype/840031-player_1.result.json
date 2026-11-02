@@ -1,0 +1,110 @@
+{
+  "action_sha256": "376f34bf0ab0756d9719c83b8aa0038a81d0975c514125cc879a42d33c6f6f4c",
+  "caught_errors": 0,
+  "fresh": 300,
+  "io_cpu_ns": {
+    "max": 263000,
+    "median": 147000.0,
+    "n": 303,
+    "p95": 203599.9999999999
+  },
+  "io_wall_ns": {
+    "max": 490833,
+    "median": 147916.0,
+    "n": 303,
+    "p95": 205871.19999999998
+  },
+  "metrics": {
+    "attempts": [
+      {
+        "match": 1,
+        "observation": 41,
+        "step": 142
+      }
+    ],
+    "conflicts": 0,
+    "extra_current": {
+      "dead": 106,
+      "point": 24
+    },
+    "fact_steps": {
+      "A-G_dead": 0,
+      "A-G_point": 0,
+      "A-V_dead": 0,
+      "A-V_point": 0,
+      "G-A_dead": 0,
+      "G-A_point": 0,
+      "G-V_dead": 0,
+      "G-V_point": 0,
+      "V-A_dead": 0,
+      "V-A_point": 0,
+      "V-G_dead": 0,
+      "V-G_point": 0
+    },
+    "false_extra": {
+      "A": 0,
+      "G": 0
+    },
+    "false_v": 12,
+    "lead": [],
+    "measurement_limits": "Fixed V/A/G order; process CPU includes scheduling effects; shadow observe is not active-agent latency.",
+    "positive_carryovers": 0,
+    "strict_facts": [],
+    "timing": {
+      "A_cpu_ns": {
+        "max": 84000,
+        "median": 60000.0,
+        "n": 300,
+        "p95": 74050.00000000001
+      },
+      "A_wall_ns": {
+        "max": 85542,
+        "median": 61333.0,
+        "n": 300,
+        "p95": 74935.45000000001
+      },
+      "G_cpu_ns": {
+        "max": 137000,
+        "median": 58000.0,
+        "n": 300,
+        "p95": 69000.0
+      },
+      "G_minus_V_cpu_ns": {
+        "max": 46000,
+        "median": -16000.0,
+        "n": 300,
+        "p95": -11000.0
+      },
+      "G_wall_ns": {
+        "max": 137000,
+        "median": 58417.0,
+        "n": 300,
+        "p95": 69893.75
+      },
+      "V_cpu_ns": {
+        "max": 113000,
+        "median": 73000.0,
+        "n": 300,
+        "p95": 92050.00000000001
+      },
+      "V_wall_ns": {
+        "max": 114541,
+        "median": 74333.0,
+        "n": 300,
+        "p95": 92587.80000000002
+      }
+    }
+  },
+  "opp_points": 1352,
+  "opp_wins": 0,
+  "opponent_setup_wall_ns": 236542,
+  "our_points": 1501,
+  "our_wins": 3,
+  "point_counting_version": 2,
+  "resets": 3,
+  "result": 1.0,
+  "seed": 840031,
+  "side": "player_1",
+  "steps": 303,
+  "v_attempts": 0
+}

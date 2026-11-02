@@ -1,0 +1,61 @@
+{
+  "action_sha256": "234304f54f81984ca862d8f9f2bcafa7206f7e3dd13cd0bde2eab61cadb14620",
+  "caught_errors": 0,
+  "fresh": 300,
+  "io_cpu_ns": {
+    "max": 200000,
+    "median": 118000.0,
+    "n": 303,
+    "p95": 165899.99999999997
+  },
+  "io_wall_ns": {
+    "max": 336375,
+    "median": 119125.0,
+    "n": 303,
+    "p95": 169295.59999999995
+  },
+  "metrics": {
+    "attempts": [],
+    "conflicts": 0,
+    "extra_current": {
+      "dead": 0,
+      "point": 0
+    },
+    "fact_steps": {},
+    "false_extra": {
+      "A": 0,
+      "G": 0
+    },
+    "false_v": 0,
+    "lead": [],
+    "measurement_limits": "Fixed V/A/G order; process CPU includes scheduling effects; shadow observe is not active-agent latency.",
+    "positive_carryovers": 0,
+    "strict_facts": [],
+    "timing": {
+      "V_cpu_ns": {
+        "max": 135000,
+        "median": 53000.0,
+        "n": 300,
+        "p95": 107000.0
+      },
+      "V_wall_ns": {
+        "max": 135458,
+        "median": 53395.5,
+        "n": 300,
+        "p95": 107196.15000000001
+      }
+    }
+  },
+  "opp_points": 298,
+  "opp_wins": 1,
+  "opponent_setup_wall_ns": 213375,
+  "our_points": 522,
+  "our_wins": 2,
+  "point_counting_version": 2,
+  "resets": 3,
+  "result": 1.0,
+  "seed": 840034,
+  "side": "player_0",
+  "steps": 303,
+  "v_attempts": 0
+}
