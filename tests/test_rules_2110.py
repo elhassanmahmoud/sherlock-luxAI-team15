@@ -709,6 +709,17 @@ def test_cand_rescue_only_without_known_point_tiles():
         assert moved == want_move, known_pt
 
 
+def test_zone_rescue_also_with_point_tiles_elsewhere_but_not_inside_the_zone():
+    # Relic (9, 9) bekannt; ein Punkte-Tile weit weg (20, 20) schaltet cand_rescue ab, zone_rescue greift trotzdem.
+    # Liegt das Punkte-Tile in der Zone (9, 10), greift auch zone_rescue nicht.
+    for pt, zone, want_move in (((20, 20), False, False), ((20, 20), True, True), ((9, 10), True, False)):
+        a = _stay_agent(cand_rescue=True, zone_rescue=zone, far_opp=10)   # wie V14: ferne Gegner-Tiles hinter Kandidaten
+        a.belief.point_tiles[pt] = True
+        act = a.act(30, make_obs(30, 30, units=[(5, 9, 100)], enemies=[], relics=[(9, 9)]))
+        moved = int(act[0, 0]) in (geo.RIGHT, geo.DOWN, geo.UP)
+        assert moved == want_move, (pt, zone)
+
+
 def test_stage_attack_waits_alone_before_shooter_zone():
     from agents.sherlock.features import make_context
     # Schuetze (Gegner mit Energie >= Sap-Kosten) auf Punkte-Tile (12,12), Reichweite 4 (Manhattan).

@@ -221,6 +221,12 @@ class AgentConfig:
     neb_cand und idle_approach aktiv (Kandidaten gezielt testen). Sicherheitsnetz fuer 0-Punkte-Spiele."""
     rescue_after: int = 0
     """cand_rescue greift erst, wenn das erste Relic seit mindestens so vielen Steps bekannt ist."""
+    zone_rescue: bool = False
+    """True (01.11.2026, nur Auswertung): cand_rescue je Relic-Zone. Units mit einem Kandidaten-Ziel in der 5x5-Zone eines
+    Relics, das seit rescue_after Schritten bekannt ist und in dessen Zone noch kein Punkte-Tile bewiesen ist, testen
+    gezielt (obey_target, neb_cand, idle_approach), auch wenn anderswo schon Punkte-Tiles bekannt sind. cand_rescue
+    allein greift nur ohne jedes bekannte Punkte-Tile, im 2./3. Match also kaum. cand_rescue brachte auf frischen
+    Karten +0,86 pp, alle 6 Gegner im Plus (V14)."""
     art_safe_cheb: bool = False
     """True (22.10.2026): art_safe prueft die Gefahr im ganzen Sap-Quadrat (Chebyshev, wie die Engine)
     statt in der Manhattan-Raute von Solution_92. Robustheit gegen Gegner, die diagonal sappen."""

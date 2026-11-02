@@ -189,6 +189,8 @@ class Agent_x:
         from .param_est import ParamEstimator
         self.param_est = ParamEstimator(censor=bool(self.cfg.est_censor))  # 21.10.2026: versteckte Parameter
         self._first_relic_step = None  # 22.10.2026: fuer cand_rescue/rescue_after
+        self._relic_seen: dict = {}  # 01.11.2026: erster Schritt je Relic (cfg.zone_rescue)
+        self._rescue_zones: set = set()
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
                          "sap_attempts": 0, "sap_hits_est": 0}
@@ -388,6 +390,21 @@ class Agent_x:
         self._rescue = bool(self.cfg.cand_rescue and not self.training and self.belief.relic_positions
                             and not self.belief.point_tiles.any() and self.belief.match_step >= 10
                             and int(ctx["step"]) - self._first_relic_step >= self.cfg.rescue_after)
+        # 01.11.2026 (cfg.zone_rescue): dieselbe Rettung je Relic-Zone. cand_rescue greift nur, solange GAR KEIN
+        # Punkte-Tile bekannt ist; im 2./3. Match sind meist alte Punkte-Tiles bekannt, und die Zone eines neuen
+        # Relics wird nie gerettet. Hier: Zonen (5x5) bekannter Relics, seit rescue_after Schritten bekannt, ohne
+        # bewiesenes Punkte-Tile; Units mit Kandidaten-Ziel in einer solchen Zone testen gezielt (_rescue_for).
+        self._rescue_zones = set()
+        if self.cfg.zone_rescue and not self.training:
+            step_now = int(ctx["step"])
+            for r in self.belief.relic_positions:
+                self._relic_seen.setdefault(r, step_now)
+            if self.belief.match_step >= 10:
+                pt = self.belief.point_tiles
+                for (rx, ry), first in self._relic_seen.items():
+                    if (rx, ry) in self.belief.relic_positions and step_now - first >= self.cfg.rescue_after \
+                            and not pt[max(0, rx - 2):rx + 3, max(0, ry - 2):ry + 3].any():
+                        self._rescue_zones.add((rx, ry))
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
             if self.training and len(legal) > 0 and self.rng.random() < eps:
@@ -405,7 +422,7 @@ class Agent_x:
                     a = self._path_fix(ctx, uid, masks[k], a)
                 if self.cfg.stage_attack and not self.training and 1 <= a <= 4:
                     a = self._stage(ctx, uid, a, stage_info)
-                if (self.cfg.obey_target or self._rescue) and not self.training and 1 <= a <= 4:
+                if (self.cfg.obey_target or self._rescue_for(ctx, uid)) and not self.training and 1 <= a <= 4:
                     a = self._obey_target(ctx, uid, masks[k], a)
                 if self.cfg.unstack and not self.training and a == geo.STAY:
                     a = self._unstack(ctx, uid, masks[k], a)
@@ -480,8 +497,8 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["nebula_detours"] = st.get("nebula_detours", 0) + 1
-            if ((self.cfg.neb_cand or self._rescue) and not self.training and a == geo.STAY
-                    and (self.cfg.idle_approach or self._rescue
+            if ((self.cfg.neb_cand or self._rescue_for(ctx, uid)) and not self.training and a == geo.STAY
+                    and (self.cfg.idle_approach or self._rescue_for(ctx, uid)
                          or self._harmful_nebula() >= self.cfg.nebula_avoid_min)):
                 d = self._neb_cand_step(ctx, uid, masks[k])
                 if d is not None:
@@ -491,7 +508,7 @@ class Agent_x:
             if a == geo.STAY and self._harmful_nebula() >= 25:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 if (ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]
-                        and not ((self.cfg.neb_cand or self._rescue) and self.belief.candidate[x, y])):
+                        and not ((self.cfg.neb_cand or self._rescue_for(ctx, uid)) and self.belief.candidate[x, y])):
                     d = self._leave_nebula(ctx, uid, masks[k])
                     if d is not None:
                         a = d
@@ -810,7 +827,7 @@ class Agent_x:
         tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
         if not ctx["nebula"][tx, ty] or self.belief.point_tiles[tx, ty]:
             return a
-        if (self.cfg.neb_cand or getattr(self, "_rescue", False)) and self.belief.candidate[tx, ty]:
+        if (self.cfg.neb_cand or self._rescue_for(ctx, uid)) and self.belief.candidate[tx, ty]:
             return a  # 22.10.2026: Kandidaten im Nebel testen (sonst nie Punkte-Tiles, 361050)
         tgt = ctx["assigned"].get(int(uid))
         if tgt is not None:
@@ -929,7 +946,7 @@ class Agent_x:
         b = self.belief
         if tgt is None or not b.candidate[tgt]:
             return None
-        approach = self.cfg.idle_approach or getattr(self, "_rescue", False)
+        approach = self.cfg.idle_approach or self._rescue_for(ctx, uid)
         if not approach and not ctx["nebula"][tgt]:
             return None
         ec = ctx["enemy_coords"]
@@ -1285,6 +1302,20 @@ class Agent_x:
             return a
         self.ep_stats["stage_waits"] = self.ep_stats.get("stage_waits", 0) + 1
         return geo.STAY
+
+    def _rescue_for(self, ctx: dict, uid: int) -> bool:
+        """Kandidaten-Rettung fuer diese Unit: global (cfg.cand_rescue, kein Punkte-Tile bekannt) oder je Zone
+        (cfg.zone_rescue: Ziel ist ein Kandidat in der Zone eines Relics ohne bewiesenes Punkte-Tile)."""
+        if getattr(self, "_rescue", False):
+            return True
+        zones = getattr(self, "_rescue_zones", None)
+        if not zones:
+            return False
+        tgt = ctx["assigned"].get(int(uid))
+        if tgt is None or not self.belief.candidate[tgt]:
+            return False
+        tx, ty = int(tgt[0]), int(tgt[1])
+        return any(max(abs(tx - rx), abs(ty - ry)) <= 2 for rx, ry in zones)
 
     def _obey_target(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """cfg.obey_target (22.10.2026): Zug, der die BFS-Distanz zum zugewiesenen Punkte- oder
