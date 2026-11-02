@@ -9,6 +9,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 02.11.2026, 17:06 Berlin – Codex: tatsächliche P-Datei technisch zugelassen, Leistungstest wartet auf AC
+
+- Experimentdatei P gebaut: `experiments/ensembles/20261102_targeting_P_only/P.pth` in der Performancekopie, SHA-256 `dbb15222848b9ce8530080e128fa9ca66309c9900e98f50de5cce1d73e5b7f5a`. Sie enthält alle 36 ursprünglichen V14-Netze und nur die neuen Configwerte `point_pair_swap=true`/`art_move_guard=true`. Die teilweise nachtrainierten Netze werden nicht verwendet. P ist kein freigegebener Ersatz der Abgabe.
+- Tatsächlicher `Agent_x`-Konstruktor lädt exakt alle 36 geordneten Tensorzustände, 79 Merkmale/6 Aktionen, epsilon0; Lernen und automatisches Speichern aus. Keine Forward-Calls, Lernupdates oder Spiele durch diese Ladeprüfung. Alle geschützten Gewichte unverändert. [Ladebeleg](../experiments/analysis/continuation_20261102/performance/review/P_actual_load_preflight.json).
+- Unabhängige zweite Dateiprüfung: 20 Prüfungen ohne Fehler, sämtliche Checkpointinhalte mit V14 identisch außer den zwei Configschaltern, Manifest ohne Trainingsauditbehauptung, Ladebeleg und Schutzdateien stimmen. [Abnahme](../experiments/analysis/continuation_20261102/performance/review/P_candidate_admission_audit.md). Das ist technische Zulassung, kein Stärkenachweis.
+- Trainings-Freeze nach Ende des 19er-Startfensters kontrolliert geschlossen; Performancekopie am sicheren Übergang verlustfrei auf main92cc7d9 gebracht. Alte Pilotverzeichnisse und Endstände bleiben erhalten. Noch kein reales841/842/843er-Spiel. Nutzer meldet, sobald das Netzteil angeschlossen ist; längere Auswahl erst bei nachgewiesenem AC und ausreichender Gesamtzeit.
+- Nächster gemeinsamer Freeze wird Auswahl und mögliche Bestätigung mit genau baseline/P und festen3.000/9.000Spielen binden. Keine späterePT-Ergänzung, keine Übernahme ohne die festgelegten Gates. Zeitfenster siehe Leistungsprotokoll; P-only-Auswahl initial spätestens19:24Berlin, ggf. früher bei langsamerem Durchsatz.
+
 ## 02.11.2026, 16:47 Berlin – Codex: P-only vor frischen Daten fest gewählt
 
 - ZweiteWelle wurde bis zum festenStartlimit15:44:54UTC mangelsAC nicht gestartet. Keine19erRunverzeichnisse/-Trainer. Vierarmpilot daher **unvollständig**, ersteZweiArme unabhängig akzeptiert. Ursprüngliche2hFrist nicht verlängert; Source-Freeze8e4720c bis Abschluss unverändert und allegepinntenQuellen/Gewichte exakt nachgeprüft. [Abschlussbeleg](../experiments/analysis/continuation_20261102/performance/review/training_freeze_close.json).
