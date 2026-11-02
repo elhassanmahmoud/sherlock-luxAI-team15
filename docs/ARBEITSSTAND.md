@@ -11,6 +11,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 02.11.2026 – Codex: separate Forschungsroute nur für eine verworfene P-Auswahl vorbereitet
+
+- Vor Lektüre vollständiger frischer P-Ergebnisse eine begrenzte Folgeroute geplant: [PT2-Plan](superpowers/plans/2026-11-02-conditional-backup-adaptation.md). Nur nach vollständiger unabhängiger ACCEPTED-P-Auswahl **ohne Nominee**, niemals nach begonnener P-Bestätigung oder unvollständiger Auswahl. Genau eine begonnene unabhängige Bestätigung im ganzen Nachtpfad; keine Ergänzung des aktuellen P-Masters.
+- Zwei neue adaptierte Starts30/31 aus V14-Komponenten18/19, je120Vorlauf+600Training+96bekannteVal, nur Endstände; keine alten Teilwellengewichte und keine Kontrollen oder Kausalbehauptung. Neue Auswahl50bisher unbenutzte844er-Karten/1.500Spiele, Bestätigung unverändert300+300Karten/9.000Spiele auf842/843, sofern die P-Bestätigung diese niemals benutzt hat. Freshness, AC, Quota und vollständiger Zeitfit inklusive20minSetup/Audit+60minAbschluss bis05:30 bleiben zwingend. Bei bisherigen Floors ab19:15 nur etwa8minZusatzpuffer; keine Startzusage.
+- Benannter Backup-Trainingswrapper ist offline vorbereitet: nur Modultext, Protokoll, Variantenname und zwei ARMS-Konstanten geändert, sämtliche18Funktionskörper zur geprüften Vorlage identisch. Sieben reine AST-/NumPy-Tests grün, unabhängiger Review PASS; keine Torch-/Agent-/Env-Imports, keine Spiele oder Trainings. Geerbte Vierarm-Hilfetexte sind als kleiner Dokumentationsrest vermerkt, tatsächliche Zuordnung/Metadaten enthalten nur zwei Arme. Eligibility und tatsächlicher Lade-/Enddatencheck erfolgen außerhalb des Helpers vor einem möglichen Start.
+- Getrennte Studienwerkzeuge werden noch ausschließlich in der primären Arbeitskopie geprüft; keine aktuelle Aktivierung. Der laufende Vergleich in der Performancekopie bleibt exakt auf Source03e54e2 und zwei Evaluationsprozessen. Bisher wurden nur Jobstatus und Laufzeiten, keine frischen Ergebnisquoten zur Variantenwahl gelesen.
+
 ## 02.11.2026, 17:29 Berlin – Codex: frische P-only-Auswahl läuft, Entscheidungsablauf dokumentiert
 
 - Der Mac meldet seit16:12:57UTC tatsächlich AC und lädt. Nach erneuter Quotenprüfung (17%verbraucht/83%frei), vollständiger Zeitprojektion und unabhängiger Prüfung der tatsächlichen Modelle/Argumente/Quellen wurde die Auswahl am **17:16:14Berlin** gestartet. Zwei schwere Evaluationsworker, keine parallelen Trainings.
