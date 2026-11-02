@@ -1,0 +1,103 @@
+FFFFFFFFFFF...                                                           [100%]
+=================================== FAILURES ===================================
+____ test_sources_excludes_non_module_names_and_hard_keywords[config 2.py] _____
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['belief.py',..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 1 diff: 'config 2.py' != 'config.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+____ test_sources_excludes_non_module_names_and_hard_keywords[reward 2.py] _____
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['belief.py',..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 3 diff: 'reward 2.py' != 'reward.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+___ test_sources_excludes_non_module_names_and_hard_keywords[agent-copy.py] ____
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['agent-copy...., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: 'agent-copy.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+____ test_sources_excludes_non_module_names_and_hard_keywords[agent.old.py] ____
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['agent.old.p..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: 'agent.old.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+_____ test_sources_excludes_non_module_names_and_hard_keywords[2agent.py] ______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['2agent.py',..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: '2agent.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+________ test_sources_excludes_non_module_names_and_hard_keywords[.py] _________
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['.py', 'beli..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: '.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+______ test_sources_excludes_non_module_names_and_hard_keywords[class.py] ______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['belief.py',..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 1 diff: 'class.py' != 'config.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+_______ test_sources_excludes_non_module_names_and_hard_keywords[for.py] _______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['belief.py',..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 2 diff: 'for.py' != 'main.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+______ test_sources_excludes_non_module_names_and_hard_keywords[async.py] ______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['async.py', ..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: 'async.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+______ test_sources_excludes_non_module_names_and_hard_keywords[None.py] _______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['None.py', '..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: 'None.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+______ test_sources_excludes_non_module_names_and_hard_keywords[True.py] _______
+tests/test_submission_sources.py:32: in test_sources_excludes_non_module_names_and_hard_keywords
+    assert [path.name for path in files] == ["belief.py", "config.py", "main.py", "reward.py"]
+E   AssertionError: assert ['True.py', '..., 'reward.py'] == ['belief.py',..., 'reward.py']
+E     
+E     At index 0 diff: 'True.py' != 'belief.py'
+E     Left contains one more item: 'reward.py'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[config 2.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[reward 2.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[agent-copy.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[agent.old.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[2agent.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[class.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[for.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[async.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[None.py]
+FAILED tests/test_submission_sources.py::test_sources_excludes_non_module_names_and_hard_keywords[True.py]
+11 failed, 3 passed in 0.12s

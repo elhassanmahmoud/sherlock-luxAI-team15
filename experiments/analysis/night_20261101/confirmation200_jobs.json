@@ -1,0 +1,85 @@
+{
+  "name": "confirmation200",
+  "manifest_path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/confirmation200_jobs.json",
+  "candidate": "control",
+  "prepared_at": "2026-11-01T23:06:33.358215+00:00",
+  "deadline_utc": "2026-11-02T04:30:00+00:00",
+  "panel": [
+    "solution92",
+    "sol92_sq",
+    "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+    "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+    "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth"
+  ],
+  "direct_opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+  "frozen_weights": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/agents/sherlock/weights/agent_p1.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_all18_v3/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261022_v10_baseline/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v13_neb/agent_p0.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_overlap.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_control.pth",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/night_20261101_discovery.pth"
+  ],
+  "selection_sha256": "1a7b545328dcb69e15dadc6f08364edab08e7812fe411801266dd6f059920af7",
+  "selection_freeze_sha256": "96385f7398bcc531d6983ab7d127df200b74fb4ca54599a8b4ad6e64e51d61ab",
+  "time_addendum_sha256": "3319dcfa8cec9b979945cd6fe9e12fb41d5a53e2ccf7d41885450eae158e2aaf",
+  "summary_tool_sha256": "83430c9f2b8aadede9da807d88026c2416b07b89a5d2eccbac28ce8829216c4d",
+  "jobs": [
+    {
+      "name": "baseline",
+      "args": [
+        "--weights",
+        "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--first",
+        "332000",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/confirmation200_baseline.csv"
+      ]
+    },
+    {
+      "name": "control",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_control.pth",
+        "--first",
+        "332000",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "solution92,sol92_sq,self:experiments/releases/20261022_all18_v3/agent_p0.pth,self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth,self:experiments/releases/20261022_v10_baseline/agent_p0.pth,self:experiments/releases/20261101_v13_neb/agent_p0.pth,default",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/confirmation200_control.csv"
+      ]
+    },
+    {
+      "name": "control_direct",
+      "args": [
+        "--weights",
+        "experiments/ensembles/night_20261101_control.pth",
+        "--first",
+        "333000",
+        "--n",
+        "200",
+        "--workers",
+        "2",
+        "--opponents",
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--out",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/night_20261101/confirmation200_control_direct.csv"
+      ]
+    }
+  ]
+}

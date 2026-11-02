@@ -1,0 +1,50 @@
+{
+  "predeclared_at": "2026-11-01T21:33:45.298151+00:00",
+  "reason": "Measured evaluation throughput projects the original 300-map confirmation at or beyond the night deadline without safety reserve. No performance CSV or aggregate result has been inspected for this decision.",
+  "selection_state_at_declaration": {
+    "jobs_started": [
+      "baseline"
+    ],
+    "jobs_finished": 0
+  },
+  "original_confirmation_maps": 300,
+  "confirmation_maps": 200,
+  "confirmation_seed_range": [
+    832000,
+    832199
+  ],
+  "direct_seed_range": [
+    833000,
+    833199
+  ],
+  "confirmation_games": 6000,
+  "phase_name": "confirmation200",
+  "selection_unchanged": true,
+  "nominee_rule_unchanged": true,
+  "max_nominees": 1,
+  "allow_runner_up": false,
+  "gates": {
+    "panel_delta_min": 0.01,
+    "panel_lower_strictly_above": 0,
+    "solution_delta_min": 0,
+    "solution_lower_min": -0.01,
+    "default_min": 0.99,
+    "default_delta_min": -0.01,
+    "direct_lower_strictly_above": 0.5
+  },
+  "bootstrap": {
+    "unit": "whole map including both sides",
+    "resamples": 5000,
+    "rng_seed": 0,
+    "percentiles": [
+      2.5,
+      97.5
+    ]
+  },
+  "frozen_head": "aa0660183cace1e21285fde30ae61e3812136f05",
+  "no_game_source_or_weight_changes": true,
+  "original_plan_preserved_during_source_freeze": true,
+  "deadline_utc": "2026-11-02T04:30:00+00:00",
+  "requires_complete_phase_with_runtime_reserve": true,
+  "limitation": "200 independent maps rather than300; roughly22.5percent wider intervals under comparable variance. No claim that reduced sample size improves evidence."
+}
