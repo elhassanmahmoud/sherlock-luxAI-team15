@@ -12,6 +12,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 18:55 Berlin – Codex: getrennte PT2-Steuerung offline geprüft
+
+- [Controller, Statistik und Anleitung](../experiments/analysis/backup_adaptation_20261102/README.md) für die bereits vor Ergebnislektüre festgelegte bedingte Route vorbereitet. Keine Aktivierung, keine zusätzlichen Spiele oder Modelle. Die laufende P-Auswahl bleibt auf Source03e54e2 unverändert; beide Panelblöcke sind abgeschlossen, das Direktduell läuft noch. Ergebnisquoten werden erst nach vollständigem Phasenabschluss gelesen.
+- Root: 26 synthetische Tests bestanden (5,69 s); unabhängiger [Code-/Spec-Review PASS](../experiments/analysis/backup_adaptation_20261102/review/backup_study_final_review.md). Historischer P-Archivnachweis, neue Zweiarm-Abnahme, feste Karten/Gates, übernommene Laufzeitraten, exklusive einmalige Bestätigungsreservierung und Prozessschutz geprüft. Keine tatsächliche Trainings- oder Leistungsabnahme damit behauptet.
+- Eintritt weiterhin nur nach vollständiger unabhängig akzeptierter P-Auswahl ohne Nominee, geschlossenem altem Freeze und vollständiger Zeit-/AC-/Quota-/Freshnessprüfung. Bei P-Nomination bleibt dieselbe eingefrorene P-Studie für die Bestätigung maßgeblich; die neue Route wird dann nicht verwendet. Die aktuelle V14-Abgabe und ZIP bleiben bytegleich.
+
 ## 02.11.2026 – Codex: separate Forschungsroute nur für eine verworfene P-Auswahl vorbereitet
 
 - Vor Lektüre vollständiger frischer P-Ergebnisse eine begrenzte Folgeroute geplant: [PT2-Plan](superpowers/plans/2026-11-02-conditional-backup-adaptation.md). Nur nach vollständiger unabhängiger ACCEPTED-P-Auswahl **ohne Nominee**, niemals nach begonnener P-Bestätigung oder unvollständiger Auswahl. Genau eine begonnene unabhängige Bestätigung im ganzen Nachtpfad; keine Ergänzung des aktuellen P-Masters.

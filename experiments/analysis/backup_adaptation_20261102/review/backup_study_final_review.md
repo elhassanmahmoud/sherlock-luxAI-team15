@@ -1,0 +1,35 @@
+# Unabhängiger Offline-Review: getrennte PT2-Studiensteuerung
+
+**Spec-Verdikt: PASS innerhalb des dokumentierten Controller-/Statistikscopes. Code-Verdikt: PASS. Keine Important/Critical Findings.** Dies ist keine tatsächliche Eintritts-/Daten-/Trainings-/Spielstartfreigabe. Die externe Root-Zulassung bleibt notwendig.
+
+Geprüft: PRIMARY `experiments/analysis/backup_adaptation_20261102/{study_driver.py,study_stats.py,test_study_driver.py,test_study_stats.py,README.md}` gegen `docs/superpowers/plans/2026-11-02-conditional-backup-adaptation.md` sowie bestehende Quellhelfer und den Quelltext des tatsächlichen unabhängigen P-Auditors. Keine echten Phase-/CSV-/Outcome-Dateien geöffnet.
+
+SHA256:
+- Driver: `e8094cae362a14f374cdc06833199c46423be3c588b5ab72d15756eb59f784e5`
+- Statistik: `7abf4ad3f126d301bdf95831d2eb05577a6e673ca63d285ff17bd32db46c70f8`
+- Driver-Test: `058f960b1a91a337f4951f70abc5814c76cb1163a6edece99075b27a422065df`
+- Statistik-Test: `724823c0158ad3358d6f767a1dc39c66f5f8d87366564f173d1aca504b11395d`
+
+## Wesentliche Prüfergebnisse
+
+**Historischer Parent:** Genau vollständige P-only-Auswahl mit3000, `nominee` ausdrücklich vorhanden und null, P.passed ausdrücklich false; kein Eintritt nach fehlenden/technisch verworfenen Belegen. Parentplan wird aus der festen historischen Jobdefinition rekonstruiert. Source-before/after müssen die originale Identität belegen, alle historischen Dateipins einschließlich Interpreter/Modelle/Protokolle bleiben bytegleich. Ein späterer legaler HEAD-Wechsel bzw. zusätzliche Quelldateien wird nicht durch den alten Live-HEAD-Guard blockiert. Originaler03e-HEAD ist weiterhin im Archiv gebunden.
+
+Das tatsächliche unabhängige Auditorformat passt: Top-Level ACCEPTED/selection/failed=[], `results.selection` mit kompletter Nullnomination, passed=false,3000 und Plan-/State-/Master-/CSV-Hashes. Dessen evidence_sha256 wird einschließlich aller Zusatzdateien geprüft und muss die vollständige Phase samt Rootsummary enthalten. Rootabschluss ist exakt an diese Belege gebunden. Das gelesene Auditorprogramm erzeugt dieses Schema; keine realen Auditergebnisse wurden gelesen.
+
+**Neue Kohorte:** Manifestrollen exakt baseline/PT2. Candidate-Admission verlangt ACCEPTED_PT2, konkrete Kandidatendatei und SHA,36 geordnete Komponenten, Ersatz18/19 sowie zwei neue Seeds30/31 mit120/600/96. Zwei tatsächliche Enddateien und der separate ACCEPTED_TWO_ARM_BACKUP-Audit werden gehasht; Auditfailed/warnings müssen leer sein und seine Evidenz beide Enddateien enthalten. Kein Legacy-Vierarmaudit wird akzeptiert. Der neue Freeze bindet Admission, Trainingsaudit, Enddateien und auch alle zuvor geschützten Parentgewichte.
+
+**Feste Messung/Statistik:** Auswahl exakt844000–844049:700+700+100=1500; Bestätigung842000–842299:4200+4200 plus843000–843299:600=9000. Jeweils beide Seiten, exakt gleiche sieben Gegnerlabels, direkte V14-Datei, zwei Worker und nur die zwei P-Konfigurationsflags. CSV-Kontrolle prüft volle einzigartige Keys,303 Schritte,Point-v2, endliche/zulässige Felder und vollständige Hash-/Receiptzuordnung. Default wird aus der kombinierten Datei separat ausgewertet; Panel nur die sechs festgelegten Gegner. Gemeinsame Whole-map-Paarung über beide Seiten/all sechs Gegner,5000 Bootstrap/RNG0/Perzentile unverändert aus den bestehenden Helfern. Keine alten Liga-Gatekonstanten genutzt. Einziger Nominee PT2; unveränderte Auswahl-/Bestätigungsgates einschließlich Direkt-CI und reiner W/D/L-Zahlen. Statsintegrität nutzt require statt deaktivierbarer assert.
+
+**Einzige Bestätigung:** Jeder existierende Parentconfirmation-Pfad/Marker sperrt Eintritt, einschließlich dangling symlinks. Die gemeinsame conditional_confirmation_reservation.json liegt beim ursprünglichen Parent und wird exklusiv mit O_EXCL, Datei- und Verzeichnis-fsync erzeugt, bevor das neue Bestätigungsverzeichnis entsteht. Die Bindung enthält Masterpfad/-hash und kanonischen Bestätigungsplan. Sie bleibt nach Fehler und bei null Spielen bestehen. Andere Master dürfen sie nicht übernehmen; auch dieselbe Studie darf keinen zweiten Plan anlegen. Die legitime eigene Prüfung eines schon reservierten Plans bleibt möglich. Frühe Reservierung bereits bei prepare ist konservativer als erst bei Spielstart und entspricht dem festgelegten Verbot zweiter Versuche.
+
+**Zeit:** Eintrittsprognose enthält9800combined+700direct bei Klassenfloors2,22/3,0, volle20%,50minTraining,20minSetup/Audit und60minAbschluss. Parent-Ratebelege werden übernommen; langsamster relativer Faktor skaliert beide Klassen. Neue PT2-Raten werden ergänzt und bei Bestätigung aus gebundener vollständiger Auswahl übernommen, keine Halbierung oder Rücksetzung. Spätere Eval-Zulassungen reservieren weiterhin20minSetup plus60minAbschluss; Auswahl reserviert die komplette mögliche9000-Bestätigung. Ende04:30UTC/05:30Berlin, harter Spielecutoff03:30UTC/04:30Berlin. Die50minTrainingsprovision ist Bestandteil von admit_backup, nicht nach bereits abgeschlossenem Training erneut von create_freeze; externe Aufnahme muss admit_backup tatsächlich vor Training anwenden.
+
+**Prozesse/Pfade/Fehler:** check_foreign_jobs erkennt ausdrücklich scripts.targeting_adapt_backup sowie den Originalwrapper, zusätzlich zur vorhandenen globalen Modelljobprüfung. Gemeinsamer Ressourcenlock und ausschließlich eigene Prozessgruppen; Signalmaskierung schützt Spawn/Registrierung und Cleanup, Kind stellt Originalmaske vor exec wieder her. Exklusive State-Erzeugung erst unter Lock plus owns_state schützt fremde Receipts. Finaler Plan-/Freeze-Recheck vorhanden. Systemaliasnormalisierung und kanonische Eingangspfade erhalten; Nutzer-Symlinkoutputs abgewiesen. Teilphasen bleiben incomplete, kein Resume-/Duplikatpfad.
+
+## Externe Zulassungsgrenze vor jeder tatsächlichen Aktivierung
+
+Der Controller ist bewusst kein Tensor-/Lernbeweisprüfer: Root muss den unabhängigen tatsächlichen Trainings-, Komponenten-/Assembler- und Actual-Load-Audit erst durchführen. Das neue Candidate-Admission-Schema ist ein zukünftiger Prüfvertrag, kein bereits existierender Nachweis. Insbesondere müssen dort tatsächlich beide neuen Endstände, Zuordnung18/19, unveränderte restliche34, volle Inferenzconfig und positive/finite Lernzustände bewiesen werden; ein bloß formal passendes JSON ist keine Abnahme.
+
+Freshness/Nichtbenutzung der842/843/844-Karten, aktuelle Quota und AC bei Aufnahme bleiben laut Plan/README externe Root-Gates. Der geerbte Laufzeitsupervisor selbst besitzt weiterhin Batterie35/25 mit AC-Ausnahme; er erzwingt nicht dauerhaft Netzstrom. Kein neues Training parallel zu den aktuellen zwei P-Evalworkern. Diese Abgrenzungen sind dokumentiert und kein behaupteter Controllernachweis.
+
+Prüfevidenz: Quellen/Tests gelesen und Hashes selbst bestimmt. Die berichteten26 synthetischen Tests normal und mit -O wurden nicht erneut ausgeführt; keine Test-/Controller-/Statistik-/Torch-/Agentimports, keine Modelle, Spiele, Trainings, echten P-Outcomes oder Repositoryänderungen. Aktives Performance03e unverändert und Worker unberührt. Einzige neue Datei diese /tmp-Reviewnotiz.
