@@ -8,6 +8,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 02.11.2026, 16:47 Berlin – Codex: P-only vor frischen Daten fest gewählt
+
+- ZweiteWelle wurde bis zum festenStartlimit15:44:54UTC mangelsAC nicht gestartet. Keine19erRunverzeichnisse/-Trainer. Vierarmpilot daher **unvollständig**, ersteZweiArme unabhängig akzeptiert. Ursprüngliche2hFrist nicht verlängert; Source-Freeze8e4720c bis Abschluss unverändert und allegepinntenQuellen/Gewichte exakt nachgeprüft. [Abschlussbeleg](../experiments/analysis/continuation_20261102/performance/review/training_freeze_close.json).
+- Datenblind **P-only** gewählt, bevor ein reales841/842/843er-Spiel stattfand: [fixierteEntscheidung](../experiments/analysis/continuation_20261102/performance/route_decision.json). NurzweiPlanungsflags,36Originalnetze. Weder teilweise trainierteGewichte noch späterePT-Ergänzung. Auswahl3.000Spiele/100Karten, Bestätigungweiter9.000Spiele/300Karten, gleicheGates. NeueLangeJobs bleiben bei29%ohneAC blockiert; vorbereiten/prüfen ist möglich.
+- Beide abgeschlossenenTeilwellen-Endstände undRohdaten unter [training/first_wave](../experiments/analysis/continuation_20261102/training/first_wave/README.md) gesichert:1.632tatsächlicheSpiele. JSONLverlustfreimitgzip, jederOriginal-/Archivhash inprovenance.json; Endgewichte bytegleich. ReplayBuffer je187MB und nichtverwendeteZwischenbeste bleiben lokal. DieseEndgewichte sind ausschließlichForschung undkeineAbgabe/Nominees.
+- Performancekopie darf nun am sicherenPhasenübergang den aktuellenWerkzeug-/Dokumentationsstand übernehmen; vorbereitete altePilotverzeichnisse erhalten, nicht unter verändertemHEAD fortsetzen. NächsterSchritt: P-Datei ausV14 bilden, tatsächliche36Tensoren/Config/Ladevorgang prüfen, gemeinsamenP-onlyFreeze aufbauen; frische Auswahl erstbeiAC und ausreichenderGesamtzeit starten. Kein stärkererNachfolger behauptet, aktuelleAbgabeV14weiterbytegleich.
+
 ## 02.11.2026, 16:41 Berlin – Codex: erste Teilwelle unabhängig akzeptiert, P-only-Fallback vorbereitet
 
 - [Unabhängiger Teilbericht](../experiments/analysis/continuation_20261102/performance/review/first_wave_independent_audit.md): **ACCEPTED_FIRST_WAVE_ONLY**,1.762Prüfungen/0Fehler. Zwei tatsächliche vollständige Arme, je720Rollouts/96Val/600CSV,90.000Updates,278.160Env-Schritte, echteTensor-/Adam-/Reloadbelege und strikteValisolation. Keine Agentenkonstruktion,Forward-Calls,Gradienten oder Spiele durch den Auditor. Das ist keine Vierarm- oder Stärkeabnahme.

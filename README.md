@@ -1,6 +1,6 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-Stand02.11.: Abgabe weiter **V14**, Gewichte unverändert. Erstes kontrolliertes Trainingspaar abgeschlossen; zweite Welle und frische Leistungsprüfung noch offen. [Arbeitsstand](docs/ARBEITSSTAND.md) · [Trainingspilot](docs/superpowers/plans/2026-11-02-targeting-adaptation.md) · [Feste Leistungsstudie](docs/superpowers/plans/2026-11-02-targeting-performance.md). Noch kein nachgewiesen stärkerer Nachfolger.
+Stand02.11.: Abgabe weiter **V14**, Gewichte unverändert. Erstes kontrolliertes Trainingspaar unabhängig geprüft; Vierarmpilot unvollständig. Für frische Leistungsprüfung P-only mit allen36Originalnetzen festgelegt, Start wartet auf AC. [Arbeitsstand](docs/ARBEITSSTAND.md) · [Trainingspilot](docs/superpowers/plans/2026-11-02-targeting-adaptation.md) · [Feste Leistungsstudie](docs/superpowers/plans/2026-11-02-targeting-performance.md). Noch kein nachgewiesen stärkerer Nachfolger.
 
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**
