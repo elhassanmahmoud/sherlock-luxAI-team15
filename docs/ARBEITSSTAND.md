@@ -12,6 +12,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 19:30 Berlin – Codex: bedingte Abgabeprüfung offline vorbereitet
+
+- [Eng begrenzte Releasewerkzeuge](../experiments/analysis/continuation_20261102/release_tools/README.md) für den Fall einer vollständig bestandenen P-Bestätigung vorbereitet und unabhängig geprüft. Root: 19 synthetische Installation-/Rollbacktests und16 synthetische Paket-/Tensorprotokolltests bestanden, keine tatsächlichen Modelle oder neuen Spiele darin. Beide Reviews PASS; diese Abnahme ist keine reale Freigabe oder Installation.
+- Ein enger Metadatenfehler im Paketprüfer wurde vor echter Modellprüfung behoben: Rohes V14/P speichert `frozen` nicht, der effektive WertFalse stammt aus dem Configstandard; im ZIP muss ausdrücklichTrue stehen. Gegenbeleg und Nachprüfung erhalten, Entscheidungsablauf präzisiert. Aktuelles P und die laufenden Messungen unverändert.
+- Getrennte Python3.10.22-Umgebung mit Torch2.2.2/NumPy1.26.4 außerhalb des Repos vorbereitet; bisher nur Paketmetadaten und quellenidentische Kurskonfiguration geprüft, keine Agentenausführung. Gemeinsames3.13 unverändert. Tatsächlicher Kurs-/Paket-/Replaycheck erst nach Ende aller Evaluationsworker und bestandener Bestätigung. Vorbereitung, Warnungen und Herkunft sind dokumentiert.
+- Einzige9.000-Spiele-Bestätigung weiterhin auf identischem03e-Source-Freeze; nur Status gelesen, keine laufenden Ergebnisquoten. Primärer main aktuell, Performancekopie bewusst eingefroren. Kontingent22 %verbraucht/78 %frei; V14 und ZIP unverändert.
+
 ## 02.11.2026, 19:03 Berlin – Codex: P nominiert, einzige frische Bestätigung gestartet
 
 - Vollständige [P-Auswahl mit 3.000 Spielen](../experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md) unabhängig akzeptiert: 137 Prüfungen ohne Abweichung. Sechserpanel 78,33 → 81,00 %, Δ +2,67 pp [+0,42; +5,00]; Solution beide184/200, default beide200/200. P direkt gegen V14 118/200, 59 % [53;65]. Alle vier Auswahlgates erfüllt. Kein behaupteter Solution-Fortschritt und noch keine Übernahmefreigabe; anderes Karten-/Gegnerpanel als Mahmouds historische Liga.

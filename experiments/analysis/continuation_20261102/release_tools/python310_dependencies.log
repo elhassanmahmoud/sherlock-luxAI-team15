@@ -1,0 +1,6 @@
+Using Python 3.10.22 environment at: /tmp/sherlock-continue-20261102/venv310
+error: No solution found when resolving dependencies
+  cause: Because gym>=0.26.0 has no usable wheels and gymnax==0.0.8 depends on gym>=0.26, we can conclude that gymnax==0.0.8 cannot be used.
+         And because luxai-s3>=0.2.1 depends on gymnax==0.0.8 and you require luxai-s3==0.2.1, we can conclude that your requirements are unsatisfiable.
+
+hint: Wheels are required for `gym` because building from source is disabled for all packages (i.e., with `--no-build`)

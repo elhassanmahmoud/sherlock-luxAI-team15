@@ -1,0 +1,20 @@
+{
+  "status": "isolated_course_engine_prepared",
+  "actual_model_tested": false,
+  "engine_version": "0.2.1",
+  "source_freeze": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/study_freeze.json",
+  "source_freeze_sha256": "e1731478088ec7bdaa2b63a51a6ae60f0c7ecedc4522fbedfbcfbb0f1517ba03",
+  "changed_files": [
+    "params.py"
+  ],
+  "reason": "Course uses 3 matches, upstream default is 5; only isolated Python3.10 engine updated to exact already-frozen course source. Shared evaluation environment unchanged.",
+  "upstream_backup": {
+    "path": "/tmp/sherlock-continue-20261102/python310_upstream_params.py",
+    "sha256": "fa530e77c39e443ffa8c020d381c9eccf1a8092655655108452c63d8130cde7b"
+  },
+  "course_params": {
+    "path": "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/params.py",
+    "sha256": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666"
+  },
+  "all_course_python_files_match": true
+}
