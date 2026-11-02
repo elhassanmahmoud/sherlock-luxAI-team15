@@ -84,9 +84,10 @@ ist bis zum Ende der Kernprüfungen und einer eigenen Freigabe zurückgestellt.
   Jobs, vollständige Rohdaten und feste Karten/Gegner vor den Karten-Bootstraps.
   Für `confirmation200` **nicht** das alte, auf 300 Karten festgelegte
   `summarize.py confirmation` verwenden. Der geprüfte externe Auswerter liegt
-  unter `/tmp/sherlock-night-20261101/confirmation200-summary.py`, der unabhängige
-  Audit unter `/tmp/sherlock-night-20261101/confirmation200-independent-audit.md`.
-  Beide Auswertungen stimmen überein; die Belege werden separat archiviert.
+  während der Messung unter `/tmp/sherlock-night-20261101/`; bytegleiche Kopien
+  sind jetzt hier als `confirmation200-summary.py` und
+  `confirmation200-independent-audit.md` archiviert. Beide Auswertungen stimmen
+  überein; `external_evidence_archive.json` bindet die ursprünglichen Hashes.
   Vorhandene Zusammenfassungen werden nicht überschrieben.
 - Historische Manifeste enthalten absolute Pfade auf Moayeds Mac. Nicht durch
   neue Pfade oder einen anderen HEAD ersetzen; für Reproduktionen neue Ausgaben
@@ -96,3 +97,17 @@ ist bis zum Ende der Kernprüfungen und einer eigenen Freigabe zurückgestellt.
 Die anfänglichen Designberichte sind Vorschläge vor Umsetzung. Maßgeblich sind
 Plan, endgültige Umsetzungsberichte und tatsächliche Journal-/Datenbelege. Die
 36-Netz-V14-Sicherung bleibt unter `experiments/releases/20261101_v14_baseline/`.
+
+## Nach der abgeschlossenen Entscheidung
+
+694 Tests + 14 Untertests und acht vollständige Kursprüfspiele bestanden.
+Das lokal neu gebaute V14-Paket ist in `submission_validation.json` dokumentiert;
+beide Ablageorte, eingefrorenes Training und Tensor-/Dateiidentität sind geprüft.
+Die Gewichte bleiben unverändert. Der Paketfilter entfernt ungültige lokale
+Python-Dateikopien; interne Repo-Dokumente werden nicht mitgeliefert.
+
+Zwölf zusätzliche Nachspiele auf sechs bereits bekannten Verlustschlüsseln sind
+unter `remaining_solution_losses/` gespeichert. Das sind qualitative Fälle,
+keine neue Stärkenbestätigung oder Kandidatenauswahl. Der unabhängige
+Diagnosereview prüft die verfügbaren Felder und nennt die Ausgabengrenzen.
+Die weitere Schluss-/Git-Übergabe steht im Morgenbericht.

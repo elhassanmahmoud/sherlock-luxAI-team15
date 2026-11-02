@@ -26,16 +26,16 @@ höchstens ein Kandidat erhält eine unabhängige Bestätigung.
 
 ## Aufgaben
 
-- [ ] 1. V14 aktualisieren, Referenz-/Umgebungsbelege sichern, Baseline-Tests ohne andere Modelljobs.
-- [ ] 2. Überlappungsinferenz: rote Regression, minimale opt-in Umsetzung, grüne Regression,
+- [x] 1. V14 aktualisieren, Referenz-/Umgebungsbelege sichern, Baseline-Tests ohne andere Modelljobs.
+- [x] 2. Überlappungsinferenz: rote Regression, minimale opt-in Umsetzung, grüne Regression,
   erschöpfender kleiner Wahrheitsvergleich, Leistungsgrenze und unabhängiges Review.
   Dateien: `agents/sherlock/{belief,config,main}.py`, `tests/test_overlap_inference.py`.
-- [ ] 3. Kontrollpilot vorbereiten: deterministisch Netzindex 18 aus V14 extrahieren,
+- [x] 3. Kontrollpilot vorbereiten: deterministisch Netzindex 18 aus V14 extrahieren,
   q/target=q, frischer Optimierer, keine Ensemble-Extras, Tensoridentität prüfen.
   Fehlende Quelle/ungültiger Index/existierendes Ziel ablehnen. Beide Arme erhalten
   identischen Ausgang und neue Buffer. Dateien: `scripts/night_train_pilot.py`,
   `tests/test_night_train_pilot.py`. Keine globale Variante dauerhaft verändern.
-- [ ] 4. Maximal 600 Trainingsspiele je Arm, gleiche Karten, seed=9/map_offset=4200,
+- [x] 4. Maximal 600 Trainingsspiele je Arm, gleiche Karten, seed=9/map_offset=4200,
   120 Prefill-Spiele, Lernrate 1e-4, bestehender Gegner-Mix 60 % Solution,
   20 % Quadrat-Solution, 10 % default, 10 % rush. Gleiche V12-Trainingsregeln
   plus V14-Konfiguration; eval-only Regeln bleiben ausdrücklich eval-only.
@@ -48,11 +48,11 @@ höchstens ein Kandidat erhält eine unabhängige Bestätigung.
   Arm-Provenienz, tatsächliche Configs (einziger Unterschied Entdeckungsreward),
   Seed-/Gegnerplan, Prefill/Lernrate/Endstandwahl, vollständige Trainings- und
   Validierungsdaten, endlichen Loss und tatsächlichen Lernfortschritt.
-- [ ] 5. Kompatibilität mit Opt-in aus (4 Spiele) und Diagnosetrace (40 Karten)
+- [x] 5. Kompatibilität mit Opt-in aus (4 Spiele) und Diagnosetrace (40 Karten)
   prüfen; ohne zusätzliche sichere Fakten im Trace keinen Inferenzkandidaten.
-- [ ] 6. Festen Auswahlsatz vollständig spielen; genau einen zugelassenen
+- [x] 6. Festen Auswahlsatz vollständig spielen; genau einen zugelassenen
   Kandidaten nominieren, danach frischen Bestätigungsblock ohne Nachjustieren.
-- [ ] 7. Nur qualifizierten Kandidaten sichern/übernehmen; sonst V14 behalten.
+- [x] 7. Nur qualifizierten Kandidaten sichern/übernehmen; sonst V14 behalten.
   Kurs-Runner, portable Battle-ZIP und Hashprüfung; Bericht, Commits und Push.
 
 ## Vorab festgelegte Karten und Kandidaten
@@ -105,3 +105,29 @@ Vor jeder Phase Laufzeit aus tatsächlich gemessenen Sekunden/Spiel abschätzen.
 Nur beginnen, wenn vollständige Phase bis 05:30 Berlin mit Reserve passt; sonst
 auslassen. Ab 05:00 keine neuen langen Jobs, 05:30–06:00 Schlussprüfung/Übergabe.
 Keine selektive Auswertung unfertiger Blöcke, keine unbestätigte Übernahme.
+
+## Ausführungsnachtrag vom 02.11. nach Ende der Messung
+
+Der ursprüngliche Plantext bleibt als Vorabstand erhalten. Der vor Ergebnislektüre
+um 21:33:45 UTC geschriebene `confirmation_time_addendum.json` reduzierte aus
+gemessenen Laufzeiten die unabhängige Bestätigung auf **200 Karten**, alle Gates
+unverändert. Diese vollständige Phase heißt `confirmation200`; 6.000 Spiele, kein
+Abschneiden eines 300er-Laufs. Auswahl und Bestätigung liefen durchgehend auf
+HEAD `aa06601` mit unveränderten Quellen und Gewichten.
+
+3.100 Auswahlspiele nominierten CONTROL. Die 6.000 frischen Bestätigungsspiele
+zeigten keinen Übernahmenachweis: Panel −0,167 pp [−2,375; +2,000], Solution
+384/400 statt 382/400, direkt 201/400. Vier Gates verfehlt, Daten unabhängig exakt
+nachgerechnet. V14 bleibt; kein Nachrücken. Details in
+`experiments/analysis/night_20261101/DECISION.md`.
+
+Nach Ende und Audit des Source-Freeze: Paketfilter separat übernommen,
+694 Tests + 14 Untertests und acht Kurs-Runner-Spiele bestanden. Lokale Battle-ZIP
+mit V14, zwei Ablageorten und eingefrorenem Training geprüft. Der Morgenbericht
+und die Git-/Prozess-Abschlussprüfung dokumentieren den letzten Schritt.
+
+Abschluss: zwölf qualitative Nachspiele auf sechs verbrauchten Verlustschlüsseln
+reproduziert und separat nachgerechnet, ohne neue Gewichts-/Regeländerung.
+Eigene Modellläufe/Remote-Watch beendet, Nachtaufträge deaktiviert. Bericht,
+Paketbelege und Schlussdokumentation werden mit main abgeglichen. Keine neue
+Stärkenstudie oder automatische Fortsetzung nach dieser Nacht.

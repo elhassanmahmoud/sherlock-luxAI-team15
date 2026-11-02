@@ -18,6 +18,8 @@
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)
 
+- **Nacht 01./02.11. abgeschlossen: V14 bleibt.** Zwei 600-Spiele-Nachtrainingsarme, opt-in Überlappungsinferenz und 9.100 Vergleichsspiele lieferten keinen qualifizierten Nachfolger. CONTROL war in der Auswahl +4,83 pp, auf 200 frischen Karten im neuen lokalen Panel jedoch −0,167 pp [−2,375; +2,000]; gegen Solution 384/400 statt 382/400 ohne gesicherten Vorteil, direkt 50,25 % [43,5; 57]. Keine Übernahme und kein Nachrücken; neue Gewichte bleiben Experimente. [Entscheidung](experiments/analysis/night_20261101/DECISION.md), [Morgenbericht](docs/MORGENBERICHT_20261102.md). ZIP am 02.11. lokal mit unverändertem V14 neu gebaut; interne Repo-Doku und ungültige lokale Python-Dateikopien werden nicht verpackt. Aktuellen Abschlussstand im jüngsten Arbeitsstand lesen.
+
 - Abschluss des begrenzten V4-Programms am Abend des 21.10.: [Bericht für den 22.10.](docs/MORGENBERICHT_20261022.md). Paar-Koordinator, Zielpilot, 240 CNN-Trainingsspiele und Artillerie-Bestätigung lieferten in insgesamt 3.336 neuen Spielen keinen qualifizierten V3-Ersatz. Der letzte frische Vergleich ergab 301/400 statt 292/400 gegen Solution, aber +2,25 pp mit Intervall [−0,25; +4,75] verfehlt die vorab festgelegten Gates. Neue Evidenz wird von Mahmouds bereits gestarteten Gefahrmerkmale-/PPO-Studien erwartet; nicht doppelt starten. Alle Details und aktueller Abschlussstatus im Bericht.
 
 - **Battle-Vorbereitung 29.10.–04.11.** (Claude Code mit Mahmoud): [Plan](docs/superpowers/plans/2026-10-29-battle-push.md) mit Testkarten 800000–809999 und Hürden aus `scripts/league_gates.py`. Training und Messungen laufen auf Mahmouds Rechner; nicht doppelt starten. Stand im jüngsten Arbeitsstand.

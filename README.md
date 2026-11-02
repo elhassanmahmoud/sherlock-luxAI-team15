@@ -7,7 +7,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Ein Netz genügt für beide Seiten, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
 
-## Auf einen Blick (Stand 01.11.2026)
+## Auf einen Blick (Stand 02.11.2026)
 
 | | |
 |---|---|
@@ -18,9 +18,25 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | Gegen `default` | 100 % |
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
-| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, gebaut am 01.11., 17:51) mit `python -m scripts.build_submission --battle` |
-| Tests | 632 (`python -m pytest -q`) |
-| Gespielte Spiele | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
+| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal neu gebaut und geprüft am 02.11., 03:49) mit `python -m scripts.build_submission --battle` |
+| Tests | **694 Tests + 14 Untertests** bestanden (`python -m pytest -q`, 02.11.) |
+| Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
+
+## Nachtprüfung 01./02.11.: V14 bleibt
+
+Zwei Nachtrainingsarme mit je 600 Spielen und eine zusätzliche exakte
+Überlappungsinferenz wurden in **3.100 Auswahlspielen** und einer unabhängigen Bestätigung mit
+**6.000 Spielen** geprüft. Der einzige nominierte Kandidat erreichte gegen
+Solution 384 statt 382 Siege aus 400 Spielen. Im neuen lokalen Sechserpanel
+entstand jedoch kein Vorteil (−0,17 pp), direkt gegen V14 nur 201/400.
+**Kein Kandidat ist zur Übernahme qualifiziert; die 36 V14-Netze bleiben unverändert.**
+
+[Entscheidung mit Intervallen und Daten](experiments/analysis/night_20261101/DECISION.md)
+· [Morgenbericht und nächste Schritte](docs/MORGENBERICHT_20261102.md).
+Das lokale Panel unterscheidet sich von Mahmouds historischer Liga; seine
+Mittelwerte sind nicht direkt mit den 87,6 % oben vergleichbar. Die ZIP enthält
+nur Laufzeitdateien, Gewichte und benötigte Hinweise; interne Repo-Dokumente
+und lokale Dateikopien werden nicht verpackt.
 
 ## Inhalt
 
@@ -306,7 +322,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
 │   ├── play_and_view.py, demo_server.py   Spiel ansehen, Demo-Seite
 │   └── common.py, metrics.py, protocol.py, …   Spiel-Schleife, Kennzahlen, Seeds
-├── tests/                        pytest (632 Tests)
+├── tests/                        pytest (694 Tests + 14 Untertests, Stand 02.11.)
 ├── experiments/
 │   ├── compare/                  Ergebnisse je Spiel als CSV
 │   ├── analysis/                 Auswertungen, Übernahmeberichte (release_*/RELEASE.md)
