@@ -71,6 +71,45 @@ class DriverTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.driver.build_jobs(REPO, self.out, self.weights, 'confirmation', candidate='backup')
 
+    def test_predeclared_p_only_has_three_selection_jobs_and_no_pt_confirmation(self):
+        d = self.driver
+        weights = {key: self.weights[key] for key in ('baseline', 'P')}
+        try:
+            jobs = d.build_jobs(REPO, self.out, weights, 'selection')
+        except ValueError as exc:
+            self.fail(f'Predeclared P-only weight roster must be accepted: {exc}')
+        self.assertEqual([j['name'] for j in jobs], ['baseline_panel', 'P_panel', 'P_direct'])
+        self.assertEqual([j['games'] for j in jobs], [1400, 1400, 200])
+        self.assertEqual(sum(j['games'] for j in jobs), 3000)
+        self.assertTrue(all(j['workers'] == 2 for j in jobs))
+        self.assertEqual({j['role'] for j in jobs}, {'baseline', 'P'})
+        confirm = d.build_jobs(REPO, self.out, weights, 'confirmation', candidate='P')
+        self.assertEqual(len(confirm), 3)
+        self.assertEqual(sum(j['games'] for j in confirm), 9000)
+        with self.assertRaises(ValueError):
+            d.build_jobs(REPO, self.out, weights, 'confirmation', candidate='PT')
+        for invalid in ({'baseline': 'b'}, {'baseline': 'b', 'PT': 'pt'}, dict(weights, extra='x')):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                d.build_jobs(REPO, self.out, invalid, 'selection')
+
+    def test_freeze_accepts_exact_p_only_roster_and_rejects_missing_p(self):
+        d = self.driver
+        tools, frozen, freeze = self.phase_fixture()
+        frozen.update(schema_version=1, expected_head='f'*40,
+                      driver=dict(path=str(Path(d.__file__).resolve()), sha256=d.digest(d.__file__)))
+        frozen['weights'] = {key: self.weights[key] for key in ('baseline', 'P')}
+        freeze.write_text(json.dumps(frozen))
+        with patch.object(d, 'identity', return_value=frozen['identity']), patch.object(d, 'load_tools', return_value=tools):
+            try:
+                checked = d.check_freeze(freeze)
+            except ValueError as exc:
+                self.fail(f'Frozen P-only roster is valid: {exc}')
+            self.assertEqual(set(checked['weights']), {'baseline', 'P'})
+            frozen['weights'] = dict(baseline=self.weights['baseline'], PT=self.weights['PT'])
+            freeze.write_text(json.dumps(frozen))
+            with self.assertRaises(ValueError):
+                d.check_freeze(freeze)
+
     def test_power_thresholds_and_ac(self):
         d = self.driver
         for text, want in [
@@ -207,13 +246,13 @@ class DriverTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             d.check_selection_summary(summary, 'PT', receipt)
 
-    def phase_fixture(self):
+    def phase_fixture(self, weights=None):
         d = self.driver
         tools = d.load_tools(REPO)
         tools.early = SimpleNamespace(GAME_FIELDS=tools.early.GAME_FIELDS, read_rows=tools.early.read_rows,
                                      resource_lock=lambda root: nullcontext(), THREAD_ENV={})
         tools.jobs = SimpleNamespace(validate_inputs=lambda *args: None)
-        frozen = dict(root=str(REPO), python='/synthetic/python', weights=self.weights,
+        frozen = dict(root=str(REPO), python='/synthetic/python', weights=weights or self.weights,
                       frozen_weights={}, identity=dict(source=dict(head='f'*40), weights={}))
         freeze_path = self.out / 'study_freeze.json'
         freeze_path.write_text(json.dumps(frozen))
@@ -274,6 +313,39 @@ class DriverTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 d.run_phase(plan, start=True)
         self.assertNotIn('torch', __import__('sys').modules)
+
+    def test_p_only_same_freeze_confirmation_and_late_pt_addition_is_rejected(self):
+        d = self.driver
+        weights = {key: self.weights[key] for key in ('baseline', 'P')}
+        tools, frozen, freeze = self.phase_fixture(weights)
+        with patch.object(d, 'check_freeze', return_value=frozen), patch.object(d, 'load_tools', return_value=tools), \
+             patch.object(d, 'identity', return_value=frozen['identity']), patch.object(d, 'check_foreign_jobs'), \
+             patch.object(d, 'current_power', return_value=(True, 10)), patch.object(d.time, 'time', return_value=1), \
+             patch.object(d, 'run_job', side_effect=self.synthetic_job):
+            try:
+                d.prepare_phase(freeze, self.out / 'p_only_selection', 'selection')
+            except ValueError as exc:
+                self.fail(f'P-only prepare should bind the fixed smaller study before outcomes: {exc}')
+            plan_path = self.out / 'p_only_selection/plan.json'
+            state = d.run_phase(plan_path, start=True)
+            self.assertEqual(state['completed_games'], 3000)
+            summary = self.out / 'p_only_summary.json'
+            summary.write_text(json.dumps(dict(phase='selection', status='complete', nominee='P',
+                plan_sha256=d.digest(plan_path), study_freeze_sha256=d.digest(freeze),
+                csv_sha256={row['out']: row['output_sha256'] for row in state['jobs']})))
+            confirmation = d.prepare_phase(freeze, self.out / 'p_only_confirmation', 'confirmation', candidate='P',
+                selection_state=plan_path.parent / 'state.json', selection_summary=summary)
+            self.assertEqual(confirmation['study_freeze_sha256'], state['study_freeze_sha256'])
+            self.assertEqual(sum(j['games'] for j in confirmation['jobs']), 9000)
+            with self.assertRaises(ValueError):
+                d.prepare_phase(freeze, self.out / 'forbidden_pt', 'confirmation', candidate='PT',
+                    selection_state=plan_path.parent / 'state.json', selection_summary=summary)
+            self.assertFalse((self.out / 'forbidden_pt').exists())
+            frozen['weights'] = dict(self.weights)
+            freeze.write_text(json.dumps(frozen))
+            with self.assertRaises(ValueError):
+                d.prepare_phase(freeze, self.out / 'late_extended_master', 'confirmation', candidate='PT',
+                    selection_state=plan_path.parent / 'state.json', selection_summary=summary)
 
     def test_logical_tmp_plan_input_uses_canonical_output_and_receipt_paths(self):
         if not Path('/tmp').is_symlink():

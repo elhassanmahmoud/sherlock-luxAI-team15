@@ -89,12 +89,19 @@ def load_tools(root):
     return SimpleNamespace(early=early, jobs=jobs)
 
 
+def candidate_roles(weights):
+    require(set(weights) in ({'baseline', 'P'}, {'baseline', 'P', 'PT'}),
+            'Freeze exactly baseline+P or baseline+P+PT before fresh outcomes')
+    return ('P', 'PT') if 'PT' in weights else ('P',)
+
+
 def build_jobs(root, out, weights, phase, *, candidate=None):
     require(phase in ('selection', 'confirmation'), 'Unknown fixed phase')
     require(candidate is None if phase == 'selection' else candidate in ('P', 'PT'), 'Invalid nominee')
-    require(set(weights) == {'baseline', 'P', 'PT'}, 'Bind baseline, P and PT paths')
+    nominees = candidate_roles(weights)
+    require(phase == 'selection' or candidate in nominees, 'Nominee is absent from the original shared study freeze')
     root, out = Path(root), Path(out)
-    roles = ('baseline', 'P', 'PT') if phase == 'selection' else ('baseline', candidate)
+    roles = ('baseline', *nominees) if phase == 'selection' else ('baseline', candidate)
     first, n = (841000, 100) if phase == 'selection' else (842000, 300)
     jobs = []
     for role in roles:
@@ -112,7 +119,8 @@ def build_jobs(root, out, weights, phase, *, candidate=None):
                 log=str(out / f'{role}_direct.log')))
     for job in jobs:
         job['root'] = str(root)
-    require(sum(j['games'] for j in jobs) == (4600 if phase == 'selection' else 9000), 'Wrong fixed game count')
+    require(sum(j['games'] for j in jobs) == (1400 + 1600 * len(nominees) if phase == 'selection' else 9000),
+            'Wrong fixed game count')
     return jobs
 
 
@@ -204,7 +212,8 @@ def check_freeze(path, *, expected_sha=None, tools=None):
     path = Path(path).resolve(strict=True)
     require(path.is_file() and (expected_sha is None or digest(path) == expected_sha), 'Study freeze SHA mismatch')
     frozen = read_json(path)
-    require(frozen['schema_version'] == 1 and set(frozen['weights']) == {'baseline', 'P', 'PT'}, 'Invalid shared study freeze')
+    require(frozen['schema_version'] == 1, 'Invalid shared study freeze')
+    candidate_roles(frozen['weights'])
     require(frozen['driver']['path'] == str(Path(__file__).resolve()), 'Use the recorded reviewed driver path')
     require(re.fullmatch('[0-9a-f]{40}', frozen['expected_head']), 'Invalid full HEAD pin')
     tools = tools or load_tools(frozen['root'])
@@ -216,7 +225,8 @@ def check_freeze(path, *, expected_sha=None, tools=None):
 def create_freeze(root, out, weights, *, python, protocols, expected_head):
     root, out = Path(root).resolve(strict=True), new_path(out)
     require(out.suffix == '.json' and out.parent.is_dir(), 'Use new JSON in an existing output directory')
-    require(set(weights) == {'baseline', 'P', 'PT'} and protocols, 'Bind all three models and performance protocols')
+    candidate_roles(weights)
+    require(protocols, 'Bind the fixed performance protocols')
     tools = load_tools(root)
     models = {role: str((root / path).resolve(strict=True)) for role, path in weights.items()}
     paths = set(map(Path, models.values()))
@@ -502,8 +512,9 @@ def main():
     freeze.add_argument('--python', type=Path, required=True)
     freeze.add_argument('--expected-head', required=True)
     freeze.add_argument('--protocol', type=Path, action='append', required=True)
-    for role in ('baseline', 'p', 'pt'):
+    for role in ('baseline', 'p'):
         freeze.add_argument('--' + role, required=True)
+    freeze.add_argument('--pt', help='Omit only for a predeclared P-only study; the shared roster cannot be extended later')
     prepare = sub.add_parser('prepare', help='Write one fresh fixed phase plan; never starts games')
     prepare.add_argument('--freeze', type=Path, required=True)
     prepare.add_argument('--out', type=Path, required=True)
@@ -516,7 +527,10 @@ def main():
     run.add_argument('--start', action='store_true', required=True)
     args = parser.parse_args()
     if args.command == 'freeze':
-        create_freeze(args.root, args.out, dict(baseline=args.baseline, P=args.p, PT=args.pt),
+        weights = dict(baseline=args.baseline, P=args.p)
+        if args.pt is not None:
+            weights['PT'] = args.pt
+        create_freeze(args.root, args.out, weights,
                       python=args.python, protocols=args.protocol, expected_head=args.expected_head)
     elif args.command == 'prepare':
         prepare_phase(args.freeze, args.out, args.phase,

@@ -41,6 +41,23 @@ Solution-Delta mindestens0; default mindestens99%; direkt mindestens50%.
 Unter Zulässigen größtes Panel-Delta, bei Gleichstand innerhalb1e-9 einfacheres P.
 Maximal ein Nominee; keiner bei verfehlten Bedingungen.
 
+### Vorab erlaubter P-only-Fallback
+
+Wenn der Vierarmpilot aus Ressourcen-/Zeitgründen unvollständig bleibt, darf
+Root **vor dem ersten841er-Ergebnis** ausschließlichP als Kandidaten festlegen.
+Das gemeinsame unveränderliche Freeze enthält dann genau baseline/P; sonst
+baseline/P/PT. Ein nachträgliches Hinzufügen vonPT und ein Nachrücken bleiben verboten.
+P benötigt keinen Trainingsaudit, weil sämtliche36Netze aus dem exakt gehashten
+V14 stammen; geordnete Tensoridentität und ausschließlich2neueConfigflags sind
+unabhängig zu belegen. PT benötigt weiterhin allevierACCEPTED-Arme.
+
+P-only-Auswahl: dieselben100Karten/beidenSeiten/Gegner/Gates,1400Referenz+
+1400P+200direkt=**3000Spiele**. Bestätigung unverändert9000Spiele/300Karten und
+dieselben Gates. Keine Verkleinerung nach Ergebnissen. Initial136,32minAuswahl+
+408,96minBestätigung+60minSchluss=605,28min; spätester Auswahlstart19:24:43Berlin
+(konservativ19:24), Bestätigung weiter21:41. Akku-/Zeit-/Kontingentgrenzen gelten identisch.
+Die reine Werkzeugunterstützung entscheidet noch keine Route und startet keine Spiele.
+
 ## Einmalige frische Bestätigung
 
 300 Karten842000–842299, beide Seiten, sieben Gegner für V14 und den einzigen

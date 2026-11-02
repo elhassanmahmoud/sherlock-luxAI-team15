@@ -205,6 +205,29 @@ class SyntheticCompletePhaseTests(unittest.TestCase):
             stats.summarize(plan, state_path, target)
         self.assertFalse(target.exists())
 
+    def test_predeclared_p_only_selection_and_same_freeze_confirmation(self):
+        self.weights = {role: self.weights[role] for role in ('baseline', 'P')}
+        self.freeze = self.root / 'study_p_only_freeze.json'
+        with patch.object(self.driver, 'SOURCE_SHA', self.driver.digest(self.weights['baseline'])):
+            self.frozen = self.driver.create_freeze(self.root, self.freeze, self.weights,
+                python=sys.executable, protocols=[self.root / 'synthetic_protocol.md'], expected_head=self.head)
+        plan, state = self.write_complete_phase(self.root / 'p_only_selection', 'selection')
+        target = self.root / 'p_only_selection_summary.json'
+        with contextlib.redirect_stdout(io.StringIO()):
+            summary = stats.summarize(plan, state, target)
+        self.assertEqual(summary['completed_games'], 3000)
+        self.assertEqual(set(summary['candidates']), {'P'})
+        self.assertEqual(summary['nominee'], 'P')
+        self.assertEqual(summary['candidates']['P']['panel']['maps'], 100)
+        plan2, state2 = self.write_complete_phase(self.root / 'p_only_confirmation', 'confirmation',
+            candidate='P', selection_state=state, selection_summary=target)
+        with contextlib.redirect_stdout(io.StringIO()):
+            confirmation = stats.summarize(plan2, state2, self.root / 'p_only_confirmation_summary.json')
+        self.assertEqual(confirmation['completed_games'], 9000)
+        self.assertTrue(confirmation['promotion_qualified'])
+        self.assertEqual(confirmation['study_freeze_sha256'], summary['study_freeze_sha256'])
+        self.assertNotIn('torch', sys.modules)
+
 
 if __name__ == '__main__':
     unittest.main()

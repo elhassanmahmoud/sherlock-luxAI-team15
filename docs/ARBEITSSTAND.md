@@ -7,6 +7,15 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 02.11.2026, 16:41 Berlin – Codex: erste Teilwelle unabhängig akzeptiert, P-only-Fallback vorbereitet
+
+- [Unabhängiger Teilbericht](../experiments/analysis/continuation_20261102/performance/review/first_wave_independent_audit.md): **ACCEPTED_FIRST_WAVE_ONLY**,1.762Prüfungen/0Fehler. Zwei tatsächliche vollständige Arme, je720Rollouts/96Val/600CSV,90.000Updates,278.160Env-Schritte, echteTensor-/Adam-/Reloadbelege und strikteValisolation. Keine Agentenkonstruktion,Forward-Calls,Gradienten oder Spiele durch den Auditor. Das ist keine Vierarm- oder Stärkeabnahme.
+- Eine zu strenge Auditannahme wurde vor einem Vierarm-Audit sauber eingegrenzt: Vorladeprüfung benutzteglobalSeed28, echte finetune-Initialisierung planmäßig4228; tatsächliche Partner stimmen überein. BestehenderDefaultAgent setzt zwischenEpisoden globalNumPy zurück. Vergleich kompletter globalerRNG über diese Konstruktion wäre falsch; innerhalb jeder Validierung bleibt exakte eigene/globaleRNG-Erhaltung zwingend und wurde bestanden. Details/Patchhinweis im Teilbericht; alter Vierarm-Audit noch nicht ausgeführt.
+- ZweiteWelle noch ohneAC bei30%Akku vorgemerkt, spätester zulässigerStart15:44:54UTC, keineFristverlängerung und keine doppeltenArme. Danach keinPT aus einem unvollständigenPilot. Beide Abgabegewichte unverändert.
+- Bereits im Protokoll erlaubten **P-only-Fallback** konkret implementiert und unabhängig geprüft: vor ersten841er-Daten kann Root bei fehlenderPT-Zulassung ausschließlichP fixieren. Auswahl3.000 statt4.600Spiele, dieselben100Karten/Gegner/Gates; Bestätigung unverändert9.000Spiele/300Karten, derselbeFreeze. Kein späteresPT-Hinzufügen. P verwendet alle36Originalnetze, nurzweiConfigflags; keinTrainingaudit behauptet. Die Route ist hiermit noch nicht gewählt.
+- 49 fokussierte synthetische Tests nach Übertragung in die primäre Arbeitskopie bestanden, keineSkips (22Driver+16Stats+11Builder). Finaler unabhängigerCode-/Spec-Review PASS. OriginaleTools und deren historischeReviewnachweise erhalten; Source-Freeze der Performancekopie weiter8e4720c, dortkeineHEAD-/Quellenänderung. [Werkzeuge/Review](../experiments/analysis/continuation_20261102/performance/README.md). Kein reales841/842/843er-Spiel, kein neuesStärkeergebnis.
+
 ## 02.11.2026, 16:22 Berlin – Codex: erstes Trainingspaar abgeschlossen, feste Leistungsstudie vorbereitet
 
 - Erste Welle `20261102_target_control18`/`20261102_target_adapt18` vollständig: je120Prefill+600Lernspiele+96bekannteValidierungen, zusammen1.632 tatsächliche Spiele. Beide Startnetze exakt V14-Komponente18; am Ende je90.000 reale Lernupdates und278.160Env-Schritte, q verändert, gespeicherter Endstand erfolgreich erneut geladen, keine Counterabweichung. Dies ist noch **kein Stärkenachweis**.

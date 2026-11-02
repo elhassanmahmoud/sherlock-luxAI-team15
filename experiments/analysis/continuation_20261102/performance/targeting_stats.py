@@ -90,7 +90,7 @@ def summarize(plan_path, state_path, out):
         by_role.setdefault(job['role'], []).append((job, frame))
         csv_hashes[str(target)] = done['output_sha256']
         total += len(frame)
-    roles = ['P', 'PT'] if phase == 'selection' else [plan['candidate']]
+    roles = [name for name in ('P', 'PT') if name in frozen['weights']] if phase == 'selection' else [plan['candidate']]
     assert roles in (['P', 'PT'], ['P'], ['PT'])
     assert set(by_role) == {'baseline', *roles}
     expected_first = 841000 if phase == 'selection' else 842000
@@ -151,7 +151,7 @@ def summarize(plan_path, state_path, out):
                                              draws=int((values == .5).sum()), losses=int((values == 0).sum()))
         results[role] = dict(panel=panel, direct=direct, opponents=rows, counts=counts,
                              gates={k: bool(v) for k, v in checks.items()}, passed=all(checks.values()))
-    expected_total = (4600 if phase == 'selection' else 9000)
+    expected_total = (1400 + 1600*len(roles) if phase == 'selection' else 9000)
     assert total == expected_total
     result = dict(phase=phase, status='complete', study_freeze_sha256=plan['study_freeze_sha256'],
                   plan_path=str(plan_path), plan_sha256=sha(plan_path), state_sha256=sha(state_path),

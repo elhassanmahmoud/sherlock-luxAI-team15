@@ -1,0 +1,152 @@
+OPTIONAL PREDECLARED P-ONLY FALLBACK — external tooling, 02 Nov 2026
+
+Prepared only. Root has not selected this fallback through this task. No real
+model, environment, game, training, fresh841 result, promotion or repository edit
+was used. All new files are in /tmp/sherlock-continue-20261102/p_only_fallback/.
+The initial seven copies were byte-identical; initial_copy_manifest.json records
+the original paths and SHA pins. All seven ORIGINAL files still match those
+pins. The original stable full-route tools and primary ac17 sources are intact.
+
+Root owns copied targeting_stats.py/test_targeting_stats.py. The implementer
+owns copied driver/builder/their tests/this handoff. All modules import siblings
+or derive paths from --root and __file__, supporting later common performance/
+integration. Real freezes must be created AFTER the reviewed files are relocated
+or committed, because driver path, driver SHA and full source HEAD are pinned.
+
+FILES / CURRENT SHA256
+
+targeting_eval_driver.py
+  7700ba0ab0bb2eda3d7ced9b252da615af10669ddb42b58f23e3ae0940610308
+build_targeting_candidates.py
+  7be85c7f8bc2f55888c78ae3603a56df0d7ae546225fcb8c1f196cb1df550102
+targeting_stats.py (Root-owned copy)
+  2916fd4e8e68dcd1cabac45c210bb871a97e0587cd408217b51d34ae39f8378e
+test_targeting_eval_driver.py
+  14b10b5bc6d2483e7524e0fed22dc9e3c42896d09ad38ae7ec55016325ae324a
+test_targeting_stats.py (Root-owned copy)
+  0ab6ea0fad16c81277850fe7eaae5cdd63c24abb6c9f36aa6c03faaba604aba1
+test_build_targeting_candidates.py
+  8fd4825efdf8fd32d6b4378fb60291db41ca9328f44cca3dadb109a2d25598ad
+
+FIXED ROSTERS / NO LATE PT ADDITION
+
+The master freeze accepts EXACTLY weights={baseline,P} OR {baseline,P,PT}.
+Missing P, baseline-only, baseline+PT, extra roles and missing nominee paths
+fail closed. The initial roster is bound by the complete master file SHA.
+
+Full selection is unchanged: five jobs, 4600 games, baseline1400/P1600/PT1600.
+Predeclared P-only selection has three jobs: baseline_panel1400, P_panel1400,
+P_direct200 =3000 games. Both use the same100maps841000–841099 and both sides.
+Each panel job is the exact six specified historical opponents PLUS default;
+metrics/gates continue to use only PANEL6 for the panel mean and default alone
+for its guard. Every job is unmodified par_eval with exactly two workers.
+
+Confirmation remains three jobs/9000 games for BOTH rosters: baseline4200,
+the one predeclared/selected candidate4200 on842000–842299 and direct600 on
+843000–843299. A P-only freeze cannot confirm PT. Replacing/extending that master
+after selection breaks the selection receipt's SHA binding; the new roster
+cannot be used as its confirmation. No post-outcome fallback or PT addition.
+Root alone chooses the fixed roster BEFORE the first fresh841 outcome, only
+for the predeclared resource/pilot-admission reason. Gates and N100/300 are fixed.
+
+BUILDER MODES
+
+--p-only builds ONLY P from the pinned V14 source, with all36 ordered tensors
+unchanged and exactly point_pair_swap/art_move_guard set true. Source SHA,
+homogeneous79/6 dimensions, ordered component hashes and saved reload are
+checked. No training audit or adapted checkpoint is read. The manifest explicitly
+says training_audit_used=false and omits audit_path/audit_sha256 claims.
+
+Full/default mode still REQUIRES --audit: all four ACCEPTED arms, unchanged
+evidence hashes and both adapted final18/19 inputs. It still produces P and PT,
+replaces exactly18/19 for PT and retains36 equal-weight ordered networks.
+--p-only and --audit are mutually exclusive in CLI AND API. Neither mode may
+write active weights; only new experiments/ensembles/ output directories.
+
+SOURCE / RECEIPT / ADMISSION SAFETY UNCHANGED
+
+The shared master pins source/HEAD/interpreter/driver/protocols, model inputs,
+historical opponents, direct V14 and both active released weights. Selection and
+confirmation require the IDENTICAL master SHA. Before/while/after checks remain.
+Every completed CSV must have exact unique(seed,side,opponent) keys,303 steps,
+point-countingv2 and finite/consistent values. No outcome selection is performed
+by the driver. Root's independent statistics summary chooses at most one nominee.
+Confirmation requires its pinned complete selection state and summary, exact
+CSV hashes, matching nominee and matching master; no partial/incomplete phases.
+
+Resource classes remain combined_panel(initial2.22 WALL seconds/game) and
+direct(initial3.0). These already reflect two-worker throughput: NEVER /2.
+For each class use observedmax_c across all completed study jobs; global
+slowdown=max(1,max_c(observedmax_c/initial_c)); effective_c=max(observedmax_c,
+initial_c*slowdown). Projection=1.20*sum(remaining_games_c*effective_c).
+Selection budgets FULL future confirmation{combined_panel:8400,direct:600} even
+in P-only mode. Confirmation inherits all pinned selection timings and has
+zero extra future work. Earlier slow measurements are never discarded.
+
+Hard deadline remains03Nov04:30Z(05:30Berlin), with3600seconds closing reserve;
+managed game work must finish before03:30Z(04:30Berlin). Initial-only latest
+starts: full selection~18:10:34Berlin, P-only selection~19:24:43Berlin,
+confirmation~21:41:02Berlin. Slower measurements only move these earlier.
+Battery use allowed: below35% no new long job, <=25% stop owned process groups;
+AC permits lower charge. Polling, shared lock, foreign-job refusal, protected
+spawn/ownership registration, child mask restoration and bounded own-group
+cleanup are unchanged. Receipt ownership is reserved under lock with open('x');
+foreign receipts are never overwritten. Fresh outputs only; no partial resume.
+
+FUTURE CLI — NOT EXECUTED HERE
+
+P-only candidate:
+  python -B REVIEWED_BUILDER --root FROZEN_ROOT --source V14_SOURCE
+    --out NEW_EXPERIMENT_ENSEMBLE_DIR --p-only
+
+Full candidate build instead uses --audit ACCEPTED_FOUR_ARM_AUDIT, not --p-only.
+
+Create ONE master; omit --pt ONLY for a predeclared P-only study:
+  python -B REVIEWED_DRIVER freeze --root FROZEN_ROOT --out NEW_BASE/study_freeze.json
+    --python SHARED_PYTHON --expected-head REVIEWED_FULL_HEAD
+    --protocol PERFORMANCE_PROTOCOL --protocol ADAPTATION_PROTOCOL
+    --baseline V14_SOURCE --p P_FILE [--pt PT_FILE]
+
+  python -B REVIEWED_DRIVER prepare --freeze NEW_BASE/study_freeze.json
+    --out NEW_BASE/selection --phase selection
+  python -B REVIEWED_DRIVER run --plan NEW_BASE/selection/plan.json --start
+
+After complete independent selection audit and the ONE pinned nominee:
+  python -B REVIEWED_DRIVER prepare --freeze NEW_BASE/study_freeze.json
+    --out NEW_BASE/confirmation --phase confirmation --candidate P_OR_PT
+    --selection-state NEW_BASE/selection/state.json
+    --selection-summary ACCEPTED_SELECTION_SUMMARY
+  python -B REVIEWED_DRIVER run --plan NEW_BASE/confirmation/plan.json --start
+
+Bracket notation is descriptive, not a literal shell argument. NEW_BASE must
+exist, the master file must be new, and each phase output directory must be new.
+
+RED/GREEN EVIDENCE
+
+red_p_only_driver.log: three new required behaviors fail on the copied unchanged
+driver before implementation: P-only roster/jobs, exact freeze roster validation,
+and same-freeze confirmation/late-PT refusal. All nineteen full-route tests are
+retained. Runner fixtures use SOURCE_ROOT/CWD and canonical/tmp temporary dirs.
+
+red_p_only_builder.log: four missing-mode failures and one missing manifest
+behavior before implementation. New high-level tests execute the builder using
+dictionary/JSON serializer doubles; no torch runtime or real checkpoint is used.
+They prove no training/audit input in P-only mode, same36 states/config+2flags,
+mutually exclusive audit/mode, unchanged full four-arm admission/replacements,
+and refusal to write active paths. Six original structure tests remain green.
+
+final_unittest.log: ALL49 tests passed in1.719seconds, no skips:
+  Driver22 + RootStats16 + Builder11.
+Run with shared Python -B and TARGETING_SOURCE_ROOT set to the unchanged
+performance worktree. Statistics includes wholly synthetic3000/9000 P-only and
+4600/9000 full phase-file pipelines, actual hash/CSV/master/summary checks and
+the existing5000-draw bootstrap. Invented test rows are not fresh-map outcomes.
+No torch is imported, no real model opened and no real game/child worker started.
+
+FOLLOW-UP
+
+Root must independently review these NEW copies and decide whether they are
+needed. Real source/component/config preflight, loaded-model admission, runtime
+freeze, battery/time/quota admission and all study execution remain separate.
+The optional fallback has not been selected or started by this task. The stable
+original full-route tools remain available and unchanged if AC/full pilot wins.

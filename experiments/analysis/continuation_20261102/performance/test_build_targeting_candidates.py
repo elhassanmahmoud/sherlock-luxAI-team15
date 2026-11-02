@@ -1,9 +1,16 @@
 """Pure dictionary checks: no checkpoint loading, tensors, games or promotion."""
 import copy
+import contextlib
 import importlib.util
+import inspect
+import io
+import json
 from pathlib import Path
 import sys
+import tempfile
+from types import ModuleType
 import unittest
+from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
@@ -69,6 +76,137 @@ class CandidateStructureTests(unittest.TestCase):
             with self.subTest(index=index), self.assertRaises(ValueError):
                 builder.make_candidate(self.source, {index: dict(weight=[[999]])})
         self.assertNotIn('torch', sys.modules)
+
+
+class CandidateBuildModeTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(dir=Path('/tmp').resolve())
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.states = [dict(weight=[[index]], bias=[index / 100]) for index in range(36)]
+        self.source = dict(q=self.states[0], ensemble=self.states[1:], cfg=dict(
+            point_pair_swap=False, art_move_guard=False, frozen=True, cand_rescue=True,
+            rescue_after=30, w_discovery=.5, w_explore=.3),
+            feature_dim=79, n_actions=6, ensemble_dims=[79]*35)
+        self.source_path = self.root / 'synthetic_source.pth'
+        self.source_path.write_bytes(b'synthetic dictionary fixture; never torch data')
+        self.checkpoints = {self.source_path: self.source}
+        self.loaded = []
+
+    @contextlib.contextmanager
+    def dictionary_runtime(self):
+        """Execute builder guards with JSON dictionaries, never the torch runtime."""
+        torch = ModuleType('torch')
+
+        def load(path, **kwargs):
+            path = Path(path)
+            self.loaded.append(path)
+            if path in self.checkpoints:
+                return copy.deepcopy(self.checkpoints[path])
+            return json.loads(path.read_text())
+
+        def save(checkpoint, path):
+            Path(path).write_text(json.dumps(checkpoint))
+
+        torch.load, torch.save = load, save
+        hashes = ModuleType('scripts.night_train_pilot')
+        hashes.tensor_sha256 = lambda state: __import__('hashlib').sha256(
+            json.dumps(state, sort_keys=True).encode()).hexdigest()
+        models = ModuleType('agents.sherlock.model')
+        models.checkpoint_ensemble_dims = lambda checkpoint, dim: [dim]*len(checkpoint['ensemble'])
+        modules = {'torch': torch, 'scripts': ModuleType('scripts'),
+                   'scripts.night_train_pilot': hashes, 'agents': ModuleType('agents'),
+                   'agents.sherlock': ModuleType('agents.sherlock'), 'agents.sherlock.model': models}
+        with patch.dict(sys.modules, modules), patch.object(builder, 'SOURCE_SHA', builder.sha(self.source_path)):
+            yield
+
+    def accepted_audit(self):
+        evidence = {}
+        for index in (18, 19):
+            path = self.root / f'experiments/runs/20261102_target_adapt{index}/weights/agent.pth'
+            path.parent.mkdir(parents=True)
+            path.write_bytes(f'synthetic replacement {index}'.encode())
+            self.checkpoints[path] = dict(q=dict(weight=[[index*100]], bias=[index]),
+                ensemble=[], feature_dim=79, n_actions=6, learn_steps=150)
+            evidence[str(path)] = builder.sha(path)
+        audit = self.root / 'accepted_audit.json'
+        audit.write_text(json.dumps(dict(verdict='ACCEPTED', failed=[], warnings=[],
+            arms={name: {} for name in ('control18', 'adapt18', 'control19', 'adapt19')},
+            evidence_sha256=evidence)))
+        return audit
+
+    def test_p_only_build_needs_no_audit_or_training_inputs_and_preserves_36_nets(self):
+        self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')
+        out = self.root / 'experiments/ensembles/p_only'
+        before = copy.deepcopy(self.source)
+        with self.dictionary_runtime(), contextlib.redirect_stdout(io.StringIO()):
+            builder.build(self.root, self.source_path, None, out, p_only=True)
+        manifest = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(set(manifest['candidates']), {'P'})
+        self.assertEqual(manifest['candidates']['P']['nets'], 36)
+        self.assertEqual(manifest['candidates']['P']['replaced_indices'], [])
+        self.assertEqual(len(manifest['source_component_sha256']), 36)
+        self.assertFalse(manifest['training_audit_used'])
+        self.assertNotIn('audit_path', manifest)
+        self.assertNotIn('audit_sha256', manifest)
+        self.assertEqual(self.loaded, [self.source_path, out / 'P.pth'])
+        candidate = json.loads((out / 'P.pth').read_text())
+        self.assertEqual([candidate['q'], *candidate['ensemble']], self.states)
+        self.assertEqual(candidate['cfg'], dict(before['cfg'], point_pair_swap=True, art_move_guard=True))
+        self.assertEqual(self.source, before)
+        self.assertFalse((out / 'PT.pth').exists())
+        self.assertNotIn('torch', sys.modules)
+
+    def test_p_only_and_audit_are_mutually_exclusive_without_loading(self):
+        self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')
+        with self.assertRaises(ValueError):
+            builder.build(self.root, self.source_path, self.root / 'unused_audit.json',
+                          self.root / 'experiments/ensembles/invalid', p_only=True)
+        self.assertTrue(hasattr(builder, 'main'), 'testable mutually exclusive CLI entry point missing')
+        argv = ['builder', '--root', str(self.root), '--source', str(self.source_path),
+                '--out', str(self.root / 'out'), '--audit', 'unused.json', '--p-only']
+        with patch.object(sys, 'argv', argv), contextlib.redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as stopped:
+                builder.main()
+        self.assertEqual(stopped.exception.code, 2)
+        self.assertNotIn('torch', sys.modules)
+
+    def test_full_mode_still_requires_all_four_accepted_arms(self):
+        self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')
+        out = self.root / 'experiments/ensembles/full'
+        with self.assertRaises(ValueError):
+            builder.build(self.root, self.source_path, None, out)
+        audit = self.accepted_audit()
+        values = json.loads(audit.read_text())
+        values['arms'].pop('control19')
+        audit.write_text(json.dumps(values))
+        with self.dictionary_runtime(), self.assertRaises(AssertionError):
+            builder.build(self.root, self.source_path, audit, out)
+        self.assertFalse(out.exists())
+        self.assertEqual(self.loaded, [])
+
+    def test_full_mode_keeps_both_outputs_and_only_replaces_18_19(self):
+        audit = self.accepted_audit()
+        out = self.root / 'experiments/ensembles/full'
+        with self.dictionary_runtime(), contextlib.redirect_stdout(io.StringIO()):
+            builder.build(self.root, self.source_path, audit, out)
+        manifest = json.loads((out / 'manifest.json').read_text())
+        self.assertEqual(set(manifest['candidates']), {'P', 'PT'})
+        self.assertTrue(manifest['training_audit_used'])
+        self.assertEqual(manifest['audit_path'], str(audit))
+        self.assertEqual(manifest['candidates']['P']['replaced_indices'], [])
+        self.assertEqual(manifest['candidates']['PT']['replaced_indices'], [18, 19])
+        pt = json.loads((out / 'PT.pth').read_text())
+        actual = [pt['q'], *pt['ensemble']]
+        self.assertEqual(len(actual), 36)
+        self.assertEqual([i for i in range(36) if actual[i] != self.states[i]], [18, 19])
+
+    def test_p_only_cannot_write_into_active_weight_directory(self):
+        self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')
+        out = self.root / 'agents/sherlock/weights/new_candidate'
+        with self.dictionary_runtime(), self.assertRaises(AssertionError):
+            builder.build(self.root, self.source_path, None, out, p_only=True)
+        self.assertFalse(out.exists())
 
 
 if __name__ == '__main__':
