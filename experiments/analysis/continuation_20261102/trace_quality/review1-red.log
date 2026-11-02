@@ -1,0 +1,328 @@
+..................................FFF.FFF.                               [100%]
+=================================== FAILURES ===================================
+___ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-keys] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11dd44950>
+changed_input = 'keys', key_count = 1
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+_ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-baseline] __
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1208c4250>
+changed_input = 'baseline', key_count = 1
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+___ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-head] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x12075ac60>
+changed_input = 'head', key_count = 1
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+___ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-keys] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11dd3af90>
+changed_input = 'keys', key_count = 2
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+_ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-baseline] __
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x120898210>
+changed_input = 'baseline', key_count = 2
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+___ test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-head] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-131/test_cli_rechecks_pinned_input7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1208a4c80>
+changed_input = 'head', key_count = 2
+
+    @pytest.mark.parametrize("changed_input", [None, "keys", "baseline", "head"])
+    @pytest.mark.parametrize("key_count", [1, 2])
+    def test_cli_rechecks_pinned_inputs_before_next_pair_and_completion(
+            tmp_path, monkeypatch, changed_input, key_count):
+        """Disk/HEAD drift after a pair must fail without starting another pair."""
+        import gzip
+        p = probe()
+        weights = tmp_path / "weights.pth"
+        weights.write_bytes(b"disposable weights; game boundary is replaced")
+        baseline = tmp_path / "baseline.csv"
+        baseline.write_text(
+            "seed,side,opponent,result,our_wins,opp_wins,our_points,opp_points,point_counting_version,steps\n"
+            "831000,player_0,solution92,1,2,1,793,452,2,303\n"
+            "831001,player_0,solution92,1,2,1,793,452,2,303\n")
+        keys = tmp_path / "keys.json"
+        keys.write_text(json.dumps(dict(source=str(baseline), keys=[
+            dict(seed=831000 + i, side="player_0", group="control") for i in range(key_count)])))
+        head = {"value": "pinned-head"}
+        monkeypatch.setattr(p.subprocess, "check_output", lambda *args, **kwargs: head["value"])
+        calls = []
+    
+        def controlled_game(seed, side, path, trace_path=None):
+            calls.append((seed, trace_path is not None))
+            if trace_path:
+                with gzip.open(trace_path, "xt") as stream:
+                    stream.write('{"status":"decision"}\n')
+                if seed == 831000:
+                    if changed_input == "keys":
+                        keys.write_text(keys.read_text() + "\n")
+                    elif changed_input == "baseline":
+                        baseline.write_text(baseline.read_text() + "\n")
+                    elif changed_input == "head":
+                        head["value"] = "changed-head"
+            return dict(seed=seed, side=side, opponent="solution92", steps=303, reset_steps=3,
+                        decision_steps=300, our_wins=2, opp_wins=1, result=1.0, our_points=793,
+                        opp_points=452, point_counting_version=2, matches=[{}, {}, {}], config={},
+                        caught_errors=0, action_sha256="same-native-actions",
+                        statuses={"reset": 3, "decision": 300} if trace_path else {})
+    
+        monkeypatch.setattr(p, "_play", controlled_game)
+        output = tmp_path / "output"
+        if changed_input:
+>           with pytest.raises(RuntimeError, match="changed during the run"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_targeting_probe.py:450: Failed
+=========================== short test summary info ============================
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-keys]
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-baseline]
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[1-head]
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-keys]
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-baseline]
+FAILED tests/test_targeting_probe.py::test_cli_rechecks_pinned_inputs_before_next_pair_and_completion[2-head]
+6 failed, 36 passed in 2.71s

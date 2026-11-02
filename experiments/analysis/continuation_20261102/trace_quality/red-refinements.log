@@ -1,0 +1,71 @@
+.....F..........FFF........                                              [100%]
+=================================== FAILURES ===================================
+________ test_holder_uses_lowest_living_id_even_if_input_order_differs _________
+
+    def test_holder_uses_lowest_living_id_even_if_input_order_differs():
+        ctx = frame_ctx(positions=((2, 0), (2, 0)), energies=(10, 100))
+        ctx["ally_ids"] = np.array([1, 0])
+        units = {u["uid"]: u for u in classify(ctx)["units"]}
+>       assert units[0]["holder"] and not units[1]["holder"]
+E       assert (False)
+
+tests/test_targeting_probe.py:110: AssertionError
+_____ test_artillery_wrapper_records_actual_caller_move_then_overkill_sap ______
+
+    def test_artillery_wrapper_records_actual_caller_move_then_overkill_sap():
+        a = agent_for()
+        a.q = FixedQ([0, 0, 10, 0, 0, 0])
+        a.cfg.art_sap = 1
+        a.cfg.sap_no_overkill = True
+        # Real safe artillery: enemy is three tiles away, sap energy and safety hold.
+        obs = make_obs(10, 10, units=[(5, 5, 200)], enemies=[(8, 5, 100)])
+        with probe().DecisionObserver(a) as observer:
+            a.act(10, obs)
+            events = observer.last_frame["events"]
+        art = next(e for e in events if e["method"] == "_artillery_ok")
+>       overkill = next(e for e in events if e["method"] == "_overkill")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_targeting_probe.py:240: StopIteration
+_______ test_nebula_posterior_is_copied_without_calling_estimator_again ________
+
+    def test_nebula_posterior_is_copied_without_calling_estimator_again():
+        a = agent_for()
+        a.param_est.log_neb[:] = [0, 0, 0, 0, 0, 12]
+        a.param_est.n_neb = 3
+        with probe().DecisionObserver(a) as observer:
+            a.act(10, make_obs(10, 10, units=[(0, 0, 100)]))
+            estimate = observer.last_frame["public"]["nebula_estimate"]
+>       assert estimate["samples"] == 3
+               ^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/test_targeting_probe.py:252: TypeError
+_____ test_observer_cleanup_after_agent_error_restores_instance_and_hooks ______
+
+    def test_observer_cleanup_after_agent_error_restores_instance_and_hooks():
+        a = agent_for()
+        original_act = a.act
+        original_override = a._rule_override
+        def fail(ctx, uid, mask, a):
+            raise RuntimeError("original rule failed")
+        a._rule_override = fail
+        original_keys = set(a.__dict__)
+        with pytest.raises(RuntimeError, match="original rule failed"):
+            with probe().DecisionObserver(a):
+                a.act(10, make_obs(10, 10, units=[(0, 0, 100)]))
+>       assert set(a.__dict__) == original_keys
+E       AssertionError: assert {'_cache', '_..._pred_n', ...} == {'_cache', '_..._pred_n', ...}
+E         
+E         Extra items in the left set:
+E         '_rescue'
+E         Use -v to get more diff
+
+tests/test_targeting_probe.py:267: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_targeting_probe.py::test_holder_uses_lowest_living_id_even_if_input_order_differs
+FAILED tests/test_targeting_probe.py::test_artillery_wrapper_records_actual_caller_move_then_overkill_sap
+FAILED tests/test_targeting_probe.py::test_nebula_posterior_is_copied_without_calling_estimator_again
+FAILED tests/test_targeting_probe.py::test_observer_cleanup_after_agent_error_restores_instance_and_hooks
+4 failed, 23 passed in 3.40s

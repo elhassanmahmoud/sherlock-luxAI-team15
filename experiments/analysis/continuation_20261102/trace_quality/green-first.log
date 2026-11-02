@@ -1,0 +1,47 @@
+..............F........                                                  [100%]
+=================================== FAILURES ===================================
+_____ test_observer_cleanup_after_agent_error_restores_instance_and_hooks ______
+
+    def test_observer_cleanup_after_agent_error_restores_instance_and_hooks():
+        a = agent_for()
+        original_act = a.act
+        original_override = a._rule_override
+        def fail(*args, **kwargs):
+            raise RuntimeError("original rule failed")
+        a._rule_override = fail
+        original_keys = set(a.__dict__)
+        with pytest.raises(RuntimeError, match="original rule failed"):
+            with probe().DecisionObserver(a):
+>               a.act(10, make_obs(10, 10, units=[(0, 0, 100)]))
+
+tests/test_targeting_probe.py:223: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/targeting_probe.py:337: in act
+    actions = original_act(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agents/sherlock/main.py:266: in act
+    return self._act_est(step, obs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+agents/sherlock/main.py:295: in _act_est
+    actions = self._act(step, obs)
+              ^^^^^^^^^^^^^^^^^^^^
+agents/sherlock/main.py:393: in _act
+    a = self._rule_override(ctx, uid, masks[k], a)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_original = <function test_observer_cleanup_after_agent_error_restores_instance_and_hooks.<locals>.fail at 0x11bdb0cc0>
+_signature = <Signature (*args, **kwargs)>, _name = '_rule_override'
+args = ({'belief': <agents.sherlock.belief.Belief object at 0x11be00050>, 'W': 24, 'H': 24, 'ally_ids': array([0]), ...}, 0, array([ True, False,  True,  True, False, False]), 2)
+kwargs = {}
+
+    def wrapper(*args, _original=original, _signature=signature, _name=name, **kwargs):
+        bound = _signature.bind(*args, **kwargs).arguments
+>       ctx, uid = bound["ctx"], int(bound["uid"])
+                   ^^^^^^^^^^^^
+E       KeyError: 'ctx'
+
+scripts/targeting_probe.py:313: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_targeting_probe.py::test_observer_cleanup_after_agent_error_restores_instance_and_hooks
+1 failed, 22 passed in 3.15s

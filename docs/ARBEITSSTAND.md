@@ -6,6 +6,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 14:03 Berlin – Codex: unveränderten V14 passiv diagnostiziert, zwei enge Ansatzpunkte
+
+- Externes Werkzeug `scripts/targeting_probe.py`, 42 fokussierte Tests nach einer Provenienzkorrektur grün; vorheriger gemeinsamer Volltest 728 Tests + 14 Untertests. Unabhängiger Code-/Fixreview sauber. Agentenlogik und Gewichte unverändert.
+- 24 finale Nachspiele (12 feste verbrauchte Schlüssel × beobachtet/unbeobachtet) plus zwei frühere Integrationsspiele = **26 tatsächliche Spiele**. Alle zwölf Paare reproduzieren native Aktionshashes beider Teams, Punkte v2/Siege und 303 Schritte sowie die alte Auswahlbasis. Vollständige Quellen-/Gewichts-/Planidentität über den Lauf unverändert; 584.037 unabhängige Rohdatenprüfungen ohne Fehler. [Befund und Grenzen](../experiments/analysis/continuation_20261102/targeting_audit.md).
+- **H1:** 16 beobachtete Bewegung→Artillerie→Overkill→STAY-Fälle, davon nur drei verhinderte erste Fortschritte zu bekannten eigenen Punkten (zwei in den alten verlorenen Matches). Eine frühe Ablehnung des bereits als überflüssig erkannten Artillerie-Saps kann die normale Bewegungskette erhalten; noch nicht umgesetzt oder als stärker bestätigt.
+- **H2:** 141 erlaubte Zwei-Eigentümer-Tauschgelegenheiten bei exakt denselben eigenen gewählten Punktzielen, 91 Frames/82 Episoden in beiden Gruppen. Kürzere BFS-Summe ist noch kein tatsächlicher Punkte-/Sieggewinn. Pauschale Heimpriorität bleibt unbegründet: potenzielle Versorger unzugewiesener Felder hatten in dieser Diagnose andere eigene Punktziele.
+- Nächster Schritt sind default-off Prototypen und frische Vergleiche; keine neue Abgabe. Gauß-Admissionwerkzeug auf getrenntem Branch in Prüfung, noch keine echten Gaußspiele. Primärer Checkout bleibt vorübergehend auf `384dad2` als explizite Referenz für diese technische Prüfung; Remote und Performancezweig dürfen die fertige Diagnosedokumentation schon enthalten. Nach sicherem Übergang lokal aktualisieren.
+
 ## 02.11.2026, 13:22 Berlin – Codex mit Moayed: gezielte Fortsetzung bis 03.11., 06:00
 
 - Neuer autonomer Auftrag nach dem abgeschlossenen Nachtbericht. Frischer Remote-Abgleich: main/origin/main `3a7e782`, keine neuen Mahmoud-Commits. V14 und alle Sicherungen unverändert; keine neuen Stärke- oder Trainingsergebnisse.

@@ -34,13 +34,13 @@ Intervention, getrennte technische Abnahme und frische Leistungsbestätigung.
 - [x] 1. Repo/Remote/Prozesse/Kontingent prüfen, isolierten vorhandenen Worktree
   wiederverwenden. Letzte 694 Tests + 14 Untertests stammen vom unveränderten
   Ausgang; nicht ohne neue Änderung denselben Volltest wiederholen.
-- [ ] 2. Konkreten Trace-Schema-Nachtrag aus Quellenprüfung schreiben; Review.
+- [x] 2. Konkreten Trace-Schema-Nachtrag aus Quellenprüfung schreiben; Review.
   Implementer schreibt erst rote Verhaltenstests, dann das externe Werkzeug
   `scripts/targeting_probe.py` und `tests/test_targeting_probe.py`. Agentenlogik,
   Gewichte und Kursrunner unverändert. Mindestens: Spiegelung, freie/verdeckt
   besetzte Felder, BFS unerreichbar, negative Energie, Halter/Stacker,
   tatsächliche Endaktion, fehlender/passender Cache. Passivität real abgleichen.
-- [ ] 3. Vorab bestimmte verbrauchte Verlust- und Kontrollschlüssel vollständig
+- [x] 3. Vorab bestimmte verbrauchte Verlust- und Kontrollschlüssel vollständig
   diagnostizieren. Ausgaben/Hashes/303 Schritte/Ergebnisse separat nachrechnen;
   Messgrenzen und konkurrierende Erklärungen dokumentieren.
 - [ ] 4. Auf Evidenz begrenzten Eingriff oder separaten Gauß-Admissionpfad wählen,

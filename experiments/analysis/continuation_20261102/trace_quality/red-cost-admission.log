@@ -1,0 +1,31 @@
+.............F....................                                       [100%]
+=================================== FAILURES ===================================
+__ test_two_owner_rejects_unavailable_supply_or_incompatible_costs[manhattan] __
+
+obstacle = 'manhattan'
+
+    @pytest.mark.parametrize("obstacle", ["holder", "unreachable", "masked", "bonus", "manhattan"])
+    def test_two_owner_rejects_unavailable_supply_or_incompatible_costs(obstacle):
+        ctx = swap_ctx()
+        masks = {0: np.ones(6, bool), 1: np.ones(6, bool)}
+        if obstacle == "holder":
+            ctx["point_tiles"][0, 0] = True
+        elif obstacle == "unreachable":
+            ctx["passable"][1, :] = False
+        elif obstacle == "masked":
+            masks[0][1:5] = False
+        elif obstacle == "bonus":
+            ctx["config"]["energy_pref"] = 1
+        else:
+            ctx["config"]["reach_assign"] = False
+        out = classify(ctx, masks)["two_owner_swap"]
+>       assert out["improvements"] == []
+E       AssertionError: assert [{'units': [0...sum': 5, ...}] == []
+E         
+E         Left contains one more item: {'units': [0, 1], 'old_targets': [[4, 0], [2, 0]], 'new_targets': [[2, 0], [4, 0]], 'old_bfs_sum': 5, ...}
+E         Use -v to get more diff
+
+tests/test_targeting_probe.py:170: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_targeting_probe.py::test_two_owner_rejects_unavailable_supply_or_incompatible_costs[manhattan]
+1 failed, 33 passed in 2.99s

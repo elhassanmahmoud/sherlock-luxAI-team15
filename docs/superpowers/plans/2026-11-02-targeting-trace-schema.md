@@ -52,8 +52,11 @@ Nach normalem `act` genau den passenden Cache lesen.
 2. Je Unit: 79 tatsächliche Merkmale, kopiertes gemitteltes Q[6], Maske,
    raw/masked argmax und finale native/kanonische Aktion; Klasse negative Energie,
    unter Bewegungskosten, unter Sapkosten oder genügend Sapenergie. Holder nur
-   erste eigene Unit auf bekanntem Punktefeld mit nichtnegativer Energie;
-   gestapelte Units getrennt. BFS-Distanz zum Istziel und erlaubte erste
+   erste/niedrigste ID unter eigenen Units mit nichtnegativer Energie auf einem
+   bekannten Punktefeld. `ctx.first_on_tile` als Legacy-Planwert separat erhalten:
+   bei negativer Legacy-Unit bleibt die einzige lebende Unit ein produktiver Halter,
+   keine frei verfügbare gestapelte Reserve. Gestapelte lebende Units getrennt.
+   BFS-Distanz zum Istziel und erlaubte erste
    BFS-verkürzende Richtungen; Manhattan nicht als BFS etikettieren.
 3. Maskengründe nur soweit aus öffentlichen Daten exakt ableitbar:
    Energie/Rand/nach Gedächtnis unpassierbar und sichtbare Besetzung. Für weitere
@@ -65,6 +68,11 @@ Nach normalem `act` genau den passenden Cache lesen.
    (insbesondere planned_dmg). Nicht instrumentierte Inline-Übergänge als
    unaufgelöst kennzeichnen; beobachtetes Artillerie-OK alleine beweist keine
    vollständig rekonstruierte frühere Bewegungsaktion.
+   Optional darf der Wrapper die aktuelle lokale Aktion `a` aus seinem direkten
+   `_act`-Aufrufer rein lesend kopieren, nur bei gleicher Unit-ID und passendem
+   Funktionsnamen. Sonst `caller_action=null`; Frame nicht dauerhaft halten.
+   Das macht eine echte Vor-Artillerie-Aktion beobachtbar, ohne sie aus Q-Werten
+   zu erraten oder Produktionscode umzuschreiben.
 
 ## Freie eigene Felder und Gegenfaktum
 

@@ -1,0 +1,20 @@
+...F..............................                                       [100%]
+=================================== FAILURES ===================================
+__ test_negative_first_entry_never_becomes_holder_and_stackers_stay_separate ___
+
+    def test_negative_first_entry_never_becomes_holder_and_stackers_stay_separate():
+        ctx = frame_ctx(positions=((2, 0), (2, 0), (2, 0), (1, 1)),
+                        energies=(-1, 0, 100, 2))
+        units = classify(ctx)["units"]
+        assert [u["energy_class"] for u in units] == [
+            "negative", "below_move_cost", "sap_ready", "below_move_cost"]
+        assert [u["holder"] for u in units] == [False, True, False, False]
+        assert [u["sole_holder"] for u in units] == [False, False, False, False]
+        assert units[0]["legacy_first_on_tile"] is True
+>       assert units[0]["stacker"] is False
+E       assert True is False
+
+tests/test_targeting_probe.py:92: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_targeting_probe.py::test_negative_first_entry_never_becomes_holder_and_stackers_stay_separate
+1 failed, 33 passed in 3.03s

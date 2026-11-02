@@ -1,0 +1,3226 @@
+{
+  "status": "PASS",
+  "checks": 584037,
+  "failure_total": 0,
+  "failures": [],
+  "manifest": {
+    "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/targeting/manifest.json",
+    "sha256": "90324b008945da4a054a0559a108ee0023cf572d754b20af844160dfe4ebc435",
+    "git_head": "0c0dda642e9876141a705c2b8ed807a4f26ed870"
+  },
+  "receipts": [
+    {
+      "path": "/private/tmp/sherlock-continue-20261102/targeting_execution.json",
+      "sha256": "f3dc2b19f59b4e7c800bb2fac9dc3341e3524b732d8ef69026682a967c0c1015",
+      "validation": "explicit_guard_schema_checked",
+      "source_head": "0c0dda642e9876141a705c2b8ed807a4f26ed870",
+      "pinned_files": 208,
+      "started_utc": "2026-11-02T12:47:57.109914+00:00",
+      "finished_utc": "2026-11-02T12:50:49.079662+00:00"
+    }
+  ],
+  "explicitly_simulated_games": 24,
+  "traced_games": 12,
+  "raw_frames": 3636,
+  "cohorts": {
+    "all": {
+      "agent_free_allowed_first_step_supply_field_steps": {
+        "count": 6791,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 714
+      },
+      "agent_free_assigned_below_move_unit_field_steps": {
+        "count": 40,
+        "games": 6,
+        "maps": 6,
+        "distinct_phases_bearing_condition": 13
+      },
+      "agent_free_assigned_holder_elsewhere_field_steps": {
+        "count": 5,
+        "games": 2,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 5
+      },
+      "agent_free_assigned_negative_unit_field_steps": {
+        "count": 25,
+        "games": 9,
+        "maps": 6,
+        "distinct_phases_bearing_condition": 25
+      },
+      "agent_free_field_steps": {
+        "count": 8392,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 722
+      },
+      "agent_free_hidden_enemy_field_steps": {
+        "count": 253,
+        "games": 10,
+        "maps": 6,
+        "distinct_phases_bearing_condition": 58
+      },
+      "agent_free_memory_impassable_field_steps": {
+        "count": 1482,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 124
+      },
+      "agent_free_no_allowed_first_step_supply_field_steps": {
+        "count": 1601,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 152
+      },
+      "agent_free_no_living_bfs_field_steps": {
+        "count": 1482,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 124
+      },
+      "agent_free_no_mobile_nonholder_bfs_field_steps": {
+        "count": 1598,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 152
+      },
+      "agent_free_true_asteroid_field_steps": {
+        "count": 1485,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 127
+      },
+      "agent_free_untargeted_field_steps": {
+        "count": 3067,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 236
+      },
+      "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+        "count": 1617,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 153
+      },
+      "all_empty_belief_own_field_steps": {
+        "count": 8901,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 756
+      },
+      "approach_final_action_progress_unit_steps": {
+        "count": 4935,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 728
+      },
+      "approach_final_sap_with_legal_progress_unit_steps": {
+        "count": 16,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 15
+      },
+      "approach_final_stay_with_legal_progress_unit_steps": {
+        "count": 90,
+        "games": 8,
+        "maps": 5,
+        "distinct_phases_bearing_condition": 30
+      },
+      "approach_legal_progress_unit_steps": {
+        "count": 5349,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 740
+      },
+      "approach_masked_changed_by_final_unit_steps": {
+        "count": 130,
+        "games": 11,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 71
+      },
+      "approach_masked_progress_lost_in_final_unit_steps": {
+        "count": 18,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 16
+      },
+      "approach_masked_progress_unit_steps": {
+        "count": 4842,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 729
+      },
+      "approach_masked_stay_with_legal_progress_unit_steps": {
+        "count": 87,
+        "games": 7,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 27
+      },
+      "approach_raw_masked_out_unit_steps": {
+        "count": 487,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 230
+      },
+      "approach_raw_progress_unit_steps": {
+        "count": 4536,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 725
+      },
+      "assigned_own_point_approach_unit_steps": {
+        "count": 5531,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 745
+      },
+      "counterfactual_pair_opportunities": {
+        "count": 141,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 0
+      },
+      "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+        "count": 290,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 0
+      },
+      "first_step_capacity_maximum_sum": {
+        "count": 5128,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 0
+      },
+      "mobile_nonholder_supply_sum": {
+        "count": 23799,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_ok_unit_steps": {
+        "count": 106,
+        "games": 9,
+        "maps": 5,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_overkill_final_stay_chains": {
+        "count": 16,
+        "games": 5,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 3
+      },
+      "preaction_holder_below_sap_unit_steps": {
+        "count": 5580,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 683
+      },
+      "preaction_holder_unit_steps": {
+        "count": 17061,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 0
+      },
+      "visible_enemy_field_steps": {
+        "count": 509,
+        "games": 12,
+        "maps": 7,
+        "distinct_phases_bearing_condition": 170
+      }
+    },
+    "loss": {
+      "agent_free_allowed_first_step_supply_field_steps": {
+        "count": 4024,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 488
+      },
+      "agent_free_assigned_below_move_unit_field_steps": {
+        "count": 30,
+        "games": 3,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 8
+      },
+      "agent_free_assigned_holder_elsewhere_field_steps": {
+        "count": 5,
+        "games": 2,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 5
+      },
+      "agent_free_assigned_negative_unit_field_steps": {
+        "count": 21,
+        "games": 5,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 21
+      },
+      "agent_free_field_steps": {
+        "count": 5008,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 495
+      },
+      "agent_free_hidden_enemy_field_steps": {
+        "count": 127,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 40
+      },
+      "agent_free_memory_impassable_field_steps": {
+        "count": 967,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 76
+      },
+      "agent_free_no_allowed_first_step_supply_field_steps": {
+        "count": 984,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 84
+      },
+      "agent_free_no_living_bfs_field_steps": {
+        "count": 967,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 76
+      },
+      "agent_free_no_mobile_nonholder_bfs_field_steps": {
+        "count": 984,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 84
+      },
+      "agent_free_true_asteroid_field_steps": {
+        "count": 978,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 75
+      },
+      "agent_free_untargeted_field_steps": {
+        "count": 1774,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 131
+      },
+      "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+        "count": 844,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 77
+      },
+      "all_empty_belief_own_field_steps": {
+        "count": 5340,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 521
+      },
+      "approach_final_action_progress_unit_steps": {
+        "count": 3018,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 496
+      },
+      "approach_final_sap_with_legal_progress_unit_steps": {
+        "count": 11,
+        "games": 4,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 10
+      },
+      "approach_final_stay_with_legal_progress_unit_steps": {
+        "count": 63,
+        "games": 5,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 20
+      },
+      "approach_legal_progress_unit_steps": {
+        "count": 3345,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 506
+      },
+      "approach_masked_changed_by_final_unit_steps": {
+        "count": 82,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 44
+      },
+      "approach_masked_progress_lost_in_final_unit_steps": {
+        "count": 13,
+        "games": 4,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 11
+      },
+      "approach_masked_progress_unit_steps": {
+        "count": 2963,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 496
+      },
+      "approach_masked_stay_with_legal_progress_unit_steps": {
+        "count": 60,
+        "games": 4,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 17
+      },
+      "approach_raw_masked_out_unit_steps": {
+        "count": 280,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 128
+      },
+      "approach_raw_progress_unit_steps": {
+        "count": 2808,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 493
+      },
+      "assigned_own_point_approach_unit_steps": {
+        "count": 3473,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 511
+      },
+      "counterfactual_pair_opportunities": {
+        "count": 72,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 0
+      },
+      "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+        "count": 152,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 0
+      },
+      "first_step_capacity_maximum_sum": {
+        "count": 3184,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 0
+      },
+      "mobile_nonholder_supply_sum": {
+        "count": 12161,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_ok_unit_steps": {
+        "count": 57,
+        "games": 5,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_overkill_final_stay_chains": {
+        "count": 9,
+        "games": 2,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 3
+      },
+      "preaction_holder_below_sap_unit_steps": {
+        "count": 3213,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 400
+      },
+      "preaction_holder_unit_steps": {
+        "count": 7747,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 0
+      },
+      "visible_enemy_field_steps": {
+        "count": 332,
+        "games": 6,
+        "maps": 4,
+        "distinct_phases_bearing_condition": 112
+      }
+    },
+    "control": {
+      "agent_free_allowed_first_step_supply_field_steps": {
+        "count": 2767,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 226
+      },
+      "agent_free_assigned_below_move_unit_field_steps": {
+        "count": 10,
+        "games": 3,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 5
+      },
+      "agent_free_assigned_negative_unit_field_steps": {
+        "count": 4,
+        "games": 4,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 4
+      },
+      "agent_free_field_steps": {
+        "count": 3384,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 227
+      },
+      "agent_free_hidden_enemy_field_steps": {
+        "count": 126,
+        "games": 4,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 18
+      },
+      "agent_free_memory_impassable_field_steps": {
+        "count": 515,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 48
+      },
+      "agent_free_no_allowed_first_step_supply_field_steps": {
+        "count": 617,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 68
+      },
+      "agent_free_no_living_bfs_field_steps": {
+        "count": 515,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 48
+      },
+      "agent_free_no_mobile_nonholder_bfs_field_steps": {
+        "count": 614,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 68
+      },
+      "agent_free_true_asteroid_field_steps": {
+        "count": 507,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 52
+      },
+      "agent_free_untargeted_field_steps": {
+        "count": 1293,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 105
+      },
+      "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+        "count": 773,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 76
+      },
+      "all_empty_belief_own_field_steps": {
+        "count": 3561,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 235
+      },
+      "approach_final_action_progress_unit_steps": {
+        "count": 1917,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 232
+      },
+      "approach_final_sap_with_legal_progress_unit_steps": {
+        "count": 5,
+        "games": 2,
+        "maps": 1,
+        "distinct_phases_bearing_condition": 5
+      },
+      "approach_final_stay_with_legal_progress_unit_steps": {
+        "count": 27,
+        "games": 3,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 10
+      },
+      "approach_legal_progress_unit_steps": {
+        "count": 2004,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 234
+      },
+      "approach_masked_changed_by_final_unit_steps": {
+        "count": 48,
+        "games": 5,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 27
+      },
+      "approach_masked_progress_lost_in_final_unit_steps": {
+        "count": 5,
+        "games": 2,
+        "maps": 1,
+        "distinct_phases_bearing_condition": 5
+      },
+      "approach_masked_progress_unit_steps": {
+        "count": 1879,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 233
+      },
+      "approach_masked_stay_with_legal_progress_unit_steps": {
+        "count": 27,
+        "games": 3,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 10
+      },
+      "approach_raw_masked_out_unit_steps": {
+        "count": 207,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 102
+      },
+      "approach_raw_progress_unit_steps": {
+        "count": 1728,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 232
+      },
+      "assigned_own_point_approach_unit_steps": {
+        "count": 2058,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 234
+      },
+      "counterfactual_pair_opportunities": {
+        "count": 69,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+        "count": 138,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "first_step_capacity_maximum_sum": {
+        "count": 1944,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "mobile_nonholder_supply_sum": {
+        "count": 11638,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_ok_unit_steps": {
+        "count": 49,
+        "games": 4,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 0
+      },
+      "observed_move_artillery_overkill_final_stay_chains": {
+        "count": 7,
+        "games": 3,
+        "maps": 2,
+        "distinct_phases_bearing_condition": 0
+      },
+      "preaction_holder_below_sap_unit_steps": {
+        "count": 2367,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 283
+      },
+      "preaction_holder_unit_steps": {
+        "count": 9314,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 0
+      },
+      "visible_enemy_field_steps": {
+        "count": 177,
+        "games": 6,
+        "maps": 3,
+        "distinct_phases_bearing_condition": 58
+      }
+    }
+  },
+  "games": [
+    {
+      "key": {
+        "seed": 831006,
+        "side": "player_1",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 1084,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 109
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_assigned_holder_elsewhere_field_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 3
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 8,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "agent_free_field_steps": {
+          "count": 1237,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 109
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 48,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 153,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 26
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 153,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 26
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 153,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 26
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 153,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 26
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 149,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 25
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 348,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 33
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 201,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 1289,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 116
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 870,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 113
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 907,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 114
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 24,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 15
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 7,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 861,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 113
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 50,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 819,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 113
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 915,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 115
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 88,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 882,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1951,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 24,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_overkill_final_stay_chains": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 604,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 113
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1076,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 52,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        }
+      },
+      "chain_examples": [
+        {
+          "key": {
+            "obs_step": 62,
+            "match_step": 62,
+            "match_idx": 0,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 6,
+          "move": 2,
+          "target": [
+            19,
+            8
+          ],
+          "artillery_order": 15,
+          "overkill_order": 16
+        },
+        {
+          "key": {
+            "obs_step": 62,
+            "match_step": 62,
+            "match_idx": 0,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 11,
+          "move": 3,
+          "target": [
+            17,
+            5
+          ],
+          "artillery_order": 22,
+          "overkill_order": 23
+        },
+        {
+          "key": {
+            "obs_step": 62,
+            "match_step": 62,
+            "match_idx": 0,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 13,
+          "move": 3,
+          "target": [
+            18,
+            6
+          ],
+          "artillery_order": 27,
+          "overkill_order": 28
+        },
+        {
+          "key": {
+            "obs_step": 62,
+            "match_step": 62,
+            "match_idx": 0,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 14,
+          "move": 3,
+          "target": [
+            17,
+            8
+          ],
+          "artillery_order": 31,
+          "overkill_order": 32
+        },
+        {
+          "key": {
+            "obs_step": 195,
+            "match_step": 94,
+            "match_idx": 1,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 8,
+          "move": 2,
+          "target": [
+            15,
+            6
+          ],
+          "artillery_order": 14,
+          "overkill_order": 15
+        },
+        {
+          "key": {
+            "obs_step": 195,
+            "match_step": 94,
+            "match_idx": 1,
+            "seed": 831006,
+            "side": "player_1"
+          },
+          "uid": 9,
+          "move": 2,
+          "target": [
+            18,
+            1
+          ],
+          "artillery_order": 18,
+          "overkill_order": 19
+        }
+      ]
+    },
+    {
+      "key": {
+        "seed": 831029,
+        "side": "player_0",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 302,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 12,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 401,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 85,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 99,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 11
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 85,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 99,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 11
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 85,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 192,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 93,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 11
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 421,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 216,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 216,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 213,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 41,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 13
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 188,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 229,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 27
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 8,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 214,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1829,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 601,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1701,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 20,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831042,
+        "side": "player_0",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 486,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 17,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "agent_free_field_steps": {
+          "count": 601,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 112,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 115,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 112,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 115,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 120,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 264,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 152,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 13
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 628,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 297,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 43
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 9,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 3
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 325,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 43
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 11,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 286,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 43
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 9,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 3
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 51,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 276,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 42
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 362,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 334,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1660,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 661,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 48
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1659,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831042,
+        "side": "player_1",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 562,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 658,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 39
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 96,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 96,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 96,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 96,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 97,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 305,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 18
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 209,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 15
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 687,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 41
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 370,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 40
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 376,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 40
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 370,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 40
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 14,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 361,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 40
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 380,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 40
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 12,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 353,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1634,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 8,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 856,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 55
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1753,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 29,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831043,
+        "side": "player_0",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 724,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 130
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_field_steps": {
+          "count": 973,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 133
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 42,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 249,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 249,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 249,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 249,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 250,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 292,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 23
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 75,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 1071,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 145
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 600,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 134
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 24,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 709,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 138
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 20,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 10
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 584,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 134
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 24,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 54,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 28
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 555,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 134
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 739,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 140
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 12,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 24,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 649,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 2466,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 13,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 265,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 78
+        },
+        "preaction_holder_unit_steps": {
+          "count": 837,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 98,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 34
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831043,
+        "side": "player_1",
+        "result": 0.0,
+        "our_wins": 1,
+        "opp_wins": 2,
+        "group": "loss"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 866,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 140
+        },
+        "agent_free_assigned_holder_elsewhere_field_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "agent_free_field_steps": {
+          "count": 1138,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 143
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 29,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 272,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 272,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 272,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 272,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 277,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 17
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 373,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 26
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 114,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 12
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 1244,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 148
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 665,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 139
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 812,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 144
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 22,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 3
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 649,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 139
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 26,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 70,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 35
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 609,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 137
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 848,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 145
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 7,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 14,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 752,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 2621,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 10,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_overkill_final_stay_chains": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 226,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 68
+        },
+        "preaction_holder_unit_steps": {
+          "count": 721,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 106,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        }
+      },
+      "chain_examples": [
+        {
+          "key": {
+            "obs_step": 49,
+            "match_step": 49,
+            "match_idx": 0,
+            "seed": 831043,
+            "side": "player_1"
+          },
+          "uid": 8,
+          "move": 2,
+          "target": [
+            13,
+            9
+          ],
+          "artillery_order": 29,
+          "overkill_order": 30
+        },
+        {
+          "key": {
+            "obs_step": 49,
+            "match_step": 49,
+            "match_idx": 0,
+            "seed": 831043,
+            "side": "player_1"
+          },
+          "uid": 9,
+          "move": 2,
+          "target": [
+            14,
+            10
+          ],
+          "artillery_order": 33,
+          "overkill_order": 34
+        },
+        {
+          "key": {
+            "obs_step": 49,
+            "match_step": 49,
+            "match_idx": 0,
+            "seed": 831043,
+            "side": "player_1"
+          },
+          "uid": 10,
+          "move": 2,
+          "target": [
+            11,
+            6
+          ],
+          "artillery_order": 37,
+          "overkill_order": 38
+        }
+      ]
+    },
+    {
+      "key": {
+        "seed": 831000,
+        "side": "player_0",
+        "result": 1.0,
+        "our_wins": 2,
+        "opp_wins": 1,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 288,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 28
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 7,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 376,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 28
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 82,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 88,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 88,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 88,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 88,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 56,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 99,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 12
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 36,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 407,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 247,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 258,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 243,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 34,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 222,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 272,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 3,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 252,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 2480,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 334,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "preaction_holder_unit_steps": {
+          "count": 770,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 31,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 10
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831000,
+        "side": "player_1",
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 230,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 19
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 270,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 16,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 40,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 51,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 287,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 207,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 207,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 207,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 20,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 11
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 192,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 215,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 203,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 2365,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 378,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 42
+        },
+        "preaction_holder_unit_steps": {
+          "count": 976,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 17,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        }
+      },
+      "chain_examples": []
+    },
+    {
+      "key": {
+        "seed": 831001,
+        "side": "player_0",
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 465,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 42
+        },
+        "agent_free_field_steps": {
+          "count": 562,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 42
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 97,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 97,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 97,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 97,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 98,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 205,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 16
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 115,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 13
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 578,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 333,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 347,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 14,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 321,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 33,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 19
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 294,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 352,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 47
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 22,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 44,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 336,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 2025,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 19,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_overkill_final_stay_chains": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 307,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 44
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1610,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 16,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        }
+      },
+      "chain_examples": [
+        {
+          "key": {
+            "obs_step": 196,
+            "match_step": 95,
+            "match_idx": 1,
+            "seed": 831001,
+            "side": "player_0"
+          },
+          "uid": 10,
+          "move": 3,
+          "target": [
+            3,
+            19
+          ],
+          "artillery_order": 18,
+          "overkill_order": 19
+        }
+      ]
+    },
+    {
+      "key": {
+        "seed": 831001,
+        "side": "player_1",
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 783,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 62
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 956,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 62
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 173,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 173,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 173,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 173,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 174,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 401,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 29
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 228,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 1036,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 64
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 518,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 61
+        },
+        "approach_final_sap_with_legal_progress_unit_steps": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "approach_final_stay_with_legal_progress_unit_steps": {
+          "count": 23,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 578,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 63
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 13
+        },
+        "approach_masked_progress_lost_in_final_unit_steps": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 4
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 499,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 62
+        },
+        "approach_masked_stay_with_legal_progress_unit_steps": {
+          "count": 23,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 69,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 28
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 449,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 62
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 593,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 63
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 54,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 537,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1943,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 18,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_overkill_final_stay_chains": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 543,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 68
+        },
+        "preaction_holder_unit_steps": {
+          "count": 1623,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 80,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 18
+        }
+      },
+      "chain_examples": [
+        {
+          "key": {
+            "obs_step": 58,
+            "match_step": 58,
+            "match_idx": 0,
+            "seed": 831001,
+            "side": "player_1"
+          },
+          "uid": 12,
+          "move": 3,
+          "target": [
+            18,
+            16
+          ],
+          "artillery_order": 30,
+          "overkill_order": 31
+        },
+        {
+          "key": {
+            "obs_step": 81,
+            "match_step": 81,
+            "match_idx": 0,
+            "seed": 831001,
+            "side": "player_1"
+          },
+          "uid": 9,
+          "move": 2,
+          "target": [
+            18,
+            14
+          ],
+          "artillery_order": 19,
+          "overkill_order": 20
+        }
+      ]
+    },
+    {
+      "key": {
+        "seed": 831002,
+        "side": "player_0",
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 477,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "agent_free_assigned_below_move_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_assigned_negative_unit_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_field_steps": {
+          "count": 615,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 27,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 6
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 75,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 138,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 75,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 9
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 135,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 20
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 72,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 258,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 19
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 159,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 13
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 635,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 303,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 303,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 302,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 21,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 12
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 286,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 308,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 6,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 12,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 306,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1385,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 7,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_overkill_final_stay_chains": {
+          "count": 4,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 421,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 43
+        },
+        "preaction_holder_unit_steps": {
+          "count": 2189,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 20,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        }
+      },
+      "chain_examples": [
+        {
+          "key": {
+            "obs_step": 71,
+            "match_step": 71,
+            "match_idx": 0,
+            "seed": 831002,
+            "side": "player_0"
+          },
+          "uid": 5,
+          "move": 2,
+          "target": [
+            22,
+            13
+          ],
+          "artillery_order": 15,
+          "overkill_order": 16
+        },
+        {
+          "key": {
+            "obs_step": 72,
+            "match_step": 72,
+            "match_idx": 0,
+            "seed": 831002,
+            "side": "player_0"
+          },
+          "uid": 1,
+          "move": 1,
+          "target": [
+            19,
+            15
+          ],
+          "artillery_order": 4,
+          "overkill_order": 5
+        },
+        {
+          "key": {
+            "obs_step": 72,
+            "match_step": 72,
+            "match_idx": 0,
+            "seed": 831002,
+            "side": "player_0"
+          },
+          "uid": 3,
+          "move": 1,
+          "target": [
+            22,
+            12
+          ],
+          "artillery_order": 10,
+          "overkill_order": 11
+        },
+        {
+          "key": {
+            "obs_step": 72,
+            "match_step": 72,
+            "match_idx": 0,
+            "seed": 831002,
+            "side": "player_0"
+          },
+          "uid": 5,
+          "move": 2,
+          "target": [
+            22,
+            13
+          ],
+          "artillery_order": 16,
+          "overkill_order": 17
+        }
+      ]
+    },
+    {
+      "key": {
+        "seed": 831002,
+        "side": "player_1",
+        "result": 1.0,
+        "our_wins": 2,
+        "opp_wins": 1,
+        "group": "control"
+      },
+      "frames": 303,
+      "metrics": {
+        "agent_free_allowed_first_step_supply_field_steps": {
+          "count": 524,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "agent_free_field_steps": {
+          "count": 605,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "agent_free_hidden_enemy_field_steps": {
+          "count": 1,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 1
+        },
+        "agent_free_memory_impassable_field_steps": {
+          "count": 42,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "agent_free_no_allowed_first_step_supply_field_steps": {
+          "count": 81,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_no_living_bfs_field_steps": {
+          "count": 42,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 5
+        },
+        "agent_free_no_mobile_nonholder_bfs_field_steps": {
+          "count": 81,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 14
+        },
+        "agent_free_true_asteroid_field_steps": {
+          "count": 67,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 7
+        },
+        "agent_free_untargeted_field_steps": {
+          "count": 279,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 21
+        },
+        "agent_free_untargeted_with_allowed_first_step_supply_field_steps": {
+          "count": 208,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 19
+        },
+        "all_empty_belief_own_field_steps": {
+          "count": 618,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "approach_final_action_progress_unit_steps": {
+          "count": 309,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "approach_legal_progress_unit_steps": {
+          "count": 311,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "approach_masked_changed_by_final_unit_steps": {
+          "count": 2,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 2
+        },
+        "approach_masked_progress_unit_steps": {
+          "count": 307,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "approach_raw_masked_out_unit_steps": {
+          "count": 30,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 18
+        },
+        "approach_raw_progress_unit_steps": {
+          "count": 285,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 37
+        },
+        "assigned_own_point_approach_unit_steps": {
+          "count": 318,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 38
+        },
+        "counterfactual_pair_opportunities": {
+          "count": 10,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "counterfactual_pair_step_bfs_savings_sum_NOT_additive_policy_gain": {
+          "count": 20,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "first_step_capacity_maximum_sum": {
+          "count": 310,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "mobile_nonholder_supply_sum": {
+          "count": 1440,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "observed_move_artillery_ok_unit_steps": {
+          "count": 5,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "preaction_holder_below_sap_unit_steps": {
+          "count": 384,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 42
+        },
+        "preaction_holder_unit_steps": {
+          "count": 2146,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 0
+        },
+        "visible_enemy_field_steps": {
+          "count": 13,
+          "games": 1,
+          "maps": 1,
+          "distinct_phases_bearing_condition": 8
+        }
+      },
+      "chain_examples": []
+    }
+  ],
+  "limitations": [
+    "Selected six losses and first six wins are qualitative, not representative or matched controls.",
+    "Field phases mean consecutive own-empty known-point observations; a condition may occur only during part of a phase.",
+    "Holder low-energy phases are pre-action observations, not the old post-move/pre-sap metric and not identity-verified life histories.",
+    "No energy phase reconstruction or whole-route energy/safe-arrival proof exists in these traces.",
+    "Stored Q values are ensemble aggregates; per-network outputs are not retained for independent re-averaging.",
+    "Full action SHA includes both teams and native shape/dtype; opponent action arrays are not retained, so SHA is compared across runs, not rebuilt from trace.",
+    "Pair opportunities and saved BFS sums overlap and are not additive realizable gain or strength evidence.",
+    "Guard identity is independently rehashed against current frozen inputs; no model is imported."
+  ]
+}
