@@ -90,3 +90,16 @@ kein Siegtest und lockert keine Übernahmehürde. Andernfalls nur bei rechtzeiti
 fertigem Planungsprototyp ein kontrollierter Anpassungspilot, unveränderter Reward,
 feste36-Netz-Zahl statt ein weiteres37.Netz. Dessen exakte vier Arme/Endstandwahl
 brauchen vor dem Training einen eigenen Nachtrag; nichts davon ist schon gestartet.
+
+
+## Präzisierung der praktischen Routingmetrik
+
+Vor jeglicher S-Ergebnis-/Neuheitslektüre am 2026-11-02T13:34:46.897421+00:00:
+20 physische positive Fakten werden konservativ als unterschiedliche
+`(seed, Welt-x, Welt-y, kind)` über beide Seiten und Matches entdoppelt.
+Per-Spiel-/Acquisition-Match-Zahlen zusätzlich berichten, nicht still ersetzen.
+Die100 positiven Fakt-Schritte meinen den anhaltenden positiven Wissensvorsprung
+von G gegenüber V∪A je Entscheidungsframe, nicht nur Neuerwerbsframes.
+Mindestens5Spiele/3Karten müssen einen strikten positiven Neuerwerb enthalten.
+Dies präzisiert nur die praktische Routenwahl, keine technische oder statistische
+Übernahmehürde. Root und unabhängiger Auditor haben noch keine S-Zahlen gelesen.
