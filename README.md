@@ -320,6 +320,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── build_ensemble.py         Ensemble aus Einzelnetzen bauen
 │   ├── build_submission.py       agent.zip bzw. Gruppe15.zip bauen und prüfen
 │   ├── xversion_replay.py        Zip unter anderen Python-/torch-Versionen nachspielen
+│   ├── sherlock_server.py        Fernspiel: Sherlock antwortet übers Netz, Gegner bekommt nur einen Stellvertreter
 │   ├── decision_trace.py         Anteile von Netz, Maske und Regeln messen
 │   ├── mechanism_probe.py        Energiebilanz je Match (Sap, Kollision, Tod)
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
@@ -370,6 +371,7 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 | Einzelnetz trainieren (neuer Run-Ordner) | `python -m scripts.train --games 400 --opponent default` |
 | Battle-Zip bauen und prüfen | `python -m scripts.build_submission --battle` |
 | Battle-Zip unter einer anderen Python-Version prüfen | `python scripts/xversion_replay.py record Gruppe15.zip spiel.pkl --seed 4242`, dann `/pfad/zu/python3.10 -I scripts/xversion_replay.py replay Gruppe15.zip spiel.pkl` |
+| Fernspiel: andere gegen Sherlock spielen lassen, ohne Code oder Gewichte weiterzugeben | `python -m scripts.sherlock_server --tunnel` → öffentliche Adresse, `Sherlock_Fernspiel.zip` (nur Stellvertreter, gitignored) |
 | Tests | `python -m pytest -q` |
 
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und eine JSON-Datei aus `replays/` hochladen. `scripts.play_and_view` erzeugt stattdessen eine HTML-Datei mit eingebettetem Replay.
