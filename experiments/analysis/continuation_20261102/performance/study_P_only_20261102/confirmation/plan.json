@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "phase": "confirmation",
+  "candidate": "P",
+  "study_freeze_path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/study_freeze.json",
+  "study_freeze_sha256": "e1731478088ec7bdaa2b63a51a6ae60f0c7ecedc4522fbedfbcfbb0f1517ba03",
+  "initial_seconds_per_game": {
+    "combined_panel": 2.22,
+    "direct": 3.0
+  },
+  "prior_observed_seconds_per_game": {
+    "combined_panel": [
+      1.969262640624989,
+      2.0730930905656924
+    ],
+    "direct": [
+      2.7851077797898323
+    ]
+  },
+  "deadline_utc": "2026-11-03T04:30:00+00:00",
+  "reserve_seconds": 3600,
+  "future_confirmation_games": {
+    "combined_panel": 0,
+    "direct": 0
+  },
+  "jobs": [
+    {
+      "name": "baseline_panel",
+      "role": "baseline",
+      "engine": "par_eval",
+      "timing_class": "combined_panel",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "first_seed": 842000,
+      "n_maps": 300,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [
+        "point_pair_swap=false",
+        "art_move_guard=false"
+      ],
+      "workers": 2,
+      "games": 4200,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/baseline_panel.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/baseline_panel.log",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics"
+    },
+    {
+      "name": "P_panel",
+      "role": "P",
+      "engine": "par_eval",
+      "timing_class": "combined_panel",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/20261102_targeting_P_only/P.pth",
+      "first_seed": 842000,
+      "n_maps": 300,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [
+        "point_pair_swap=true",
+        "art_move_guard=true"
+      ],
+      "workers": 2,
+      "games": 4200,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/P_panel.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/P_panel.log",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics"
+    },
+    {
+      "name": "P_direct",
+      "role": "P",
+      "engine": "par_eval",
+      "timing_class": "direct",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/ensembles/20261102_targeting_P_only/P.pth",
+      "first_seed": 843000,
+      "n_maps": 300,
+      "opponents": [
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth"
+      ],
+      "overrides": [
+        "point_pair_swap=true",
+        "art_move_guard=true"
+      ],
+      "workers": 2,
+      "games": 600,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/P_direct.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/confirmation/P_direct.log",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics"
+    }
+  ],
+  "selection_state_path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/selection/state.json",
+  "selection_state_sha256": "3c30201b94615d39e3ed14afb4d11bf55b60ca20dc56aa1a5a6576c6d842b9ce",
+  "selection_summary_path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/selection_summary.json",
+  "selection_summary_sha256": "9d138e690829764f9a78e28037f442515bc7bf506023f4441ab3521ca735ddff"
+}

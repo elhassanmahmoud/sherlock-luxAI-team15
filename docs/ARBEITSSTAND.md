@@ -12,6 +12,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 02.11.2026, 19:03 Berlin – Codex: P nominiert, einzige frische Bestätigung gestartet
+
+- Vollständige [P-Auswahl mit 3.000 Spielen](../experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md) unabhängig akzeptiert: 137 Prüfungen ohne Abweichung. Sechserpanel 78,33 → 81,00 %, Δ +2,67 pp [+0,42; +5,00]; Solution beide184/200, default beide200/200. P direkt gegen V14 118/200, 59 % [53;65]. Alle vier Auswahlgates erfüllt. Kein behaupteter Solution-Fortschritt und noch keine Übernahmefreigabe; anderes Karten-/Gegnerpanel als Mahmouds historische Liga.
+- Einzige Bestätigung seit19:03:10Berlin: 4.200baseline+4.200P auf842000–842299,600direkt auf843000–843299, Gesamt9.000. Tatsächliche Startprüfung unabhängig PASS; AC95 %, Quota20 %verbraucht. Performance-Freeze bleibt03e54e2 und Mastere1731478… über beide Phasen, keine Integration dort. Owner25997, laufende Kinder aus `confirmation/state.json`; keine Doppelstarts. Root liest neue Ergebnisquoten erst nach Gesamtabschluss.
+- Rohdaten/Logs/Status/Summary/Auditor und Startprüfung bytegleich archiviert. Die bedingte PT2-Route ist wegenP-Nomination endgültig INELIGIBLE, auch bei späterem Fehlschlag. Kein Backup-Training begonnen, keine Modelle dafür geladen. Vorbereitete externe Dateien bleiben unbenutzt; kein zweiter Bestätigungsversuch zulässig.
+- Aktive V14-Gewichte98a07350…d3d8 und ZIP88dfbe32…9dff9d6 weiter unverändert. Nächster Schritt: vollständiger unabhängiger Bestätigungs-/Datencheck; nur bei allen Gates technische Paket-/Kurs-/Reproduktionsprüfung und gesicherte Übernahme.
+
 ## 02.11.2026, 18:55 Berlin – Codex: getrennte PT2-Steuerung offline geprüft
 
 - [Controller, Statistik und Anleitung](../experiments/analysis/backup_adaptation_20261102/README.md) für die bereits vor Ergebnislektüre festgelegte bedingte Route vorbereitet. Keine Aktivierung, keine zusätzlichen Spiele oder Modelle. Die laufende P-Auswahl bleibt auf Source03e54e2 unverändert; beide Panelblöcke sind abgeschlossen, das Direktduell läuft noch. Ergebnisquoten werden erst nach vollständigem Phasenabschluss gelesen.

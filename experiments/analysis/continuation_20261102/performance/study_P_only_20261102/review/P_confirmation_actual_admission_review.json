@@ -1,0 +1,106 @@
+{
+  "verdict": "PASS_ACTUAL_CONFIRMATION_MANIFEST",
+  "checked_utc": "2026-11-02T18:02:50.890970+00:00",
+  "head": "03e54e267242ff642c126313fe5f512ed9d959ac",
+  "master_sha256": "e1731478088ec7bdaa2b63a51a6ae60f0c7ecedc4522fbedfbcfbb0f1517ba03",
+  "confirmation_plan_sha256": "0e7d5a5e34acc8f8d808c206106381b3ac45a3e1963a2f41ef89a2d20187c6e3",
+  "driver": {
+    "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/analysis/continuation_20261102/performance/targeting_eval_driver.py",
+    "sha256": "7700ba0ab0bb2eda3d7ced9b252da615af10669ddb42b58f23e3ae0940610308"
+  },
+  "selection_plan_sha256": "a1c632a189b18391070b3ce24022efba7c6de8dc7a89edae6c215f5333d9b19b",
+  "selection_state_sha256": "3c30201b94615d39e3ed14afb4d11bf55b60ca20dc56aa1a5a6576c6d842b9ce",
+  "selection_summary_sha256": "9d138e690829764f9a78e28037f442515bc7bf506023f4441ab3521ca735ddff",
+  "independent_audit_sha256": "99062c6c37d792093cb1db9dea8b249ffa1e4ca200eebb22c451de867f00edf9",
+  "independent_audit_checks": 137,
+  "all_audit_evidence_hashes_match": true,
+  "nominee": "P",
+  "candidate_sha256": "dbb15222848b9ce8530080e128fa9ca66309c9900e98f50de5cce1d73e5b7f5a",
+  "baseline_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "active_weights_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "jobs": [
+    {
+      "name": "baseline_panel",
+      "role": "baseline",
+      "first_seed": 842000,
+      "n_maps": 300,
+      "games": 4200,
+      "workers": 2,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [
+        "point_pair_swap=false",
+        "art_move_guard=false"
+      ]
+    },
+    {
+      "name": "P_panel",
+      "role": "P",
+      "first_seed": 842000,
+      "n_maps": 300,
+      "games": 4200,
+      "workers": 2,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [
+        "point_pair_swap=true",
+        "art_move_guard=true"
+      ]
+    },
+    {
+      "name": "P_direct",
+      "role": "P",
+      "first_seed": 843000,
+      "n_maps": 300,
+      "games": 600,
+      "workers": 2,
+      "opponents": [
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth"
+      ],
+      "overrides": [
+        "point_pair_swap=true",
+        "art_move_guard=true"
+      ]
+    }
+  ],
+  "total_games": 9000,
+  "inherited_rates": {
+    "combined_panel": [
+      1.969262640624989,
+      2.0730930905656924
+    ],
+    "direct": [
+      2.7851077797898323
+    ]
+  },
+  "effective_rates": {
+    "combined_panel": 2.22,
+    "direct": 3.0
+  },
+  "slowdown": 1.0,
+  "game_seconds_plus20percent": 24537.6,
+  "closing_reserve_seconds": 3600,
+  "full_program_slack_seconds": 9491.51864089966,
+  "deadline_utc": "2026-11-03T04:30:00+00:00",
+  "power": {
+    "ac": true,
+    "battery_percent": 95
+  },
+  "quota": "Root attests 20% used; no independent quota API read",
+  "confirmation_outcomes_read": false,
+  "model_imports_or_games": false
+}
