@@ -8,6 +8,7 @@ import sys
 import unittest
 from unittest.mock import patch
 
+from tests.archive_import_isolation import assert_isolated_imports
 from test_study_driver import HERE, SyntheticFixture, load, write_json
 
 
@@ -86,7 +87,7 @@ class CompleteStudyTests(SyntheticFixture):
         self.assertEqual(confirmed['candidates']['PT2']['direct']['wins'], 600)
         self.assertEqual(confirmed['candidates']['PT2']['panel']['maps'], 300)
         self.assertEqual(confirmed['study_freeze_sha256'], result['study_freeze_sha256'])
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
     def test_whole_maps_joint_panel_and_nil_nomination_on_failed_selection(self):
         plan, state_path = self.complete_phase('selection')

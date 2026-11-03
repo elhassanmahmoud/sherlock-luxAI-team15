@@ -20,6 +20,8 @@ import unittest
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE = Path(__file__).resolve().parent
 SOURCE_ROOT = Path(os.environ.get('TARGETING_SOURCE_ROOT', Path.cwd())).resolve()
 
@@ -193,7 +195,7 @@ class SyntheticCompletePhaseTests(unittest.TestCase):
         self.assertEqual(confirmation['candidates']['P']['direct']['wins'], 600)
         self.assertEqual(confirmation['candidates']['P']['panel']['maps'], 300)
         self.assertEqual(confirmation['study_freeze_sha256'], summary['study_freeze_sha256'])
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
     def test_incomplete_phase_is_rejected_before_summary_creation(self):
         plan, state_path = self.write_complete_phase(self.root / 'selection', 'selection')
@@ -226,7 +228,7 @@ class SyntheticCompletePhaseTests(unittest.TestCase):
         self.assertEqual(confirmation['completed_games'], 9000)
         self.assertTrue(confirmation['promotion_qualified'])
         self.assertEqual(confirmation['study_freeze_sha256'], summary['study_freeze_sha256'])
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
 
 if __name__ == '__main__':

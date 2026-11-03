@@ -15,6 +15,8 @@ from unittest.mock import patch
 import warnings
 import zipfile
 
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE = Path(__file__).resolve().parent
 MODULE = HERE / 'verify_P_package.py'
 
@@ -167,7 +169,7 @@ class PackageTests(unittest.TestCase):
         self.assertFalse(receipt['claims_course_execution'])
         self.assertFalse(receipt['claims_python310'])
         self.assertFalse(receipt['claims_replay_validation'])
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
     def test_manifest_serialized_cfg_missing_frozen_uses_pinned_false_default(self):
         # Static manifest/config facts only; no checkpoint or unfinished outcomes.
@@ -324,7 +326,7 @@ class PackageTests(unittest.TestCase):
         value=json.loads(self.complete.read_text()); value['status']='running'; self.complete.write_text(json.dumps(value))
         with patch.object(self, 'loader', side_effect=AssertionError('must not load model')):
             with self.assertRaises(ValueError): self.audit()
-        self.assertNotIn('torch',sys.modules)
+        assert_isolated_imports(self)
 
     def test_drift_during_load_refused_by_final_evidence_recheck(self):
         original_loader=self.loader

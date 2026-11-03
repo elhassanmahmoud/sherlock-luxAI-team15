@@ -15,6 +15,8 @@ import unittest
 from unittest import mock
 import zipfile
 
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE=Path(__file__).resolve().parent
 SCRIPT=HERE/'install_qualified_P.py'
 
@@ -315,7 +317,7 @@ class QualifiedReleaseContracts(unittest.TestCase):
         self.assertEqual(result['status'],'rolled_back');self.old_unchanged()
 
     def test_model_or_environment_stack_never_imported(self):
-        self.assertFalse(any(n=='torch' or n.startswith(('torch.','agents.','luxai_s3.')) for n in sys.modules))
+        assert_isolated_imports(self, ('torch', 'agents', 'luxai_s3'))
 
 
 if __name__=='__main__':unittest.main()

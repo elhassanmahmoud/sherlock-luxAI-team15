@@ -13,6 +13,8 @@ import unittest
 from unittest.mock import patch
 
 sys.dont_write_bytecode = True
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('build_targeting_candidates', HERE / 'build_targeting_candidates.py')
 builder = importlib.util.module_from_spec(spec)
@@ -75,7 +77,7 @@ class CandidateStructureTests(unittest.TestCase):
         for index in (-1, 0, 1, 17, 20, 35, 36, 37, True, '18'):
             with self.subTest(index=index), self.assertRaises(ValueError):
                 builder.make_candidate(self.source, {index: dict(weight=[[999]])})
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
 
 class CandidateBuildModeTests(unittest.TestCase):
@@ -155,7 +157,7 @@ class CandidateBuildModeTests(unittest.TestCase):
         self.assertEqual(candidate['cfg'], dict(before['cfg'], point_pair_swap=True, art_move_guard=True))
         self.assertEqual(self.source, before)
         self.assertFalse((out / 'PT.pth').exists())
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
     def test_p_only_and_audit_are_mutually_exclusive_without_loading(self):
         self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')
@@ -169,7 +171,7 @@ class CandidateBuildModeTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as stopped:
                 builder.main()
         self.assertEqual(stopped.exception.code, 2)
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
     def test_full_mode_still_requires_all_four_accepted_arms(self):
         self.assertIn('p_only', inspect.signature(builder.build).parameters, 'explicit P-only builder mode missing')

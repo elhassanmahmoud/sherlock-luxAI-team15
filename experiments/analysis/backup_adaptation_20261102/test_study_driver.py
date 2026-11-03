@@ -11,6 +11,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 
@@ -520,7 +522,7 @@ class DriverTests(SyntheticFixture):
             path.write_text(content)
             with self.assertRaises(ValueError):
                 d.validate_output(path, job)
-        self.assertNotIn('torch', sys.modules)
+        assert_isolated_imports(self)
 
 
 if __name__ == '__main__':

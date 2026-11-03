@@ -13,6 +13,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
+from tests.archive_import_isolation import assert_isolated_imports
+
 HERE = Path(__file__).resolve().parent
 REPO = Path(os.environ.get('TARGETING_SOURCE_ROOT', Path.cwd())).resolve()
 
@@ -312,7 +314,7 @@ class DriverTests(unittest.TestCase):
                              dict(combined_panel=[2.3, 2.3, 2.3], direct=[2.3, 2.3]))
             with self.assertRaises(FileExistsError):
                 d.run_phase(plan, start=True)
-        self.assertNotIn('torch', __import__('sys').modules)
+        assert_isolated_imports(self)
 
     def test_p_only_same_freeze_confirmation_and_late_pt_addition_is_rejected(self):
         d = self.driver
