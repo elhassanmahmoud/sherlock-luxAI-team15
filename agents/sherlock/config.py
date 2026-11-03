@@ -221,6 +221,9 @@ class AgentConfig:
     neb_cand und idle_approach aktiv (Kandidaten gezielt testen). Sicherheitsnetz fuer 0-Punkte-Spiele."""
     rescue_after: int = 0
     """cand_rescue greift erst, wenn das erste Relic seit mindestens so vielen Steps bekannt ist."""
+    rescue_in_training: bool = False
+    """Opt-in fuer Rettungs-Nachtraining: nur aktive cand-/zone_rescue-Eingriffe auch beim Lernen.
+    Schaltet eigenstaendige obey_target/neb_cand-Regeln nicht frei; Inferenz bleibt unveraendert."""
     zone_rescue: bool = False
     """True (01.11.2026, nur Auswertung): cand_rescue je Relic-Zone. Units mit einem Kandidaten-Ziel in der 5x5-Zone eines
     Relics, das seit rescue_after Schritten bekannt ist und in dessen Zone noch kein Punkte-Tile bewiesen ist, testen

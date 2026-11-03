@@ -387,7 +387,8 @@ class Agent_x:
         # testen (obey_target, neb_cand, idle_approach nur in diesem Fall aktiv)
         if self.belief.relic_positions and getattr(self, "_first_relic_step", None) is None:
             self._first_relic_step = int(ctx["step"])
-        self._rescue = bool(self.cfg.cand_rescue and not self.training and self.belief.relic_positions
+        rescue_allowed = not self.training or self.cfg.rescue_in_training
+        self._rescue = bool(self.cfg.cand_rescue and rescue_allowed and self.belief.relic_positions
                             and not self.belief.point_tiles.any() and self.belief.match_step >= 10
                             and int(ctx["step"]) - self._first_relic_step >= self.cfg.rescue_after)
         # 01.11.2026 (cfg.zone_rescue): dieselbe Rettung je Relic-Zone. cand_rescue greift nur, solange GAR KEIN
@@ -395,7 +396,7 @@ class Agent_x:
         # Relics wird nie gerettet. Hier: Zonen (5x5) bekannter Relics, seit rescue_after Schritten bekannt, ohne
         # bewiesenes Punkte-Tile; Units mit Kandidaten-Ziel in einer solchen Zone testen gezielt (_rescue_for).
         self._rescue_zones = set()
-        if self.cfg.zone_rescue and not self.training:
+        if self.cfg.zone_rescue and rescue_allowed:
             step_now = int(ctx["step"])
             for r in self.belief.relic_positions:
                 self._relic_seen.setdefault(r, step_now)
@@ -407,6 +408,10 @@ class Agent_x:
                         self._rescue_zones.add((rx, ry))
         for k, uid in enumerate(ids):
             legal = np.nonzero(masks[k])[0]
+            rescue_training = bool(self.training and self.cfg.rescue_in_training
+                                   and self._rescue_for(ctx, uid))
+            if rescue_training:
+                st["training_rescue_unit_steps"] = st.get("training_rescue_unit_steps", 0) + 1
             if self.training and len(legal) > 0 and self.rng.random() < eps:
                 st["explore_steps"] += 1
                 if self.rng.random() < self.cfg.guided_prob:
@@ -422,8 +427,12 @@ class Agent_x:
                     a = self._path_fix(ctx, uid, masks[k], a)
                 if self.cfg.stage_attack and not self.training and 1 <= a <= 4:
                     a = self._stage(ctx, uid, a, stage_info)
-                if (self.cfg.obey_target or self._rescue_for(ctx, uid)) and not self.training and 1 <= a <= 4:
+                if (((self.cfg.obey_target or self._rescue_for(ctx, uid)) and not self.training)
+                        or rescue_training) and 1 <= a <= 4:
+                    before_rescue = a
                     a = self._obey_target(ctx, uid, masks[k], a)
+                    if rescue_training and a != before_rescue:
+                        st["training_rescue_action_changes"] = st.get("training_rescue_action_changes", 0) + 1
                 if self.cfg.unstack and not self.training and a == geo.STAY:
                     a = self._unstack(ctx, uid, masks[k], a)
             self._prev_feats[uid] = feats[k]
@@ -497,7 +506,8 @@ class Agent_x:
                     a = a2
                     self._prev_actions[uid] = a
                     st["nebula_detours"] = st.get("nebula_detours", 0) + 1
-            if ((self.cfg.neb_cand or self._rescue_for(ctx, uid)) and not self.training and a == geo.STAY
+            if ((((self.cfg.neb_cand or self._rescue_for(ctx, uid)) and not self.training) or rescue_training)
+                    and a == geo.STAY
                     and (self.cfg.idle_approach or self._rescue_for(ctx, uid)
                          or self._harmful_nebula() >= self.cfg.nebula_avoid_min)):
                 d = self._neb_cand_step(ctx, uid, masks[k])
@@ -505,6 +515,8 @@ class Agent_x:
                     a = d
                     self._prev_actions[uid] = a
                     st["neb_cand_steps"] = st.get("neb_cand_steps", 0) + 1
+                    if rescue_training:
+                        st["training_rescue_action_changes"] = st.get("training_rescue_action_changes", 0) + 1
             if a == geo.STAY and self._harmful_nebula() >= 25:
                 x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
                 if (ctx["nebula"][x, y] and not self.belief.point_tiles[x, y]
