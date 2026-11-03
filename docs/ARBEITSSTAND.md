@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 03.11.2026, 18:18 Berlin – Codex: vollständiger Kandidatenvergleich gestartet
+
+- Alle sechs Kandidaten nach vollständigem Training tatsächlich zugelassen: 14.812 unabhängige Prüfungen bestanden, geordnete Tensoren und Konfigurationen exakt, Endnetze korrekt an Index 18 ersetzt. [Kandidaten- und Startnachweise](../experiments/analysis/final_battle_20261103/selection_start/README.md).
+- Seit 18:18:26 läuft die feste Auswahl mit **8.800 Spielen** auf 80 neuen Karten 851000–851079, jeweils beide Seiten: V14 und sechs Kandidaten gegen das lokale Sechserpanel plus default, zusätzlich sechs Direktblöcke gegen V14. C36 ist nur Kontrolle und kann nicht nominiert werden. Höchstens ein Kandidat erhält danach eine unabhängige Bestätigung mit 12.000 Spielen.
+- Startabnahme bestanden: Quelle/Interpreter/Eingaben, 13 Aufgaben, zwei Rechenworker mit je einem Thread, unveränderte aktive Gewichte/ZIP und Gesamtzeitreserve geprüft. Tatsächliche Ergebnisdateien und Gewinnquoten noch nicht ausgewertet. Keine neue Stärke oder Freigabe behauptet.
+- Lauf ausschließlich im eingefrorenen Worktree `sherlock-november-followup`, HEAD `7c906e1`; Eigentümer 59605, Status `experiments/analysis/final_battle_20261103/performance/selection/state.json`. Quelle und Eingaben bleiben auch zwischen Auswahl und Bestätigung unverändert. Kein zweiter Start. Primärer Hauptcheckout erhält nur diese Dokumentation; GitHub-/Kontingentwächter bleiben aktiv.
+
 ## 03.11.2026, 18:13 Berlin – Codex: festes Nachtraining vollständig und unabhängig akzeptiert
 
 - Beide echten Läufe erfolgreich beendet, Exit 0, keine aktiven Trainingskinder. Dauer rund 74 Minuten 51 Sekunden. Je Arm **120 Vorlaufspiele, 1.200 Lernspiele, 96 bekannte Validierungsspiele, 180.000 Lernupdates und 459.960 kumulierte Umgebungsschritte**. Insgesamt 2.832 Trainings-/Validierungsausführungen plus die zwei vorangegangenen technischen Spiele; keine entsprechende Anzahl unabhängiger Testkarten.
