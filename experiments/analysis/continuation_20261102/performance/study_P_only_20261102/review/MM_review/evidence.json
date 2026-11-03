@@ -1,0 +1,20 @@
+{
+  "zone_off_normalized_full_main_AST_equal": true,
+  "zone_off_boolean_P_flags_cases": 8,
+  "session_limit_counterexample": {
+    "max_sessions": 1,
+    "simultaneous_factory_calls": 8,
+    "registered_sessions_during_construction": 0
+  },
+  "unbounded_dimensions_forwarded_to_agent": {
+    "map_width": 1000000000,
+    "map_height": 1000000000
+  },
+  "imports": "stdlib only; extracted AST; no sockets/models/games",
+  "source_sha256": {
+    "agents/sherlock/main.py": "8de06de511bcbe090293715c1d72fec048e6ef4aa91713f766bee6a5e30b2beb",
+    "agents/sherlock/config.py": "f6f3b6fb35c9ac7e98c91484e69f919ea41c15cba8a0e5fab77b19edfcc995e6",
+    "scripts/sherlock_server.py": "d1b274a0263ce0118aa44f08ac37c504a03490c122ba93863947340a701a8a23",
+    "scripts/sherlock_remote_stub.py": "8ecd3e6050de31a03ebf4ccc6066c9e2108c631fef4cb38a1b5ef718e418cb9c"
+  }
+}

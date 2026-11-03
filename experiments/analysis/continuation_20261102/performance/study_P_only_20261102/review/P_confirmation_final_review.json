@@ -1,0 +1,76 @@
+{
+  "verdict": "PASS_DATA_AND_NO_ADOPTION_DECISION",
+  "important_findings": [],
+  "promotion_qualified": false,
+  "adoption": "V14 retained; P rejected for promotion; no runner-up, retry, enlarged sample or backup route",
+  "games": 9000,
+  "counts": {
+    "baseline_panel": {
+      "games": 4200,
+      "wins": 3485,
+      "draws": 0,
+      "losses": 715
+    },
+    "P_panel": {
+      "games": 4200,
+      "wins": 3496,
+      "draws": 0,
+      "losses": 704
+    },
+    "P_direct": {
+      "games": 600,
+      "wins": 309,
+      "draws": 0,
+      "losses": 291
+    }
+  },
+  "recomputed_whole_map_bootstrap": {
+    "panel": {
+      "delta": 0.0030555555555555566,
+      "low": -0.00861111111111111,
+      "high": 0.01472222222222222
+    },
+    "solution92": {
+      "delta": -0.01,
+      "low": -0.023333333333333334,
+      "high": 0.0016666666666666668
+    },
+    "default": {
+      "delta": 0.0,
+      "low": 0.0,
+      "high": 0.0
+    },
+    "direct": {
+      "winrate": 0.515,
+      "low": 0.4816666666666667,
+      "high": 0.5516666666666666
+    }
+  },
+  "gates": {
+    "panel_delta": false,
+    "panel_lower": false,
+    "solution_delta": false,
+    "solution_lower": false,
+    "default": true,
+    "default_delta": true,
+    "direct_lower": false
+  },
+  "failed_gates": 5,
+  "audit_checks_verified": 276,
+  "bound_file_hashes_rechecked": 237,
+  "source_head": "03e54e267242ff642c126313fe5f512ed9d959ac",
+  "study_freeze_sha256": "e1731478088ec7bdaa2b63a51a6ae60f0c7ecedc4522fbedfbcfbb0f1517ba03",
+  "plan_sha256": "0e7d5a5e34acc8f8d808c206106381b3ac45a3e1963a2f41ef89a2d20187c6e3",
+  "summary_sha256": "cec6aed5d0d800ecac0a5ebb7fb0eea334ca28fa26e2ae3488e4ba27847b4e9f",
+  "independent_audit_sha256": "cfe86559cb129098905d525ff8f390a24c2ee16489d26d2e7329572d143e2630",
+  "completed_at_utc": "2026-11-03T00:36:40.203592+00:00",
+  "hard_game_deadline_utc": "2026-11-03T03:30:00+00:00",
+  "sleep_caveat": "P_panel calendar elapsed exceeds monotonic elapsed by 4353.697270417018 seconds; report active-time and calendar-time separately, not uninterrupted throughput. Calendar deadline met.",
+  "not_claimed": [
+    "Python 3.10 compatibility",
+    "P package/tensor/course technical QC",
+    "raw action-stream reconstruction",
+    "stronger agent",
+    "causal learned adaptation"
+  ]
+}

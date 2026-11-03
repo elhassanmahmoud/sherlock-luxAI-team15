@@ -4,13 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 03.11.2026 – Codex: P nicht bestätigt, V14 bleibt; Remote-Stand übernommen
 
-
-
-
-
-
-
+- Die [9.000-Spiele-Bestätigung](../experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md) verfehlt fünf von sieben Gates. Panel Δ +0,306 pp [−0,861; +1,472]; Solution P 572/600 gegen V14 578/600; direkt P 309/600 = 51,5 % [48,167; 55,167]; default beide 600/600. Der Auswahlvorteil wurde nicht repliziert. Kein Stärkezuwachs nachgewiesen, keine 100%-Quote und auch keine gesicherte generelle Verschlechterung behauptet.
+- Root-Auswertung, unabhängiger Auditor mit 276 Prüfungen und zweiter Datenreview mit eigener CSV-/Bootstrap-Gegenrechnung sowie 237 Dateihashes stimmen überein. Source03e und Mastere173 blieben über beide Phasen gleich. Freeze nach vollständiger Abnahme und Ende der Modelljobs geschlossen; die Performancekopie bleibt zur historischen Reproduktion auf03e. Keine P-Freigabeprüfung oder Übernahme, kein Nachrücken, keine zweite Bestätigung und kein PT2.
+- Der Mac schlief am02.11. von22:22:49 bis23:35:47 Berlin mit kurzen Weckphasen. Beim P-Panel beträgt die Kalender-/Monotoniedifferenz4.353,7 Sekunden. Der absolute Abschluss um01:36:40 Berlin lag innerhalb der Frist. Quellen und Rechenzustand blieben erhalten; die Kalenderdifferenz bedeutet keinen entsprechend langsameren Algorithmus.
+- Danach origin/main35a9ebc ohne Verlust lokaler Arbeit übernommen. `zone_rescue` bleibt ausgeschaltet und ohne Leistungsmessung. Der [Commitreview](../experiments/analysis/continuation_20261102/performance/study_P_only_20261102/review/MM_commits_20261102_review.md) belegt Entscheidungsäquivalenz bei ausgeschaltetem Flag, auch mit P-Flags. Das ist keine Stärkeabnahme. Server/Tunnel wurden nicht gestartet. Vor öffentlichem Einsatz sind zwei belegte Ressourcenfehler zu beheben: parallele Konstruktionen umgehen das Sitzungslimit; ungeprüfte Env-Dimensionen können große Arrays anlegen.
+- Aktive Gewichte weiterhin `98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8`, bestehende ZIP `88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6`. Zusätzliche technische 3.10-Prüfung noch in Arbeit: erster Versuch scheiterte vor Spielen am SciPy-Mac-Binärpaket; nur die isolierte Umgebung wurde repariert. Agent und gemeinsames Python3.13 bleiben unverändert. Endgültiger Morgenbericht nach technischer Schlussprüfung.
 
 ## 02.11.2026, 22:33 Berlin – Claude Code mit Mahmoud: Fernspiel-Server und `zone_rescue` (Default aus)
 

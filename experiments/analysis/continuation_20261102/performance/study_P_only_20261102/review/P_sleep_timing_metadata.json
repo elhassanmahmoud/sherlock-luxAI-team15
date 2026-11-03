@@ -1,0 +1,70 @@
+{
+  "scope": "power/timing metadata only; no fresh outcomes",
+  "events": [
+    {
+      "time": "2026-11-02 22:22:49 +0100",
+      "event": "Sleep",
+      "reason": "Clamshell Sleep"
+    },
+    {
+      "time": "2026-11-02 22:40:48 +0100",
+      "event": "Wake",
+      "reason": "NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:66%) 3 secs    "
+    },
+    {
+      "time": "2026-11-02 22:40:51 +0100",
+      "event": "Sleep",
+      "reason": "Sleep Service Back to Sleep"
+    },
+    {
+      "time": "2026-11-02 22:57:47 +0100",
+      "event": "Wake",
+      "reason": "NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:66%) 2 secs    "
+    },
+    {
+      "time": "2026-11-02 22:57:49 +0100",
+      "event": "Sleep",
+      "reason": "Sleep Service Back to Sleep"
+    },
+    {
+      "time": "2026-11-02 23:14:09 +0100",
+      "event": "Wake",
+      "reason": "NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:66%) 2 secs    "
+    },
+    {
+      "time": "2026-11-02 23:14:11 +0100",
+      "event": "Sleep",
+      "reason": "Sleep Service Back to Sleep"
+    },
+    {
+      "time": "2026-11-02 23:29:31 +0100",
+      "event": "Wake",
+      "reason": "NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:66%) 2 secs    "
+    },
+    {
+      "time": "2026-11-02 23:29:33 +0100",
+      "event": "Sleep",
+      "reason": "Sleep Service Back to Sleep"
+    },
+    {
+      "time": "2026-11-02 23:35:47 +0100",
+      "event": "Wake",
+      "reason": "smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/UserActivity Assertion Using BA"
+    }
+  ],
+  "complete_job_times": [
+    {
+      "job": "baseline_panel",
+      "calendar_seconds": 8562.068922,
+      "monotonic_seconds": 8562.071548291016,
+      "calendar_minus_monotonic_seconds": -0.002626291015985771
+    },
+    {
+      "job": "P_panel",
+      "calendar_seconds": 13280.212197,
+      "monotonic_seconds": 8926.514926582982,
+      "calendar_minus_monotonic_seconds": 4353.697270417018
+    }
+  ],
+  "source_unchanged": true
+}
