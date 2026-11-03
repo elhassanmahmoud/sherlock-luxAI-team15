@@ -4,6 +4,11 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 03.11.2026 – Codex: Originalprüfsummen im Git-Archiv abgesichert
+
+- Die FT18-Bestätigung läuft unverändert weiter. Nach dem Upload der Auswahl unter `6c4f953` wurde beim Vergleich der tatsächlichen Git-Dateiinhalte eine automatische CRLF→LF-Umwandlung bei allen 13 CSVs festgestellt (`core.autocrlf=input`). Zahlen und Auswertung waren unverändert, die ursprünglichen Datei-Prüfsummen ließen sich im heruntergeladenen Archiv dadurch jedoch nicht direkt bestätigen.
+- Eng begrenzte `.gitattributes` nur für CSVs der aktuellen Studie ergänzt und die originalen CSV-Bytes erneut versioniert. Zunächst alle 49 ursprünglichen Nachweisdateien direkt aus dem Git-Index gegen ihre Original-Manifeste geprüft: bytegleich, alle SHA-256 stimmen. Nach Aufnahme der Fehlernachweise bestätigte ein unabhängiger Review alle 51 Dateien; dessen eigener Bericht ist zusätzlich archiviert. Globale Git-Einstellungen, historische Daten und eingefrorene laufende Studienkopie nicht geändert.
+
 ## 03.11.2026, 23:36 Berlin – Codex: FT18 ausgewählt, einzige frische Bestätigung gestartet
 
 - [Vollständige Auswahl](../experiments/analysis/final_battle_20261103/performance_selection/README.md): **8.800 Spiele**, alle 13 Aufgaben Exit 0, Quelle/Eingaben unverändert. Unabhängiger vollständiger Abgleich aller Schlüssel, Werte, Bootstrapintervalle, Gates und Nominierung bestanden. Eine fehlende Gegnerbezeichnung im externen Prüfer wurde korrigiert; alte Fehlerausgabe erhalten, keine Änderung an Studie, Statistik oder Grenzen. Korrigierter Prüfer: 20 kleine synthetische Prüfungen grün.

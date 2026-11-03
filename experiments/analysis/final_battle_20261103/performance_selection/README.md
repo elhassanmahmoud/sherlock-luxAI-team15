@@ -47,6 +47,9 @@ Ausgabeformat ergänzen. Ursprünglicher Fehlerbericht, alte Prüferfassung und 
 vollständig bestandene erneute Abnahme sind erhalten. Keine Statistik, Grenzen,
 Kandidatenauswahl oder eingefrorene Implementierung wurde dafür verändert.
 
+Die studienspezifische `.gitattributes` erhält die Original-Zeilenumbrüche der CSVs auch
+in Git, damit ihre SHA-256-Werte nach einem Checkout unverändert bleiben.
+
 Die ursprünglichen Ausführungspfade bleiben in den Belegen erhalten. Auswerter sind
 als `.py.txt` archiviert, damit eine Archivierung keine Quellen des laufenden Versuchs
 verändert. Die aktive Studienkopie bleibt auf Commit `7c906e1` eingefroren.
