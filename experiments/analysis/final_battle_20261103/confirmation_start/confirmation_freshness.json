@@ -1,0 +1,185 @@
+{
+  "verdict": "PASS",
+  "checked_utc": "2026-11-03T22:35:01.671479+00:00",
+  "original_audit": "/tmp/sherlock-final-20261103/seed_audit.json",
+  "original_audit_sha256": "1faf40b601bb2550e06b5941136861eaa989f1d619344d5d65ce56e4be257bc3",
+  "original_audited_at_utc": "2026-11-03T15:30:28.910313+00:00",
+  "ranges_inclusive": {
+    "confirmation": [
+      852000,
+      852399
+    ],
+    "direct": [
+      853000,
+      853399
+    ]
+  },
+  "worktrees": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint"
+  ],
+  "heads": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "24f9d76b84685246b6a772678e3d8338ed5a1208",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie": "694eda39ee006cb4644184db73ff2b0a5cbe4383",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation": "3dcf090b380918175c5d1d01262ddbd7a717d18f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "7c906e16943ff7217afe1eae392834439cc76634",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics": "03e54e267242ff642c126313fe5f512ed9d959ac",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint": "ea8cd339829f398fd27e8f871f654fded2513589"
+  },
+  "counts": {
+    ".csv_files": 6936,
+    "physical_bytes": 1483179734,
+    "csv_unique_scanned": 1492,
+    ".json_files": 3090,
+    "csv_seed_fields": 1589974,
+    ".csv.gz_files": 9,
+    ".jsonl_files": 20,
+    "jsonl_unique_scanned": 51,
+    "jsonl_lines": 16200,
+    ".jsonl.gz_files": 205,
+    "jsonl_seed_fields": 10235,
+    "json_unique_scanned": 35,
+    "json_hash_duplicates": 16,
+    "csv_hash_duplicates": 5453,
+    "jsonl_hash_duplicates": 174
+  },
+  "seedless_csv_files": {
+    "csv": 263
+  },
+  "actual_seed_range_counts": {
+    "other": 1586369,
+    "selection851": 8800,
+    "prefill495": 240,
+    "training493": 4800
+  },
+  "consumption_overlaps": [],
+  "new_manifest_count": 15,
+  "new_manifests": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/selection_start/manifest.json",
+      "sha256": "536938caddb2bc77a0999c5bb67c66c98c5aa4b42c622af9c0573c826927e44c",
+      "mtime_ns": 1793726637858367444,
+      "ctime_ns": 1793726645822858139
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/selection_start/freeze.json",
+      "sha256": "3b3bdbe8de396e5762fd542d2337c26334246424986f2ccb80e83bcda19ae73c",
+      "mtime_ns": 1793726637856124988,
+      "ctime_ns": 1793726645817628185
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/completed_training/archive_manifest.json",
+      "sha256": "044d4953902997e6b6f8646b3350f071d50d75f1f7cf09f8c06ec830854045d5",
+      "mtime_ns": 1793726128836658796,
+      "ctime_ns": 1793726132566506749
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/performance_selection/freeze.selection.reservation.json",
+      "sha256": "40f1768672e3e6ac9bebf6b328732720add98366a0da64e6d74c78ba3d792054",
+      "mtime_ns": 1793745189061105781,
+      "ctime_ns": 1793745196925596113
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/performance_selection/archive_manifest.json",
+      "sha256": "e2bd48acb2eaef1f10b4b4557872036a7b345a1d55a9c0b7d53add8c6d813fc8",
+      "mtime_ns": 1793745189086770312,
+      "ctime_ns": 1793745196933406320
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/final_battle_20261103/performance_selection/selection/state.json",
+      "sha256": "60bcf63461e0ca63a28360d71196f9f54dc12a3dfff26434cf127b7c0ac14c78",
+      "mtime_ns": 1793745189067676778,
+      "ctime_ns": 1793745200310146180
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/ensembles/final_battle_20261103/manifest.json",
+      "sha256": "20d6b784a4ad94199642a386ee67793d5a008e413616ea66f87df28de9fa44b7",
+      "mtime_ns": 1793726007805848665,
+      "ctime_ns": 1793726016057658491
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training_prepared/manifest.json",
+      "sha256": "6c81a4f6f6e01b9f1a8ff82912ad6a3acfe4f37b93a3333d20c553f1a495bae7",
+      "mtime_ns": 1793721403587033566,
+      "ctime_ns": 1793721411749180178
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training_prepared/control18/manifest.json",
+      "sha256": "c319e19bd5a2f93a46c101301ae4452c2b7f3944fcc9591b4079f8b5f49c659c",
+      "mtime_ns": 1793721403568827102,
+      "ctime_ns": 1793721411777233559
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training_prepared/adapt18/manifest.json",
+      "sha256": "0ff0f3cc99ab935074b6b8eb3f9d94c37e3316b142aa181338d5b21f122fee81",
+      "mtime_ns": 1793721403576385236,
+      "ctime_ns": 1793721411771090668
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training/state.json",
+      "sha256": "06d157f5b76ba200dacb9ff3c00d8685e174210406526390df79b4ea4afd4739",
+      "mtime_ns": 1793725949655864094,
+      "ctime_ns": 1793725960414531816
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/freeze.confirmation.reservation.json",
+      "sha256": "46e5db29ba3c14665dbc6d32070fdd498aace3543a2ee1419218fbf6e9b9b2b2",
+      "mtime_ns": 1793745100808267576,
+      "ctime_ns": 1793745105424210500
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/confirmation/plan.json",
+      "sha256": "918d0ea0e354dda69639002cde92aab8cd99f6c43e3d6b6f1298810b5b0d8749",
+      "mtime_ns": 1793745100808498909,
+      "ctime_ns": 1793745107433235598
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/manifest.json",
+      "sha256": "de665495e50e401a181c79d7c0236ca874509a62691bc87a7141d4933b060897",
+      "mtime_ns": 1793725912622887548,
+      "ctime_ns": 1793725917946012829
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/manifest.json",
+      "sha256": "a358175684cd5336be49069d8afb96c78c7b5656ed9a3a6f7263eb7adb827e8c",
+      "mtime_ns": 1793725944551144126,
+      "ctime_ns": 1793725948121358547
+    }
+  ],
+  "target_declarations": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/confirmation/plan.json",
+      "key": ".jobs[0].first_seed",
+      "first_seed": 852000,
+      "n_maps": 400,
+      "classification": "planned_interval"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/confirmation/plan.json",
+      "key": ".jobs[1].first_seed",
+      "first_seed": 852000,
+      "n_maps": 400,
+      "classification": "planned_interval"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/confirmation/plan.json",
+      "key": ".jobs[2].first_seed",
+      "first_seed": 853000,
+      "n_maps": 400,
+      "classification": "planned_interval"
+    }
+  ],
+  "errors": [],
+  "planned_confirmation_files": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/performance/confirmation/plan.json"
+  ],
+  "planned_confirmation_note": "plan.json and the sibling confirmation reservation declare future jobs only; no CSV/state/log or completed-game data in the confirmation directory.",
+  "duration_seconds": 21.052803500031587,
+  "scope": "Local freshness only across registered worktrees; actual seed fields only, no outcome analysis/model/game/source/HEAD changes"
+}

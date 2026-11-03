@@ -1,6 +1,6 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-Stand 03.11.: Abgabe weiter **V14**, Gewichte unverändert. P wurde nach der unabhängigen Bestätigung mit 9.000 Spielen abgelehnt; kein nachgewiesen stärkerer Nachfolger. Der finale Vergleich läuft bis **04.11., 16:00 Uhr Berlin**: zwei feste Nachtrainingsläufe sind vollständig geprüft; sechs Kandidaten mit 18, 24 oder 36 Netzen werden jetzt in 8.800 Spielen verglichen. Noch keine neuen Leistungsresultate oder Übernahmeentscheidung. [Arbeitsstand](docs/ARBEITSSTAND.md) · [Abschlussbericht](docs/MORGENBERICHT_20261103.md) · [P-Studie](experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md).
+Stand 03.11.: Abgabe weiter **V14**, Gewichte unverändert. P wurde nach der unabhängigen Bestätigung mit 9.000 Spielen abgelehnt; kein nachgewiesen stärkerer Nachfolger. Die finale Auswahl mit 8.800 Spielen ist vollständig geprüft: **FT18 mit 18 bereits nachtrainierten Netzen** ist nominiert. Seine einzige Bestätigung mit 12.000 Spielen auf neuen Karten läuft; noch kein bestätigter Stärkegewinn und kein Austausch der Abgabe. Abschluss bis **04.11., 16:00 Uhr Berlin**. [Aktuelle Auswahl](experiments/analysis/final_battle_20261103/performance_selection/README.md). [Arbeitsstand](docs/ARBEITSSTAND.md) · [Abschlussbericht](docs/MORGENBERICHT_20261103.md) · [P-Studie](experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md).
 
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**

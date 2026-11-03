@@ -1,0 +1,395 @@
+"""Independent final-study audit; refuses incomplete states before opening CSVs.
+
+Only stdlib and NumPy. Does not import repository evaluation/statistics/model code.
+Use --self-test for small synthetic contracts, or --plan/--state/--out after a phase.
+"""
+import argparse
+import csv
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+import numpy as np
+
+PANEL = ('solution92', 'sol92_sq',
+    'self:experiments/releases/20261022_all18_v3/agent_p0.pth',
+    'self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth',
+    'self:experiments/releases/20261022_v10_baseline/agent_p0.pth',
+    'self:experiments/releases/20261101_v13_neb/agent_p0.pth')
+DIRECT = 'self:experiments/releases/20261101_v14_baseline/agent_p0.pth'
+SIDES = ('player_0', 'player_1')
+COUNTS = dict(PAIR18=18, PAIR24=24, FT18=18, Z36=36, C36=36, R36=36)
+BASE = ('PAIR18', 'PAIR24', 'FT18', 'Z36')
+FIELDS = ['seed', 'side', 'opponent', 'result', 'game_win', 'point_win', 'our_wins', 'opp_wins',
+    'our_points', 'opp_points', 'point_counting_version', 'wait_frac', 'invalid_frac', 'greedy_masked_frac',
+    'sap_attempts', 'sap_hits', 'stack_frac', 'relics_found', 'relics_seen', 'known_point_tiles',
+    'belief_contradictions', 'unit_steps', 'steps', 'secs']
+SOURCE_SHA = '98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8'
+FREEZE_SHA = '3b3bdbe8de396e5762fd542d2337c26334246424986f2ccb80e83bcda19ae73c'
+HEAD = '7c906e16943ff7217afe1eae392834439cc76634'
+EPS = 1e-9
+
+
+def need(value, message):
+    if not value:
+        raise ValueError(message)
+
+
+def sha(path):
+    with Path(path).open('rb') as handle:
+        return hashlib.file_digest(handle, 'sha256').hexdigest()
+
+
+def read(path):
+    return json.loads(Path(path).read_text())
+
+
+def closed_state(path):
+    """This check must precede every real CSV read, including confirmation ancestry."""
+    state = read(path)
+    need(state.get('status') == 'complete', 'REFUSE: phase state is not explicitly complete')
+    need(state.get('schema_version') == 1, 'Wrong state schema')
+    need(isinstance(state.get('jobs'), list) and state['jobs'], 'No completed job receipts')
+    need(all(j.get('status') == 'complete' and type(j.get('exit_code')) is int
+             and j['exit_code'] == 0 for j in state['jobs']), 'REFUSE: job incomplete or nonzero exit')
+    return state
+
+
+def schedule(root, out, weights, phase, candidate):
+    names = set(weights)
+    allowed = {'baseline', *BASE}
+    need(names in (allowed, allowed | {'C36', 'R36'}), 'Wrong fixed role roster')
+    roles = (*BASE, 'C36', 'R36') if 'R36' in names else BASE
+    need(phase in ('selection', 'confirmation'), 'Wrong phase')
+    need(candidate is None if phase == 'selection' else candidate in roles and candidate != 'C36', 'Invalid nominee')
+    selected = ('baseline', *roles) if phase == 'selection' else ('baseline', candidate)
+    first, n = (851000, 80) if phase == 'selection' else (852000, 400)
+    jobs = []
+    for role in selected:
+        for kind in (('panel',) if role == 'baseline' else ('panel', 'direct')):
+            direct = kind == 'direct'
+            name = role + '_' + kind
+            jobs.append(dict(name=name, role=role, engine='par_eval',
+                timing_class='direct' if direct else 'combined_panel', root=str(root), weights=weights[role],
+                first_seed=(851000 if phase == 'selection' else 853000) if direct else first,
+                n_maps=n, opponents=[DIRECT] if direct else [*PANEL, 'default'], overrides=[], workers=2,
+                games=2*n*(1 if direct else 7), out=str(out/(name+'.csv')), log=str(out/(name+'.log'))))
+    return roles, jobs
+
+
+def bootstrap(values):
+    """Draw card indices independently, explicitly using PCG64 and linear quantiles."""
+    values = np.asarray(values, dtype=np.float64)
+    need(values.ndim == 1 and len(values) >= 2 and np.isfinite(values).all(), 'Invalid bootstrap cards')
+    rng = np.random.Generator(np.random.PCG64(0))
+    indices = rng.integers(0, len(values), size=(5000, len(values)))
+    samples = values[indices].mean(axis=1)
+    low, high = np.percentile(samples, [2.5, 97.5], method='linear')
+    return float(low), float(high)
+
+
+def read_csv(job):
+    """Return a fixed ordered score cube; reject any incomplete or extra key."""
+    with Path(job['out']).open(newline='') as handle:
+        reader = csv.DictReader(handle)
+        need(reader.fieldnames == FIELDS, 'Wrong ordered CSV schema')
+        rows = list(reader)
+    expected = {(s, side, opp) for s in range(job['first_seed'], job['first_seed']+job['n_maps'])
+                for side in SIDES for opp in job['opponents']}
+    values = {}
+    for row in rows:
+        need(None not in row and all(v not in (None, '') for v in row.values()), 'Incomplete CSV cells')
+        numbers = {k: float(v) for k, v in row.items() if k not in ('side', 'opponent')}
+        need(all(math.isfinite(v) for v in numbers.values()), 'Nonfinite CSV value')
+        seed = numbers['seed']
+        need(seed.is_integer() and seed >= 0, 'Invalid seed')
+        key = int(seed), row['side'], row['opponent']
+        need(key in expected and key not in values, 'Duplicate/unexpected game key')
+        need(numbers['steps'] == 303 and numbers['point_counting_version'] == 2 and numbers['secs'] >= 0,
+             'Wrong steps, point version or runtime')
+        own, other = numbers['our_wins'], numbers['opp_wins']
+        need(own.is_integer() and other.is_integer() and min(own, other) >= 0 and own+other <= 3, 'Invalid match wins')
+        score = 1. if own > other else 0. if own < other else .5
+        need(numbers['result'] == score and numbers['game_win'] == int(own > other), 'Result inconsistent with wins')
+        for field in ('sap_attempts', 'sap_hits', 'relics_found', 'relics_seen', 'known_point_tiles',
+                      'belief_contradictions', 'unit_steps', 'our_points', 'opp_points'):
+            need(numbers[field].is_integer() and numbers[field] >= 0, 'Invalid '+field)
+        for field in ('wait_frac', 'invalid_frac', 'greedy_masked_frac', 'stack_frac'):
+            need(0 <= numbers[field] <= 1, 'Invalid '+field)
+        ours, theirs = numbers['our_points'], numbers['opp_points']
+        need(numbers['point_win'] == (1. if ours > theirs else 0. if ours < theirs else .5), 'Wrong point result')
+        values[key] = score
+    need(set(values) == expected and len(rows) == job['games'], 'Missing or extra game keys')
+    return np.array([[[values[s, side, opp] for side in SIDES] for opp in job['opponents']]
+                     for s in range(job['first_seed'], job['first_seed']+job['n_maps'])])
+
+
+def paired(candidate, reference):
+    need(candidate.shape == reference.shape and candidate.ndim == 1, 'Unpaired cards')
+    low, high = bootstrap(candidate-reference)
+    return dict(maps=len(candidate), games=2*len(candidate), winrate=float(candidate.mean()),
+                ref_winrate=float(reference.mean()), delta=float((candidate-reference).mean()), low=low, high=high)
+
+
+def gates(phase, panel, solution, default, direct, control=None):
+    if phase == 'selection':
+        checks = dict(panel_delta=panel['delta'] >= .005-EPS, solution_delta=solution['delta'] >= -EPS,
+                      default=default['winrate'] >= .99-EPS, direct=direct['winrate'] >= .5-EPS)
+        if control is not None:
+            checks.update(control_panel=panel['delta'] >= control['panel']['delta']-EPS,
+                          control_solution=solution['delta'] >= control['opponents']['solution92']['delta']-EPS)
+    else:
+        checks = dict(panel_delta=panel['delta'] >= .01-EPS, panel_lower=panel['low'] > EPS,
+            solution_delta=solution['delta'] >= -EPS, solution_lower=solution['low'] > -.01+EPS,
+            default=default['winrate'] >= .99-EPS, default_delta=default['delta'] >= -.01-EPS,
+            direct_lower=direct['low'] > .5+EPS)
+    return {k: bool(v) for k, v in checks.items()}
+
+
+def nominate(results):
+    valid = [name for name in results if name in COUNTS and name != 'C36' and results[name]['passed']]
+    def score(name):
+        r = results[name]
+        if 'counts' in r:
+            # All candidates share the same complete denominator and baseline.
+            # Exact half-win units avoid floating noise breaking a true tie.
+            def units(opponent):
+                c, b = r['counts'][opponent]['candidate'], r['counts'][opponent]['baseline']
+                return 2*(c['wins']-b['wins'])+c['draws']-b['draws']
+            return -sum(units(o) for o in PANEL), -units('solution92'), COUNTS[name], name
+        return -r['panel']['delta'], -r['opponents']['solution92']['delta'], COUNTS[name], name
+    return min(valid, key=score) if valid else None
+
+
+def calculate(phase, roles, frames, direct_frames):
+    results = {}
+    for name in roles:
+        cube, ref = frames[name], frames['baseline']
+        opponents, counts = {}, {}
+        for index, opponent in enumerate((*PANEL, 'default')):
+            opponents[opponent] = paired(cube[:, index].mean(axis=1), ref[:, index].mean(axis=1))
+            opponents[opponent].update(excluded_candidate=0, excluded_reference=0)
+            counts[opponent] = {}
+            for label, array in (('candidate', cube[:, index]), ('baseline', ref[:, index])):
+                counts[opponent][label] = dict(games=int(array.size), wins=int((array == 1).sum()),
+                    draws=int((array == .5).sum()), losses=int((array == 0).sum()))
+        panel = paired(cube[:, :6].mean(axis=(1, 2)), ref[:, :6].mean(axis=(1, 2)))
+        panel.pop('games')
+        raw = direct_frames[name]
+        cards = raw.mean(axis=(1, 2)); low, high = bootstrap(cards)
+        direct = dict(maps=len(cards), games=int(raw.size), winrate=float(cards.mean()), low=low, high=high,
+            wins=int((raw == 1).sum()), draws=int((raw == .5).sum()), losses=int((raw == 0).sum()))
+        checks = gates(phase, panel, opponents['solution92'], opponents['default'], direct)
+        results[name] = dict(panel=panel, opponents=opponents, direct=direct, counts=counts,
+                             gates=checks, passed=all(checks.values()))
+    if phase == 'selection' and 'R36' in results:
+        r = results['R36']
+        r['gates'] = gates(phase, r['panel'], r['opponents']['solution92'], r['opponents']['default'],
+                           r['direct'], control=results['C36'])
+        r['passed'] = all(r['gates'].values())
+    return results
+
+
+def same(actual, expected, where='summary'):
+    if isinstance(expected, dict):
+        need(isinstance(actual, dict) and set(actual) == set(expected), 'Wrong keys: '+where)
+        for key in expected:
+            same(actual[key], expected[key], where+'.'+key)
+    elif isinstance(expected, float):
+        need(type(actual) in (int, float) and math.isfinite(actual)
+             and abs(actual-expected) <= 1e-12, 'Numerical mismatch: '+where)
+    else:
+        need(type(actual) == type(expected) and actual == expected, 'Mismatch: '+where)
+
+
+def audit(plan_path, state_path, official_summary=None):
+    # Gate ALL jobs first. No CSV hash/read or outcome access above this boundary.
+    state = closed_state(state_path)
+    plan_path, state_path = Path(plan_path).resolve(strict=True), Path(state_path).resolve(strict=True)
+    plan = read(plan_path); phase = plan['phase']
+    need(plan_path.name == 'plan.json' and plan['schema_version'] == 1 and state['phase'] == phase, 'Bad phase binding')
+    need(Path(state['plan_path']).resolve() == plan_path and state['plan_sha256'] == sha(plan_path), 'Unbound plan')
+    freeze_path = Path(plan['study_freeze_path']).resolve(strict=True); freeze = read(freeze_path)
+    freeze_sha = sha(freeze_path)
+    need(freeze.get('schema_version') == 1 and freeze_sha == FREEZE_SHA
+         and freeze_sha == plan['study_freeze_sha256'] == state['study_freeze_sha256'], 'Wrong freeze hash')
+    need(state['source_before'] == state['source_after'] == freeze['identity'], 'Phase source identity changed')
+    root = Path(freeze['root']); expected_head = freeze['expected_head']
+    need(subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+         == expected_head == freeze['identity']['source']['head'] == HEAD, 'Actual source HEAD changed')
+    names = subprocess.check_output(['git', '-C', str(root), 'ls-files', '-z', '--cached', '--others',
+                                    '--exclude-standard', '--', '*.py']).split(b'\0')
+    paths = {root/name.decode() for name in names if name}
+    for directory in ('scripts', 'agents', 'lux'):
+        paths.update((root/directory).rglob('*.py'))
+    paths.update(map(Path, freeze['protocols']))
+    for name in ('requirements.txt', 'pyproject.toml'):
+        if (root/name).is_file():
+            paths.add(root/name)
+    venv = Path(freeze['python']).parent.parent
+    if (venv/'pyvenv.cfg').is_file():
+        paths.add(venv/'pyvenv.cfg')
+    for engine in (venv/'lib').glob('python*/site-packages/luxai_s3'):
+        paths.update(engine.rglob('*.py'))
+    need(set(map(str, paths)) == set(freeze['identity']['source']['files']), 'Frozen source inventory changed')
+    for mapping in (freeze['identity']['source']['files'], freeze['frozen_weights']):
+        need(all(sha(p) == h for p, h in mapping.items()), 'Frozen source/input content changed')
+    source = freeze['identity']['source']
+    need(sha(source['executable']) == source['executable_sha256'], 'Interpreter changed')
+    need(sha(freeze['driver']['path']) == freeze['driver']['sha256'], 'Driver changed')
+    for path in (freeze['weights']['baseline'], root/DIRECT[5:], root/'agents/sherlock/weights/agent_p0.pth',
+                 root/'agents/sherlock/weights/agent_p1.pth'):
+        need(sha(path) == SOURCE_SHA, 'V14 identity changed')
+    reservation = freeze_path.with_name(freeze_path.stem+'.'+phase+'.reservation.json')
+    need(read(reservation) == dict(plan_path=str(plan_path), phase=phase, study_freeze_sha256=freeze_sha), 'Wrong reservation')
+    roles, jobs = schedule(root, plan_path.parent, freeze['weights'], phase, plan['candidate'])
+    need(jobs == plan['jobs'] and len(jobs) == len(state['jobs']), 'Changed/incomplete fixed jobs')
+    total = 12000 if phase == 'confirmation' else (8800 if 'R36' in roles else 6240)
+    need(sum(j['games'] for j in jobs) == total == state['completed_games'], 'Wrong exact phase total')
+    need(plan['initial_seconds_per_game'] == dict(combined_panel=2.22, direct=3.)
+         and plan['reserve_seconds'] == 3600 and plan['game_end_utc'] == '2026-11-04T12:30:00+00:00'
+         and plan['future_confirmation_games'] == (dict(combined_panel=11200, direct=800) if phase == 'selection'
+                                                  else dict(combined_panel=0, direct=0)), 'Changed deadline/budget contract')
+    prior = None
+    observed = dict(combined_panel=[], direct=[])
+    if phase == 'confirmation':
+        need(sha(plan['selection_state_path']) == plan['selection_state_sha256']
+             and sha(plan['selection_summary_path']) == plan['selection_summary_sha256'], 'Changed selection evidence')
+        selection_state = closed_state(plan['selection_state_path'])
+        prior = audit(selection_state['plan_path'], plan['selection_state_path'], plan['selection_summary_path'])
+        need(prior['summary']['study_freeze_sha256'] == freeze_sha
+             and prior['summary']['nominee'] == plan['candidate'], 'Confirmation does not match independent nominee')
+        for done in selection_state['jobs']:
+            seconds = done['wall_seconds']
+            need(type(seconds) in (int, float) and math.isfinite(seconds) and seconds > 0, 'Invalid wall-time receipt')
+            observed[done['timing_class']].append(seconds/done['actual_games'])
+    need(plan['prior_observed_seconds_per_game'] == observed, 'Changed historical wall-rate observations')
+    frames, directs, hashes = {}, {}, {}
+    for job, done in zip(jobs, state['jobs']):
+        need(done['name'] == job['name'] and done['out'] == job['out'] and done['timing_class'] == job['timing_class']
+             and done['actual_games'] == job['games'] and sha(job['out']) == done['output_sha256'], 'Wrong output receipt')
+        cube = read_csv(job)
+        (directs if job['timing_class'] == 'direct' else frames)[job['role']] = cube
+        hashes[job['out']] = done['output_sha256']
+    candidates = roles if phase == 'selection' else (plan['candidate'],)
+    results = calculate(phase, candidates, frames, directs)
+    summary = dict(schema_version=1, phase=phase, status='complete', study_freeze_sha256=freeze_sha,
+        plan_path=str(plan_path), plan_sha256=sha(plan_path), state_sha256=sha(state_path), csv_sha256=hashes,
+        candidates=results, nominee=nominate(results) if phase == 'selection' else plan['candidate'],
+        promotion_qualified=bool(phase == 'confirmation' and results[plan['candidate']]['passed']),
+        completed_games=total, bootstrap_samples=5000, bootstrap_rng_seed=0,
+        bootstrap_cluster='whole map, paired sides and all panel opponents')
+    if official_summary:
+        same(read(official_summary), summary)
+    need(sha(plan_path) == state['plan_sha256'] and sha(freeze_path) == freeze_sha
+         and all(sha(p) == h for p, h in hashes.items()), 'Inputs changed during audit')
+    return dict(verdict='PASS', checked_utc=datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        implementation='independent stdlib/NumPy; no repository statistical helpers',
+        auditor_sha256=sha(__file__), official_summary_matched=bool(official_summary), summary=summary,
+        scope='Data/statistics acceptance only; independent technical release approval still required')
+
+
+def self_test():
+    checks = 0
+    need(bootstrap([0., 0.]) == (0., 0.), 'Zero interval'); checks += 1
+    need(bootstrap([-1., 1.]) == (-1., 1.), 'Known two-card interval'); checks += 1
+    data = np.array([0., .25, .75, 1.])
+    reference_draws = np.random.Generator(np.random.PCG64(0)).choice(data, size=(5000, 4)).mean(axis=1)
+    need(bootstrap(data) == tuple(np.percentile(reference_draws, [2.5, 97.5], method='linear')),
+         'PCG64 seed0 draw contract'); checks += 1
+    # Opposite sides on each card cancel exactly; row-independent resampling would not.
+    cube = np.zeros((2, 7, 2)); cube[:, :, 0] = 1
+    reference = cube[:, :, ::-1].copy()
+    results = calculate('selection', ('FT18',), {'baseline': reference, 'FT18': cube}, {'FT18': np.ones((2, 1, 2))})
+    need(results['FT18']['panel']['low'] == results['FT18']['panel']['high'] == 0, 'Whole-card pairing'); checks += 1
+    panel, sol, default, direct = dict(delta=.01, low=.001), dict(delta=0., low=-.009), dict(winrate=.99, delta=-.01), dict(winrate=.5, low=.501)
+    need(all(gates('confirmation', panel, sol, default, direct).values()), 'Exact nonstrict gate boundaries'); checks += 1
+    for group, changed, key in [('solution', dict(sol, low=-.01), 'solution_lower'), ('panel', dict(panel, low=0.), 'panel_lower'),
+                               ('direct', dict(direct, low=.5), 'direct_lower')]:
+        args = [panel, sol, default, direct]; args[{'panel':0, 'solution':1, 'direct':3}[group]] = changed
+        need(not gates('confirmation', *args)[key], 'Strict gate boundary'); checks += 1
+    ranked = {name: dict(passed=True, panel=dict(delta=.02), opponents=dict(solution92=dict(delta=.01)))
+              for name in ('C36', 'Z36', 'PAIR18', 'FT18')}
+    need(nominate(ranked) == 'FT18', 'Tie order/C36 exclusion'); checks += 1
+    for name in ('FT18', 'PAIR18'):
+        ranked[name]['counts'] = {o: dict(candidate=dict(wins=2, draws=0), baseline=dict(wins=1, draws=0)) for o in PANEL}
+    ranked['PAIR18']['panel']['delta'] += 1e-17
+    need(nominate({n: ranked[n] for n in ('FT18', 'PAIR18')}) == 'FT18', 'Exact half-score tie units'); checks += 1
+    need(not gates('selection', panel, sol, default, direct,
+        dict(panel=dict(delta=.02), opponents=dict(solution92=dict(delta=.01))))['control_panel'], 'R36 control'); checks += 1
+    with tempfile.TemporaryDirectory(dir=Path('/tmp').resolve()) as temporary:
+        path = Path(temporary)/'state.json'; path.write_text(json.dumps(dict(status='running')))
+        try:
+            audit(Path(temporary)/'MISSING_PLAN.json', path)
+        except ValueError as exc:
+            need('not explicitly complete' in str(exc), 'Incomplete state must fail before plan/CSV reads'); checks += 1
+        else:
+            raise AssertionError('Read incomplete data')
+        path.write_text(json.dumps(dict(schema_version=1, status='complete', jobs=[dict(status='complete', exit_code=1)])))
+        try:
+            closed_state(path)
+        except ValueError:
+            checks += 1
+        else:
+            raise AssertionError('Nonzero exit accepted')
+        job = dict(out=str(Path(temporary)/'games.csv'), first_seed=1, n_maps=2, opponents=['default'], games=4)
+        rows = []
+        for seed in (1, 2):
+            for side in SIDES:
+                row = {k: 0 for k in FIELDS}
+                row.update(seed=seed, side=side, opponent='default', result=.5, point_win=.5,
+                           our_wins=1, opp_wins=1, steps=303, point_counting_version=2)
+                rows.append(row)
+        with Path(job['out']).open('w', newline='') as handle:
+            writer = csv.DictWriter(handle, fieldnames=FIELDS); writer.writeheader(); writer.writerows(rows)
+        need(np.all(read_csv(job) == .5), 'Draw scoring/schema'); checks += 1
+        for bad in (rows[:-1], rows + rows[:1], [dict(rows[0], steps=302), *rows[1:]],
+                    [dict(rows[0], result=1), *rows[1:]], [dict(rows[0], point_counting_version=1), *rows[1:]]):
+            with Path(job['out']).open('w', newline='') as handle:
+                writer = csv.DictWriter(handle, fieldnames=FIELDS); writer.writeheader(); writer.writerows(bad)
+            try:
+                read_csv(job)
+            except ValueError:
+                checks += 1
+            else:
+                raise AssertionError('Corrupt synthetic CSV accepted')
+    need(not any(n == 'torch' or n.startswith(('torch.', 'agents.', 'luxai_s3.')) for n in sys.modules), 'Unexpected model import')
+    return dict(verdict='PASS', synthetic_checks=checks, real_results_read=False, model_imports=False)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--self-test', action='store_true')
+    parser.add_argument('--plan', type=Path)
+    parser.add_argument('--state', type=Path)
+    parser.add_argument('--summary', type=Path, help='Optional official complete summary to compare')
+    parser.add_argument('--out', type=Path)
+    args = parser.parse_args()
+    if args.self_test:
+        print(json.dumps(self_test(), indent=2)); return
+    if not all((args.plan, args.state, args.out)):
+        parser.error('--plan, --state and a NEW --out are required')
+    need(args.out.resolve().is_relative_to(Path('/tmp/sherlock-final-20261103').resolve()), 'Write audit outside frozen source')
+    need(not args.out.exists(), 'Output exists')
+    try:
+        result = audit(args.plan, args.state, args.summary)
+    except Exception as exc:
+        result = dict(verdict='REJECTED', error=type(exc).__name__+': '+str(exc),
+                      scope='No acceptance; incomplete phases are never evaluated')
+        with args.out.open('x') as handle:
+            json.dump(result, handle, indent=2, allow_nan=False); handle.write('\n')
+        raise
+    with args.out.open('x') as handle:
+        json.dump(result, handle, indent=2, allow_nan=False); handle.write('\n')
+    print(json.dumps(dict(verdict=result['verdict'], phase=result['summary']['phase'],
+        completed_games=result['summary']['completed_games'], nominee=result['summary']['nominee'],
+        promotion_qualified=result['summary']['promotion_qualified']), indent=2))
+
+
+if __name__ == '__main__':
+    main()
