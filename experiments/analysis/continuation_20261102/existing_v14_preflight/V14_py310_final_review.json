@@ -1,0 +1,58 @@
+{
+  "verdict": "PASS_RECORDED_V14_TECHNICAL_SCOPE_WITH_PROVENANCE_LIMITS",
+  "blocking_runtime_findings": [],
+  "new_full_technical_games": 9,
+  "breakdown": {
+    "runner310": 8,
+    "zip_layout_smoke_full_games": 0,
+    "record313": 1,
+    "replay310_new_games": 0,
+    "initial_failed_runner_games": 0
+  },
+  "replay": {
+    "steps": 303,
+    "player_action_comparisons": 606,
+    "differing_actions": 0,
+    "loaded_nets": 36,
+    "frozen": true
+  },
+  "protected_current_hashes_verified": 8,
+  "zip_runtime_modules_equal_git_75af0c5": 14,
+  "repair_evidence_hashes_verified": 25,
+  "current_distribution_records_match": 60,
+  "unchanged_non_scipy_distributions": 59,
+  "full_game_arithmetic": {
+    "earlier_technical": 218,
+    "partial_pilot": 1632,
+    "P_selection": 3000,
+    "P_confirmation": 9000,
+    "new_V14_checks": 9,
+    "total": 13859
+  },
+  "count_provenance_limits": "218 is the established earlier technical ledger (26 diagnostic+24 prototype+168 Gaussian); first-wave audit supports 1632. This review does not re-audit every earlier trace. These executions are not 13859 fresh independent performance samples.",
+  "scope_limits": [
+    "macOS arm64 Python3.10.22 with specified packages; not Windows certification or all possible unpinned dependencies",
+    "no P qualification, promotion, package QC or new zone_rescue strength claim",
+    "course time limit unknown; not certified",
+    "existing payload tensor-comparison receipt read; no tensor/model reload by reviewer",
+    "process.json has command/log hashes and durations but no cwd/start-time or runtime-source snapshot; requires Root launcher provenance for stronger historical identity claim",
+    "Payload and launcher were inline Root commands, not preserved producer files. Root reports reviewed config/schema/strict-equality checks, resource lock, performance cwd and THREAD_ENV; these are method statements, not immutable launch attestation. No tensor reload was repeated by reviewer."
+  ],
+  "artifacts_sha256": {
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/process.json": "f9abcd112ddd065de9e5e61cee95557af7e6f0310e2bf3e06680f60e9d792423",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/runner310.json": "d93895349e6880a12ee07d9b2fe1e8641c5f85476384ae5dcd64c960d0057a70",
+    "/tmp/sherlock-continue-20261102/V14_py310_actual/existing_zip_payload.json": "07b96cd633cbf3eb4aba1d71c034ee8cf920be996f7e6a991e5b808fa758f1fd",
+    "/tmp/py310_repair_report.json": "604e1b7d627c7c33c6bf226d0afb81c08f43c4885c0431c97b172795f1736b3b",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/v14_4242.pkl": "d6a2b14937e3687051f5fd5ac0dca7edfad2469e7a6bd7877e0170184f6b53eb",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/runner310.log": "55aee67f99a71c0e354d6725d78c4c2f6b417589d6e57dd519807f95e0e26d07",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/zip310.log": "82952679818cc1ad11f91564652d4a49db592d4d4a9035c81c439ad7371eb456",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/record313.log": "e40619da62bb276ff53e4fec3bab233a9a2f326e44f8c80e48ae169e1d5c449c",
+    "/tmp/sherlock-continue-20261102/V14_final_preflight/replay310.log": "459d3ae2a7048dcca9b07dcf2e7170503fc5b7a56c0d1302b624cc1dbd0ca908"
+  },
+  "root_method_clarification": {
+    "producer": "inline config_schema + checkpoint_schema with explicit defaults + whole-checkpoint strict_equal, CPU uint8 tensor-byte protocol",
+    "initial_payload_TypeError_games": 0,
+    "launcher": "inline; existing resource lock; performance03e cwd; THREAD_ENV; fresh logs",
+    "persisted_historical_cwd_time_source_snapshot": false
+  }
+}

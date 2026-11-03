@@ -1,0 +1,78 @@
+{
+  "scope": "Additional technical checks of unchanged V14; no performance candidacy",
+  "protected_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "jobs": [
+    {
+      "name": "runner310",
+      "command": [
+        "/tmp/sherlock-continue-20261102/venv310/bin/python",
+        "-B",
+        "-m",
+        "scripts.check_candidate_runner",
+        "--weights",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--out",
+        "/tmp/sherlock-continue-20261102/V14_final_preflight/runner310.json"
+      ],
+      "exit_code": 0,
+      "calendar_seconds": 73.46401786804199,
+      "log_sha256": "55aee67f99a71c0e354d6725d78c4c2f6b417589d6e57dd519807f95e0e26d07"
+    },
+    {
+      "name": "zip310",
+      "command": [
+        "/tmp/sherlock-continue-20261102/venv310/bin/python",
+        "-B",
+        "-c",
+        "from pathlib import Path;import sys;from scripts.build_submission import check_battle;check_battle(Path(sys.argv[1]),(\"Gruppe15.main.Agent_x\",\"Gruppe15/agent.pth\",\"Gruppe15/agent.pth\"))",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip"
+      ],
+      "exit_code": 0,
+      "calendar_seconds": 12.192803859710693,
+      "log_sha256": "82952679818cc1ad11f91564652d4a49db592d4d4a9035c81c439ad7371eb456"
+    },
+    {
+      "name": "record313",
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/scripts/xversion_replay.py",
+        "record",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip",
+        "/tmp/sherlock-continue-20261102/V14_final_preflight/v14_4242.pkl",
+        "--seed",
+        "4242"
+      ],
+      "exit_code": 0,
+      "calendar_seconds": 10.123977899551392,
+      "log_sha256": "e40619da62bb276ff53e4fec3bab233a9a2f326e44f8c80e48ae169e1d5c449c"
+    },
+    {
+      "name": "replay310",
+      "command": [
+        "/tmp/sherlock-continue-20261102/venv310/bin/python",
+        "-I",
+        "-B",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/scripts/xversion_replay.py",
+        "replay",
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip",
+        "/tmp/sherlock-continue-20261102/V14_final_preflight/v14_4242.pkl"
+      ],
+      "exit_code": 0,
+      "calendar_seconds": 12.052919864654541,
+      "log_sha256": "459d3ae2a7048dcca9b07dcf2e7170503fc5b7a56c0d1302b624cc1dbd0ca908"
+    }
+  ],
+  "status": "complete",
+  "protected_after": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  }
+}

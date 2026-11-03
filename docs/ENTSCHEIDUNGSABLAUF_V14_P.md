@@ -1,5 +1,9 @@
 # Entscheidungsablauf: V14 und P-only
 
+Stand 03.11.: P hat die frische Bestätigung verfehlt. Aktiv bleibt V14; P-Zweige
+in dieser Notiz beschreiben den ausgeschalteten Forschungsprototyp.
+[Daten und Entscheidung](../experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md).
+
 Technische Notiz für Mahmoud · Quellstand `03e54e267242ff642c126313fe5f512ed9d959ac` · 02.11.2026
 
 Sherlock verbindet regelbasierte Zustandsaufbereitung und Zielzuweisung mit einer gelernten Bewertung von sechs Aktionsklassen. **Die Regeln wirken vor und nach dem Netz.** Der Belief liefert Wissen über die bisher beobachtete Welt; er gibt selbst keine vollständige Aktion aus. Das Netz liefert Q-Werte; die endgültige Aktion entsteht erst nach Maskierung und den nachfolgenden Regelstufen.

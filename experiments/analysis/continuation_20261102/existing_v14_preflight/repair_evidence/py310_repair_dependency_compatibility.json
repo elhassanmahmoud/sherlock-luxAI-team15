@@ -1,0 +1,20 @@
+{
+  "constraints": [
+    {
+      "package": "jax",
+      "requirement": "scipy>=1.10",
+      "accepts_1_14_1": true
+    },
+    {
+      "package": "jaxlib",
+      "requirement": "scipy >=1.10",
+      "accepts_1_14_1": true
+    }
+  ],
+  "replacement_numpy_requirement": [
+    "numpy<2.3,>=1.23.5",
+    "numpydoc; extra == \"doc\""
+  ],
+  "selected_wheel": "/tmp/sherlock-continue-20261102/py310_repair_wheels/scipy-1.14.1-cp310-cp310-macosx_12_0_arm64.whl",
+  "wheel_sha256": "d0d2821003174de06b69e58cef2316a6622b60ee613121199cb2852a873f8cf3"
+}

@@ -1,0 +1,133 @@
+{
+  "status": "STABLE_LIBRARY_COMPATIBILITY_ONLY",
+  "completed_at": "2026-11-03T00:50:52.077622+00:00",
+  "started_utc": "2026-11-03T00:43:45+00:00",
+  "stable_notified_utc": "2026-11-03T00:49:04+00:00",
+  "isolated_environment": "/tmp/sherlock-continue-20261102/venv310",
+  "python": "3.10.22 (main, Oct  9 2026, 15:10:41) [Clang 22.1.3 ]",
+  "original_failure": {
+    "package": "scipy",
+    "version": "1.15.3",
+    "minimal_import_exit_code": 1,
+    "course_attempt_before_games": true,
+    "propack_sha256": "dad5761989d85578a9daa55821c31e92ecea17fab414a0bd2075fd27f11c405f",
+    "thread_bss": {
+      "type": 18,
+      "offset": 114992,
+      "size": 8
+    }
+  },
+  "selected_wheel": {
+    "wheel": "/tmp/sherlock-continue-20261102/py310_repair_wheels/scipy-1.14.1-cp310-cp310-macosx_14_0_arm64.whl",
+    "sha256": "8bddf15838ba768bb5f5083c1ea012d64c9a444e16192762bd858f1e126196d0",
+    "url": "https://files.pythonhosted.org/packages/07/42/0e0bea9666fcbf2cb6ea0205db42c81b1f34d7b729ba251010edf9c80ebd/scipy-1.14.1-cp310-cp310-macosx_14_0_arm64.whl",
+    "wheel_metadata": "Wheel-Version: 1.0\nGenerator: meson\nRoot-Is-Purelib: false\nTag: cp310-cp310-macosx_14_0_arm64",
+    "bad": [],
+    "zero_fill_sections": 202
+  },
+  "changed_packages": {
+    "scipy": {
+      "before": {
+        "version": "1.15.3",
+        "record_sha256": "b1634703702a27b54c74eb47ad8aac49c8b7c708f1dc8743fda5398dbc11f513"
+      },
+      "after": {
+        "version": "1.14.1",
+        "record_sha256": "cd1fbfcb3b287d8e7cf98511327afeaf849200ed9f2eb7dc254cc22601d5b808"
+      }
+    }
+  },
+  "final_versions": {
+    "scipy": "1.14.1",
+    "torch": "2.2.2",
+    "numpy": "1.26.4",
+    "jax": "0.4.35",
+    "jaxlib": "0.4.35",
+    "luxai-s3": "0.2.1"
+  },
+  "validation": {
+    "package_check_exit_code": 0,
+    "all_60_packages_compatible": true,
+    "library_smoke_exit_code": 0,
+    "library_smoke_seconds": 9.545140792033635,
+    "convolve2d_exact": true,
+    "all_four_propack_imported": true,
+    "engine_imported_without_instantiation": true,
+    "actual_agent_test": false,
+    "actual_game_test": false,
+    "actual_model_load": false
+  },
+  "preservation": {
+    "engine_python_files": {
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+      "/tmp/sherlock-continue-20261102/venv310/lib/python3.10/site-packages/luxai_s3/state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5"
+    },
+    "protected_raw_zip": {
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    "non_scipy_59_distribution_versions_and_records_identical": true,
+    "interpreter_sha256": "c21b8f194a501a60896bc83a39835b72a6c684302a40f7e72d8f0629ada47e5f"
+  },
+  "mutations": [
+    {
+      "command": "UV_CACHE_DIR=/tmp/sherlock-continue-20261102/py310_repair_uv_cache /tmp/sherlock-continue-20261102/tooling/uv/bin/uv pip install --python /tmp/sherlock-continue-20261102/venv310/bin/python --reinstall-package scipy --no-deps --no-index --link-mode copy /tmp/sherlock-continue-20261102/py310_repair_wheels/scipy-1.14.1-cp310-cp310-macosx_12_0_arm64.whl",
+      "exit_code": 0
+    },
+    {
+      "command": "UV_CACHE_DIR=/tmp/sherlock-continue-20261102/py310_repair_uv_cache /tmp/sherlock-continue-20261102/tooling/uv/bin/uv pip install --python /tmp/sherlock-continue-20261102/venv310/bin/python --reinstall-package scipy --no-deps --no-index --link-mode copy /tmp/sherlock-continue-20261102/py310_repair_wheels/scipy-1.14.1-cp310-cp310-macosx_14_0_arm64.whl",
+      "exit_code": 0
+    }
+  ],
+  "intermediate_limit": {
+    "macos12_1_14_1_import_passed": true,
+    "macos12_1_14_1_package_check_exit_code": 1,
+    "reason": "Official wheel filename macosx_12_0 but internal WHEEL Tag macosx_12_3; rejected by uv platform check; replaced with matching official macos14 wheel."
+  },
+  "sources": [
+    "https://pypi.org/pypi/scipy/1.15.3/json",
+    "https://pypi.org/pypi/scipy/1.14.1/json",
+    "https://files.pythonhosted.org/packages/07/42/0e0bea9666fcbf2cb6ea0205db42c81b1f34d7b729ba251010edf9c80ebd/scipy-1.14.1-cp310-cp310-macosx_14_0_arm64.whl",
+    "https://github.com/scipy/scipy/issues/25635"
+  ],
+  "no_tls_security_bypass": true,
+  "no_native_binary_patch": true,
+  "no_repository_or_shared_environment_mutation": true,
+  "next_step": "Root-owned actual unchanged-V14 course/replay validation; no agent/model/course pass claimed here.",
+  "evidence_sha256": {
+    "/tmp/py310_repair_report.md": "45b16d76b2265a06598aa90cecb5f635e9ec688cc3a585b7257d8842996ee741",
+    "/tmp/sherlock-continue-20261102/py310_original_runner_failed.log": "99f410fc5f0f6a168191b47d819d325513b0e7ef08a32aa8faddbedc72d7898f",
+    "/tmp/sherlock-continue-20261102/py310_scipy_import_before.log": "36bc12a2adc357dbbd347a4268f5cdc82b931bea428c8b2700a7ecd2b16cf273",
+    "/tmp/sherlock-continue-20261102/py310_repair_before.json": "7331ea2f059524ceaac8b134754161c04e665671639c36afda1222bdeacf1dcc",
+    "/tmp/sherlock-continue-20261102/py310_repair_binary_before.json": "95020394959a95295bbfd229184f196791eea2618de8a174f821f99ad7d2a0f5",
+    "/tmp/sherlock-continue-20261102/py310_repair_package_records_before.json": "473772ba48ac2666859c30b166dc62eecdee225a405b0013829ba6a2cd4ad72c",
+    "/tmp/sherlock-continue-20261102/py310_repair_dependency_compatibility.json": "62b470229e1365795b1ce0e26742ddf3117d5265b8fc9764165062ad75e82be4",
+    "/tmp/sherlock-continue-20261102/py310_alternative_wheel_sections.json": "e61bd256757384c1366a26e5e6777199bd67b6a365787d99c24859dd784eee31",
+    "/tmp/sherlock-continue-20261102/py310_scipy_reinstall.log": "e707d4e3961ceedb0fc2760232cb263a01f4f5b461009671e5e9232a5afc7517",
+    "/tmp/sherlock-continue-20261102/py310_uv_check_before.log": "eec42790ab547a57551715b792ea07dccf04491b4a0d262349313409b08e8b8b",
+    "/tmp/sherlock-continue-20261102/py310_uv_check_after.log": "fdb0894508c154bcb544b8568dd57a3cd019d5d029a8beed59ecbe7ccb6e4d92",
+    "/tmp/sherlock-continue-20261102/py310_scipy_import_after.log": "2c9b4891dce1bf04577dfebfe0f8fa405ba7d6bef71f232b3771249647aeaad4",
+    "/tmp/sherlock-continue-20261102/py310_scipy_reinstall_macos14.log": "a23ab0c2cb50134e464f28a4030baeb58cc88a3a10c1362433953713029b9e03",
+    "/tmp/sherlock-continue-20261102/py310_uv_check_final.log": "d968c927c6cd0e20b145bd0e2f0c7567f2f498c3d10f21a02e134afa57171739",
+    "/tmp/sherlock-continue-20261102/py310_library_smoke_final.log": "99a1f90fe9be1cc5dfce1b893e0a68539a2ee2bfa05f2e9027312d3fa24fcf4f",
+    "/tmp/sherlock-continue-20261102/py310_repair_after.json": "007ad3d5214614361c43c25e85d955c69526cd81a317327322decfaf40b36074",
+    "/tmp/sherlock-continue-20261102/py310_spropack_otool_before.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/tmp/sherlock-continue-20261102/py310_wheel_analysis_1.11.4.json": "076e02721396f0680f5a6ccd2b69eaf12c79def3ac6d399dbaebb2bf2976706b",
+    "/tmp/sherlock-continue-20261102/py310_wheel_analysis_1.14.1.json": "9cb0af3d85de4dad6603a38997b96f342d044fba46c7cae4f1c022ee5dd5f615",
+    "/tmp/sherlock-continue-20261102/py310_wheel_analysis_1.14.1_macos14.json": "f42cd0f312cec23769d6472094ee195e26b4750f8282f5e44a4e81205427dfd6",
+    "/tmp/sherlock-continue-20261102/py310_wheel_analysis_1.13.1.json": "9e1fff60ec64f0757f667014e130db13c8c38ab21264d09a2a1ad52615e3f30b",
+    "/tmp/sherlock-continue-20261102/py310_scipy_1.14.1_pypi.json": "f09f658c304aa75500249c3e9c2c7ab58bb698346b9e265e746a26fa34b061a3",
+    "/tmp/sherlock-continue-20261102/py310_scipy_1.11.4_pypi.json": "ba18590c59fbcbc1dc5dfb40deac5cf1782f4d80f0835c236d455d8751fc8468",
+    "/tmp/sherlock-continue-20261102/py310_scipy_1.13.1_pypi.json": "86171ef0c8fe772c8a2edb631bacc9467359ccbd5c0526ae0f8293f0c1e32000",
+    "/tmp/sherlock-continue-20261102/py310_scipy_1153_pypi.json": "8ed72bbbf9a616992e8c333d5b0217ab3148639cb14d28cc54548f601e3f22ea"
+  }
+}
