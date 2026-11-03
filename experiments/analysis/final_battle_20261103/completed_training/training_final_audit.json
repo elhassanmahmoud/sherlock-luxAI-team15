@@ -1,0 +1,93 @@
+{
+  "verdict": "PASS",
+  "checked_utc": "2026-11-03T17:12:50+00:00",
+  "head": "7c906e16943ff7217afe1eae392834439cc76634",
+  "state_sha256": "06d157f5b76ba200dacb9ff3c00d8685e174210406526390df79b4ea4afd4739",
+  "source_file_count": 238,
+  "input_count": 7,
+  "cross_protected_count": 5,
+  "arms": {
+    "control18": {
+      "prefill": 120,
+      "train": 1200,
+      "validation": 96,
+      "total_games": 1416,
+      "updates": 180000,
+      "env_steps": 459960,
+      "q_sha256": "361463b9fbff1e2e839ba8e2027e3e3df2eea95ad6536668793ca568f630c2e7",
+      "target_sha256": "361463b9fbff1e2e839ba8e2027e3e3df2eea95ad6536668793ca568f630c2e7",
+      "checkpoint_sha256": "686dd59c54668b270ed47a12479e1c7c0119617819f07a72219f916c87d08abb",
+      "rescue": {
+        "prefill": {
+          "units": 0,
+          "helper_changes": 0
+        },
+        "train": {
+          "units": 0,
+          "helper_changes": 0
+        }
+      },
+      "act_calls": 399960,
+      "update_calls": 399960,
+      "checked_replay_transitions": 4736222,
+      "optimizer_parameters": 12,
+      "finite": true,
+      "reload_verified": true
+    },
+    "adapt18": {
+      "prefill": 120,
+      "train": 1200,
+      "validation": 96,
+      "total_games": 1416,
+      "updates": 180000,
+      "env_steps": 459960,
+      "q_sha256": "2c8adc63c9b0e1e1e13715a68c7471f34047a97e481dcdc0107e106331fbcd88",
+      "target_sha256": "2c8adc63c9b0e1e1e13715a68c7471f34047a97e481dcdc0107e106331fbcd88",
+      "checkpoint_sha256": "fe57f67fb263b206a8147d7d0ed6cab9bd27c6987e3e53789f14e8f08f4082b7",
+      "rescue": {
+        "prefill": {
+          "units": 719,
+          "helper_changes": 232
+        },
+        "train": {
+          "units": 15737,
+          "helper_changes": 2001
+        }
+      },
+      "act_calls": 399960,
+      "update_calls": 399960,
+      "checked_replay_transitions": 4730182,
+      "optimizer_parameters": 12,
+      "finite": true,
+      "reload_verified": true
+    }
+  },
+  "evidence_sha256": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/final_receipt.json": "ecf0e49bb241698ed6b86944b3f24d8a7a4c0372a1b6c0cfbe4eb99f1c5263ed",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/rescue_training_audit.json": "0ee5422bc18c3500818ed5159f5f3f3db6565a91d96ec3e1528a2bcf0dc896ad",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/rollouts.jsonl": "b702ff609ed6e8a134f22657e7c61d49c9769f89a95ea0f676e0a9fee71790db",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/validation_games.jsonl": "c2e1586b845a0b3f8f21c6e731ff0f47054bc1a9cf82b3f98bbff30e5f6fa626",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/train.csv": "cceaa991271a9f51a79f01ee27fbf7618219bc4de2fd5deff2099d893f0f177f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/weights/agent.pth": "686dd59c54668b270ed47a12479e1c7c0119617819f07a72219f916c87d08abb",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/final_receipt.json": "0fda4afdb90eee77acfbcebf98b14568a150e6a574b2aa04b4e4e5362e529e40",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/rescue_training_audit.json": "349daefc257b1b6a5d7ce97486923bcc23d4da4be34ed2f756bb7d79b7672f97",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/rollouts.jsonl": "665caee8a594c247a4ea66a9b0933813e728a58fe673ff6b3ad1a1a0e273f869",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/validation_games.jsonl": "0930fb08e975c0ad092c6e606c2de4ab777dce8b0ff1677ce4651c9ee9543877",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/train.csv": "0ad5a1dd23a6c3080e11e4571959e8d16111da11f62feb001b866be9a36719f9",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/weights/agent.pth": "fe57f67fb263b206a8147d7d0ed6cab9bd27c6987e3e53789f14e8f08f4082b7"
+  },
+  "total_actual_games": 2832,
+  "initial_pair_identity_equal": true,
+  "known_prefill_reused": [
+    495000,
+    495001,
+    495002,
+    495003
+  ],
+  "duration_seconds": 4490.536152839661,
+  "last_power": {
+    "ac": true,
+    "percent": 54
+  },
+  "scope": "Technical training acceptance only, no strength or release claim"
+}
