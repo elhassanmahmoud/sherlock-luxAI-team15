@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 03.11.2026 – Codex: begrenzte Nachanalyse des Rettungstrainings
+
+- [Diagnose für Mahmoud](RESCUE_NACHTRAINING_DIAGNOSE_20261103.md) nur aus abgeschlossenen Trainings-/Auswahldaten und statischem Code; keine Modelle/Spiele/Tests gestartet und keine Bestätigungsdaten gelesen. Root hat zentrale Verlust-, Aktionszähler- und Validierungswerte unabhängig nachgerechnet.
+- Kein konkreter Fehlstart, numerischer Zusammenbruch oder Konfigurationsfehler gefunden. Rettungshelfer änderten im Lernteil 2.001-mal eine Zwischenaktion in 66/1.200 Spielen; das sind rund 0,04655 % bezogen auf den internen Entscheidungszähler. Kleine bekannte Einzelnetz-Validierung begünstigt R, der frische Ensemble-Screen dagegen C. Diese Belege erklären die Ursache noch nicht.
+- Q-Abstände/Ensemble-Beiträge wurden nicht gemessen; eine unpassende Q-Skalierung bleibt eine Hypothese. Die Notiz trennt Messungen, verbleibende Trainings-/Inferenzunterschiede und zwei spätere Prüfungen. Keine nachträgliche Kandidatenänderung, kein Nachrücken und kein neuer Leistungsversuch. FT18-Bestätigung läuft unverändert; V14 bleibt aktuelle Abgabe.
+
 ## 03.11.2026 – Codex: Originalprüfsummen im Git-Archiv abgesichert
 
 - Die FT18-Bestätigung läuft unverändert weiter. Nach dem Upload der Auswahl unter `6c4f953` wurde beim Vergleich der tatsächlichen Git-Dateiinhalte eine automatische CRLF→LF-Umwandlung bei allen 13 CSVs festgestellt (`core.autocrlf=input`). Zahlen und Auswertung waren unverändert, die ursprünglichen Datei-Prüfsummen ließen sich im heruntergeladenen Archiv dadurch jedoch nicht direkt bestätigen.

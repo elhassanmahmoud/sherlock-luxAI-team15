@@ -1,0 +1,71 @@
+{
+  "control": {
+    "train_rows": 1200,
+    "learning_rollouts": 1200,
+    "units": 4343216,
+    "mean_loss": 0.7154872083333333,
+    "all_loss_finite": true,
+    "invalid_all_zero": true,
+    "winrate": 0.76,
+    "effect_totals": {
+      "unit_steps": 4307541,
+      "greedy_masked": 1046000,
+      "explore_steps": 215452,
+      "sap_attempts": 103405,
+      "sap_hits_est": 90996,
+      "path_fixes": 46690,
+      "overkill_skips": 21765,
+      "relics_found": 4619,
+      "known_point_tiles": 19183,
+      "belief_contradictions": 284
+    },
+    "final_solution_val": [
+      {
+        "games": 16,
+        "winrate": 0.75
+      }
+    ]
+  },
+  "adapt": {
+    "train_rows": 1200,
+    "learning_rollouts": 1200,
+    "units": 4334135,
+    "mean_loss": 0.726752275,
+    "all_loss_finite": true,
+    "invalid_all_zero": true,
+    "winrate": 0.7533333333333333,
+    "effect_totals": {
+      "unit_steps": 4298903,
+      "greedy_masked": 978678,
+      "explore_steps": 215124,
+      "sap_attempts": 100953,
+      "sap_hits_est": 88876,
+      "path_fixes": 45301,
+      "overkill_skips": 19839,
+      "relics_found": 4606,
+      "known_point_tiles": 19153,
+      "belief_contradictions": 103
+    },
+    "final_solution_val": [
+      {
+        "games": 16,
+        "winrate": 0.9375
+      }
+    ],
+    "rescue_counter_crosscheck": {
+      "training_rescue_action_changes": {
+        "sum": 2001,
+        "nonzero_games": 66
+      },
+      "training_rescue_unit_steps": {
+        "sum": 15737,
+        "nonzero_games": 70
+      },
+      "unit_steps_denominators": {
+        "effect_counters": 4298903,
+        "rollout_top_level": 4334135
+      }
+    }
+  },
+  "scope": "Root numeric crosscheck of completed training and known validation only; no confirmation results."
+}
