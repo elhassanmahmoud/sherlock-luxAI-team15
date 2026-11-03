@@ -22,7 +22,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal gebaut am 02.11.; zusätzliche Python-3.10-Prüfung am 03.11.) · Upload bis **04.11., 23:59 Uhr** |
-| Tests | Historisch **694 Tests + 14 Untertests** bestanden (02.11.); späterer Gesamtsuitenfehler in der Importisolation dokumentiert. Aktuellen Prüfstand im [Arbeitsstand](docs/ARBEITSSTAND.md) lesen. |
+| Tests | **1.075 Tests + 126 Untertests** bestanden (03.11., gesamte lokale Suite einschließlich Archivtests). Importisolationsfehler behoben; Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
 | Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Nachtprüfung 01./02.11.: V14 bleibt
@@ -337,7 +337,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
 │   ├── play_and_view.py, demo_server.py   Spiel ansehen, Demo-Seite
 │   └── common.py, metrics.py, protocol.py, …   Spiel-Schleife, Kennzahlen, Seeds
-├── tests/                        pytest (historisch 694 Tests + 14 Untertests, 02.11.; aktuell siehe Arbeitsstand)
+├── tests/                        pytest (aktuelle Gesamtsuite einschließlich Archivtests: 1.075 Tests + 126 Untertests, 03.11.)
 ├── experiments/
 │   ├── compare/                  Ergebnisse je Spiel als CSV
 │   ├── analysis/                 Auswertungen, Übernahmeberichte (release_*/RELEASE.md)

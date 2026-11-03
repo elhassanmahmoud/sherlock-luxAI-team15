@@ -1,0 +1,4559 @@
+{
+  "audited_at_utc": "2026-11-03T15:30:28.910313+00:00",
+  "worktrees": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint"
+  ],
+  "ranges": {
+    "training": [
+      493000,
+      493599
+    ],
+    "prefill": [
+      495000,
+      495059
+    ],
+    "screen": [
+      851000,
+      851079
+    ],
+    "confirmation": [
+      852000,
+      852399
+    ],
+    "direct": [
+      853000,
+      853399
+    ]
+  },
+  "counts": {
+    "csv_files": 6908,
+    "unique_csv_files": 1474,
+    "csv_seed_rows": 1578774,
+    "json_files": 667,
+    "text_files": 1110
+  },
+  "csv_consumption_overlaps": [],
+  "declaration_candidates": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/night_20261101/seed-audit.json",
+      "kind": "json_seed_interval",
+      "key": ".training_occupancy.finetune_slots[29].possible_arguments[0].absolute_seeds_half_open",
+      "values": [
+        491500,
+        495000
+      ],
+      "overlaps": [
+        "training"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/night_20261101/seed-audit.json",
+      "kind": "json_seed_value",
+      "key": ".training_occupancy.finetune_slots[29].possible_arguments[0].absolute_seeds_half_open[1]",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/training_design.md",
+      "line": 95,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495059
+      ],
+      "context": "| Prefill Paar2 |495000\u2013495059 |"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/continuous_20261021/planning/curriculum_start_audit.md",
+      "line": 27,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [],
+      "direct_values": [
+        852166
+      ],
+      "context": "- `/Users/moayedshawesh/Desktop/KI/sherlock-counterplay/experiments/runs/20261021_early_contact_v1_early_curriculum_s47_control/val.csv`: `56af0675e750bd758e6deb6b6b82ee6910f73859e852166eb3b4b9223d579d89`"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/docs/ARBEITSSTAND.md",
+      "line": 977,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495003
+      ],
+      "context": "- Pr\u00fcfungen: gesamte Testsuite **552 bestanden** (+14 Untertests). V10-Spielverhalten unver\u00e4ndert: Die 10 Diagnosespiele 690000\u2013690004 lieferten mit dem neuen Code bitgleich dieselbe Auswertung (36.258 Entscheidungen samt Beispiel-Q-Werten). Probelauf mit je einem Trainingsspiel gegen `sol92_sq`, RushBot, V10-Pool und Solution_92 (Karten 495000\u2013495003, nur Scratchpad). Panel-Messung, Direktduell und Pr\u00fcfskript auf 2 Karten durchlaufen (nur Scratchpad)."
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/docs/superpowers/plans/2026-11-02-targeting-adaptation.md",
+      "line": 20,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495059
+      ],
+      "context": "| 19 / 29 | beide P-Flags false | beide P-Flags true | 494200\u2013494499 | 495000\u2013495059 |"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/docs/superpowers/plans/2026-11-02-targeting-adaptation.md",
+      "line": 24,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495003
+      ],
+      "context": "**Herkunftsgrenze:** Der zentrale `seed_audit.json` belegt 840000\u2013844999, nicht diese Lernbl\u00f6cke. Der \u00e4ltere `training_design.md` fand in vorhandenen CSV/Manifesten keinen Treffer, zertifiziert aber keine universelle Frische. `ARBEITSSTAND.md:870` nennt ausdr\u00fccklich fr\u00fchere Scratchpad-Spiele auf **495000\u2013495003**; diese Prefillkarten sind bereits bekannt. Seeds 28/29 wurden fr\u00fcher mit anderem Offset trainiert (`:709`). Lern-/Prefillkarten d\u00fcrfen bekannt sein und werden nicht als heutiger unabh\u00e4n"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/docs/ARBEITSSTAND.md",
+      "line": 969,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495003
+      ],
+      "context": "- Pr\u00fcfungen: gesamte Testsuite **552 bestanden** (+14 Untertests). V10-Spielverhalten unver\u00e4ndert: Die 10 Diagnosespiele 690000\u2013690004 lieferten mit dem neuen Code bitgleich dieselbe Auswertung (36.258 Entscheidungen samt Beispiel-Q-Werten). Probelauf mit je einem Trainingsspiel gegen `sol92_sq`, RushBot, V10-Pool und Solution_92 (Karten 495000\u2013495003, nur Scratchpad). Panel-Messung, Direktduell und Pr\u00fcfskript auf 2 Karten durchlaufen (nur Scratchpad)."
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/docs/superpowers/plans/2026-11-03-final-battle.md",
+      "line": 36,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill",
+        "training"
+      ],
+      "direct_values": [
+        493000,
+        493599,
+        495000,
+        495059
+      ],
+      "context": "- Je120 Prefill +1200 Lernspiele +96 bekannte Validierungen (0/600/1200,500000\u2013500007,default/Solution,beide Seiten), Endstand statt best checkpoint. Mix .6Solution/.2square/.1default/.1rush. Seed29, map-offset3000: Training493000\u2013493599, Prefill495000\u2013495059; gemeinsame Gegner-/Seitenfolge."
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/docs/superpowers/plans/2026-11-03-final-battle.md",
+      "line": 42,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "screen"
+      ],
+      "direct_values": [
+        851000,
+        851079
+      ],
+      "context": "- Screen:80 Karten851000\u2013851079, beide Seiten, Baseline+alle sechs Kandidaten gegen sieben Gegner; dazu je Kandidat160 Direktspiele auf denselben Screenkarten gegen V14. Insgesamt8800 Spiele. Gesamten Screen abschlie\u00dfen vor Ergebniswahl. Bei unvollst\u00e4ndigem Training entfallen vor Screenbeginn C36/R36 mit dokumentiertem technischem Grund; kein nachtr\u00e4gliches Entfernen anhand der Leistung."
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/docs/superpowers/plans/2026-11-03-final-battle.md",
+      "line": 44,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "confirmation",
+        "direct"
+      ],
+      "direct_values": [
+        852000,
+        852399,
+        853000,
+        853399
+      ],
+      "context": "- Best\u00e4tigung:400 neue Karten852000\u2013852399, beide Seiten, V14 und ein Kandidat gegen sieben Gegner;800 getrennte Direktspiele853000\u2013853399. Insgesamt12000 Spiele. Vorher Reservierung gegen alle lokalen Datens\u00e4tze pr\u00fcfen. Keine Auswahl anhand laufender Best\u00e4tigungsquoten."
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_target_adapt18/rollouts.jsonl",
+      "line": 15,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [],
+      "direct_values": [
+        493191
+      ],
+      "context": "{\"seed\": 485007, \"side\": \"player_0\", \"steps\": 303, \"our_wins\": 0, \"opp_wins\": 3, \"our_points\": 1, \"opp_points\": 963, \"point_counting_version\": 2, \"result\": 0.0, \"game_win\": 0, \"point_win\": 0.0, \"secs\": 3.38, \"unit_steps\": 3752, \"wait_frac\": 0.21428571428571427, \"invalid_frac\": 0.0, \"sap_attempts\": 45, \"sap_hits\": 45, \"stack_frac\": 0.36007462686567165, \"relics_seen\": 1, \"relics_found\": 2, \"known_point_tiles\": 0, \"greedy_masked_frac\": 0.48629032258064514, \"belief_contradictions\": 0, \"phase\": \"pref"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[0].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[1].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[2].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[3].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[4].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[5].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[6].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[7].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[8].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[9].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[10].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[11].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[12].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[13].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[14].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[15].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[16].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[17].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[18].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[19].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[20].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[21].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[22].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[23].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[24].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[25].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[26].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[27].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[28].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[29].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[30].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[31].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[32].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[33].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[34].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[35].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[36].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[37].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[38].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[39].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[40].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[41].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[42].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[43].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[44].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[45].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[46].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[47].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[48].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[49].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[50].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[51].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[52].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[53].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[54].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[55].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[56].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[57].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[58].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[59].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[60].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[61].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[62].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[63].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[64].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[65].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[66].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[67].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[68].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[69].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[70].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[71].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[72].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[73].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[74].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[75].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[76].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[77].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[78].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[79].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[80].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[81].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[82].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[83].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[84].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[85].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[86].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[87].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[88].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[89].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[90].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[91].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[92].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[93].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[94].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[95].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[96].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[97].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[98].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[99].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[100].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[101].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[102].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[103].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[104].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[105].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[106].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[107].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[108].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[109].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[110].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[111].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[112].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[113].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[114].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[115].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[116].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[117].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[118].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.control19.rollout_plan[119].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[0].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[1].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[2].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[3].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[4].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[5].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[6].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[7].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[8].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[9].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[10].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[11].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[12].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[13].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[14].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[15].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[16].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[17].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[18].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[19].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[20].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[21].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[22].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[23].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[24].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[25].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[26].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[27].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[28].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[29].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[30].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[31].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[32].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[33].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[34].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[35].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[36].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[37].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[38].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[39].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[40].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[41].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[42].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[43].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[44].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[45].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[46].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[47].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[48].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[49].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[50].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[51].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[52].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[53].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[54].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[55].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[56].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[57].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[58].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[59].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[60].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[61].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[62].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[63].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[64].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[65].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[66].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[67].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[68].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[69].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[70].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[71].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[72].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[73].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[74].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[75].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[76].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[77].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[78].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[79].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[80].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[81].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[82].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[83].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[84].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[85].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[86].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[87].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[88].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[89].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[90].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[91].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[92].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[93].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[94].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[95].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[96].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[97].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[98].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[99].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[100].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[101].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[102].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[103].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[104].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[105].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[106].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[107].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[108].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[109].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[110].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[111].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[112].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[113].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[114].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[115].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[116].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[117].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[118].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".arms.adapt19.rollout_plan[119].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[0].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[1].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[2].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[3].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[4].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[5].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[6].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[7].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[8].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[9].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[10].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[11].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[12].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[13].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[14].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[15].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[16].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[17].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[18].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[19].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[20].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[21].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[22].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[23].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[24].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[25].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[26].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[27].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[28].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[29].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[30].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[31].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[32].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[33].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[34].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[35].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[36].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[37].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[38].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[39].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[40].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[41].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[42].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[43].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[44].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[45].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[46].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[47].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[48].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[49].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[50].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[51].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[52].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[53].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[54].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[55].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[56].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[57].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[58].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[59].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[60].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[61].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[62].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[63].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[64].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[65].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[66].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[67].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[68].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[69].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[70].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[71].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[72].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[73].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[74].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[75].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[76].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[77].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[78].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[79].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[80].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[81].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[82].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[83].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[84].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[85].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[86].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[87].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[88].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[89].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[90].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[91].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[92].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[93].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[94].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[95].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[96].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[97].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[98].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[99].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[100].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[101].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[102].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[103].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[104].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[105].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[106].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[107].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[108].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[109].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[110].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[111].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[112].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[113].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[114].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[115].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[116].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[117].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[118].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/control19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[119].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[0].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[1].seed",
+      "value": 495000,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[2].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[3].seed",
+      "value": 495001,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[4].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[5].seed",
+      "value": 495002,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[6].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[7].seed",
+      "value": 495003,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[8].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[9].seed",
+      "value": 495004,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[10].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[11].seed",
+      "value": 495005,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[12].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[13].seed",
+      "value": 495006,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[14].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[15].seed",
+      "value": 495007,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[16].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[17].seed",
+      "value": 495008,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[18].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[19].seed",
+      "value": 495009,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[20].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[21].seed",
+      "value": 495010,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[22].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[23].seed",
+      "value": 495011,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[24].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[25].seed",
+      "value": 495012,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[26].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[27].seed",
+      "value": 495013,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[28].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[29].seed",
+      "value": 495014,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[30].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[31].seed",
+      "value": 495015,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[32].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[33].seed",
+      "value": 495016,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[34].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[35].seed",
+      "value": 495017,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[36].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[37].seed",
+      "value": 495018,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[38].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[39].seed",
+      "value": 495019,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[40].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[41].seed",
+      "value": 495020,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[42].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[43].seed",
+      "value": 495021,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[44].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[45].seed",
+      "value": 495022,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[46].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[47].seed",
+      "value": 495023,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[48].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[49].seed",
+      "value": 495024,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[50].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[51].seed",
+      "value": 495025,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[52].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[53].seed",
+      "value": 495026,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[54].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[55].seed",
+      "value": 495027,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[56].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[57].seed",
+      "value": 495028,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[58].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[59].seed",
+      "value": 495029,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[60].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[61].seed",
+      "value": 495030,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[62].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[63].seed",
+      "value": 495031,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[64].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[65].seed",
+      "value": 495032,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[66].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[67].seed",
+      "value": 495033,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[68].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[69].seed",
+      "value": 495034,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[70].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[71].seed",
+      "value": 495035,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[72].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[73].seed",
+      "value": 495036,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[74].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[75].seed",
+      "value": 495037,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[76].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[77].seed",
+      "value": 495038,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[78].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[79].seed",
+      "value": 495039,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[80].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[81].seed",
+      "value": 495040,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[82].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[83].seed",
+      "value": 495041,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[84].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[85].seed",
+      "value": 495042,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[86].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[87].seed",
+      "value": 495043,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[88].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[89].seed",
+      "value": 495044,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[90].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[91].seed",
+      "value": 495045,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[92].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[93].seed",
+      "value": 495046,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[94].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[95].seed",
+      "value": 495047,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[96].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[97].seed",
+      "value": 495048,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[98].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[99].seed",
+      "value": 495049,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[100].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[101].seed",
+      "value": 495050,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[102].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[103].seed",
+      "value": 495051,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[104].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[105].seed",
+      "value": 495052,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[106].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[107].seed",
+      "value": 495053,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[108].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[109].seed",
+      "value": 495054,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[110].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[111].seed",
+      "value": 495055,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[112].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[113].seed",
+      "value": 495056,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[114].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[115].seed",
+      "value": 495057,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[116].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[117].seed",
+      "value": 495058,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[118].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_targeting_prepared/adapt19/manifest.json",
+      "kind": "json_seed_value",
+      "key": ".rollout_plan[119].seed",
+      "value": 495059,
+      "overlaps": [
+        "prefill"
+      ]
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_target_control18/rollouts.jsonl",
+      "line": 325,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [],
+      "direct_values": [
+        853043
+      ],
+      "context": "{\"seed\": 484302, \"side\": \"player_0\", \"steps\": 303, \"our_wins\": 3, \"opp_wins\": 0, \"our_points\": 1237, \"opp_points\": 862, \"point_counting_version\": 2, \"result\": 1.0, \"game_win\": 1, \"point_win\": 1.0, \"secs\": 3.29, \"unit_steps\": 3697, \"wait_frac\": 0.457397890181228, \"invalid_frac\": 0.0, \"sap_attempts\": 184, \"sap_hits\": 184, \"stack_frac\": 0.2126048147146335, \"relics_seen\": 4, \"relics_found\": 4, \"known_point_tiles\": 16, \"greedy_masked_frac\": 0.2766712141882674, \"belief_contradictions\": 0, \"phase\": \"tr"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/experiments/runs/20261102_target_control18/rollouts.jsonl",
+      "line": 342,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [],
+      "direct_values": [
+        493462
+      ],
+      "context": "{\"seed\": 484310, \"side\": \"player_1\", \"steps\": 303, \"our_wins\": 3, \"opp_wins\": 0, \"our_points\": 1502, \"opp_points\": 65, \"point_counting_version\": 2, \"result\": 1.0, \"game_win\": 1, \"point_win\": 1.0, \"secs\": 1.98, \"unit_steps\": 3720, \"wait_frac\": 0.5623655913978495, \"invalid_frac\": 0.0, \"sap_attempts\": 16, \"sap_hits\": 14, \"stack_frac\": 0.11505376344086021, \"relics_seen\": 3, \"relics_found\": 4, \"known_point_tiles\": 14, \"greedy_masked_frac\": 0.32483731019522777, \"belief_contradictions\": 0, \"phase\": \"tr"
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics/docs/ARBEITSSTAND.md",
+      "line": 917,
+      "kind": "text_declaration_or_numeric_mention",
+      "range_overlaps": [
+        "prefill"
+      ],
+      "direct_values": [
+        495000,
+        495003
+      ],
+      "context": "- Pr\u00fcfungen: gesamte Testsuite **552 bestanden** (+14 Untertests). V10-Spielverhalten unver\u00e4ndert: Die 10 Diagnosespiele 690000\u2013690004 lieferten mit dem neuen Code bitgleich dieselbe Auswertung (36.258 Entscheidungen samt Beispiel-Q-Werten). Probelauf mit je einem Trainingsspiel gegen `sol92_sq`, RushBot, V10-Pool und Solution_92 (Karten 495000\u2013495003, nur Scratchpad). Panel-Messung, Direktduell und Pr\u00fcfskript auf 2 Karten durchlaufen (nur Scratchpad)."
+    }
+  ],
+  "errors": [],
+  "classification": {
+    "status": "NO_PRIOR_EVALUATION_CONSUMPTION_FOUND; FOUR_PREFILL_MAPS_PREVIOUSLY_USED",
+    "training_493000_493599": "No consumed data found. Historical night_20261101 audit lists [491500,495000) as an available gap/possible argument, not an executed run.",
+    "prefill_495000_495059": "495000..495003 were executed as historical scratchpad training games per ARBEITSSTAND. Other mentions are never-run control19/adapt19 preparation plans. Root explicitly accepts these four reused prefill maps; no freshness claim.",
+    "screen_851000_851079": "Only current final-battle plan reservation found; no prior consumption found.",
+    "confirmation_852000_852399": "Only current final-battle plan reservation found; one 852166 text match is part of a SHA256 digest, not a seed.",
+    "direct_853000_853399": "Only current final-battle plan reservation found; a 853043 JSONL text match is part of non-seed numeric content, not the row seed.",
+    "jsonl_numeric_mentions": "All three historical rollout JSONL matches have actual seed fields 485007,484302,484310 outside requested ranges.",
+    "limitation": "Read-only local records audit across registered worktrees; cannot establish universal absence of undocumented/external runs."
+  }
+}
