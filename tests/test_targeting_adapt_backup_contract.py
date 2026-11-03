@@ -5,7 +5,9 @@ _config, extracted from the candidate's AST with no import statements.
 """
 import ast
 from collections import Counter
+import json
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -143,11 +145,30 @@ class BackupAdaptationContractTests(unittest.TestCase):
         self.assertEqual(ast.literal_eval(constants["EVAL_SEED"]), 20261102)
 
     def test_no_training_model_or_environment_module_was_imported(self):
-        pure_namespace(self.candidate())["rollout_plan"]("adapt18")
-        for prefix in ("torch", "agents", "luxai_s3", "lux.runner", "scripts.targeting_adapt",
-                       "scripts.targeting_adapt_backup", "scripts.experiment", "scripts.finetune"):
-            with self.subTest(prefix=prefix):
-                self.assertFalse(any(name == prefix or name.startswith(prefix + ".") for name in sys.modules))
+        # Other tests legitimately import these modules in the pytest process.
+        # Exercise the actual AST helpers in a fresh interpreter so any forbidden
+        # import here belongs to this contract, regardless of test ordering.
+        probe = """
+import json
+import runpy
+import sys
+
+sys.path.insert(0, sys.argv[1])
+contract = runpy.run_path(sys.argv[2])
+namespace = contract["pure_namespace"](contract["parse"](contract["BACKUP"]))
+namespace["rollout_plan"]("adapt18")
+prefixes = ("torch", "agents", "luxai_s3", "lux.runner", "scripts.targeting_adapt",
+            "scripts.targeting_adapt_backup", "scripts.experiment", "scripts.finetune")
+print(json.dumps(sorted(name for name in sys.modules
+                        if any(name == prefix or name.startswith(prefix + ".")
+                               for prefix in prefixes))))
+"""
+        result = subprocess.run(
+            [sys.executable, "-I", "-B", "-c", probe, str(ROOT), str(Path(__file__).resolve())],
+            cwd=ROOT, capture_output=True, text=True, timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout), [], "Forbidden imports in isolated AST contract")
 
 
 if __name__ == "__main__":

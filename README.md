@@ -1,6 +1,6 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-Stand02.11.: Abgabe weiter **V14**, Gewichte unverändert. Erstes kontrolliertes Trainingspaar unabhängig geprüft; Vierarmpilot unvollständig. Für frische Leistungsprüfung P-only mit allen36Originalnetzen festgelegt, Start wartet auf AC. [Arbeitsstand](docs/ARBEITSSTAND.md) · [Trainingspilot](docs/superpowers/plans/2026-11-02-targeting-adaptation.md) · [Feste Leistungsstudie](docs/superpowers/plans/2026-11-02-targeting-performance.md). Noch kein nachgewiesen stärkerer Nachfolger.
+Stand 03.11.: Abgabe weiter **V14**, Gewichte unverändert. P wurde nach der unabhängigen Bestätigung mit 9.000 Spielen abgelehnt; kein nachgewiesen stärkerer Nachfolger. Neue Verbesserungsarbeit ist bis **04.11., 16:00 Uhr Berlin** freigegeben; dafür liegen noch keine Ergebnisse vor. [Arbeitsstand](docs/ARBEITSSTAND.md) · [Abschlussbericht](docs/MORGENBERICHT_20261103.md) · [P-Studie](experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md).
 
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**
@@ -10,7 +10,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Ein Netz genügt für beide Seiten, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
 
-## Auf einen Blick (Stand 02.11.2026)
+## Auf einen Blick (Stand 03.11.2026)
 
 | | |
 |---|---|
@@ -21,8 +21,8 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | Gegen `default` | 100 % |
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
-| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal neu gebaut und geprüft am 02.11., 03:49) mit `python -m scripts.build_submission --battle` |
-| Tests | **694 Tests + 14 Untertests** bestanden (`python -m pytest -q`, 02.11.) |
+| Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal gebaut am 02.11.; zusätzliche Python-3.10-Prüfung am 03.11.) · Upload bis **04.11., 23:59 Uhr** |
+| Tests | Historisch **694 Tests + 14 Untertests** bestanden (02.11.); späterer Gesamtsuitenfehler in der Importisolation dokumentiert. Aktuellen Prüfstand im [Arbeitsstand](docs/ARBEITSSTAND.md) lesen. |
 | Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Nachtprüfung 01./02.11.: V14 bleibt
@@ -40,6 +40,17 @@ Das lokale Panel unterscheidet sich von Mahmouds historischer Liga; seine
 Mittelwerte sind nicht direkt mit den 87,6 % oben vergleichbar. Die ZIP enthält
 nur Laufzeitdateien, Gewichte und benötigte Hinweise; interne Repo-Dokumente
 und lokale Dateikopien werden nicht verpackt.
+
+## Fortsetzung 02./03.11.: P abgelehnt
+
+P verwendete alle 36 Originalnetze mit zwei geänderten Planungsflags. Nach der
+Auswahl mit 3.000 Spielen verfehlte P in der unabhängigen Bestätigung mit
+**9.000 Spielen fünf von sieben Hürden**: Panel Δ +0,306 pp [−0,861; +1,472],
+Solution 572/600 statt V14 578/600, direkt 51,5 % [48,167; 55,167].
+Der Auswahlvorteil wurde nicht bestätigt. V14 bleibt unverändert; Teilgewichte
+des unvollständigen Vierarmpiloten wurden nicht übernommen. Die 578/600 sind
+eine neue Messung desselben V14 auf anderen Karten, kein Leistungsfortschritt.
+[Abschluss und Grenzen](docs/MORGENBERICHT_20261103.md).
 
 ## Inhalt
 
@@ -75,7 +86,7 @@ und lokale Dateikopien werden nicht verpackt.
 
 ¹ Nur Karten mit Nebelabzug 25: Nur dort ändert V13 etwas, deshalb wurde gezielt dort gemessen. Auf den übrigen Karten spielte V13 in 720 von 720 Spielen genau wie V12.
 
-² V14 war in zwei unabhängigen Messungen besser als V13 (+0,50 und +0,86 Punkte im Mittel über 6 Gegner, jeder Gegner im Plus), verfehlte aber unsere Hürde von +1 Punkt knapp. Mahmoud hat die Übernahme ausdrücklich entschieden.
+² V14 war in zwei unabhängigen Messungen besser als V13 (+0,50 und +0,86 Prozentpunkte im Mittel über 6 Gegner, jeder Gegner im Plus), verfehlte aber zwei Hürden: Panel Δ ≥ +1 pp und untere Direktduellgrenze > 50 % (tatsächlich 49,25 %). Mahmoud hat die Übernahme ausdrücklich entschieden.
 
 Die Zeilen stammen aus verschiedenen Kartenblöcken und sind untereinander nur grob vergleichbar. Belastbar ist jeweils der gepaarte Vergleich mit dem Vorgänger auf denselben Karten. Die 46,7 % des Reviews beruhen auf 60 mehrfach verwendeten Testspielen. Von V3 bis V10 blieben die 18 Netze gleich: Der Sprung von 78 auf 90 % kam allein aus Korrekturen an Gedächtnis, Wegfindung, Zielwahl und Sap-Regeln.
 
@@ -95,7 +106,7 @@ V14 = V13 plus Kandidaten-Rettung `cand_rescue`: Ist ein Relic seit 30 Schritten
 | `default` | 99,9 % | 100 % | ±0 |
 
 - **Direkt gegen V13:** 50,6 % [49,25; 52,0] aus 800 Spielen.
-- **Teamentscheidung:** Die Hürde von +1 Punkt im Mittel wurde knapp verfehlt. Weil schon der Screen auf den Entwicklungskarten +0,50 [+0,14; +0,94] gezeigt hatte und kein Gegner schlechter wurde, hat Mahmoud die Übernahme ausdrücklich entschieden ([Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md)).
+- **Teamentscheidung:** Zwei Hürden wurden verfehlt: Panel Δ ≥ +1 pp und untere Direktduellgrenze > 50 % (49,25 %). Weil schon der Screen auf den Entwicklungskarten +0,50 [+0,14; +0,94] gezeigt hatte und kein Gegner schlechter wurde, hat Mahmoud die Übernahme ausdrücklich entschieden ([Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md)).
 
 ### V13: Nebel-Korrektur
 
@@ -193,7 +204,7 @@ Ausführliche Erklärung mit Beispielen: [Wie Sherlock entscheidet](Sherlock_Ent
 | `est_censor` + `neb_cross` | Neu in V13: Die Abzugsschätzung wertet keine Beobachtung mit Energie 0 aus, und Einheiten betreten Nebel nur mit genug Energie für die ganze Durchquerung. Sonst sammeln sie erst Energie. |
 | `scripted_explore` | Erkunder laufen direkt zu ihrem Erkundungsziel. |
 
-Beim Sap entscheidet das Netz, **ob** geschossen wird; **wohin**, berechnet eine Formel (größte getroffene Gegnerenergie inklusive Streuung). Alle Schalter stehen mit Erläuterung in `agents/sherlock/config.py` (`AgentConfig`). Beim Laden gelten die im Checkpoint gespeicherten Einstellungen.
+Die Netze schlagen die Aktionsart vor; aktive nachgelagerte Regeln können auch Sap erzwingen oder einen geplanten Sap verwerfen. Das Sap-Ziel berechnen Heuristiken (unter anderem getroffene Gegnerenergie inklusive Streuung und vermutete unsichtbare Halter). Alle Schalter stehen mit Erläuterung in `agents/sherlock/config.py` (`AgentConfig`). Beim Laden gelten die im Checkpoint gespeicherten Einstellungen. [Genauer Ablauf](docs/ENTSCHEIDUNGSABLAUF_V14_P.md).
 
 ## Training
 
@@ -326,7 +337,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 │   ├── style_opponents.py        Testgegner (sol92_sq, sol92_weak, Rush-Bot)
 │   ├── play_and_view.py, demo_server.py   Spiel ansehen, Demo-Seite
 │   └── common.py, metrics.py, protocol.py, …   Spiel-Schleife, Kennzahlen, Seeds
-├── tests/                        pytest (694 Tests + 14 Untertests, Stand 02.11.)
+├── tests/                        pytest (historisch 694 Tests + 14 Untertests, 02.11.; aktuell siehe Arbeitsstand)
 ├── experiments/
 │   ├── compare/                  Ergebnisse je Spiel als CSV
 │   ├── analysis/                 Auswertungen, Übernahmeberichte (release_*/RELEASE.md)
@@ -357,6 +368,8 @@ python -m pytest -q                    # alles grün?
 
 `set_match_count` ändert `match_count_per_episode` in der installierten `luxai_s3/params.py` von 5 auf 3. Mit `--check` wird nur geprüft.
 
+Der optionale Fernspiel-Tunnel benötigt zusätzlich das separat installierte Programm `cloudflared`; es gehört nicht zu `requirements.txt`.
+
 ## Nutzung
 
 Alle Befehle aus dem Projektordner mit aktiviertem venv.
@@ -366,13 +379,15 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 | Ein Spiel über den Kurs-Runner mit Replay (Gruppe 15 gegen 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
 | Spiel spielen und sofort im Browser ansehen (Viewer braucht Internet) | `python -m scripts.play_and_view` (Optionen `--gegner default\|solution\|dqn`, `--seite 1`) |
 | Demo-Seite mit Gegnerwahl und eingebettetem Viewer | `python -m scripts.demo_server --open` → <http://127.0.0.1:8615/> |
-| Bewertung auf festen Karten (`--first` = erster Seed − 500000) | `python -m scripts.par_eval --weights agents/sherlock/weights/agent_p0.pth --first 300000 --n 50 --workers 8 --opponents solution92,default --out ergebnis.csv` |
+| Bewertung auf festen Karten (`--first` = erster Seed − 500000; auf dem 8-GB-Mac höchstens zwei Worker) | `python -m scripts.par_eval --weights agents/sherlock/weights/agent_p0.pth --first 300000 --n 50 --workers 2 --opponents solution92,default --out ergebnis.csv` |
 | Anteile von Netz, Maske und Regeln messen | `python -m scripts.decision_trace --out trace.json` |
 | Einzelnetz trainieren (neuer Run-Ordner) | `python -m scripts.train --games 400 --opponent default` |
 | Battle-Zip bauen und prüfen | `python -m scripts.build_submission --battle` |
 | Battle-Zip unter einer anderen Python-Version prüfen | `python scripts/xversion_replay.py record Gruppe15.zip spiel.pkl --seed 4242`, dann `/pfad/zu/python3.10 -I scripts/xversion_replay.py replay Gruppe15.zip spiel.pkl` |
-| Fernspiel: andere gegen Sherlock spielen lassen, ohne Code oder Gewichte weiterzugeben | `python -m scripts.sherlock_server --tunnel` → öffentliche Adresse, `Sherlock_Fernspiel.zip` (nur Stellvertreter, gitignored) |
+| Experimentelles Fernspiel (offene Ressourcenfehler, siehe unten) | `python -m scripts.sherlock_server --tunnel` → öffentliche Adresse, `Sherlock_Fernspiel.zip` (nur Stellvertreter, gitignored); benötigt `cloudflared` |
 | Tests | `python -m pytest -q` |
+
+**Fernspiel ist noch experimentell:** Vor öffentlichem Einsatz müssen zwei belegte Ressourcenfehler behoben werden: parallele Agentenkonstruktionen können das Sitzungslimit umgehen, und ungeprüfte Env-Dimensionen können große Arrays anlegen. [Befund](experiments/analysis/continuation_20261102/performance/study_P_only_20261102/review/MM_commits_20261102_review.md).
 
 **Replays ansehen:** <https://s3vis.lux-ai.org/> öffnen und eine JSON-Datei aus `replays/` hochladen. `scripts.play_and_view` erzeugt stattdessen eine HTML-Datei mit eingebettetem Replay.
 
@@ -382,7 +397,7 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 
 ### Battle am 06.11.
 
-- **Format laut Prof-Mail:** `Gruppe15.zip` mit Ordner `Gruppe15/`, Agent-Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth` (eine Datei für beide Seiten). Upload auf Moodle bis Mittwoch, 04.11., nachts.
+- **Format laut Prof-Mail:** `Gruppe15.zip` mit Ordner `Gruppe15/`, Agent-Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth` (eine Datei für beide Seiten). Upload auf Moodle bis **Mittwoch, 04.11.2026, 23:59 Uhr**.
 - **Bauen:** `python -m scripts.build_submission --battle` erzeugt `Gruppe15.zip` im Projektordner (nicht im Repository). In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kurs-Runner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. Das Skript prüft das Paket in einer frischen Kursvorlage, einmal unter `agents/` und einmal in der Projektwurzel („Check ok“).
 - **Absturzschutz:** Der Kurs-Runner fängt Fehler des Agenten nicht ab. Nur in der eingefrorenen Abgabe fängt Sherlock deshalb Fehler in `act()` und `update()` ab; die Einheiten bleiben dann einen Schritt stehen, und das Spiel läuft weiter. In Training und Messungen bleiben Fehler sichtbar.
 - **Andere Python-Versionen:** Mit `scripts/xversion_replay.py` aufgezeichnete Spiele spielt die Zip unter Python 3.10 mit torch 2.2/numpy 1.26 und mit torch 2.14/numpy 2.2 ohne eine einzige abweichende Aktion nach (V14: 3 Spiele, darunter eines mit Nebelabzug 25 und eines mit Sichtweite 1).
@@ -394,18 +409,19 @@ Vorgaben laut Kursfolie 51: Ordner mit Teamnamen, leere `__init__.py`, `main.py`
 
 ## Grenzen und nächste Schritte
 
-Stand **01.11.2026**:
+Stand **03.11.2026** (Leistungszahlen unten stammen aus den jeweils genannten historischen Versuchen):
 
 - **Die Gegner im Battle sind unbekannt.** Gemessen wurde gegen Solution_92 und zwei Varianten, gegen unsere früheren Abgaben, zwei zurückgehaltene RL-Ensembles und einfache Agenten. Für deutlich stärkere Agenten, etwa die Spitzenlösungen von Kaggle, gibt es keine Messung.
-- **100 % sind nicht erreichbar:** Karten und Spielparameter sind zufällig, vieles ist verborgen. Am schwächsten ist Sherlock bei Sichtweite 1 (85,6 % im Mittel über die 6 Gegner) und beim Streufaktor 0,25 gegen RL-Gegner (`league_nets6` 65,5 %).
+- **100 % gegen starke Gegner sind bisher nicht belegt:** Karten und Spielparameter sind zufällig, vieles ist verborgen; eine Garantie auf unbekannten Karten folgt aus den Messungen nicht. Eine prinzipielle Unmöglichkeit ist damit ebenfalls nicht bewiesen. Historische Schwächen sind Sichtweite 1 (85,6 % im Mittel über die 6 Gegner) und Streufaktor 0,25 gegen RL-Gegner (`league_nets6` 65,5 %).
 - **Bei Sichtweite 1 fehlt vor allem Information** (Orakel-Diagnose 01.11., Entwicklungskarten, nur Diagnose): Bekäme Sherlock die wahren Relics und Punkte-Felder, gewönne es dort gegen Solution_92 96,5 statt 85,4 %. Nur die Punkte-Felder bringen 94,4 %, nur die Relics 90,3 %. Bei Sichtweite 2 bis 4 bringt dasselbe Wissen gegen Solution_92 kaum etwas (−0,7 bis +1,3 Punkte). Bei 0,25 ist das Schussduell ausgeglichen. Alle naheliegenden Gegenmittel wurden getestet und haben dort geschadet.
-- Sap-Ziele, Zielzuweisung und Regeln sind Heuristiken; die Netze entscheiden die Art der Aktion.
-- **Geprüft, nicht übernommen (31.10.):** Nebel-Sap ohne Energiereserve (`v13r0`). Auf 800 frischen Karten gewann er direkt 59,4 % gegen V12, im Mittel über die 6 Gegner aber nur +0,45 Prozentpunkte (Hürde +1,0) und gegen Solution_92 94,3 statt 95,0 %. V12 bleibt.
+- Sap-Ziele, Zielzuweisung und Regeln sind Heuristiken; die Netze schlagen die Aktionsart vor, nachgelagerte Regeln können sie ändern.
+- **Geprüft, nicht übernommen (31.10.):** Nebel-Sap ohne Energiereserve (`v13r0`). Auf 800 frischen Karten gewann er direkt 59,4 % gegen V12, im Mittel über die 6 Gegner aber nur +0,45 Prozentpunkte (Hürde +1,0) und gegen Solution_92 94,3 statt 95,0 %. Damals blieb V12.
 - **Geprüft, nicht übernommen (01.11.):** die Regel „Restenergie am Matchende verschießen“ (`end_sap`, im Code, Standard aus). Auf den Entwicklungskarten war sie mit 10 Schritten im Mittel über die 6 Gegner +1,1 Prozentpunkte besser, verlor aber direkt gegen V12 mit 45,7 % (Hürde mindestens 50 %). Mit 20 Schritten: +0,1.
 - **Geprüft, nicht übernommen (01.11.):** Nachtraining Runde 6 (`v17a`: V12-Netze + 12 nachtrainierte Netze + Nebel-Korrektur). Auf 800 frischen Karten +0,41 Punkte (Hürde +1,0), direkt 53,8 % gegen V12. Der Gewinn kam aus der Nebel-Korrektur; sie wurde allein als V13 übernommen.
-- **Übernommen als V14 (01.11., Teamentscheidung):** `cand_rescue`, +0,86 Punkte auf 800 frischen Karten, jeder Gegner im Plus, Hürde +1 knapp verfehlt.
+- **Übernommen als V14 (01.11., Teamentscheidung):** `cand_rescue`, +0,86 pp auf 800 frischen Karten, jeder Gegner im Plus; Panel-Hürde +1 pp und untere Direktduellgrenze >50 % verfehlt.
 - **Geprüft, nicht übernommen (01.11.):** `cand_post` (wahrscheinliche Punkte-Felder zuerst testen) mit `spawn_proof` und `cand_rescue` (`v19cr`). Auf den Entwicklungskarten +1,81 Punkte, auf 800 frischen Karten −0,35. Der Gewinn auf den Entwicklungskarten kam aus der Auswahl auf denselben Karten. Auch die Relic-Suche nach dem Lage-Gitter der Relics (`relic_prior`, Wachposten) brachte nichts.
-- **Termine:** Upload `Gruppe15.zip` (V14) bis Mittwoch, 04.11., nachts; Zwischenpräsentation und Battle am 06.11. ([Folien](Sherlock_Battle_06-11-2026.pdf)); Finale mit Turnier am 27.11.
+- **Neue Verbesserungsarbeit:** bis 04.11., 16:00 Uhr Berlin autorisiert; noch keine Ergebnisse dieses Programms. Die abgeschlossene P-Studie begründet keine Übernahme.
+- **Termine:** Upload `Gruppe15.zip` bis Mittwoch, 04.11.2026, 23:59 Uhr; Zwischenpräsentation und Battle am 06.11. ([Folien](Sherlock_Battle_06-11-2026.pdf)); Finale mit Turnier am 27.11.
 
 ## Historische Ergebnisse
 
