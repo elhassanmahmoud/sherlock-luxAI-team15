@@ -1,0 +1,46 @@
+[sherlock[final_rescue_alignment_20261103]] geladen: /Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training_prepared/control18/weights/agent.pth (env_steps=60000, eps=0.050, Ensemble=1 Netze)
+[sherlock[final_rescue_alignment_20261103]] geladen: /Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/final_battle_20261103/training_prepared/adapt18/weights/agent.pth (env_steps=60000, eps=0.050, Ensemble=1 Netze)
+{
+  "status": "technical_pass",
+  "purpose": "consumed-map prelaunch boundary smoke",
+  "performance_claim": false,
+  "protected_files_unchanged": true,
+  "games": [
+    {
+      "arm": "control18",
+      "side": "player_0",
+      "seed": 500720,
+      "steps": 303,
+      "actual_learning_updates": 0,
+      "model_and_optimizer_unchanged": true,
+      "disposable_env_steps": 60303,
+      "disposable_replay_size": 3608,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3608,
+        "transcript_sha256": "180d6f4326faab10733c4b2801d390bdec5e0181682cd7edb51ed72f0429999f"
+      },
+      "rescue_unit_steps": 0,
+      "rescue_action_changes": 0
+    },
+    {
+      "arm": "adapt18",
+      "side": "player_1",
+      "seed": 500720,
+      "steps": 303,
+      "actual_learning_updates": 0,
+      "model_and_optimizer_unchanged": true,
+      "disposable_env_steps": 60303,
+      "disposable_replay_size": 3585,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3585,
+        "transcript_sha256": "cb8954b2c3af2cb5a28213627b2605b382ed253b7aca4c3e49bc29e34ca508a7"
+      },
+      "rescue_unit_steps": 0,
+      "rescue_action_changes": 0
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+"""Two disposable real-environment boundary checks; never a training run.
+
+Run from the frozen repository root, only after complete suite/admission:
+  /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B \
+    /private/tmp/sherlock-final-20261103/technical_smoke.py --prepared ABSOLUTE_PREPARED_DIR
+
+Uses already-consumed seed500720: control as player0, rescue as player1.
+Prints technical JSON only. Does not save checkpoints, buffers, CSVs or run records.
+"""
+from __future__ import annotations
+
+import argparse
+import gc
+import json
+import os
+from pathlib import Path
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--prepared", type=Path, required=True)
+    args = parser.parse_args()
+    root = Path.cwd().resolve()
+    if not (root / "scripts/final_rescue_train.py").is_file():
+        parser.error("Run from the intended frozen repository root")
+    sys.path.insert(0, str(root))
+    sys.dont_write_bytecode = True
+    for key in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+                "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS"):
+        os.environ[key] = "1"
+    os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
+
+    # Deliberately lazy: creating/reviewing this file imports no model/engine.
+    from scripts import experiment, final_rescue_train as trainer
+    from scripts.variants import VARIANTS, seed_everything
+    from luxai_s3.wrappers import LuxAIS3GymEnv
+
+    experiment.limit_threads()
+    prepared = args.prepared.resolve(strict=True)
+    if (prepared / "run_records").exists() or (prepared / "supervisor_launch.json").exists():
+        raise ValueError("Technical prelaunch smoke must precede the once-only official launch")
+    protected = {
+        root / "agents/sherlock/weights/agent_p0.pth",
+        root / "agents/sherlock/weights/agent_p1.pth",
+        prepared / "manifest.json",
+    }
+    for arm in ("control18", "adapt18"):
+        manifest, entry, init = trainer.check_prepared(prepared, arm)
+        protected.update((Path(manifest["source"]), init / "manifest.json", init / "weights/agent.pth"))
+    before_files = {str(path): trainer.file_sha256(path) for path in protected}
+    missing = object()
+    old_variant = VARIANTS.get(trainer._VARIANT, missing)
+    results = []
+    try:
+        for arm, side in (("control18", "player_0"), ("adapt18", "player_1")):
+            manifest, entry, init = trainer.check_prepared(prepared, arm)
+            VARIANTS[trainer._VARIANT] = ("sherlock", entry["config"])
+            seed_everything(3029)  # same runseed+map-offset as the fixed regimen
+            # Existing prepared directory is read; save/save_buffers are never called.
+            learners = experiment.Learners(trainer._VARIANT, init, 29, load=True)
+            initial = trainer.prove_initial(learners, entry)
+            agent = learners.agents[side]
+            agent.autosave_on_terminate = False
+            agent.learn_enabled = False  # collect disposable replay, no optimizer updates
+            opponent_side = "player_1" if side == "player_0" else "player_0"
+            opponent = experiment.make_opponent("solution92", opponent_side)
+            env = None
+            try:
+                env = LuxAIS3GymEnv(numpy_output=True)
+                with trainer.action_audit(agent) as action_proof:
+                    row = experiment.play_game(env, agent, opponent, 500720, side, train=True)
+                final = trainer.learner_identity(learners)
+                assert row["steps"] == 303 and row["point_counting_version"] == 2, row
+                assert action_proof["act_calls"] == action_proof["update_calls"] == 303, action_proof
+                assert action_proof["checked_replay_transitions"] > 0, action_proof
+                assert agent.env_steps == 60303 and agent.learn_steps == 0
+                assert not agent.opt.state and not agent.recent_losses
+                assert final["q_tensor_sha256"] == initial["q_tensor_sha256"]
+                assert final["target_tensor_sha256"] == initial["target_tensor_sha256"]
+                assert final["learning"]["optimizer_sha256"] == initial["learning"]["optimizer_sha256"]
+                assert agent.cfg.to_dict() == entry["config"]
+                results.append(dict(
+                    arm=arm, side=side, seed=500720, steps=303,
+                    actual_learning_updates=0, model_and_optimizer_unchanged=True,
+                    disposable_env_steps=agent.env_steps,
+                    disposable_replay_size=len(agent.buffer),
+                    action_audit=action_proof,
+                    rescue_unit_steps=agent.episode_stats().get("training_rescue_unit_steps", 0),
+                    rescue_action_changes=agent.episode_stats().get("training_rescue_action_changes", 0),
+                ))
+            finally:
+                if env is not None:
+                    env.close()
+                del env, opponent, agent, learners
+                gc.collect()
+            trainer.check_prepared(prepared, arm)
+    finally:
+        if old_variant is missing:
+            VARIANTS.pop(trainer._VARIANT, None)
+        else:
+            VARIANTS[trainer._VARIANT] = old_variant
+        after_files = {path: trainer.file_sha256(path) for path in before_files}
+        if after_files != before_files:
+            raise ValueError("A protected source/prepared checkpoint changed during disposable smoke")
+    assert len(results) == 2
+    assert not (prepared / "run_records").exists()
+    assert not (prepared / "supervisor_launch.json").exists()
+    print(json.dumps(dict(status="technical_pass", purpose="consumed-map prelaunch boundary smoke",
+                          performance_claim=False, protected_files_unchanged=True, games=results), indent=2))
+
+
+if __name__ == "__main__":
+    main()
