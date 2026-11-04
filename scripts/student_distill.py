@@ -1,6 +1,6 @@
 """Fixed V14 arithmetic-Q distillation into a genuine single QNet.
 
-Only final, three-epoch weights are exported. Historical row diagnostics have no
+Only weights completing the requested epochs are exported. Historical row diagnostics have no
 current action masks and do not establish unseen-map or episode generalization.
 """
 from __future__ import annotations
@@ -212,7 +212,9 @@ def _diagnostics(net, datasets, targets, check) -> list[dict]:
     return results
 
 
-def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, row_cap=None) -> dict:
+def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, row_cap=None, epochs=EPOCHS) -> dict:
+    if type(epochs) is not int or not 1 <= epochs <= 100:
+        raise ValueError('epochs must be a plain integer between 1 and 100')
     if deadline.tzinfo is None:
         raise ValueError('Deadline must include a UTC offset')
     if len(buffers) != 2 or len({Path(path).resolve() for path in buffers}) != 2:
@@ -222,7 +224,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
     started = time.monotonic()
     prior_determinism = torch.are_deterministic_algorithms_enabled()
     prior_warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
-    manifest = dict(status='running', seed=SEED, hidden=HIDDEN, epochs_requested=EPOCHS,
+    manifest = dict(status='running', seed=SEED, hidden=HIDDEN, epochs_requested=epochs,
                     batch_size=BATCH_SIZE, learning_rate=LEARNING_RATE, cpu_threads=1,
                     epochs_completed=0, updates=0, training_rows_seen=0,
                     technical_row_cap=row_cap, technical_test_only=row_cap is not None,
@@ -282,7 +284,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
             train_y = np.concatenate([target[:split] for (_, split), target in zip(datasets, targets)])
             optimizer = torch.optim.Adam(student.parameters(), lr=LEARNING_RATE)
             generator = torch.Generator().manual_seed(SEED)
-            for epoch in range(EPOCHS):
+            for epoch in range(epochs):
                 order = torch.randperm(len(train_x), generator=generator).numpy()
                 student.train()
                 for start in range(0, len(order), BATCH_SIZE):
@@ -303,6 +305,8 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
                 manifest['epochs_completed'] = epoch + 1
                 student.eval()
                 progress('fitting')
+            if manifest['epochs_completed'] != epochs:
+                raise ValueError('Requested epochs did not complete')
             progress('diagnostics_after')
             after = _diagnostics(student, datasets, targets, check)
             student.eval()
@@ -315,7 +319,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
             checkpoint = dict(q=state, target_q={key: value.clone() for key, value in state.items()},
                               ensemble=[], ensemble_dims=[], cfg=student_cfg,
                               feature_dim=79, n_actions=6, env_steps=60000, learn_steps=0,
-                              distillation_updates=manifest['updates'], distillation_epochs=EPOCHS,
+                              distillation_updates=manifest['updates'], distillation_epochs=epochs,
                               distillation_seed=SEED)
             _finite(checkpoint)
             (out / 'weights').mkdir()
@@ -372,9 +376,10 @@ def main(argv=None) -> int:
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--deadline-utc', required=True)
     parser.add_argument('--row-cap', type=int, help='Technical tests only; marks run as non-production')
+    parser.add_argument('--epochs', type=int, default=EPOCHS, help='Epoch count from 1 to 100 (default: 3)')
     args = parser.parse_args(argv)
     deadline = datetime.fromisoformat(args.deadline_utc.replace('Z', '+00:00'))
-    result = run_distillation(args.teacher, args.buffers, args.out, deadline, row_cap=args.row_cap)
+    result = run_distillation(args.teacher, args.buffers, args.out, deadline, row_cap=args.row_cap, epochs=args.epochs)
     print(json.dumps(dict(status=result['status'], out=str(args.out), updates=result['updates'])))
     return 0 if result['status'] == 'complete' else 2
 

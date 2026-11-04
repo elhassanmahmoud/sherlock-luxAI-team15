@@ -146,6 +146,44 @@ def test_three_epoch_export_is_single_net_reload_exact_and_inputs_unchanged(tmp_
     assert torch.equal(loaded.q(x), net(x))
 
 
+@pytest.mark.parametrize('entrypoint', ['api', 'cli'])
+def test_explicit_two_epochs_export_requested_count_and_reload_exact(tmp_path, monkeypatch, entrypoint):
+    sd, source, paths = fixture(tmp_path, monkeypatch)
+    out = tmp_path / 'two-epochs'
+    deadline = datetime.now(timezone.utc) + timedelta(minutes=2)
+    if entrypoint == 'api':
+        result = sd.run_distillation(source, paths, out, deadline, row_cap=20, epochs=2)
+        assert result['status'] == 'complete'
+    else:
+        assert sd.main(['--teacher', str(source), '--buffers', *map(str, paths),
+                        '--out', str(out), '--deadline-utc', deadline.isoformat(),
+                        '--row-cap', '20', '--epochs', '2']) == 0
+    manifest = json.loads((out / 'manifest.json').read_text())
+    assert manifest['status'] == 'complete'
+    assert manifest['epochs_requested'] == manifest['epochs_completed'] == 2
+    assert manifest['updates'] == 2
+    assert manifest['training_rows_seen'] == 64
+    assert manifest['reload_exact'] is True
+    checkpoint = torch.load(out / 'weights/agent.pth', weights_only=True)
+    assert checkpoint['distillation_epochs'] == checkpoint['distillation_updates'] == 2
+    net = QNet(79, 6, 512, True).eval()
+    net.load_state_dict(checkpoint['q'])
+    from agents.sherlock.main import Agent_x
+    loaded = Agent_x('player_0', agent_path=str(out / 'weights/agent.pth'), train=False)
+    x = torch.from_numpy(np.load(paths[0])['s'])
+    assert torch.equal(loaded.q(x), net(x))
+
+
+@pytest.mark.parametrize('epochs', [True, False, 1.0, 2.5, 0, -1, 101, '2', np.int64(2)])
+def test_invalid_epoch_count_rejected_before_output_reservation(tmp_path, epochs):
+    sd = module()
+    out = tmp_path / 'invalid-epochs'
+    with pytest.raises(ValueError, match='epochs'):
+        sd.run_distillation(tmp_path / 'teacher.pth', [tmp_path / 'a.npz', tmp_path / 'b.npz'],
+                            out, datetime.now(timezone.utc) + timedelta(minutes=2), epochs=epochs)
+    assert not out.exists()
+
+
 def test_expired_deadline_has_incomplete_status_without_checkpoint(tmp_path, monkeypatch):
     sd, source, paths = fixture(tmp_path, monkeypatch)
     out = tmp_path / 'timed-out'

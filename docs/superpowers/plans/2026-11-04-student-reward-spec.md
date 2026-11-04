@@ -12,6 +12,14 @@ Moayed autorisiert ein wirklich trainiertes Einzelnetz und gezielte Verbesserung
 
 ## Grenzen und Abschluss
 
+### Transparente Änderung vor ersten neuen Spielresultaten, 04.11., 14:15
+
+Der ursprüngliche Dreiepochenlauf ist vollständig beendet und bleibt unverändert als S3 erhalten. Er brauchte tatsächlich 17,9 Sekunden; auf den historischen Diagnosezeilen beträgt die unmaskierte Aktionsübereinstimmung nur 53,395 beziehungsweise 54,715 %. Das ist ein Entwicklungsbefund, kein frisches Spielergebnis. Bisher wurde kein Spiel dieser neuen Studie gespielt.
+
+Auf dieser Grundlage wird genau ein zusätzlicher Lauf S30 mit 30 vollständigen Epochen ab derselben Zufallsinitialisierung festgelegt. Daten, Lehrer, Lernziel, Lernrate und Batchgröße bleiben gleich. Kein Zwischencheckpoint und keine Wahl nach besserer Diagnosezahl: Der vollständige, endliche S30 ist der festgelegte Ausgangspunkt beider RL-Arme. Scheitert er technisch, entfallen die abhängigen Phasen; es wird nicht nach Spielresultaten auf S3 zurückgewechselt. Die drei Epochen bleiben Standard des Werkzeugs; die Erweiterung muss explizit angegeben und protokolliert werden.
+
+Der einmalige frische Diagnosevergleich umfasst damit fünf vorher benannte Rollen V14/S3/S30/CONTROL30/SAP0_30 auf denselben 20 reservierten Karten und drei Gegnern, also 600 statt 480 Spiele. Das frühere Design bleibt oben nachvollziehbar; dieser Absatz ersetzt dessen Modellanzahl und RL-Startcheckpoint. Keine Übernahme, Bestätigungsrunde oder weitere Verlängerung nach diesen Ergebnissen. Alle Zeit-, Ressourcen- und Schutzgrenzen gelten weiter.
+
 - Höchstens zwei rechenintensive Prozesse, je ein CPU-Thread. Kein Download und keine neue Python-Installation; vorhandene .venv verwenden. Quelldateien und Eingaben einer gestarteten Phase bleiben fest. Keine Wiederholung abgeschlossener Versuche.
 - Ab 15:00 keinen neuen längeren Trainingsblock; eigene Modelljobs spätestens 15:35 beenden, Dokumentation/Abgleich bis 16:00. Vor jeder Phase Laufzeit messen und verbleibenden Umfang konservativ zulassen. Falls der feste Umfang nicht passt: Phase auslassen, keinen nachträglich günstigeren Teilstand wählen.
 - Mindestens 30 % Kontingentreserve, ab 65 % Verbrauch keine neue Phase, keine Resets. Bei Akku unter 35 % keine neue schwere Phase, bei 25 % geordneter Stopp. Anfangskontingent 4 % verbraucht; Akku 95 % ohne Netzstrom.

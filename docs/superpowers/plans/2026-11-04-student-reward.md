@@ -7,6 +7,8 @@
 **Tech Stack:** Existing Python 3.13 venv, PyTorch, NumPy, pytest; standard-library provenance and subprocess coordination.
 **Spec:** `docs/superpowers/plans/2026-11-04-student-reward-spec.md`.
 
+**Amendment before new study game results (04.11.,14:15):** the spec now additionally fixes S30 (same student,30epochs), keeps S3, starts both RL arms from S30, and expands the one diagnostic to five roles/600games. The original task text below is retained for provenance; the dated spec amendment governs these changed counts.
+
 ## Global Constraints
 
 Finish by 2026-11-04 16:00 Europe/Berlin; model jobs stop by 15:35. Maximum two CPU workers, one thread each. V14 and ZIP remain byte-identical. No promotion, no fresh-test tuning, no optimizer/replay reuse across reward treatments. Use `/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python`. Writes only in experiment paths checked against submission roots. Reject existing output directories, source mutation and nonfinite input/output. Preserve foreign files. Root owns Git commits, runtime jobs, documentation and integration; implementers do not launch production experiments or commit.
