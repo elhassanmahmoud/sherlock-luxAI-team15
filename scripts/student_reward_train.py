@@ -110,7 +110,7 @@ def _student(path):
                                         ('distillation_seed', 0))):
         raise ValueError('Student distillation provenance requires valid integer counts/seed')
     cfg = AgentConfig(**cp['cfg']).to_dict()
-    if (cfg != cp['cfg'] or cfg['hidden'] != 512 or not cfg['canonical']
+    if (cfg['hidden'] != 512 or not cfg['canonical']
             or not cfg['use_shaping'] or cfg['eps_end'] != .05
             or cfg['eps_decay_steps'] != 60000 or cfg['learn_start'] != 5000
             or cfg['train_every'] != 2):
@@ -120,7 +120,10 @@ def _student(path):
         raise ValueError('Distilled student q/target must be identical')
     with torch.random.fork_rng(devices=[]):
         QNet(79, 6, hidden=512, dueling=cfg['dueling']).load_state_dict(cp['q'], strict=True)
-    return cp
+    # Legacy V14 checkpoints store only explicit overrides. Compare and export
+    # their complete effective configuration, exactly as live Agent_x does;
+    # this changes only the loaded object, never the immutable student file.
+    return dict(cp, cfg=cfg)
 
 
 def _config(source, arm):

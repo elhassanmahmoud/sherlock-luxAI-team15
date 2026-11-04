@@ -330,3 +330,42 @@ def test_student_rejects_invalid_or_unknown_provenance(student, metadata):
     torch.save(cp, student)
     with pytest.raises(ValueError, match='contract|provenance'):
         m._student(student)
+
+
+def test_sparse_legacy_producer_config_preserves_nondefaults_and_live_contract(tmp_path, monkeypatch):
+    """Legacy teachers omit default keys; actual export retains that sparse cfg."""
+    m = module()
+    from tests.test_student_distill import fixture as distilled_fixture
+    from scripts import experiment
+    sd, teacher, buffers = distilled_fixture(tmp_path, monkeypatch)
+    teacher_cp = torch.load(teacher, weights_only=True)
+    teacher_cp['cfg'] = dict(hidden=8, dueling=True, w_opp_points=1.25,
+                             w_sap_hit=.45, cand_rescue=True, frozen=True)
+    torch.save(teacher_cp, teacher)
+    monkeypatch.setattr(sd, 'V14_SHA256', sd.sha256(teacher))
+    out = tmp_path / 'sparse_student'
+    sd.run_distillation(teacher, buffers, out,
+                       datetime.now(timezone.utc) + timedelta(minutes=2), row_cap=20)
+    source = out / 'weights/agent.pth'
+    before = m.file_sha256(source)
+    saved_cfg = torch.load(source, weights_only=True)['cfg']
+    assert 'rescue_in_training' not in saved_cfg
+    normalized = m._student(source)
+    assert normalized['cfg']['w_opp_points'] == 1.25
+    assert normalized['cfg']['cand_rescue'] is True
+    assert normalized['cfg']['rescue_in_training'] is False
+    prepared = tmp_path / 'prepared'
+    manifest = m.prepare(source, prepared)
+    assert manifest['source_config']['w_sap_hit'] == .45
+    for arm in ('control', 'sap0'):
+        _, entry, init = m.check_prepared(prepared, arm)
+        assert entry['config']['w_opp_points'] == 1.25
+        assert entry['config']['cand_rescue'] is True
+        assert entry['config']['rescue_in_training'] is False
+        assert entry['config']['w_sap_hit'] == (.45 if arm == 'control' else 0.)
+        monkeypatch.setitem(m.VARIANTS, m.VARIANT, ('sherlock', entry['config']))
+        learners = experiment.Learners(m.VARIANT, init, 29, load=True)
+        assert learners.agents['player_0'].cfg.to_dict() == entry['config']
+        assert m.prove_initial(learners, entry)['learning']['config'] == entry['config']
+    assert m.file_sha256(source) == before
+    assert torch.load(source, weights_only=True)['cfg'] == saved_cfg
