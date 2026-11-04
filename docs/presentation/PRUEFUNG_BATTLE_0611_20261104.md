@@ -1,4 +1,6 @@
-# Battle-Präsentation: Prüfung und Aufteilungsvorschlag
+# Battle-Präsentation: Prüfung und Umsetzung
+
+**Nachtrag nach Freigabe am 04.11.2026:** Die folgenden Korrekturen sind in HTML, PDF und Stichpunkten umgesetzt. Moayed bestätigt Folien 1–5 und 12–13, Mahmoud 6–11. Design und 17 Seiten (13 Hauptfolien + vier Reservefolien) bleiben erhalten, Planzeit 9:50. Folien 11/12 und Sprechtexte gekürzt; die jüngsten Versuche knapp auf Folie 12 ergänzt. Fachlicher Gegenreview und gerenderte PDF geprüft. README, gemeinsame Anweisungen und Arbeitsstand sind angeglichen. Offen bleibt die gemeinsame Probe; die Zeit ist keine gemessene Vortragsdauer. Die folgende Erstprüfung bleibt als Begründung erhalten.
 
 Stand: 04.11.2026, abends. Codex mit unabhängigen Reviews zu Fachinhalt und Vortragsaufteilung.
 
@@ -47,6 +49,6 @@ Das sind Planzeiten aus den vorhandenen Folienzeiten, keine gemessene Probe. Mit
 
 Folie 11 kürzen: V11-Training nicht erneut ausführlich erklären, V12 und V14 als Beispiele hervorheben, V13 in einem Satz. Folie 12 für Moayed auf drei einfache Aussagen verdichten: Netze und Regeln ergänzen sich; Verbesserungen müssen auf neuen Karten bestehen; mehr Training oder mehr Netze ist nicht automatisch besser. Detaillierte Auswahlhürden und Orakelwerte bleiben als Antworten vorbereitet.
 
-## Nächster Schritt
+## Historischer nächster Schritt vor der Freigabe
 
 Die PDF und die bisherigen Stichpunkte sind in diesem Prüfschritt unverändert. Als Nächstes gezielt die genannten Stellen in Quelle, PDF und Übungsnotizen angleichen, das bestehende Design beibehalten und dann Moayeds Folien 1–5 und 12–13 einfach durchgehen. Kein Training oder erneute Agentenabgabe dafür erforderlich. Aufteilung bis zur Rückmeldung ausdrücklich Vorschlag.

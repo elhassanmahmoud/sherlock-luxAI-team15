@@ -72,12 +72,12 @@
   .box { background: #ECF2F1; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.28in 0.32in; }
   /* Ablauf eines Schritts */
   .flow { display: flex; align-items: stretch; gap: 0; }
-  .fbox { flex: 1; background: #FFFFFF; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.18in 0.16in; }
+  .fbox { flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #D3DEDC; border-radius: 8px; padding: 0.18in 0.16in; }
   .fbox.learned { background: #E3F0EE; border: 2px solid #0F7C7A; }
   .fbox .n { font-size: 20pt; font-weight: 700; color: #0F7C7A; }
   .fbox h3 { margin: 0.06in 0 0.1in 0; font-size: 17pt; }
   .fbox p { margin: 0; font-size: 15pt; color: #56676C; line-height: 1.3; min-height: 1.3in; }
-  .fbox .who { margin-top: 0.14in; font-size: 11.5pt; font-weight: 700; letter-spacing: 0.02em; color: #56676C; }
+  .fbox .who { margin-top: auto; padding-top: 0.14in; font-size: 11.5pt; font-weight: 700; letter-spacing: 0.02em; color: #56676C; }
   .fbox.learned .who { color: #0F7C7A; }
   .arrow { width: 0.3in; flex: none; display: flex; align-items: center; justify-content: center; font-size: 20pt; color: #9AA7A9; }
   /* Q-Werte-Tabelle */
@@ -113,7 +113,7 @@
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
   <div style="position:absolute; left:0.76in; top:1.95in; font-size:66pt; font-weight:700;">Sherlock</div>
   <div style="position:absolute; left:0.8in; top:3.15in; font-size:30pt; color:#A8D5C8;">Wie unser Agent entscheidet und wie wir ihn trainiert haben</div>
-  <div style="position:absolute; left:0.8in; top:4.25in; font-size:22pt; line-height:1.4;">36 gelernte Netze entscheiden, Gedächtnis und Regeln helfen ihnen.<br>95 % gegen Solution_92</div>
+  <div style="position:absolute; left:0.8in; top:4.25in; font-size:22pt; line-height:1.4;">36 gelernte Netze, Gedächtnis und Regeln.<br>95,4 % Siege gegen Solution_92 in 1.600 Testspielen</div>
   <div style="position:absolute; left:0.8in; top:5.65in; font-size:18pt; color:#A8D5C8; line-height:1.45;">
     Mahmoud El-Hassan · Moayed Shawesh<br>HTW Berlin · Anwendungen der KI · 06.11.2026
   </div>
@@ -156,7 +156,7 @@
       <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
       <div style="flex:0.5; display:flex; flex-direction:column; justify-content:center; align-items:center;">
         <div style="font-size:30pt; font-weight:700;">Sherlock</div>
-        <div class="grey" style="font-size:14pt; margin-top:0.08in; text-align:center;">meist 5 ms, höchstens<br>12 ms pro Schritt</div>
+        <div class="grey" style="font-size:14pt; margin-top:0.08in; text-align:center;">im damaligen Test:<br>meist 5 ms, maximal 12 ms</div>
       </div>
       <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
       <div class="box" style="flex:1.2;">
@@ -185,27 +185,27 @@
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
       <div class="fbox"><div class="n">2</div><h3>Ziele</h3>
-        <p>jede Einheit ein eigenes Ziel, nach Weglänge verteilt</p>
+        <p>Punktefelder, Kandidaten oder Erkundung; nach Weglänge verteilt</p>
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
-      <div class="fbox"><div class="n">3</div><h3>Merkmale</h3>
-        <p>79 Zahlen je Einheit: Lage, Ziel, Umgebung, Gegner</p>
+      <div class="fbox"><div class="n">3</div><h3>Vorbereitung</h3>
+        <p>79 Merkmale, Aktionsmaske und sichtbares Schussziel berechnen</p>
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
       <div class="fbox learned"><div class="n">4</div><h3>36 Netze</h3>
         <p>bewerten die 6 Aktionen mit Q-Werten, wir mitteln</p>
         <div class="who">GELERNT (DQN)</div></div>
       <div class="arrow">→</div>
-      <div class="fbox"><div class="n">5</div><h3>Maske</h3>
-        <p>verbotene Aktionen streichen, beste erlaubte nehmen</p>
+      <div class="fbox"><div class="n">5</div><h3>Auswahl</h3>
+        <p>Maske anwenden, Aktion mit höchstem verbleibendem Q-Wert wählen</p>
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
       <div class="fbox"><div class="n">6</div><h3>Regeln</h3>
-        <p>korrigieren Sackgassen, Nebel, doppelte Schüsse</p>
+        <p>Aktion ändern, Schuss auslösen oder überflüssigen Schuss verhindern</p>
         <div class="who">PROGRAMMIERT</div></div>
     </div>
     <div style="margin-top:0.5in;">
-      <div class="mid"><b>→ 16 × 3 Aktionen ans Spiel.</b> Das Netz entscheidet <b class="teal">was</b> eine Einheit tut, beim Sap auch <b class="teal">ob</b> geschossen wird. <b>Wohin</b> geschossen wird, berechnet eine Formel: das Feld mit der meisten getroffenen Gegnerenergie.</div>
+      <div class="mid"><b>→ 16 × 3 Zahlen ans Spiel.</b> Die Netze bewerten, die Maske begrenzt die Auswahl. <b class="teal">Regeln können danach eingreifen.</b> Schussziele werden programmiert bestimmt: sichtbare Ziele nach Gegnerenergie und Streuwirkung, verdeckte über eine eigene Regel.</div>
     </div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">04</div>
@@ -230,7 +230,7 @@
         <li>Solche Gleichungen werden gesammelt, bis sie eindeutig sind</li>
         <li>Die Karte ist spiegelsymmetrisch: ein bewiesenes Feld gilt auch für sein Spiegelfeld</li>
         <li>Asteroiden und Nebel wandern: das Gedächtnis erkennt die Drift und verschiebt die Karte mit</li>
-        <li>Alles bleibt über die 3 Matches eines Spiels erhalten</li>
+        <li>Relic- und Punktewissen bleibt über 3 Matches erhalten; Erkundung startet pro Match neu</li>
       </ul>
     </div>
     <div class="note below">Die Punktefelder sieht kein Agent direkt. Das Spiel zeigt nur, wie viele Punkte das Team im Schritt bekommen hat.</div>
@@ -241,20 +241,20 @@
 <!-- 6 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Action Masking: nur erlaubte Aktionen</h1>
+  <h1 class="title">Action Masking</h1>
   <div class="content" style="top:1.85in;">
     <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
       <div style="flex:1.05;">
         <table class="res" style="font-size:15.5pt;">
-          <tr class="head"><td>Aktion</td><td>erlaubt, wenn …</td></tr>
+          <tr class="head"><td>Aktion</td><td>in der Netzauswahl, wenn …</td></tr>
           <tr><td class="strong">Stehen</td><td>immer</td></tr>
           <tr><td class="strong">Zug</td><td>genug Energie, Zielfeld auf der Karte, kein Asteroid</td></tr>
-          <tr><td class="strong">Zug, im Spiel</td><td>zusätzlich kein mindestens gleich starker Gegner auf oder neben dem Zielfeld</td></tr>
-          <tr><td class="strong">Sap</td><td>Gegner in Reichweite und genug Energie</td></tr>
+          <tr><td class="strong">Sicherer Zug</td><td>zusätzlich keine erkennbare Kollision mit einem mindestens gleich starken Gegner</td></tr>
+          <tr><td class="strong">Sap</td><td>sichtbares Schussziel in Reichweite und genug Energie</td></tr>
         </table>
         <ul class="dash" style="font-size:15.5pt; line-height:1.3; margin-top:0.25in;">
-          <li>Verboten heißt: Q-Wert = −∞, die Aktion wird nie gewählt</li>
-          <li>Im Training gilt dasselbe für Zufallszüge und das Lernziel</li>
+          <li>Ausgeblendet heißt: Q-Wert = −∞, in der Netzauswahl ausgeschlossen</li>
+          <li>Training: Masken auch für Zufallszüge und Lernziel</li>
         </ul>
       </div>
       <div class="box" style="flex:0.95;">
@@ -270,7 +270,7 @@
         <div class="small grey" style="margin-top:0.14in;">Mittel der 36 Netze. Am liebsten „runter“, das ist aber verboten.</div>
       </div>
     </div>
-    <div class="note below">Gemessen in 36.209 Entscheidungen: im Mittel 4,3 von 6 Aktionen erlaubt; in 22 % war die Lieblingsaktion der Netze verboten (10 Spiele gegen Solution_92, 5 Karten × beide Seiten).</div>
+    <div class="note below"><b>Danach kann eine Regel einen Blindschuss auslösen:</b> Sie prüft ein verdecktes Ziel, Reichweite und Energiereserve separat. Die Maske enthält Spielgrenzen und programmierte Sicherheitsregeln.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">06</div>
 </section>
@@ -298,10 +298,10 @@
           <div class="vote">↓</div><div class="vote win">→</div><div class="vote">●</div><div class="vote">●</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">●</div><div class="vote win">→</div><div class="vote win">→</div><div class="vote">↓</div>
         </div>
         <div class="kv"><span>→ rechts <b>12</b></span><span>↓ runter <b>15</b></span><span>● stehen <b>9</b></span></div>
-        <div style="font-size:15pt; margin-top:0.2in; line-height:1.35;">Mehrheit wäre <b>runter</b>. Der Mittelwert wählt <b class="teal">rechts</b> (27,0 vor 26,9), weil er zählt, <b>wie sicher</b> sich jedes Netz ist.</div>
+        <div style="font-size:15pt; margin-top:0.2in; line-height:1.35;">Mehrheit wäre <b>runter</b>. Der Mittelwert wählt <b class="teal">rechts</b> (27,0 vor 26,9): Es zählt die <b>Höhe der Aktionswerte</b>, keine Wahrscheinlichkeit.</div>
       </div>
     </div>
-    <div class="note below">In den 36.209 gemessenen Entscheidungen: alle 36 Netze einig in 31 %; im Mittel wählen 27,4 von 36 Netzen einzeln dieselbe Aktion wie das Ensemble; Mittelwert und Mehrheitswahl unterscheiden sich in 6 %.</div>
+    <div class="note below">V11-Diagnose, 10 Spiele / 36.209 Entscheidungen: alle Netze einig in 31 %; im Mittel wählen 27,4 von 36 Netzen dieselbe Aktion wie das Ensemble. Mittelwert und Mehrheitswahl unterscheiden sich in 6 %.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">07</div>
 </section>
@@ -316,16 +316,16 @@
       <tr><td class="strong">A</td><td>6</td><td>3.000</td><td>abwechselnd default und Solution_92</td></tr>
       <tr><td class="strong">B</td><td>6</td><td>4.000</td><td>70 % Solution_92, Rest default</td></tr>
       <tr><td class="strong">C</td><td>6</td><td>4.000</td><td>60 % Solution_92, 20 % eigene alte Agenten; Strafe für Gegnerpunkte</td></tr>
-      <tr><td class="strong teal">Nach&shy;training</td><td>18 Kopien</td><td>+ 5.500</td><td>alle heutigen Regeln aktiv; 70 % Solution_92 und zwei Varianten, 20 % eigene Abgaben, Rest default und Rush-Bot</td></tr>
+      <tr><td class="strong teal">Nach&shy;training</td><td>18 Kopien</td><td>+ 5.500</td><td>damalige V10-Regeln aktiv; 70 % Solution_92 und zwei Varianten, 20 % eigene Abgaben, Rest default und Rush-Bot</td></tr>
     </table>
     <div class="cols" style="gap:0.5in; height:auto; margin-top:0.35in;">
       <ul class="dash col" style="font-size:16pt; line-height:1.3;">
-        <li><b>66.000 + 99.000 Trainingsspiele</b>, je Netz eigener Zufallsstart und eigene Karten</li>
+        <li><b>66.000 + 99.000 Trainingsspiele</b> für die Netzfamilien der Abgabe; weitere Projektversuche separat</li>
         <li>Double DQN mit Target-Netz und Replay Buffer (300.000 Übergänge)</li>
       </ul>
       <ul class="dash col" style="font-size:16pt; line-height:1.3;">
-        <li>Belohnung <b>in jedem Schritt pro Einheit</b>: Punktefeld halten, Annäherung ans Ziel, Erkunden, Matchsieg; Strafe für Tod</li>
-        <li>Verwendet wird der Endstand jedes Laufs</li>
+        <li>Reward pro Schritt: Punktefeld halten, Annäherung, Erkunden; Abzug bei Tod. <b>Matchbonus am Matchende.</b></li>
+        <li>Endstände der Läufe; V11–V14 nutzen dieselben 36 Netze mit späteren Regeländerungen</li>
       </ul>
     </div>
   </div>
@@ -335,25 +335,25 @@
 <!-- 9 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Das Netz entscheidet, Regeln sichern ab</h1>
+  <h1 class="title">Netze und Regeln</h1>
   <div class="content" style="top:1.85in;">
     <div class="cols" style="gap:0.55in; height:auto; align-items:flex-start;">
       <div class="box" style="flex:0.75;">
         <div class="hero">91 %</div>
-        <div style="font-size:17pt; margin-top:0.15in; line-height:1.35;">der Entscheidungen spielt Sherlock genau so, wie die Netze sie getroffen haben</div>
-        <div class="small grey" style="margin-top:0.3in; line-height:1.35;">Eine einfache Regel statt der Netze gewann am 19.10. nur 3 % gegen Solution_92, mit Netzen 38 %.</div>
+        <div style="font-size:17pt; margin-top:0.15in; line-height:1.35;">ohne protokollierten Regeleingriff nach der <b>maskierten Netzauswahl</b> in einer V12-Diagnose</div>
+        <div class="small grey" style="margin-top:0.3in; line-height:1.35;">Ziele, Merkmale und Maske sind bereits programmiert. 91 % bedeutet daher nicht „ohne Regeln“.</div>
       </div>
       <table class="res" style="flex:1.25; width:auto; font-size:15.5pt;">
         <tr class="head"><td>Regel greift ein</td><td style="text-align:right;">Anteil</td></tr>
         <tr><td>Nur Erkundungsziel: direkt hinlaufen statt warten</td><td class="v">4,6 %</td></tr>
         <tr><td>Auf dem Punktefeld stehen und schießen</td><td class="v">1,3 %</td></tr>
         <tr><td>Schädlichen Nebel umgehen</td><td class="v">1,1 %</td></tr>
-        <tr><td>Kein Schuss auf ein schon sicher getroffenes Ziel</td><td class="v">1,1 %</td></tr>
+        <tr><td>Überflüssigen Schuss durch Stehen ersetzen</td><td class="v">1,1 %</td></tr>
         <tr><td>Sackgasse: kürzesten Weg nehmen</td><td class="v">0,7 %</td></tr>
         <tr><td>In eine Gruppe schießen (bei sicher hohem Streuschaden schon ab 2 Treffern)</td><td class="v">0,6 %</td></tr>
       </table>
     </div>
-    <div class="note below">Anteile an 36.204 Entscheidungen in 10 Spielen gegen Solution_92 (V12). Zusammen ändern die Regeln 8,3 % der Aktionen. Schüsse auf unsichtbare Gegner (Folie 11) hier nur 0,1 %, weil diese Karten Sichtweite 2–4 haben.</div>
+    <div class="note below">Historische Diagnose: 36.204 Entscheidungen in 10 V12-Spielen gegen Solution_92. Regeln ändern 8,3 % der Aktionen; Blindschüsse hier nur 0,1 % (Sichtweite 2–4). Keine allgemeine V14-Quote.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">09</div>
 </section>
@@ -371,12 +371,12 @@
         <div class="pill">78 → 90 %: FEHLERSUCHE</div>
         <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">Verlorene Spiele mit dem wahren Zustand verglichen. Gleiche 18 Netze.</div>
         <div class="pill">90 → 94 %: NACHTRAINING</div>
-        <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">Die 18 Netze unter den heutigen Regeln weitertrainiert</div>
+        <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">18 Netze unter V10-Regeln nachtrainiert, alt + neu gemischt; neue Schussregeln</div>
         <div class="pill">94 → 95 %: GEZIELTE KORREKTUREN</div>
         <div style="font-size:14.5pt; line-height:1.28;">Unsichtbare Gegner treffen, Nebel richtig einschätzen, Kandidaten-Rettung</div>
       </div>
     </div>
-    <div class="note below">Siegquote gegen Solution_92 auf neuen Karten, beide Seiten; ab V10 je 800 Karten. V13 wurde nur auf Nebel-Karten gemessen, daher ohne Balken.</div>
+    <div class="note below">Historische Tests auf verschiedenen Kartensätzen, beide Seiten; ab V10 je 800 Karten. Kein isolierter Wirkungsnachweis einzelner Änderungen. V13 nur auf starkem Nebel geprüft, daher ohne Balken.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">10</div>
 </section>
@@ -384,16 +384,16 @@
 <!-- 11 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Neu seit letzter Woche: V11 bis V14</h1>
+  <h1 class="title">Neue Versionen</h1>
   <div class="content" style="top:1.75in;">
     <table class="res" style="font-size:14.5pt;">
       <tr class="head"><td style="width:1.55in;">Version</td><td>Was neu ist</td><td style="text-align:right; width:1.95in;">Solution_92</td><td style="text-align:right; width:2.15in;">Mittel 6 Gegner</td></tr>
-      <tr><td class="strong">V11 · 30.10.</td><td><b>Nachtraining:</b> die 18 Netze unter allen heutigen Regeln je 5.500 Spiele weitertrainiert, alt + neu gemischt (36)</td><td class="v">89,6 → 94,1 %</td><td class="v" style="color:#56676C;">nicht gemessen</td></tr>
-      <tr><td class="strong">V12 · 31.10.</td><td><b>Schüsse auf unsichtbare Gegner:</b> punktet der Gegner unsichtbar, schießt Sherlock auf ein verdecktes Punktefeld</td><td class="v">93,0 → 94,4 %</td><td class="v">81,2 → 87,1 %</td></tr>
-      <tr><td class="strong">V13 · 01.11.</td><td><b>Nebel richtig einschätzen:</b> Energie 0 im Nebel sah aus wie „Nebel kostet nichts“</td><td class="v">94,2 → 95,0 %¹</td><td class="v">84,8 → 87,2 %¹</td></tr>
-      <tr><td class="strong" style="border-bottom:none;">V14 · 01.11.</td><td style="border-bottom:none;"><b>Kandidaten-Rettung:</b> 30 Schritte nach einem Relic noch kein Punktefeld → Felder um das Relic gezielt testen</td><td class="v" style="border-bottom:none;">94,9 → 95,4 %</td><td class="v" style="border-bottom:none;">86,7 → 87,6 %</td></tr>
+      <tr><td class="strong">V11 · 30.10.</td><td><b>Nachtraining unter V10-Regeln:</b> alte + nachtrainierte Netze (36), ergänzt um Schussregeln</td><td class="v">89,6 → 94,1 %</td><td class="v" style="color:#56676C;">nicht gemessen</td></tr>
+      <tr><td class="strong">V12 · 31.10.</td><td><b>Blindschüsse:</b> Gegner punktet verdeckt → vermutetes Punktefeld beschießen</td><td class="v">93,0 → 94,4 %</td><td class="v">81,2 → 87,1 %</td></tr>
+      <tr><td class="strong">V13 · 01.11.</td><td><b>Nebelkosten:</b> Energie 0 bedeutet nicht „Nebel kostenlos“</td><td class="v">94,2 → 95,0 %¹</td><td class="v">84,8 → 87,2 %¹</td></tr>
+      <tr><td class="strong" style="border-bottom:none;">V14 · 01.11.</td><td style="border-bottom:none;"><b>Kandidaten-Rettung:</b> nach 30 Schritten ohne Punktefund gezielt Relic-Umgebung testen</td><td class="v" style="border-bottom:none;">94,9 → 95,4 %</td><td class="v" style="border-bottom:none;">86,7 → 87,6 %</td></tr>
     </table>
-    <div class="note below">Jede Zeile: neue, unbenutzte Karten gegen die Vorgängerversion (800 Karten, je Gegner 1.600 Spiele). ¹ V13 wirkt nur bei starkem Nebel (jede sechste Karte), gemessen auf 300 solcher Karten; sonst 720 von 720 Spielen gleich. Größter Sprung: V12 bei Sichtweite 1, im Mittel über die 6 Gegner 77 → 86 %.</div>
+    <div class="note below">Je Zeile eigener Vergleich mit der Vorgängerversion: 800 neue Karten / 1.600 Spiele je Gegner; ¹ V13 auf 300 Karten mit starkem Nebel. V14 wurde trotz zweier verfehlter Übernahmehürden per dokumentierter Teamentscheidung übernommen.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">11</div>
 </section>
@@ -403,14 +403,12 @@
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
   <h1 class="title">Erkenntnisse</h1>
   <div class="content" style="top:1.85in;">
-    <div class="step" style="margin-bottom:0.24in;"><div class="num">01</div><div><h3>Das Gelernte trägt</h3>
-      <p>91&nbsp;% der Aktionen kommen unverändert aus den Netzen. Eine einfache Regel statt der Netze gewann nur <b class="teal">3&nbsp;%</b> statt 38&nbsp;%.</p></div></div>
-    <div class="step" style="margin-bottom:0.24in;"><div class="num">02</div><div><h3>Fehler suchen bringt mehr als weitertrainieren</h3>
-      <p>Fehlersuche: <b class="teal">78&nbsp;→&nbsp;90&nbsp;%</b>, V12 <b class="teal">+5,9 Punkte</b>. Nachtraining half einmal (90&nbsp;→&nbsp;94&nbsp;%), ein zweites mit 24.000 Spielen brachte auf neuen Karten nichts mehr.</p></div></div>
-    <div class="step" style="margin-bottom:0.24in;"><div class="num">03</div><div><h3>Nur neue Karten zählen</h3>
-      <p>Eine Regel war auf unseren Entwicklungskarten <b class="teal">+1,8</b> Punkte besser, auf 800 neuen Karten <b style="color:#B5552E;">−0,35</b>: nicht übernommen. V14 lag knapp unter der Hürde (+0,86 statt +1), war aber zweimal und gegen jeden Gegner besser: bewusste Teamentscheidung.</p></div></div>
-    <div class="step" style="margin-bottom:0;"><div class="num">04</div><div><h3>Was noch fehlt, ist Information</h3>
-      <p>Mit dem wahren Wissen über Relics und Punktefelder gewänne Sherlock bei Sichtweite 1 <b class="teal">96,5&nbsp;%</b> statt 85&nbsp;% gegen Solution_92 (Test, Reservefolie 17).</p></div></div>
+    <div class="step" style="margin-bottom:0.4in;"><div class="num">01</div><div><h3>Netze und Regeln ergänzen sich</h3>
+      <p>Die Netze bewerten Aktionen. Gedächtnis, Zielzuweisung und Regeln unterstützen die Auswahl. Gezielte Fehlerkorrekturen brachten große Fortschritte.</p></div></div>
+    <div class="step" style="margin-bottom:0.4in;"><div class="num">02</div><div><h3>Neue Karten entscheiden</h3>
+      <p>Eine neue Regel brachte im Entwicklungstest <b class="teal">+1,8 Prozentpunkte</b>, auf 800 neuen Karten aber <b style="color:#B5552E;">−0,35</b>. Deshalb wurde sie nicht übernommen.</p></div></div>
+    <div class="step" style="margin-bottom:0;"><div class="num">03</div><div><h3>Mehr ist nicht automatisch besser</h3>
+      <p>02.–04.11.: kleinere und größere Ensembles, Einzelnetz-Schüler und Nachtraining mit Lehrerbeispielen geprüft. <b class="teal">Kein ausreichend belegter Ersatz – V14 bleibt.</b></p></div></div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">12</div>
 </section>
@@ -440,7 +438,8 @@
     <ul class="dash" style="font-size:17pt; line-height:1.3;">
       <li><b>Entwicklung:</b> 300 Karten, beide Seiten, gegen 6 Gegner, darunter 2 RL-Gegner, gegen die nie trainiert wurde. Was auf diesen Karten entwickelt und ausgewählt wurde, sieht dort zu gut aus; entscheidend sind neue Karten.</li>
       <li><b>Auswahl:</b> 200 neue Karten je Kandidat, höchstens einer kommt weiter.</li>
-      <li><b>Übernahme nur, wenn alle Hürden auf 800 frischen Karten erfüllt sind</b> (vorab festgelegt): Mittel über 4 Gegner mindestens +2&nbsp;Punkte mit 95&nbsp;%-Untergrenze über 0; gegen Solution_92 nicht schlechter; default mindestens 99&nbsp;%; direkt gegen die Abgabe mit Untergrenze über 50&nbsp;%. Fürs Battle (seit 31.10.): Mittel über dieselben 6 Gegner wie in der Entwicklung, mindestens +1&nbsp;Punkt. V12: +5,9 (<span style="white-space:nowrap;">95&nbsp;%-Intervall</span> +4,8 bis +7,1), bestanden. Eine auf den Entwicklungskarten gebaute Regel: dort +1,8, neu −0,35, durchgefallen. V14: +0,86 (+0,48 bis +1,28), knapp verfehlt, Teamentscheidung.</li>
+      <li><b>Vorab festgelegte Hürden:</b> frische Karten, Panelgewinn mit positiver 95-%-Untergrenze, begrenzte Verluste gegen Solution_92/default und Direktduell-Untergrenze über 50 %. Im Battle-Protokoll: mindestens +1 Prozentpunkt im Mittel über 6 Gegner. Umfang und genaue Grenzen stehen jeweils vor dem Vergleich fest.</li>
+      <li><b>V14 war eine dokumentierte Ausnahme:</b> Panel +0,86 statt mindestens +1 Prozentpunkt (Intervall +0,48 bis +1,28); Direktduell 50,6 % mit Untergrenze 49,25 statt über 50 %. <b>Zwei Hürden verfehlt</b>, Übernahme per Teamentscheidung. Spätere Kandidaten wurden nicht übernommen.</li>
       <li><b>Statistik:</b> gepaarter Bootstrap über ganze Karten (beide Seiten zusammen). <b>Frische Karten:</b> jeder Block nur einmal benutzt; alte Abgabe vor jeder Übernahme mit Prüfsumme gesichert.</li>
     </ul>
   </div>
@@ -492,7 +491,7 @@
       <div style="flex:1;">
         <ul class="dash" style="font-size:16.5pt; line-height:1.3;">
           <li>Im Test bekommt Sherlock (V14) in jedem Schritt das <b>wahre Wissen</b>, das kein Agent hat: wo Relics liegen und welche Felder Punkte bringen</li>
-          <li>Der Unterschied zeigt, was bessere Information noch bringen kann</li>
+          <li>Die Diagnose zeigt einen möglichen Informationsengpass, keinen garantierten Gewinn eines einsetzbaren Agenten</li>
           <li>Im Mittel über 6 Gegner: <b class="teal">86,5 → 91,0 %</b></li>
           <li>Bei Sichtweite 1 allein die Punktefelder: 94,4 %, allein die Relics: 90,3 %</li>
         </ul>
@@ -508,7 +507,7 @@
         </table>
       </div>
     </div>
-    <div class="note below">Nur Diagnose: 300 Entwicklungskarten, beide Seiten, je Gegner 600 Spiele. Bei guter Sicht fehlt kaum etwas; bei Sichtweite 1 kostet vor allem das langsame Austesten der Punktefelder (30–40 Schritte je neuem Relic).</div>
+    <div class="note below">Nur Diagnose: 300 Entwicklungskarten, beide Seiten, je Gegner 600 Spiele. Das Zusatzwissen ist im normalen Spiel nicht verfügbar. Die untersuchten Karten zeigen besonders bei Sichtweite 1 Potenzial durch bessere Information.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">17</div>
 </section>

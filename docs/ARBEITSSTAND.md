@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 04.11.2026, abends – Codex: Battle-Folien korrigiert, Rollen bestätigt
+
+- Moayed beauftragt die Umsetzung der Präsentationsprüfung und bestätigt: **Moayed 1–5 und 12–13, Mahmoud 6–11**. [PDF](../Sherlock_Battle_06-11-2026.pdf), [HTML](presentation/Sherlock_Battle_06-11-2026.html) und [Stichpunkte](../Sherlock_Stichpunkte_06-11-2026.md) aktualisiert. Bestehendes Design, 13 Hauptfolien und vier Reservefolien erhalten; Planzeit 9:50 (Moayed 4:25 / Mahmoud 5:25), keine gemessene Probe.
+- Tatsächlichen Ablauf Vorbereitung → Q-Mittel → maskierte Auswahl → Regelkette klargestellt. Blindschüsse und Overkill-Schutz korrekt erklärt; Q-Werte nicht als Sicherheit, Gedächtnis beim Matchwechsel präzisiert, Nachtraining den V10-Regeln zugeordnet. V12-Diagnose von allgemeinen V14-Aussagen getrennt, beide verfehlten V14-Hürden in der Reserve/FAQ genannt. Erkenntnisfolie auf drei einfache Aussagen verkürzt und abgeschlossene Versuche vom 02.–04.11. ergänzt. V14 bleibt Abgabe; Upload laut Teammitteilung bereits erfolgt, nicht selbst in Moodle eingesehen.
+- Geprüft: alle 17 Seiten gerendert und visuell kontrolliert, letzte Layout-/Textkorrekturen erneut angesehen; 960 × 540 pt, kein Text außerhalb der Seiten und alle Bilder geladen. Unabhängiger fachlicher Gegenreview von HTML und Stichpunkten ohne offene Befunde; Rollen-/Zeit-, lokale Link- und Diff-Prüfung. Keine Programmtests oder Leistungsspiele nötig/gestartet. README, CLAUDE und [Prüfnotiz](presentation/PRUEFUNG_BATTLE_0611_20261104.md) angeglichen.
+- Agent, Gewichte und vorhandene ZIP nicht verändert; Quelle und Abgabe zusätzlich per Vorher-/Nachher-Prüfsummen abgesichert. Fremde unversionierte Dateien erhalten. **Nächster Schritt:** Moayeds Folien erklären und zweimal mit Uhr proben. Training bleibt beendet.
+
 ## 04.11.2026, abends – Codex: Training beendet, Battle-Präsentation geprüft
 
 - Moayed beendet die Trainingsarbeit ausdrücklich; laut seiner Mitteilung hat Mahmoud Sherlock bereits abgegeben. Moodle-Upload nicht selbst eingesehen. Keine neuen Trainings, Spiele oder Agenten-/Gewichts-/ZIP-Änderungen. GitHub-Abgleich vor der Prüfung unverändert auf `36a68ab`; keine erfassten aktiven Trainings-/Auswertungsprozesse gefunden.
