@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-11-04T07:02:38.102418+00:00",
+  "source": "Actual implementer tool execution and stable-file handoff; root checked file hashes, did not duplicate suite",
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q tests/test_network_breadth_candidates.py tests/test_network_breadth_study.py",
+  "result": "31 passed in 4.19s",
+  "files_sha256": {
+    "scripts/network_breadth_study.py": "007cf1347f27c37435654cea33a3c0a60caa03deed92b7377a0a53ad8fe5d683",
+    "tests/test_network_breadth_study.py": "35cd17c8a2d4452eb9c4ee99d8e125cce0a04863d464cb9c82fbcfe47d15eec5",
+    "scripts/network_breadth_candidates.py": "28ed012c8b9051763bdcf79e3660cff78acabe4bd2bd5ca9e9d0aabc5e2808d5",
+    "tests/test_network_breadth_candidates.py": "dab5eb3f399d4e8a7b08eb8fd5a1eb938150e1b6339723ba23fe05f48590d5d9"
+  },
+  "actual_model_build": false,
+  "actual_game_run": false
+}
