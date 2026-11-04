@@ -1,0 +1,102 @@
+{
+  "closed_utc": "2026-11-04T14:18:24.573287+00:00",
+  "model_jobs": {
+    "student": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:03:56.979008+00:00"
+    },
+    "student30": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:18:24.107538+00:00"
+    },
+    "rl_control": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:34:54.972215+00:00"
+    },
+    "rl_sap0": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:35:46.491991+00:00"
+    },
+    "eval_V14": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:49:00.709508+00:00"
+    },
+    "eval_S3": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:47:45.133043+00:00"
+    },
+    "eval_S30": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:55:12.888149+00:00"
+    },
+    "eval_CONTROL30": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T13:55:51.868247+00:00"
+    },
+    "eval_SAP0_30": {
+      "status": "completed",
+      "returncode": 0,
+      "finished_utc": "2026-11-04T14:01:50.738922+00:00"
+    }
+  },
+  "own_model_process_groups_absent": true,
+  "watcher": {
+    "closed_at": 1793801750.9429262,
+    "owned_pid": 4400,
+    "session_id": 9374,
+    "owned_process_alive": false,
+    "session_exit_code": 0,
+    "receipt": {
+      "pid": 4400,
+      "stopped": "2026-11-04T14:15:42.170270+00:00",
+      "reason": "stop_file"
+    },
+    "final_remote_observation": {
+      "time": 1793801572.073241,
+      "code": 0,
+      "stdout": "b06a77de86b6359426e886c582917361162e8ff0\trefs/heads/main",
+      "stderr": "",
+      "sha": "b06a77de86b6359426e886c582917361162e8ff0"
+    },
+    "battery_percent": 67,
+    "battery_state": "discharging",
+    "usage_used_percent": 13,
+    "ordinary_usage_allowed": true,
+    "reset_used": false,
+    "events": "",
+    "status": "cleanly_stopped",
+    "other_jobs_touched": false
+  },
+  "awake": {
+    "pid": 4234,
+    "command": [
+      "caffeinate",
+      "-i",
+      "-t",
+      "7785"
+    ],
+    "stopped_and_pid_absent": true
+  },
+  "automations": {
+    "sherlock-repo-alle-drei-stunden-abgleichen": "PAUSED",
+    "sherlock-verbesserungsplan-fortsetzen": "PAUSED"
+  },
+  "submission_changed": false,
+  "promotion": false,
+  "resets_used": 0,
+  "retained_study_worktree": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "retention_reason": "Unique local replaybuffers and original path-bound training records retained; tested candidateweights and reviewdata versioned separately.",
+  "git_publication": {
+    "status": "pending",
+    "target": "main",
+    "note": "Root verifies and records actual publication after pushing; this is not yet an upload receipt."
+  }
+}

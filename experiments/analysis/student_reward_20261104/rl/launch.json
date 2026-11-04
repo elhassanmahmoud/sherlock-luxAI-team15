@@ -1,0 +1,53 @@
+{
+  "started_utc": "2026-11-04T13:24:08.184349+00:00",
+  "head": "5b9f8836fb94c21a9cdbe07f49fb091a19de8426",
+  "jobs": {
+    "rl_control": {
+      "status": "running",
+      "launcher_pid": 10157,
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.student_reward_train",
+        "runarm",
+        "--prepared",
+        "experiments/runs/20261104_student_reward30",
+        "--arm",
+        "control",
+        "--deadline-utc",
+        "2026-11-04T13:55:00+00:00"
+      ],
+      "cwd": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+      "deadline_utc": "2026-11-04T13:56:00+00:00",
+      "started_utc": "2026-11-04T13:23:39.831331+00:00",
+      "guard_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "child_pid": 10179,
+      "child_process_group": 10179
+    },
+    "rl_sap0": {
+      "status": "running",
+      "launcher_pid": 10158,
+      "command": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.student_reward_train",
+        "runarm",
+        "--prepared",
+        "experiments/runs/20261104_student_reward30",
+        "--arm",
+        "sap0",
+        "--deadline-utc",
+        "2026-11-04T13:55:00+00:00"
+      ],
+      "cwd": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+      "deadline_utc": "2026-11-04T13:56:00+00:00",
+      "started_utc": "2026-11-04T13:23:39.831351+00:00",
+      "guard_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "child_pid": 10180,
+      "child_process_group": 10180
+    }
+  },
+  "source_freeze": "No changes to imported source/HEAD/inputweights until both jobs exit. Primary main stillb06; watcher readsremoteonly."
+}

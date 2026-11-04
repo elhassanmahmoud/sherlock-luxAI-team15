@@ -1,0 +1,19 @@
+{
+  "recorded_utc": "2026-11-04T13:18:29.128149+00:00",
+  "arm_count": 2,
+  "prefill_per_arm": 40,
+  "learning_per_arm": 160,
+  "validation_per_arm": 32,
+  "max_parallel_heavy_workers": 2,
+  "threads_per_worker": 1,
+  "padded_parallel_arm_seconds": 1760,
+  "padded_diagnostic_seconds": 2400,
+  "model_stop_utc": "2026-11-04T14:35:00+00:00",
+  "arm_deadline_utc": "2026-11-04T13:55:00+00:00",
+  "historical_review": "runtime_admission_review.md",
+  "no_fresh_game_outcomes_seen": true,
+  "conditional": "Launch only after technically complete finite S30 and both prepared identities; omit entire600game phase if remaining budget fails at phase transition",
+  "status": "admitted",
+  "updated_utc": "2026-11-04T13:23:23.989207+00:00",
+  "note": "S30 complete and independently audited. Sparse legacy config integration corrected and independently reviewed before first game. RL phase admitted independently;600gamephase admission recalculated at transition, omitted whole if too little time. No selection/extent changes."
+}

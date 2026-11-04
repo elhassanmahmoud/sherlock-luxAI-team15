@@ -1,0 +1,11 @@
+{
+  "reason": "Avoid reviewed final_receipt-before-done-status interleaving without mutating frozen source or model state",
+  "action": "SIGSTOP ownedSAP0 child; resume as soon as control finished and receipt validated",
+  "pid": 10180,
+  "command": "/Library/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python -B -m scripts.student_reward_train runarm --prepared experiments/runs/20261104_student_reward30 --arm sap0 --deadline-utc 2026-11-04T13:55:00+00:00",
+  "paused_utc": "2026-11-04T13:34:02.352150+00:00",
+  "resume_required": false,
+  "resumed_utc": "2026-11-04T13:34:55.226684+00:00",
+  "control_guard_status": "completed",
+  "maximum_pause_watch_seconds": 60
+}

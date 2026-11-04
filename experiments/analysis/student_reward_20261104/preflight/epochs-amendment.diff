@@ -1,0 +1,120 @@
+diff --git a/scripts/student_distill.py b/scripts/student_distill.py
+index 41da61b..ab5e91f 100644
+--- a/scripts/student_distill.py
++++ b/scripts/student_distill.py
+@@ -1,6 +1,6 @@
+ """Fixed V14 arithmetic-Q distillation into a genuine single QNet.
+ 
+-Only final, three-epoch weights are exported. Historical row diagnostics have no
++Only weights completing the requested epochs are exported. Historical row diagnostics have no
+ current action masks and do not establish unseen-map or episode generalization.
+ """
+ from __future__ import annotations
+@@ -212,7 +212,9 @@ def _diagnostics(net, datasets, targets, check) -> list[dict]:
+     return results
+ 
+ 
+-def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, row_cap=None) -> dict:
++def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, row_cap=None, epochs=EPOCHS) -> dict:
++    if type(epochs) is not int or not 1 <= epochs <= 100:
++        raise ValueError('epochs must be a plain integer between 1 and 100')
+     if deadline.tzinfo is None:
+         raise ValueError('Deadline must include a UTC offset')
+     if len(buffers) != 2 or len({Path(path).resolve() for path in buffers}) != 2:
+@@ -222,7 +224,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
+     started = time.monotonic()
+     prior_determinism = torch.are_deterministic_algorithms_enabled()
+     prior_warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
+-    manifest = dict(status='running', seed=SEED, hidden=HIDDEN, epochs_requested=EPOCHS,
++    manifest = dict(status='running', seed=SEED, hidden=HIDDEN, epochs_requested=epochs,
+                     batch_size=BATCH_SIZE, learning_rate=LEARNING_RATE, cpu_threads=1,
+                     epochs_completed=0, updates=0, training_rows_seen=0,
+                     technical_row_cap=row_cap, technical_test_only=row_cap is not None,
+@@ -282,7 +284,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
+             train_y = np.concatenate([target[:split] for (_, split), target in zip(datasets, targets)])
+             optimizer = torch.optim.Adam(student.parameters(), lr=LEARNING_RATE)
+             generator = torch.Generator().manual_seed(SEED)
+-            for epoch in range(EPOCHS):
++            for epoch in range(epochs):
+                 order = torch.randperm(len(train_x), generator=generator).numpy()
+                 student.train()
+                 for start in range(0, len(order), BATCH_SIZE):
+@@ -303,6 +305,8 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
+                 manifest['epochs_completed'] = epoch + 1
+                 student.eval()
+                 progress('fitting')
++            if manifest['epochs_completed'] != epochs:
++                raise ValueError('Requested epochs did not complete')
+             progress('diagnostics_after')
+             after = _diagnostics(student, datasets, targets, check)
+             student.eval()
+@@ -315,7 +319,7 @@ def run_distillation(teacher: Path, buffers, out: Path, deadline: datetime, *, r
+             checkpoint = dict(q=state, target_q={key: value.clone() for key, value in state.items()},
+                               ensemble=[], ensemble_dims=[], cfg=student_cfg,
+                               feature_dim=79, n_actions=6, env_steps=60000, learn_steps=0,
+-                              distillation_updates=manifest['updates'], distillation_epochs=EPOCHS,
++                              distillation_updates=manifest['updates'], distillation_epochs=epochs,
+                               distillation_seed=SEED)
+             _finite(checkpoint)
+             (out / 'weights').mkdir()
+@@ -372,9 +376,10 @@ def main(argv=None) -> int:
+     parser.add_argument('--out', type=Path, required=True)
+     parser.add_argument('--deadline-utc', required=True)
+     parser.add_argument('--row-cap', type=int, help='Technical tests only; marks run as non-production')
++    parser.add_argument('--epochs', type=int, default=EPOCHS, help='Epoch count from 1 to 100 (default: 3)')
+     args = parser.parse_args(argv)
+     deadline = datetime.fromisoformat(args.deadline_utc.replace('Z', '+00:00'))
+-    result = run_distillation(args.teacher, args.buffers, args.out, deadline, row_cap=args.row_cap)
++    result = run_distillation(args.teacher, args.buffers, args.out, deadline, row_cap=args.row_cap, epochs=args.epochs)
+     print(json.dumps(dict(status=result['status'], out=str(args.out), updates=result['updates'])))
+     return 0 if result['status'] == 'complete' else 2
+ 
+diff --git a/tests/test_student_distill.py b/tests/test_student_distill.py
+index ea358ba..ba20998 100644
+--- a/tests/test_student_distill.py
++++ b/tests/test_student_distill.py
+@@ -146,6 +146,44 @@ def test_three_epoch_export_is_single_net_reload_exact_and_inputs_unchanged(tmp_
+     assert torch.equal(loaded.q(x), net(x))
+ 
+ 
++@pytest.mark.parametrize('entrypoint', ['api', 'cli'])
++def test_explicit_two_epochs_export_requested_count_and_reload_exact(tmp_path, monkeypatch, entrypoint):
++    sd, source, paths = fixture(tmp_path, monkeypatch)
++    out = tmp_path / 'two-epochs'
++    deadline = datetime.now(timezone.utc) + timedelta(minutes=2)
++    if entrypoint == 'api':
++        result = sd.run_distillation(source, paths, out, deadline, row_cap=20, epochs=2)
++        assert result['status'] == 'complete'
++    else:
++        assert sd.main(['--teacher', str(source), '--buffers', *map(str, paths),
++                        '--out', str(out), '--deadline-utc', deadline.isoformat(),
++                        '--row-cap', '20', '--epochs', '2']) == 0
++    manifest = json.loads((out / 'manifest.json').read_text())
++    assert manifest['status'] == 'complete'
++    assert manifest['epochs_requested'] == manifest['epochs_completed'] == 2
++    assert manifest['updates'] == 2
++    assert manifest['training_rows_seen'] == 64
++    assert manifest['reload_exact'] is True
++    checkpoint = torch.load(out / 'weights/agent.pth', weights_only=True)
++    assert checkpoint['distillation_epochs'] == checkpoint['distillation_updates'] == 2
++    net = QNet(79, 6, 512, True).eval()
++    net.load_state_dict(checkpoint['q'])
++    from agents.sherlock.main import Agent_x
++    loaded = Agent_x('player_0', agent_path=str(out / 'weights/agent.pth'), train=False)
++    x = torch.from_numpy(np.load(paths[0])['s'])
++    assert torch.equal(loaded.q(x), net(x))
++
++
++@pytest.mark.parametrize('epochs', [True, False, 1.0, 2.5, 0, -1, 101, '2', np.int64(2)])
++def test_invalid_epoch_count_rejected_before_output_reservation(tmp_path, epochs):
++    sd = module()
++    out = tmp_path / 'invalid-epochs'
++    with pytest.raises(ValueError, match='epochs'):
++        sd.run_distillation(tmp_path / 'teacher.pth', [tmp_path / 'a.npz', tmp_path / 'b.npz'],
++                            out, datetime.now(timezone.utc) + timedelta(minutes=2), epochs=epochs)
++    assert not out.exists()
++
++
+ def test_expired_deadline_has_incomplete_status_without_checkpoint(tmp_path, monkeypatch):
+     sd, source, paths = fixture(tmp_path, monkeypatch)
+     out = tmp_path / 'timed-out'

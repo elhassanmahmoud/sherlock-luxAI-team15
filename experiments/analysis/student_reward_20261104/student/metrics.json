@@ -1,0 +1,89 @@
+{
+  "buffers": [
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_control18/weights/agent.buffer.npz",
+      "source_rows": 300000,
+      "used_rows": 300000,
+      "split_row": 240000,
+      "train_rows": 240000,
+      "diagnostic_rows": 60000,
+      "before": {
+        "train": {
+          "rows": 240000,
+          "q_mse": 349.98090531986173,
+          "mean_value_mse": 347.5181287847832,
+          "centered_action_mse": 2.462776535078522,
+          "unmasked_argmax_agreement": 0.12730833333333333
+        },
+        "diagnostic": {
+          "rows": 60000,
+          "q_mse": 369.48670098737745,
+          "mean_value_mse": 366.8531548673652,
+          "centered_action_mse": 2.6335461200121446,
+          "unmasked_argmax_agreement": 0.12853333333333333
+        }
+      },
+      "after": {
+        "train": {
+          "rows": 240000,
+          "q_mse": 11.342879737315629,
+          "mean_value_mse": 10.346036566242537,
+          "centered_action_mse": 0.9968431710730908,
+          "unmasked_argmax_agreement": 0.5365791666666667
+        },
+        "diagnostic": {
+          "rows": 60000,
+          "q_mse": 11.080402919959761,
+          "mean_value_mse": 10.043876226553158,
+          "centered_action_mse": 1.0365266934066024,
+          "unmasked_argmax_agreement": 0.53395
+        }
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/runs/20261103_rescue_adapt18/weights/agent.buffer.npz",
+      "source_rows": 300000,
+      "used_rows": 300000,
+      "split_row": 240000,
+      "train_rows": 240000,
+      "diagnostic_rows": 60000,
+      "before": {
+        "train": {
+          "rows": 240000,
+          "q_mse": 334.2863360326095,
+          "mean_value_mse": 331.7530187124379,
+          "centered_action_mse": 2.5333173201716046,
+          "unmasked_argmax_agreement": 0.11639166666666667
+        },
+        "diagnostic": {
+          "rows": 60000,
+          "q_mse": 367.8221177618354,
+          "mean_value_mse": 364.9717072692446,
+          "centered_action_mse": 2.850410492590764,
+          "unmasked_argmax_agreement": 0.12126666666666666
+        }
+      },
+      "after": {
+        "train": {
+          "rows": 240000,
+          "q_mse": 11.512129512753859,
+          "mean_value_mse": 10.517546030866384,
+          "centered_action_mse": 0.9945834818874751,
+          "unmasked_argmax_agreement": 0.5370916666666666
+        },
+        "diagnostic": {
+          "rows": 60000,
+          "q_mse": 11.672984522430081,
+          "mean_value_mse": 10.596692862723502,
+          "centered_action_mse": 1.0762916597065806,
+          "unmasked_argmax_agreement": 0.54715
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Historical row diagnostic only; maps/episodes are not independent.",
+    "No current action masks: argmax agreement is unmasked, not legal-action agreement."
+  ],
+  "decomposition": "q_mse = mean_value_mse + centered_action_mse"
+}

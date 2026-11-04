@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-11-04T12:54:08.623926+00:00",
+  "status": "PASS_WITH_STATED_LOCAL_SCHEMA_LIMITS",
+  "range": [
+    864000,
+    864019
+  ],
+  "actual_csv_jsonl_consumption": 0,
+  "all_metadata_hits": "Current study reservation and documentation of a learn_steps counter; no other path hits",
+  "scanned_paths": 12722,
+  "counts": {
+    ".json_paths": 3945,
+    "stored_bytes": 1830830039,
+    "json_unique_scanned": 749,
+    "json_seed_values": 18998,
+    ".csv_paths": 8490,
+    "csv_unique_scanned": 1509,
+    "csv_seed_values": 1606778,
+    "csv_rows": 1611317,
+    "csv_rows_with_seed_column": 1606778,
+    "json_blank_seed_values": 2,
+    ".jsonl.gz_paths": 244,
+    "jsonl_unique_scanned": 51,
+    "jsonl_seed_values": 10811,
+    "jsonl_records": 16200,
+    "jsonl_records_without_numeric_seed": 6065,
+    ".jsonl_paths": 22,
+    ".csv.gz_paths": 12,
+    "json_exact_byte_duplicates": 3205,
+    ".json.gz_paths": 9,
+    "csv_exact_byte_duplicates": 6993,
+    "jsonl_exact_byte_duplicates": 215,
+    "unique_observed_csv_jsonl_seed_values": 205378,
+    "json_interval_candidates_examined": 620,
+    "seedless_unique_csv_files": 262,
+    "seedless_unique_jsonl_files": 21,
+    "invalid_seed_values": 66
+  },
+  "raw_audit_sha256": "9eba95065bed271985693f1b49fef4aa0f14cd124778e0c9987b0827cd2fff03",
+  "audit_source_sha256": "8e45a901904d61112d2e2697d6935744d7875a687b4900cd8ef878c5e6fb833e",
+  "limits": [
+    "Local registered worktrees only; undocumented trials or other machines are unknown.",
+    "Files without seed columns/fields do not prove non-consumption; reported explicitly.",
+    "JSON range candidates are conservative inclusive endpoints unless stop_exclusive is explicit; all candidates require adjudication before a freshness claim.",
+    "JSON seed metadata and numeric/string mentions are distinguished from actual CSV/JSONL consumption.",
+    "Only experiments/logs/replays directory trees scanned; .git/.venv/venv/node_modules/__pycache__ skipped; directory symlinks not followed.",
+    "Stored file bytes deduplicated by SHA-256 within format; compressed/uncompressed representations count separately if bytes differ.",
+    "No model, game, test, source changes, or repository writes made."
+  ],
+  "invalid_seed_values": 66,
+  "seedless_files": 283
+}

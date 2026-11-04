@@ -1,0 +1,335 @@
+{
+  "method": "existingindependentlyreviewed scripts.compare_report",
+  "per_opponent_comparisons": {
+    "V14": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.575,
+        "ref_winrate": 0.575,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.9,
+        "ref_winrate": 0.9,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ],
+    "S3": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.825,
+        "ref_winrate": 1.0,
+        "delta": -0.175,
+        "low": -0.325,
+        "high": -0.05,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.0,
+        "ref_winrate": 0.575,
+        "delta": -0.575,
+        "low": -0.675,
+        "high": -0.5,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.0,
+        "ref_winrate": 0.9,
+        "delta": -0.9,
+        "low": -1.0,
+        "high": -0.775,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ],
+    "S30": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.1,
+        "ref_winrate": 0.575,
+        "delta": -0.475,
+        "low": -0.6,
+        "high": -0.325,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.45,
+        "ref_winrate": 0.9,
+        "delta": -0.45,
+        "low": -0.625,
+        "high": -0.275,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ],
+    "CONTROL30": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.05,
+        "ref_winrate": 0.575,
+        "delta": -0.525,
+        "low": -0.65,
+        "high": -0.375,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.4,
+        "ref_winrate": 0.9,
+        "delta": -0.5,
+        "low": -0.675,
+        "high": -0.325,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ],
+    "SAP0_30": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.1,
+        "ref_winrate": 0.575,
+        "delta": -0.475,
+        "low": -0.6,
+        "high": -0.35,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.55,
+        "ref_winrate": 0.9,
+        "delta": -0.35,
+        "low": -0.525,
+        "high": -0.175,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ],
+    "SAP0_vs_CONTROL": [
+      {
+        "opponent": "default",
+        "maps": 20,
+        "games": 40,
+        "winrate": 1.0,
+        "ref_winrate": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.1,
+        "ref_winrate": 0.05,
+        "delta": 0.05,
+        "low": -0.1,
+        "high": 0.2,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      },
+      {
+        "opponent": "solution92",
+        "maps": 20,
+        "games": 40,
+        "winrate": 0.55,
+        "ref_winrate": 0.4,
+        "delta": 0.15,
+        "low": 0.0,
+        "high": 0.3,
+        "excluded_candidate": 0,
+        "excluded_reference": 0
+      }
+    ]
+  },
+  "WDL": {
+    "V14": {
+      "default": {
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0
+      },
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+        "wins": 23,
+        "draws": 0,
+        "losses": 17,
+        "score": 0.575
+      },
+      "solution92": {
+        "wins": 36,
+        "draws": 0,
+        "losses": 4,
+        "score": 0.9
+      }
+    },
+    "S3": {
+      "default": {
+        "wins": 33,
+        "draws": 0,
+        "losses": 7,
+        "score": 0.825
+      },
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+        "wins": 0,
+        "draws": 0,
+        "losses": 40,
+        "score": 0.0
+      },
+      "solution92": {
+        "wins": 0,
+        "draws": 0,
+        "losses": 40,
+        "score": 0.0
+      }
+    },
+    "S30": {
+      "default": {
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0
+      },
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+        "wins": 4,
+        "draws": 0,
+        "losses": 36,
+        "score": 0.1
+      },
+      "solution92": {
+        "wins": 18,
+        "draws": 0,
+        "losses": 22,
+        "score": 0.45
+      }
+    },
+    "CONTROL30": {
+      "default": {
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0
+      },
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+        "wins": 2,
+        "draws": 0,
+        "losses": 38,
+        "score": 0.05
+      },
+      "solution92": {
+        "wins": 16,
+        "draws": 0,
+        "losses": 24,
+        "score": 0.4
+      }
+    },
+    "SAP0_30": {
+      "default": {
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "score": 1.0
+      },
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+        "wins": 4,
+        "draws": 0,
+        "losses": 36,
+        "score": 0.1
+      },
+      "solution92": {
+        "wins": 22,
+        "draws": 0,
+        "losses": 18,
+        "score": 0.55
+      }
+    }
+  }
+}

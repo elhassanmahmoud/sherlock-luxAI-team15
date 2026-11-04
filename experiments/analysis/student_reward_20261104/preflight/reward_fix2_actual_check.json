@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "raw_config_keys": 72,
+  "effective_config_keys": 167,
+  "explicit_overrides_preserved": true,
+  "source_hashes_before": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_student512/weights/agent.pth": "0b465006b5eb6ec3dc9e2bdff19aec29eae44f557573e76e07e3af1e35a52a9b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_student512_e30/weights/agent.pth": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b"
+  },
+  "source_hashes_after": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_student512/weights/agent.pth": "0b465006b5eb6ec3dc9e2bdff19aec29eae44f557573e76e07e3af1e35a52a9b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_student512_e30/weights/agent.pth": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b"
+  },
+  "checks": [
+    {
+      "arm": "control",
+      "config_keys": 167,
+      "w_sap_hit": 0.3,
+      "tensor_sha256": "4b94c376e8e290e151d32397f4024a6c47aceab59d7e7751d8d6322af13b9a7e",
+      "optimizer_absent": true,
+      "replay_absent": true
+    },
+    {
+      "arm": "sap0",
+      "config_keys": 167,
+      "w_sap_hit": 0.0,
+      "tensor_sha256": "4b94c376e8e290e151d32397f4024a6c47aceab59d7e7751d8d6322af13b9a7e",
+      "optimizer_absent": true,
+      "replay_absent": true
+    }
+  ],
+  "arm_config_differences": [
+    "w_sap_hit"
+  ],
+  "games_run": 0
+}

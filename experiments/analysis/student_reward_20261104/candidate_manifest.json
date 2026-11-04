@@ -1,0 +1,34 @@
+{
+  "purpose": "Experimental candidates only; not approved for submission",
+  "models": {
+    "S3": {
+      "path": "experiments/candidates/student_reward_20261104/S3.pth",
+      "sha256": "0b465006b5eb6ec3dc9e2bdff19aec29eae44f557573e76e07e3af1e35a52a9b",
+      "bytes": 3496143,
+      "active_q_networks": 1
+    },
+    "S30": {
+      "path": "experiments/candidates/student_reward_20261104/S30.pth",
+      "sha256": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b",
+      "bytes": 3496143,
+      "active_q_networks": 1
+    },
+    "CONTROL30": {
+      "path": "experiments/candidates/student_reward_20261104/CONTROL30.pth",
+      "sha256": "c5df4fa5accbf110af590fce36ed1786f4fcea9022c603eae1b0d0995c3693b9",
+      "bytes": 6993259,
+      "active_q_networks": 1
+    },
+    "SAP0_30": {
+      "path": "experiments/candidates/student_reward_20261104/SAP0_30.pth",
+      "sha256": "900c420a67ecada72c9252964edc953100569fbff037490e1a7aa97ace89c31f",
+      "bytes": 6993259,
+      "active_q_networks": 1
+    }
+  },
+  "teacher": {
+    "networks": 36,
+    "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "note": "S3/S30 omit optimizer and replay;RL exports retain their optimizer, but contain only one activeQnetwork. Replaybuffersstaylocal."
+}

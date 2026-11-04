@@ -1,0 +1,5 @@
+# Immutable experiment evidence: preserve exact bytes across platforms.
+* -text
+# CRLF CSVs and space-prefixed patch context are original evidence, not source style.
+*.csv -whitespace
+*.diff -whitespace

@@ -1,0 +1,72 @@
+diff --git a/scripts/student_reward_train.py b/scripts/student_reward_train.py
+index 13010d5..ded0621 100644
+--- a/scripts/student_reward_train.py
++++ b/scripts/student_reward_train.py
+@@ -110,7 +110,7 @@ def _student(path):
+                                         ('distillation_seed', 0))):
+         raise ValueError('Student distillation provenance requires valid integer counts/seed')
+     cfg = AgentConfig(**cp['cfg']).to_dict()
+-    if (cfg != cp['cfg'] or cfg['hidden'] != 512 or not cfg['canonical']
++    if (cfg['hidden'] != 512 or not cfg['canonical']
+             or not cfg['use_shaping'] or cfg['eps_end'] != .05
+             or cfg['eps_decay_steps'] != 60000 or cfg['learn_start'] != 5000
+             or cfg['train_every'] != 2):
+@@ -120,7 +120,10 @@ def _student(path):
+         raise ValueError('Distilled student q/target must be identical')
+     with torch.random.fork_rng(devices=[]):
+         QNet(79, 6, hidden=512, dueling=cfg['dueling']).load_state_dict(cp['q'], strict=True)
+-    return cp
++    # Legacy V14 checkpoints store only explicit overrides. Compare and export
++    # their complete effective configuration, exactly as live Agent_x does;
++    # this changes only the loaded object, never the immutable student file.
++    return dict(cp, cfg=cfg)
+ 
+ 
+ def _config(source, arm):
+diff --git a/tests/test_student_reward_train.py b/tests/test_student_reward_train.py
+index 5a7d28d..e36662a 100644
+--- a/tests/test_student_reward_train.py
++++ b/tests/test_student_reward_train.py
+@@ -330,3 +330,42 @@ def test_student_rejects_invalid_or_unknown_provenance(student, metadata):
+     torch.save(cp, student)
+     with pytest.raises(ValueError, match='contract|provenance'):
+         m._student(student)
++
++
++def test_sparse_legacy_producer_config_preserves_nondefaults_and_live_contract(tmp_path, monkeypatch):
++    """Legacy teachers omit default keys; actual export retains that sparse cfg."""
++    m = module()
++    from tests.test_student_distill import fixture as distilled_fixture
++    from scripts import experiment
++    sd, teacher, buffers = distilled_fixture(tmp_path, monkeypatch)
++    teacher_cp = torch.load(teacher, weights_only=True)
++    teacher_cp['cfg'] = dict(hidden=8, dueling=True, w_opp_points=1.25,
++                             w_sap_hit=.45, cand_rescue=True, frozen=True)
++    torch.save(teacher_cp, teacher)
++    monkeypatch.setattr(sd, 'V14_SHA256', sd.sha256(teacher))
++    out = tmp_path / 'sparse_student'
++    sd.run_distillation(teacher, buffers, out,
++                       datetime.now(timezone.utc) + timedelta(minutes=2), row_cap=20)
++    source = out / 'weights/agent.pth'
++    before = m.file_sha256(source)
++    saved_cfg = torch.load(source, weights_only=True)['cfg']
++    assert 'rescue_in_training' not in saved_cfg
++    normalized = m._student(source)
++    assert normalized['cfg']['w_opp_points'] == 1.25
++    assert normalized['cfg']['cand_rescue'] is True
++    assert normalized['cfg']['rescue_in_training'] is False
++    prepared = tmp_path / 'prepared'
++    manifest = m.prepare(source, prepared)
++    assert manifest['source_config']['w_sap_hit'] == .45
++    for arm in ('control', 'sap0'):
++        _, entry, init = m.check_prepared(prepared, arm)
++        assert entry['config']['w_opp_points'] == 1.25
++        assert entry['config']['cand_rescue'] is True
++        assert entry['config']['rescue_in_training'] is False
++        assert entry['config']['w_sap_hit'] == (.45 if arm == 'control' else 0.)
++        monkeypatch.setitem(m.VARIANTS, m.VARIANT, ('sherlock', entry['config']))
++        learners = experiment.Learners(m.VARIANT, init, 29, load=True)
++        assert learners.agents['player_0'].cfg.to_dict() == entry['config']
++        assert m.prove_initial(learners, entry)['learning']['config'] == entry['config']
++    assert m.file_sha256(source) == before
++    assert torch.load(source, weights_only=True)['cfg'] == saved_cfg
