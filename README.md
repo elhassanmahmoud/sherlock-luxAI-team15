@@ -1,6 +1,6 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-Stand 03.11.: Abgabe weiter **V14**, Gewichte unverändert. P wurde nach der unabhängigen Bestätigung mit 9.000 Spielen abgelehnt; kein nachgewiesen stärkerer Nachfolger. Die finale Auswahl mit 8.800 Spielen ist vollständig geprüft: **FT18 mit 18 bereits nachtrainierten Netzen** ist nominiert. Seine einzige Bestätigung mit 12.000 Spielen auf neuen Karten läuft; noch kein bestätigter Stärkegewinn und kein Austausch der Abgabe. Abschluss bis **04.11., 16:00 Uhr Berlin**. [Aktuelle Auswahl](experiments/analysis/final_battle_20261103/performance_selection/README.md). [Arbeitsstand](docs/ARBEITSSTAND.md) · [Abschlussbericht](docs/MORGENBERICHT_20261103.md) · [P-Studie](experiments/analysis/continuation_20261102/performance/study_P_only_20261102/README.md).
+Stand 04.11.: **Finale Studie abgeschlossen; V14 bleibt die Abgabe.** Zwei echte Nachtrainingsläufe, 8.800 Auswahlspiele und 12.000 unabhängige Bestätigungsspiele lieferten keinen qualifizierten Nachfolger. FT18 mit 18 vorhandenen Netzen verfehlte vier von sieben Freigabebedingungen: gegen Solution **755/800** statt **761/800** mit V14, im lokalen Sechserpanel −0,92 Prozentpunkte. Die Rohdaten und Auswertung wurden unabhängig bestätigt. Gewichte und bestehende `Gruppe15.zip` bleiben unverändert. Upload bis **04.11., 23:59 Uhr Berlin**. [Abschlussbericht](docs/MORGENBERICHT_20261104.md) · [Bestätigung und Nachweise](experiments/analysis/final_battle_20261103/performance_confirmation/README.md) · [Arbeitsstand](docs/ARBEITSSTAND.md).
 
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**
@@ -10,20 +10,37 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Ein Netz genügt für beide Seiten, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
 
-## Auf einen Blick (Stand 03.11.2026)
+## Auf einen Blick (Stand 04.11.2026)
 
 | | |
 |---|---|
 | **Aktuelle Abgabe** | **V14 `v14_rescue`** seit 01.11.2026, 17:51 · [Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md) |
 | Was V14 ist | dieselben 36 Netze wie V11–V13; Regeln von V13 (Nebel-Korrektur) plus Kandidaten-Rettung `cand_rescue` |
-| Gegen Solution_92 | **95,4 %** (1.600 Spiele auf 800 frischen Karten, beide Seiten; V13 auf denselben Karten 94,9 %) |
-| Mittel über 6 starke Gegner | **87,6 %** (V13 auf denselben Karten: 86,7 %) |
+| Gegen Solution_92 | Historische Übernahmeprüfung vom 01.11.: **95,4 %** (1.600 Spiele auf 800 Karten, beide Seiten; V13 auf denselben Karten 94,9 %). Neuer Vergleich vom 04.11.: **761/800 = 95,125 %** mit unverändertem V14. |
+| Mittel über 6 starke Gegner | Historisches Battle-Panel vom 01.11.: **87,6 %** (V13: 86,7 %). Das aktuelle lokale Panel enthält andere Gegner; seine Quote ist damit nicht direkt vergleichbar. |
 | Gegen `default` | 100 % |
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal gebaut am 02.11.; zusätzliche Python-3.10-Prüfung am 03.11.) · Upload bis **04.11., 23:59 Uhr** |
 | Tests | **1.075 Tests + 126 Untertests** bestanden (03.11., gesamte lokale Suite einschließlich Archivtests). Importisolationsfehler behoben; Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
 | Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
+
+## Finaler Durchlauf 03./04.11.: V14 bleibt
+
+Geprüft wurden drei kompakte Teilensembles, zonenweise Kandidatenrettung und
+ein kontrolliertes Nachtraining mit zwei Armen. FT18 verwendet ausschließlich
+die bereits nachtrainierten V14-Netze 18–35; es enthält keine Gewichte aus dem
+neuen Rettungstraining. Die Auswahl nominierte FT18, die getrennte Bestätigung
+auf 400 neuen Panelkarten und 400 anderen Direktkarten qualifizierte es jedoch
+nicht: Paneländerung **−0,92 pp [−2,81; +0,96]**, Solution **755/800 statt
+761/800**. Das direkte Duell gewann FT18 mit **453/800 = 56,625 %**
+[51,75; 61,375], erfüllte damit aber nicht die vier verfehlten Panel-/Solution-
+Bedingungen. Die Daten beweisen auch keine allgemeine Verschlechterung.
+
+**20.800 Vergleichsspiele und 2.832 Trainings-/Validierungsausführungen**
+wurden vollständig geprüft, zusätzlich zwei technische Kontrollspiele.
+Kein Nachrücken, kein Austausch der Abgabe und keine erreichten 100 % gegen
+Solution. [Vollständiger Abschluss mit Karten, Intervallen und Abgabepfaden](docs/MORGENBERICHT_20261104.md).
 
 ## Nachtprüfung 01./02.11.: V14 bleibt
 
