@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "datasets": [
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/collect_r1",
+      "rows": 213244,
+      "train_rows": 178651,
+      "diagnostic_rows": 34593,
+      "student_sha256": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b",
+      "student_hook_exact": true,
+      "student_hook_max_abs_error": 0.0,
+      "teacher_all_rows_exact": true,
+      "teacher_max_abs_error": 0.0,
+      "games": 60,
+      "course_steps_each": 303,
+      "final_outside_mask_rows": 776
+    }
+  ],
+  "auditor_sha256": "332cf34de54c02f2a2135a14d69fb441c8e1fe0391713905893620c18924cfa1",
+  "fit": {
+    "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/fit_r1",
+    "checkpoint_sha256": "bd58230d6baa6a52ff20e563718c7528ac65c6d36731981b2ecd46a97577eb15",
+    "scale": 1.4489637004540474,
+    "action_updates": 5250,
+    "value_updates": 875,
+    "independently_recomputed_metrics": {
+      "before": {
+        "train": {
+          "rows": 178651,
+          "masked_argmax_agreement": 0.711582918651449,
+          "legal_regret": 0.10554406435530429,
+          "legal_q_mse": 3.696781354801175,
+          "centered_legal_q_mse": 0.21477503513783808,
+          "legal_mean_q_mse": 3.482006319663337,
+          "recorded_collector_rule_override_rate": 0.07950697169341342,
+          "recorded_collector_final_outside_mask_rate": 0.0033641009566137327
+        },
+        "diagnostic": {
+          "rows": 34593,
+          "masked_argmax_agreement": 0.7207816610296881,
+          "legal_regret": 0.1202638237280248,
+          "legal_q_mse": 4.117090627116887,
+          "centered_legal_q_mse": 0.26744861385252633,
+          "legal_mean_q_mse": 3.8496420132643605,
+          "recorded_collector_rule_override_rate": 0.07114156043130113,
+          "recorded_collector_final_outside_mask_rate": 0.005058826930303819
+        }
+      },
+      "after": {
+        "train": {
+          "rows": 178651,
+          "masked_argmax_agreement": 0.8492871576425545,
+          "legal_regret": 0.016173686318865052,
+          "legal_q_mse": 4.912325343404012,
+          "centered_legal_q_mse": 0.04628528379458204,
+          "legal_mean_q_mse": 4.86604005960943,
+          "recorded_collector_rule_override_rate": 0.07950697169341342,
+          "recorded_collector_final_outside_mask_rate": 0.0033641009566137327
+        },
+        "diagnostic": {
+          "rows": 34593,
+          "masked_argmax_agreement": 0.8293007255803198,
+          "legal_regret": 0.03778992078588867,
+          "legal_q_mse": 6.759203125174648,
+          "centered_legal_q_mse": 0.12846132175665356,
+          "legal_mean_q_mse": 6.630741803417994,
+          "recorded_collector_rule_override_rate": 0.07114156043130113,
+          "recorded_collector_final_outside_mask_rate": 0.005058826930303819
+        }
+      }
+    },
+    "calibration_attestation": {
+      "body_adv_unchanged": true,
+      "non_tie_pair_rank_changes": 0,
+      "numerical_near_tie_pair_rank_changes": 0,
+      "rank_tolerance": "8*float32_eps*max(1, abs(Q_before), abs(Q_after)) per row"
+    },
+    "calibration_limit": "Pre-calibration tensors not retained: frozen body/adv byte equality and pair-flip counts are run attestations corroborated by frozen source, not independently reconstructable without rerunning training."
+  },
+  "wall_seconds": 5.195030250004493
+}

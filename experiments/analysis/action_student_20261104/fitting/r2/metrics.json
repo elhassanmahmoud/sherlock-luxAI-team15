@@ -1,0 +1,72 @@
+{
+  "before": {
+    "train": {
+      "rows": 356415,
+      "masked_argmax_agreement": 0.8376050390696239,
+      "legal_regret": 0.02033788009904567,
+      "legal_q_mse": 5.208273925046039,
+      "centered_legal_q_mse": 0.05774729319915862,
+      "legal_mean_q_mse": 5.150526631846882,
+      "recorded_collector_rule_override_rate": 0.08322320889973767,
+      "recorded_collector_final_outside_mask_rate": 0.003462256077886733
+    },
+    "diagnostic": {
+      "rows": 68687,
+      "masked_argmax_agreement": 0.8199368148266776,
+      "legal_regret": 0.04124856045629325,
+      "legal_q_mse": 7.166626709963679,
+      "centered_legal_q_mse": 0.13525583623665102,
+      "legal_mean_q_mse": 7.0313708737270275,
+      "recorded_collector_rule_override_rate": 0.0731142719874212,
+      "recorded_collector_final_outside_mask_rate": 0.004993666923872057
+    }
+  },
+  "after_action": {
+    "train": {
+      "rows": 356415,
+      "masked_argmax_agreement": 0.8777745044400488,
+      "legal_regret": 0.009695667077137732,
+      "legal_q_mse": 11.615609828767159,
+      "centered_legal_q_mse": 0.022685244216287752,
+      "legal_mean_q_mse": 11.592924584550872,
+      "recorded_collector_rule_override_rate": 0.08322320889973767,
+      "recorded_collector_final_outside_mask_rate": 0.003462256077886733
+    },
+    "diagnostic": {
+      "rows": 68687,
+      "masked_argmax_agreement": 0.8670345189045963,
+      "legal_regret": 0.023390588893947288,
+      "legal_q_mse": 10.320081046662805,
+      "centered_legal_q_mse": 0.08275425203264497,
+      "legal_mean_q_mse": 10.237326794630162,
+      "recorded_collector_rule_override_rate": 0.0731142719874212,
+      "recorded_collector_final_outside_mask_rate": 0.004993666923872057
+    }
+  },
+  "after": {
+    "train": {
+      "rows": 356415,
+      "masked_argmax_agreement": 0.8777745044400488,
+      "legal_regret": 0.009695667077137732,
+      "legal_q_mse": 3.4176114651000877,
+      "centered_legal_q_mse": 0.022685244110916804,
+      "legal_mean_q_mse": 3.394926220989171,
+      "recorded_collector_rule_override_rate": 0.08322320889973767,
+      "recorded_collector_final_outside_mask_rate": 0.003462256077886733
+    },
+    "diagnostic": {
+      "rows": 68687,
+      "masked_argmax_agreement": 0.8670345189045963,
+      "legal_regret": 0.023390588893947288,
+      "legal_q_mse": 6.1586554912229845,
+      "centered_legal_q_mse": 0.08275425170045919,
+      "legal_mean_q_mse": 6.075901239522526,
+      "recorded_collector_rule_override_rate": 0.0731142719874212,
+      "recorded_collector_final_outside_mask_rate": 0.004993666923872057
+    }
+  },
+  "limitations": [
+    "Development rows, not fresh policy strength evaluation.",
+    "Recorded collector rule/final-action metrics belong to the collecting policy; they are not replayed final actions of the newly fitted policy."
+  ]
+}

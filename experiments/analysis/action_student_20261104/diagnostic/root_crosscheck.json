@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-04T16:34:11.479857+00:00",
+  "source_commit": "96b524b4fe70a0008e5cee2244dae6d74195f209",
+  "source_files": 91,
+  "pinned_inputs": 33,
+  "jobs": 17,
+  "games": 1400,
+  "numeric_equalities": 288,
+  "comparisons": [
+    {
+      "candidate": "V14",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "S30",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "A2",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL27",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL28",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP027",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP028",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL2",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP02",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP027",
+      "reference": "CONTROL27",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP028",
+      "reference": "CONTROL28",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "A2",
+      "reference": "S30",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL2",
+      "reference": "CONTROL27",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL2",
+      "reference": "CONTROL28",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP02",
+      "reference": "SAP027",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "SAP02",
+      "reference": "SAP028",
+      "three_opponents_and_pooled_equal": true
+    }
+  ],
+  "direct_roles": 8,
+  "caught_exception_logs": [],
+  "all_candidate_copies_equal": true,
+  "all_protected_inputs_unchanged": true,
+  "independent_audit_sha256": "aee4a509a483e23e1929ebef00b835e4e5cab31ca6970746f7e3c732c8d45ce4",
+  "controller_state_sha256": "1fcef874928108bcb4e9fbeb98343a67018e34246e747022ed4237556b29966c",
+  "limit": "Reuses existing compare_report for opponent intervals; independent explicit pooled/direct calculation. Does not rerun engine scoring or games."
+}

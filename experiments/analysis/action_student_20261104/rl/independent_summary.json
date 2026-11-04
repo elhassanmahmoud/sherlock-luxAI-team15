@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "source_head": "96b524b",
+  "actual_arms": 4,
+  "actual_game_executions": 928,
+  "actual_prefill_games": 160,
+  "actual_train_games": 640,
+  "actual_known_validation_games": 128,
+  "actual_rl_updates": 96000,
+  "common_a2_sha256": "1baec85605e2b7aaad8c0beaa416d0489d2b9faa1362a9b361bbb63f04cc14bd",
+  "all_four_final_q_states_distinct": true,
+  "initial_agent_and_global_rng_differ_between_seeds": true,
+  "training_and_prefill_map_seeds_disjoint_between_starts": true,
+  "known_validation_maps_shared_by_design": true,
+  "archives_rechecked_against_sources": [
+    {
+      "seed": 27,
+      "copied_files": 30,
+      "copied_bytes": 3969266
+    },
+    {
+      "seed": 28,
+      "copied_files": 30,
+      "copied_bytes": 3970269
+    }
+  ],
+  "evidence_limits": [
+    "Initial live learner/empty-replay identities, action/reward checks, and calibration freeze are recorded runtime proofs backed by pinned source.",
+    "Original per-transition reward contexts and pre-calibration tensors are not retained; no independent reconstruction is claimed.",
+    "Bounded final replay overwrote the paired prefill; original feature/final-action equality is evidenced by matching runtime digests."
+  ]
+}

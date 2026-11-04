@@ -1,0 +1,184 @@
+{
+  "created_utc": "2026-11-04T15:48:02.459553+00:00",
+  "historical_timing_sources": {
+    "V14": {
+      "sha256": "cbd8976003076cdd8286515e7cb5765744dc1c5c0b8d6e2bb6c1bc6b625be3d5",
+      "mean_seconds_by_opponent": {
+        "solution92": 3.62025,
+        "default": 2.366,
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.9037500000000005
+      }
+    },
+    "S3": {
+      "sha256": "cf392ee1e2d1a91123cbbc928d1aede94297184604375a0d1a635403ce08592f",
+      "mean_seconds_by_opponent": {
+        "solution92": 2.9285,
+        "default": 1.83475,
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.22725
+      }
+    },
+    "S30": {
+      "sha256": "1376af4d90da89dd67a75bea012dacf40734b049a8c294afe68900b57a76bce1",
+      "mean_seconds_by_opponent": {
+        "solution92": 3.11375,
+        "default": 1.9292500000000001,
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.37025
+      }
+    },
+    "CONTROL30": {
+      "sha256": "4f2395dab887e708ab84b71084a5e2605b452a81bc4b683cf5aad0ddc9d43caa",
+      "mean_seconds_by_opponent": {
+        "solution92": 3.04475,
+        "default": 1.87475,
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.28425
+      }
+    },
+    "SAP0_30": {
+      "sha256": "7fb4b2ab163c820b026c6196ce7cc857040718fc0336de42117387e0921861ab",
+      "mean_seconds_by_opponent": {
+        "solution92": 2.86725,
+        "default": 1.6475000000000002,
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.0565
+      }
+    }
+  },
+  "single_net_bound": {
+    "solution92": 3.11375,
+    "default": 1.9292500000000001,
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.37025
+  },
+  "two_net_and_V14_bound": {
+    "solution92": 3.62025,
+    "default": 2.366,
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.9037500000000005
+  },
+  "explanation": "Same 512 architecture: maximum opponent mean across all four earlier single-net roles; two-net ensembles conservatively use full36 V14 timing. Direct V14 uses measured V13 timing, same36 architecture. All means padded15% plus12s startup/job. No fresh outcomes used. Estimate, not guaranteed worst-case.",
+  "multiplier": 1.15,
+  "startup_seconds_per_job": 12,
+  "two_worker_queue_seconds": 3005.5975000000008,
+  "schedule": [
+    {
+      "kind": "panel",
+      "role": "V14",
+      "worker": 0,
+      "start_s": 0.0,
+      "end_s": 512.94
+    },
+    {
+      "kind": "panel",
+      "role": "S30",
+      "worker": 1,
+      "start_s": 0.0,
+      "end_s": 445.00950000000006
+    },
+    {
+      "kind": "panel",
+      "role": "A2",
+      "worker": 1,
+      "start_s": 445.00950000000006,
+      "end_s": 890.0190000000001
+    },
+    {
+      "kind": "panel",
+      "role": "CONTROL27",
+      "worker": 0,
+      "start_s": 512.94,
+      "end_s": 957.9495000000002
+    },
+    {
+      "kind": "panel",
+      "role": "CONTROL28",
+      "worker": 1,
+      "start_s": 890.0190000000001,
+      "end_s": 1335.0285000000001
+    },
+    {
+      "kind": "panel",
+      "role": "SAP027",
+      "worker": 0,
+      "start_s": 957.9495000000002,
+      "end_s": 1402.9590000000003
+    },
+    {
+      "kind": "panel",
+      "role": "SAP028",
+      "worker": 1,
+      "start_s": 1335.0285000000001,
+      "end_s": 1780.0380000000002
+    },
+    {
+      "kind": "panel",
+      "role": "CONTROL2",
+      "worker": 0,
+      "start_s": 1402.9590000000003,
+      "end_s": 1915.8990000000003
+    },
+    {
+      "kind": "panel",
+      "role": "SAP02",
+      "worker": 1,
+      "start_s": 1780.0380000000002,
+      "end_s": 2292.978
+    },
+    {
+      "kind": "direct",
+      "role": "S30",
+      "worker": 0,
+      "start_s": 1915.8990000000003,
+      "end_s": 2128.9305000000004
+    },
+    {
+      "kind": "direct",
+      "role": "A2",
+      "worker": 0,
+      "start_s": 2128.9305000000004,
+      "end_s": 2341.9620000000004
+    },
+    {
+      "kind": "direct",
+      "role": "CONTROL27",
+      "worker": 1,
+      "start_s": 2292.978,
+      "end_s": 2506.0095
+    },
+    {
+      "kind": "direct",
+      "role": "CONTROL28",
+      "worker": 0,
+      "start_s": 2341.9620000000004,
+      "end_s": 2554.9935000000005
+    },
+    {
+      "kind": "direct",
+      "role": "SAP027",
+      "worker": 1,
+      "start_s": 2506.0095,
+      "end_s": 2719.041
+    },
+    {
+      "kind": "direct",
+      "role": "SAP028",
+      "worker": 0,
+      "start_s": 2554.9935000000005,
+      "end_s": 2768.0250000000005
+    },
+    {
+      "kind": "direct",
+      "role": "CONTROL2",
+      "worker": 1,
+      "start_s": 2719.041,
+      "end_s": 2956.6135000000004
+    },
+    {
+      "kind": "direct",
+      "role": "SAP02",
+      "worker": 0,
+      "start_s": 2768.0250000000005,
+      "end_s": 3005.5975000000008
+    }
+  ],
+  "model_deadline_utc": "2026-11-04T16:40:00+00:00",
+  "closure_reserve_minutes": 20,
+  "projected_finish_utc": "2026-11-04T16:38:08.057053+00:00",
+  "admitted": true
+}

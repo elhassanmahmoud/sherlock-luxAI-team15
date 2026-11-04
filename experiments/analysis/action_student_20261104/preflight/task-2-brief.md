@@ -1,0 +1,9 @@
+### Task 2: Masked action distillation and calibration
+
+Files: new `scripts/student_action_distill.py`, `tests/test_student_action_distill.py`. CLI `--student PATH --datasets DIR [DIR ...] --out DIR --deadline-utc ISO`. Each DIR is a complete Task1dataset/manifest; validate status, hashes and array schemas before training. Expose loss/scale/metrics helpers for unit tests. Use exact loss and schedule from spec. Initialize from supplied S30/A1; fixed30action epochs then5value-only epochs; train only is_train, use teacher RMS across all legal trainentries for one global scale. Adam1e-4/batch1024/seed20261104, export final-only one-net contract compatible with student_reward_train `_student`. Datasetcollection rounds may share maps but must same split assignments. Sidecars record cumulative true update counts, startinginputhash, codepins, split, objective/scale, phasecounts, before/after masked agreement/legalregret/Qerror and ruleoverride metrics based on recorded collectoractions. Do not mislabel these as replayed newfinalpolicy actions. Verify calibration by unchanged body/adv tensors and numerical action-rank checks. Exact Agent_x reload noextra_q. Deadline nofinalcheckpoint on partial phases.
+
+- [ ] Synthetic tests illegal perturbation/constantshift invariance, onelegalfinitezero, rankingerror, scaleusestrainonly, no teachergrad; schema/split/protected-output/partial refusal and headfreeze/compatibleexport checks.
+- [ ] Implement + report evidence; no commits/jobs. Task1producer contract is above; do not import collector mutable internals.
+
+
+Root producer/consumer contract: manifest.json schema_version1,status=done,teacher_sha256=pinnedV14,teacher_members36,student_sha256,game_plan entries {game_index,env_seed,side:int0/1,side_name,opponent,is_train},files_sha256 keys dataset.npz/games.jsonl,rows. status.json statusdone. Legal-centered teacher RMS trainonly. Complete markers afteroutputshashed. No teacherfinalpolicyclaim.

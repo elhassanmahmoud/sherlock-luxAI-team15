@@ -1,0 +1,25 @@
+{
+  "admitted_utc": "2026-11-04T15:16:20.516562+00:00",
+  "source_commit": "96b524b4fe70a0008e5cee2244dae6d74195f209",
+  "checkpoint_sha256": "1baec85605e2b7aaad8c0beaa416d0489d2b9faa1362a9b361bbb63f04cc14bd",
+  "seeds": [
+    27,
+    28
+  ],
+  "arms": [
+    "control",
+    "sap0"
+  ],
+  "games_per_arm": {
+    "prefill": 40,
+    "training": 160,
+    "validation": 32
+  },
+  "total_games": 928,
+  "max_parallel_workers": 2,
+  "source_frozen": true,
+  "padded_total_budget_seconds": 2400,
+  "basis": "Earlier same512architecture40+160+32 matched pair completed in under10minutes. Two waves allow20min each includingverification; fit2 independentlypassed. Modelstop16:40UTC, RLplannedlatestfinish15:56UTC leaves44min diagnosticreserve.",
+  "wave1_deadline_utc": "2026-11-04T15:36:00Z",
+  "wave2_deadline_utc": "2026-11-04T15:56:00Z"
+}

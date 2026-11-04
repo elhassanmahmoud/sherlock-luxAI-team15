@@ -1,0 +1,11 @@
+# Diagnostic controller scoped fix review
+
+**APPROVED for the fixed 1400-game plan, subject to root's final launch/input admission.** The earlier exceptional cleanup issue is addressed. Only `/tmp/sherlock-action-student-20261104/run_diagnostic.py` was edited; frozen repository source, HEAD, models and running jobs were untouched.
+
+The controller now reads the owned guard's recorded child process group, verifies that it equals the recorded child PID, and performs bounded TERM → KILL group cleanup (two seconds per signal). It checks group existence and records `gone`, `surviving` or `unknown`, including any signal/record errors. This check runs for every active job during controller failure, including the guard-timeout path. A timed-out guard is killed only after its child group receives cleanup; guard waiting after kill is also bounded. The incomplete controller receipt retains unresolved job names in `running`, records per-job cleanup evidence and sets `cleanup_confirmed=false` whenever group/guard termination cannot be established. No uncertain group is silently declared gone.
+
+Actual verification: Python stdlib AST parsing plus seven isolated mocked helper cases passed: group already absent; TERM sufficient; KILL required; surviving group after both signals; permission error/unknown; missing guard record; inconsistent recorded group/PID. No subprocess controller, model, game or project test suite was launched. The complete check output is `diagnostic_cleanup_check.json`; reproducible bounded check script is `check_diagnostic_cleanup.py`. Static reinspection confirms the main exception branch retains unresolved jobs and does not convert failed cleanup to a complete run.
+
+Reviewed helper SHA256: `25b66cdcd40a542928a74c4f9949f25d6b1243d932dc864bfdd3001694865640`.
+
+The earlier reviewed schedule remains unchanged: nine fixed panel roles × 120 plus eight direct roles × 40 = 1400 games, at most two single-worker evaluations, deadline supplied as 16:40 UTC/17:40 Berlin, no retry, replacement, partial-comparison fallback or candidate selection. Root will pin both seed files, Python, guard/controller/auditor, all role/opponent and protected inputs before launch. Exact final CSV completeness and statistical checks remain the later artifact gate.

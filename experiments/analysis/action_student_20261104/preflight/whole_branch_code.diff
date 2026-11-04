@@ -1,0 +1,2174 @@
+diff --git a/docs/superpowers/plans/2026-11-04-action-student.md b/docs/superpowers/plans/2026-11-04-action-student.md
+new file mode 100644
+index 0000000..a249de4
+--- /dev/null
++++ b/docs/superpowers/plans/2026-11-04-action-student.md
+@@ -0,0 +1,38 @@
++# Action student implementation plan
++
++Spec: `docs/superpowers/specs/2026-11-04-action-student-design.md`. Execute with subagents and independent review; user approved all three steps and autonomous publication. No renewed approval needed.
++
++## Global Constraints
++
++Worktree `/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15`, Python `/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python`. Finish by18Berlin; modelstop17:40. Two one-thread model workers maximum. No runtime-agent/default changes or promoted weights. Inputs immutable, exact protected hashes, no existing-output overwrite. Root owns real jobs, Git, integration and docs. No worker subagents or production jobs. Historical data remain intact. Fresh status/manifest must distinguish incomplete from completed.
++
++## Review Focus
++
++Exact copied Q hook before numpy masking mutation; current masks rather than next-step masks. Final canonical/world actions distinct from masked argmax. Whole-map split consistent across rounds; no diagnostic rows used for scale/fitting. Constant teacher-only scale and numerical stability, one-action rows. Manifest-bound RL seed everywhere including replay proofs. Single-net reload/finite outputs and deadline/exception paths. Focused meaningful tests, no need repeat unrelated historical suite.
++
++### Task 1: Exact student-state collector
++
++Files: new `scripts/student_collect.py`, `tests/test_student_collect.py`. Read relevant spec data section. Interface CLI `--student PATH --out DIR --seed-start 865100 --maps 30 --deadline-utc ISO`. `collect(student,out,seed_start,maps,deadline)` outputs `dataset.npz`, `manifest.json`, `games.jsonl`, `status.json`. Production maps30; tests may pass5 so one whole map diagnosis by last1/6 fraction, at least1; production last5 diagnostic maps. Output field contract verbatim in spec. Use scripts.common play_game, make_opponent, pinned teacher loader/mean from student_distill, V13 self opponent. Network hook only active collector instance, immediate numpy copies, match saved_prev fields, remove in finally. Copy final world actions and mirror movement direction back when needed. Dataset teacher labels in batches after games. Copy/retain all finite rows, count reset/no-unit/no-network steps. Act wrapper checks deadline each step; no partial dataset success. Reject occupied/protected outputs. Pin all dependencies/input/source/protected before/after, real load exactly one512net, no learning/save/optimizer mutation.
++
++- [ ] Implement meaningful synthetic hook/mask/action tests and output/split guards, verify failure then success. Test no accidental mutation from CPU numpy alias.
++- [ ] Implement collector and provide report with exact API, tests/limits. No commits or production games.
++
++### Task 2: Masked action distillation and calibration
++
++Files: new `scripts/student_action_distill.py`, `tests/test_student_action_distill.py`. CLI `--student PATH --datasets DIR [DIR ...] --out DIR --deadline-utc ISO`. Each DIR is a complete Task1dataset/manifest; validate status, hashes and array schemas before training. Expose loss/scale/metrics helpers for unit tests. Use exact loss and schedule from spec. Initialize from supplied S30/A1; fixed30action epochs then5value-only epochs; train only is_train, use teacher RMS across all legal trainentries for one global scale. Adam1e-4/batch1024/seed20261104, export final-only one-net contract compatible with student_reward_train `_student`. Datasetcollection rounds may share maps but must same split assignments. Sidecars record cumulative true update counts, startinginputhash, codepins, split, objective/scale, phasecounts, before/after masked agreement/legalregret/Qerror and ruleoverride metrics based on recorded collectoractions. Do not mislabel these as replayed newfinalpolicy actions. Verify calibration by unchanged body/adv tensors and numerical action-rank checks. Exact Agent_x reload noextra_q. Deadline nofinalcheckpoint on partial phases.
++
++- [ ] Synthetic tests illegal perturbation/constantshift invariance, onelegalfinitezero, rankingerror, scaleusestrainonly, no teachergrad; schema/split/protected-output/partial refusal and headfreeze/compatibleexport checks.
++- [ ] Implement + report evidence; no commits/jobs. Task1producer contract is above; do not import collector mutable internals.
++
++### Task 3: Independent RL starts
++
++Files: modify only `scripts/student_reward_train.py`, `tests/test_student_reward_train.py`. Add optional run_seed to prepare CLI/API default29; manifest stores/validates integer0..29; runtime derives seed from prepared manifest. Preserve fixed counts40/160/32 and offset3000, all existing proof requirements. rollout_plan accepts seed default29. Use manifest seed consistently in learnerconstruction, finetune CLI, expectedopponent/mapplans, receipt verification. No process-global mutation to change seed. Legacy default manifest may be supported explicitly or rejected clearly, but never rewrite it. The newactionstudent remains exact existing checkpoint contract.
++
++- [ ] Meaningful tests seeds27/28 distinct schedules, withinpairidenticalplans, configsdifferonlySAP, malformed/tamperedseed rejected; olddefaulttests retained.
++- [ ] Implement/report; no commits/jobs.
++
++### Task 4: Execute, audit, compare, publish
++
++- [ ] Root technical realcollection observer/noobserver equivalence and timing; independent code review. Fixed two collection/fitting rounds then four RLarms when runtimefits, two modelworkers maximum, sources frozen perphase.
++- [ ] Independent artifact/model/data checks. Fixed two ensembles only; plan/pins before freshgames. Seedinventory and measured fullphaseadmission. Compare all completed roles honestly, mark missing stages if deadlineprevents fullprotocol, no improvisation frompartialoutcomes.
++- [ ] Statistical whole-card crosscheck and finalbranchreview; report forMahmoud, updateREADME/workstatus/protocol; meaningfulcommits/safemainpush. HashV14/ZIP, stopownjobs/watch, leaveforeignchanges. No promotion absentfullindependentqualification.
+diff --git a/docs/superpowers/specs/2026-11-04-action-student-design.md b/docs/superpowers/specs/2026-11-04-action-student-design.md
+new file mode 100644
+index 0000000..6617eab
+--- /dev/null
++++ b/docs/superpowers/specs/2026-11-04-action-student-design.md
+@@ -0,0 +1,33 @@
++# Aktionsbezogener Schüler: Fortsetzung bis 18 Uhr
++
++Moayed autorisiert am 04.11. nach der abgeschlossenen ersten Schülerstudie ausdrücklich drei weitere Verbesserungen: aktionsbezogene Lernziele, Daten aus den eigenen Spielsituationen des Schülers und anschließendes RL. Rewards/Regeln dürfen bei begründetem Bedarf untersucht werden; mehrere Netze bleiben eine mögliche Alternative. Abschluss spätestens 18:00 Berlin (17:00 UTC). Ein negativer Versuch beweist keine grundsätzliche Grenze von Einzelnetzen.
++
++## Entscheidung und Alternativen
++
++Wir verwenden weiterhin genau ein 79→512→512-Dueling-Netz, starten von S30 und behalten den V14-Spielcode samt Belief/Regeln. Vorrang haben Entscheidungslernen und passende Daten: rohe Q-MSE und historische Daten ohne Aktionsmasken waren eine erkennbare Einschränkung. Ein größeres Netz oder zusätzliches langes MSE-Training würde diese Einschränkung nicht gezielt untersuchen und wird zurückgestellt. Ein vorab festgelegtes Zweierensemble der unabhängig nachtrainierten Schüler darf zusätzlich gemessen werden; kein nachträgliches Suchen nach vielen Mischungen. Der Nutzer hat autonome Ausführung und geprüfte Veröffentlichung bereits beauftragt; keine erneute Freigabeschleife.
++
++## Daten und Lernziel
++
++- Unveränderter Lehrer V14, SHA256 `98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8`, arithmetisches Mittel seiner 36 rohen Q-Vektoren. S30-Start SHA256 `3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b`.
++- Zwei feste Sammel-/Lernrunden: zuerst S30, dann der vollständig gelernte A1-Schüler. Je 30 Karten 865100–865129, beide Seiten = 60 Spiele pro Runde. Gegner nach Kartenindex modulo fünf: 0/1/2 Solution, 3 default, 4 V13 (`experiments/releases/20261101_v13_neb/agent_p0.pth`). Die letzten fünf vollständigen Karten bleiben in beiden Runden Diagnose; alle anderen Lernkarten. Diese Daten sind Entwicklungsdaten, kein frischer Stärketest.
++- Sammlung im echten Eval-Modus durch genau einen normalen act-Aufruf; Kopie des tatsächlichen Netzinputs/-outputs und der gespeicherten Netzmaske. Keine zweite Context-/Belief-Auswertung. Die Maske enthält Spielgrenzen und Sherlock-Heuristiken; spätere Regeln können sie in besonderen Fällen übergehen. Finale kanonische und Weltaktionen werden getrennt aufgezeichnet, Abweichungen von der Netzmaske nicht still verworfen. Matchreset-/Nullunit-Schritte haben keine Trainingszeilen. Alle Karten, Seiten, Schritte und Einheiten bleiben zuordenbar.
++- Lehrer bewertet dieselben Merkmalszeilen, ohne Zugriff auf verborgenen Spielzustand. Keine Nachbildung einer vollständigen finalen Lehreraktion behaupten. Datenformat: `s float32[N,79]`, `mask bool[N,6]`, `teacher_q/student_q float32[N,6]`, `final_action int8[N]`, `world_action int16[N,3]`, `game_index int32[N]`, `env_seed int64[N]`, `side int8[N]`, `env_step/match_step int16[N]`, `uid int8[N]`, `is_train bool[N]`; Metadaten mit genauen Spielplänen, Hashes, Status und Ausschlüssen.
++- Aktionsverlust: über die jeweils erlaubten Aktionen zentrierte Q-MSE, geteilt durch ein einziges aus den Lernzeilen berechnetes RMS-Quadrat der legal zentrierten Lehrer-Q-Werte, plus KL zwischen Lehrer-/Schüler-Softmax mit genau diesem Skalenwert. Skalenuntergrenze 0,001. Keine schülereigene oder zeilenweise Normalisierung. Ein-Aktions-Zeilen tragen null Aktionsverlust bei. Ungültige/leer maskierte oder nichtendliche Daten werden abgelehnt.
++- Je Runde genau 30 Epochen, Adam 0,0001, Batch 1024, Startwert 20261104. A1 lernt auf Runde 1 ab S30; A2 auf zusammengeführten Runden 1+2 ab A1. Nur endgültige vollständig gelernte Checkpoints. Danach je fünf Epochen nur Wertkopf-Kalibrierung auf Lehrer-Mittelwerten erlaubter Q-Werte; Rumpf/Vorteilskopf eingefroren, Aktionsrangfolge darf sich außer numerischen Nahties nicht ändern. Diese Kalibrierung erhält Q-Einheiten für anschließendes DQN.
++- Export bleibt vorhandener Einzelnetz-Vertrag (q=target, keine Ensembles, kein Optimizer/Replay, env_steps60000 als ausdrücklich gesetzter Explorationsstartwert, learn_steps0). Neue Provenienz steht in Sidecars, nicht als inkompatible Zusatzfelder.
++
++## RL und begrenzte Alternativen
++
++Von A2 starten zwei unabhängige Trainingspaare mit Seeds27 und28. Innerhalb jedes Paares identische Initialgewichte, frische Optimierer/Puffer, derselbe Gegnerplan; ursprüngliches SAP-Shaping gegenüber `w_sap_hit=0`. Je 40 Vorlauf-, 160 Lern- und 32 bekannte Validierungsspiele wie im geprüften bisherigen Werkzeug. Nur Seed wird sauber manifestgebunden parametrisiert; alle anderen Budgets bleiben gleich. Keine Wiederaufnahme oder Änderung historischer Ergebnisse. Vier vollständige Läufe =928 Spielausführungen. Gesonderte Auswertung beider Starts, zwei Starts erlauben noch keine präzise Trainingsunsicherheit.
++
++Zwei feste optionale Zweierensembles: CONTROL27+CONTROL28 und SAP027+SAP028, gleiche Architektur und Tensorreihenfolge, arithmetischer Mittelwert, keine neuen Regeln. Sie sind ein expliziter Test mehrerer Schüler, kein Beleg dafür, dass ein Einzelnetz prinzipiell nicht ausreicht. Aufbau ausschließlich nach technischem Abschluss aller vier Läufe; keine Auswahl der Mitglieder nach Testspielen.
++
++Weitere Reward-Terme oder Regeländerungen brauchen eine konkrete beobachtete Ursache und einen getrennten Vergleich. Ohne solche Evidenz werden sie in diesem Zeitfenster nicht willkürlich hinzugefügt. Bestehende Defaults bleiben erhalten.
++
++## Messung und Schutz
++
++Vor neuen Stärkespielen Modell-/Quellhashes und vollständigen Vergleichsplan fixieren. Der geplante einmalige Diagnosevergleich: V14, S30, A2, CONTROL27/32, SAP027/32, beide Zweierensembles =neun Rollen auf20 neuen Karten866000–866019, beide Seiten gegen Solution/default/V13 (=1080 Spiele); alle acht Schülerrollen zusätzlich gegen V14 auf20 separaten Karten866100–866119 (=320 Spiele). Alle303Schritte/Punktezählungv2, gepaarte ganze Karten,95-%-Intervalle, Vergleich von Trainingsstarts getrennt. Die zusätzlichen S30-Messungen sind ein neuer kontrollierter Vergleich, keine Wiederholung zur Schönung alter Ergebnisse. Frische Karten erst nach lokalem Seed-Inventar benutzen. Kein Schluss von40/40 auf allgemeine100%.
++
++Nach bereits beobachteten Diagnoseergebnissen keine Änderung oder Auswahl einer Mischung. Eine mögliche Übernahme benötigt die vorhandenen vollständigen unabhängigen Bestätigungsbedingungen und Paketprüfung; die kleine Diagnose reicht dafür nicht. Wenn deren vollständiger Umfang nicht mehr bis zur Frist passt, bleibt ein positiver Kandidat experimentell. Keine Abgabeänderung aufgrund Zeitdrucks.
++
++Höchstens zwei schwere Prozesse mit je einem CPU-Thread, neue Ausgabepfade, keine Installation, kein Reset/Force-Push. Mindestens30% Kontingent übrig; ab65%Verbrauch keine neue Phase. Bei Akku unter35% kein neuer schwerer Block, bei25% geordneter Stopp. Ab17:15 keine neue lange Trainingsphase; alle Modelle spätestens17:40Berlin beendet, Rest für Prüfung/Publikation. Jede Phase vor Start mit gemessener Laufzeit und Puffer zulassen; unvollständige Phasen nie als fertige Kandidaten zählen. Eigene Beobachter/Wachhalteprozesse am Ende beenden, andere Dateien erhalten. V14 und bestehende ZIP bis qualifizierter Freigabe bytegleich.
+diff --git a/scripts/student_action_distill.py b/scripts/student_action_distill.py
+new file mode 100644
+index 0000000..5bc52ca
+--- /dev/null
++++ b/scripts/student_action_distill.py
+@@ -0,0 +1,447 @@
++"""Masked decision fitting followed by value-only Q-unit calibration.
++
++Only complete 30+5 epoch runs export a final single-network checkpoint. Recorded
++collector final actions describe the collecting policy, never a replay of this fit.
++"""
++from __future__ import annotations
++
++import argparse
++from datetime import datetime, timezone
++import json
++from pathlib import Path
++import platform
++import subprocess
++import sys
++import time
++
++import numpy as np
++import torch
++
++from scripts.student_distill import (ROOT, SEED, BATCH_SIZE, LEARNING_RATE,
++                                    V14_SHA256, _finite, _write, sha256,
++                                    reserve_output as _reserve_output)
++from scripts.output_paths import checked_output
++from agents.sherlock.model import QNet
++
++ACTION_EPOCHS = 30
++VALUE_EPOCHS = 5
++SCALE_FLOOR = .001
++ARRAY_SCHEMA = {
++    's': (np.dtype('float32'), (79,)), 'mask': (np.dtype('bool'), (6,)),
++    'teacher_q': (np.dtype('float32'), (6,)), 'student_q': (np.dtype('float32'), (6,)),
++    'final_action': (np.dtype('int8'), ()), 'world_action': (np.dtype('int16'), (3,)),
++    'game_index': (np.dtype('int32'), ()), 'env_seed': (np.dtype('int64'), ()),
++    'side': (np.dtype('int8'), ()), 'env_step': (np.dtype('int16'), ()),
++    'match_step': (np.dtype('int16'), ()), 'uid': (np.dtype('int8'), ()),
++    'is_train': (np.dtype('bool'), ()),
++}
++SOURCE_FILES = [Path(__file__).resolve(), *(ROOT / name for name in (
++    'scripts/student_distill.py', 'scripts/student_reward_train.py', 'scripts/output_paths.py',
++    'agents/sherlock/model.py', 'agents/sherlock/config.py', 'agents/sherlock/main.py'))]
++
++
++def reserve_output(out, inputs):
++    # Match the collector's packaged-submission boundary without importing its
++    # implementation. The stable helper retains all raw-weight/input guards.
++    for base in (ROOT, Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15'),
++                 Path('/Users/moayedshawesh/Desktop/KI/sherlock-november-followup')):
++        protected = base / 'agents/Gruppe15'
++        checked_output(out, protected)
++        if protected.resolve().is_relative_to(Path(out).expanduser().resolve()):
++            raise ValueError('Output must not contain protected submission directory')
++    return _reserve_output(out, inputs)
++
++
++def _validate_q(prediction, target, mask):
++    if (not isinstance(prediction, torch.Tensor) or not isinstance(target, torch.Tensor)
++            or not isinstance(mask, torch.Tensor) or prediction.shape != target.shape
++            or prediction.ndim != 2 or prediction.shape[1] != 6 or not len(prediction)
++            or mask.shape != prediction.shape or mask.dtype != torch.bool
++            or not prediction.is_floating_point() or not target.is_floating_point()
++            or not torch.isfinite(prediction).all() or not torch.isfinite(target).all()
++            or not mask.any(dim=1).all()):
++        raise ValueError('Require finite nonempty six-action Q matrices and nonempty bool masks')
++
++
++def _center(q, mask):
++    legal = q.masked_fill(~mask, 0)
++    mean = legal.sum(dim=1, keepdim=True) / mask.sum(dim=1, keepdim=True)
++    return (legal - mean).masked_fill(~mask, 0)
++
++
++def action_loss(prediction, target, mask, scale):
++    """Mean per-row legal centered MSE/scale² plus KL(teacher || student)."""
++    _validate_q(prediction, target, mask)
++    if not np.isfinite(scale) or scale < SCALE_FLOOR:
++        raise ValueError('Scale must be a finite scalar at least .001')
++    target = target.detach()
++    student = _center(prediction, mask) / scale
++    teacher = _center(target, mask) / scale
++    mse = (student - teacher).square().sum(1) / mask.sum(1)
++    log_student = torch.log_softmax(student.masked_fill(~mask, -torch.inf), dim=1)
++    log_teacher = torch.log_softmax(teacher.masked_fill(~mask, -torch.inf), dim=1)
++    difference = log_teacher.masked_fill(~mask, 0) - log_student.masked_fill(~mask, 0)
++    kl = (log_teacher.exp() * difference).sum(1)
++    return (mse + kl).mean()
++
++
++def teacher_scale(target, mask, is_train):
++    """One global RMS of legal-centered teacher train Q; never fit diagnostics."""
++    target = torch.as_tensor(target, dtype=torch.float64)
++    mask = torch.as_tensor(mask)
++    _validate_q(target, target, mask)
++    train = np.asarray(is_train)
++    if train.dtype != np.bool_ or train.shape != (len(target),) or not train.any():
++        raise ValueError('Scale requires a nonempty bool train split')
++    selected = torch.from_numpy(train)
++    centered = _center(target[selected], mask[selected])
++    return max(SCALE_FLOOR, float(torch.sqrt(centered.square().sum() / mask[selected].sum())))
++
++
++def action_metrics(prediction, target, mask, final_action, collector_q):
++    prediction = torch.as_tensor(prediction, dtype=torch.float64)
++    target = torch.as_tensor(target, dtype=torch.float64)
++    mask = torch.as_tensor(mask)
++    collector = torch.as_tensor(collector_q, dtype=torch.float64)
++    _validate_q(prediction, target, mask)
++    _validate_q(collector, target, mask)
++    final = torch.as_tensor(final_action).long()
++    if final.shape != (len(target),) or not ((final >= 0) & (final < 6)).all():
++        raise ValueError('Recorded final actions must lie in 0..5')
++    choices = prediction.masked_fill(~mask, -torch.inf).argmax(1)
++    best = target.masked_fill(~mask, -torch.inf).argmax(1)
++    collecting_choices = collector.masked_fill(~mask, -torch.inf).argmax(1)
++    row = torch.arange(len(target))
++    delta = (prediction - target).masked_fill(~mask, 0)
++    centered = _center(prediction, mask) - _center(target, mask)
++    mean_delta = delta.sum(1) / mask.sum(1)
++    return dict(rows=len(target), masked_argmax_agreement=float((choices == best).double().mean()),
++                legal_regret=float((target[row, best] - target[row, choices]).mean()),
++                legal_q_mse=float((delta.square().sum(1) / mask.sum(1)).mean()),
++                centered_legal_q_mse=float((centered.square().sum(1) / mask.sum(1)).mean()),
++                legal_mean_q_mse=float(mean_delta.square().mean()),
++                recorded_collector_rule_override_rate=float((final != collecting_choices).double().mean()),
++                recorded_collector_final_outside_mask_rate=float((~mask[row, final]).double().mean()))
++
++
++def _read_object(path):
++    value = json.loads(Path(path).read_text())
++    if not isinstance(value, dict):
++        raise ValueError(f'Expected metadata object: {path}')
++    return value
++
++
++def load_datasets(paths, check=lambda: None):
++    """Validate completed collector packages without importing collector internals."""
++    paths = [Path(path).resolve() for path in paths]
++    if not paths or len(set(paths)) != len(paths):
++        raise ValueError('Require distinct completed dataset directories')
++    parts, metadata, seed_split = [], [], {}
++    for path in paths:
++        check()
++        manifest = _read_object(path / 'manifest.json')
++        status = _read_object(path / 'status.json')
++        if (type(manifest.get('schema_version')) is not int or manifest['schema_version'] != 1
++                or manifest.get('status') != 'done' or status.get('status') != 'done'):
++            raise ValueError('Dataset manifest and status must be complete (done), schema 1')
++        if (manifest.get('teacher_sha256') != V14_SHA256
++                or type(manifest.get('teacher_members')) is not int or manifest['teacher_members'] != 36):
++            raise ValueError('Dataset teacher must be pinned V14 with exactly 36 members')
++        digest = manifest.get('student_sha256')
++        if not isinstance(digest, str) or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
++            raise ValueError('Dataset student SHA256 missing or malformed')
++        expected = manifest.get('files_sha256')
++        if not isinstance(expected, dict) or set(expected) != {'dataset.npz', 'games.jsonl'}:
++            raise ValueError('Dataset requires exact dataset/games hashes')
++        for name in expected:
++            check()
++            if sha256(path / name) != expected[name]:
++                raise ValueError(f'Dataset file hash mismatch: {name}')
++        with np.load(path / 'dataset.npz', allow_pickle=False) as archive:
++            if set(archive.files) != set(ARRAY_SCHEMA):
++                raise ValueError('Dataset array columns do not match schema')
++            arrays = {name: np.ascontiguousarray(archive[name]) for name in ARRAY_SCHEMA}
++        rows = len(arrays['s'])
++        if type(manifest.get('rows')) is not int or manifest['rows'] != rows or not rows:
++            raise ValueError('Dataset row count must be positive and agree with manifest')
++        for name, (dtype, dimensions) in ARRAY_SCHEMA.items():
++            check()
++            if arrays[name].dtype != dtype or arrays[name].shape != (rows, *dimensions):
++                raise ValueError(f'Dataset shape/dtype invalid: {name}')
++            if not np.isfinite(arrays[name]).all():
++                raise ValueError(f'Dataset contains nonfinite values: {name}')
++        if (not arrays['mask'].any(1).all()
++                or not ((arrays['final_action'] >= 0) & (arrays['final_action'] < 6)).all()
++                or not ((arrays['side'] >= 0) & (arrays['side'] <= 1)).all()
++                or not ((arrays['uid'] >= 0) & (arrays['uid'] < 16)).all()
++                or (arrays['env_step'] < 0).any() or (arrays['match_step'] < 0).any()):
++            raise ValueError('Dataset has invalid masks, actions, side, uid or step identifiers')
++        row_ids = np.column_stack([arrays[name] for name in ('game_index', 'env_step', 'uid')])
++        if len(np.unique(row_ids, axis=0)) != rows:
++            raise ValueError('Dataset contains duplicate game/step/unit row identifiers')
++        plan = manifest.get('game_plan')
++        if not isinstance(plan, list) or not plan:
++            raise ValueError('Dataset game_plan must be a nonempty list')
++        seen, sides, local_split = set(), {}, {}
++        for game in plan:
++            check()
++            if (not isinstance(game, dict)
++                    or any(type(game.get(key)) is not int for key in ('game_index', 'env_seed', 'side'))
++                    or type(game.get('is_train')) is not bool or game['side'] not in (0, 1)
++                    or game.get('side_name') != f"player_{game['side']}"
++                    or not isinstance(game.get('opponent'), str) or not game['opponent']):
++                raise ValueError('Dataset game_plan has malformed identifiers or split')
++            game_index, seed, side, train = (game[key] for key in ('game_index', 'env_seed', 'side', 'is_train'))
++            if game_index in seen or (seed, side) in sides:
++                raise ValueError('Dataset duplicate game index or seed/side')
++            seen.add(game_index)
++            sides[seed, side] = game
++            if seed in local_split and local_split[seed] != train:
++                raise ValueError('Dataset split must hold out whole seeds across sides')
++            if seed in seed_split and seed_split[seed] != train:
++                raise ValueError('Dataset split conflicts across collection rounds')
++            local_split[seed] = seed_split[seed] = train
++            selected = arrays['game_index'] == game_index
++            for column, expected_value in (('env_seed', seed), ('side', side), ('is_train', train)):
++                if not np.all(arrays[column][selected] == expected_value):
++                    raise ValueError(f'Dataset rows disagree with game_plan {column}/split')
++        if seen != set(range(len(plan))) or not set(arrays['game_index']).issubset(seen):
++            raise ValueError('Dataset game indices must cover the full contiguous plan')
++        if any((seed, side) not in sides for seed in local_split for side in (0, 1)):
++            raise ValueError('Dataset plan requires both sides of every complete seed')
++        if not arrays['is_train'].any() or arrays['is_train'].all():
++            raise ValueError('Dataset needs nonempty train and diagnostic splits')
++        parts.append(arrays)
++        metadata.append(dict(path=str(path), **manifest))
++    return {name: np.concatenate([part[name] for part in parts]) for name in ARRAY_SCHEMA}, metadata
++
++
++@torch.no_grad()
++def _predict(net, rows, check):
++    net.eval()
++    prediction = np.empty((len(rows), 6), np.float32)
++    for start in range(0, len(rows), BATCH_SIZE):
++        check()
++        value = net(torch.from_numpy(rows[start:start + BATCH_SIZE]))
++        _finite(value)
++        prediction[start:start + BATCH_SIZE] = value.numpy()
++    return prediction
++
++
++def _metrics(prediction, arrays):
++    return {label: action_metrics(prediction[select], arrays['teacher_q'][select],
++                                  arrays['mask'][select], arrays['final_action'][select],
++                                  arrays['student_q'][select])
++            for label, select in (('train', arrays['is_train']), ('diagnostic', ~arrays['is_train']))}
++
++
++def _calibration_checks(net, frozen_state, before, after, mask):
++    unchanged = all(torch.equal(net.state_dict()[key], value) for key, value in frozen_state.items())
++    # A shared value changes no exact real-number rank. Float32 addition/subtraction
++    # can flip numerical near-ties; count every non-tie pair separately.
++    tolerance = 8 * np.finfo(np.float32).eps * np.maximum(1., np.maximum(abs(before), abs(after)).max(1))
++    first = before.astype(np.float64)[:, :, None] - before.astype(np.float64)[:, None, :]
++    second = after.astype(np.float64)[:, :, None] - after.astype(np.float64)[:, None, :]
++    legal_pairs = mask[:, :, None] & mask[:, None, :] & np.triu(np.ones((6, 6), bool), 1)
++    flips = legal_pairs & (np.sign(first) != np.sign(second))
++    non_tie = (abs(first) > tolerance[:, None, None]) & (abs(second) > tolerance[:, None, None])
++    result = dict(body_adv_unchanged=unchanged,
++                  non_tie_pair_rank_changes=int((flips & non_tie).sum()),
++                  numerical_near_tie_pair_rank_changes=int((flips & ~non_tie).sum()),
++                  rank_tolerance='8*float32_eps*max(1, abs(Q_before), abs(Q_after)) per row')
++    if not unchanged or result['non_tie_pair_rank_changes']:
++        raise ValueError('Value calibration changed frozen body/adv or non-tie legal action ranking')
++    return result
++
++
++def run_distillation(student, datasets, out, deadline):
++    """Fit exactly 30 action epochs plus 5 value-only epochs from S30/A1."""
++    from scripts.student_reward_train import _student, _protected_hashes
++    if not isinstance(deadline, datetime) or deadline.tzinfo is None:
++        raise ValueError('Deadline must be a datetime with a UTC offset')
++    student = Path(student).resolve()
++    directories = [Path(path).resolve() for path in datasets]
++    if any(Path(out).resolve().is_relative_to(directory) for directory in directories):
++        raise ValueError('Output must not be inside an input dataset')
++    inputs = [student, *[directory / name for directory in directories
++                        for name in ('manifest.json', 'status.json', 'dataset.npz', 'games.jsonl')]]
++    out = reserve_output(Path(out), inputs)
++    started = time.monotonic()
++    final, pending = out / 'weights/agent.pth', out / 'weights/agent.pending.pth'
++    manifest = dict(status='running', seed=SEED, action_epochs_requested=ACTION_EPOCHS,
++                    value_epochs_requested=VALUE_EPOCHS, action_epochs_completed=0,
++                    value_epochs_completed=0, action_updates=0, value_updates=0, updates=0,
++                    training_rows_seen=0, batch_size=BATCH_SIZE, learning_rate=LEARNING_RATE,
++                    deadline_utc=deadline.astimezone(timezone.utc).isoformat(), cpu_threads=1,
++                    started_utc=datetime.now(timezone.utc).isoformat())
++    previous_determinism = torch.are_deterministic_algorithms_enabled()
++    previous_warn = torch.is_deterministic_algorithms_warn_only_enabled()
++
++    def check():
++        if datetime.now(timezone.utc) >= deadline:
++            raise TimeoutError('Fixed deadline reached; incomplete phases cannot export a final checkpoint')
++
++    def progress(phase):
++        manifest['phase'] = phase
++        manifest['wall_seconds'] = time.monotonic() - started
++        _write(out / 'status.json', manifest)
++
++    def hashes(paths):
++        return {str(path): sha256(path) for path in paths}
++
++    try:
++        progress('validation')
++        check()
++        torch.set_num_threads(1)
++        manifest['inputs_before'] = hashes(inputs)
++        manifest['sources_before'] = hashes(SOURCE_FILES)
++        manifest['protected_before'] = _protected_hashes()
++        manifest['starting_student_sha256'] = sha256(student)
++        manifest['runtime'] = dict(python_executable=sys.executable, python_version=platform.python_version(),
++                                   torch_version=str(torch.__version__), numpy_version=np.__version__,
++                                   git_head=subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT,
++                                                           check=True, capture_output=True, text=True).stdout.strip())
++        checkpoint = _student(student)
++        if not checkpoint['cfg']['dueling']:
++            raise ValueError('Student must use the fixed dueling architecture')
++        arrays, metadata = load_datasets(directories, check)
++        if metadata[-1]['student_sha256'] != manifest['starting_student_sha256']:
++            raise ValueError('Latest dataset collecting student differs from the supplied starting student')
++        manifest['datasets'] = metadata
++        manifest['teacher_sha256'] = V14_SHA256
++        manifest['teacher_members'] = 36
++        manifest['scale'] = teacher_scale(arrays['teacher_q'], arrays['mask'], arrays['is_train'])
++        manifest['objective'] = dict(action='mean_rows(mean_legal((center_legal(Q)-center_legal(T))^2)/scale^2 + KL(softmax_legal(T/scale)||softmax_legal(Q/scale)))',
++                                     scale='One global RMS over legal-centered teacher entries on train rows only',
++                                     scale_floor=SCALE_FLOOR,
++                                     calibration='mean_rows((mean_legal(Q)-mean_legal(T))^2), value head only')
++        manifest['split'] = {label: sorted(set(arrays['env_seed'][select].tolist()))
++                             for label, select in (('train_seeds', arrays['is_train']),
++                                                   ('diagnostic_seeds', ~arrays['is_train']))}
++        manifest['prior_distillation_updates'] = checkpoint.get('distillation_updates', 0)
++        manifest['cumulative_updates'] = manifest['prior_distillation_updates']
++        with torch.random.fork_rng(devices=[]):
++            torch.manual_seed(SEED)
++            torch.use_deterministic_algorithms(True)
++            net = QNet(79, 6, 512, True)
++            net.load_state_dict(checkpoint['q'], strict=True)
++            before = _metrics(_predict(net, arrays['s'], check), arrays)
++            train_index = np.flatnonzero(arrays['is_train'])
++            generator = torch.Generator().manual_seed(SEED)
++            optimizer = torch.optim.Adam(net.parameters(), lr=LEARNING_RATE)
++            frozen_state, before_calibration = None, None
++            for phase, epochs in (('action', ACTION_EPOCHS), ('value', VALUE_EPOCHS)):
++                if phase == 'value':
++                    before_calibration = _predict(net, arrays['s'], check)
++                    frozen_state = {key: value.detach().clone() for key, value in net.state_dict().items()
++                                    if key.startswith(('body.', 'adv.'))}
++                    net.body.requires_grad_(False)
++                    net.adv.requires_grad_(False)
++                    net.zero_grad(set_to_none=True)
++                    optimizer = torch.optim.Adam(net.value.parameters(), lr=LEARNING_RATE)
++                for epoch in range(epochs):
++                    check()
++                    net.train()
++                    order = train_index[torch.randperm(len(train_index), generator=generator).numpy()]
++                    for start in range(0, len(order), BATCH_SIZE):
++                        check()
++                        index = order[start:start + BATCH_SIZE]
++                        optimizer.zero_grad(set_to_none=True)
++                        prediction = net(torch.from_numpy(arrays['s'][index]))
++                        target = torch.from_numpy(arrays['teacher_q'][index])
++                        mask = torch.from_numpy(arrays['mask'][index])
++                        if phase == 'action':
++                            loss = action_loss(prediction, target, mask, manifest['scale'])
++                        else:
++                            legal_count = mask.sum(1)
++                            predicted_mean = prediction.masked_fill(~mask, 0).sum(1) / legal_count
++                            teacher_mean = target.masked_fill(~mask, 0).sum(1) / legal_count
++                            loss = (predicted_mean - teacher_mean).square().mean()
++                        _finite(loss)
++                        loss.backward()
++                        _finite([p.grad for p in net.parameters()])
++                        optimizer.step()
++                        _finite(net.state_dict())
++                        manifest[f'{phase}_updates'] += 1
++                        manifest['updates'] += 1
++                        manifest['cumulative_updates'] += 1
++                        manifest['training_rows_seen'] += len(index)
++                        manifest['last_batch_loss'] = float(loss.detach())
++                        progress(f'{phase}_fitting')
++                    manifest[f'{phase}_epochs_completed'] = epoch + 1
++                    progress(f'{phase}_fitting')
++            if (manifest['action_epochs_completed'] != ACTION_EPOCHS
++                    or manifest['value_epochs_completed'] != VALUE_EPOCHS):
++                raise ValueError('Both fixed training phases must finish')
++            prediction = _predict(net, arrays['s'], check)
++            manifest['calibration'] = _calibration_checks(net, frozen_state, before_calibration,
++                                                          prediction, arrays['mask'])
++            after = _metrics(prediction, arrays)
++            state = {key: value.detach().clone() for key, value in net.state_dict().items()}
++            exported = dict(q=state, target_q={key: value.clone() for key, value in state.items()},
++                            cfg=checkpoint['cfg'], feature_dim=79, n_actions=6,
++                            ensemble=[], ensemble_dims=[], env_steps=60000, learn_steps=0,
++                            distillation_updates=manifest['cumulative_updates'],
++                            distillation_epochs=checkpoint.get('distillation_epochs', 0)+ACTION_EPOCHS+VALUE_EPOCHS,
++                            distillation_seed=SEED)
++            _finite(exported)
++            (out / 'weights').mkdir()
++            check()
++            torch.save(exported, pending)
++            _student(pending)
++            # Verify the actual deployment loader, not only a naked QNet reload.
++            from agents.sherlock.main import Agent_x
++            loaded = Agent_x('player_0', agent_path=str(pending), train=False)
++            probe = torch.from_numpy(arrays['s'][:min(32, len(arrays['s']))])
++            with torch.no_grad():
++                manifest['reload_exact'] = not loaded.extra_q and torch.equal(loaded.q(probe), net(probe))
++            if not manifest['reload_exact']:
++                raise ValueError('Agent_x single-network reload changed Q predictions')
++        manifest['inputs_after'] = hashes(inputs)
++        manifest['sources_after'] = hashes(SOURCE_FILES)
++        manifest['protected_after'] = _protected_hashes()
++        for category in ('inputs', 'sources', 'protected'):
++            if manifest[f'{category}_before'] != manifest[f'{category}_after']:
++                raise ValueError(f'{category} changed during fitting')
++        check()
++        _write(out / 'metrics.json', dict(before=before, after_action=_metrics(before_calibration, arrays), after=after,
++               limitations=['Development rows, not fresh policy strength evaluation.',
++                            'Recorded collector rule/final-action metrics belong to the collecting policy; '
++                            'they are not replayed final actions of the newly fitted policy.']))
++        check()
++        pending.replace(final)
++        manifest['checkpoint_sha256'] = sha256(final)
++        manifest['status'] = 'complete'
++        manifest['completed_utc'] = datetime.now(timezone.utc).isoformat()
++        progress('complete')
++        _write(out / 'manifest.json', manifest)
++        return manifest
++    except BaseException as error:
++        final.unlink(missing_ok=True)
++        pending.unlink(missing_ok=True)
++        manifest['status'] = 'incomplete'
++        manifest['error'] = f'{type(error).__name__}: {error}'
++        progress('incomplete')
++        _write(out / 'manifest.json', manifest)
++        if isinstance(error, TimeoutError):
++            return manifest
++        raise
++    finally:
++        torch.use_deterministic_algorithms(previous_determinism, warn_only=previous_warn)
++
++
++def main(argv=None):
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--student', type=Path, required=True)
++    parser.add_argument('--datasets', type=Path, nargs='+', required=True)
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--deadline-utc', required=True)
++    args = parser.parse_args(argv)
++    deadline = datetime.fromisoformat(args.deadline_utc.replace('Z', '+00:00'))
++    result = run_distillation(args.student, args.datasets, args.out, deadline)
++    print(json.dumps(dict(status=result['status'], out=str(args.out), updates=result['updates'])))
++    return 0 if result['status'] == 'complete' else 2
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/scripts/student_collect.py b/scripts/student_collect.py
+new file mode 100644
+index 0000000..7355017
+--- /dev/null
++++ b/scripts/student_collect.py
+@@ -0,0 +1,415 @@
++"""Collect exact normal-eval student decisions and raw pinned-V14 Q labels.
++
++The instance-local forward hook copies tensors before Agent_x masks its CPU
++numpy view in place. No second belief/context/decision evaluation is performed.
++"""
++from __future__ import annotations
++
++import argparse
++import copy
++from datetime import datetime, timezone
++import hashlib
++from importlib.metadata import version
++import json
++from pathlib import Path
++import sys
++import time
++
++import numpy as np
++import torch
++
++from agents.sherlock import geometry as geo
++from agents.sherlock.config import AgentConfig
++from agents.sherlock.main import Agent_x
++from agents.sherlock.model import QNet
++from scripts.common import make_opponent, play_game
++from scripts.output_paths import checked_output
++from scripts.student_distill import (_finite, _hashes, _write, load_teacher,
++                                    reserve_output as _reserve_output, sha256,
++                                    teacher_q, V14_SHA256)
++
++ROOT = Path(__file__).resolve().parent.parent
++PRIMARY = Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15')
++HISTORICAL = Path('/Users/moayedshawesh/Desktop/KI/sherlock-november-followup')
++TEACHER = ROOT / 'agents/sherlock/weights/agent_p0.pth'
++V13 = ROOT / 'experiments/releases/20261101_v13_neb/agent_p0.pth'
++V13_SHA256 = '6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62'
++DTYPES = dict(s=np.float32, mask=np.bool_, student_q=np.float32,
++              final_action=np.int8, world_action=np.int16, game_index=np.int32,
++              env_seed=np.int64, side=np.int8, env_step=np.int16,
++              match_step=np.int16, uid=np.int8, is_train=np.bool_)
++
++
++def game_plan(seed_start: int, maps: int) -> list[dict]:
++    if type(maps) is not int or not 2 <= maps <= 30:
++        raise ValueError('maps must be an integer from 2 to 30 with a nonempty train split')
++    if type(seed_start) is not int or not 0 <= seed_start <= np.iinfo(np.int64).max - maps:
++        raise ValueError('seed_start must be a nonnegative int64 seed')
++    diagnostic = max(1, maps // 6)
++    opponents = ('solution92', 'solution92', 'solution92', 'default', 'self')
++    return [dict(game_index=2 * index + side, env_seed=seed_start + index,
++                 side=side, side_name=f'player_{side}', opponent=opponents[index % 5],
++                 is_train=index < maps - diagnostic)
++            for index in range(maps) for side in (0, 1)]
++
++
++def reserve_output(out: Path, inputs) -> Path:
++    # Include the packaging directory as well as the existing raw-weight guards.
++    for base in (ROOT, PRIMARY, HISTORICAL):
++        checked_output(out, base / 'agents/Gruppe15')
++        if (base / 'agents/Gruppe15').resolve().is_relative_to(Path(out).expanduser().resolve()):
++            raise ValueError('Output must not contain protected submission directory')
++    return _reserve_output(out, inputs)
++
++
++class ExactCollector:
++    """Attach to exactly one agent for one or more games; restore in finally."""
++    def __init__(self, agent, check=lambda: None):
++        self.agent, self.check = agent, check
++        self.chunks = []
++        self.game = None
++        self.counts = dict(act_steps=0, network_steps=0, no_network_steps=0,
++                           reset_steps=0, no_unit_steps=0,
++                           final_outside_network_mask_rows=0)
++        self._calls = []
++        self._active = False
++
++    def set_game(self, game):
++        self.game = dict(game)
++
++    def __enter__(self):
++        self._had_act = 'act' in vars(self.agent)
++        self._own_act = vars(self.agent).get('act')
++        self._original = self.agent.act
++        self._handle = self.agent.q.register_forward_hook(self._hook)
++        self.agent.act = self._act
++        return self
++
++    def __exit__(self, *exc):
++        self._handle.remove()
++        if self._had_act:
++            self.agent.act = self._own_act
++        else:
++            del self.agent.act
++
++    def _hook(self, module, inputs, output):
++        if not self._active:
++            raise ValueError('Student network called outside the normal act invocation')
++        # .numpy() alone aliases CPU tensor storage: both copies must occur HERE.
++        self._calls.append((inputs[0].detach().cpu().numpy().copy(),
++                            output.detach().cpu().numpy().copy()))
++
++    def _act(self, step: int, obs):
++        self.check()
++        if self.agent.training or self.agent.cfg.frozen or self.agent.autosave_on_terminate:
++            raise ValueError('Collection requires fail-fast eval with autosave disabled')
++        self._calls = []
++        self._active = True
++        try:
++            actions = self._original(step=step, obs=obs)
++        finally:
++            self._active = False
++        self.counts['act_steps'] += 1
++        match_step = int(np.asarray(obs['match_steps']))
++        feats = self.agent._prev_feats
++        if not self._calls:
++            if feats or self.agent._prev_masks:
++                raise ValueError('Saved features without current network invocation')
++            self.counts['no_network_steps'] += 1
++            self.counts['reset_steps' if match_step == 0 else 'no_unit_steps'] += 1
++            return actions
++        if len(self._calls) != 1 or not feats or match_step == 0:
++            raise ValueError('Expected exactly one network call for each nonreset decision')
++        s, q = self._calls[0]
++        ids = list(feats)
++        if (s.shape != (len(ids), 79) or s.dtype != np.float32
++                or q.shape != (len(ids), 6) or q.dtype != np.float32):
++            raise ValueError('Network input/output must be float32 [N,79]/[N,6]')
++        if not np.array_equal(s, np.stack([feats[u] for u in ids])):
++            raise ValueError('Captured features do not align with saved current-decision features')
++        if set(ids) != set(self.agent._prev_masks):
++            raise ValueError('Saved feature/mask unit IDs do not match')
++        mask = np.stack([self.agent._prev_masks[u] for u in ids]).copy()
++        if mask.shape != (len(ids), 6) or mask.dtype != np.bool_ or not mask.any(axis=1).all():
++            raise ValueError('Invalid or empty network mask')
++        if not np.isfinite(s).all() or not np.isfinite(q).all():
++            raise ValueError('Nonfinite captured feature or raw Q value')
++        world_all = np.asarray(actions)
++        if (world_all.ndim != 2 or world_all.shape[1] != 3 or
++                not np.issubdtype(world_all.dtype, np.integer) or
++                any(type(u) not in (int, np.int64, np.int32) or not 0 <= u < min(16, len(world_all)) for u in ids)):
++            raise ValueError('Invalid final action array or unit IDs')
++        world = world_all[ids].copy()
++        if ((world < np.iinfo(np.int16).min) | (world > np.iinfo(np.int16).max)).any():
++            raise ValueError('Final world action exceeds int16')
++        final = world[:, 0].copy()
++        if ((final < 0) | (final > 5)).any():
++            raise ValueError('Final action must be in 0..5')
++        if self.agent.belief.mirrored:
++            moving = final < 5
++            final[moving] = geo.MIRROR_DIR[final[moving]]
++        self.counts['final_outside_network_mask_rows'] += int((~mask[np.arange(len(ids)), final]).sum())
++        if self.game is None:
++            # A failed act need not have game metadata; a retained row always must.
++            raise ValueError('Set game metadata before collecting network rows')
++        if not 0 <= step <= 32767 or not 0 <= match_step <= 32767:
++            raise ValueError('Step does not fit dataset int16 contract')
++        chunk = dict(s=s, student_q=q, mask=mask, world_action=world,
++                     final_action=final, uid=np.asarray(ids))
++        for key in ('game_index', 'env_seed', 'side', 'is_train'):
++            chunk[key] = np.full(len(ids), self.game[key])
++        chunk['env_step'] = np.full(len(ids), step)
++        chunk['match_step'] = np.full(len(ids), match_step)
++        self.chunks.append({key: np.asarray(value, dtype=DTYPES[key]).copy() for key, value in chunk.items()})
++        self.counts['network_steps'] += 1
++        return actions
++
++    def arrays(self):
++        shapes = dict(s=(0, 79), student_q=(0, 6), mask=(0, 6), world_action=(0, 3))
++        return {key: (np.concatenate([chunk[key] for chunk in self.chunks]) if self.chunks
++                      else np.empty(shapes.get(key, (0,)), dtype=dtype))
++                for key, dtype in DTYPES.items()}
++
++
++def load_student(path: Path):
++    cp = torch.load(path, map_location='cpu', weights_only=True)
++    fields = {'q', 'target_q', 'cfg', 'feature_dim', 'n_actions', 'ensemble',
++              'ensemble_dims', 'env_steps', 'learn_steps'}
++    provenance = {'distillation_updates', 'distillation_epochs', 'distillation_seed'}
++    if (not isinstance(cp, dict) or not fields <= set(cp)
++            or set(cp) - fields not in (set(), provenance) or cp['feature_dim'] != 79
++            or cp['n_actions'] != 6 or cp['ensemble'] or cp['ensemble_dims']
++            or cp['env_steps'] != 60000 or cp['learn_steps'] != 0):
++        raise ValueError('Student requires one final 79/6 network without optimizer/replay')
++    if provenance <= set(cp) and any(
++            type(cp[name]) is not int or cp[name] < minimum
++            for name, minimum in (('distillation_updates', 1),
++                                  ('distillation_epochs', 1), ('distillation_seed', 0))):
++        raise ValueError('Legacy distillation provenance requires positive counts and a valid seed')
++    cfg = AgentConfig(**cp['cfg'])
++    if cfg.hidden != 512 or not cfg.dueling or not cfg.canonical or not cfg.use_sap or cfg.threat_feats:
++        raise ValueError('Student requires a single canonical 512-wide dueling 79/6 network')
++    _finite(cp)
++    with torch.random.fork_rng(devices=[]):
++        probe = QNet(79, 6, 512, True)
++        probe.load_state_dict(cp['q'], strict=True)
++        probe.load_state_dict(cp['target_q'], strict=True)
++    if any(not torch.equal(cp['q'][k], cp['target_q'][k]) for k in cp['q']):
++        raise ValueError('Student q/target must be equal')
++    return cp
++
++
++def _agent(student, checkpoint):
++    cfg = AgentConfig(**dict(checkpoint['cfg'], frozen=False))
++    agent = Agent_x('player_0', agent_path=str(student), cfg=cfg, train=False, seed=20261104)
++    agent.autosave_on_terminate = False
++    agent.learn_enabled = False
++    agent.set_to_eval_mode()
++    agent.target_q.eval()
++    if agent.extra_q or agent.cnn_policy is not None or agent.training or agent.cfg.frozen:
++        raise ValueError('Real loaded student must be a fail-fast eval single network')
++    for name in ('q', 'target_q'):
++        actual = getattr(agent, name).state_dict()
++        if set(actual) != set(checkpoint[name]) or any(
++                not torch.equal(v.detach().cpu(), checkpoint[name][k]) for k, v in actual.items()):
++            raise ValueError('Real loaded student differs from validated checkpoint')
++    return agent
++
++
++def _learning_digest(agent):
++    digest = hashlib.sha256()
++    def add(value):
++        if isinstance(value, torch.Tensor):
++            value = value.detach().cpu().contiguous()
++            digest.update(str((value.dtype, tuple(value.shape))).encode())
++            digest.update(value.numpy().tobytes())
++        elif isinstance(value, dict):
++            for key in sorted(value, key=str):
++                digest.update(repr(key).encode())
++                add(value[key])
++        elif isinstance(value, (list, tuple)):
++            for item in value:
++                add(item)
++        else:
++            digest.update(repr(value).encode())
++    add([agent.q.state_dict(), agent.target_q.state_dict(), agent.opt.state_dict(),
++         agent.env_steps, agent.learn_steps, len(agent.buffer), agent.recent_losses])
++    return digest.hexdigest()
++
++
++def _protected_hashes():
++    paths = set()
++    for base in (ROOT, PRIMARY, HISTORICAL):
++        for folder in ('agents/sherlock/weights', 'Gruppe15', 'agents/Gruppe15'):
++            directory = base / folder
++            if directory.exists():
++                paths.update(p.resolve() for p in directory.rglob('*') if p.is_file())
++        paths.update(p.resolve() for p in base.glob('*.zip') if p.is_file())
++    return _hashes(sorted(paths))
++
++
++def _pins():
++    import luxai_s3
++    sources = {ROOT / 'scripts' / f'{name}.py' for name in
++               ('student_collect', 'student_distill', 'common', 'metrics', 'scoring', 'output_paths')}
++    for directory in ('agents/sherlock', 'agents/default', 'agents/Solution_92_Kaggle'):
++        sources.update((ROOT / directory).rglob('*.py'))
++    sources.add(ROOT / 'lux/utils.py')
++    sources.update(Path(luxai_s3.__file__).resolve().parent.rglob('*.py'))
++    return dict(sources=_hashes(sorted(sources)), protected=_protected_hashes(),
++                interpreter=str(Path(sys.executable).resolve()),
++                interpreter_sha256=sha256(Path(sys.executable).resolve()),
++                dependency_versions={name: version(name) for name in
++                                     ('numpy', 'torch', 'scipy', 'jax', 'jaxlib', 'luxai-s3', 'gymnasium')})
++
++
++def _env():
++    from luxai_s3.wrappers import LuxAIS3GymEnv
++    return LuxAIS3GymEnv(numpy_output=True)
++
++
++def _json_safe(value):
++    if isinstance(value, dict):
++        return {key: _json_safe(item) for key, item in value.items()}
++    if isinstance(value, (list, tuple)):
++        return [_json_safe(item) for item in value]
++    if isinstance(value, (float, np.floating)) and not np.isfinite(value):
++        return None
++    if isinstance(value, np.generic):
++        return value.item()
++    return value
++
++
++def collect(student: Path, out: Path, seed_start: int, maps: int, deadline: datetime) -> dict:
++    if deadline.tzinfo is None:
++        raise ValueError('Deadline must include a UTC offset')
++    plan = game_plan(seed_start, maps)
++    student = Path(student).expanduser().resolve(strict=True)
++    inputs = [student, TEACHER.resolve(strict=True), V13.resolve(strict=True)]
++    out = reserve_output(out, inputs)
++    started = time.monotonic()
++    manifest = dict(schema_version=1, status='running', teacher_sha256=V14_SHA256,
++                    teacher_members=36, teacher=str(TEACHER.resolve()), student=str(student),
++                    game_plan=plan, games_completed=0, rows=0, cpu_threads=1,
++                    technical_test_only=maps != 30, seed_start=seed_start, maps=maps,
++                    deadline_utc=deadline.astimezone(timezone.utc).isoformat(),
++                    started_utc=datetime.now(timezone.utc).isoformat(),
++                    exclusions='Only reset/no-unit steps with no network forward have no rows; invalid rows fail the run.',
++                    limitations='Development states; teacher Q on identical observed features, not final teacher actions.')
++    def check():
++        if datetime.now(timezone.utc) >= deadline:
++            raise TimeoutError('Collection deadline reached')
++    def progress(phase):
++        manifest.update(phase=phase, wall_seconds=time.monotonic() - started)
++        _write(out / 'status.json', manifest)
++    env = None
++    try:
++        progress('preflight')
++        check()
++        torch.set_num_threads(1)
++        manifest['inputs_before'] = _hashes(inputs)
++        manifest['student_sha256'] = manifest['inputs_before'][str(student)]
++        if manifest['inputs_before'][str(V13.resolve())] != V13_SHA256:
++            raise ValueError('V13 opponent hash does not match pinned release')
++        manifest['pins_before'] = _pins()
++        checkpoint = load_student(student)
++        manifest['student_config'] = copy.deepcopy(checkpoint['cfg'])
++        nets, cfg = load_teacher(TEACHER)
++        manifest['teacher_config'] = cfg
++        _write(out / 'manifest.json', manifest)
++        agent = _agent(student, checkpoint)
++        initial = _learning_digest(agent)
++        manifest['learning_state_before'] = initial
++        env = _env()
++        with (out / 'games.jsonl').open('x') as log, ExactCollector(agent, check) as capture:
++            for game in plan:
++                check()
++                capture.set_game(game)
++                other = f"player_{1 - game['side']}"
++                opp = make_opponent(game['opponent'], other,
++                                    self_play_path=str(V13) if game['opponent'] == 'self' else None)
++                if hasattr(opp, 'cfg'):
++                    opp.cfg.frozen = False
++                if hasattr(opp, 'autosave_on_terminate'):
++                    opp.autosave_on_terminate = False
++                before_rows = sum(len(c['s']) for c in capture.chunks)
++                result = play_game(env, agent, opp, game['env_seed'], game['side_name'], train=False)
++                if result['steps'] != 303:
++                    raise ValueError('Collection requires all 303 course steps (three matches)')
++                if _learning_digest(agent) != initial or agent.training or agent.q.training:
++                    raise ValueError('Student learning/model/optimizer state mutated during eval')
++                result.update(game_index=game['game_index'], env_seed=game['env_seed'],
++                              is_train=game['is_train'], opponent=game['opponent'],
++                              rows=sum(len(c['s']) for c in capture.chunks) - before_rows)
++                log.write(json.dumps(_json_safe(result), allow_nan=False) + '\n')
++                log.flush()
++                manifest['games_completed'] += 1
++                manifest['counts'] = dict(capture.counts)
++                progress('collecting')
++            data = capture.arrays()
++        if not len(data['s']) or not data['is_train'].any() or data['is_train'].all():
++            raise ValueError('Collection requires nonempty train and diagnostic rows')
++        manifest['rows'] = len(data['s'])
++        manifest['train_rows'] = int(data['is_train'].sum())
++        manifest['diagnostic_rows'] = int((~data['is_train']).sum())
++        data['teacher_q'] = np.empty((len(data['s']), 6), np.float32)
++        progress('labeling')
++        for start in range(0, len(data['s']), 1024):
++            check()
++            data['teacher_q'][start:start + 1024] = teacher_q(
++                nets, torch.from_numpy(data['s'][start:start + 1024])).cpu().numpy()
++        if not np.isfinite(data['teacher_q']).all():
++            raise ValueError('Nonfinite teacher labels')
++        manifest['teacher_gradients_absent'] = all(p.grad is None for net in nets for p in net.parameters())
++        manifest['learning_state_after'] = _learning_digest(agent)
++        manifest['inputs_after'] = _hashes(inputs)
++        manifest['pins_after'] = _pins()
++        if (manifest['learning_state_after'] != initial or
++                manifest['inputs_before'] != manifest['inputs_after'] or
++                manifest['pins_before'] != manifest['pins_after']):
++            raise ValueError('Pinned input/source/protected/learning-state mutation detected')
++        check()
++        pending = out / 'dataset.pending.npz'
++        np.savez_compressed(pending, **data)
++        # Verify actual serialized schema and row counts before publishing success.
++        with np.load(pending, allow_pickle=False) as archive:
++            if set(archive.files) != set(data) or any(
++                    not np.array_equal(archive[key], value) for key, value in data.items()):
++                raise ValueError('Dataset serialization differs from collected rows')
++        check()
++        # Serialization can take time; attest the final bytes against the same freeze.
++        if manifest['inputs_before'] != _hashes(inputs) or manifest['pins_before'] != _pins():
++            raise ValueError('Pinned input/source/protected mutation during serialization')
++        pending.replace(out / 'dataset.npz')
++        manifest['files_sha256'] = {name: sha256(out / name) for name in ('dataset.npz', 'games.jsonl')}
++        manifest.update(status='done', completed_utc=datetime.now(timezone.utc).isoformat())
++        _write(out / 'manifest.json', manifest)
++        progress('done')
++        return manifest
++    except BaseException as error:
++        (out / 'dataset.pending.npz').unlink(missing_ok=True)
++        (out / 'dataset.npz').unlink(missing_ok=True)
++        manifest.update(status='failed', error=f'{type(error).__name__}: {error}')
++        _write(out / 'manifest.json', manifest)
++        progress('failed')
++        raise
++    finally:
++        if env is not None and hasattr(env, 'close'):
++            env.close()
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--student', type=Path, required=True)
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--seed-start', type=int, default=865100)
++    parser.add_argument('--maps', type=int, default=30)
++    parser.add_argument('--deadline-utc', required=True)
++    args = parser.parse_args()
++    deadline = datetime.fromisoformat(args.deadline_utc.replace('Z', '+00:00'))
++    result = collect(args.student, args.out, args.seed_start, args.maps, deadline)
++    print(json.dumps(dict(status=result['status'], rows=result['rows'], out=str(args.out))))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/student_reward_train.py b/scripts/student_reward_train.py
+index 574c180..ac7fbe8 100644
+--- a/scripts/student_reward_train.py
++++ b/scripts/student_reward_train.py
+@@ -129,88 +129,104 @@ def _student(path):
+ def _config(source, arm):
+     if arm not in ARMS:
+         raise ValueError('Unknown reward arm')
+     result = dict(source, frozen=False, lr=1e-4, rules_in_training=True,
+                   rules_in_training_all=True)
+     if arm == 'sap0':
+         result['w_sap_hit'] = 0.
+     return result
+ 
+ 
+-def rollout_plan():
+-    rng = np.random.default_rng(RUN_SEED + OFFSET)
++def _run_seed(value):
++    # finetune reserves maps below validation (500000): its fixed prefill
++    # formula admits starts 0..29 only. Reject before preparing any files.
++    if type(value) is not int or not 0 <= value <= 29:
++        raise ValueError('run_seed must be an integer in trainer range 0..29; validation maps start at 500000')
++    return value
++
++
++def rollout_plan(run_seed=RUN_SEED):
++    run_seed = _run_seed(run_seed)
++    rng = np.random.default_rng(run_seed + OFFSET)
+     names = ['solution92', 'sol92_sq', 'default', 'rush']
+-    return [dict(phase=phase, game=g, seed=200000 + RUN_SEED * 10000 + offset + g // 2,
++    return [dict(phase=phase, game=g, seed=200000 + run_seed * 10000 + offset + g // 2,
+                  side=('player_0', 'player_1')[g % 2],
+                  opponent=names[rng.choice(4, p=[.6, .2, .1, .1])])
+             for phase, count, offset in (('prefill', PREFILL, 5000), ('train', TRAIN, OFFSET))
+             for g in range(count)]
+ 
+ 
+ def validation_plan():
+     return [dict(after_games=after, opponent=opp, seed=seed, side=side)
+             for after in (0, TRAIN) for opp in ('default', 'solution92')
+             for seed in range(500000, 500004) for side in ('player_0', 'player_1')]
+ 
+ 
+-def prepare(student: Path, out: Path):
++def prepare(student: Path, out: Path, run_seed=RUN_SEED):
++    run_seed = _run_seed(run_seed)
+     student = Path(student).resolve(strict=True)
+     out = _output(out)
+     if out.exists():
+         raise FileExistsError(out)
+     before = file_sha256(student)
+     cp = _student(student)
+     if cp['cfg']['w_sap_hit'] == 0:
+         raise ValueError('Control SAP weight must be nonzero for the ablation')
+-    manifest = dict(schema_version=1, student=str(student), student_sha256=before,
++    manifest = dict(schema_version=1, run_seed=run_seed, student=str(student), student_sha256=before,
+                     source_config=cp['cfg'], pins=_pins(), arms={},
+                     validation_plan=validation_plan())
+     for arm in ARMS:
+         cfg = _config(cp['cfg'], arm)
+         init = out / 'init' / arm
+         (init / 'weights').mkdir(parents=True, exist_ok=False)
+         checkpoint = copy.deepcopy(cp)
+         checkpoint['cfg'] = cfg
+         path = init / 'weights/agent.pth'
+         torch.save(checkpoint, path)
+-        entry = dict(config=cfg, run_seed=RUN_SEED, tensor_sha256=tensor_sha256(cp['q']),
+-                     weights_sha256=file_sha256(path), rollout_plan=rollout_plan())
++        entry = dict(config=cfg, run_seed=run_seed, tensor_sha256=tensor_sha256(cp['q']),
++                     weights_sha256=file_sha256(path), rollout_plan=rollout_plan(run_seed))
+         manifest['arms'][arm] = entry
+         _write(init / 'manifest.json', dict(variant=VARIANT, base_variant=VARIANT,
+                                           train_games=0, arm=arm, **entry))
+     if file_sha256(student) != before or manifest['pins'] != _pins():
+         raise ValueError('Input/protected/code hashes changed during prepare')
+     _write(out / 'manifest.json', manifest)
+     return manifest
+ 
+ 
+ def check_prepared(prepared, arm):
+     if arm not in ARMS:
+         raise ValueError('Unknown reward arm')
+     prepared = _output(Path(prepared).resolve(strict=True))
+     manifest = json.loads((prepared / 'manifest.json').read_text())
++    if 'run_seed' not in manifest:
++        raise ValueError('Legacy prepared manifest has no run_seed; prepare a new directory without rewriting historical data')
++    run_seed = _run_seed(manifest['run_seed'])
+     source = Path(manifest['student'])
+     if file_sha256(source) != manifest['student_sha256']:
+         raise ValueError('Student hash changed')
+     cp = _student(source)
+     if (manifest['pins'] != _pins() or manifest['source_config'] != cp['cfg']
+             or manifest['validation_plan'] != validation_plan() or set(manifest['arms']) != set(ARMS)):
+         raise ValueError('Prepared input/protected/code/config/plan changed')
+     for name in ARMS:
+         entry = manifest['arms'][name]
++        _run_seed(entry['run_seed'])
+         init = prepared / 'init' / name
+         path = init / 'weights/agent.pth'
+-        expected = dict(config=_config(cp['cfg'], name), run_seed=RUN_SEED,
++        expected = dict(config=_config(cp['cfg'], name), run_seed=run_seed,
+                         tensor_sha256=tensor_sha256(cp['q']),
+-                        weights_sha256=file_sha256(path), rollout_plan=rollout_plan())
++                        weights_sha256=file_sha256(path), rollout_plan=rollout_plan(run_seed))
++        local = json.loads((init / 'manifest.json').read_text())
++        _run_seed(local['run_seed'])
+         if (entry != expected or {p.name for p in (init / 'weights').iterdir()} != {'agent.pth'}
+-                or json.loads((init / 'manifest.json').read_text()) != dict(
++                or local != dict(
+                     variant=VARIANT, base_variant=VARIANT, train_games=0, arm=name, **entry)):
+             raise ValueError('Prepared init/config/weights changed or replay present')
+         saved = torch.load(path, map_location='cpu', weights_only=True)
+         want = dict(cp, cfg=expected['config'])
+         if experiment.state_sha256(saved) != experiment.state_sha256(want):
+             raise ValueError('Init is not exact fresh student without optimizer/replay')
+     return manifest, manifest['arms'][arm], prepared / 'init' / arm
+ 
+ 
+ @contextmanager
+@@ -321,52 +337,53 @@ def _isolated_validation(env, learners, seeds, opponents, deadline, completed):
+         experiment.play_game = original
+         a.learn_enabled = enabled
+         a.rng.bit_generator.state = rng
+         experiment._restore_global_rng(global_rng)
+ 
+ 
+ def run_arm(prepared, arm, deadline_utc):
+     from scripts import finetune
+     deadline = _deadline(deadline_utc)
+     manifest, entry, init = check_prepared(prepared, arm)
++    prepared_seed = manifest['run_seed']
+     prepared = Path(prepared).resolve()
+     destination = _output(prepared / 'runs' / arm)
+     if destination.exists():
+         raise FileExistsError(destination)
+     destination.mkdir(parents=True)
+     # finetune itself requires the run dir to be absent. Keep admission status
+     # outside it until its mkdir has run, or before an early deadline refusal.
+     status_path = prepared / f'{arm}_status.json'
+     record = dict(status='running', arm=arm, deadline_utc=deadline.isoformat(),
+                   started_utc=datetime.now(timezone.utc).isoformat())
+     _write(status_path, record)
+     destination.rmdir()
+-    audit = dict(initial=None, prefill=None, validations=[], end=None)
++    audit = dict(run_seed=prepared_seed, initial=None, prefill=None, validations=[], end=None)
+     rows, vals, pending, box = [], [], [], []
+     keys = ('Learners', 'play_game', 'play_set', 'make_opponent', 'RUNS')
+     old = {k: getattr(finetune, k) for k in keys}
+     old_argv = sys.argv
+     missing = object()
+     prior_variant = VARIANTS.get(VARIANT, missing)
+     restored = []
+ 
+     def persist():
+         destination.mkdir(parents=True, exist_ok=True)
+         _write(destination / 'training_audit.json', audit)
+         _write(destination / 'status.json', record)
+ 
+     def append(name, row):
+         with (destination / name).open('a') as f:
+             f.write(json.dumps(row, allow_nan=False) + '\n')
+ 
+     def load(variant, run_dir, run_seed, load=False):
+-        if box or variant != VARIANT or Path(run_dir) != destination or run_seed != RUN_SEED or not load:
++        if box or variant != VARIANT or Path(run_dir) != destination or run_seed != prepared_seed or not load:
+             raise ValueError('Unexpected learner load')
+         learners = old['Learners'](variant, run_dir, run_seed, load=load)
+         audit['initial'] = prove_initial(learners, entry)
+         a = _canonical(learners)
+         original_save = a.save_agent
+         def save(path=None):
+             # finetune attempts best-validation saves; persist only final state.
+             if len(rows) == PREFILL + TRAIN and len(audit['validations']) == 2:
+                 original_save(path)
+         prior = vars(a).get('save_agent', missing)
+@@ -440,21 +457,21 @@ def run_arm(prepared, arm, deadline_utc):
+         end = learner_identity(learners)
+         expected = [r for r in validation_plan() if r['after_games'] == after]
+         actual = [dict(after_games=after, opponent=r['opponent'], seed=r['seed'], side=r['side']) for r in result]
+         if before != end or actual != expected or any(r['steps'] != 303 or r['point_counting_version'] != 2 for r in result):
+             raise ValueError('Validation learning isolation or plan failed')
+         audit['validations'].append(dict(after_games=after, before=before, after=end))
+         persist()
+         return result
+ 
+     argv = ['student_reward/finetune', '--init', str(init), '--name', arm,
+-            '--variant', VARIANT, '--games', str(TRAIN), '--seed', str(RUN_SEED),
++            '--variant', VARIANT, '--games', str(TRAIN), '--seed', str(prepared_seed),
+             '--map-offset', str(OFFSET), '--lr', '.0001', '--prefill-games', str(PREFILL),
+             '--keep-final', '--no-test', '--val-every', str(TRAIN), '--n-val', '4', '--mix', MIX]
+     record['argv'] = argv
+     try:
+         _check_deadline(deadline)
+         VARIANTS[VARIANT] = ('sherlock', entry['config'])
+         finetune.RUNS = prepared / 'runs'
+         finetune.Learners, finetune.play_game = load, rollout
+         finetune.play_set, finetune.make_opponent = validate, opponent
+         sys.argv = argv
+@@ -470,21 +487,21 @@ def run_arm(prepared, arm, deadline_utc):
+         audit['end'] = _prove_end(box[0], entry, audit['initial'], destination / 'weights/agent.pth', rows)
+         if (audit['end']['learning']['learn_steps'] != 24000
+                 or audit['end']['learning']['env_steps'] != 120600):
+             raise ValueError('Final fixed update/env counters mismatch')
+         # Historical finetune makes a best-validation directory even with
+         # --keep-final. It never supplies this experiment's accepted weights.
+         shutil.rmtree(destination / 'weights_best', ignore_errors=True)
+         check_prepared(prepared, arm)
+         _check_deadline(deadline)
+         persist()
+-        receipt = dict(schema_version=1, status='done', arm=arm, prepared=str(prepared),
++        receipt = dict(schema_version=1, status='done', arm=arm, run_seed=prepared_seed, prepared=str(prepared),
+                        student_sha256=manifest['student_sha256'], config=entry['config'],
+                        actual_prefill_games=PREFILL, actual_train_games=TRAIN,
+                        actual_validation_games=len(vals), end=audit['end'],
+                        final_checkpoint=str(destination / 'weights/agent.pth'),
+                        final_checkpoint_sha256=file_sha256(destination / 'weights/agent.pth'),
+                        prefill_action_sha256=experiment.state_sha256([
+                            [r['final_action_audit']['transcript_sha256'],
+                             r['policy_transcript']['action_state_sha256']] for r in rows[:PREFILL]]),
+                        evidence_sha256={n: file_sha256(destination / n) for n in (
+                            'training_audit.json', 'rollouts.jsonl', 'validation_games.jsonl', 'train.csv')})
+@@ -523,29 +540,31 @@ def run_arm(prepared, arm, deadline_utc):
+ 
+ def validate_receipt(destination):
+     """Refuse partial arms and verify persisted budget, config, hashes and proofs."""
+     destination = Path(destination)
+     try:
+         status = json.loads((destination / 'status.json').read_text())
+         receipt = json.loads((destination / 'final_receipt.json').read_text())
+         if status['status'] != 'done' or receipt['status'] != 'done':
+             raise ValueError('Incomplete arm')
+         manifest, entry, _ = check_prepared(receipt['prepared'], receipt['arm'])
+-        if (receipt['student_sha256'] != manifest['student_sha256'] or receipt['config'] != entry['config']
++        if (_run_seed(receipt['run_seed']) != manifest['run_seed']
++                or receipt['student_sha256'] != manifest['student_sha256'] or receipt['config'] != entry['config']
+                 or (receipt['actual_prefill_games'], receipt['actual_train_games'], receipt['actual_validation_games']) != (40, 160, 32)
+                 or any(file_sha256(destination / n) != digest for n, digest in receipt['evidence_sha256'].items())
+                 or file_sha256(destination / 'weights/agent.pth') != receipt['final_checkpoint_sha256']):
+             raise ValueError('Receipt hashes/counts/config differ')
+         rows = [json.loads(line) for line in (destination / 'rollouts.jsonl').read_text().splitlines()]
+         vals = [json.loads(line) for line in (destination / 'validation_games.jsonl').read_text().splitlines()]
+         audit = json.loads((destination / 'training_audit.json').read_text())
+-        if ([{k: r[k] for k in ('phase', 'game', 'seed', 'side', 'opponent')} for r in rows] != rollout_plan()
++        if (_run_seed(audit['run_seed']) != manifest['run_seed']
++                or [{k: r[k] for k in ('phase', 'game', 'seed', 'side', 'opponent')} for r in rows] != rollout_plan(manifest['run_seed'])
+                 or [{k: r[k] for k in ('after_games', 'opponent', 'seed', 'side')} for r in vals] != validation_plan()
+                 or len(audit['validations']) != 2 or any(p['before'] != p['after'] for p in audit['validations'])
+                 or not audit['end']['reload_verified'] or audit['end'] != receipt['end']
+                 or audit['end']['learning']['learn_steps'] != 24000
+                 or audit['end']['learning']['env_steps'] != 120600
+                 or any(r['steps'] != 303 or r['final_action_audit']['act_calls'] != 303
+                        or r['final_action_audit']['update_calls'] != 303
+                        or r['reward_audit']['transitions'] != r['final_action_audit']['checked_replay_transitions'] for r in rows)):
+             raise ValueError('Receipt actual rollout/validation/action/update proof incomplete')
+         _validate_persisted_learning(destination, entry, audit, rows, vals)
+@@ -639,24 +658,26 @@ def compare_prefill(prepared):
+     _write(Path(prepared) / 'paired_prefill.json', result)
+     return result
+ 
+ 
+ def main():
+     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+     sub = ap.add_subparsers(dest='command', required=True)
+     p = sub.add_parser('prepare')
+     p.add_argument('--student', type=Path, required=True)
+     p.add_argument('--out', type=Path, required=True)
++    p.add_argument('--run-seed', type=int, default=RUN_SEED,
++                   help='Matched learner/map/opponent start in trainer range 0..29 (default: 29)')
+     r = sub.add_parser('runarm')
+     r.add_argument('--prepared', type=Path, required=True)
+     r.add_argument('--arm', choices=ARMS, required=True)
+     r.add_argument('--deadline-utc', required=True)
+     args = ap.parse_args()
+     experiment.limit_threads()
+     if args.command == 'prepare':
+-        prepare(args.student, args.out)
++        prepare(args.student, args.out, run_seed=args.run_seed)
+     else:
+         run_arm(args.prepared, args.arm, args.deadline_utc)
+ 
+ 
+ if __name__ == '__main__':
+     main()
+diff --git a/tests/test_student_action_distill.py b/tests/test_student_action_distill.py
+new file mode 100644
+index 0000000..0c093d3
+--- /dev/null
++++ b/tests/test_student_action_distill.py
+@@ -0,0 +1,363 @@
++"""Bounded real-network tests of masked action fitting and value calibration."""
++from datetime import datetime, timedelta, timezone
++import importlib.util
++import json
++
++import numpy as np
++import pytest
++import torch
++
++
++@pytest.fixture(autouse=True)
++def one_thread():
++    torch.set_num_threads(1)
++
++
++def module():
++    assert importlib.util.find_spec('scripts.student_action_distill') is not None
++    from scripts import student_action_distill
++    return student_action_distill
++
++
++def test_masked_loss_ignores_illegal_q_and_independent_row_offsets():
++    sd = module()
++    mask = torch.tensor([[True, True, False, False, False, False],
++                         [True, False, True, False, True, False]])
++    teacher = torch.tensor([[1., 3., 100., 0., 0., 0.], [3., 4., 2., 4., 1., 4.]])
++    student = teacher.clone()
++    student[0, 0] += 2
++    student[1, 4] -= 1
++    original = sd.action_loss(student, teacher, mask, 2.)
++    changed_teacher = teacher + torch.tensor([[17.], [-3.]])
++    changed_student = student + torch.tensor([[-9.], [6.]])
++    changed_teacher[~mask] = -1e8
++    changed_student[~mask] = 1e8
++    torch.testing.assert_close(sd.action_loss(changed_student, changed_teacher, mask, 2.), original)
++    assert original > 0
++
++
++def test_one_legal_action_is_exact_finite_zero_and_teacher_has_no_gradient():
++    sd = module()
++    student = torch.tensor([[1., -9., 300., 100., 2., 4.]], requires_grad=True)
++    teacher = torch.tensor([[3., 4., 5., 6., 7., 8.]], requires_grad=True)
++    mask = torch.tensor([[False, True, False, False, False, False]])
++    loss = sd.action_loss(student, teacher, mask, .001)
++    assert loss.item() == 0 and torch.isfinite(loss)
++    loss.backward()
++    assert teacher.grad is None
++    assert torch.equal(student.grad, torch.zeros_like(student))
++
++
++def test_teacher_scale_uses_train_legal_centered_entries_only():
++    sd = module()
++    teacher = np.array([[0, 4, 100, 100, 100, 100], [3, 3, 3, 3, 3, 3],
++                        [-10000, 10000, 0, 0, 0, 0]], np.float32)
++    mask = np.array([[1, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0],
++                     [1, 1, 0, 0, 0, 0]], bool)
++    train = np.array([True, True, False])
++    assert sd.teacher_scale(teacher, mask, train) == pytest.approx(np.sqrt(8/3))
++    assert sd.teacher_scale(np.ones((1, 6), np.float32), np.ones((1, 6), bool),
++                            np.ones(1, bool)) == .001
++    teacher += np.array([[800], [-500], [130]], np.float32)
++    teacher[~mask] = 1e6
++    assert sd.teacher_scale(teacher, mask, train) == pytest.approx(np.sqrt(8/3))
++
++
++def test_objective_is_legal_row_mse_plus_teacher_to_student_kl():
++    sd = module()
++    # Row 1: teacher [-1,1], student [0,0], scale2: MSE=.25;
++    # row 2 has exactly one legal action and contributes zero.
++    mask = torch.tensor([[True, True, False, False, False, False],
++                         [True, False, False, False, False, False]])
++    target = torch.tensor([[-1., 1., 0., 0., 0., 0.], [8., 0., 0., 0., 0., 0.]])
++    student = torch.zeros_like(target)
++    probability = 1/(1+np.exp(1))
++    kl = probability*np.log(2*probability)+(1-probability)*np.log(2*(1-probability))
++    assert sd.action_loss(student, target, mask, 2.).item() == pytest.approx((.25+kl)/2)
++
++
++def test_metrics_detect_wrong_legal_ranking_and_label_recorded_rule_overrides():
++    sd = module()
++    teacher = np.array([[1., 5., 100, 0, 0, 0], [1., 5., 100, 0, 0, 0]], np.float32)
++    student = np.array([[5., 1., -100, 0, 0, 0], [1., 5., 100, 0, 0, 0]], np.float32)
++    mask = np.array([[1, 1, 0, 0, 0, 0]] * 2, bool)
++    metrics = sd.action_metrics(student, teacher, mask, np.array([2, 0], np.int8), student)
++    assert metrics['masked_argmax_agreement'] == .5
++    assert metrics['legal_regret'] == 2
++    assert metrics['legal_q_mse'] == 8
++    assert metrics['recorded_collector_final_outside_mask_rate'] == .5
++    assert metrics['recorded_collector_rule_override_rate'] == 1
++
++
++@pytest.mark.parametrize('bad', ['empty_mask', 'nonfinite', 'dtype'])
++def test_action_helpers_reject_invalid_data(bad):
++    sd = module()
++    q = torch.ones(2, 6)
++    mask = torch.ones(2, 6, dtype=torch.bool)
++    if bad == 'empty_mask':
++        mask[0] = False
++    elif bad == 'nonfinite':
++        q[0, 5] = float('nan')
++    else:
++        mask = mask.float()
++    with pytest.raises(ValueError):
++        sd.action_loss(q, q, mask, 1.)
++
++
++def source_student(tmp_path):
++    from agents.sherlock.config import AgentConfig
++    from agents.sherlock.model import QNet
++    torch.manual_seed(71)
++    net = QNet(79, 6, 512, True)
++    cfg = AgentConfig(hidden=512).to_dict()
++    source = tmp_path / 'start.pth'
++    torch.save(dict(q=net.state_dict(), target_q=net.state_dict(), cfg=cfg,
++                    ensemble=[], ensemble_dims=[], feature_dim=79, n_actions=6,
++                    env_steps=60000, learn_steps=0, distillation_updates=90,
++                    distillation_epochs=30, distillation_seed=20261104), source)
++    return source
++
++
++def dataset_fixture(tmp_path, student, name='dataset', *, flipped=False):
++    """Two complete seeds/sides, tiny rows; diagnostics deliberately extreme."""
++    sd = module()
++    out = tmp_path / name
++    out.mkdir()
++    rng = np.random.default_rng(12)
++    plan = [dict(game_index=i, env_seed=865100+i//2, side=i % 2,
++                 side_name=f'player_{i % 2}', opponent='solution92', is_train=(i < 2) ^ flipped)
++            for i in range(4)]
++    q = np.tile(np.array([-2, -1, 0, 1, 2, 3], np.float32), (8, 1))
++    q[4:] *= 100
++    arrays = dict(s=rng.normal(size=(8, 79)).astype(np.float32),
++                  mask=np.ones((8, 6), bool), teacher_q=q,
++                  student_q=np.zeros((8, 6), np.float32),
++                  final_action=np.zeros(8, np.int8), world_action=np.zeros((8, 3), np.int16),
++                  game_index=np.repeat(np.arange(4, dtype=np.int32), 2),
++                  env_seed=np.repeat(np.array([865100, 865100, 865101, 865101], np.int64), 2),
++                  side=np.repeat(np.array([0, 1, 0, 1], np.int8), 2),
++                  env_step=np.tile(np.array([1, 2], np.int16), 4),
++                  match_step=np.tile(np.array([1, 2], np.int16), 4),
++                  uid=np.zeros(8, np.int8),
++                  is_train=np.repeat(np.array([p['is_train'] for p in plan], bool), 2))
++    np.savez(out / 'dataset.npz', **arrays)
++    (out / 'games.jsonl').write_text(''.join(json.dumps(dict(p, status='done'))+'\n' for p in plan))
++    manifest = dict(schema_version=1, status='done', teacher_sha256=sd.V14_SHA256,
++                    teacher_members=36, student_sha256=sd.sha256(student), game_plan=plan,
++                    rows=8, files_sha256={name: sd.sha256(out / name)
++                                          for name in ('dataset.npz', 'games.jsonl')})
++    (out / 'manifest.json').write_text(json.dumps(manifest))
++    (out / 'status.json').write_text(json.dumps(dict(status='done')))
++    return out, arrays, manifest
++
++
++def rewrite_dataset(out, arrays, manifest):
++    sd = module()
++    np.savez(out / 'dataset.npz', **arrays)
++    manifest['files_sha256']['dataset.npz'] = sd.sha256(out / 'dataset.npz')
++    (out / 'manifest.json').write_text(json.dumps(manifest))
++
++
++def test_loader_validates_hash_schema_plan_and_consistent_whole_seed_split(tmp_path):
++    sd = module()
++    student = source_student(tmp_path)
++    a, _, _ = dataset_fixture(tmp_path, student)
++    b, _, _ = dataset_fixture(tmp_path, student, 'round2')
++    arrays, metadata = sd.load_datasets([a, b])
++    assert len(arrays['s']) == 16
++    assert arrays['is_train'].sum() == 8
++    assert [item['rows'] for item in metadata] == [8, 8]
++    c, _, _ = dataset_fixture(tmp_path, student, 'leak', flipped=True)
++    with pytest.raises(ValueError, match='split'):
++        sd.load_datasets([a, c])
++
++
++@pytest.mark.parametrize('bad', ['status', 'hash', 'shape', 'dtype', 'empty_mask',
++                                 'nonfinite', 'row_plan', 'plan_split', 'teacher', 'members',
++                                 'missing_side', 'rows', 'duplicate_row'])
++def test_loader_refuses_incomplete_tampered_or_inconsistent_datasets(tmp_path, bad):
++    sd = module()
++    student = source_student(tmp_path)
++    out, arrays, manifest = dataset_fixture(tmp_path, student)
++    if bad == 'status':
++        (out / 'status.json').write_text('{"status":"incomplete"}')
++    elif bad == 'hash':
++        (out / 'games.jsonl').write_text('tampered')
++    elif bad == 'shape':
++        arrays['s'] = arrays['s'][:, :78]
++    elif bad == 'dtype':
++        arrays['mask'] = arrays['mask'].astype(np.int8)
++    elif bad == 'empty_mask':
++        arrays['mask'][0] = False
++    elif bad == 'nonfinite':
++        arrays['student_q'][-1, 5] = np.nan
++    elif bad == 'row_plan':
++        arrays['env_seed'][0] += 7
++    elif bad == 'plan_split':
++        manifest['game_plan'][1]['is_train'] = False
++    elif bad == 'teacher':
++        manifest['teacher_sha256'] = '0'*64
++    elif bad == 'members':
++        manifest['teacher_members'] = 35
++    elif bad == 'missing_side':
++        manifest['game_plan'] = manifest['game_plan'][:-1]
++    elif bad == 'rows':
++        manifest['rows'] = 100
++    elif bad == 'duplicate_row':
++        for column in ('env_step', 'match_step'):
++            arrays[column][1] = arrays[column][0]
++    if bad not in ('status', 'hash'):
++        rewrite_dataset(out, arrays, manifest)
++    with pytest.raises(ValueError):
++        sd.load_datasets([out])
++
++
++def test_complete_run_has_exact_schedule_frozen_calibration_and_compatible_export(tmp_path):
++    sd = module()
++    student = source_student(tmp_path)
++    data, _, _ = dataset_fixture(tmp_path, student)
++    before = sd.sha256(student)
++    out = tmp_path / 'fit'
++    result = sd.run_distillation(student, [data], out, datetime.now(timezone.utc)+timedelta(minutes=2))
++    assert result['status'] == 'complete'
++    assert result['action_epochs_completed'] == 30
++    assert result['value_epochs_completed'] == 5
++    assert result['action_updates'] == 30 and result['value_updates'] == 5
++    assert result['updates'] == 35 and result['cumulative_updates'] == 125
++    assert result['training_rows_seen'] == 140
++    assert result['calibration']['body_adv_unchanged'] is True
++    assert result['calibration']['non_tie_pair_rank_changes'] == 0
++    assert result['reload_exact'] is True
++    assert result['scale'] == pytest.approx(np.sqrt(35/12))
++    assert result['inputs_before'] == result['inputs_after']
++    assert result['sources_before'] == result['sources_after']
++    assert sd.sha256(student) == before
++    cp = torch.load(out / 'weights/agent.pth', weights_only=True)
++    assert set(cp) == {'q', 'target_q', 'cfg', 'feature_dim', 'n_actions', 'ensemble',
++                       'ensemble_dims', 'env_steps', 'learn_steps',
++                       'distillation_updates', 'distillation_epochs', 'distillation_seed'}
++    assert cp['distillation_updates'] == 125
++    from scripts.student_reward_train import _student
++    _student(out / 'weights/agent.pth')
++    from agents.sherlock.main import Agent_x
++    loaded = Agent_x('player_0', agent_path=str(out / 'weights/agent.pth'), train=False)
++    assert loaded.extra_q == []
++    assert all(torch.equal(value, cp['target_q'][key]) for key, value in cp['q'].items())
++    metrics = json.loads((out / 'metrics.json').read_text())
++    assert metrics['before']['train']['rows'] == metrics['after']['train']['rows'] == 4
++    assert metrics['before']['diagnostic']['rows'] == metrics['after']['diagnostic']['rows'] == 4
++    assert metrics['after']['train']['legal_mean_q_mse'] < metrics['after_action']['train']['legal_mean_q_mse']
++
++
++def test_deadline_never_exports_partial_checkpoint(tmp_path):
++    sd = module()
++    student = source_student(tmp_path)
++    data, _, _ = dataset_fixture(tmp_path, student)
++    out = tmp_path / 'partial'
++    result = sd.run_distillation(student, [data], out, datetime.now(timezone.utc)-timedelta(seconds=1))
++    assert result['status'] == 'incomplete'
++    assert not (out / 'weights/agent.pth').exists()
++
++
++def test_output_protection_and_collecting_student_identity(tmp_path):
++    sd = module()
++    student = source_student(tmp_path)
++    data, _, manifest = dataset_fixture(tmp_path, student)
++    deadline = datetime.now(timezone.utc)+timedelta(minutes=2)
++    for out in (data, sd.ROOT / 'Gruppe15/new-fit', tmp_path):
++        with pytest.raises(ValueError):
++            sd.run_distillation(student, [data], out, deadline)
++    manifest['student_sha256'] = '0'*64
++    (data / 'manifest.json').write_text(json.dumps(manifest))
++    with pytest.raises(ValueError, match='student'):
++        sd.run_distillation(student, [data], tmp_path / 'mismatch', deadline)
++    assert not (tmp_path / 'mismatch/weights/agent.pth').exists()
++
++
++@pytest.mark.parametrize('base', ['current', 'primary', 'historical'])
++def test_output_guard_rejects_packaged_submission_paths_before_any_creation(base, monkeypatch):
++    sd = module()
++    from pathlib import Path
++    roots = dict(current=sd.ROOT,
++                 primary=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15'),
++                 historical=Path('/Users/moayedshawesh/Desktop/KI/sherlock-november-followup'))
++
++    def creation_is_a_bug(*args, **kwargs):
++        pytest.fail('Protected submission path reached directory creation')
++
++    monkeypatch.setattr(Path, 'mkdir', creation_is_a_bug)
++    with pytest.raises(ValueError, match='geschuetzt|protected'):
++        sd.reserve_output(roots[base]/'agents/Gruppe15/action-fit-regression', [])
++
++
++def test_output_guard_rejects_symlink_alias_of_packaged_submission(tmp_path):
++    sd = module()
++    from pathlib import Path
++    # A temporary ancestor alias points at the existing repository. Creating
++    # the alias itself is harmless; no directory under agents is touched.
++    alias = tmp_path/'repository-alias'
++    alias.symlink_to(sd.ROOT, target_is_directory=True)
++    with pytest.raises(ValueError, match='geschuetzt|protected'):
++        sd.reserve_output(alias/'agents/Gruppe15/action-fit-regression', [])
++
++
++def test_diagnostic_labels_never_affect_scale_or_either_training_phase(tmp_path):
++    sd = module()
++    student = source_student(tmp_path)
++    a, _, _ = dataset_fixture(tmp_path, student)
++    b, arrays, manifest = dataset_fixture(tmp_path, student, 'other-diagnostics')
++    arrays['teacher_q'][~arrays['is_train']] *= -1000
++    rewrite_dataset(b, arrays, manifest)
++    deadline = datetime.now(timezone.utc)+timedelta(minutes=2)
++    first = sd.run_distillation(student, [a], tmp_path/'first', deadline)
++    second = sd.run_distillation(student, [b], tmp_path/'second', deadline)
++    cp_a = torch.load(tmp_path/'first/weights/agent.pth', weights_only=True)
++    cp_b = torch.load(tmp_path/'second/weights/agent.pth', weights_only=True)
++    assert first['scale'] == second['scale']
++    assert all(torch.equal(value, cp_b['q'][key]) for key, value in cp_a['q'].items())
++
++
++def test_interrupted_value_phase_refuses_final_checkpoint_after_complete_action_phase(tmp_path, monkeypatch):
++    sd = module()
++    student = source_student(tmp_path)
++    data, _, _ = dataset_fixture(tmp_path, student)
++    out = tmp_path/'interrupted'
++    real_datetime = datetime
++    deadline = real_datetime.now(timezone.utc)+timedelta(minutes=2)
++
++    class DeadlineDuringCalibration(real_datetime):
++        @classmethod
++        def now(cls, tz=None):
++            if (out/'status.json').exists():
++                status = json.loads((out/'status.json').read_text())
++                if status['value_epochs_completed'] >= 1:
++                    return deadline+timedelta(seconds=1)
++            return real_datetime.now(tz)
++
++    # The fake clock keeps datetime type checking valid while crossing the
++    # deadline at the first completed value epoch.
++    monkeypatch.setattr(sd, 'datetime', DeadlineDuringCalibration)
++    deadline = DeadlineDuringCalibration.fromisoformat(deadline.isoformat())
++    result = sd.run_distillation(student, [data], out, deadline)
++    assert result['status'] == 'incomplete'
++    assert result['action_epochs_completed'] == 30
++    assert result['value_epochs_completed'] == 1
++    assert result['updates'] == 31
++    assert not list((out/'weights').glob('*.pth'))
++
++
++def test_calibration_checks_reject_body_mutation_and_non_tie_rank_changes():
++    sd = module()
++    from agents.sherlock.model import QNet
++    net = QNet(79, 6, 512, True)
++    frozen = {name: value.clone() for name, value in net.state_dict().items()
++              if name.startswith(('body.', 'adv.'))}
++    before = np.array([[1, 2, 3, 4, 5, 6]], np.float32)
++    mask = np.ones((1, 6), bool)
++    sd._calibration_checks(net, frozen, before, before+4, mask)
++    with pytest.raises(ValueError, match='calibration'):
++        sd._calibration_checks(net, frozen, before, before[:, ::-1], mask)
++    with torch.no_grad():
++        net.body[0].weight[0, 0] += 1
++    with pytest.raises(ValueError, match='calibration'):
++        sd._calibration_checks(net, frozen, before, before, mask)
+diff --git a/tests/test_student_collect.py b/tests/test_student_collect.py
+new file mode 100644
+index 0000000..5b81902
+--- /dev/null
++++ b/tests/test_student_collect.py
+@@ -0,0 +1,346 @@
++"""Bounded tests for exact eval-state collection; no Lux games are started."""
++from datetime import datetime, timedelta, timezone
++import importlib.util
++from types import SimpleNamespace
++
++import numpy as np
++import pytest
++import torch
++
++
++def module():
++    assert importlib.util.find_spec('scripts.student_collect') is not None, 'Collector is not implemented'
++    from scripts import student_collect
++    torch.set_num_threads(1)
++    return student_collect
++
++
++class FakeAgent:
++    """Reproduce the actual CPU tensor/numpy alias and late rule overrides."""
++    def __init__(self, mirrored=True):
++        self.q = torch.nn.Linear(79, 6).eval()
++        with torch.no_grad():
++            self.q.weight.zero_()
++            self.q.bias.copy_(torch.arange(6))
++        self.cfg = SimpleNamespace(frozen=False)
++        self.training = False
++        self.autosave_on_terminate = False
++        self.belief = SimpleNamespace(mirrored=mirrored)
++        self._prev_feats, self._prev_masks = {}, {}
++        self.calls = 0
++
++    def act(self, step, obs):
++        self.calls += 1
++        self._prev_feats, self._prev_masks = {}, {}
++        actions = np.zeros((16, 3), int)
++        if obs['match_steps'] == 0 or obs.get('empty'):
++            return actions
++        x = torch.full((2, 79), 3., dtype=torch.float32)
++        masks = np.array([[True, True, False, False, False, False],
++                          [True, False, False, False, False, False]])
++        with torch.no_grad():
++            output = self.q(x)
++        output.numpy()[~masks] = -np.inf
++        self._prev_feats = {7: x.numpy()[0], 2: x.numpy()[1]}
++        self._prev_masks = {7: masks[0], 2: masks[1]}
++        self._prev_actions = {7: 0, 2: 0}  # Not authoritative final actions.
++        actions[7] = [2, 0, 0]  # world RIGHT -> canonical UP
++        actions[2] = [5, -3, 1]  # legal late SAP override outside network mask
++        return actions
++
++
++def test_copies_before_numpy_mask_mutation_and_uses_final_world_actions():
++    sc = module()
++    agent = FakeAgent()
++    with sc.ExactCollector(agent) as capture:
++        capture.set_game(dict(game_index=4, env_seed=865102, side=1, is_train=True))
++        actions = agent.act(11, {'match_steps': 12})
++        agent._prev_feats[7][:] = 99
++        agent._prev_masks[7][:] = False
++        actions[7][:] = 0
++    data = capture.arrays()
++    assert agent.calls == 1
++    assert np.array_equal(data['student_q'], [[0, 1, 2, 3, 4, 5]] * 2)
++    assert np.all(data['s'] == 3)
++    assert np.array_equal(data['mask'][0], [True, True, False, False, False, False])
++    assert data['uid'].tolist() == [7, 2]
++    assert data['final_action'].tolist() == [1, 5]
++    assert data['world_action'].tolist() == [[2, 0, 0], [5, -3, 1]]
++    assert data['env_step'].tolist() == [11, 11]
++    assert data['match_step'].tolist() == [12, 12]
++    assert capture.counts['final_outside_network_mask_rows'] == 1
++    assert len(agent.q._forward_hooks) == 0
++    assert 'act' not in vars(agent)
++
++
++def test_reset_and_no_unit_steps_never_reuse_previous_network_rows():
++    sc = module()
++    agent = FakeAgent(False)
++    with sc.ExactCollector(agent) as capture:
++        capture.set_game(dict(game_index=0, env_seed=1, side=0, is_train=True))
++        agent.act(1, {'match_steps': 1})
++        agent.act(2, {'match_steps': 0})
++        agent.act(3, {'match_steps': 3, 'empty': True})
++    assert len(capture.arrays()['s']) == 2
++    assert capture.counts['reset_steps'] == 1
++    assert capture.counts['no_unit_steps'] == 1
++    assert capture.counts['no_network_steps'] == 2
++    assert capture.arrays()['final_action'].tolist() == [2, 5]
++
++
++def test_hook_removed_and_act_restored_when_original_act_raises():
++    sc = module()
++    agent = FakeAgent()
++    original = lambda step, obs: (_ for _ in ()).throw(RuntimeError('act failed'))
++    agent.act = original
++    with pytest.raises(RuntimeError, match='act failed'):
++        with sc.ExactCollector(agent):
++            agent.act(1, {'match_steps': 1})
++    assert agent.act is original
++    assert len(agent.q._forward_hooks) == 0
++
++
++def test_feature_alignment_failure_is_not_silently_dropped():
++    sc = module()
++    agent = FakeAgent()
++    original = agent.act
++    def wrong(step, obs):
++        result = original(step, obs)
++        agent._prev_feats[7] = np.zeros(79, np.float32)
++        return result
++    agent.act = wrong
++    with pytest.raises(ValueError, match='feature'):
++        with sc.ExactCollector(agent):
++            agent.act(1, {'match_steps': 1})
++    assert len(agent.q._forward_hooks) == 0
++
++
++def test_plan_holds_out_whole_maps_and_preserves_fixed_opponents():
++    sc = module()
++    plan = sc.game_plan(865100, 30)
++    assert len(plan) == 60
++    assert [row['opponent'] for row in plan[:10:2]] == ['solution92'] * 3 + ['default', 'self']
++    assert [row['env_seed'] for row in plan if not row['is_train']][::2] == list(range(865125, 865130))
++    small = sc.game_plan(2, 5)
++    assert [(r['side'], r['is_train']) for r in small[-2:]] == [(0, False), (1, False)]
++    assert sum(r['is_train'] for r in small) == 8
++
++
++@pytest.mark.parametrize('maps', [0, 1, True, 2.5])
++def test_invalid_plan_cannot_have_empty_train_split(maps):
++    with pytest.raises(ValueError):
++        module().game_plan(2, maps)
++
++
++def test_output_guards_reject_occupied_and_protected_paths(tmp_path):
++    sc = module()
++    occupied = tmp_path / 'occupied'
++    occupied.mkdir()
++    with pytest.raises(ValueError):
++        sc.reserve_output(occupied, [])
++    with pytest.raises(ValueError):
++        sc.reserve_output(sc.ROOT / 'agents/sherlock/weights/collect', [])
++    source = tmp_path / 'source' / 'student.pth'
++    with pytest.raises(ValueError):
++        sc.reserve_output(source.parent, [source])
++
++
++def test_deadline_checked_before_every_act_and_removes_hook():
++    sc = module()
++    agent = FakeAgent()
++    def expired():
++        raise TimeoutError('deadline')
++    with pytest.raises(TimeoutError):
++        with sc.ExactCollector(agent, check=expired):
++            agent.act(1, {'match_steps': 1})
++    assert agent.calls == 0
++    assert len(agent.q._forward_hooks) == 0
++
++
++def test_rejects_uid_outside_course_sixteen_unit_limit():
++    sc = module()
++    agent = FakeAgent()
++    original = agent.act
++    def wrong(step, obs):
++        actions = original(step, obs)
++        agent._prev_feats[17] = agent._prev_feats.pop(2)
++        agent._prev_masks[17] = agent._prev_masks.pop(2)
++        return np.pad(actions, ((0, 16), (0, 0)))
++    agent.act = wrong
++    with pytest.raises(ValueError, match='unit IDs'):
++        with sc.ExactCollector(agent) as capture:
++            capture.set_game(dict(game_index=0, env_seed=1, side=0, is_train=True))
++            agent.act(1, {'match_steps': 1})
++
++
++def checkpoint_file(tmp_path):
++    from agents.sherlock.config import AgentConfig
++    from agents.sherlock.model import QNet
++    torch.set_num_threads(1)
++    net = QNet(79, 6, 512, True)
++    state = net.state_dict()
++    cp = dict(q=state, target_q={k: v.clone() for k, v in state.items()},
++              cfg=AgentConfig(hidden=512).to_dict(), feature_dim=79, n_actions=6,
++              ensemble=[], ensemble_dims=[], env_steps=60000, learn_steps=0)
++    path = tmp_path / 'student.pth'
++    torch.save(cp, path)
++    return path, cp
++
++
++@pytest.mark.parametrize('mutation', ['ensemble', 'optimizer', 'width', 'target', 'nan'])
++def test_student_rejects_incompatible_or_mutated_checkpoint(tmp_path, mutation):
++    sc = module()
++    path, cp = checkpoint_file(tmp_path)
++    if mutation == 'ensemble':
++        cp['ensemble'] = [cp['q']]
++    elif mutation == 'optimizer':
++        cp['opt'] = {}
++    elif mutation == 'width':
++        cp['cfg']['hidden'] = 256
++    elif mutation == 'target':
++        next(iter(cp['target_q'].values())).add_(1)
++    else:
++        next(iter(cp['q'].values())).flatten()[0] = float('nan')
++    torch.save(cp, path)
++    with pytest.raises((ValueError, RuntimeError)):
++        sc.load_student(path)
++
++
++def collect_fixture(tmp_path, monkeypatch, *, mutation=False):
++    sc = module()
++    path, cp = checkpoint_file(tmp_path)
++    teacher, v13 = tmp_path / 'teacher.pth', tmp_path / 'v13.pth'
++    teacher.write_bytes(b'teacher')
++    v13.write_bytes(b'v13')
++    monkeypatch.setattr(sc, 'TEACHER', teacher)
++    monkeypatch.setattr(sc, 'V13', v13)
++    monkeypatch.setattr(sc, 'V13_SHA256', sc.sha256(v13))
++    monkeypatch.setattr(sc, '_pins', lambda: {'sources': {'fixed': 'hash'}, 'protected': {}})
++    agent = FakeAgent()
++    agent.target_q = torch.nn.Linear(79, 6)
++    agent.opt = torch.optim.Adam(agent.q.parameters())
++    agent.env_steps, agent.learn_steps = 60000, 0
++    agent.buffer, agent.recent_losses = [], []
++    monkeypatch.setattr(sc, '_agent', lambda student, checkpoint: agent)
++    net = torch.nn.Linear(79, 6)
++    with torch.no_grad():
++        net.weight.zero_()
++        net.bias.fill_(8)
++    monkeypatch.setattr(sc, 'load_teacher', lambda path: ([net], {'hidden': 512}))
++    monkeypatch.setattr(sc, '_env', lambda: object())
++    monkeypatch.setattr(sc, 'make_opponent', lambda *args, **kwargs: object())
++    def play(env, a, opp, seed, side, train):
++        assert train is False
++        a.act(0, {'match_steps': 0})
++        a.act(1, {'match_steps': 1})
++        a.act(2, {'match_steps': 2, 'empty': True})
++        if mutation:
++            a.env_steps += 1
++        return dict(seed=seed, side=side, steps=303, result=1., optional=float('nan'))
++    monkeypatch.setattr(sc, 'play_game', play)
++    return sc, path, agent
++
++
++def test_complete_collection_serializes_exact_schema_and_hash_receipts(tmp_path, monkeypatch):
++    import json
++    sc, path, agent = collect_fixture(tmp_path, monkeypatch)
++    out = tmp_path / 'out'
++    manifest = sc.collect(path, out, 865100, 5, datetime.now(timezone.utc) + timedelta(minutes=1))
++    assert manifest['status'] == 'done'
++    assert manifest['games_completed'] == 10
++    assert manifest['rows'] == 20
++    assert manifest['train_rows'] == 16
++    assert manifest['diagnostic_rows'] == 4
++    assert manifest['learning_state_before'] == manifest['learning_state_after']
++    assert manifest['files_sha256'] == {name: sc.sha256(out / name) for name in ['dataset.npz', 'games.jsonl']}
++    with np.load(out / 'dataset.npz', allow_pickle=False) as data:
++        assert set(data.files) == {'s', 'mask', 'teacher_q', 'student_q', 'final_action', 'world_action',
++                                   'game_index', 'env_seed', 'side', 'env_step', 'match_step', 'uid', 'is_train'}
++        assert data['teacher_q'].dtype == np.float32
++        assert np.all(data['teacher_q'] == 8)
++        assert data['world_action'].dtype == np.int16
++        assert data['env_seed'].dtype == np.int64
++        assert data['is_train'].tolist() == [True] * 16 + [False] * 4
++    games = [json.loads(line) for line in (out / 'games.jsonl').read_text().splitlines()]
++    assert len(games) == 10
++    assert games[-1]['env_seed'] == 865104
++    assert games[-1]['optional'] is None
++    assert json.loads((out / 'status.json').read_text())['status'] == 'done'
++    assert len(agent.q._forward_hooks) == 0
++
++
++@pytest.mark.parametrize('failure', ['deadline', 'learning_mutation', 'source_mutation'])
++def test_failure_never_publishes_partial_dataset_success(tmp_path, monkeypatch, failure):
++    import json
++    sc, path, agent = collect_fixture(tmp_path, monkeypatch, mutation=failure == 'learning_mutation')
++    if failure == 'source_mutation':
++        calls = iter([{'source': 'before'}, {'source': 'after'}])
++        monkeypatch.setattr(sc, '_pins', lambda: next(calls))
++    deadline = datetime.now(timezone.utc) + timedelta(minutes=-1 if failure == 'deadline' else 1)
++    out = tmp_path / 'failed'
++    with pytest.raises((ValueError, TimeoutError)):
++        sc.collect(path, out, 865100, 5, deadline)
++    assert not (out / 'dataset.npz').exists()
++    assert not (out / 'dataset.pending.npz').exists()
++    assert json.loads((out / 'status.json').read_text())['status'] == 'failed'
++    assert json.loads((out / 'manifest.json').read_text())['status'] == 'failed'
++    assert len(agent.q._forward_hooks) == 0
++
++
++def test_real_load_is_single_failfast_eval_and_preserves_input(tmp_path):
++    sc = module()
++    path, cp = checkpoint_file(tmp_path)
++    before = sc.sha256(path)
++    loaded = sc.load_student(path)
++    agent = sc._agent(path, loaded)
++    assert agent.cfg.hidden == 512
++    assert not agent.cfg.frozen and not agent.training and not agent.q.training
++    assert not agent.autosave_on_terminate and not agent.learn_enabled
++    assert not agent.extra_q and agent.cnn_policy is None
++    assert len(agent.q._forward_hooks) == 0
++    assert sc.sha256(path) == before
++    for key, value in agent.q.state_dict().items():
++        assert torch.equal(value.cpu(), cp['q'][key])
++
++
++@pytest.mark.parametrize('corruption', ['nonfinite_q', 'empty_mask', 'duplicate_forward'])
++def test_bad_current_decisions_fail_instead_of_dropping_rows(corruption):
++    sc = module()
++    agent = FakeAgent()
++    if corruption == 'nonfinite_q':
++        with torch.no_grad():
++            agent.q.bias[0] = float('nan')
++    original = agent.act
++    def wrong(step, obs):
++        actions = original(step, obs)
++        if corruption == 'empty_mask':
++            agent._prev_masks[7][:] = False
++        if corruption == 'duplicate_forward':
++            agent.q(torch.zeros(2, 79))
++        return actions
++    agent.act = wrong
++    with pytest.raises(ValueError):
++        with sc.ExactCollector(agent) as capture:
++            capture.set_game(dict(game_index=0, env_seed=1, side=0, is_train=True))
++            agent.act(1, {'match_steps': 1})
++    assert len(agent.q._forward_hooks) == 0
++
++
++def test_output_aliases_and_deadline_without_timezone_are_rejected(tmp_path):
++    sc = module()
++    alias = tmp_path / 'alias'
++    alias.symlink_to(sc.ROOT / 'agents/sherlock/weights', target_is_directory=True)
++    with pytest.raises(ValueError):
++        sc.reserve_output(alias / 'new', [])
++    with pytest.raises(ValueError, match='UTC offset'):
++        sc.collect(tmp_path / 'missing.pth', tmp_path / 'out', 865100, 5, datetime.now())
++    assert not (tmp_path / 'out').exists()
++
++
++def test_legacy_provenance_must_be_complete_and_have_positive_training_counts(tmp_path):
++    sc = module()
++    path, cp = checkpoint_file(tmp_path)
++    cp.update(distillation_updates=0, distillation_epochs=30, distillation_seed=20261104)
++    torch.save(cp, path)
++    with pytest.raises(ValueError, match='provenance'):
++        sc.load_student(path)
+diff --git a/tests/test_student_reward_train.py b/tests/test_student_reward_train.py
+index 5e7233c..31df9e1 100644
+--- a/tests/test_student_reward_train.py
++++ b/tests/test_student_reward_train.py
+@@ -40,20 +40,120 @@ def test_prepare_preserves_full_config_and_only_reward_differs(student, tmp_path
+     assert a['config']['frozen'] is False
+     assert a['config']['rules_in_training'] is a['config']['rules_in_training_all'] is True
+     assert b['config']['w_sap_hit'] == 0
+     assert a['tensor_sha256'] == b['tensor_sha256']
+     assert a['rollout_plan'] == b['rollout_plan']
+     assert a['rollout_plan'][0]['seed'] == 495000
+     assert a['rollout_plan'][40]['seed'] == 493000
+     assert len(a['rollout_plan']) == 200
+ 
+ 
++def test_independent_seeds_keep_matched_arms_and_distinct_plans(student, tmp_path):
++    m = module()
++    manifests = [m.prepare(student, tmp_path / str(seed), run_seed=seed)
++                 for seed in (27, 28)]
++    for seed, manifest in zip((27, 28), manifests):
++        assert manifest['run_seed'] == seed
++        control, sap0 = (manifest['arms'][arm] for arm in m.ARMS)
++        assert control['run_seed'] == sap0['run_seed'] == seed
++        assert control['rollout_plan'] == sap0['rollout_plan']
++        assert {k for k in control['config'] if control['config'][k] != sap0['config'][k]} == {'w_sap_hit'}
++        assert [r['phase'] for r in control['rollout_plan']].count('prefill') == 40
++        assert [r['phase'] for r in control['rollout_plan']].count('train') == 160
++        assert len(manifest['validation_plan']) == 32
++        for arm in m.ARMS:
++            assert m.check_prepared(tmp_path / str(seed), arm)[1] == manifest['arms'][arm]
++    first, second = [manifest['arms']['control']['rollout_plan'] for manifest in manifests]
++    assert (first[0]['seed'], first[40]['seed']) == (475000, 473000)
++    assert (second[0]['seed'], second[40]['seed']) == (485000, 483000)
++    assert {r['seed'] for r in first}.isdisjoint(r['seed'] for r in second)
++    assert [r['opponent'] for r in first] != [r['opponent'] for r in second]
++    assert manifests[0]['arms']['control']['config'] == manifests[1]['arms']['control']['config']
++
++
++def test_explicit_default_and_default_plans_match(student, tmp_path):
++    m = module()
++    default = m.prepare(student, tmp_path / 'default')
++    explicit = m.prepare(student, tmp_path / 'explicit', run_seed=29)
++    assert default == explicit
++    assert m.rollout_plan() == m.rollout_plan(29)
++
++
++@pytest.mark.parametrize('seed', [True, False, 27., 27.5, -1, 30, 1000, '27', None])
++def test_prepare_and_planner_reject_invalid_run_seed_without_writing(student, tmp_path, seed):
++    m = module()
++    out = tmp_path / 'invalid'
++    with pytest.raises(ValueError, match='seed'):
++        m.prepare(student, out, run_seed=seed)
++    assert not out.exists()
++    with pytest.raises(ValueError, match='seed'):
++        m.rollout_plan(seed)
++
++
++@pytest.mark.parametrize('seed', [0, 29])
++def test_prepare_accepts_seed_boundaries(student, tmp_path, seed):
++    m = module()
++    out = tmp_path / 'prepared'
++    m.prepare(student, out, run_seed=seed)
++    assert m.check_prepared(out, 'control')[0]['run_seed'] == seed
++
++
++@pytest.mark.parametrize('where,seed', [
++    ('run_seed', True), ('run_seed', 27.), ('run_seed', -1), ('run_seed', 30),
++    ('run_seed', 28), ('control', 27.), ('sap0', 27.), ('sap0', 28),
++    ('init', 27.), ('init', True),
++])
++def test_check_prepared_rejects_malformed_or_tampered_seed(student, tmp_path, where, seed):
++    m = module()
++    out = tmp_path / 'prepared'
++    manifest = m.prepare(student, out, run_seed=27)
++    path = out / 'manifest.json'
++    if where == 'init':
++        path = out / 'init/control/manifest.json'
++        manifest = json.loads(path.read_text())
++        manifest['run_seed'] = seed
++    elif where == 'run_seed':
++        manifest[where] = seed
++    else:
++        manifest['arms'][where]['run_seed'] = seed
++    path.write_text(json.dumps(manifest))
++    before = path.read_bytes()
++    with pytest.raises(ValueError, match='seed|changed'):
++        m.check_prepared(out, 'control')
++    assert path.read_bytes() == before
++
++
++def test_prepare_cli_uses_selected_seed(student, tmp_path, monkeypatch):
++    m = module()
++    import sys
++    out = tmp_path / 'cli'
++    monkeypatch.setattr(sys, 'argv', ['student_reward_train', 'prepare', '--student', str(student),
++                                    '--out', str(out), '--run-seed', '27'])
++    m.main()
++    manifest, entry, _ = m.check_prepared(out, 'control')
++    assert manifest['run_seed'] == entry['run_seed'] == 27
++    assert entry['rollout_plan'][40]['seed'] == 473000
++
++
++def test_seedless_legacy_manifest_is_rejected_without_rewrite(student, tmp_path):
++    m = module()
++    out = tmp_path / 'prepared'
++    manifest = m.prepare(student, out)
++    del manifest['run_seed']
++    path = out / 'manifest.json'
++    path.write_text(json.dumps(manifest))
++    before = path.read_bytes()
++    with pytest.raises(ValueError, match='legacy|run_seed'):
++        m.check_prepared(out, 'control')
++    assert path.read_bytes() == before
++
++
+ def test_prepare_drops_optimizer_and_replay_and_checks_mutation(student, tmp_path):
+     m = module()
+     # Extra optimizer is forbidden at the distilled checkpoint contract boundary.
+     cp = torch.load(student, weights_only=True)
+     cp['opt'] = {'state': {}}
+     torch.save(cp, student)
+     with pytest.raises(ValueError, match='optimizer|contract'):
+         m.prepare(student, tmp_path / 'bad')
+     del cp['opt']
+     torch.save(cp, student)
+@@ -210,21 +310,22 @@ def test_run_failure_restores_hooks_variant_and_arg_parser(student, tmp_path, mo
+     with pytest.raises(RuntimeError, match='synthetic rollout'):
+         m.run_arm(prepared, 'control', (datetime.now(timezone.utc) + timedelta(minutes=1)).isoformat())
+     assert all(getattr(finetune, k) is value for k, value in old.items())
+     assert sys.argv is argv
+     assert m.VARIANT not in m.VARIANTS
+     run = prepared / 'runs/control'
+     assert json.loads((run / 'status.json').read_text())['status'] == 'incomplete'
+     assert not (run / 'final_receipt.json').exists()
+ 
+ 
+-def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, monkeypatch):
++@pytest.mark.parametrize('run_seed', [29, 27, 28])
++def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, monkeypatch, run_seed):
+     """Actual finetune orchestration; synthetic episodes, no game/gradient claim."""
+     m = module()
+     from contextlib import contextmanager
+     from tests.test_targeting_adapt import simulated_finetune
+     finetune = simulated_finetune.__wrapped__(m, monkeypatch)
+     @contextmanager
+     def action_evidence(agent):
+         yield dict(act_calls=303, update_calls=303, checked_replay_transitions=303,
+                    transcript_sha256='0' * 64)
+     @contextmanager
+@@ -236,39 +337,61 @@ def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, mo
+     original_write = m._write
+     peer_observations = []
+     def observe_publication(path, value):
+         original_write(path, value)
+         if path.name == 'final_receipt.json':
+             # A peer runs as soon as the marker becomes visible, before the
+             # publisher can perform any subsequent status/evidence writes.
+             peer_observations.append(m.validate_receipt(path.parent))
+     monkeypatch.setattr(m, '_write', observe_publication)
+     prepared = tmp_path / 'prepared'
+-    m.prepare(student, prepared)
++    m.prepare(student, prepared, run_seed=run_seed)
+     record = m.run_arm(prepared, 'control', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
+     run = prepared / 'runs/control'
+     receipt = m.validate_receipt(run)
+     assert record['status'] == 'done'
++    assert record['argv'][record['argv'].index('--seed') + 1] == str(run_seed)
++    assert json.loads((run / 'manifest.json').read_text())['run_seed'] == run_seed
++    assert receipt['run_seed'] == run_seed
++    initial_audit = json.loads((run / 'training_audit.json').read_text())
++    assert initial_audit['run_seed'] == run_seed
++    expected_rng = np.random.default_rng({29: 2900, 27: 2700, 28: 2800}[run_seed])
++    assert initial_audit['initial']['agent_rng_sha256'] == m.experiment.state_sha256(expected_rng.bit_generator.state)
+     assert (receipt['actual_prefill_games'], receipt['actual_train_games'], receipt['actual_validation_games']) == (40, 160, 32)
+     assert receipt['end']['learning']['learn_steps'] == 24000
+     assert receipt['end']['learning']['env_steps'] == 120600
+     assert receipt['end']['reload_verified'] is True
+     assert len(list((run / 'weights').glob('*.pth'))) == 1
+     assert not (run / 'weights_best').exists()
+     m.run_arm(prepared, 'sap0', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
++    peer_audit = json.loads((prepared / 'runs/sap0/training_audit.json').read_text())
++    assert peer_audit['initial']['agent_rng_sha256'] == initial_audit['initial']['agent_rng_sha256']
+     assert [r['arm'] for r in peer_observations] == ['control', 'sap0']
+     assert all(r['status'] == 'done' for r in peer_observations)
+     assert m.compare_prefill(prepared)['status'] == 'matched'
+     assert json.loads((prepared / 'paired_prefill.json').read_text())['prefill_games'] == 40
+-    # Rehashing cannot legitimize missing initial live learning evidence.
++    receipt_path = run / 'final_receipt.json'
++    for bad_seed in (True, float(run_seed), 28 if run_seed != 28 else 27):
++        receipt_path.write_text(json.dumps(dict(receipt, run_seed=bad_seed)))
++        with pytest.raises(ValueError, match='seed|differ'):
++            m.validate_receipt(run)
++    receipt_path.write_text(json.dumps(receipt))
+     audit_path = run / 'training_audit.json'
+     audit = json.loads(audit_path.read_text())
++    audit_path.write_text(json.dumps(dict(audit, run_seed=float(run_seed))))
++    altered_receipt = copy.deepcopy(receipt)
++    altered_receipt['evidence_sha256']['training_audit.json'] = m.file_sha256(audit_path)
++    receipt_path.write_text(json.dumps(altered_receipt))
++    with pytest.raises(ValueError, match='seed'):
++        m.validate_receipt(run)
++    audit_path.write_text(json.dumps(audit))
++    # Rehashing cannot legitimize missing initial live learning evidence.
+     audit['initial'] = {}
+     audit_path.write_text(json.dumps(audit))
+     receipt['evidence_sha256']['training_audit.json'] = m.file_sha256(audit_path)
+     (run / 'final_receipt.json').write_text(json.dumps(receipt))
+     with pytest.raises(ValueError, match='proof|evidence|malformed'):
+         m.validate_receipt(run)
+ 
+ 
+ def test_concurrent_atomic_writers_use_independent_tempfiles(tmp_path, monkeypatch):
+     """Both workers reach replace together; shared .tmp deterministically fails."""

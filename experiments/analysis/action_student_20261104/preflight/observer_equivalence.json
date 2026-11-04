@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-04T15:02:07.989893+00:00",
+  "games": 4,
+  "rows": [
+    {
+      "side": 0,
+      "observed": false,
+      "actions_sha256": "807c200d6a2f1477f3b00f64e1ef51f53f4e2eba0522138958205403105ca70d",
+      "result": {
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "our_points": 1028,
+        "opp_points": 885,
+        "steps": 303,
+        "point_counting_version": 2
+      },
+      "rows": null,
+      "seconds": 4.834510292042978
+    },
+    {
+      "side": 0,
+      "observed": true,
+      "actions_sha256": "807c200d6a2f1477f3b00f64e1ef51f53f4e2eba0522138958205403105ca70d",
+      "result": {
+        "result": 1.0,
+        "our_wins": 3,
+        "opp_wins": 0,
+        "our_points": 1028,
+        "opp_points": 885,
+        "steps": 303,
+        "point_counting_version": 2
+      },
+      "rows": 3565,
+      "seconds": 4.499372457969002
+    },
+    {
+      "side": 1,
+      "observed": false,
+      "actions_sha256": "a0e212950babb064a850ad2f263ea3e2803c619ddf34910c9b58d6b83d569ac8",
+      "result": {
+        "result": 0.0,
+        "our_wins": 0,
+        "opp_wins": 3,
+        "our_points": 535,
+        "opp_points": 1065,
+        "steps": 303,
+        "point_counting_version": 2
+      },
+      "rows": null,
+      "seconds": 4.573071291903034
+    },
+    {
+      "side": 1,
+      "observed": true,
+      "actions_sha256": "a0e212950babb064a850ad2f263ea3e2803c619ddf34910c9b58d6b83d569ac8",
+      "result": {
+        "result": 0.0,
+        "our_wins": 0,
+        "opp_wins": 3,
+        "our_points": 535,
+        "opp_points": 1065,
+        "steps": 303,
+        "point_counting_version": 2
+      },
+      "rows": 3605,
+      "seconds": 4.621299416990951
+    }
+  ],
+  "source_protected_before_after_equal": true,
+  "student_sha256": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b"
+}

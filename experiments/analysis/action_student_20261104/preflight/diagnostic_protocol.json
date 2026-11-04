@@ -1,0 +1,410 @@
+{
+  "status": "admitted_frozen_before_first_game",
+  "created_utc": "2026-11-04T14:49:25.171797+00:00",
+  "root": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "roles": {
+    "V14": "agents/sherlock/weights/agent_p0.pth",
+    "S30": "experiments/candidates/student_reward_20261104/S30.pth",
+    "A2": "experiments/runs/20261104_action_student/fit_r2/weights/agent.pth",
+    "CONTROL27": "experiments/runs/20261104_action_student/rl_seed27/runs/control/weights/agent.pth",
+    "CONTROL28": "experiments/runs/20261104_action_student/rl_seed28/runs/control/weights/agent.pth",
+    "SAP027": "experiments/runs/20261104_action_student/rl_seed27/runs/sap0/weights/agent.pth",
+    "SAP028": "experiments/runs/20261104_action_student/rl_seed28/runs/sap0/weights/agent.pth",
+    "CONTROL2": "experiments/runs/20261104_action_student/ensembles/CONTROL2.pth",
+    "SAP02": "experiments/runs/20261104_action_student/ensembles/SAP02.pth"
+  },
+  "panel_seeds": [
+    866000,
+    866001,
+    866002,
+    866003,
+    866004,
+    866005,
+    866006,
+    866007,
+    866008,
+    866009,
+    866010,
+    866011,
+    866012,
+    866013,
+    866014,
+    866015,
+    866016,
+    866017,
+    866018,
+    866019
+  ],
+  "direct_seeds": [
+    866100,
+    866101,
+    866102,
+    866103,
+    866104,
+    866105,
+    866106,
+    866107,
+    866108,
+    866109,
+    866110,
+    866111,
+    866112,
+    866113,
+    866114,
+    866115,
+    866116,
+    866117,
+    866118,
+    866119
+  ],
+  "opponents": [
+    "solution92",
+    "default",
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth"
+  ],
+  "direct_opponent": "self:agents/sherlock/weights/agent_p0.pth",
+  "panel_games": 1080,
+  "direct_games": 320,
+  "selection_after_observing_games": false,
+  "promotion_from_diagnostic": false,
+  "notes": [
+    "This is a planned comparison, not evidence of completed games. Hash/source/runtime admission recorded separately before launch.",
+    "No unqualified promotion. All training seeds, including paired reward arms, must complete before the full panel is admitted.",
+    "Same maps and both sides; whole-card bootstrap; trainseed effects reported separately.",
+    "Role agents fail fast with frozen=false in evaluation; runtime source/defaults unchanged. Opponent logs will be checked for caught errors."
+  ],
+  "evaluation_overrides": [
+    "frozen=false"
+  ],
+  "recorded_utc": "2026-11-04T15:48:02.459553+00:00",
+  "output_directory": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/diagnostic",
+  "deadline_utc": "2026-11-04T16:40:00Z",
+  "source_commit": "96b524b4fe70a0008e5cee2244dae6d74195f209",
+  "source_sha256": {
+    "agents/DQN/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/DQN/feat_generator.py": "fab42beace7099bbf70ff6a85df9fe5ef027b67ed0bfc162380f5215c77e5128",
+    "agents/DQN/main.py": "ec26aa60799ed3e4a7ac0238e7b00c64bf111bd5ddc84ff9cadc8f58f1476843",
+    "agents/Solution_92_Kaggle/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/Solution_92_Kaggle/agent.py": "de835c2cc24960695229b092d7a2fd66627f49e4fe1f99a31d2e03360c1cdcc5",
+    "agents/Solution_92_Kaggle/base.py": "ec227fc8873ea09c6579cfe28e67f5b7e4e1913e9997c9841c23faeddb9aa33c",
+    "agents/Solution_92_Kaggle/pathfinding.py": "87307cf0948c78a57f5316cb82e8e29ea4408cb3cd71bf12ac5987f9ef6afeaf",
+    "agents/__init__.py": "6c326dbf6ca0bf31b95766f311b1b6c24d83529a4485cb887a1fb98ae51e77dc",
+    "agents/default/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/default/default.py": "07c6b27d3f7c8a3a169deaa0f93ba02ae47b3f0a07659787e00a596225d6d0c0",
+    "agents/sherlock/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agents/sherlock/assignment.py": "399e84a6a3ccef3906e3f39749db86412d05947ba3c7676d3c607154ef047db4",
+    "agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+    "agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+    "agents/sherlock/config.py": "791b70b9017d7ba1d4ffe06ddbe38cf6b23a9a4d633acab266fad59f45d22e27",
+    "agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/main.py": "4b7d3698e878dd76439c056fdb007ea5e586edb0797dc37638435433d5554603",
+    "agents/sherlock/model.py": "df21cb3cfd68795cb59b3925e8d9099337c81104596df2adadf65d3300bc80ab",
+    "agents/sherlock/opp_model.py": "d6e0f65bd754fb7eb267b17f5e6c69753a0fd01cde16152f6ea1fa2827363da9",
+    "agents/sherlock/param_est.py": "c98eae7b8afba125bc7df3b2e8371b3c00a89ead149d3058a1dbc448affd8419",
+    "agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78",
+    "agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311",
+    "agents/sherlock/reward.py": "76de1da0959f42e5760f4d7e86567d81f1a36e29ba5e8a0136dad0eb42fd3a9c",
+    "agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+    "agents/sherlock/tactics.py": "b90122ed687c72530461baf385529c02b81b0f986c635172e36d13a99d003fce",
+    "lux/__init__.py": "40687d2d1aae048b8e57e8727ee37d64c8e39f542f4fd3b568a32cd6839c5917",
+    "lux/kit.py": "8ae5f85c57b37de6eeb1f670667c96b844a0325553c7562b3266372bb8584f15",
+    "lux/runner.py": "8b8a69f18ff8d1d32b84648804803cb798b5bf0a8747a5c9f97259be59816912",
+    "lux/utils.py": "1ec78a4ad40d85be439a380a77077b8aa5f602e5b6262894ed2c9c1c0b6057f5",
+    "scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/analyze_losses.py": "45600f579e1ec117459267c7608a8944f251e2f67944a001d804471f824682c6",
+    "scripts/analyze_timing.py": "691461d7cdd5eb5504c1dd819445c58bd3b04244fb73864acb5bbc62604b2e50",
+    "scripts/belief_truth_check.py": "595fe3c2f66d35de6297feb33644b85d5735c24818b7b144b77e7eec77542460",
+    "scripts/build_cnn_ensemble.py": "e9c21299549bce576978fc2ecabf28b79a93d07f24fd3b4e9db348170a165725",
+    "scripts/build_ensemble.py": "7d2c5a982a4eaca7f13f0892b84ac947b37dd17463e005f27ff1cd88708748a9",
+    "scripts/build_submission.py": "d0c85a3086769dcc8194fb99b5f740d4c94b167d97dd6925c42692e6068ad973",
+    "scripts/check_candidate_runner.py": "a5e671b12805bfa3ad0aad06a8b44379e1e6127f157ea708dff4e4ad86f73c2f",
+    "scripts/common.py": "3f1a17515a588145c145999fe60293553473414900a3b2b77076ed4c2223d7a1",
+    "scripts/compare_report.py": "c43355f08fc71a07242e087ce67ec1d2aac2a7d0951fb1150754c60a642eea72",
+    "scripts/compare_weights.py": "f451fbc3fa12f4ff8e9092f9acc352740bac6cac2092be4af3debd6784bbfd43",
+    "scripts/decision_trace.py": "e6adc48d3c7a28721c59cdd45fb60bc2fb9ab03f32ca5fa76b6c8babd9777ec5",
+    "scripts/demo_server.py": "7a6da1805ea0528f6d186c4cd35d3e1a0a917bb8c1ad85fef3e7230785e117cf",
+    "scripts/early_curriculum_analysis.py": "ccb254c37e3be5e913f856a963c41fc0ffe0a73e69f1804d6780a23198e5d447",
+    "scripts/early_curriculum_study.py": "62a317f634da7db8f1945ccc8a7f69224d87de72751e074e9300144a35926252",
+    "scripts/evaluate.py": "b787f238492e440408593e34f9f2f6e80cd9ab77135e569634fdfe67ba0b24a2",
+    "scripts/experiment.py": "00b316de7233cbfdfd07f33751d49a9f1711a93db643aa3a5e6352c337170405",
+    "scripts/final_battle_candidates.py": "5e5a5c25e81376b0d8f1a24028393abe7834dfdbcd782c889d259d76a6722812",
+    "scripts/final_battle_study.py": "5794caadd90d5a87f0538077664e8808904d692ef81b85a6979a07c2a1e5641e",
+    "scripts/final_rescue_train.py": "d17f7f92862b23a1493e7b78ab4bce1daa939ec39f300066ddf23600d06a9053",
+    "scripts/final_training_supervisor.py": "1b35745c175f5adca714e9762768c9ca81224a5ee456abad1dea64132e9fdb76",
+    "scripts/finetune.py": "4eff762d6c4b8e2341d8abe854dea483ab7acd15bc83167109efac3f54034507",
+    "scripts/league_gates.py": "47b2884f11c2f8fbc4bb41742c39d3db74a7c010abadea3bf481f8917fb3e22a",
+    "scripts/make_demo_icon.py": "4ec8b4d4fd1bf3399afef3ada68f1cbd2655edf464158cbb4ffd86e8c318aa38",
+    "scripts/mechanism_probe.py": "8a982f7e75c7c694b8ffcfc618f5b5445fd881bf6d34fe5f0d1e0b988b6a64af",
+    "scripts/mechanism_report.py": "ddde090969293c6f997d23fd18759e9c757ee81c9976d28d1f89cb0516539ab7",
+    "scripts/metrics.py": "35944cc163617af3d7e63fd6a1da992b60cda6ba28d2e7891c24963f1bb3853e",
+    "scripts/network_breadth_candidates.py": "28ed012c8b9051763bdcf79e3660cff78acabe4bd2bd5ca9e9d0aabc5e2808d5",
+    "scripts/network_breadth_study.py": "ddbe007a5486ec02e838c344dc59559ea5da9b9ef60c390ff4c8f9ae88e3900f",
+    "scripts/night_train_pilot.py": "69650408717a0bca74ee3ee80eb8af167983f9aa303efe6631e4b271a720898f",
+    "scripts/observe_loss_mechanisms.py": "2fab40331acc220cf0cfac30641ffb55eff8951f1903625390bbc69f9b1d8a06",
+    "scripts/oracle_probe.py": "ec21a9ce1e75c86c538273257d20f4ec0b4f1296623f96a63f76e699409a3ac1",
+    "scripts/output_paths.py": "850603ec73be07ae1e26aa00dbd6f4336bc11588dc5cf5f0d585da1f72920893",
+    "scripts/par_eval.py": "f525506d5268600e00c180d2a1fc4c9cc6bfb02ff2d63c6dcc7a8da33bf58a61",
+    "scripts/par_losses.py": "28a6de8766d88369b6f856cc583e741b7e6db591d53ad98f014ddcd3e939f42a",
+    "scripts/play_and_view.py": "aed9c980584afece1327c943639ee62169ba66957fa5353bd544ff4cf349c8a1",
+    "scripts/ppo_train.py": "0a561339e8a1167cb6132df3a69a4f99a14de1602c5c2ab5ba321b88deb4e635",
+    "scripts/protocol.py": "44d35c70faee2e6251a65636f74976bb232704459cfe088dee156fcc6c43fcc4",
+    "scripts/record_replay.py": "94a29e73b7d754e4f9ff43791126d0f05e47f83d2eccbcfc2425a03260106f4c",
+    "scripts/release_candidate.py": "bf304b584d4eca61a8c2163509684e758ba5c8720466c65be7515d6d3620e676",
+    "scripts/render_snapshots.py": "4b896e5654998520fbaf90acc169bee8a4dbe926ea41905ebabc562f0d5fbaaa",
+    "scripts/report.py": "12d94c1f97d907e7ef984b3f633217f5cdfffd133ffc2e5963a3e5984a287b89",
+    "scripts/run_experiments.py": "000ef470ed61f651a6f88414bec2d1413e1a0e4845f5c25f00186033da6f788a",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "scripts/screen_table.py": "23ae948bcc2fb9c198c7ce01010f1686b0344eabf242510fb0e465ac5ee46bb4",
+    "scripts/set_cfg.py": "41eed8354cbfbaa8ccf02fb475c285f555bfbd937789aaf8e83e18501d1fd338",
+    "scripts/set_match_count.py": "8f27a91cf13dfb5b8acdb8ea5a1fcecc94dcae34f9ecb05a4ccabf801b3a6bec",
+    "scripts/sherlock_remote_stub.py": "8ecd3e6050de31a03ebf4ccc6066c9e2108c631fef4cb38a1b5ef718e418cb9c",
+    "scripts/sherlock_server.py": "d1b274a0263ce0118aa44f08ac37c504a03490c122ba93863947340a701a8a23",
+    "scripts/student_action_distill.py": "ac499f02a0d6df8ef24b146936326f02fe16cdd71e42f6cc0c24e11a3f682ccf",
+    "scripts/student_collect.py": "ea4aac4f86e013b7305c8e1836e2c4bf0e27e1f489caabb99cea289153e74f7e",
+    "scripts/student_distill.py": "d79c07ba4df4dcd56f2784a4ad51201be5a1818c2a22a85b22b8cfea7095a6fa",
+    "scripts/student_reward_train.py": "414460a6eab48364af3dca30c33ab690c018e2acf412728b19becd0d0841e842",
+    "scripts/style_opponents.py": "e92edef4212c1f3c990efd1b6c992b247f123d9399303e2d9952f5d9e4cd340a",
+    "scripts/targeting_adapt.py": "3ea5e2c2122c8fc756daa7826a7f85508a915318023359331a97784f97d315d0",
+    "scripts/targeting_adapt_backup.py": "a01f6bc81158c5f2f652d0cfa78ffcb8c65a481eae77b376b591c3f7cd6ee475",
+    "scripts/targeting_probe.py": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee",
+    "scripts/train.py": "5c8073b9e4f957f81ca3edc5f6290888b4b88751a8610113b81c720b6dec45ab",
+    "scripts/v5_gates.py": "6fbf32d372bac7fcc32cc401ea77f4a82e8ed0e05d906225f085fa2d3a2491bd",
+    "scripts/variants.py": "be550a92ce1f10153a82418116c0b618d1cb6b9b6895f9531d178193aa6b0ff5",
+    "scripts/xversion_replay.py": "6302d3361c83bc8cebee23ccedbede792e35ee101ef412fcee2cfee36d96a7ba"
+  },
+  "inputs_sha256": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/candidates/student_reward_20261104/S30.pth": "3104596d5527d644d0c3f2cfc98189ec166e6e8e4a1f0ae9a4166f27a934b11b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/fit_r2/weights/agent.pth": "1baec85605e2b7aaad8c0beaa416d0489d2b9faa1362a9b361bbb63f04cc14bd",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/rl_seed27/runs/control/weights/agent.pth": "1af0dfb242875cb5ec0ac8a12213588ec769cb3aede96c4af6215059848ec47c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/rl_seed28/runs/control/weights/agent.pth": "a885920fd09647885c2855b4ba5f874781aa37de21e6e3d07d637d2bafbea6f8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/rl_seed27/runs/sap0/weights/agent.pth": "a71e7b08890b54d4b033953b44417b40ce53ea5b38535b73448cbfae9eb3853e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/rl_seed28/runs/sap0/weights/agent.pth": "175a7005e8034e4e25514c759612719241d7b8124d7f9e0271650ce892b6dbf4",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/ensembles/CONTROL2.pth": "74b52721981a7bdbc91a706a1baaede51768946c6a1d4e4230e8c071b20acff9",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/ensembles/SAP02.pth": "a56e2a043d7e7efa1795083abe68493e8e34ea8ff6f5997a6932364aac00330d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/releases/20261101_v13_neb/agent_p0.pth": "6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13": "bdc6b50ebbf1fa5d1fc4ed8f3ab7decb640e60b55088ae0be4bf63bb914a89d5",
+    "/tmp/sherlock-action-student-20261104/panel_seeds.json": "012fdbae344c66e4a72e1d126c6b6d57e11f81aacea8f4209bdace8a0fc108d9",
+    "/tmp/sherlock-action-student-20261104/direct_seeds.json": "0e8a32b2028be60130e438593b6f84d31e801413a090f515f281dfc269d5a48d",
+    "/tmp/sherlock-action-student-20261104/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+    "/tmp/sherlock-action-student-20261104/run_diagnostic.py": "25b66cdcd40a542928a74c4f9949f25d6b1243d932dc864bfdd3001694865640",
+    "/tmp/sherlock-action-student-20261104/planned_comparison.json": "9013acb0af56ba810cfee3abdf44122c27c6e9519502f283c2d4290655c01bd6",
+    "/tmp/sherlock-action-student-20261104/audit_final.py": "123a330c4ff8e408b6e1a31460b472f2b3e55b4d4436a5b86d6cd7cea7a4d884",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5"
+  },
+  "python": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+  "guard_script": "/tmp/sherlock-action-student-20261104/run_guarded.py",
+  "panel_seed_file": "/tmp/sherlock-action-student-20261104/panel_seeds.json",
+  "direct_seed_file": "/tmp/sherlock-action-student-20261104/direct_seeds.json",
+  "runtime_admission": {
+    "created_utc": "2026-11-04T15:48:02.459553+00:00",
+    "historical_timing_sources": {
+      "V14": {
+        "sha256": "cbd8976003076cdd8286515e7cb5765744dc1c5c0b8d6e2bb6c1bc6b625be3d5",
+        "mean_seconds_by_opponent": {
+          "solution92": 3.62025,
+          "default": 2.366,
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.9037500000000005
+        }
+      },
+      "S3": {
+        "sha256": "cf392ee1e2d1a91123cbbc928d1aede94297184604375a0d1a635403ce08592f",
+        "mean_seconds_by_opponent": {
+          "solution92": 2.9285,
+          "default": 1.83475,
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.22725
+        }
+      },
+      "S30": {
+        "sha256": "1376af4d90da89dd67a75bea012dacf40734b049a8c294afe68900b57a76bce1",
+        "mean_seconds_by_opponent": {
+          "solution92": 3.11375,
+          "default": 1.9292500000000001,
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.37025
+        }
+      },
+      "CONTROL30": {
+        "sha256": "4f2395dab887e708ab84b71084a5e2605b452a81bc4b683cf5aad0ddc9d43caa",
+        "mean_seconds_by_opponent": {
+          "solution92": 3.04475,
+          "default": 1.87475,
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.28425
+        }
+      },
+      "SAP0_30": {
+        "sha256": "7fb4b2ab163c820b026c6196ce7cc857040718fc0336de42117387e0921861ab",
+        "mean_seconds_by_opponent": {
+          "solution92": 2.86725,
+          "default": 1.6475000000000002,
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.0565
+        }
+      }
+    },
+    "single_net_bound": {
+      "solution92": 3.11375,
+      "default": 1.9292500000000001,
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.37025
+    },
+    "two_net_and_V14_bound": {
+      "solution92": 3.62025,
+      "default": 2.366,
+      "self:experiments/releases/20261101_v13_neb/agent_p0.pth": 4.9037500000000005
+    },
+    "explanation": "Same 512 architecture: maximum opponent mean across all four earlier single-net roles; two-net ensembles conservatively use full36 V14 timing. Direct V14 uses measured V13 timing, same36 architecture. All means padded15% plus12s startup/job. No fresh outcomes used. Estimate, not guaranteed worst-case.",
+    "multiplier": 1.15,
+    "startup_seconds_per_job": 12,
+    "two_worker_queue_seconds": 3005.5975000000008,
+    "schedule": [
+      {
+        "kind": "panel",
+        "role": "V14",
+        "worker": 0,
+        "start_s": 0.0,
+        "end_s": 512.94
+      },
+      {
+        "kind": "panel",
+        "role": "S30",
+        "worker": 1,
+        "start_s": 0.0,
+        "end_s": 445.00950000000006
+      },
+      {
+        "kind": "panel",
+        "role": "A2",
+        "worker": 1,
+        "start_s": 445.00950000000006,
+        "end_s": 890.0190000000001
+      },
+      {
+        "kind": "panel",
+        "role": "CONTROL27",
+        "worker": 0,
+        "start_s": 512.94,
+        "end_s": 957.9495000000002
+      },
+      {
+        "kind": "panel",
+        "role": "CONTROL28",
+        "worker": 1,
+        "start_s": 890.0190000000001,
+        "end_s": 1335.0285000000001
+      },
+      {
+        "kind": "panel",
+        "role": "SAP027",
+        "worker": 0,
+        "start_s": 957.9495000000002,
+        "end_s": 1402.9590000000003
+      },
+      {
+        "kind": "panel",
+        "role": "SAP028",
+        "worker": 1,
+        "start_s": 1335.0285000000001,
+        "end_s": 1780.0380000000002
+      },
+      {
+        "kind": "panel",
+        "role": "CONTROL2",
+        "worker": 0,
+        "start_s": 1402.9590000000003,
+        "end_s": 1915.8990000000003
+      },
+      {
+        "kind": "panel",
+        "role": "SAP02",
+        "worker": 1,
+        "start_s": 1780.0380000000002,
+        "end_s": 2292.978
+      },
+      {
+        "kind": "direct",
+        "role": "S30",
+        "worker": 0,
+        "start_s": 1915.8990000000003,
+        "end_s": 2128.9305000000004
+      },
+      {
+        "kind": "direct",
+        "role": "A2",
+        "worker": 0,
+        "start_s": 2128.9305000000004,
+        "end_s": 2341.9620000000004
+      },
+      {
+        "kind": "direct",
+        "role": "CONTROL27",
+        "worker": 1,
+        "start_s": 2292.978,
+        "end_s": 2506.0095
+      },
+      {
+        "kind": "direct",
+        "role": "CONTROL28",
+        "worker": 0,
+        "start_s": 2341.9620000000004,
+        "end_s": 2554.9935000000005
+      },
+      {
+        "kind": "direct",
+        "role": "SAP027",
+        "worker": 1,
+        "start_s": 2506.0095,
+        "end_s": 2719.041
+      },
+      {
+        "kind": "direct",
+        "role": "SAP028",
+        "worker": 0,
+        "start_s": 2554.9935000000005,
+        "end_s": 2768.0250000000005
+      },
+      {
+        "kind": "direct",
+        "role": "CONTROL2",
+        "worker": 1,
+        "start_s": 2719.041,
+        "end_s": 2956.6135000000004
+      },
+      {
+        "kind": "direct",
+        "role": "SAP02",
+        "worker": 0,
+        "start_s": 2768.0250000000005,
+        "end_s": 3005.5975000000008
+      }
+    ],
+    "model_deadline_utc": "2026-11-04T16:40:00+00:00",
+    "closure_reserve_minutes": 20,
+    "projected_finish_utc": "2026-11-04T16:38:08.057053+00:00",
+    "admitted": true
+  },
+  "statistical_unit": "whole card across sides and opponents",
+  "bootstrap_replicates": 5000,
+  "bootstrap_seed": 0,
+  "confirmation": false,
+  "dependency_versions": {
+    "torch": "2.14.1",
+    "numpy": "2.5.4",
+    "luxai-s3": "0.2.1",
+    "jax": "0.12.0",
+    "jaxlib": "0.12.0"
+  }
+}

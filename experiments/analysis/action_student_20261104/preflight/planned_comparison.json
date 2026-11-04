@@ -1,0 +1,79 @@
+{
+  "status": "planned",
+  "created_utc": "2026-11-04T14:49:25.171797+00:00",
+  "root": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "roles": {
+    "V14": "agents/sherlock/weights/agent_p0.pth",
+    "S30": "experiments/candidates/student_reward_20261104/S30.pth",
+    "A2": "experiments/runs/20261104_action_student/fit_r2/weights/agent.pth",
+    "CONTROL27": "experiments/runs/20261104_action_student/rl_seed27/runs/control/weights/agent.pth",
+    "CONTROL28": "experiments/runs/20261104_action_student/rl_seed28/runs/control/weights/agent.pth",
+    "SAP027": "experiments/runs/20261104_action_student/rl_seed27/runs/sap0/weights/agent.pth",
+    "SAP028": "experiments/runs/20261104_action_student/rl_seed28/runs/sap0/weights/agent.pth",
+    "CONTROL2": "experiments/runs/20261104_action_student/ensembles/CONTROL2.pth",
+    "SAP02": "experiments/runs/20261104_action_student/ensembles/SAP02.pth"
+  },
+  "panel_seeds": [
+    866000,
+    866001,
+    866002,
+    866003,
+    866004,
+    866005,
+    866006,
+    866007,
+    866008,
+    866009,
+    866010,
+    866011,
+    866012,
+    866013,
+    866014,
+    866015,
+    866016,
+    866017,
+    866018,
+    866019
+  ],
+  "direct_seeds": [
+    866100,
+    866101,
+    866102,
+    866103,
+    866104,
+    866105,
+    866106,
+    866107,
+    866108,
+    866109,
+    866110,
+    866111,
+    866112,
+    866113,
+    866114,
+    866115,
+    866116,
+    866117,
+    866118,
+    866119
+  ],
+  "opponents": [
+    "solution92",
+    "default",
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth"
+  ],
+  "direct_opponent": "self:agents/sherlock/weights/agent_p0.pth",
+  "panel_games": 1080,
+  "direct_games": 320,
+  "selection_after_observing_games": false,
+  "promotion_from_diagnostic": false,
+  "notes": [
+    "This is a planned comparison, not evidence of completed games. Hash/source/runtime admission recorded separately before launch.",
+    "No unqualified promotion. All training seeds, including paired reward arms, must complete before the full panel is admitted.",
+    "Same maps and both sides; whole-card bootstrap; trainseed effects reported separately.",
+    "Role agents fail fast with frozen=false in evaluation; runtime source/defaults unchanged. Opponent logs will be checked for caught errors."
+  ],
+  "evaluation_overrides": [
+    "frozen=false"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "datasets": [],
+  "auditor_sha256": "30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd",
+  "rl_pairs": [
+    {
+      "prepared": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_action_student/rl_seed27",
+      "run_seed": 27,
+      "arms": {
+        "control": {
+          "seed": 27,
+          "checkpoint_sha256": "1af0dfb242875cb5ec0ac8a12213588ec769cb3aede96c4af6215059848ec47c",
+          "actual_prefill_games": 40,
+          "actual_train_games": 160,
+          "actual_validation_games": 32,
+          "updates": 24000,
+          "env_steps": 120600,
+          "replay_rows": 300000,
+          "total_transitions": 717331,
+          "reward_totals": {
+            "transitions": 717331.0,
+            "sap_transitions": 15333.0,
+            "estimated_positive_hits": 13821.0,
+            "estimated_misses": 1512.0,
+            "removed_signed": 5873.399999999999,
+            "removed_absolute": 6780.599999999992,
+            "actual_reward": 259699.3169583334
+          },
+          "production_receipt_validator": "passed",
+          "initial_fresh_adam_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b"
+        },
+        "sap0": {
+          "seed": 27,
+          "checkpoint_sha256": "a71e7b08890b54d4b033953b44417b40ce53ea5b38535b73448cbfae9eb3853e",
+          "actual_prefill_games": 40,
+          "actual_train_games": 160,
+          "actual_validation_games": 32,
+          "updates": 24000,
+          "env_steps": 120600,
+          "replay_rows": 300000,
+          "total_transitions": 713412,
+          "reward_totals": {
+            "transitions": 713412.0,
+            "sap_transitions": 13104.0,
+            "estimated_positive_hits": 11514.0,
+            "estimated_misses": 1590.0,
+            "removed_signed": 5177.999999999996,
+            "removed_absolute": 6131.999999999997,
+            "actual_reward": 255306.15741666677
+          },
+          "production_receipt_validator": "passed",
+          "initial_fresh_adam_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b"
+        }
+      },
+      "paired_prefill": "prefill overwritten in bounded final replay; hashes prove original equality",
+      "initial_rng_sha256": {
+        "agent": "17739e7cd783702f71f6a57ffac3419f204c6b2b9eddb2a14a08babf4ccf7655",
+        "global_rng": "3027c9bb04ff402e2814009a910621e78a1197db7e23529edf96a7756fc3081f"
+      },
+      "paired_prefill_games_with_reward_difference": 40,
+      "evidence_limit": "Actual action/reward boundaries were checked during training and retained as aggregate counts and digests. Per-transition original contexts are not saved, so no independent rerun of each reward formula or reconstruction of full action transcripts is claimed."
+    }
+  ],
+  "wall_seconds": 1.169164292048663
+}
