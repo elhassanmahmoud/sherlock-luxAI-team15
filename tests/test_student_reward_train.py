@@ -233,6 +233,15 @@ def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, mo
                    removed_absolute=.3, actual_reward=.3)
     monkeypatch.setattr(m, 'action_audit', action_evidence)
     monkeypatch.setattr(m, 'reward_audit', reward_evidence)
+    original_write = m._write
+    peer_observations = []
+    def observe_publication(path, value):
+        original_write(path, value)
+        if path.name == 'final_receipt.json':
+            # A peer runs as soon as the marker becomes visible, before the
+            # publisher can perform any subsequent status/evidence writes.
+            peer_observations.append(m.validate_receipt(path.parent))
+    monkeypatch.setattr(m, '_write', observe_publication)
     prepared = tmp_path / 'prepared'
     m.prepare(student, prepared)
     record = m.run_arm(prepared, 'control', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
@@ -246,6 +255,8 @@ def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, mo
     assert len(list((run / 'weights').glob('*.pth'))) == 1
     assert not (run / 'weights_best').exists()
     m.run_arm(prepared, 'sap0', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
+    assert [r['arm'] for r in peer_observations] == ['control', 'sap0']
+    assert all(r['status'] == 'done' for r in peer_observations)
     assert m.compare_prefill(prepared)['status'] == 'matched'
     assert json.loads((prepared / 'paired_prefill.json').read_text())['prefill_games'] == 40
     # Rehashing cannot legitimize missing initial live learning evidence.

@@ -489,8 +489,10 @@ def run_arm(prepared, arm, deadline_utc):
                        evidence_sha256={n: file_sha256(destination / n) for n in (
                            'training_audit.json', 'rollouts.jsonl', 'validation_games.jsonl', 'train.csv')})
         record.update(status='done', actual_rollout_games=len(rows), actual_validation_games=len(vals))
-        _write(destination / 'final_receipt.json', receipt)
+        # Receipt existence is the peer's readiness marker: publish only after
+        # done-status and all hashed evidence have been persisted.
         persist()
+        _write(destination / 'final_receipt.json', receipt)
         validate_receipt(destination)
         other = prepared / 'runs' / ('sap0' if arm == 'control' else 'control')
         if (other / 'final_receipt.json').exists():
