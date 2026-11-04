@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "at": "2026-11-04T07:13:59.818364+00:00",
+  "method": "Independent torch.equal per ordered source tensor; no builder imports",
+  "candidates": {
+    "SOLO28": {
+      "count": 1,
+      "sha256": "3127ec6abc2b138cece4780419c8f9cbea02594624d48371fd5947fad803059d",
+      "ordered_tensors_equal_expected": true,
+      "config_exact_raw_v14": true
+    },
+    "FO42": {
+      "count": 42,
+      "sha256": "f63f14939095581812ece8de63602d70665fb26dce068cdf0903dfe1ab80d60e",
+      "ordered_tensors_equal_expected": true,
+      "config_exact_raw_v14": true
+    }
+  },
+  "protected": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+  }
+}

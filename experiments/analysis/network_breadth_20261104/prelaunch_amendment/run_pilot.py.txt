@@ -1,0 +1,132 @@
+"""One-shot, known-card technical/timing pilot; no strength selection."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path('/Users/moayedshawesh/Desktop/KI/sherlock-november-followup')
+PYTHON = '/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python'
+sys.path.insert(0, str(ROOT))
+from scripts import network_breadth_study as study
+
+
+def main():
+    out = ROOT / 'experiments/analysis/network_breadth_20261104/pilot'
+    if out.exists():
+        raise ValueError('Pilot already reserved; do not repeat')
+    study.check_usage(study.USAGE_FILE, now=time.time())
+    study.check_runtime(start=True)
+    tools = study.load_tools(ROOT)
+    tools.early.check_resources()
+    manifest = ROOT / 'experiments/ensembles/network_breadth_20261104/manifest.json'
+    models = {'baseline': ROOT / 'agents/sherlock/weights/agent_p0.pth',
+              **{r: ROOT / f'experiments/ensembles/network_breadth_20261104/{r}.pth'
+                 for r in ('SOLO28', 'FO42')}}
+    opponents = ['solution92', 'self:experiments/releases/20261101_v13_neb/agent_p0.pth', 'default']
+    weights = list(models.values()) + [ROOT / x[5:] for x in (*opponents, study.DIRECT) if x.startswith('self:')]
+    weights += [ROOT / 'agents/sherlock/weights/agent_p1.pth', ROOT / 'experiments/candidates/all24fo.pth']
+    before = dict(source=tools.early.source_identity(ROOT, PYTHON, [ROOT/study.PROTOCOL, manifest]),
+                  weights=tools.early.hashes(weights))
+    jobs = []
+    for role in models:
+        kinds = [('panel', opponents)] + ([('direct', [study.DIRECT])] if role != 'baseline' else [])
+        for kind, opps in kinds:
+            name = f'{role}_{kind}'
+            jobs.append(dict(name=name, role=role, kind=kind, engine='par_eval',
+                timing_class='direct' if kind == 'direct' else 'combined_panel', root=str(ROOT),
+                weights=str(models[role]), first_seed=500720, n_maps=2, opponents=opps,
+                overrides=[], workers=2, games=4*len(opps),
+                out=str(out/f'{name}.csv'), log=str(out/f'{name}.log')))
+    state = dict(status='running', purpose='technical timing only; no strength selection',
+                 started_at=study.stamp(), owner_pid=os.getpid(), source_before=before, jobs=[])
+    out.mkdir()
+    def save():
+        study.atomic_json(out/'receipt.json', state)
+    save()
+    current = None
+    def interrupted(sig, frame):
+        raise InterruptedError(f'Own pilot received signal {sig}')
+    handlers = {sig: signal.getsignal(sig) for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)}
+    try:
+        for sig in handlers:
+            signal.signal(sig, interrupted)
+        with tools.early.resource_lock(ROOT):
+            for job in jobs:
+                study.check_runtime(start=True)
+                command = study.job_command(job, PYTHON)
+                record = dict(job, command=command, status='running', started_at=study.stamp())
+                state['jobs'].append(record)
+                start = time.monotonic()
+                with Path(job['log']).open('x') as log:
+                    blocked = signal.pthread_sigmask(signal.SIG_BLOCK, set(handlers))
+                    try:
+                        launcher = ('import os, signal, sys; '
+                            f'signal.pthread_sigmask(signal.SIG_SETMASK, {sorted(map(int, blocked))!r}); '
+                            'os.execvpe(sys.argv[1], sys.argv[1:], os.environ)')
+                        launch = [PYTHON, '-B', '-c', launcher, *command]
+                        current = subprocess.Popen(launch, cwd=ROOT, env={**os.environ, **tools.early.THREAD_ENV},
+                            stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                        tools.early.CURRENT = dict(process=current, owner_pid=os.getpid(), pgid=current.pid)
+                        record.update(pid=current.pid, pgid=current.pid, launch_command=launch)
+                        save()
+                    finally:
+                        signal.pthread_sigmask(signal.SIG_SETMASK, blocked)
+                    try:
+                        while current.poll() is None:
+                            study.check_runtime(start=False)
+                            try:
+                                current.wait(timeout=5)
+                            except subprocess.TimeoutExpired:
+                                pass
+                        record['exit_code'] = current.returncode
+                        if current.returncode != 0:
+                            raise ValueError(f'Pilot failed: {job["name"]}, see log')
+                    finally:
+                        blocked = signal.pthread_sigmask(signal.SIG_BLOCK, set(handlers))
+                        try:
+                            if tools.early.group_exists(current.pid):
+                                tools.early.stop_group(current)
+                            tools.early.CURRENT = None
+                        finally:
+                            signal.pthread_sigmask(signal.SIG_SETMASK, blocked)
+                record.update(wall_seconds=time.monotonic()-start,
+                    actual_games=study.validate_output(job['out'], job),
+                    output_sha256=study.digest(job['out']), status='complete', finished_at=study.stamp())
+                current = None
+                save()
+            after = dict(source=tools.early.source_identity(ROOT, PYTHON, [ROOT/study.PROTOCOL, manifest]),
+                         weights=tools.early.hashes(weights))
+            if before != after:
+                raise ValueError('Pilot source or input changed')
+            state.update(status='complete', source_after=after, finished_at=study.stamp(),
+                         completed_games=sum(j['actual_games'] for j in state['jobs']))
+            study.pilot_rates(state)
+            save()
+    except BaseException as exc:
+        blocked = signal.pthread_sigmask(signal.SIG_BLOCK, set(handlers))
+        try:
+            try:
+                if current is not None and tools.early.group_exists(current.pid):
+                    tools.early.stop_group(current)
+                tools.early.CURRENT = None
+            finally:
+                state.update(status='incomplete', error=f'{type(exc).__name__}: {exc}', finished_at=study.stamp())
+                save()
+        finally:
+            signal.pthread_sigmask(signal.SIG_SETMASK, blocked)
+        raise
+    finally:
+        blocked = signal.pthread_sigmask(signal.SIG_BLOCK, set(handlers))
+        try:
+            for sig, handler in handlers.items():
+                signal.signal(sig, handler)
+        finally:
+            signal.pthread_sigmask(signal.SIG_SETMASK, blocked)
+    print(json.dumps({'status':state['status'], 'games':state['completed_games'], 'receipt':str(out/'receipt.json')}))
+
+if __name__ == '__main__':
+    main()

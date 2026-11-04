@@ -148,7 +148,7 @@ def build_jobs(root, out, weights, phase, *, candidate=None):
     jobs = []
     for role in selected:
         blocks = [('panel', [*PANEL, 'default'], 861000, 20)] if phase == 'selection' else [
-            ('panel', [*PANEL, 'default'], 862000, 120), ('solution_extra', ['solution92'], 862120, 280)]
+            ('panel', [*PANEL, 'default'], 862000, 80), ('solution_extra', ['solution92'], 862080, 320)]
         if role != 'baseline':
             blocks.append(('direct', [DIRECT], 861000 if phase == 'selection' else 863000,
                            20 if phase == 'selection' else 160))
@@ -158,7 +158,7 @@ def build_jobs(root, out, weights, phase, *, candidate=None):
                 weights=str(weights[role]), first_seed=first, n_maps=count, opponents=opponents,
                 overrides=[], workers=2, games=2 * count * len(opponents),
                 out=str(out / f'{role}_{kind}.csv'), log=str(out / f'{role}_{kind}.log')))
-    require(len(jobs) == 5 and sum(j['games'] for j in jobs) == (920 if phase == 'selection' else 4800),
+    require(len(jobs) == 5 and sum(j['games'] for j in jobs) == (920 if phase == 'selection' else 3840),
             'Wrong fixed game count')
     return jobs
 
@@ -287,7 +287,7 @@ def create_freeze(root, out, weights, *, python, expected_head, pilot_receipt,
 
 
 def future_games(phase):
-    return dict(combined_panel=4480, direct=320) if phase == 'selection' else dict(combined_panel=0, direct=0)
+    return dict(combined_panel=3520, direct=320) if phase == 'selection' else dict(combined_panel=0, direct=0)
 
 
 def reservation_path(freeze_path, phase):
@@ -362,7 +362,7 @@ def summary_data(plan_path, state_path):
         direct = direct_result(frames[role]['direct'], DIRECT)
         solution_frames = {name: combined_solution(frames[name], phase) for name in ('baseline', role)}
         rows['solution92'] = compare_results(solution_frames[role], solution_frames['baseline'])[0]
-        panel_maps, solution_maps, direct_maps = (20, 20, 20) if phase == 'selection' else (120, 400, 160)
+        panel_maps, solution_maps, direct_maps = (20, 20, 20) if phase == 'selection' else (80, 400, 160)
         require(panel['maps'] == panel_maps and direct['maps'] == direct_maps
                 and rows['solution92']['maps'] == solution_maps and rows['default']['maps'] == panel_maps,
                 'Incomplete expected maps')

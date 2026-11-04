@@ -22,24 +22,26 @@ def test_fixed_jobs_cover_exact_asymmetric_counts_and_separate_direct_seeds(tmp_
     confirm = study.build_jobs(ROOT, tmp_path, weights(), 'confirmation', candidate='SOLO28')
     assert len(screen) == len(confirm) == 5
     assert sum(j['games'] for j in screen) == 920
-    assert sum(j['games'] for j in confirm) == 4800
+    assert sum(j['games'] for j in confirm) == 3840
+    assert sum(j['games'] for j in screen + confirm) == 4760
     assert {(j['first_seed'], j['n_maps']) for j in screen} == {(861000, 20)}
     assert sorted((j['first_seed'], j['n_maps'], j['games']) for j in confirm) == [
-        (862000, 120, 1680), (862000, 120, 1680),
-        (862120, 280, 560), (862120, 280, 560), (863000, 160, 320)]
+        (862000, 80, 1120), (862000, 80, 1120),
+        (862080, 320, 640), (862080, 320, 640), (863000, 160, 320)]
+    assert study.future_games('selection') == dict(combined_panel=3520, direct=320)
     assert all(j['workers'] == 2 and j['overrides'] == [] for j in screen + confirm)
     with pytest.raises(ValueError): study.build_jobs(ROOT, tmp_path, weights(), 'confirmation', candidate='FT18')
     with pytest.raises(ValueError): study.candidate_roles({**weights(), 'OTHER': 'x'})
 
 
 def test_rates_are_wall_time_and_only_rise_with_pilot_and_completed_jobs():
-    games = dict(combined_panel=5320, direct=400)
+    games = dict(combined_panel=4360, direct=400)
     observed = dict(combined_panel=[], direct=[])
-    assert study.project_seconds(games, observed) == pytest.approx(18278.4)
-    assert study.admit(games, observed, now=study.GAME_END - 19479) == pytest.approx(18278.4)
-    with pytest.raises(ValueError): study.admit(games, observed, now=study.GAME_END - 19478)
-    assert study.project_seconds(games, dict(combined_panel=[5.2], direct=[])) == pytest.approx(36556.8)
-    assert study.project_seconds(games, dict(combined_panel=[.1], direct=[.1])) == pytest.approx(18278.4)
+    assert study.project_seconds(games, observed) == pytest.approx(15283.2)
+    assert study.admit(games, observed, now=study.GAME_END - 16484) == pytest.approx(15283.2)
+    with pytest.raises(ValueError): study.admit(games, observed, now=study.GAME_END - 16483)
+    assert study.project_seconds(games, dict(combined_panel=[5.2], direct=[])) == pytest.approx(30566.4)
+    assert study.project_seconds(games, dict(combined_panel=[.1], direct=[.1])) == pytest.approx(15283.2)
     assert study.GAME_END == datetime(2026, 11, 4, 13, 30, tzinfo=timezone.utc).timestamp()
 
 
@@ -131,21 +133,21 @@ def test_extra_solution_changes_solution_only_and_all_complete_maps_are_used(scr
     plan = study.prepare_phase(freeze, tmp_path / 'confirmation', 'confirmation', candidate='SOLO28',
                                selection_state=state, selection_summary=summary)
     plan_path = tmp_path / 'confirmation/plan.json'
-    # Candidate wins every panel game but loses the extra 280 Solution maps.
+    # Candidate wins every panel game but loses the extra 320 Solution maps.
     # Reference loses panel games but wins all extra Solution maps.
     state = complete_state(plan, plan_path, identity,
         lambda job: int((job['role'] != 'baseline') != (job['kind'] == 'solution_extra')))
     result = study.summarize(plan_path, state, tmp_path / 'confirmation-summary.json')
     r = result['candidates']['SOLO28']
-    assert result['completed_games'] == 4800
-    assert r['panel']['maps'] == 120 and r['panel']['delta'] == 1
+    assert result['completed_games'] == 3840
+    assert r['panel']['maps'] == 80 and r['panel']['delta'] == 1
     assert r['direct']['maps'] == 160 and r['direct']['games'] == 320
     assert r['opponents']['solution92']['maps'] == 400
-    assert r['opponents']['solution92']['winrate'] == .3
-    assert r['opponents']['solution92']['ref_winrate'] == .7
-    assert r['opponents']['solution92']['delta'] == pytest.approx(-.4)
+    assert r['opponents']['solution92']['winrate'] == .2
+    assert r['opponents']['solution92']['ref_winrate'] == .8
+    assert r['opponents']['solution92']['delta'] == pytest.approx(-.6)
     assert r['counts']['solution92']['candidate']['games'] == 800
-    assert r['counts']['default']['candidate']['games'] == 240
+    assert r['counts']['default']['candidate']['games'] == 160
     assert not result['promotion_qualified']
     with pytest.raises(FileExistsError):
         study.prepare_phase(freeze, tmp_path / 'again', 'confirmation', candidate='SOLO28',

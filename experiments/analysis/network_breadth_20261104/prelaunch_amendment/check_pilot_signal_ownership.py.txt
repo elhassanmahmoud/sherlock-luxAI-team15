@@ -1,0 +1,101 @@
+"""Bounded signal injection into the pilot's real child-ownership boundary.
+
+All model, source, quota and game operations are replaced with stdlib fixtures.
+The only child writes its signal mask and sleeps; it never imports game code.
+"""
+import contextlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+from types import SimpleNamespace
+
+PILOT = Path('/tmp/sherlock-breadth-20261104/run_pilot.py')
+spec = importlib.util.spec_from_file_location('pilot_signal_check', PILOT)
+pilot = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(pilot)
+real_study = pilot.study
+real_early = real_study.load_tools(pilot.ROOT).early
+real_popen = subprocess.Popen
+managed = {signal.SIGINT, signal.SIGTERM, signal.SIGHUP}
+initial_handlers = {sig: signal.getsignal(sig) for sig in managed}
+initial_mask = signal.pthread_sigmask(signal.SIG_BLOCK, set())
+
+
+def check(inject_cleanup):
+    children = []
+    masks = []
+    cleanup_calls = []
+    with tempfile.TemporaryDirectory(prefix='breadth-pilot-signals-') as temporary:
+        root = Path(temporary)
+        (root / 'experiments/analysis/network_breadth_20261104').mkdir(parents=True)
+        marker = root / 'child-mask.json'
+        script = ('import json, pathlib, signal, time; '
+                  f'pathlib.Path({str(marker)!r}).write_text(json.dumps(sorted(map(int, '
+                  'signal.pthread_sigmask(signal.SIG_BLOCK, set()))))); time.sleep(20)')
+        command = [sys.executable, '-B', '-c', script]
+        def injected_popen(*args, **kwargs):
+            masks.append(signal.pthread_sigmask(signal.SIG_BLOCK, set()))
+            child = real_popen(*args, **kwargs)
+            children.append(child)
+            deadline = time.monotonic() + 3
+            while not marker.exists() and time.monotonic() < deadline and child.poll() is None:
+                time.sleep(.01)
+            if not marker.exists():
+                raise AssertionError('Stdlib child did not start within 3 seconds')
+            os.kill(os.getpid(), signal.SIGINT)
+            return child
+        def stop_group(child):
+            cleanup_calls.append(signal.pthread_sigmask(signal.SIG_BLOCK, set()))
+            if inject_cleanup:
+                os.kill(os.getpid(), signal.SIGTERM)
+            real_early.CURRENT = early.CURRENT
+            real_early.stop_group(child)
+        early = SimpleNamespace(source_identity=lambda *args: {'fixture': True},
+            hashes=lambda paths: {str(path): 'fixture' for path in paths},
+            check_resources=lambda: None, resource_lock=lambda root: contextlib.nullcontext(),
+            THREAD_ENV={}, group_exists=real_early.group_exists, stop_group=stop_group)
+        pilot.ROOT, pilot.PYTHON = root, sys.executable
+        pilot.study = SimpleNamespace(USAGE_FILE=root/'unused', PROTOCOL='unused', DIRECT=real_study.DIRECT,
+            check_usage=lambda *args, **kwargs: None, check_runtime=lambda **kwargs: None,
+            load_tools=lambda root: SimpleNamespace(early=early), stamp=real_study.stamp,
+            atomic_json=real_study.atomic_json, job_command=lambda *args: command,
+            validate_output=lambda *args: (_ for _ in ()).throw(AssertionError('No game validation expected')),
+            digest=real_study.digest, pilot_rates=real_study.pilot_rates)
+        subprocess.Popen = injected_popen
+        try:
+            try:
+                pilot.main()
+            except InterruptedError:
+                pass
+            else:
+                raise AssertionError('Injected signal was not handled')
+            receipt = json.loads((root/'experiments/analysis/network_breadth_20261104/pilot/receipt.json').read_text())
+            assert len(children) == 1
+            assert not real_early.group_exists(children[0].pid), 'Owned child group survived injected signal'
+            assert receipt['status'] == 'incomplete'
+            assert receipt['jobs'][0]['pid'] == receipt['jobs'][0]['pgid'] == children[0].pid
+            assert managed <= masks[0], 'Registration signals were not blocked'
+            assert cleanup_calls and all(managed <= mask for mask in cleanup_calls), 'Cleanup was interruptible'
+            assert set(json.loads(marker.read_text())) == set(map(int, initial_mask)), 'Child inherited protected mask'
+            assert {sig: signal.getsignal(sig) for sig in managed} == initial_handlers, 'Original handlers not restored'
+            assert signal.pthread_sigmask(signal.SIG_BLOCK, set()) == initial_mask, 'Parent mask not restored'
+        finally:
+            subprocess.Popen = real_popen
+            for sig, handler in initial_handlers.items():
+                signal.signal(sig, handler)
+            signal.pthread_sigmask(signal.SIG_SETMASK, initial_mask)
+            for child in children:
+                if real_early.group_exists(child.pid):
+                    os.killpg(child.pid, signal.SIGKILL)
+                child.wait(timeout=3)
+            real_early.CURRENT = None
+    print('PASS: registration signal' + (' plus cleanup signal' if inject_cleanup else '') + '; no owned process remains')
+
+check(False)
+check(True)

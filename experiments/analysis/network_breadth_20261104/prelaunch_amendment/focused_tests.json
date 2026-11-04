@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "executor": "breadth_impl",
+  "tests": 31,
+  "seconds": 4.13,
+  "scope": "tests/test_network_breadth_candidates.py and tests/test_network_breadth_study.py",
+  "root_verified_source_sha256": {
+    "scripts/network_breadth_study.py": "ddbe007a5486ec02e838c344dc59559ea5da9b9ef60c390ff4c8f9ae88e3900f",
+    "tests/test_network_breadth_study.py": "79fa479b85b9afc62d4bfb4c2c3f1ade026edfe6f242a4520534a48e963f6630"
+  },
+  "before_change": "Affected schedule/statistics tests failed",
+  "after_change": "31 focused tests passed"
+}

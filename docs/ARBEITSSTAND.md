@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 04.11.2026, 08:18 Berlin – Codex: technischer Pilot bestanden, Zeitumfang vor Ergebnissen korrigiert
+
+- SOLO28 und FO42 tatsächlich gebaut und unabhängig durch exakten Vergleich aller Tensoren in ihrer Reihenfolge geprüft: ein Netz beziehungsweise 42 unterschiedliche Netze, identische rohe V14-Konfiguration. Kein neues Training und kein Stärkegewinn damit behauptet. Vier aktive Gewichtsdateien in beiden Arbeitskopien und die bestehende ZIP bytegleich.
+- Einmaliger Pilot mit 44 bekannten Spielen auf 500720/500721 vollständig, Exit0, Quellen und Gewichte vor/nach identisch. Die maximale Direkt-Wandzeit von4,50655s/Spiel erhöht beide Zeitklassen konservativ. Der ursprüngliche 5.720-Spiele-Umfang ist nicht zugelassen: prognostiziertes Ende inklusive Reserven15:10 statt spätestens14:30Berlin. Noch keine frischen Spiele/Ergebnisauswahl gestartet.
+- [Vorabplan](superpowers/plans/2026-11-04-network-breadth.md) deshalb vor Ergebnissen geändert: unveränderte920 Auswahlspiele; gegebenenfalls3.840 Bestätigungsspiele mit80 Panel/default-Karten,400 Solution-Karten und160 Direktkarten. Original3598bb8 und Zulassungsfehler bleiben erhalten. Alle sieben Gates und Sicherheitsreserven unverändert; breitere Panelunsicherheit ausdrücklich dokumentieren. Aktualisierte Schedule-Tests und unabhängiger Auswerter müssen vor Start bestehen. Keine Wiederholung des Piloten zur Verbesserung der Zeitmessung.
+
 ## 04.11.2026 – Codex: erneuter Auftrag bis 16 Uhr, neue Einzelnetz-/42-Netz-Studie
 
 - Moayed beauftragt nach dem abgeschlossenen Morgenlauf ausdrücklich weitere Versuche bis 16 Uhr, auch ein starkes Einzelnetz und größere Ensembles. [Neuer Vorabplan](superpowers/plans/2026-11-04-network-breadth.md): genau SOLO28 (V14-Mitglied28, historische Validierung16/16 gegen Solution) und FO42 (V14 + sechs weitere FO-Netze). Eine reine Wiederholung von FT3 würde Netze duplizieren; die gewählte FO-Ergänzung enthält tatsächlich sechs andere Tensorzustände. Vollständige FT5/FTRL/League-Familien sind lokal nicht vorhanden. Historische Validierung ist kein neuer Stärkenbeleg.
