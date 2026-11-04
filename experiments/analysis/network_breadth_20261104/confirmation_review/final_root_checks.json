@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "at": "2026-11-04T10:15:15.218733+00:00",
+  "raw_counts": {
+    "baseline": {
+      "panel": {
+        "games": 960,
+        "wins": 772.0
+      },
+      "solution": {
+        "games": 800,
+        "wins": 762.0
+      }
+    },
+    "FO42": {
+      "panel": {
+        "games": 960,
+        "wins": 773.0
+      },
+      "solution": {
+        "games": 800,
+        "wins": 771.0
+      },
+      "direct": {
+        "games": 320,
+        "wins": 180.0
+      }
+    }
+  },
+  "protected": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+  },
+  "existing_zip_members": [
+    "Gruppe15/__init__.py",
+    "Gruppe15/belief.py",
+    "Gruppe15/cnn_model.py",
+    "Gruppe15/config.py",
+    "Gruppe15/features.py",
+    "Gruppe15/geometry.py",
+    "Gruppe15/main.py",
+    "Gruppe15/model.py",
+    "Gruppe15/opp_model.py",
+    "Gruppe15/param_est.py",
+    "Gruppe15/ppo_agent.py",
+    "Gruppe15/replay_buffer.py",
+    "Gruppe15/reward.py",
+    "Gruppe15/rules.py",
+    "Gruppe15/tactics.py",
+    "Gruppe15/agent.pth",
+    "Gruppe15/agents.yaml",
+    "Gruppe15/LIESMICH.txt"
+  ],
+  "existing_zip_bytes": 22228404,
+  "technical_scope": "Hash and content verification of previously tested unchanged V14 package; no new runtime test or FO42 build"
+}

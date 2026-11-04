@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "checked_utc": "2026-11-04T10:25:43+00:00",
+  "scope": "Independent read-only final documentation/archive review; no numerical recomputation",
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "Ambiguous no-100-percent sentence following default perfect scores",
+      "resolution": "Now explicitly scoped to Solution in confirmation README"
+    }
+  ],
+  "documentation_sha256": {
+    "docs/ABSCHLUSSBERICHT_20261104_NETZE.md": "b315059b533f508d8a70c96ec87902e45f6ab0609191155df9bf8db250c8eb53",
+    "experiments/analysis/network_breadth_20261104/confirmation/README.md": "9f959b0240257c5c0471fcffbbfcb1fb4ede3e363a43cb0406f4c41b742ca5f0",
+    "experiments/analysis/network_breadth_20261104/selection/README.md": "2fab86e2745c67c03ccda09e8587513fb988625f792afcc856a1419a7bc9addf",
+    "README.md": "910641073f80205d3c1520f1b63d5d396a345c35d58e3f10479811f0a62277eb",
+    "CLAUDE.md": "fe3859e8217ab85c0263cc9901b5d28693d83115de2ffbe6d34d9b7863a79f12",
+    "docs/ARBEITSSTAND.md": "472360c6df94cbf683b35257bfdc46d22f2cf897a9cfe0715c5ffc1d0bd190e2",
+    "docs/EXPERIMENT_PROTOKOLL.md": "9f546b1fb8952cc26ef96ebaf701d5a8ccc251f2f92065e56d01f2a259966785"
+  },
+  "local_links_checked": 26,
+  "local_links": [
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "MORGENBERICHT_20261104.md"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/selection/README.md"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation/README.md"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/confirmation_independent_review.md"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/final_root_checks.json"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/single_distillation_feasibility.md"
+    },
+    {
+      "source": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/closure_checks.json"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/confirmation/README.md",
+      "target": "../../../../docs/superpowers/plans/2026-11-04-network-breadth.md"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/confirmation/README.md",
+      "target": "../confirmation_review/confirmation_independent_review.md"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/confirmation/README.md",
+      "target": "../confirmation_review/confirmation_independent_review.json"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/confirmation/README.md",
+      "target": "../confirmation_review/archive_manifest.json"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/confirmation/README.md",
+      "target": "../../../../docs/ABSCHLUSSBERICHT_20261104_NETZE.md"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/selection/README.md",
+      "target": "../selection_review/selection_independent_review.json"
+    },
+    {
+      "source": "experiments/analysis/network_breadth_20261104/selection/README.md",
+      "target": "../confirmation/README.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md"
+    },
+    {
+      "source": "README.md",
+      "target": "experiments/analysis/network_breadth_20261104/confirmation/README.md"
+    },
+    {
+      "source": "CLAUDE.md",
+      "target": "docs/ABSCHLUSSBERICHT_20261104_NETZE.md"
+    },
+    {
+      "source": "CLAUDE.md",
+      "target": "experiments/analysis/network_breadth_20261104/confirmation/README.md"
+    },
+    {
+      "source": "docs/ARBEITSSTAND.md",
+      "target": "ABSCHLUSSBERICHT_20261104_NETZE.md"
+    },
+    {
+      "source": "docs/ARBEITSSTAND.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation/README.md"
+    },
+    {
+      "source": "docs/ARBEITSSTAND.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/single_distillation_feasibility.md"
+    },
+    {
+      "source": "docs/ARBEITSSTAND.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/final_root_checks.json"
+    },
+    {
+      "source": "docs/ARBEITSSTAND.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/closure_checks.json"
+    },
+    {
+      "source": "docs/EXPERIMENT_PROTOKOLL.md",
+      "target": "ABSCHLUSSBERICHT_20261104_NETZE.md"
+    },
+    {
+      "source": "docs/EXPERIMENT_PROTOKOLL.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation/README.md"
+    },
+    {
+      "source": "docs/EXPERIMENT_PROTOKOLL.md",
+      "target": "../experiments/analysis/network_breadth_20261104/confirmation_review/single_distillation_feasibility.md"
+    }
+  ],
+  "archive_manifest_sha256": "3bd24b8d2fca7b4c76f61c679793515777ad407749f52a0ea13f7b6f2bfafcb9",
+  "archive_entries_verified": 20,
+  "archive_entries": [
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_direct.csv",
+      "archive": "confirmation/FO42_direct.csv",
+      "sha256": "b9c240b1052c8230216b2bc6a8d8f123830ddc4ba46931a9dd107850a7e47fc6",
+      "bytes": 62627
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_direct.log",
+      "archive": "confirmation/FO42_direct.log",
+      "sha256": "43121ac73bbdeb20f9b929735c07909769b1ca9e0552febb7eb810cc462f7a3c",
+      "bytes": 43688
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_panel.csv",
+      "archive": "confirmation/FO42_panel.csv",
+      "sha256": "d4050630fdb006037c8902d9e7a30fd8831fcf741c5af8764d92cae0d815392e",
+      "bytes": 191651
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_panel.log",
+      "archive": "confirmation/FO42_panel.log",
+      "sha256": "3db6d95faaf641365e2d6fdf06fffa0a61daabe7744a360f9e9016b4f3656ba8",
+      "bytes": 85132
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_solution_extra.csv",
+      "archive": "confirmation/FO42_solution_extra.csv",
+      "sha256": "1936ee77748c4a9f8e48da68d218773609b72be163fcc7d9604913f0b3663d3c",
+      "bytes": 93144
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/FO42_solution_extra.log",
+      "archive": "confirmation/FO42_solution_extra.log",
+      "sha256": "0892da3b8b868974ac0477340bceec6ef86437da82dd0d68444f1103270c8979",
+      "bytes": 447
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/baseline_panel.csv",
+      "archive": "confirmation/baseline_panel.csv",
+      "sha256": "983fd7b41b1a8a4dce76d4c56c8ac32b7d8d856427ca117326275a852c66512d",
+      "bytes": 191502
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/baseline_panel.log",
+      "archive": "confirmation/baseline_panel.log",
+      "sha256": "a23c920ff903d94851dfca27606df407e73775d58b095d8b7e1aa6e36ae369b6",
+      "bytes": 85100
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/baseline_solution_extra.csv",
+      "archive": "confirmation/baseline_solution_extra.csv",
+      "sha256": "7411e3b2de11cc87bbdb247d6b32df652f660dc2cb19cb5ed1becdffa225870f",
+      "bytes": 93158
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/baseline_solution_extra.log",
+      "archive": "confirmation/baseline_solution_extra.log",
+      "sha256": "30a6066722999cc9aaafb5db8756e8fc6a55cab72328a0e49ebc1baf95c22a4d",
+      "bytes": 415
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/plan.json",
+      "archive": "confirmation/plan.json",
+      "sha256": "4d90ea83936ddff07f492eb747a2d73cf5ed58aec4665c4055fcb6d2f9122d8a",
+      "bytes": 6285
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/state.json",
+      "archive": "confirmation/state.json",
+      "sha256": "1e653930cf304e4506d1f52d0048241ece0160ece18a1e9f1cc68d674de1a66c",
+      "bytes": 111152
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/confirmation/summary.json",
+      "archive": "confirmation/summary.json",
+      "sha256": "3efb7f115df316a26987ae6581dbeeeaa7932f602cbb201f8d4f3651c12d42a2",
+      "bytes": 7660
+    },
+    {
+      "source": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/freeze.confirmation.reservation.json",
+      "archive": "freeze.confirmation.reservation.json",
+      "sha256": "a4d1b31a8ec5b5fd7df7b5c16a87ebe208417d41ee1d9712e500e41ad2f46a77",
+      "bytes": 269
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/confirmation_independent_review.json",
+      "archive": "confirmation_review/confirmation_independent_review.json",
+      "sha256": "8ac4b9e2c16b64749843685b4f7cc8a74c8ef8a0e15853b549a9e63f6651570b",
+      "bytes": 8701
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/confirmation_independent_review.md",
+      "archive": "confirmation_review/confirmation_independent_review.md",
+      "sha256": "68139b6d40814626fb0c5d211358591ff5db7a381439c9a659b6410f6ac9b0c4",
+      "bytes": 3047
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/final_root_checks.json",
+      "archive": "confirmation_review/final_root_checks.json",
+      "sha256": "3851221920f38caad94ca73423ae9b317314a0ae2f136422cfdc4aec32a1538f",
+      "bytes": 2020
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/confirmation_prelaunch_pins.json",
+      "archive": "confirmation_review/confirmation_prelaunch_pins.json",
+      "sha256": "daf2f3d92a97a563659c6a7e01a2f9417db52a0015fa855dd629115fa59cce6c",
+      "bytes": 864
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/single_distillation_feasibility.md",
+      "archive": "confirmation_review/single_distillation_feasibility.md",
+      "sha256": "eef6bcf626c5a5a6a63d1c7823acf8aa678b144e2f17ded5e6bb44c1bc5f0175",
+      "bytes": 5188
+    },
+    {
+      "source": "/tmp/sherlock-breadth-20261104/closure_checks.json",
+      "archive": "confirmation_review/closure_checks.json",
+      "sha256": "e00d59e0806340750729fe3cab0c22056114492af237dd48636b6151277cdb08",
+      "bytes": 1393
+    }
+  ],
+  "independent_confirmation_review_sha256": "8ac4b9e2c16b64749843685b4f7cc8a74c8ef8a0e15853b549a9e63f6651570b",
+  "official_summary_matches_pinned_review": true,
+  "verified_facts": {
+    "executions": 4804,
+    "technical_games": 44,
+    "selection_games": 920,
+    "confirmation_games": 3840,
+    "fresh_distinct_cards": 580,
+    "known_technical_cards": 2,
+    "newly_trained_networks_this_study": 0,
+    "promotion_qualified": false,
+    "failed_promotion_gates": [
+      "panel_delta",
+      "panel_lower",
+      "direct_lower"
+    ],
+    "retained_incumbent": "V14",
+    "future_distillation": "proposal only, not implemented or trained",
+    "solution_extra_excluded_from_panel": true
+  },
+  "closure": {
+    "proof_present": true,
+    "proof_sha256": "e00d59e0806340750729fe3cab0c22056114492af237dd48636b6151277cdb08",
+    "documented_status": "PASS",
+    "own_processes_absent": 5,
+    "automations_paused": 2,
+    "quota_used_percent": 2,
+    "evidence_scope": "Archived root receipt inspected; no independent live process/account query in this documentation review"
+  },
+  "pending": [
+    "Final commit/push verification is outside this pre-commit documentation snapshot and is not claimed complete"
+  ],
+  "reexecuted_bootstrap": false,
+  "reran_auditor": false,
+  "reran_tests": false,
+  "loaded_models": false,
+  "started_games": false,
+  "repository_edits": false,
+  "markdown_sha256": "c331377a3679c275a11844f409e26db66fa3eda815d5abea844ac7a65d8be1b9"
+}

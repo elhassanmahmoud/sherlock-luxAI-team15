@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-11-04T10:22:18.584073+00:00",
+  "status": "PASS",
+  "owned_processes": [
+    {
+      "pid": 89222,
+      "absent": true
+    },
+    {
+      "pid": 90800,
+      "absent": true
+    },
+    {
+      "pid": 91519,
+      "absent": true
+    },
+    {
+      "pid": 93363,
+      "absent": true
+    },
+    {
+      "pid": 88581,
+      "absent": true
+    }
+  ],
+  "automations": [
+    {
+      "id": "sherlock-repo-alle-drei-stunden-abgleichen",
+      "status": "PAUSED"
+    },
+    {
+      "id": "sherlock-verbesserungsplan-fortsetzen",
+      "status": "PAUSED"
+    }
+  ],
+  "remote_fetch": "Succeeded through existing macOS HTTPS credential helper before final commit; origin SSH configuration unchanged",
+  "main_before_final_commit": "17c1c656073d02afec0e28370fc1ff12ace8f8f6",
+  "origin_main_before_final_commit": "17c1c656073d02afec0e28370fc1ff12ace8f8f6",
+  "experiment_head_unchanged": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+  "usage": {
+    "used_percent": 2,
+    "remaining_percent": 98,
+    "source": "actual final watcher get_usage_limits after natural window renewal; no reset redeemed"
+  },
+  "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=36438115)\t35%; discharging; 2:28 remaining present: true",
+  "preservation": "No submission weights, existing ZIP, foreign processes, foreign untracked files, or old backups modified. No Moodle upload."
+}
