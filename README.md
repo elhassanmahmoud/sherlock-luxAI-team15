@@ -1,6 +1,8 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-**Stand 04.11., nach der Schüler-/Reward-Studie: V14 bleibt die Abgabe.** Ein neues Einzelnetz wurde tatsächlich aus den 36 V14-Netzen destilliert und in zwei getrennten RL-Armen nachtrainiert. Alle 1.064 Spielausführungen sind geprüft. Im frischen 20-Karten-Vergleich gewann V14 gegen Solution 36/40, der beste neue Schüler 22/40; kein neuer Kandidat qualifiziert sich. Das Entfernen des SAP-Shapings zeigt nur eine unsichere positive Tendenz innerhalb des Schülerpaares. **V14-Gewichte und Gruppe15.zip bleiben bytegleich.** [Bericht und Grenzen](docs/SCHUELERNETZ_REWARD_20261104.md) · [Daten und Nachweise](experiments/analysis/student_reward_20261104/README.md).
+**Stand 04.11., nach der Aktionsschüler-Studie: V14 bleibt die Abgabe.** Der neue Einzelnetz-Schüler A2 erreicht gegen Solution **38/40 statt Ausgangsnetz S30 16/40** auf denselben neuen Karten; V14 ebenfalls 38/40. Im Gesamtpanel A2 94/120 statt V14 98/120, direkt gegen V14 14/40: kein nachgewiesener Ersatz. Vier zusätzliche RL-Läufe und zwei feste Zweierensembles liefern keinen besseren Gesamtstand. **2.452 neue Spielausführungen geprüft; V14 und ZIP bytegleich.** [Bericht und Grenzen](docs/AKTIONSSCHUELER_20261104.md) · [Daten und Prüfungen](experiments/analysis/action_student_20261104/README.md).
+
+**Vorherige Schüler-/Reward-Studie vom 04.11.:** Ein neues Einzelnetz wurde tatsächlich aus den 36 V14-Netzen destilliert und in zwei getrennten RL-Armen nachtrainiert. Alle 1.064 Spielausführungen sind geprüft. Im frischen 20-Karten-Vergleich gewann V14 gegen Solution 36/40, der beste neue Schüler 22/40; kein neuer Kandidat qualifiziert sich. Das Entfernen des SAP-Shapings zeigt nur eine unsichere positive Tendenz innerhalb des Schülerpaares. **V14-Gewichte und Gruppe15.zip bleiben bytegleich.** [Bericht und Grenzen](docs/SCHUELERNETZ_REWARD_20261104.md) · [Daten und Nachweise](experiments/analysis/student_reward_20261104/README.md).
 
 Die getrennten früheren Studien bleiben dokumentiert: [Einzelnetz-/42-Netz-Vergleich](docs/ABSCHLUSSBERICHT_20261104_NETZE.md) und [FT18/Nachtraining](docs/MORGENBERICHT_20261104.md). Deren Resultate sind keine Messungen der neuen Schülernetze.
 
@@ -10,7 +12,7 @@ Team 15 (Moodle-Gruppe `15`) · Mahmoud El-Hassan, Moayed Shawesh · Agent **She
 
 Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit Nebel, wandernden Asteroiden und versteckten Punkte-Feldern rund um Relics. Im Kurs besteht ein Spiel aus 3 Matches à 100 Schritte; jede Seite steuert bis zu 16 Einheiten. Viele Spielparameter (Sichtweite, Sap-Kosten, Streuschaden, Nebel-Abzug …) werden pro Spiel zufällig gezogen und sind nicht direkt sichtbar.
 
-Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Ein Netz genügt für beide Seiten, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
+Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das für jede Einheit einzeln entscheidet. Davor stehen ein **Gedächtnis**, das Relics und unsichtbare Punkte-Felder erschließt, eine **Zielzuweisung** und **Aktionsmasken**. Danach prüfen **Regeln** wenige, aber wichtige Fälle. Derselbe Gewichtssatz wird für beide Seiten verwendet, weil `player_1` in einen gespiegelten, kanonischen Raum übersetzt wird.
 
 ## Auf einen Blick (Stand 04.11.2026)
 
@@ -24,7 +26,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal gebaut am 02.11.; zusätzliche Python-3.10-Prüfung am 03.11.) · Upload bis **04.11., 23:59 Uhr** |
-| Tests | Historisch **1.075 Tests + 126 Untertests** bestanden (03.11.). Am 04.11. zusätzlich die **50 gezielten Schüler-/Reward-Tests** gemeinsam bestanden; keine erneute Gesamtsuite. Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
+| Tests | Historisch **1.075 Tests + 126 Untertests** bestanden (03.11.). Am 04.11. zuletzt **136 gezielte Schüler-/Reward-Tests** gemeinsam bestanden, dazu unabhängige Lern-/Diagnoseprüfungen; keine erneute Gesamtsuite. Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
 | Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Finaler Durchlauf 03./04.11.: V14 bleibt
