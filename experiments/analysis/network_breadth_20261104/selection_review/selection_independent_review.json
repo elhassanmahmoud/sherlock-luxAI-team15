@@ -1,0 +1,466 @@
+{
+  "verdict": "PASS",
+  "checked_utc": "2026-11-04T07:55:53+00:00",
+  "implementation": "independent stdlib/NumPy; no repository statistical helpers",
+  "auditor_sha256": "0722ff67da35b9b50ba71cd3f49340fe1024cba14965f27ed5dd29410eb7c530",
+  "expected_head": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+  "expected_freeze_sha256": "c01a9f059fb165767e216683db95dc82a29c814ad7073a37585e98579c632e13",
+  "official_summary_matched": true,
+  "summary": {
+    "schema_version": 1,
+    "phase": "selection",
+    "status": "complete",
+    "study_freeze_sha256": "c01a9f059fb165767e216683db95dc82a29c814ad7073a37585e98579c632e13",
+    "plan_path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/plan.json",
+    "plan_sha256": "ece414c4d1247753881b4910206fb1233bc4498be156d587673fbc78b2d9cd0a",
+    "state_sha256": "1b0faa3ae5ba9e45dac6cd9d03a3bbf37b87057152a53b681aab914a77674a09",
+    "csv_sha256": {
+      "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/baseline_panel.csv": "27661eb5e1f354e707750776e45ae1746b9cc613328ed13e84a8eac01c079f7f",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_panel.csv": "a1ba86aa49cd6d2712103c8ce71f6738c621417ef58c8abbd6351018800d7f58",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_direct.csv": "f9739cf4b3603d9b273af95740bcded7b8daf6a5274bdde99175eb59a92e5b25",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_panel.csv": "96eb99ac3423e82e3e0b4a72cf4d4fa6af8f63116ad9acdfc3a850b433f873e4",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_direct.csv": "7e7f53787a4d9d1108839f15e94076df7890a0c61b91a54597c0665358388b0e"
+    },
+    "candidates": {
+      "SOLO28": {
+        "panel": {
+          "maps": 20,
+          "winrate": 0.5708333333333333,
+          "ref_winrate": 0.7916666666666666,
+          "delta": -0.22083333333333335,
+          "low": -0.30416666666666664,
+          "high": -0.14156250000000145
+        },
+        "opponents": {
+          "solution92": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.775,
+            "ref_winrate": 0.875,
+            "delta": -0.1,
+            "low": -0.275,
+            "high": 0.075,
+            "opponent": "solution92",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "sol92_sq": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.7,
+            "ref_winrate": 0.775,
+            "delta": -0.075,
+            "low": -0.25,
+            "high": 0.1,
+            "opponent": "sol92_sq",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.65,
+            "ref_winrate": 0.9,
+            "delta": -0.25,
+            "low": -0.5,
+            "high": 0.0,
+            "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.5,
+            "ref_winrate": 0.85,
+            "delta": -0.35,
+            "low": -0.6,
+            "high": -0.1,
+            "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.4,
+            "ref_winrate": 0.85,
+            "delta": -0.45,
+            "low": -0.7,
+            "high": -0.2,
+            "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.4,
+            "ref_winrate": 0.5,
+            "delta": -0.1,
+            "low": -0.325,
+            "high": 0.125,
+            "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "default": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 1.0,
+            "ref_winrate": 1.0,
+            "delta": 0.0,
+            "low": 0.0,
+            "high": 0.0,
+            "opponent": "default",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          }
+        },
+        "direct": {
+          "maps": 20,
+          "games": 40,
+          "winrate": 0.4,
+          "low": 0.2,
+          "high": 0.6,
+          "wins": 16,
+          "draws": 0,
+          "losses": 24
+        },
+        "counts": {
+          "solution92": {
+            "candidate": {
+              "games": 40,
+              "wins": 31,
+              "draws": 0,
+              "losses": 9
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 35,
+              "draws": 0,
+              "losses": 5
+            }
+          },
+          "sol92_sq": {
+            "candidate": {
+              "games": 40,
+              "wins": 28,
+              "draws": 0,
+              "losses": 12
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 31,
+              "draws": 0,
+              "losses": 9
+            }
+          },
+          "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 26,
+              "draws": 0,
+              "losses": 14
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 36,
+              "draws": 0,
+              "losses": 4
+            }
+          },
+          "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 20,
+              "draws": 0,
+              "losses": 20
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 34,
+              "draws": 0,
+              "losses": 6
+            }
+          },
+          "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 16,
+              "draws": 0,
+              "losses": 24
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 34,
+              "draws": 0,
+              "losses": 6
+            }
+          },
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 16,
+              "draws": 0,
+              "losses": 24
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 20,
+              "draws": 0,
+              "losses": 20
+            }
+          },
+          "default": {
+            "candidate": {
+              "games": 40,
+              "wins": 40,
+              "draws": 0,
+              "losses": 0
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 40,
+              "draws": 0,
+              "losses": 0
+            }
+          }
+        },
+        "gates": {
+          "panel_delta": false,
+          "solution_delta": false,
+          "default": true,
+          "direct": false
+        },
+        "passed": false
+      },
+      "FO42": {
+        "panel": {
+          "maps": 20,
+          "winrate": 0.8041666666666666,
+          "ref_winrate": 0.7916666666666666,
+          "delta": 0.012500000000000011,
+          "low": -0.054166666666666655,
+          "high": 0.07510416666666518
+        },
+        "opponents": {
+          "solution92": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.975,
+            "ref_winrate": 0.875,
+            "delta": 0.1,
+            "low": 0.0,
+            "high": 0.225,
+            "opponent": "solution92",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "sol92_sq": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.85,
+            "ref_winrate": 0.775,
+            "delta": 0.075,
+            "low": 0.0,
+            "high": 0.15,
+            "opponent": "sol92_sq",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.95,
+            "ref_winrate": 0.9,
+            "delta": 0.05,
+            "low": -0.1,
+            "high": 0.2,
+            "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.8,
+            "ref_winrate": 0.85,
+            "delta": -0.05,
+            "low": -0.25,
+            "high": 0.1,
+            "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.8,
+            "ref_winrate": 0.85,
+            "delta": -0.05,
+            "low": -0.25,
+            "high": 0.15,
+            "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 0.45,
+            "ref_winrate": 0.5,
+            "delta": -0.05,
+            "low": -0.3,
+            "high": 0.2,
+            "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          },
+          "default": {
+            "maps": 20,
+            "games": 40,
+            "winrate": 1.0,
+            "ref_winrate": 1.0,
+            "delta": 0.0,
+            "low": 0.0,
+            "high": 0.0,
+            "opponent": "default",
+            "excluded_candidate": 0,
+            "excluded_reference": 0
+          }
+        },
+        "direct": {
+          "maps": 20,
+          "games": 40,
+          "winrate": 0.5,
+          "low": 0.3,
+          "high": 0.7,
+          "wins": 20,
+          "draws": 0,
+          "losses": 20
+        },
+        "counts": {
+          "solution92": {
+            "candidate": {
+              "games": 40,
+              "wins": 39,
+              "draws": 0,
+              "losses": 1
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 35,
+              "draws": 0,
+              "losses": 5
+            }
+          },
+          "sol92_sq": {
+            "candidate": {
+              "games": 40,
+              "wins": 34,
+              "draws": 0,
+              "losses": 6
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 31,
+              "draws": 0,
+              "losses": 9
+            }
+          },
+          "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 38,
+              "draws": 0,
+              "losses": 2
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 36,
+              "draws": 0,
+              "losses": 4
+            }
+          },
+          "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 32,
+              "draws": 0,
+              "losses": 8
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 34,
+              "draws": 0,
+              "losses": 6
+            }
+          },
+          "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 32,
+              "draws": 0,
+              "losses": 8
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 34,
+              "draws": 0,
+              "losses": 6
+            }
+          },
+          "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+            "candidate": {
+              "games": 40,
+              "wins": 18,
+              "draws": 0,
+              "losses": 22
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 20,
+              "draws": 0,
+              "losses": 20
+            }
+          },
+          "default": {
+            "candidate": {
+              "games": 40,
+              "wins": 40,
+              "draws": 0,
+              "losses": 0
+            },
+            "baseline": {
+              "games": 40,
+              "wins": 40,
+              "draws": 0,
+              "losses": 0
+            }
+          }
+        },
+        "gates": {
+          "panel_delta": true,
+          "solution_delta": true,
+          "default": true,
+          "direct": true
+        },
+        "passed": true
+      }
+    },
+    "nominee": "FO42",
+    "promotion_qualified": false,
+    "completed_games": 920,
+    "bootstrap_samples": 5000,
+    "bootstrap_rng_seed": 0,
+    "bootstrap_cluster": "whole map, paired sides and all panel opponents",
+    "map_counts": {
+      "panel": 20,
+      "solution": 20,
+      "default": 20,
+      "direct": 20
+    }
+  },
+  "scope": "Data/statistics acceptance only; independent technical release approval still required"
+}

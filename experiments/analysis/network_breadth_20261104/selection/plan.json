@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "phase": "selection",
+  "candidate": null,
+  "study_freeze_path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/freeze.json",
+  "study_freeze_sha256": "c01a9f059fb165767e216683db95dc82a29c814ad7073a37585e98579c632e13",
+  "initial_seconds_per_game": {
+    "combined_panel": 2.6,
+    "direct": 3.5
+  },
+  "prior_observed_seconds_per_game": {
+    "combined_panel": [
+      2.421623170162396,
+      2.152827691005465,
+      2.5270326424118443
+    ],
+    "direct": [
+      4.090330031234771,
+      4.506549020734383
+    ]
+  },
+  "game_end_utc": "2026-11-04T13:30:00+00:00",
+  "reserve_seconds": 1200,
+  "future_confirmation_games": {
+    "combined_panel": 3520,
+    "direct": 320
+  },
+  "jobs": [
+    {
+      "name": "baseline_panel",
+      "role": "baseline",
+      "kind": "panel",
+      "engine": "par_eval",
+      "timing_class": "combined_panel",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p0.pth",
+      "first_seed": 861000,
+      "n_maps": 20,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [],
+      "workers": 2,
+      "games": 280,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/baseline_panel.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/baseline_panel.log"
+    },
+    {
+      "name": "SOLO28_panel",
+      "role": "SOLO28",
+      "kind": "panel",
+      "engine": "par_eval",
+      "timing_class": "combined_panel",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/ensembles/network_breadth_20261104/SOLO28.pth",
+      "first_seed": 861000,
+      "n_maps": 20,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [],
+      "workers": 2,
+      "games": 280,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_panel.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_panel.log"
+    },
+    {
+      "name": "SOLO28_direct",
+      "role": "SOLO28",
+      "kind": "direct",
+      "engine": "par_eval",
+      "timing_class": "direct",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/ensembles/network_breadth_20261104/SOLO28.pth",
+      "first_seed": 861000,
+      "n_maps": 20,
+      "opponents": [
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth"
+      ],
+      "overrides": [],
+      "workers": 2,
+      "games": 40,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_direct.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/SOLO28_direct.log"
+    },
+    {
+      "name": "FO42_panel",
+      "role": "FO42",
+      "kind": "panel",
+      "engine": "par_eval",
+      "timing_class": "combined_panel",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/ensembles/network_breadth_20261104/FO42.pth",
+      "first_seed": 861000,
+      "n_maps": 20,
+      "opponents": [
+        "solution92",
+        "sol92_sq",
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+        "default"
+      ],
+      "overrides": [],
+      "workers": 2,
+      "games": 280,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_panel.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_panel.log"
+    },
+    {
+      "name": "FO42_direct",
+      "role": "FO42",
+      "kind": "direct",
+      "engine": "par_eval",
+      "timing_class": "direct",
+      "root": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "weights": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/ensembles/network_breadth_20261104/FO42.pth",
+      "first_seed": 861000,
+      "n_maps": 20,
+      "opponents": [
+        "self:experiments/releases/20261101_v14_baseline/agent_p0.pth"
+      ],
+      "overrides": [],
+      "workers": 2,
+      "games": 40,
+      "out": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_direct.csv",
+      "log": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/analysis/network_breadth_20261104/selection/FO42_direct.log"
+    }
+  ]
+}
