@@ -1,0 +1,183 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-11-04T05:33:35.275735+00:00",
+  "scope": "Read-only before/after identity of active V14, baseline backups and primary ZIP; archival writes restricted to the new performance_confirmation directory",
+  "protected_count": 9,
+  "backup_manifest_count": 2,
+  "protected_before": [
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_backup_manifest",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/manifest.json",
+      "bytes": 292,
+      "sha256": "5c476ca4bdbbfdedcee05b607aee2271789a6e453b4abadc0e2c21dd7640e851"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_backup_manifest",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/manifest.json",
+      "bytes": 292,
+      "sha256": "5c476ca4bdbbfdedcee05b607aee2271789a6e453b4abadc0e2c21dd7640e851"
+    },
+    {
+      "kind": "primary_battle_zip",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip",
+      "bytes": 22228404,
+      "sha256": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+    }
+  ],
+  "protected_after": [
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_backup_manifest",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/manifest.json",
+      "bytes": 292,
+      "sha256": "5c476ca4bdbbfdedcee05b607aee2271789a6e453b4abadc0e2c21dd7640e851"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "active",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/agents/sherlock/weights/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_baseline_backup",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/agent_p1.pth",
+      "bytes": 24020311,
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    {
+      "kind": "V14_backup_manifest",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup/experiments/releases/20261101_v14_baseline/manifest.json",
+      "bytes": 292,
+      "sha256": "5c476ca4bdbbfdedcee05b607aee2271789a6e453b4abadc0e2c21dd7640e851"
+    },
+    {
+      "kind": "primary_battle_zip",
+      "path": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/Gruppe15.zip",
+      "bytes": 22228404,
+      "sha256": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+    }
+  ],
+  "all_expected_sha256_match": true,
+  "protected_before_after_equal": true,
+  "heads_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "16581a579df49c17609005ff953b18e4d17242dc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "7c906e16943ff7217afe1eae392834439cc76634"
+  },
+  "heads_after": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "16581a579df49c17609005ff953b18e4d17242dc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "7c906e16943ff7217afe1eae392834439cc76634"
+  },
+  "git_status_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": " M CLAUDE.md\n M README.md\n M docs/ARBEITSSTAND.md\n M docs/EXPERIMENT_PROTOKOLL.md\n?? .DS_Store\n?? \"agents/sherlock/config 2.py\"\n?? \"agents/sherlock/reward 2.py\"\n?? docs/.DS_Store\n?? experiments/analysis/autonomous_20261020/awake_until_deadline.json\n",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "?? experiments/analysis/final_battle_20261103/performance/\n?? experiments/analysis/final_battle_20261103/training/\n?? experiments/analysis/final_battle_20261103/training_prepared/\n?? experiments/runs/20261103_rescue_adapt18/\n?? experiments/runs/20261103_rescue_control18/\n"
+  },
+  "git_status_after_payload_and_readme": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": " M CLAUDE.md\n M README.md\n M docs/ARBEITSSTAND.md\n M docs/EXPERIMENT_PROTOKOLL.md\n?? .DS_Store\n?? \"agents/sherlock/config 2.py\"\n?? \"agents/sherlock/reward 2.py\"\n?? docs/.DS_Store\n?? experiments/analysis/autonomous_20261020/awake_until_deadline.json\n?? experiments/analysis/final_battle_20261103/performance_confirmation/\n",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "?? experiments/analysis/final_battle_20261103/performance/\n?? experiments/analysis/final_battle_20261103/training/\n?? experiments/analysis/final_battle_20261103/training_prepared/\n?? experiments/runs/20261103_rescue_adapt18/\n?? experiments/runs/20261103_rescue_control18/\n"
+  },
+  "status_note": "Root concurrently owns primary documentation edits. Archive directory appears as one untracked directory; closing_identity.json and archive_manifest.json are generated after this snapshot inside that same directory.",
+  "csv_git_clean_filter_checks": [
+    {
+      "file": "confirmation/FT18_direct.csv",
+      "text_attribute": "experiments/analysis/final_battle_20261103/performance_confirmation/confirmation/FT18_direct.csv: text: unset",
+      "raw_git_blob": "38c91f98a46744fe92e20e58279683ae8d3d3e42",
+      "filtered_git_blob": "38c91f98a46744fe92e20e58279683ae8d3d3e42"
+    },
+    {
+      "file": "confirmation/FT18_panel.csv",
+      "text_attribute": "experiments/analysis/final_battle_20261103/performance_confirmation/confirmation/FT18_panel.csv: text: unset",
+      "raw_git_blob": "035875044b5577bdf664cd0fd45e9098221d3f99",
+      "filtered_git_blob": "035875044b5577bdf664cd0fd45e9098221d3f99"
+    },
+    {
+      "file": "confirmation/baseline_panel.csv",
+      "text_attribute": "experiments/analysis/final_battle_20261103/performance_confirmation/confirmation/baseline_panel.csv: text: unset",
+      "raw_git_blob": "5b839c120be7e296d73c0f23954a2177a5df67fc",
+      "filtered_git_blob": "5b839c120be7e296d73c0f23954a2177a5df67fc"
+    }
+  ],
+  "no_stage_commit_push": true
+}

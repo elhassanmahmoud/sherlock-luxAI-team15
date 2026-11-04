@@ -1,0 +1,32 @@
+{
+  "checked_utc": "2026-11-04T05:35:43.825208+00:00",
+  "reason": "Final study complete and independently reviewed; V14 retained",
+  "terminated": [
+    {
+      "key": "watcher",
+      "pid": 47241,
+      "verified_command": "/Library/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python -B /tmp/sherlock-final-20261103/remote_watch.py",
+      "absent_after": true
+    },
+    {
+      "key": "awake",
+      "pid": 45548,
+      "verified_command": "caffeinate -i -t 84577",
+      "absent_after": true
+    }
+  ],
+  "automations": [
+    {
+      "id": "sherlock-repo-alle-drei-stunden-abgleichen",
+      "status": "PAUSED",
+      "updated_at": 1793770525658
+    },
+    {
+      "id": "sherlock-verbesserungsplan-fortsetzen",
+      "status": "PAUSED",
+      "updated_at": 1793770525784
+    }
+  ],
+  "confirmation_completed": true,
+  "finished_utc": "2026-11-04T05:35:43.844286+00:00"
+}
