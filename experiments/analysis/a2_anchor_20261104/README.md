@@ -20,7 +20,7 @@ Die vier Modellkopien sind die Endstände, auch wenn die bekannte Zwischenvalidi
 
 ## Daten prüfen und wiederverwenden
 
-Die manifesteigenen SHA-256-Werte beziehen sich auf die ursprünglichen Bytes. Für komprimierte Dateien benennt das Archivmanifest sowohl den komprimierten als auch den entpackten Hash. `.gitattributes` verhindert automatische Zeilenumwandlung.
+Die manifesteigenen SHA-256-Werte beziehen sich auf die ursprünglichen Bytes. Für komprimierte Dateien benennt das Archivmanifest sowohl den komprimierten als auch den entpackten Hash. `.gitattributes` verhindert automatische Zeilenumwandlung und behandelt originale CRLF-/Log-Leerzeichen nicht als zu bereinigenden Quelltext.
 
 Der unabhängige Auswerter in `completion/audit_results.py` akzeptiert `--data-ready --directory PATH_ZU/diagnostic --out-prefix NEUER_AUSGABEPFAD` und liest nur die elf fertigen CSVs. Er prüft Schlüssel, Vollständigkeit, Ergebnisse und gepaarte Kartenintervalle; er startet kein Spiel. `--self-test` verwendet ausschließlich erfundene Testdaten.
 
