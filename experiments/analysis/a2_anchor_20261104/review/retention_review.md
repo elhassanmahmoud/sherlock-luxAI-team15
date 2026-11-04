@@ -1,0 +1,13 @@
+# Task 1 independent review
+
+Verdict: **one P2 correction requested before acceptance**.
+
+- **[P2] Reject output directories inside an input collector archive** (`scripts/student_retention.py:125–130`). The guard receives only the four individual input files, so `--out COLLECTOR/retention-report` is accepted and changes the existing collector directory. This escapes the spec's immutable-old-archives boundary; the existing `run_distillation` already rejects precisely this relation. Check resolved output against every resolved dataset directory before `reserve_output` creates anything, and add a rejection test (including a symlinked ancestor if practical). A temporary-directory, direct guard probe confirmed `nested_output_accepted=True` and `output_inside_collector=True`; no real dataset was touched.
+
+Otherwise the reviewed patch meets the scoped requirements: validated loader enforces complete packages, dtype/shape/nonempty masks and seed-consistent splits; inference receives only `~is_train`, runs independently per model with eval/no-grad batching, and preserves torch RNG. Checkpoint inference reads `q` only, checks inferred architecture against config and strict state shapes, rejects ensembles and nonfinite state/output. Legal agreement/regret, centered errors, pooled and per-row Q spreads and legal top-two gaps have appropriate masking/aggregation and singleton handling. Collector override metrics are correctly labeled. Before/after hashes cover all four package files, model files and direct sources; successful JSON publication is atomic and refuses changed hashes. Protected and occupied output checks are reused.
+
+Reviewed task-1 review package, brief, specification, implementation report, runtime module/tests and relevant shared helpers. No test suite, game, model training, or real-corpus inference was run by this reviewer. Root still owns combined verification and the five-model diagnostic; implementation claims of 24 passing tests were inspected, not independently rerun here. No repo source, index, HEAD, existing data or model edits were made.
+
+## Scoped P2 re-review
+
+**Addressed; no remaining review findings.** The new resolved-output containment check precedes `reserve_output`, so direct descendants and symlinked ancestor aliases are rejected before creation. The two new parameterized regressions require rejection, absent output and identical collector directory entries/hashes. Reviewed the fix, regressions and implementer red-proof/26-pass report only; no suite or corpus was rerun. Root verification and actual five-model diagnostics remain root-owned.

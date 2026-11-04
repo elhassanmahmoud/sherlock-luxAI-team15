@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-04T20:38:08.785315+00:00",
+  "source_commit": "09c69349afc020a7b2418c249657a5698c472964",
+  "source_files": 266,
+  "pinned_inputs": 153,
+  "jobs": 11,
+  "games": 920,
+  "numeric_equalities": 236,
+  "comparisons": [
+    {
+      "candidate": "V14",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "A2",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL25",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL26",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR25",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR26",
+      "reference": "V14",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "V14",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "A2",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL25",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "CONTROL26",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR25",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR26",
+      "reference": "A2",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR25",
+      "reference": "CONTROL25",
+      "three_opponents_and_pooled_equal": true
+    },
+    {
+      "candidate": "ANCHOR26",
+      "reference": "CONTROL26",
+      "three_opponents_and_pooled_equal": true
+    }
+  ],
+  "direct_roles": 5,
+  "caught_exception_logs": [],
+  "all_candidate_copies_equal": true,
+  "all_protected_inputs_unchanged": true,
+  "independent_audit_sha256": "e6cad1e70b15cbd07f8282d5967cb040d97d0c4139f66d1491f26693a3d130ae",
+  "controller_state_sha256": "5ddfc2b54f4e01e2c772a6d09a92cfdef0e86144c220e6260ab1cb867bd3bbd1",
+  "limit": "Reuses existing compare_report for opponent intervals; independent explicit pooled/direct calculation. Does not rerun engine scoring or games."
+}

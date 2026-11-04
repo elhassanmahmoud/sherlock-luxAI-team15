@@ -1,0 +1,81 @@
+........................................ [  3%]
+......................................................................................................................................... [ 13%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 30%]
+..........................................F............................. [ 35%]
+........................................................................ [ 41%]
+........................................................................ [ 46%]
+.....F.................................................................. [ 52%]
+........................................................................ [ 57%]
+........................................................................ [ 63%]
+.............................................................. [ 67%]
+........................................................................ [ 73%]
+........................................................................ [ 79%]
+........................................................................................................................................... [ 89%]
+........................................................................ [ 95%]
+...............................................................          [100%]
+=================================== FAILURES ===================================
+________________ test_stop_cleans_real_owned_stdlib_child_group ________________
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-274/test_stop_cleans_real_owned_st0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1206fd8d0>
+
+    def test_stop_cleans_real_owned_stdlib_child_group(tmp_path, monkeypatch):
+        from types import SimpleNamespace
+        stop = tmp_path / 'STOP'
+        monkeypatch.setattr(study, 'STOP_FILE', stop)
+        monkeypatch.setattr(study, 'current_power', lambda: (True, 90))
+        monkeypatch.setattr(study, 'check_freeze', lambda *a, **k: {})
+        monkeypatch.setattr(study, 'job_command', lambda *a: [sys.executable, '-B', '-c', 'import time; time.sleep(60)'])
+        plan_path = tmp_path / 'plan.json'
+        plan_path.write_text('{}')
+        job = study.build_jobs(ROOT, tmp_path, weights(), 'selection')[0]
+        frozen = dict(root=str(ROOT), python=sys.executable, frozen_weights={})
+        plan = dict(study_freeze_path='unused', study_freeze_sha256='unused')
+        tools = SimpleNamespace(early=early, jobs=SimpleNamespace(validate_inputs=lambda *a: None))
+        record = dict(plan_sha256=study.digest(plan_path))
+    
+        def save():
+            if record.get('pid'):
+                stop.write_text('stop test')
+    
+>       with pytest.raises(ValueError, match='STOP'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'STOP'
+E         Actual message: 'Hard game deadline reached'
+
+tests/test_final_battle_study.py:259: AssertionError
+________________ test_stop_cleans_only_real_owned_process_group ________________
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-274/test_stop_cleans_only_real_own0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1206764a0>
+
+    def test_stop_cleans_only_real_owned_process_group(tmp_path, monkeypatch):
+        from types import SimpleNamespace
+        stop = tmp_path / 'STOP'
+        monkeypatch.setattr(study, 'STOP_FILE', stop)
+        monkeypatch.setattr(study, 'current_power', lambda: (True, 90))
+        monkeypatch.setattr(study, 'check_freeze', lambda *args, **kwargs: {})
+        monkeypatch.setattr(study, 'job_command', lambda *args: [sys.executable, '-B', '-c', 'import time; time.sleep(60)'])
+        plan_path = tmp_path / 'plan.json'
+        plan_path.write_text('{}')
+        job = study.build_jobs(ROOT, tmp_path, weights(), 'selection')[0]
+        frozen = dict(root=str(ROOT), python=sys.executable, frozen_weights={})
+        plan = dict(study_freeze_path='unused', study_freeze_sha256='unused')
+        tools = SimpleNamespace(early=early, jobs=SimpleNamespace(validate_inputs=lambda *args: None))
+        record = dict(plan_sha256=study.digest(plan_path))
+        def save():
+            if record.get('pid'): stop.write_text('stop')
+>       with pytest.raises(ValueError, match='STOP'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'STOP'
+E         Actual message: 'Hard game deadline reached'
+
+tests/test_network_breadth_study.py:285: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_final_battle_study.py::test_stop_cleans_real_owned_stdlib_child_group
+FAILED tests/test_network_breadth_study.py::test_stop_cleans_only_real_owned_process_group
+2 failed, 1303 passed, 126 subtests passed in 234.70s (0:03:54)

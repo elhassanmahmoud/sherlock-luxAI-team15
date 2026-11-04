@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "independent": true,
+  "source_commit": "09c69349afc020a7b2418c249657a5698c472964",
+  "auditor_script": "/private/tmp/sherlock-a2-anchor-20261104/learning_completion_auditor.py",
+  "auditor_sha256": "8731231b56a514f882736b06040188703e0887d717f181b86a446bb0a9f2acbc",
+  "training_admission_sha256": "6ed1da37ef92afc2e1f638de0cb84cffdfb00d1c9dd985674f2491f5facde915",
+  "arms": {
+    "CONTROL25": {
+      "prepared": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25",
+      "receipt_sha256": "6ce019279a562991a7f5386f26b7dce0b07ca140764482e2a07844265efd571e",
+      "checkpoint_sha256": "287401b9136aea1a8116cdf6456b706f55bff4e83f5c6a56aa66094d52528044",
+      "guard_sha256": "ab40270ab6d7dc0198cea68bf19c0cbf6dced912a718b3e8094e29c6534264af",
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "anchor_active_verified": false,
+      "actual_games": 232,
+      "actual_updates": 24000,
+      "total_actual_replay_transitions": 713449,
+      "update_evidence": {
+        "updates": 24000,
+        "sample_count": 0,
+        "weight": 0.0,
+        "positive_gradient_updates": 0,
+        "sampler_rng_sha256": "e848979f47b647ef1e2f433949bbbc74b814c48896fe474cb206b7cc221efde0",
+        "td_loss_sum": 19776.015935361385,
+        "anchor_loss_sum": 0.0,
+        "total_loss_sum": 19776.015935361385,
+        "min_anchor_output_gradient_norm": 0.0,
+        "all_samples_independently_replayed": true,
+        "excluded_sample_count": 0,
+        "all_updates_one_optimizer_step": true
+      },
+      "replay_evidence": {
+        "file_sha256": "473072f43663c6a248da800bc177ff694537ecfed690823fb1f9189aa169df8d",
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "946459386e6c92db9538a27f26a83c393a4d271afc9f09881966e4e71f182b54"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "97934966a2e7802aaa57d37ca10ccfbcc77ee6850dd23253de5c9b0e20648eff"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8",
+            "content_sha256": "112786de845a83b1628c6453e3aba8b0f6020b0f0e66358516811b99904e5e1a"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "354a67f1ae238742c2dec5354f1c38e51d9693a029f129d039b063a64cddb87e"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "4a93da14ef2c086d2a3d9207f2d2c1b695984681e319ead78ee4db65f7f29cf3"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              6
+            ],
+            "dtype": "|b1",
+            "content_sha256": "8ae41dd0e2318bd7aee638356c3b2c6b7723bd322f868676394d3c8f331cacae"
+          }
+        }
+      },
+      "initial_checkpoint_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "initial_tensor_sha256": "a07110af6053c4fc1da8ac246f1ae0f04264d082abf55a88dc928d9d8a67f3f7",
+      "initial_optimizer_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b",
+      "public_validation": {
+        "record": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed25_control.json",
+        "record_sha256": "4cb6697f48ad9f1ad4e816534368acdf8ee8bcbc6aee66be617990e5cc49e11b",
+        "command": [
+          "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+          "-B",
+          "-m",
+          "scripts.student_anchor_train",
+          "validate",
+          "--prepared",
+          "experiments/runs/20261104_a2_anchor/seed25",
+          "--arm",
+          "control"
+        ],
+        "returncode": 0,
+        "log": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed25_control.log",
+        "log_sha256": "421368a72e9c2f0bf94a882f9894cc9c839d25424136317d40f25ba00b10cafe",
+        "completed_utc": "2026-11-04T20:05:43.246455+00:00"
+      }
+    },
+    "ANCHOR25": {
+      "prepared": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25",
+      "receipt_sha256": "befe107b8c8667df4e7c75b0af90997dc9a633305c1a29bb3a8833921d69f148",
+      "checkpoint_sha256": "4ff1d70e0a698e01e97dd161ed25e590aea7af4ddebfca99edd967b5b24e246f",
+      "guard_sha256": "7486a9f0f933e8fb92cad3ce359b95f7ceefb8d652e04fa7afdaf9920d9b814b",
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "anchor_active_verified": true,
+      "actual_games": 232,
+      "actual_updates": 24000,
+      "total_actual_replay_transitions": 716218,
+      "update_evidence": {
+        "updates": 24000,
+        "sample_count": 6144000,
+        "weight": 0.1,
+        "positive_gradient_updates": 24000,
+        "sampler_rng_sha256": "3f505822624d9dcaa1827e6195aea53f3c9a65a28615d66fb8460a4b1c8b9638",
+        "td_loss_sum": 19942.334159702063,
+        "anchor_loss_sum": 1395.2250432930887,
+        "total_loss_sum": 20081.85666000843,
+        "min_anchor_output_gradient_norm": 0.000525962095707655,
+        "all_samples_independently_replayed": true,
+        "excluded_sample_count": 0,
+        "all_updates_one_optimizer_step": true
+      },
+      "replay_evidence": {
+        "file_sha256": "2ee0af1cec5164833c0d69e35970c5c95b9ed8458132824c2cf1130be88be7a0",
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "444bb67a9519d5fd68c9bf08019ffd786664fef65f37d0b4065b9c19ac1ca0f9"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "6e22773dddc1e83113f38ac9d930c0db96bbb499bcd17f0cb316e4ea54c1e050"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8",
+            "content_sha256": "c4281a39be284dfa50cb6124ef5954d126959acc9fd9dacb93e3fc1b25c41c32"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "a043cb537623010bdb17bc92c9795d207528ec21c3128eb44b51fd012876cfb9"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "11095a84cec8042239ebb2f9842c2141b57137c668fdf5d63457514900c4e4a8"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              6
+            ],
+            "dtype": "|b1",
+            "content_sha256": "93a256e43bc6bdd104826505036d7d8eea7e3facc61ed86404794820ed414988"
+          }
+        }
+      },
+      "initial_checkpoint_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "initial_tensor_sha256": "a07110af6053c4fc1da8ac246f1ae0f04264d082abf55a88dc928d9d8a67f3f7",
+      "initial_optimizer_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b",
+      "public_validation": {
+        "record": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed25_anchor.json",
+        "record_sha256": "3a2817eb1d836ce8aa5784625ab8e31262c0e906f3d6323d5ca9b371e6035b2b",
+        "command": [
+          "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+          "-B",
+          "-m",
+          "scripts.student_anchor_train",
+          "validate",
+          "--prepared",
+          "experiments/runs/20261104_a2_anchor/seed25",
+          "--arm",
+          "anchor"
+        ],
+        "returncode": 0,
+        "log": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed25_anchor.log",
+        "log_sha256": "421368a72e9c2f0bf94a882f9894cc9c839d25424136317d40f25ba00b10cafe",
+        "completed_utc": "2026-11-04T20:05:46.615631+00:00"
+      }
+    },
+    "CONTROL26": {
+      "prepared": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26",
+      "receipt_sha256": "91658d2998fd2106e124d787392d13527810024f52bbba8907baeb417a526d2f",
+      "checkpoint_sha256": "97875390db6dbd52d73c9f96008a788e059c5aa4e773698b612ac26617ea6fe3",
+      "guard_sha256": "89d4bdfac1caedfa5709f248560a91e137b8c7ba199d4150c2b90059f9d1f17c",
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "anchor_active_verified": false,
+      "actual_games": 232,
+      "actual_updates": 24000,
+      "total_actual_replay_transitions": 714128,
+      "update_evidence": {
+        "updates": 24000,
+        "sample_count": 0,
+        "weight": 0.0,
+        "positive_gradient_updates": 0,
+        "sampler_rng_sha256": "a1be02f93b5bc48fd510f57af964f59d41e4133b7e160ff385bce186a951fa66",
+        "td_loss_sum": 20726.503564566374,
+        "anchor_loss_sum": 0.0,
+        "total_loss_sum": 20726.503564566374,
+        "min_anchor_output_gradient_norm": 0.0,
+        "all_samples_independently_replayed": true,
+        "excluded_sample_count": 0,
+        "all_updates_one_optimizer_step": true
+      },
+      "replay_evidence": {
+        "file_sha256": "b2c48b11be657348096aa163d73a95477869614fa303575b0cfed3fe36fd058a",
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "fd62b0d3a91907dfc3772bc5f5c44c9f68c1dcc198ef2f0e25894f0536479430"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "df216a59e04f256ccf78b6cde244ba996d899f0cf35fa0002f5e2c34c5137160"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8",
+            "content_sha256": "dc6a68f12dbec0873738a0bedf0a95a5e36bf83e8dc4e2da7ae10348c9d2c0b8"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "fc0fc48d9f46c1535ff006af53e7ae247ff85134f0f72ceef3e97a9b2b8f287f"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "bfa5b9f8da73eb470e3b1946e961c7484ee8bc58d25a4adf8ce331de87e83e33"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              6
+            ],
+            "dtype": "|b1",
+            "content_sha256": "f89cf2fa7e0b00c2c988980308a2427093db0a523dbac0f0a4dead9a35631fac"
+          }
+        }
+      },
+      "initial_checkpoint_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "initial_tensor_sha256": "a07110af6053c4fc1da8ac246f1ae0f04264d082abf55a88dc928d9d8a67f3f7",
+      "initial_optimizer_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b",
+      "public_validation": {
+        "record": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed26_control.json",
+        "record_sha256": "ef722a07fefc64cdb87941f6bbb389f1670dcf4efbe1be0bdf7fb06d7d78581b",
+        "command": [
+          "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+          "-B",
+          "-m",
+          "scripts.student_anchor_train",
+          "validate",
+          "--prepared",
+          "experiments/runs/20261104_a2_anchor/seed26",
+          "--arm",
+          "control"
+        ],
+        "returncode": 0,
+        "log": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed26_control.log",
+        "log_sha256": "421368a72e9c2f0bf94a882f9894cc9c839d25424136317d40f25ba00b10cafe",
+        "completed_utc": "2026-11-04T20:05:49.936528+00:00"
+      }
+    },
+    "ANCHOR26": {
+      "prepared": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26",
+      "receipt_sha256": "8977642a463e41d243b60ed33869c51573b212fab8d3d3e916065542818d2d5d",
+      "checkpoint_sha256": "4bd80887dd4379070c07e8e8c169aedd0a5be83dc4899d45c7a78f4708def10f",
+      "guard_sha256": "d1d4157c0ad38ef699465b41107d47afa19cd000faca015e949d8990fcbfc642",
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "anchor_active_verified": true,
+      "actual_games": 232,
+      "actual_updates": 24000,
+      "total_actual_replay_transitions": 713950,
+      "update_evidence": {
+        "updates": 24000,
+        "sample_count": 6144000,
+        "weight": 0.1,
+        "positive_gradient_updates": 24000,
+        "sampler_rng_sha256": "f8a01b31430b875b56387fa6a405287f6aca2f5973e858ae16b609841db1f4d0",
+        "td_loss_sum": 21891.197530686855,
+        "anchor_loss_sum": 1543.4319525621831,
+        "total_loss_sum": 22045.540726333857,
+        "min_anchor_output_gradient_norm": 0.0005765664973296225,
+        "all_samples_independently_replayed": true,
+        "excluded_sample_count": 0,
+        "all_updates_one_optimizer_step": true
+      },
+      "replay_evidence": {
+        "file_sha256": "6e9b7a621070187cc4f7c266745ec52e587fe84cf3f32cf4d26589c3db876416",
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "922c45c322ab29329d7bf6a62a9e3302e1d49b8eae803c4619dcc69ef2ed39a3"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4",
+            "content_sha256": "a8898f6984a06fb3b60f17f217dee5b59905a54e9a68a22c5cab815c868a47fc"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8",
+            "content_sha256": "86c939b8c70ca8e2d747e8368178e621b74c79c879731b1b9f44a71b023cd4c3"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "dd6fb6ce551c5fc76bed54daa8c0db43fc529c6047b52e5595cf7b8c04d28165"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4",
+            "content_sha256": "35658a04e8d73f4425fcac776da35704df11cd07191005edeb4f95028ac03e11"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              6
+            ],
+            "dtype": "|b1",
+            "content_sha256": "46b013c3a46ea757b7a0240e6f4091e521e53a1fe28c4a52654d7b5be7b12aed"
+          }
+        }
+      },
+      "initial_checkpoint_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "initial_tensor_sha256": "a07110af6053c4fc1da8ac246f1ae0f04264d082abf55a88dc928d9d8a67f3f7",
+      "initial_optimizer_sha256": "bf0c705e88d8e773f72fd929981691ea190de2a3c37f27d0412ad1bea1657b3b",
+      "public_validation": {
+        "record": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed26_anchor.json",
+        "record_sha256": "235b44793297f627312ed03f6d3120ed8fb6f55d546a3def5c49493d6cf9bdd6",
+        "command": [
+          "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+          "-B",
+          "-m",
+          "scripts.student_anchor_train",
+          "validate",
+          "--prepared",
+          "experiments/runs/20261104_a2_anchor/seed26",
+          "--arm",
+          "anchor"
+        ],
+        "returncode": 0,
+        "log": "/tmp/sherlock-a2-anchor-20261104/learning_public_validate_seed26_anchor.log",
+        "log_sha256": "421368a72e9c2f0bf94a882f9894cc9c839d25424136317d40f25ba00b10cafe",
+        "completed_utc": "2026-11-04T20:05:53.362867+00:00"
+      }
+    }
+  },
+  "pair_prefill_equal": {
+    "25": true,
+    "26": true
+  },
+  "dataset_evidence": {
+    "train_rows": 356415,
+    "excluded_rows": 68687,
+    "scale_recomputed": 1.4293522257922757,
+    "train_indices_sha256": "336507d962ab589b64bfb65a6ffe02b539ba98d248afa5aabce3ee1bb32c669a"
+  },
+  "pair_prefill_sha256": {
+    "25": "8f2e77a3ab330ac9657120178dd953a4bb066cdff437ca9dcdf5a14a684a3862",
+    "26": "e1f79cf270c41796865fe1817e1442475989433668d4e2cf316a8feb33fa9de5"
+  },
+  "limitations": [
+    "No new model inference or games; final tensors were loaded and compared directly.",
+    "CONTROL exact original update path is supported by pinned reviewed zero-weight branch and actual zero-anchor records.",
+    "Gradient activity is the persisted hook norm from the actual shared backward; every norm/sample/loss was independently checked.",
+    "Prefill actual arrays are represented by the runtime content digest and compared exactly between paired arms; no raw prefill snapshot was separately saved."
+  ],
+  "finished_utc": "2026-11-04T20:05:53.455864+00:00"
+}

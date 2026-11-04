@@ -1,0 +1,994 @@
+{
+  "status": "copied_and_byte_verified",
+  "created_utc": "2026-11-04T20:39:09.309757+00:00",
+  "files": [
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/anchor_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/anchor_receipt.json",
+      "source_sha256": "befe107b8c8667df4e7c75b0af90997dc9a633305c1a29bb3a8833921d69f148",
+      "archive_sha256": "befe107b8c8667df4e7c75b0af90997dc9a633305c1a29bb3a8833921d69f148",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/prefill_replay.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/prefill_replay.json",
+      "source_sha256": "0599e331e1a808915f0a4393cb0563c81bfbc1c51a1bc90e6363dccc4747610f",
+      "archive_sha256": "0599e331e1a808915f0a4393cb0563c81bfbc1c51a1bc90e6363dccc4747610f",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/samples.u32",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/samples.u32.gz",
+      "source_sha256": "9bc19b21c1b29fde6759638880af92e1139035c88f5fddc8cad6044c5e3b87de",
+      "archive_sha256": "89d4fa41a17990cda43e4fa76399a661a4b19af475028dd8924bba80f931e55b",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/status.json",
+      "source_sha256": "bb7eea908981ad29427c4335c38b74bd0e7b7515c31fb73635de8f5619309a19",
+      "archive_sha256": "bb7eea908981ad29427c4335c38b74bd0e7b7515c31fb73635de8f5619309a19",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/summary.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/summary.json",
+      "source_sha256": "b3159fc97f9398eb08ee39b1e7bdaa5ea112b687373067e5f560c3c793739161",
+      "archive_sha256": "b3159fc97f9398eb08ee39b1e7bdaa5ea112b687373067e5f560c3c793739161",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/updates.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/anchor/updates.jsonl.gz",
+      "source_sha256": "f023e7f442d3b792869da71dccdc2072d86e5cb6d76fafd5c533140baa0dd970",
+      "archive_sha256": "5ff09b52ced66702757e91fa6c0675954a82b421e9e3ced4aff707beb6e8e36b",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/anchor_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/anchor_receipt.json",
+      "source_sha256": "6ce019279a562991a7f5386f26b7dce0b07ca140764482e2a07844265efd571e",
+      "archive_sha256": "6ce019279a562991a7f5386f26b7dce0b07ca140764482e2a07844265efd571e",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/prefill_replay.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/prefill_replay.json",
+      "source_sha256": "0599e331e1a808915f0a4393cb0563c81bfbc1c51a1bc90e6363dccc4747610f",
+      "archive_sha256": "0599e331e1a808915f0a4393cb0563c81bfbc1c51a1bc90e6363dccc4747610f",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/samples.u32",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/samples.u32.gz",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive_sha256": "ac73670af3abed54ac6fb4695131f4099be9fbe39d6076c5d0264a6bbdae9d83",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/status.json",
+      "source_sha256": "a211472f1cc8ed95bba8426570319e048d5b73d192467aa958fa52ab8ccff1e6",
+      "archive_sha256": "a211472f1cc8ed95bba8426570319e048d5b73d192467aa958fa52ab8ccff1e6",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/summary.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/summary.json",
+      "source_sha256": "e7aa18104fae6982a97b439e17c8371ea68c51a702baa40789fb2118ba3de60c",
+      "archive_sha256": "e7aa18104fae6982a97b439e17c8371ea68c51a702baa40789fb2118ba3de60c",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/updates.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/audits/control/updates.jsonl.gz",
+      "source_sha256": "e5a1510d7188af7323c919ff00fb55e2055d842438b6f2ebc5f78490b6ea8ba2",
+      "archive_sha256": "38aabe3c80d1427cd5570cabcde0eda1aba6de3378516e4558e59f6a2715c3bf",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/control_status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/control_status.json",
+      "source_sha256": "537605aa7a04849f3f0f98e831e9139aeff77caa63b01209182921f82a4bc025",
+      "archive_sha256": "537605aa7a04849f3f0f98e831e9139aeff77caa63b01209182921f82a4bc025",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/init/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/init/control/manifest.json",
+      "source_sha256": "4cb8b93c8b509b911cf19c21c675ea40519dc34df1308fa0d9a1a9c4fd4897cb",
+      "archive_sha256": "4cb8b93c8b509b911cf19c21c675ea40519dc34df1308fa0d9a1a9c4fd4897cb",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/init/sap0/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/init/sap0/manifest.json",
+      "source_sha256": "3afe6698b8f08aa7b14447852d4505ec72b4c3aff584cd87de9af0fd276a858b",
+      "archive_sha256": "3afe6698b8f08aa7b14447852d4505ec72b4c3aff584cd87de9af0fd276a858b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/manifest.json",
+      "source_sha256": "dbb11e398476c22bcd75e390945a15b844a2e4adeb2a5f79768f9b012fe1e640",
+      "archive_sha256": "dbb11e398476c22bcd75e390945a15b844a2e4adeb2a5f79768f9b012fe1e640",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/final_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/final_receipt.json",
+      "source_sha256": "470f269026430b9ad6854533d190f1f314e022849e82e3519ff8fe4a171c021b",
+      "archive_sha256": "470f269026430b9ad6854533d190f1f314e022849e82e3519ff8fe4a171c021b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/log.txt",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/log.txt",
+      "source_sha256": "641bb67c870f23a286a8efba0a6d763739e22827742b8502f80e5c61cc8c7372",
+      "archive_sha256": "641bb67c870f23a286a8efba0a6d763739e22827742b8502f80e5c61cc8c7372",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/manifest.json",
+      "source_sha256": "4cb229b9df2af000dfeb1518645d2ae5e75723c448ad2346b866767fe088c77c",
+      "archive_sha256": "4cb229b9df2af000dfeb1518645d2ae5e75723c448ad2346b866767fe088c77c",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/rollouts.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/rollouts.jsonl.gz",
+      "source_sha256": "16cb078b038d8f0a3cb66512c8f0061082b9488e1e58e2c00c92d042a61b7a42",
+      "archive_sha256": "1c7c0b199278301c5f55f11b616278daf1a478e449c5689174c8ee06c3dc6fc0",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/status.json",
+      "source_sha256": "537605aa7a04849f3f0f98e831e9139aeff77caa63b01209182921f82a4bc025",
+      "archive_sha256": "537605aa7a04849f3f0f98e831e9139aeff77caa63b01209182921f82a4bc025",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/train.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/train.csv",
+      "source_sha256": "a27d776067ce95eb7f12c00f17d003ea211f9fe91ce55420f9f4d0e667546d4d",
+      "archive_sha256": "a27d776067ce95eb7f12c00f17d003ea211f9fe91ce55420f9f4d0e667546d4d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/training_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/training_audit.json",
+      "source_sha256": "751f8d8d2508f994e68c27b06d5cadbf3edb72e2cdf6b4f6dbe431f4528e0430",
+      "archive_sha256": "751f8d8d2508f994e68c27b06d5cadbf3edb72e2cdf6b4f6dbe431f4528e0430",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/val.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/val.csv",
+      "source_sha256": "e1dd91bdf0f1808d79b1b7166aa550d1f305f089273767f576c3fc190acc0d0a",
+      "archive_sha256": "e1dd91bdf0f1808d79b1b7166aa550d1f305f089273767f576c3fc190acc0d0a",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/validation_games.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/anchor/runs/control/validation_games.jsonl.gz",
+      "source_sha256": "4312c654bc80966c30f4d00228a386f2063f222a74d4eff9886e1d8c2789a68b",
+      "archive_sha256": "155dee53f5ab420b9a24ce2ba6d4ecac221af49f85b9ec1d38e2c90beaf95177",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/control_status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/control_status.json",
+      "source_sha256": "e7fb174ff8cc82d53505200652cf1092fc1d3a6aedbe67ec62ac6af532e6c3f6",
+      "archive_sha256": "e7fb174ff8cc82d53505200652cf1092fc1d3a6aedbe67ec62ac6af532e6c3f6",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/init/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/init/control/manifest.json",
+      "source_sha256": "4cb8b93c8b509b911cf19c21c675ea40519dc34df1308fa0d9a1a9c4fd4897cb",
+      "archive_sha256": "4cb8b93c8b509b911cf19c21c675ea40519dc34df1308fa0d9a1a9c4fd4897cb",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/init/sap0/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/init/sap0/manifest.json",
+      "source_sha256": "3afe6698b8f08aa7b14447852d4505ec72b4c3aff584cd87de9af0fd276a858b",
+      "archive_sha256": "3afe6698b8f08aa7b14447852d4505ec72b4c3aff584cd87de9af0fd276a858b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/manifest.json",
+      "source_sha256": "dbb11e398476c22bcd75e390945a15b844a2e4adeb2a5f79768f9b012fe1e640",
+      "archive_sha256": "dbb11e398476c22bcd75e390945a15b844a2e4adeb2a5f79768f9b012fe1e640",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/final_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/final_receipt.json",
+      "source_sha256": "9197e2b2a54187fc187eead9daf0d83eb000dff61cab2d8f91415cc8f1a85b97",
+      "archive_sha256": "9197e2b2a54187fc187eead9daf0d83eb000dff61cab2d8f91415cc8f1a85b97",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/log.txt",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/log.txt",
+      "source_sha256": "931bab52b78c5270bc88ef0f3597fc32f0540f223c72de2738f166d715c4af1c",
+      "archive_sha256": "931bab52b78c5270bc88ef0f3597fc32f0540f223c72de2738f166d715c4af1c",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/manifest.json",
+      "source_sha256": "c8cb9af3c0fcc892dd6ee581267052ff378a660ca7e55e125a1554e807cbf699",
+      "archive_sha256": "c8cb9af3c0fcc892dd6ee581267052ff378a660ca7e55e125a1554e807cbf699",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/rollouts.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/rollouts.jsonl.gz",
+      "source_sha256": "0057ac54ef0b7a694c0d16e9322c22f8a4c8619f37b03298e15208f348bce68f",
+      "archive_sha256": "d535156d3263dc68db5fd5f8a9593df09dd80cae433e076c625f7cc8cd5d293b",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/status.json",
+      "source_sha256": "e7fb174ff8cc82d53505200652cf1092fc1d3a6aedbe67ec62ac6af532e6c3f6",
+      "archive_sha256": "e7fb174ff8cc82d53505200652cf1092fc1d3a6aedbe67ec62ac6af532e6c3f6",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/train.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/train.csv",
+      "source_sha256": "687ed74a5ccca466619c719d77956358ff3c1b5c817225c074d1c9bba9aee048",
+      "archive_sha256": "687ed74a5ccca466619c719d77956358ff3c1b5c817225c074d1c9bba9aee048",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/training_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/training_audit.json",
+      "source_sha256": "599b05a43d3c7486fbdf18bc8f676e7fde3f3436a9c4893832faf8a5b5e2d41e",
+      "archive_sha256": "599b05a43d3c7486fbdf18bc8f676e7fde3f3436a9c4893832faf8a5b5e2d41e",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/val.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/val.csv",
+      "source_sha256": "5b29db5c574e238dc11e1d95369fa9eb9eac3c55b62876c0c67b9e36005d187d",
+      "archive_sha256": "5b29db5c574e238dc11e1d95369fa9eb9eac3c55b62876c0c67b9e36005d187d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/validation_games.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/engine/control/runs/control/validation_games.jsonl.gz",
+      "source_sha256": "88f92aa898153b55c08b6f9301cb73e1760d231b96d868dd6febe97cf8ca8d5e",
+      "archive_sha256": "ef424b8198e17a2e14b00a7d6c66b00c85d86ac17464f4a4b7261e5638ab085f",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/manifest.json",
+      "source_sha256": "adb776c96a3f79a01ed104bb79408300070eb5a3442e4abe7b2e6342af51992a",
+      "archive_sha256": "adb776c96a3f79a01ed104bb79408300070eb5a3442e4abe7b2e6342af51992a",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/paired_prefill.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed25/paired_prefill.json",
+      "source_sha256": "d4535ebc266f114894d0078e36b37e8b9aac1a6750144d523c1774734ea79d87",
+      "archive_sha256": "d4535ebc266f114894d0078e36b37e8b9aac1a6750144d523c1774734ea79d87",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/anchor_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/anchor_receipt.json",
+      "source_sha256": "8977642a463e41d243b60ed33869c51573b212fab8d3d3e916065542818d2d5d",
+      "archive_sha256": "8977642a463e41d243b60ed33869c51573b212fab8d3d3e916065542818d2d5d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/prefill_replay.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/prefill_replay.json",
+      "source_sha256": "10e135c6a5d44cd52d896a6f4878e0c67152f9e5fd9cb847a73175598cf4e2eb",
+      "archive_sha256": "10e135c6a5d44cd52d896a6f4878e0c67152f9e5fd9cb847a73175598cf4e2eb",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/samples.u32",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/samples.u32.gz",
+      "source_sha256": "bc06914365b4559f819481cbb7a0b697f7d54e0f74ae8a84e31976c8549e15e9",
+      "archive_sha256": "a375f521c9ffba460c1e3d7519dcd7299c87fbff85dbe5570d8d3be83bb37432",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/status.json",
+      "source_sha256": "1513b5e79eceec319213b0c13ff81f9fa2f4624cb65213ca78819bf33479d419",
+      "archive_sha256": "1513b5e79eceec319213b0c13ff81f9fa2f4624cb65213ca78819bf33479d419",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/summary.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/summary.json",
+      "source_sha256": "8e43bf1d9a7b2c999485c922ad0375ee1ffec7bf8a62c21ff7f80334bf1c24c8",
+      "archive_sha256": "8e43bf1d9a7b2c999485c922ad0375ee1ffec7bf8a62c21ff7f80334bf1c24c8",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/updates.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/anchor/updates.jsonl.gz",
+      "source_sha256": "019261ab31d9e380c3593b99f670192849a0859d9ac1f88623ee1c1b878a8f85",
+      "archive_sha256": "12cb493c015ef0fe5cdc01bb9ed27c8b2a235c66859113c562f1def8933f3253",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/anchor_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/anchor_receipt.json",
+      "source_sha256": "91658d2998fd2106e124d787392d13527810024f52bbba8907baeb417a526d2f",
+      "archive_sha256": "91658d2998fd2106e124d787392d13527810024f52bbba8907baeb417a526d2f",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/prefill_replay.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/prefill_replay.json",
+      "source_sha256": "10e135c6a5d44cd52d896a6f4878e0c67152f9e5fd9cb847a73175598cf4e2eb",
+      "archive_sha256": "10e135c6a5d44cd52d896a6f4878e0c67152f9e5fd9cb847a73175598cf4e2eb",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/samples.u32",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/samples.u32.gz",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive_sha256": "ac73670af3abed54ac6fb4695131f4099be9fbe39d6076c5d0264a6bbdae9d83",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/status.json",
+      "source_sha256": "ce2b07426f8329ecaccb9dea503601037e02186b2aa8a05a4c0a6c023d6f542c",
+      "archive_sha256": "ce2b07426f8329ecaccb9dea503601037e02186b2aa8a05a4c0a6c023d6f542c",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/summary.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/summary.json",
+      "source_sha256": "0b69552b8c219fec7faac54de67df888eca4e8413eb2a5f182e57342c0523e02",
+      "archive_sha256": "0b69552b8c219fec7faac54de67df888eca4e8413eb2a5f182e57342c0523e02",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/updates.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/audits/control/updates.jsonl.gz",
+      "source_sha256": "5e489dc138432f391dceed4f154ea5baae80fe7dceeb275a49d9847a29d1ac0a",
+      "archive_sha256": "0d4310d85a13c04b03ae600fee86d999ce68976e68dd7307010628f938a20ad3",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/control_status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/control_status.json",
+      "source_sha256": "57160c5162fcfb011a35f86f05693598010ba987748bf407cf68b40fe0fd8dc7",
+      "archive_sha256": "57160c5162fcfb011a35f86f05693598010ba987748bf407cf68b40fe0fd8dc7",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/init/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/init/control/manifest.json",
+      "source_sha256": "838d53d0f66130a0292061d085e01e1c308615870d78075f5fe54d0c595d5fa4",
+      "archive_sha256": "838d53d0f66130a0292061d085e01e1c308615870d78075f5fe54d0c595d5fa4",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/init/sap0/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/init/sap0/manifest.json",
+      "source_sha256": "b6c1d12c4cfcfb9dc8c1173432ca3fa7f6b33b1e1358dadf020ccd406430df81",
+      "archive_sha256": "b6c1d12c4cfcfb9dc8c1173432ca3fa7f6b33b1e1358dadf020ccd406430df81",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/manifest.json",
+      "source_sha256": "6ce11e754631d3e883bb8134211dce44ea9f10725d42dee3e34bf5624f48799b",
+      "archive_sha256": "6ce11e754631d3e883bb8134211dce44ea9f10725d42dee3e34bf5624f48799b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/final_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/final_receipt.json",
+      "source_sha256": "a8a7eb5e711c9e48d1a587845510a0f43df9d7dc9326927811fc799d0c2e5d9c",
+      "archive_sha256": "a8a7eb5e711c9e48d1a587845510a0f43df9d7dc9326927811fc799d0c2e5d9c",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/log.txt",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/log.txt",
+      "source_sha256": "98b611d3865ba4dc349a610e50f502d01f1461953b6290986fcdb4432b898f86",
+      "archive_sha256": "98b611d3865ba4dc349a610e50f502d01f1461953b6290986fcdb4432b898f86",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/manifest.json",
+      "source_sha256": "243ffc3f93b18dbd72256ee018b16703af102bc668497b147fa9dc6a78410051",
+      "archive_sha256": "243ffc3f93b18dbd72256ee018b16703af102bc668497b147fa9dc6a78410051",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/rollouts.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/rollouts.jsonl.gz",
+      "source_sha256": "851a619fdb09141c0b0bd7909a136a13a0b381c95e9d551fdf1283651e9b6f42",
+      "archive_sha256": "9f0984aa959224fead4eea22f4a33812ba8c828ad46c8ef9dde00b9025181a64",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/status.json",
+      "source_sha256": "57160c5162fcfb011a35f86f05693598010ba987748bf407cf68b40fe0fd8dc7",
+      "archive_sha256": "57160c5162fcfb011a35f86f05693598010ba987748bf407cf68b40fe0fd8dc7",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/train.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/train.csv",
+      "source_sha256": "71f0aeae10b02fc0ab94d040f554f18b93457bdf85e0d433969ef6ea6f0ab4f4",
+      "archive_sha256": "71f0aeae10b02fc0ab94d040f554f18b93457bdf85e0d433969ef6ea6f0ab4f4",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/training_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/training_audit.json",
+      "source_sha256": "74fb802c171b9a21099ab6c803c13a7c1b160072398ddc1244bd9d0f81b45f65",
+      "archive_sha256": "74fb802c171b9a21099ab6c803c13a7c1b160072398ddc1244bd9d0f81b45f65",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/val.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/val.csv",
+      "source_sha256": "360704165741639d92b9621c8f57a19e660a5cda926e545247b3143fb3b8d134",
+      "archive_sha256": "360704165741639d92b9621c8f57a19e660a5cda926e545247b3143fb3b8d134",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/validation_games.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/anchor/runs/control/validation_games.jsonl.gz",
+      "source_sha256": "0b71a4b4a95f6c79db05d76f7a0fedc2f549c7a14d729c707663c45ea8c259ce",
+      "archive_sha256": "3a30c1893015d3ab5c85047e8c81e545aea9c1017e4e9b8e793de5dba95e3656",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/control_status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/control_status.json",
+      "source_sha256": "c6e9011b408a44595cd1289e922f672fcc5535726997828c7b4780985d300d2b",
+      "archive_sha256": "c6e9011b408a44595cd1289e922f672fcc5535726997828c7b4780985d300d2b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/init/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/init/control/manifest.json",
+      "source_sha256": "838d53d0f66130a0292061d085e01e1c308615870d78075f5fe54d0c595d5fa4",
+      "archive_sha256": "838d53d0f66130a0292061d085e01e1c308615870d78075f5fe54d0c595d5fa4",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/init/sap0/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/init/sap0/manifest.json",
+      "source_sha256": "b6c1d12c4cfcfb9dc8c1173432ca3fa7f6b33b1e1358dadf020ccd406430df81",
+      "archive_sha256": "b6c1d12c4cfcfb9dc8c1173432ca3fa7f6b33b1e1358dadf020ccd406430df81",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/manifest.json",
+      "source_sha256": "6ce11e754631d3e883bb8134211dce44ea9f10725d42dee3e34bf5624f48799b",
+      "archive_sha256": "6ce11e754631d3e883bb8134211dce44ea9f10725d42dee3e34bf5624f48799b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/final_receipt.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/final_receipt.json",
+      "source_sha256": "e9e179bc84dc24cdcfe54be5f6c3f87eaafc3a918d7226abf14a485670e98f8d",
+      "archive_sha256": "e9e179bc84dc24cdcfe54be5f6c3f87eaafc3a918d7226abf14a485670e98f8d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/log.txt",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/log.txt",
+      "source_sha256": "3dccdfaa741169b835d58d6a33088069e2e446191cceb61cdf4535bd6a6e97a4",
+      "archive_sha256": "3dccdfaa741169b835d58d6a33088069e2e446191cceb61cdf4535bd6a6e97a4",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/manifest.json",
+      "source_sha256": "fc864a7507a3553e2c7248a8249af0940661fc9c29c08286532373b7c339b394",
+      "archive_sha256": "fc864a7507a3553e2c7248a8249af0940661fc9c29c08286532373b7c339b394",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/rollouts.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/rollouts.jsonl.gz",
+      "source_sha256": "5b14e72eb4466d4d06cd004b8d33e922b81c8cb4c5abf0255f40441640c4aae1",
+      "archive_sha256": "7819c1f96b360ba054fdf1b3b95ead7641ac8f132e4e9cd4609e03536cd7343c",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/status.json",
+      "source_sha256": "c6e9011b408a44595cd1289e922f672fcc5535726997828c7b4780985d300d2b",
+      "archive_sha256": "c6e9011b408a44595cd1289e922f672fcc5535726997828c7b4780985d300d2b",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/train.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/train.csv",
+      "source_sha256": "bb88a1960365457976359f58b35540553fe55696b47fc7506b7434a9c7149536",
+      "archive_sha256": "bb88a1960365457976359f58b35540553fe55696b47fc7506b7434a9c7149536",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/training_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/training_audit.json",
+      "source_sha256": "9d462eeb44a6c88b36d3f12b1c6c94863bd98feaeed4390608f4fa7cf1f8d698",
+      "archive_sha256": "9d462eeb44a6c88b36d3f12b1c6c94863bd98feaeed4390608f4fa7cf1f8d698",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/val.csv",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/val.csv",
+      "source_sha256": "ded9632343f8f9848f260a7fc4864d825b5282174d27fa0f5ae03c2c411ca37a",
+      "archive_sha256": "ded9632343f8f9848f260a7fc4864d825b5282174d27fa0f5ae03c2c411ca37a",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/validation_games.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/engine/control/runs/control/validation_games.jsonl.gz",
+      "source_sha256": "28df884b9c1d266c69990c2136801b988d531d37ba6e60812c4b391de4ac07c7",
+      "archive_sha256": "62c9c14e7751fde2875c19d6569b4171805f8c2a6e5d538fb34ed63f2fc58bf9",
+      "compression": "gzip"
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/manifest.json",
+      "source_sha256": "4c6582017a3a99996fb8bbfabefffbfeb11079142c3ebb389118f7439013b501",
+      "archive_sha256": "4c6582017a3a99996fb8bbfabefffbfeb11079142c3ebb389118f7439013b501",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/paired_prefill.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/training/seed26/paired_prefill.json",
+      "source_sha256": "7b227c59a6b85f11f3b1d770aaa6662b301c7cb9da1669c1c5bae4277ce9b184",
+      "archive_sha256": "7b227c59a6b85f11f3b1d770aaa6662b301c7cb9da1669c1c5bae4277ce9b184",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/training_admission.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/training_admission.json",
+      "source_sha256": "6ed1da37ef92afc2e1f638de0cb84cffdfb00d1c9dd985674f2491f5facde915",
+      "archive_sha256": "6ed1da37ef92afc2e1f638de0cb84cffdfb00d1c9dd985674f2491f5facde915",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_startup_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_startup_audit.json",
+      "source_sha256": "127b94a36d32b18d5f9e402b8038eed4560d534d2d00b42f206b0f741c25c87b",
+      "archive_sha256": "127b94a36d32b18d5f9e402b8038eed4560d534d2d00b42f206b0f741c25c87b",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_completion_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_completion_audit.json",
+      "source_sha256": "9f9ab1233ad1868eaa1e10aaaab66f56ccede723527d80e1c04f7f422e5b903e",
+      "archive_sha256": "9f9ab1233ad1868eaa1e10aaaab66f56ccede723527d80e1c04f7f422e5b903e",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_completion_auditor.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_completion_auditor.py",
+      "source_sha256": "8731231b56a514f882736b06040188703e0887d717f181b86a446bb0a9f2acbc",
+      "archive_sha256": "8731231b56a514f882736b06040188703e0887d717f181b86a446bb0a9f2acbc",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_completion_audit.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_completion_audit.md",
+      "source_sha256": "621d80d21515a966f05d84806ffa80ea2fcf6bae2e0871debc1bf01cd5ef3524",
+      "archive_sha256": "621d80d21515a966f05d84806ffa80ea2fcf6bae2e0871debc1bf01cd5ef3524",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_completion_audit.failed_attempt1.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_completion_audit.failed_attempt1.json",
+      "source_sha256": "1f51b30763b5ed9455a9e7836f4700df757da018f0991d6d35152cc9e0147539",
+      "archive_sha256": "1f51b30763b5ed9455a9e7836f4700df757da018f0991d6d35152cc9e0147539",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/learning_completion_auditor.failed_attempt1.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/learning_completion_auditor.failed_attempt1.py",
+      "source_sha256": "b0d2044da2565c5279fde69e3b0662c6ab374ca49cb7d1b13c23e1c522ee9026",
+      "archive_sha256": "b0d2044da2565c5279fde69e3b0662c6ab374ca49cb7d1b13c23e1c522ee9026",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/prepare_diagnostic.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/prepare_diagnostic.py",
+      "source_sha256": "56b457344961f7149fed33a178857408be8a2bb933f94c911204f24bb32e84de",
+      "archive_sha256": "56b457344961f7149fed33a178857408be8a2bb933f94c911204f24bb32e84de",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/preparation_report.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/preparation_report.md",
+      "source_sha256": "73240d021553af9b484b10569005fc23feba6e7b0cf319a32208fc86fdd86871",
+      "archive_sha256": "73240d021553af9b484b10569005fc23feba6e7b0cf319a32208fc86fdd86871",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/diagnostic_protocol.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/diagnostic_protocol.json",
+      "source_sha256": "e91cb61d3664ceaf3bae897726a9d5c25426f2b619fd7a66ece85b7c55c94e84",
+      "archive_sha256": "e91cb61d3664ceaf3bae897726a9d5c25426f2b619fd7a66ece85b7c55c94e84",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/diagnostic_runtime_admission.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/diagnostic_runtime_admission.json",
+      "source_sha256": "100722a46cea92d0d1f31f5e2438f4dd5360dd4beb49b4d61fec78845a8d0114",
+      "archive_sha256": "100722a46cea92d0d1f31f5e2438f4dd5360dd4beb49b4d61fec78845a8d0114",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/role_manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/role_manifest.json",
+      "source_sha256": "795f31dfdc9507a54cae3dc4672ca34d1e6d6acbc60b9c37fed548ccfaa6e2fe",
+      "archive_sha256": "795f31dfdc9507a54cae3dc4672ca34d1e6d6acbc60b9c37fed548ccfaa6e2fe",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/panel_seeds.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/panel_seeds.json",
+      "source_sha256": "d06d699ee7a37cfe240af2b5047e948470039a491ce1524746a52d8ae9f2f080",
+      "archive_sha256": "d06d699ee7a37cfe240af2b5047e948470039a491ce1524746a52d8ae9f2f080",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/direct_seeds.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/direct_seeds.json",
+      "source_sha256": "fcf8f5bd521193490bcaf271cf1861ff6805553415e469ac231d7484836cb8e4",
+      "archive_sha256": "fcf8f5bd521193490bcaf271cf1861ff6805553415e469ac231d7484836cb8e4",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/run_diagnostic.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/run_diagnostic.py",
+      "source_sha256": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+      "archive_sha256": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/run_guarded.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/run_guarded.py",
+      "source_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "archive_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/audit_results.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/audit_results.py",
+      "source_sha256": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04",
+      "archive_sha256": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/diagnostic_review.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/diagnostic_review.json",
+      "source_sha256": "e6cad1e70b15cbd07f8282d5967cb040d97d0c4139f66d1491f26693a3d130ae",
+      "archive_sha256": "e6cad1e70b15cbd07f8282d5967cb040d97d0c4139f66d1491f26693a3d130ae",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/diagnostic_review.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/diagnostic_review.md",
+      "source_sha256": "8a3d6b42c862d9dd4bf667784a2e9485eda9f014762266702c578ce46de6c574",
+      "archive_sha256": "8a3d6b42c862d9dd4bf667784a2e9485eda9f014762266702c578ce46de6c574",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/reviewer_notes.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/reviewer_notes.md",
+      "source_sha256": "7dfc1e8a8b2b118ac885fa80f13fc7f7f4dc222fdf6a78fc045e9d1c0edbef39",
+      "archive_sha256": "7dfc1e8a8b2b118ac885fa80f13fc7f7f4dc222fdf6a78fc045e9d1c0edbef39",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/archive_completed.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/archive_completed.py",
+      "source_sha256": "f30c4032a3e09b82c904df0a6502d22c71eb7f84c801dbb966e23dbe9a15867a",
+      "archive_sha256": "f30c4032a3e09b82c904df0a6502d22c71eb7f84c801dbb966e23dbe9a15867a",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/admit_seed26.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/admit_seed26.py",
+      "source_sha256": "963a34a337b60f5a3028fb448630b94edae90c1b55185fd5f2f3721cdb17e031",
+      "archive_sha256": "963a34a337b60f5a3028fb448630b94edae90c1b55185fd5f2f3721cdb17e031",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/crosscheck_diagnostic.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/crosscheck_diagnostic.py",
+      "source_sha256": "39f178bd4b506b2ed8c589e37505ff65140f80810bc519a7a361fb783fd77ca7",
+      "archive_sha256": "39f178bd4b506b2ed8c589e37505ff65140f80810bc519a7a361fb783fd77ca7",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/root_crosscheck.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/root_crosscheck.json",
+      "source_sha256": "319fa505f7eb9f7549812ea615a8de4d9a23a77fa41fad2774a15589689fcc6a",
+      "archive_sha256": "319fa505f7eb9f7549812ea615a8de4d9a23a77fa41fad2774a15589689fcc6a",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/retention_after_independent.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/retention_after_independent.json",
+      "source_sha256": "537eff69dc95e1b00220f1b93d28e8c8a877b6d6b61e8e92474ca69f0d6e0e36",
+      "archive_sha256": "537eff69dc95e1b00220f1b93d28e8c8a877b6d6b61e8e92474ca69f0d6e0e36",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/retention_independent_audit.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/retention_independent_audit.py",
+      "source_sha256": "43e6163b54a9e452d7ecd3761abf6a0674229fda7ede627296724484ab3e3c49",
+      "archive_sha256": "43e6163b54a9e452d7ecd3761abf6a0674229fda7ede627296724484ab3e3c49",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/retention_after_independent_audit.py",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/retention_after_independent_audit.py",
+      "source_sha256": "00580d893fb160b10b938f3f462a8f800c48690bdc6f8dfbd51b30f7102b7e66",
+      "archive_sha256": "00580d893fb160b10b938f3f462a8f800c48690bdc6f8dfbd51b30f7102b7e66",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed26_admission.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed26_admission.json",
+      "source_sha256": "f0769c9246db3c06a3002934e35f4b59e81b4d163be9812973517c112f68f45b",
+      "archive_sha256": "f0769c9246db3c06a3002934e35f4b59e81b4d163be9812973517c112f68f45b",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed25_control_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed25_control_guard.json",
+      "source_sha256": "ab40270ab6d7dc0198cea68bf19c0cbf6dced912a718b3e8094e29c6534264af",
+      "archive_sha256": "ab40270ab6d7dc0198cea68bf19c0cbf6dced912a718b3e8094e29c6534264af",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed25_control_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed25_control_guard.log",
+      "source_sha256": "7163829b5ab6f3e08c438ab6bb76dc1eb47f48e01026c8d18edd00030e3712b2",
+      "archive_sha256": "7163829b5ab6f3e08c438ab6bb76dc1eb47f48e01026c8d18edd00030e3712b2",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed25_anchor_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed25_anchor_guard.json",
+      "source_sha256": "7486a9f0f933e8fb92cad3ce359b95f7ceefb8d652e04fa7afdaf9920d9b814b",
+      "archive_sha256": "7486a9f0f933e8fb92cad3ce359b95f7ceefb8d652e04fa7afdaf9920d9b814b",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed25_anchor_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed25_anchor_guard.log",
+      "source_sha256": "bfc87e8f42c9fc1ba602e9fcdea5c389f9f2cc1c7c2635dde01f19ad195e3b86",
+      "archive_sha256": "bfc87e8f42c9fc1ba602e9fcdea5c389f9f2cc1c7c2635dde01f19ad195e3b86",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed26_control_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed26_control_guard.json",
+      "source_sha256": "89d4bdfac1caedfa5709f248560a91e137b8c7ba199d4150c2b90059f9d1f17c",
+      "archive_sha256": "89d4bdfac1caedfa5709f248560a91e137b8c7ba199d4150c2b90059f9d1f17c",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed26_control_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed26_control_guard.log",
+      "source_sha256": "8f06475d46812e09aac12a47f3f4afe376cf32e8d8f94713216c83ba12c77cff",
+      "archive_sha256": "8f06475d46812e09aac12a47f3f4afe376cf32e8d8f94713216c83ba12c77cff",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed26_anchor_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed26_anchor_guard.json",
+      "source_sha256": "d1d4157c0ad38ef699465b41107d47afa19cd000faca015e949d8990fcbfc642",
+      "archive_sha256": "d1d4157c0ad38ef699465b41107d47afa19cd000faca015e949d8990fcbfc642",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/seed26_anchor_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/seed26_anchor_guard.log",
+      "source_sha256": "0ec30241373c4b80a152cf4e488b7d23081d8e3065823855bffb20e97ee24d48",
+      "archive_sha256": "0ec30241373c4b80a152cf4e488b7d23081d8e3065823855bffb20e97ee24d48",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/full_tests_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/full_tests_guard.json",
+      "source_sha256": "a9359485a262438216c7270b44a402f242890ef69f059af11854e8b5e6a8e93d",
+      "archive_sha256": "a9359485a262438216c7270b44a402f242890ef69f059af11854e8b5e6a8e93d",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/full_tests_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/full_tests_guard.log",
+      "source_sha256": "4ebd51ea2e0e88790e95d61c2c1aee276838b11603d0d3caac4fedd1a9bfc2f1",
+      "archive_sha256": "4ebd51ea2e0e88790e95d61c2c1aee276838b11603d0d3caac4fedd1a9bfc2f1",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/full_tests_fixed_guard.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/full_tests_fixed_guard.json",
+      "source_sha256": "c5c339505c349c0780279a517614aa58924fc1672ab275b60b61ab2e549018e5",
+      "archive_sha256": "c5c339505c349c0780279a517614aa58924fc1672ab275b60b61ab2e549018e5",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/full_tests_fixed_guard.log",
+      "archive": "experiments/analysis/a2_anchor_20261104/completion/full_tests_fixed_guard.log",
+      "source_sha256": "b24321d360aec1cc0e78ca45216b5b0b39fc2c70b4cd42189998a228aefd5c18",
+      "archive_sha256": "b24321d360aec1cc0e78ca45216b5b0b39fc2c70b4cd42189998a228aefd5c18",
+      "compression": null
+    },
+    {
+      "source": "/tmp/sherlock-a2-anchor-20261104/retention_after/report.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/retention_after/report.json",
+      "source_sha256": "386b2e70a99f7db5635caf4219be20e09216f5118c3ee0b889514b5bdf059f92",
+      "archive_sha256": "386b2e70a99f7db5635caf4219be20e09216f5118c3ee0b889514b5bdf059f92",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/anchor_impl.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/anchor_impl.md",
+      "source_sha256": "fb217c05c30d672eb190def8ad3fdcade4637d1d670027212446e1417c163ef7",
+      "archive_sha256": "fb217c05c30d672eb190def8ad3fdcade4637d1d670027212446e1417c163ef7",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/anchor_review.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/anchor_review.md",
+      "source_sha256": "aa4e77ea51ee01fccced5979200b57e013bbb8672dc535f33ed4d29a1460b7ad",
+      "archive_sha256": "aa4e77ea51ee01fccced5979200b57e013bbb8672dc535f33ed4d29a1460b7ad",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/deadline_test_fix.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/deadline_test_fix.md",
+      "source_sha256": "17791318b16c0d0f5f1760efa23dfa6e5113850c38f1651183f0a4e8ac2ed5df",
+      "archive_sha256": "17791318b16c0d0f5f1760efa23dfa6e5113850c38f1651183f0a4e8ac2ed5df",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/plan-path",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/plan-path",
+      "source_sha256": "ee1de094f14cd0e269ee82bbe427525766c69d50f128d1a980e38202dc5b706d",
+      "archive_sha256": "ee1de094f14cd0e269ee82bbe427525766c69d50f128d1a980e38202dc5b706d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/progress.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/progress.md",
+      "source_sha256": "347a4259157f33e5fccadb43b519a3da6501914bf4a55df655ea735afc63dab0",
+      "archive_sha256": "347a4259157f33e5fccadb43b519a3da6501914bf4a55df655ea735afc63dab0",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/retention_impl.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/retention_impl.md",
+      "source_sha256": "e240af290ef8293ec5d2caeb3854cf3a6eefb729faef57658d06c8bedca07f83",
+      "archive_sha256": "e240af290ef8293ec5d2caeb3854cf3a6eefb729faef57658d06c8bedca07f83",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/retention_review.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/retention_review.md",
+      "source_sha256": "137140c9c9c6422bcf6fe87e7634dd9b43ee86c2f501723a56c6b92e8f5ff4af",
+      "archive_sha256": "137140c9c9c6422bcf6fe87e7634dd9b43ee86c2f501723a56c6b92e8f5ff4af",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-1-brief.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-1-brief.md",
+      "source_sha256": "dc04b0e982ccc74d77d06a2bc4190f217f90d21487acf995a5f53331a5c30106",
+      "archive_sha256": "dc04b0e982ccc74d77d06a2bc4190f217f90d21487acf995a5f53331a5c30106",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-1-review-package.diff",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-1-review-package.diff",
+      "source_sha256": "e7406a81c505ff7a3ec70c058f31d929150e84c1d7a20804073adf97009a0c9d",
+      "archive_sha256": "e7406a81c505ff7a3ec70c058f31d929150e84c1d7a20804073adf97009a0c9d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-2-brief.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-2-brief.md",
+      "source_sha256": "91e7864ccaf3d061f5c8ea2a8399afc982953f177098b53746150a7aa7b65219",
+      "archive_sha256": "91e7864ccaf3d061f5c8ea2a8399afc982953f177098b53746150a7aa7b65219",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-2-review-package.diff",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-2-review-package.diff",
+      "source_sha256": "16f642a2c64bcf8c0fa85dc48de04b97ebcc08d86f81f92863e3d91e1de4b9f3",
+      "archive_sha256": "16f642a2c64bcf8c0fa85dc48de04b97ebcc08d86f81f92863e3d91e1de4b9f3",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-3-brief.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-3-brief.md",
+      "source_sha256": "be45938e4c469239387aed9d04a3b067e184a4afe247bbab34f5651e56fff6c8",
+      "archive_sha256": "be45938e4c469239387aed9d04a3b067e184a4afe247bbab34f5651e56fff6c8",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task-3-review-package.diff",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task-3-review-package.diff",
+      "source_sha256": "86d64b0f4bae05292be1f805be96e314e5e20f6849fde7e4c1410390849614a6",
+      "archive_sha256": "86d64b0f4bae05292be1f805be96e314e5e20f6849fde7e4c1410390849614a6",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task3_test_incident/manifest.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task3_test_incident/manifest.json",
+      "source_sha256": "67998dd243de907defc1bd396c79845a11cb6a7143ee38923be89414608eadc9",
+      "archive_sha256": "67998dd243de907defc1bd396c79845a11cb6a7143ee38923be89414608eadc9",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task3_test_incident/outer_status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task3_test_incident/outer_status.json",
+      "source_sha256": "8aed3172b39a914a182025cb4ae63fa23430e67a279f55035004d8471119e0da",
+      "archive_sha256": "8aed3172b39a914a182025cb4ae63fa23430e67a279f55035004d8471119e0da",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task3_test_incident/rollouts.jsonl",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task3_test_incident/rollouts.jsonl",
+      "source_sha256": "1f4ec6099990dcdab33ee5a3a702abadef4b4084a7c6724e929ac0a47a5097dc",
+      "archive_sha256": "1f4ec6099990dcdab33ee5a3a702abadef4b4084a7c6724e929ac0a47a5097dc",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task3_test_incident/status.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task3_test_incident/status.json",
+      "source_sha256": "5ca1bf9b2bef87ead18e19ca36873d3ca3df00e0b872d807a46267e95db9bf4d",
+      "archive_sha256": "5ca1bf9b2bef87ead18e19ca36873d3ca3df00e0b872d807a46267e95db9bf4d",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/task3_test_incident/training_audit.json",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/task3_test_incident/training_audit.json",
+      "source_sha256": "2130e1213a47b1e34dc8bf43568821d9a32956809b49420254f65c88a8d930e5",
+      "archive_sha256": "2130e1213a47b1e34dc8bf43568821d9a32956809b49420254f65c88a8d930e5",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/trace_impl.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/trace_impl.md",
+      "source_sha256": "afe15f1fdb6fece740d8ec4b9c44fec157b557a67a4dc0989672720955702e14",
+      "archive_sha256": "afe15f1fdb6fece740d8ec4b9c44fec157b557a67a4dc0989672720955702e14",
+      "compression": null
+    },
+    {
+      "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/.superpowers/sdd/2026-11-04-a2-teacher-anchor/trace_review.md",
+      "archive": "experiments/analysis/a2_anchor_20261104/review/trace_review.md",
+      "source_sha256": "6acd47876f8e6e027c7776b6f757f59eac117d3451552b6aaa8f08bef0f8cd30",
+      "archive_sha256": "6acd47876f8e6e027c7776b6f757f59eac117d3451552b6aaa8f08bef0f8cd30",
+      "compression": null
+    }
+  ],
+  "local_replay_buffers_excluded": true
+}

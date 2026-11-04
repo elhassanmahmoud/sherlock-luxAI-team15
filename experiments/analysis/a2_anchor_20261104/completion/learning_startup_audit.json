@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "audit": "independent learning startup audit",
+  "timestamp_utc": "2026-11-04T19:40:57.810889+00:00",
+  "status": "PASS_STARTUP",
+  "source_commit": "09c69349afc020a7b2418c249657a5698c472964",
+  "scope": "seed25 startup metadata, immutable file hashes, static adapter/engine review and flushed JSON evidence only; no model load, inference, tests, training or replay launched by auditor",
+  "checks": {
+    "head_matches_admission": true,
+    "outer_contract": true,
+    "A2_file_hash": true,
+    "pair_configuration_identical": true,
+    "pair_rollout_plans_identical": true,
+    "only_fixed_public_weights": true,
+    "all_outer_source_pins_match": true,
+    "all_admission_source_pins_match": true,
+    "all_protected_pins_match": true,
+    "dataset_file_hashes_match": true,
+    "fixed_dataset_split_scale": true,
+    "control_nested_manifest_hash": true,
+    "control_nested_control_binding": true,
+    "control_init_file_hash": true,
+    "control_unused_sap0_not_started": true,
+    "control_actual_attempt_flags": true,
+    "control_actual_run_manifest": true,
+    "control_guard_command": true,
+    "control_observed_rollout_prefix_matches_plan": true,
+    "control_fresh_initial_metadata": true,
+    "anchor_nested_manifest_hash": true,
+    "anchor_nested_control_binding": true,
+    "anchor_init_file_hash": true,
+    "anchor_unused_sap0_not_started": true,
+    "anchor_actual_attempt_flags": true,
+    "anchor_actual_run_manifest": true,
+    "anchor_guard_command": true,
+    "anchor_observed_rollout_prefix_matches_plan": true,
+    "anchor_fresh_initial_metadata": true,
+    "pair_live_initial_evidence_exactly_identical": true,
+    "pair_live_initial_optimizer_rng_identical": true,
+    "pair_initial_file_bytes_identical": true,
+    "admission_fixed_scope": true
+  },
+  "arm_observations": {
+    "control": {
+      "guard_status": "running",
+      "child_pid": 88761,
+      "public_status": "running",
+      "inner_status": "running",
+      "observed_complete_rollout_rows": 40,
+      "observed_phases": {
+        "prefill": 40
+      },
+      "partial_final_rollout_line_ignored": false,
+      "observed_complete_update_rows": 0,
+      "partial_final_update_line_ignored": false,
+      "sample_bytes_in_progress": 0,
+      "prefill_audit_available": true,
+      "outer_completion_receipt_present": false,
+      "init_file_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "actual_argv": [
+        "student_reward/finetune",
+        "--init",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/init/control",
+        "--name",
+        "control",
+        "--variant",
+        "student_reward_20261104",
+        "--games",
+        "160",
+        "--seed",
+        "25",
+        "--map-offset",
+        "3000",
+        "--lr",
+        ".0001",
+        "--prefill-games",
+        "40",
+        "--keep-final",
+        "--no-test",
+        "--val-every",
+        "160",
+        "--n-val",
+        "4",
+        "--mix",
+        "solution92=0.6,sol92_sq=0.2,default=0.1,rush=0.1"
+      ]
+    },
+    "anchor": {
+      "guard_status": "running",
+      "child_pid": 88760,
+      "public_status": "running",
+      "inner_status": "running",
+      "observed_complete_rollout_rows": 40,
+      "observed_phases": {
+        "prefill": 40
+      },
+      "partial_final_rollout_line_ignored": false,
+      "observed_complete_update_rows": 0,
+      "partial_final_update_line_ignored": false,
+      "sample_bytes_in_progress": 0,
+      "prefill_audit_available": true,
+      "outer_completion_receipt_present": false,
+      "init_file_sha256": "47858b3eef87ba6c34168452765c7b726930269d8fdb00dc4604e5f9592f092a",
+      "actual_argv": [
+        "student_reward/finetune",
+        "--init",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/init/control",
+        "--name",
+        "control",
+        "--variant",
+        "student_reward_20261104",
+        "--games",
+        "160",
+        "--seed",
+        "25",
+        "--map-offset",
+        "3000",
+        "--lr",
+        ".0001",
+        "--prefill-games",
+        "40",
+        "--keep-final",
+        "--no-test",
+        "--val-every",
+        "160",
+        "--n-val",
+        "4",
+        "--mix",
+        "solution92=0.6,sol92_sq=0.2,default=0.1,rush=0.1"
+      ]
+    }
+  },
+  "dataset_contract": {
+    "datasets": [
+      {
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/collection/r1",
+        "files_sha256": {
+          "manifest.json": "e9547fc49d06b0151078eeefd2c9bc9070aaa56be48af868613c2c775bd44cd0",
+          "status.json": "2193e810a084c1958e1c017142181108457d22b6942f1558c399eb832b3c412f",
+          "dataset.npz": "899fc77a7164b3cd1eba8fbf1f2472552a7483d9167463522a234e987618e2a0",
+          "games.jsonl": "ad2501091bd102773968514589161e6e8ce266d2609f28455430601f54d937b5"
+        }
+      },
+      {
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/collection/r2",
+        "files_sha256": {
+          "manifest.json": "4a08df90401887e120b4688dfe0eb23f39281c7ba778b1890bed74012e6dc7ea",
+          "status.json": "8098365a32bdd442994d0d12bb79504b4c0f353e09733eb44dc7a3b73cf19537",
+          "dataset.npz": "c1f3cf232bc155c6b1018eabe701fee067cb13bf93a4ee0a085cc064a9a57df9",
+          "games.jsonl": "7a1b779e3842c40012f7e43dd23a84270ecfd36a5d9794806963fdd419c70411"
+        }
+      }
+    ],
+    "train_rows": 356415,
+    "excluded_rows": 68687,
+    "scale": 1.4293522257922757,
+    "train_indices_sha256": "336507d962ab589b64bfb65a6ffe02b539ba98d248afa5aabce3ee1bb32c669a",
+    "sample_index_format": "little-endian uint32 indices in concatenated r1/r2 rows"
+  },
+  "static_findings": [
+    "AnchorData copies only is_train-selected feature/Q/mask rows; sampler selects only that copied training population using independent NumPy Generator(20261104 + seed).",
+    "teacher_scale selects training rows only; action_loss detaches teacher target and applies legal centered MSE/scale squared plus teacher-to-student KL.",
+    "CONTROL weight zero calls original _learn without teacher sampling or added arithmetic; ANCHOR uses original TD expressions, one combined backward and one optimizer step, same clipping and target-update cadence.",
+    "Both public arms invoke only original engine control role; prepared SAP0 roles are excluded and have no started run.",
+    "The recorded actual trainer attempts include --keep-final and --no-test with 160 train, 40 prefill, 4 known validation maps and fixed mixture.",
+    "Guard source sets OMP/MKL/OPENBLAS/VECLIB/NUMEXPR thread counts to one before launching the two child processes."
+  ],
+  "limitations": [
+    "This is a startup acceptance, not completion or intervention-activity acceptance.",
+    "Dataset bytes and split/scale contracts were hash checked; diagnostic-row exclusion follows the reviewed sampling code here. Every actual sampled index remains to be independently audited after full flush.",
+    "Fresh-optimizer and identical tensor/RNG observations are from persisted live identity evidence; no checkpoint was loaded by this audit.",
+    "Full 40-game prefill equality/content hash, 24000 real updates per arm, positive anchor gradients, complete validation isolation, final checkpoint identity and outer completion receipts remain pending.",
+    "Admission account/battery/time measurements were reviewed as recorded startup evidence, not remeasured by this learning audit."
+  ],
+  "failures": []
+}

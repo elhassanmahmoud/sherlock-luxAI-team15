@@ -1,0 +1,6766 @@
+{
+  "schema": "a2_anchor_diagnostic_audit_v1",
+  "audited_at": "2026-11-04T20:37:40.756650+00:00",
+  "integrity": "complete",
+  "role_count": 6,
+  "panel_games": 720,
+  "direct_games": 200,
+  "games": 920,
+  "panel_cards": [
+    867000,
+    867001,
+    867002,
+    867003,
+    867004,
+    867005,
+    867006,
+    867007,
+    867008,
+    867009,
+    867010,
+    867011,
+    867012,
+    867013,
+    867014,
+    867015,
+    867016,
+    867017,
+    867018,
+    867019
+  ],
+  "direct_cards": [
+    867100,
+    867101,
+    867102,
+    867103,
+    867104,
+    867105,
+    867106,
+    867107,
+    867108,
+    867109,
+    867110,
+    867111,
+    867112,
+    867113,
+    867114,
+    867115,
+    867116,
+    867117,
+    867118,
+    867119
+  ],
+  "sides": [
+    "player_0",
+    "player_1"
+  ],
+  "opponents": [
+    "solution92",
+    "default",
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth"
+  ],
+  "direct_opponent": "self:agents/sherlock/weights/agent_p0.pth",
+  "source_csv_sha256": {
+    "panel/V14.csv": "a43ba5b98583161b9ef56e9269ef6e5a7b9a29537f0369bd3f622f3fca59eb94",
+    "panel/A2.csv": "92d50ae8356aec394a4a12e5e76dafbb703c84f5ce0eb26fdfda8b6104803d05",
+    "panel/CONTROL25.csv": "e23045e16c6be783f4828e1f78637e11e2465680dda185c81e568f4c8dc7a1d0",
+    "panel/CONTROL26.csv": "7b80483539e1eefd373ce5222e5b63aafb297788dbf309575e1d81b2b91251f3",
+    "panel/ANCHOR25.csv": "4259518eae198e7b99c5ad1634d47632f391cab743a3c2a5678eeb039489d6eb",
+    "panel/ANCHOR26.csv": "cd4cf13f9b04b7861ab84b7fb1c00adc780a0a8124d500a5a8999578160441b7",
+    "direct/A2.csv": "e7a492fbc0a0b8092e5cb44900b84c230f171ff0dbcb85a4d1e855e67e1ab11e",
+    "direct/CONTROL25.csv": "9681078396315b913df2ad30dada3231494960ffa1db3ebe60f8ecfaca420350",
+    "direct/CONTROL26.csv": "a326150ac6c6067e4674d364653a65302370c1e3bd3057789f84baf483f8bf36",
+    "direct/ANCHOR25.csv": "c4a8f729e4d3477a82a5cd9387dd9f49f791adae0913c3ebaf68574f50b6b889",
+    "direct/ANCHOR26.csv": "2f90dfedf35489042a01c30e5a04ab087890f2af6f6d1d884e02624770d88dd9"
+  },
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "rng": "numpy.default_rng/PCG64",
+    "unit": "whole card; both sides and all panel opponents kept together",
+    "interval": "unadjusted percentile 95%; numpy quantile method=linear",
+    "common_resample_indices": true,
+    "separate_panel_direct_cards": true
+  },
+  "summaries": {
+    "V14": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 101,
+        "draws": 0,
+        "losses": 19,
+        "draw_half_score": 0.8416666666666667,
+        "win_fraction": 0.8416666666666667,
+        "mean_our_points": 1199.025,
+        "mean_opp_points": 594.2416666666667
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1193.9,
+          "mean_opp_points": 714.7
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1492.25,
+          "mean_opp_points": 166.6
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 21,
+          "draws": 0,
+          "losses": 19,
+          "draw_half_score": 0.525,
+          "win_fraction": 0.525,
+          "mean_our_points": 910.925,
+          "mean_opp_points": 901.425
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 46,
+          "draws": 0,
+          "losses": 14,
+          "draw_half_score": 0.7666666666666667,
+          "win_fraction": 0.7666666666666667,
+          "mean_our_points": 1202.9833333333333,
+          "mean_opp_points": 589.3833333333333
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 55,
+          "draws": 0,
+          "losses": 5,
+          "draw_half_score": 0.9166666666666666,
+          "win_fraction": 0.9166666666666666,
+          "mean_our_points": 1195.0666666666666,
+          "mean_opp_points": 599.1
+        }
+      }
+    },
+    "A2": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 95,
+        "draws": 0,
+        "losses": 25,
+        "draw_half_score": 0.7916666666666666,
+        "win_fraction": 0.7916666666666666,
+        "mean_our_points": 1182.4583333333333,
+        "mean_opp_points": 616.475
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 39,
+          "draws": 0,
+          "losses": 1,
+          "draw_half_score": 0.975,
+          "win_fraction": 0.975,
+          "mean_our_points": 1144.675,
+          "mean_opp_points": 727.5
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1476.5,
+          "mean_opp_points": 173.225
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 16,
+          "draws": 0,
+          "losses": 24,
+          "draw_half_score": 0.4,
+          "win_fraction": 0.4,
+          "mean_our_points": 926.2,
+          "mean_opp_points": 948.7
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 48,
+          "draws": 0,
+          "losses": 12,
+          "draw_half_score": 0.8,
+          "win_fraction": 0.8,
+          "mean_our_points": 1183.3833333333334,
+          "mean_opp_points": 614.5833333333334
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 47,
+          "draws": 0,
+          "losses": 13,
+          "draw_half_score": 0.7833333333333333,
+          "win_fraction": 0.7833333333333333,
+          "mean_our_points": 1181.5333333333333,
+          "mean_opp_points": 618.3666666666667
+        }
+      }
+    },
+    "CONTROL25": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 81,
+        "draws": 0,
+        "losses": 39,
+        "draw_half_score": 0.675,
+        "win_fraction": 0.675,
+        "mean_our_points": 1030.9916666666666,
+        "mean_opp_points": 663.5333333333333
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 34,
+          "draws": 0,
+          "losses": 6,
+          "draw_half_score": 0.85,
+          "win_fraction": 0.85,
+          "mean_our_points": 1029.025,
+          "mean_opp_points": 790.425
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 39,
+          "draws": 0,
+          "losses": 1,
+          "draw_half_score": 0.975,
+          "win_fraction": 0.975,
+          "mean_our_points": 1293.15,
+          "mean_opp_points": 185.975
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 8,
+          "draws": 0,
+          "losses": 32,
+          "draw_half_score": 0.2,
+          "win_fraction": 0.2,
+          "mean_our_points": 770.8,
+          "mean_opp_points": 1014.2
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 41,
+          "draws": 0,
+          "losses": 19,
+          "draw_half_score": 0.6833333333333333,
+          "win_fraction": 0.6833333333333333,
+          "mean_our_points": 1033.05,
+          "mean_opp_points": 662.4166666666666
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 20,
+          "draw_half_score": 0.6666666666666666,
+          "win_fraction": 0.6666666666666666,
+          "mean_our_points": 1028.9333333333334,
+          "mean_opp_points": 664.65
+        }
+      }
+    },
+    "CONTROL26": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 75,
+        "draws": 0,
+        "losses": 45,
+        "draw_half_score": 0.625,
+        "win_fraction": 0.625,
+        "mean_our_points": 988.1666666666666,
+        "mean_opp_points": 696.9333333333333
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 31,
+          "draws": 0,
+          "losses": 9,
+          "draw_half_score": 0.775,
+          "win_fraction": 0.775,
+          "mean_our_points": 968.15,
+          "mean_opp_points": 823.35
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1259.7,
+          "mean_opp_points": 191.85
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 4,
+          "draws": 0,
+          "losses": 36,
+          "draw_half_score": 0.1,
+          "win_fraction": 0.1,
+          "mean_our_points": 736.65,
+          "mean_opp_points": 1075.6
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 36,
+          "draws": 0,
+          "losses": 24,
+          "draw_half_score": 0.6,
+          "win_fraction": 0.6,
+          "mean_our_points": 989.8833333333333,
+          "mean_opp_points": 688.2666666666667
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 39,
+          "draws": 0,
+          "losses": 21,
+          "draw_half_score": 0.65,
+          "win_fraction": 0.65,
+          "mean_our_points": 986.45,
+          "mean_opp_points": 705.6
+        }
+      }
+    },
+    "ANCHOR25": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 96,
+        "draws": 0,
+        "losses": 24,
+        "draw_half_score": 0.8,
+        "win_fraction": 0.8,
+        "mean_our_points": 1133.7333333333333,
+        "mean_opp_points": 605.775
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 36,
+          "draws": 0,
+          "losses": 4,
+          "draw_half_score": 0.9,
+          "win_fraction": 0.9,
+          "mean_our_points": 1105.275,
+          "mean_opp_points": 734.075
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1373.325,
+          "mean_opp_points": 178.65
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 20,
+          "draws": 0,
+          "losses": 20,
+          "draw_half_score": 0.5,
+          "win_fraction": 0.5,
+          "mean_our_points": 922.6,
+          "mean_opp_points": 904.6
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 48,
+          "draws": 0,
+          "losses": 12,
+          "draw_half_score": 0.8,
+          "win_fraction": 0.8,
+          "mean_our_points": 1137.2,
+          "mean_opp_points": 602.0666666666667
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 48,
+          "draws": 0,
+          "losses": 12,
+          "draw_half_score": 0.8,
+          "win_fraction": 0.8,
+          "mean_our_points": 1130.2666666666667,
+          "mean_opp_points": 609.4833333333333
+        }
+      }
+    },
+    "ANCHOR26": {
+      "pooled_three_opponent_panel": {
+        "games": 120,
+        "cards": 20,
+        "wins": 88,
+        "draws": 0,
+        "losses": 32,
+        "draw_half_score": 0.7333333333333333,
+        "win_fraction": 0.7333333333333333,
+        "mean_our_points": 1089.9416666666666,
+        "mean_opp_points": 621.6416666666667
+      },
+      "by_opponent": {
+        "solution92": {
+          "games": 40,
+          "cards": 20,
+          "wins": 36,
+          "draws": 0,
+          "losses": 4,
+          "draw_half_score": 0.9,
+          "win_fraction": 0.9,
+          "mean_our_points": 1058.675,
+          "mean_opp_points": 754.0
+        },
+        "default": {
+          "games": 40,
+          "cards": 20,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "draw_half_score": 1.0,
+          "win_fraction": 1.0,
+          "mean_our_points": 1360.3,
+          "mean_opp_points": 169.675
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "games": 40,
+          "cards": 20,
+          "wins": 12,
+          "draws": 0,
+          "losses": 28,
+          "draw_half_score": 0.3,
+          "win_fraction": 0.3,
+          "mean_our_points": 850.85,
+          "mean_opp_points": 941.25
+        }
+      },
+      "by_side": {
+        "player_0": {
+          "games": 60,
+          "cards": 20,
+          "wins": 44,
+          "draws": 0,
+          "losses": 16,
+          "draw_half_score": 0.7333333333333333,
+          "win_fraction": 0.7333333333333333,
+          "mean_our_points": 1092.6666666666667,
+          "mean_opp_points": 613.2
+        },
+        "player_1": {
+          "games": 60,
+          "cards": 20,
+          "wins": 44,
+          "draws": 0,
+          "losses": 16,
+          "draw_half_score": 0.7333333333333333,
+          "win_fraction": 0.7333333333333333,
+          "mean_our_points": 1087.2166666666667,
+          "mean_opp_points": 630.0833333333334
+        }
+      }
+    }
+  },
+  "comparisons_against_V14": {
+    "V14": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.0,
+        "score_difference_percentage_points": 0.0,
+        "percentile_95_ci": [
+          0.0,
+          0.0
+        ],
+        "percentile_95_ci_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": 0.0
+          },
+          {
+            "seed": 867005,
+            "difference": 0.0
+          },
+          {
+            "seed": 867006,
+            "difference": 0.0
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": 0.0
+          },
+          {
+            "seed": 867012,
+            "difference": 0.0
+          },
+          {
+            "seed": 867013,
+            "difference": 0.0
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": 0.0
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": 0.0
+          },
+          {
+            "seed": 867018,
+            "difference": 0.0
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "A2": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.049999999999999996,
+        "score_difference_percentage_points": -5.0,
+        "percentile_95_ci": [
+          -0.1333333333333333,
+          0.033333333333333326
+        ],
+        "percentile_95_ci_percentage_points": [
+          -13.33333333333333,
+          3.3333333333333326
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867002,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867005,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867019,
+            "difference": -0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.025,
+          "score_difference_percentage_points": -2.5,
+          "percentile_95_ci": [
+            -0.075,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -7.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.125,
+          "score_difference_percentage_points": -12.5,
+          "percentile_95_ci": [
+            -0.35,
+            0.1
+          ],
+          "percentile_95_ci_percentage_points": [
+            -35.0,
+            10.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.5
+            },
+            {
+              "seed": 867001,
+              "difference": -0.5
+            },
+            {
+              "seed": 867002,
+              "difference": -0.5
+            },
+            {
+              "seed": 867003,
+              "difference": 0.5
+            },
+            {
+              "seed": 867004,
+              "difference": -0.5
+            },
+            {
+              "seed": 867005,
+              "difference": 0.5
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": -0.5
+            },
+            {
+              "seed": 867008,
+              "difference": -1.0
+            },
+            {
+              "seed": 867009,
+              "difference": -0.5
+            },
+            {
+              "seed": 867010,
+              "difference": -0.5
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.5
+            },
+            {
+              "seed": 867013,
+              "difference": 0.5
+            },
+            {
+              "seed": 867014,
+              "difference": -0.5
+            },
+            {
+              "seed": 867015,
+              "difference": 0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.5
+            },
+            {
+              "seed": 867017,
+              "difference": 0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": -0.5
+            }
+          ]
+        }
+      }
+    },
+    "CONTROL25": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.16666666666666669,
+        "score_difference_percentage_points": -16.666666666666668,
+        "percentile_95_ci": [
+          -0.2583333333333333,
+          -0.075
+        ],
+        "percentile_95_ci_percentage_points": [
+          -25.83333333333333,
+          -7.5
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867002,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867005,
+            "difference": -0.5
+          },
+          {
+            "seed": 867006,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": -0.5
+          },
+          {
+            "seed": 867012,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": -0.5
+          },
+          {
+            "seed": 867018,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867019,
+            "difference": -0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.15,
+          "score_difference_percentage_points": -15.0,
+          "percentile_95_ci": [
+            -0.3,
+            -0.025
+          ],
+          "percentile_95_ci_percentage_points": [
+            -30.0,
+            -2.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -1.0
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.025,
+          "score_difference_percentage_points": -2.5,
+          "percentile_95_ci": [
+            -0.075,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -7.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.325,
+          "score_difference_percentage_points": -32.5,
+          "percentile_95_ci": [
+            -0.5,
+            -0.125
+          ],
+          "percentile_95_ci_percentage_points": [
+            -50.0,
+            -12.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.5
+            },
+            {
+              "seed": 867001,
+              "difference": -0.5
+            },
+            {
+              "seed": 867002,
+              "difference": -0.5
+            },
+            {
+              "seed": 867003,
+              "difference": 0.5
+            },
+            {
+              "seed": 867004,
+              "difference": 0.5
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": -0.5
+            },
+            {
+              "seed": 867008,
+              "difference": -1.0
+            },
+            {
+              "seed": 867009,
+              "difference": -0.5
+            },
+            {
+              "seed": 867010,
+              "difference": -0.5
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": -0.5
+            },
+            {
+              "seed": 867013,
+              "difference": 0.5
+            },
+            {
+              "seed": 867014,
+              "difference": -0.5
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": -0.5
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": -0.5
+            }
+          ]
+        }
+      }
+    },
+    "CONTROL26": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.2166666666666667,
+        "score_difference_percentage_points": -21.66666666666667,
+        "percentile_95_ci": [
+          -0.29166666666666663,
+          -0.13333333333333336
+        ],
+        "percentile_95_ci_percentage_points": [
+          -29.166666666666664,
+          -13.333333333333336
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": -0.5
+          },
+          {
+            "seed": 867002,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867005,
+            "difference": -0.5
+          },
+          {
+            "seed": 867006,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867012,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867016,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867018,
+            "difference": -0.5
+          },
+          {
+            "seed": 867019,
+            "difference": -0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.225,
+          "score_difference_percentage_points": -22.5,
+          "percentile_95_ci": [
+            -0.4,
+            -0.075
+          ],
+          "percentile_95_ci_percentage_points": [
+            -40.0,
+            -7.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": -1.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.425,
+          "score_difference_percentage_points": -42.5,
+          "percentile_95_ci": [
+            -0.55,
+            -0.275
+          ],
+          "percentile_95_ci_percentage_points": [
+            -55.00000000000001,
+            -27.500000000000004
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": -0.5
+            },
+            {
+              "seed": 867001,
+              "difference": -0.5
+            },
+            {
+              "seed": 867002,
+              "difference": 0.5
+            },
+            {
+              "seed": 867003,
+              "difference": -0.5
+            },
+            {
+              "seed": 867004,
+              "difference": -0.5
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": -0.5
+            },
+            {
+              "seed": 867008,
+              "difference": -1.0
+            },
+            {
+              "seed": 867009,
+              "difference": -0.5
+            },
+            {
+              "seed": 867010,
+              "difference": -0.5
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": -0.5
+            },
+            {
+              "seed": 867013,
+              "difference": -0.5
+            },
+            {
+              "seed": 867014,
+              "difference": -0.5
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.5
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": -0.5
+            }
+          ]
+        }
+      }
+    },
+    "ANCHOR25": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.04166666666666667,
+        "score_difference_percentage_points": -4.166666666666667,
+        "percentile_95_ci": [
+          -0.12499999999999997,
+          0.03333333333333334
+        ],
+        "percentile_95_ci_percentage_points": [
+          -12.499999999999996,
+          3.333333333333334
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867002,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867005,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867007,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": 0.0
+          },
+          {
+            "seed": 867018,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867019,
+            "difference": 0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.1,
+          "score_difference_percentage_points": -10.0,
+          "percentile_95_ci": [
+            -0.225,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -22.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.025,
+          "score_difference_percentage_points": -2.5,
+          "percentile_95_ci": [
+            -0.275,
+            0.2
+          ],
+          "percentile_95_ci_percentage_points": [
+            -27.500000000000004,
+            20.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.5
+            },
+            {
+              "seed": 867001,
+              "difference": -0.5
+            },
+            {
+              "seed": 867002,
+              "difference": -0.5
+            },
+            {
+              "seed": 867003,
+              "difference": 0.5
+            },
+            {
+              "seed": 867004,
+              "difference": 0.5
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": -0.5
+            },
+            {
+              "seed": 867008,
+              "difference": -1.0
+            },
+            {
+              "seed": 867009,
+              "difference": -0.5
+            },
+            {
+              "seed": 867010,
+              "difference": 0.5
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": -0.5
+            },
+            {
+              "seed": 867013,
+              "difference": -0.5
+            },
+            {
+              "seed": 867014,
+              "difference": -0.5
+            },
+            {
+              "seed": 867015,
+              "difference": 0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.5
+            },
+            {
+              "seed": 867017,
+              "difference": 0.5
+            },
+            {
+              "seed": 867018,
+              "difference": 0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "ANCHOR26": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.10833333333333332,
+        "score_difference_percentage_points": -10.833333333333332,
+        "percentile_95_ci": [
+          -0.19166666666666665,
+          -0.025
+        ],
+        "percentile_95_ci_percentage_points": [
+          -19.166666666666664,
+          -2.5
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867002,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": -0.5
+          },
+          {
+            "seed": 867005,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867006,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": 0.0
+          },
+          {
+            "seed": 867019,
+            "difference": -0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.1,
+          "score_difference_percentage_points": -10.0,
+          "percentile_95_ci": [
+            -0.225,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -22.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": -1.0
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.225,
+          "score_difference_percentage_points": -22.5,
+          "percentile_95_ci": [
+            -0.425,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -42.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.5
+            },
+            {
+              "seed": 867001,
+              "difference": -0.5
+            },
+            {
+              "seed": 867002,
+              "difference": -0.5
+            },
+            {
+              "seed": 867003,
+              "difference": -0.5
+            },
+            {
+              "seed": 867004,
+              "difference": -0.5
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": 0.5
+            },
+            {
+              "seed": 867007,
+              "difference": -0.5
+            },
+            {
+              "seed": 867008,
+              "difference": -1.0
+            },
+            {
+              "seed": 867009,
+              "difference": -0.5
+            },
+            {
+              "seed": 867010,
+              "difference": -0.5
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": -0.5
+            },
+            {
+              "seed": 867013,
+              "difference": 0.5
+            },
+            {
+              "seed": 867014,
+              "difference": -0.5
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.5
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": 0.5
+            },
+            {
+              "seed": 867019,
+              "difference": -0.5
+            }
+          ]
+        }
+      }
+    }
+  },
+  "comparisons_against_A2": {
+    "V14": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.049999999999999996,
+        "score_difference_percentage_points": 5.0,
+        "percentile_95_ci": [
+          -0.033333333333333326,
+          0.1333333333333333
+        ],
+        "percentile_95_ci_percentage_points": [
+          -3.3333333333333326,
+          13.33333333333333
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867001,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867002,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867003,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867004,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867005,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867008,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867009,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867010,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867011,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867013,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867014,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867015,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867017,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867019,
+            "difference": 0.16666666666666666
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.025,
+          "score_difference_percentage_points": 2.5,
+          "percentile_95_ci": [
+            0.0,
+            0.075
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            7.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.125,
+          "score_difference_percentage_points": 12.5,
+          "percentile_95_ci": [
+            -0.1,
+            0.35
+          ],
+          "percentile_95_ci_percentage_points": [
+            -10.0,
+            35.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": -0.5
+            },
+            {
+              "seed": 867001,
+              "difference": 0.5
+            },
+            {
+              "seed": 867002,
+              "difference": 0.5
+            },
+            {
+              "seed": 867003,
+              "difference": -0.5
+            },
+            {
+              "seed": 867004,
+              "difference": 0.5
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": 0.5
+            },
+            {
+              "seed": 867007,
+              "difference": 0.5
+            },
+            {
+              "seed": 867008,
+              "difference": 1.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.5
+            },
+            {
+              "seed": 867010,
+              "difference": 0.5
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": -0.5
+            },
+            {
+              "seed": 867013,
+              "difference": -0.5
+            },
+            {
+              "seed": 867014,
+              "difference": 0.5
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": -0.5
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": 0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "A2": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.0,
+        "score_difference_percentage_points": 0.0,
+        "percentile_95_ci": [
+          0.0,
+          0.0
+        ],
+        "percentile_95_ci_percentage_points": [
+          0.0,
+          0.0
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": 0.0
+          },
+          {
+            "seed": 867005,
+            "difference": 0.0
+          },
+          {
+            "seed": 867006,
+            "difference": 0.0
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": 0.0
+          },
+          {
+            "seed": 867012,
+            "difference": 0.0
+          },
+          {
+            "seed": 867013,
+            "difference": 0.0
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": 0.0
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": 0.0
+          },
+          {
+            "seed": 867018,
+            "difference": 0.0
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "CONTROL25": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.11666666666666665,
+        "score_difference_percentage_points": -11.666666666666666,
+        "percentile_95_ci": [
+          -0.2333333333333333,
+          -0.016666666666666666
+        ],
+        "percentile_95_ci_percentage_points": [
+          -23.333333333333332,
+          -1.6666666666666667
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867005,
+            "difference": -0.6666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": 0.0
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867012,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867013,
+            "difference": 0.0
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867016,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867017,
+            "difference": -0.6666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": 0.0
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.125,
+          "score_difference_percentage_points": -12.5,
+          "percentile_95_ci": [
+            -0.275,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -27.500000000000004,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -1.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.025,
+          "score_difference_percentage_points": -2.5,
+          "percentile_95_ci": [
+            -0.075,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -7.5,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.2,
+          "score_difference_percentage_points": -20.0,
+          "percentile_95_ci": [
+            -0.4,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -40.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 1.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": -1.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": -1.0
+            },
+            {
+              "seed": 867016,
+              "difference": -1.0
+            },
+            {
+              "seed": 867017,
+              "difference": -1.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "CONTROL26": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.16666666666666666,
+        "score_difference_percentage_points": -16.666666666666664,
+        "percentile_95_ci": [
+          -0.2666666666666667,
+          -0.06666666666666665
+        ],
+        "percentile_95_ci_percentage_points": [
+          -26.66666666666667,
+          -6.666666666666665
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867001,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867002,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867003,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867004,
+            "difference": 0.0
+          },
+          {
+            "seed": 867005,
+            "difference": -0.6666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": 0.0
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867013,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": -0.5
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": -0.5
+          },
+          {
+            "seed": 867018,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.2,
+          "score_difference_percentage_points": -20.0,
+          "percentile_95_ci": [
+            -0.35,
+            -0.075
+          ],
+          "percentile_95_ci_percentage_points": [
+            -35.0,
+            -7.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": -1.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": -0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": -0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.3,
+          "score_difference_percentage_points": -30.0,
+          "percentile_95_ci": [
+            -0.55,
+            -0.05
+          ],
+          "percentile_95_ci_percentage_points": [
+            -55.00000000000001,
+            -5.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": -1.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 1.0
+            },
+            {
+              "seed": 867003,
+              "difference": -1.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": -1.0
+            },
+            {
+              "seed": 867013,
+              "difference": -1.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": -1.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -1.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "ANCHOR25": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.008333333333333335,
+        "score_difference_percentage_points": 0.8333333333333335,
+        "percentile_95_ci": [
+          -0.08333333333333333,
+          0.09999999999999999
+        ],
+        "percentile_95_ci_percentage_points": [
+          -8.333333333333332,
+          10.0
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867005,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867006,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867011,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867012,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867013,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": 0.0
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867019,
+            "difference": 0.3333333333333333
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.075,
+          "score_difference_percentage_points": -7.5,
+          "percentile_95_ci": [
+            -0.15,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -15.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.1,
+          "score_difference_percentage_points": 10.0,
+          "percentile_95_ci": [
+            -0.2,
+            0.35
+          ],
+          "percentile_95_ci_percentage_points": [
+            -20.0,
+            35.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 1.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 1.0
+            },
+            {
+              "seed": 867011,
+              "difference": 1.0
+            },
+            {
+              "seed": 867012,
+              "difference": -1.0
+            },
+            {
+              "seed": 867013,
+              "difference": -1.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 1.0
+            }
+          ]
+        }
+      }
+    },
+    "ANCHOR26": {
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": -0.05833333333333333,
+        "score_difference_percentage_points": -5.833333333333333,
+        "percentile_95_ci": [
+          -0.15833333333333333,
+          0.041666666666666664
+        ],
+        "percentile_95_ci_percentage_points": [
+          -15.833333333333332,
+          4.166666666666666
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867004,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867005,
+            "difference": -0.5
+          },
+          {
+            "seed": 867006,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867012,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867013,
+            "difference": 0.0
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867018,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.075,
+          "score_difference_percentage_points": -7.5,
+          "percentile_95_ci": [
+            -0.2,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            -20.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": -1.0
+            },
+            {
+              "seed": 867005,
+              "difference": -0.5
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": -0.1,
+          "score_difference_percentage_points": -10.0,
+          "percentile_95_ci": [
+            -0.35,
+            0.2
+          ],
+          "percentile_95_ci_percentage_points": [
+            -35.0,
+            20.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": -1.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": -1.0
+            },
+            {
+              "seed": 867006,
+              "difference": 1.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 1.0
+            },
+            {
+              "seed": 867012,
+              "difference": -1.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": -1.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": -1.0
+            },
+            {
+              "seed": 867018,
+              "difference": 1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "anchor_minus_control": {
+    "25": {
+      "candidate": "ANCHOR25",
+      "reference": "CONTROL25",
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.125,
+        "score_difference_percentage_points": 12.5,
+        "percentile_95_ci": [
+          0.025,
+          0.2333333333333333
+        ],
+        "percentile_95_ci_percentage_points": [
+          2.5,
+          23.333333333333332
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.0
+          },
+          {
+            "seed": 867001,
+            "difference": 0.0
+          },
+          {
+            "seed": 867002,
+            "difference": 0.0
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": 0.0
+          },
+          {
+            "seed": 867005,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867006,
+            "difference": -0.16666666666666666
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867011,
+            "difference": 0.6666666666666666
+          },
+          {
+            "seed": 867012,
+            "difference": 0.0
+          },
+          {
+            "seed": 867013,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867016,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867017,
+            "difference": 0.5
+          },
+          {
+            "seed": 867018,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867019,
+            "difference": 0.3333333333333333
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.05,
+          "score_difference_percentage_points": 5.0,
+          "percentile_95_ci": [
+            -0.075,
+            0.2
+          ],
+          "percentile_95_ci_percentage_points": [
+            -7.5,
+            20.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 1.0
+            },
+            {
+              "seed": 867006,
+              "difference": -0.5
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.5
+            },
+            {
+              "seed": 867018,
+              "difference": -0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.025,
+          "score_difference_percentage_points": 2.5,
+          "percentile_95_ci": [
+            0.0,
+            0.075
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            7.5
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.3,
+          "score_difference_percentage_points": 30.0,
+          "percentile_95_ci": [
+            0.05,
+            0.55
+          ],
+          "percentile_95_ci_percentage_points": [
+            5.0,
+            55.00000000000001
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 1.0
+            },
+            {
+              "seed": 867011,
+              "difference": 1.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": -1.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 1.0
+            },
+            {
+              "seed": 867016,
+              "difference": 1.0
+            },
+            {
+              "seed": 867017,
+              "difference": 1.0
+            },
+            {
+              "seed": 867018,
+              "difference": 1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 1.0
+            }
+          ]
+        }
+      }
+    },
+    "26": {
+      "candidate": "ANCHOR26",
+      "reference": "CONTROL26",
+      "pooled_three_opponent_panel": {
+        "cards": 20,
+        "games_per_role": 120,
+        "score_difference": 0.10833333333333335,
+        "score_difference_percentage_points": 10.833333333333336,
+        "percentile_95_ci": [
+          0.008333333333333335,
+          0.20833333333333331
+        ],
+        "percentile_95_ci_percentage_points": [
+          0.8333333333333335,
+          20.833333333333332
+        ],
+        "card_score_differences": [
+          {
+            "seed": 867000,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867001,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867002,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867003,
+            "difference": 0.0
+          },
+          {
+            "seed": 867004,
+            "difference": -0.3333333333333333
+          },
+          {
+            "seed": 867005,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867006,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867007,
+            "difference": 0.0
+          },
+          {
+            "seed": 867008,
+            "difference": 0.0
+          },
+          {
+            "seed": 867009,
+            "difference": 0.0
+          },
+          {
+            "seed": 867010,
+            "difference": 0.0
+          },
+          {
+            "seed": 867011,
+            "difference": 0.5
+          },
+          {
+            "seed": 867012,
+            "difference": 0.0
+          },
+          {
+            "seed": 867013,
+            "difference": 0.3333333333333333
+          },
+          {
+            "seed": 867014,
+            "difference": 0.0
+          },
+          {
+            "seed": 867015,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867016,
+            "difference": 0.0
+          },
+          {
+            "seed": 867017,
+            "difference": 0.16666666666666666
+          },
+          {
+            "seed": 867018,
+            "difference": 0.5
+          },
+          {
+            "seed": 867019,
+            "difference": 0.0
+          }
+        ]
+      },
+      "by_opponent": {
+        "solution92": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.125,
+          "score_difference_percentage_points": 12.5,
+          "percentile_95_ci": [
+            -0.05,
+            0.275
+          ],
+          "percentile_95_ci_percentage_points": [
+            -5.0,
+            27.500000000000004
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 1.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": -1.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.5
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.5
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.5
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.5
+            },
+            {
+              "seed": 867018,
+              "difference": 0.5
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "default": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.0,
+          "score_difference_percentage_points": 0.0,
+          "percentile_95_ci": [
+            0.0,
+            0.0
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            0.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 0.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": 0.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 0.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 0.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 0.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 0.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "cards": 20,
+          "games_per_role": 40,
+          "score_difference": 0.2,
+          "score_difference_percentage_points": 20.0,
+          "percentile_95_ci": [
+            0.0,
+            0.4
+          ],
+          "percentile_95_ci_percentage_points": [
+            0.0,
+            40.0
+          ],
+          "card_score_differences": [
+            {
+              "seed": 867000,
+              "difference": 1.0
+            },
+            {
+              "seed": 867001,
+              "difference": 0.0
+            },
+            {
+              "seed": 867002,
+              "difference": -1.0
+            },
+            {
+              "seed": 867003,
+              "difference": 0.0
+            },
+            {
+              "seed": 867004,
+              "difference": 0.0
+            },
+            {
+              "seed": 867005,
+              "difference": 0.0
+            },
+            {
+              "seed": 867006,
+              "difference": 1.0
+            },
+            {
+              "seed": 867007,
+              "difference": 0.0
+            },
+            {
+              "seed": 867008,
+              "difference": 0.0
+            },
+            {
+              "seed": 867009,
+              "difference": 0.0
+            },
+            {
+              "seed": 867010,
+              "difference": 0.0
+            },
+            {
+              "seed": 867011,
+              "difference": 1.0
+            },
+            {
+              "seed": 867012,
+              "difference": 0.0
+            },
+            {
+              "seed": 867013,
+              "difference": 1.0
+            },
+            {
+              "seed": 867014,
+              "difference": 0.0
+            },
+            {
+              "seed": 867015,
+              "difference": 0.0
+            },
+            {
+              "seed": 867016,
+              "difference": 0.0
+            },
+            {
+              "seed": 867017,
+              "difference": 0.0
+            },
+            {
+              "seed": 867018,
+              "difference": 1.0
+            },
+            {
+              "seed": 867019,
+              "difference": 0.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "direct_against_V14": {
+    "A2": {
+      "games": 40,
+      "cards": 20,
+      "wins": 16,
+      "draws": 0,
+      "losses": 24,
+      "draw_half_score": 0.4,
+      "win_fraction": 0.4,
+      "mean_our_points": 952.35,
+      "mean_opp_points": 996.25,
+      "by_side": {
+        "player_0": {
+          "games": 20,
+          "cards": 20,
+          "wins": 8,
+          "draws": 0,
+          "losses": 12,
+          "draw_half_score": 0.4,
+          "win_fraction": 0.4,
+          "mean_our_points": 952.35,
+          "mean_opp_points": 996.25
+        },
+        "player_1": {
+          "games": 20,
+          "cards": 20,
+          "wins": 8,
+          "draws": 0,
+          "losses": 12,
+          "draw_half_score": 0.4,
+          "win_fraction": 0.4,
+          "mean_our_points": 952.35,
+          "mean_opp_points": 996.25
+        }
+      },
+      "candidate_score": {
+        "estimate": 0.4,
+        "percentile_95_ci": [
+          0.2,
+          0.6
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "candidate_win_fraction": {
+        "estimate": 0.4,
+        "percentile_95_ci": [
+          0.2,
+          0.6
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "V14_win_fraction": {
+        "estimate": 0.6,
+        "percentile_95_ci": [
+          0.4,
+          0.8
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "V14_score": {
+        "estimate": 0.6,
+        "percentile_95_ci": [
+          0.4,
+          0.8
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "CONTROL25": {
+      "games": 40,
+      "cards": 20,
+      "wins": 12,
+      "draws": 0,
+      "losses": 28,
+      "draw_half_score": 0.3,
+      "win_fraction": 0.3,
+      "mean_our_points": 910.3,
+      "mean_opp_points": 978.55,
+      "by_side": {
+        "player_0": {
+          "games": 20,
+          "cards": 20,
+          "wins": 6,
+          "draws": 0,
+          "losses": 14,
+          "draw_half_score": 0.3,
+          "win_fraction": 0.3,
+          "mean_our_points": 910.3,
+          "mean_opp_points": 978.55
+        },
+        "player_1": {
+          "games": 20,
+          "cards": 20,
+          "wins": 6,
+          "draws": 0,
+          "losses": 14,
+          "draw_half_score": 0.3,
+          "win_fraction": 0.3,
+          "mean_our_points": 910.3,
+          "mean_opp_points": 978.55
+        }
+      },
+      "candidate_score": {
+        "estimate": 0.3,
+        "percentile_95_ci": [
+          0.1,
+          0.5
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "candidate_win_fraction": {
+        "estimate": 0.3,
+        "percentile_95_ci": [
+          0.1,
+          0.5
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "V14_win_fraction": {
+        "estimate": 0.7,
+        "percentile_95_ci": [
+          0.5,
+          0.9
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "V14_score": {
+        "estimate": 0.7,
+        "percentile_95_ci": [
+          0.5,
+          0.9
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "CONTROL26": {
+      "games": 40,
+      "cards": 20,
+      "wins": 6,
+      "draws": 0,
+      "losses": 34,
+      "draw_half_score": 0.15,
+      "win_fraction": 0.15,
+      "mean_our_points": 785.1,
+      "mean_opp_points": 1053.1,
+      "by_side": {
+        "player_0": {
+          "games": 20,
+          "cards": 20,
+          "wins": 3,
+          "draws": 0,
+          "losses": 17,
+          "draw_half_score": 0.15,
+          "win_fraction": 0.15,
+          "mean_our_points": 785.1,
+          "mean_opp_points": 1053.1
+        },
+        "player_1": {
+          "games": 20,
+          "cards": 20,
+          "wins": 3,
+          "draws": 0,
+          "losses": 17,
+          "draw_half_score": 0.15,
+          "win_fraction": 0.15,
+          "mean_our_points": 785.1,
+          "mean_opp_points": 1053.1
+        }
+      },
+      "candidate_score": {
+        "estimate": 0.15,
+        "percentile_95_ci": [
+          0.0,
+          0.3
+        ],
+        "card_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "candidate_win_fraction": {
+        "estimate": 0.15,
+        "percentile_95_ci": [
+          0.0,
+          0.3
+        ],
+        "card_values": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "V14_win_fraction": {
+        "estimate": 0.85,
+        "percentile_95_ci": [
+          0.7,
+          1.0
+        ],
+        "card_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "V14_score": {
+        "estimate": 0.85,
+        "percentile_95_ci": [
+          0.7,
+          1.0
+        ],
+        "card_values": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "ANCHOR25": {
+      "games": 40,
+      "cards": 20,
+      "wins": 14,
+      "draws": 0,
+      "losses": 26,
+      "draw_half_score": 0.35,
+      "win_fraction": 0.35,
+      "mean_our_points": 958.7,
+      "mean_opp_points": 952.45,
+      "by_side": {
+        "player_0": {
+          "games": 20,
+          "cards": 20,
+          "wins": 7,
+          "draws": 0,
+          "losses": 13,
+          "draw_half_score": 0.35,
+          "win_fraction": 0.35,
+          "mean_our_points": 958.7,
+          "mean_opp_points": 952.45
+        },
+        "player_1": {
+          "games": 20,
+          "cards": 20,
+          "wins": 7,
+          "draws": 0,
+          "losses": 13,
+          "draw_half_score": 0.35,
+          "win_fraction": 0.35,
+          "mean_our_points": 958.7,
+          "mean_opp_points": 952.45
+        }
+      },
+      "candidate_score": {
+        "estimate": 0.35,
+        "percentile_95_ci": [
+          0.15,
+          0.55
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "candidate_win_fraction": {
+        "estimate": 0.35,
+        "percentile_95_ci": [
+          0.15,
+          0.55
+        ],
+        "card_values": [
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "V14_win_fraction": {
+        "estimate": 0.65,
+        "percentile_95_ci": [
+          0.45,
+          0.85
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "V14_score": {
+        "estimate": 0.65,
+        "percentile_95_ci": [
+          0.45,
+          0.85
+        ],
+        "card_values": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "ANCHOR26": {
+      "games": 40,
+      "cards": 20,
+      "wins": 12,
+      "draws": 0,
+      "losses": 28,
+      "draw_half_score": 0.3,
+      "win_fraction": 0.3,
+      "mean_our_points": 900.05,
+      "mean_opp_points": 1015.15,
+      "by_side": {
+        "player_0": {
+          "games": 20,
+          "cards": 20,
+          "wins": 6,
+          "draws": 0,
+          "losses": 14,
+          "draw_half_score": 0.3,
+          "win_fraction": 0.3,
+          "mean_our_points": 900.05,
+          "mean_opp_points": 1015.15
+        },
+        "player_1": {
+          "games": 20,
+          "cards": 20,
+          "wins": 6,
+          "draws": 0,
+          "losses": 14,
+          "draw_half_score": 0.3,
+          "win_fraction": 0.3,
+          "mean_our_points": 900.05,
+          "mean_opp_points": 1015.15
+        }
+      },
+      "candidate_score": {
+        "estimate": 0.3,
+        "percentile_95_ci": [
+          0.1,
+          0.5
+        ],
+        "card_values": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "candidate_win_fraction": {
+        "estimate": 0.3,
+        "percentile_95_ci": [
+          0.1,
+          0.5
+        ],
+        "card_values": [
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "V14_win_fraction": {
+        "estimate": 0.7,
+        "percentile_95_ci": [
+          0.5,
+          0.9
+        ],
+        "card_values": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "V14_score": {
+        "estimate": 0.7,
+        "percentile_95_ci": [
+          0.5,
+          0.9
+        ],
+        "card_values": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "Exploratory diagnostic on 20 locally reserved cards; not a strength confirmation or submission decision.",
+    "Only two training seeds, reported separately; card bootstrap quantifies card variation conditional on these checkpoints, not precise training-seed uncertainty.",
+    "Multiple role/opponent comparisons; percentile intervals are unadjusted and do not control simultaneous error.",
+    "Whole cards are paired across roles and resampled with both sides together; pooled panels additionally keep all three opponents together.",
+    "A score of 1 on these games describes this sample only and does not imply a population guarantee.",
+    "CSV consistency cannot independently reconstruct engine scoring; v2 is required and outcome/win/point fields are cross-checked."
+  ],
+  "promotion_from_diagnostic": false,
+  "confirmation_screen": {
+    "candidates": {
+      "ANCHOR25": {
+        "training_seed": 25,
+        "paired_control": "CONTROL25",
+        "gates": {
+          "panel_at_least_A2": true,
+          "solution_at_least_A2": false,
+          "panel_above_paired_control": true,
+          "direct_at_least_24_strict_wins": false
+        },
+        "eligible_for_later_confirmation": false,
+        "panel_score": 0.8,
+        "solution_score": 0.9,
+        "direct_wins": 14
+      },
+      "ANCHOR26": {
+        "training_seed": 26,
+        "paired_control": "CONTROL26",
+        "gates": {
+          "panel_at_least_A2": false,
+          "solution_at_least_A2": false,
+          "panel_above_paired_control": true,
+          "direct_at_least_24_strict_wins": false
+        },
+        "eligible_for_later_confirmation": false,
+        "panel_score": 0.7333333333333333,
+        "solution_score": 0.9,
+        "direct_wins": 12
+      }
+    },
+    "eligible_ranked": [],
+    "selected_for_later_confirmation": null,
+    "rule": "ANCHOR only; panel and Solution draw-half scores >= A2, panel > paired CONTROL, >=24/40 strict direct wins; rank panel, Solution, smaller seed",
+    "release_qualified": false,
+    "no_promotion_from_diagnostic": true,
+    "no_fallback_after_failed_confirmation": true
+  },
+  "auditor_sha256": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04"
+}

@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "case": "already_gone",
+      "status": "gone",
+      "signals": []
+    },
+    {
+      "case": "term_sufficient",
+      "status": "gone",
+      "signals": [
+        15
+      ]
+    },
+    {
+      "case": "kill_required",
+      "status": "gone",
+      "signals": [
+        15,
+        9
+      ]
+    },
+    {
+      "case": "survivor",
+      "status": "surviving",
+      "signals": [
+        15,
+        9
+      ]
+    },
+    {
+      "case": "permission_unknown",
+      "status": "unknown",
+      "signals": []
+    },
+    {
+      "case": "missing_record",
+      "status": "unknown"
+    },
+    {
+      "case": "inconsistent_owned_group",
+      "status": "unknown"
+    }
+  ],
+  "helper_sha256": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+  "scope": "AST-isolated stdlib mocks only; no process launch/model/test-suite execution"
+}

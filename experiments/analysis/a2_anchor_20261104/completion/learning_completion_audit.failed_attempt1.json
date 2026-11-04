@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "independent": true,
+  "source_commit": "09c69349afc020a7b2418c249657a5698c472964",
+  "auditor_script": "/private/tmp/sherlock-a2-anchor-20261104/learning_completion_auditor.py",
+  "auditor_sha256": "b0d2044da2565c5279fde69e3b0662c6ab374ca49cb7d1b13c23e1c522ee9026",
+  "training_admission_sha256": "6ed1da37ef92afc2e1f638de0cb84cffdfb00d1c9dd985674f2491f5facde915",
+  "arms": {},
+  "pair_prefill_equal": {},
+  "dataset_evidence": {
+    "train_rows": 356415,
+    "excluded_rows": 68687,
+    "scale_recomputed": 1.4293522257922757,
+    "train_indices_sha256": "336507d962ab589b64bfb65a6ffe02b539ba98d248afa5aabce3ee1bb32c669a"
+  },
+  "error": "AttributeError: module 'numpy.lib.format' has no attribute '_read_array_header'",
+  "finished_utc": "2026-11-04T20:05:11.527250+00:00"
+}

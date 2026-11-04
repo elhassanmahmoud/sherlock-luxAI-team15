@@ -1,0 +1,30 @@
+{
+  "status": "completed",
+  "launcher_pid": 4746,
+  "command": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+    "-B",
+    "-m",
+    "scripts.par_eval",
+    "--weights",
+    "experiments/candidates/a2_anchor_20261104/ANCHOR25.pth",
+    "--set",
+    "frozen=false",
+    "--seed-list",
+    "/tmp/sherlock-a2-anchor-20261104/direct_seeds.json",
+    "--workers",
+    "1",
+    "--opponents",
+    "self:agents/sherlock/weights/agent_p0.pth",
+    "--out",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/direct/ANCHOR25.csv"
+  ],
+  "cwd": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "deadline_utc": "2026-11-04T22:00:00+00:00",
+  "started_utc": "2026-11-04T20:31:31.056073+00:00",
+  "guard_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+  "child_pid": 4747,
+  "child_process_group": 4747,
+  "returncode": 0,
+  "finished_utc": "2026-11-04T20:34:47.002011+00:00"
+}

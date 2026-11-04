@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "study": "a2_teacher_anchor_20261104",
+  "source_commit": "09c69349afc020a7b2418c249657a5698c472964",
+  "roles": {
+    "V14": {
+      "path": "agents/sherlock/weights/agent_p0.pth",
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "original": true
+    },
+    "A2": {
+      "path": "experiments/candidates/action_student_20261104/A2.pth",
+      "sha256": "1baec85605e2b7aaad8c0beaa416d0489d2b9faa1362a9b361bbb63f04cc14bd",
+      "original": true
+    },
+    "CONTROL25": {
+      "path": "experiments/candidates/a2_anchor_20261104/CONTROL25.pth",
+      "sha256": "287401b9136aea1a8116cdf6456b706f55bff4e83f5c6a56aa66094d52528044",
+      "original": false,
+      "source_final_checkpoint": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/control/runs/control/weights/agent.pth",
+      "outer_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/control/anchor_receipt.json",
+      "receipt_sha256": "6ce019279a562991a7f5386f26b7dce0b07ca140764482e2a07844265efd571e",
+      "run_seed": 25,
+      "arm": "control",
+      "weight": 0.0,
+      "final_only": true,
+      "ensemble": false,
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "promoted": false
+    },
+    "CONTROL26": {
+      "path": "experiments/candidates/a2_anchor_20261104/CONTROL26.pth",
+      "sha256": "97875390db6dbd52d73c9f96008a788e059c5aa4e773698b612ac26617ea6fe3",
+      "original": false,
+      "source_final_checkpoint": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/control/runs/control/weights/agent.pth",
+      "outer_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/control/anchor_receipt.json",
+      "receipt_sha256": "91658d2998fd2106e124d787392d13527810024f52bbba8907baeb417a526d2f",
+      "run_seed": 26,
+      "arm": "control",
+      "weight": 0.0,
+      "final_only": true,
+      "ensemble": false,
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "promoted": false
+    },
+    "ANCHOR25": {
+      "path": "experiments/candidates/a2_anchor_20261104/ANCHOR25.pth",
+      "sha256": "4ff1d70e0a698e01e97dd161ed25e590aea7af4ddebfca99edd967b5b24e246f",
+      "original": false,
+      "source_final_checkpoint": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/engine/anchor/runs/control/weights/agent.pth",
+      "outer_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed25/audits/anchor/anchor_receipt.json",
+      "receipt_sha256": "befe107b8c8667df4e7c75b0af90997dc9a633305c1a29bb3a8833921d69f148",
+      "run_seed": 25,
+      "arm": "anchor",
+      "weight": 0.1,
+      "final_only": true,
+      "ensemble": false,
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "promoted": false
+    },
+    "ANCHOR26": {
+      "path": "experiments/candidates/a2_anchor_20261104/ANCHOR26.pth",
+      "sha256": "4bd80887dd4379070c07e8e8c169aedd0a5be83dc4899d45c7a78f4708def10f",
+      "original": false,
+      "source_final_checkpoint": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/engine/anchor/runs/control/weights/agent.pth",
+      "outer_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261104_a2_anchor/seed26/audits/anchor/anchor_receipt.json",
+      "receipt_sha256": "8977642a463e41d243b60ed33869c51573b212fab8d3d3e916065542818d2d5d",
+      "run_seed": 26,
+      "arm": "anchor",
+      "weight": 0.1,
+      "final_only": true,
+      "ensemble": false,
+      "public_validate_passed": true,
+      "independent_checks_passed": true,
+      "promoted": false
+    }
+  },
+  "no_ensemble": true,
+  "final_only": true,
+  "learning_audit": "/tmp/sherlock-a2-anchor-20261104/learning_completion_audit.json",
+  "learning_audit_sha256": "9f9ab1233ad1868eaa1e10aaaab66f56ccede723527d80e1c04f7f422e5b903e",
+  "promotion_from_diagnostic": false
+}

@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "launcher_pid": 77348,
+  "command": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+    "-B",
+    "-m",
+    "scripts.student_retention",
+    "--datasets",
+    "experiments/analysis/action_student_20261104/collection/r1",
+    "experiments/analysis/action_student_20261104/collection/r2",
+    "--model",
+    "A2=experiments/candidates/action_student_20261104/A2.pth",
+    "--model",
+    "CONTROL27=experiments/candidates/action_student_20261104/CONTROL27.pth",
+    "--model",
+    "CONTROL28=experiments/candidates/action_student_20261104/CONTROL28.pth",
+    "--model",
+    "SAP027=experiments/candidates/action_student_20261104/SAP027.pth",
+    "--model",
+    "SAP028=experiments/candidates/action_student_20261104/SAP028.pth",
+    "--out",
+    "/tmp/sherlock-a2-anchor-20261104/retention_before"
+  ],
+  "cwd": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "deadline_utc": "2026-11-04T19:35:00+00:00",
+  "started_utc": "2026-11-04T19:21:32.974502+00:00",
+  "guard_sha256": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+  "child_pid": 77349,
+  "child_process_group": 77349,
+  "returncode": 0,
+  "finished_utc": "2026-11-04T19:21:36.996889+00:00"
+}
