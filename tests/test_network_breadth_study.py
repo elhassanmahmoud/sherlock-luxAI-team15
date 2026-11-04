@@ -267,7 +267,9 @@ def test_pilot_counts_and_slower_observations_are_required():
 
 
 def test_stop_cleans_only_real_owned_process_group(tmp_path, monkeypatch):
+    import time
     from types import SimpleNamespace
+    monkeypatch.setattr(study, 'GAME_END', time.time() + 60)
     stop = tmp_path / 'STOP'
     monkeypatch.setattr(study, 'STOP_FILE', stop)
     monkeypatch.setattr(study, 'current_power', lambda: (True, 90))

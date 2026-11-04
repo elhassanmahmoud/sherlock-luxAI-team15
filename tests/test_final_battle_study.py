@@ -238,7 +238,9 @@ def test_freeze_verifies_head_and_live_source_identity(tmp_path, monkeypatch):
 
 
 def test_stop_cleans_real_owned_stdlib_child_group(tmp_path, monkeypatch):
+    import time
     from types import SimpleNamespace
+    monkeypatch.setattr(study, 'GAME_END', time.time() + 60)
     stop = tmp_path / 'STOP'
     monkeypatch.setattr(study, 'STOP_FILE', stop)
     monkeypatch.setattr(study, 'current_power', lambda: (True, 90))
