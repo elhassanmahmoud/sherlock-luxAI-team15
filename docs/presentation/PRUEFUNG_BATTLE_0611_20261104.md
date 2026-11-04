@@ -1,6 +1,34 @@
 # Battle-Präsentation: Prüfung und Umsetzung
 
-**Nachtrag nach Freigabe am 04.11.2026:** Die folgenden Korrekturen sind in HTML, PDF und Stichpunkten umgesetzt. Moayed bestätigt Folien 1–5 und 12–13, Mahmoud 6–11. Design und 17 Seiten (13 Hauptfolien + vier Reservefolien) bleiben erhalten, Planzeit 9:50. Folien 11/12 und Sprechtexte gekürzt; die jüngsten Versuche knapp auf Folie 12 ergänzt. Fachlicher Gegenreview und gerenderte PDF geprüft. README, gemeinsame Anweisungen und Arbeitsstand sind angeglichen. Offen bleibt die gemeinsame Probe; die Zeit ist keine gemessene Vortragsdauer. Die folgende Erstprüfung bleibt als Begründung erhalten.
+## Aktuelle Fassung: neun Hauptfolien zum Agenten
+
+Moayed beauftragt ausdrücklich weniger Folien und eine anschauliche Erklärung des abgegebenen Sherlock. Die Versionschronik, Fortschrittsbalken und Versuchsübersicht entfallen aus dem Hauptteil. **Neun Hauptfolien + drei Reservefolien**, bestehendes Design, Plan **9:50** (keine gemessene Probe). Moayed behält den leichteren Einstieg/Schluss; wegen der Kürzung gilt jetzt **Moayed 1–4 und 9 (4:35), Mahmoud 5–8 (5:15)**.
+
+| Folie | Schwerpunkt | Professorfeedback / Nutzen |
+|---|---|---|
+| 1 | Sherlock | Gedächtnis, Netze und Regeln als Gesamtsystem |
+| 2 | Entscheidungsablauf | Beobachtung → Gedächtnis → Ziele → Vorbereitung → Q-Mittel → maskierte Auswahl → Regeln → Ausgabe |
+| 3 | Gedächtnis und Ziele | Punktebeispiel; programmierte Zielverteilung vor Netzauswahl und Wegkorrektur |
+| 4 | Die 79 Merkmale | Sieben konkrete Gruppen mit Anzahl und Beispielen; ein Merkmal ist eine Zahl |
+| 5 | Das Ensemble | Gleiche Architektur, 36 verschiedene Gewichtsstände; 18 Originale + 18 verwandte Nachtrainingspartner; reales Q-Mittel-Beispiel |
+| 6 | Training und Reward | Erfahrungen, Double DQN, Schrittbelohnung und Matchbonus; feste Gewichte im Battle |
+| 7 | Action Masking | Vorbereitete Maske nach Q-Mittel angewandt; Asteroidenbeispiel; spätere Regeln getrennt |
+| 8 | Regelkorrekturen | Schematische Wegkorrektur am bestehenden Ziel; danach Blindschuss und Overkill-Schutz in tatsächlicher Reihenfolge |
+| 9 | Im Battle | Arbeitsweise zusammenfassen; historische 95,4 % auf 800 Karten als eingeordnetes Ergebnis |
+
+Reserve 10–12: Trainingsdetails, Prüfverfahren einschließlich der zwei verfehlten V14-Hürden, spezielle Spielregeln. Keine internen Regieanweisungen auf Hauptfolien. Sprechtexte und FAQ folgen der neuen Nummerierung; die alte Folienverteilung ist überholt.
+
+**Fachprüfung:** Drei getrennte Beiträge für Netzherkunft, Sprechtexte und unabhängigen Gegenreview. Alle 36 Gewichtsstände sind verschieden; gleiche Bauart bedeutet nicht gleiche gelernte Funktion. Die 18 Nachtrainingspartner stammen jeweils aus einem der 18 Originale und wurden je 5.500 Spiele weitertrainiert. Das Ensemble kann unterschiedliche Einzelfehler abschwächen; identische Kopien würden keine zusätzliche Vielfalt schaffen und gemeinsame Fehler können bleiben. Keine allgemeine Überlegenheit durch die Netzanzahl behauptet. [Nachweis der Netzherkunft](source/ENSEMBLE_BATTLE_0611_20261104.json).
+
+Fünf kleine Reviewbefunde korrigiert und unabhängig nachgeprüft: Notizenfolge Blindschuss vor Overkill, „die meisten“ statt absoluter Mehrheit bei 15/36, Halter-Reward statt pauschaler Feldbesetzung, Potential-Shaping statt pauschal näher=positiv, 34-%-Überlappungszahl als Kartenmessung. Keine offenen fachlichen Befunde. Das Wegbeispiel ist schematisch: direkter Abstand 3→2, begehbarer Weg bei „hoch“ 7→8, bei „runter“ 7→6. Das Ziel bleibt gleich.
+
+**Darstellung und Umfang:** Alle zwölf PDF-Seiten gerendert und visuell geprüft; Überlagerungen im ersten Entwurf auf 6/8/9 behoben und die korrigierten Seiten erneut kontrolliert. HTML-Text bleibt innerhalb der Seiten, PDF 960×540 pt. Rollen/Zeiten, lokale Links und Nummerierung geprüft. [Technischer Nachweis](source/PRUEFUNG_BATTLE_0611_20261104.json). Agentenquellen, Gewichte und vorhandene ZIP in beiden Arbeitskopien anhand 39 vorhandener Prüfsummen unverändert. Keine neuen Spiele oder Trainings. Offen bleibt die gemeinsame Zeitprobe.
+
+## Historie der vorherigen Prüfung und ersten Korrektur
+
+Die nachfolgenden Foliennummern und Aufteilungen beschreiben die frühere 17-seitige Fassung; für den Vortrag gilt die neue Fassung oben.
+
+**Historischer erster Umsetzungsstand am 04.11.2026 (durch die Kürzung oben nicht mehr aktuelle Foliennummern):** Die folgenden Korrekturen sind in HTML, PDF und Stichpunkten umgesetzt. Moayed bestätigt Folien 1–5 und 12–13, Mahmoud 6–11. Design und 17 Seiten (13 Hauptfolien + vier Reservefolien) bleiben erhalten, Planzeit 9:50. Folien 11/12 und Sprechtexte gekürzt; die jüngsten Versuche knapp auf Folie 12 ergänzt. Fachlicher Gegenreview und gerenderte PDF geprüft. README, gemeinsame Anweisungen und Arbeitsstand sind angeglichen. Offen bleibt die gemeinsame Probe; die Zeit ist keine gemessene Vortragsdauer. Die folgende Erstprüfung bleibt als Begründung erhalten.
 
 Stand: 04.11.2026, abends. Codex mit unabhängigen Reviews zu Fachinhalt und Vortragsaufteilung.
 

@@ -1,232 +1,230 @@
 # Sherlock – Battle Session (06.11.2026): Vortrag zum Üben
 
-> **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist nur zum **Üben**. Ziel: Die **fett gedruckten Kernsätze** jeder Folie frei sagen können. Die Folie selbst ist die Gedächtnisstütze.
+> **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist zum **Üben**. Die **fett gedruckten Kernsätze** sollen frei sitzen; die Folien sind die Gedächtnisstütze.
 
-**Stand 04.11.2026, nach dem Präsentationsreview.** Die Aufteilung ist verbindlich: Moayed übernimmt 1–5 und 12–13, Mahmoud 6–11. Abgabe bleibt **V14 mit 36 Netzen**. Folien: [Battle-PDF](Sherlock_Battle_06-11-2026.pdf), Quelle: [HTML](docs/presentation/Sherlock_Battle_06-11-2026.html). Fachliche Grundlage: [Review vom 04.11.](docs/presentation/PRUEFUNG_BATTLE_0611_20261104.md).
+**Stand 04.11.2026, nach der beauftragten inhaltlichen Kürzung.** Der Vortrag erklärt den abgegebenen Agenten: Ziele, konkrete Merkmale, unterschiedliche Netze und Regeln vor beziehungsweise nach der Netzauswahl. Versions- und Fortschrittschronik entfallen. Die neue Verteilung lautet: **Moayed 1–4 und 9, Mahmoud 5–8**. Abgabe bleibt **V14 mit 36 Netzen**. Folien: [Battle-PDF](Sherlock_Battle_06-11-2026.pdf), Quelle: [HTML](docs/presentation/Sherlock_Battle_06-11-2026.html).
 
 | Wer | Folien | Planzeit |
 |---|---|---:|
-| Moayed | 1–5 · 12–13 | 4:25 |
-| Mahmoud | 6–11 | 5:25 |
-| **Gesamt** | **1–13** | **9:50** |
+| Moayed | 1–4 · 9 | 4:35 |
+| Mahmoud | 5–8 | 5:15 |
+| **Gesamt** | **1–9** | **9:50** |
 
-Die Planzeiten enthalten kurze Zeigepausen und die beiden Übergaben; sie sind **keine gemessene Probe**. Die Folien 14–17 sind Reserve für Fragen. *Kursiv in Klammern* = nur Hinweis, nicht sagen.
+Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 8; sie sind **keine gemessene Probe**. Folien 10–12 sind Reserve. *Kursiv in Klammern* = Übungshinweis, nicht sagen.
 
-**Kernaussage:** **Sherlock verbindet 36 gelernte Netze mit Gedächtnis und Regeln. V14 erreichte rund 95 % gegen Solution_92.**
+**Kernaussage:** **Sherlock sammelt Wissen, lässt 36 Netze Aktionen bewerten und koordiniert die Ausführung mit Regeln.**
 
-**Publikum:** Kommilitoninnen und Kommilitonen. Spielregeln und DQN kennen alle aus der Vorlesung, also nicht erneut erklären. Unsere eigenen Begriffe (Gedächtnis, Maske, Ensemble) dagegen schon.
-
----
+**Publikum:** Kommilitoninnen und Kommilitonen. Spielregeln und DQN sind aus der Vorlesung bekannt. Unsere Begriffe und konkreten Entscheidungen erklären wir an Beispielen.
 
 ## Vor dem Vortrag
 
-1. **Die Agentenabgabe ist laut Moayeds Mitteilung bereits erledigt.** Der Moodle-Upload wurde hier nicht selbst eingesehen. Die Pfadangaben unten bleiben nur als Referenz erhalten.
-2. Mit der aktuellen PDF üben. Die Entwicklungen vom 02.–04.11. sind auf Folie 12 zusammengefasst; die abgegebene Version bleibt V14.
-3. Zweimal mit Uhr proben, einschließlich Zeigepausen und Übergaben nach Folie 5 und 11. Ziel 9:50; bei Überschreitung Beispiele kürzen. Die Reserve gehört nicht in die zehn Minuten.
+1. Die Agentenabgabe ist laut Moayeds Mitteilung bereits erledigt; der Moodle-Upload wurde hier nicht selbst eingesehen. Die Pfadangaben unten bleiben als Referenz erhalten.
+2. Mit der aktuellen PDF üben. Neun Hauptfolien, drei Reservefolien; keine zusätzliche Versionsgeschichte erzählen.
+3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel 9:50. Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
 
 ---
 
 ## Folie 1 – Sherlock
-### Moayed · 0:20
+### Moayed · 0:30
 
 - Hallo, wir sind Mahmoud und Moayed, Team 15. Unser Agent heißt Sherlock.
-- **Sherlock verbindet 36 gelernte Netze mit Gedächtnis und Regeln. Unsere Abgabe V14 erreichte rund 95 % gegen Solution_92.**
-- Wir zeigen euch den Ablauf, das Training und unsere letzten Verbesserungen.
+- **Sherlock verbindet Gedächtnis, 36 gelernte Netze und programmierte Regeln.** Wir zeigen ihr Zusammenspiel.
+- Welche Ziele bekommen Einheiten, was sehen die Netze und wann greifen Regeln ein?
 
 ---
 
-## Folie 2 – Agenda
-### Moayed · 0:15
-
-- Erst zeigen wir, was Sherlock bekommt und wie daraus eine Aktion entsteht.
-- Dann erklärt Mahmoud die Netze, das Training und die Entwicklung. Zum Schluss kommen unsere drei wichtigsten Erkenntnisse und das Battle.
-
----
-
-## Folie 3 – Was Sherlock bekommt und zurückgibt
-### Moayed · 0:45
-
-- Sherlock bekommt in jedem Schritt sichtbare Einheiten, Felder und Relics sowie den Punktestand. Der Rest der Karte bleibt zunächst unbekannt.
-- **Welche Felder Punkte bringen, wird nicht direkt verraten. Das muss Sherlock selbst herausfinden.**
-- Zurück gibt es für jede der 16 Einheiten drei Zahlen: die Aktion und beim Schuss das Ziel.
-- Im damaligen V14-Test dauerte ein Aufruf typischerweise etwa 5 und höchstens rund 12 Millisekunden. Das ist eine Messung auf unserem Testrechner.
-
----
-
-## Folie 4 – Ein Spielschritt: wer macht was?
+## Folie 2 – Entscheidungsablauf
 ### Moayed · 1:00
 
-- *(Die sechs Stationen nacheinander zeigen.)* Zuerst aktualisiert das **Gedächtnis** unser Wissen. Dann werden den Einheiten **Ziele** zugeteilt.
-- Die **Vorbereitung** erstellt 79 Merkmale, die Aktionsmaske und ein mögliches sichtbares Schussziel.
-- **Alle 36 Netze bewerten die sechs Aktionen. Ihre Bewertungen werden gemittelt.**
-- Bei der **Auswahl** wird die vorbereitete Maske angewandt. Sherlock nimmt die beste verbleibende Aktion.
-- Danach kommen die **Regeln**. Sie können die Aktion ändern, einen Schuss verhindern oder selbst auslösen. Für verdeckte Schussziele gibt es eigene Bedingungen.
-- **Die gelernte Bewertung ist also ein Teil des gesamten Ablaufs.**
+- *(Die Stationen nacheinander zeigen.)* Sherlock bekommt sichtbare Felder, Einheiten und den Punktestand. Punktefelder werden nicht direkt verraten.
+- Zuerst aktualisiert das **Gedächtnis** das Kartenwissen. Dann werden den Einheiten **Ziele** zugeteilt.
+- Aus Beobachtung, Gedächtnis und Ziel entstehen pro Einheit **79 Merkmale**. Auch Aktionsmaske und sichtbares Schussziel werden vorbereitet.
+- Alle 36 Netze bewerten dieselben sechs Aktionen. Wir mitteln ihre Werte und wählen die beste Aktion, die nach der Maske übrig bleibt.
+- Danach können **Regeln** die Auswahl verändern. Dann geht die Aktion ans Spiel.
+- **Vor den Netzen wird vorbereitet; nach der Bewertung wird ausgewählt und korrigiert.**
 
 ---
 
-## Folie 5 – Gedächtnis: Welche Felder bringen Punkte?
-### Moayed · 0:45
+## Folie 3 – Gedächtnis und Ziele
+### Moayed · 1:15
 
-- Das Gedächtnis arbeitet wie ein Detektiv, daher der Name Sherlock.
-- *(Auf die Tabelle zeigen.)* Wir bekommen 3 Punkte und besetzen 4 Felder. 2 kennen wir schon als Punktefelder. **Genau eines der beiden anderen bringt also einen Punkt.**
-- Sherlock sammelt solche Gleichungen und nutzt die Spiegelsymmetrie der Karte.
-- **Relic- und Punktewissen bleibt über die drei Matches erhalten.** Erkundungs- und Sichtzeitstempel werden beim Matchwechsel zurückgesetzt.
-- Damit kennen wir Sherlocks Informationen. Mahmoud zeigt jetzt, wie daraus eine Aktion entsteht.
-
----
-
-## Folie 6 – Action Masking
-### Mahmoud · 0:50
-
-- **Die Maske entfernt Aktionen vor der Auswahl.** Sie enthält Spielbedingungen und programmierte Sicherheitsregeln, etwa gegen gefährliche Zusammenstöße.
-- *(Tabelle zeigen.)* Bewegung braucht genug Energie und ein Feld ohne Asteroid. Für die Netzauswahl braucht Sap ein geeignetes sichtbares Ziel.
-- Technisch setzen wir gesperrte Aktionswerte auf minus unendlich.
-- *(Beispiel rechts.)* Die höchste Bewertung hat „runter“, dort liegt aber ein Asteroid. **Die beste verbleibende Aktion ist „rechts“.**
-- Im Training nutzen Zufallsaktionen und Lernziel die jeweilige Trainingsmaske. Spätere Regeln bleiben ein eigener Schritt: Ein verdeckter Schuss prüft eigene Bedingungen, auch wenn zuvor kein sichtbares Ziel vorlag.
+- Sherlock kombiniert Beobachtungen wie ein Detektiv. Beispiel: Wir bekommen drei Punkte und besetzen vier Felder. Zwei davon kennen wir schon als Punktefelder. **Genau eines der beiden übrigen Felder bringt also einen Punkt.**
+- Weitere Beobachtungen und die Spiegelsymmetrie helfen, offene Fälle aufzulösen. Relic- und Punktewissen bleibt über die drei Matches erhalten; Erkundungs- und Sichtzeitstempel werden beim Matchwechsel zurückgesetzt.
+- **Das Ziel einer Einheit legt die programmierte Zielzuweisung fest.** Grundsätzlich kommen bekannte Punktefelder zuerst, dann mögliche Punktefelder und danach unbekannte Bereiche zur Erkundung.
+- Bei der Verteilung zählt die begehbare Weglänge. Dadurch laufen Einheiten nicht einfach alle zum geometrisch nächsten Feld.
+- Richtung und Abstand zum zugewiesenen Ziel gehen anschließend als Merkmale ins Netz. **Das Netz bewertet dazu die nächste Aktion.**
 
 ---
 
-## Folie 7 – 36 Netze entscheiden gemeinsam
-### Mahmoud · 0:50
+## Folie 4 – Die 79 Merkmale
+### Moayed · 1:05
 
-- **Alle 36 Netze bewerten jede Einheit in jedem Schritt. Wir mitteln ihre Q-Werte für jede Aktion.**
-- Jedes ist ein Dueling-DQN mit zwei Schichten zu je 256 Neuronen. Ein Netz gilt für alle Einheiten und beide Seiten; für Spieler 2 spiegeln wir die Karte.
-- *(Beispiel rechts.)* 15 Netze bevorzugen „runter“, 12 „rechts“, 9 „stehen“. Trotzdem gewinnt im Mittel „rechts“.
-- **Q-Werte sind geschätzte Aktionswerte, keine Sicherheit oder Wahrscheinlichkeit.** Der Mittelwert berücksichtigt die Höhe der Bewertungen; eine Mehrheitswahl zählt nur Stimmen.
-- Die 36 bestehen aus 18 ursprünglichen Netzen und 18 nachtrainierten Kopien.
-
----
-
-## Folie 8 – So wurden die 36 Netze trainiert
-### Mahmoud · 1:00
-
-- Trainiert haben wir mit Double DQN, Target-Netz und Replay Buffer. Einheiten sammeln Erfahrungen, aus denen die Netze lernen.
-- **Belohnungen werden pro Schritt berechnet:** etwa für Punktefelder, Annäherung ans Ziel und Erkundung; Tod bringt einen Abzug. Der Matchbonus kommt erst am Matchende.
-- *(Tabelle zeigen.)* Die ursprünglichen 18 Netze stammen aus drei Gruppen mit je 6 Netzen: anfangs gegen default, dann vor allem gegen Solution_92, teils auch gegen ältere eigene Versionen.
-- Diese Gruppen umfassen 66.000 Trainingsspiele. Kopien der 18 Netze wurden jeweils 5.500 Spiele **unter den V10-Regeln** weitertrainiert: weitere 99.000 Spiele.
-- Das ist das Herkunftsbudget dieser Netzfamilien, nicht die Summe aller Projektversuche. Spätere Regeln kamen danach hinzu.
+- **Jede Einheit bekommt in jedem Schritt ihren eigenen Vektor mit 79 Zahlen.** Alle Netze sehen für diese Einheit denselben Vektor.
+- *(Tabelle zeigen.)* Zehn Werte beschreiben eigene Lage und Spielparameter, etwa Energie und Schussreichweite. Vier beschreiben den Punktestand.
+- Zwanzig Werte beschreiben fünf Zielarten: jeweils Richtung, Abstand und ob das Ziel vorhanden ist. Darunter ist das zugewiesene Ziel.
+- Fünf Werte beschreiben das aktuelle Feld. Dreißig beschreiben das eigene Feld und die vier Nachbarn, zum Beispiel Begehbarkeit, Energie und Punktewissen.
+- Sechs Werte betreffen sichtbare Gegner, etwa Richtung, Energievergleich und Reichweite. Vier sind globale Zähler, etwa bekannte Punktefelder.
+- **Die Merkmale ändern sich beim Spielen; die gelernten Gewichte bleiben fest.** Mahmoud erklärt jetzt die Netzbewertungen.
 
 ---
 
-## Folie 9 – Netze und Regeln
-### Mahmoud · 0:40
+## Folie 5 – Das Ensemble
+### Mahmoud · 1:25
 
-- **In zehn V12-Diagnosespielen entsprach die finale Aktion zu rund 91 % der maskierten Netzauswahl, ohne protokollierten Regeleingriff.** Regeln änderten rund 8 % der Aktionen.
-- Das ist keine neue V14-Messung. Ziele, Merkmale und Maske waren bereits programmiert.
-- Ein Beispiel: Der Overkill-Schutz ändert einen überflüssigen Schuss in „stehen“, nicht in die zweitbeste Netzempfehlung.
-
----
-
-## Folie 10 – Von 47 % auf 95 % gegen Solution_92
-### Mahmoud · 0:55
-
-- *(Die Entwicklung von links nach rechts zeigen.)* Beim ersten Review lagen wir bei rund 47 %. Später kamen neue Trainingsstände, mehr Netze und gezielte Regelkorrekturen hinzu.
-- **Mit denselben 18 Netzen stieg die gemessene Siegquote von etwa 78 auf 90 %.** Wir korrigierten unter anderem das Kartengedächtnis, Sackgassen und überflüssige Mehrfachschüsse.
-- V11 kombinierte nachtrainierte Netze mit neuen Schussregeln. Danach folgten die Korrekturen bis V14 mit 95,4 %.
-- Die Balken stammen aus verschiedenen Testblöcken. Sie zeigen unseren Fortschritt; die einzelnen Ursachen lassen sich daraus nicht vollständig voneinander trennen.
+- **Alle 36 Netze haben dieselbe Bauart, aber unterschiedliche gelernte Gewichte.** Jedes verarbeitet 79 Eingaben über zwei Schichten mit je 256 Neuronen. Der Dueling-Aufbau erzeugt sechs Aktionswerte.
+- Die ursprünglichen 18 Netze lernten mit verschiedenen Zufallsstarts und Karten. Die Gegnermischungen unterschieden sich; eine Gruppe bestrafte gegnerische Punkte.
+- Von jedem Original wurde eine Kopie jeweils 5.500 Spiele unter den damaligen V10-Regeln weitertrainiert. **Wir kombinieren also 18 Originale mit 18 weitergelernten Verwandten, keine 36 unabhängigen Neustarts.**
+- Alle Netze bewerten jede Einheit, ohne feste Spezialrollen. Das Mitteln kann unterschiedliche Einzelfehler dämpfen, garantiert aber keinen besseren Zug.
+- *(Beispiel zeigen.)* Hier bevorzugen 15 Netze „runter“, 12 „rechts“ und 9 „stehen“. Trotzdem gewinnt „rechts“ mit einem mittleren Q-Wert von 27,0 vor „runter“ mit 26,9.
+- **Wir mitteln Bewertungen, nicht Stimmen.** Q-Werte schätzen den erwarteten zukünftigen Reward; sie sind keine Wahrscheinlichkeiten.
 
 ---
 
-## Folie 11 – Neue Versionen
+## Folie 6 – Training und Reward
 ### Mahmoud · 1:10
 
-- Vier Versionen wurden gegen ihre Vorgänger auf neuen Karten geprüft.
-- **V11:** 36 Netze aus Originalen und Nachtraining unter V10-Regeln, dazu neue Schussregeln.
-- **V12:** Aus gegnerischen Punkten werden verdeckte Besetzungen erschlossen; Sherlock kann auf solche Punktefelder schießen.
-- **V13:** Die Schätzung des Nebelabzugs und das Durchqueren von Nebel wurden korrigiert.
-- **V14:** Nach 30 Schritten ohne gefundenes Punktefeld bei bekanntem Relic testen Einheiten gezielt Kandidatenfelder.
-- **V14 erreichte 95,44 % in 1.600 Spielen gegen Solution_92 und bleibt unsere Abgabe.**
-- Moayed fasst jetzt unsere drei wichtigsten Erkenntnisse zusammen.
+- **Gelernt wurde vor dem Battle. Im Spiel werden die Gewichte nur ausgewertet.** Das Gedächtnis sammelt weiter Informationen.
+- Beim Training entstehen Erfahrungen aus Zustand, Aktion, Belohnung und Folgezustand. Der Replay Buffer speichert sie; das Netz lernt aus gemischten Stichproben.
+- Double DQN trennt Auswahl und Bewertung im Lernziel: Das Online-Netz wählt die nächste Aktion, das Target-Netz bewertet sie.
+- **Reward gibt es pro Schritt**, etwa fürs Halten von Punktefeldern, Veränderungen der Zielnähe und Erkundung. Tod bringt einen Abzug. Der Matchbonus kommt erst am Matchende.
+- Die drei ursprünglichen Gruppen mit je sechs Netzen umfassen zusammen **66.000 Trainingsspiele**. Das Nachtraining der 18 Kopien umfasst **99.000 weitere Spiele**.
+- Das ist das Herkunftsbudget dieser Netzfamilien; weitere Projektversuche zählen separat.
 
 ---
 
-## Folie 12 – Erkenntnisse
-### Moayed · 0:55
+## Folie 7 – Action Masking
+### Mahmoud · 1:00
 
-- **Erstens: Netze und Regeln ergänzen sich.** Die Netze bewerten Aktionen; Gedächtnis und Regeln helfen beim Entscheiden.
-- **Zweitens: Neue Karten entscheiden.** Was auf bekannten Karten besser aussieht, muss sich auf neuen Karten erst bestätigen.
-- **Drittens: Mehr ist nicht automatisch besser.** Vom 02. bis 04. November haben wir kleinere und größere Ensembles, Einzelnetz-Schüler und weiteres Nachtraining mit Lehrerbeispielen geprüft.
-- **Kein Kandidat war ausreichend als Ersatz belegt. Deshalb bleibt V14.** Das gilt für unsere geprüften Varianten; andere Ansätze können künftig trotzdem besser werden.
+- **Die Maske wird vor den Netzen vorbereitet und nach dem Q-Mittelwert angewandt.** Sie sperrt Aktionen für die Auswahl.
+- Darin stehen Spielbedingungen und eigene Sicherheitsregeln: Bewegung braucht genügend Energie und ein begehbares Zielfeld; außerdem vermeiden wir bestimmte gefährliche Zusammenstöße. Für Sap braucht diese Netzauswahl ein geeignetes sichtbares Ziel.
+- *(Beispiel zeigen.)* „Runter“ hat mit 53,8 den höchsten Q-Wert. Dort liegt aber ein Asteroid. Wir setzen diesen Aktionswert auf minus unendlich. „Rechts“ gewinnt mit 52,2.
+- **Die Maske begrenzt die Auswahl.** Spätere Regeln können sie noch ändern. Ein späterer Blindschuss hat dafür eigene Prüfungen zu Ziel, Reichweite und Energie.
 
 ---
 
-## Folie 13 – Fazit und Battle
-### Moayed · 0:25
+## Folie 8 – Regelkorrekturen
+### Mahmoud · 1:40
 
-- **Sherlock verbindet gelernte Bewertungen mit Gedächtnis und programmierten Regeln.**
-- Im Battle könnt ihr darauf achten: Sherlock verteilt Einheiten auf Ziele, hält Punktefelder auch beim Schießen und sucht gezielt weiter, wenn Punktefelder lange fehlen.
-- Unsere Abgabe bleibt V14 mit 36 Netzen. Danke! Habt ihr Fragen?
+- **Nach der maskierten Netzauswahl kann Sherlock Aktionen korrigieren.** Drei Beispiele:
+- Erstens die **Wegkorrektur**: Ein Zug verkleinert den direkten Gitterabstand zum bereits zugewiesenen Ziel, führt aber wegen eines Hindernisses nicht auf einen kürzeren begehbaren Weg. Dann ersetzt Sherlock ihn, falls möglich, durch den ersten Schritt eines kürzesten Wegs. Ein seitlicher oder bewusst abgewandter Zug wird dadurch nicht automatisch korrigiert.
+- Zweitens der **Blindschuss**: Sherlock kennt Punktefelder und sieht den gegnerischen Punktezuwachs. Nicht durch sichtbare Gegner erklärte Punkte deuten auf verdeckte Besetzungen hin. Die konkreten besetzten Felder kennt es nicht sicher.
+- Eine passende Regel kann **STAY zu SAP** ändern. Sie prüft unter anderem Reichweite, Energiereserve und ob eine eigene Einheit auf dem Ziel steht. Die Einheit kann dabei ihr Punktefeld halten.
+- Drittens der **Overkill-Schutz**: Mehrere Einheiten können Schüsse auf denselben Gegner planen. Sherlock berücksichtigt den bereits geplanten Schaden. Wird ein weiterer Schuss dadurch überflüssig, ändert es **SAP zu STAY**. Es nimmt nicht die zweitbeste Netzempfehlung.
+- **Regeln können also Bewegung ändern, einen Schuss verhindern oder selbst auslösen.** Moayed zeigt zum Schluss, worauf wir im Battle achten.
+
+---
+
+## Folie 9 – Im Battle
+### Moayed · 0:45
+
+- **Sherlock arbeitet in drei Schritten: Wissen sammeln, Aktionen bewerten und die Ausführung koordinieren.**
+- Im Battle achten wir darauf, wie Einheiten Ziele verteilen, Punktefelder halten und dabei schießen. Wenn trotz bekanntem Relic lange kein Punktefeld gefunden wird, testen sie gezielt Kandidaten.
+- Unsere Abgabe erreichte in ihrer historischen Bestätigung **95,4 Prozent gegen Solution_92: 1.600 Spiele auf 800 neuen Karten, jeweils auf beiden Seiten.** Das ist ein gemessenes Ergebnis, kein Versprechen für jeden Gegner.
+- Damit sind wir bereit fürs Battle. Danke!
+
+---
+
+## Reservefolie 10 – Trainingsdetails
+### Mahmoud · nur bei Rückfragen
+
+**Bauart je Netz:** 79 → 256 → 256 mit ReLU. Danach zwei Köpfe mit je 128 Neuronen: ein Zustandswert V und sechs Aktionsvorteile A. Zusammen: `Q(a) = V + A(a) − Mittelwert(A)`. Ein Netz hat 152.967 Parameter. Alle Einheiten teilen seine Gewichte; ihre Eingaben unterscheiden sich. Für die andere Spielseite wird die Karte in dieselbe kanonische Sicht gespiegelt.
+
+| Ursprüngliche Gruppe | Netze | Spiele je Netz | Gegner nach den ersten 25 % gegen default |
+|---|---:|---:|---|
+| A | 6 | 3.000 | abwechselnd default und Solution_92 |
+| B | 6 | 4.000 | 70 % Solution_92, Rest default |
+| C | 6 | 4.000 | 60 % Solution_92, 20 % alte eigene Agenten, Rest default; zusätzliche Strafe für Gegnerpunkte |
+
+Die 18 nachtrainierten Kopien lernten je 1.500 + 2.000 + 2.000 Spiele unter V10-Regeln. Gegner waren Solution_92 und zwei Varianten, eigene frühere Abgaben, default und ein Rush-Bot.
+
+**Verfahren:** Double DQN, Huber-Loss, Replay Buffer mit 300.000 Übergängen, Batch 256, Lernrate 0,0003, γ = 0,99; Target-Kopie alle 500 Lernupdates. Ein Spiel umfasst viele Umgebungsschritte; ein Schritt erzeugt Erfahrungen mehrerer Einheiten. Spiele, Übergänge und Lernupdates deshalb auseinanderhalten.
+
+## Reservefolie 11 – Prüfverfahren
+### Mahmoud · nur bei Rückfragen
+
+- Auf Entwicklungskarten werden Ideen verglichen. Die Auswahl nutzt neue Karten; für die Bestätigung folgt ein weiterer vorher zurückgehaltener Block. Umfang und Hürden werden vor den Ergebnissen festgelegt.
+- Beide Spielseiten derselben Karte werden gemeinsam ausgewertet. Der gepaarte Bootstrap zieht ganze Karten, keine vermeintlich unabhängigen Einzelspiele.
+- **V14 wurde ausdrücklich per Teamentscheidung übernommen, obwohl zwei Hürden verfehlt waren:** Panelgewinn +0,86 statt mindestens +1 Prozentpunkt; im Direktduell lag die untere Intervallgrenze bei 49,25 % statt über 50 %.
+- Der Panelgewinn hatte ein Intervall von +0,48 bis +1,28 Prozentpunkten; alle sechs Gegner lagen im gemessenen Ergebnis im Plus. Das erklärt die Entscheidung, ersetzt aber keine bestandene automatische Prüfung.
+
+## Reservefolie 12 – Spielregeln, die wir nutzen
+### Moayed oder Mahmoud · nur bei Rückfragen
+
+- Sap erreicht Ziele im ganzen Quadrat innerhalb der Reichweite und trifft mit geringerem oder gleichem Schaden auch die acht Nachbarfelder. Der zunächst verdeckte Streufaktor kann 0,25, 0,5 oder 1 sein.
+- Bei Kollisionen zählt die Gesamtenergie beider Teams auf dem Feld; bei Gleichstand sterben beide. Benachbarte Gegner können zusätzlich Energie abziehen.
+- Asteroiden und Nebel driften. Relics können in späteren Matches dazukommen, daher bleibt Erkundung wichtig.
+- Punktefelder liegen im 5×5-Bereich um Relics. Die Grundwahrscheinlichkeit pro Feld beträgt 20 %. Bei überlappenden Relic-Bereichen wurde auf unseren Karten eine höhere Häufigkeit gemessen.
+- Muster in der Relic-Lage und Häufigkeiten sind aus Kartenstatistiken abgeleitet; sie sind kein sicheres Wissen über eine einzelne Karte.
 
 ---
 
 ## Bei Fragen
 
-**„Ist das noch Reinforcement Learning, wenn Regeln eingreifen?“**
-Ja. Die Netze wurden aus Erfahrungen und Belohnungen trainiert und bewerten die Aktionen. In der historischen V12-Diagnose mit zehn Spielen entsprach die finale Aktion in 91,2 % der Fälle der maskierten Netzauswahl, ohne protokollierten Regeleingriff. Regeln änderten 8,3 % der Aktionen. Die beiden Diagnosegrößen ergänzen sich nicht exakt zu 100 %. Vorher wirken bereits programmierte Ziele, Merkmale und Maske. Die Zahlen beschreiben diese Diagnose, nicht jeden V14-Einsatz. Der alte Vergleich 3 % gegen 38 % betraf genau einen einfachen Regelersatz; er bewertet nicht regelbasierte Agenten allgemein.
+**„Wer legt das Ziel fest – das Netz oder die Regeln?“**
+Die programmierte Zielzuweisung. Sie priorisiert grundsätzlich Punktefelder, Kandidaten und Erkundung und berücksichtigt unter anderem begehbare Weglängen. Das Netz bekommt Richtung und Abstand dieses Ziels als Merkmale. Die spätere Wegkorrektur benutzt dasselbe zugewiesene Ziel; sie erfindet kein neues. Je nach Zielart und Situation können mehrere Einheiten dasselbe Ziel erhalten.
 
-**„Warum nicht PPO?“**
-Wir haben einen CNN-/PPO-Ansatz mit Nachahmung des Ensembles ausprobiert. Im damaligen Vergleich erreichte er 73,0 % gegen 73,25 % und belegte keinen Vorteil. Deshalb wurde dieser Kandidat nicht übernommen. Daraus folgt keine allgemeine Aussage gegen PPO.
+**„Was genau sind die 79 Merkmale?“**
+10 eigene Lage/Spielparameter + 4 Punktestand + 20 Zielmerkmale + 5 aktuelles Feld + 30 Umgebung + 6 Gegner + 4 globale Zähler. Die fünf Zielarten sind nächstes Punktefeld, Kandidatenfeld, Relic, unbekanntes Feld und zugewiesenes Ziel. Jede liefert dx, dy, direkten Gitterabstand und ein Vorhandensein-Signal. Weglängen helfen bei der Zielzuweisung; der Zielabstand im Merkmalsvektor ist der Manhattan-Abstand.
 
-**„Was sind die 79 Merkmale?“**
-Eigene Lage und Spielparameter (10), Punktestand (4), Richtung und Abstand zu den nächsten Zielen (20), das aktuelle Feld (5), die vier Nachbarfelder und das eigene (30), der nächste Gegner (6), globale Zähler (4).
+**„Warum sind die Netze verschieden, wenn sie dieselbe Bauart haben?“**
+Die Bauart legt Rechenschritte und Größen fest. Die Gewichte sind die im Training angepassten Zahlen. Andere Zufallsstarts, Karten, Gegner und teilweise Rewards erzeugen andere gelernte Gewichte und Bewertungen. Gleiche Architektur bedeutet deshalb nicht dieselbe Funktion.
+
+**„Sind die nachtrainierten Kopien nur identische Duplikate?“**
+Sie beginnen jeweils mit den Gewichten eines Originals und lernen dann weiter. Original und nachtrainierter Stand bleiben beide im Ensemble. Es sind verwandte Paare mit unterschiedlichen Trainingsständen, keine 36 unabhängigen Starts. 36 identische Kopien würden nach dem Mitteln genau dieselben Q-Werte wie ein einziges Netz liefern.
+
+**„Was ist der Vorteil des Ensembles?“**
+Wenn einzelne Netze unterschiedlich falsch liegen, kann das Mitteln diese Fehler dämpfen. Gemeinsame Fehler bleiben bestehen; viele Netze sind deshalb keine Garantie. Außerdem kostet das Ensemble mehr Rechenzeit als ein einzelnes Netz. Der Nutzen hängt von den konkreten trainierten Mitgliedern ab.
+
+**„Hat jedes Netz eine feste Rolle?“**
+Nein. Es gibt kein eigenes Netz nur für Angriff, Erkundung, eine Einheit, ein Match oder eine Spielseite. Alle 36 bewerten dieselben sechs Aktionen für jede Einheit. Die Einheit bekommt ihre eigene Situation als Eingabe, und die Bewertungen werden pro Aktion gemittelt.
 
 **„Warum Mittelwert und keine Mehrheitswahl?“**
-Der Mittelwert berücksichtigt, wie hoch jedes Netz eine Aktion bewertet. Die Mehrheitswahl zählt nur die bevorzugten Aktionen. Q-Werte sind geschätzte Aktionswerte, keine Wahrscheinlichkeiten oder Sicherheitsangaben. Netze mit größeren Wertunterschieden können den Mittelwert stärker beeinflussen.
+Der Mittelwert berücksichtigt die Höhe der Bewertungen. Eine Mehrheitswahl zählt nur, welche Aktion jedes Netz bevorzugt. Netze mit größeren Wertunterschieden können das Mittel stärker beeinflussen. Q-Werte sind geschätzte zukünftige Rewards, keine Sicherheit oder Wahrscheinlichkeit.
+
+**„Ist jede Annäherung positiv und jedes besetzte Punktefeld belohnt?“**
+Das Ziel-Shaping nutzt die diskontierte Potentialänderung γΦ(s′) − Φ(s), nicht nur „näher ist gut“. Außerdem werden Ziele neu zugewiesen und terminale Zustände gesondert behandelt. Beim Punktefeld erhält der ausgewählte Halter den positiven Anteil; zusätzliche gestapelte Einheiten können einen Abzug bekommen. Die Folie zeigt einzelne Reward-Anteile, nicht die gesamte Belohnung eines Schritts.
+
+**„Was lernt Sherlock während des Battles?“**
+Die Netzgewichte bleiben fest. Das Gedächtnis aktualisiert Karten- und Punktewissen und schätzt verdeckte Spielparameter aus Beobachtungen. Das ist Anpassung des Wissens, kein weiteres Training der Netze.
+
+**„Ist das noch Reinforcement Learning, wenn Regeln eingreifen?“**
+Ja. Die Aktionsbewertungen sind aus Erfahrungen und Rewards gelernt. Die Gesamtlösung ist ein hybrider Agent: Ziele, Merkmale, Maske und Korrekturen sind programmiert. Der Beitrag eines Netzes lässt sich deshalb nicht allein daran ablesen, wie oft eine spätere Regel die Aktion ändert.
 
 **„Wie kann Sherlock schießen, wenn die Maske Sap gesperrt hat?“**
-Die vorbereitete Maske gilt für die Netzauswahl. Dort wird ein geeignetes sichtbares Sap-Ziel benötigt. Danach können Regeln einen eigenen Schuss auslösen, etwa auf ein verdecktes Punktefeld. Dieser Pfad prüft seine eigenen Bedingungen wie Reichweite und Energiereserve. Die Spielregeln gelten weiterhin. Sichtbare Ziele werden anhand von Gegnerenergie und Streuwirkung bewertet; verdeckte Ziele nutzen einen eigenen Regelpfad.
+Die vorbereitete Maske gilt für die Netzauswahl; dort wird ein geeignetes sichtbares Schussziel benötigt. Danach kann eine Regel einen eigenen Schuss auslösen, etwa auf ein verdecktes Punktefeld. Dieser Pfad prüft seine eigenen Bedingungen, einschließlich Reichweite und Energiereserve. Die Spielregeln gelten weiterhin.
+
+**„Weiß Sherlock dadurch genau, wo ein unsichtbarer Gegner steht?“**
+Nein. Bekannte Punktefelder und nicht durch sichtbare Gegner erklärter Punktezuwachs deuten auf verdeckte Besetzungen hin. Sie verraten nicht eindeutig, welche einzelnen Felder besetzt sind. Der Blindschuss ist eine regelbasierte Entscheidung unter dieser Unsicherheit.
 
 **„Nimmt Sherlock beim Overkill-Schutz die zweitbeste Aktion?“**
-Nein. Ist ein geplanter Sap nach der Schadensteilung überflüssig, wird er zu STAY, also Stehen. Das ist eine spätere Regelkorrektur, keine erneute Rangwahl der Netze.
+Nein. Wenn der bereits geplante Schaden einen weiteren Schuss überflüssig macht, wird SAP zu STAY. Die Netze wählen dafür nicht erneut.
 
 **„Wie schätzt Sherlock den Streuschaden?“**
-Ein Sap kann auch Einheiten auf den acht Nachbarfeldern treffen. Der Streufaktor ist zunächst unbekannt. Sherlock vergleicht beobachtete Energieverluste eigener Einheiten mit den möglichen Werten. Bestimmte Schussregeln werden erst aktiv, wenn die Schätzung ausreichend eindeutig ist.
+Es vergleicht beobachtete Energieverluste eigener Einheiten mit den möglichen Streufaktoren. Bestimmte Schussregeln werden erst aktiv, wenn die Schätzung ausreichend eindeutig ist. Sichtbare Schussziele werden auch anhand von Gegnerenergie und Streuwirkung bewertet.
 
-**„Koordinieren sich die Einheiten?“**
-Ja, über programmierte Zielzuweisung und geteilten geplanten Schussschaden. Bei der Zielwahl zählt unter anderem die Weglänge. Nicht jedes Ziel ist exklusiv: Je nach Zielart und Situation können mehrere Einheiten dasselbe Ziel erhalten. Der Overkill-Schutz verhindert bestimmte überflüssige Mehrfachschüsse.
-
-**„Warum stehen so viele Einheiten still?“**
-Punkte entstehen durch die Besetzung eines Punktefeldes. Stehen erhält diese Position; Sap ebenfalls, deshalb kann eine Einheit halten und schießen. Eine Bewegung auf ein anderes Punktefeld kann auch punkten. Man muss also nicht grundsätzlich die Aktion STAY wählen. In der historischen V12-Diagnose war etwa die Hälfte der Aktionen STAY.
+**„Warum stehen Einheiten auf Punktefeldern still?“**
+Punkte entstehen durch Besetzung. STAY erhält die Position; SAP ebenfalls, deshalb kann eine Einheit halten und schießen. Eine Bewegung auf ein anderes Punktefeld kann auch punkten. STAY ist also nicht grundsätzlich zum Punkten vorgeschrieben.
 
 **„Bleibt das Gedächtnis immer erhalten?“**
-Relic- und Punktewissen bleibt innerhalb eines Spiels über die drei Matches erhalten. Erkundungs- und Sichtzeitstempel werden beim Matchwechsel zurückgesetzt. Ein neues Spiel beginnt mit neuem Gedächtnis. Die trainierten Gewichte bleiben beim Battle fest.
+Relic- und Punktewissen bleibt innerhalb eines Spiels über die drei Matches erhalten. Erkundungs- und Sichtzeitstempel werden beim Matchwechsel zurückgesetzt. Ein neues Spiel beginnt mit neuem Gedächtnis.
 
-**„Woher wisst ihr, dass 95 % stimmt?“**
-Die historische V14-Bestätigung nutzte 800 neue Karten auf beiden Seiten, also 1.600 Spiele gegen Solution_92: V14 95,44 %, V13 auf denselben Karten 94,94 %. Die Unsicherheit wurde mit gepaartem Bootstrap über ganze Karten berechnet. Die späteren 40/40 in einer kleinen separaten Diagnose ersetzen diesen Nachweis nicht und bedeuten keine garantierten 100 %. Details stehen auf Reservefolie 14.
+**„Woher kommt die Zahl 95,4 Prozent?“**
+Aus der historischen V14-Bestätigung: 800 neue Karten auf beiden Seiten, also 1.600 Spiele gegen Solution_92, mit 95,44 % Siegen. Die Unsicherheit wurde über ganze Karten berechnet. Kleine spätere Diagnosen mit einzelnen 100-%-Ergebnissen ersetzen diesen Nachweis nicht.
 
 **„Warum habt ihr V14 trotz verfehlter Hürden übernommen?“**
-V14 verfehlte **zwei** Hürden: Im Mittel über sechs Gegner +0,86 statt mindestens +1 Prozentpunkt; im Direktduell lag die untere Intervallgrenze bei 49,25 % statt über 50 %. Der Panelgewinn hatte ein Intervall von +0,48 bis +1,28 Prozentpunkten, alle sechs Gegner lagen im gemessenen Ergebnis im Plus. Das Team entschied sich deshalb ausdrücklich für die Übernahme und dokumentierte die Ausnahme. Die Hürden wurden nicht geändert; die automatische Prüfung war nicht bestanden. Details stehen auf Reservefolie 14.
+Das war eine dokumentierte Teamentscheidung. Der Panelgewinn von +0,86 Prozentpunkten lag unter der Mindesthürde von +1; im Direktduell lag die untere Intervallgrenze mit 49,25 % unter der verlangten Grenze von über 50 %. Das Panelintervall war positiv, und alle sechs Gegner lagen im gemessenen Ergebnis im Plus. Die Hürden wurden nicht nachträglich geändert.
+
+**„Warum nicht mehr Netze, ein Einzelnetz oder PPO?“**
+Solche Varianten wurden geprüft; keine belegte einen ausreichenden Gesamtvorteil als Ersatz für die Abgabe. Das gilt für unsere untersuchten Kandidaten und beweist keine allgemeine Grenze einer Methode. Deshalb präsentieren wir den tatsächlich abgegebenen Agenten.
 
 **„Was ist der Orakel-Test?“**
-Eine reine Diagnose mit Zusatzwissen, das im echten Spiel nicht verfügbar ist: Sherlock erhält die wahren Relic- und Punktefelder. Im damaligen Test stieg das Mittel über sechs Gegner von 86,5 auf 91 %, bei Sichtweite 1 gegen Solution_92 von 85 auf 96,5 %. Das macht Information zu einem möglichen Verbesserungsansatz. Es ist kein einsetzbarer Agent und keine garantierte erreichbare Siegquote. Details stehen auf Reservefolie 17.
-
-**„Warum trainiert ihr nicht einfach weiter oder nehmt mehr Netze?“**
-Das haben wir in mehreren abgeschlossenen Studien geprüft. Vom 02.–04.11. gehörten kleinere Ensembles, ein 42-Netz-Ensemble, neu trainierte Einzelnetz-Schüler und weiteres Nachtraining dazu, zuletzt auch mit Lehrerbeispielen. Einzelne Ansätze verbesserten ihre jeweilige Kontrolle, aber kein Kandidat belegte einen ausreichenden Gesamtvorteil für einen V14-Ersatz. Die neu trainierten Netze bleiben experimentell. Das beweist weder, dass die Netze ausgereizt sind, noch dass mehr Training grundsätzlich nichts bringt.
-
-**„Was ist ein Einzelnetz-Schüler?“**
-Ein neu trainiertes einzelnes Netz lernt aus Beispielen des Ensembles. Der spätere Aktionsschüler A2 war deutlich besser als sein Ausgangsnetz S30. Auf einer kleinen frischen Diagnose erreichten A2 und V14 gegen Solution jeweils 38/40. Gegen das gesamte Gegnerfeld und im Direktvergleich belegte A2 aber keinen ausreichenden Vorteil. Gleich viele Siege in einem Teilvergleich reichen für den Abgabewechsel nicht.
-
-**„Was war mit der Regel, die auf euren Karten +1,8 brachte?“**
-Sie priorisierte wahrscheinliche Punktefelder. Auf 300 bekannten Entwicklungskarten wurde die beste von vier Varianten ausgewählt: dort +1,81 Prozentpunkte. Auf 800 neuen Karten lag sie bei −0,35 und wurde nicht übernommen. Die Auswahl auf bekannten Karten kann den dortigen Eindruck zu günstig machen; deshalb braucht es neue Karten.
-
-**„Die Regel für 50 % Streuschaden lag knapp unter der Hürde. Warum ist sie in V12 drin?“**
-Allein verfehlte sie die Hürde mit +0,95 statt +1,0 Prozentpunkten. Vor der nächsten Messung wurde V12 als Kombination aus dieser Regel und der Regel für verdeckte Schüsse festgelegt. Diese Kombination bestand die neue Prüfung mit +5,9 Prozentpunkten. Das gemeinsame Ergebnis trennt die Beiträge der beiden Änderungen nicht exakt.
-
-**„Woher weiß Sherlock, wo unsichtbare Gegner stehen?“**
-Es kennt einige Punktefelder und sieht den gegnerischen Punktezuwachs. Nicht durch sichtbare Einheiten erklärte Punkte sprechen für verdeckte Besetzungen. Daraus folgt nicht eindeutig, welche einzelnen Felder belegt sind. Sherlock prüft passende verdeckte Punktefelder in Reichweite und schießt unter eigenen Bedingungen, unter anderem ohne eigene Einheit auf dem Ziel und mit genügend Energiereserve.
-
-**„Was war der Fehler in der Nebel-Regel?“**
-Das Gedächtnis übernimmt Kartenwissen auch gespiegelt. Dadurch galten gegnerische Punktefelder als gesehen und leer, obwohl sie der Sensor gerade nicht zeigte. Die Regel für verdeckte Schüsse nutzt deshalb die tatsächliche aktuelle Sicht. Separat korrigierte V13 die Nebelabzugsschätzung bei Energie null und prüft die Energie für eine ganze Nebeldurchquerung.
-
-**„Was ist ein Halter?“**
-Eine eigene Einheit, die ein Punktefeld besetzt und hält.
+Eine Diagnose mit wahren Relic- und Punktefeldern als Zusatzwissen, das im echten Spiel nicht verfügbar ist. Sie untersucht mögliche Informationsengpässe. Das Ergebnis ist weder ein einsetzbarer Agent noch eine garantierte erreichbare Siegquote.
 
 ---
 
 ## Moodle-Pfade – archivierte Referenz
 
-Die Abgabe ist laut Moayeds Mitteilung bereits erfolgt. Diese Angaben sind nur die dokumentierte Referenz, keine erneute Upload- oder Bauanweisung.
+Die Abgabe ist laut Moayeds Mitteilung bereits erfolgt. Diese Angaben sind die dokumentierte Referenz, keine erneute Upload- oder Bauanweisung.
 
 ```text
 Gruppe 15 – Agent Sherlock (Mahmoud El-Hassan, Moayed Shawesh)
@@ -239,16 +237,13 @@ Zeile für Paths.csv: 15;Gruppe15.main.Agent_x;Gruppe15/agent.pth;Gruppe15/agent
 Bitte mit train=False starten. Der Ordner Gruppe15 kann unter agents/ oder in der Projektwurzel liegen.
 ```
 
----
-
 ## Belege
 
-- Ablauf, Maske, Regeln und Gedächtnis: [Präsentationsreview](docs/presentation/PRUEFUNG_BATTLE_0611_20261104.md), [quellengestützter Ablauf](experiments/analysis/final_battle_20261103/preflight/decision_flow_sources.md), `agents/sherlock/main.py`, `belief.py`, `model.py`. Die [ältere Ablaufbeschreibung](Sherlock_Entscheidungsprozess.md) enthält historische Formulierungen; bei Abweichungen gelten der aktuelle Code und der Review.
-- Historische Anteile auf Folie 9: [V12-Diagnose](experiments/analysis/decision_trace_20261031_v12.json), zehn Spiele auf fünf Karten, 36.204 Entscheidungen; kein Leistungsnachweis. Beispiele auf Folien 6/7 aus [V11-Diagnose](experiments/analysis/decision_trace_20261030_v11.json), dieselben 36 Netze. Alter Regelersatz 3 % gegen 38 %: [Arbeitsstand](docs/ARBEITSSTAND.md), 19.10.
-- Trainingsherkunft: [V11-Übernahmebericht](experiments/analysis/release_20261030_v11/RELEASE.md) und Netzherkunft in [Entscheidungsprozess](Sherlock_Entscheidungsprozess.md). 66.000 + 99.000 bezeichnet die Herkunftsbudgets, nicht alle Projektversuche.
-- Fortschritt auf Folie 10: Übernahmeberichte [V7](experiments/analysis/release_20261022_v7/RELEASE.md), [V10](experiments/analysis/release_20261022_v10/RELEASE.md), [V11](experiments/analysis/release_20261030_v11/RELEASE.md), [V12](experiments/analysis/release_20261031_v12/RELEASE.md), [V13](experiments/analysis/release_20261101_v13/RELEASE.md), [V14](experiments/analysis/release_20261101_v14/RELEASE.md). Diagramm: [PNG](docs/presentation/folie_0611_fortschritt.png), [Quelle](docs/presentation/source/fortschritt_0611.py). Jeweils eigene Testblöcke; keine isolierte Ursachenmessung durch die Balken.
-- V13: 300 Karten mit Nebelabzug 25 (816000–817792), `experiments/compare/battle/GN_*.csv`. V14: 800 Panelkarten 820000–820799 und getrennte Direktkarten 821000–821399, `GF_*.csv`; [Übernahmebericht einschließlich beider verfehlter Hürden und damaliger Laufzeitmessung](experiments/analysis/release_20261101_v14/RELEASE.md), [Teamentscheidungsmanifest](experiments/releases/20261101_v14_rescue.json).
-- Aktuelle Studien für Folie 12: [02.11.](docs/MORGENBERICHT_20261102.md), [03.11.](docs/MORGENBERICHT_20261103.md), [kleinere Ensembles und Nachtraining](docs/MORGENBERICHT_20261104.md), [Einzelnetz/42 Netze](docs/ABSCHLUSSBERICHT_20261104_NETZE.md), [Schüler-/Reward-Studie](docs/SCHUELERNETZ_REWARD_20261104.md), [Aktionsschüler](docs/AKTIONSSCHUELER_20261104.md), [Nachtraining mit Lehreranker](docs/A2_LEHRERANKER_20261104.md). Studien getrennt betrachten; keine ihrer experimentellen Varianten ersetzt V14.
-- Neue Karten und Reserve: `v19cr` auf bekannten Dev-A-Karten `D_v19cr*.csv` (+1,81 pp), frisch auf 822000–823399 `GG_*.csv` (−0,35 pp). Orakel-Test: `experiments/compare/battle/O_v18r_full.csv` gegen `D_v18r*.csv`; [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11.
-- Reservefolie 16: Relic-/Punktefeldzählung auf 10.000 bzw. 1.500 Karten; Arbeitsstand 01.11., 11:35 und 12:19; Tabellen `RELIC_P6` und `OVERLAP_POINT_P` in `agents/sherlock/features.py`.
-- Weitere historische Rückfragen: PPO-Vergleich, Mischung ohne neue Regeln und 50-%-Streuschaden in [Arbeitsstand](docs/ARBEITSSTAND.md) und `experiments/pipeline_battle_gate.log`. Ladefehler und damaliger Abgabetest: Arbeitsstand 29.10. Aktueller Abgabestatus nach Teammitteilung: jüngster Arbeitsstand 04.11.
+- Für diese Kürzung geprüfte [36 Netzgewichte und Herkunftsketten](docs/presentation/source/ENSEMBLE_BATTLE_0611_20261104.json); alle sind verschieden, die 18 Nachtrainingspartner sind mit ihren Originalen verwandt.
+
+- Ablauf, Ziele, Merkmale, Maske und Regeln: [Präsentationsreview](docs/presentation/PRUEFUNG_BATTLE_0611_20261104.md), [quellengestützter Ablauf](experiments/analysis/final_battle_20261103/preflight/decision_flow_sources.md), [Agent](agents/sherlock/main.py), [Merkmale und Zielzuweisung](agents/sherlock/features.py), [Gedächtnis](agents/sherlock/belief.py), [Netzarchitektur](agents/sherlock/model.py) und [Konfiguration](agents/sherlock/config.py). Die [ältere Ablaufbeschreibung](Sherlock_Entscheidungsprozess.md) enthält historische Formulierungen; bei Abweichungen gelten der aktuelle Code und der Review.
+- Reale Beispiele auf Folien **5 und 7**: [V11-Diagnose](experiments/analysis/decision_trace_20261030_v11.json), dieselben 36 Netze. Beide Beispiele betreffen Karte 690000, Schritt 114: Maske bei Einheit 0, Ensemble bei Einheit 2. Die Q-Werte sind gerundet.
+- Trainingsherkunft für Folien **5, 6 und 10**: [V11-Übernahmebericht](experiments/analysis/release_20261030_v11/RELEASE.md), [Netzherkunft](Sherlock_Entscheidungsprozess.md#9-wie-die-18-netze-trainiert-wurden). 66.000 + 99.000 bezeichnet die Herkunftsbudgets dieser Familien, nicht alle Projektversuche.
+- Historisches Ergebnis auf Folie **9** und Ausnahme auf Reservefolie **11**: [V14-Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md), [Teamentscheidungsmanifest](experiments/releases/20261101_v14_rescue.json). 800 Panelkarten 820000–820799; getrennte Direktkarten 821000–821399; Rohdaten `experiments/compare/battle/GF_*.csv`.
+- Reservefolie **12**: [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11., 11:35 und 12:19, Relic-/Punktefeldzählung auf 10.000 beziehungsweise 1.500 Karten; Tabellen `RELIC_P6` und `OVERLAP_POINT_P` in [features.py](agents/sherlock/features.py).
+- FAQ zu weiteren Kandidaten: [Einzelnetz/42 Netze](docs/ABSCHLUSSBERICHT_20261104_NETZE.md), [Aktionsschüler](docs/AKTIONSSCHUELER_20261104.md), [Nachtraining mit Lehreranker](docs/A2_LEHRERANKER_20261104.md); weitere historische Befunde im [Arbeitsstand](docs/ARBEITSSTAND.md). Orakel-Diagnose: `experiments/compare/battle/O_v18r_full.csv` gegen `D_v18r*.csv`. Keine der dort beschriebenen experimentellen Varianten ersetzt V14.

@@ -104,80 +104,32 @@
   .pill { display:inline-block; font-size:12pt; font-weight:700; letter-spacing:0.02em; color:#0F7C7A;
           border:1.5px solid #0F7C7A; border-radius:999px; padding:0.03in 0.14in; margin-bottom:0.12in; }
   .pill.off { color:#56676C; border-color:#9AA7A9; }
+
+  .feature-table td { padding: 0.105in 0.14in; }
+  .focus-list li { margin-bottom: 0.18in; }
+  .rule-title { font-size: 19pt; font-weight: 700; margin: 0 0 0.14in; }
+  .rule-copy { font-size: 16pt; line-height: 1.32; }
+  .rule-result { font-size: 22pt; font-weight: 700; color: #0F7C7A; margin-top: 0.14in; }
+  .training-step { margin-bottom: 0.24in; font-size: 18pt; line-height: 1.35; }
+  .training-step b { color: #0F7C7A; }
 </style>
 </head>
 <body>
 
-<!-- 1 -->
 <section class="slide dark">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <div style="position:absolute; left:0.76in; top:1.95in; font-size:66pt; font-weight:700;">Sherlock</div>
-  <div style="position:absolute; left:0.8in; top:3.15in; font-size:30pt; color:#A8D5C8;">Wie unser Agent entscheidet und wie wir ihn trainiert haben</div>
-  <div style="position:absolute; left:0.8in; top:4.25in; font-size:22pt; line-height:1.4;">36 gelernte Netze, Gedächtnis und Regeln.<br>95,4 % Siege gegen Solution_92 in 1.600 Testspielen</div>
-  <div style="position:absolute; left:0.8in; top:5.65in; font-size:18pt; color:#A8D5C8; line-height:1.45;">
-    Mahmoud El-Hassan · Moayed Shawesh<br>HTW Berlin · Anwendungen der KI · 06.11.2026
-  </div>
+  <h1 class="title" style="color:#fff; font-size:60pt; top:1.05in;">Sherlock</h1>
+
+  <div style="position:absolute; left:0.8in; top:2.5in; font-size:32pt; color:#A8D5C8;">Gedächtnis · 36 Netze · koordinierte Aktionen</div>
+  <div style="position:absolute; left:0.8in; top:3.55in; font-size:23pt; line-height:1.5;">Wie aus einer Beobachtung<br>eine Aktion für jede Einheit wird</div>
+  <div style="position:absolute; left:0.8in; top:5.6in; font-size:18pt; color:#A8D5C8; line-height:1.45;">Mahmoud El-Hassan · Moayed Shawesh<br>HTW Berlin · Anwendungen der KI · 06.11.2026</div>
+
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">01</div>
 </section>
 
-<!-- 2 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Agenda</h1>
-  <div class="content" style="top:2.05in;">
-    <table style="font-size:22pt; border-collapse:collapse; margin-left:0.4in;">
-      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">1.</td><td style="padding-bottom:0.2in;">Was Sherlock bekommt und zurückgibt</td></tr>
-      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">2.</td><td style="padding-bottom:0.2in;">Ein Spielschritt: Gedächtnis, Netze, Maske, Regeln</td></tr>
-      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">3.</td><td style="padding-bottom:0.2in;">Training der Netze</td></tr>
-      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">4.</td><td style="padding-bottom:0.2in;">Von 47 % auf 95 %</td></tr>
-      <tr><td class="teal strong" style="padding:0 0.55in 0.2in 0;">5.</td><td style="padding-bottom:0.2in;">Neu seit letzter Woche</td></tr>
-      <tr><td class="teal strong" style="padding:0 0.55in 0in 0;">6.</td><td style="padding-bottom:0in;">Erkenntnisse und Battle</td></tr>
-    </table>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">02</div>
-</section>
-
-<!-- 3 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Was Sherlock bekommt und zurückgibt</h1>
-  <div class="content" style="top:1.8in;">
-    <div class="cols" style="gap:0.35in; height:auto; align-items:stretch;">
-      <div class="box" style="flex:1.2;">
-        <div class="boxtitle">Eingang in jedem Schritt</div>
-        <ul class="dash tight" style="font-size:15.5pt; line-height:1.2;">
-          <li>Sichtbare Einheiten beider Teams: Position, Energie</li>
-          <li>Sichtbare Felder: Energie, Nebel, Asteroid</li>
-          <li>Sichtbare Relics</li>
-          <li>Punkte im Match, gewonnene Matches, Schrittzähler</li>
-          <li class="strong" style="margin-bottom:0;">Unsichtbar: welche Felder Punkte bringen</li>
-        </ul>
-      </div>
-      <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
-      <div style="flex:0.5; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div style="font-size:30pt; font-weight:700;">Sherlock</div>
-        <div class="grey" style="font-size:14pt; margin-top:0.08in; text-align:center;">im damaligen Test:<br>meist 5 ms, maximal 12 ms</div>
-      </div>
-      <div style="flex:none; width:0.5in; display:flex; align-items:center; justify-content:center; font-size:30pt; color:#9AA7A9;">→</div>
-      <div class="box" style="flex:1.2;">
-        <div class="boxtitle">Ausgang</div>
-        <div style="font-size:16pt; line-height:1.35;">16 × 3 Zahlen, je Einheit <b>[Aktion, dx, dy]</b></div>
-        <table class="res" style="font-size:15pt; margin-top:0.14in;">
-          <tr><td style="width:0.9in;" class="teal strong">0</td><td>stehen</td></tr>
-          <tr><td class="teal strong">1–4</td><td>hoch, rechts, runter, links</td></tr>
-          <tr><td class="teal strong" style="border-bottom:none;">5</td><td style="border-bottom:none;">Sap (Schuss) auf Feld (dx, dy)</td></tr>
-        </table>
-      </div>
-    </div>
-    <div class="note below">Einmal pro Spiel kommen Zugkosten, Sap-Kosten, Sap-Reichweite und Sichtweite dazu. Verdeckte Werte wie den Energieabzug im Nebel oder den Streuschaden beim Sap schätzt Sherlock aus den Energieverläufen der eigenen Einheiten.</div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">03</div>
-</section>
-
-<!-- 4 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Ein Spielschritt: wer macht was?</h1>
+  <h1 class="title">Entscheidungsablauf</h1>
   <div class="content" style="top:1.85in;">
     <div class="flow">
       <div class="fbox"><div class="n">1</div><h3>Gedächtnis</h3>
@@ -189,7 +141,7 @@
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
       <div class="fbox"><div class="n">3</div><h3>Vorbereitung</h3>
-        <p>79 Merkmale, Aktionsmaske und sichtbares Schussziel berechnen</p>
+        <p>79 Zahlen je Einheit, Maske und sichtbares Schussziel vorbereiten</p>
         <div class="who">PROGRAMMIERT</div></div>
       <div class="arrow">→</div>
       <div class="fbox learned"><div class="n">4</div><h3>36 Netze</h3>
@@ -205,40 +157,128 @@
         <div class="who">PROGRAMMIERT</div></div>
     </div>
     <div style="margin-top:0.5in;">
-      <div class="mid"><b>→ 16 × 3 Zahlen ans Spiel.</b> Die Netze bewerten, die Maske begrenzt die Auswahl. <b class="teal">Regeln können danach eingreifen.</b> Schussziele werden programmiert bestimmt: sichtbare Ziele nach Gegnerenergie und Streuwirkung, verdeckte über eine eigene Regel.</div>
+      <div class="mid"><b>Eingang:</b> sichtbare Einheiten, Karte und Punktestand. <b>Ausgang:</b> bis zu 16 × [Aktion, dx, dy].<br>Die Maske begrenzt die Netzauswahl. <b class="teal">Regeln können die gewählte Aktion danach ändern.</b></div>
     </div>
   </div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">02</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
+  <h1 class="title">Gedächtnis und Ziele</h1>
+
+  <div class="content" style="top:1.8in;">
+    <div class="cols" style="height:auto; align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="boxtitle">Punktefelder erschließen</div>
+        <table class="res" style="font-size:18pt;">
+          <tr><td>Punktezuwachs</td><td class="v">3</td></tr>
+          <tr><td>Besetzte Felder</td><td class="v">4</td></tr>
+          <tr><td>Davon als Punktefeld bekannt</td><td class="v">2</td></tr>
+        </table>
+        <p class="lead" style="margin:0.23in 0;">Also bringt <b class="teal">genau eines der zwei übrigen Felder</b> einen Punkt.</p>
+        <div class="grey" style="font-size:16pt; line-height:1.35;">Sherlock sammelt solche Gleichungen, nutzt die Spiegelsymmetrie und führt die bewegliche Karte mit.</div>
+      </div>
+      <div class="box" style="flex:1;">
+        <div class="boxtitle">Ziele werden programmiert zugewiesen</div>
+        <div class="step" style="margin-bottom:0.17in;"><div class="num" style="width:0.55in;">1</div><div><h3>Punkte besetzen</h3><p>Bekannte, geeignete Punktefelder</p></div></div>
+        <div class="step" style="margin-bottom:0.17in;"><div class="num" style="width:0.55in;">2</div><div><h3>Kandidaten testen</h3><p>Mögliche Punktefelder um Relics</p></div></div>
+        <div class="step" style="margin-bottom:0;"><div class="num" style="width:0.55in;">3</div><div><h3>Weiter erkunden</h3><p>Unbekannte Bereiche absuchen</p></div></div>
+        <div style="font-size:15pt; margin-top:0.2in; line-height:1.3;"><b>Grundpriorität:</b> Weglänge und Erreichbarkeit zählen mit. Nahe eigene Kandidaten können vor fernen gegnerischen Punkten liegen.</div>
+      </div>
+    </div>
+    <div class="note below"><b>Das zugewiesene Ziel geht als Merkmal ins Netz.</b> Relic- und Punktewissen bleibt über drei Matches erhalten; Erkundung startet pro Match neu. Ein neues Spiel beginnt mit neuem Gedächtnis.</div>
+  </div>
+
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">03</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
+  <h1 class="title">Die 79 Merkmale</h1>
+
+  <div class="content" style="top:1.65in;">
+    <div class="lead" style="margin-bottom:0.2in;"><b>Ein Merkmal = eine Zahl.</b> Für jede Einheit entsteht in jedem Schritt ein neuer Vektor.</div>
+    <table class="res feature-table" style="font-size:16.5pt;">
+      <tr class="head"><td style="width:3.5in;">Gruppe</td><td style="width:0.8in; text-align:right;">Anzahl</td><td>Beispiele</td></tr>
+      <tr><td>Eigene Lage und Spielparameter</td><td class="v">10</td><td>Position, Energie, Zugkosten, Sichtweite</td></tr>
+      <tr><td>Punktestand</td><td class="v">4</td><td>Eigene Punkte, Punktedifferenz, Matchsiege</td></tr>
+      <tr><td class="strong teal">Ziele</td><td class="v">20</td><td><b>Richtung und Abstand zum zugewiesenen Ziel</b> und zu vier Zielarten</td></tr>
+      <tr><td>Aktuelles Feld</td><td class="v">5</td><td>Punktefeld? Kandidat? Nebel? Eigene Einheiten?</td></tr>
+      <tr><td>Eigenes Feld und vier Nachbarn</td><td class="v">30</td><td>Begehbarkeit, Feldenergie, Punktewissen, Besetzung</td></tr>
+      <tr><td>Gegner</td><td class="v">6</td><td>Richtung, Abstand, Energie und sichtbare Gegnerzahl</td></tr>
+      <tr><td>Globale Zähler</td><td class="v">4</td><td>Eigene Einheiten, bekannte Punktefelder, erkundeter Anteil</td></tr>
+    </table>
+    <div class="note below"><b>Beispiel:</b> 200 von 400 Energie → Merkmal 0,5. Dieselben 79 Zahlen einer Einheit gehen an alle 36 Netze. Die Aktionsmaske ist separat; die Netzgewichte bleiben im Spiel fest.</div>
+  </div>
+
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">04</div>
 </section>
 
-<!-- 5 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Gedächtnis: Welche Felder bringen Punkte?</h1>
-  <div class="content" style="top:1.95in;">
-    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
-      <div class="box" style="flex:1;">
-        <div class="boxtitle">Beispiel für einen Schritt</div>
-        <table class="res" style="font-size:16.5pt;">
-          <tr><td>Punktezuwachs in diesem Schritt</td><td class="v">3</td></tr>
-          <tr><td>besetzte Felder</td><td class="v">4</td></tr>
-          <tr><td>davon schon bewiesene Punktefelder</td><td class="v">2</td></tr>
-          <tr><td style="border-bottom:none;"><b>Also:</b> von den 2 übrigen Feldern bringt genau 1 einen Punkt</td><td class="v" style="border-bottom:none;"></td></tr>
-        </table>
+  <h1 class="title">Das Ensemble</h1>
+
+  <div class="content" style="top:1.7in;">
+    <div class="cols" style="height:auto; align-items:flex-start;">
+      <div style="flex:1.05;">
+        <div class="boxtitle">Gleiche Bauart, unterschiedliche Gewichte</div>
+        <ul class="dash focus-list" style="font-size:17pt; line-height:1.3;">
+          <li><b>79 → 256 → 256 → 6 Q-Werte</b><br>Dueling-DQN, rund 153.000 Parameter je Netz</li>
+          <li><b>18 Grundnetze:</b> unterschiedliche Zufallsstarts, Trainingskarten, Gegner- und Reward-Konfigurationen</li>
+          <li><b>18 Nachtrainingspartner:</b> aus diesen Netzen, jeweils 5.500 zusätzliche Spiele</li>
+          <li><b>36 verschiedene Gewichtsstände.</b> Alle bewerten jede Einheit; es gibt keine feste Rollenverteilung.</li>
+        </ul>
       </div>
-      <ul class="dash" style="flex:1; font-size:16.5pt; line-height:1.3;">
-        <li>Solche Gleichungen werden gesammelt, bis sie eindeutig sind</li>
-        <li>Die Karte ist spiegelsymmetrisch: ein bewiesenes Feld gilt auch für sein Spiegelfeld</li>
-        <li>Asteroiden und Nebel wandern: das Gedächtnis erkennt die Drift und verschiebt die Karte mit</li>
-        <li>Relic- und Punktewissen bleibt über 3 Matches erhalten; Erkundung startet pro Match neu</li>
-      </ul>
+      <div class="box" style="flex:0.95; padding-bottom:0.22in;">
+        <div class="boxtitle">Reales Beispiel: Mittelwert statt Abstimmung</div>
+        <table class="res" style="font-size:17pt;">
+          <tr class="head"><td>Aktion</td><td style="text-align:right;">Erste Wahl</td><td style="text-align:right;">Q-Mittel</td></tr>
+          <tr><td>Stehen</td><td class="v" style="color:#56676C;">9 Netze</td><td class="v" style="color:#56676C;">26,561</td></tr>
+          <tr><td class="strong teal">Rechts ✓</td><td class="v">12 Netze</td><td class="v">26,990</td></tr>
+          <tr><td>Runter</td><td class="v" style="color:#56676C;">15 Netze</td><td class="v" style="color:#56676C;">26,948</td></tr>
+        </table>
+        <p style="font-size:17pt; line-height:1.35; margin-bottom:0;">„Runter“ hat die meisten Erstwahlen.<br><b class="teal">Im Q-Mittel gewinnt „rechts“.</b></p>
+        <p style="font-size:15pt; line-height:1.3; margin:0.1in 0 0;">Q-Werte schätzen künftigen Reward, keine Wahrscheinlichkeiten.</p>
+      </div>
     </div>
-    <div class="note below">Die Punktefelder sieht kein Agent direkt. Das Spiel zeigt nur, wie viele Punkte das Team im Schritt bekommen hat.</div>
+    <div class="note below" style="font-size:16pt;"><b>Nutzen:</b> Das Mittel kann einzelne Fehlbewertungen abschwächen. Gemeinsame Fehler bleiben möglich.<br><span style="font-size:12pt;">Nachtrainingspartner sind verwandt, keine 36 unabhängigen Neustarts. Beispiel aus V11 mit denselben Netzen.</span></div>
   </div>
+
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">05</div>
 </section>
 
-<!-- 6 -->
+<section class="slide">
+  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
+  <h1 class="title">Training und Reward</h1>
+
+  <div class="content" style="top:1.8in;">
+    <div class="cols" style="height:auto; align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="boxtitle">Lernen vor dem Battle</div>
+        <div class="training-step"><b>1 · Spielen und sammeln</b><br>Situation, Aktion, Reward und Folgesituation pro Einheit → Replay Buffer</div>
+        <div class="training-step"><b>2 · Bewertungen verbessern</b><br>Double DQN lernt aus zufälligen Mini-Batches; Target-Netz für das Lernziel</div>
+        <div class="training-step"><b>3 · Gewichte fixieren</b><br>18 Grundnetze + 18 nachtrainierte Stände bilden das Ensemble</div>
+      </div>
+      <div style="flex:1;">
+        <div class="boxtitle">Reward pro Einheit – Auszug</div>
+        <table class="res" style="font-size:17pt;">
+          <tr class="head"><td>Situation</td><td>Signal</td></tr>
+          <tr><td>Punktefeld als Halter sichern</td><td class="strong teal">positiv</td></tr>
+          <tr><td>Änderung der Zielnähe</td><td>Potential-Shaping¹</td></tr>
+          <tr><td>Neue Felder oder Punkte entdecken</td><td class="strong teal">positiv</td></tr>
+          <tr><td>Einheit verloren</td><td style="color:#B5552E;">negativ</td></tr>
+          <tr><td>Matchende</td><td>Bonus / Abzug</td></tr>
+        </table>
+        <p style="font-size:16pt; line-height:1.3; margin:0.18in 0 0;"><b>Battle: Gewichte fest, Gedächtnis veränderlich.</b></p>
+      </div>
+    </div>
+    <div class="note below">66.000 Grundtrainingsspiele + 99.000 Nachtrainingsspiele unter V10-Regeln; weitere Versuche separat.<br>Reward pro Schritt, Matchbonus erst am Ende. ¹ Signal aus diskontierter Veränderung des Zielpotentials: γΦ(s′) − Φ(s).</div>
+  </div>
+
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">06</div>
+</section>
+
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
   <h1 class="title">Action Masking</h1>
@@ -272,44 +312,65 @@
     </div>
     <div class="note below"><b>Danach kann eine Regel einen Blindschuss auslösen:</b> Sie prüft ein verdecktes Ziel, Reichweite und Energiereserve separat. Die Maske enthält Spielgrenzen und programmierte Sicherheitsregeln.</div>
   </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">06</div>
-</section>
-
-<!-- 7 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">36 Netze entscheiden gemeinsam</h1>
-  <div class="content" style="top:1.85in;">
-    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
-      <div style="flex:1;">
-        <ul class="dash" style="font-size:17pt; line-height:1.3;">
-          <li><b>Keine Aufteilung auf Spiele:</b> alle 36 Netze bewerten jede Einheit in jedem Schritt</li>
-          <li>Gleiche Bauart: 79 → 256 → 256 → 6 Q-Werte (Dueling-DQN, 153.000 Parameter je Netz)</li>
-          <li>Ein Netz für alle Einheiten und beide Seiten: die Karte wird für Spieler 2 gespiegelt</li>
-          <li>Q-Werte je Aktion mitteln → beste erlaubte Aktion</li>
-          <li><b>Warum 36?</b> 18 Netze vom 20.10. und dieselben 18 nachtrainiert. Gemischt besser als jede Hälfte allein.</li>
-        </ul>
-      </div>
-      <div class="box" style="flex:1;">
-        <div class="boxtitle">Echtes Beispiel: die 36 Netze sind uneinig</div>
-        <div class="votes v36">
-          <div class="vote win">→</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">●</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">●</div><div class="vote win">→</div><div class="vote win">→</div>
-          <div class="vote">●</div><div class="vote">↓</div><div class="vote">●</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote">●</div><div class="vote">↓</div><div class="vote">●</div><div class="vote">↓</div><div class="vote">↓</div><div class="vote win">→</div>
-          <div class="vote">↓</div><div class="vote win">→</div><div class="vote">●</div><div class="vote">●</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote win">→</div><div class="vote">↓</div><div class="vote">●</div><div class="vote win">→</div><div class="vote win">→</div><div class="vote">↓</div>
-        </div>
-        <div class="kv"><span>→ rechts <b>12</b></span><span>↓ runter <b>15</b></span><span>● stehen <b>9</b></span></div>
-        <div style="font-size:15pt; margin-top:0.2in; line-height:1.35;">Mehrheit wäre <b>runter</b>. Der Mittelwert wählt <b class="teal">rechts</b> (27,0 vor 26,9): Es zählt die <b>Höhe der Aktionswerte</b>, keine Wahrscheinlichkeit.</div>
-      </div>
-    </div>
-    <div class="note below">V11-Diagnose, 10 Spiele / 36.209 Entscheidungen: alle Netze einig in 31 %; im Mittel wählen 27,4 von 36 Netzen dieselbe Aktion wie das Ensemble. Mittelwert und Mehrheitswahl unterscheiden sich in 6 %.</div>
-  </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">07</div>
 </section>
 
-<!-- 8 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">So wurden die 36 Netze trainiert</h1>
+  <h1 class="title">Regelkorrekturen</h1>
+
+  <div class="content" style="top:1.65in;">
+    <div class="cols" style="height:auto; gap:0.45in;">
+      <div style="flex:1.1;">
+        <h3 class="rule-title">1 · Weg zum bestehenden Ziel</h3>
+        <p class="rule-copy" style="margin:0 0 0.18in;">Ein Zug verkürzt die direkte Entfernung, aber nicht den begehbaren Weg um Hindernisse.</p>
+        <div style="display:flex; gap:0.2in; align-items:center;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 230" style="width:2.15in; flex:none;" role="img" aria-label="Schematische Karte: Einheit links einer Wand, Ziel rechts. Der direkte Zug nach oben verlängert den begehbaren Weg; nach unten geht es um die Wand."><rect x="4" y="4" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="44" y="4" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="84" y="4" width="40" height="40" fill="#596970" stroke="#C8D3D2"/><rect x="124" y="4" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="164" y="4" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="4" y="44" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="44" y="44" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="84" y="44" width="40" height="40" fill="#596970" stroke="#C8D3D2"/><rect x="124" y="44" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="164" y="44" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="4" y="84" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="44" y="84" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="84" y="84" width="40" height="40" fill="#596970" stroke="#C8D3D2"/><rect x="124" y="84" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="164" y="84" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="4" y="124" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="44" y="124" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="84" y="124" width="40" height="40" fill="#596970" stroke="#C8D3D2"/><rect x="124" y="124" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="164" y="124" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="4" y="164" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="44" y="164" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="84" y="164" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="124" y="164" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/><rect x="164" y="164" width="40" height="40" fill="#F7F6F1" stroke="#C8D3D2"/>
+  <rect x="47" y="87" width="34" height="34" rx="17" fill="#0F7C7A"/><text x="64" y="110" text-anchor="middle" font-size="21" font-family="Arial" fill="white">U</text>
+  <rect x="127" y="47" width="34" height="34" fill="#A8D5C8"/><text x="144" y="70" text-anchor="middle" font-size="21" font-family="Arial" fill="#142D35">Z</text>
+  <path d="M64 84 L64 55 M56 65 L64 55 L72 65" fill="none" stroke="#B5552E" stroke-width="4"/>
+  <path d="M64 124 L64 153 M56 143 L64 153 L72 143" fill="none" stroke="#0F7C7A" stroke-width="4"/>
+  <text x="4" y="224" font-size="13" font-family="Arial" fill="#56676C">U = Einheit · Z = zugewiesenes Ziel</text>
+</svg>
+          <div class="rule-copy"><b style="color:#B5552E;">Gewählt: hoch ↑</b><br>Direkt: 3 → 2 Felder<br>Begehbar: 7 → 8<br><br><b class="teal">Korrektur: runter ↓</b><br>Begehbar: 7 → 6</div>
+        </div>
+        <p class="rule-copy" style="margin:0.16in 0 0;"><b>Das Ziel bleibt gleich.</b> Wenn möglich: erlaubter erster Schritt auf dem kürzesten begehbaren Weg.</p>
+      </div>
+      <div style="flex:1; border-left:1px solid #D3DEDC; padding-left:0.35in;">
+        <h3 class="rule-title">2 · Verdecktes Ziel beschießen</h3>
+        <div class="rule-copy">Ein Halter würde stehen. Gegnerpunkte deuten auf verdeckte Besetzung. Passendes Punktefeld in Reichweite und genug Energiereserve?</div>
+        <div class="rule-result">Dann: STEHEN → SAP</div>
+        <div class="small grey" style="margin-top:0.1in;">Eigene Prüfung; der genaue Aufenthaltsort ist nicht sicher bekannt.</div>
+        <h3 class="rule-title" style="margin-top:0.22in;">3 · Überflüssigen Schuss verhindern</h3>
+        <div class="rule-copy">Andere eigene Einheiten haben bereits genug Schaden auf dieses Ziel geplant?</div>
+        <div class="rule-result">Dann: SAP → STEHEN</div>
+        <div class="small grey" style="margin-top:0.08in;">Kein erneuter Netzentscheid.</div>
+      </div>
+    </div>
+    <div class="note below">Nach der maskierten Netzauswahl; ausgewählte Regeln in Ausführungsreihenfolge. Weitere Sicherheitsprüfungen können folgen.<br>Karte schematisch; Wege nach aktuellem Kartenwissen. Das Ziel wird vorher zugewiesen.</div>
+  </div>
+
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">08</div>
+</section>
+
+<section class="slide dark">
+  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
+  <h1 class="title" style="color:#fff;">Im Battle</h1>
+
+  <div style="position:absolute; left:0.8in; top:2.0in; font-size:27pt; font-weight:700; line-height:1.25;">Wissen sammeln → Bewerten → Gemeinsam handeln</div>
+  <ul class="dash" style="position:absolute; left:0.85in; right:0.8in; top:3.0in; font-size:21pt; color:#CFE3DE; line-height:1.35;">
+    <li>Gedächtnis und Zielzuweisung liefern den Kontext.</li>
+    <li>36 unterschiedliche Netze bewerten mögliche Aktionen.</li>
+    <li>Maske und Regeln machen daraus die ausgeführten Aktionen.</li>
+  </ul>
+  <div style="position:absolute; left:0.8in; top:5.2in; font-size:18pt; color:#A8D5C8;">Abgegebener V14: 95,4 % Siege gegen Solution_92<br><span style="font-size:14pt;">Historischer Test: 800 neue Karten × beide Seiten = 1.600 Spiele.</span></div>
+  <div style="position:absolute; left:0.8in; top:6.3in; font-size:29pt; font-weight:700;">Fragen?</div>
+
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">09</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">SHERLOCK / BATTLE SESSION · RESERVE</div>
+  <h1 class="title">Reserve: Trainingsdetails</h1>
   <div class="content" style="top:1.85in;">
     <table class="res" style="font-size:16pt;">
       <tr class="head"><td>Gruppe</td><td>Netze</td><td>Spiele je Netz</td><td>Gegner nach 25 % Aufwärmen gegen default</td></tr>
@@ -321,116 +382,17 @@
     <div class="cols" style="gap:0.5in; height:auto; margin-top:0.35in;">
       <ul class="dash col" style="font-size:16pt; line-height:1.3;">
         <li><b>66.000 + 99.000 Trainingsspiele</b> für die Netzfamilien der Abgabe; weitere Projektversuche separat</li>
-        <li>Double DQN mit Target-Netz und Replay Buffer (300.000 Übergänge)</li>
+        <li>Dueling: 79 → 256 → 256; Wert-Kopf 128 → 1 und Vorteil-Kopf 128 → 6</li>
       </ul>
       <ul class="dash col" style="font-size:16pt; line-height:1.3;">
         <li>Reward pro Schritt: Punktefeld halten, Annäherung, Erkunden; Abzug bei Tod. <b>Matchbonus am Matchende.</b></li>
-        <li>Endstände der Läufe; V11–V14 nutzen dieselben 36 Netze mit späteren Regeländerungen</li>
+        <li>Double DQN, Replay Buffer mit 300.000 Übergängen; Q = V + A − Mittelwert(A)</li>
       </ul>
     </div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">08</div>
-</section>
-
-<!-- 9 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Netze und Regeln</h1>
-  <div class="content" style="top:1.85in;">
-    <div class="cols" style="gap:0.55in; height:auto; align-items:flex-start;">
-      <div class="box" style="flex:0.75;">
-        <div class="hero">91 %</div>
-        <div style="font-size:17pt; margin-top:0.15in; line-height:1.35;">ohne protokollierten Regeleingriff nach der <b>maskierten Netzauswahl</b> in einer V12-Diagnose</div>
-        <div class="small grey" style="margin-top:0.3in; line-height:1.35;">Ziele, Merkmale und Maske sind bereits programmiert. 91 % bedeutet daher nicht „ohne Regeln“.</div>
-      </div>
-      <table class="res" style="flex:1.25; width:auto; font-size:15.5pt;">
-        <tr class="head"><td>Regel greift ein</td><td style="text-align:right;">Anteil</td></tr>
-        <tr><td>Nur Erkundungsziel: direkt hinlaufen statt warten</td><td class="v">4,6 %</td></tr>
-        <tr><td>Auf dem Punktefeld stehen und schießen</td><td class="v">1,3 %</td></tr>
-        <tr><td>Schädlichen Nebel umgehen</td><td class="v">1,1 %</td></tr>
-        <tr><td>Überflüssigen Schuss durch Stehen ersetzen</td><td class="v">1,1 %</td></tr>
-        <tr><td>Sackgasse: kürzesten Weg nehmen</td><td class="v">0,7 %</td></tr>
-        <tr><td>In eine Gruppe schießen (bei sicher hohem Streuschaden schon ab 2 Treffern)</td><td class="v">0,6 %</td></tr>
-      </table>
-    </div>
-    <div class="note below">Historische Diagnose: 36.204 Entscheidungen in 10 V12-Spielen gegen Solution_92. Regeln ändern 8,3 % der Aktionen; Blindschüsse hier nur 0,1 % (Sichtweite 2–4). Keine allgemeine V14-Quote.</div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">09</div>
-</section>
-
-<!-- 10 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Von 47 % auf 95 % gegen Solution_92</h1>
-  <div class="content" style="top:1.7in;">
-    <div class="cols" style="gap:0.45in;">
-      <img src="folie_0611_fortschritt.png" style="width:7.2in; height:4.6in; flex:none;">
-      <div style="flex:1; padding-top:0.05in;">
-        <div class="pill">BIS 78 %: TRAINING UND REGELN</div>
-        <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">Neu trainiert mit aktiven Regeln, 18 statt 6 Netze</div>
-        <div class="pill">78 → 90 %: FEHLERSUCHE</div>
-        <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">Verlorene Spiele mit dem wahren Zustand verglichen. Gleiche 18 Netze.</div>
-        <div class="pill">90 → 94 %: NACHTRAINING</div>
-        <div style="font-size:14.5pt; line-height:1.28; margin-bottom:0.18in;">18 Netze unter V10-Regeln nachtrainiert, alt + neu gemischt; neue Schussregeln</div>
-        <div class="pill">94 → 95 %: GEZIELTE KORREKTUREN</div>
-        <div style="font-size:14.5pt; line-height:1.28;">Unsichtbare Gegner treffen, Nebel richtig einschätzen, Kandidaten-Rettung</div>
-      </div>
-    </div>
-    <div class="note below">Historische Tests auf verschiedenen Kartensätzen, beide Seiten; ab V10 je 800 Karten. Kein isolierter Wirkungsnachweis einzelner Änderungen. V13 nur auf starkem Nebel geprüft, daher ohne Balken.</div>
   </div>
   <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">10</div>
 </section>
 
-<!-- 11 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Neue Versionen</h1>
-  <div class="content" style="top:1.75in;">
-    <table class="res" style="font-size:14.5pt;">
-      <tr class="head"><td style="width:1.55in;">Version</td><td>Was neu ist</td><td style="text-align:right; width:1.95in;">Solution_92</td><td style="text-align:right; width:2.15in;">Mittel 6 Gegner</td></tr>
-      <tr><td class="strong">V11 · 30.10.</td><td><b>Nachtraining unter V10-Regeln:</b> alte + nachtrainierte Netze (36), ergänzt um Schussregeln</td><td class="v">89,6 → 94,1 %</td><td class="v" style="color:#56676C;">nicht gemessen</td></tr>
-      <tr><td class="strong">V12 · 31.10.</td><td><b>Blindschüsse:</b> Gegner punktet verdeckt → vermutetes Punktefeld beschießen</td><td class="v">93,0 → 94,4 %</td><td class="v">81,2 → 87,1 %</td></tr>
-      <tr><td class="strong">V13 · 01.11.</td><td><b>Nebelkosten:</b> Energie 0 bedeutet nicht „Nebel kostenlos“</td><td class="v">94,2 → 95,0 %¹</td><td class="v">84,8 → 87,2 %¹</td></tr>
-      <tr><td class="strong" style="border-bottom:none;">V14 · 01.11.</td><td style="border-bottom:none;"><b>Kandidaten-Rettung:</b> nach 30 Schritten ohne Punktefund gezielt Relic-Umgebung testen</td><td class="v" style="border-bottom:none;">94,9 → 95,4 %</td><td class="v" style="border-bottom:none;">86,7 → 87,6 %</td></tr>
-    </table>
-    <div class="note below">Je Zeile eigener Vergleich mit der Vorgängerversion: 800 neue Karten / 1.600 Spiele je Gegner; ¹ V13 auf 300 Karten mit starkem Nebel. V14 wurde trotz zweier verfehlter Übernahmehürden per dokumentierter Teamentscheidung übernommen.</div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">11</div>
-</section>
-
-<!-- 12 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title">Erkenntnisse</h1>
-  <div class="content" style="top:1.85in;">
-    <div class="step" style="margin-bottom:0.4in;"><div class="num">01</div><div><h3>Netze und Regeln ergänzen sich</h3>
-      <p>Die Netze bewerten Aktionen. Gedächtnis, Zielzuweisung und Regeln unterstützen die Auswahl. Gezielte Fehlerkorrekturen brachten große Fortschritte.</p></div></div>
-    <div class="step" style="margin-bottom:0.4in;"><div class="num">02</div><div><h3>Neue Karten entscheiden</h3>
-      <p>Eine neue Regel brachte im Entwicklungstest <b class="teal">+1,8 Prozentpunkte</b>, auf 800 neuen Karten aber <b style="color:#B5552E;">−0,35</b>. Deshalb wurde sie nicht übernommen.</p></div></div>
-    <div class="step" style="margin-bottom:0;"><div class="num">03</div><div><h3>Mehr ist nicht automatisch besser</h3>
-      <p>02.–04.11.: kleinere und größere Ensembles, Einzelnetz-Schüler und Nachtraining mit Lehrerbeispielen geprüft. <b class="teal">Kein ausreichend belegter Ersatz – V14 bleibt.</b></p></div></div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">12</div>
-</section>
-
-<!-- 13 -->
-<section class="slide dark">
-  <div class="kicker">SHERLOCK / BATTLE SESSION</div>
-  <h1 class="title" style="color:#fff;">Fazit und Battle</h1>
-  <div style="position:absolute; left:0.76in; top:2.3in; font-size:36pt; font-weight:700;">Gelernt entscheiden, programmiert absichern</div>
-  <div style="position:absolute; left:0.8in; top:3.35in; font-size:19pt; color:#A8D5C8;">Im Replay achten auf:</div>
-  <ul class="dash" style="position:absolute; left:0.85in; top:3.8in; font-size:18pt; color:#CFE3DE; line-height:1.2;">
-    <li>Einheiten verteilen sich auf verschiedene Ziele</li>
-    <li>Einheiten auf Punktefeldern bleiben stehen und schießen</li>
-    <li>Bei kleiner Sicht schießen sie auch auf Gegner, die sie nicht sehen</li>
-    <li>Schädlicher Nebel wird umgangen</li>
-    <li>Findet Sherlock lange kein Punktefeld, testen die Einheiten die Felder um das Relic</li>
-  </ul>
-  <div style="position:absolute; left:0.76in; top:6.3in; font-size:30pt; font-weight:700;">Fragen?</div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">13</div>
-</section>
-
-<!-- 14 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION · RESERVE</div>
   <h1 class="title">Reserve: So prüfen wir</h1>
@@ -443,28 +405,9 @@
       <li><b>Statistik:</b> gepaarter Bootstrap über ganze Karten (beide Seiten zusammen). <b>Frische Karten:</b> jeder Block nur einmal benutzt; alte Abgabe vor jeder Übernahme mit Prüfsumme gesichert.</li>
     </ul>
   </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">14</div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">11</div>
 </section>
 
-<!-- 15 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION · RESERVE</div>
-  <h1 class="title">Reserve: Fehler 1: Die Karte im Gedächtnis war veraltet</h1>
-  <div class="content" style="top:1.62in;">
-    <div class="legend"><span class="k dot first" style="background:#3A7FC1"></span>Sherlock<span class="k dot" style="background:#D93A3A"></span>Solution_92<span class="k" style="background:#F6D56A"></span>Punktefeld<span class="k" style="background:#555"></span>Asteroid<span class="k" style="background:#D7C2EF"></span>Nebel<span style="margin-left:0.18in;">★ Relic · Zahl = Energie · Karte 360014, Match 3</span></div>
-    <div class="imgpair">
-      <figure><img src="folie_2310_karte_vorher.png"><figcaption class="grey"><b>Vorher:</b> Einheiten am Start eingesperrt · Schritt 90: 112 : 717</figcaption></figure>
-      <figure><img src="folie_2310_karte_nachher.png"><figcaption class="grey"><b>Nachher:</b> Einheiten verlassen sofort den Start · Schritt 90: 541 : 488</figcaption></figure>
-    </div>
-    <ul class="dash below" style="bottom:-0.05in; font-size:15.5pt;">
-      <li>Asteroiden und Nebel wandern, Nebel ist bei kleiner Sicht unsichtbar → <b>18 % der gemerkten Felder waren falsch</b></li>
-      <li style="margin-bottom:0;">Lösung: Drift erkennen und Karte mitrollen; unsichtbar trotz Sichtweite heißt Nebel → 210 von 210 Drifts erkannt</li>
-    </ul>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">15</div>
-</section>
-
-<!-- 16 -->
 <section class="slide">
   <div class="kicker">SHERLOCK / BATTLE SESSION · RESERVE</div>
   <h1 class="title">Reserve: Spielregeln, die wir nutzen</h1>
@@ -476,41 +419,10 @@
       <tr><td><b>Drift</b></td><td>Asteroiden und Nebel verschieben sich alle 7–40 Schritte diagonal</td></tr>
       <tr><td><b>Relics</b></td><td>bis zu drei Paare; ein neues Paar kann in Match 2 und 3 in den ersten 50 Schritten erscheinen</td></tr>
       <tr><td><b>Lage der Relics</b></td><td>auf den höchsten Werten eines Zufallsrauschens mit 6er-Raster: 97&nbsp;% liegen auf Zeilen oder Spalten mit Rest 2 oder 3 (geteilt durch 6); spätere Paare meist direkt neben früheren (10.000 Karten gezählt)</td></tr>
-      <tr><td><b>Punktefelder</b></td><td>je Relic 5&nbsp;×&nbsp;5 Felder, jedes mit 20&nbsp;% Wahrscheinlichkeit; liegt ein Feld bei zwei Relics, 34&nbsp;%</td></tr>
+      <tr><td><b>Punktefelder</b></td><td>je Relic 5&nbsp;×&nbsp;5 Felder, jedes mit 20&nbsp;% Wahrscheinlichkeit; bei zwei Relics in unserer Kartenmessung ca. 34&nbsp;%</td></tr>
     </table>
   </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">16</div>
+  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">12</div>
 </section>
-
-<!-- 17 -->
-<section class="slide">
-  <div class="kicker">SHERLOCK / BATTLE SESSION · RESERVE</div>
-  <h1 class="title">Reserve: Wie viel fehlt noch? Der Orakel-Test</h1>
-  <div class="content" style="top:1.85in;">
-    <div class="cols" style="gap:0.5in; height:auto; align-items:flex-start;">
-      <div style="flex:1;">
-        <ul class="dash" style="font-size:16.5pt; line-height:1.3;">
-          <li>Im Test bekommt Sherlock (V14) in jedem Schritt das <b>wahre Wissen</b>, das kein Agent hat: wo Relics liegen und welche Felder Punkte bringen</li>
-          <li>Die Diagnose zeigt einen möglichen Informationsengpass, keinen garantierten Gewinn eines einsetzbaren Agenten</li>
-          <li>Im Mittel über 6 Gegner: <b class="teal">86,5 → 91,0 %</b></li>
-          <li>Bei Sichtweite 1 allein die Punktefelder: 94,4 %, allein die Relics: 90,3 %</li>
-        </ul>
-      </div>
-      <div class="box" style="flex:0.85;">
-        <div class="boxtitle">Gegen Solution_92 nach Sichtweite</div>
-        <table class="res tight" style="font-size:16pt;">
-          <tr class="head"><td>Sichtweite</td><td style="text-align:right;">normal</td><td style="text-align:right;">mit Orakel</td></tr>
-          <tr><td><b>1 Feld</b></td><td class="v" style="color:#B5552E;">85,4 %</td><td class="v">96,5 %</td></tr>
-          <tr><td>2 Felder</td><td class="v" style="color:#56676C;">94,2 %</td><td class="v">95,5 %</td></tr>
-          <tr><td>3 Felder</td><td class="v" style="color:#56676C;">98,1 %</td><td class="v">98,7 %</td></tr>
-          <tr><td style="border-bottom:none;">4 Felder</td><td class="v" style="border-bottom:none; color:#56676C;">100 %</td><td class="v" style="border-bottom:none;">99,3 %</td></tr>
-        </table>
-      </div>
-    </div>
-    <div class="note below">Nur Diagnose: 300 Entwicklungskarten, beide Seiten, je Gegner 600 Spiele. Das Zusatzwissen ist im normalen Spiel nicht verfügbar. Die untersuchten Karten zeigen besonders bei Sichtweite 1 Potenzial durch bessere Information.</div>
-  </div>
-  <div class="footer">Team 15 · Mahmoud El-Hassan &amp; Moayed Shawesh</div><div class="pageno">17</div>
-</section>
-
 </body>
 </html>

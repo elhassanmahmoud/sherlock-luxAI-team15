@@ -1,13 +1,12 @@
 {
   "date": "2026-11-04",
-  "scope": "Presentation and speaker notes only; no training or agent change",
-  "pdf_pages": 17,
-  "main_slides": 13,
+  "scope": "Presentation and notes only; no inference, games, training or agent change",
+  "pdf_pages": 12,
+  "main_slides": 9,
   "reserve_slides": [
-    14,
-    15,
-    16,
-    17
+    10,
+    11,
+    12
   ],
   "page_size_pt": [
     960,
@@ -18,46 +17,107 @@
     "2": "Moayed",
     "3": "Moayed",
     "4": "Moayed",
-    "5": "Moayed",
+    "5": "Mahmoud",
     "6": "Mahmoud",
     "7": "Mahmoud",
     "8": "Mahmoud",
-    "9": "Mahmoud",
-    "10": "Mahmoud",
-    "11": "Mahmoud",
-    "12": "Moayed",
-    "13": "Moayed"
+    "9": "Moayed"
   },
   "planned_seconds": {
-    "Moayed": 265,
-    "Mahmoud": 325
+    "Moayed": 275,
+    "Mahmoud": 315
+  },
+  "planned_seconds_per_slide": {
+    "1": 30,
+    "2": 60,
+    "3": 75,
+    "4": 65,
+    "5": 85,
+    "6": 70,
+    "7": 60,
+    "8": 100,
+    "9": 45
   },
   "planned_total_seconds": 590,
   "timing_is_rehearsed": false,
   "speaker_word_counts_per_slide": {
-    "1": 41,
-    "2": 32,
-    "3": 72,
-    "4": 82,
-    "5": 72,
-    "6": 87,
-    "7": 90,
-    "8": 105,
-    "9": 54,
-    "10": 79,
-    "11": 84,
-    "12": 81,
-    "13": 44
+    "1": 38,
+    "2": 88,
+    "3": 116,
+    "4": 108,
+    "5": 132,
+    "6": 114,
+    "7": 95,
+    "8": 172,
+    "9": 80
   },
-  "local_links_checked": 34,
+  "word_count_method": "Regex words including numbers; headings and italic parenthesized practice directions excluded",
+  "local_links_checked": 22,
   "protected_files_unchanged": 39,
   "dom_text_outside_pages": 0,
   "missing_images": 0,
-  "visual_review": "All 17 rendered pages reviewed by root; final changes to pages 4 and 9 re-rendered and inspected",
-  "content_review": "Independent reviewer: no outstanding findings after two wording corrections; final root notes edits only remove an extra example and align slide 12 title",
+  "content_footnote_overlaps": 0,
+  "visual_review": "All twelve rendered pages reviewed; corrections to pages 6/8/9 and final ensemble page 5 separately rendered and inspected",
+  "content_review": "Independent review of slides and notes; all five findings corrected and rechecked, no outstanding factual findings",
+  "feature_group_counts": [
+    10,
+    4,
+    20,
+    5,
+    30,
+    6,
+    4
+  ],
+  "ensemble_weights": {
+    "count": 36,
+    "distinct_tensor_hashes": 36,
+    "parameters_each": 152967,
+    "originals": 18,
+    "related_finetuned_partners": 18,
+    "additional_games_per_partner": 5500,
+    "root_recomputed_hashes": true
+  },
+  "path_diagram": {
+    "schematic": true,
+    "assigned_target": [
+      3,
+      1
+    ],
+    "unit": [
+      1,
+      2
+    ],
+    "wall": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "bfs_start_up_down": [
+      7,
+      8,
+      6
+    ],
+    "manhattan_start_up": [
+      3,
+      2
+    ]
+  },
   "sha256": {
-    "Sherlock_Battle_06-11-2026.pdf": "20bb939b6fc7bf6b1d03c1ebb670f40521d48ce46232a8b5465134d40486140e",
-    "Sherlock_Stichpunkte_06-11-2026.md": "6e43cdd30b913accf498588cdaaca6ebc6301506d1b4e8773a90b6f755b18361",
-    "docs/presentation/Sherlock_Battle_06-11-2026.html": "1e87513a4320df4330b2b6c67fdda7d55b2f692b9baf676c6ef7f78e40d7f1f0"
+    "Sherlock_Battle_06-11-2026.pdf": "7f6b133db88a1cec3e23cb8992e713b69354d33cd3bc3efef42ebca521c581b3",
+    "Sherlock_Stichpunkte_06-11-2026.md": "6d04711113e9e3000fb0da6e621544f4e36b98c10e1c1c4c04841a23135156be",
+    "docs/presentation/Sherlock_Battle_06-11-2026.html": "6303cb98ec552c35f8b6c3f1b6c8984a46a1feabe5330be33e3f46f3f7c02ad8"
   }
 }

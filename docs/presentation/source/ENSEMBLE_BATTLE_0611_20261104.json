@@ -1,0 +1,1288 @@
+{
+  "checkpoint_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "n": 36,
+  "distinct_hashes": 36,
+  "tensor_hashes": [
+    "81a38673b23af1b3f128dcda121dbba5a954846fce4524d04dd6571e6ca16ca8",
+    "27cd0a687f3bbb9b21d98d2954d5e4288c09870bf01a35fe61984eb133f1fbda",
+    "59b4e29d874a584696b805a1b2a84532234ec1b3b375aa74796860afae570d98",
+    "9c30601557e192f9341aa5aef7b845a45c026fa4208926a7f4d81999fec5662b",
+    "426ae56536b9772c89e58ffb2aadb7115a3b8358ef48bd72079806bcd0f7c678",
+    "2adf7200baba0f21e0f157fe4f46827085264e436e6023b2b04e20e58a7c6dcf",
+    "8ab32bf4be7525878be4183e35c696add18b620d56bf8c9c90740141de6e3318",
+    "81b971d1ab7a37f82d390d095fa812014ff2f538826e799d7d02a989e6035918",
+    "1511ca5654950060fbd17feb79d454aeacbcc426e8f2999deb4d4443ffda057f",
+    "104a2c84f66c5fec33541f4577c91d404e6e4e7d15ab915eb469f1fe69d458d3",
+    "2f7860707a3508cf87e4c35370db7361984dc00659173164ccd99831c7b5efc7",
+    "9778cdaa4c491ab37cc7f18a43d6b0a53b549db8651f2e7008fc9349f7b55d1b",
+    "d409abaee9b25f194c895f6ae98b57100ae6657122df628f76f787f1c4cb41f7",
+    "eac9b74fee0833f1fc9cb29c5638662502c293b1a1aeb40bd9e5e2eec4cd0bcd",
+    "d956db7d553a4439a6415ce7524db440e949b0bf6aec8010c8ef8eecce542bc8",
+    "6e2118e15f0a2f5287d56e76b1e8a3eb55b0025b8120d10b7e2bff3376f3998f",
+    "6348f3512bb8a1c9ae0c6c8b187bf5584b3ee37c1b2481a7eca79fbaa1d4074b",
+    "a21260132754467418f26335d6caf2fa0cd16755ff79f384421f80c25dfe722b",
+    "4258592eaf67752099adde0de7d79d164871b63095a8d5aa0b7c41986d676ef3",
+    "6b20ff0b1fff7d0d5c597a469e1386dcbb090d9405281d038ffce93348e9f5c7",
+    "a12159f7261419e4ca3ebc757d0d1aeb9ba4a663f9ca8a276e91e3462ef4ed45",
+    "14b1771063fabb07f0770f63dc11c5527b0ec314f2e12dd6532ba1dbf41e05e9",
+    "db0b5d813dadb0457107f7e60a2e24ee66645b47a35f49650bc18827a9800616",
+    "a5abb177241669baa800121335e7bc607ef7cb51d57944fd2d0b703265ee0db5",
+    "84bad75f152034f61a890be1541bf91533e054f9be688cbc12e1291d46f05c58",
+    "0b048acef2713dece7513939c7989858985ad347579b32bf99ce99811171e7b1",
+    "b25372672eadac0fc272495299864e62819ce96e598b2bc35d8482a1136b1b5f",
+    "8bda61a3c5a1d8bda78e331c8db55f9dd9666a98480b96cbceca08216c8cb10c",
+    "2391a8b18fe8c1334e43f4dbc86ab8f3e7536ff45b1e7b37e6888d5440c669a7",
+    "d6b77ca9ca34c4e8c5c1d08fd9585b91d4ec546dfc831acb07c3632b31cae599",
+    "33ba620a8bc0c6fa314c8cdadc5373ca91abb475367e664e387b9561fc04b6cf",
+    "704aa45b83fda6edd0786b4e244f17344f12a2d36aa3fc7302586dc3e193b9f6",
+    "472e3f23da74c173304d1e937e753f18f373fa13e6a92691612c43e0da3a1d16",
+    "53ac340a5a24170e1a7a6e7b591d373771e0a4cd2b9c81aaf7f2b910e0ce4fa1",
+    "cf4fb4402ad85db861e90ae72f12117703c5e48307abf0849dad0b0ee76f125f",
+    "13e34bc6794c5781f0fec144edea1c60eea1ddc13ca372f5b4e48a98ee296b7f"
+  ],
+  "tensor_shapes": {
+    "body.0.weight": [
+      256,
+      79
+    ],
+    "body.0.bias": [
+      256
+    ],
+    "body.2.weight": [
+      256,
+      256
+    ],
+    "body.2.bias": [
+      256
+    ],
+    "value.0.weight": [
+      128,
+      256
+    ],
+    "value.0.bias": [
+      128
+    ],
+    "value.2.weight": [
+      1,
+      128
+    ],
+    "value.2.bias": [
+      1
+    ],
+    "adv.0.weight": [
+      128,
+      256
+    ],
+    "adv.0.bias": [
+      128
+    ],
+    "adv.2.weight": [
+      6,
+      128
+    ],
+    "adv.2.bias": [
+      6
+    ]
+  },
+  "all_same_shapes": true,
+  "parameters_per_net": 152967,
+  "sources": [
+    "experiments/releases/20261022_v10_baseline/agent_p0.pth",
+    "experiments/ensembles/battle_ft3_18.pth"
+  ],
+  "original_sources": [
+    "experiments/runs/20261019_full_rules_s0/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s1/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s2/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s3/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s4/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s5/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s10_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s11_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s6_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s7_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s8_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_s9_sol70/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s12_pool/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s13_pool/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s14_pool/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s15_pool/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s16_pool/weights/agent.pth",
+    "experiments/runs/20261019_full_rules_opp_s17_pool/weights/agent.pth"
+  ],
+  "original_runs": [
+    {
+      "name": "20261019_full_rules_s0",
+      "variant": "full_rules",
+      "run_seed": 0,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        0,
+        1499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s1",
+      "variant": "full_rules",
+      "run_seed": 1,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        10000,
+        11499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s2",
+      "variant": "full_rules",
+      "run_seed": 2,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        20000,
+        21499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s3",
+      "variant": "full_rules",
+      "run_seed": 3,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        30000,
+        31499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s4",
+      "variant": "full_rules",
+      "run_seed": 4,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        40000,
+        41499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s5",
+      "variant": "full_rules",
+      "run_seed": 5,
+      "train_games": 3000,
+      "sol92_frac": null,
+      "train_seeds": [
+        50000,
+        51499
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann abwechselnd default/solution92"
+    },
+    {
+      "name": "20261019_full_rules_s10_sol70",
+      "variant": "full_rules",
+      "run_seed": 10,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        100000,
+        101999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_s11_sol70",
+      "variant": "full_rules",
+      "run_seed": 11,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        110000,
+        111999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_s6_sol70",
+      "variant": "full_rules",
+      "run_seed": 6,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        60000,
+        61999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_s7_sol70",
+      "variant": "full_rules",
+      "run_seed": 7,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        70000,
+        71999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_s8_sol70",
+      "variant": "full_rules",
+      "run_seed": 8,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        80000,
+        81999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_s9_sol70",
+      "variant": "full_rules",
+      "run_seed": 9,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        90000,
+        91999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3
+      },
+      "curriculum": "erste 25% default, dann 70% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s12_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 12,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        120000,
+        121999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s13_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 13,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        130000,
+        131999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s14_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 14,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        140000,
+        141999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s15_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 15,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        150000,
+        151999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s16_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 16,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        160000,
+        161999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    },
+    {
+      "name": "20261019_full_rules_opp_s17_pool",
+      "variant": "full_rules_opp",
+      "run_seed": 17,
+      "train_games": 4000,
+      "sol92_frac": null,
+      "train_seeds": [
+        170000,
+        171999
+      ],
+      "mix": null,
+      "pool": null,
+      "reward": {
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "w_opp_points": 1.0
+      },
+      "curriculum": "erste 25% default, dann 60% solution92"
+    }
+  ],
+  "finetune_lineage": [
+    {
+      "ft_seed": 10,
+      "origin": "experiments/runs/20261019_full_rules_s0",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s10",
+          "init_from": "experiments/runs/20261029_ft2_v10_s10",
+          "games": 2000,
+          "seed": 10,
+          "train_seeds": [
+            302000,
+            303000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s10",
+          "init_from": "experiments/runs/20261029_ft_v10_s10",
+          "games": 2000,
+          "seed": 10,
+          "train_seeds": [
+            301000,
+            302000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s10",
+          "init_from": "experiments/runs/20261019_full_rules_s0",
+          "games": 1500,
+          "seed": 10,
+          "train_seeds": [
+            300000,
+            300750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 11,
+      "origin": "experiments/runs/20261019_full_rules_s1",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s11",
+          "init_from": "experiments/runs/20261029_ft2_v10_s11",
+          "games": 2000,
+          "seed": 11,
+          "train_seeds": [
+            312000,
+            313000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s11",
+          "init_from": "experiments/runs/20261029_ft_v10_s11",
+          "games": 2000,
+          "seed": 11,
+          "train_seeds": [
+            311000,
+            312000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s11",
+          "init_from": "experiments/runs/20261019_full_rules_s1",
+          "games": 1500,
+          "seed": 11,
+          "train_seeds": [
+            310000,
+            310750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 12,
+      "origin": "experiments/runs/20261019_full_rules_s2",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s12",
+          "init_from": "experiments/runs/20261029_ft2_v10_s12",
+          "games": 2000,
+          "seed": 12,
+          "train_seeds": [
+            322000,
+            323000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s12",
+          "init_from": "experiments/runs/20261029_ft_v10_s12",
+          "games": 2000,
+          "seed": 12,
+          "train_seeds": [
+            321000,
+            322000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s12",
+          "init_from": "experiments/runs/20261019_full_rules_s2",
+          "games": 1500,
+          "seed": 12,
+          "train_seeds": [
+            320000,
+            320750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 13,
+      "origin": "experiments/runs/20261019_full_rules_s3",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s13",
+          "init_from": "experiments/runs/20261029_ft2_v10_s13",
+          "games": 2000,
+          "seed": 13,
+          "train_seeds": [
+            332000,
+            333000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s13",
+          "init_from": "experiments/runs/20261029_ft_v10_s13",
+          "games": 2000,
+          "seed": 13,
+          "train_seeds": [
+            331000,
+            332000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s13",
+          "init_from": "experiments/runs/20261019_full_rules_s3",
+          "games": 1500,
+          "seed": 13,
+          "train_seeds": [
+            330000,
+            330750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 14,
+      "origin": "experiments/runs/20261019_full_rules_s4",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s14",
+          "init_from": "experiments/runs/20261029_ft2_v10_s14",
+          "games": 2000,
+          "seed": 14,
+          "train_seeds": [
+            342000,
+            343000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s14",
+          "init_from": "experiments/runs/20261029_ft_v10_s14",
+          "games": 2000,
+          "seed": 14,
+          "train_seeds": [
+            341000,
+            342000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s14",
+          "init_from": "experiments/runs/20261019_full_rules_s4",
+          "games": 1500,
+          "seed": 14,
+          "train_seeds": [
+            340000,
+            340750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 15,
+      "origin": "experiments/runs/20261019_full_rules_s5",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s15",
+          "init_from": "experiments/runs/20261029_ft2_v10_s15",
+          "games": 2000,
+          "seed": 15,
+          "train_seeds": [
+            352000,
+            353000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s15",
+          "init_from": "experiments/runs/20261029_ft_v10_s15",
+          "games": 2000,
+          "seed": 15,
+          "train_seeds": [
+            351000,
+            352000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s15",
+          "init_from": "experiments/runs/20261019_full_rules_s5",
+          "games": 1500,
+          "seed": 15,
+          "train_seeds": [
+            350000,
+            350750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 16,
+      "origin": "experiments/runs/20261019_full_rules_s10_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s16",
+          "init_from": "experiments/runs/20261029_ft2_v10_s16",
+          "games": 2000,
+          "seed": 16,
+          "train_seeds": [
+            362000,
+            363000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s16",
+          "init_from": "experiments/runs/20261029_ft_v10_s16",
+          "games": 2000,
+          "seed": 16,
+          "train_seeds": [
+            361000,
+            362000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s16",
+          "init_from": "experiments/runs/20261019_full_rules_s10_sol70",
+          "games": 1500,
+          "seed": 16,
+          "train_seeds": [
+            360000,
+            360750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 17,
+      "origin": "experiments/runs/20261019_full_rules_s11_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s17",
+          "init_from": "experiments/runs/20261029_ft2_v10_s17",
+          "games": 2000,
+          "seed": 17,
+          "train_seeds": [
+            372000,
+            373000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s17",
+          "init_from": "experiments/runs/20261029_ft_v10_s17",
+          "games": 2000,
+          "seed": 17,
+          "train_seeds": [
+            371000,
+            372000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s17",
+          "init_from": "experiments/runs/20261019_full_rules_s11_sol70",
+          "games": 1500,
+          "seed": 17,
+          "train_seeds": [
+            370000,
+            370750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 18,
+      "origin": "experiments/runs/20261019_full_rules_s6_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s18",
+          "init_from": "experiments/runs/20261029_ft2_v10_s18",
+          "games": 2000,
+          "seed": 18,
+          "train_seeds": [
+            382000,
+            383000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s18",
+          "init_from": "experiments/runs/20261029_ft_v10_s18",
+          "games": 2000,
+          "seed": 18,
+          "train_seeds": [
+            381000,
+            382000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s18",
+          "init_from": "experiments/runs/20261019_full_rules_s6_sol70",
+          "games": 1500,
+          "seed": 18,
+          "train_seeds": [
+            380000,
+            380750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 19,
+      "origin": "experiments/runs/20261019_full_rules_s7_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s19",
+          "init_from": "experiments/runs/20261029_ft2_v10_s19",
+          "games": 2000,
+          "seed": 19,
+          "train_seeds": [
+            392000,
+            393000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s19",
+          "init_from": "experiments/runs/20261029_ft_v10_s19",
+          "games": 2000,
+          "seed": 19,
+          "train_seeds": [
+            391000,
+            392000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s19",
+          "init_from": "experiments/runs/20261019_full_rules_s7_sol70",
+          "games": 1500,
+          "seed": 19,
+          "train_seeds": [
+            390000,
+            390750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 20,
+      "origin": "experiments/runs/20261019_full_rules_s8_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s20",
+          "init_from": "experiments/runs/20261029_ft2_v10_s20",
+          "games": 2000,
+          "seed": 20,
+          "train_seeds": [
+            402000,
+            403000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s20",
+          "init_from": "experiments/runs/20261029_ft_v10_s20",
+          "games": 2000,
+          "seed": 20,
+          "train_seeds": [
+            401000,
+            402000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s20",
+          "init_from": "experiments/runs/20261019_full_rules_s8_sol70",
+          "games": 1500,
+          "seed": 20,
+          "train_seeds": [
+            400000,
+            400750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 21,
+      "origin": "experiments/runs/20261019_full_rules_s9_sol70",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s21",
+          "init_from": "experiments/runs/20261029_ft2_v10_s21",
+          "games": 2000,
+          "seed": 21,
+          "train_seeds": [
+            412000,
+            413000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s21",
+          "init_from": "experiments/runs/20261029_ft_v10_s21",
+          "games": 2000,
+          "seed": 21,
+          "train_seeds": [
+            411000,
+            412000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s21",
+          "init_from": "experiments/runs/20261019_full_rules_s9_sol70",
+          "games": 1500,
+          "seed": 21,
+          "train_seeds": [
+            410000,
+            410750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 22,
+      "origin": "experiments/runs/20261019_full_rules_opp_s12_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s22",
+          "init_from": "experiments/runs/20261029_ft2_v10_s22",
+          "games": 2000,
+          "seed": 22,
+          "train_seeds": [
+            422000,
+            423000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s22",
+          "init_from": "experiments/runs/20261029_ft_v10_s22",
+          "games": 2000,
+          "seed": 22,
+          "train_seeds": [
+            421000,
+            422000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s22",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s12_pool",
+          "games": 1500,
+          "seed": 22,
+          "train_seeds": [
+            420000,
+            420750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 23,
+      "origin": "experiments/runs/20261019_full_rules_opp_s13_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s23",
+          "init_from": "experiments/runs/20261029_ft2_v10_s23",
+          "games": 2000,
+          "seed": 23,
+          "train_seeds": [
+            432000,
+            433000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s23",
+          "init_from": "experiments/runs/20261029_ft_v10_s23",
+          "games": 2000,
+          "seed": 23,
+          "train_seeds": [
+            431000,
+            432000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s23",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s13_pool",
+          "games": 1500,
+          "seed": 23,
+          "train_seeds": [
+            430000,
+            430750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 24,
+      "origin": "experiments/runs/20261019_full_rules_opp_s14_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s24",
+          "init_from": "experiments/runs/20261029_ft2_v10_s24",
+          "games": 2000,
+          "seed": 24,
+          "train_seeds": [
+            442000,
+            443000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s24",
+          "init_from": "experiments/runs/20261029_ft_v10_s24",
+          "games": 2000,
+          "seed": 24,
+          "train_seeds": [
+            441000,
+            442000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s24",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s14_pool",
+          "games": 1500,
+          "seed": 24,
+          "train_seeds": [
+            440000,
+            440750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 25,
+      "origin": "experiments/runs/20261019_full_rules_opp_s15_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s25",
+          "init_from": "experiments/runs/20261029_ft2_v10_s25",
+          "games": 2000,
+          "seed": 25,
+          "train_seeds": [
+            452000,
+            453000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s25",
+          "init_from": "experiments/runs/20261029_ft_v10_s25",
+          "games": 2000,
+          "seed": 25,
+          "train_seeds": [
+            451000,
+            452000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s25",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s15_pool",
+          "games": 1500,
+          "seed": 25,
+          "train_seeds": [
+            450000,
+            450750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 26,
+      "origin": "experiments/runs/20261019_full_rules_opp_s16_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s26",
+          "init_from": "experiments/runs/20261029_ft2_v10_s26",
+          "games": 2000,
+          "seed": 26,
+          "train_seeds": [
+            462000,
+            463000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s26",
+          "init_from": "experiments/runs/20261029_ft_v10_s26",
+          "games": 2000,
+          "seed": 26,
+          "train_seeds": [
+            461000,
+            462000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s26",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s16_pool",
+          "games": 1500,
+          "seed": 26,
+          "train_seeds": [
+            460000,
+            460750
+          ]
+        }
+      ]
+    },
+    {
+      "ft_seed": 27,
+      "origin": "experiments/runs/20261019_full_rules_opp_s17_pool",
+      "additional_train_games": 5500,
+      "chain": [
+        {
+          "name": "20261029_ft3_v10_s27",
+          "init_from": "experiments/runs/20261029_ft2_v10_s27",
+          "games": 2000,
+          "seed": 27,
+          "train_seeds": [
+            472000,
+            473000
+          ]
+        },
+        {
+          "name": "20261029_ft2_v10_s27",
+          "init_from": "experiments/runs/20261029_ft_v10_s27",
+          "games": 2000,
+          "seed": 27,
+          "train_seeds": [
+            471000,
+            472000
+          ]
+        },
+        {
+          "name": "20261029_ft_v10_s27",
+          "init_from": "experiments/runs/20261019_full_rules_opp_s17_pool",
+          "games": 1500,
+          "seed": 27,
+          "train_seeds": [
+            470000,
+            470750
+          ]
+        }
+      ]
+    }
+  ],
+  "unique_originals_for_ft": 18,
+  "original_set_matches_ft_lineage": true,
+  "trace_example_summary": {
+    "source": "experiments/analysis/decision_trace_20261030_v11.json",
+    "example": "uneinig",
+    "scope": "Historische V11-Diagnose, kein neu ausgeführtes Spiel und keine allgemeine V14-Häufigkeit",
+    "seed": 690000,
+    "side": "player_0",
+    "step": 114,
+    "match": 2,
+    "uid": 2,
+    "votes": {
+      "right": 12,
+      "down": 15,
+      "stay": 9
+    },
+    "q_mean": [
+      26.561,
+      25.86,
+      26.99,
+      26.948,
+      25.667,
+      23.259
+    ],
+    "final": "right"
+  },
+  "v14_first18_equal_v10": true,
+  "summary_de": [
+    "Alle 36 Netze haben dieselbe Bauart, aber 36 unterschiedliche Gewichtssätze.",
+    "79 Merkmale, zwei gemeinsame 256er-Schichten, Dueling-Köpfe mit jeweils 128 Neuronen, sechs Q-Werte; 152.967 Parameter pro Netz.",
+    "18 ursprüngliche Netze, jeweils mit einem nach 5.500 weiteren Spielen erzeugten Nachtrainingspartner. Die 36 sind deshalb keine 36 unabhängigen Neustarts; Partner teilen eine Lernhistorie.",
+    "Originale: sechs Starts 0–5 mit default/Solution-Curriculum, sechs Starts 6–11 mit stärkerem Solution-Anteil, sechs Starts 12–17 zusätzlich mit Gegnerpool und gegnerischen Punkten als Reward-Abzug.",
+    "Beim Spielen gleiche Merkmale für alle Netze; Q-Werte je Aktion mitteln, danach Maske und nachgelagerte Regeln. Keine Mehrheitsabstimmung.",
+    "Erhoffter Vorteil: Unterschiedliche gelernte Einschätzungen ergänzen sich; das Mittel hängt weniger von einem einzelnen Modell ab. Das ist keine Garantie höherer Spielstärke oder unabhängiger Fehler.",
+    "Historisches konkretes V11-Beispiel: 12 rechts, 15 runter, 9 stehen; rechts gewinnt wegen Q-Mittel 26,990 vor 26,948, trotz weniger Einzelpräferenzen."
+  ],
+  "scope": "Nur vorhandene Artefakte, Manifeste und Code gelesen; CPU torch.load(weights_only=True); keine Inferenz, Trainings- oder Spielausführung; keine Repoänderung.",
+  "performance_caveat": {
+    "source": "docs/MORGENBERICHT_20261104.md",
+    "claim": "Aktuelle reine Hälfte FT18 (Netze 18–35) hatte in frischer Bestätigung keinen gesicherten Gesamtvorteil: Panel -0,9167 pp [-2,8130;+0,9583], Solution 755/800 vs V14 761/800, direkt 453/800. Das beweist weder allgemeine Überlegenheit der 36 noch allgemeine Unterlegenheit der 18. V11 vs V10 enthält zusätzlich Regeländerungen und isoliert daher den Ensembleeffekt nicht."
+  },
+  "sources_code": [
+    "agents/sherlock/model.py:48",
+    "agents/sherlock/main.py:341",
+    "scripts/pipeline_battle_ft3.sh:1",
+    "experiments/analysis/decision_trace_20261030_v11.json",
+    "docs/MORGENBERICHT_20261104.md"
+  ],
+  "hash_method": "SHA-256 je State-Dict: lexikografisch sortierte Tensor-Keys; nacheinander key.encode(), str(tuple(shape)).encode(), str(dtype).encode(), tensor.numpy().tobytes(), ohne Trenner oder Längenpräfixe. CPU-Load mit weights_only=True; Reihenfolge [checkpoint['q']] + checkpoint['ensemble']. Checkpoint-Dateihash separat über sämtliche Bytes."
+}
