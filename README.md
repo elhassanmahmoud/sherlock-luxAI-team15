@@ -1,8 +1,8 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-**Einzelnetz-/42-Netz-Studie am 04.11. abgeschlossen: V14 bleibt.** Nach 44 technischen, 920 Auswahl- und 3.840 Bestätigungsspielen ist FO42 nicht zur Übernahme qualifiziert: gegen Solution 771/800 statt V14 762/800, aber nur +0,104 Prozentpunkte im Sechserpanel und drei von sieben Freigabehürden verfehlt. Das geprüfte Einzelnetz SOLO28 scheiterte bereits in der Auswahl; das ist kein Urteil über alle Einzelnetze. Daten und Statistik sind unabhängig bestätigt. In dieser zusätzlichen Studie wurde kein neues Netz trainiert; aktive Gewichte und bestehende ZIP bleiben bytegleich. [Abschlussbericht](docs/ABSCHLUSSBERICHT_20261104_NETZE.md) · [Bestätigung und Nachweise](experiments/analysis/network_breadth_20261104/confirmation/README.md). Die folgenden Angaben zur FT18-Studie betreffen das getrennte frühere Programm.
+**Stand 04.11., nach der Schüler-/Reward-Studie: V14 bleibt die Abgabe.** Ein neues Einzelnetz wurde tatsächlich aus den 36 V14-Netzen destilliert und in zwei getrennten RL-Armen nachtrainiert. Alle 1.064 Spielausführungen sind geprüft. Im frischen 20-Karten-Vergleich gewann V14 gegen Solution 36/40, der beste neue Schüler 22/40; kein neuer Kandidat qualifiziert sich. Das Entfernen des SAP-Shapings zeigt nur eine unsichere positive Tendenz innerhalb des Schülerpaares. **V14-Gewichte und Gruppe15.zip bleiben bytegleich.** [Bericht und Grenzen](docs/SCHUELERNETZ_REWARD_20261104.md) · [Daten und Nachweise](experiments/analysis/student_reward_20261104/README.md).
 
-Stand 04.11.: **Finale Studie abgeschlossen; V14 bleibt die Abgabe.** Zwei echte Nachtrainingsläufe, 8.800 Auswahlspiele und 12.000 unabhängige Bestätigungsspiele lieferten keinen qualifizierten Nachfolger. FT18 mit 18 vorhandenen Netzen verfehlte vier von sieben Freigabebedingungen: gegen Solution **755/800** statt **761/800** mit V14, im lokalen Sechserpanel −0,92 Prozentpunkte. Die Rohdaten und Auswertung wurden unabhängig bestätigt. Gewichte und bestehende `Gruppe15.zip` bleiben unverändert. Upload bis **04.11., 23:59 Uhr Berlin**. [Abschlussbericht](docs/MORGENBERICHT_20261104.md) · [Bestätigung und Nachweise](experiments/analysis/final_battle_20261103/performance_confirmation/README.md) · [Arbeitsstand](docs/ARBEITSSTAND.md).
+Die getrennten früheren Studien bleiben dokumentiert: [Einzelnetz-/42-Netz-Vergleich](docs/ABSCHLUSSBERICHT_20261104_NETZE.md) und [FT18/Nachtraining](docs/MORGENBERICHT_20261104.md). Deren Resultate sind keine Messungen der neuen Schülernetze.
 
 
 **HTW Berlin · Anwendungen der KI · WS 26/27**
@@ -24,7 +24,7 @@ Sherlock ist ein **Ensemble aus 36 Double-DQN-Netzen mit Dueling-Kopf**, das fü
 | DQN-Beispiel des Profs, Rush-Bot, Zufallsspieler | je **600 von 600** gewonnen (Entwicklungskarten) |
 | Entscheidungen | 91 % wie die Netze, Regeln ändern 8 % (gemessen mit V12) |
 | Battle-Abgabe 06.11. | `Gruppe15.zip` (22,2 MB, V14, lokal gebaut am 02.11.; zusätzliche Python-3.10-Prüfung am 03.11.) · Upload bis **04.11., 23:59 Uhr** |
-| Tests | **1.075 Tests + 126 Untertests** bestanden (03.11., gesamte lokale Suite einschließlich Archivtests). Importisolationsfehler behoben; Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
+| Tests | Historisch **1.075 Tests + 126 Untertests** bestanden (03.11.). Am 04.11. zusätzlich die **50 gezielten Schüler-/Reward-Tests** gemeinsam bestanden; keine erneute Gesamtsuite. Details im [Arbeitsstand](docs/ARBEITSSTAND.md). |
 | Gespielte Spiele (historischer Zählstand 01.11., vor dieser Nacht) | rund **1,35 Millionen**: 640.000 Trainingsspiele, 66.000 Zwischenprüfungen, 644.000 Bewertungsspiele ([Zahlen und Fakten](#zahlen-und-fakten)) |
 
 ## Finaler Durchlauf 03./04.11.: V14 bleibt
