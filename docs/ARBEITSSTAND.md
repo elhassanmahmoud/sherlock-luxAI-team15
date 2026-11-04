@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 04.11.2026, abends – Codex: Training beendet, Battle-Präsentation geprüft
+
+- Moayed beendet die Trainingsarbeit ausdrücklich; laut seiner Mitteilung hat Mahmoud Sherlock bereits abgegeben. Moodle-Upload nicht selbst eingesehen. Keine neuen Trainings, Spiele oder Agenten-/Gewichts-/ZIP-Änderungen. GitHub-Abgleich vor der Prüfung unverändert auf `36a68ab`; keine erfassten aktiven Trainings-/Auswertungsprozesse gefunden.
+- Battle-PDF, HTML-Quelle und Stichpunkte vom 01.11. geprüft, alle 17 PDF-Seiten gerendert und visuell angesehen; unabhängige Reviews zu tatsächlichem Entscheidungsablauf und Vortragsaufteilung. Design beibehalten, 13 Hauptfolien plus vier Reservefolien. [Befunde und Vorschlag](presentation/PRUEFUNG_BATTLE_0611_20261104.md).
+- Relevante Korrekturen: Regeln können selbst Sap auslösen; Maskenwirkung von späteren Regeln unterscheiden; Q-Werte nicht als Sicherheit bezeichnen; Nachtraining unter V10- statt „allen heutigen“ Regeln; V12-Diagnoseanteile nicht als allgemeine V14-Werte; zwei verfehlte V14-Hürden in der Reserve vollständig benennen. Jüngste abgeschlossene Studien fehlen im Vortrag; keine davon ist neue Abgabe.
+- Aufteilungsvorschlag: Moayed 1–5 und 12–13 (4:25), Mahmoud 6–11 (5:25), zusammen 9:50 Planzeit mit zwei Übergaben. Folien 11/12 und zugehörigen Sprechtext kürzen; Reserve 14–17 nur auf Nachfrage. Noch nicht vom Team bestätigt, PDF und bisherige Stichpunkte in diesem Prüfschritt unverändert. Offen: gezielte Folienkorrektur, Aufteilung abstimmen und Probe.
+
 ## 04.11.2026, 21:40 Berlin – Codex: A2-Lehreranker geprüft, V14 bleibt
 
 - **Ergebnis:** Lehrerbeispiele verbessern beide RL-Kontrollen, aber kein neuer Agent ist gegenüber A2/V14 nachweislich besser. Solution auf denselben neuen Karten: V14 40/40, A2 39/40, ANCHOR25/26 je 36/40. Panel Anker 96/120 und 88/120 statt Kontrollen 81/120 und 75/120; direkt V14 nur 14/40 und 12/40. Beide verfehlen die vorab festgelegte Auswahl. Kein weiterer Versuch, keine Bestätigung, kein Abgabewechsel. [Bericht](A2_LEHRERANKER_20261104.md).
