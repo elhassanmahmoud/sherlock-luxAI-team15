@@ -1,0 +1,9 @@
+### Task 1: Exact student-state collector
+
+Files: new `scripts/student_collect.py`, `tests/test_student_collect.py`. Read relevant spec data section. Interface CLI `--student PATH --out DIR --seed-start 865100 --maps 30 --deadline-utc ISO`. `collect(student,out,seed_start,maps,deadline)` outputs `dataset.npz`, `manifest.json`, `games.jsonl`, `status.json`. Production maps30; tests may pass5 so one whole map diagnosis by last1/6 fraction, at least1; production last5 diagnostic maps. Output field contract verbatim in spec. Use scripts.common play_game, make_opponent, pinned teacher loader/mean from student_distill, V13 self opponent. Network hook only active collector instance, immediate numpy copies, match saved_prev fields, remove in finally. Copy final world actions and mirror movement direction back when needed. Dataset teacher labels in batches after games. Copy/retain all finite rows, count reset/no-unit/no-network steps. Act wrapper checks deadline each step; no partial dataset success. Reject occupied/protected outputs. Pin all dependencies/input/source/protected before/after, real load exactly one512net, no learning/save/optimizer mutation.
+
+- [ ] Implement meaningful synthetic hook/mask/action tests and output/split guards, verify failure then success. Test no accidental mutation from CPU numpy alias.
+- [ ] Implement collector and provide report with exact API, tests/limits. No commits or production games.
+
+
+Root producer/consumer contract: manifest.json schema_version1,status=done,teacher_sha256=pinnedV14,teacher_members36,student_sha256,game_plan entries {game_index,env_seed,side:int0/1,side_name,opponent,is_train},files_sha256 keys dataset.npz/games.jsonl,rows. status.json statusdone. Legal-centered teacher RMS trainonly. Complete markers afteroutputshashed. No teacherfinalpolicyclaim.
