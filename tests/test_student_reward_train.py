@@ -47,6 +47,106 @@ def test_prepare_preserves_full_config_and_only_reward_differs(student, tmp_path
     assert len(a['rollout_plan']) == 200
 
 
+def test_independent_seeds_keep_matched_arms_and_distinct_plans(student, tmp_path):
+    m = module()
+    manifests = [m.prepare(student, tmp_path / str(seed), run_seed=seed)
+                 for seed in (27, 28)]
+    for seed, manifest in zip((27, 28), manifests):
+        assert manifest['run_seed'] == seed
+        control, sap0 = (manifest['arms'][arm] for arm in m.ARMS)
+        assert control['run_seed'] == sap0['run_seed'] == seed
+        assert control['rollout_plan'] == sap0['rollout_plan']
+        assert {k for k in control['config'] if control['config'][k] != sap0['config'][k]} == {'w_sap_hit'}
+        assert [r['phase'] for r in control['rollout_plan']].count('prefill') == 40
+        assert [r['phase'] for r in control['rollout_plan']].count('train') == 160
+        assert len(manifest['validation_plan']) == 32
+        for arm in m.ARMS:
+            assert m.check_prepared(tmp_path / str(seed), arm)[1] == manifest['arms'][arm]
+    first, second = [manifest['arms']['control']['rollout_plan'] for manifest in manifests]
+    assert (first[0]['seed'], first[40]['seed']) == (475000, 473000)
+    assert (second[0]['seed'], second[40]['seed']) == (485000, 483000)
+    assert {r['seed'] for r in first}.isdisjoint(r['seed'] for r in second)
+    assert [r['opponent'] for r in first] != [r['opponent'] for r in second]
+    assert manifests[0]['arms']['control']['config'] == manifests[1]['arms']['control']['config']
+
+
+def test_explicit_default_and_default_plans_match(student, tmp_path):
+    m = module()
+    default = m.prepare(student, tmp_path / 'default')
+    explicit = m.prepare(student, tmp_path / 'explicit', run_seed=29)
+    assert default == explicit
+    assert m.rollout_plan() == m.rollout_plan(29)
+
+
+@pytest.mark.parametrize('seed', [True, False, 27., 27.5, -1, 30, 1000, '27', None])
+def test_prepare_and_planner_reject_invalid_run_seed_without_writing(student, tmp_path, seed):
+    m = module()
+    out = tmp_path / 'invalid'
+    with pytest.raises(ValueError, match='seed'):
+        m.prepare(student, out, run_seed=seed)
+    assert not out.exists()
+    with pytest.raises(ValueError, match='seed'):
+        m.rollout_plan(seed)
+
+
+@pytest.mark.parametrize('seed', [0, 29])
+def test_prepare_accepts_seed_boundaries(student, tmp_path, seed):
+    m = module()
+    out = tmp_path / 'prepared'
+    m.prepare(student, out, run_seed=seed)
+    assert m.check_prepared(out, 'control')[0]['run_seed'] == seed
+
+
+@pytest.mark.parametrize('where,seed', [
+    ('run_seed', True), ('run_seed', 27.), ('run_seed', -1), ('run_seed', 30),
+    ('run_seed', 28), ('control', 27.), ('sap0', 27.), ('sap0', 28),
+    ('init', 27.), ('init', True),
+])
+def test_check_prepared_rejects_malformed_or_tampered_seed(student, tmp_path, where, seed):
+    m = module()
+    out = tmp_path / 'prepared'
+    manifest = m.prepare(student, out, run_seed=27)
+    path = out / 'manifest.json'
+    if where == 'init':
+        path = out / 'init/control/manifest.json'
+        manifest = json.loads(path.read_text())
+        manifest['run_seed'] = seed
+    elif where == 'run_seed':
+        manifest[where] = seed
+    else:
+        manifest['arms'][where]['run_seed'] = seed
+    path.write_text(json.dumps(manifest))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match='seed|changed'):
+        m.check_prepared(out, 'control')
+    assert path.read_bytes() == before
+
+
+def test_prepare_cli_uses_selected_seed(student, tmp_path, monkeypatch):
+    m = module()
+    import sys
+    out = tmp_path / 'cli'
+    monkeypatch.setattr(sys, 'argv', ['student_reward_train', 'prepare', '--student', str(student),
+                                    '--out', str(out), '--run-seed', '27'])
+    m.main()
+    manifest, entry, _ = m.check_prepared(out, 'control')
+    assert manifest['run_seed'] == entry['run_seed'] == 27
+    assert entry['rollout_plan'][40]['seed'] == 473000
+
+
+def test_seedless_legacy_manifest_is_rejected_without_rewrite(student, tmp_path):
+    m = module()
+    out = tmp_path / 'prepared'
+    manifest = m.prepare(student, out)
+    del manifest['run_seed']
+    path = out / 'manifest.json'
+    path.write_text(json.dumps(manifest))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match='legacy|run_seed'):
+        m.check_prepared(out, 'control')
+    assert path.read_bytes() == before
+
+
 def test_prepare_drops_optimizer_and_replay_and_checks_mutation(student, tmp_path):
     m = module()
     # Extra optimizer is forbidden at the distilled checkpoint contract boundary.
@@ -217,7 +317,8 @@ def test_run_failure_restores_hooks_variant_and_arg_parser(student, tmp_path, mo
     assert not (run / 'final_receipt.json').exists()
 
 
-def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, monkeypatch):
+@pytest.mark.parametrize('run_seed', [29, 27, 28])
+def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, monkeypatch, run_seed):
     """Actual finetune orchestration; synthetic episodes, no game/gradient claim."""
     m = module()
     from contextlib import contextmanager
@@ -243,11 +344,18 @@ def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, mo
             peer_observations.append(m.validate_receipt(path.parent))
     monkeypatch.setattr(m, '_write', observe_publication)
     prepared = tmp_path / 'prepared'
-    m.prepare(student, prepared)
+    m.prepare(student, prepared, run_seed=run_seed)
     record = m.run_arm(prepared, 'control', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
     run = prepared / 'runs/control'
     receipt = m.validate_receipt(run)
     assert record['status'] == 'done'
+    assert record['argv'][record['argv'].index('--seed') + 1] == str(run_seed)
+    assert json.loads((run / 'manifest.json').read_text())['run_seed'] == run_seed
+    assert receipt['run_seed'] == run_seed
+    initial_audit = json.loads((run / 'training_audit.json').read_text())
+    assert initial_audit['run_seed'] == run_seed
+    expected_rng = np.random.default_rng({29: 2900, 27: 2700, 28: 2800}[run_seed])
+    assert initial_audit['initial']['agent_rng_sha256'] == m.experiment.state_sha256(expected_rng.bit_generator.state)
     assert (receipt['actual_prefill_games'], receipt['actual_train_games'], receipt['actual_validation_games']) == (40, 160, 32)
     assert receipt['end']['learning']['learn_steps'] == 24000
     assert receipt['end']['learning']['env_steps'] == 120600
@@ -255,13 +363,28 @@ def test_real_finetune_loop_emits_only_fixed_final_receipt(student, tmp_path, mo
     assert len(list((run / 'weights').glob('*.pth'))) == 1
     assert not (run / 'weights_best').exists()
     m.run_arm(prepared, 'sap0', (datetime.now(timezone.utc) + timedelta(minutes=2)).isoformat())
+    peer_audit = json.loads((prepared / 'runs/sap0/training_audit.json').read_text())
+    assert peer_audit['initial']['agent_rng_sha256'] == initial_audit['initial']['agent_rng_sha256']
     assert [r['arm'] for r in peer_observations] == ['control', 'sap0']
     assert all(r['status'] == 'done' for r in peer_observations)
     assert m.compare_prefill(prepared)['status'] == 'matched'
     assert json.loads((prepared / 'paired_prefill.json').read_text())['prefill_games'] == 40
-    # Rehashing cannot legitimize missing initial live learning evidence.
+    receipt_path = run / 'final_receipt.json'
+    for bad_seed in (True, float(run_seed), 28 if run_seed != 28 else 27):
+        receipt_path.write_text(json.dumps(dict(receipt, run_seed=bad_seed)))
+        with pytest.raises(ValueError, match='seed|differ'):
+            m.validate_receipt(run)
+    receipt_path.write_text(json.dumps(receipt))
     audit_path = run / 'training_audit.json'
     audit = json.loads(audit_path.read_text())
+    audit_path.write_text(json.dumps(dict(audit, run_seed=float(run_seed))))
+    altered_receipt = copy.deepcopy(receipt)
+    altered_receipt['evidence_sha256']['training_audit.json'] = m.file_sha256(audit_path)
+    receipt_path.write_text(json.dumps(altered_receipt))
+    with pytest.raises(ValueError, match='seed'):
+        m.validate_receipt(run)
+    audit_path.write_text(json.dumps(audit))
+    # Rehashing cannot legitimize missing initial live learning evidence.
     audit['initial'] = {}
     audit_path.write_text(json.dumps(audit))
     receipt['evidence_sha256']['training_audit.json'] = m.file_sha256(audit_path)

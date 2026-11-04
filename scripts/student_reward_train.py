@@ -136,10 +136,19 @@ def _config(source, arm):
     return result
 
 
-def rollout_plan():
-    rng = np.random.default_rng(RUN_SEED + OFFSET)
+def _run_seed(value):
+    # finetune reserves maps below validation (500000): its fixed prefill
+    # formula admits starts 0..29 only. Reject before preparing any files.
+    if type(value) is not int or not 0 <= value <= 29:
+        raise ValueError('run_seed must be an integer in trainer range 0..29; validation maps start at 500000')
+    return value
+
+
+def rollout_plan(run_seed=RUN_SEED):
+    run_seed = _run_seed(run_seed)
+    rng = np.random.default_rng(run_seed + OFFSET)
     names = ['solution92', 'sol92_sq', 'default', 'rush']
-    return [dict(phase=phase, game=g, seed=200000 + RUN_SEED * 10000 + offset + g // 2,
+    return [dict(phase=phase, game=g, seed=200000 + run_seed * 10000 + offset + g // 2,
                  side=('player_0', 'player_1')[g % 2],
                  opponent=names[rng.choice(4, p=[.6, .2, .1, .1])])
             for phase, count, offset in (('prefill', PREFILL, 5000), ('train', TRAIN, OFFSET))
@@ -152,7 +161,8 @@ def validation_plan():
             for seed in range(500000, 500004) for side in ('player_0', 'player_1')]
 
 
-def prepare(student: Path, out: Path):
+def prepare(student: Path, out: Path, run_seed=RUN_SEED):
+    run_seed = _run_seed(run_seed)
     student = Path(student).resolve(strict=True)
     out = _output(out)
     if out.exists():
@@ -161,7 +171,7 @@ def prepare(student: Path, out: Path):
     cp = _student(student)
     if cp['cfg']['w_sap_hit'] == 0:
         raise ValueError('Control SAP weight must be nonzero for the ablation')
-    manifest = dict(schema_version=1, student=str(student), student_sha256=before,
+    manifest = dict(schema_version=1, run_seed=run_seed, student=str(student), student_sha256=before,
                     source_config=cp['cfg'], pins=_pins(), arms={},
                     validation_plan=validation_plan())
     for arm in ARMS:
@@ -172,8 +182,8 @@ def prepare(student: Path, out: Path):
         checkpoint['cfg'] = cfg
         path = init / 'weights/agent.pth'
         torch.save(checkpoint, path)
-        entry = dict(config=cfg, run_seed=RUN_SEED, tensor_sha256=tensor_sha256(cp['q']),
-                     weights_sha256=file_sha256(path), rollout_plan=rollout_plan())
+        entry = dict(config=cfg, run_seed=run_seed, tensor_sha256=tensor_sha256(cp['q']),
+                     weights_sha256=file_sha256(path), rollout_plan=rollout_plan(run_seed))
         manifest['arms'][arm] = entry
         _write(init / 'manifest.json', dict(variant=VARIANT, base_variant=VARIANT,
                                           train_games=0, arm=arm, **entry))
@@ -188,6 +198,9 @@ def check_prepared(prepared, arm):
         raise ValueError('Unknown reward arm')
     prepared = _output(Path(prepared).resolve(strict=True))
     manifest = json.loads((prepared / 'manifest.json').read_text())
+    if 'run_seed' not in manifest:
+        raise ValueError('Legacy prepared manifest has no run_seed; prepare a new directory without rewriting historical data')
+    run_seed = _run_seed(manifest['run_seed'])
     source = Path(manifest['student'])
     if file_sha256(source) != manifest['student_sha256']:
         raise ValueError('Student hash changed')
@@ -197,13 +210,16 @@ def check_prepared(prepared, arm):
         raise ValueError('Prepared input/protected/code/config/plan changed')
     for name in ARMS:
         entry = manifest['arms'][name]
+        _run_seed(entry['run_seed'])
         init = prepared / 'init' / name
         path = init / 'weights/agent.pth'
-        expected = dict(config=_config(cp['cfg'], name), run_seed=RUN_SEED,
+        expected = dict(config=_config(cp['cfg'], name), run_seed=run_seed,
                         tensor_sha256=tensor_sha256(cp['q']),
-                        weights_sha256=file_sha256(path), rollout_plan=rollout_plan())
+                        weights_sha256=file_sha256(path), rollout_plan=rollout_plan(run_seed))
+        local = json.loads((init / 'manifest.json').read_text())
+        _run_seed(local['run_seed'])
         if (entry != expected or {p.name for p in (init / 'weights').iterdir()} != {'agent.pth'}
-                or json.loads((init / 'manifest.json').read_text()) != dict(
+                or local != dict(
                     variant=VARIANT, base_variant=VARIANT, train_games=0, arm=name, **entry)):
             raise ValueError('Prepared init/config/weights changed or replay present')
         saved = torch.load(path, map_location='cpu', weights_only=True)
@@ -328,6 +344,7 @@ def run_arm(prepared, arm, deadline_utc):
     from scripts import finetune
     deadline = _deadline(deadline_utc)
     manifest, entry, init = check_prepared(prepared, arm)
+    prepared_seed = manifest['run_seed']
     prepared = Path(prepared).resolve()
     destination = _output(prepared / 'runs' / arm)
     if destination.exists():
@@ -340,7 +357,7 @@ def run_arm(prepared, arm, deadline_utc):
                   started_utc=datetime.now(timezone.utc).isoformat())
     _write(status_path, record)
     destination.rmdir()
-    audit = dict(initial=None, prefill=None, validations=[], end=None)
+    audit = dict(run_seed=prepared_seed, initial=None, prefill=None, validations=[], end=None)
     rows, vals, pending, box = [], [], [], []
     keys = ('Learners', 'play_game', 'play_set', 'make_opponent', 'RUNS')
     old = {k: getattr(finetune, k) for k in keys}
@@ -359,7 +376,7 @@ def run_arm(prepared, arm, deadline_utc):
             f.write(json.dumps(row, allow_nan=False) + '\n')
 
     def load(variant, run_dir, run_seed, load=False):
-        if box or variant != VARIANT or Path(run_dir) != destination or run_seed != RUN_SEED or not load:
+        if box or variant != VARIANT or Path(run_dir) != destination or run_seed != prepared_seed or not load:
             raise ValueError('Unexpected learner load')
         learners = old['Learners'](variant, run_dir, run_seed, load=load)
         audit['initial'] = prove_initial(learners, entry)
@@ -447,7 +464,7 @@ def run_arm(prepared, arm, deadline_utc):
         return result
 
     argv = ['student_reward/finetune', '--init', str(init), '--name', arm,
-            '--variant', VARIANT, '--games', str(TRAIN), '--seed', str(RUN_SEED),
+            '--variant', VARIANT, '--games', str(TRAIN), '--seed', str(prepared_seed),
             '--map-offset', str(OFFSET), '--lr', '.0001', '--prefill-games', str(PREFILL),
             '--keep-final', '--no-test', '--val-every', str(TRAIN), '--n-val', '4', '--mix', MIX]
     record['argv'] = argv
@@ -477,7 +494,7 @@ def run_arm(prepared, arm, deadline_utc):
         check_prepared(prepared, arm)
         _check_deadline(deadline)
         persist()
-        receipt = dict(schema_version=1, status='done', arm=arm, prepared=str(prepared),
+        receipt = dict(schema_version=1, status='done', arm=arm, run_seed=prepared_seed, prepared=str(prepared),
                        student_sha256=manifest['student_sha256'], config=entry['config'],
                        actual_prefill_games=PREFILL, actual_train_games=TRAIN,
                        actual_validation_games=len(vals), end=audit['end'],
@@ -530,7 +547,8 @@ def validate_receipt(destination):
         if status['status'] != 'done' or receipt['status'] != 'done':
             raise ValueError('Incomplete arm')
         manifest, entry, _ = check_prepared(receipt['prepared'], receipt['arm'])
-        if (receipt['student_sha256'] != manifest['student_sha256'] or receipt['config'] != entry['config']
+        if (_run_seed(receipt['run_seed']) != manifest['run_seed']
+                or receipt['student_sha256'] != manifest['student_sha256'] or receipt['config'] != entry['config']
                 or (receipt['actual_prefill_games'], receipt['actual_train_games'], receipt['actual_validation_games']) != (40, 160, 32)
                 or any(file_sha256(destination / n) != digest for n, digest in receipt['evidence_sha256'].items())
                 or file_sha256(destination / 'weights/agent.pth') != receipt['final_checkpoint_sha256']):
@@ -538,7 +556,8 @@ def validate_receipt(destination):
         rows = [json.loads(line) for line in (destination / 'rollouts.jsonl').read_text().splitlines()]
         vals = [json.loads(line) for line in (destination / 'validation_games.jsonl').read_text().splitlines()]
         audit = json.loads((destination / 'training_audit.json').read_text())
-        if ([{k: r[k] for k in ('phase', 'game', 'seed', 'side', 'opponent')} for r in rows] != rollout_plan()
+        if (_run_seed(audit['run_seed']) != manifest['run_seed']
+                or [{k: r[k] for k in ('phase', 'game', 'seed', 'side', 'opponent')} for r in rows] != rollout_plan(manifest['run_seed'])
                 or [{k: r[k] for k in ('after_games', 'opponent', 'seed', 'side')} for r in vals] != validation_plan()
                 or len(audit['validations']) != 2 or any(p['before'] != p['after'] for p in audit['validations'])
                 or not audit['end']['reload_verified'] or audit['end'] != receipt['end']
@@ -646,6 +665,8 @@ def main():
     p = sub.add_parser('prepare')
     p.add_argument('--student', type=Path, required=True)
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--run-seed', type=int, default=RUN_SEED,
+                   help='Matched learner/map/opponent start in trainer range 0..29 (default: 29)')
     r = sub.add_parser('runarm')
     r.add_argument('--prepared', type=Path, required=True)
     r.add_argument('--arm', choices=ARMS, required=True)
@@ -653,7 +674,7 @@ def main():
     args = ap.parse_args()
     experiment.limit_threads()
     if args.command == 'prepare':
-        prepare(args.student, args.out)
+        prepare(args.student, args.out, run_seed=args.run_seed)
     else:
         run_arm(args.prepared, args.arm, args.deadline_utc)
 
