@@ -95,8 +95,18 @@
   "retained_study_worktree": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
   "retention_reason": "Unique local replaybuffers and original path-bound training records retained; tested candidateweights and reviewdata versioned separately.",
   "git_publication": {
-    "status": "pending",
+    "status": "verified",
     "target": "main",
-    "note": "Root verifies and records actual publication after pushing; this is not yet an upload receipt."
+    "published_content_commit": "a4addadf3ed50d2e4351439b5da0ff42c8371afa",
+    "verified_utc": "2026-11-04T14:25:05.023508+00:00",
+    "local_primary_head": "a4addadf3ed50d2e4351439b5da0ff42c8371afa",
+    "remote_main_head": "a4addadf3ed50d2e4351439b5da0ff42c8371afa",
+    "tracked_working_tree_clean": true,
+    "primary_protected_sha256": {
+      "agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+    },
+    "note": "All experiment tools, evidence, candidate checkpoints and handoff documentation are published. This closure receipt is committed separately after that verification; original local replaybuffers remain retained."
   }
 }
