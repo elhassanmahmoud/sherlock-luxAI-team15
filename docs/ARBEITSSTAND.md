@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 05.11.2026, 15:47 Berlin – Claude Code: Schlussfolie mit „Besonders“ und „Gelernt“
+
+- **Grund:** Mahmouds Punkte „was Sherlock besonders macht“ waren nur indirekt enthalten; die Erkenntnisfolie der Präsentationen vom 16./23.10. war bei der Kürzung entfallen. Das Bewertungsschema (Kursfolie 11) liegt weiter nicht vor.
+- **Änderung:** Folie 10 „Im Battle“ (Moayed) behält Kernsatz, Ergebnis und „Fragen?“; die drei Wiederholungspunkte sind durch zwei Spalten ersetzt: **Das macht Sherlock besonders** (Punktefelder aus dem Punktestand erschließen, 36 Netze mit Maske/Regeln, Schüsse auf unsichtbare Gegner) und **Was wir gelernt haben** (Netze und Regeln ergänzen sich, nur neue Karten zählen mit `v19cr` +1,81 auf Dev A / −0,35 pp frisch, mehr Netze oder Training nicht automatisch besser). Sprechtext Folie 10 0:45 → 1:05; Plan Moayed 4:55, Mahmoud 5:45, gesamt 10:40 (keine gemessene Probe; Kürzungshinweis im Text). Stichpunkte, README, CLAUDE.md und Prüfprotokoll angeglichen.
+- **Prüfungen:** Beispielzahlen gegen die Arbeitsstand-Einträge vom 01.11. (15:22, 17:29) abgeglichen. PDF neu gerendert, 13 Seiten; Seite 10 visuell geprüft, übrige Seiten textgleich mit der vorherigen Fassung. Nur Präsentation/Dokumentation, keine Spiele.
+- **Offen:** Moayed muss die geänderte Folie 10 und seinen neuen Sprechtext kennen. Gemeinsame Probe mit Uhr.
+
 ## 05.11.2026, 15:32 Berlin – Claude Code: Spielzahlen im Sprechtext zu Folie 6
 
 - Auf Mahmouds Auftrag spricht Folie 6 jetzt zusätzlich die Projektgröße aus: 165.000 Trainingsspiele in den 36 Abgabenetzen und über 1,3 Millionen Spiele im ganzen Projekt, etwa zur Hälfte Training und Tests. Quelle ist die README-Zählung vom 01.11. (640.104 Training, 65.824 Zwischenprüfungen, 644.419 Bewertung, zusammen 1.350.347), nicht neu gezählt; spätere Studien kommen hinzu. Folie selbst unverändert. Planzeit Folie 6 1:10 → 1:15, Mahmoud 5:45, gesamt 10:20 (keine gemessene Probe). Stichpunkte, README, CLAUDE.md und Prüfprotokoll angeglichen; nur Dokumentation, keine Spiele.

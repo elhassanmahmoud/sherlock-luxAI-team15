@@ -6,9 +6,9 @@
 
 | Wer | Folien | Planzeit |
 |---|---|---:|
-| Moayed | 1–4 · 10 | 4:35 |
+| Moayed | 1–4 · 10 | 4:55 |
 | Mahmoud | 5–9 | 5:45 |
-| **Gesamt** | **1–10** | **10:20** |
+| **Gesamt** | **1–10** | **10:40** |
 
 Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; sie sind **keine gemessene Probe**. Folien 11–13 sind Reserve. *Kursiv in Klammern* = Übungshinweis, nicht sagen.
 
@@ -20,7 +20,7 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; si
 
 1. Die Agentenabgabe ist laut Moayeds Mitteilung bereits erledigt; der Moodle-Upload wurde hier nicht selbst eingesehen. Die Pfadangaben unten bleiben als Referenz erhalten.
 2. Mit der aktuellen PDF üben. Zehn Hauptfolien, drei Reservefolien; die Neuerungen nur kompakt auf Folie 9, keine weitere Versionsgeschichte erzählen.
-3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel etwa 10 Minuten (Plan 10:20). Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
+3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel etwa 10 Minuten (Plan 10:40; bei Zeitdruck auf Folie 10 nur die fetten Sätze). Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
 
 ---
 
@@ -125,10 +125,12 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; si
 ---
 
 ## Folie 10 – Im Battle
-### Moayed · 0:45
+### Moayed · 1:05
 
 - **Sherlock arbeitet in drei Schritten: Wissen sammeln, Aktionen bewerten und die Ausführung koordinieren.**
-- Im Battle achten wir darauf, wie Einheiten Ziele verteilen, Punktefelder halten und dabei schießen. Wenn trotz bekanntem Relic lange kein Punktefeld gefunden wird, testen sie gezielt Kandidaten.
+- **Besonders an Sherlock: Es erschließt wie ein Detektiv aus dem Punktestand, welche Felder Punkte bringen. 36 unterschiedliche Netze bewerten gemeinsam, und es schießt sogar auf Gegner, die es nicht sieht.**
+- **Gelernt haben wir: Netze und Regeln ergänzen sich, und eine Verbesserung zählt erst, wenn sie auf neuen Karten besteht.** Eine Regel sah auf alten Karten nach +1,8 Prozentpunkten aus, auf neuen Karten waren es −0,35. Mehr Netze oder mehr Training ist nicht automatisch besser. *(Bei Zeitdruck nur den fetten Satz sagen.)*
+- Im Battle achten wir darauf, wie Einheiten Ziele verteilen, Punktefelder halten und dabei schießen.
 - Unsere Abgabe erreichte in ihrer historischen Bestätigung **95,4 Prozent gegen Solution_92: 1.600 Spiele auf 800 neuen Karten, jeweils auf beiden Seiten.** Das ist ein gemessenes Ergebnis, kein Versprechen für jeden Gegner.
 - Damit sind wir bereit fürs Battle. Danke!
 
@@ -254,6 +256,7 @@ Bitte mit train=False starten. Der Ordner Gruppe15 kann unter agents/ oder in de
 - Ablauf, Ziele, Merkmale, Maske und Regeln: [Präsentationsreview](docs/presentation/PRUEFUNG_BATTLE_0611_20261104.md), [quellengestützter Ablauf](experiments/analysis/final_battle_20261103/preflight/decision_flow_sources.md), [Agent](agents/sherlock/main.py), [Merkmale und Zielzuweisung](agents/sherlock/features.py), [Gedächtnis](agents/sherlock/belief.py), [Netzarchitektur](agents/sherlock/model.py) und [Konfiguration](agents/sherlock/config.py). Die [ältere Ablaufbeschreibung](Sherlock_Entscheidungsprozess.md) enthält historische Formulierungen; bei Abweichungen gelten der aktuelle Code und der Review.
 - Reale Beispiele auf Folien **5 und 7**: [V11-Diagnose](experiments/analysis/decision_trace_20261030_v11.json), dieselben 36 Netze. Beide Beispiele betreffen Karte 690000, Schritt 114: Maske bei Einheit 0, Ensemble bei Einheit 2. Die Q-Werte sind gerundet.
 - Trainingsherkunft für Folien **5, 6 und 11**: [V11-Übernahmebericht](experiments/analysis/release_20261030_v11/RELEASE.md), [Netzherkunft](Sherlock_Entscheidungsprozess.md#9-wie-die-18-netze-trainiert-wurden). 66.000 + 99.000 bezeichnet die Herkunftsbudgets dieser Familien, nicht alle Projektversuche.
+- „Besonders“ und „Gelernt“ auf Folie **10**: Detektiv-Schluss aus dem Punktestand auf Folie 3, Ensemble auf Folie 5, Blindschuss auf Folie 8. Beispiel +1,81 / −0,35 pp: `v19cr` im [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11., 15:22 (Entwicklungskarten Dev A, Mittel 6 Gegner) und 17:29 (800 frische Karten). „Mehr Netze oder Training nicht automatisch besser“: Studien 01.–04.11., siehe FAQ-Belege unten.
 - Historisches Ergebnis auf Folie **10** und Ausnahme auf Reservefolie **12**: [V14-Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md), [Teamentscheidungsmanifest](experiments/releases/20261101_v14_rescue.json). 800 Panelkarten 820000–820799; getrennte Direktkarten 821000–821399; Rohdaten `experiments/compare/battle/GF_*.csv`.
 - Neuerungen auf Folie **9**: Übernahmeberichte [V11](experiments/analysis/release_20261030_v11/RELEASE.md), [V12](experiments/analysis/release_20261031_v12/RELEASE.md), [V13](experiments/analysis/release_20261101_v13/RELEASE.md) und [V14](experiments/analysis/release_20261101_v14/RELEASE.md); dieselben Zahlen in der Versionstabelle des [README](README.md). Je Zeile eigener gepaarter Vergleich gegen die Vorgängerversion auf frischen Karten (V11 806000–806799, V12 808000–808799, V13 nur Nebelabzug 25 auf 300 Karten 816000–817792, V14 820000–820799). Schritt im Ablauf aus `agents/sherlock/config.py` und `main.py` (`art_splash`, `sap_still_splash`, `fog_sap`, `splash_min_drop`, `est_censor`, `neb_cross`, `cand_rescue`). Schülerzahlen: [Aktionsschüler-Bericht](docs/AKTIONSSCHUELER_20261104.md), A2 und V14 je 38/40 gegen Solution, A2 direkt 14/40.
 - Reservefolie **13**: [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11., 11:35 und 12:19, Relic-/Punktefeldzählung auf 10.000 beziehungsweise 1.500 Karten; Tabellen `RELIC_P6` und `OVERLAP_POINT_P` in [features.py](agents/sherlock/features.py).
