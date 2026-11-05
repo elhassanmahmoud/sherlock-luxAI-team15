@@ -2,15 +2,15 @@
 
 > **Beim Vortrag nichts ablesen.** Laut Bewertungsschema (Kursfolie 11) zählt, dass wir in eigenen Worten frei sprechen. Diese Datei ist zum **Üben**. Die **fett gedruckten Kernsätze** sollen frei sitzen; die Folien sind die Gedächtnisstütze.
 
-**Stand 04.11.2026, nach der beauftragten inhaltlichen Kürzung.** Der Vortrag erklärt den abgegebenen Agenten: Ziele, konkrete Merkmale, unterschiedliche Netze und Regeln vor beziehungsweise nach der Netzauswahl. Versions- und Fortschrittschronik entfallen. Die neue Verteilung lautet: **Moayed 1–4 und 9, Mahmoud 5–8**. Abgabe bleibt **V14 mit 36 Netzen**. Folien: [Battle-PDF](Sherlock_Battle_06-11-2026.pdf), Quelle: [HTML](docs/presentation/Sherlock_Battle_06-11-2026.html).
+**Stand 05.11.2026, nach der Kürzung vom 04.11. und einer Ergänzung am 05.11.** Der Vortrag erklärt den abgegebenen Agenten: Ziele, konkrete Merkmale, unterschiedliche Netze und Regeln vor beziehungsweise nach der Netzauswahl. Die lange Versions- und Fortschrittschronik bleibt weg. Weil die Aufgabe ausdrücklich „die neuesten Entwicklungen der letzten Woche“ verlangt, stehen V11–V14 und die Prüfungen vom 02.–04.11. kompakt auf der neuen **Folie 9**, jeweils mit dem Schritt im Ablauf, an dem sie eingreifen. Die Verteilung lautet jetzt: **Moayed 1–4 und 10, Mahmoud 5–9**. Abgabe bleibt **V14 mit 36 Netzen**. Folien: [Battle-PDF](Sherlock_Battle_06-11-2026.pdf), Quelle: [HTML](docs/presentation/Sherlock_Battle_06-11-2026.html).
 
 | Wer | Folien | Planzeit |
 |---|---|---:|
-| Moayed | 1–4 · 9 | 4:35 |
-| Mahmoud | 5–8 | 5:15 |
-| **Gesamt** | **1–9** | **9:50** |
+| Moayed | 1–4 · 10 | 4:35 |
+| Mahmoud | 5–9 | 5:40 |
+| **Gesamt** | **1–10** | **10:15** |
 
-Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 8; sie sind **keine gemessene Probe**. Folien 10–12 sind Reserve. *Kursiv in Klammern* = Übungshinweis, nicht sagen.
+Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; sie sind **keine gemessene Probe**. Folien 11–13 sind Reserve. *Kursiv in Klammern* = Übungshinweis, nicht sagen.
 
 **Kernaussage:** **Sherlock sammelt Wissen, lässt 36 Netze Aktionen bewerten und koordiniert die Ausführung mit Regeln.**
 
@@ -19,8 +19,8 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 8; si
 ## Vor dem Vortrag
 
 1. Die Agentenabgabe ist laut Moayeds Mitteilung bereits erledigt; der Moodle-Upload wurde hier nicht selbst eingesehen. Die Pfadangaben unten bleiben als Referenz erhalten.
-2. Mit der aktuellen PDF üben. Neun Hauptfolien, drei Reservefolien; keine zusätzliche Versionsgeschichte erzählen.
-3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel 9:50. Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
+2. Mit der aktuellen PDF üben. Zehn Hauptfolien, drei Reservefolien; die Neuerungen nur kompakt auf Folie 9, keine weitere Versionsgeschichte erzählen.
+3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel etwa 10 Minuten (Plan 10:15). Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
 
 ---
 
@@ -103,18 +103,28 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 8; si
 ---
 
 ## Folie 8 – Regelkorrekturen
-### Mahmoud · 1:40
+### Mahmoud · 1:25
 
 - **Nach der maskierten Netzauswahl kann Sherlock Aktionen korrigieren.** Drei Beispiele:
-- Erstens die **Wegkorrektur**: Ein Zug verkleinert den direkten Gitterabstand zum bereits zugewiesenen Ziel, führt aber wegen eines Hindernisses nicht auf einen kürzeren begehbaren Weg. Dann ersetzt Sherlock ihn, falls möglich, durch den ersten Schritt eines kürzesten Wegs. Ein seitlicher oder bewusst abgewandter Zug wird dadurch nicht automatisch korrigiert.
-- Zweitens der **Blindschuss**: Sherlock kennt Punktefelder und sieht den gegnerischen Punktezuwachs. Nicht durch sichtbare Gegner erklärte Punkte deuten auf verdeckte Besetzungen hin. Die konkreten besetzten Felder kennt es nicht sicher.
-- Eine passende Regel kann **STAY zu SAP** ändern. Sie prüft unter anderem Reichweite, Energiereserve und ob eine eigene Einheit auf dem Ziel steht. Die Einheit kann dabei ihr Punktefeld halten.
+- Erstens die **Wegkorrektur**: Ein Zug verkleinert den direkten Abstand zum bereits zugewiesenen Ziel, wegen eines Hindernisses aber nicht den begehbaren Weg. Dann nimmt Sherlock, falls möglich, den ersten Schritt eines kürzesten Wegs. *(Nur bei Nachfrage: Seitliche oder bewusst abgewandte Züge korrigiert diese Regel nicht automatisch.)*
+- Zweitens der **Blindschuss**: Sherlock sieht den gegnerischen Punktezuwachs. Punkte, die keine sichtbare Einheit erklärt, deuten auf verdeckte Halter hin; die genauen Felder kennt es nicht sicher. Dann kann eine Regel **STAY zu SAP** ändern. Sie prüft Reichweite, Energiereserve und ob eine eigene Einheit auf dem Ziel steht. Die Einheit hält dabei ihr Punktefeld.
 - Drittens der **Overkill-Schutz**: Mehrere Einheiten können Schüsse auf denselben Gegner planen. Sherlock berücksichtigt den bereits geplanten Schaden. Wird ein weiterer Schuss dadurch überflüssig, ändert es **SAP zu STAY**. Es nimmt nicht die zweitbeste Netzempfehlung.
-- **Regeln können also Bewegung ändern, einen Schuss verhindern oder selbst auslösen.** Moayed zeigt zum Schluss, worauf wir im Battle achten.
+- **Regeln können also Bewegung ändern, einen Schuss verhindern oder selbst auslösen.** Was davon seit letzter Woche neu ist, zeigt die nächste Folie.
 
 ---
 
-## Folie 9 – Im Battle
+## Folie 9 – Neu seit letzter Woche
+### Mahmoud · 0:40
+
+- **Seit letzter Woche kamen vier Versionen dazu. Jede greift an einer bestimmten Stelle unseres Ablaufs ein.**
+- V11 verdoppelt die Netze auf 36, das ist Schritt 4. V12 bringt den Blindschuss, den ich gerade gezeigt habe, also eine Regel.
+- V13 korrigiert die Nebel-Schätzung im Gedächtnis, damit Einheiten nicht mehr ohne Energie im Nebel feststecken. V14 lässt Einheiten ihre Kandidatenfelder gezielt testen, wenn 30 Schritte nach dem ersten Relic noch kein Punktefeld bekannt ist.
+- Jede Version lag in ihrem eigenen Vergleich auf neuen Karten vor ihrer Vorgängerin; die Unterschiede sind teils klein. *(Zahlen zeigen, nicht vorlesen. Die Zeilen sind getrennte Messungen, keine durchgehende Kurve.)*
+- **Vom 2. bis 4. November haben wir weitere Netze und Trainingsvarianten getestet. Keine war nachweislich besser, deshalb spielt im Battle V14.** Moayed zeigt zum Schluss, worauf wir im Battle achten.
+
+---
+
+## Folie 10 – Im Battle
 ### Moayed · 0:45
 
 - **Sherlock arbeitet in drei Schritten: Wissen sammeln, Aktionen bewerten und die Ausführung koordinieren.**
@@ -124,7 +134,7 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 8; si
 
 ---
 
-## Reservefolie 10 – Trainingsdetails
+## Reservefolie 11 – Trainingsdetails
 ### Mahmoud · nur bei Rückfragen
 
 **Bauart je Netz:** 79 → 256 → 256 mit ReLU. Danach zwei Köpfe mit je 128 Neuronen: ein Zustandswert V und sechs Aktionsvorteile A. Zusammen: `Q(a) = V + A(a) − Mittelwert(A)`. Ein Netz hat 152.967 Parameter. Alle Einheiten teilen seine Gewichte; ihre Eingaben unterscheiden sich. Für die andere Spielseite wird die Karte in dieselbe kanonische Sicht gespiegelt.
@@ -139,7 +149,7 @@ Die 18 nachtrainierten Kopien lernten je 1.500 + 2.000 + 2.000 Spiele unter V10-
 
 **Verfahren:** Double DQN, Huber-Loss, Replay Buffer mit 300.000 Übergängen, Batch 256, Lernrate 0,0003, γ = 0,99; Target-Kopie alle 500 Lernupdates. Ein Spiel umfasst viele Umgebungsschritte; ein Schritt erzeugt Erfahrungen mehrerer Einheiten. Spiele, Übergänge und Lernupdates deshalb auseinanderhalten.
 
-## Reservefolie 11 – Prüfverfahren
+## Reservefolie 12 – Prüfverfahren
 ### Mahmoud · nur bei Rückfragen
 
 - Auf Entwicklungskarten werden Ideen verglichen. Die Auswahl nutzt neue Karten; für die Bestätigung folgt ein weiterer vorher zurückgehaltener Block. Umfang und Hürden werden vor den Ergebnissen festgelegt.
@@ -147,7 +157,7 @@ Die 18 nachtrainierten Kopien lernten je 1.500 + 2.000 + 2.000 Spiele unter V10-
 - **V14 wurde ausdrücklich per Teamentscheidung übernommen, obwohl zwei Hürden verfehlt waren:** Panelgewinn +0,86 statt mindestens +1 Prozentpunkt; im Direktduell lag die untere Intervallgrenze bei 49,25 % statt über 50 %.
 - Der Panelgewinn hatte ein Intervall von +0,48 bis +1,28 Prozentpunkten; alle sechs Gegner lagen im gemessenen Ergebnis im Plus. Das erklärt die Entscheidung, ersetzt aber keine bestandene automatische Prüfung.
 
-## Reservefolie 12 – Spielregeln, die wir nutzen
+## Reservefolie 13 – Spielregeln, die wir nutzen
 ### Moayed oder Mahmoud · nur bei Rückfragen
 
 - Sap erreicht Ziele im ganzen Quadrat innerhalb der Reichweite und trifft mit geringerem oder gleichem Schaden auch die acht Nachbarfelder. Der zunächst verdeckte Streufaktor kann 0,25, 0,5 oder 1 sein.
@@ -243,7 +253,8 @@ Bitte mit train=False starten. Der Ordner Gruppe15 kann unter agents/ oder in de
 
 - Ablauf, Ziele, Merkmale, Maske und Regeln: [Präsentationsreview](docs/presentation/PRUEFUNG_BATTLE_0611_20261104.md), [quellengestützter Ablauf](experiments/analysis/final_battle_20261103/preflight/decision_flow_sources.md), [Agent](agents/sherlock/main.py), [Merkmale und Zielzuweisung](agents/sherlock/features.py), [Gedächtnis](agents/sherlock/belief.py), [Netzarchitektur](agents/sherlock/model.py) und [Konfiguration](agents/sherlock/config.py). Die [ältere Ablaufbeschreibung](Sherlock_Entscheidungsprozess.md) enthält historische Formulierungen; bei Abweichungen gelten der aktuelle Code und der Review.
 - Reale Beispiele auf Folien **5 und 7**: [V11-Diagnose](experiments/analysis/decision_trace_20261030_v11.json), dieselben 36 Netze. Beide Beispiele betreffen Karte 690000, Schritt 114: Maske bei Einheit 0, Ensemble bei Einheit 2. Die Q-Werte sind gerundet.
-- Trainingsherkunft für Folien **5, 6 und 10**: [V11-Übernahmebericht](experiments/analysis/release_20261030_v11/RELEASE.md), [Netzherkunft](Sherlock_Entscheidungsprozess.md#9-wie-die-18-netze-trainiert-wurden). 66.000 + 99.000 bezeichnet die Herkunftsbudgets dieser Familien, nicht alle Projektversuche.
-- Historisches Ergebnis auf Folie **9** und Ausnahme auf Reservefolie **11**: [V14-Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md), [Teamentscheidungsmanifest](experiments/releases/20261101_v14_rescue.json). 800 Panelkarten 820000–820799; getrennte Direktkarten 821000–821399; Rohdaten `experiments/compare/battle/GF_*.csv`.
-- Reservefolie **12**: [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11., 11:35 und 12:19, Relic-/Punktefeldzählung auf 10.000 beziehungsweise 1.500 Karten; Tabellen `RELIC_P6` und `OVERLAP_POINT_P` in [features.py](agents/sherlock/features.py).
+- Trainingsherkunft für Folien **5, 6 und 11**: [V11-Übernahmebericht](experiments/analysis/release_20261030_v11/RELEASE.md), [Netzherkunft](Sherlock_Entscheidungsprozess.md#9-wie-die-18-netze-trainiert-wurden). 66.000 + 99.000 bezeichnet die Herkunftsbudgets dieser Familien, nicht alle Projektversuche.
+- Historisches Ergebnis auf Folie **10** und Ausnahme auf Reservefolie **12**: [V14-Übernahmebericht](experiments/analysis/release_20261101_v14/RELEASE.md), [Teamentscheidungsmanifest](experiments/releases/20261101_v14_rescue.json). 800 Panelkarten 820000–820799; getrennte Direktkarten 821000–821399; Rohdaten `experiments/compare/battle/GF_*.csv`.
+- Neuerungen auf Folie **9**: Übernahmeberichte [V11](experiments/analysis/release_20261030_v11/RELEASE.md), [V12](experiments/analysis/release_20261031_v12/RELEASE.md), [V13](experiments/analysis/release_20261101_v13/RELEASE.md) und [V14](experiments/analysis/release_20261101_v14/RELEASE.md); dieselben Zahlen in der Versionstabelle des [README](README.md). Je Zeile eigener gepaarter Vergleich gegen die Vorgängerversion auf frischen Karten (V11 806000–806799, V12 808000–808799, V13 nur Nebelabzug 25 auf 300 Karten 816000–817792, V14 820000–820799). Schritt im Ablauf aus `agents/sherlock/config.py` und `main.py` (`art_splash`, `sap_still_splash`, `fog_sap`, `splash_min_drop`, `est_censor`, `neb_cross`, `cand_rescue`). Schülerzahlen: [Aktionsschüler-Bericht](docs/AKTIONSSCHUELER_20261104.md), A2 und V14 je 38/40 gegen Solution, A2 direkt 14/40.
+- Reservefolie **13**: [Arbeitsstand](docs/ARBEITSSTAND.md), 01.11., 11:35 und 12:19, Relic-/Punktefeldzählung auf 10.000 beziehungsweise 1.500 Karten; Tabellen `RELIC_P6` und `OVERLAP_POINT_P` in [features.py](agents/sherlock/features.py).
 - FAQ zu weiteren Kandidaten: [Einzelnetz/42 Netze](docs/ABSCHLUSSBERICHT_20261104_NETZE.md), [Aktionsschüler](docs/AKTIONSSCHUELER_20261104.md), [Nachtraining mit Lehreranker](docs/A2_LEHRERANKER_20261104.md); weitere historische Befunde im [Arbeitsstand](docs/ARBEITSSTAND.md). Orakel-Diagnose: `experiments/compare/battle/O_v18r_full.csv` gegen `D_v18r*.csv`. Keine der dort beschriebenen experimentellen Varianten ersetzt V14.

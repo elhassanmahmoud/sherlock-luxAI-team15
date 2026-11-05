@@ -1,5 +1,15 @@
 # Battle-Präsentation: Prüfung und Umsetzung
 
+## Ergänzung 05.11.2026: Folie 9 „Neu seit letzter Woche“
+
+Die Aufgabe verlangt zusätzlich „kurz die neuesten Entwicklungen der letzten Woche“. Nach der Kürzung fehlten V13 und die Prüfungen vom 02.–04.11.; V11, V12 und V14 waren nicht als neu erkennbar. Auf Mahmouds Auftrag deshalb eine kompakte neue Hauptfolie 9 (Mahmoud, 0:40): V11–V14 mit Änderung, **Schritt im Ablauf** und Solution_92 vorher → nachher aus dem jeweiligen gepaarten Übernahmevergleich, dazu die Prüfungen 02.–04.11. Jetzt **zehn Hauptfolien + drei Reservefolien (11–13)**, Moayed 1–4 und 10 (4:35), Mahmoud 5–9 (5:40), Plan 10:15. Folie 8 im Sprechtext auf 1:25 gekürzt. Die Tabelle unten beschreibt die Fassung vom 04.11.; „Im Battle“ ist jetzt Folie 10.
+
+| Folie | Schwerpunkt | Nutzen |
+|---|---|---|
+| 9 | Neu seit letzter Woche | V11 (36 Netze, Schritt 4; Streuschüsse, Schritt 6), V12 (Blindschuss, 6), V13 (Nebel-Schätzung im Gedächtnis 1 und Nebelregel 6), V14 (Kandidaten-Rettung: Gedächtnis 1 löst Regeln 6 aus); Prüfungen 02.–04.11. ohne nachgewiesen besseren Ersatz |
+
+Zahlen gegen die Übernahmeberichte geprüft. Fußnote: getrennte Vergleiche je Version, V13 nur auf 300 Karten mit starkem Nebel, V14 per Teamentscheidung. PDF neu gerendert: Seiten 1–8 textgleich, 10–13 bis auf die Seitennummer textgleich mit den alten Seiten 9–12, Seite 9 visuell geprüft.
+
 ## Aktuelle Fassung: neun Hauptfolien zum Agenten
 
 Moayed beauftragt ausdrücklich weniger Folien und eine anschauliche Erklärung des abgegebenen Sherlock. Die Versionschronik, Fortschrittsbalken und Versuchsübersicht entfallen aus dem Hauptteil. **Neun Hauptfolien + drei Reservefolien**, bestehendes Design, Plan **9:50** (keine gemessene Probe). Moayed behält den leichteren Einstieg/Schluss; wegen der Kürzung gilt jetzt **Moayed 1–4 und 9 (4:35), Mahmoud 5–8 (5:15)**.
