@@ -4,6 +4,10 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 05.11.2026, 15:32 Berlin – Claude Code: Spielzahlen im Sprechtext zu Folie 6
+
+- Auf Mahmouds Auftrag spricht Folie 6 jetzt zusätzlich die Projektgröße aus: 165.000 Trainingsspiele in den 36 Abgabenetzen und über 1,3 Millionen Spiele im ganzen Projekt, etwa zur Hälfte Training und Tests. Quelle ist die README-Zählung vom 01.11. (640.104 Training, 65.824 Zwischenprüfungen, 644.419 Bewertung, zusammen 1.350.347), nicht neu gezählt; spätere Studien kommen hinzu. Folie selbst unverändert. Planzeit Folie 6 1:10 → 1:15, Mahmoud 5:45, gesamt 10:20 (keine gemessene Probe). Stichpunkte, README, CLAUDE.md und Prüfprotokoll angeglichen; nur Dokumentation, keine Spiele.
+
 ## 05.11.2026, 15:13 Berlin – Claude Code: Battle-Folie „Neu seit letzter Woche“ ergänzt
 
 - **Grund:** Die Aufgabenstellung verlangt neben Funktionsweise und Training ausdrücklich „kurz die neuesten Entwicklungen der letzten Woche“. Die Kürzung vom 04.11. hatte die Versionsübersicht entfernt; V13 und die Prüfungen vom 02.–04.11. kamen nicht mehr vor, V11/V12/V14 nur ohne Hinweis, dass sie neu sind. Mahmoud hat die Ergänzung beauftragt und betont, dass der Professor eine genaue Erklärung von Ablauf, Entscheidungsprozess und Netznutzung erwartet.

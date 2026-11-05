@@ -2,7 +2,7 @@
 
 ## Ergänzung 05.11.2026: Folie 9 „Neu seit letzter Woche“
 
-Die Aufgabe verlangt zusätzlich „kurz die neuesten Entwicklungen der letzten Woche“. Nach der Kürzung fehlten V13 und die Prüfungen vom 02.–04.11.; V11, V12 und V14 waren nicht als neu erkennbar. Auf Mahmouds Auftrag deshalb eine kompakte neue Hauptfolie 9 (Mahmoud, 0:40): V11–V14 mit Änderung, **Schritt im Ablauf** und Solution_92 vorher → nachher aus dem jeweiligen gepaarten Übernahmevergleich, dazu die Prüfungen 02.–04.11. Jetzt **zehn Hauptfolien + drei Reservefolien (11–13)**, Moayed 1–4 und 10 (4:35), Mahmoud 5–9 (5:40), Plan 10:15. Folie 8 im Sprechtext auf 1:25 gekürzt. Die Tabelle unten beschreibt die Fassung vom 04.11.; „Im Battle“ ist jetzt Folie 10.
+Die Aufgabe verlangt zusätzlich „kurz die neuesten Entwicklungen der letzten Woche“. Nach der Kürzung fehlten V13 und die Prüfungen vom 02.–04.11.; V11, V12 und V14 waren nicht als neu erkennbar. Auf Mahmouds Auftrag deshalb eine kompakte neue Hauptfolie 9 (Mahmoud, 0:40): V11–V14 mit Änderung, **Schritt im Ablauf** und Solution_92 vorher → nachher aus dem jeweiligen gepaarten Übernahmevergleich, dazu die Prüfungen 02.–04.11. Jetzt **zehn Hauptfolien + drei Reservefolien (11–13)**, Moayed 1–4 und 10 (4:35), Mahmoud 5–9 (5:45), Plan 10:20. Folie 8 im Sprechtext auf 1:25 gekürzt; Folie 6 (1:15) nennt zusätzlich die Projektzählung über 1,3 Millionen Spiele. Die Tabelle unten beschreibt die Fassung vom 04.11.; „Im Battle“ ist jetzt Folie 10.
 
 | Folie | Schwerpunkt | Nutzen |
 |---|---|---|

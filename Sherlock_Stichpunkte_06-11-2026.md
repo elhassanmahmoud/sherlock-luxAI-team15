@@ -7,8 +7,8 @@
 | Wer | Folien | Planzeit |
 |---|---|---:|
 | Moayed | 1–4 · 10 | 4:35 |
-| Mahmoud | 5–9 | 5:40 |
-| **Gesamt** | **1–10** | **10:15** |
+| Mahmoud | 5–9 | 5:45 |
+| **Gesamt** | **1–10** | **10:20** |
 
 Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; sie sind **keine gemessene Probe**. Folien 11–13 sind Reserve. *Kursiv in Klammern* = Übungshinweis, nicht sagen.
 
@@ -20,7 +20,7 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; si
 
 1. Die Agentenabgabe ist laut Moayeds Mitteilung bereits erledigt; der Moodle-Upload wurde hier nicht selbst eingesehen. Die Pfadangaben unten bleiben als Referenz erhalten.
 2. Mit der aktuellen PDF üben. Zehn Hauptfolien, drei Reservefolien; die Neuerungen nur kompakt auf Folie 9, keine weitere Versionsgeschichte erzählen.
-3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel etwa 10 Minuten (Plan 10:15). Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
+3. Zweimal mit Uhr proben, mit Übergabe **nach den 79 Merkmalen** an Mahmoud und **vor dem Battle-Abschluss** zurück an Moayed. Ziel etwa 10 Minuten (Plan 10:20). Bei Zeitdruck Zusatzdetails in die Fragerunde verschieben.
 
 ---
 
@@ -81,14 +81,14 @@ Die Zeiten enthalten kurze Zeigepausen und die Übergaben nach Folie 4 und 9; si
 ---
 
 ## Folie 6 – Training und Reward
-### Mahmoud · 1:10
+### Mahmoud · 1:15
 
 - **Gelernt wurde vor dem Battle. Im Spiel werden die Gewichte nur ausgewertet.** Das Gedächtnis sammelt weiter Informationen.
 - Beim Training entstehen Erfahrungen aus Zustand, Aktion, Belohnung und Folgezustand. Der Replay Buffer speichert sie; das Netz lernt aus gemischten Stichproben.
 - Double DQN trennt Auswahl und Bewertung im Lernziel: Das Online-Netz wählt die nächste Aktion, das Target-Netz bewertet sie.
 - **Reward gibt es pro Schritt**, etwa fürs Halten von Punktefeldern, Veränderungen der Zielnähe und Erkundung. Tod bringt einen Abzug. Der Matchbonus kommt erst am Matchende.
 - Die drei ursprünglichen Gruppen mit je sechs Netzen umfassen zusammen **66.000 Trainingsspiele**. Das Nachtraining der 18 Kopien umfasst **99.000 weitere Spiele**.
-- Das ist das Herkunftsbudget dieser Netzfamilien; weitere Projektversuche zählen separat.
+- **In den 36 Netzen der Abgabe stecken also 165.000 Trainingsspiele. Im ganzen Projekt haben wir über 1,3 Millionen Spiele laufen lassen, etwa zur Hälfte Training und zur Hälfte Tests.** *(Stand 01.11. laut README-Zählung: 640.104 Trainingsspiele, 65.824 Zwischenprüfungen, 644.419 Bewertungsspiele, zusammen 1.350.347; spätere Studien kommen dazu. Nur bei Nachfrage: Die übrigen Trainingsspiele gehören zu anderen Versuchen, nicht zu den 36 Netzen.)*
 
 ---
 
