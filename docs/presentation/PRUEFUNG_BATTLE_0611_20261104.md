@@ -8,9 +8,9 @@ Die Aufgabe verlangt zusätzlich „kurz die neuesten Entwicklungen der letzten 
 |---|---|---|
 | 9 | Neu seit letzter Woche | V11 (36 Netze, Schritt 4; Streuschüsse, Schritt 6), V12 (Blindschuss, 6), V13 (Nebel-Schätzung im Gedächtnis 1 und Nebelregel 6), V14 (Kandidaten-Rettung: Gedächtnis 1 löst Regeln 6 aus); Prüfungen 02.–04.11. ohne nachgewiesen besseren Ersatz |
 
-Zahlen gegen die Übernahmeberichte geprüft. Fußnote: getrennte Vergleiche je Version, V13 nur auf 300 Karten mit starkem Nebel, V14 per Teamentscheidung. PDF neu gerendert: Seiten 1–8 textgleich, 10–13 bis auf die Seitennummer textgleich mit den alten Seiten 9–12, Seite 9 visuell geprüft.
+Zahlen gegen die Übernahmeberichte geprüft. Fußnote: getrennte Vergleiche je Version, V13 nur auf 300 Karten mit starkem Nebel, V14 per Teamentscheidung. Die erste Ergänzung vom 05.11. verschob den Schluss zunächst nur auf Seite 10; der spätere Commit `6955a51` erweiterte diese Schlussfolie inhaltlich. Aktueller Vergleich gegen `a33d71a`: Seiten 1–8 textgleich, neue Seite 9, überarbeitete Seite 10, Reserve 11–13 nur umnummeriert. Codex hat am 05.11. die aktuellen Seiten 9/10 gerendert und visuell geprüft. Der JSON-Prüfnachweis vom 04.11. beschreibt ausschließlich die frühere zwölfseitige Fassung.
 
-## Aktuelle Fassung: neun Hauptfolien zum Agenten
+## Historische Fassung vom 04.11.: neun Hauptfolien zum Agenten
 
 Moayed beauftragt ausdrücklich weniger Folien und eine anschauliche Erklärung des abgegebenen Sherlock. Die Versionschronik, Fortschrittsbalken und Versuchsübersicht entfallen aus dem Hauptteil. **Neun Hauptfolien + drei Reservefolien**, bestehendes Design, Plan **9:50** (keine gemessene Probe). Moayed behält den leichteren Einstieg/Schluss; wegen der Kürzung gilt jetzt **Moayed 1–4 und 9 (4:35), Mahmoud 5–8 (5:15)**.
 
