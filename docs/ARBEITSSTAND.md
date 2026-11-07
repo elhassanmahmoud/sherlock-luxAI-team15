@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07.11.2026 – Codex: geprüfter Versuch r1 tatsächlich gestartet
+
+- Supervisor 27750 gestartet; anfängliche Kinder A0/B0 27767/27773, eigener Wachhalteprozess 27756. Maßgeblich ist **`experiments/analysis/ensemble_diversity_20261107/training_run_r1/state.json`** in der Studienkopie. Der ältere Pfad `training_run/state.json` beschreibt ausschließlich den unterbrochenen Versuch. Keine zweite Instanz starten.
+- Studie bleibt auf `6ad34527673e29f0e50e2dacc917e5ded59f0343` eingefroren. Neue Runs heißen `experiments/runs/20261107_diversity_r1_<ARM>`; Vorbereitung `20261107_diversity_r1_prepared`. Gleichheit aller sechs initialen Tensoren, Konfigurationen, Eltern, Zufallsstarts und vollständigen Spielpläne vor Start geprüft. [Prüfnachweis](../experiments/analysis/ensemble_diversity_20261107/operations/retry_initial_equality.json), [Startmomentaufnahme](../experiments/analysis/ensemble_diversity_20261107/operations/retry_started.json).
+- Netzstrom erkannt, zuletzt 99 % Akku; Kontingent beim Start 57 % verbraucht. Maximal zwei Modellläufe, Kontingentreserve unverändert. Keine parallelen Tests. Alle Review-Korrekturen und Werkzeuge vor diesem Start geprüft und veröffentlicht (`4ff93d9`, `6ad3452`).
+- Alte Teilstände und Rohprotokolle unverändert erhalten; r1 ist ein neuer Versuch, keine exakte Fortsetzung und kein Stärkeergebnis. V14 und ZIP bytegleich. Remote-Abgleich auf r1-Pfad aktualisiert; neue Commits während des Freeze zunächst nur prüfen.
+
 ## 07.11.2026 – Codex: fester Ensemblevergleich technisch vorbereitet
 
 - Neue Werkzeuge bauen ausschließlich A39/B39/ALL42/REPLACE36 aus sechs vollständig geprüften Endständen, prüfen die exakte Netzreihenfolge und V14-Konfiguration und erlauben keine Nutzung der unterbrochenen Teilstände. Alte V14-Dateien bleiben schreibgeschützt.
