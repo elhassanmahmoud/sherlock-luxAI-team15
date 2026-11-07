@@ -33,6 +33,7 @@ PLANS = ('docs/superpowers/specs/2026-11-07-ensemble-diversity.md',
          'docs/superpowers/plans/2026-11-07-ensemble-diversity.md')
 CHECK_INTERVAL = 10
 GRACE_SECONDS = 180
+DEFAULT_RUN_PREFIX = '20261107_diversity'
 
 
 class StopRequested(Exception):
@@ -62,14 +63,24 @@ def compute_lock(root, path=LOCK_FILE):
             yield
 
 
-def training_command(state, arm):
+def run_name(state, arm):
     require(arm in ARMS, 'Unknown training arm')
+    prefix = state.get('run_prefix', DEFAULT_RUN_PREFIX)
+    require(isinstance(prefix, str) and
+            re.fullmatch(r'20261107_diversity(?:_[a-z0-9]{1,24})?', prefix) is not None,
+            'Invalid study run prefix')
+    return f'{prefix}_{arm}'
+
+
+def training_command(state, arm):
+    name = run_name(state, arm)
     return [state['python'], '-B', '-m', 'scripts.ensemble_diversity_train', 'run',
             '--prepared', state['prepared'], '--arm', arm,
-            '--name', f'20261107_diversity_{arm}']
+            '--name', name]
 
 
-def build_state(prepared, out, python, expected_head, stop_file=STOP_FILE):
+def build_state(prepared, out, python, expected_head, stop_file=STOP_FILE,
+                run_prefix=DEFAULT_RUN_PREFIX):
     require(Path.cwd().resolve() == ROOT, 'Use the intended worktree')
     require(re.fullmatch('[0-9a-f]{40}', expected_head) is not None, 'Expected HEAD must be full')
     prepared, out = safe_path(prepared), safe_path(out)
@@ -83,7 +94,7 @@ def build_state(prepared, out, python, expected_head, stop_file=STOP_FILE):
             and set(manifest.get('arms', {})) == set(ARMS)
             and not manifest.get('smoke', False), 'Prepared production arms/source differ')
     require(not (prepared / 'supervisor_launch.json').exists(), 'Prepared study already launched')
-    runs = [ROOT / 'experiments/runs' / f'20261107_diversity_{arm}' for arm in ARMS]
+    runs = [ROOT / 'experiments/runs' / run_name({'run_prefix': run_prefix}, arm) for arm in ARMS]
     require(all(not path.exists() for path in runs), 'A training run already exists; no restart')
     plans = [str(ROOT / name) for name in PLANS]
     source = source_identity(ROOT, python, plans)
@@ -95,7 +106,7 @@ def build_state(prepared, out, python, expected_head, stop_file=STOP_FILE):
                 python=str(python), expected_head=expected_head, plans=plans, source=source,
                 protected=protected, inputs=hashes(safe_path(p) for p in prepared.rglob('*') if p.is_file()),
                 status='prepared', owner_pid=os.getpid(), stop_file=str(Path(stop_file).absolute()),
-                queue=list(ARMS), jobs={}, active=[], receipts={},
+                queue=list(ARMS), jobs={}, active=[], receipts={}, run_prefix=run_prefix,
                 quota_control='External root monitoring; STOP inhibits and gracefully stops work')
 
 
@@ -152,38 +163,65 @@ def spawn_owned(state, arm, command, owned):
         save_state(state)
 
 
+def group_alive(pgid):
+    """EPERM is not disappearance unless an independent process snapshot proves it."""
+    try:
+        return group_exists(pgid)
+    except PermissionError:
+        snapshot = subprocess.check_output(['ps', '-axo', 'pgid='], text=True, timeout=5)
+        groups = {int(line.strip()) for line in snapshot.splitlines() if line.strip()}
+        if pgid in groups:
+            raise
+        return False
+
 def shutdown_owned(owned, *, grace=GRACE_SECONDS):
-    """Signal all owned children first, allowing their current game/checkpoint to finish."""
+    """Reap before probing and signal only registered process groups; never restart."""
+    def live_groups():
+        live = []
+        for child in owned.values():
+            child['process'].poll()
+            if group_alive(child['pgid']):
+                live.append(child['pgid'])
+        return live
     for child in owned.values():
         p = child['process']
         require(child['owner_pid'] == os.getpid() and child['pgid'] == p.pid,
-                'Refusing to signal an unowned process')
+                  'Refusing to signal an unowned process')
         if p.poll() is None:
             try:
                 require(os.getpgid(p.pid) == p.pid, 'Owned process group changed')
             except ProcessLookupError:
-                pass  # Leader may finish between poll() and getpgid().
-        if group_exists(p.pid):
-            os.killpg(p.pid, signal.SIGTERM)
+                pass
+        if group_alive(p.pid):
+            try:
+                os.killpg(p.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            except PermissionError:
+                if group_alive(p.pid):
+                    raise
     deadline = time.monotonic() + grace
-    while any(group_exists(c['pgid']) for c in owned.values()) and time.monotonic() < deadline:
-        for child in owned.values():
-            child['process'].poll()  # reap exited leaders, so their groups disappear
+    while live_groups() and time.monotonic() < deadline:
         time.sleep(1)
+    for pgid in live_groups():
+        try:
+            os.killpg(pgid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        except PermissionError:
+            if group_alive(pgid):
+                raise
     for child in owned.values():
-        p = child['process']
-        if group_exists(p.pid):
-            os.killpg(p.pid, signal.SIGKILL)
-        p.wait(timeout=10)
+        child['process'].wait(timeout=10)
     deadline = time.monotonic() + 10
-    while any(group_exists(c['pgid']) for c in owned.values()) and time.monotonic() < deadline:
+    while live_groups() and time.monotonic() < deadline:
         time.sleep(1)
-    require(not any(group_exists(c['pgid']) for c in owned.values()), 'Owned process group did not stop')
+    require(not live_groups(), 'Owned process group did not stop')
 
 
 def verify_receipt(state, arm):
     """Check lightweight completion evidence; root separately audits tensors after training."""
-    name = f'20261107_diversity_{arm}'
+    name = run_name(state, arm)
     run = Path(state['root']) / 'experiments/runs' / name
     progress = json.loads((run / 'progress.json').read_text())
     path = run / 'final_receipt.json'
@@ -217,7 +255,7 @@ def run_queue(state):
                     continue
                 state['jobs'][arm].update(returncode=code, finished_at=time.time())
                 require(code == 0, f'Training arm {arm} failed with exit {code}')
-                require(not group_exists(child['pgid']), f'Training arm {arm} left descendants')
+                require(not group_alive(child['pgid']), f'Training arm {arm} left descendants')
                 state['receipts'][arm] = verify_receipt(state, arm)
                 del owned[arm]
             can_start = power['ac'] or power['percent'] >= 35
@@ -255,7 +293,8 @@ def run_queue(state):
     return state
 
 
-def run_supervisor(prepared, out, python, expected_head, stop_file=STOP_FILE):
+def run_supervisor(prepared, out, python, expected_head, stop_file=STOP_FILE,
+                   run_prefix=DEFAULT_RUN_PREFIX):
     if Path(stop_file).exists():
         raise StopRequested('Existing STOP inhibits start')
     signals = (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)
@@ -267,7 +306,7 @@ def run_supervisor(prepared, out, python, expected_head, stop_file=STOP_FILE):
             signal.signal(sig, lambda *_: request_stop(stop_file))
         with compute_lock(ROOT):
             check_model_processes({})
-            state = build_state(prepared, out, python, expected_head, stop_file)
+            state = build_state(prepared, out, python, expected_head, stop_file, run_prefix)
             Path(state['out']).parent.mkdir(parents=True, exist_ok=True)
             Path(state['out']).mkdir()
             with (Path(state['prepared']) / 'supervisor_launch.json').open('x') as stream:
@@ -304,6 +343,8 @@ def main():
     for name in ('prepared', 'out', 'python', 'expected-head'):
         start.add_argument('--' + name, required=True)
     start.add_argument('--stop-file', type=Path, default=STOP_FILE)
+    start.add_argument('--run-prefix', default=DEFAULT_RUN_PREFIX,
+                       help='Explicit fresh attempt; existing run directories are never reused')
     commands.add_parser('stop').add_argument('--stop-file', type=Path, default=STOP_FILE)
     args = parser.parse_args()
     if args.command == 'stop':
@@ -311,7 +352,8 @@ def main():
         print(f'STOP recorded: {args.stop_file}')
         return
     try:
-        state = run_supervisor(args.prepared, args.out, args.python, args.expected_head, args.stop_file)
+        state = run_supervisor(args.prepared, args.out, args.python, args.expected_head,
+                               args.stop_file, args.run_prefix)
     except Exception as exc:
         print(f'Supervisor stopped: {type(exc).__name__}: {exc}', file=sys.stderr)
         raise SystemExit(1)

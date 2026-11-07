@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-11-07T14:18:48.471043+00:00",
+  "status": "stopped_incomplete_retained",
+  "source_head": "b683bc7123fb159a294b8bbe3fa2a392477e80a6",
+  "root_cause": "Root allowed lightweight pytest in primary checkout; shared model guard explicitly rejects any pytest process. Training supervisor detected PID87785 and signaled ownedchildren. Source content remained unchanged.",
+  "partial_arms": {
+    "A0": {
+      "status": "incomplete",
+      "eligible": false,
+      "actual_prefill_games": 120,
+      "actual_train_games": 1906,
+      "actual_validation_games": 64,
+      "learn_steps": 285900,
+      "error": "StudyInterrupted: SIGTERM requested; stopped at completed-game boundary",
+      "checkpoint_sha256": "eed374a16e8f628fe0a02265701d096aeedf9d8e328b508d157e8b53dcc8b19d",
+      "receipt_exists": false
+    },
+    "B0": {
+      "status": "incomplete",
+      "eligible": false,
+      "actual_prefill_games": 120,
+      "actual_train_games": 2178,
+      "actual_validation_games": 96,
+      "learn_steps": 326700,
+      "error": "StudyInterrupted: SIGTERM requested; stopped at completed-game boundary",
+      "checkpoint_sha256": "df8f4b00b12d1e229b1fb9e9a96ae76c1f425b5ee087ea2cc4569cd552e3d1d4",
+      "receipt_exists": false
+    }
+  },
+  "cleanup": "Supervisor6274, children6291/6297, wake6280 and detected87785 confirmedgone with os.kill(pid,0) and filteredps. Secondary cleanup PermissionError was recorded while children exited; exact failing probe not captured.",
+  "resume": "Checkpoints contain Q,target,Adam,counters but no replay/RNG snapshot. No exact continuation claim; preservepartials/ineligible. Finish all tooling/tests, then explicitly prepare fresh attempt with identical design, initialstates, RNGseeds/map/opponentplans, no intermediate choice. No automaticrestart.",
+  "selection_games": 0,
+  "confirmation_games": 0
+}

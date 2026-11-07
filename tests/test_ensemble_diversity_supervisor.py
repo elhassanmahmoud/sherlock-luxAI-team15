@@ -33,6 +33,35 @@ def test_fixed_order_commands_and_atomic_ledger(s, tmp_path):
     assert not list(Path(st['out']).glob('*.tmp'))
 
 
+def test_explicit_fresh_attempt_has_distinct_run_names(s, tmp_path):
+    st = state(tmp_path)
+    st['run_prefix'] = '20261107_diversity_r1'
+    assert s.training_command(st, 'A0')[-1] == '20261107_diversity_r1_A0'
+    assert s.run_name(st, 'B2') == '20261107_diversity_r1_B2'
+    original = {k: v for k, v in st.items() if k != 'run_prefix'}
+    assert s.run_name(original, 'A0') == '20261107_diversity_A0'
+
+
+@pytest.mark.parametrize('prefix', ['', '../outside', 'other_study', '20261107_diversity/child',
+                                    '20261107_diversity_r1/../../agents', None])
+def test_attempt_names_cannot_escape_study(s, tmp_path, prefix):
+    st = state(tmp_path)
+    st['run_prefix'] = prefix
+    with pytest.raises(ValueError, match='prefix'):
+        s.training_command(st, 'A0')
+
+
+def test_fresh_attempt_never_admits_original_receipt(s, tmp_path):
+    st = state(tmp_path)
+    st['run_prefix'] = '20261107_diversity_r1'
+    old = tmp_path / 'experiments/runs/20261107_diversity_A0'
+    old.mkdir(parents=True)
+    (old/'progress.json').write_text(json.dumps(dict(status='done', eligible=True)))
+    (old/'final_receipt.json').write_text('{}')
+    with pytest.raises(FileNotFoundError):
+        s.verify_receipt(st, 'A0')
+
+
 @pytest.mark.parametrize('power,starting,allowed', [
     ({'ac': False, 'percent': 34}, True, False),
     ({'ac': False, 'percent': 35}, True, True),
@@ -227,3 +256,78 @@ def test_lock_acquires_existing_cross_worktree_lock_and_external_lock(s, tmp_pat
         with pytest.raises(ValueError, match='lock'):
             with s.compute_lock(tmp_path, tmp_path/'compute.lock'):
                 pass
+
+
+@pytest.mark.parametrize('snapshot,expected', [('111\n222\n', False), ('111\n333\n', 'permission'), (None, 'snapshot')])
+def test_group_permission_race_requires_independent_absence(s, monkeypatch, snapshot, expected):
+    def denied(_):
+        raise PermissionError('probe denied')
+    def ps(*args, **kwargs):
+        if snapshot is None:
+            raise OSError('snapshot failed')
+        return snapshot
+    monkeypatch.setattr(s, 'group_exists', denied)
+    monkeypatch.setattr(s.subprocess, 'check_output', ps)
+    if expected is False:
+        assert s.group_alive(333) is False
+    elif expected == 'permission':
+        with pytest.raises(PermissionError):
+            s.group_alive(333)
+    else:
+        with pytest.raises(OSError, match='snapshot failed'):
+            s.group_alive(333)
+
+
+def test_shutdown_reaps_before_every_group_probe(s, monkeypatch):
+    events = []
+    def poll():
+        events.append('poll')
+        return 0
+    def probe(_):
+        assert events[-1] == 'poll', 'probe happened before leader reap'
+        events.append('probe')
+        return False
+    p = SimpleNamespace(pid=401, poll=poll, wait=lambda timeout: 0)
+    monkeypatch.setattr(s, 'group_exists', probe)
+    s.shutdown_owned({'one': dict(process=p, pgid=401, owner_pid=os.getpid())})
+    assert events.count('poll') == events.count('probe')
+
+
+@pytest.mark.parametrize('disappears_at', [signal.SIGTERM, signal.SIGKILL])
+def test_shutdown_tolerates_disappearance_between_probe_and_signal(s, monkeypatch, disappears_at):
+    alive, sent = [True], []
+    p = SimpleNamespace(pid=402, poll=lambda: None, wait=lambda timeout: 0)
+    def send(pid, sig):
+        assert pid == 402
+        sent.append(sig)
+        if sig == disappears_at:
+            alive[0] = False
+            raise ProcessLookupError('group exited just before signal')
+    monkeypatch.setattr(s, 'group_exists', lambda _: alive[0])
+    monkeypatch.setattr(s.os, 'getpgid', lambda pid: pid)
+    monkeypatch.setattr(s.os, 'killpg', send)
+    s.shutdown_owned({'one': dict(process=p, pgid=402, owner_pid=os.getpid())}, grace=0)
+    assert disappears_at in sent
+    assert alive == [False]
+
+
+def test_completed_queue_accepts_permission_probe_only_after_empty_snapshot(s, tmp_path, monkeypatch):
+    st = state(tmp_path)
+    launched = []
+    def spawn(st, arm, command, owned):
+        launched.append(arm)
+        p = SimpleNamespace(pid=500 + len(launched), poll=lambda: 0)
+        owned[arm] = dict(process=p, pgid=p.pid, owner_pid=os.getpid())
+        st['jobs'][arm] = dict(returncode=None)
+    def denied(_):
+        raise PermissionError('just-exited group')
+    monkeypatch.setattr(s, 'guard', lambda *args: {'ac': True, 'percent': 90})
+    monkeypatch.setattr(s, 'spawn_owned', spawn)
+    monkeypatch.setattr(s, 'verify_receipt', lambda st, arm: {'arm': arm})
+    monkeypatch.setattr(s, 'group_exists', denied)
+    monkeypatch.setattr(s.subprocess, 'check_output', lambda *args, **kwargs: '999\n')
+    monkeypatch.setattr(s.time, 'sleep', lambda _: None)
+    s.run_queue(st)
+    assert launched == list(s.ARMS)
+    assert st['status'] == 'complete'
+    assert len(st['receipts']) == 6

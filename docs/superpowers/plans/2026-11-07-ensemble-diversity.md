@@ -60,3 +60,10 @@ Files: scripts/ensemble_diversity_train.py; tests/test_ensemble_diversity_train.
 - Root verification: 142 targeted pytest tests passed in 50.74 s, including both new tools and shared finetune/ensemble/rescue/supervisor tests. Independent review found validation SIGTERM waited a full block; fixed with two initially failing regression tests, root inspected per-game check and verified green suite. Real smoke remains next; no performance results.
 
 - Task 1 complete: tool/spec commit cda52d9; Root real A0/B0 smoke at that commit: each 2 prefill + 2 learning + 8 validation executions, 300 actual optimizer updates, changed finite weights and successful reload, validation identities unchanged. Both receipts explicitly smoke/ineligible, total24 technical executions. Protected baseline hashes unchanged. Production not yet started.
+
+
+## Operativer Neuanlauf nach Fremdprozess-Abbruch, 07.11.2026
+
+Der erste Versuch wurde nach 1906/2178 Lernspielen durch einen von Codex parallel erlaubten pytest-Prozess gestoppt. Beide unvollständigen Endstände bleiben erhalten und nicht nominierbar; A1/B1/A2/B2 waren noch nicht gestartet. Da Replay und Zufallszustand nicht vollständig gespeichert sind, gibt es keine exakte Fortsetzung aus diesen Dateien.
+
+Nach Fehleranalyse, abgeschlossenen Werkzeugtests und unabhängiger Prüfung ist ein ausdrücklich neuer Versuch `20261107_diversity_r1` vorgesehen. Vor Start die sechs initialen Tensoren sowie sämtliche Karten-/Seiten-/Gegnerpläne gegen den ersten vorbereiteten Versuch vergleichen. Gleiche Eltern, Trainingsparameter, Startseeds und feste Budgets; keine Entscheidung aus Zwischenwerten. Neue Ausgabe- und Reservierungspfade, kein Löschen oder Wiederverwenden alter Runs. Die getrennten 4484 abgebrochenen Ausführungen zusätzlich ausweisen. Während des Neuanlaufs keine parallelen Tests, keine Quellen- oder HEAD-Änderungen. Kontingent- und Energiegrenzen bleiben unverändert.
