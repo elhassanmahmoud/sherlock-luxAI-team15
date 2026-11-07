@@ -4,6 +4,15 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07.11.2026 – Codex: neue sechsarmige Trainingswelle gestartet
+
+- **Tatsächlicher Start:** Der einmalige Supervisor läuft im Studienworktree `/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15` auf eingefrorenem Quellstand `b683bc7123fb159a294b8bbe3fa2a392477e80a6`. Eigentümer-PID 6274; erste Kinder A0/B0 6291/6297. Keine zweite Kopie starten. Momentaufnahme nach Start: 38/42 Vorlaufspiele, noch keine Lernupdates; daraus folgt noch kein Stärkeergebnis.
+- Verbindlicher Live-Stand: `experiments/analysis/ensemble_diversity_20261107/training_run/state.json` in der Studienkopie; Einzelstände `experiments/runs/20261107_diversity_<ARM>/progress.json`. Zwei Arme aktiv, A1/B1/A2/B2 folgen automatisch. Geplant 18.000 Lern-, 720 Vorlauf- und 768 Validierungsausführungen. Keine automatische Auswertung/Übernahme durch den Supervisor; die feste Vergleichsphase folgt erst nach unabhängig geprüften vollständigen Endständen.
+- Einmaliger Abbruch: `python -m scripts.ensemble_diversity_supervisor stop` in der Studienkopie setzt `/tmp/sherlock-diversity-20261107/STOP`. Laufende Spiele werden zu Ende geführt, Zwischenstände gesichert, Teilstände bleiben nicht nominierbar. Kein automatischer Neustart. Unter 35 % Akku keine neuen Kinder, bei höchstens 25 % ohne Netzstrom geordneter Stopp. Wachhalteprozess wird vom Supervisor besessen und am Ende beendet. Nutzer kündigt Anschluss an; zuletzt tatsächlicher Akkubetrieb 56 %.
+- Vorbereitung veröffentlicht: `cda52d9` (Werkzeuge/Design/Tests), `b683bc7` (24 echte Smoke-Ausführungen und Abnahme). Root: 142 gezielte Tests bestanden; Smoke je 300 tatsächliche Updates, erfolgreiches Wiederladen, keine Änderung an V14/ZIP. Produktive Endstände sind noch nicht vorhanden.
+- Remote-Überwachung und Kontingentkontrolle aktiv, bisher letzter Verbrauch 47 %. Früher beauftragter dreistündlicher Repo-Abgleich wieder aktiviert. Bis Trainingsende keine Änderungen an Quellen/HEAD der Studienkopie; neue Remote-Commits zunächst nur prüfen. Dieser Startbericht wird ausschließlich im primären Checkout ergänzt und erst nach Source-Freeze in die Studienkopie übernommen.
+
+
 ## 07.11.2026 – Codex: neue Ensemble-Studie nach der Präsentation vorbereitet
 
 - Moayed beauftragt erneut autonome Trainings und Verbesserungen, Schwerpunkt mehr Netze, ohne feste Uhrzeit. Historischer Präsentations-/Trainingsstopp aufgehoben; mindestens 30 % Kontingentreserve bleibt erhalten.
