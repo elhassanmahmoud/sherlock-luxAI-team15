@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07.11.2026 – Codex: fester Ensemblevergleich technisch vorbereitet
+
+- Neue Werkzeuge bauen ausschließlich A39/B39/ALL42/REPLACE36 aus sechs vollständig geprüften Endständen, prüfen die exakte Netzreihenfolge und V14-Konfiguration und erlauben keine Nutzung der unterbrochenen Teilstände. Alte V14-Dateien bleiben schreibgeschützt.
+- Der Vergleichscontroller führt die festen 39 Auswahljobs mit höchstens zwei Spielprozessen aus, bindet Karten, Gegner, Modelle, Quellen und Ausgaben über Prüfsummen und verweigert unvollständige Ergebnisse. Kontingentnachweis muss aktuell sein; bei mindestens 65 % Verbrauch Stopp. Die Bestätigung wird erst nach erneut errechneter, identischer Auswahlentscheidung freigegeben. Kein automatisches Nachrücken oder Neustarten.
+- Auswertung trennt echte Siege/Remis/Niederlagen vom Score mit halbem Remispunkt, nutzt ganze Karten für den gepaarten Bootstrap und die vorher festgelegten Gates. Alle Auswahlrollen müssen vollständig sein, auch REPLACE36; dieser diagnostische Kandidat darf nicht nominiert werden.
+- **Tatsächlich geprüft:** 287 Tests plus 16 Untertests vor den Review-Korrekturen; danach Root-Prüfung mit 138 gezielten Tests plus 16 Untertests bestanden. Enthalten sind synthetische vollständige 7800-/23200-Zeilen-Datensätze; diese sind **keine gespielten Partien**. Unabhängiger Review und enger Nachreview haben beide Befunde als behoben bewertet. [Review](../experiments/analysis/ensemble_diversity_20261107/operations/comparison_review.md), [Korrekturtests](../experiments/analysis/ensemble_diversity_20261107/operations/comparison_fix1.md).
+- Noch keine neuen vollständigen Modelle, Kandidaten oder Leistungsdaten. Nächster Schritt ist der separat dokumentierte frische Trainingsversuch; anschließend vollständige Lernabnahme und Vergleich.
+
 ## 07.11.2026 – Codex: Trainingsunterbrechung aufgeklärt und sicherer Neuanlauf vorbereitet
 
 - **Tatsächlicher Abbruch um 14:14 UTC / 15:14 Berlin:** Codex hatte leichte Werkzeugtests im primären Checkout parallel erlaubt. Die vorhandene Prozessüberwachung blockiert jedoch auch `pytest` und stoppte deshalb beide eigenen Trainings. Das war ein Koordinationsfehler, kein Fehler von Mahmoud und kein Verlust der V14-Abgabe. Die neue gemeinsame Arbeitsregel trennt Tests und Modellläufe zeitlich.
