@@ -1,0 +1,28 @@
+{
+  "checked_utc": "2026-11-07T17:18:53.426625+00:00",
+  "scope": "Read-only counts/hash/recorded-proof audit, no tensor deserialization or performance comparison. Final independent tensor audit after all training.",
+  "arm": "B0",
+  "checks": {
+    "final_checkpoint_sha256": true,
+    "rollouts_sha256": true,
+    "validation_sha256": true,
+    "audit_sha256": true,
+    "complete": true,
+    "rollout_count": true,
+    "train_count": true,
+    "validation_count": true,
+    "learning_updates": true,
+    "supervisor_receipt": true,
+    "reload_proof": true,
+    "validation_state_preserved": true
+  },
+  "active": [
+    "A0",
+    "A1"
+  ],
+  "queue": [
+    "B1",
+    "A2",
+    "B2"
+  ]
+}

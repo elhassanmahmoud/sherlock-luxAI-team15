@@ -38,14 +38,14 @@ Files: scripts/ensemble_diversity_train.py; tests/test_ensemble_diversity_train.
 ### Task 2: First six-member training wave
 
 - [x] Complete seed-collision audit; snapshot reference/source/interpreter hashes.
-- [ ] Prepare six arms and record operational ownership; run A0/B0 first, then A1/B1 and A2/B2 with at most two workers.
-- [ ] Check real loss, optimizer updates, replay/action consistency, finite changed weights, validation isolation and final checkpoint reload. Stop on technical defects; do not nominate partial outputs.
-- [ ] Record resource/battery/account budget and safe GitHub comparisons; finish or stop cleanly on resource limits.
+- [x] Prepare six arms and record operational ownership; run A0/B0 first, then A1/B1 and A2/B2 with at most two workers.
+- [x] Check real loss, optimizer updates, replay/action consistency, finite changed weights, validation isolation and final checkpoint reload. Stop on technical defects; do not nominate partial outputs.
+- [x] Record resource/battery/account budget and safe GitHub comparisons; finish or stop cleanly on resource limits.
 
 ### Task 3: Fixed ensemble comparisons
 
-- [ ] Write exact selection/confirmation jobs and thresholds before first fresh result; independent review.
-- [ ] Build the four specified candidates with identical V14 inference config and verified distinct members.
+- [x] Write exact selection/confirmation jobs and thresholds before first fresh result; independent review.
+- [x] Build the four specified candidates with identical V14 inference config and verified distinct members.
 - [ ] Run paired selection, choose at most one by fixed ranking, then one independent confirmation if qualified.
 - [ ] Independently verify complete raw data and all gates; keep V14 absent proof of improvement. Document results and push meaningful verified commits; safely update primary checkout.
 
@@ -67,3 +67,5 @@ Files: scripts/ensemble_diversity_train.py; tests/test_ensemble_diversity_train.
 Der erste Versuch wurde nach 1906/2178 Lernspielen durch einen von Codex parallel erlaubten pytest-Prozess gestoppt. Beide unvollständigen Endstände bleiben erhalten und nicht nominierbar; A1/B1/A2/B2 waren noch nicht gestartet. Da Replay und Zufallszustand nicht vollständig gespeichert sind, gibt es keine exakte Fortsetzung aus diesen Dateien.
 
 Nach Fehleranalyse, abgeschlossenen Werkzeugtests und unabhängiger Prüfung ist ein ausdrücklich neuer Versuch `20261107_diversity_r1` vorgesehen. Vor Start die sechs initialen Tensoren sowie sämtliche Karten-/Seiten-/Gegnerpläne gegen den ersten vorbereiteten Versuch vergleichen. Gleiche Eltern, Trainingsparameter, Startseeds und feste Budgets; keine Entscheidung aus Zwischenwerten. Neue Ausgabe- und Reservierungspfade, kein Löschen oder Wiederverwenden alter Runs. Die getrennten 4484 abgebrochenen Ausführungen zusätzlich ausweisen. Während des Neuanlaufs keine parallelen Tests, keine Quellen- oder HEAD-Änderungen. Kontingent- und Energiegrenzen bleiben unverändert.
+
+- 07.11. Abschluss: r1 alle sechs Arme vollständig und unabhängig geprüft; vier Kandidaten gebaut/extern geprüft. 19.488 Ausführungen,2.700.000 Updates. Noch keine Auswahlspiele; Ressourcenpause bei64%Kontingentverbrauch und weiterhin30%Reserve. Siehe docs/ENSEMBLE_TRAINING_20261107.md. Historische Checkboxen betreffen den tatsächlich abgeschlossenen Neuanlauf.

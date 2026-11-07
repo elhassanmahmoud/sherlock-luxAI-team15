@@ -1,0 +1,21 @@
+{
+  "recorded_utc": "2026-11-07T20:03:58.458861+00:00",
+  "scope": "Controlled completion of the already running final pair only; no new work or comparison phase at >=65% usage.",
+  "basis": "User reserve remains at least30%; earlier instruction explicitly permits controlled completion or ending of existing jobs at65%.",
+  "required_state": {
+    "queue": [],
+    "active_subset": [
+      "A2",
+      "B2"
+    ],
+    "prior_completed": [
+      "A0",
+      "B0",
+      "A1",
+      "B1"
+    ]
+  },
+  "at_65": "Notify root; pause recurring sync; finish only already-active pair if required state remains true. No new jobs, code, tests, candidate assembly or comparisons.",
+  "at_68_or_unknown": "Create whole-study STOP immediately; keep at least32% before final record/response.",
+  "user_budget_question": "Pending; absent explicit change, reserve remains in force."
+}

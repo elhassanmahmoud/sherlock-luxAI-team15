@@ -1,0 +1,44 @@
+{
+  "utc": "2026-11-07T15:47:50.109141+00:00",
+  "scope": "Read-only deterministic first1000 milestone comparison; no new model execution.",
+  "arms": {
+    "A0": {
+      "same": {
+        "q_tensor_sha256": true,
+        "target_tensor_sha256": true,
+        "agent_rng_sha256": true,
+        "global_rng_sha256": true,
+        "optimizer_sha256": true,
+        "replay": true,
+        "config": true,
+        "env_steps": true,
+        "learn_steps": true
+      },
+      "learn_steps": 150000,
+      "validation_state_preserved": true,
+      "validation_milestones": [
+        0,
+        1000
+      ]
+    },
+    "B0": {
+      "same": {
+        "q_tensor_sha256": true,
+        "target_tensor_sha256": true,
+        "agent_rng_sha256": true,
+        "global_rng_sha256": true,
+        "optimizer_sha256": true,
+        "replay": true,
+        "config": true,
+        "env_steps": true,
+        "learn_steps": true
+      },
+      "learn_steps": 150000,
+      "validation_state_preserved": true,
+      "validation_milestones": [
+        0,
+        1000
+      ]
+    }
+  }
+}

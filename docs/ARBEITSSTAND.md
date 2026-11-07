@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07./08.11.2026 – Codex: sechs neue Netze fertig; größere Ensembles vorbereitet
+
+- Neuer Versuch r1 vollständig: sechs × 3000 Lernspiele, insgesamt 19.488 Ausführungen einschließlich Vorlauf/Validierung und 2.700.000 Updates. Alle sechs Endstände unabhängig technisch geprüft; Rohpläne, endliche veränderte Q/Target/Adam, 24 Validierungsgrenzen, Konfiguration und Prüfsummen bestanden. Keine parallelen Tests während Training; alle eigenen Rechen-/Wachhalteprozesse beendet.
+- A39/B39/ALL42 sowie diagnostisches REPLACE36 aus exakt den vorab festgelegten Mitgliedern gebaut und wieder geladen. Neue Endcheckpoints und Kandidaten für Mahmoud unter `experiments/candidates/ensemble_diversity_20261107/`; Rohdaten/Receipts versioniert, große Replay-Puffer lokal. [Abschluss und Grenzen](ENSEMBLE_TRAINING_20261107.md), [unabhängiger Audit](../experiments/analysis/ensemble_diversity_20261107/operations/final_training_audit.md).
+- **Noch kein neuer Stärkegewinn belegt.** Null Auswahl-/Bestätigungsspiele. Bei 64 % Kontingentverbrauch gesicherter Zwischenstand wegen bisheriger 30-%-Reserve; Rückfrage zur Reserve unbeantwortet, kein Reset. Die festen 7800 Auswahlspiele erst nach ausreichender Ressourcenfreigabe starten; bei Nominierung einmalige 23.200-Spiele-Bestätigung. Keine Wiederholung fertiger Trainings, keine Übernahme anhand bekannter Zwischenvalidierung.
+- Remote nach Trainingsende geprüft; keine neuen Mahmoud-Commits gegenüber `73119c7`. Studienkopie am sicheren Übergang auf diesen Dokumentationsstand aktualisiert, historische Trainingspins bleiben `6ad3452`. Wiederkehrender Remote-Abgleich pausiert. V14 und ZIP in beiden Checkouts bytegleich; keine Abgabeänderung. Veröffentlichung erfolgt als zusammenhängender geprüfter Trainings-/Artefaktstand; abschließender Kontingentstand 64 %.
+
 ## 07.11.2026 – Codex: geprüfter Versuch r1 tatsächlich gestartet
 
 - Supervisor 27750 gestartet; anfängliche Kinder A0/B0 27767/27773, eigener Wachhalteprozess 27756. Maßgeblich ist **`experiments/analysis/ensemble_diversity_20261107/training_run_r1/state.json`** in der Studienkopie. Der ältere Pfad `training_run/state.json` beschreibt ausschließlich den unterbrochenen Versuch. Keine zweite Instanz starten.
