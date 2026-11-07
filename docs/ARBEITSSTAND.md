@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07.11.2026 – Codex: neue Ensemble-Studie nach der Präsentation vorbereitet
+
+- Moayed beauftragt erneut autonome Trainings und Verbesserungen, Schwerpunkt mehr Netze, ohne feste Uhrzeit. Historischer Präsentations-/Trainingsstopp aufgehoben; mindestens 30 % Kontingentreserve bleibt erhalten.
+- Remote und beide lokalen Arbeitskopien zu Beginn auf `a9b5202`; keine laufenden Modellprozesse. Bestehenden isolierten Worktree auf `improvement/ensemble-diversity-20261107` wiederverwendet; fünf historische unversionierte Run-Verzeichnisse erhalten.
+- FO42-/FT18-Misserfolge geprüft; neue Welle statt Wiederholung: drei V14-Netzfamilien × zwei Gegnermischungen, sechs neue Endstände mit je 3000 Lernspielen. Feste Kandidaten A39/B39/ALL42; REPLACE36 rein diagnostisch. [Design](superpowers/specs/2026-11-07-ensemble-diversity.md), [Plan](superpowers/plans/2026-11-07-ensemble-diversity.md).
+- Tatsächlich geprüft: 88 bestehende gezielte pytest-Tests bestanden; Seedprüfung in acht lokalen Worktrees ohne aufgezeichnete Überschneidung (externe/seedlose Läufe nicht abgedeckt). Zwei unabhängige Analysen zu Training und Evidenz; neue Trainingswerkzeuge noch in Umsetzung. Noch kein neues Training oder Stärkeergebnis.
+- Referenz V14 (36 Netze), bestehende Sicherungen und abgegebene ZIP bleiben unverändert. Offene Punkte: Werkzeugtests/Review, reale Smoke-Läufe, Netzstromprüfung, neue Trainingswelle, vorab festzulegende Leistungsvergleiche. Startkontingent 44 % verbraucht; Mac zunächst 62 % Akku, Nutzer kündigt Netzteil an.
+
 ## 05.11.2026 – Codex: Mahmouds aktuelle Battle-Präsentation lokal übernommen
 
 - Auf Moayeds Bitte die drei neuen Präsentationscommits `0d54780`, `506e074`, `6955a51` geprüft und beide lokalen Arbeitskopien ohne Überschreiben eigener Dateien auf `6955a51` vorgezogen. Nur Präsentation/Dokumentation betroffen; Agentenquellen, Gewichte und ZIP vor/nach per Prüfsumme unverändert. PDF und zugehörige Stichpunkte in beiden Arbeitskopien identisch.
