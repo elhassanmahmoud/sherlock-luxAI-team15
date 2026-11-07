@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-11-07T13:16:43.604556+00:00",
+  "stage": "before_candidate_build_and_all_selection_confirmation_games",
+  "game_score": "(wins + 0.5 * draws) / games",
+  "unchanged": "Original score gates, ranking, bootstrap, seeds, candidate rosters, single confirmation",
+  "additional_point_gates_both_phases": [
+    "strict_solution_wins >= reference_strict_solution_wins",
+    "strict_default_win_fraction >= 0.99"
+  ],
+  "default_min_wins": {
+    "selection": 198,
+    "confirmation": 1584
+  },
+  "selection_games_started": 0,
+  "confirmation_games_started": 0,
+  "comparison_plan_sha256_primary": "cd7343ddc0191c6a1338f7f91aa9b245d5cd9653335fb00d4d8d330117d7fc8f"
+}

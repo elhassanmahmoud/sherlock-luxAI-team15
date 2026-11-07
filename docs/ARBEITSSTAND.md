@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 07.11.2026 – Codex: erster Lernmeilenstein geprüft, Vergleich präzisiert
+
+- Unabhängige technische Momentprüfung nach B0s erstem 1000-Spiele-Meilenstein: 150.000 Updates, geänderte Gewichte/Adam-Zustände, 300.000 Replay-Einträge; Validierung mit exakter V14-Konfiguration und unverändertem Lern-/Zufallszustand. Alle geprüften Rohzeilen entsprechen Karten, Seiten und Gegnerplan; protokollierte Verluste endlich. A0 läuft ebenfalls weiter. Noch keine vollständigen Endmodelle oder Aussage über neue Ensemble-Stärke.
+- Netzstrom inzwischen vom Gerät erkannt. Beide Modellprozesse laufen weiter; Studienquellen und HEAD bleiben bei `b683bc7` eingefroren. Dieser Bericht verändert ausschließlich den primären Checkout, nicht den Trainingslauf.
+- Anschlussreview bestätigt 39 geplante Jobs mit 7800 Auswahlspielen; bisher null gestartet. Alte Vergleichs-CLI-Voreinstellungen passen nicht zum lokalen Sechserpanel, daher vorhandene Statistikfunktionen mit den ausdrücklich festgelegten Parametern wiederverwenden.
+- Vor Leistungsdaten präzisiert: Score zählt ein Remis halb; zusätzlich echte Siege/Remis/Niederlagen berichten. Bestehende Gates bleiben erhalten, zusätzlich echte Solution-Siegquote mindestens Baseline und echte default-Siegquote mindestens 99 % in Auswahl und Bestätigung. [Protokoll](superpowers/plans/2026-11-07-ensemble-comparison.md), [Review und Audit](../experiments/analysis/ensemble_diversity_20261107/operations/).
+- Offen: sechs vollständige Trainingsabschlüsse, unabhängige Endprüfung, feste Ensemble-Auswahl und gegebenenfalls einzige frische Bestätigung. V14 und abgegebene ZIP bleiben unverändert.
+
 ## 07.11.2026 – Codex: neue sechsarmige Trainingswelle gestartet
 
 - **Tatsächlicher Start:** Der einmalige Supervisor läuft im Studienworktree `/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15` auf eingefrorenem Quellstand `b683bc7123fb159a294b8bbe3fa2a392477e80a6`. Eigentümer-PID 6274; erste Kinder A0/B0 6291/6297. Keine zweite Kopie starten. Momentaufnahme nach Start: 38/42 Vorlaufspiele, noch keine Lernupdates; daraus folgt noch kein Stärkeergebnis.

@@ -46,3 +46,11 @@ Zusätzliche Voraussetzung für diesen Solution-orientierten Auftrag: gemessene 
 - Modellgröße, Laufzeit und Speicher. Die mathematische Zahl der Netze allein sagt nichts über bessere Entscheidungen.
 
 Nach einer fehlgeschlagenen Bestätigung endet diese Welle. Weitere Ideen benötigen neue Hypothese, separate Dokumentation und neue Karten, keine blinde Wiederholung.
+
+## Präzisierung vor Beginn der Leistungsspiele, 07.11.2026
+
+Die vorhandenen Statistikfunktionen verwenden `result`: Sieg = 1, Remis = 0,5, Niederlage = 0. Die oben übernommenen Score-Gates und die Rangfolge bleiben genau auf dieser Größe; Berichte nennen sie **Spielscore = (Siege + 0,5 × Remis) / Spiele** und zeigen zusätzlich Siege/Remis/Niederlagen sowie die echte Siegquote. Ein Score ist keine reine Siegquote.
+
+Weil Solution/default oben ausdrücklich als Siegquote bezeichnet werden und der Auftrag echte Siege priorisiert, gelten zusätzlich in Auswahl und Bestätigung: echte Solution-Siegquote mindestens die der Baseline und echte default-Siegquote mindestens 99 %. Für default sind das mindestens 198/200 beziehungsweise 1584/1600 Siege. Diese zusätzlichen Punktschätzungsgates lockern keine ursprüngliche Bedingung; aus ihnen allein folgt keine statistisch gesicherte Nichtverschlechterung. Die zusätzliche nichtnegative Solution-Scoredifferenz bleibt ebenfalls Pflicht. Karten, Kandidaten, Rangfolge, Bootstrap und einmalige Bestätigung sind unverändert.
+
+Diese Klarstellung wurde vor Kandidatenbau und vor sämtlichen Auswahl-/Bestätigungsspielen festgelegt; bisher liegen ausschließlich Trainings- und bekannte Zwischenprüfungen vor. Der unabhängige Anschlussreview liegt unter `experiments/analysis/ensemble_diversity_20261107/operations/comparison_execution_review.md`.

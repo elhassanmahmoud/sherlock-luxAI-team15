@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "verdict": "PASS_SNAPSHOT_ONLY",
+  "checked_utc": "2026-11-07T13:12:48.947680+00:00",
+  "scope": "Technical integrity of completed log prefixes; no games, model imports, tests, strength comparison, checkpoint reload or source changes. Live files continue growing.",
+  "prepared_sha256": "68ffeaa91a3495a7e873cb00786ead511995b1e09b55864122768ec3454dde25",
+  "arms": {
+    "A0": {
+      "status": "running",
+      "eligible": false,
+      "raw_prefill_games": 120,
+      "raw_train_games": 899,
+      "csv_rows": 875,
+      "csv_buffered_lag": 24,
+      "validation_rows": 32,
+      "validation_proofs": [
+        0
+      ],
+      "latest_learn_steps": 134850,
+      "latest_env_steps": 368757,
+      "finite_loss_rows": 875,
+      "loss_range": [
+        0.63811,
+        0.842
+      ],
+      "checked_action_replay_transitions": 3649209,
+      "training_rescue_action_changes": 2714,
+      "milestone1000": null,
+      "checkpoint_file": "experiments/runs/20261107_diversity_A0/weights/agent.pth",
+      "checkpoint_bytes": 1235231,
+      "checkpoint_mtime_utc": "2026-11-07T12:19:08.903548+00:00",
+      "checkpoint_sha256_read_only": "4311d4848617c59ea252002ae1016cc45d9150b695c35adf5d16c321e11807b2",
+      "final_receipt_exists": false,
+      "final_reload_proof_exists": false,
+      "captured_artifact_sha256": {
+        "progress.json": "0eea23c98d3f2206d91af5d451f7cd130e1bdf50e112cc108d4dc4d0e699bfa5",
+        "training_audit.json": "83f231464be5780c392d1d6034a24c4794f705c7a71d627d0604c4d456e2dd8e",
+        "rollouts.jsonl": "8eb9aff4b31adb89bc196d6be7049b733a37174da219fba52dcda02628a3c82a",
+        "validation_games.jsonl": "c2973df015889f10667882d48a13ecefbce5dec34296953bb16d67d198579d44",
+        "train.csv": "54403e33955eaddcc66db499a16b9352f9e5226fb4594c7f29a60e4e278a383a",
+        "manifest.json": "2ed3242f958b4b96c7719400ffb04af4ad06b13d81078c25b349ab4d4737ef86"
+      },
+      "issues": []
+    },
+    "B0": {
+      "status": "running",
+      "eligible": false,
+      "raw_prefill_games": 120,
+      "raw_train_games": 1032,
+      "csv_rows": 1025,
+      "csv_buffered_lag": 7,
+      "validation_rows": 64,
+      "validation_proofs": [
+        0,
+        1000
+      ],
+      "latest_learn_steps": 154800,
+      "latest_env_steps": 409056,
+      "finite_loss_rows": 1025,
+      "loss_range": [
+        0.60863,
+        0.77912
+      ],
+      "checked_action_replay_transitions": 4148706,
+      "training_rescue_action_changes": 2067,
+      "milestone1000": {
+        "learn_steps": 150000,
+        "env_steps": 399360,
+        "replay_size": 300000,
+        "q_changed": true,
+        "optimizer_changed": true,
+        "validation_before_after_equal": true,
+        "validation_exact_v14_config": true
+      },
+      "checkpoint_file": "experiments/runs/20261107_diversity_B0/weights/agent.pth",
+      "checkpoint_bytes": 2467179,
+      "checkpoint_mtime_utc": "2026-11-07T13:11:08.045558+00:00",
+      "checkpoint_sha256_read_only": "dd3dbbd39716a699713619fe54566a6fb0a95fa9de1a154f23e069417723112f",
+      "final_receipt_exists": false,
+      "final_reload_proof_exists": false,
+      "captured_artifact_sha256": {
+        "progress.json": "eaeef49a3ec58d4e37800a41cfee0bead6f1c6e1dbc468f7a79cf614cf34337f",
+        "training_audit.json": "3196dd625cf7efdefba079e0699ad7fee53ca59be52afb273bf5ccd6bbda1c0b",
+        "rollouts.jsonl": "314421827c5a0d25b5842b835d24e298e94f0dc0e69c3369cae7039c9fd54e45",
+        "validation_games.jsonl": "31cf650c38102f9abc3512d8178a437f41d7566c8e175d18a650a0afcaec4e67",
+        "train.csv": "4d58fffdf886111659016949f6e3787ed4d428c5bcea69175bd25bd6624e90d5",
+        "manifest.json": "b487d61f1ace530b9c17a553ff771cc2d272f10d0d98a2a74f2b36edfad3fed8"
+      },
+      "issues": []
+    }
+  },
+  "limits": [
+    "Final training/reload/admission proofs do not exist yet.",
+    "Checkpoint bytes were hashed but neither deserialized nor independently reloaded.",
+    "train.csv is buffered every 25 games; row lag is expected.",
+    "Opponent is sampled per game; both sides share a map but need not share an opponent.",
+    "No conclusion about agent strength or comparative curriculum effects."
+  ]
+}
