@@ -32,12 +32,12 @@ Files: scripts/ensemble_diversity_train.py; tests/test_ensemble_diversity_train.
 
 - [x] Add failing tests for arm mapping, isolated seed ranges, source/config identity, safe outputs and smoke/incomplete eligibility.
 - [x] Implement prepare/run CLI using existing training machinery; persist incremental progress and final evidence, restore process-local hooks.
-- [ ] Run focused pytest tests and actual separate smoke games; independently review source and receipts.
-- [ ] Commit reviewed tool, tests, spec and plan before source-freeze.
+- [x] Run focused pytest tests and actual separate smoke games; independently review source and receipts.
+- [x] Commit reviewed tool, tests, spec and plan before source-freeze.
 
 ### Task 2: First six-member training wave
 
-- [ ] Complete seed-collision audit; snapshot reference/source/interpreter hashes.
+- [x] Complete seed-collision audit; snapshot reference/source/interpreter hashes.
 - [ ] Prepare six arms and record operational ownership; run A0/B0 first, then A1/B1 and A2/B2 with at most two workers.
 - [ ] Check real loss, optimizer updates, replay/action consistency, finite changed weights, validation isolation and final checkpoint reload. Stop on technical defects; do not nominate partial outputs.
 - [ ] Record resource/battery/account budget and safe GitHub comparisons; finish or stop cleanly on resource limits.
@@ -58,3 +58,5 @@ Files: scripts/ensemble_diversity_train.py; tests/test_ensemble_diversity_train.
 - Vor Betriebsstart unveränderte abgegebene ZIP vom primären Checkout in den ignorierten Studienworktree kopiert (SHA256 88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6); kein Neubau. Betreuer prüft dieselben Bytes zusätzlich zu beiden Rohgewichten.
 
 - Root verification: 142 targeted pytest tests passed in 50.74 s, including both new tools and shared finetune/ensemble/rescue/supervisor tests. Independent review found validation SIGTERM waited a full block; fixed with two initially failing regression tests, root inspected per-game check and verified green suite. Real smoke remains next; no performance results.
+
+- Task 1 complete: tool/spec commit cda52d9; Root real A0/B0 smoke at that commit: each 2 prefill + 2 learning + 8 validation executions, 300 actual optimizer updates, changed finite weights and successful reload, validation identities unchanged. Both receipts explicitly smoke/ineligible, total24 technical executions. Protected baseline hashes unchanged. Production not yet started.

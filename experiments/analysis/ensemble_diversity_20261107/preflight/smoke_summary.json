@@ -1,0 +1,44 @@
+{
+  "source_commit": "cda52d9",
+  "scope": "Real technical smoke only; no strength comparison",
+  "executions": 24,
+  "arms": {
+    "A0": {
+      "status": "smoke_done",
+      "eligible": false,
+      "actual_prefill_games": 2,
+      "actual_train_games": 2,
+      "actual_validation_games": 8,
+      "learn_steps": 300,
+      "env_steps": 61212,
+      "initial_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "final_checkpoint_sha256": "111da4e750ea1512bc8eac62599fa7ee3bca993914cfdd0628de8bf5ba57af56",
+      "audit_sha256": "01126c1960d60a42ee68184c2bf2f50980cf5a33fa69879d28b0e2fda3fc07de",
+      "rollouts_sha256": "99d7410ebc20ab9e6d27af004c31cb93ba4410e6a8e4ec18f09018a3d99617ae",
+      "validation_sha256": "b7ec44e0e10e82c28692cb5a2aee176e566da5f7299a6b0686fce578b8ad4a08",
+      "reload_verified": true,
+      "validation_identity_unchanged": true,
+      "checked_replay_transitions": 13512,
+      "role": "technical only"
+    },
+    "B0": {
+      "status": "smoke_done",
+      "eligible": false,
+      "actual_prefill_games": 2,
+      "actual_train_games": 2,
+      "actual_validation_games": 8,
+      "learn_steps": 300,
+      "env_steps": 61212,
+      "initial_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "final_checkpoint_sha256": "afe5d728bcecf96946b03560d16207a1132b5e667f3a5fb94bfe9e42bba08466",
+      "audit_sha256": "3dfae343b1a19e019617cc500f70c86c6afc05dd50e4cb17eb0f9f082a1bc492",
+      "rollouts_sha256": "ad7b7a5aa2681bc6073f9e7edf3a26a64dbddf569c4439414bffb31e086ce400",
+      "validation_sha256": "b0e91be72712c48af7a7316c3edc575a3c7bf22fa05e81b223c0a6aeb2bb8b66",
+      "reload_verified": true,
+      "validation_identity_unchanged": true,
+      "checked_replay_transitions": 14574,
+      "role": "technical only"
+    }
+  },
+  "protected_hashes_unchanged": true
+}
