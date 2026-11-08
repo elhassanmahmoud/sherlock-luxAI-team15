@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-11-08T13:20:00.240534+00:00",
+  "tests": {
+    "command": "python -B -m pytest -q tests/test_fog_reward_compare.py",
+    "passed": 45,
+    "seconds": 10.99
+  },
+  "actual_artifact_assembly": "PASS",
+  "actual_admission": "PASS",
+  "bound_files": 55,
+  "roles": {
+    "V14": {
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "members": 36
+    },
+    "CONTROL38": {
+      "sha256": "efa81d3bbf5065c71d8106e016921d2640d368722546f0b8a40086173e95c947",
+      "members": 38
+    },
+    "NEUTRAL38": {
+      "sha256": "b928d4a8a66403526b77c656d4373f3fe6e31ffe9e7cc9f6d4b64e63d4566a39",
+      "members": 38
+    }
+  },
+  "plan_jobs": 11,
+  "plan_games": 440,
+  "games_started": 0
+}

@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Zwei feste Fog-Ensembles gebaut, Vergleichswerkzeug geprüft
+
+- CONTROL38 und NEUTRAL38 tatsächlich aus den 36 unveränderten V14-Netzen plus jeweils zwei festgelegten finalen Nachtrainingsnetzen gebaut. Gleiches Gewicht je Netz, ursprüngliche Inferenzkonfiguration; tatsächliches Laden und Tensorreihenfolge geprüft. Historische Trainingsabnahme und 55 benötigte Dateien gebunden.
+- Root: 45 gezielte synthetische Tests bestanden (10,99s), reale reine Artefaktmontage und erneute Zulassungsprüfung bestanden. Vier feste Kartenlisten und elf Auswahljobs / 440 Spiele vorbereitet. Noch keine Leistungsspiele und kein belegter stärkerer Agent; V14 und ZIP unverändert.
+- [Werkzeug-/Prüfbelege](../experiments/analysis/fog_comparison_20261108/operations/), [feste Regeln](superpowers/specs/2026-11-08-fog-comparison.md). Unabhängiger Schlussreview von Spezifikation, Code/Integration und Methode PASS; keine offenen Blocker. Der kommende Vergleich hält Quellen und HEAD über Auswahl **und gegebenenfalls Bestätigung** gleich; maximal zwei Worker, keine parallelen Tests. Keine zusätzlichen Karten oder nachrückenden Kandidaten bei negativem Ausgang.
+
 ## 08.11.2026 – Fog-Nachtraining vollständig geprüft; kleiner Ensemblevergleich folgt
 
 - Vier feste Arme ab V14-Komponente 18: je 40 Vorlauf-, 400 Lern- und 32 Diagnosepartien. Tatsächlich 1.888 Spielausführungen und 240.000 neue Lernupdates. Beide Kontroll-/Neutral-Paare vor Gradienten identisch bis auf das geplante Reward-Signal.
