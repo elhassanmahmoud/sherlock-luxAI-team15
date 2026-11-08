@@ -1,0 +1,419 @@
+{
+  "status": "planned_not_launched",
+  "protocol": "docs/superpowers/plans/2026-11-08-ensemble-compact.md",
+  "opponent_sha256": {
+    "experiments/releases/20261022_all18_v3/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+    "experiments/releases/20261022_v10_baseline/agent_p0.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+    "experiments/releases/20261101_v13_neb/agent_p0.pth": "6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62",
+    "experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "max_simultaneous_model_processes": 2,
+  "roles": {
+    "V14": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+    "A39": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+    "B39": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+    "ALL42": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+    "REPLACE36": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth"
+  },
+  "non_nominable": [
+    "V14",
+    "REPLACE36"
+  ],
+  "jobs": [
+    {
+      "name": "V14_panel_0",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_1",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_2",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_3",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_4",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_5",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_6",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_0",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_1",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_2",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_3",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_4",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_5",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_panel_6",
+      "role": "A39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "A39_direct",
+      "role": "A39",
+      "kind": "direct",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/A39.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/direct_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_0",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_1",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_2",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_3",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_4",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_5",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_panel_6",
+      "role": "B39",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "B39_direct",
+      "role": "B39",
+      "kind": "direct",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/B39.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/direct_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_0",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_1",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_2",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_3",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_4",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_5",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_panel_6",
+      "role": "ALL42",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALL42_direct",
+      "role": "ALL42",
+      "kind": "direct",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/ALL42.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/direct_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_0",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_1",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_2",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "self:experiments/releases/20261022_all18_v3/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_3",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_4",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "self:experiments/releases/20261022_v10_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_5",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "self:experiments/releases/20261101_v13_neb/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_panel_6",
+      "role": "REPLACE36",
+      "kind": "panel",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/panel_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "REPLACE36_direct",
+      "role": "REPLACE36",
+      "kind": "direct",
+      "weights": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/ensemble_diversity_20261108_compact/selection_plan/direct_seeds.json",
+      "expected_games": 40,
+      "workers": 1
+    }
+  ],
+  "total_games": 1560,
+  "requirement": "Verify full training receipts and frozen candidate hashes before any job. Prepared commands only; no games launched.",
+  "profile": "compact20261108",
+  "phase": "selection"
+}

@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-11-08T03:56:04.063763+00:00",
+  "profile": "compact20261108",
+  "selection_jobs": 39,
+  "selection_games": 1560,
+  "confirmation_games_if_qualified": 3200,
+  "selection_status": "not_started",
+  "all_admitted_hashes_verified": true,
+  "local_seed_audit": "eight worktrees,no recordedoverlaps/errors; external/seedlessruns outside scope",
+  "tests": {
+    "passed": 123,
+    "subtests_passed": 43,
+    "seconds": 9.44,
+    "command": "python -B -m pytest tests/test_ensemble_diversity_eval_supervisor.py tests/test_ensemble_diversity_compare.py tests/test_ensemble_diversity_candidates.py -q"
+  },
+  "real_prepared_plan_validated": true,
+  "old_partial_outcomes_inspected": false,
+  "quota_limit": 100,
+  "user_handles_reset": true
+}

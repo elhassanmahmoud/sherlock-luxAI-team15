@@ -1,0 +1,7 @@
+# Kompakter Vergleich vom 08.11.2026
+
+Nutzer hat weniger Testspiele verlangt. Ausschließlich Profil `compact20261108`: 39 Auswahljobs mit 1560 Spielen; bei qualifiziertem Kandidaten einmalig 3200 Bestätigungsspiele. Quellen/HEAD zwischen beiden Phasen unverändert lassen. Modelle bereits fertig unter experiments/candidates/ensemble_diversity_20261107, nicht erneut trainieren. Alter großer Auswahlversuch ist gestoppt und getrennt; seine Reservierung/STOP-Kopie/ganzen Kartenblöcke erhalten, keine Ergebnisse daraus verwenden.
+
+Werkzeuge f903de9 unabhängig geprüft; Root123Tests+43Untertests bestanden. Neue Karten in acht lokalen Arbeitskopien ohne dokumentierte Überschneidung. Keine Tests parallel zu Modellläufen. Maximal zwei Spielprozesse, aktiven Stand nach Start unter selection/state.json und selection_launch.json prüfen. Keine automatische Wiederholung unvollständiger Phasen. Nur nach vollständiger Auswahl einen Kandidaten anhand unveränderter Gates nominieren; Bestätigung braucht dieselbe Quelle/Modelle und erneute deterministische Auswahlprüfung.
+
+Nutzer erlaubt restliches Kontingent: --max-used-percent100. Immer frischen Nachweis in ../ensemble_diversity_20261107/operations/usage.json schreiben; ungültige/veraltete/gesperrte/erschöpfte Nutzung stoppt kontrolliert. Nutzer übernimmt Resets selbst. Originale V14-Gewichte und ZIP bleiben bis zu nachweislicher Freigabe unverändert. Aktueller Launchbeleg folgt lokal; diese Notiz behauptet keinen Start.

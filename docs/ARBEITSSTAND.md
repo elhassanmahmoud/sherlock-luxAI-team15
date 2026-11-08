@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Codex: Nutzer reduziert Vergleichsumfang vor Ergebnisprüfung
+
+- Der erste große Auswahlcontroller wurde tatsächlich gestartet (Quellstand `f797627`, PID46618), anschließend auf Moayeds ausdrücklichen Wunsch nach weniger Testspielen kontrolliert beendet. Zwei Referenzjobs waren aktiv; keine vollständigen Ergebnis-CSV gespeichert, keine Ergebniswerte betrachtet. Tatsächlich intern berechnete Partien lassen sich daraus nicht exakt zählen. Alle eigenen Prozesse beendet; alte Daten/Reservierungen bleiben erhalten, ursprüngliche Kartenblöcke werden nicht wiederverwendet.
+- Neuer vorab fester kompakter Umfang: 20 Karten für fünf Rollen gegen sieben Gegner plus vier direkte V14-Vergleiche =1560 Auswahlspiele. Nur ein qualifizierter Kandidat: 100 neue Karten gegen sieben Gegner und 200 separate Direktkarten =3200 Bestätigungsspiele. Jeweils beide Seiten, maximal4760. Entspricht dem Gesamtumfang der früheren Netzstudie, mit anderer Kartenverteilung und geringerer Solution-Präzision. Kein nachträgliches Nachlegen bis Signifikanz.
+- Gleiche Modelle, Gegner, Rangfolge und Übernahmegates. Ein unklarer Ausgang qualifiziert keinen Nachfolger; V14 bleibt. [Neuer kompakter Plan](superpowers/plans/2026-11-08-ensemble-compact.md). Werkzeugänderung `f903de9` unabhängig geprüft (PASS). Root: 123 Tests plus 43 Untertests in 9,44 Sekunden bestanden; echter vorbereiteter Plan validiert. Seedprüfung über acht Arbeitskopien ohne dokumentierte Überschneidung oder Lesefehler. Noch keine kompakten Leistungsspiele gestartet; Start erst nach Veröffentlichung und erneutem Ressourcencheck.
+
 ## 08.11.2026 – Codex: Kontingentfreigabe und Fortsetzung des Ensemblevergleichs
 
 - Moayed hat ausdrücklich die Nutzung des gesamten restlichen Kontingents freigegeben; die 30-%-Reserve gilt für diesen Auftrag nicht mehr. Einen gegebenenfalls nötigen Reset übernimmt er selbst. Keine Reset-Einlösung durch Codex.
