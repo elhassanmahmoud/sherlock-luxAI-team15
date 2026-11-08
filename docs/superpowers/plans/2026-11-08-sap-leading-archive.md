@@ -24,11 +24,13 @@
 
 ## Schritte
 
-- [ ] Implementierung außerhalb der produktiven Agentendateien; kleine synthetische Fälle für Richtung, Spiegelungsfreiheit/kanonische Position, Grenzen, Sichtbarkeit, fehlende Folgeposition und Mehrfach-SAP auf dieselbe Gegner-/Schrittkombination.
-- [ ] Root prüft Auswahl, Achsenordnung und Nenner anhand Recorderquelle; unabhängiger Code-/Definitionsreview vor Vollausführung.
-- [ ] Einmalige vollständige Archivzählung; alle Datei-SHAs und Ereignisse speichern, existierenden Output nicht überschreiben. Pro Spiel/Gruppe sowie insgesamt zählen; Ereignisse pro schießender Unit und eindeutige Gegner/Frame-Fälle separat.
-- [ ] Ergebnis gegen Ereignistabelle prüfen, Grenzen festhalten und sinnvollen nächsten Schritt entscheiden. Nur bei konkretem Signal wäre eine getrennte kausale Spielprüfung zu entwerfen; keine automatische Freigabe aus idealisierter Geometrie. Versionieren und für Mahmoud dokumentieren.
+- [x] Implementierung außerhalb der produktiven Agentendateien; kleine synthetische Fälle für Richtung, Spiegelungsfreiheit/kanonische Position, Grenzen, Sichtbarkeit, fehlende Folgeposition und Mehrfach-SAP auf dieselbe Gegner-/Schrittkombination.
+- [x] Root prüft Auswahl, Achsenordnung und Nenner anhand Recorderquelle; unabhängiger Code-/Definitionsreview vor Vollausführung.
+- [x] Einmalige vollständige Archivzählung; alle Datei-SHAs und Ereignisse speichern, existierenden Output nicht überschreiben. Pro Spiel/Gruppe sowie insgesamt zählen; Ereignisse pro schießender Unit und eindeutige Gegner/Frame-Fälle separat.
+- [x] Ergebnis gegen Ereignistabelle prüfen, Grenzen festhalten und sinnvollen nächsten Schritt entscheiden. Nur bei konkretem Signal wäre eine getrennte kausale Spielprüfung zu entwerfen; keine automatische Freigabe aus idealisierter Geometrie. Versionieren und für Mahmoud dokumentieren.
 
 ## Review-Fokus
 
 Achsen [x,y], Match-/Resetgrenzen und UID-Wiederverwendung, Reihenfolge öffentliche Beobachtung → Auswahl → Folgelabel, fehlende Gegner nicht als STAY/Tod erfinden, mehrfach gezählte gleichzeitige Schüsse. Vorherige negative HOLD-, Geometrie- und Koordinationsstudien werden nicht nachträglich umgedeutet.
+
+Tatsächlicher Abschluss: [Bericht](../../../experiments/analysis/sap_leading_archive_20261108/README.md), null neue Spiele/Updates, 27 synthetische Checks und unabhängige Summarynachrechnung bestanden. Nächster Ansatz nur als gesonderter Entwurf; kein automatischer Leistungs-/Übernahmestart.

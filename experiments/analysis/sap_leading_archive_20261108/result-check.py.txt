@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Independent standard-library check of the saved SAP event table only."""
+from collections import Counter, defaultdict
+from fractions import Fraction
+from pathlib import Path
+import hashlib
+import json
+
+PATH = Path('/tmp/sap-leading-archive-result-20261108.json')
+PIN = '3f46764a597f13749a146977e5a7fee9611bed89bbb234ca9f93e6cad073016b'
+STAGES = ['sap_total', 'assigned_current', 'previous_visible', 'moved', 'energy', 'legal', 'eligible']
+FACTORS = {'0': Fraction(0), '0.25': Fraction(1, 4), '0.5': Fraction(1, 2), '1': Fraction(1)}
+KEYS = [(831006, 'player_1'), (831029, 'player_0'), (831042, 'player_0'), (831042, 'player_1'),
+        (831043, 'player_0'), (831043, 'player_1'), (831000, 'player_0'), (831000, 'player_1'),
+        (831001, 'player_0'), (831001, 'player_1'), (831002, 'player_0'), (831002, 'player_1')]
+
+
+def require(value, text):
+    if not value:
+        raise ValueError(text)
+
+
+def identity(event, field):
+    return tuple(event['key'][name] for name in ('seed', 'side', 'match_idx', 'obs_step')) + (event[field],)
+
+
+def geom(event):
+    future = event['next_position']
+    distances = [max(abs(a - b) for a, b in zip(center, future)) for center in (event['old_target'], event['predicted_target'])]
+    require(distances == [event['distance_old'], event['distance_new']], 'Saved distances differ from coordinates')
+    result = {}
+    for name, factor in FACTORS.items():
+        old, new = [Fraction(1) if distance == 0 else factor if distance == 1 else Fraction(0) for distance in distances]
+        result[name] = dict(old=float(old), new=float(new), delta=float(new - old))
+    return result
+
+
+def outcomes(rows):
+    known = [row for row in rows if 'next_position' in row]
+    unknown = [row for row in rows if 'next_position' not in row]
+    require(all(row['outcome'] == 'unknown' and row['unknown_reason'] in ('next_frame_unavailable', 'next_uid_not_visible') and
+                'geometry' not in row for row in unknown), 'Unknown cases were relabelled or assigned geometry')
+    for row in known:
+        movement = [a - b for a, b in zip(row['next_position'], row['old_target'])]
+        label = 'stay' if movement == [0, 0] else 'keep' if movement == row['last_delta'] else 'turn' if sum(map(abs, movement)) == 1 else 'other'
+        require(row['outcome'] == label and row['next_delta'] == movement and row['geometry'] == geom(row), 'Saved motion/geometry differs')
+        require(row['next_energy_sign'] == ('negative' if row['next_enemy_energy'] < 0 else 'nonnegative'), 'Energy sign differs')
+    out = dict(eligible=len(rows), observed=len(known),
+               outcomes={label: sum(row['outcome'] == label for row in rows) for label in ('keep', 'turn', 'stay', 'other', 'unknown')},
+               unknown_reasons=dict(Counter(row['unknown_reason'] for row in unknown)),
+               observed_energy_signs=dict(Counter(row['next_energy_sign'] for row in known)), geometry={})
+    for name in FACTORS:
+        out['geometry'][name] = dict(denominator=len(known), **{field: sum(geom(row)[name][field] for row in known)
+                                                             for field in ('old', 'new', 'delta')})
+    out['by_observed_energy_sign'] = {}
+    for sign in ('negative', 'nonnegative'):
+        subset = [row for row in known if row['next_energy_sign'] == sign]
+        out['by_observed_energy_sign'][sign] = dict(count=len(subset), outcomes=dict(Counter(row['outcome'] for row in subset)),
+                                                   geometry_delta={name: sum(geom(row)[name]['delta'] for row in subset) for name in FACTORS})
+    return out
+
+
+def summary(rows):
+    require(len({identity(row, 'shooter_uid') for row in rows}) == len(rows), 'Duplicate shooter/frame row')
+    for row in rows:
+        require(row['passed'] == STAGES[:len(row['passed'])] and bool(row['passed']), 'Funnel is not a valid prefix')
+        require((row['rejection'] is None) == ('eligible' in row['passed']), 'Rejected/eligible accounting differs')
+        require(row['final_action'][0] == 5 and row['old_target'] == [row['own_position'][axis] + row['final_action'][axis+1] for axis in (0, 1)],
+                'Row is not a final SAP with the saved target')
+    eligible = [row for row in rows if row['passed'][-1] == 'eligible']
+    buckets = defaultdict(list)
+    for row in eligible:
+        buckets[identity(row, 'enemy_uid')].append(row)
+    unique = []
+    projection = ('old_target', 'predicted_target', 'outcome', 'next_position', 'next_enemy_energy', 'geometry', 'unknown_reason')
+    for bucket in buckets.values():
+        require(len({json.dumps([row.get(field) for field in projection], sort_keys=True) for row in bucket}) == 1, 'Same enemy/frame disagrees')
+        unique.append(min(bucket, key=lambda row: row['shooter_uid']))
+    return dict(unique_events=len(rows), funnel=dict((stage, sum(stage in row['passed'] for row in rows)) for stage in STAGES),
+                unique_enemy_frames_by_stage={stage: len({identity(row, 'enemy_uid') for row in rows if stage in row['passed']}) for stage in STAGES[1:]},
+                rejections=dict(Counter(row['rejection'] for row in rows if row['rejection'] is not None)),
+                events=outcomes(eligible), enemy_frames=outcomes(unique))
+
+
+raw = PATH.read_bytes()
+require(hashlib.sha256(raw).hexdigest() == PIN, 'Wrong saved-result hash')
+document = json.loads(raw)
+require(document['status'] == 'COMPLETE_DESCRIPTIVE', 'Incomplete original result')
+rows = document['events']
+require([(item['seed'], item['side']) for item in document['per_game']] == KEYS, 'Wrong fixed game inventory')
+groups = {key: 'loss' if index < 6 else 'control' for index, key in enumerate(KEYS)}
+require(all((row['key']['seed'], row['key']['side']) in groups and row['group'] == groups[(row['key']['seed'], row['key']['side'])] for row in rows), 'Wrong event/game/group join')
+require(set(document['groups']) == {'loss', 'control'}, 'Wrong group set')
+total = summary(rows)
+require(total == document['summary'], 'Aggregate summary differs')
+for group in ('loss', 'control'):
+    require(summary([row for row in rows if row['group'] == group]) == document['groups'][group], 'Group summary differs')
+for game in document['per_game']:
+    key = game['seed'], game['side']
+    require(game['group'] == groups[key] and summary([row for row in rows if (row['key']['seed'], row['key']['side']) == key]) == game['summary'], 'Per-game summary differs')
+require(hashlib.sha256(PATH.read_bytes()).hexdigest() == PIN, 'Input changed during result check')
+print(json.dumps(dict(status='PASS', input_sha256=PIN, events=len(rows), summary_blocks=15, games=12, groups=2,
+                      eligible=total['events']['eligible'], unique_eligible=total['enemy_frames']['eligible'],
+                      observed=total['events']['observed'], unique_observed=total['enemy_frames']['observed'],
+                      unique_outcomes=total['enemy_frames']['outcomes'], unique_geometry=total['enemy_frames']['geometry'],
+                      negative_observed=total['events']['observed_energy_signs']['negative'],
+                      unique_negative_observed=total['enemy_frames']['observed_energy_signs']['negative']), indent=2))

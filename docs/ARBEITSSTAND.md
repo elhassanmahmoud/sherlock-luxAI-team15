@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – SAP-Bewegungsdiagnose ohne neue Spiele abgeschlossen
+
+- Folgeaktions-Abschluss47b9f11 tatsächlich aufmain veröffentlicht und primäre Arbeitskopie aktualisiert; fünf fremde Dateien sowie beide V14-Gewichte/ZIP unverändert. Die zehn veröffentlichten CSVs bleiben auch nach Git-Übernahme bytegleich zu den Audit-Hashes.
+- Zwölf bestehende Traces einmalig ausgewertet:1343SAPs,426 geeignete Schüsse beziehungsweise286 eindeutige Gegner/Schritt-Fälle;248 Folgepositionen beobachtet,38 unbekannt. Darunter118 geradeaus,49 stehen,81 andere kardinale Richtung. Rein geometrischer Einzelzielsaldi bei f0,25:+51,5;f0,5:+34;f1:−1. Kein Schadens-/Punkte-/Stärkenachweis. [Bericht und Grenzen](../experiments/analysis/sap_leading_archive_20261108/README.md).
+- Werkzeug27 synthetische Checks PASS; unabhängiger Codereview, vollständiger Root-Codecheck und tatsächliche einmalige Archivauswertung Exit0. Unabhängig alle15 Summarys aus der Ereignistabelle exakt bestätigt. Null neue Spiele/Modelle/Updates, Agent und Gewichte unverändert.
+- Konkreter nächster Ansatz: separates, öffentlich begründetes Vorhalten bei finalem SAP und sicher genug geschätztem Streufaktor unter1. Eine kleine echte Vergleichsprobe wäre nötig; bisher weder Regel eingebaut noch neue Leistungsdaten. Reines Erhöhen der Netzanzahl erweitert die sechs Netzausgabeklassen nicht um neue SAP-Koordinaten.
+
 ## 08.11.2026 – Folgeaktions-Pilot abgeschlossen; V14 bleibt
 
 - Alle 400 festen Vergleichsspiele vollständig, zehn Jobs Exit 0. Solution pro Start: Sampled37/40 vs Kontrolle35/40 und35/40 vs34/40; direkt nur20/40 und14/40. Gemeinsames Panelmittel +0,625 pp [−8,125; +11,875], vier von sechs Methodengates verfehlt. Kein V14-Vergleich, kein belegter Stärkegewinn, keine Verlängerung. [Ergebnis](../experiments/analysis/sampled_target_performance_20261108/ERGEBNIS.md).

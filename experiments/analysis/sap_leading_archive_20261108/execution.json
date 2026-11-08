@@ -1,0 +1,27 @@
+{
+  "code_sha256": "02bc4cbdd017e6f3336f9cf6a63012606756951e1ab7664dd50162ad8acbf785",
+  "self_tests": {
+    "execution_owner": "artillery_design_review",
+    "evidence": "Subagent session report; no separately saved raw log; Root did not rerun",
+    "command": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B /tmp/sap-leading-diagnose.py --self-test",
+    "red": {
+      "returncode": 1,
+      "reason": "NotImplementedError before implementation"
+    },
+    "green": {
+      "returncode": 0,
+      "status": "PASS_SYNTHETIC",
+      "checks": 27,
+      "archive_files_read": 0
+    }
+  },
+  "archive_execution": {
+    "execution_owner": "Root",
+    "returncode": 0,
+    "command": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B /tmp/sap-leading-diagnose.py --root /Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15 --out /tmp/sap-leading-archive-result-20261108.json",
+    "result_sha256": "3f46764a597f13749a146977e5a7fee9611bed89bbb234ca9f93e6cad073016b",
+    "new_games": 0,
+    "training_updates": 0
+  },
+  "source_copy": "scripts/sap_leading_archive.py is byte-identical to executed /tmp script."
+}
