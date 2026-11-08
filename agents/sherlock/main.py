@@ -303,6 +303,7 @@ class Agent_x:
     def _act_est(self, step: int, obs) -> np.ndarray:
         use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est or self.cfg.art_splash
                     or self.cfg.sap_still_splash) and (not self.training or self.cfg.rules_in_training_all))
+        use_est = use_est or (self.training and self.cfg.art_splash and self.cfg.art_splash_in_training)
         if use_est:
             self.param_est.observe(obs, self.team_id, None, self.env_cfg or {})
         actions = self._act(step, obs)
@@ -749,8 +750,9 @@ class Agent_x:
             if tgt is not None and self.belief.point_tiles[tgt] and tgt[0] + tgt[1] <= ctx["W"] - 1:
                 return False
         min_hits, safe = c.art_min_hits, c.art_safe
-        drop_est = self.param_est.dropoff(default=0.0) if c.art_splash and not self.training else 0.0
-        if c.art_splash and not self.training and drop_est >= c.splash_min_drop:
+        splash = c.art_splash and (not self.training or c.art_splash_in_training)
+        drop_est = self.param_est.dropoff(default=0.0) if splash else 0.0
+        if splash and drop_est >= c.splash_min_drop:
             # 30.10.2026: voller Streuschaden; unter splash_safe_below bleibt die Sicherheitspruefung
             min_hits, safe = c.art_splash_hits, safe and drop_est < c.splash_safe_below
         if int(sap[2]) < min_hits:

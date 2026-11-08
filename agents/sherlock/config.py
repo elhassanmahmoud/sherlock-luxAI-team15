@@ -137,6 +137,9 @@ class AgentConfig:
     art_min_hits=art_splash_hits und kein art_safe (voller Streuschaden: zwei Treffer im 3x3 lohnen auch
     in gegnerischer Reichweite). Dev A, V10 gegen Solution_92/sol92_sq, art_safe=false + art_min_hits=2
     nach Streufaktor 0,25/0,5/1,0: −6,5/−0,8/+6,0 pp. Dev B mit art_splash: +0,8 pp, bei 1,0 +3,1 pp."""
+    art_splash_in_training: bool = False
+    """True (08.11.2026): vorhandene art_splash-Regel samt Parameterschaetzung auch im Training.
+    Ohne art_splash wirkungslos; die Inferenz bleibt unveraendert."""
     art_splash_hits: int = 2
     sap_still_splash: bool = False
     """True (30.10.2026, mit sap_still): Ist der Streufaktor laut param_est sicher 1,0, duerfen Halter auch
