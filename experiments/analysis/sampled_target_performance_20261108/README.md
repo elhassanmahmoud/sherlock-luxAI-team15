@@ -1,8 +1,8 @@
 # Fester Folgeaktions-Leistungsvergleich
 
-**Fester Vergleich tatsächlich gestartet; noch kein vollständiges Leistungsresultat.**
+**Abgeschlossen und unabhängig geprüft: kein belegter Methodenvorteil, V14 bleibt.** [Ergebnis und Grenzen](ERGEBNIS.md). Vier finale Einzelnetze, zwei feste Trainingsstarts; genau 400 Spiele auf 20 Panel- und 20 getrennten Direktkarten, beide Seiten. Keine Verlängerung oder Übernahme.
 
-Studienkopie: `sherlock-student-20261104/sherlock-luxAI-team15`, Quelle/HEAD `153d2af974d7fa4ce1a9dbc318b1cb2dade5be2b`, Laufzustand `performance_v1/state.json`. Nicht duplizieren oder während des laufenden Vergleichs Quellen/Gewichte ändern. Vier finale Einzelnetze, zwei feste Trainingsstarts. Je Rolle40 Spiele gegen Solution92 und40 gegen sol92_sq, plus je40 direkte Spiele Sampled gegen seine passende Kontrolle: **400 insgesamt**,20 Karten pro separater Panel-/Direktliste und beide Seiten.
+Studienkopie: `sherlock-student-20261104/sherlock-luxAI-team15`, Quelle/HEAD `153d2af974d7fa4ce1a9dbc318b1cb2dade5be2b`, Laufzustand `performance_v1/state.json`. Alle eigenen Prozesse sind beendet; historische Quellenbindung vor Freigabe geprüft. Nicht erneut starten. Vier finale Einzelnetze, zwei feste Trainingsstarts. Je Rolle40 Spiele gegen Solution92 und40 gegen sol92_sq, plus je40 direkte Spiele Sampled gegen seine passende Kontrolle: **400 insgesamt**,20 Karten pro separater Panel-/Direktliste und beide Seiten.
 
 [Trainingsabnahme](../sampled_target_20261108/TRAININGSERGEBNIS.md), [tatsächliche Werkzeugprüfung](../sampled_target_20261108/operations/task4-integration.md), [fester Jobplan](plans/jobs.json), [Inferenzkopien](../../candidates/sampled_target_20261108/admission.json).
 

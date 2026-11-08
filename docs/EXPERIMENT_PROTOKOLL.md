@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+08.11.2026: **Folgeaktions-Pilot vollständig geschlossen, V14 bleibt.** Genau400 Leistungsspiele, unabhängig geprüft; Sampled vs Kontrolle im Panel69/80vs67/80 und67/80vs68/80, direkt20/40 und14/40. Mittlerer Panelkontrast+0,625 pp [−8,125; +11,875], vier von sechs Gates verfehlt. Kein V14-Vergleich, kein gesicherter Methodenvorteil, keine Verlängerung. [Vollständiges Ergebnis](../experiments/analysis/sampled_target_performance_20261108/ERGEBNIS.md). Training separat800 Ausführungen/96.000 Updates, vier Technikspiele.
+
 08.11.2026: Folgeaktions-Pilot technisch abgeschlossen: vier Lernarme,800 Ausführungen/96.000 Updates, vier separate Technikspiele. Beide Vorläufe exakt gepaart, unabhängiger vollständiger Lernaudit PASS; Originalprüfungen durch Supervisor und historische Quelle945e193 gebunden. Keine Leistungsaussage/Übernahme. [Trainingsbericht](../experiments/analysis/sampled_target_20261108/TRAININGSERGEBNIS.md). V14/ZIP unverändert;400 feste Leistungsspiele folgen separat.
 
 - 08.11.2026, **technischer Sampled-Start vor erstem Spiel unterbrochen und diagnostiziert:** Mac-Framework-Python verändert den Programmnamen in `orig_argv`, wodurch die neue Startprüfung den richtigen Worker zurückwies. Null Spiele/Updates, alle eigenen Prozesse beendet, historische Belege erhalten. Enge Interpreter-/Argumentprüfung mit125 Tests PASS; gesonderte v2-Aufnahme nach Fixreview, unverändert vier bekannte Technikspiele. [Nachweis](../experiments/analysis/sampled_target_20261108/operations/launcher-fix.md).

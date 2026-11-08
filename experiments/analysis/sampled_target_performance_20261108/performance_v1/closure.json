@@ -1,0 +1,35 @@
+{
+  "status": "accepted_complete",
+  "accepted_at": "2026-11-08T21:52:14.708682+00:00",
+  "performance_head": "153d2af974d7fa4ce1a9dbc318b1cb2dade5be2b",
+  "training_head": "945e1938a1fb1fcc87eeaf10b58138a409266581",
+  "state_sha256": "9b2ff40e1e26e01127a10ae34e7c0e07582d1ac4b71e4f8600e44c8f11381804",
+  "summary_sha256": "e39e2b7dd7c04398393668c60d65e81aa1b9a91ff3c68096a25c5ad55b4e5c25",
+  "independent_audit_sha256": "44b1ad404e0603ef89adab5558ad157d89c2bfe3eddd3aa9bf567cc9102ff756",
+  "bound_inputs_verified": 547,
+  "games": 400,
+  "owned_pids_and_groups_absent": [
+    53500,
+    53560,
+    53631,
+    53644,
+    54483,
+    54490,
+    54738,
+    54745,
+    55012,
+    55019,
+    55226,
+    55233
+  ],
+  "screening_passed": false,
+  "failed_checks": [
+    "start46_panel_positive",
+    "mean_panel_gain_at_least5pp",
+    "start46_direct_at_least50pct",
+    "combined_direct_above50pct"
+  ],
+  "v14_replaced": false,
+  "source_freeze_released": true,
+  "analysis_cli_note": "Relative provenance path rejected without summary; absolute CLI succeeded with original frozen code. Bound input files unchanged. No raw data or source edits. Root closure initially compared metadata with numerical statistics; corrected key subset, all numerical fields exactly identical."
+}

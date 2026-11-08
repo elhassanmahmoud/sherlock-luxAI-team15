@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Folgeaktions-Pilot abgeschlossen; V14 bleibt
+
+- Alle 400 festen Vergleichsspiele vollständig, zehn Jobs Exit 0. Solution pro Start: Sampled37/40 vs Kontrolle35/40 und35/40 vs34/40; direkt nur20/40 und14/40. Gemeinsames Panelmittel +0,625 pp [−8,125; +11,875], vier von sechs Methodengates verfehlt. Kein V14-Vergleich, kein belegter Stärkegewinn, keine Verlängerung. [Ergebnis](../experiments/analysis/sampled_target_performance_20261108/ERGEBNIS.md).
+- Originalauswertung und unabhängig implementierte vollständige Nachrechnung bestanden; Audit SHA `44b1ad404e0603ef89adab5558ad157d89c2bfe3eddd3aa9bf567cc9102ff756`. Root hat 547 Bindungen und Ende aller eigenen Prozesse geprüft, unter Messquelle153d2af versiegelt und erst danach eigenen35534e6-Dokunachtrag übernommen. Relative Analysepfade waren gesperrt; absoluter Originalaufruf erfolgreich, keine Rohdaten-/Quellenänderung nötig.
+- V14/ZIP unverändert. Vier Lernarme samt 800 Vorlauf-/Lernspielen und96.000 Updates bleiben separat dokumentiert; große Replay-NPZs lokal. Nächste Arbeit zunächst lesende Offline-Diagnose öffentlich beobachteter Bewegungen und finaler SAP-Koordinaten in vorhandenen Traces; noch keine neue Regel, kein weiterer Modelllauf. Ergebnisse dieses Abschlusses werden als eigener Meilenstein veröffentlicht.
+
 ## 08.11.2026 – Fester400-Spiel-Leistungsvergleich läuft
 
 - Nach akzeptiertem Training,32 bestandenen Werkzeugtests und sicherem Push/Lokalabgleich tatsächlich gestartet. Studienkopie `sherlock-student-20261104/sherlock-luxAI-team15`, eingefrorene Quelle/HEAD `153d2af974d7fa4ce1a9dbc318b1cb2dade5be2b`. Maßgeblich `experiments/analysis/sampled_target_performance_20261108/performance_v1/state.json`; Supervisor53500, Wachhalter53560, maximal zwei Rechenworker.
