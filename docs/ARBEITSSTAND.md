@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – V14-Verhalten nach optionaler Trainingsregel exakt reproduziert
+
+- Vier bekannte technische Ausführungen: zwei Karten/Seiten jeweils mit art_splash_in_training=False und True bei Inferenz. Alle1212 Frames inklusive beider Aktionen, Zustands-/Beobachtungshashes, Punkte und Endergebnis exakt zur archivierten V14-Referenz.
+- Quelleca14b1c während der Läufe unverändert, Exit0, Root-Abschlussprüfung und geschützte Hashes bestanden. Keine Lernupdates. Quelle erst nach vollständigem Abschluss wieder freigegeben.
+- [Technikbelege](../experiments/analysis/artillery_alignment_20261108/operations/technical-acceptance.json). Trainingswerkzeuge nun in Umsetzung; noch keine neuen trainierten Netze und keine behauptete Verbesserung der Siegquote.
+
 ## 08.11.2026 – Optionale Artillerie-Trainingsregel geprüft
 
 - Neuer Schalter art_splash_in_training=False; nur bei ausdrücklicher Aktivierung wirkt die bestehende Streuschadenregel auch imTraining. Die notwendige Parameterschätzung wird versorgt. Andere Regeln/Rewards und Gewichte unverändert.
