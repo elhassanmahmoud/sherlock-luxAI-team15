@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Folgeaktions-Studienwerkzeuge geprüft; reale Integration folgt
+
+- Fester Runner und Supervisor für die separate Sampled-Target-Methode implementiert. Beide Vorläufe müssen in tatsächlichen Aktionen, Erfahrungen, Zufallszuständen und unveränderten Netzen übereinstimmen, bevor der jeweilige Lernvergleich beginnt. Vollständige bestätigte Folgeaktionsbelege und atomare Freigabedateien verhindern unvollständige Aufnahme.
+- Tatsächlich 123 gezielte Tests PASS in 3,19 Sekunden (53 Agent- und 70 Studienprüfungen); unabhängiger statischer Review PASS, Root-Code-/Hashabgleich ebenfalls durchgeführt. [Umsetzung und Testbefehle](../experiments/analysis/sampled_target_20261108/operations/task3-implementation.md), [unabhängiger Review](../experiments/analysis/sampled_target_20261108/operations/task3-review.md).
+- Noch keine realen Pilotspiele. Nächster Schritt ist ausschließlich die vorab festgelegte Vier-Spiel-Technikprüfung auf bekannter Karte4242 ohne Gradienten. Erst nach vollständiger Abnahme der tatsächlichen Daten dürfen die vier frischen Arme mit insgesamt800 Ausführungen beginnen. Kein automatischer Neustart oder Übergang; Source-Freeze nach diesem Werkzeugcommit beachten.
+- V14, produktive Agentlogik und ZIP bytegleich. Die feste400-Spiel-Leistungsprüfung wird separat vorbereitet; aus diesem Methodenpilot folgt noch keine V14-Übernahme.
+
 ## 08.11.2026 – Getrennter Folgeaktions-Lerner vorbereitet und synthetisch geprüft
 
 - Nach negativem Artillerieabschluss setzt Root den autonomen Auftrag mit einem SARSA-artigen Replay-Target fort. Experimentlokale Unterklassen erfassen bestätigte Folgeaktionen; beide Vergleichsarme erhalten dieselbe verzögerte Replayfreigabe. Produktive Aktionswahl, Regeln, Rewards und V14 unverändert.

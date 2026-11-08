@@ -1,11 +1,13 @@
 # Sampled-Target-Pilot
 
-**Stand 08.11.2026: Lernmodul synthetisch geprüft; noch keine realen Spiele oder Lernresultate dieser Studie.** V14 und die Abgabe-ZIP bleiben unverändert. Der vorangegangene [Artillerievergleich](../artillery_comparison_20261108/ERGEBNIS.md) ist abgeschlossen und wird nicht verlängert.
+**Stand 08.11.2026: Lernmodul und Studienwerkzeuge synthetisch geprüft; noch keine realen Spiele oder Lernresultate dieser Studie.** V14 und die Abgabe-ZIP bleiben unverändert. Der vorangegangene [Artillerievergleich](../artillery_comparison_20261108/ERGEBNIS.md) ist abgeschlossen und wird nicht verlängert.
 
 Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsächlich an die Engine übergebenen Folgeaktion. Beide Arme verwenden dieselbe verzögerte Replayfreigabe. Das ist SARSA-artiges Lernen aus historischen Replayaktionen, kein streng on-policy SARSA. Die normale Aktionswahl, Regeln, Rewards und der produktive Core bleiben erhalten. Nur die kurze experimentlokale Lernmethode entscheidet zwischen den beiden Targets.
 
 ## Tatsächlich geprüft
 
+- [Gemeinsamer Abschlusslauf: 123 Tests bestanden](operations/task3-implementation.md), 3,19 Sekunden: bestehende 53 Agenttests und 70 Studien-/Supervisorprüfungen. Feste Spielpläne, vollständige Folgeaktionsbelege, atomare Vorlauf-Freigabe, strikte Aufnahme und kontrolliertes Beenden eigener Prozesse. Nur synthetische Daten; keine echte Lux-Laufzeit oder Spielstärke aus diesem Ergebnis ableiten.
+- [Unabhängiger abschließender Code-Review](operations/task3-review.md): PASS_STATIC, keine konkreten Blocker. Root hat Worker und Supervisor zusätzlich vollständig gelesen und die tatsächlichen Datei-/Schutzhashes abgeglichen.
 - [53 synthetische Tests bestanden](operations/task12-tests.json), 2,71 Sekunden: bestätigte Folgeaktionslabels, Terminal-/Matchgrenzen, Maskenfälle, Ring-/Bundle-Speicherung und numerische Gleichheit des Kontroll-Lernschritts mit dem Core auf demselben fertigen Batch.
 - [Unabhängiger statischer Fixreview](operations/task12-review-fix1.md). Historische UNRUN-Berichte dokumentieren die frühere reine Textvorbereitung; der Root-Testbeleg ist jünger.
 - [Methodenreview](operations/method-review.md); vier alte Statusformulierungen anschließend präzisiert, technische Initialisierung auf run_seed45 festgelegt. Keine Aufnahmefreigabe für den noch ungeprüften Studienrunner.
@@ -23,4 +25,4 @@ Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsäc
 
 Der feste Maximalumfang beträgt1204 Spielausführungen, getrennt nach Technik, Vorlauf/Lernen und Leistung. Die sechs Kartenlisten und alle Aufnahmebedingungen stehen in der Methode. Fehler/fehlende Labels werden nicht durch STAY, Argmax oder ausgeschlossene Zeilen ersetzt. Der Core definiert Terminalgrenzen; die geerbte nahe Respawn-Heuristik wird dadurch nicht zu einem sicheren Identitätsnachweis. „Ausgeführt“ bedeutet an die Engine übergeben, nicht garantierte physische Wirkung.
 
-Studienrunner, Supervisor, reale Integration und Aufnahmeprüfungen sind noch offen. Keine neuen Gewichte oder verbesserte Siegquote werden durch diese Vorbereitung behauptet.
+Studienrunner und Supervisor sind implementiert und statisch unabhängig geprüft. Nach diesem Werkzeugstand werden Quellen und Inputs für genau die vier bekannten Technikspiele gebunden. Erst deren vollständige Datenabnahme erlaubt die getrennte Aufnahme der Frischstudie; beide Stufen behalten dieselbe unveränderte Quelle. Die 400er-Leistungsprüfung ist noch umzusetzen. Keine neuen Gewichte oder verbesserte Siegquote werden durch diese Vorbereitung behauptet.
