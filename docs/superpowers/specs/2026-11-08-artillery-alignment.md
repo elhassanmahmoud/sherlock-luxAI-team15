@@ -32,7 +32,7 @@ Nach Training: vollständige Kartenfolge, je60000 Updates, endliche/veränderte 
 
 ## Vergleich und Übernahme
 
-Erst nach technischer Abnahme aller vier Arme zwei feste Kandidaten bauen: V14+beideKontrollnetze bzw. V14+beideAlignednetze, uniform38. Keine Mitgliedersuche/Umgewichtung. Kleinen festen Vergleich und etwaige einmalige frische Bestätigung vor deren Ergebnissen separat festlegen. Ziel: Vorteile gegen V14 UND Solution, keine wesentliche Regression gegen Kontrollen. Keine Promotion aus Loss, Einzelnetz-Diagnosen oder bekannten Karten. Bei belegtem Vorteil vorher V14 sichern, Kurs-/Lade-/Laufzeitprüfung sowie Reproduktion abschließen und Übergabe für Mahmoud dokumentieren.
+Erst nach technischer Abnahme aller vier Arme zwei feste Kandidaten bauen: V14+beideKontrollnetze bzw. V14+beideAlignednetze, uniform38. Keine Mitgliedersuche/Umgewichtung. Vor Trainings- und Leistungsresultaten festgelegte Obergrenze:440 Auswahlspiele, nur bei Nominierung einmalig600 frische Bestätigungsspiele, maximal1040. Der Methodenvermerk experiments/analysis/artillery_alignment_20261108/operations/comparison-sizing.md bindet Paneldefinitionen, unveränderte Auswahl-/Übernahmebedingungen und feste Rangfolge; beide Kandidaten sind nominierbar. Geringere Empfindlichkeit wegen nur20 unabhängigen Kartenclustern ausdrücklich akzeptiert, kein Nachschlag bei Unklarheit. Exakte vier frische Kartenlisten und Werkzeugzulassung vor Leistungsdaten separat binden. Ziel: Vorteile gegen V14 UND Solution, keine wesentliche Regression gegen Kontrollen. Keine Promotion aus Loss, Einzelnetz-Diagnosen oder bekannten Karten. Bei belegtem Vorteil vorher V14 sichern, Kurs-/Lade-/Laufzeitprüfung sowie Reproduktion abschließen und Übergabe für Mahmoud dokumentieren.
 
 ## Betrieb
 

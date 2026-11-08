@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 08.11.2026, **separater Artillerie-Trainingsvergleich vorbereitet:** Kontroll-/Aligned-Arme43/44 mit je40 Vorlauf+400 Lernen+32 Diagnosen; nur art_splash_in_training unterscheidet das Paar.103 gezielte Tests und unabhängige integrierte Prüfung bestanden, vier bekannte V14-Ausführungen zuvor exakt. Noch keine Lernresultate. Leistungsgrenze vor Ergebnissen440+optional600, V14/ZIP unverändert. [Vorabplan](superpowers/plans/2026-11-08-artillery-alignment.md).
+
 - 08.11.2026: **Artillerie-Trainingsunterschied offline gemessen.** Zwei archivierte V14-Niederlagen, 1192 Helper-Aufrufe, davon 24 Eval-ja/Training-nein in einer Partie. Null neue Spiele oder Lernupdates. Root-Technik-/Hash-/Summenprüfung bestanden, unabhängiger Code-/Prämissenreview PASS; separate Ergebnisnachrechnung nach Nutzer-Reset abgeschlossen,39590 Prüfungen PASS. Keine Aktionsqualitäts- oder Stärkeaussage, keine Promotion. [Ergebnis und Grenzen](../experiments/analysis/artillery_training_exposure_20261108/ERGEBNIS.md).
 
 08.11.2026: OfflineFog-Netzeinflussdiagnose abgeschlossen:10000vorhandeneZeilen, keineSpiele/Updates; C/N143/139VorschlagsänderungenvsV14, unabhängigerAuditPASS. KeinAktionsqualitäts-/Stärkenachweis. [Ergebnis](../experiments/analysis/fog_influence_20261108/ERGEBNIS.md).

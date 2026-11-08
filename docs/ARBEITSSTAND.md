@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Artillerie-Lernvergleich technisch freigegeben
+
+- Vier feste Lernarme43/44 (Kontrolle/angleichende Artillerieregel), je40 Vorlaufspiele,400 Lernspiele und32 getrennte Diagnosen. Beide Arbeiter warten vor Gradienten auf die Prüfung tatsächlicher zusätzlicher Schüsse und unveränderter Startnetze. Maximal zwei Arbeiter; V14 und ZIP bleiben geschützt.
+- Unabhängiger integrierter Review fand einen Belief-Typfehler in der Prüfprotokollierung; vor jedem echten Lernspiel reproduziert und behoben. Vier neue Regressionen, abschließend **103 gezielte Tests bestanden in4,05s**; Fix-Nachprüfung Spec/Qualität PASS. Kein neuer Stärkegewinn behauptet.
+- Werkzeuge und Vorabregeln sind fertig; nach diesem Commit Quellen einfrieren und den registrierten Lauf starten. Nur finale Netze verwenden. Anschließend maximal440 Auswahlspiele und bei Nominierung600 frische Bestätigungsspiele, kein Nachschlag bei unklarem Ausgang. [Plan](superpowers/plans/2026-11-08-artillery-alignment.md), [Prüfbericht](../experiments/analysis/artillery_alignment_20261108/operations/task-2-review-fix1.md).
+
 ## 08.11.2026 – V14-Verhalten nach optionaler Trainingsregel exakt reproduziert
 
 - Vier bekannte technische Ausführungen: zwei Karten/Seiten jeweils mit art_splash_in_training=False und True bei Inferenz. Alle1212 Frames inklusive beider Aktionen, Zustands-/Beobachtungshashes, Punkte und Endergebnis exakt zur archivierten V14-Referenz.
