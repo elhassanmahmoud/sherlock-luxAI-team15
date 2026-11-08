@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Technischen Start vor erstem Spiel korrigiert
+
+- Erster Sampled-Technikstart unter `a7e4203` vor Learnerkonstruktion gesperrt: macOS-Python ersetzt `sys.orig_argv[0]` durch seinen Framework-Launcher. Root hat die Ursache mit einer reinen Prozessprobe reproduziert; keine Agent-/Spielausführung, keine Lernupdates. Alle eigenen Prozesse beendet,397 ursprüngliche Datei-/Schutzbindungen vor Freigabe der Quelle geprüft.
+- Enge Korrektur erhält exakte PID-/Gruppen-/Eltern-/Befehlsbindung und prüft den verlangten Interpreter nun über `sys.executable`. Regression zuerst RED, danach125 gemeinsame Tests PASS in3,42s. [Ursache, Nachweise und gesonderter Technikentscheid](../experiments/analysis/sampled_target_20261108/operations/launcher-fix.md).
+- Fehlgeschlagene Stufe und STOP archiviert; neue technische Aufnahme in eigenen v2-Verzeichnissen erst nach unabhängiger Fixprüfung/Commit. Weiterhin exakt vier bekannte Technikspiele, da bislang null begonnen wurden; frische Trainings noch gesperrt. V14/ZIP unverändert.
+
 ## 08.11.2026 – Folgeaktions-Studienwerkzeuge geprüft; reale Integration folgt
 
 - Fester Runner und Supervisor für die separate Sampled-Target-Methode implementiert. Beide Vorläufe müssen in tatsächlichen Aktionen, Erfahrungen, Zufallszuständen und unveränderten Netzen übereinstimmen, bevor der jeweilige Lernvergleich beginnt. Vollständige bestätigte Folgeaktionsbelege und atomare Freigabedateien verhindern unvollständige Aufnahme.

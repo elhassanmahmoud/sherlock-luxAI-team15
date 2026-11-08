@@ -396,7 +396,7 @@ def test_supervisor_owned_queue_cleanup_and_no_automatic_next_stage(tmp_path,mon
     if fault=='exit_failure':assert len([e for e in trace if e[0]=='spawn'])==2
     assert any(e[0]=='cleanup' for e in trace)
 
-@pytest.mark.parametrize('fault',[None,'wrong_pid','wrong_command','peer_timeout'])
+@pytest.mark.parametrize('fault',[None,'framework_argv0','wrong_executable','wrong_pid','wrong_command','peer_timeout'])
 def test_worker_ownership_registration_is_bounded_and_exact(tmp_path,monkeypatch,fault):
     state=dict(profile=V.PROFILE,status='running',stage='study',root=str(V.ROOT),prepared=str(tmp_path/'prepared'),
         out=str(tmp_path),python='/python',stop_file=str(tmp_path/'STOP'),owner_pid=9,active=['control45','sampled45'],jobs={})
@@ -409,9 +409,14 @@ def test_worker_ownership_registration_is_bounded_and_exact(tmp_path,monkeypatch
     path=tmp_path/'state.json';path.write_text(json.dumps(state));calls=[]
     monkeypatch.setattr(V.os,'getpid',lambda:10);monkeypatch.setattr(V.os,'getpgrp',lambda:10)
     monkeypatch.setattr(V.os,'getppid',lambda:9);monkeypatch.setattr(V.os,'kill',lambda pid,sig:calls.append((pid,sig)))
-    monkeypatch.setattr(V.sys,'orig_argv',command);monkeypatch.setattr(V,'guard',lambda *a:calls.append('guard'))
+    actual=command.copy()
+    if fault=='framework_argv0':
+        actual[0]='/Library/Frameworks/Python.framework/Versions/3.13/Resources/Python.app/Contents/MacOS/Python'
+    monkeypatch.setattr(V.sys,'orig_argv',actual)
+    monkeypatch.setattr(V.sys,'executable','/wrong/python' if fault=='wrong_executable' else state['python'])
+    monkeypatch.setattr(V,'guard',lambda *a:calls.append('guard'))
     clock=iter([0,16]);monkeypatch.setattr(V.time,'monotonic',lambda:next(clock))
-    if fault:
+    if fault not in (None,'framework_argv0'):
         with pytest.raises(ValueError):V.worker_guard(path,'control45',V.run_name('control45'),state['prepared'],startup=True)
         assert 'guard' not in calls
     else:

@@ -6,6 +6,7 @@ Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsäc
 
 ## Tatsächlich geprüft
 
+- [Technischen Startfehler vor dem ersten Spiel reproduziert und korrigiert](operations/launcher-fix.md): Mac-Framework-Interpretername; danach125 gemeinsame Tests PASS in3,42s. Fehlgeschlagene Stufe vollständig erhalten, null Spiele/Updates; neue Aufnahme separat und weiterhin vor jeder Frischstudie.
 - [Gemeinsamer Abschlusslauf: 123 Tests bestanden](operations/task3-implementation.md), 3,19 Sekunden: bestehende 53 Agenttests und 70 Studien-/Supervisorprüfungen. Feste Spielpläne, vollständige Folgeaktionsbelege, atomare Vorlauf-Freigabe, strikte Aufnahme und kontrolliertes Beenden eigener Prozesse. Nur synthetische Daten; keine echte Lux-Laufzeit oder Spielstärke aus diesem Ergebnis ableiten.
 - [Unabhängiger abschließender Code-Review](operations/task3-review.md): PASS_STATIC, keine konkreten Blocker. Root hat Worker und Supervisor zusätzlich vollständig gelesen und die tatsächlichen Datei-/Schutzhashes abgeglichen.
 - [53 synthetische Tests bestanden](operations/task12-tests.json), 2,71 Sekunden: bestätigte Folgeaktionslabels, Terminal-/Matchgrenzen, Maskenfälle, Ring-/Bundle-Speicherung und numerische Gleichheit des Kontroll-Lernschritts mit dem Core auf demselben fertigen Batch.

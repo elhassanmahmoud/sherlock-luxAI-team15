@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_study.py", line 683, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_study.py", line 681, in main
+    else:(technical if args.command=='technical' else run_arm)(args.prepared,args.arm,args.name,supervisor_state=args.supervisor_state)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_study.py", line 669, in technical
+    return execute(prepared,arm,name,supervisor_state=supervisor_state,technical=True)
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_study.py", line 574, in execute
+    worker_guard(supervisor_state,job,name,prepared,startup=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_supervisor.py", line 93, in worker_guard
+    require(arm in state['active'] and job.get('pid') == os.getpid()
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and job.get('pgid') == os.getpgrp() == os.getpid()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and job.get('owner_pid') == owner and job.get('argv') == expected
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and getattr(sys, 'orig_argv', None) == expected,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            'Worker lacks exact owned supervisor PID/group/command')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/early_curriculum_study.py", line 52, in require
+    raise ValueError(message)
+ValueError: Worker lacks exact owned supervisor PID/group/command

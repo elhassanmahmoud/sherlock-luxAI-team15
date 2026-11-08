@@ -90,10 +90,15 @@ def worker_guard(state_path, arm, name, prepared, *, startup=False):
         job = state.get('jobs', {}).get(arm)
         if job is not None:
             expected = training_command(state, arm)
+            actual = getattr(sys, 'orig_argv', None)
+            # macOS framework Python rewrites orig_argv[0] to its app launcher.
+            # Bind the requested interpreter through sys.executable and retain
+            # exact module/options/arguments plus the registered process identity.
             require(arm in state['active'] and job.get('pid') == os.getpid()
                     and job.get('pgid') == os.getpgrp() == os.getpid()
                     and job.get('owner_pid') == owner and job.get('argv') == expected
-                    and getattr(sys, 'orig_argv', None) == expected,
+                    and sys.executable == expected[0] and isinstance(actual, list)
+                    and len(actual) == len(expected) and actual[1:] == expected[1:],
                     'Worker lacks exact owned supervisor PID/group/command')
             # A peer can be between Popen and atomic registration. Neither worker
             # begins learner work while that peer would look like a foreign job.
