@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "no_observed_conflicts": true,
+  "root_review": "All proposed ranges had zero recorded consumption/reservation/text conflicts, errors and mutations; all eight worktree heads remained stable. Observational assurance only; source gaps are retained.",
+  "ranges_inclusive": {
+    "selection_panel": [
+      9800000,
+      9800019
+    ],
+    "selection_direct": [
+      9800100,
+      9800119
+    ],
+    "confirmation_panel": [
+      9801000,
+      9801019
+    ],
+    "confirmation_direct": [
+      9801100,
+      9801119
+    ]
+  },
+  "counts": {
+    ".json_paths": 5281,
+    "stored_bytes": 2258973940,
+    "json_unique_scanned": 1351,
+    "json_seed_values": 109079,
+    "json_exact_byte_duplicates": 3947,
+    ".csv_paths": 8794,
+    "csv_unique_scanned": 1659,
+    "csv_seed_values": 1641784,
+    "csv_rows": 1646445,
+    "csv_rows_with_seed_column": 1641784,
+    ".jsonl_paths": 490,
+    "jsonl_unique_scanned": 388,
+    "jsonl_records": 371199,
+    "jsonl_records_without_numeric_seed": 328472,
+    "jsonl_seed_values": 43971,
+    ".jsonl.gz_paths": 652,
+    "jsonl_exact_byte_duplicates": 754,
+    "json_blank_seed_values": 2,
+    ".csv.gz_paths": 12,
+    ".json.gz_paths": 17,
+    "csv_exact_byte_duplicates": 7147,
+    "text_paths": 8873,
+    "text_unique_scanned": 1688,
+    "unique_observed_csv_jsonl_seed_values": 216316,
+    "json_interval_candidates_examined": 704,
+    "seedless_unique_csv_files": 286,
+    "seedless_unique_jsonl_files": 227,
+    "invalid_seed_values": 1152
+  },
+  "worktrees": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint"
+  ],
+  "limitations": [
+    "Only eight registered local worktrees; other machines, unregistered checkouts and undocumented runs remain unknown.",
+    "Seedless files/records do not prove non-consumption; path/schema gaps retained.",
+    "Structured scanner covers experiments/logs/replays CSV/JSONL/JSON including gzip; conservative JSON seed interval candidates require adjudication.",
+    "Supplemental text scan covers root/docs/scripts/experiments/logs/replays .md/.py/.sh/.txt/.log files, numeric literal mentions and explicit intervals. Computed seed formulas, unsupported schemas and opaque binary formats can escape detection.",
+    "Directory symlinks not followed; .git/.venv/venv/node_modules/__pycache__ skipped.",
+    "Stored bytes deduplicated by SHA256 for structured formats; text content separately deduplicated.",
+    "Current exact spec/plan references allowed as reservations, not consumption. Own three audit outputs excluded to avoid recursion.",
+    "No repository imports, model loading, tests or game execution; writes restricted to three authorized audit paths."
+  ],
+  "raw_audit": {
+    "path": "experiments/analysis/artillery_comparison_20261108/operations/seed-audit.raw.json.gz",
+    "sha256": "6ed229bd707d57f3b0a1d3311a6dcbe9e0c27ea0d91d8b766d4605b6af9f2d95"
+  },
+  "raw_uncompressed_sha256": "f5320ed562080b87675b3523a4deb79f156d2932dc4e23a96be16f645f942a3f",
+  "files": {
+    "experiments/analysis/artillery_comparison_20261108/operations/seed-audit.py": "b21292538e425f0caa709b01f96d6125f297a1a2ab2c8c006d438eb757ceb414",
+    "experiments/analysis/artillery_comparison_20261108/operations/seed-audit.md": "c1ebb38c84a8ab36bfe051a9843cde29189ce184d34ee5a00a981f9de547c456"
+  }
+}

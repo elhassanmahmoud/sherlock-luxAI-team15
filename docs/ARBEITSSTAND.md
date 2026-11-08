@@ -6,6 +6,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 08.11.2026 – Zwei Artillerie-Ensembles für festen Vergleich zugelassen
+
+- CONTROL38 und ALIGNED38 aus exakt 36 ursprünglichen V14-Netzen plus den jeweiligen finalen Netzen 43/44 gebaut. Einheitliche Mittelung und ursprüngliche V14-Inferenzkonfiguration; keine Mitglieder-/Gewichtssuche. Erneutes Laden, Mitgliederreihenfolge, historische Trainingsbelege und Schutzdateien geprüft.
+- 123 gezielte synthetische Vergleichs-/Regressionstests bestanden (26,02 Sekunden), unabhängiger Installations-/Abnahmereview PASS. Vier neue Kartenlisten nach stabilem Audit über acht Worktrees ohne beobachtete Überschneidungen, Fehler oder Dateimutationen akzeptiert; bekannte Datenlücken ausdrücklich erhalten.
+- Elf feste Jobs / 440 Auswahlspiele vorbereitet, noch keine Leistungsspiele in diesem Stand. Nur bei Qualifikation einmalig 600 Bestätigungsspiele über das lokale Sechserpanel, default und direkt gegen V14. Keine Zusatzkarten oder Nachrücker. [Vorabregeln](superpowers/specs/2026-11-08-artillery-comparison.md), [Artefakte](../experiments/analysis/artillery_comparison_20261108/README.md).
+- Nach diesem Commit Quellen/HEAD über Auswahl und mögliche Bestätigung einfrieren; maximal zwei Worker. V14/ZIP unverändert. Die großen vier Replaypuffer sind nur lokal vorhanden; vollständige erneute Zulassung in einer anderen Kopie benötigt deren separate Übertragung.
+
 ## 08.11.2026 – Zwei vorhandene Datenbestände ohne neue Spiele ausgewertet
 
 - [Geführte Pfadkorrektur](../experiments/analysis/guided_path_20261108/ERGEBNIS.md): zwölf alte ausgewählte Ausführungen, 343 hypothetische Helperänderungen. Mit der theoretischen Explorationswahrscheinlichkeit rechnerisch rund zwölf Eingriffe über diese zwölf Partien, keine gemessene Trainingshäufigkeit oder Endaktionswirkung. Unabhängig geprüft; vorläufig niedrige Priorität, keine neue Regel oder Lernserie daraus.

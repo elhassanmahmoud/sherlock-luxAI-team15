@@ -1,0 +1,132 @@
+{
+  "profile": "artillery_alignment_20261108",
+  "protocol": "docs/superpowers/plans/2026-11-08-artillery-comparison.md",
+  "phase": "selection",
+  "nominee": null,
+  "roles": {
+    "V14": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+    "CONTROL38": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+    "ALIGNED38": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth"
+  },
+  "total_games": 440,
+  "max_simultaneous_model_processes": 2,
+  "opponent_sha256": {
+    "experiments/releases/20261022_all18_v3/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+    "experiments/releases/20261022_v10_baseline/agent_p0.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+    "experiments/releases/20261101_v13_neb/agent_p0.pth": "6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62",
+    "experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "jobs": [
+    {
+      "name": "V14_panel_0",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_1",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "V14_panel_2",
+      "role": "V14",
+      "kind": "panel",
+      "weights": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "CONTROL38_panel_0",
+      "role": "CONTROL38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "CONTROL38_panel_1",
+      "role": "CONTROL38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "CONTROL38_panel_2",
+      "role": "CONTROL38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALIGNED38_panel_0",
+      "role": "ALIGNED38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALIGNED38_panel_1",
+      "role": "ALIGNED38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALIGNED38_panel_2",
+      "role": "ALIGNED38",
+      "kind": "panel",
+      "weights": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth",
+      "opponent": "default",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "CONTROL38_direct",
+      "role": "CONTROL38",
+      "kind": "direct",
+      "weights": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_direct.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "ALIGNED38_direct",
+      "role": "ALIGNED38",
+      "kind": "direct",
+      "weights": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth",
+      "opponent": "self:experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "seed_list": "experiments/analysis/artillery_comparison_20261108/plans/selection_direct.json",
+      "expected_games": 40,
+      "workers": 1
+    }
+  ]
+}

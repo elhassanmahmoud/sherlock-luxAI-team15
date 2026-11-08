@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "profile": "artillery_alignment_20261108",
+  "training_acceptance_sha256": "34395fb96b8245a7cca7088cdb04acdd881dd1c037f9f7c0b688affb093f7712",
+  "seed_acceptance_sha256": "9417e1526dfb29efa2e2ce8eca42486aa8a94c4f9118eab63712e22ab0676c21",
+  "roles": {
+    "V14": {
+      "path": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+      "members": 36
+    },
+    "CONTROL38": {
+      "path": "experiments/candidates/artillery_alignment_20261108/CONTROL38.pth",
+      "sha256": "d7e882c272a4e526eae360c51ef4be020d40a42d963047659aa2817a0a4dc4e2",
+      "members": 38
+    },
+    "ALIGNED38": {
+      "path": "experiments/candidates/artillery_alignment_20261108/ALIGNED38.pth",
+      "sha256": "cd422172a56c711cafe75fb9023bde7e7cb8780bc64ff684e93c00435fda4107",
+      "members": 38
+    }
+  },
+  "selection_jobs": 11,
+  "selection_games": 440,
+  "confirmation_games": 600,
+  "source_count": 67,
+  "seed_bindings": 9,
+  "games_started": 0,
+  "promoted": false
+}

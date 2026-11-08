@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 08.11.2026, **Artillerie-Leistungsvergleich technisch vorbereitet, noch keine Ergebnisse:** zwei exakt feste 38er-Ensembles, 123 Tests und reale Montage-/Reload-/Zulassungsprüfung bestanden. Karten 9800000–9800019 und 9800100–9800119 für 440 Auswahlspiele; optional genau ein Nominierter auf 9801000–9801019 und 9801100–9801119 für 600 Bestätigungsspiele. Unveränderte vorab festgelegte Hürden, keine Erweiterung. [Plan](superpowers/plans/2026-11-08-artillery-comparison.md).
+
 - 08.11.2026, **zwei reine Archivdiagnosen abgeschlossen:** Guided/Path: 343 hypothetische Helperänderungen in zwölf alten Ausführungen, geringe theoretische Exposition, keine Regeländerung. Replay: 2.019 von 10.000 gespeicherten Endnetzgewinnern nicht unter den wenigen passenden aktuellen Replayaktionen beobachtet; keine TD-/Stärkeaussage. Beide unabhängig geprüft, null neue Spiele/Updates. [Pfadbericht](../experiments/analysis/guided_path_20261108/ERGEBNIS.md), [Replaybericht](../experiments/analysis/replay_support_20261108/ERGEBNIS.md).
 
 - 08.11.2026, **Artillerietraining abgeschlossen und unabhängig geprüft:** vier Arme, 1.888 Ausführungen / 240.000 Updates, Quelle `02ce1b2`. Finale Einzelnetzdiagnose Solution: C43/A43 6/8 gegenüber 8/8; C44/A44 7/8 gegenüber 5/8. Keine Stärkeaussage oder Übernahme. Historische Abnahme nach Root-Originalvalidatoren gesichert; V14/ZIP unverändert. [Trainingsbericht](../experiments/analysis/artillery_alignment_20261108/TRAININGSERGEBNIS.md).
