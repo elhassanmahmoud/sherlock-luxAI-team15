@@ -1,6 +1,6 @@
 # Sampled-Target-Pilot
 
-**Stand 08.11.2026: Vier Technikspiele und alle 800 Vorlauf-/Lernausführungen vollständig akzeptiert; 96.000 Updates, noch kein Leistungsresultat.**
+**Stand 08.11.2026: vollständig abgeschlossen.** Vier Technikspiele, 800 Vorlauf-/Lernausführungen mit 96.000 Updates und 400 Leistungsspiele akzeptiert. [Leistungsergebnis](../sampled_target_performance_20261108/ERGEBNIS.md): vier von sechs Methodengates verfehlt, kein belegter Vorteil, V14 bleibt.
 
 [Trainingsbericht, Rohbelege und Grenzen](TRAININGSERGEBNIS.md). Ältere Vorbereitungsnachweise unten sind historisch; die Quellensperre des Trainings wurde erst nach der vollständigen Abnahme aufgehoben. V14 und die Abgabe-ZIP bleiben unverändert. Der vorangegangene [Artillerievergleich](../artillery_comparison_20261108/ERGEBNIS.md) ist abgeschlossen und wird nicht verlängert.
 
@@ -28,4 +28,4 @@ Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsäc
 
 Der feste Maximalumfang beträgt1204 Spielausführungen, getrennt nach Technik, Vorlauf/Lernen und Leistung. Die sechs Kartenlisten und alle Aufnahmebedingungen stehen in der Methode. Fehler/fehlende Labels werden nicht durch STAY, Argmax oder ausgeschlossene Zeilen ersetzt. Der Core definiert Terminalgrenzen; die geerbte nahe Respawn-Heuristik wird dadurch nicht zu einem sicheren Identitätsnachweis. „Ausgeführt“ bedeutet an die Engine übergeben, nicht garantierte physische Wirkung.
 
-Technik und Training sind abgeschlossen; die vier neuen Netze bleiben experimentell. Die feste 400er-Leistungsprüfung folgt nach eigener Werkzeug- und Datenaufnahme. Aktueller Laufstatus im gemeinsamen Arbeitsstand; noch kein bestätigter Stärkegewinn.
+Technik, Training und die feste 400er-Leistungsprüfung sind abgeschlossen; die vier neuen Netze bleiben experimentell. Kein bestätigter Stärkegewinn, keine Verlängerung. Tatsächlich publizierter Abschluss: `47b9f11`, auch die primäre lokale Arbeitskopie wurde danach aktualisiert.
