@@ -46,7 +46,13 @@ def validate_job_csv(path, job, seeds):
 def request_stop(path=STOP_FILE):
     helpers().request_stop(path)
 
-def check_usage(path, *, now):
+def validate_quota_ceiling(max_used_percent):
+    helpers().require(type(max_used_percent) in (int, float)
+        and math.isfinite(max_used_percent) and 0 < max_used_percent <= 100,
+        'Quota ceiling must be a finite number greater than 0 and at most 100')
+
+def check_usage(path, *, now, max_used_percent=65):
+    validate_quota_ceiling(max_used_percent)
     h = helpers()
     try:
         usage = json.loads(h.safe_path(path).read_text())
@@ -56,8 +62,8 @@ def check_usage(path, *, now):
                   and 0 <= now - when.timestamp() <= 1200, 'Quota receipt stale or from future')
         h.require(type(used) in (int, float) and math.isfinite(used) and 0 <= used <= 100,
                   'Unknown quota usage')
-        h.require(usage['ordinaryUsageAllowed'] is True and used < 65,
-                  'Quota disallowed or >=65%; stopping comparison')
+        h.require(usage['ordinaryUsageAllowed'] is True and used < max_used_percent,
+                  f'Quota disallowed or >={max_used_percent}%; stopping comparison')
     except (OSError, KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:
         raise ValueError('Missing or malformed quota receipt') from exc
     return usage
@@ -71,7 +77,8 @@ def repo_path(root, relative):
     return path
 
 def build_state(jobs, admission, out, python, expected_head, *, usage_file,
-                phase='selection', nominee=None, stop_file=STOP_FILE):
+                phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65):
+    validate_quota_ceiling(max_used_percent)
     h = helpers()
     h.require(Path.cwd().resolve() == ROOT, 'Use the intended checkout')
     h.require(re.fullmatch('[0-9a-f]{40}', expected_head) is not None, 'Expected HEAD must be full')
@@ -123,7 +130,8 @@ def build_state(jobs, admission, out, python, expected_head, *, usage_file,
         protected=protected, inputs=h.hashes(paths), admission_sha256=h.digest(admission_path),
         model_sha256=models, opponent_sha256=plan['opponent_sha256'],
         provenance=dict(model_sha256=models, source_identity=source),
-        usage_file=str(h.safe_path(usage_file)), stop_file=str(Path(stop_file).absolute()),
+        usage_file=str(h.safe_path(usage_file)), max_used_percent=max_used_percent,
+        stop_file=str(Path(stop_file).absolute()),
         reservation=str(reservation), expected_games=sum(job['expected_games'] for job in job_list),
         job_plan={job['name']: job for job in job_list}, queue=[job['name'] for job in job_list],
         jobs={}, active=[], receipts={}, status='prepared', owner_pid=os.getpid())
@@ -182,7 +190,8 @@ def guard(state, owned):
     h = helpers()
     if Path(state['stop_file']).exists():
         raise StopRequested('External STOP requested')
-    usage = check_usage(state['usage_file'], now=time.time())
+    usage = check_usage(state['usage_file'], now=time.time(),
+                        max_used_percent=state.get('max_used_percent', 65))
     power = h.read_power()
     h.admit_power(power, starting=False)
     check_inputs(state)
@@ -210,7 +219,8 @@ def exclusive_json(path, value):
 def reserve_launch(state):
     h = helpers()
     exclusive_json(state['reservation'], dict(owner_pid=os.getpid(), out=state['out'],
-        phase=state['phase'], jobs_path=state.get('jobs_path'), started_at=time.time(), source_identity=state['source']))
+        phase=state['phase'], jobs_path=state.get('jobs_path'),
+        max_used_percent=state.get('max_used_percent', 65), started_at=time.time(), source_identity=state['source']))
     path = Path(state['out']) / 'provenance.json'
     exclusive_json(path, state['provenance'])
     state['inputs'].update(h.hashes([state['reservation'], path]))
@@ -352,7 +362,8 @@ def run_queue(state):
     return state
 
 def run_supervisor(jobs, admission, out, python, expected_head, *, usage_file,
-                   phase='selection', nominee=None, stop_file=STOP_FILE):
+                   phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65):
+    validate_quota_ceiling(max_used_percent)
     h = helpers()
     if Path(stop_file).exists():
         raise StopRequested('Existing STOP inhibits start')
@@ -364,7 +375,8 @@ def run_supervisor(jobs, admission, out, python, expected_head, *, usage_file,
         with h.compute_lock(ROOT):
             h.check_model_processes({})
             state = build_state(jobs, admission, out, python, expected_head, usage_file=usage_file,
-                                phase=phase, nominee=nominee, stop_file=stop_file)
+                                phase=phase, nominee=nominee, stop_file=stop_file,
+                                max_used_percent=max_used_percent)
             guard(state, {})
             target = h.safe_path(state['out'])
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -411,6 +423,8 @@ def main():
     for name in ('jobs', 'admission', 'out', 'python', 'expected-head', 'usage-file'):
         start.add_argument('--' + name, required=True)
     start.add_argument('--phase', choices=('selection', 'confirmation'), default='selection')
+    start.add_argument('--max-used-percent', type=float, default=65,
+        help='Stop at this quota usage percentage (default: 65; maximum: 100)')
     start.add_argument('--nominee', choices=('A39', 'B39', 'ALL42'))
     commands.add_parser('stop')
     args = parser.parse_args()
@@ -420,7 +434,8 @@ def main():
         return
     try:
         state = run_supervisor(args.jobs, args.admission, args.out, args.python, args.expected_head,
-            usage_file=args.usage_file, phase=args.phase, nominee=args.nominee)
+            usage_file=args.usage_file, phase=args.phase, nominee=args.nominee,
+            max_used_percent=args.max_used_percent)
     except Exception as exc:
         print(f'Comparison stopped: {type(exc).__name__}: {exc}', file=sys.stderr)
         raise SystemExit(1)

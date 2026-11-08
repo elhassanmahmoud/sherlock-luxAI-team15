@@ -70,6 +70,66 @@ class SupervisorTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.s.check_usage(path, now=now)
 
+    def test_explicit_quota_ceiling_accepts_remaining_budget_but_not_exhaustion(self):
+        now = datetime(2026, 11, 7, 12, tzinfo=timezone.utc).timestamp()
+        path = self.root / 'usage.json'
+        for used in (65, 99, 100):
+            with self.subTest(used=used):
+                path.write_text(json.dumps(dict(timestamp='2026-11-07T12:00:00Z',
+                    ordinaryUsageAllowed=True, usedPercent=used)))
+                if used < 100:
+                    self.assertEqual(self.s.check_usage(path, now=now,
+                        max_used_percent=100)['usedPercent'], used)
+                else:
+                    with self.assertRaises(ValueError):
+                        self.s.check_usage(path, now=now, max_used_percent=100)
+
+    def test_quota_ceiling_rejects_invalid_caps_and_preserves_receipt_safety(self):
+        now = datetime(2026, 11, 7, 12, tzinfo=timezone.utc).timestamp()
+        path = self.root / 'usage.json'
+        good = dict(timestamp='2026-11-07T12:00:00Z', ordinaryUsageAllowed=True, usedPercent=0)
+        path.write_text(json.dumps(good))
+        for cap in (True, False, 0, -1, float('nan'), float('inf'), -float('inf'), 101, None, '100'):
+            with self.subTest(cap=cap), self.assertRaises(ValueError):
+                self.s.check_usage(path, now=now, max_used_percent=cap)
+        for change in (dict(timestamp='2026-11-07T11:39:59Z'),
+                       dict(timestamp='2026-11-07T12:00:01Z'),
+                       dict(ordinaryUsageAllowed=False), dict(usedPercent=None),
+                       dict(usedPercent=True), dict(usedPercent=float('nan'))):
+            with self.subTest(change=change):
+                path.write_text(json.dumps({**good, **change}))
+                with self.assertRaises(ValueError):
+                    self.s.check_usage(path, now=now, max_used_percent=100)
+
+    def test_guard_uses_persisted_ceiling_and_defaults_legacy_state_to_65(self):
+        path = self.root / 'usage.json'
+        path.write_text(json.dumps(dict(timestamp=datetime.now(timezone.utc).isoformat(),
+            ordinaryUsageAllowed=True, usedPercent=99)))
+        st = dict(self.state, usage_file=str(path), max_used_percent=100)
+        with patch.object(self.s, 'check_inputs'), \
+             patch.object(self.s.helpers(), 'check_model_processes'), \
+             patch.object(self.s.helpers(), 'read_power', return_value={'ac': True, 'percent': 90}):
+            self.s.guard(st, {})
+            self.assertEqual(st['last_usage']['usedPercent'], 99)
+            del st['max_used_percent']
+            with self.assertRaises(ValueError):
+                self.s.guard(st, {})
+            st['max_used_percent'] = float('nan')
+            with self.assertRaises(ValueError):
+                self.s.guard(st, {})
+
+    def test_cli_forwards_default_and_explicit_quota_ceiling(self):
+        argv = ['controller', 'start', '--jobs', 'jobs', '--admission', 'admission',
+            '--out', 'out', '--python', sys.executable, '--expected-head', 'a' * 40,
+            '--usage-file', 'usage']
+        for options, expected in (([], 65), (['--max-used-percent', '100'], 100)):
+            with self.subTest(options=options), patch.object(sys, 'argv', argv + options), \
+                 patch.object(self.s, 'run_supervisor', return_value=dict(
+                     status='complete', out='out', completed_games=7800)) as run, \
+                 redirect_stdout(io.StringIO()):
+                self.s.main()
+                self.assertEqual(run.call_args.kwargs['max_used_percent'], expected)
+
     def test_receipt_requires_successful_exit_full_csv_and_current_input_hashes(self):
         st = self.state
         (self.root / 'seeds.json').write_text('[1400000]')
@@ -127,9 +187,10 @@ class SupervisorTests(unittest.TestCase):
 
     def test_launch_reservation_cannot_be_reused_with_another_output(self):
         st = self.state
-        st.update(reservation=str(self.root / 'selection_launch.json'), provenance=dict(
+        st.update(max_used_percent=100, reservation=str(self.root / 'selection_launch.json'), provenance=dict(
             model_sha256=st['model_sha256'], source_identity=st['source']))
         self.s.reserve_launch(st)
+        self.assertEqual(json.loads(Path(st['reservation']).read_text())['max_used_percent'], 100)
         self.assertTrue((self.out / 'provenance.json').exists())
         self.assertIn(str(self.out / 'provenance.json'), st['inputs'])
         st['out'] = str(self.root / 'second')
@@ -216,6 +277,14 @@ class SupervisorTests(unittest.TestCase):
                 usage_file=self.root / 'usage.json')
             self.assertEqual(built['model_sha256'], {'V14': sha(model)})
             self.assertIn(str(admission), built['inputs'])
+            self.assertEqual(built['max_used_percent'], 65)
+            built = self.s.build_state(jobs, admission, fresh, sys.executable, 'a' * 40,
+                usage_file=self.root / 'usage.json', max_used_percent=100)
+            self.assertEqual(built['max_used_percent'], 100)
+            for cap in (True, 0, -1, float('nan'), float('inf'), 101):
+                with self.subTest(cap=cap), self.assertRaises(ValueError):
+                    self.s.build_state(jobs, admission, fresh, sys.executable, 'a' * 40,
+                        usage_file=self.root / 'usage.json', max_used_percent=cap)
             with patch.object(self.s, 'validate_plan', side_effect=AssertionError('confirmation seeds read early')), \
                  patch.object(self.s, 'selection_evidence', side_effect=ValueError('missing selection')):
                 with self.assertRaisesRegex(ValueError, 'missing selection'):
@@ -345,13 +414,14 @@ class SupervisorTests(unittest.TestCase):
         with ExitStack() as stack:
             stack.enter_context(patch.object(self.s.helpers(), 'compute_lock', lock))
             stack.enter_context(patch.object(self.s.helpers(), 'check_model_processes'))
-            stack.enter_context(patch.object(self.s, 'build_state', return_value=st))
+            build = stack.enter_context(patch.object(self.s, 'build_state', return_value=st))
             stack.enter_context(patch.object(self.s, 'guard', return_value={'ac': True, 'percent': 80}))
             stack.enter_context(patch.object(self.s, 'run_queue', side_effect=ValueError('bad CSV')))
             stack.enter_context(patch.object(self.s.subprocess, 'Popen', side_effect=spawn_wake))
             with self.assertRaisesRegex(ValueError, 'bad CSV'):
                 self.s.run_supervisor('jobs', 'admission', 'out', sys.executable, 'a' * 40,
-                                      usage_file='usage', stop_file=st['stop_file'])
+                                      usage_file='usage', stop_file=st['stop_file'], max_used_percent=100)
+            self.assertEqual(build.call_args.kwargs['max_used_percent'], 100)
         self.assertEqual(events.count('lock'), 1)
         self.assertEqual(events.count('unlock'), 1)
         self.assertEqual(events.count('terminate'), 1)
