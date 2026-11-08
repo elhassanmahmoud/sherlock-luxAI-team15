@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "study": "holder_learning_20261108",
+  "weights": "agents/sherlock/weights/agent_p0.pth",
+  "baseline_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "opponent": "solution92",
+  "train_seeds": [
+    6500000,
+    6500001,
+    6500002,
+    6500003,
+    6500004,
+    6500005,
+    6500006,
+    6500007,
+    6500008,
+    6500009,
+    6500010,
+    6500011,
+    6500012,
+    6500013,
+    6500014,
+    6500015,
+    6500016,
+    6500017,
+    6500018,
+    6500019,
+    6500020,
+    6500021,
+    6500022,
+    6500023
+  ],
+  "validation_seeds": [
+    6501000,
+    6501001,
+    6501002,
+    6501003,
+    6501004,
+    6501005,
+    6501006,
+    6501007
+  ],
+  "sides": [
+    "player_0",
+    "player_1"
+  ],
+  "max_pairs_per_game": 8,
+  "spacing": 12,
+  "horizon": 12,
+  "protocols": [
+    "docs/superpowers/specs/2026-11-08-holder-learning.md",
+    "docs/superpowers/plans/2026-11-08-holder-learning.md"
+  ]
+}

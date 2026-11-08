@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – kleiner HOLD-Lernversuch vor neuen Daten festgelegt
+
+- Nach bestandener Einflussprobe eigener [Lernplan](superpowers/plans/2026-11-08-holder-learning.md):24Trainingskarten6500000–6500023 und8Validierungskarten6501000–6501007, beideSeiten, höchstens512Paare. Je Referenz+Sammler zusammen128volleAusführungen; keine frischen Leistungsspiele. Noch nicht gestartet.
+- 16öffentliche Merkmale, genau eine gewichtete Ridge-Regression mit festem Faktor0,1, Vorhersageschwelle strikt>1Punkt. Normierung nurTraining; Kopf vor ersterValidierung einfrieren. Höchstens8bewertete Gelegenheiten proSpiel,12Schritte Abstand auch nachAblehnung. Validierung prüft Nutzen aufgetrenntenKarten, anschließend nur beiPASS ein eigener vollständigerSpielvergleich. KeineNachoptimierung aufValidation.
+- Seed-Audit über8Worktrees: keine beobachtete Verbrauchs-/Metadatenüberschneidung, keineLesefehler. Lücken transparent:282seedloseCSV,83seedloseJSONL und598nichtnumerische/uneindeutigeSeed-Feldwerte. KeineGarantie überunprotokollierte/externeRuns. [Belege](../experiments/analysis/holder_learning_20261108/operations/seed-audit.md).
+- ZweiSubagents implementieren getrennt Lernarithmetik und experimentellePolicy/Datenerfassung. Noch kein neuerKopf/Trainingslabel. V14/ZIP unverändert; main/primärerCheckout zuletzt8e462f6, keine neuen Mahmoud-Commits.
+
 ## 08.11.2026 – HOLD-Einflussprobe vollständig: 28 hilfreiche und21 schädliche Eingriffe
 
 - Fester Block vollständig:24Spielausführungen auf zwölf bekannten Schlüsseln,55Paare über je zwölf Schritte. Positive Labels28 in10Spielen, negative21, null6; Mittel+0,418Team-Punkte, Spannweite−27 bis+42. Vorab-Machbarkeit bestanden, keine nachgewiesene stärkere Policy. Bekannte ausgewählte Spiele, keine neue Leistungsvalidierung.
