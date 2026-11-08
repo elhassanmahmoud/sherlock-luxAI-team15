@@ -9,3 +9,5 @@ Jetzt: Vergleichsadapter nach docs/superpowers/specs/2026-11-08-fog-comparison.m
 V14-P0/P1 SHA256 98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8, ZIP 88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6 bleiben unverändert. Kein belegter stärkerer Agent. Maximal zwei Modellprozesse; während Modellläufen keine Tests. Aktuelle echte Quota in operations/usage.json, Watcher fog_remote_watch erneuert sie. Nutzer erlaubt Restkontingent, Resets übernimmt ausschließlich er.
 
 Origin/main regelmäßig prüfen, neue Mahmoud-Änderungen erst bei sicheren Phasenübergängen integrieren. Fremde Dateien erhalten. Vollständige Trainingsbeschreibung in TRAININGSERGEBNIS.md. Alte HOLD-/Ensemblestudien geschlossen.
+
+**Aktuelle Folgephase tatsächlich gestartet:** Auswahl unter `experiments/analysis/fog_comparison_20261108/selection/state.json` im Studienworktree. Source-Freeze c096e4f0d1720900ee04d5acaa7faaef465fcded über Auswahl und gegebenenfalls Bestätigung; keine Integration in die Studie bis Abschluss. Siehe dortige HANDOFF.md. Dieser Eintrag wird ausschließlich im primären Checkout dokumentiert.

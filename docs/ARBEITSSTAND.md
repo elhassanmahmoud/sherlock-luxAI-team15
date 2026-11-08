@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Fog-Auswahl tatsächlich gestartet
+
+- Elf feste Jobs / 440 Spiele laufen, maximal zwei Worker. Supervisor79399, eigenes Wachhalten79418, erste V14-Referenzworker79431/79440. Netzstrom100%, echte erlaubte Kontingentnutzung93% beim Start. Keine fertigen Leistungsresultate behauptet.
+- Studienworktree weiterhin `sherlock-student-20261104/sherlock-luxAI-team15`, Livezustand `experiments/analysis/fog_comparison_20261108/selection/state.json`. Quellen/HEAD `c096e4f0d1720900ee04d5acaa7faaef465fcded` bis Ende von Auswahl und eventueller Bestätigung unverändert. Keine parallelen Tests; keine zweite Instanz.
+- Werkzeugreview PASS, Root45Tests PASS, tatsächliche Kandidatenmontage/Ladung/Zulassung sowie portable Gegenprüfung im primären Checkout PASS. Dieser Startvermerk verändert ausschließlich den primären Checkout. V14 und ZIP unverändert; Überwachung prüft GitHub, Ressourcen und die tatsächlichen Ergebnisse.
+
 ## 08.11.2026 – Zwei feste Fog-Ensembles gebaut, Vergleichswerkzeug geprüft
 
 - CONTROL38 und NEUTRAL38 tatsächlich aus den 36 unveränderten V14-Netzen plus jeweils zwei festgelegten finalen Nachtrainingsnetzen gebaut. Gleiches Gewicht je Netz, ursprüngliche Inferenzkonfiguration; tatsächliches Laden und Tensorreihenfolge geprüft. Historische Trainingsabnahme und 55 benötigte Dateien gebunden.

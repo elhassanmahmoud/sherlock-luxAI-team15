@@ -1,0 +1,77 @@
+{
+  "status": "running",
+  "root": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+  "out": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/selection",
+  "owner_pid": 79399,
+  "expected_head": "c096e4f0d1720900ee04d5acaa7faaef465fcded",
+  "expected_games": 440,
+  "phase": "selection",
+  "model_sha256": {
+    "V14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "CONTROL38": "efa81d3bbf5065c71d8106e016921d2640d368722546f0b8a40086173e95c947",
+    "NEUTRAL38": "b928d4a8a66403526b77c656d4373f3fe6e31ffe9e7cc9f6d4b64e63d4566a39"
+  },
+  "last_power": {
+    "ac": true,
+    "percent": 100
+  },
+  "last_usage": {
+    "timestamp": "2026-11-08T13:18:58Z",
+    "usedPercent": 93,
+    "ordinaryUsageAllowed": true
+  },
+  "wake": {
+    "pid": 79418,
+    "pgid": 79418,
+    "argv": [
+      "/usr/bin/caffeinate",
+      "-i",
+      "-w",
+      "79399"
+    ],
+    "owner_pid": 79399
+  },
+  "initial_jobs": {
+    "V14_panel_0": {
+      "pid": 79431,
+      "pgid": 79431,
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--seed-list",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/plans/selection_panel.json",
+        "--workers",
+        "1",
+        "--opponents",
+        "solution92",
+        "--out",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/selection/V14_panel_0.csv"
+      ]
+    },
+    "V14_panel_1": {
+      "pid": 79440,
+      "pgid": 79440,
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.par_eval",
+        "--weights",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/releases/20261101_v14_baseline/agent_p0.pth",
+        "--seed-list",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/plans/selection_panel.json",
+        "--workers",
+        "1",
+        "--opponents",
+        "sol92_sq",
+        "--out",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/selection/V14_panel_1.csv"
+      ]
+    }
+  },
+  "note": "Snapshot after actual launch; authoritative live state is in the study worktree."
+}
