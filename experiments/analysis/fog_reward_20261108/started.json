@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-11-08T12:03:36.943515+00:00",
+  "source_head": "a3111c3d0aa0aa974298daabe300bba7be157da1",
+  "owner_pid": 50389,
+  "jobs": {
+    "control41": {
+      "pid": 50415,
+      "pgid": 50415,
+      "owner_pid": 50389,
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.fog_reward_study",
+        "run",
+        "--prepared",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared",
+        "--arm",
+        "control41",
+        "--name",
+        "20261108_fog_reward_control41",
+        "--supervisor-state",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/state.json"
+      ],
+      "log": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/control41.log",
+      "started_at": 1794139369.849741,
+      "returncode": null
+    },
+    "neutral41": {
+      "pid": 50416,
+      "pgid": 50416,
+      "owner_pid": 50389,
+      "argv": [
+        "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+        "-B",
+        "-m",
+        "scripts.fog_reward_study",
+        "run",
+        "--prepared",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared",
+        "--arm",
+        "neutral41",
+        "--name",
+        "20261108_fog_reward_neutral41",
+        "--supervisor-state",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/state.json"
+      ],
+      "log": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/neutral41.log",
+      "started_at": 1794139369.857177,
+      "returncode": null
+    }
+  },
+  "wake": {
+    "pid": 50410,
+    "pgid": 50410,
+    "owner_pid": 50389,
+    "argv": [
+      "/usr/bin/caffeinate",
+      "-i",
+      "-w",
+      "50389"
+    ]
+  },
+  "state": "training_v1/state.json",
+  "preparation": "experiments/runs/20261108_fog_reward_prepared/manifest.json",
+  "initial_pairs": [
+    "control41",
+    "neutral41"
+  ],
+  "remaining": [
+    "control42",
+    "neutral42"
+  ],
+  "no_learning_or_strength_claim_at_start": true
+}
