@@ -1,6 +1,6 @@
 # Artillerie-Ensemblevergleich
 
-08.11.2026: **Werkzeuge und Kandidaten geprüft; in diesem Vorabstand noch keine Leistungsspiele.** Tatsächlicher späterer Laufstatus steht in `selection/state.json` und gegebenenfalls `confirmation/state.json`.
+08.11.2026: **Abgeschlossen, V14 bleibt.** 440 Auswahl- und 600 Bestätigungsspiele vollständig und unabhängig geprüft. ALIGNED38 verfehlt drei von zehn Bestätigungsbedingungen; keine Übernahme oder weitere Karten. [Ergebnisse, Unsicherheit und Entscheidung](ERGEBNIS.md). Die folgenden Regeln dokumentieren das zuvor festgelegte Verfahren.
 
 | Rolle | Zusammensetzung | SHA-256 |
 |---|---|---|

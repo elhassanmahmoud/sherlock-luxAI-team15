@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Artillerievergleich vollständig beendet: V14 bleibt
+
+- 440 Auswahl- und 600 frische Bestätigungsspiele abgeschlossen; zwei unabhängige Daten-/Statistikaudits PASS. Root hat beide Originalanalysen und 512 Dateibindungen noch unter Messquelle `70669eb` geprüft, bevor die Quellensperre aufgehoben wurde. Alle zugehörigen Worker/Supervisor/Wachhalter beendet.
+- ALIGNED38 war nach Auswahl zugelassen. In der Bestätigung: Sechserpanel 204/240 statt V14 196/240, Δ +3,33 Prozentpunkte [−0,83; +7,92]; Solution beide 38/40, Δ-Intervall [−7,50; +7,50]; direkt 16/40 = 40 % [20; 60]. Drei von zehn Bedingungen verfehlt. default beide 40/40. [Vollständiger Bericht](../experiments/analysis/artillery_comparison_20261108/ERGEBNIS.md).
+- Kein nachgewiesener stärkerer Agent, keine Übernahme, kein Nachschlag/Nachrücker. Beide V14-Gewichte und ZIP bytegleich. Die Modelle, Rohdaten und historischen Prüfbelege bleiben erhalten; die großen Trainings-Replaypuffer weiterhin nur lokal. Nur 20 unabhängige Kartencluster pro Liste, keine garantierte Teststärke.
+- Eigene zwischenzeitliche Dokumentationscommits `4a65955` und `cb8dea5` nach Abschluss sicher in die Studienkopie übernommen. Weitere autonome Forschung ist vom Nutzer freigegeben; der vorbereitete Sampled-Target-Ansatz ist eine getrennte Methode und kein Nachtest dieser geschlossenen Welle.
+
 ## 08.11.2026 – Artillerie-Auswahl abgeschlossen; ALIGNED38 in Bestätigung
 
 - Alle 440 Auswahlspiele unter unveränderter Quelle `70669eb` vollständig, eigener Supervisor/Worker/Wachhalter beendet. Unabhängige Rohdaten-/Statistikprüfung PASS, 280 numerische/strukturelle Vergleiche; Quellen, Befehle und sämtliche Eingaben gebunden.
