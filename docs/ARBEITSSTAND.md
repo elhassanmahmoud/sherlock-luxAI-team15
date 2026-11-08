@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Artillerie-Auswahl abgeschlossen; ALIGNED38 in Bestätigung
+
+- Alle 440 Auswahlspiele unter unveränderter Quelle `70669eb` vollständig, eigener Supervisor/Worker/Wachhalter beendet. Unabhängige Rohdaten-/Statistikprüfung PASS, 280 numerische/strukturelle Vergleiche; Quellen, Befehle und sämtliche Eingaben gebunden.
+- ALIGNED38 erfüllt die fünf Auswahlbedingungen: Solution 38/40 statt V14 36/40; Zweierpanel 70/80 statt 67/80 (+3,75 Prozentpunkte, 95%-Intervall −2,50 bis +10,00); direkt 24/40 Siege; default 40/40. CONTROL38 erreicht im Panel 74/80, scheidet aber mit 18/40 direkten Siegen aus. Keine isolierte Wirkung der Trainingsregel belegt, zwei feste Trainingsstarts.
+- Die einmalige vorab festgelegte Bestätigung ist tatsächlich gestartet: 600 Spiele auf neuen Karten, ALIGNED38 und V14 gegen das lokale Sechserpanel plus default sowie direkt. Gleiche eingefrorene Quelle, maximal zwei Worker. Nach dieser Prüfung keine Zusatzkarten oder Nachrücker. [Methode](superpowers/specs/2026-11-08-artillery-comparison.md).
+- Noch kein bestätigter stärkerer Agent und keine Übernahme. V14/ZIP bleiben bytegleich. Vollständige Rohbelege und Abschlussentscheidung folgen nach Ende der laufenden Sperre; dieser Fortschrittsvermerk verändert nur die primäre Dokumentation.
+
 ## 08.11.2026, 20:22 Berlin – Artillerie-Auswahl tatsächlich gestartet
 
 - Die feste Auswahl mit 440 Partien läuft in der Studienkopie `sherlock-student-20261104/sherlock-luxAI-team15`; Quelle/HEAD `70669eb9e1509b1bddff902c22a2b7e394167f97` bleibt über Auswahl und mögliche Bestätigung eingefroren. Nicht parallel duplizieren oder dort Code/Gewichte ändern.
