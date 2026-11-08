@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Fog-Reward-Mechanik geprüft, Lernläufe folgen
+
+- Explizite Herkunft finaler Fog-SAPs und optional neutrales Hit-Shaping umgesetzt; Schalter standardmäßig False. Numerische Trefferschätzung, Aktionen/Maske/Regeln und alte Fünf-Argument-Rewards erhalten. Trainingswerkzeug mit vier festen Armen, Herkunfts-/Replay-Audit und gemeinsamer Vorlaufprüfung vor Gradienten.
+- Root:145 gezielte Tests bestanden (22,41s), ein echter Spieltest dort bewusst ausgeschlossen. Danach vier vollständige bekannte V14-Ausführungen (beide Seiten ×FlagFalse/True): alle1212 Schritte einschließlich beider Aktionen, Engine-/Beobachtungszustände und Punkte exakt mit alten Referenzen identisch. JeSeite69/91 finale unbekannte Schüsse explizit erkannt. Kein Lernen oder Leistungsvergleich in diesen vier Technikspielen.
+- Unabhängiger Core-Review sowie integrierter Trainings-/Gesamtreview PASS, keine Blocker. Neue reale Reward-/Replay-/Lernzähler werden erst in den jetzt anstehenden Vorläufen und Trainings geprüft. Noch keine neue Spielstärke behauptet. Abgabe-Gewichte und ZIP bytegleich.
+
 ## 08.11.2026 – gezieltes Fog-Reward-Nachtraining vorbereitet
 
 - Nächste getrennte Hypothese: finale Nebelschüsse mit unbekanntem Treffer werden bislang im Hit-Shaping wie eine Nulltrefferschätzung abgezogen. Optionaler Neutral-Term nur für explizit nachgewiesene finale Fog-Herkunft; bekannte Treffer/Miss-Schätzungen, Aktionen und Regeln bleiben gleich. Default False, noch in Implementierung.

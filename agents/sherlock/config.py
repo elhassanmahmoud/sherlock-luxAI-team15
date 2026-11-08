@@ -496,6 +496,9 @@ class AgentConfig:
     w_match: float = 2.0
     w_discovery: float = 0.5
     w_sap_hit: float = 0.3
+    fog_unknown_reward_neutral: bool = False
+    """True: finalen Fog-SAP ohne bekannte Trefferschätzung im Hit-Shaping neutral
+    behandeln. Aktion und numerische Trefferschätzung bleiben unverändert."""
     w_opp_points: float = 0.0
     """> 0: Strafe je Gegner-Punkt in diesem Step, auf das Team verteilt (19.10.)."""
 

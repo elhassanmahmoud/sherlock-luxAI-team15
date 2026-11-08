@@ -178,6 +178,7 @@ class Agent_x:
         self._prev_masks: dict[int, np.ndarray] = {}
         self._prev_ctx: Optional[dict] = None
         self._sap_hits: dict[int, int] = {}
+        self._sap_unknown: set[int] = set()
         self._enemy_prev: dict[int, tuple[int, int]] = {}
         self._cache: Optional[tuple] = None
         self._sticky_prev: Optional[tuple] = None  # (match_idx, {uid: Ziel}) fuer cfg.sticky
@@ -310,6 +311,7 @@ class Agent_x:
         return actions
 
     def _act(self, step: int, obs) -> np.ndarray:
+        self._sap_unknown = set()
         self.belief.observe(obs)
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
@@ -440,6 +442,7 @@ class Agent_x:
             self._prev_masks[uid] = masks[k]
 
             sap = sap_targets[uid]
+            fog_origin = None
             if self.cfg.ram:
                 d = rules.ram_move(ctx, uid, masks[k], self.belief.point_tiles, rammed,
                                    self.cfg.ram_margin)
@@ -451,6 +454,7 @@ class Agent_x:
                     and not (self.cfg.fog_v2 and sap_targets[uid] is not None)):
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
                 if sap is not sap_targets[uid]:
+                    fog_origin = sap
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if self.cfg.contest_sap and a != geo.SAP and masks[k][geo.SAP]:
@@ -594,6 +598,8 @@ class Agent_x:
                     dx, dy = geo.mirror_delta(dx, dy)
                 actions[uid] = [geo.SAP, dx, dy]
                 self._sap_hits[uid] = hits
+                if sap is fog_origin:
+                    self._sap_unknown.add(uid)
                 st["sap_attempts"] += 1
                 st["sap_hits_est"] += int(hits > 0)
             else:
@@ -1544,8 +1550,13 @@ class Agent_x:
         next_ctx, next_ids, next_feats, next_masks, _ = self._decide(next_obs)
         # Matchende (next match_step 0): fuer die Units endet hier ihre Episode.
         match_over = next_ctx["match_step"] == 0
-        rewards = unit_rewards(self.cfg, prev_ctx, next_ctx,
-                               self._prev_actions, self._sap_hits)
+        if getattr(self.cfg, "fog_unknown_reward_neutral", False):
+            rewards = unit_rewards(self.cfg, prev_ctx, next_ctx,
+                                   self._prev_actions, self._sap_hits,
+                                   unknown_sap=self._sap_unknown)
+        else:
+            rewards = unit_rewards(self.cfg, prev_ctx, next_ctx,
+                                   self._prev_actions, self._sap_hits)
 
         alive_next = surviving(self.cfg, prev_ctx, next_ctx)
         zero = np.zeros(self.feat_dim, dtype=np.float32)

@@ -104,8 +104,9 @@ def _sparse_rewards(cfg, alive_now, alive_next, next_ctx, outcome) -> dict[int, 
 
 
 def unit_rewards(cfg, ctx: dict, next_ctx: dict,
-                 actions: dict[int, int], sap_hits: dict[int, int]) -> dict[int, float]:
-    """Reward je Unit, die im Ausgangszustand `ctx` gelebt hat."""
+                 actions: dict[int, int], sap_hits: dict[int, int], *,
+                 unknown_sap=None) -> dict[int, float]:
+    """Reward je Unit aus `ctx`; unknown_sap markiert nur finale Fog-SAPs."""
     alive_now = set(int(u) for u in ctx["ally_ids"].tolist())
     alive_next = surviving(cfg, ctx, next_ctx)
     n = max(1, len(alive_now))
@@ -145,7 +146,9 @@ def unit_rewards(cfg, ctx: dict, next_ctx: dict,
                 # Auch bei gleichzeitigem Matchende genau einmal anwenden.
                 r -= cfg.w_shape * _phi(ctx, uid)
 
-        if actions.get(uid) == geo.SAP:
+        unknown = (getattr(cfg, "fog_unknown_reward_neutral", False)
+                   and unknown_sap is not None and uid in unknown_sap)
+        if actions.get(uid) == geo.SAP and not unknown:
             hits = sap_hits.get(uid, 0)
             r += cfg.w_sap_hit * (1.0 if hits > 0 else -1.0) * max(1, hits)
 
