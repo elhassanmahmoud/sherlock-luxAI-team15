@@ -1,0 +1,53 @@
+{
+  "status": "ready_for_independent_review_not_executed",
+  "real_traces_parsed": 0,
+  "model_imports": 0,
+  "games": 0,
+  "repo_writes": 0,
+  "imports": [
+    "argparse",
+    "ast",
+    "collections",
+    "gzip",
+    "hashlib",
+    "json",
+    "math",
+    "os",
+    "pathlib",
+    "subprocess",
+    "time"
+  ],
+  "syntactic_parse": true,
+  "selfcheck": {
+    "status": "selfcheck_pass",
+    "checks": [
+      "open_grid_distance",
+      "blocked_goal_seeded",
+      "guided_deadend",
+      "deadend_longer",
+      "energy_first_step",
+      "equal_energy_first_direction",
+      "mask_excludes_energy_tie",
+      "no_legal_better_keeps_move",
+      "away_move_kept",
+      "target_already_reached",
+      "missing_target_no_random",
+      "blocked_guided_no_random",
+      "unreachable_here",
+      "unreachable_helper_keeps_move",
+      "edge_safe_first_step",
+      "energy_beats_direction_order",
+      "guided_equal_axes_prefers_horizontal",
+      "guided_vertical_fallback"
+    ],
+    "count": 18,
+    "real_traces_read": 0
+  },
+  "sha256": {
+    "diagnose.py": "997dc49f332de7aa6fba18cb314725c89b3824a6fde6d87b521bcfc7d12bafa2",
+    "bindings.json": "f4975b0922ea37784726928c903fe534a3ee0b4016c8a25356857ae2ec98dbce",
+    "SPEC.md": "177b8f071dc8cdb9a2e086e8f330855026e89c436767ed1a4b93b55a39a1d9a7",
+    "PLAN.md": "a603a34a93065416c3b2e78a47bd72836dcb81f41c99b2dbd7ff8bcbed472bd1",
+    "selfcheck.json": "22c9e720f7b1b4782b00ae6cc2f88c498c76bc2d76295397cff72fa12cb9ff9a"
+  }
+}

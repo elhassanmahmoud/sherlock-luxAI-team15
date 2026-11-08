@@ -1,0 +1,63 @@
+{
+  "status": "ready_for_static_review_no_real_npz_opened",
+  "real_npz_parsed": 0,
+  "games": 0,
+  "model_imports": 0,
+  "repo_writes": 0,
+  "selfcheck": {
+    "status": "selfcheck_pass",
+    "count": 22,
+    "checks": [
+      "duplicate_query_not_duplicate_records",
+      "missing_s_unknown",
+      "matched_without_winner",
+      "matched_with_winner",
+      "mask_excludes_global_max",
+      "tie_uses_first_action",
+      "single_legal_margin_unknown",
+      "signed_zero_bytes_distinct",
+      "signed_zero_not_merged",
+      "arm_mapping_not_bank_order",
+      "arms_not_pooled",
+      "next_row_not_assigned_to_prior_s",
+      "nonfinite_or_empty_mask_rejected",
+      "invalid_replay_action_rejected",
+      "numpy_bytes_match_struct",
+      "synthetic_stream_preserves_bytes",
+      "synthetic_stream_action_schema",
+      "stream_wrong_dtype_rejected",
+      "masked_numpy_and_scalar_agree",
+      "nonterminal_original_accepted",
+      "terminal_original_aborts",
+      "invalid_terminal_flag_aborts"
+    ],
+    "numpy_version": "2.5.4",
+    "numerical_threads": 1,
+    "real_npz_parsed": 0
+  },
+  "imports": [
+    "argparse",
+    "ast",
+    "collections",
+    "gc",
+    "hashlib",
+    "json",
+    "math",
+    "os",
+    "pathlib",
+    "signal",
+    "struct",
+    "subprocess",
+    "tempfile",
+    "time",
+    "zipfile",
+    "numpy",
+    "numpy"
+  ],
+  "sha256": {
+    "support.py": "e1dc7a4a2e72a159e6477e00c7f024d172db0116702c115b76dbe31e14b9cdbb",
+    "SPEC.md": "e56e3213bebd15d6cb20278e9529ddc92eba54b27e27f1ec5cf6e710d567d83a",
+    "bindings.json": "4aafc5c1e160f06cdfb73d5d3ae0a82f0f64ee44761bb98d479d72cbfff4afe1",
+    "selfcheck.json": "e3dc2c22565d2308f39e135eaf74383bde16d416f03d60639d8351651d3d6154"
+  }
+}

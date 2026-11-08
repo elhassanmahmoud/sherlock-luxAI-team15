@@ -1,0 +1,247 @@
+{
+  "status": "PASS",
+  "checks": 69683,
+  "golden_calls": 22258,
+  "golden_changes": 541,
+  "hypothetical_helper_changes": 343,
+  "target_classes": {
+    "exploration": 109,
+    "candidate": 90,
+    "known_point": 144
+  },
+  "groups": {
+    "loss": 142,
+    "control": 201
+  },
+  "games": [
+    {
+      "seed": 831006,
+      "side": "player_1",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 1993,
+        "golden_changes": 49
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 30,
+        "changed_target_exploration": 5,
+        "changed_target_candidate": 14,
+        "changed_target_known_point": 11
+      },
+      "distinct_steps": 27
+    },
+    {
+      "seed": 831029,
+      "side": "player_0",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 1592,
+        "golden_changes": 35
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 24,
+        "changed_target_exploration": 12,
+        "changed_target_candidate": 5,
+        "changed_target_known_point": 7
+      },
+      "distinct_steps": 24
+    },
+    {
+      "seed": 831042,
+      "side": "player_0",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 1488,
+        "golden_changes": 17
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 5,
+        "changed_target_exploration": 1,
+        "changed_target_candidate": 4
+      },
+      "distinct_steps": 5
+    },
+    {
+      "seed": 831042,
+      "side": "player_1",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 1436,
+        "golden_changes": 15
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 6,
+        "changed_target_exploration": 1,
+        "changed_target_candidate": 4,
+        "changed_target_known_point": 1
+      },
+      "distinct_steps": 6
+    },
+    {
+      "seed": 831043,
+      "side": "player_0",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 2472,
+        "golden_changes": 72
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 19,
+        "changed_target_exploration": 6,
+        "changed_target_known_point": 13
+      },
+      "distinct_steps": 19
+    },
+    {
+      "seed": 831043,
+      "side": "player_1",
+      "group": "loss",
+      "golden": {
+        "golden_calls": 2568,
+        "golden_changes": 82
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 58,
+        "changed_target_exploration": 5,
+        "changed_target_candidate": 30,
+        "changed_target_known_point": 23
+      },
+      "distinct_steps": 47
+    },
+    {
+      "seed": 831000,
+      "side": "player_0",
+      "group": "control",
+      "golden": {
+        "golden_calls": 2372,
+        "golden_changes": 100
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 90,
+        "changed_target_exploration": 56,
+        "changed_target_candidate": 4,
+        "changed_target_known_point": 30
+      },
+      "distinct_steps": 76
+    },
+    {
+      "seed": 831000,
+      "side": "player_1",
+      "group": "control",
+      "golden": {
+        "golden_calls": 2191,
+        "golden_changes": 49
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 35,
+        "changed_target_exploration": 14,
+        "changed_target_candidate": 10,
+        "changed_target_known_point": 11
+      },
+      "distinct_steps": 31
+    },
+    {
+      "seed": 831001,
+      "side": "player_0",
+      "group": "control",
+      "golden": {
+        "golden_calls": 1932,
+        "golden_changes": 52
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 27,
+        "changed_target_exploration": 2,
+        "changed_target_candidate": 7,
+        "changed_target_known_point": 18
+      },
+      "distinct_steps": 25
+    },
+    {
+      "seed": 831001,
+      "side": "player_1",
+      "group": "control",
+      "golden": {
+        "golden_calls": 1770,
+        "golden_changes": 58
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 36,
+        "changed_target_exploration": 4,
+        "changed_target_known_point": 26,
+        "changed_target_candidate": 6
+      },
+      "distinct_steps": 32
+    },
+    {
+      "seed": 831002,
+      "side": "player_0",
+      "group": "control",
+      "golden": {
+        "golden_calls": 1200,
+        "golden_changes": 5
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 5,
+        "changed_target_exploration": 2,
+        "changed_target_candidate": 3
+      },
+      "distinct_steps": 5
+    },
+    {
+      "seed": 831002,
+      "side": "player_1",
+      "group": "control",
+      "golden": {
+        "golden_calls": 1244,
+        "golden_changes": 7
+      },
+      "opportunities": {
+        "hypothetical_helper_changes": 8,
+        "changed_target_exploration": 1,
+        "changed_target_candidate": 3,
+        "changed_target_known_point": 4
+      },
+      "distinct_steps": 6
+    }
+  ],
+  "distinct_game_steps": 303,
+  "distinct_map_seeds": 7,
+  "theoretical_mass": "12.005",
+  "script_sha256": "88f89fbe3d54fce12e05d20e2ee9caa70a7e774e6a1fa092a1fe58cf82c0f65f",
+  "input_sha256": {
+    "/private/tmp/guided-path-diagnosis-20261108/diagnose.py": "997dc49f332de7aa6fba18cb314725c89b3824a6fde6d87b521bcfc7d12bafa2",
+    "/private/tmp/guided-path-diagnosis-20261108/SPEC.md": "177b8f071dc8cdb9a2e086e8f330855026e89c436767ed1a4b93b55a39a1d9a7",
+    "/private/tmp/guided-path-diagnosis-20261108/PLAN.md": "a603a34a93065416c3b2e78a47bd72836dcb81f41c99b2dbd7ff8bcbed472bd1",
+    "/private/tmp/guided-path-diagnosis-20261108/bindings.json": "f4975b0922ea37784726928c903fe534a3ee0b4016c8a25356857ae2ec98dbce",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/diagnostic_keys.json": "90b54b15037277641106b26eafe909e7c111b9b70312b5f278570911b35ab0db",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/manifest.json": "90324b008945da4a054a0559a108ee0023cf572d754b20af844160dfe4ebc435",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/prepared_v1/manifest.json": "b352abfa2b7f3f90eb66c0bae31bdd552ea190dc84045abd08d47afc98ab247e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831006_player_1.jsonl.gz": "f5b81f554ad4d52f70bcb3a04008a1463c3887594cfd6be246dfe2556de97d08",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831029_player_0.jsonl.gz": "333dd18abe61ebc1945aef1765a32f7d6d0c643817da589c6f68c28c79bfce04",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_0.jsonl.gz": "9e05725ddf80814694711a5e63db1b5e940acad09c858189e46ba2d99a9fedb2",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_1.jsonl.gz": "c1f3844a1131595c8cd8a62ab77ca0a18fdf4a1f1073c1b848b4ba4a06a69571",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_0.jsonl.gz": "faab6800960eb4564e8c8a701bb6dc81ef30daaaf5c9b5538d44bff0e65e568d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_1.jsonl.gz": "0d3e597db076c6a5e2057dd834e1cdc734d8ea495684c9618820bab7ff92b815",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_0.jsonl.gz": "2f03777deb7c9449dd7572389c4720191d22bdf4c10b5b2b275a1c177edb293b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_1.jsonl.gz": "bccc367104077bd3ceb65b542e2f1cc6d695bcb67cf2a3cad88f87038ad55b98",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_0.jsonl.gz": "ac0109759057a874cafad0176393707247e92e3072681946bc493a42084f78cd",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_1.jsonl.gz": "1727faa1bb614124e76737ba2cd36a4e4c1b5f7bcd1b1b04260e8dca25b01f7d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_0.jsonl.gz": "5a5637fab3d53cf43caff4b60a5217b7c16d7f2bb0d89a8505422b9df70d6f06",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_1.jsonl.gz": "65f89f8a8ac8b0559eeee9c0a68f2ec5aa8457090bbf9484d0e4378f74174a21",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/main.py": "108ea9cb072bbdba0987d91873a7001cedda420b965da96cd9e9090e7c1d33bc",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_probe.py": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee",
+    "/private/tmp/guided-path-diagnosis-20261108/run_v1/golden.jsonl": "2fdaf7da948a300c0f3b73889f514b1cc3f10a1df6f2a4cb288a36428098c38b",
+    "/private/tmp/guided-path-diagnosis-20261108/run_v1/opportunities.jsonl": "46eb1e35b6e57995b4075d10af44ce82ec8324f328cdb179a7d6b46739d9425b",
+    "/private/tmp/guided-path-diagnosis-20261108/run_v1/summary.json": "400672012d6109ad3a63eef5fe19b2af4b352704f1387e156792441f0f1f673b",
+    "/private/tmp/guided-path-diagnosis-20261108/ROOT_APPROVAL.json": "ab822593547b29730459d47aaa235d24b20ddda3361d24c95f45e9d6678a25fd"
+  },
+  "limits": [
+    "No helper reimplementation or archive decompression; historical equality checked in emitted golden ledger.",
+    "343 opportunity rows independently recounted; all-unit/frame denominators checked arithmetically across summary, not independently regenerated.",
+    "Old selected evaluation states; 12.005 is theoretical mass over twelve archived executions, no observed training share or final-action/quality effect."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "checks": 41002,
+  "bank_rows": 10000,
+  "independently_streamed_current_s_rows": 1200000,
+  "full_source_histograms_reconstructed": true,
+  "per_arm": [
+    {
+      "arm": "control41",
+      "observed": 1959,
+      "unobserved": 541,
+      "unknown": 0
+    },
+    {
+      "arm": "neutral41",
+      "observed": 1992,
+      "unobserved": 508,
+      "unknown": 0
+    },
+    {
+      "arm": "control42",
+      "observed": 2010,
+      "unobserved": 490,
+      "unknown": 0
+    },
+    {
+      "arm": "neutral42",
+      "observed": 2020,
+      "unobserved": 480,
+      "unknown": 0
+    }
+  ],
+  "counts": {
+    "matched_winner_observed": 7981,
+    "matched_winner_unobserved": 2019
+  },
+  "terminal_bank_rows": 0,
+  "elapsed_seconds": 1.7125260420143604,
+  "numpy_version": "2.5.4",
+  "inputs": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank.npz": "e64df568ab55b9ba4ab915b061d3dd8449786f8bb6d9accdf65bea263e988774",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/outputs.npz": "f1b607f11b8089d8869aa3754ac540e7846f279a3ac5546be31e0892f13f6c68",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/weights/agent.buffer.npz": "20c66ad7461aafff93e1fab8b9df760cb0d4adcbd008da9230ad18192d5decb6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/weights/agent.buffer.npz": "685924fb456a4e0795a737325e58bc05762a12bbd7f8ddb565961678aa92d118",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/weights/agent.buffer.npz": "1b967416ca2432929722099c3d88e30e732ca36a27b9384cd325502b11f520ba",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/weights/agent.buffer.npz": "501ba751f93693d778e7a65ec48e17de08d7cf57560677af16dabea9fdc3ad15",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/summary.json": "a0571fd3e07c982d5650554f22a715d10f0328028133d7f37bc22ba02e66ede9",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank_manifest.json": "7c42bc89b4a6840f54ec51466da673d7375b5465554ce656f97d11c13754f66b"
+  },
+  "artifacts": {
+    "/tmp/replay-support-diagnosis-20261108/support.py": "e1dc7a4a2e72a159e6477e00c7f024d172db0116702c115b76dbe31e14b9cdbb",
+    "/tmp/replay-support-diagnosis-20261108/SPEC.md": "e56e3213bebd15d6cb20278e9529ddc92eba54b27e27f1ec5cf6e710d567d83a",
+    "/tmp/replay-support-diagnosis-20261108/bindings.json": "4aafc5c1e160f06cdfb73d5d3ae0a82f0f64ee44761bb98d479d72cbfff4afe1",
+    "/tmp/replay-support-diagnosis-20261108/ROOT_APPROVAL.json": "cb67a84f087ef9fc7d1c22a261c19c1cb5519e34ba8d557ea53a451d1935cecc",
+    "/tmp/replay-support-diagnosis-20261108/run_v1/rows.jsonl": "a24aa40b39c32d02878e7054d6be6176ba9234212fec8e882caf5f00793c49fd",
+    "/tmp/replay-support-diagnosis-20261108/run_v1/summary.json": "2294768574d1728ba3adbb9006cceb763d805745b4dae0a810e0127470b6af87"
+  },
+  "audit_script_sha256": "e566df3bae5357f71310d13247e108fe345ceffb70599c293d862697c68b2115",
+  "limits": [
+    "Saved final Q only; no model forward, historical TD or quality claim.",
+    "Exact 79-feature bytes are not full Belief/state identity.",
+    "Finite correlated retained replay is descriptive; absence is not impossibility.",
+    "No original sampler RNG rerun, historical training or source policy re-execution."
+  ]
+}

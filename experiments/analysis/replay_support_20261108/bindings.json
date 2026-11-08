@@ -1,0 +1,155 @@
+{
+  "status": "prepared_only_no_npz_opened",
+  "source": {
+    "historical_head": "f6f8b8ad2feecb680a3cd06a0eab2669d5d7b4d7",
+    "source_file": "scripts/fog_influence.py",
+    "source_sha256": "be6da3adccc23c5d4fd7a0f20e62a1a9c62b602e67c1629be8e3ea4ed7fa80e0",
+    "bank_arm_order": [
+      "control41",
+      "neutral41",
+      "control42",
+      "neutral42"
+    ],
+    "new_member_order": [
+      "control41",
+      "control42",
+      "neutral41",
+      "neutral42"
+    ],
+    "member_index": {
+      "control41": 36,
+      "neutral41": 38,
+      "control42": 37,
+      "neutral42": 39
+    }
+  },
+  "roles": {
+    "control41": {
+      "bank_arm_index": 0,
+      "member_index": 36,
+      "member_sha256": "02932ab0c275097d7e28ab764acfa3bbe347ef3d8484889f0208a69b5676ec88",
+      "buffer": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/weights/agent.buffer.npz",
+      "buffer_rows": 300000,
+      "bank_rows": 2500
+    },
+    "neutral41": {
+      "bank_arm_index": 1,
+      "member_index": 38,
+      "member_sha256": "34259aaa7e172a969e127d52bab5676a1869a497af8cfa88a8e5326c29be0077",
+      "buffer": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/weights/agent.buffer.npz",
+      "buffer_rows": 300000,
+      "bank_rows": 2500
+    },
+    "control42": {
+      "bank_arm_index": 2,
+      "member_index": 37,
+      "member_sha256": "6e606eb8acf89d327e7a869b18e313d8bbff02e2189c4c04f605632bb740df3c",
+      "buffer": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/weights/agent.buffer.npz",
+      "buffer_rows": 300000,
+      "bank_rows": 2500
+    },
+    "neutral42": {
+      "bank_arm_index": 3,
+      "member_index": 39,
+      "member_sha256": "84c0daef896814b18e9ece56c6d5bc829dd2e6035f7a1b36624cdda671eae348",
+      "buffer": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/weights/agent.buffer.npz",
+      "buffer_rows": 300000,
+      "bank_rows": 2500
+    }
+  },
+  "inputs": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank.npz": "e64df568ab55b9ba4ab915b061d3dd8449786f8bb6d9accdf65bea263e988774",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/outputs.npz": "f1b607f11b8089d8869aa3754ac540e7846f279a3ac5546be31e0892f13f6c68",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/weights/agent.buffer.npz": "20c66ad7461aafff93e1fab8b9df760cb0d4adcbd008da9230ad18192d5decb6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/weights/agent.buffer.npz": "685924fb456a4e0795a737325e58bc05762a12bbd7f8ddb565961678aa92d118",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/weights/agent.buffer.npz": "1b967416ca2432929722099c3d88e30e732ca36a27b9384cd325502b11f520ba",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/weights/agent.buffer.npz": "501ba751f93693d778e7a65ec48e17de08d7cf57560677af16dabea9fdc3ad15",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/summary.json": "a0571fd3e07c982d5650554f22a715d10f0328028133d7f37bc22ba02e66ede9",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank_manifest.json": "7c42bc89b4a6840f54ec51466da673d7375b5465554ce656f97d11c13754f66b"
+  },
+  "sizes": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank.npz": 3311006,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/outputs.npz": 10904506,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/weights/agent.buffer.npz": 196201440,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/weights/agent.buffer.npz": 196201440,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/weights/agent.buffer.npz": 196201440,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/weights/agent.buffer.npz": 196201440,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/summary.json": 158855,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/run_v1/bank_manifest.json": 4892
+  },
+  "ordered_member_hashes": [
+    "11bc9d87d73781e9418112b75c287e3e2b6e142eb2d9dca3d38772ced6d2130f",
+    "733e54563c847fb69526bb5ab4adb64dbfaf65fa083ec88944be0971cb3ad1df",
+    "a64c263a7cdcd2132d5a8c398e6d91a451a2cd7d0a891b92f5d3c082f75822f8",
+    "f378d76dc13dc5a1965667d86e6b090e285a5890735edd9564cbd9878f8bef40",
+    "d46ea28b10b5b701815d0d841b4de3253db7b1c2c35282e9b191327bf71b0ce4",
+    "03a9a6cd942c258c2c540c56ae0dfdbd9e4f71988e7c6835a319793b58aae2bf",
+    "566aa04c09e31a2206aec64375877872e22a60a0e9a4c5ec33f0981447405af0",
+    "1e90d596d1b079e6fa7a53daf6dc0b6b64a7f1de201b18dbff0b153c2401b8cc",
+    "9fa86e50c53007a7d549b37a2b1dfbc1f07800fbea1a510bdbafc9f46a7085e3",
+    "c6c9367deb52681353ccc5b1f5f122e12f52126b8f69dacc8f74860dfcba4755",
+    "d54e2b2fa227daf79fe47726d6f26ef614b1aa77574767843e610ac9063ed9b5",
+    "936d3c456f0ac5537bf7a3abd689b7c33b08438d29d393bb46b2941948c4ba6b",
+    "0c1b4f49e1fc6540509a4e7f247068462855812d6f585c23f65230a48c443f8f",
+    "1c6e3c02d9f5b2cfaba3d2faed93e87a698c6122b2154aef389c0da5a03dccc7",
+    "a445e062d5e1e267a4c85a3d2e39026b0a0bb4ddf0cc7aa0628469dcf8439cc7",
+    "51fa28702b4fd5fb471391c0edfff2042a489b9d70ccf3983f67447d1965864c",
+    "3dd5f22c3ca6b08e2b2202cd03b0db7093782c9c73e2527aeccd97d30a49a69b",
+    "ca8641c72bf68ce1f5b876eaeb0337d462f0e04c72deb7b76743fa574d99bd12",
+    "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "d2b77c3e20682231cfd7a148a5fee3232004435cb10522b87b247a1f82094d98",
+    "3d337d9fa254042c676d1781ba5c295897c5166020002dd15ed505ae8f216462",
+    "ac8c2d1f8aa69efce281d067f91f06b5b6592515900f6c5f4c1f67ef93962405",
+    "3e5e77b5b076bd5a5d8056a24daa51b09bdb926376dfc7e0c6de15415867056c",
+    "061e278c1fca535709d548ac1340f241cba8f8b219d2a32ed2e969ce5368b8c9",
+    "ad1f304ac541e1383b52945a81380c3d83bb811c71513aa18ae7e842c80befeb",
+    "a7dbe5bdbcef99dd15d946f0a9d4b9dc61fdd00047169a85bd577a385cac19b1",
+    "7bf9b73a56f2099ba99de210f2478e28c44bced8baec2cfe943de23a53c19ff4",
+    "7f483da97c871378b3475af4e5e5cfea7f048025edcee2008a2542f7315d683f",
+    "c64668df600d900c722f98b05adaa021e5223fd0e00260d73447e975ce2bdce0",
+    "55cc93f5d51f04929186bfbb5ca6734801d29848305963bf4bcf0c9784ff5fba",
+    "faef464711a69b09949657611f8d974e1a94ebb126c29bc908b4c8d847f11c7f",
+    "9912e9d0e086be1af39311babaf8ca45f6957866e017f97a5f43f0acd1f6de68",
+    "a309ef8a434179e715127fc663cc7bd8b131e967e9dbf16daa2fdc0932bf05d8",
+    "4a5de42388f4f4a66a9659240b5f84601fdd372990c51aed396bbcef170dfcdd",
+    "7618f4ac9f2a6b5ae9f8eaa103a112094c4073babf4d81ccfdaae46eeb5b5300",
+    "cb3385ff292f79fc7c4c5bc3637b86184aa0b8ac3b6240ce0ace4beb4ff1ea2a",
+    "02932ab0c275097d7e28ab764acfa3bbe347ef3d8484889f0208a69b5676ec88",
+    "6e606eb8acf89d327e7a869b18e313d8bbff02e2189c4c04f605632bb740df3c",
+    "34259aaa7e172a969e127d52bab5676a1869a497af8cfa88a8e5326c29be0077",
+    "84c0daef896814b18e9ece56c6d5bc829dd2e6035f7a1b36624cdda671eae348"
+  ],
+  "max_bank_rows": 10000,
+  "max_seconds": 120,
+  "stream_chunk_rows": 4096,
+  "arrays_from_source": {
+    "bank": [
+      "ns",
+      "mask",
+      "row_indices",
+      "arm_indices"
+    ],
+    "outputs": [
+      "member_q",
+      "V14_mean_q",
+      "CONTROL38_mean_q",
+      "NEUTRAL38_mean_q",
+      "CONTROL38_independent_mean_q",
+      "NEUTRAL38_independent_mean_q",
+      "row_indices",
+      "arm_indices",
+      "ordered_member_hashes",
+      "member_labels"
+    ],
+    "replay": [
+      "s",
+      "ns",
+      "a",
+      "r",
+      "done",
+      "mask"
+    ]
+  },
+  "no_model_imports": true,
+  "real_npz_parsed": 0
+}

@@ -1,0 +1,119 @@
+{
+  "status": "complete",
+  "arms": [
+    {
+      "arm": "control41",
+      "bank_rows": 2500,
+      "unique_feature_byte_keys": 2499,
+      "counts": {
+        "matched_winner_observed": 1959,
+        "matched_winner_unobserved": 541
+      },
+      "matched_row_multiplicity": {
+        "count": 2500,
+        "sum": 2544,
+        "max": 2
+      },
+      "legal_margin_rows": 2276,
+      "bank_origin_checks": {
+        "ns": 2500,
+        "mask": 2500,
+        "done": 2500
+      },
+      "terminal_bank_rows": 0,
+      "nonterminal_bank_rows": 2500,
+      "buffer_sha256": "20c66ad7461aafff93e1fab8b9df760cb0d4adcbd008da9230ad18192d5decb6"
+    },
+    {
+      "arm": "neutral41",
+      "bank_rows": 2500,
+      "unique_feature_byte_keys": 2499,
+      "counts": {
+        "matched_winner_observed": 1992,
+        "matched_winner_unobserved": 508
+      },
+      "matched_row_multiplicity": {
+        "count": 2500,
+        "sum": 2567,
+        "max": 2
+      },
+      "legal_margin_rows": 2262,
+      "bank_origin_checks": {
+        "ns": 2500,
+        "mask": 2500,
+        "done": 2500
+      },
+      "terminal_bank_rows": 0,
+      "nonterminal_bank_rows": 2500,
+      "buffer_sha256": "685924fb456a4e0795a737325e58bc05762a12bbd7f8ddb565961678aa92d118"
+    },
+    {
+      "arm": "control42",
+      "bank_rows": 2500,
+      "unique_feature_byte_keys": 2500,
+      "counts": {
+        "matched_winner_unobserved": 490,
+        "matched_winner_observed": 2010
+      },
+      "matched_row_multiplicity": {
+        "count": 2500,
+        "sum": 2548,
+        "max": 2
+      },
+      "legal_margin_rows": 2237,
+      "bank_origin_checks": {
+        "ns": 2500,
+        "mask": 2500,
+        "done": 2500
+      },
+      "terminal_bank_rows": 0,
+      "nonterminal_bank_rows": 2500,
+      "buffer_sha256": "1b967416ca2432929722099c3d88e30e732ca36a27b9384cd325502b11f520ba"
+    },
+    {
+      "arm": "neutral42",
+      "bank_rows": 2500,
+      "unique_feature_byte_keys": 2500,
+      "counts": {
+        "matched_winner_unobserved": 480,
+        "matched_winner_observed": 2020
+      },
+      "matched_row_multiplicity": {
+        "count": 2500,
+        "sum": 2553,
+        "max": 2
+      },
+      "legal_margin_rows": 2248,
+      "bank_origin_checks": {
+        "ns": 2500,
+        "mask": 2500,
+        "done": 2500
+      },
+      "terminal_bank_rows": 0,
+      "nonterminal_bank_rows": 2500,
+      "buffer_sha256": "501ba751f93693d778e7a65ec48e17de08d7cf57560677af16dabea9fdc3ad15"
+    }
+  ],
+  "pooled_row_counts": {
+    "matched_winner_observed": 7981,
+    "matched_winner_unobserved": 2019
+  },
+  "bank_rows": 10000,
+  "terminal_bank_rows": 0,
+  "nonterminal_bank_rows": 10000,
+  "elapsed_seconds": 2.7396466250065714,
+  "numpy_version": "2.5.4",
+  "rows_sha256": "a24aa40b39c32d02878e7054d6be6176ba9234212fec8e882caf5f00793c49fd",
+  "bindings_sha256": "4aafc5c1e160f06cdfb73d5d3ae0a82f0f64ee44761bb98d479d72cbfff4afe1",
+  "script_sha256": "e1dc7a4a2e72a159e6477e00c7f024d172db0116702c115b76dbe31e14b9cdbb",
+  "approval_sha256": "cb67a84f087ef9fc7d1c22a261c19c1cb5519e34ba8d557ea53a451d1935cecc",
+  "limits": [
+    "No exact current-s match means unknown, not zero coverage.",
+    "Byte-equal 79 features do not prove equal full state/belief/history.",
+    "mask belongs to ns; replay a belongs to current s. No a[i+1] linkage or next_actual_action exists.",
+    "Fixed endnetwork Q values are not training-time online/target Q values; no historical TD errors inferred.",
+    "Repeated bank states and correlated replay rows are not independent observations.",
+    "Empirical absent winner in finite retained replay does not prove action impossible or Q erroneous.",
+    "No model import/forward, games, training, action/network selection or policy change."
+  ]
+}

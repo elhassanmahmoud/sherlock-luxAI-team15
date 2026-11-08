@@ -5,6 +5,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
 
+
+## 08.11.2026 – Zwei vorhandene Datenbestände ohne neue Spiele ausgewertet
+
+- [Geführte Pfadkorrektur](../experiments/analysis/guided_path_20261108/ERGEBNIS.md): zwölf alte ausgewählte Ausführungen, 343 hypothetische Helperänderungen. Mit der theoretischen Explorationswahrscheinlichkeit rechnerisch rund zwölf Eingriffe über diese zwölf Partien, keine gemessene Trainingshäufigkeit oder Endaktionswirkung. Unabhängig geprüft; vorläufig niedrige Priorität, keine neue Regel oder Lernserie daraus.
+- [Replay-Abdeckung](../experiments/analysis/replay_support_20261108/ERGEBNIS.md): feste 10.000 gespeicherte Fog-Folgezustände, eigene Endnetzgewinner bei 7.981 passenden aktuellen Zuständen im Replay beobachtet und bei 2.019 nicht beobachtet. Meist nur ein bis zwei Beobachtungen je Zustand. Alle Zeilen unabhängig rekonstruiert; kein Beweis fehlerhafter Targets oder schlechter Aktionen.
+- Beide Diagnosen verwenden ausschließlich vorhandene Daten, null neue Spiele/Forwards/Updates. V14 unverändert. Ein separates Lernen mit tatsächlich aufgezeichneten Folgebefehlen ist nur ein vorbereiteter Methodenentwurf; noch keine Umsetzung oder gestartete Studie. Der laufende Arbeitsplan bleibt der feste Artillerie-Ensemblevergleich.
+
 ## 08.11.2026 – Artillerietraining vollständig abgenommen
 
 - Vier feste Endnetze ab V14-Komponente 18, je 40 Vorlauf-, 400 Lern- und 32 Diagnoseausführungen: insgesamt 1.888 Ausführungen und 240.000 Updates. Quellenstand `02ce1b2` bis zum Abschluss unverändert; alle eigenen Worker/Supervisor/Wachhalteprozesse beendet.

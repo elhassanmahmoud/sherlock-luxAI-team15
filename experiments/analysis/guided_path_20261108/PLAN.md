@@ -1,0 +1,7 @@
+# Ausführungsplan nach Root-Review
+
+1. Root/ unabhängiger Reviewer liest SPEC.md, bindings.json und diagnose.py; prüft insbesondere historischen AST-/Hashbezug, BFS-semantische Details, Caller-/Maskenbindung und Grenzen. Keine echte Datenanalyse vor ausdrücklicher Freigabe.
+2. Bereits durchgeführt: `python3 -B diagnose.py prepare` (nur Quell-/Metadatenprüfung und Byteshashes), anschließend `python3 -B diagnose.py selfcheck` (18 reine In-Memory-Fälle). Die realen gzip-Inhalte wurden nicht geparst.
+3. Bei Freigabe legt Root `ROOT_APPROVAL.json` unter diesem /tmp-Verzeichnis an: `approved: true`, `sha256` mit den exakten SHA-256-Werten für `diagnose.py`, `bindings.json`, `SPEC.md` und `PLAN.md`. Keine Platzhalter/automatische Selbstfreigabe. Eine nachfolgende Änderung entwertet diese Freigabe.
+4. Genau einmal `python3 -B /tmp/guided-path-diagnosis-20261108/diagnose.py run`. Vorher Quellen/Inputs/HEAD prüfen. Pro Frame zuerst sämtliche vorhandenen Golden-Aufrufe reproduzieren, dann hypothetische geführte Gelegenheiten berechnen; nur ein vollständig bestandener Gesamtlauf veröffentlicht summary.json. Jeder spätere Golden-/Integritätsfehler macht den gesamten Lauf unvollständig; vorherige Teilzahlen sind kein Ergebnis.
+5. Root prüft Ergebnis-/Zeilenkonsistenz und Inputhashes. Bericht trennt nachgerechnete historische Aufrufe, hypothetische Gelegenheiten und unbekannte finale Folgen. Keine Modell-/Spiel-/Trainingsaktion folgt automatisch. Bei fehlenden Daten oder Laufzeitabbruch keine zusätzlichen Archive, Spiele oder stillen Wiederholungen.

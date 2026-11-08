@@ -1,0 +1,185 @@
+{
+  "status": "prepared_only_no_trace_parsed",
+  "schema": 1,
+  "source": {
+    "historical_head": "0c0dda642e9876141a705c2b8ed807a4f26ed870",
+    "current_head": "02ce1b2ce9a5b0780da1ee6462a2368b2226d495",
+    "files": {
+      "agents/sherlock/main.py": {
+        "historical_sha256": "fd5057d1a2439ff9e3ea5751887f76e8966129e5dd94e9252dda519278d1e0d6",
+        "current_sha256": "108ea9cb072bbdba0987d91873a7001cedda420b965da96cd9e9090e7c1d33bc",
+        "ast": {
+          "_path_fix": "fe5238419c4bce07b011cb1c666ab4c8021a06068ff6d1c6a335186b190a3940",
+          "_step_toward": "ce613ec43ef103521e911152aa112efd9576dde1b3f71b773b6af35932508fef",
+          "_guided_action": "110fb1e05acc8cdf128c154a3b04093d3423c6360d0170bf1337c5a661470645"
+        }
+      },
+      "agents/sherlock/rules.py": {
+        "historical_sha256": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+        "current_sha256": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+        "ast": {
+          "distance_map": "20ff79b13f24726f7f010cb183543b2310cae5ebe5f0a73b0656f94dfd7a6e93",
+          "first_step": "f03e6e7c562d1dedf22c065adf2182ad37c1261075bf3450d95d06842a141096",
+          "PathCache.get": "300b6db437afb4c7747c46d0be71fc2a196b1431bcbc321ebc40440f13f149d5"
+        }
+      },
+      "agents/sherlock/features.py": {
+        "historical_sha256": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+        "current_sha256": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d"
+      },
+      "agents/sherlock/belief.py": {
+        "historical_sha256": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+        "current_sha256": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56"
+      },
+      "agents/sherlock/geometry.py": {
+        "historical_sha256": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+        "current_sha256": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa"
+      },
+      "scripts/targeting_probe.py": {
+        "historical_sha256": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee",
+        "current_sha256": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee"
+      }
+    }
+  },
+  "traces": [
+    {
+      "seed": 831006,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831006_player_1.jsonl.gz",
+      "sha256": "f5b81f554ad4d52f70bcb3a04008a1463c3887594cfd6be246dfe2556de97d08",
+      "bytes": 2292559
+    },
+    {
+      "seed": 831029,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831029_player_0.jsonl.gz",
+      "sha256": "333dd18abe61ebc1945aef1765a32f7d6d0c643817da589c6f68c28c79bfce04",
+      "bytes": 2447101
+    },
+    {
+      "seed": 831042,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_0.jsonl.gz",
+      "sha256": "9e05725ddf80814694711a5e63db1b5e940acad09c858189e46ba2d99a9fedb2",
+      "bytes": 2456955
+    },
+    {
+      "seed": 831042,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_1.jsonl.gz",
+      "sha256": "c1f3844a1131595c8cd8a62ab77ca0a18fdf4a1f1073c1b848b4ba4a06a69571",
+      "bytes": 2472426
+    },
+    {
+      "seed": 831043,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_0.jsonl.gz",
+      "sha256": "faab6800960eb4564e8c8a701bb6dc81ef30daaaf5c9b5538d44bff0e65e568d",
+      "bytes": 2357228
+    },
+    {
+      "seed": 831043,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_1.jsonl.gz",
+      "sha256": "0d3e597db076c6a5e2057dd834e1cdc734d8ea495684c9618820bab7ff92b815",
+      "bytes": 2353682
+    },
+    {
+      "seed": 831000,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_0.jsonl.gz",
+      "sha256": "2f03777deb7c9449dd7572389c4720191d22bdf4c10b5b2b275a1c177edb293b",
+      "bytes": 2326031
+    },
+    {
+      "seed": 831000,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_1.jsonl.gz",
+      "sha256": "bccc367104077bd3ceb65b542e2f1cc6d695bcb67cf2a3cad88f87038ad55b98",
+      "bytes": 2327008
+    },
+    {
+      "seed": 831001,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_0.jsonl.gz",
+      "sha256": "ac0109759057a874cafad0176393707247e92e3072681946bc493a42084f78cd",
+      "bytes": 2397509
+    },
+    {
+      "seed": 831001,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_1.jsonl.gz",
+      "sha256": "1727faa1bb614124e76737ba2cd36a4e4c1b5f7bcd1b1b04260e8dca25b01f7d",
+      "bytes": 2396826
+    },
+    {
+      "seed": 831002,
+      "side": "player_0",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_0.jsonl.gz",
+      "sha256": "5a5637fab3d53cf43caff4b60a5217b7c16d7f2bb0d89a8505422b9df70d6f06",
+      "bytes": 2448039
+    },
+    {
+      "seed": 831002,
+      "side": "player_1",
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_1.jsonl.gz",
+      "sha256": "65f89f8a8ac8b0559eeee9c0a68f2ec5aa8457090bbf9484d0e4378f74174a21",
+      "bytes": 2435482
+    }
+  ],
+  "inputs": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/diagnostic_keys.json": "90b54b15037277641106b26eafe909e7c111b9b70312b5f278570911b35ab0db",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/manifest.json": "90324b008945da4a054a0559a108ee0023cf572d754b20af844160dfe4ebc435",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/prepared_v1/manifest.json": "b352abfa2b7f3f90eb66c0bae31bdd552ea190dc84045abd08d47afc98ab247e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831006_player_1.jsonl.gz": "f5b81f554ad4d52f70bcb3a04008a1463c3887594cfd6be246dfe2556de97d08",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831029_player_0.jsonl.gz": "333dd18abe61ebc1945aef1765a32f7d6d0c643817da589c6f68c28c79bfce04",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_0.jsonl.gz": "9e05725ddf80814694711a5e63db1b5e940acad09c858189e46ba2d99a9fedb2",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_1.jsonl.gz": "c1f3844a1131595c8cd8a62ab77ca0a18fdf4a1f1073c1b848b4ba4a06a69571",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_0.jsonl.gz": "faab6800960eb4564e8c8a701bb6dc81ef30daaaf5c9b5538d44bff0e65e568d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_1.jsonl.gz": "0d3e597db076c6a5e2057dd834e1cdc734d8ea495684c9618820bab7ff92b815",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_0.jsonl.gz": "2f03777deb7c9449dd7572389c4720191d22bdf4c10b5b2b275a1c177edb293b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_1.jsonl.gz": "bccc367104077bd3ceb65b542e2f1cc6d695bcb67cf2a3cad88f87038ad55b98",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_0.jsonl.gz": "ac0109759057a874cafad0176393707247e92e3072681946bc493a42084f78cd",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_1.jsonl.gz": "1727faa1bb614124e76737ba2cd36a4e4c1b5f7bcd1b1b04260e8dca25b01f7d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_0.jsonl.gz": "5a5637fab3d53cf43caff4b60a5217b7c16d7f2bb0d89a8505422b9df70d6f06",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_1.jsonl.gz": "65f89f8a8ac8b0559eeee9c0a68f2ec5aa8457090bbf9484d0e4378f74174a21",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/main.py": "108ea9cb072bbdba0987d91873a7001cedda420b965da96cd9e9090e7c1d33bc",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_probe.py": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee"
+  },
+  "input_sizes": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/diagnostic_keys.json": 2208,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/manifest.json": 169565,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/prepared_v1/manifest.json": 392919,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831006_player_1.jsonl.gz": 2292559,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831029_player_0.jsonl.gz": 2447101,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_0.jsonl.gz": 2456955,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831042_player_1.jsonl.gz": 2472426,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_0.jsonl.gz": 2357228,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831043_player_1.jsonl.gz": 2353682,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_0.jsonl.gz": 2326031,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831000_player_1.jsonl.gz": 2327008,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_0.jsonl.gz": 2397509,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831001_player_1.jsonl.gz": 2396826,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_0.jsonl.gz": 2448039,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting/831002_player_1.jsonl.gz": 2435482,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/main.py": 91942,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/rules.py": 17289,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/features.py": 39843,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/belief.py": 43700,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/geometry.py": 2227,
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_probe.py": 34383
+  },
+  "compressed_trace_bytes": 28710846,
+  "expected_frames": 3636,
+  "expected_decision_frames": 3600,
+  "max_seconds": 120,
+  "max_line_bytes": 2000000,
+  "hypothesis": "guided deterministic move followed by existing path_fix; no random fallback",
+  "theoretical_branch_probability": 0.035,
+  "actual_games": 0,
+  "model_forwards": 0
+}
