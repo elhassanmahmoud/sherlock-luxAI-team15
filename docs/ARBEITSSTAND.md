@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – HOLD-Einflussprobe vollständig: 28 hilfreiche und21 schädliche Eingriffe
+
+- Fester Block vollständig:24Spielausführungen auf zwölf bekannten Schlüsseln,55Paare über je zwölf Schritte. Positive Labels28 in10Spielen, negative21, null6; Mittel+0,418Team-Punkte, Spannweite−27 bis+42. Vorab-Machbarkeit bestanden, keine nachgewiesene stärkere Policy. Bekannte ausgewählte Spiele, keine neue Leistungsvalidierung.
+- Technischer Smoke separat4Ausführungen/2Paare. Insgesamt28 vollständige Ausführungen und1680 zusätzliche Simulationsschritte, null Lernupdates. Referenz/Sammler, Baselinezweig/Livezukunft und Wiederholungen exakt; unabhängiger Audit70990 Datenprüfungen PASS. Quellen/HEAD01d4279 während Läufen eingefroren, eigene Modell-/Wachhalteprozesse beendet.
+- V14 und ZIP unverändert. [Ergebnis mit Grenzen](../experiments/analysis/decision_learning_20261108/HOLD_DIAGNOSE.md). Nun separater kleiner Lernversuch auf24Trainings-/8Validierungskarten; Merkmale, Eingriffshäufigkeit und Freigaberegeln vor neuen Labels fixieren. Keine Probeverlängerung oder Übernahme aus den bekannten Fällen.
+
 ## 08.11.2026 – HOLD-Diagnosewerkzeug geprüft, echte Probe folgt
 
 - Isolierte Diagnosewerkzeuge umgesetzt; Produktionsagent, Gewichte und ZIP unverändert. Zustandskopien erhalten Solution-Global/Node-Aliase und restaurieren globale Zufallszustände. Einmaliger STAY-Vorschlag durchläuft normale Regeln; ganze Teamfolgen über zwölf Schritte werden gemessen.

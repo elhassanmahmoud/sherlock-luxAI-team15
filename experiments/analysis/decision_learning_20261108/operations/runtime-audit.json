@@ -1,0 +1,594 @@
+{
+  "verdict": "PASS",
+  "reviewed_at": "2026-11-08T10:48:54.468764+00:00",
+  "source_head": "01d42794bd798ac6c90831d4ac20358187f3ea1a",
+  "checks": 70990,
+  "runs": [
+    {
+      "folder": "technical_smoke_v1",
+      "manifest_sha256": "088aad2abbf7b483267963ff5315cdd339eccd712ecc966436d2f5c3e00785be",
+      "completed_games": 4,
+      "complete_game_steps": 1212,
+      "pairs": 2,
+      "primary_steps": 48,
+      "technical_repeat_steps": 48,
+      "effective": 2,
+      "positive": 1,
+      "negative": 1,
+      "zero": 0,
+      "positive_games": 1,
+      "feasibility": {
+        "cases": 2,
+        "effective": 2,
+        "positive": 1,
+        "positive_games": 1,
+        "passed": false
+      },
+      "boundary89_pairs": 0,
+      "per_game": [
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "pairs": 1
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "pairs": 1
+        }
+      ],
+      "labels": [
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 41,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 42,
+          "uid": 0,
+          "effective": true,
+          "label": -25
+        }
+      ],
+      "source_files": 324
+    },
+    {
+      "folder": "diagnostic_v1",
+      "manifest_sha256": "38dcdcf044a270679406660239b6260ef408424cd41994012357deb1f175f2ea",
+      "completed_games": 24,
+      "complete_game_steps": 7272,
+      "pairs": 55,
+      "primary_steps": 1320,
+      "technical_repeat_steps": 264,
+      "effective": 55,
+      "positive": 28,
+      "negative": 21,
+      "zero": 6,
+      "positive_games": 10,
+      "feasibility": {
+        "cases": 55,
+        "effective": 55,
+        "positive": 28,
+        "positive_games": 10,
+        "passed": true
+      },
+      "boundary89_pairs": 0,
+      "per_game": [
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "pairs": 8
+        },
+        {
+          "seed": 831029,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 831042,
+          "side": "player_0",
+          "pairs": 2
+        },
+        {
+          "seed": 831042,
+          "side": "player_1",
+          "pairs": 1
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "pairs": 8
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "pairs": 8
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "pairs": 6
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "pairs": 5
+        },
+        {
+          "seed": 831001,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "pairs": 8
+        },
+        {
+          "seed": 831002,
+          "side": "player_0",
+          "pairs": 2
+        },
+        {
+          "seed": 831002,
+          "side": "player_1",
+          "pairs": 3
+        }
+      ],
+      "labels": [
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 41,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 53,
+          "uid": 11,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 68,
+          "uid": 12,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 87,
+          "uid": 7,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 135,
+          "uid": 2,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 150,
+          "uid": 8,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 179,
+          "uid": 11,
+          "effective": true,
+          "label": -18
+        },
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "step": 255,
+          "uid": 9,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 831042,
+          "side": "player_0",
+          "step": 139,
+          "uid": 6,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 831042,
+          "side": "player_0",
+          "step": 151,
+          "uid": 8,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831042,
+          "side": "player_1",
+          "step": 152,
+          "uid": 13,
+          "effective": true,
+          "label": -8
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 42,
+          "uid": 0,
+          "effective": true,
+          "label": -25
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 54,
+          "uid": 0,
+          "effective": true,
+          "label": 19
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 70,
+          "uid": 6,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 86,
+          "uid": 2,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 136,
+          "uid": 2,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 148,
+          "uid": 7,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 164,
+          "uid": 5,
+          "effective": true,
+          "label": 8
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "step": 177,
+          "uid": 14,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 52,
+          "uid": 0,
+          "effective": true,
+          "label": 42
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 67,
+          "uid": 13,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 79,
+          "uid": 8,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 136,
+          "uid": 1,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 149,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 162,
+          "uid": 2,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 176,
+          "uid": 7,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 831043,
+          "side": "player_1",
+          "step": 242,
+          "uid": 6,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 63,
+          "uid": 11,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 84,
+          "uid": 8,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 135,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 147,
+          "uid": 7,
+          "effective": true,
+          "label": 7
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 262,
+          "uid": 1,
+          "effective": true,
+          "label": -6
+        },
+        {
+          "seed": 831000,
+          "side": "player_0",
+          "step": 280,
+          "uid": 10,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "step": 67,
+          "uid": 8,
+          "effective": true,
+          "label": 10
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "step": 133,
+          "uid": 2,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "step": 164,
+          "uid": 10,
+          "effective": true,
+          "label": 11
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "step": 242,
+          "uid": 1,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 831000,
+          "side": "player_1",
+          "step": 254,
+          "uid": 4,
+          "effective": true,
+          "label": -14
+        },
+        {
+          "seed": 831001,
+          "side": "player_0",
+          "step": 60,
+          "uid": 3,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 831001,
+          "side": "player_0",
+          "step": 118,
+          "uid": 1,
+          "effective": true,
+          "label": -3
+        },
+        {
+          "seed": 831001,
+          "side": "player_0",
+          "step": 144,
+          "uid": 6,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 831001,
+          "side": "player_0",
+          "step": 168,
+          "uid": 6,
+          "effective": true,
+          "label": 12
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 118,
+          "uid": 1,
+          "effective": true,
+          "label": -3
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 142,
+          "uid": 6,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 155,
+          "uid": 7,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 170,
+          "uid": 5,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 188,
+          "uid": 9,
+          "effective": true,
+          "label": 12
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 243,
+          "uid": 5,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 258,
+          "uid": 6,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831001,
+          "side": "player_1",
+          "step": 273,
+          "uid": 4,
+          "effective": true,
+          "label": -27
+        },
+        {
+          "seed": 831002,
+          "side": "player_0",
+          "step": 164,
+          "uid": 14,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 831002,
+          "side": "player_0",
+          "step": 183,
+          "uid": 15,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 831002,
+          "side": "player_1",
+          "step": 164,
+          "uid": 12,
+          "effective": true,
+          "label": -6
+        },
+        {
+          "seed": 831002,
+          "side": "player_1",
+          "step": 177,
+          "uid": 4,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 831002,
+          "side": "player_1",
+          "step": 279,
+          "uid": 11,
+          "effective": true,
+          "label": 16
+        }
+      ],
+      "source_files": 324
+    }
+  ],
+  "method": "Independent stdlib-only raw JSON/gzip arithmetic, hash recomputation and file checksum audit; no production modules imported, no tests or models run.",
+  "limits": [
+    "State and observation digests compared exactly; underlying state tensors are not archived and cannot be rehashed from these artifacts.",
+    "Reverse/repeat executions are evidenced by successful runtime equality flags and counters; duplicate branch frames are not separately archived.",
+    "Module fingerprint and operational guards are reviewed runtime checks, not independently reconstructed execution history."
+  ]
+}
