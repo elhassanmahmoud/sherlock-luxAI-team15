@@ -156,7 +156,9 @@ def analyze(jobs_json,result_dir,*,root=ROOT,provenance=None,phase='selection',n
     h=S.helpers();root=h.safe_path(root);result_dir=h.safe_path(result_dir);jobs_json=h.safe_path(jobs_json)
     require(result_dir!=root/ANALYSIS and result_dir.is_relative_to(root/ANALYSIS),'Wrong result directory')
     plan=C._load_json(jobs_json);jobs=F.validate_plan(plan,root,phase=phase,nominee=nominee)
-    require(provenance is not None and h.safe_path(provenance)==result_dir/'provenance.json','Frozen provenance required')
+    require(provenance is not None,'Frozen provenance required')
+    provenance=h.safe_path(provenance)
+    require(provenance==result_dir/'provenance.json','Frozen provenance required')
     frozen=C._load_json(provenance);state=C._load_json(result_dir/'state.json')
     reservation=root/ANALYSIS/f'{phase}_launch.json';launch=C._load_json(reservation)
     total=F.TOTALS[phase]
@@ -185,7 +187,7 @@ def analyze(jobs_json,result_dir,*,root=ROOT,provenance=None,phase='selection',n
     protected[str(root/'Gruppe15.zip')]=C.digest(S.repo_path(root,'Gruppe15.zip'))
     require(state.get('protected')==protected,'Protected V14/ZIP bindings differ')
     S.check_inputs(state)
-    bound=[jobs_json,Path(provenance),reservation,admission,*map(Path,bindings),
+    bound=[jobs_json,provenance,reservation,admission,*map(Path,bindings),
         *(S.repo_path(root,p) for p in plan['roles'].values()),
         *(S.repo_path(root,p) for p in plan['opponent_sha256']),
         *(S.repo_path(root,j['seed_list']) for j in jobs),

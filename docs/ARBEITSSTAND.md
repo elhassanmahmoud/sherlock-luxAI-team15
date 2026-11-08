@@ -4,6 +4,11 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Pfadfehler der Auswertungs-CLI behoben
+
+- Nach vollständig beendeter Auswahl erkannte die Auswertung bei relativen Ergebnisordnern einen fehlenden Herkunftsbeleg: der Dateiinhalt stimmte, aber ein relativer Pfad wurde mit absoluten Schlüsseln verglichen. Derselbe unveränderte Auswertungscode erzeugte mit absoluten Argumenten das vollständige, unabhängig bestätigte Ergebnis noch unter dem ursprünglichen Freeze.
+- Erst danach eng korrigiert: Herkunftspfad einmal kanonisch auflösen und überall gleich verwenden. Root: beide neuen CLI/API-Regressionen bestanden (3,69s). Keine Spielwiederholung, Modell-/Daten-/Gateänderung. Historische Resultate/Quellstand unverändert erhalten.
+
 ## 08.11.2026 – Fog-Auswahl tatsächlich gestartet
 
 - Elf feste Jobs / 440 Spiele laufen, maximal zwei Worker. Supervisor79399, eigenes Wachhalten79418, erste V14-Referenzworker79431/79440. Netzstrom100%, echte erlaubte Kontingentnutzung93% beim Start. Keine fertigen Leistungsresultate behauptet.

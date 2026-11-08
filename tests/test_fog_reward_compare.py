@@ -400,3 +400,26 @@ def test_assembly_rechecks_archived_source_before_admission(artifacts,monkeypatc
     monkeypatch.setattr(torch,'save',mutate_source)
     with pytest.raises(ValueError): F.build_candidates(root=artifacts.root)
     assert not (artifacts.root/F.CANDIDATE_DIR/'admission.json').exists()
+
+
+@pytest.mark.parametrize('entrypoint',['api','cli'])
+def test_analysis_relative_and_absolute_paths_match(phase_ready,monkeypatch,entrypoint):
+    p=phase_ready
+    state=complete_state(make_state(p))
+    jobs=Path(state['jobs_path']);results=Path(state['out'])
+
+    def analyze_paths(relative):
+        selected_jobs=jobs.relative_to(p.root) if relative else jobs
+        selected_results=results.relative_to(p.root) if relative else results
+        if entrypoint=='api':
+            return E.analyze(selected_jobs,selected_results,root=p.root,
+                provenance=selected_results/'provenance.json')
+        # Exercise the real argparse entrypoint against the synthetic checkout.
+        monkeypatch.setitem(E.analyze.__kwdefaults__,'root',p.root)
+        output=p.root/f'summary_{relative}.json'
+        monkeypatch.setattr(sys,'argv',['fog_reward_eval','analyze','--jobs',str(selected_jobs),
+            '--results',str(selected_results),'--out',str(output)])
+        E.main()
+        return C._load_json(output)
+
+    assert analyze_paths(True)==analyze_paths(False)
