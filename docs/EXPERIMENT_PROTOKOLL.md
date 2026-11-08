@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 08.11.2026, neue separate [Fog-Reward-Studie](superpowers/specs/2026-11-08-fog-reward.md) vorab festgelegt: vier gepaarte Arme ab V14-Komponente18,40 Vorlauf/400 Lernen/32 Diagnosen jeArm, nur finales unbekanntes Fog-SAP-Hit-Shaping neutral statt negativ. Noch nicht gestartet. Geschlossene frühere SAP0-/HOLD-Ergebnisse nicht umgedeutet; kein Gewichts-/ZIP-Tausch.
+
 - 08.11.2026, **HOLD-Kopf abgeschlossen, keine Freigabe:** ein Ridge-Fit auf162 Paaren (24 Karten,20 mit geeigneten Fällen). Feste getrennte Validierung acht Karten/28 Paare:14 gewählt,10 positive/4 negative, mittlerer Kartenwert+1,125; untere Bootstrap-Grenze−0,8765625. Menge und Unsicherheitsgate verfehlt. Kein Nachschlag/Refit/Leistungstest dieses Kopfes.132 vollständige Ausführungen,5736 zusätzliche Simulationsschritte; keine DQN-Updates. Unabhängig bestätigt, V14/ZIP unverändert. [Bericht](../experiments/analysis/holder_learning_20261108/ERGEBNIS.md).
 
 - 08.11.2026, **HOLD-Einflussprobe abgeschlossen:**24vollständige Ausführungen auf12historischen Schlüsseln,55Paare:28positive/21negative/6null12-Schritt-Punktedifferenzen. Mittel+0,418, keine Stärkeaussage. Vorab-Machbarkeit bestanden; getrennte Lernstudie folgt. Technik separat4Ausführungen/2Paare. Insgesamt1680zusätzliche Simulationsschritte, nullTrainingsupdates. Unabhängiger Audit PASS; V14/ZIP unverändert. [Bericht](../experiments/analysis/decision_learning_20261108/HOLD_DIAGNOSE.md).

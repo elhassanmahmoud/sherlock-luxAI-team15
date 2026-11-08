@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – gezieltes Fog-Reward-Nachtraining vorbereitet
+
+- Nächste getrennte Hypothese: finale Nebelschüsse mit unbekanntem Treffer werden bislang im Hit-Shaping wie eine Nulltrefferschätzung abgezogen. Optionaler Neutral-Term nur für explizit nachgewiesene finale Fog-Herkunft; bekannte Treffer/Miss-Schätzungen, Aktionen und Regeln bleiben gleich. Default False, noch in Implementierung.
+- Fest vorab: V14-Komponente18, zwei Starts41/42, je Kontrolle/Neutral, vier Arme mit40 Vorlauf+400 Lernspielen und32 diagnostischen Validierungsausführungen. Insgesamt1888 geplante Ausführungen,240000 erwartete neue Lernupdates. Kein bereits gestarteter/bestandener Versuch. [Spec](superpowers/specs/2026-11-08-fog-reward.md), [Plan](superpowers/plans/2026-11-08-fog-reward.md), [Übergabe](../experiments/analysis/fog_reward_20261108/HANDOFF.md).
+- Unabhängiger Kartencheck über acht Worktrees: keine beobachtete Verwendung/Reservierungsüberschneidung und keine Lesefehler. Grenzen:282 seedlose CSV,215 JSONL ohne numerischen Seed,778 uneindeutige Seed-Felder; externe/unprotokollierte Läufe unbekannt. [Vollständiger Audit](../experiments/analysis/fog_reward_20261108/operations/seed-audit.md).
+- Getrennte Implementer für Agentenmechanik und Trainingswerkzeuge; unabhängiger Kartencheck und spätere Code-/Datenreviews. Maximal zwei Modellprozesse, keine parallelen Tests, Source-Freeze erst nach Werkzeugprüfung. V14/ZIP unverändert; vorherige HOLD-/Ensemblestudien geschlossen. Kein allgemeines SAP0 und kein erneuter Großvergleich.
+
 ## 08.11.2026 – HOLD-Kopf gelernt und getrennt geprüft: keine Freigabe
 
 - Tatsächlich ein kleiner Kopf mit16 öffentlichen Merkmalen gelernt:162 vollständige Trainingspaare auf20 von24 festgelegten Karten. Beide Seiten,96 Referenz-/Sammelausführungen. Alle positiven/negativen/Null-Labels genutzt; Normierung nurTraining, einmaliger Ridge-Fit. V14-Netze unverändert.
