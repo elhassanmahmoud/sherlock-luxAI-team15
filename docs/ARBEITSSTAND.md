@@ -7,6 +7,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+
+## 08.11.2026, 20:22 Berlin – Artillerie-Auswahl tatsächlich gestartet
+
+- Die feste Auswahl mit 440 Partien läuft in der Studienkopie `sherlock-student-20261104/sherlock-luxAI-team15`; Quelle/HEAD `70669eb9e1509b1bddff902c22a2b7e394167f97` bleibt über Auswahl und mögliche Bestätigung eingefroren. Nicht parallel duplizieren oder dort Code/Gewichte ändern.
+- Supervisor 31115, eigenes Wachhalten 31135, maximal zwei Modellworker. Maßgeblich `experiments/analysis/artillery_comparison_20261108/selection/state.json`; tatsächliche Einzeljobs/Receipts entstehen dort. Die ersten beiden Jobs / 80 Partien sind vollständig, weitere laufen; noch kein vollständiges Ergebnis oder Nominierter.
+- Root hat vor dem ersten Spiel 367 Quellen und 84 Eingaben gebunden; Vorabpins SHA-256 `28879945c2d63e03fe1930d63f131ac96bb199d8b7c329250baebdb984004b2f`. AC 100 %, tatsächliches Kontingent freigegeben, Watcher überwacht GitHub und Ressourcen. V14 und ZIP unverändert.
+- Dieser Startvermerk wird ausschließlich in der primären Arbeitskopie veröffentlicht; die laufende Studienkopie übernimmt ihn erst nach Ende des Freeze. Keine neuen Quellen oder Tests parallel zum Vergleich.
+
 ## 08.11.2026 – Zwei Artillerie-Ensembles für festen Vergleich zugelassen
 
 - CONTROL38 und ALIGNED38 aus exakt 36 ursprünglichen V14-Netzen plus den jeweiligen finalen Netzen 43/44 gebaut. Einheitliche Mittelung und ursprüngliche V14-Inferenzkonfiguration; keine Mitglieder-/Gewichtssuche. Erneutes Laden, Mitgliederreihenfolge, historische Trainingsbelege und Schutzdateien geprüft.
