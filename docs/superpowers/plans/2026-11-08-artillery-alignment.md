@@ -35,7 +35,7 @@
 ### Task 2: kontrolliertes Training und Wirkungsbelege
 
 **Files:** Create scripts/artillery_alignment_study.py, scripts/artillery_alignment_supervisor.py und tests/test_artillery_alignment_study.py. Alte Studien unverändert.
-**Interfaces:** CLI prepare/run und Supervisor analog fog_reward_study, final_receipt.json mit klarer Quelle/Config/Zählern. Wiederverwenden: finetune, action_audit, isolated_validation, prove_initial, _prove_prefill, _prove_end, source_identity, Ressourcen/Ownership/STOP-Prüfungen. Keine neue allgemeine Trainingsplattform.
+**Interfaces:** CLI prepare/run und Supervisor analog fog_reward_study, final_receipt.json mit klarer Quelle/Config/Zählern. Wiederverwenden: finetune-Rezept mit experiment.Learners/common.play_game und validate_v14, action_audit, prove_initial, _prove_prefill, _prove_end, source_identity, Ressourcen/Ownership/STOP-Prüfungen. Ein enger expliziter Spielplan-Loop ist gegenüber dem Patchen zahlreicher finetune-Globals erlaubt und bevorzugt, wenn die identische Konfiguration, Seeds, Lernbudgets und Validierungsisolation nachgewiesen werden. Keine neue allgemeine Trainingsplattform.
 
 - [ ] Feste Werte aus der Spec übernehmen: vierArme43/44, Komponente18,40+400Spiele,32Diagnosen,240000Updates gesamt, Karten und Mischungen. Nur finalerCheckpoint. Quellkonfigurationsannahmen explizit ablehnen, wenn falsch.
 - [ ] Temporären endlich-restaurierten Beobachter implementieren: actual/alternate Helperverdikt bei identischen Eingaben, Original-Rückgabe bewahren, keine RNG-/Estimator-/Kontextmutation; neueErlaubnis vsfinaleSAP-Ausführung/Abbruch getrennt. Finale native/kanonische/replayAktion prüfen. Artefakte mit tatsächlich messbaren Behauptungen.

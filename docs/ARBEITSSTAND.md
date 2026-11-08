@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Optionale Artillerie-Trainingsregel geprüft
+
+- Neuer Schalter art_splash_in_training=False; nur bei ausdrücklicher Aktivierung wirkt die bestehende Streuschadenregel auch imTraining. Die notwendige Parameterschätzung wird versorgt. Andere Regeln/Rewards und Gewichte unverändert.
+- 45 gezielte Tests bestanden (3,06s), unabhängiger Spec-/Qualitätsreview PASS. Vier vollständige bekannte V14-Referenzverläufe mit beidenFlagwerten werden als nächster Technikschritt geprüft; noch kein tatsächlicher neuer Lernlauf.
+- Kartenaudit über acht Worktrees: keine beobachtete Verwendung/fremde Reservierung der neuen Bereiche. Dokumentierte Datenlücken und harmlose HEAD-only-Ausnahme erhalten. Trainingswerkzeuge werden separat vorbereitet; während der technischen Ausführung keine Quellenänderungen.
+
 ## 08.11.2026 – Wiederaufnahme und unabhängiger Artillerie-Datenabschluss
 
 - Moayed autorisiert erneut selbstständige Weiterarbeit und V14-Ersatz bei belegtem Vorteil. Tatsächliches Kontingent auf0% zurückgesetzt, AC100%, keine laufenden Modelljobs, Repo/Remote aufdd15d99 ohne neue Mahmoud-Änderungen.
