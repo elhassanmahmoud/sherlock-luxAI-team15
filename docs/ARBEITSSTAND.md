@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – kompakte Auswahl vollständig; kein nominierter Nachfolger
+
+- Alle39 Jobs/1560 Spiele vollständig, unabhängig gegen Rohdaten/Prüfsummen nachgerechnet. Sechserpanel V14 185/240; A39 202, B39 193, ALL42 205, REPLACE36 202. Solution V14 38/40, A39/B39/REPLACE36 39/40, ALL42 40/40; default überall40/40. Direkt A39/ALL42 je18/40, B39 14/40, REPLACE36 28/40.
+- A39/B39/ALL42 verfehlen direkt mindestens50%; REPLACE36 bleibt gemäß Vorabplan nur Diagnose. `nominee:null` bleibt unverändert, keine kompakte Bestätigung. ALL42s40/40 sind keine allgemeine100%-Garantie; Auswahl klein und explorativ. [Vollständige Einordnung](ENSEMBLE_AUSWAHL_20261108.md).
+- Unabhängiger Audit bestätigt alle39Jobs,1560 Zeilen und sämtlichen Bootstrap-/Gatewerte bis1e-12. Source-Freeze2146494 eingehalten; alle eigenen Prozesse inklusiveWachhalten beendet. V14/ZIP unverändert. Danach sichere Übernahme des eigenen Dokumentationscommits57f896e.
+- Root folgt dem unabhängigen Methodenreview: separate prospektive Validierung genau des diagnostisch interessanten REPLACE36, maximal3200 neue Spiele, unveränderteGates, keine Modelländerung/Nachrücker/Nachschläge. Keine Umdeutung als alteNomination; Ergebnis motiviertneueHypothese. Folgetest noch inVorbereitung, Gesamtausführungen des gestoppten Großstarts zusätzlich unbekannt. Nach diesem begrenzten Folgetest kein automatischer weitererVersuch.
+
 ## 08.11.2026, 04:57 Berlin – kompakte Auswahl läuft
 
 - Tatsächlich gestartet: 39 Jobs / 1560 Spiele, Profil `compact20261108`, maximal zwei Spielprozesse. Supervisor PID52177 mit eigenem Wachhalteprozess PID52193; erste Kinder 52218/52224. Startmoment: V14 gegen Solution und sol92_sq, noch kein vollständiger Ergebnisblock. Keine Stärkebehauptung.

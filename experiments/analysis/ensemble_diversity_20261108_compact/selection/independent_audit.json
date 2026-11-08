@@ -1,0 +1,1386 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "scope": "Independent complete raw-data/statistics audit; audit-only",
+  "created_utc": "2026-11-08T05:02:14.987433+00:00",
+  "profile": "compact20261108",
+  "frozen_head": "2146494ee12ce288b48ae69bde119198cf8316b9",
+  "source_files_verified": 316,
+  "source_identity_verified": true,
+  "protected_hashes_verified": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+  },
+  "model_sha256_verified": {
+    "V14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "A39": "908a40161d1424abe8d6acb20e7b78cc58c5687f919ea60149901f05a18443a2",
+    "B39": "2b682299f083579dab5cd4be28f46d548f031528fdd842fd7919dd8a93177cb5",
+    "ALL42": "a602939772d389e690b18b04ac7c3bdbf72081342b80af47e6fa825e383d21ee",
+    "REPLACE36": "5ce350a86d4ed90b319af298e64b98e7f725ed253f5df89d504e98a73a54db6b"
+  },
+  "opponent_sha256_verified": {
+    "experiments/releases/20261022_all18_v3/agent_p0.pth": "aac1c9101c6639e3e085398267d0bc448a4e47b482e68bfe8b01374d5288d935",
+    "experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": "c394acba84f7a298f8f1e6107328d8e6ce151b367a28997b059aa82fc8a895e6",
+    "experiments/releases/20261022_v10_baseline/agent_p0.pth": "03cf8bdc20bef58a99e7d00ca743add92ed4fc21b7e8c4452f1bb7feea6d8c67",
+    "experiments/releases/20261101_v13_neb/agent_p0.pth": "6d00b6c52366a613eed3b7b5b6f9c3c088802716a85c30fe192c46c57bdd8e62",
+    "experiments/releases/20261101_v14_baseline/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "jobs": 39,
+  "games": 1560,
+  "expected_key_count": 1560,
+  "missing_rows": 0,
+  "duplicate_rows": 0,
+  "excluded_rows": 0,
+  "extra_csv_files": 0,
+  "seed_blocks": {
+    "panel": [
+      1700000,
+      1700019
+    ],
+    "direct": [
+      1701000,
+      1701019
+    ]
+  },
+  "point_counting_version": 2,
+  "steps_every_game": 303,
+  "method": {
+    "bootstrap_samples": 5000,
+    "bit_generator": "PCG64",
+    "seed": 0,
+    "interval": "unadjusted 95% percentile",
+    "resampling_unit": "whole seed/map; both sides and all panel opponents together",
+    "independence": "stdlib CSV parsing and fresh NumPy integer-index resampling; no production analysis imports/calls",
+    "script_sha256": "4b4e74971938cc0f45d88d147ed1e32d2e1eb9d2a76a098fc6b90958ef6e2d6a"
+  },
+  "baseline_opponent_outcomes": {
+    "solution92": {
+      "games": 40,
+      "wins": 38,
+      "draws": 0,
+      "losses": 2,
+      "half_wins": 76,
+      "score": 0.95,
+      "strict_winrate": 0.95
+    },
+    "sol92_sq": {
+      "games": 40,
+      "wins": 34,
+      "draws": 0,
+      "losses": 6,
+      "half_wins": 68,
+      "score": 0.85,
+      "strict_winrate": 0.85
+    },
+    "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+      "games": 40,
+      "wins": 36,
+      "draws": 0,
+      "losses": 4,
+      "half_wins": 72,
+      "score": 0.9,
+      "strict_winrate": 0.9
+    },
+    "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+      "games": 40,
+      "wins": 26,
+      "draws": 0,
+      "losses": 14,
+      "half_wins": 52,
+      "score": 0.65,
+      "strict_winrate": 0.65
+    },
+    "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+      "games": 40,
+      "wins": 30,
+      "draws": 0,
+      "losses": 10,
+      "half_wins": 60,
+      "score": 0.75,
+      "strict_winrate": 0.75
+    },
+    "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+      "games": 40,
+      "wins": 21,
+      "draws": 0,
+      "losses": 19,
+      "half_wins": 42,
+      "score": 0.525,
+      "strict_winrate": 0.525
+    },
+    "default": {
+      "games": 40,
+      "wins": 40,
+      "draws": 0,
+      "losses": 0,
+      "half_wins": 80,
+      "score": 1.0,
+      "strict_winrate": 1.0
+    }
+  },
+  "baseline_panel": {
+    "games": 240,
+    "wins": 185,
+    "draws": 0,
+    "losses": 55,
+    "half_wins": 370,
+    "score": 0.7708333333333334,
+    "strict_winrate": 0.7708333333333334
+  },
+  "results": {
+    "A39": {
+      "panel": {
+        "maps": 20,
+        "score": 0.8416666666666668,
+        "ref_score": 0.7708333333333333,
+        "delta": 0.07083333333333335,
+        "low": -0.012499999999999994,
+        "high": 0.15833333333333335,
+        "candidate": {
+          "games": 240,
+          "wins": 202,
+          "draws": 0,
+          "losses": 38,
+          "half_wins": 404,
+          "score": 0.8416666666666667,
+          "strict_winrate": 0.8416666666666667
+        },
+        "reference": {
+          "games": 240,
+          "wins": 185,
+          "draws": 0,
+          "losses": 55,
+          "half_wins": 370,
+          "score": 0.7708333333333334,
+          "strict_winrate": 0.7708333333333334
+        }
+      },
+      "solution92": {
+        "maps": 20,
+        "score": 0.975,
+        "ref_score": 0.95,
+        "delta": 0.025,
+        "low": 0.0,
+        "high": 0.075,
+        "candidate": {
+          "games": 40,
+          "wins": 39,
+          "draws": 0,
+          "losses": 1,
+          "half_wins": 78,
+          "score": 0.975,
+          "strict_winrate": 0.975
+        },
+        "reference": {
+          "games": 40,
+          "wins": 38,
+          "draws": 0,
+          "losses": 2,
+          "half_wins": 76,
+          "score": 0.95,
+          "strict_winrate": 0.95
+        }
+      },
+      "default": {
+        "maps": 20,
+        "score": 1.0,
+        "ref_score": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "candidate": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        },
+        "reference": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        }
+      },
+      "direct": {
+        "maps": 20,
+        "games": 40,
+        "score": 0.45,
+        "low": 0.25,
+        "high": 0.65,
+        "candidate": {
+          "games": 40,
+          "wins": 18,
+          "draws": 0,
+          "losses": 22,
+          "half_wins": 36,
+          "score": 0.45,
+          "strict_winrate": 0.45
+        }
+      },
+      "checks": {
+        "panel_score_gain_ge_0.005": true,
+        "default_score_ge_0.99": true,
+        "direct_score_ge_0.50": false,
+        "solution92_score_nonnegative": true,
+        "solution92_strict_winrate_nonnegative": true,
+        "default_strict_winrate_ge_0.99": true
+      },
+      "passed": false,
+      "nominable": true,
+      "opponent_outcomes": {
+        "solution92": {
+          "candidate": {
+            "games": 40,
+            "wins": 39,
+            "draws": 0,
+            "losses": 1,
+            "half_wins": 78,
+            "score": 0.975,
+            "strict_winrate": 0.975
+          },
+          "reference": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          }
+        },
+        "sol92_sq": {
+          "candidate": {
+            "games": 40,
+            "wins": 35,
+            "draws": 0,
+            "losses": 5,
+            "half_wins": 70,
+            "score": 0.875,
+            "strict_winrate": 0.875
+          },
+          "reference": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          }
+        },
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          },
+          "reference": {
+            "games": 40,
+            "wins": 36,
+            "draws": 0,
+            "losses": 4,
+            "half_wins": 72,
+            "score": 0.9,
+            "strict_winrate": 0.9
+          }
+        },
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 32,
+            "draws": 0,
+            "losses": 8,
+            "half_wins": 64,
+            "score": 0.8,
+            "strict_winrate": 0.8
+          },
+          "reference": {
+            "games": 40,
+            "wins": 26,
+            "draws": 0,
+            "losses": 14,
+            "half_wins": 52,
+            "score": 0.65,
+            "strict_winrate": 0.65
+          }
+        },
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          },
+          "reference": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          }
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 24,
+            "draws": 0,
+            "losses": 16,
+            "half_wins": 48,
+            "score": 0.6,
+            "strict_winrate": 0.6
+          },
+          "reference": {
+            "games": 40,
+            "wins": 21,
+            "draws": 0,
+            "losses": 19,
+            "half_wins": 42,
+            "score": 0.525,
+            "strict_winrate": 0.525
+          }
+        },
+        "default": {
+          "candidate": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          },
+          "reference": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          }
+        }
+      },
+      "panel_half_win_gain": 34,
+      "solution_half_win_gain": 2
+    },
+    "B39": {
+      "panel": {
+        "maps": 20,
+        "score": 0.8041666666666668,
+        "ref_score": 0.7708333333333333,
+        "delta": 0.03333333333333334,
+        "low": -0.03333333333333331,
+        "high": 0.10000000000000005,
+        "candidate": {
+          "games": 240,
+          "wins": 193,
+          "draws": 0,
+          "losses": 47,
+          "half_wins": 386,
+          "score": 0.8041666666666667,
+          "strict_winrate": 0.8041666666666667
+        },
+        "reference": {
+          "games": 240,
+          "wins": 185,
+          "draws": 0,
+          "losses": 55,
+          "half_wins": 370,
+          "score": 0.7708333333333334,
+          "strict_winrate": 0.7708333333333334
+        }
+      },
+      "solution92": {
+        "maps": 20,
+        "score": 0.975,
+        "ref_score": 0.95,
+        "delta": 0.025,
+        "low": 0.0,
+        "high": 0.075,
+        "candidate": {
+          "games": 40,
+          "wins": 39,
+          "draws": 0,
+          "losses": 1,
+          "half_wins": 78,
+          "score": 0.975,
+          "strict_winrate": 0.975
+        },
+        "reference": {
+          "games": 40,
+          "wins": 38,
+          "draws": 0,
+          "losses": 2,
+          "half_wins": 76,
+          "score": 0.95,
+          "strict_winrate": 0.95
+        }
+      },
+      "default": {
+        "maps": 20,
+        "score": 1.0,
+        "ref_score": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "candidate": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        },
+        "reference": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        }
+      },
+      "direct": {
+        "maps": 20,
+        "games": 40,
+        "score": 0.35,
+        "low": 0.15,
+        "high": 0.55,
+        "candidate": {
+          "games": 40,
+          "wins": 14,
+          "draws": 0,
+          "losses": 26,
+          "half_wins": 28,
+          "score": 0.35,
+          "strict_winrate": 0.35
+        }
+      },
+      "checks": {
+        "panel_score_gain_ge_0.005": true,
+        "default_score_ge_0.99": true,
+        "direct_score_ge_0.50": false,
+        "solution92_score_nonnegative": true,
+        "solution92_strict_winrate_nonnegative": true,
+        "default_strict_winrate_ge_0.99": true
+      },
+      "passed": false,
+      "nominable": true,
+      "opponent_outcomes": {
+        "solution92": {
+          "candidate": {
+            "games": 40,
+            "wins": 39,
+            "draws": 0,
+            "losses": 1,
+            "half_wins": 78,
+            "score": 0.975,
+            "strict_winrate": 0.975
+          },
+          "reference": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          }
+        },
+        "sol92_sq": {
+          "candidate": {
+            "games": 40,
+            "wins": 37,
+            "draws": 0,
+            "losses": 3,
+            "half_wins": 74,
+            "score": 0.925,
+            "strict_winrate": 0.925
+          },
+          "reference": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          }
+        },
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 36,
+            "draws": 0,
+            "losses": 4,
+            "half_wins": 72,
+            "score": 0.9,
+            "strict_winrate": 0.9
+          },
+          "reference": {
+            "games": 40,
+            "wins": 36,
+            "draws": 0,
+            "losses": 4,
+            "half_wins": 72,
+            "score": 0.9,
+            "strict_winrate": 0.9
+          }
+        },
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          },
+          "reference": {
+            "games": 40,
+            "wins": 26,
+            "draws": 0,
+            "losses": 14,
+            "half_wins": 52,
+            "score": 0.65,
+            "strict_winrate": 0.65
+          }
+        },
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          },
+          "reference": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          }
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 17,
+            "draws": 0,
+            "losses": 23,
+            "half_wins": 34,
+            "score": 0.425,
+            "strict_winrate": 0.425
+          },
+          "reference": {
+            "games": 40,
+            "wins": 21,
+            "draws": 0,
+            "losses": 19,
+            "half_wins": 42,
+            "score": 0.525,
+            "strict_winrate": 0.525
+          }
+        },
+        "default": {
+          "candidate": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          },
+          "reference": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          }
+        }
+      },
+      "panel_half_win_gain": 16,
+      "solution_half_win_gain": 2
+    },
+    "ALL42": {
+      "panel": {
+        "maps": 20,
+        "score": 0.8541666666666666,
+        "ref_score": 0.7708333333333333,
+        "delta": 0.08333333333333334,
+        "low": 0.012500000000000016,
+        "high": 0.14583333333333337,
+        "candidate": {
+          "games": 240,
+          "wins": 205,
+          "draws": 0,
+          "losses": 35,
+          "half_wins": 410,
+          "score": 0.8541666666666666,
+          "strict_winrate": 0.8541666666666666
+        },
+        "reference": {
+          "games": 240,
+          "wins": 185,
+          "draws": 0,
+          "losses": 55,
+          "half_wins": 370,
+          "score": 0.7708333333333334,
+          "strict_winrate": 0.7708333333333334
+        }
+      },
+      "solution92": {
+        "maps": 20,
+        "score": 1.0,
+        "ref_score": 0.95,
+        "delta": 0.05,
+        "low": 0.0,
+        "high": 0.15,
+        "candidate": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        },
+        "reference": {
+          "games": 40,
+          "wins": 38,
+          "draws": 0,
+          "losses": 2,
+          "half_wins": 76,
+          "score": 0.95,
+          "strict_winrate": 0.95
+        }
+      },
+      "default": {
+        "maps": 20,
+        "score": 1.0,
+        "ref_score": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "candidate": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        },
+        "reference": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        }
+      },
+      "direct": {
+        "maps": 20,
+        "games": 40,
+        "score": 0.45,
+        "low": 0.25,
+        "high": 0.6512499999999818,
+        "candidate": {
+          "games": 40,
+          "wins": 18,
+          "draws": 0,
+          "losses": 22,
+          "half_wins": 36,
+          "score": 0.45,
+          "strict_winrate": 0.45
+        }
+      },
+      "checks": {
+        "panel_score_gain_ge_0.005": true,
+        "default_score_ge_0.99": true,
+        "direct_score_ge_0.50": false,
+        "solution92_score_nonnegative": true,
+        "solution92_strict_winrate_nonnegative": true,
+        "default_strict_winrate_ge_0.99": true
+      },
+      "passed": false,
+      "nominable": true,
+      "opponent_outcomes": {
+        "solution92": {
+          "candidate": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          },
+          "reference": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          }
+        },
+        "sol92_sq": {
+          "candidate": {
+            "games": 40,
+            "wins": 35,
+            "draws": 0,
+            "losses": 5,
+            "half_wins": 70,
+            "score": 0.875,
+            "strict_winrate": 0.875
+          },
+          "reference": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          }
+        },
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          },
+          "reference": {
+            "games": 40,
+            "wins": 36,
+            "draws": 0,
+            "losses": 4,
+            "half_wins": 72,
+            "score": 0.9,
+            "strict_winrate": 0.9
+          }
+        },
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          },
+          "reference": {
+            "games": 40,
+            "wins": 26,
+            "draws": 0,
+            "losses": 14,
+            "half_wins": 52,
+            "score": 0.65,
+            "strict_winrate": 0.65
+          }
+        },
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 32,
+            "draws": 0,
+            "losses": 8,
+            "half_wins": 64,
+            "score": 0.8,
+            "strict_winrate": 0.8
+          },
+          "reference": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          }
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          },
+          "reference": {
+            "games": 40,
+            "wins": 21,
+            "draws": 0,
+            "losses": 19,
+            "half_wins": 42,
+            "score": 0.525,
+            "strict_winrate": 0.525
+          }
+        },
+        "default": {
+          "candidate": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          },
+          "reference": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          }
+        }
+      },
+      "panel_half_win_gain": 40,
+      "solution_half_win_gain": 4
+    },
+    "REPLACE36": {
+      "panel": {
+        "maps": 20,
+        "score": 0.8416666666666666,
+        "ref_score": 0.7708333333333333,
+        "delta": 0.07083333333333335,
+        "low": 0.008333333333333345,
+        "high": 0.13333333333333336,
+        "candidate": {
+          "games": 240,
+          "wins": 202,
+          "draws": 0,
+          "losses": 38,
+          "half_wins": 404,
+          "score": 0.8416666666666667,
+          "strict_winrate": 0.8416666666666667
+        },
+        "reference": {
+          "games": 240,
+          "wins": 185,
+          "draws": 0,
+          "losses": 55,
+          "half_wins": 370,
+          "score": 0.7708333333333334,
+          "strict_winrate": 0.7708333333333334
+        }
+      },
+      "solution92": {
+        "maps": 20,
+        "score": 0.975,
+        "ref_score": 0.95,
+        "delta": 0.025,
+        "low": 0.0,
+        "high": 0.075,
+        "candidate": {
+          "games": 40,
+          "wins": 39,
+          "draws": 0,
+          "losses": 1,
+          "half_wins": 78,
+          "score": 0.975,
+          "strict_winrate": 0.975
+        },
+        "reference": {
+          "games": 40,
+          "wins": 38,
+          "draws": 0,
+          "losses": 2,
+          "half_wins": 76,
+          "score": 0.95,
+          "strict_winrate": 0.95
+        }
+      },
+      "default": {
+        "maps": 20,
+        "score": 1.0,
+        "ref_score": 1.0,
+        "delta": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "candidate": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        },
+        "reference": {
+          "games": 40,
+          "wins": 40,
+          "draws": 0,
+          "losses": 0,
+          "half_wins": 80,
+          "score": 1.0,
+          "strict_winrate": 1.0
+        }
+      },
+      "direct": {
+        "maps": 20,
+        "games": 40,
+        "score": 0.7,
+        "low": 0.5,
+        "high": 0.9,
+        "candidate": {
+          "games": 40,
+          "wins": 28,
+          "draws": 0,
+          "losses": 12,
+          "half_wins": 56,
+          "score": 0.7,
+          "strict_winrate": 0.7
+        }
+      },
+      "checks": {
+        "panel_score_gain_ge_0.005": true,
+        "default_score_ge_0.99": true,
+        "direct_score_ge_0.50": true,
+        "solution92_score_nonnegative": true,
+        "solution92_strict_winrate_nonnegative": true,
+        "default_strict_winrate_ge_0.99": true
+      },
+      "passed": true,
+      "nominable": false,
+      "opponent_outcomes": {
+        "solution92": {
+          "candidate": {
+            "games": 40,
+            "wins": 39,
+            "draws": 0,
+            "losses": 1,
+            "half_wins": 78,
+            "score": 0.975,
+            "strict_winrate": 0.975
+          },
+          "reference": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          }
+        },
+        "sol92_sq": {
+          "candidate": {
+            "games": 40,
+            "wins": 35,
+            "draws": 0,
+            "losses": 5,
+            "half_wins": 70,
+            "score": 0.875,
+            "strict_winrate": 0.875
+          },
+          "reference": {
+            "games": 40,
+            "wins": 34,
+            "draws": 0,
+            "losses": 6,
+            "half_wins": 68,
+            "score": 0.85,
+            "strict_winrate": 0.85
+          }
+        },
+        "self:experiments/releases/20261022_all18_v3/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          },
+          "reference": {
+            "games": 40,
+            "wins": 36,
+            "draws": 0,
+            "losses": 4,
+            "half_wins": 72,
+            "score": 0.9,
+            "strict_winrate": 0.9
+          }
+        },
+        "self:experiments/releases/20261022_v7_Bsnpd/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 32,
+            "draws": 0,
+            "losses": 8,
+            "half_wins": 64,
+            "score": 0.8,
+            "strict_winrate": 0.8
+          },
+          "reference": {
+            "games": 40,
+            "wins": 26,
+            "draws": 0,
+            "losses": 14,
+            "half_wins": 52,
+            "score": 0.65,
+            "strict_winrate": 0.65
+          }
+        },
+        "self:experiments/releases/20261022_v10_baseline/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 38,
+            "draws": 0,
+            "losses": 2,
+            "half_wins": 76,
+            "score": 0.95,
+            "strict_winrate": 0.95
+          },
+          "reference": {
+            "games": 40,
+            "wins": 30,
+            "draws": 0,
+            "losses": 10,
+            "half_wins": 60,
+            "score": 0.75,
+            "strict_winrate": 0.75
+          }
+        },
+        "self:experiments/releases/20261101_v13_neb/agent_p0.pth": {
+          "candidate": {
+            "games": 40,
+            "wins": 20,
+            "draws": 0,
+            "losses": 20,
+            "half_wins": 40,
+            "score": 0.5,
+            "strict_winrate": 0.5
+          },
+          "reference": {
+            "games": 40,
+            "wins": 21,
+            "draws": 0,
+            "losses": 19,
+            "half_wins": 42,
+            "score": 0.525,
+            "strict_winrate": 0.525
+          }
+        },
+        "default": {
+          "candidate": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          },
+          "reference": {
+            "games": 40,
+            "wins": 40,
+            "draws": 0,
+            "losses": 0,
+            "half_wins": 80,
+            "score": 1.0,
+            "strict_winrate": 1.0
+          }
+        }
+      },
+      "panel_half_win_gain": 34,
+      "solution_half_win_gain": 2
+    }
+  },
+  "nominee": null,
+  "production_summary_agrees": true,
+  "job_bindings": [
+    {
+      "name": "V14_panel_0",
+      "rows": 40,
+      "csv_sha256": "03687dc864b20d077d01e84be57272442ffa56912d7bd7a002ba1c146588f022",
+      "receipt_sha256": "2b17bdb53d5a166edc4e1897473214868db642663026816b644260b70dffa055"
+    },
+    {
+      "name": "V14_panel_1",
+      "rows": 40,
+      "csv_sha256": "2bdcc3a08ea8e195403f5cb6607908c924721b200ec399a675d151b740ac2f95",
+      "receipt_sha256": "3251733e387d70957bbc80cf6189668b82583db3406265af855caac54dd3788b"
+    },
+    {
+      "name": "V14_panel_2",
+      "rows": 40,
+      "csv_sha256": "2e3d4d923bfe1f2d71ac51fa1cc8d92203f78aa2a70512a473d1da58ecc7ab1a",
+      "receipt_sha256": "99e5b9b288d487e11746075f9a54dd8ee16a40a49c2d547a7adb0f39e06552f8"
+    },
+    {
+      "name": "V14_panel_3",
+      "rows": 40,
+      "csv_sha256": "0b0cf83cc70138e3bb2439e5ea836b71a99062a5d3a0422ccaac071dd5dafa5a",
+      "receipt_sha256": "679221630f4d6293a19d75b2778bf4084abbce711308d0e49847b53ff0acc6ad"
+    },
+    {
+      "name": "V14_panel_4",
+      "rows": 40,
+      "csv_sha256": "8684ae5e2d0d04ce9e506fc033bfd3056ab7badc1555873fc245351ccb040687",
+      "receipt_sha256": "466e26e86495e95b2a6d42ccc325bee682cd1c113c0b4cb8d6c6cc7b15d5b61c"
+    },
+    {
+      "name": "V14_panel_5",
+      "rows": 40,
+      "csv_sha256": "4b114160afd46b2b2e8dca63df343958dec92c01d52483155705870b8da06e83",
+      "receipt_sha256": "db37a3a1bc02fd1a3f7bcd7f8d2910f77ed143deb9b9f6a4d6a666e5e3071853"
+    },
+    {
+      "name": "V14_panel_6",
+      "rows": 40,
+      "csv_sha256": "0d74897c00173eb67cac721f87dbb1cbb73720ded74b1dad189c2e815c1fed4f",
+      "receipt_sha256": "1320250109410300866dcb273470375f23855f78764126a862e8ba07ba528e6d"
+    },
+    {
+      "name": "A39_panel_0",
+      "rows": 40,
+      "csv_sha256": "9d49b9bdd80f6efb6ba9b3c037e2aecd7fbbbfe722705e5b9736509d76866559",
+      "receipt_sha256": "7e98ca9e314ff63192531c641888c9616d2cee2dfe623af716b8ef03d01210bc"
+    },
+    {
+      "name": "A39_panel_1",
+      "rows": 40,
+      "csv_sha256": "5add095fd1229b3ee8b78c39c792c7d33e4de4077e94c0b50dbada180ee44fd4",
+      "receipt_sha256": "4cfad0b9eb520e9e5c640213d7889bf5d9b36f1c164437acd99a638705f8fa6c"
+    },
+    {
+      "name": "A39_panel_2",
+      "rows": 40,
+      "csv_sha256": "edb680326706ee51c2b3cf1bd1d8d6418a66c49a92d44530dd4e54aabfacc164",
+      "receipt_sha256": "01cc9989d1be3e92567b4a57fed281bac6c6191fb456fcb3e22a4d15893162a2"
+    },
+    {
+      "name": "A39_panel_3",
+      "rows": 40,
+      "csv_sha256": "ab0b8bc32defb64f05edd5a69d9cf98314bda7ca71d33f1ab64d890106d899f3",
+      "receipt_sha256": "554bffb61c25c5569e434401b12d22d6653e4275d2e1d95d66c81777a1624621"
+    },
+    {
+      "name": "A39_panel_4",
+      "rows": 40,
+      "csv_sha256": "055d70f7703dd44a688e11a88dc9f8d161e37100d7e71709f56e0ac0463c4671",
+      "receipt_sha256": "a9e7f1d5c2584818e23122315036c140211777e4bdefdd52e5461b1e02cee1f0"
+    },
+    {
+      "name": "A39_panel_5",
+      "rows": 40,
+      "csv_sha256": "5a0ea8f7bcef33218564088e0eb9b030b1af34baab301cc678654fc720d698c5",
+      "receipt_sha256": "59c5bdfbb94865ecdcfb55c27e6bae9c3c77a4f5c9fe704790739aa2f6838b60"
+    },
+    {
+      "name": "A39_panel_6",
+      "rows": 40,
+      "csv_sha256": "18edabd583b17b65faa7beb9d2ac047e1bb20b94a95c8bfc9f0c9a44065d3edd",
+      "receipt_sha256": "e1f80de458f38d24b5425875ec9efefd044b5697e28b4e1d4e9c5339cccdc4bd"
+    },
+    {
+      "name": "A39_direct",
+      "rows": 40,
+      "csv_sha256": "aa213438203f3178ad72aed221ff80ba97e7de460f02bb22cfa0f3b4a43b2ea8",
+      "receipt_sha256": "7ad3af73aa274536ba1fa4c5d639817b20de72c6b262707eb3afdcd35e6a8908"
+    },
+    {
+      "name": "B39_panel_0",
+      "rows": 40,
+      "csv_sha256": "8271de66016a2228046ac90eb59be746f674223d64b6034c5b11aa63bb25bba4",
+      "receipt_sha256": "9c91ea1e8988788a2d0dba81e8e4ca826df3c477d37ed5b1bbecda9f1343964c"
+    },
+    {
+      "name": "B39_panel_1",
+      "rows": 40,
+      "csv_sha256": "2615635cfcf0c18319fa294089321417ed24155d3b8f79fc30162bef77c4e28f",
+      "receipt_sha256": "982f3e8a0e4973022f37987c176c9923b3feda472843da6cad6060f6c55cc819"
+    },
+    {
+      "name": "B39_panel_2",
+      "rows": 40,
+      "csv_sha256": "efb95c664c80c1fd56be338f0f948fc924f27da945c318589399fc3a175f0ec9",
+      "receipt_sha256": "c74d519826ff1dc20ad97949f492390142f991e4cb1ead50cdcf73b550527cd6"
+    },
+    {
+      "name": "B39_panel_3",
+      "rows": 40,
+      "csv_sha256": "9e7056481a2f433de445311a8629e0a4614880c859b30eae1a0271a4fc264ec6",
+      "receipt_sha256": "2f15b0e01090d514177f91ba3bda68ab05d1a37debc630617235a6f3d1022206"
+    },
+    {
+      "name": "B39_panel_4",
+      "rows": 40,
+      "csv_sha256": "e30935e426eb2289fd28dc1bfca8e654ff93f7ba6f7a4c40bbb351b682bc874a",
+      "receipt_sha256": "9c46c66cc0c7a3e5709b06cb8786744891aad85a4c1d92a9618df11ec67e3a6c"
+    },
+    {
+      "name": "B39_panel_5",
+      "rows": 40,
+      "csv_sha256": "e0ec6c75f65978fb21ca4dcad6f3d9d069b7b8464d9d0b1a38e7428d15ee69ff",
+      "receipt_sha256": "49000c8e3f13d7ee96687e93aeed70171075a9eea1581a56080a1a496ed85acd"
+    },
+    {
+      "name": "B39_panel_6",
+      "rows": 40,
+      "csv_sha256": "e282a375af1a1b0bafbef9d8e3396551970ce33ab8d204b01fc4224ac0f90ddc",
+      "receipt_sha256": "606491596d64048980d40fe644e3a84551587c7345960e4080d554c06772afd4"
+    },
+    {
+      "name": "B39_direct",
+      "rows": 40,
+      "csv_sha256": "b63263779885618efd5fb68aed6cedfe60350de96d7fbd8e1277fc73cbd3fbea",
+      "receipt_sha256": "a5e27b5b8169e2e928646284fe77d92fba6d9aa14ca7f2a0d774159db9b5ce75"
+    },
+    {
+      "name": "ALL42_panel_0",
+      "rows": 40,
+      "csv_sha256": "19eefb94c4281b2d9b558d2fab2225e090d87f0dae3944da1356a53c49316b82",
+      "receipt_sha256": "4470a963abba75b96e5bad84b0359c22525a6d16cdaaf458eba9a1f124163518"
+    },
+    {
+      "name": "ALL42_panel_1",
+      "rows": 40,
+      "csv_sha256": "4096a73b3ac6b270b0d82043a94dfe52735f73fa4ae06126e787458fb9738edf",
+      "receipt_sha256": "630d5e6d4f027366a71b46c17ec91f6a90b335e52111b5eadf6665eefa89f315"
+    },
+    {
+      "name": "ALL42_panel_2",
+      "rows": 40,
+      "csv_sha256": "e6b2a1b30c8b35dc3aa94928aec7b14eb5e705b3748239085163315af53d6c07",
+      "receipt_sha256": "93a2f0d806ff6dbe146a15d4188dc18eeb47a1595d3be0da66a60f770c5974d9"
+    },
+    {
+      "name": "ALL42_panel_3",
+      "rows": 40,
+      "csv_sha256": "d70580ca3e003f988e17d6a37d96d2b227c4ced8b16d9e34493dc40107b3d3f0",
+      "receipt_sha256": "91e7101e9608f912d2288d65f7d4af8a318e683cee6eb98428ce307323a815ee"
+    },
+    {
+      "name": "ALL42_panel_4",
+      "rows": 40,
+      "csv_sha256": "f9d11abe5525011b4bc9012bd6c4e161f39896257757ebbd58bf02c8df8f8758",
+      "receipt_sha256": "7a941226c8d2d19c3c07c60877f094040bce87b917ee44ae8ec8a46c05e2e3f9"
+    },
+    {
+      "name": "ALL42_panel_5",
+      "rows": 40,
+      "csv_sha256": "33ffe448e4e476546ccbce1d31892b115b9adee1fcc71a21fa2c88d43951b795",
+      "receipt_sha256": "2a924a230680469320409351dffc5583f7ca57039443de15c260ed131c524dec"
+    },
+    {
+      "name": "ALL42_panel_6",
+      "rows": 40,
+      "csv_sha256": "beef3d5002fe63abf234af36e3f2f3b135a6b7821521d9ad726055b30815ced8",
+      "receipt_sha256": "d6a5745e6a468a7aefdf54c24f372742c88c72f0ad269d07aca96ba07ca04111"
+    },
+    {
+      "name": "ALL42_direct",
+      "rows": 40,
+      "csv_sha256": "6ee3abe7250a3126d2798e695458b5e95604b15b4ed7dd4b4c86c84093817ca1",
+      "receipt_sha256": "5b46226987656707615587ceabe4f600d8e777e4ce254f6b7233b473674be4f1"
+    },
+    {
+      "name": "REPLACE36_panel_0",
+      "rows": 40,
+      "csv_sha256": "5b16de336f1904adccbc41c9811b920df0b2afdddafe68e0e52a1c7a6c2c6587",
+      "receipt_sha256": "2366eec674637e2345a2409e3b91f2f2ba124b2bf21e297420a44b1223e90f58"
+    },
+    {
+      "name": "REPLACE36_panel_1",
+      "rows": 40,
+      "csv_sha256": "5fb74a4634ef0626c44bae92569c0ea737cc2c9af6c7aec07a2b9ea63a6e52fd",
+      "receipt_sha256": "5e3c33ab450f21245cd5363729ae7fb54c36fe200ffe1148655c1408076406c2"
+    },
+    {
+      "name": "REPLACE36_panel_2",
+      "rows": 40,
+      "csv_sha256": "fb4265962caeb38af4085ae78b3d950145b4510c52be2dcec0616568fa42e1e0",
+      "receipt_sha256": "9ceeb57a6087e5731d2f0d4dedf319ab97e72945f62354c7133c2c92988de0bc"
+    },
+    {
+      "name": "REPLACE36_panel_3",
+      "rows": 40,
+      "csv_sha256": "f42254010f832df43c124d058b005993638cea23244c24681c8164b47ba85711",
+      "receipt_sha256": "401b6351c7d01da1f350bc2353a5a804129f3766ed304ec503ac0bbf07cf4f6b"
+    },
+    {
+      "name": "REPLACE36_panel_4",
+      "rows": 40,
+      "csv_sha256": "d5e5bcc019602b7f1678410193d1f0489e7d033c105f174f9af0607db03d63d3",
+      "receipt_sha256": "64048fb48f028b291583a0bf1566fd8e8effe091d3cb87229bebebd1a73e9536"
+    },
+    {
+      "name": "REPLACE36_panel_5",
+      "rows": 40,
+      "csv_sha256": "9eb531863e6b641a5369e42a8d4f72d20bf795345588f855723950fec5d11753",
+      "receipt_sha256": "eb6d51cc632b4e24a8a09a6892b16d9a3a8b6b833534b4cc64db3a4f6255d5dc"
+    },
+    {
+      "name": "REPLACE36_panel_6",
+      "rows": 40,
+      "csv_sha256": "f75de646f4f9895317fc28409bbd77c9789f28fe02cf459aabdc541223045059",
+      "receipt_sha256": "ec822d4ae17f23458c1a536920e21d20a108aad382da076a0bc1bc4a878d84de"
+    },
+    {
+      "name": "REPLACE36_direct",
+      "rows": 40,
+      "csv_sha256": "094304489ca16b5b9bb6adca1f31f01d362ccbc15bfcf7d5f86e72ff71de594b",
+      "receipt_sha256": "a3cdb3120cbbe99bc77eae8aceb086a09c7f8cc37a77403e9f038419cfdb3dc1"
+    }
+  ],
+  "limitations": [
+    "Selection is exploratory: four candidate comparisons and unadjusted 95% intervals do not establish general strength or control selection multiplicity.",
+    "Only 20 independent maps per panel/direct block; sides and opponents remain grouped within maps. Interval precision is low and near-boundary estimates are fragile.",
+    "Observed 40/40 on Solution_92 for ALL42 and default 40/40 for every role are finite samples, not universal 100% win guarantees.",
+    "REPLACE36 was predeclared diagnostic/non-nominable; passing its exploratory checks cannot authorize confirmation or promotion.",
+    "No confirmation games were requested or executed by this audit; no candidate substitution, source changes, model loads, games or test suites.",
+    "Receipt and file identities validate recorded execution bindings; no engine replay was newly run, so point totals are checked for numeric and result consistency rather than regenerated."
+  ],
+  "source_inputs": {
+    "plan_sha256": "b785f1cdfe77cfa20cb7ef438485929a033ebeee94806cbca9cd3cd5853a147e",
+    "provenance_sha256": "5a918c922102704a38912e5e6ada647df2b7cff197714f1a862f74f13e7d4578",
+    "summary_sha256": "1f1151351351b30a656966755089642d7dbf52f6007bedad3bf14f2e6ab27534",
+    "state_sha256": "1d9f9a455cf59c25308a816a5a96ab0905d1e77f523a324dd2d81f368a3182ba",
+    "launch_sha256": "42bee0f789722c5dd7d02460048a53ef2e1ab5c24c0fd113d9b0a605223dd34f"
+  }
+}

@@ -1,0 +1,33 @@
+# Methodological next-step review — 08.11.2026
+
+**Recommendation:** close the compact study with **no nominee; V14 remains**. Under the broader autonomous improvement mandate described by the coordinator, a separate, prospectively fixed, one-shot validation of the exact existing REPLACE36 is defensible and preferable to another training wave or repeating failed additive candidates. It is an outcome-motivated follow-up, not a successful selection or authorized confirmation under the compact protocol. Root owns the scope decision; this review launches nothing.
+
+## Protocol versus broader mandate
+
+Read: `docs/superpowers/specs/2026-11-07-ensemble-diversity.md`, the original implementation/comparison plans, the budget-resume and compact plans, current `CLAUDE.md`/latest `ARBEITSSTAND.md`, relevant experiment history, and `selection/summary.json`.
+
+The compact plan says “REPLACE36 remains diagnostic” and “At most one qualified nominee, one fixed confirmation.” The original comparison says “Nur Diagnose, nicht nominierbar” and requires confirmation to follow the eligible selection. Therefore changing `nominable`, overriding `nominee: null`, or submitting REPLACE36 to that controller as its nominee would violate the recorded design. Its complete selection result must remain unchanged.
+
+The original comparison also says: “Nach einer fehlgeschlagenen Bestätigung endet diese Welle. Weitere Ideen benötigen neue Hypothese, separate Dokumentation und neue Karten, keine blinde Wiederholung.” No confirmation has failed or even begun here. The specification requires investigation before a new wave, rather than imposing a permanent research stop. These are experiment boundaries, not an instruction to abandon the broader user goal forever. The diagnostic signal supplies a concrete hypothesis: this exact replacement ensemble may retain the panel gains while improving its matchup against V14. This hypothesis was prompted by the data and must be labelled so.
+
+This interpretation depends on the coordinator's stated broad user authorization. Remaining quota alone does not authorize endless experiments. If the actual conversation includes an additional explicit commitment to stop all follow-up after no nominee, a new directory would not evade it: stop and seek the user's choice. No such blanket commitment appears in the reviewed plans. Do not present the proposed allocation as having been preauthorized by the compact design itself.
+
+## Evidence and limits
+
+- All three eligible candidates fail the direct point-estimate gate: A39 18/40, B39 14/40, ALL42 18/40. These small samples do not prove population inferiority, but they are sufficient to deny nomination under the fixed rule.
+- ALL42 has panel +8.33 pp, exploratory 95% interval [1.25, 14.58], and Solution 40/40 versus V14 38/40. This neither overrides the direct gate nor establishes universal perfect play or a secured Solution gain (difference interval includes zero).
+- REPLACE36 has panel +7.08 pp [0.83, 13.33], Solution 39/40 versus 38/40, default 40/40, and direct 28/40 [50, 90]%. Its point checks pass; its diagnostic-only eligibility does not. Even its current direct interval fails the stricter confirmation requirement of lower bound **greater than** 50%.
+- There are only 20 independent map clusters per selection block. Multiple candidates/endpoints were inspected; unadjusted selection intervals are exploratory. The apparently strong direct rate may regress substantially on fresh maps.
+
+## Bounded follow-up, if root proceeds
+
+1. First record the compact study's failed nomination and untouched confirmation. Register a separate plan explaining the outcome-driven change from addition to this exact replacement; freeze model hashes, V14 configuration, opponents, all analysis code, and the decision before any new outcomes. Do not tune members, weights, rules, or checkpoints.
+2. One candidate only, one complete fresh block: 100 paired panel/default maps for V14 and REPLACE36 (2800 games) plus 200 separate direct maps (400 games), **3200 additional performance games maximum**. Total completed planned performance games would be 4760 including selection; the earlier aborted phase has unknown additional executions and must remain disclosed. Use separately reserved, collision-audited maps and outputs; retain old reservations and evidence. No preliminary rescreen is needed: the existing diagnostic data are the discovery evidence.
+3. Keep all seven confirmation gates and all three additional Solution/default checks unchanged, along with whole-map paired bootstrap (5000, PCG64 seed 0), data completeness, source/hash binding, independent review, and technical release checks. Fresh data alone determine the decision; do not pool selection, old studies, or partial jobs. No interim success decision, extra maps, alternative candidate, or automatic follow-up on failure/inconclusiveness.
+4. Report the fresh effect sizes and uncertainty regardless of outcome. Independent validation of one fixed candidate avoids reusing discovery noise as confirmation; selection across four discovery roles does not itself require four fresh confirmation tests. However, nominal intervals do **not** provide a family-wise 95% guarantee across the project's many successive studies/endpoints. Preserve that limitation and the full negative history. A positive result would support this fixed candidate under this local panel and sampling procedure, not a universal architectural claim. No guaranteed power at this compact size; failure/inconclusiveness leaves V14 unchanged.
+
+## What addition versus replacement actually shows
+
+On these observed maps, ALL42 has the higher panel score (205/240 versus REPLACE36 202/240), while REPLACE36 has the higher direct score against V14 (28/40 versus 18/40). These are different estimands, and neither marginal interval establishes the uncertainty of the paired ALL42–REPLACE36 contrast. Both contain the same six new nets; ALL42 additionally retains six specified old members. Their comparison concerns that concrete bundle of retained members and its ensemble averaging effects. It does not isolate network count from composition, prove dilution/interference as a mechanism, prove replacement generally superior, or establish a causal curriculum effect. The existing observations justify testing a fixed artifact, not optimizing combinations until one passes.
+
+**Checks actually performed:** read-only plan/history review and JSON inspection; no fresh maps inspected, games, training, tests, code/model changes, or promotion. Only this report written. Root should integrate the decision and actual subsequent work into the shared handoff record.
