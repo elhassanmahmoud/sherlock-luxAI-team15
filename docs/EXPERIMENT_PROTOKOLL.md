@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+08.11.2026: Feste Fog-Auswahl440Spiele abgeschlossen, unabhängigPASS, keinNominierter. CONTROL38Panel75/80vsV1474/80, Solution38/40vs37, direkt28/40; NEUTRAL73/80,37/40,direkt26/40. BeidePanelhürde+2,5ppverfehlt; keineBestätigung/Verlängerung. [VollständigesErgebnis](../experiments/analysis/fog_comparison_20261108/ERGEBNIS.md). V14unverändert.
+
 08.11.2026: Vier Fog-Reward-Arme technisch abgeschlossen: 1.888 Ausführungen / 240.000 Updates, unabhängig geprüft. Noch kein Stärkevergleich. [Trainingsbelege](../experiments/analysis/fog_reward_20261108/TRAININGSERGEBNIS.md); folgender begrenzter Vergleich bereits vorab [festgelegt](superpowers/specs/2026-11-08-fog-comparison.md). V14 unverändert.
 
 - 08.11.2026, neue separate [Fog-Reward-Studie](superpowers/specs/2026-11-08-fog-reward.md) vorab festgelegt: vier gepaarte Arme ab V14-Komponente18,40 Vorlauf/400 Lernen/32 Diagnosen jeArm, nur finales unbekanntes Fog-SAP-Hit-Shaping neutral statt negativ. Noch nicht gestartet. Geschlossene frühere SAP0-/HOLD-Ergebnisse nicht umgedeutet; kein Gewichts-/ZIP-Tausch.

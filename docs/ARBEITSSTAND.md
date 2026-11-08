@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Fog-Vergleich abgeschlossen: positives Kontrollsignal, keine Freigabe
+
+- Alle440 festen Partien / elf Jobs unabhängig vollständig bestätigt,280 Statistik-/Strukturgegenprüfungen PASS. CONTROL38: Solution38/40 stattV1437/40, Panel75/80 statt74, direkt28/40[50%;90%]. NEUTRAL38: Solution37/40, Panel73/80, direkt26/40[45%;85%]. Defaultalle40/40. KeineRemis.
+- PaneldifferenzKontrolle+1,25pp[0;3,75], Neutral−1,25pp[−3,75;0]; N−C−2,5pp[−6,25;0]. Beide verfehlen vorab mindestens+2,5ppPanelgewinn. `nominee:null`, keineBestätigung/Erweiterung; V14/ZIP bleiben bytegleich. [Ergebnis mit Grenzen](../experiments/analysis/fog_comparison_20261108/ERGEBNIS.md).
+- HistorischeAbnahmeunterc096e4fgesichert, eigeneProzesse/Wachhaltenbeendet, danach sichereIntegrationeigenerDokumentation. NächsterkleinerSchritt: vorhandeneReplaydaten offline auf tatsächlichenEinflussderNetze prüfen, höchstens10000Zeilen, keineweiterenSpiele/Trainingsupdates. NochkeinErgebnisdieserDiagnose.
+
 ## 08.11.2026 – Pfadfehler der Auswertungs-CLI behoben
 
 - Nach vollständig beendeter Auswahl erkannte die Auswertung bei relativen Ergebnisordnern einen fehlenden Herkunftsbeleg: der Dateiinhalt stimmte, aber ein relativer Pfad wurde mit absoluten Schlüsseln verglichen. Derselbe unveränderte Auswertungscode erzeugte mit absoluten Argumenten das vollständige, unabhängig bestätigte Ergebnis noch unter dem ursprünglichen Freeze.
