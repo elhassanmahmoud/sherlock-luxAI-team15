@@ -291,11 +291,13 @@ def confirmation_plan(root, plan, nominee='A39'):
     import json
     plan['roles'] = {name: path for name, path in plan['roles'].items() if name in ('V14', nominee)}
     plan['jobs'] = [item for item in plan['jobs'] if item['role'] in plan['roles']]
-    plan['total_games'] = 23200
+    compact = plan.get('profile') == 'compact20261108'
+    plan['total_games'] = 3200 if compact else 23200
     plan['nominee'] = nominee
     for item in plan['jobs']:
         direct = item['kind'] == 'direct'
-        first, maps = (1600000, 400) if direct else (1500000, 800)
+        first, maps = (((1900000, 200) if direct else (1800000, 100)) if compact
+                       else ((1600000, 400) if direct else (1500000, 800)))
         item['expected_games'] = 2 * maps
         item['seed_list'] = item['seed_list'].replace('selection_plan', 'confirmation_plan')
         seed_file = root / item['seed_list']
@@ -330,6 +332,8 @@ def completed_block(planned, *, phase='selection'):
     sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     provenance = {'model_sha256': {name: sha(root / path) for name, path in plan['roles'].items()},
                   'source_identity': {'head': 'a' * 40, 'files': {str(source): sha(source)}}}
+    if 'profile' in plan:
+        provenance['profile'] = plan['profile']
     provenance_path = output / 'provenance.json'
     provenance_path.write_text(json.dumps(provenance))
     plan_path = root / 'jobs.json'
@@ -359,6 +363,8 @@ def completed_block(planned, *, phase='selection'):
                        command=[sys.executable, '-B', '-m', 'scripts.par_eval', '--weights', str(root / item['weights']),
                                 '--seed-list', str(root / item['seed_list']), '--workers', '1',
                                 '--opponents', item['opponent'], '--out', str(csv_path)])
+        if 'profile' in plan:
+            receipt['profile'] = plan['profile']
         (output / 'receipts' / f"{item['name']}.json").write_text(json.dumps(receipt))
     return dict(jobs_json=plan_path, result_dir=output, root=root, provenance=provenance_path,
                 phase=phase, nominee='A39' if phase == 'confirmation' else None)
@@ -476,3 +482,99 @@ def test_actual_prepared_plan_matches_the_pinned_schedule():
     import json
     path = C.ROOT / 'experiments/analysis/ensemble_diversity_20261107/selection_plan/jobs.json'
     assert len(C.validate_plan(json.loads(path.read_text()), C.ROOT)) == 39
+
+
+def compact_plan(root, plan):
+    """Independent fixed compact schedule; retain identical model/opponent pins."""
+    import json
+    plan.update(profile='compact20261108',
+                protocol='docs/superpowers/plans/2026-11-08-ensemble-compact.md', total_games=1560)
+    for item in plan['jobs']:
+        item['expected_games'] = 40
+        item['seed_list'] = item['seed_list'].replace('ensemble_diversity_20261107',
+                                                     'ensemble_diversity_20261108_compact')
+        path = root / item['seed_list']
+        path.parent.mkdir(parents=True, exist_ok=True)
+        first = 1701000 if item['kind'] == 'direct' else 1700000
+        path.write_text(json.dumps(list(range(first, first + 20))))
+    return root, plan
+
+
+@pytest.fixture
+def compact_planned(planned):
+    return compact_plan(*planned)
+
+
+@pytest.mark.parametrize(('phase', 'games', 'jobs'), [('selection', 1560, 39), ('confirmation', 3200, 15)])
+def test_compact_complete_bound_blocks_use_fixed_profile(compact_planned, phase, games, jobs):
+    block = completed_block(compact_planned, phase=phase)
+    report = C.analyze(**block)
+    assert (report['profile'], report['games'], report['jobs'], report['nominee']) == (
+        'compact20261108', games, jobs, 'A39')
+    assert report['results']['A39']['passed']
+    if phase == 'confirmation':
+        assert len(report['results']['A39']['checks']) == 10
+        assert report['passed']
+
+
+@pytest.mark.parametrize('damage', ['profile', 'unknown_profile', 'protocol', 'total', 'games',
+                                    'seeds', 'seed_path', 'nominee'])
+def test_compact_rejects_mixed_or_changed_fixed_schedule(compact_planned, damage):
+    import json
+    root, plan = compact_planned
+    if damage == 'nominee':
+        plan = confirmation_plan(root, plan)
+        plan['nominee'] = 'B39'
+    elif damage == 'profile':
+        plan['profile'] = 'full20261107'
+    elif damage == 'unknown_profile':
+        plan['profile'] = 'custom'
+    elif damage == 'protocol':
+        plan['protocol'] = C.PROTOCOL
+    elif damage == 'total':
+        plan['total_games'] = 7800
+    elif damage == 'games':
+        plan['jobs'][0]['expected_games'] = 200
+    elif damage == 'seed_path':
+        plan['jobs'][0]['seed_list'] = plan['jobs'][0]['seed_list'].replace(
+            'ensemble_diversity_20261108_compact', 'ensemble_diversity_20261107')
+    else:
+        (root / plan['jobs'][0]['seed_list']).write_text(json.dumps(list(range(1700001, 1700021))))
+    with pytest.raises(ValueError):
+        C.validate_plan(plan, root, phase='confirmation' if damage == 'nominee' else 'selection',
+                        nominee='A39' if damage == 'nominee' else None)
+
+
+@pytest.mark.parametrize('target', ['provenance', 'receipt'])
+def test_compact_rejects_cross_profile_execution_evidence(compact_planned, target, monkeypatch):
+    import json
+    block = completed_block(compact_planned)
+    path = (block['provenance'] if target == 'provenance' else
+            block['result_dir'] / 'receipts/A39_panel_0.json')
+    data = json.loads(path.read_text())
+    data['profile'] = 'full20261107'
+    path.write_text(json.dumps(data))
+    monkeypatch.setattr(C, 'selection_checks', lambda *a, **kw: pytest.fail('statistics before validation'))
+    with pytest.raises(ValueError, match='profile'):
+        C.analyze(**block)
+
+
+def test_compact_strict_default_gate_requires_all_40_selection_wins():
+    ref, candidate = frame(first=1700000, maps=20), frame(first=1700000, maps=20, value=1)
+    direct = frame((C.V14_LABEL,), first=1701000, maps=20, value=1)
+    assert C.selection_checks(ref, candidate, direct, name='A39', profile='compact20261108')['passed']
+    outcomes(candidate, 'default', [1] * 39 + [.5])
+    result = C.selection_checks(ref, candidate, direct, name='A39', profile='compact20261108')
+    assert not result['checks']['default_strict_winrate_ge_0.99']
+    assert not result['passed']
+
+
+def test_compact_confirmation_strict_default_boundary_is_198_of_200():
+    ref, candidate = frame(first=1800000, maps=100), frame(first=1800000, maps=100, value=1)
+    direct = frame((C.V14_LABEL,), first=1900000, maps=200, value=1)
+    outcomes(candidate, 'default', [1] * 198 + [.5] * 2)
+    assert C.confirmation_checks(ref, candidate, direct, name='A39', profile='compact20261108')['passed']
+    outcomes(candidate, 'default', [1] * 197 + [.5] * 3)
+    result = C.confirmation_checks(ref, candidate, direct, name='A39', profile='compact20261108')
+    assert not result['checks']['default_strict_winrate_ge_0.99']
+    assert not result['passed']

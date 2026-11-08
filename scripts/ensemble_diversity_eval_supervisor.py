@@ -36,9 +36,9 @@ def helpers():
     """Reuse the existing stdlib-only ownership/resource safeguards lazily."""
     return importlib.import_module('scripts.ensemble_diversity_supervisor')
 
-def validate_plan(plan, root, *, phase, nominee):
+def validate_plan(plan, root, *, phase, nominee, profile='full20261107'):
     return importlib.import_module('scripts.ensemble_diversity_compare').validate_plan(
-        plan, root, phase=phase, nominee=nominee)
+        plan, root, phase=phase, nominee=nominee, profile=profile)
 
 def validate_job_csv(path, job, seeds):
     return importlib.import_module('scripts.ensemble_diversity_compare').validate_job_csv(path, job, seeds)
@@ -77,21 +77,25 @@ def repo_path(root, relative):
     return path
 
 def build_state(jobs, admission, out, python, expected_head, *, usage_file,
-                phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65):
+                phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65,
+                profile='full20261107'):
     validate_quota_ceiling(max_used_percent)
     h = helpers()
     h.require(Path.cwd().resolve() == ROOT, 'Use the intended checkout')
     h.require(re.fullmatch('[0-9a-f]{40}', expected_head) is not None, 'Expected HEAD must be full')
     h.require(phase in ('selection', 'confirmation'), 'Unknown comparison phase')
     jobs_path, admission_path, out = map(h.safe_path, (jobs, admission, out))
-    base = h.safe_path(ROOT / ANALYSIS)
+    comparison = importlib.import_module('scripts.ensemble_diversity_compare')
+    spec = comparison.comparison_profile(profile)
+    plan = json.loads(jobs_path.read_text())
+    comparison.plan_profile(plan, profile)
+    base = h.safe_path(ROOT / spec.analysis)
     h.require(out != base and out.is_relative_to(base) and not out.exists(),
               'Use a fresh study analysis output directory')
     reservation = h.safe_path(base / f'{phase}_launch.json')
     h.require(not reservation.exists(), 'Phase already launched; no automatic restart')
     python = Path(python).absolute()
     h.require(python.is_file() and os.access(python, os.X_OK), 'Python unavailable')
-    plan = json.loads(jobs_path.read_text())
     admission_data = json.loads(admission_path.read_text())
     h.require(admission_data.get('status') == 'admitted', 'Models have not been admitted')
     models, paths = {}, [jobs_path, admission_path]
@@ -108,16 +112,16 @@ def build_state(jobs, admission, out, python, expected_head, *, usage_file,
         path = repo_path(ROOT, relative)
         h.require(h.digest(path) == value, 'Opponent hash differs')
         paths.append(path)
-    plans = [str(repo_path(ROOT, name)) for name in PLANS]
+    plans = [str(repo_path(ROOT, name)) for name in (PLANS[0], spec.protocol)]
     source = h.source_identity(ROOT, python, plans)
     h.require(source['head'] == expected_head, 'Expected HEAD changed')
     protected = h.hashes([repo_path(ROOT, f'agents/sherlock/weights/agent_p{i}.pth') for i in (0, 1)])
     h.require(set(protected.values()) == {SOURCE_SHA}, 'Protected V14 weights differ')
     protected.update(h.hashes([repo_path(ROOT, 'Gruppe15.zip')]))
     if phase == 'confirmation':
-        paths.extend(selection_evidence(nominee, source, models))
+        paths.extend(selection_evidence(nominee, source, models, profile=profile))
     # Confirmation seed files remain unread until a completed nomination is bound.
-    job_list = validate_plan(plan, ROOT, phase=phase, nominee=nominee)
+    job_list = validate_plan(plan, ROOT, phase=phase, nominee=nominee, profile=profile)
     for job in job_list:
         h.require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', job['name']), 'Unsafe job name')
         paths.append(repo_path(ROOT, job['seed_list']))
@@ -125,11 +129,14 @@ def build_state(jobs, admission, out, python, expected_head, *, usage_file,
               'Duplicate or empty fixed job queue')
     h.require(all(out != path and out not in path.parents for path in paths),
               'An input overlaps output')
-    return dict(schema_version=1, root=str(ROOT), out=str(out), python=str(python),
+    provenance = dict(model_sha256=models, source_identity=source)
+    if profile != 'full20261107':
+        provenance['profile'] = profile
+    return dict(schema_version=1, profile=profile, root=str(ROOT), out=str(out), python=str(python),
         phase=phase, nominee=nominee, jobs_path=str(jobs_path), expected_head=expected_head, source=source, plans=plans,
         protected=protected, inputs=h.hashes(paths), admission_sha256=h.digest(admission_path),
         model_sha256=models, opponent_sha256=plan['opponent_sha256'],
-        provenance=dict(model_sha256=models, source_identity=source),
+        provenance=provenance,
         usage_file=str(h.safe_path(usage_file)), max_used_percent=max_used_percent,
         stop_file=str(Path(stop_file).absolute()),
         reservation=str(reservation), expected_games=sum(job['expected_games'] for job in job_list),
@@ -137,21 +144,25 @@ def build_state(jobs, admission, out, python, expected_head, *, usage_file,
         jobs={}, active=[], receipts={}, status='prepared', owner_pid=os.getpid())
 
 
-def selection_evidence(nominee, source, models):
+def selection_evidence(nominee, source, models, *, profile='full20261107'):
     """Bind the single confirmation to the completed, externally analyzed selection."""
     h = helpers()
-    reservation = h.safe_path(ROOT / ANALYSIS / 'selection_launch.json')
+    comparison = importlib.import_module('scripts.ensemble_diversity_compare')
+    spec = comparison.comparison_profile(profile)
+    reservation = h.safe_path(ROOT / spec.analysis / 'selection_launch.json')
     launch = json.loads(reservation.read_text())
     out = h.safe_path(launch['out'])
-    h.require(out.is_relative_to(ROOT / ANALYSIS), 'Selection output escapes study')
+    h.require(out.is_relative_to(ROOT / spec.analysis), 'Selection output escapes study')
     summary_path, state_path, provenance_path = (h.safe_path(out / name) for name in
                                                ('summary.json', 'state.json', 'provenance.json'))
     summary = json.loads(summary_path.read_text())
     completed = json.loads(state_path.read_text())
     provenance = json.loads(provenance_path.read_text())
+    h.require(all(record.get('profile', 'full20261107') == profile
+                  for record in (launch, summary, completed, provenance)), 'Selection profile differs')
     h.require(summary.get('status') == 'complete' and summary.get('phase') == 'selection'
-              and summary.get('jobs') == 39 and summary.get('games') == 7800
-              and completed.get('status') == 'complete' and completed.get('completed_games') == 7800,
+              and summary.get('jobs') == 39 and summary.get('games') == spec.total('selection')
+              and completed.get('status') == 'complete' and completed.get('completed_games') == spec.total('selection'),
               'Selection is not complete')
     h.require(nominee in ('A39', 'B39', 'ALL42') and summary.get('nominee') == nominee,
               'Confirmation nominee differs from completed selection')
@@ -171,7 +182,8 @@ def selection_evidence(nominee, source, models):
         h.require(h.digest(csv_path) == value and h.digest(receipt_path) == receipts[name],
                   'Selection CSV/receipt hash differs')
         paths.extend((csv_path, receipt_path))
-    recomputed = importlib.import_module('scripts.ensemble_diversity_compare').analyze(
+    comparison.plan_profile(comparison._load_json(plan_path), profile)
+    recomputed = comparison.analyze(
         plan_path, out, root=ROOT, phase='selection', provenance=provenance_path)
     h.require(summary == recomputed and recomputed['nominee'] == nominee,
               'Saved selection differs from the deterministically recomputed report/nominee')
@@ -219,7 +231,7 @@ def exclusive_json(path, value):
 def reserve_launch(state):
     h = helpers()
     exclusive_json(state['reservation'], dict(owner_pid=os.getpid(), out=state['out'],
-        phase=state['phase'], jobs_path=state.get('jobs_path'),
+        phase=state['phase'], profile=state.get('profile', 'full20261107'), jobs_path=state.get('jobs_path'),
         max_used_percent=state.get('max_used_percent', 65), started_at=time.time(), source_identity=state['source']))
     path = Path(state['out']) / 'provenance.json'
     exclusive_json(path, state['provenance'])
@@ -244,6 +256,8 @@ def write_receipt(state, name):
         model_sha256=state['model_sha256'][job['role']], opponent_sha256=state['opponent_sha256'],
         seed_list_sha256=h.digest(repo_path(state['root'], job['seed_list'])),
         source_identity=state['source'], csv_sha256=csv_hash, rows=len(rows), command=record['argv'])
+    if state.get('profile', 'full20261107') != 'full20261107':
+        receipt['profile'] = state['profile']
     target = Path(state['out']) / 'receipts' / f'{name}.json'
     exclusive_json(target, receipt)
     state['inputs'].update(h.hashes([path, target]))
@@ -362,7 +376,8 @@ def run_queue(state):
     return state
 
 def run_supervisor(jobs, admission, out, python, expected_head, *, usage_file,
-                   phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65):
+                   phase='selection', nominee=None, stop_file=STOP_FILE, max_used_percent=65,
+                   profile='full20261107'):
     validate_quota_ceiling(max_used_percent)
     h = helpers()
     if Path(stop_file).exists():
@@ -376,7 +391,7 @@ def run_supervisor(jobs, admission, out, python, expected_head, *, usage_file,
             h.check_model_processes({})
             state = build_state(jobs, admission, out, python, expected_head, usage_file=usage_file,
                                 phase=phase, nominee=nominee, stop_file=stop_file,
-                                max_used_percent=max_used_percent)
+                                max_used_percent=max_used_percent, profile=profile)
             guard(state, {})
             target = h.safe_path(state['out'])
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -422,6 +437,7 @@ def main():
     start = commands.add_parser('start')
     for name in ('jobs', 'admission', 'out', 'python', 'expected-head', 'usage-file'):
         start.add_argument('--' + name, required=True)
+    start.add_argument('--profile', choices=('full20261107', 'compact20261108'), default='full20261107')
     start.add_argument('--phase', choices=('selection', 'confirmation'), default='selection')
     start.add_argument('--max-used-percent', type=float, default=65,
         help='Stop at this quota usage percentage (default: 65; maximum: 100)')
@@ -435,7 +451,7 @@ def main():
     try:
         state = run_supervisor(args.jobs, args.admission, args.out, args.python, args.expected_head,
             usage_file=args.usage_file, phase=args.phase, nominee=args.nominee,
-            max_used_percent=args.max_used_percent)
+            max_used_percent=args.max_used_percent, profile=args.profile)
     except Exception as exc:
         print(f'Comparison stopped: {type(exc).__name__}: {exc}', file=sys.stderr)
         raise SystemExit(1)

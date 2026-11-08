@@ -281,6 +281,27 @@ class SupervisorTests(unittest.TestCase):
             built = self.s.build_state(jobs, admission, fresh, sys.executable, 'a' * 40,
                 usage_file=self.root / 'usage.json', max_used_percent=100)
             self.assertEqual(built['max_used_percent'], 100)
+            compact_base = self.root / 'experiments/analysis/ensemble_diversity_20261108_compact'
+            protocol = self.root / 'docs/superpowers/plans/2026-11-08-ensemble-compact.md'
+            protocol.write_text('compact protocol')
+            plan = json.loads(jobs.read_text())
+            jobs.write_text(json.dumps({**plan, 'profile': 'compact20261108'}))
+            compact = self.s.build_state(jobs, admission, compact_base / 'fresh', sys.executable, 'a' * 40,
+                usage_file=self.root / 'usage.json', profile='compact20261108', max_used_percent=100)
+            self.assertEqual(compact['profile'], 'compact20261108')
+            self.assertEqual(compact['provenance']['profile'], 'compact20261108')
+            self.assertEqual(compact['reservation'], str(compact_base / 'selection_launch.json'))
+            self.assertIn(str(protocol), compact['plans'])
+            with self.assertRaisesRegex(ValueError, 'profile'):
+                self.s.build_state(jobs, admission, compact_base / 'fresh', sys.executable, 'a' * 40,
+                    usage_file=self.root / 'usage.json')
+            with patch.object(self.s, 'validate_plan', side_effect=AssertionError('confirmation seeds read early')), \
+                 patch.object(self.s, 'selection_evidence', side_effect=ValueError('missing compact selection')):
+                with self.assertRaisesRegex(ValueError, 'missing compact selection'):
+                    self.s.build_state(jobs, admission, compact_base / 'fresh', sys.executable, 'a' * 40,
+                        usage_file=self.root / 'usage.json', profile='compact20261108',
+                        phase='confirmation', nominee='A39')
+            jobs.write_text(json.dumps(plan))
             for cap in (True, 0, -1, float('nan'), float('inf'), 101):
                 with self.subTest(cap=cap), self.assertRaises(ValueError):
                     self.s.build_state(jobs, admission, fresh, sys.executable, 'a' * 40,
@@ -507,6 +528,78 @@ class SupervisorTests(unittest.TestCase):
         for relative in ('symlink', 'hardlink', '../foreign'):
             with self.subTest(path=relative), self.assertRaises(ValueError):
                 self.s.repo_path(self.root, relative)
+
+
+def test_compact_confirmation_binds_profile_and_recomputes_before_accepting(tmp_path, monkeypatch):
+    """A complete compact selection is accepted only under its exact profile/ranking."""
+    import pytest
+    from scripts import ensemble_diversity_compare as compare
+    supervisor = importlib.import_module(MODULE)
+    spec = importlib.util.spec_from_file_location('compact_test_fixtures',
+        Path(__file__).with_name('test_ensemble_diversity_compare.py'))
+    fixtures = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fixtures)
+    planned = fixtures.compact_plan(*fixtures.planned.__wrapped__(tmp_path, monkeypatch))
+    block = fixtures.completed_block(planned)
+    root = block['root']
+    base = root / 'experiments/analysis/ensemble_diversity_20261108_compact'
+    output = base / 'selection_results'
+    block['result_dir'].rename(output)
+    block.update(result_dir=output, provenance=output / 'provenance.json')
+    for path in (output / 'receipts').glob('*.json'):
+        receipt = json.loads(path.read_text())
+        receipt['command'][-1] = str(output / f'{path.stem}.csv')
+        path.write_text(json.dumps(receipt))
+    report = compare.analyze(**block)
+    summary = output / 'summary.json'
+    summary.write_text(json.dumps(report))
+    completed = dict(profile='compact20261108', status='complete', completed_games=1560)
+    (output / 'state.json').write_text(json.dumps(completed))
+    provenance = json.loads(block['provenance'].read_text())
+    source, models = provenance['source_identity'], provenance['model_sha256']
+    launch = dict(profile='compact20261108', out=str(output), jobs_path=str(block['jobs_json']),
+                  source_identity=source)
+    reservation = base / 'selection_launch.json'
+    reservation.write_text(json.dumps(launch))
+    monkeypatch.setattr(supervisor, 'ROOT', root)
+    selected_models = {role: models[role] for role in ('V14', 'A39')}
+    paths = supervisor.selection_evidence('A39', source, selected_models, profile='compact20261108')
+    assert summary in paths
+    # Saved summary nominee tampering cannot authorize a different confirmation.
+    summary.write_text(json.dumps({**report, 'nominee': 'B39'}))
+    with pytest.raises(ValueError, match='recomputed'):
+        supervisor.selection_evidence('B39', source, {role: models[role] for role in ('V14', 'B39')},
+                                      profile='compact20261108')
+    summary.write_text(json.dumps(report))
+    for target, original in ((reservation, launch), (summary, report),
+                             (output / 'state.json', completed)):
+        target.write_text(json.dumps({**original, 'profile': 'full20261107'}))
+        with pytest.raises(ValueError, match='profile'):
+            supervisor.selection_evidence('A39', source, selected_models, profile='compact20261108')
+        target.write_text(json.dumps(original))
+    with pytest.raises(ValueError, match='provenance'):
+        supervisor.selection_evidence('A39', {**source, 'head': 'f' * 40}, selected_models,
+                                      profile='compact20261108')
+
+
+def test_compact_cli_requires_explicit_profile_and_persists_launch(tmp_path):
+    supervisor = importlib.import_module(MODULE)
+    argv = ['controller', 'start', '--jobs', 'jobs', '--admission', 'admission', '--out', 'out',
+            '--python', sys.executable, '--expected-head', 'a' * 40, '--usage-file', 'usage',
+            '--profile', 'compact20261108', '--max-used-percent', '100']
+    with patch.object(sys, 'argv', argv), patch.object(supervisor, 'run_supervisor',
+            return_value=dict(status='complete', out='out', completed_games=1560)) as run, \
+            redirect_stdout(io.StringIO()):
+        supervisor.main()
+        assert run.call_args.kwargs['profile'] == 'compact20261108'
+        assert run.call_args.kwargs['max_used_percent'] == 100
+    out = tmp_path / 'out'
+    out.mkdir()
+    state = dict(profile='compact20261108', reservation=str(tmp_path / 'selection_launch.json'),
+                 phase='selection', out=str(out), jobs_path='jobs', source={'head': 'a' * 40},
+                 provenance={'profile': 'compact20261108'}, inputs={})
+    supervisor.reserve_launch(state)
+    assert json.loads(Path(state['reservation']).read_text())['profile'] == 'compact20261108'
 
 
 if __name__ == '__main__':
