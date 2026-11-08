@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026, 06:20 Berlin – begrenzter REPLACE36-Frischdatenvergleich läuft
+
+- Tatsächlich gestartet unter Quellstand `f9e1195bb65b6587206685971b3ce11e604666db`:15 Jobs/3200 Spiele, maximal zwei Spielprozesse. Controller78722, eigener Wachhalteprozess78738. [Startbeleg](../experiments/analysis/replacement_validation_20261108/started.json). Noch kein Ergebnis oder neuer Stärkegewinn behauptet.
+- Maßgeblich: Studienkopie `/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15`, `experiments/analysis/replacement_validation_20261108/validation/state.json`. Keine zweite Instanz, keine parallelen Tests, keine Änderungen an Quellen/HEAD/Modellen bis zum vollständigen Ende. Diese Startnotiz ändert nur den primären Checkout.
+- Frischer Ressourcencheck und Eingabebindung bestanden; AC100%, Kontingentnutzung erlaubt. Unabhängiger Beobachter hält Nutzungsbeleg aktuell, prüft Prozesse und GitHub. Einmaliger fester Umfang, kein Nachschlag bei negativem/unklarem Ergebnis. V14 und ZIP unverändert.
+
 ## 08.11.2026 – Werkzeug für begrenzten Frischdatenvergleich geprüft
 
 - Separates Werkzeug `replacement_validation.py` in `e5b6345`; bestehende Auswahl, Nomination und Auswertungsregeln bleiben unverändert. Exakte REPLACE36-/V14-Dateien, Herkunft, Karten, Quellen, Prozessbesitz und vollständige Rohdaten vor Auswertung gebunden. Keine automatische Übernahme.
