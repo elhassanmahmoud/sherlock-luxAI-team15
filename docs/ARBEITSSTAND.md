@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Offline-Netzeinfluss vollständig geprüft
+
+- 10.000 gespeicherte Folgezustände /9.996 eindeutige Feature-Maskenpaare, null neue Spiele/Updates. CONTROL38 verändert143 und NEUTRAL38 139 legale Vorschläge gegenüberV14. Einzelnetze verändern18,89–20,55% gegenüberElternkomponente18; verschiedeneReferenzen, keineBehauptungunterdrücktenhilfreichenLernens.
+- Nachträgliche reineRechenreferenzINIT38 (36Originale+zweimalunveränderteKomponente18):142ÄnderungenvsV14; C/N117/116vsINIT38. Kein gespeicherter/spielgetesteterKandidat. KeineUmgewichtung oderAktionsqualitätsaussage.
+- UnabhängigerAuditPASS,1906 Zahlen-/Strukturprüfungen, Sampler/Masken/Originalpufferhashes exakt. Tatsächliche unabhängige38erMittelwerte exaktreproduziert. HistorischeAbnahmeunterf6f8b8agesichert, Prozessbeendet. [Ergebnis und Grenzen](../experiments/analysis/fog_influence_20261108/ERGEBNIS.md). V14/ZIPunverändert.
+- NächsterbelegterCodeprüfpunkt: art_splash bleibt beiTraining ausgeschaltet, obwohl es imSpielgreift. Exposition erstgezieltdiagnostizieren; nochkeineImplementierung/TrainingsfreigabeausdiesemBefund abgeleitet.
+
 ## 08.11.2026 – Offline-Netzeinflussdiagnose geprüft
 
 - Kleines eigenständiges Werkzeug für höchstens10000 vorhandene Folgezustände mit passender gespeicherter Aktionsmaske. Feste Stichprobe, Vergleich aller40 beteiligten Einzelnetze und exakte Kontrolle beider38erMittelwerte. KeineSimulationen, Lernupdates oderGewichtssuche.

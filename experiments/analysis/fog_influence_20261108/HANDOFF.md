@@ -1,5 +1,5 @@
-# Offline-Netzeinfluss: Umsetzung in Arbeit
+# Offline-Netzeinfluss abgeschlossen
 
-VorherigeFogstudiegeschlossen:440Vergleichsspiele, keinNominierter, keineBestätigung/Verlängerung. DiegesichertenModelleundvierlokalenReplaypufferwerdennurbeschreibenduntersucht. Maximal10000gespeicherteFolgezustände, keineSpiele/Updates/Gewichtssuche. Spec docs/superpowers/specs/2026-11-08-fog-influence.md.
+run_v1 vollständig unterf6f8b8a, unabhängigerDaten-/MatheauditPASS, RootAbnahmevorSourcewechsel.10000Zeilen/9996eindeutig, nullSpiele/Updates. C/Nändern143/139legaleVorschlägevsV14; keinQualitätsnachweis. NachträglicheRechenreferenzINIT38unverändertzusätzlicheElternkopien:142vsV14,C/N117/116vsINIT38. KeineUmgewichtung/Abgabeänderung, eigeneProzessebeendet. DetailsERGEBNIS.md.
 
-Implementer /root/fog_reward_training schreibt nur scripts/fog_influence.py undtests/test_fog_influence.py; Rootarchiviert/prüft/integriert. NochkeinDiagnoselaufgestartet. KeinSourceFreezeaktiv, bisherigeTrainings-/Vergleichsläufenichterneutstarten. EchteQuotafrischüberfog_reward_20261108/operations/usage.json; Restkontingentfreigegeben, ResetsnurNutzer. V14/ZIPunverändert.
+NächsterPrüfpunkt: dokumentierteTrainings-/Inferenzabweichungart_splash in_artillery_ok. ErstkleineExpositionsdiagnoseaufbekanntenSituationenentwerfen; nochkeinLauf/Flag/Trainingdazugeplantoderbegonnen. VorheraktuelleQuota/Remote/Prozesseprüfen. Restkontingentfreigegeben, ResetsnurNutzer. AlteStudiennichtduplizieren.
