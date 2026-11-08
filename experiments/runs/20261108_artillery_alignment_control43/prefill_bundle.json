@@ -1,0 +1,5868 @@
+{
+  "arm": "control43",
+  "entry": {
+    "component_index": 18,
+    "run_seed": 43,
+    "mix": {
+      "solution92": 0.6,
+      "sol92_sq": 0.2,
+      "default": 0.1,
+      "rush": 0.1
+    },
+    "config": {
+      "hidden": 256,
+      "dueling": true,
+      "gamma": 0.99,
+      "lr": 5e-05,
+      "batch_size": 256,
+      "buffer_capacity": 300000,
+      "learn_start": 5000,
+      "train_every": 2,
+      "target_update_every": 500,
+      "grad_clip": 5.0,
+      "double_dqn": true,
+      "eps_start": 1.0,
+      "eps_end": 0.05,
+      "eps_decay_steps": 60000,
+      "guided_prob": 0.7,
+      "use_belief": true,
+      "use_symmetry": true,
+      "home_first": false,
+      "home_penalty": 0.0,
+      "home_last_only": false,
+      "explore_memory": true,
+      "explore_grid": true,
+      "scripted_explore": true,
+      "explore_stale": 20,
+      "early_inference": true,
+      "relic_filter": true,
+      "subset_infer": true,
+      "overlap_infer": false,
+      "cand_quota": 0,
+      "sticky": 0.0,
+      "far_opp": 10,
+      "far_cand": true,
+      "cand_boost": 0.0,
+      "contest_sap": false,
+      "energy_pref": 0.0,
+      "explore_quota": 0,
+      "explore_until": 75,
+      "pt_sap": true,
+      "pt_sap_reserve": 0,
+      "pt_sap_zone": false,
+      "safe_moves": true,
+      "idle_sap": false,
+      "idle_sap_reserve": 30,
+      "art_sap": true,
+      "art_move_guard": false,
+      "art_min_hits": 3,
+      "art_reserve": 0,
+      "art_safe": true,
+      "art_splash": true,
+      "art_splash_in_training": false,
+      "art_splash_hits": 2,
+      "sap_still_splash": true,
+      "splash_min_drop": 0.5,
+      "splash_safe_below": 1.0,
+      "art_surplus": false,
+      "threat_feats": false,
+      "dodge": false,
+      "dodge_mode": "lethal",
+      "dodge_verify": false,
+      "dodge_distrust": 0.0,
+      "dodge_shape": false,
+      "splash_dodge": false,
+      "splash_dodge_min": 0.5,
+      "rules_in_training": true,
+      "rules_in_training_all": true,
+      "neb_cand": false,
+      "idle_approach": false,
+      "obey_target": false,
+      "mobile_seen": false,
+      "holder_guard": false,
+      "collision_guard": true,
+      "window_infer": false,
+      "window_infer_all": false,
+      "stage_attack": false,
+      "stage_min": 3,
+      "stage_until": 70,
+      "cand_rescue": true,
+      "rescue_after": 30,
+      "rescue_in_training": true,
+      "zone_rescue": false,
+      "art_safe_cheb": false,
+      "art_still": false,
+      "sap_still_all": false,
+      "sap_still": true,
+      "sap_relevant": false,
+      "sap_no_overkill": true,
+      "sap_overkill_recovery": false,
+      "sym_map": false,
+      "sap_reserve_k": 0.0,
+      "unstack": false,
+      "reach_assign": true,
+      "point_pair_swap": false,
+      "drift_track": true,
+      "path_fix": true,
+      "nebula_infer": true,
+      "nebula_infer_drift_safe": false,
+      "dodge_bait": false,
+      "dodge_auto": false,
+      "dodge_auto_max": 0.5,
+      "tactics_when_behind": false,
+      "nebula_avoid": true,
+      "nebula_avoid_min": 25,
+      "nebula_avoid_mode": "soft",
+      "sap_dropoff_est": false,
+      "stack_guard": false,
+      "relic_search": false,
+      "relic_search_until": 75,
+      "relic_search_stale": 25,
+      "siege": false,
+      "siege_min_score": 1.5,
+      "siege_reserve": 0.0,
+      "siege_prob": 0.5,
+      "sap_kill_first": false,
+      "sap_kill_safe": false,
+      "sap_pt_first": false,
+      "sap_geometry": false,
+      "keep_dead": false,
+      "keep_dead_fast": true,
+      "stale_all": false,
+      "opp_infer": false,
+      "opp_point_infer": false,
+      "pt_walk": false,
+      "pt_walk_own": false,
+      "pt_walk_from_match": 0,
+      "pt_hold": false,
+      "ram": false,
+      "ram_margin": 10.0,
+      "fog_sap": true,
+      "fog_any": false,
+      "fog_reserve": 30.0,
+      "fog_sap_max_sensor": 4,
+      "fog_v2": true,
+      "fog_prior": false,
+      "fog_w_occ": 4.0,
+      "fog_w_empty": 0.25,
+      "fog_drop_est": false,
+      "end_sap": 0,
+      "end_sap_hold": 1.0,
+      "est_censor": true,
+      "neb_cross": true,
+      "no_strand": false,
+      "reward_fix": true,
+      "terminal_death_potential": false,
+      "home_reserve": false,
+      "relic_scout": 0,
+      "scout_until": 60,
+      "scout_stale": 20,
+      "relic_prior": 0.0,
+      "spawn_proof": false,
+      "cand_post": 0.0,
+      "reserve_sap": false,
+      "active_targets": false,
+      "smart_sap": false,
+      "use_shaping": true,
+      "canonical": true,
+      "use_sap": true,
+      "mask_actions": true,
+      "w_point": 1.0,
+      "w_shape": 0.5,
+      "w_explore": 0.3,
+      "w_energy": 0.1,
+      "w_stack": 0.3,
+      "w_death": 0.5,
+      "w_match": 2.0,
+      "w_discovery": 0.5,
+      "w_sap_hit": 0.3,
+      "fog_unknown_reward_neutral": false,
+      "w_opp_points": 0.0,
+      "frozen": false
+    },
+    "tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "weights_sha256": "1287aa72ce557bb015072e67e4f16ba1c14d6f8e0c9d458d2881544c42811cb5",
+    "rollout_plan": [
+      {
+        "phase": "prefill",
+        "game": 0,
+        "seed": 9435000,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "prefill",
+        "game": 1,
+        "seed": 9435000,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 2,
+        "seed": 9435001,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 3,
+        "seed": 9435001,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "prefill",
+        "game": 4,
+        "seed": 9435002,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 5,
+        "seed": 9435002,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 6,
+        "seed": 9435003,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "prefill",
+        "game": 7,
+        "seed": 9435003,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 8,
+        "seed": 9435004,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 9,
+        "seed": 9435004,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 10,
+        "seed": 9435005,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "prefill",
+        "game": 11,
+        "seed": 9435005,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "prefill",
+        "game": 12,
+        "seed": 9435006,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 13,
+        "seed": 9435006,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 14,
+        "seed": 9435007,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 15,
+        "seed": 9435007,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 16,
+        "seed": 9435008,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 17,
+        "seed": 9435008,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "prefill",
+        "game": 18,
+        "seed": 9435009,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "prefill",
+        "game": 19,
+        "seed": 9435009,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 20,
+        "seed": 9435010,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 21,
+        "seed": 9435010,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "prefill",
+        "game": 22,
+        "seed": 9435011,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 23,
+        "seed": 9435011,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "prefill",
+        "game": 24,
+        "seed": 9435012,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "prefill",
+        "game": 25,
+        "seed": 9435012,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 26,
+        "seed": 9435013,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 27,
+        "seed": 9435013,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "prefill",
+        "game": 28,
+        "seed": 9435014,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 29,
+        "seed": 9435014,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 30,
+        "seed": 9435015,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 31,
+        "seed": 9435015,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 32,
+        "seed": 9435016,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 33,
+        "seed": 9435016,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 34,
+        "seed": 9435017,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 35,
+        "seed": 9435017,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 36,
+        "seed": 9435018,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 37,
+        "seed": 9435018,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 38,
+        "seed": 9435019,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "prefill",
+        "game": 39,
+        "seed": 9435019,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 0,
+        "seed": 9430000,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 1,
+        "seed": 9430000,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 2,
+        "seed": 9430001,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 3,
+        "seed": 9430001,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 4,
+        "seed": 9430002,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 5,
+        "seed": 9430002,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 6,
+        "seed": 9430003,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 7,
+        "seed": 9430003,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 8,
+        "seed": 9430004,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 9,
+        "seed": 9430004,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 10,
+        "seed": 9430005,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 11,
+        "seed": 9430005,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 12,
+        "seed": 9430006,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 13,
+        "seed": 9430006,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 14,
+        "seed": 9430007,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 15,
+        "seed": 9430007,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 16,
+        "seed": 9430008,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 17,
+        "seed": 9430008,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 18,
+        "seed": 9430009,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 19,
+        "seed": 9430009,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 20,
+        "seed": 9430010,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 21,
+        "seed": 9430010,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 22,
+        "seed": 9430011,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 23,
+        "seed": 9430011,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 24,
+        "seed": 9430012,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 25,
+        "seed": 9430012,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 26,
+        "seed": 9430013,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 27,
+        "seed": 9430013,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 28,
+        "seed": 9430014,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 29,
+        "seed": 9430014,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 30,
+        "seed": 9430015,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 31,
+        "seed": 9430015,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 32,
+        "seed": 9430016,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 33,
+        "seed": 9430016,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 34,
+        "seed": 9430017,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 35,
+        "seed": 9430017,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 36,
+        "seed": 9430018,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 37,
+        "seed": 9430018,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 38,
+        "seed": 9430019,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 39,
+        "seed": 9430019,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 40,
+        "seed": 9430020,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 41,
+        "seed": 9430020,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 42,
+        "seed": 9430021,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 43,
+        "seed": 9430021,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 44,
+        "seed": 9430022,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 45,
+        "seed": 9430022,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 46,
+        "seed": 9430023,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 47,
+        "seed": 9430023,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 48,
+        "seed": 9430024,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 49,
+        "seed": 9430024,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 50,
+        "seed": 9430025,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 51,
+        "seed": 9430025,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 52,
+        "seed": 9430026,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 53,
+        "seed": 9430026,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 54,
+        "seed": 9430027,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 55,
+        "seed": 9430027,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 56,
+        "seed": 9430028,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 57,
+        "seed": 9430028,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 58,
+        "seed": 9430029,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 59,
+        "seed": 9430029,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 60,
+        "seed": 9430030,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 61,
+        "seed": 9430030,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 62,
+        "seed": 9430031,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 63,
+        "seed": 9430031,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 64,
+        "seed": 9430032,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 65,
+        "seed": 9430032,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 66,
+        "seed": 9430033,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 67,
+        "seed": 9430033,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 68,
+        "seed": 9430034,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 69,
+        "seed": 9430034,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 70,
+        "seed": 9430035,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 71,
+        "seed": 9430035,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 72,
+        "seed": 9430036,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 73,
+        "seed": 9430036,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 74,
+        "seed": 9430037,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 75,
+        "seed": 9430037,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 76,
+        "seed": 9430038,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 77,
+        "seed": 9430038,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 78,
+        "seed": 9430039,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 79,
+        "seed": 9430039,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 80,
+        "seed": 9430040,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 81,
+        "seed": 9430040,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 82,
+        "seed": 9430041,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 83,
+        "seed": 9430041,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 84,
+        "seed": 9430042,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 85,
+        "seed": 9430042,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 86,
+        "seed": 9430043,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 87,
+        "seed": 9430043,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 88,
+        "seed": 9430044,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 89,
+        "seed": 9430044,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 90,
+        "seed": 9430045,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 91,
+        "seed": 9430045,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 92,
+        "seed": 9430046,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 93,
+        "seed": 9430046,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 94,
+        "seed": 9430047,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 95,
+        "seed": 9430047,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 96,
+        "seed": 9430048,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 97,
+        "seed": 9430048,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 98,
+        "seed": 9430049,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 99,
+        "seed": 9430049,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 100,
+        "seed": 9430050,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 101,
+        "seed": 9430050,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 102,
+        "seed": 9430051,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 103,
+        "seed": 9430051,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 104,
+        "seed": 9430052,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 105,
+        "seed": 9430052,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 106,
+        "seed": 9430053,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 107,
+        "seed": 9430053,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 108,
+        "seed": 9430054,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 109,
+        "seed": 9430054,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 110,
+        "seed": 9430055,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 111,
+        "seed": 9430055,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 112,
+        "seed": 9430056,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 113,
+        "seed": 9430056,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 114,
+        "seed": 9430057,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 115,
+        "seed": 9430057,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 116,
+        "seed": 9430058,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 117,
+        "seed": 9430058,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 118,
+        "seed": 9430059,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 119,
+        "seed": 9430059,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 120,
+        "seed": 9430060,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 121,
+        "seed": 9430060,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 122,
+        "seed": 9430061,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 123,
+        "seed": 9430061,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 124,
+        "seed": 9430062,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 125,
+        "seed": 9430062,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 126,
+        "seed": 9430063,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 127,
+        "seed": 9430063,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 128,
+        "seed": 9430064,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 129,
+        "seed": 9430064,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 130,
+        "seed": 9430065,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 131,
+        "seed": 9430065,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 132,
+        "seed": 9430066,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 133,
+        "seed": 9430066,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 134,
+        "seed": 9430067,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 135,
+        "seed": 9430067,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 136,
+        "seed": 9430068,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 137,
+        "seed": 9430068,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 138,
+        "seed": 9430069,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 139,
+        "seed": 9430069,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 140,
+        "seed": 9430070,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 141,
+        "seed": 9430070,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 142,
+        "seed": 9430071,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 143,
+        "seed": 9430071,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 144,
+        "seed": 9430072,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 145,
+        "seed": 9430072,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 146,
+        "seed": 9430073,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 147,
+        "seed": 9430073,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 148,
+        "seed": 9430074,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 149,
+        "seed": 9430074,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 150,
+        "seed": 9430075,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 151,
+        "seed": 9430075,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 152,
+        "seed": 9430076,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 153,
+        "seed": 9430076,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 154,
+        "seed": 9430077,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 155,
+        "seed": 9430077,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 156,
+        "seed": 9430078,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 157,
+        "seed": 9430078,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 158,
+        "seed": 9430079,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 159,
+        "seed": 9430079,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 160,
+        "seed": 9430080,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 161,
+        "seed": 9430080,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 162,
+        "seed": 9430081,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 163,
+        "seed": 9430081,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 164,
+        "seed": 9430082,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 165,
+        "seed": 9430082,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 166,
+        "seed": 9430083,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 167,
+        "seed": 9430083,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 168,
+        "seed": 9430084,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 169,
+        "seed": 9430084,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 170,
+        "seed": 9430085,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 171,
+        "seed": 9430085,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 172,
+        "seed": 9430086,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 173,
+        "seed": 9430086,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 174,
+        "seed": 9430087,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 175,
+        "seed": 9430087,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 176,
+        "seed": 9430088,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 177,
+        "seed": 9430088,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 178,
+        "seed": 9430089,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 179,
+        "seed": 9430089,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 180,
+        "seed": 9430090,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 181,
+        "seed": 9430090,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 182,
+        "seed": 9430091,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 183,
+        "seed": 9430091,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 184,
+        "seed": 9430092,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 185,
+        "seed": 9430092,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 186,
+        "seed": 9430093,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 187,
+        "seed": 9430093,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 188,
+        "seed": 9430094,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 189,
+        "seed": 9430094,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 190,
+        "seed": 9430095,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 191,
+        "seed": 9430095,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 192,
+        "seed": 9430096,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 193,
+        "seed": 9430096,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 194,
+        "seed": 9430097,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 195,
+        "seed": 9430097,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 196,
+        "seed": 9430098,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 197,
+        "seed": 9430098,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 198,
+        "seed": 9430099,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 199,
+        "seed": 9430099,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 200,
+        "seed": 9430100,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 201,
+        "seed": 9430100,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 202,
+        "seed": 9430101,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 203,
+        "seed": 9430101,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 204,
+        "seed": 9430102,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 205,
+        "seed": 9430102,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 206,
+        "seed": 9430103,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 207,
+        "seed": 9430103,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 208,
+        "seed": 9430104,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 209,
+        "seed": 9430104,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 210,
+        "seed": 9430105,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 211,
+        "seed": 9430105,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 212,
+        "seed": 9430106,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 213,
+        "seed": 9430106,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 214,
+        "seed": 9430107,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 215,
+        "seed": 9430107,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 216,
+        "seed": 9430108,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 217,
+        "seed": 9430108,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 218,
+        "seed": 9430109,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 219,
+        "seed": 9430109,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 220,
+        "seed": 9430110,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 221,
+        "seed": 9430110,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 222,
+        "seed": 9430111,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 223,
+        "seed": 9430111,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 224,
+        "seed": 9430112,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 225,
+        "seed": 9430112,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 226,
+        "seed": 9430113,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 227,
+        "seed": 9430113,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 228,
+        "seed": 9430114,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 229,
+        "seed": 9430114,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 230,
+        "seed": 9430115,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 231,
+        "seed": 9430115,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 232,
+        "seed": 9430116,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 233,
+        "seed": 9430116,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 234,
+        "seed": 9430117,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 235,
+        "seed": 9430117,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 236,
+        "seed": 9430118,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 237,
+        "seed": 9430118,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 238,
+        "seed": 9430119,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 239,
+        "seed": 9430119,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 240,
+        "seed": 9430120,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 241,
+        "seed": 9430120,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 242,
+        "seed": 9430121,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 243,
+        "seed": 9430121,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 244,
+        "seed": 9430122,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 245,
+        "seed": 9430122,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 246,
+        "seed": 9430123,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 247,
+        "seed": 9430123,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 248,
+        "seed": 9430124,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 249,
+        "seed": 9430124,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 250,
+        "seed": 9430125,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 251,
+        "seed": 9430125,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 252,
+        "seed": 9430126,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 253,
+        "seed": 9430126,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 254,
+        "seed": 9430127,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 255,
+        "seed": 9430127,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 256,
+        "seed": 9430128,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 257,
+        "seed": 9430128,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 258,
+        "seed": 9430129,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 259,
+        "seed": 9430129,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 260,
+        "seed": 9430130,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 261,
+        "seed": 9430130,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 262,
+        "seed": 9430131,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 263,
+        "seed": 9430131,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 264,
+        "seed": 9430132,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 265,
+        "seed": 9430132,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 266,
+        "seed": 9430133,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 267,
+        "seed": 9430133,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 268,
+        "seed": 9430134,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 269,
+        "seed": 9430134,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 270,
+        "seed": 9430135,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 271,
+        "seed": 9430135,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 272,
+        "seed": 9430136,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 273,
+        "seed": 9430136,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 274,
+        "seed": 9430137,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 275,
+        "seed": 9430137,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 276,
+        "seed": 9430138,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 277,
+        "seed": 9430138,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 278,
+        "seed": 9430139,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 279,
+        "seed": 9430139,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 280,
+        "seed": 9430140,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 281,
+        "seed": 9430140,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 282,
+        "seed": 9430141,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 283,
+        "seed": 9430141,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 284,
+        "seed": 9430142,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 285,
+        "seed": 9430142,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 286,
+        "seed": 9430143,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 287,
+        "seed": 9430143,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 288,
+        "seed": 9430144,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 289,
+        "seed": 9430144,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 290,
+        "seed": 9430145,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 291,
+        "seed": 9430145,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 292,
+        "seed": 9430146,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 293,
+        "seed": 9430146,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 294,
+        "seed": 9430147,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 295,
+        "seed": 9430147,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 296,
+        "seed": 9430148,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 297,
+        "seed": 9430148,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 298,
+        "seed": 9430149,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 299,
+        "seed": 9430149,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 300,
+        "seed": 9430150,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 301,
+        "seed": 9430150,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 302,
+        "seed": 9430151,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 303,
+        "seed": 9430151,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 304,
+        "seed": 9430152,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 305,
+        "seed": 9430152,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 306,
+        "seed": 9430153,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 307,
+        "seed": 9430153,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 308,
+        "seed": 9430154,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 309,
+        "seed": 9430154,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 310,
+        "seed": 9430155,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 311,
+        "seed": 9430155,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 312,
+        "seed": 9430156,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 313,
+        "seed": 9430156,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 314,
+        "seed": 9430157,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 315,
+        "seed": 9430157,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 316,
+        "seed": 9430158,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 317,
+        "seed": 9430158,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 318,
+        "seed": 9430159,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 319,
+        "seed": 9430159,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 320,
+        "seed": 9430160,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 321,
+        "seed": 9430160,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 322,
+        "seed": 9430161,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 323,
+        "seed": 9430161,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 324,
+        "seed": 9430162,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 325,
+        "seed": 9430162,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 326,
+        "seed": 9430163,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 327,
+        "seed": 9430163,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 328,
+        "seed": 9430164,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 329,
+        "seed": 9430164,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 330,
+        "seed": 9430165,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 331,
+        "seed": 9430165,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 332,
+        "seed": 9430166,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 333,
+        "seed": 9430166,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 334,
+        "seed": 9430167,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 335,
+        "seed": 9430167,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 336,
+        "seed": 9430168,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 337,
+        "seed": 9430168,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 338,
+        "seed": 9430169,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 339,
+        "seed": 9430169,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 340,
+        "seed": 9430170,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 341,
+        "seed": 9430170,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 342,
+        "seed": 9430171,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 343,
+        "seed": 9430171,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 344,
+        "seed": 9430172,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 345,
+        "seed": 9430172,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 346,
+        "seed": 9430173,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 347,
+        "seed": 9430173,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 348,
+        "seed": 9430174,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 349,
+        "seed": 9430174,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 350,
+        "seed": 9430175,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 351,
+        "seed": 9430175,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 352,
+        "seed": 9430176,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 353,
+        "seed": 9430176,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 354,
+        "seed": 9430177,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 355,
+        "seed": 9430177,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 356,
+        "seed": 9430178,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 357,
+        "seed": 9430178,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 358,
+        "seed": 9430179,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 359,
+        "seed": 9430179,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 360,
+        "seed": 9430180,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 361,
+        "seed": 9430180,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 362,
+        "seed": 9430181,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 363,
+        "seed": 9430181,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 364,
+        "seed": 9430182,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 365,
+        "seed": 9430182,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 366,
+        "seed": 9430183,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 367,
+        "seed": 9430183,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 368,
+        "seed": 9430184,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 369,
+        "seed": 9430184,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 370,
+        "seed": 9430185,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 371,
+        "seed": 9430185,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 372,
+        "seed": 9430186,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 373,
+        "seed": 9430186,
+        "side": "player_1",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 374,
+        "seed": 9430187,
+        "side": "player_0",
+        "opponent": "default"
+      },
+      {
+        "phase": "train",
+        "game": 375,
+        "seed": 9430187,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 376,
+        "seed": 9430188,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 377,
+        "seed": 9430188,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 378,
+        "seed": 9430189,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 379,
+        "seed": 9430189,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 380,
+        "seed": 9430190,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 381,
+        "seed": 9430190,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 382,
+        "seed": 9430191,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 383,
+        "seed": 9430191,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 384,
+        "seed": 9430192,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 385,
+        "seed": 9430192,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 386,
+        "seed": 9430193,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 387,
+        "seed": 9430193,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 388,
+        "seed": 9430194,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 389,
+        "seed": 9430194,
+        "side": "player_1",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 390,
+        "seed": 9430195,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 391,
+        "seed": 9430195,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 392,
+        "seed": 9430196,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 393,
+        "seed": 9430196,
+        "side": "player_1",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 394,
+        "seed": 9430197,
+        "side": "player_0",
+        "opponent": "rush"
+      },
+      {
+        "phase": "train",
+        "game": 395,
+        "seed": 9430197,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 396,
+        "seed": 9430198,
+        "side": "player_0",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 397,
+        "seed": 9430198,
+        "side": "player_1",
+        "opponent": "solution92"
+      },
+      {
+        "phase": "train",
+        "game": 398,
+        "seed": 9430199,
+        "side": "player_0",
+        "opponent": "sol92_sq"
+      },
+      {
+        "phase": "train",
+        "game": 399,
+        "seed": 9430199,
+        "side": "player_1",
+        "opponent": "solution92"
+      }
+    ]
+  },
+  "initial": {
+    "q_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "target_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "learning": {
+      "q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+      "target_q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+      "optimizer_sha256": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "replay": {
+        "capacity": 300000,
+        "obs_dim": 79,
+        "pos": 0,
+        "size": 0,
+        "_mask_dim": 1,
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              1
+            ],
+            "dtype": "|b1"
+          }
+        }
+      },
+      "config": {
+        "hidden": 256,
+        "dueling": true,
+        "gamma": 0.99,
+        "lr": 5e-05,
+        "batch_size": 256,
+        "buffer_capacity": 300000,
+        "learn_start": 5000,
+        "train_every": 2,
+        "target_update_every": 500,
+        "grad_clip": 5.0,
+        "double_dqn": true,
+        "eps_start": 1.0,
+        "eps_end": 0.05,
+        "eps_decay_steps": 60000,
+        "guided_prob": 0.7,
+        "use_belief": true,
+        "use_symmetry": true,
+        "home_first": false,
+        "home_penalty": 0.0,
+        "home_last_only": false,
+        "explore_memory": true,
+        "explore_grid": true,
+        "scripted_explore": true,
+        "explore_stale": 20,
+        "early_inference": true,
+        "relic_filter": true,
+        "subset_infer": true,
+        "overlap_infer": false,
+        "cand_quota": 0,
+        "sticky": 0.0,
+        "far_opp": 10,
+        "far_cand": true,
+        "cand_boost": 0.0,
+        "contest_sap": false,
+        "energy_pref": 0.0,
+        "explore_quota": 0,
+        "explore_until": 75,
+        "pt_sap": true,
+        "pt_sap_reserve": 0,
+        "pt_sap_zone": false,
+        "safe_moves": true,
+        "idle_sap": false,
+        "idle_sap_reserve": 30,
+        "art_sap": true,
+        "art_move_guard": false,
+        "art_min_hits": 3,
+        "art_reserve": 0,
+        "art_safe": true,
+        "art_splash": true,
+        "art_splash_in_training": false,
+        "art_splash_hits": 2,
+        "sap_still_splash": true,
+        "splash_min_drop": 0.5,
+        "splash_safe_below": 1.0,
+        "art_surplus": false,
+        "threat_feats": false,
+        "dodge": false,
+        "dodge_mode": "lethal",
+        "dodge_verify": false,
+        "dodge_distrust": 0.0,
+        "dodge_shape": false,
+        "splash_dodge": false,
+        "splash_dodge_min": 0.5,
+        "rules_in_training": true,
+        "rules_in_training_all": true,
+        "neb_cand": false,
+        "idle_approach": false,
+        "obey_target": false,
+        "mobile_seen": false,
+        "holder_guard": false,
+        "collision_guard": true,
+        "window_infer": false,
+        "window_infer_all": false,
+        "stage_attack": false,
+        "stage_min": 3,
+        "stage_until": 70,
+        "cand_rescue": true,
+        "rescue_after": 30,
+        "rescue_in_training": true,
+        "zone_rescue": false,
+        "art_safe_cheb": false,
+        "art_still": false,
+        "sap_still_all": false,
+        "sap_still": true,
+        "sap_relevant": false,
+        "sap_no_overkill": true,
+        "sap_overkill_recovery": false,
+        "sym_map": false,
+        "sap_reserve_k": 0.0,
+        "unstack": false,
+        "reach_assign": true,
+        "point_pair_swap": false,
+        "drift_track": true,
+        "path_fix": true,
+        "nebula_infer": true,
+        "nebula_infer_drift_safe": false,
+        "dodge_bait": false,
+        "dodge_auto": false,
+        "dodge_auto_max": 0.5,
+        "tactics_when_behind": false,
+        "nebula_avoid": true,
+        "nebula_avoid_min": 25,
+        "nebula_avoid_mode": "soft",
+        "sap_dropoff_est": false,
+        "stack_guard": false,
+        "relic_search": false,
+        "relic_search_until": 75,
+        "relic_search_stale": 25,
+        "siege": false,
+        "siege_min_score": 1.5,
+        "siege_reserve": 0.0,
+        "siege_prob": 0.5,
+        "sap_kill_first": false,
+        "sap_kill_safe": false,
+        "sap_pt_first": false,
+        "sap_geometry": false,
+        "keep_dead": false,
+        "keep_dead_fast": true,
+        "stale_all": false,
+        "opp_infer": false,
+        "opp_point_infer": false,
+        "pt_walk": false,
+        "pt_walk_own": false,
+        "pt_walk_from_match": 0,
+        "pt_hold": false,
+        "ram": false,
+        "ram_margin": 10.0,
+        "fog_sap": true,
+        "fog_any": false,
+        "fog_reserve": 30.0,
+        "fog_sap_max_sensor": 4,
+        "fog_v2": true,
+        "fog_prior": false,
+        "fog_w_occ": 4.0,
+        "fog_w_empty": 0.25,
+        "fog_drop_est": false,
+        "end_sap": 0,
+        "end_sap_hold": 1.0,
+        "est_censor": true,
+        "neb_cross": true,
+        "no_strand": false,
+        "reward_fix": true,
+        "terminal_death_potential": false,
+        "home_reserve": false,
+        "relic_scout": 0,
+        "scout_until": 60,
+        "scout_stale": 20,
+        "relic_prior": 0.0,
+        "spawn_proof": false,
+        "cand_post": 0.0,
+        "reserve_sap": false,
+        "active_targets": false,
+        "smart_sap": false,
+        "use_shaping": true,
+        "canonical": true,
+        "use_sap": true,
+        "mask_actions": true,
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "fog_unknown_reward_neutral": false,
+        "w_opp_points": 0.0,
+        "frozen": false
+      },
+      "device": "cpu",
+      "env_steps": 60000,
+      "learn_steps": 0,
+      "learn_enabled": true,
+      "autosave_on_terminate": false,
+      "recent_losses": []
+    },
+    "agent_rng_sha256": "21ec2217c5ad348e7306ac2bde0ec33ab0211c716c20c94723c60184ae28d409",
+    "global_rng_sha256": "0b62562e73f5d19ebb3198f3a261e091ec2187a204c58b718f4bab7808d7430c",
+    "initial_identity": {
+      "schema_version": 1,
+      "learners": [
+        {
+          "q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "target_q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "optimizer_sha256": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+          "replay": {
+            "capacity": 300000,
+            "obs_dim": 79,
+            "pos": 0,
+            "size": 0,
+            "_mask_dim": 1,
+            "arrays": {
+              "s": {
+                "shape": [
+                  300000,
+                  79
+                ],
+                "dtype": "<f4"
+              },
+              "ns": {
+                "shape": [
+                  300000,
+                  79
+                ],
+                "dtype": "<f4"
+              },
+              "a": {
+                "shape": [
+                  300000
+                ],
+                "dtype": "<i8"
+              },
+              "r": {
+                "shape": [
+                  300000
+                ],
+                "dtype": "<f4"
+              },
+              "done": {
+                "shape": [
+                  300000
+                ],
+                "dtype": "<f4"
+              },
+              "mask": {
+                "shape": [
+                  300000,
+                  1
+                ],
+                "dtype": "|b1"
+              }
+            },
+            "logical_content": "empty-replay-v1"
+          },
+          "config": {
+            "hidden": 256,
+            "dueling": true,
+            "gamma": 0.99,
+            "lr": 5e-05,
+            "batch_size": 256,
+            "buffer_capacity": 300000,
+            "learn_start": 5000,
+            "train_every": 2,
+            "target_update_every": 500,
+            "grad_clip": 5.0,
+            "double_dqn": true,
+            "eps_start": 1.0,
+            "eps_end": 0.05,
+            "eps_decay_steps": 60000,
+            "guided_prob": 0.7,
+            "use_belief": true,
+            "use_symmetry": true,
+            "home_first": false,
+            "home_penalty": 0.0,
+            "home_last_only": false,
+            "explore_memory": true,
+            "explore_grid": true,
+            "scripted_explore": true,
+            "explore_stale": 20,
+            "early_inference": true,
+            "relic_filter": true,
+            "subset_infer": true,
+            "overlap_infer": false,
+            "cand_quota": 0,
+            "sticky": 0.0,
+            "far_opp": 10,
+            "far_cand": true,
+            "cand_boost": 0.0,
+            "contest_sap": false,
+            "energy_pref": 0.0,
+            "explore_quota": 0,
+            "explore_until": 75,
+            "pt_sap": true,
+            "pt_sap_reserve": 0,
+            "pt_sap_zone": false,
+            "safe_moves": true,
+            "idle_sap": false,
+            "idle_sap_reserve": 30,
+            "art_sap": true,
+            "art_move_guard": false,
+            "art_min_hits": 3,
+            "art_reserve": 0,
+            "art_safe": true,
+            "art_splash": true,
+            "art_splash_in_training": false,
+            "art_splash_hits": 2,
+            "sap_still_splash": true,
+            "splash_min_drop": 0.5,
+            "splash_safe_below": 1.0,
+            "art_surplus": false,
+            "threat_feats": false,
+            "dodge": false,
+            "dodge_mode": "lethal",
+            "dodge_verify": false,
+            "dodge_distrust": 0.0,
+            "dodge_shape": false,
+            "splash_dodge": false,
+            "splash_dodge_min": 0.5,
+            "rules_in_training": true,
+            "rules_in_training_all": true,
+            "neb_cand": false,
+            "idle_approach": false,
+            "obey_target": false,
+            "mobile_seen": false,
+            "holder_guard": false,
+            "collision_guard": true,
+            "window_infer": false,
+            "window_infer_all": false,
+            "stage_attack": false,
+            "stage_min": 3,
+            "stage_until": 70,
+            "cand_rescue": true,
+            "rescue_after": 30,
+            "rescue_in_training": true,
+            "zone_rescue": false,
+            "art_safe_cheb": false,
+            "art_still": false,
+            "sap_still_all": false,
+            "sap_still": true,
+            "sap_relevant": false,
+            "sap_no_overkill": true,
+            "sap_overkill_recovery": false,
+            "sym_map": false,
+            "sap_reserve_k": 0.0,
+            "unstack": false,
+            "reach_assign": true,
+            "point_pair_swap": false,
+            "drift_track": true,
+            "path_fix": true,
+            "nebula_infer": true,
+            "nebula_infer_drift_safe": false,
+            "dodge_bait": false,
+            "dodge_auto": false,
+            "dodge_auto_max": 0.5,
+            "tactics_when_behind": false,
+            "nebula_avoid": true,
+            "nebula_avoid_min": 25,
+            "nebula_avoid_mode": "soft",
+            "sap_dropoff_est": false,
+            "stack_guard": false,
+            "relic_search": false,
+            "relic_search_until": 75,
+            "relic_search_stale": 25,
+            "siege": false,
+            "siege_min_score": 1.5,
+            "siege_reserve": 0.0,
+            "siege_prob": 0.5,
+            "sap_kill_first": false,
+            "sap_kill_safe": false,
+            "sap_pt_first": false,
+            "sap_geometry": false,
+            "keep_dead": false,
+            "keep_dead_fast": true,
+            "stale_all": false,
+            "opp_infer": false,
+            "opp_point_infer": false,
+            "pt_walk": false,
+            "pt_walk_own": false,
+            "pt_walk_from_match": 0,
+            "pt_hold": false,
+            "ram": false,
+            "ram_margin": 10.0,
+            "fog_sap": true,
+            "fog_any": false,
+            "fog_reserve": 30.0,
+            "fog_sap_max_sensor": 4,
+            "fog_v2": true,
+            "fog_prior": false,
+            "fog_w_occ": 4.0,
+            "fog_w_empty": 0.25,
+            "fog_drop_est": false,
+            "end_sap": 0,
+            "end_sap_hold": 1.0,
+            "est_censor": true,
+            "neb_cross": true,
+            "no_strand": false,
+            "reward_fix": true,
+            "terminal_death_potential": false,
+            "home_reserve": false,
+            "relic_scout": 0,
+            "scout_until": 60,
+            "scout_stale": 20,
+            "relic_prior": 0.0,
+            "spawn_proof": false,
+            "cand_post": 0.0,
+            "reserve_sap": false,
+            "active_targets": false,
+            "smart_sap": false,
+            "use_shaping": true,
+            "canonical": true,
+            "use_sap": true,
+            "mask_actions": true,
+            "w_point": 1.0,
+            "w_shape": 0.5,
+            "w_explore": 0.3,
+            "w_energy": 0.1,
+            "w_stack": 0.3,
+            "w_death": 0.5,
+            "w_match": 2.0,
+            "w_discovery": 0.5,
+            "w_sap_hit": 0.3,
+            "fog_unknown_reward_neutral": false,
+            "w_opp_points": 0.0,
+            "frozen": false
+          },
+          "device": "cpu",
+          "env_steps": 60000,
+          "learn_steps": 0,
+          "learn_enabled": true,
+          "autosave_on_terminate": false,
+          "recent_losses": [],
+          "agent_rng_sha256": "21ec2217c5ad348e7306ac2bde0ec33ab0211c716c20c94723c60184ae28d409",
+          "sides": [
+            "player_0",
+            "player_1"
+          ]
+        }
+      ],
+      "rng_sha256": {
+        "python": "910cf5a039a0eb9e45428173e958543283f0c865e7c7395a73387dfae28b26aa",
+        "numpy": "82286a8a6bedff6ae0a90f399d0644324901a9309b742e93a0abb36cde5cf70a",
+        "torch_cpu": "76636ab690bf11b7c8bbd7349e20789f5852188f3a78638fddbd79fa1606a5e5"
+      }
+    }
+  },
+  "prefill": {
+    "q_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "target_tensor_sha256": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+    "learning": {
+      "q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+      "target_q_sha256": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+      "optimizer_sha256": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "replay": {
+        "capacity": 300000,
+        "obs_dim": 79,
+        "pos": 145048,
+        "size": 145048,
+        "_mask_dim": 6,
+        "arrays": {
+          "s": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4"
+          },
+          "ns": {
+            "shape": [
+              300000,
+              79
+            ],
+            "dtype": "<f4"
+          },
+          "a": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<i8"
+          },
+          "r": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4"
+          },
+          "done": {
+            "shape": [
+              300000
+            ],
+            "dtype": "<f4"
+          },
+          "mask": {
+            "shape": [
+              300000,
+              6
+            ],
+            "dtype": "|b1"
+          }
+        }
+      },
+      "config": {
+        "hidden": 256,
+        "dueling": true,
+        "gamma": 0.99,
+        "lr": 5e-05,
+        "batch_size": 256,
+        "buffer_capacity": 300000,
+        "learn_start": 5000,
+        "train_every": 2,
+        "target_update_every": 500,
+        "grad_clip": 5.0,
+        "double_dqn": true,
+        "eps_start": 1.0,
+        "eps_end": 0.05,
+        "eps_decay_steps": 60000,
+        "guided_prob": 0.7,
+        "use_belief": true,
+        "use_symmetry": true,
+        "home_first": false,
+        "home_penalty": 0.0,
+        "home_last_only": false,
+        "explore_memory": true,
+        "explore_grid": true,
+        "scripted_explore": true,
+        "explore_stale": 20,
+        "early_inference": true,
+        "relic_filter": true,
+        "subset_infer": true,
+        "overlap_infer": false,
+        "cand_quota": 0,
+        "sticky": 0.0,
+        "far_opp": 10,
+        "far_cand": true,
+        "cand_boost": 0.0,
+        "contest_sap": false,
+        "energy_pref": 0.0,
+        "explore_quota": 0,
+        "explore_until": 75,
+        "pt_sap": true,
+        "pt_sap_reserve": 0,
+        "pt_sap_zone": false,
+        "safe_moves": true,
+        "idle_sap": false,
+        "idle_sap_reserve": 30,
+        "art_sap": true,
+        "art_move_guard": false,
+        "art_min_hits": 3,
+        "art_reserve": 0,
+        "art_safe": true,
+        "art_splash": true,
+        "art_splash_in_training": false,
+        "art_splash_hits": 2,
+        "sap_still_splash": true,
+        "splash_min_drop": 0.5,
+        "splash_safe_below": 1.0,
+        "art_surplus": false,
+        "threat_feats": false,
+        "dodge": false,
+        "dodge_mode": "lethal",
+        "dodge_verify": false,
+        "dodge_distrust": 0.0,
+        "dodge_shape": false,
+        "splash_dodge": false,
+        "splash_dodge_min": 0.5,
+        "rules_in_training": true,
+        "rules_in_training_all": true,
+        "neb_cand": false,
+        "idle_approach": false,
+        "obey_target": false,
+        "mobile_seen": false,
+        "holder_guard": false,
+        "collision_guard": true,
+        "window_infer": false,
+        "window_infer_all": false,
+        "stage_attack": false,
+        "stage_min": 3,
+        "stage_until": 70,
+        "cand_rescue": true,
+        "rescue_after": 30,
+        "rescue_in_training": true,
+        "zone_rescue": false,
+        "art_safe_cheb": false,
+        "art_still": false,
+        "sap_still_all": false,
+        "sap_still": true,
+        "sap_relevant": false,
+        "sap_no_overkill": true,
+        "sap_overkill_recovery": false,
+        "sym_map": false,
+        "sap_reserve_k": 0.0,
+        "unstack": false,
+        "reach_assign": true,
+        "point_pair_swap": false,
+        "drift_track": true,
+        "path_fix": true,
+        "nebula_infer": true,
+        "nebula_infer_drift_safe": false,
+        "dodge_bait": false,
+        "dodge_auto": false,
+        "dodge_auto_max": 0.5,
+        "tactics_when_behind": false,
+        "nebula_avoid": true,
+        "nebula_avoid_min": 25,
+        "nebula_avoid_mode": "soft",
+        "sap_dropoff_est": false,
+        "stack_guard": false,
+        "relic_search": false,
+        "relic_search_until": 75,
+        "relic_search_stale": 25,
+        "siege": false,
+        "siege_min_score": 1.5,
+        "siege_reserve": 0.0,
+        "siege_prob": 0.5,
+        "sap_kill_first": false,
+        "sap_kill_safe": false,
+        "sap_pt_first": false,
+        "sap_geometry": false,
+        "keep_dead": false,
+        "keep_dead_fast": true,
+        "stale_all": false,
+        "opp_infer": false,
+        "opp_point_infer": false,
+        "pt_walk": false,
+        "pt_walk_own": false,
+        "pt_walk_from_match": 0,
+        "pt_hold": false,
+        "ram": false,
+        "ram_margin": 10.0,
+        "fog_sap": true,
+        "fog_any": false,
+        "fog_reserve": 30.0,
+        "fog_sap_max_sensor": 4,
+        "fog_v2": true,
+        "fog_prior": false,
+        "fog_w_occ": 4.0,
+        "fog_w_empty": 0.25,
+        "fog_drop_est": false,
+        "end_sap": 0,
+        "end_sap_hold": 1.0,
+        "est_censor": true,
+        "neb_cross": true,
+        "no_strand": false,
+        "reward_fix": true,
+        "terminal_death_potential": false,
+        "home_reserve": false,
+        "relic_scout": 0,
+        "scout_until": 60,
+        "scout_stale": 20,
+        "relic_prior": 0.0,
+        "spawn_proof": false,
+        "cand_post": 0.0,
+        "reserve_sap": false,
+        "active_targets": false,
+        "smart_sap": false,
+        "use_shaping": true,
+        "canonical": true,
+        "use_sap": true,
+        "mask_actions": true,
+        "w_point": 1.0,
+        "w_shape": 0.5,
+        "w_explore": 0.3,
+        "w_energy": 0.1,
+        "w_stack": 0.3,
+        "w_death": 0.5,
+        "w_match": 2.0,
+        "w_discovery": 0.5,
+        "w_sap_hit": 0.3,
+        "fog_unknown_reward_neutral": false,
+        "w_opp_points": 0.0,
+        "frozen": false
+      },
+      "device": "cpu",
+      "env_steps": 72120,
+      "learn_steps": 0,
+      "learn_enabled": false,
+      "autosave_on_terminate": false,
+      "recent_losses": []
+    },
+    "agent_rng_sha256": "df7e789b2b41703e41486922399d9bfb103ce6c16c7df55b1060ac97f20e49c8",
+    "global_rng_sha256": "6ad30fc956f4400626e4a82896bde3db30c4d97350b1254553f8ddc9b617fd79"
+  },
+  "rows": [
+    {
+      "seed": 9435000,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 946,
+      "opp_points": 782,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 10.46,
+      "unit_steps": 3684,
+      "wait_frac": 0.4242671009771987,
+      "invalid_frac": 0.0,
+      "sap_attempts": 77,
+      "sap_hits": 66,
+      "stack_frac": 0.30483170466883824,
+      "relics_seen": 3,
+      "relics_found": 4,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.18318729463307776,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 0,
+      "opponent": "sol92_sq",
+      "env_steps": 60303,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3652,
+        "transcript_sha256": "654b3b20eaaa53a26dd1f4a14281d1b72d795b0659d0e9de29c17924136e39ee"
+      },
+      "artillery_audit": {
+        "helper_calls": 705,
+        "new_permissions": 30,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 705,
+        "transcript_sha256": "cbe6bb2db5e1cdab30a138d5ba3190090131f9758689ac1ddfe1c4c1e87b4e76"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435000,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 919,
+      "opp_points": 852,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 7.63,
+      "unit_steps": 3662,
+      "wait_frac": 0.4273620972146368,
+      "invalid_frac": 0.0,
+      "sap_attempts": 84,
+      "sap_hits": 77,
+      "stack_frac": 0.3877662479519388,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.20099118942731278,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 1,
+      "opponent": "solution92",
+      "env_steps": 60606,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3632,
+        "transcript_sha256": "059764c8e93f2c61531f52911a283a72f4f41374d216abb58ab8a7c2092a874b"
+      },
+      "artillery_audit": {
+        "helper_calls": 686,
+        "new_permissions": 44,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 686,
+        "transcript_sha256": "9d33e304e136d1cc8487cb6e351690c0bc0ed7621ebe086b3af7f07e300ff68f"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435001,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "our_points": 960,
+      "opp_points": 967,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 0.0,
+      "secs": 6.36,
+      "unit_steps": 3697,
+      "wait_frac": 0.4060048688125507,
+      "invalid_frac": 0.0,
+      "sap_attempts": 65,
+      "sap_hits": 65,
+      "stack_frac": 0.10116310522044901,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 14,
+      "greedy_masked_frac": 0.19754433833560708,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 2,
+      "opponent": "solution92",
+      "env_steps": 60909,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3665,
+        "transcript_sha256": "50b74cf4311143663ebd5f956cb5e74d414b3057eaa85e60e7333cf4e7691bd1"
+      },
+      "artillery_audit": {
+        "helper_calls": 440,
+        "new_permissions": 17,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 440,
+        "transcript_sha256": "931e2566002608301402893b22802f9ac055762b413f07c3bcfa24a66a25e4ea"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435001,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1347,
+      "opp_points": 37,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 4.08,
+      "unit_steps": 3752,
+      "wait_frac": 0.4669509594882729,
+      "invalid_frac": 0.0,
+      "sap_attempts": 68,
+      "sap_hits": 68,
+      "stack_frac": 0.11567164179104478,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 14,
+      "greedy_masked_frac": 0.25591397849462366,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 3,
+      "opponent": "default",
+      "env_steps": 61212,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3720,
+        "transcript_sha256": "6af2857862bdfe4ca3445e63aeedad23af4052e948aaa35379f7aeb6f0701a43"
+      },
+      "artillery_audit": {
+        "helper_calls": 300,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 300,
+        "transcript_sha256": "418c38cb7b51fede3b477a2127b2b292ca32389a17cbd532da2ec11eb979b733"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435002,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1411,
+      "opp_points": 751,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 5.85,
+      "unit_steps": 3636,
+      "wait_frac": 0.37293729372937295,
+      "invalid_frac": 0.0,
+      "sap_attempts": 158,
+      "sap_hits": 112,
+      "stack_frac": 0.09405940594059406,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 20,
+      "greedy_masked_frac": 0.15030504714364948,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 4,
+      "opponent": "solution92",
+      "env_steps": 61515,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3606,
+        "transcript_sha256": "8277c247d60d6e06f348658e5249f459876c42150d9530b1069ea498a8e6bd94"
+      },
+      "artillery_audit": {
+        "helper_calls": 465,
+        "new_permissions": 18,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 465,
+        "transcript_sha256": "dd2579aed60ae85aae79902c30b03b3935fea2df046404b3a918c39b862fe902"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435002,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1397,
+      "opp_points": 793,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 6.72,
+      "unit_steps": 3653,
+      "wait_frac": 0.37968792773063237,
+      "invalid_frac": 0.0,
+      "sap_attempts": 152,
+      "sap_hits": 110,
+      "stack_frac": 0.10046537092800438,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 20,
+      "greedy_masked_frac": 0.16579310344827586,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 5,
+      "opponent": "solution92",
+      "env_steps": 61818,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3625,
+        "transcript_sha256": "2e0988ab11ef7cef7699c552069acf902db836d8cdda17bcc028043b9bd2eb6e"
+      },
+      "artillery_audit": {
+        "helper_calls": 614,
+        "new_permissions": 11,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 614,
+        "transcript_sha256": "f486daa9eaa184fc2e6dbe3b2fde1cf144077d16085615eb2a36f6bfcdb1f452"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435003,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 714,
+      "opp_points": 523,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 6.86,
+      "unit_steps": 3715,
+      "wait_frac": 0.36123822341857337,
+      "invalid_frac": 0.0,
+      "sap_attempts": 53,
+      "sap_hits": 52,
+      "stack_frac": 0.1728129205921938,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 10,
+      "greedy_masked_frac": 0.2671734998642411,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 6,
+      "opponent": "sol92_sq",
+      "env_steps": 62121,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3683,
+        "transcript_sha256": "c54be7ddfaae7b24bd6c55870515b5b4becbc5735173168deac0ab37db35e4fd"
+      },
+      "artillery_audit": {
+        "helper_calls": 503,
+        "new_permissions": 13,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 503,
+        "transcript_sha256": "16e5a8f06d25adb7bfc22637cf22325a3d01d19a27f54c72349ff1a59c81e2cc"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435003,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 820,
+      "opp_points": 327,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 8.47,
+      "unit_steps": 3692,
+      "wait_frac": 0.37703141928494044,
+      "invalid_frac": 0.0,
+      "sap_attempts": 69,
+      "sap_hits": 69,
+      "stack_frac": 0.08261105092091008,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 10,
+      "greedy_masked_frac": 0.2691256830601093,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 7,
+      "opponent": "solution92",
+      "env_steps": 62424,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3660,
+        "transcript_sha256": "f06ac3611dbe5740cc72d89cf7740ca2be3e8a45dea8a625c47c5af78dda3ebc"
+      },
+      "artillery_audit": {
+        "helper_calls": 659,
+        "new_permissions": 6,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 659,
+        "transcript_sha256": "9eac43805b583c3fa615a04ed66d5fc025eaad2727c69b4265c860b93a8a790f"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435004,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1652,
+      "opp_points": 1548,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 5.05,
+      "unit_steps": 3701,
+      "wait_frac": 0.4682518238313969,
+      "invalid_frac": 0.0,
+      "sap_attempts": 73,
+      "sap_hits": 38,
+      "stack_frac": 0.11105106727911375,
+      "relics_seen": 4,
+      "relics_found": 6,
+      "known_point_tiles": 24,
+      "greedy_masked_frac": 0.23221586263287,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 8,
+      "opponent": "solution92",
+      "env_steps": 62727,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3669,
+        "transcript_sha256": "b6b0b26e7181cac7a68eff783212d98881e1eab56ad439ea1f7a4035058351a1"
+      },
+      "artillery_audit": {
+        "helper_calls": 331,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 331,
+        "transcript_sha256": "6ce9b558c7b84a8a5b328450d3bf204c6791df291e39ac2ec0424a7abcf160a9"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435004,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1687,
+      "opp_points": 1575,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 5.63,
+      "unit_steps": 3704,
+      "wait_frac": 0.48488120950323976,
+      "invalid_frac": 0.0,
+      "sap_attempts": 73,
+      "sap_hits": 50,
+      "stack_frac": 0.0988120950323974,
+      "relics_seen": 4,
+      "relics_found": 6,
+      "known_point_tiles": 24,
+      "greedy_masked_frac": 0.2295751633986928,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 9,
+      "opponent": "solution92",
+      "env_steps": 63030,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3672,
+        "transcript_sha256": "39cae0d7d155ab26f20cb0ba0f520b38b9b1381c5329461880d9b899fc606cee"
+      },
+      "artillery_audit": {
+        "helper_calls": 320,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 320,
+        "transcript_sha256": "37ca342af6f270c25e3301bbbe4f3a2052ab9e0d269314e58b0da5c3026bc263"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435005,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 628,
+      "opp_points": 12,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 2.35,
+      "unit_steps": 3664,
+      "wait_frac": 0.572325327510917,
+      "invalid_frac": 0.0,
+      "sap_attempts": 12,
+      "sap_hits": 12,
+      "stack_frac": 0.25518558951965065,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.4759284731774415,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 10,
+      "opponent": "rush",
+      "env_steps": 63333,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3635,
+        "transcript_sha256": "3ee96c49cdd9747ef937be215a700a66a4fc00beae72e74b9ad271f0ce6f1e25"
+      },
+      "artillery_audit": {
+        "helper_calls": 94,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 94,
+        "transcript_sha256": "80d5affa6ab0a6abc17a57fd8e7a2891aa5e2f5bfd4a288d49ddf8fe6c7ddaa8"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435005,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 647,
+      "opp_points": 108,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 2.82,
+      "unit_steps": 3752,
+      "wait_frac": 0.5962153518123667,
+      "invalid_frac": 0.0,
+      "sap_attempts": 21,
+      "sap_hits": 20,
+      "stack_frac": 0.23267590618336886,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.46881720430107526,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 11,
+      "opponent": "default",
+      "env_steps": 63636,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3720,
+        "transcript_sha256": "d1a468db24fb256a0f7dffca131e91d26a6c5a2d64ade1a792cfca00d6b8620a"
+      },
+      "artillery_audit": {
+        "helper_calls": 144,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 144,
+        "transcript_sha256": "dac375d1211811682e2553fe3ab4b05de4805320241e61eaaf5488a3436a4452"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435006,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 265,
+      "opp_points": 213,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 7.04,
+      "unit_steps": 3663,
+      "wait_frac": 0.42042042042042044,
+      "invalid_frac": 0.0,
+      "sap_attempts": 79,
+      "sap_hits": 79,
+      "stack_frac": 0.1162981162981163,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 2,
+      "greedy_masked_frac": 0.40705039933902504,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 12,
+      "opponent": "solution92",
+      "env_steps": 63939,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3631,
+        "transcript_sha256": "dca8c168d09cfd438f5c9e8ecc3981214a405dcdc8a9142f72ac8949d01e17b5"
+      },
+      "artillery_audit": {
+        "helper_calls": 647,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 647,
+        "transcript_sha256": "42841951d0856aa8bdb42673760bac7458ac38684a287d26bab57d7f3a3c1db6"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435006,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 281,
+      "opp_points": 184,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 7.6,
+      "unit_steps": 3687,
+      "wait_frac": 0.3883916463249254,
+      "invalid_frac": 0.0,
+      "sap_attempts": 74,
+      "sap_hits": 74,
+      "stack_frac": 0.14239218877135884,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 2,
+      "greedy_masked_frac": 0.3838577291381669,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 13,
+      "opponent": "solution92",
+      "env_steps": 64242,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3655,
+        "transcript_sha256": "315c0e98228beda3dde25ba66dab810154185888f6679015c045a847f59dfc8f"
+      },
+      "artillery_audit": {
+        "helper_calls": 696,
+        "new_permissions": 24,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 696,
+        "transcript_sha256": "551e8150d02a2f665f1dadd9baaf242f5f61052e748caf3f314c3524133211a6"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435007,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1387,
+      "opp_points": 1173,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 5.72,
+      "unit_steps": 3597,
+      "wait_frac": 0.37281067556296915,
+      "invalid_frac": 0.0,
+      "sap_attempts": 151,
+      "sap_hits": 86,
+      "stack_frac": 0.10953572421462329,
+      "relics_seen": 3,
+      "relics_found": 4,
+      "known_point_tiles": 24,
+      "greedy_masked_frac": 0.15755536865713485,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 14,
+      "opponent": "solution92",
+      "env_steps": 64545,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3567,
+        "transcript_sha256": "c208c5966dfa6304224c130ba8d889ddbbc8b2b973cd6f4f110dd9c8d54fd240"
+      },
+      "artillery_audit": {
+        "helper_calls": 329,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 329,
+        "transcript_sha256": "ad425d6e958864c436686d0ee1742c809ff5480b08efe7bbfd5c09a1cadab403"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435007,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "our_points": 1038,
+      "opp_points": 1408,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 0.0,
+      "secs": 4.93,
+      "unit_steps": 3351,
+      "wait_frac": 0.3303491495076097,
+      "invalid_frac": 0.0,
+      "sap_attempts": 120,
+      "sap_hits": 64,
+      "stack_frac": 0.10892270963891376,
+      "relics_seen": 3,
+      "relics_found": 4,
+      "known_point_tiles": 16,
+      "greedy_masked_frac": 0.15055706112616682,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 15,
+      "opponent": "solution92",
+      "env_steps": 64848,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3321,
+        "transcript_sha256": "6f631802c9ca5fa17a7aacb5cff6ab370dfcad91f2cbf79b00abda0c17491a0b"
+      },
+      "artillery_audit": {
+        "helper_calls": 317,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 317,
+        "transcript_sha256": "b0492e17d3739345ae3cfe09875646f3351508041f3b278b5a37251a73bcc9bd"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435008,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 996,
+      "opp_points": 556,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 7.1,
+      "unit_steps": 3699,
+      "wait_frac": 0.4282238442822384,
+      "invalid_frac": 0.0,
+      "sap_attempts": 71,
+      "sap_hits": 65,
+      "stack_frac": 0.12489862124898621,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.23288791928006544,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 16,
+      "opponent": "solution92",
+      "env_steps": 65151,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3667,
+        "transcript_sha256": "9710268ffdf69b39f5737ef45518044d8468b491f3975233e0bec82382256494"
+      },
+      "artillery_audit": {
+        "helper_calls": 562,
+        "new_permissions": 7,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 562,
+        "transcript_sha256": "0dfc03043c4a409f4a44e229d71846e997494d6d316e82eb58dfe61f8b86660b"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435008,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1226,
+      "opp_points": 1,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.1,
+      "unit_steps": 3735,
+      "wait_frac": 0.5705488621151271,
+      "invalid_frac": 0.0,
+      "sap_attempts": 17,
+      "sap_hits": 17,
+      "stack_frac": 0.10763052208835341,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.3856332703213611,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 17,
+      "opponent": "rush",
+      "env_steps": 65454,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3703,
+        "transcript_sha256": "60e606936d476033ff646a30452fcf0b593c8073cc1db80b77761cc183a866c0"
+      },
+      "artillery_audit": {
+        "helper_calls": 131,
+        "new_permissions": 15,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 131,
+        "transcript_sha256": "5b5d2111ea23d7b53d4a488e3263fc4af7e10cf292a0a42e076d5da274554bfb"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435009,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1771,
+      "opp_points": 185,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.95,
+      "unit_steps": 3738,
+      "wait_frac": 0.5275548421615838,
+      "invalid_frac": 0.0,
+      "sap_attempts": 93,
+      "sap_hits": 90,
+      "stack_frac": 0.08908507223113965,
+      "relics_seen": 6,
+      "relics_found": 6,
+      "known_point_tiles": 26,
+      "greedy_masked_frac": 0.29565686538980307,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 18,
+      "opponent": "default",
+      "env_steps": 65757,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3707,
+        "transcript_sha256": "a1b7dd135a09ade6606b536f94bfbd41b56016a877ee3d01999ff402ffeef681"
+      },
+      "artillery_audit": {
+        "helper_calls": 305,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 305,
+        "transcript_sha256": "0b7bf7ed4ddd6f5f217692f5f841d04538405c99b3376b63799ae71bb946f13b"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435009,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1337,
+      "opp_points": 1260,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 8.61,
+      "unit_steps": 3556,
+      "wait_frac": 0.38245219347581555,
+      "invalid_frac": 0.0,
+      "sap_attempts": 115,
+      "sap_hits": 102,
+      "stack_frac": 0.13807649043869516,
+      "relics_seen": 6,
+      "relics_found": 6,
+      "known_point_tiles": 26,
+      "greedy_masked_frac": 0.13274837248797056,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 19,
+      "opponent": "solution92",
+      "env_steps": 66060,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3533,
+        "transcript_sha256": "6473bb2630cc463be6f7871867d47e2f3418dac255b3f035bdf1603307a5f309"
+      },
+      "artillery_audit": {
+        "helper_calls": 853,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 853,
+        "transcript_sha256": "e96414ac52307f220692ac65a29cbe1ba06c80442aa5275e0501ae381a23b794"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435010,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 2298,
+      "opp_points": 2447,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 0.0,
+      "secs": 4.83,
+      "unit_steps": 3744,
+      "wait_frac": 0.6901709401709402,
+      "invalid_frac": 0.0,
+      "sap_attempts": 41,
+      "sap_hits": 32,
+      "stack_frac": 0.11485042735042734,
+      "relics_seen": 5,
+      "relics_found": 6,
+      "known_point_tiles": 32,
+      "greedy_masked_frac": 0.1904120657150552,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 20,
+      "opponent": "solution92",
+      "env_steps": 66363,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3713,
+        "transcript_sha256": "05040e31279023bbe282eedaae4626b53ebc287b8668ae703b5a53867e7e11c5"
+      },
+      "artillery_audit": {
+        "helper_calls": 354,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 354,
+        "transcript_sha256": "bbae7805b603d5b341b9a436b6788acc38e4118a765aa871ecde49b667a8ec8e"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435010,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 2400,
+      "opp_points": 121,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 2.35,
+      "unit_steps": 3745,
+      "wait_frac": 0.7255006675567424,
+      "invalid_frac": 0.0,
+      "sap_attempts": 28,
+      "sap_hits": 28,
+      "stack_frac": 0.12256341789052069,
+      "relics_seen": 3,
+      "relics_found": 6,
+      "known_point_tiles": 32,
+      "greedy_masked_frac": 0.2685160247778077,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 21,
+      "opponent": "rush",
+      "env_steps": 66666,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3713,
+        "transcript_sha256": "f9901e48bdbd48f02137c2ae6aa62907f25c6770242ab72844097274bc719bd3"
+      },
+      "artillery_audit": {
+        "helper_calls": 146,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 146,
+        "transcript_sha256": "b75a4509bcf8948479e6dd8fe53e5d790aff99b5bf6b561e018acff17911cca5"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435011,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1604,
+      "opp_points": 1229,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 4.26,
+      "unit_steps": 3705,
+      "wait_frac": 0.5079622132253712,
+      "invalid_frac": 0.0,
+      "sap_attempts": 66,
+      "sap_hits": 48,
+      "stack_frac": 0.09041835357624832,
+      "relics_seen": 4,
+      "relics_found": 6,
+      "known_point_tiles": 26,
+      "greedy_masked_frac": 0.2014153511159499,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 22,
+      "opponent": "solution92",
+      "env_steps": 66969,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3674,
+        "transcript_sha256": "338fd77a48058e0e550fbf3bc7792d8ad4f7f44c0f0333184c736c673b00464d"
+      },
+      "artillery_audit": {
+        "helper_calls": 236,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 236,
+        "transcript_sha256": "30aea1dc482bc3ed6bf3e7c8fc5d6b6525adec01e2d02ea49da32c7135d72eee"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435011,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1797,
+      "opp_points": 152,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.08,
+      "unit_steps": 3717,
+      "wait_frac": 0.5625504439063761,
+      "invalid_frac": 0.0,
+      "sap_attempts": 26,
+      "sap_hits": 25,
+      "stack_frac": 0.06779661016949153,
+      "relics_seen": 5,
+      "relics_found": 6,
+      "known_point_tiles": 26,
+      "greedy_masked_frac": 0.24877916440586,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 23,
+      "opponent": "rush",
+      "env_steps": 67272,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3686,
+        "transcript_sha256": "2d7cdc7187b4aae58e8f7eab8b9c7ea120de4f85f90267c4aa211e77d9b01709"
+      },
+      "artillery_audit": {
+        "helper_calls": 167,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 167,
+        "transcript_sha256": "7b166047ddfe555d1d4edea55a60fee2f47f6251a5053cdc90cef6495a7b657d"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435012,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 1658,
+      "opp_points": 0,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.92,
+      "unit_steps": 3700,
+      "wait_frac": 0.47675675675675677,
+      "invalid_frac": 0.0,
+      "sap_attempts": 37,
+      "sap_hits": 37,
+      "stack_frac": 0.11513513513513514,
+      "relics_seen": 5,
+      "relics_found": 6,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.3535986913849509,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 24,
+      "opponent": "rush",
+      "env_steps": 67575,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3668,
+        "transcript_sha256": "66a75f66226af38de9d915c7742e3491c4efd858f5f6146e81f12b23b6f5f120"
+      },
+      "artillery_audit": {
+        "helper_calls": 341,
+        "new_permissions": 40,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 341,
+        "transcript_sha256": "d57228d2543d22854e4d5c30ba6c27bf0ed0b745d46abefc721b940d667bd7db"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435012,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 792,
+      "opp_points": 484,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 8.25,
+      "unit_steps": 3567,
+      "wait_frac": 0.25483599663582845,
+      "invalid_frac": 0.0,
+      "sap_attempts": 200,
+      "sap_hits": 200,
+      "stack_frac": 0.18979534622932437,
+      "relics_seen": 5,
+      "relics_found": 6,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.20288217010454931,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 25,
+      "opponent": "solution92",
+      "env_steps": 67878,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3539,
+        "transcript_sha256": "16f1209042d3e8855fa44a53b01091b68c42138d86eefe01269a316099416554"
+      },
+      "artillery_audit": {
+        "helper_calls": 682,
+        "new_permissions": 55,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 682,
+        "transcript_sha256": "0c6a6da507db5099ed9649acb7c65cfc1482c7ac5cbf2e2aa29e59b9cbeaec66"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435013,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1042,
+      "opp_points": 965,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 6.93,
+      "unit_steps": 3692,
+      "wait_frac": 0.3938244853737812,
+      "invalid_frac": 0.0,
+      "sap_attempts": 83,
+      "sap_hits": 83,
+      "stack_frac": 0.1619718309859155,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 10,
+      "greedy_masked_frac": 0.2820862916439104,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 26,
+      "opponent": "solution92",
+      "env_steps": 68181,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3662,
+        "transcript_sha256": "93618f6958ed9f5c879d4eb0432ac10110127154c760ed0ac6bd37c17bfcda11"
+      },
+      "artillery_audit": {
+        "helper_calls": 538,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 538,
+        "transcript_sha256": "4bb37977c5e23b144c3b39bc53f1a48f8a1e2abe3756a6675643c8f0aec80dac"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435013,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 0,
+      "opp_wins": 3,
+      "our_points": 921,
+      "opp_points": 1069,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 0.0,
+      "secs": 5.74,
+      "unit_steps": 3725,
+      "wait_frac": 0.4161073825503356,
+      "invalid_frac": 0.0,
+      "sap_attempts": 87,
+      "sap_hits": 87,
+      "stack_frac": 0.15919463087248323,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 10,
+      "greedy_masked_frac": 0.2931781266919329,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 27,
+      "opponent": "sol92_sq",
+      "env_steps": 68484,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3694,
+        "transcript_sha256": "9f9ee081b75733e50f6cdc477261b66b1c1681752112fad89cee266d82aa3c95"
+      },
+      "artillery_audit": {
+        "helper_calls": 386,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 386,
+        "transcript_sha256": "357424a01d1ceb5a88d71d4dea9a9e5139918a14bdec1828f0bdc9ecc380a2ee"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435014,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 701,
+      "opp_points": 594,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 9.12,
+      "unit_steps": 3556,
+      "wait_frac": 0.2078177727784027,
+      "invalid_frac": 0.0,
+      "sap_attempts": 133,
+      "sap_hits": 124,
+      "stack_frac": 0.08942632170978627,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.14030612244897958,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 28,
+      "opponent": "solution92",
+      "env_steps": 68787,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3528,
+        "transcript_sha256": "047afe07ce5f16c31426837f5779adbaf67a934af63f121e8ee40ac342e4f5e4"
+      },
+      "artillery_audit": {
+        "helper_calls": 897,
+        "new_permissions": 15,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 897,
+        "transcript_sha256": "fed6004eae2f9499bd2806375b915aa210db79559fdbbc6c338195102bb7df07"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435014,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 737,
+      "opp_points": 596,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 10.72,
+      "unit_steps": 3554,
+      "wait_frac": 0.21722003376477209,
+      "invalid_frac": 0.0,
+      "sap_attempts": 131,
+      "sap_hits": 123,
+      "stack_frac": 0.05008441193021947,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.1472340425531915,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 29,
+      "opponent": "solution92",
+      "env_steps": 69090,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3525,
+        "transcript_sha256": "44bac82829c0d41d62352396521c7d7ba1d69a82a3260cbcd0eeb40121e53fe3"
+      },
+      "artillery_audit": {
+        "helper_calls": 1124,
+        "new_permissions": 9,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 1124,
+        "transcript_sha256": "cb68d1ba6198d382f494fbf54b0b624609acccade4315974397442e6b7d70d53"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435015,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "our_points": 975,
+      "opp_points": 1312,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 0.0,
+      "secs": 3.69,
+      "unit_steps": 3713,
+      "wait_frac": 0.5733907891193105,
+      "invalid_frac": 0.0,
+      "sap_attempts": 33,
+      "sap_hits": 16,
+      "stack_frac": 0.13062213843253434,
+      "relics_seen": 4,
+      "relics_found": 4,
+      "known_point_tiles": 20,
+      "greedy_masked_frac": 0.30988593155893535,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 30,
+      "opponent": "solution92",
+      "env_steps": 69393,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3682,
+        "transcript_sha256": "8c95d21cc1b99894c79da68b3419a5a9118110b0b4af4b3e9fe3f86a67f037f5"
+      },
+      "artillery_audit": {
+        "helper_calls": 47,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 47,
+        "transcript_sha256": "ab074fe579a02cc669a3aa39dc98ebd9e7f5f287f00f8c7976e1a08318be51e2"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435015,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1583,
+      "opp_points": 1150,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.87,
+      "unit_steps": 3715,
+      "wait_frac": 0.6188425302826379,
+      "invalid_frac": 0.0,
+      "sap_attempts": 38,
+      "sap_hits": 17,
+      "stack_frac": 0.09125168236877523,
+      "relics_seen": 3,
+      "relics_found": 4,
+      "known_point_tiles": 20,
+      "greedy_masked_frac": 0.2620146619603584,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 31,
+      "opponent": "solution92",
+      "env_steps": 69696,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3683,
+        "transcript_sha256": "01f21f0b4abadf12371561d4516266cd93eeb2cbd723ea38cb455cfcb0c123ec"
+      },
+      "artillery_audit": {
+        "helper_calls": 77,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 77,
+        "transcript_sha256": "2a91cabaab3a59b2ca881f89b597b45a1652575c396dc3b86a7597afa06711d4"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435016,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 1,
+      "opp_wins": 2,
+      "our_points": 856,
+      "opp_points": 767,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 1.0,
+      "secs": 5.06,
+      "unit_steps": 3703,
+      "wait_frac": 0.5490143127194167,
+      "invalid_frac": 0.0,
+      "sap_attempts": 46,
+      "sap_hits": 46,
+      "stack_frac": 0.09019713745611667,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.3940631808278867,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 32,
+      "opponent": "solution92",
+      "env_steps": 69999,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3672,
+        "transcript_sha256": "ae3bc551251ac47bb2630c707dc3d831edc0b39594d5d69deade3999564a033c"
+      },
+      "artillery_audit": {
+        "helper_calls": 332,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 332,
+        "transcript_sha256": "e9e49e31d40ff6dd8bf246c7890f41c7830347c7849d0d0fb3520b0ad3bcedee"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435016,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 923,
+      "opp_points": 767,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 4.81,
+      "unit_steps": 3711,
+      "wait_frac": 0.5486391808137968,
+      "invalid_frac": 0.0,
+      "sap_attempts": 63,
+      "sap_hits": 63,
+      "stack_frac": 0.04419293990838049,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 8,
+      "greedy_masked_frac": 0.36086956521739133,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 33,
+      "opponent": "solution92",
+      "env_steps": 70302,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3680,
+        "transcript_sha256": "598f875511925c74af8cffe50965eaaa0e1b0cb33c9e185f195e4aba6651b137"
+      },
+      "artillery_audit": {
+        "helper_calls": 316,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 316,
+        "transcript_sha256": "77db6f5a16846052a678684a60bad4ef05d3091f48eecc52a1a118efe9eecae9"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435017,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 821,
+      "opp_points": 159,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 6.24,
+      "unit_steps": 3549,
+      "wait_frac": 0.2628909551986475,
+      "invalid_frac": 0.0,
+      "sap_attempts": 123,
+      "sap_hits": 123,
+      "stack_frac": 0.13834883065652295,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.20323587851263128,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 34,
+      "opponent": "solution92",
+      "env_steps": 70605,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3523,
+        "transcript_sha256": "bbbad16bdeedd38ad60870a1bd5f6112fcc60635d97e9a7a65bcfb55262f9a3f"
+      },
+      "artillery_audit": {
+        "helper_calls": 469,
+        "new_permissions": 42,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 469,
+        "transcript_sha256": "124ad55b1161bf03020a162041e40c0a39df633c90088320b94e89e698fcc8dd"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435017,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 3,
+      "opp_wins": 0,
+      "our_points": 911,
+      "opp_points": 145,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 7.45,
+      "unit_steps": 3723,
+      "wait_frac": 0.3341391351060972,
+      "invalid_frac": 0.0,
+      "sap_attempts": 131,
+      "sap_hits": 131,
+      "stack_frac": 0.1608917539618587,
+      "relics_seen": 2,
+      "relics_found": 2,
+      "known_point_tiles": 12,
+      "greedy_masked_frac": 0.2800650054171181,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 35,
+      "opponent": "solution92",
+      "env_steps": 70908,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3692,
+        "transcript_sha256": "05b0214c683093cd2e395a1751943984051f94757ab740c9f11b55bc2ef7f9b8"
+      },
+      "artillery_audit": {
+        "helper_calls": 600,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 600,
+        "transcript_sha256": "fb01b28e154995d2fb32b4f75b0dedfabaec2c595f30738e0d0e816694bdc891"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435018,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1098,
+      "opp_points": 752,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.84,
+      "unit_steps": 3344,
+      "wait_frac": 0.32954545454545453,
+      "invalid_frac": 0.0,
+      "sap_attempts": 107,
+      "sap_hits": 43,
+      "stack_frac": 0.1055622009569378,
+      "relics_seen": 3,
+      "relics_found": 3,
+      "known_point_tiles": 19,
+      "greedy_masked_frac": 0.1389810069339765,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 36,
+      "opponent": "solution92",
+      "env_steps": 71211,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3317,
+        "transcript_sha256": "4c9e656431a6994382a01205a4d2d7a629203e91d648ca112d25f0854854c3ec"
+      },
+      "artillery_audit": {
+        "helper_calls": 185,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 185,
+        "transcript_sha256": "452779a838c4c052a662124bfa44e38c43be3ee073616c2b39c3c2d5a7aec034"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435018,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1010,
+      "opp_points": 911,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.85,
+      "unit_steps": 3276,
+      "wait_frac": 0.31166056166056166,
+      "invalid_frac": 0.0,
+      "sap_attempts": 112,
+      "sap_hits": 44,
+      "stack_frac": 0.10622710622710622,
+      "relics_seen": 3,
+      "relics_found": 3,
+      "known_point_tiles": 19,
+      "greedy_masked_frac": 0.1339066339066339,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 37,
+      "opponent": "solution92",
+      "env_steps": 71514,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3256,
+        "transcript_sha256": "2da14cf1535ae04bd9fa9e1ae3da43a0899a2a8e7c55a9fb3ec1489cb993e386"
+      },
+      "artillery_audit": {
+        "helper_calls": 167,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 167,
+        "transcript_sha256": "556a4a1e7e4f27cf874fb9a0aa5f5bd7f6ca8db5d9c22a1283165070d9a292d9"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435019,
+      "side": "player_0",
+      "steps": 303,
+      "our_wins": 2,
+      "opp_wins": 1,
+      "our_points": 1517,
+      "opp_points": 1252,
+      "point_counting_version": 2,
+      "result": 1.0,
+      "game_win": 1,
+      "point_win": 1.0,
+      "secs": 3.48,
+      "unit_steps": 3734,
+      "wait_frac": 0.5674879485806106,
+      "invalid_frac": 0.0,
+      "sap_attempts": 39,
+      "sap_hits": 17,
+      "stack_frac": 0.08998393144081414,
+      "relics_seen": 5,
+      "relics_found": 6,
+      "known_point_tiles": 22,
+      "greedy_masked_frac": 0.2709346299297677,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 38,
+      "opponent": "solution92",
+      "env_steps": 71817,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3702,
+        "transcript_sha256": "8ff7ce141b9afc05cee76acfe7701598c609db16fa2e8cb7d3e1e96a8514629f"
+      },
+      "artillery_audit": {
+        "helper_calls": 88,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 88,
+        "transcript_sha256": "acfe641834c8a04cf5380c95a8e09f70c77e3ed843d5bb2cab70622085a6e189"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    },
+    {
+      "seed": 9435019,
+      "side": "player_1",
+      "steps": 303,
+      "our_wins": 0,
+      "opp_wins": 3,
+      "our_points": 1445,
+      "opp_points": 1751,
+      "point_counting_version": 2,
+      "result": 0.0,
+      "game_win": 0,
+      "point_win": 0.0,
+      "secs": 3.38,
+      "unit_steps": 3748,
+      "wait_frac": 0.621931696905016,
+      "invalid_frac": 0.0,
+      "sap_attempts": 18,
+      "sap_hits": 8,
+      "stack_frac": 0.13367129135538955,
+      "relics_seen": 3,
+      "relics_found": 6,
+      "known_point_tiles": 22,
+      "greedy_masked_frac": 0.2769106566200215,
+      "belief_contradictions": 0,
+      "phase": "prefill",
+      "game": 39,
+      "opponent": "solution92",
+      "env_steps": 72120,
+      "learn_steps": 0,
+      "updates": 0,
+      "action_audit": {
+        "act_calls": 303,
+        "update_calls": 303,
+        "checked_replay_transitions": 3716,
+        "transcript_sha256": "709d6389627b3e309810c37fea1c4c17d5394ae7fe35e2ef3dd74e1a227ac234"
+      },
+      "artillery_audit": {
+        "helper_calls": 83,
+        "new_permissions": 0,
+        "actual_new_permissions": 0,
+        "executed_additional_saps": 0,
+        "canceled_additional_saps": 0,
+        "checked_helper_replay": 83,
+        "transcript_sha256": "738079db4bfefe5552720c8c5c847d0c06c3d5dc1e87fe397ddc96d4717b21d8"
+      },
+      "rollout_config_id": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0"
+    }
+  ]
+}

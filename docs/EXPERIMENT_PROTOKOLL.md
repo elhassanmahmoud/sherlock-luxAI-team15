@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 08.11.2026, **Artillerietraining abgeschlossen und unabhängig geprüft:** vier Arme, 1.888 Ausführungen / 240.000 Updates, Quelle `02ce1b2`. Finale Einzelnetzdiagnose Solution: C43/A43 6/8 gegenüber 8/8; C44/A44 7/8 gegenüber 5/8. Keine Stärkeaussage oder Übernahme. Historische Abnahme nach Root-Originalvalidatoren gesichert; V14/ZIP unverändert. [Trainingsbericht](../experiments/analysis/artillery_alignment_20261108/TRAININGSERGEBNIS.md).
+
 - 08.11.2026, **separater Artillerie-Trainingsvergleich vorbereitet:** Kontroll-/Aligned-Arme43/44 mit je40 Vorlauf+400 Lernen+32 Diagnosen; nur art_splash_in_training unterscheidet das Paar.103 gezielte Tests und unabhängige integrierte Prüfung bestanden, vier bekannte V14-Ausführungen zuvor exakt. Noch keine Lernresultate. Leistungsgrenze vor Ergebnissen440+optional600, V14/ZIP unverändert. [Vorabplan](superpowers/plans/2026-11-08-artillery-alignment.md).
 
 - 08.11.2026: **Artillerie-Trainingsunterschied offline gemessen.** Zwei archivierte V14-Niederlagen, 1192 Helper-Aufrufe, davon 24 Eval-ja/Training-nein in einer Partie. Null neue Spiele oder Lernupdates. Root-Technik-/Hash-/Summenprüfung bestanden, unabhängiger Code-/Prämissenreview PASS; separate Ergebnisnachrechnung nach Nutzer-Reset abgeschlossen,39590 Prüfungen PASS. Keine Aktionsqualitäts- oder Stärkeaussage, keine Promotion. [Ergebnis und Grenzen](../experiments/analysis/artillery_training_exposure_20261108/ERGEBNIS.md).

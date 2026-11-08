@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "training_head": "02ce1b2ce9a5b0780da1ee6462a2368b2226d495",
+  "validator": "scripts.artillery_alignment_study.validate_final_receipt",
+  "arms": {
+    "control43": {
+      "status": "PASS",
+      "receipt_sha256": "9be0a825ecab70d63b2195b6a3b69d39dfb5561ce926a041591a2e932d1abf5e",
+      "env_steps": 193320,
+      "learn_steps": 60000
+    },
+    "aligned43": {
+      "status": "PASS",
+      "receipt_sha256": "952561b1183e0a0f97691c1e49dff2dd7b718a569b71872fc602920d08174c30",
+      "env_steps": 193320,
+      "learn_steps": 60000
+    },
+    "control44": {
+      "status": "PASS",
+      "receipt_sha256": "be740bcecbb8f76932e3dae04b6d2ccab0adad5f5aea87e0bc5dba6fd61f5797",
+      "env_steps": 193320,
+      "learn_steps": 60000
+    },
+    "aligned44": {
+      "status": "PASS",
+      "receipt_sha256": "c9efd1d2e3009252c35ccde0180ea0dffbc94af4ee9e59a6c1704d8168544c67",
+      "env_steps": 193320,
+      "learn_steps": 60000
+    }
+  }
+}

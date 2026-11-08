@@ -4,6 +4,14 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+
+## 08.11.2026 – Artillerietraining vollständig abgenommen
+
+- Vier feste Endnetze ab V14-Komponente 18, je 40 Vorlauf-, 400 Lern- und 32 Diagnoseausführungen: insgesamt 1.888 Ausführungen und 240.000 Updates. Quellenstand `02ce1b2` bis zum Abschluss unverändert; alle eigenen Worker/Supervisor/Wachhalteprozesse beendet.
+- Unabhängiger Daten- und Tensor-/Replayaudit bestanden; Root hat alle vier Originalvalidatoren und Paarbelege noch auf der eingefrorenen Quelle geprüft und die historische Abnahme gesichert. [Trainingsbericht](../experiments/analysis/artillery_alignment_20261108/TRAININGSERGEBNIS.md).
+- Kleine finale Solution-Diagnose: Kontrolle/Aligned Start 43 = 6/8 gegen 8/8, Start 44 = 7/8 gegen 5/8; default jeweils 8/8. Gemischte Ergebnisse, keine Aussage über höhere Ensemble-Spielstärke. Keine Auswahl günstiger Zwischenstände.
+- V14 und ZIP bytegleich. Nächster festgelegter Schritt: ursprüngliche 36 Netze plus die beiden Kontroll- beziehungsweise Aligned-Endnetze; maximal 440 Auswahl- und bei Qualifikation 600 frische Bestätigungsspiele. Große Replaypuffer bleiben lokal und sind für eine vollständige Nachprüfung separat zu übertragen.
+
 ## 08.11.2026 – Artillerie-Lernvergleich technisch freigegeben
 
 - Vier feste Lernarme43/44 (Kontrolle/angleichende Artillerieregel), je40 Vorlaufspiele,400 Lernspiele und32 getrennte Diagnosen. Beide Arbeiter warten vor Gradienten auf die Prüfung tatsächlicher zusätzlicher Schüsse und unveränderter Startnetze. Maximal zwei Arbeiter; V14 und ZIP bleiben geschützt.
