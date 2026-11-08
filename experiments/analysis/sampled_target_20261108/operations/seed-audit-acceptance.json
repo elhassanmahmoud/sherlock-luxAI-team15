@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "profile": "sampled_target_20261108",
+  "no_observed_conflicts": true,
+  "accepted_at": "2026-11-08T20:21:33.865862+00:00",
+  "raw_audit": {
+    "path": "experiments/analysis/sampled_target_20261108/operations/seed-audit.raw.json.gz",
+    "sha256": "24bfcbb9d8f7e1ced08a1585074a8073e953a1c447e79db18251af10d34ac1f4"
+  },
+  "raw_uncompressed_sha256": "48c906a80d274f32ac2df7ac6bef5de10a64e753bd97557fac3e7fc768fca7a7",
+  "raw_uncompressed_bytes": 17721156,
+  "files": {
+    "experiments/analysis/sampled_target_20261108/operations/seed-audit.py": "f29a816897c411c8e7c133847b5f3793ca85e037a7a549fd8093ff0b64da6b4d",
+    "experiments/analysis/sampled_target_20261108/operations/seed-audit.md": "888e287ca59cdac89de3770da789505b1ba1b36eb987ca5d528b3097b82fefe7"
+  },
+  "limitations": [
+    "Only eight registered local worktrees; other machines, unregistered checkouts and undocumented runs remain unknown.",
+    "Seedless files/records do not prove non-consumption; path/schema gaps retained.",
+    "Structured scanner covers experiments/logs/replays CSV/JSONL/JSON including gzip; conservative JSON seed interval candidates require adjudication.",
+    "Supplemental text scan covers root/docs/scripts/experiments/logs/replays .md/.py/.sh/.txt/.log files, numeric literal mentions and explicit intervals. Computed seed formulas, unsupported schemas and opaque binary formats can escape detection.",
+    "Directory symlinks not followed; .git/.venv/venv/node_modules/__pycache__ skipped.",
+    "Stored bytes deduplicated by SHA256 for structured formats; text content separately deduplicated.",
+    "No current repository spec/plan allowlist: pilot files and target cohorts remain outside the repository until this scan is accepted. Known technical seed4242 is reused, excluded from target ranges and never declared fresh. Own audit script/results excluded to avoid recursion.",
+    "No repository imports, model loading, tests or game execution; writes restricted to the two exclusive result files beside this external audit script. The CLI flag records operator acknowledgment, not independent proof of Root/Watcher approval.",
+    "Text inventory is captured once; newly created text files are not independently re-inventoried. Root and Watcher explicitly held registered worktrees stable for the complete scan.",
+    "Observed gaps: 286 seedless CSV files; 228 seedless JSONL files; 338472 JSONL records without numeric seed; 1328 invalid nonblank seed values."
+  ],
+  "adjudication": "All12 target-string hits occur solely inside64-character SHA256 fields (the same historical digest contains9910072); no seed declaration/consumption. Original raw findings preserved.",
+  "known_reused_technical_seeds": [
+    4242
+  ],
+  "freshness_claim_for_technical": false,
+  "root_validation": "Exact six ranges, eight stable heads, zero actual/numeric/interval/text hits/errors/mutations checked; all12 string records inspected; lossless gzip roundtrip verified. This does not guarantee external/seedless freshness."
+}

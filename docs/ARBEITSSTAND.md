@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Getrennter Folgeaktions-Lerner vorbereitet und synthetisch geprüft
+
+- Nach negativem Artillerieabschluss setzt Root den autonomen Auftrag mit einem SARSA-artigen Replay-Target fort. Experimentlokale Unterklassen erfassen bestätigte Folgeaktionen; beide Vergleichsarme erhalten dieselbe verzögerte Replayfreigabe. Produktive Aktionswahl, Regeln, Rewards und V14 unverändert.
+- Task1/2 nach unabhängigem statischem Fixreview installiert; Root tatsächlich 53 synthetische Tests PASS in2,71 Sekunden. Der Kontroll-Lernschritt ist auf gleichem fertigen Batch numerisch gegen den Core geprüft. Noch keine echten Spiele, Pilot-Lernupdates oder Leistungsresultate. [Stand und Belege](../experiments/analysis/sampled_target_20261108/README.md).
+- Vorab festgelegt: vier technische Spiele auf bekannter Karte4242 ohne Gradienten; danach zwei Starts45/46 mit je Kontrolle/Sampled und40+160 Spielen pro Arm; anschließend400 feste Leistungsprüfungen. Maximal1204 Ausführungen,96000 Lernupdates. Kein V14-Ersatz direkt aus diesem Methodenpilot. [Methode](superpowers/specs/2026-11-08-sampled-target.md).
+- Frischeaudit für sechs neue Kartenbereiche abgeschlossen: acht stabile Arbeitskopien, keine beobachteten Karten-/Intervall-/Texttreffer oder Fehler/Mutationen. Zwölf numerische Teilstrings in SHA256-Feldern als Nicht-Karten geprüft; externe/seedlose Datenlücken bleiben. Studienwerkzeuge und integrierte Aufnahmeprüfung sind noch offen; keine Startfreigabe aus den53 Tests allein.
+
 ## 08.11.2026 – Artillerievergleich vollständig beendet: V14 bleibt
 
 - 440 Auswahl- und 600 frische Bestätigungsspiele abgeschlossen; zwei unabhängige Daten-/Statistikaudits PASS. Root hat beide Originalanalysen und 512 Dateibindungen noch unter Messquelle `70669eb` geprüft, bevor die Quellensperre aufgehoben wurde. Alle zugehörigen Worker/Supervisor/Wachhalter beendet.
