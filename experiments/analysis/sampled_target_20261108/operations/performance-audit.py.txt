@@ -1,0 +1,479 @@
+#!/usr/bin/env python3
+"""Independent fixed Sampled-Target performance audit. TEXT PREPARATION / UNRUN.
+
+Run only after all model jobs, supervisor and wake holder have exited and Root
+separately authorizes it. No repository imports, model construction, forward,
+optimizer update or games. Safe tensor loads check the four inference copies.
+Statistics use own CSV parsing, integer scores and whole-map PCG64(0) resampling.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+import math
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+PROFILE = "sampled_target_20261108"
+TRAINING_HEAD = "945e1938a1fb1fcc87eeaf10b58138a409266581"
+SUPPORT_SHA = "384a0467a64e5b23a8e81cb5134321c79c0cad78c39a55e5411b3b324c14a408"
+V14_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+ARMS = ("control45", "sampled45", "control46", "sampled46")
+OPPONENTS = ("solution92", "sol92_sq")
+SIDES = ("player_0", "player_1")
+BASE = Path("experiments/analysis/sampled_target_performance_20261108")
+CANDIDATES = Path("experiments/candidates/sampled_target_20261108")
+ACCEPTANCE = Path("experiments/analysis/sampled_target_20261108/operations/historical_training_acceptance.json")
+PLAN = "docs/superpowers/plans/2026-11-08-sampled-target.md"
+SPEC = "docs/superpowers/specs/2026-11-08-sampled-target.md"
+FIELDS = ("seed", "side", "opponent", "result", "game_win", "point_win", "our_wins", "opp_wins",
+          "our_points", "opp_points", "point_counting_version", "wait_frac", "invalid_frac", "greedy_masked_frac",
+          "sap_attempts", "sap_hits", "stack_frac", "relics_found", "relics_seen", "known_point_tiles",
+          "belief_contradictions", "unit_steps", "steps", "secs")
+FINAL_FILES = {"manifest.json", "initial_agent.pth", "rollouts.jsonl", "prefill_proof.json", "prefill/bundle.json",
+               "prefill/replay.npz", "prefill/provenance.jsonl.gz", "prefill/trajectory.jsonl.gz",
+               "train/provenance.jsonl.gz", "train/trajectory.jsonl.gz", "final/agent.pth",
+               "final/agent.buffer.npz", "final/pilot_state.json", "final_audit.json"}
+
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def digest(path):
+    result = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            result.update(block)
+    return result.hexdigest()
+
+
+def unique(pairs):
+    result = {}
+    for key, value in pairs:
+        need(key not in result, f"Duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def read(path):
+    def bad(value):
+        raise ValueError(f"Nonfinite JSON value: {value}")
+    return json.loads(Path(path).read_text(), object_pairs_hook=unique, parse_constant=bad)
+
+
+def sha(value):
+    need(isinstance(value, str) and re.fullmatch("[0-9a-f]{64}", value), "Invalid SHA256")
+    return value
+
+
+class Evidence:
+    def __init__(self):
+        self.files = {}
+
+    def bind(self, path, expected):
+        path = Path(path)
+        need(path.is_absolute() and ".." not in path.parts, "Evidence path must be absolute and normalized")
+        path = path.resolve(strict=True)
+        need(path.is_file() and digest(path) == sha(expected), f"Changed evidence: {path}")
+        need(str(path) not in self.files or self.files[str(path)] == expected, f"Conflicting evidence: {path}")
+        self.files[str(path)] = expected
+        return path
+
+    def mapping(self, values):
+        need(isinstance(values, dict) and values, "Missing evidence inventory")
+        for path, value in values.items():
+            self.bind(path, value)
+
+    def json(self, path, value):
+        return read(self.bind(path, value))
+
+    def finish(self):
+        for path, value in self.files.items():
+            need(digest(path) == value, f"Evidence changed during audit: {path}")
+
+
+def load_support(path):
+    global H, np, torch
+    need(digest(path) == SUPPORT_SHA, "Independent typed-hash support differs")
+    spec = importlib.util.spec_from_file_location("independent_sampled_performance_support", path)
+    H = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(H)
+    np, torch = H.np, H.torch
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+
+
+def source_check(ledger, state, root, args):
+    source = state["source"]
+    need(re.fullmatch("[0-9a-f]{40}", args.expected_head) and source["head"] == state["expected_head"] == args.expected_head and
+         subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip() == args.expected_head,
+         "Performance HEAD is not the externally pinned current source")
+    need(state["plans"] == [str(root / SPEC), str(root / PLAN)], "Method source bindings differ")
+    ledger.mapping(source["files"])
+    ledger.bind(source["executable"], source["executable_sha256"])
+    need(source["python"] == state["python"] and Path(source["python"]).resolve() == Path(source["executable"]), "Interpreter differs")
+    names = subprocess.check_output(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "*.py"]).split(b"\0")
+    files = {root / value.decode() for value in names if value}
+    for directory in ("scripts", "agents", "lux"):
+        files.update((root / directory).rglob("*.py"))
+    files.update(Path(value) for value in state["plans"])
+    files.update(root / value for value in ("requirements.txt", "pyproject.toml") if (root / value).is_file())
+    environment = Path(source["python"]).parent.parent
+    if (environment / "pyvenv.cfg").is_file():
+        files.add(environment / "pyvenv.cfg")
+    for directory in (environment / "lib").glob("python*/site-packages/luxai_s3"):
+        files.update(directory.rglob("*.py"))
+    need({str(path) for path in files} == set(source["files"]), "Performance source inventory changed")
+    need(source["files"][str(root / "scripts/sampled_target_compare.py")] == sha(args.compare_sha256) and
+         source["files"][str(root / "scripts/sampled_target_eval.py")] == sha(args.eval_sha256), "Externally reviewed performance code differs")
+
+
+def training(ledger, root, accepted_sha):
+    accepted = ledger.json(root / ACCEPTANCE, accepted_sha)
+    need(all(accepted.get(k) == v for k, v in dict(schema_version=1, status="PASS", profile=PROFILE,
+         eligible_for_performance=True, root=str(root), training_head=TRAINING_HEAD,
+         totals=dict(technical_games=4, prefill_games=160, train_games=640, training_executions=800, updates=96000)).items()) and
+         set(accepted["arms"]) == set(ARMS) and accepted["source"]["head"] == TRAINING_HEAD,
+         "Incomplete or unexpected historical training acceptance")
+    # This narrow adapter uses the original study checkout, not an implicit path rebase.
+    ledger.mapping(accepted["files"]); ledger.mapping(accepted["protected"])
+    def bound(path, value=None):
+        saved = accepted["files"].get(str(path))
+        need(saved is not None and (value is None or saved == value), "Historical reference omitted from full inventory")
+        return ledger.bind(path, saved)
+    def item(value):
+        need(set(value) == {"path", "sha256"}, "Wrong historical reference schema")
+        return read(bound(value["path"], value["sha256"]))
+    manifest = read(bound(Path(accepted["prepared"]) / "manifest.json", accepted["prepared_manifest_sha256"]))
+    need(manifest["pins"] == dict(source=accepted["source"], protected=accepted["protected"]) and manifest["stage"] == "study" and
+         manifest["profile"] == PROFILE and manifest["source_sha256"] == V14_SHA, "Historical prepared manifest differs")
+    bound(Path(accepted["prepared"]) / "supervisor_launch.json")
+    for path, value in manifest["input_sha256"].items():
+        bound(path, value)
+    expected_cohorts = dict(prefill45=list(range(9915000, 9915020)), train45=list(range(9910000, 9910080)),
+                            prefill46=list(range(9925000, 9925020)), train46=list(range(9920000, 9920080)),
+                            panel=list(range(9930000, 9930020)), direct=list(range(9930100, 9930120)))
+    seeds = item(accepted["seed_acceptance"])
+    need(manifest["cohorts"] == seeds["cohorts"] == expected_cohorts and seeds["status"] == "PASS", "Exact admitted cohorts differ")
+    technical = item(accepted["technical_acceptance"])
+    need(technical["status"] == "PASS" and technical["games"] == 4 and len(technical["receipts"]) == 4, "Known technical stage not accepted")
+    for value in technical["receipts"].values():
+        bound(value["path"], value["sha256"])
+    original = item(accepted["original_validation"]); independent = item(accepted["independent_audit"])
+    receipt_hashes = {arm: accepted["arms"][arm]["receipt_sha256"] for arm in ARMS}
+    need(original["status"] == independent["status"] == "PASS" and original["training_head"] == independent["training_head"] == TRAINING_HEAD and
+         independent["receipt_sha256"] == receipt_hashes and set(original["arms"]) == set(ARMS), "Training validators did not bind these four finals")
+    state = item(accepted["supervisor"])
+    need(state["status"] == "done" and state["stage"] == "study" and not state["active"] and not state["queue"] and
+         type(state["wake"]["returncode"]) is int and state["source"] == accepted["source"], "Historical training not closed")
+    for arm in ARMS:
+        entry = accepted["arms"][arm]; receipt_path = bound(entry["receipt_path"], entry["receipt_sha256"])
+        receipt = read(receipt_path)
+        need(receipt_path.name == "final_receipt.json" and Path(entry["checkpoint_path"]) == receipt_path.parent / "final/agent.pth" and
+             receipt["arm"] == arm and receipt["status"] == "done" and receipt["games"] == 200 and receipt["updates"] == 24000 and
+             receipt["env_steps"] == 120600 and receipt["pins"] == manifest["pins"] and set(receipt["artifacts"]) == FINAL_FILES and
+             receipt["artifacts"]["final/agent.pth"] == entry["checkpoint_sha256"], "Historical final receipt differs")
+        need(original["arms"][arm] == dict(status="PASS", receipt_sha256=entry["receipt_sha256"], games=200, updates=24000, env_steps=120600) and
+             state["receipts"][arm] == {str(receipt_path): entry["receipt_sha256"]} and state["jobs"][arm]["returncode"] == 0 and
+             state["jobs"][arm]["argv"] == receipt["command"], "Historical final execution/validation differs")
+        for name, value in receipt["artifacts"].items():
+            bound(receipt_path.parent / name, value)
+    for seed in ("45", "46"):
+        gate = item(accepted["paired_prefill"][seed])
+        proofs = {role + seed: accepted["files"][str(Path(accepted["arms"][role + seed]["receipt_path"]).parent / "prefill_proof.json")]
+                  for role in ("control", "sampled")}
+        need(gate == state["paired_prefill"][seed] and gate["status"] == "matched" and gate["proof_sha256"] == proofs, "Historical paired gate differs")
+    return accepted, manifest, independent
+
+
+def inference(ledger, root, state, accepted, manifest, accepted_sha):
+    admission_path = root / CANDIDATES / "admission.json"
+    need(state["admission_path"] == str(admission_path) and state["inputs"][str(admission_path)] == state["admission_sha256"], "Admission path differs")
+    admission = ledger.json(admission_path, state["admission_sha256"])
+    config = dict(manifest["source_config"], frozen=False)
+    need(all(admission.get(k) == v for k, v in dict(schema_version=1, status="admitted", profile=PROFILE,
+         acceptance_sha256=accepted_sha, historical_source=accepted["source"], build_root=str(root),
+         inference_config=config, reload_verified=True, promoted=False).items()) and set(admission["roles"]) == set(ARMS), "Inference admission differs")
+    ledger.mapping(admission["input_sha256"])
+    historical = {str(root / ACCEPTANCE): accepted_sha, **accepted["files"]}
+    primary = Path("/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15")
+    for path, value in accepted["protected"].items():
+        saved = Path(path)
+        need(saved.is_relative_to(root) or saved.is_relative_to(primary), "Unknown historical protected-path alias")
+        target = root / saved.relative_to(root if saved.is_relative_to(root) else primary)
+        need(str(target) not in historical or historical[str(target)] == value, "Conflicting historical protected alias")
+        historical[str(target)] = value
+    need(admission["input_sha256"] == historical, "Inference admission omits historical bindings")
+    identities = {}
+    for arm in ARMS:
+        entry = admission["roles"][arm]; original_entry = accepted["arms"][arm]
+        relative = str(CANDIDATES / (arm + ".pth"))
+        ledger.bind(root / relative, entry["sha256"])
+        original = torch.load(original_entry["checkpoint_path"], map_location="cpu", weights_only=True)
+        candidate = torch.load(root / relative, map_location="cpu", weights_only=True)
+        original_values = {k: v for k, v in original.items() if k != "cfg"}
+        candidate_values = {k: v for k, v in candidate.items() if k != "cfg"}
+        identity = H.typed_sha(candidate_values)
+        need(candidate.keys() == original.keys() and identity == H.typed_sha(original_values) and candidate["cfg"] == config and
+             candidate["feature_dim"] == 79 and candidate["n_actions"] == 6 and candidate["ensemble"] == candidate["ensemble_dims"] == [] and
+             candidate["env_steps"] == 120600 and candidate["learn_steps"] == 24000, "Inference checkpoint changed outside shared config")
+        for key in ("q", "target_q"):
+            need(isinstance(candidate[key], dict) and candidate[key] and
+                 all(isinstance(value, torch.Tensor) and bool(torch.isfinite(value).all()) for value in candidate[key].values()), "Invalid copied tensors")
+        need(entry == dict(path=relative, sha256=digest(root / relative), source_checkpoint_sha256=original_entry["checkpoint_sha256"],
+                           nonconfig_sha256=identity, q_sha256=H.tensor_sha(candidate["q"]), nets=1), "Copied checkpoint identity differs")
+        identities[arm] = entry
+        del original, candidate, original_values, candidate_values
+    return admission, identities
+
+
+def jobs_plan(ledger, root, state, admission):
+    roles = {arm: str(CANDIDATES / (arm + ".pth")) for arm in ARMS}
+    jobs = [dict(name=f"{arm}_panel_{i}", role=arm, kind="panel", weights=roles[arm], opponent=opponent,
+                 seed_list=str(BASE / "plans/panel.json"), expected_games=40, workers=1)
+            for arm in ARMS for i, opponent in enumerate(OPPONENTS)]
+    jobs.extend(dict(name=f"sampled{seed}_direct", role=f"sampled{seed}", kind="direct", weights=roles[f"sampled{seed}"],
+                     opponent="self:" + roles[f"control{seed}"], seed_list=str(BASE / "plans/direct.json"), expected_games=40, workers=1)
+                for seed in (45, 46))
+    opponents = {roles[f"control{seed}"]: admission["roles"][f"control{seed}"]["sha256"] for seed in (45, 46)}
+    expected = dict(schema_version=1, profile=PROFILE, phase="performance", protocol=PLAN, roles=roles,
+                    total_games=400, max_simultaneous_model_processes=2, opponent_sha256=opponents, jobs=jobs)
+    plan_path = root / BASE / "plans/jobs.json"
+    need(state["jobs_path"] == str(plan_path), "Unexpected jobs plan path")
+    need(ledger.json(plan_path, state["inputs"][str(plan_path)]) == expected, "Plan is not the exact fixed 400-game design")
+    for job in jobs:
+        first = 9930000 if job["kind"] == "panel" else 9930100
+        path = root / job["seed_list"]; values = ledger.json(path, state["inputs"][str(path)])
+        need(values == list(range(first, first + 20)) and all(type(v) is int for v in values), "Fixed performance seeds differ")
+        job["seeds"] = values
+    need(state["job_plan"] == {job["name"]: job for job in jobs} and state["opponent_sha256"] == opponents, "Saved job plan differs")
+    return jobs, opponents
+
+
+def csv_rows(path, job):
+    with path.open(newline="") as stream:
+        reader = csv.DictReader(stream)
+        need(reader.fieldnames is not None and len(reader.fieldnames) == len(FIELDS) and set(reader.fieldnames) == set(FIELDS), "Unexpected CSV schema")
+        rows = list(reader)
+    need(len(rows) == 40, "CSV must contain exactly 40 rows")
+    expected = {(seed, side) for seed in job["seeds"] for side in SIDES}; seen = set(); result = []
+    for row in rows:
+        need(None not in row and all(value not in (None, "") for value in row.values()), "Missing CSV field")
+        values = {key: float(value) for key, value in row.items() if key not in ("side", "opponent")}
+        need(all(math.isfinite(value) for value in values.values()) and values["seed"].is_integer(), "Nonfinite/noninteger CSV data")
+        key = (int(values["seed"]), row["side"])
+        need(key in expected and key not in seen and row["opponent"] == job["opponent"], "Unexpected or duplicated CSV game")
+        seen.add(key)
+        need(values["steps"] == 303 and values["point_counting_version"] == 2 and row["point_counting_version"] == "2" and
+             values["secs"] >= 0, "Incomplete game/counting/runtime")
+        for name in ("our_wins", "opp_wins", "our_points", "opp_points", "sap_attempts", "sap_hits", "relics_found", "relics_seen",
+                     "known_point_tiles", "belief_contradictions", "unit_steps"):
+            need(values[name].is_integer() and values[name] >= 0, f"Invalid nonnegative integer {name}")
+        for name in ("wait_frac", "invalid_frac", "greedy_masked_frac", "stack_frac"):
+            need(0 <= values[name] <= 1, f"Invalid fraction {name}")
+        need(values["our_wins"] + values["opp_wins"] <= 3, "Invalid total match wins")
+        score = 1.0 if values["our_wins"] > values["opp_wins"] else 0.0 if values["our_wins"] < values["opp_wins"] else 0.5
+        point = 1.0 if values["our_points"] > values["opp_points"] else 0.0 if values["our_points"] < values["opp_points"] else 0.5
+        need(values["result"] == score and values["game_win"] == int(score == 1) and values["point_win"] == point,
+             "CSV scores disagree with recorded match/point totals")
+        result.append(dict(seed=key[0], side=key[1], opponent=row["opponent"], result=score, half=int(2 * score)))
+    need(seen == expected, "Missing CSV keys")
+    return result
+
+
+def counts(rows):
+    wins = sum(row["half"] == 2 for row in rows); draws = sum(row["half"] == 1 for row in rows)
+    size = len(rows); half = 2 * wins + draws
+    return dict(games=size, wins=wins, draws=draws, losses=size - wins - draws, half_wins=half,
+                score=half / (2 * size), strict_winrate=wins / size)
+
+
+def interval(values):
+    need(len(values) == 20 and all(math.isfinite(value) for value in values), "Bootstrap requires 20 complete map clusters")
+    # Independently generate map INDICES; a chosen index keeps all sides/opponents/starts together.
+    rng = np.random.Generator(np.random.PCG64(0))
+    indices = rng.integers(0, 20, size=(5000, 20))
+    samples = np.asarray(values, dtype=np.float64)[indices].mean(axis=1)
+    ordered = sorted(float(value) for value in samples)
+    def percentile(fraction):
+        position = (len(ordered) - 1) * fraction
+        lower = math.floor(position); upper = math.ceil(position)
+        return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower)
+    return percentile(.025), percentile(.975)
+
+
+def clusters(rows, first, width):
+    values = []
+    for seed in range(first, first + 20):
+        group = [row for row in rows if row["seed"] == seed]
+        need(len(group) == width, "Incomplete map cluster")
+        values.append(sum(row["half"] for row in group) / (2 * width))
+    return values
+
+
+def comparison(candidate, reference, opponent=None):
+    width = 2 if opponent is not None else 4
+    cv = clusters(candidate, 9930000, width); rv = clusters(reference, 9930000, width)
+    deltas = [left - right for left, right in zip(cv, rv)]
+    low, high = interval(deltas)
+    result = dict(maps=20, score=sum(cv) / 20, ref_score=sum(rv) / 20,
+                  delta=sum(deltas) / 20, low=low, high=high,
+                  candidate=counts(candidate), reference=counts(reference))
+    if opponent is not None:
+        result.update(opponent=opponent, games=40, excluded_candidate=0, excluded_reference=0)
+    return result, deltas
+
+
+def statistics(rows):
+    starts = {}; gains = []; direct_halves = []; panel_vectors = []; direct_vectors = []
+    for seed in (45, 46):
+        control = rows[f"control{seed}_panel_0"] + rows[f"control{seed}_panel_1"]
+        sampled = rows[f"sampled{seed}_panel_0"] + rows[f"sampled{seed}_panel_1"]
+        duel = rows[f"sampled{seed}_direct"]
+        panel, vector = comparison(sampled, control); panel_vectors.append(vector)
+        opponents = {opponent: comparison(rows[f"sampled{seed}_panel_{index}"], rows[f"control{seed}_panel_{index}"], opponent)[0]
+                     for index, opponent in enumerate(OPPONENTS)}
+        dv = clusters(duel, 9930100, 2); direct_vectors.append(dv); low, high = interval(dv)
+        direct = dict(maps=20, games=40, score=sum(dv) / 20, low=low, high=high, candidate=counts(duel))
+        gain = panel["candidate"]["half_wins"] - panel["reference"]["half_wins"]
+        gains.append(gain); direct_halves.append(direct["candidate"]["half_wins"])
+        starts[str(seed)] = dict(panel=panel, opponents=opponents, direct=direct, panel_half_win_gain=gain)
+    panel_mean = [(a + b) / 2 for a, b in zip(*panel_vectors)]
+    direct_mean = [(a + b) / 2 for a, b in zip(*direct_vectors)]
+    low, high = interval(panel_mean); dl, dh = interval(direct_mean)
+    checks = dict(start45_panel_positive=gains[0] > 0, start46_panel_positive=gains[1] > 0,
+                  mean_panel_gain_at_least5pp=sum(gains) >= 16, start45_direct_at_least50pct=direct_halves[0] >= 40,
+                  start46_direct_at_least50pct=direct_halves[1] >= 40, combined_direct_above50pct=sum(direct_halves) > 80)
+    return dict(games=400, maps_per_cohort=20, starts=starts, panel_half_win_gain_sum=sum(gains), direct_half_win_sum=sum(direct_halves),
+                checks=checks, passed=all(checks.values()), promoted=False,
+                descriptive_mean_panel=dict(delta=sum(panel_mean) / 20, low=low, high=high, maps=20, fixed_starts=2),
+                descriptive_mean_direct=dict(score=sum(direct_mean) / 20, low=dl, high=dh, maps=20, fixed_starts=2))
+
+
+def equal_numbers(actual, expected, path="summary"):
+    if isinstance(expected, dict):
+        need(isinstance(actual, dict) and set(actual) == set(expected), f"Different fields at {path}")
+        for key in expected:
+            equal_numbers(actual[key], expected[key], path + "." + key)
+    elif isinstance(expected, bool) or isinstance(expected, int):
+        need(type(actual) is type(expected) and actual == expected, f"Different exact value at {path}")
+    elif isinstance(expected, float):
+        need(type(actual) in (float, int) and math.isfinite(actual) and math.isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12),
+             f"Different numerical value at {path}: {actual!r} vs {expected!r}")
+    else:
+        need(type(actual) is type(expected) and actual == expected, f"Different value at {path}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("state", "state-sha256", "summary", "summary-sha256", "acceptance-sha256", "expected-head", "compare-sha256", "eval-sha256", "out"):
+        parser.add_argument("--" + name, required=True)
+    parser.add_argument("--support", default="/tmp/sampled-target-technical-audit.py")
+    args = parser.parse_args(); ledger = Evidence()
+    state_path = Path(args.state).resolve(strict=True); state = ledger.json(state_path, args.state_sha256)
+    # No NumPy/Torch import until an externally pinned, fully closed execution is admitted.
+    need(state.get("schema_version") == 1 and state.get("profile") == PROFILE and state.get("phase") == "performance" and
+         state.get("status") == "complete" and state.get("completed_games") == state.get("expected_games") == 400 and
+         not state.get("active") and not state.get("queue") and len(state.get("jobs", {})) == 10 and
+         all(type(job.get("returncode")) is int and job["returncode"] == 0 for job in state["jobs"].values()) and
+         type(state.get("wake", {}).get("returncode")) is int, "All performance jobs/owner/wake must finish first")
+    root = Path(state["root"]).resolve(strict=True); output = Path(state["out"]).resolve(strict=True)
+    need(output != root / BASE and output.is_relative_to(root / BASE) and state_path == output / "state.json", "Unexpected performance output")
+    ledger.bind(Path(args.support).resolve(strict=True), SUPPORT_SHA)
+    ledger.bind(Path(__file__).resolve(strict=True), digest(__file__))
+    load_support(args.support)
+    source_check(ledger, state, root, args)
+    ledger.mapping(state["inputs"]); ledger.mapping(state["protected"])
+    accepted, manifest, training_audit = training(ledger, root, sha(args.acceptance_sha256))
+    admission, models = inference(ledger, root, state, accepted, manifest, args.acceptance_sha256)
+    model_hashes = {arm: models[arm]["sha256"] for arm in ARMS}
+    need(state["model_sha256"] == model_hashes and state["acceptance_sha256"] == args.acceptance_sha256, "Current models/acceptance differ")
+    need(set(state["protected"]) == {str(root / "Gruppe15.zip"), *(str(root / f"agents/sherlock/weights/agent_p{i}.pth") for i in (0, 1))} and
+         all(accepted["protected"][path] == value for path, value in state["protected"].items()) and
+         all(state["protected"][str(root / f"agents/sherlock/weights/agent_p{i}.pth")] == V14_SHA for i in (0, 1)), "V14/ZIP protection differs")
+    provenance_path = output / "provenance.json"; frozen = ledger.json(provenance_path, state["inputs"][str(provenance_path)])
+    need(frozen == state["provenance"] == dict(profile=PROFILE, phase="performance", model_sha256=model_hashes,
+         source_identity=state["source"], acceptance_sha256=args.acceptance_sha256, historical_source=accepted["source"],
+         study_kind="fixed_submitted_successor_method_pilot", inference_config=admission["inference_config"]), "Frozen provenance differs")
+    reservation = root / BASE / "performance_launch.json"; launch = ledger.json(reservation, state["inputs"][str(reservation)])
+    need(state["reservation"] == str(reservation) and launch["owner_pid"] == state["owner_pid"] and launch["out"] == str(output) and
+         launch["profile"] == PROFILE and launch["phase"] == "performance" and launch["source_identity"] == state["source"] and
+         launch["jobs_path"] == state["jobs_path"] and launch["started_at"] <= state["started_at"] <= state["finished_at"], "Launch history differs")
+    wake = state["wake"]
+    need(wake["owner_pid"] == state["owner_pid"] and wake["pid"] == wake["pgid"] and
+         wake["argv"] == ["/usr/bin/caffeinate", "-i", "-w", str(state["owner_pid"])], "Wake-holder ownership differs")
+    jobs, opponents = jobs_plan(ledger, root, state, admission)
+    names = {job["name"] for job in jobs}
+    need(set(state["jobs"]) == set(state["receipts"]) == names and {path.stem for path in output.glob("*.csv")} == names and
+         {path.stem for path in (output / "receipts").glob("*.json")} == names, "Missing/extra CSV, job or receipt")
+    rows = {}; commands = {}; csv_hashes = {}; receipt_hashes = {}; intervals = []
+    for job in jobs:
+        name = job["name"]; csv_path = output / (name + ".csv"); receipt_path = output / "receipts" / (name + ".json")
+        binding = state["receipts"][name]
+        need(binding == dict(path=str(receipt_path), sha256=state["inputs"][str(receipt_path)], rows=40), "Receipt inventory differs")
+        receipt = ledger.json(receipt_path, binding["sha256"]); csv_hash = state["inputs"][str(csv_path)]
+        ledger.bind(csv_path, csv_hash)
+        command = [state["python"], "-B", "-m", "scripts.par_eval", "--weights", str(root / job["weights"]),
+                   "--seed-list", str(root / job["seed_list"]), "--workers", "1", "--opponents", job["opponent"], "--out", str(csv_path)]
+        expected = dict(profile=PROFILE, status="complete", returncode=0, job_name=name, phase="performance", role=job["role"],
+                        opponent=job["opponent"], weights=job["weights"], model_sha256=model_hashes[job["role"]], opponent_sha256=opponents,
+                        seed_list_sha256=state["inputs"][str(root / job["seed_list"])], source_identity=state["source"],
+                        csv_sha256=csv_hash, rows=40, command=command)
+        need(receipt == expected and type(receipt["returncode"]) is int and type(receipt["rows"]) is int, "Receipt fields/actual command differ")
+        execution = state["jobs"][name]
+        need(execution["argv"] == command and execution["owner_pid"] == state["owner_pid"] and type(execution["pid"]) is int and
+             execution["pid"] > 0 and execution["pgid"] == execution["pid"] and
+             state["started_at"] <= execution["started_at"] <= execution["finished_at"] <= state["finished_at"], "Owned execution history differs")
+        intervals.extend([(execution["started_at"], 1), (execution["finished_at"], -1)])
+        rows[name] = csv_rows(csv_path, job); commands[name] = command
+        csv_hashes[name] = csv_hash; receipt_hashes[name] = binding["sha256"]
+    live = 0
+    for _, delta in sorted(intervals):
+        live += delta; need(0 <= live <= 2, "Historical evaluation concurrency exceeded two")
+    need(live == 0 and sum(len(values) for values in rows.values()) == 400, "Unclosed/incomplete raw execution set")
+    computed = statistics(rows)
+    summary_path = Path(args.summary).resolve(strict=True); summary = ledger.json(summary_path, args.summary_sha256)
+    need(all(summary.get(key) == value for key, value in dict(schema_version=1, status="complete", profile=PROFILE, phase="performance", jobs=10).items()), "Original summary is not final")
+    equal_numbers({key: summary[key] for key in computed}, computed)
+    expected_inputs = dict(plan=state["inputs"][state["jobs_path"]], provenance=state["inputs"][str(provenance_path)], state=args.state_sha256,
+                           reservation=state["inputs"][str(reservation)], admission=state["admission_sha256"],
+                           historical_acceptance=args.acceptance_sha256, csv=csv_hashes, receipts=receipt_hashes)
+    need(summary["input_sha256"] == expected_inputs, "Original summary input hashes differ")
+    ledger.finish()
+    result = dict(schema_version=1, status="PASS", profile=PROFILE, phase="performance", audited_at=datetime.now(timezone.utc).isoformat(),
+                  performance_head=args.expected_head, training_head=TRAINING_HEAD, source=state["source"],
+                  historical_acceptance_sha256=args.acceptance_sha256, training_receipt_sha256=training_audit["receipt_sha256"],
+                  games=400, jobs=10, independent_statistics=computed, original_summary_sha256=args.summary_sha256,
+                  csv_sha256=csv_hashes, receipt_sha256=receipt_hashes, commands=commands, inference_models=models,
+                  input_sha256=ledger.files, bootstrap=dict(samples=5000, generator="PCG64", seed=0, cluster="whole map", percentile="linear 2.5/97.5"),
+                  promoted=False, eligible=False, limitations=[
+                      "PASS means complete bound data and reproduced calculations; screening checks may all or partly fail.",
+                      "20 independent map clusters per cohort; unadjusted intervals and two fixed training starts are not a training-population effect.",
+                      "No V14 comparison, promotion, automatic next experiment or extra games is authorized.",
+                      "CSV arithmetic and recorded process/source/hash history are audited, not unarchived gameplay trajectories or actual runtime agent configs.",
+                      "Production Agent_x and common self loading paths are bound source; separate runtime-config integration checks remain distinct evidence, not replayed here.",
+                      "Historical training PASS is preserved as a sealed prior audit, not reexecuted after the source changed.",
+                      "Tensor copies are safely loaded and byte/typed-content checked; no model construction, forward or optimizer work.",
+                      "Root must separately confirm OS-level process exit and authorize execution; a final JSON state alone is not an OS liveness probe.",
+                      "Freshness remains limited by the historical seed audit's external/seedless coverage."])
+    target = Path(args.out).absolute()
+    need(not target.exists() and str(target.resolve()) not in ledger.files, "Output must be a new file")
+    with target.open("x") as stream:
+        json.dump(result, stream, indent=2, allow_nan=False); stream.write("\n")
+    print(json.dumps(dict(status="PASS", games=400, screening_passed=computed["passed"], out=str(target), sha256=digest(target))))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as error:
+        print(f"AUDIT BLOCKED: {type(error).__name__}: {error}", file=sys.stderr)
+        sys.exit(1)

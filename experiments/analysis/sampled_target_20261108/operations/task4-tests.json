@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "report_created_at": "2026-11-08T21:33:01.565962+00:00",
+  "command": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q tests/test_sampled_target_performance.py",
+  "exit_code": 0,
+  "tests_passed": 32,
+  "duration_seconds": 3.6,
+  "test_session": 83468,
+  "tested_files": {
+    "scripts/sampled_target_compare.py": "62319ce1897334c91972d260a65305625c80d5d7f213831628fb07ff99169cb0",
+    "scripts/sampled_target_eval.py": "96e72e72652f9f9b4644480f468ba812705b9b812bcd2963f46ce98ef1fbe1f5",
+    "tests/test_sampled_target_performance.py": "7a1748eef0d8c08ceb4b8b80919c7bccddadcdea69d0010fa95b0bcc8cbc20ce"
+  },
+  "installed_files": {
+    "scripts/sampled_target_compare.py": "62319ce1897334c91972d260a65305625c80d5d7f213831628fb07ff99169cb0",
+    "scripts/sampled_target_eval.py": "8ebe13119ce57d4f1f41f87275eae2aa0dd194172ff700e3c72581c26c2d5329",
+    "tests/test_sampled_target_performance.py": "43ad791a021d04b6892c5b489af83b1aad923d0d17e1056814823ecf2f116255"
+  },
+  "note": "After this actual test run only obsolete preparation docstrings in executor/tests were updated. Root AST comparison found all executable bodies identical to the independently reviewed draft except the intended historical acceptance hash. No redundant test rerun for docstrings.",
+  "inference_build": "actual exit0; all four complete historical finals accepted, copied with exact shared source configuration, non-config data identical",
+  "fixed_plan": {
+    "games": 400,
+    "jobs": 10,
+    "additional_games_started": 0
+  },
+  "historical_acceptance_sha256": "dac732d042b700543aeec8e718771660165e5462abfa60d84a0170689ddac458"
+}

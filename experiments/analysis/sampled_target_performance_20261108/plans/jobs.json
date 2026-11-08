@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "profile": "sampled_target_20261108",
+  "phase": "performance",
+  "protocol": "docs/superpowers/plans/2026-11-08-sampled-target.md",
+  "roles": {
+    "control45": "experiments/candidates/sampled_target_20261108/control45.pth",
+    "sampled45": "experiments/candidates/sampled_target_20261108/sampled45.pth",
+    "control46": "experiments/candidates/sampled_target_20261108/control46.pth",
+    "sampled46": "experiments/candidates/sampled_target_20261108/sampled46.pth"
+  },
+  "total_games": 400,
+  "max_simultaneous_model_processes": 2,
+  "opponent_sha256": {
+    "experiments/candidates/sampled_target_20261108/control45.pth": "1938be9118f9ecde845dd1de7573886edd1007b7ad67e9d0aeda6f032a9aded3",
+    "experiments/candidates/sampled_target_20261108/control46.pth": "b927b6959c3619008e402a246b222308267e69d271870b75f23c56ff32e7576b"
+  },
+  "jobs": [
+    {
+      "name": "control45_panel_0",
+      "role": "control45",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/control45.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "control45_panel_1",
+      "role": "control45",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/control45.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled45_panel_0",
+      "role": "sampled45",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled45.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled45_panel_1",
+      "role": "sampled45",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled45.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "control46_panel_0",
+      "role": "control46",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/control46.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "control46_panel_1",
+      "role": "control46",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/control46.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled46_panel_0",
+      "role": "sampled46",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled46.pth",
+      "opponent": "solution92",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled46_panel_1",
+      "role": "sampled46",
+      "kind": "panel",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled46.pth",
+      "opponent": "sol92_sq",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/panel.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled45_direct",
+      "role": "sampled45",
+      "kind": "direct",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled45.pth",
+      "opponent": "self:experiments/candidates/sampled_target_20261108/control45.pth",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/direct.json",
+      "expected_games": 40,
+      "workers": 1
+    },
+    {
+      "name": "sampled46_direct",
+      "role": "sampled46",
+      "kind": "direct",
+      "weights": "experiments/candidates/sampled_target_20261108/sampled46.pth",
+      "opponent": "self:experiments/candidates/sampled_target_20261108/control46.pth",
+      "seed_list": "experiments/analysis/sampled_target_performance_20261108/plans/direct.json",
+      "expected_games": 40,
+      "workers": 1
+    }
+  ]
+}

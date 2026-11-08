@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Fester400-Spiel-Vergleich technisch aufgenommen
+
+- Tatsächlich32 gezielte Tests PASS in3,60s, einschließlich identischer tatsächlicher Primär-/self-Ladewege und exakter Ganzzahlgates/20-Karten-Bootstrap. Unabhängiger Entwurfsreview und Root-AST-Abgleich: kein Logikunterschied außer echter Trainingsabnahme-PIN. [Prüfbeleg](../experiments/analysis/sampled_target_20261108/operations/task4-integration.md).
+- Vier Inferenzkopien aus den vollständigen Endnetzen gebaut und wieder geladen; sämtliche Nicht-Config-Daten identisch, gemeinsame gebundene V14-Config. Fester Plan:8 Paneljobs+2 Direktduelle, je40 Spiele. Noch keine Leistungsdaten. [Plan und Laufbereich](../experiments/analysis/sampled_target_performance_20261108/README.md).
+- Leistung erst nach Commit/Abgleich unter neuer Quellenbindung starten. Methodenpilot, kein V14-Vergleich und keine Übernahme. V14/ZIP geschützt; Rohtraining und eigenständige Prüfungen bereits separat gesichert.
+
 ## 08.11.2026 – Vier Folgeaktions-Lernarme vollständig akzeptiert
 
 - Alle vier Arme abgeschlossen: je40 Vorlauf +160 Lernspiele und24.000 Updates; insgesamt800 Ausführungen/96.000 Updates, zusätzlich vier bekannte Technikspiele. Beide Vorlaufpaare vollständig gleich und tatsächliche Targetintervention unabhängig nachgerechnet. [Trainingsbericht](../experiments/analysis/sampled_target_20261108/TRAININGSERGEBNIS.md).
