@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Fester400-Spiel-Leistungsvergleich läuft
+
+- Nach akzeptiertem Training,32 bestandenen Werkzeugtests und sicherem Push/Lokalabgleich tatsächlich gestartet. Studienkopie `sherlock-student-20261104/sherlock-luxAI-team15`, eingefrorene Quelle/HEAD `153d2af974d7fa4ce1a9dbc318b1cb2dade5be2b`. Maßgeblich `experiments/analysis/sampled_target_performance_20261108/performance_v1/state.json`; Supervisor53500, Wachhalter53560, maximal zwei Rechenworker.
+- Genau vier finale Einzelnetze,8 Paneljobs+2 direkte Paarduelle, insgesamt400 Spiele. Keine V14-Rolle, Zwischenstände, Zusatzkarten oder Übernahme. Noch kein vollständiges Leistungsresultat. Kein Duplikat starten; keine Tests/Quellen-/HEAD-/Gewichtsänderungen in der Studienkopie bis zur abgeschlossenen Auswertung.
+- Trainingsbelege `bbba10c` und Leistungswerkzeuge `153d2af` tatsächlich auf main gepusht, primäre Arbeitskopie sicher aktualisiert. Acht geschützte beziehungsweise fremde lokale Dateien vorher/nachher bytegleich. Dieser reine Laufvermerk bleibt bis Ende der Quellensperre außerhalb der Studienkopie.
+
 ## 08.11.2026 – Fester400-Spiel-Vergleich technisch aufgenommen
 
 - Tatsächlich32 gezielte Tests PASS in3,60s, einschließlich identischer tatsächlicher Primär-/self-Ladewege und exakter Ganzzahlgates/20-Karten-Bootstrap. Unabhängiger Entwurfsreview und Root-AST-Abgleich: kein Logikunterschied außer echter Trainingsabnahme-PIN. [Prüfbeleg](../experiments/analysis/sampled_target_20261108/operations/task4-integration.md).
