@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Ensemble-Welle abgeschlossen: V14 bleibt
+
+- Vollständige unabhängige REPLACE36-Validierung: **3200 Spiele, 15 Jobs**, keine Remis/Ausfälle. Solution REPLACE36 **193/200**, V14 **194/200**; Sechserpanel **930/1200 statt962/1200**, Δ −2,67 pp [−6,25; +0,92]. Direkt **206/400 =51,5 % [44,5;58,5]**; default beide200/200. Sechs von zehn festen Übernahmebedingungen verfehlt, kein bestätigter Gesamtgewinn, keine Übernahme. [Abschlussbericht](ENSEMBLE_ABSCHLUSS_20261108.md).
+- Unabhängiger Audit PASS: alle3200 Rohzeilen,317 Quellen,129 gebundene Eingaben,85 alte Nachweise;262 Kennwerte bis1e-12 reproduziert. Root-Werkzeugtests zuvor228+43 bestanden. Source-Freeze f9e1195 eingehalten, alle eigenen Prozesse/Wachhalten beendet; danach eigenen Dokumentationsstand46e0fcf sicher übernommen. Keine neuen Mahmoud-Commits beim Abschlussabgleich.
+- Insgesamt4760 vollständige Vergleichsspiele einschließlich1560 Vorauswahl; unbekannte interne Ausführungen des früheren großen Abbruchs separat. Kein Nachschlag, Nachrücker oder automatischer weiterer Versuch. Neue Modelle bleiben experimentell. V14-Gewichte und ZIP unverändert, Sicherungen erhalten. Remote-Abgleich-Automation pausiert. Veröffentlichung des fertigen Ergebnisstands folgt in diesem Commit; kein Stärkenachweis durch bloßes Trainieren behauptet.
+
 ## 08.11.2026, 06:20 Berlin – begrenzter REPLACE36-Frischdatenvergleich läuft
 
 - Tatsächlich gestartet unter Quellstand `f9e1195bb65b6587206685971b3ce11e604666db`:15 Jobs/3200 Spiele, maximal zwei Spielprozesse. Controller78722, eigener Wachhalteprozess78738. [Startbeleg](../experiments/analysis/replacement_validation_20261108/started.json). Noch kein Ergebnis oder neuer Stärkegewinn behauptet.
