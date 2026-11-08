@@ -1,0 +1,18 @@
+# Independent implementation review — PASS
+
+Reviewed 2026-11-08. Scope: task1 diagnostic tools/tests and their concrete integration dependencies. No blocking spec-compliance or code-quality findings. This approves proceeding to the planned bounded technical smoke, not acceptance of gameplay evidence or a strength claim.
+
+## Inspected evidence
+
+- Read review/task briefs, implementation report, complete new-code diff, current spec/plan, project rules and latest handoff. Inspected the collector section directly after tool-output truncation.
+- Snapshot/fork jointly deepcopy Sherlock, Solution and its Global attributes. The common memo preserves internal belief aliases and Solution Space/REWARD_RESULTS Node aliases; only inspected frozen stateless Q modules/parameters are shared. Diagnostic replay/optimizer removal matches the explicit spec exception.
+- Snapshot precedes both live act calls. Branch activation saves the current post-act Global references and RNG, installs cloned pre-act values, and restores original references/inventory plus Python/NumPy/Torch CPU RNG in finally. No live-agent closure is retained. Installed wrapper step only reassigns its state/key; installed JAX engine transitions use replacement state and have no behavioral self mutation. Wrapper inventory is checked and installed engine source is frozen.
+- Intervention replaces the selected proposal before the existing rule pipeline. The original ascending UID loop, downstream SAP/planned-damage effects and other team actions remain intact. Candidate fields come from existing public context and features, not simulator hidden state.
+- Installed engine executes match step 100, then resets its point observation. Eligibility 1..89 and twelve iterations include 89..100 correctly. Existing v2 helper reconstructs the final increment; labels subtract accumulated team differentials, with the correct team index for either side.
+- Each baseline frame must exactly match the next twelve live frames. Reference/collector complete trajectories compare hashes covering typed state/observations, full actions, points and termination, plus game totals and match records. Identical first team actions with divergent continuation are rejected. First-pair reverse/repeat checks are independent forks. Shared Q memory is fingerprinted at game boundaries.
+- Exact historical twelve-key ordering, two specified smoke keys, released weight/ZIP hashes, exclusive output, shared resource lock, current quota/AC/STOP/process checks and source/input freeze are present. Sampling caps bound the normal run to 24 complete games, 2304 primary branch steps and 288 repeat/reverse steps; smoke caps are four games, 48 primary and 48 extra steps. Actual returned environment steps are counted before later evidence assertions.
+- Synthetic tests meaningfully exercise alias preservation, post-act live restoration, exception inventory/RNG restoration, reverse/repeat equality, twelve actual live frames, mutable engine input dictionaries and last-reset point counting. Also cover eligibility boundaries, downstream rules, exact key binding, foreign processes, protected files and in-memory module mutation detection.
+
+## Verification limits / next gate
+
+Read-only review; no tests, model loads, games, commits or production edits performed. Root reports 26 focused tests passed; I inspected the tests but did not rerun them. Real four-game smoke remains necessary to establish installed-runtime deepcopy compatibility, actual hook selection, complete-game passivity and live-baseline equality on both sides. Require those checks to pass before the twelve-key diagnostic. No speculative hardening requests or framework expansion are needed for this gate.
