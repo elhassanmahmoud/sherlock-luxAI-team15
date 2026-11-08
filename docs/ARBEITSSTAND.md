@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Folgeaktions-Lernvergleich gestartet; Quelle eingefroren
+
+- Vier bekannte technische Spiele auf Karte4242 abgeschlossen, beide Modi×Seiten, null Gradienten. Unabhängiger vollständiger Daten-/Tensorcheck PASS, anschließend Root-Originalvalidatoren ebenfalls PASS. Je Ausführung303 Frames und3720 vollständig gebundene Replayzeilen; Modi je Seite in Aktionen, Trajektorien, Erfahrungen und RNG identisch. Technik ist kein Stärkenachweis. Audit SHA-256 `d6be0ee133955b7c64309962a8bd629eb1f8ebf695c0bf8ec49737a196274158`, Belege zunächst lokal bis Ende der Quellensperre.
+- Fester Lernvergleich tatsächlich gestartet: Studienkopie `sherlock-student-20261104/sherlock-luxAI-team15`, Quelle/HEAD `945e1938a1fb1fcc87eeaf10b58138a409266581`, Supervisor39527, eigener Wachhalter39587. Maßgeblicher Zustand `experiments/analysis/sampled_target_20261108/training_v1/state.json`. Erste Kontroll-/Sampled-Arme45 laufen im gradientenfreien Vorlauf; Paar46 folgt erst nach vollständigem Ende des ersten. Je40+160 Spiele, insgesamt800 Ausführungen und maximal96000 Updates. Nicht duplizieren, keine Tests oder Quellenänderungen parallel.
+- Die tatsächliche Studienaufnahme hat SHA-256 `163a9ec16a1d338414172881056bd4e2ab2b52632f155e68f4c3be6d71081372`. Vor Gradienten sind vollständige Paaridentität und tatsächlicher Unterschied der Lernziele erforderlich. Zweistufige Leistungsprüfung/Übernahme nicht vorwegnehmen: zunächst lediglich der separat feste400-Spiel-Methodenvergleich nach abgeschlossener Datenabnahme.
+- Dieser Fortschrittsvermerk wird ausschließlich in der primären Dokumentationskopie veröffentlicht. Die Studienkopie übernimmt ihn erst nach Ende des Freeze. V14/ZIP und alle fremden lokalen Dateien unverändert; noch kein neues Leistungsresultat.
+
 ## 08.11.2026 – Technischen Start vor erstem Spiel korrigiert
 
 - Erster Sampled-Technikstart unter `a7e4203` vor Learnerkonstruktion gesperrt: macOS-Python ersetzt `sys.orig_argv[0]` durch seinen Framework-Launcher. Root hat die Ursache mit einer reinen Prozessprobe reproduziert; keine Agent-/Spielausführung, keine Lernupdates. Alle eigenen Prozesse beendet,397 ursprüngliche Datei-/Schutzbindungen vor Freigabe der Quelle geprüft.
