@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – neuer Auftrag: gezieltes Entscheidungslernen vorbereitet
+
+- Moayed hat nach dem Ensemble-Abschluss ausdrücklich weitere autonome Verbesserung beauftragt, auch über den nächsten Prototyp hinaus. Die abgeschlossenen Studien bleiben geschlossen; neue Hypothese und separate Belege. V14 und ZIP unverändert.
+- Historische Detailprüfung: 277 Halterabzüge, davon268 mit sichtbarem Gegner in erweiterter SAP-Nähe; die übrigen neun von negativen Energiefeldern. Ein konservativer „sicher halten“-Filter trifft null Fälle. Keine Fehlentscheidung allein aus Abzug/Vakanz ableiten.
+- Neuer [Plan](superpowers/plans/2026-11-08-holder-rollout-probe.md): eingefrorenes V14, gleiche Situation einmal normal und einmal mit einmaligem STAY-Vorschlag, vollständige Regeln/Teamfolgen, zwölf Folgeschritte. Höchstens96 Paare aus zwölf bekannten Spielen; noch keine Spiele gestartet. Vorab Machbarkeitsfilter, danach nur bei tatsächlichem Einfluss separates Lernen auf anderen Karten.
+- Gezielte Tests und unabhängiger Review vor Modellläufen; Source-Freeze und maximal zwei Prozesse bleiben. Nutzer erlaubt restliches Kontingent, Resets ausschließlich durch ihn. [Übergabe](../experiments/analysis/decision_learning_20261108/HANDOFF.md).
+
 ## 08.11.2026 – Ensemble-Welle abgeschlossen: V14 bleibt
 
 - Vollständige unabhängige REPLACE36-Validierung: **3200 Spiele, 15 Jobs**, keine Remis/Ausfälle. Solution REPLACE36 **193/200**, V14 **194/200**; Sechserpanel **930/1200 statt962/1200**, Δ −2,67 pp [−6,25; +0,92]. Direkt **206/400 =51,5 % [44,5;58,5]**; default beide200/200. Sechs von zehn festen Übernahmebedingungen verfehlt, kein bestätigter Gesamtgewinn, keine Übernahme. [Abschlussbericht](ENSEMBLE_ABSCHLUSS_20261108.md).
