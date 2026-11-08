@@ -1,0 +1,54 @@
+{
+  "status": "matched",
+  "run_seed": 45,
+  "eligible": false,
+  "shared": {
+    "config_sha256": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0",
+    "initial": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "4473951d48d0d020d705b77aee7b255b59221161ea4d1abca46966464cf7f2d3",
+      "global_rng": "b63b2b596c04698bfd7a355f7df79535549809cea2bca13aace12f6a1e5e8843",
+      "env_steps": 60000,
+      "learn_steps": 0,
+      "replay_size": 0
+    },
+    "end": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "60f346480e5279d9246af5a87a738cdf1b96f01b60611f715ee7fc70a032c2a4",
+      "global_rng": "e0c822e9157ab3590ffcc71f5d15e053daface021be29e0564a5e3a37a4732ba",
+      "env_steps": 72120,
+      "learn_steps": 0,
+      "replay_size": 144531
+    },
+    "schedule_sha256": "b552b779ef3ed1ea504430c6c5d2d88323b4cac0a49b892dd87bb206d3362fd2",
+    "replay_sha256": "e3272a7af2061a5506a5c9edcae4b272fe37319a2da829a98f84b998673a9e84",
+    "events_semantic_sha256": "3b5b4d626ea15d3a49526be43314fb07dc3d832a96f8bae9b2f63d58885fbefd",
+    "trajectory_sha256": "db564c3765cc72129373b27516dde3fabefe14685018641f052e9b5c9a01ac62",
+    "rows_semantic_sha256": "c3de4fe39110b9a0db0d633f0f6fd4f04ada7325accdd316be9b3033ffa31ebf",
+    "captured": 144531,
+    "committed": 144531,
+    "terminal": 2793,
+    "nonterminal": 141738,
+    "frames": 12120,
+    "confirmed": 12120,
+    "diagnosis": {
+      "rows": 144531,
+      "nonterminal": 141738,
+      "different_index": 16863,
+      "different_target": 16863,
+      "outside_mask": 517,
+      "positive": 131,
+      "negative": 16732,
+      "delta_sum": -10330.1646021232,
+      "readonly": true
+    }
+  },
+  "proof_sha256": {
+    "control45": "2ea7cee1d408a32a0b880214c915e254a5bda8f26579ab6b92f49edee030e55c",
+    "sampled45": "0ab3b752b5da7e7e8ff1f88e985c5f3c65748ffe709b859eb67c570f81cd9e38"
+  }
+}

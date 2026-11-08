@@ -1,6 +1,8 @@
 # Sampled-Target-Pilot
 
-**Stand 08.11.2026: Lernmodul und Studienwerkzeuge synthetisch geprüft; noch keine realen Spiele oder Lernresultate dieser Studie.** V14 und die Abgabe-ZIP bleiben unverändert. Der vorangegangene [Artillerievergleich](../artillery_comparison_20261108/ERGEBNIS.md) ist abgeschlossen und wird nicht verlängert.
+**Stand 08.11.2026: Vier Technikspiele und alle 800 Vorlauf-/Lernausführungen vollständig akzeptiert; 96.000 Updates, noch kein Leistungsresultat.**
+
+[Trainingsbericht, Rohbelege und Grenzen](TRAININGSERGEBNIS.md). Ältere Vorbereitungsnachweise unten sind historisch; die Quellensperre des Trainings wurde erst nach der vollständigen Abnahme aufgehoben. V14 und die Abgabe-ZIP bleiben unverändert. Der vorangegangene [Artillerievergleich](../artillery_comparison_20261108/ERGEBNIS.md) ist abgeschlossen und wird nicht verlängert.
 
 Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsächlich an die Engine übergebenen Folgeaktion. Beide Arme verwenden dieselbe verzögerte Replayfreigabe. Das ist SARSA-artiges Lernen aus historischen Replayaktionen, kein streng on-policy SARSA. Die normale Aktionswahl, Regeln, Rewards und der produktive Core bleiben erhalten. Nur die kurze experimentlokale Lernmethode entscheidet zwischen den beiden Targets.
 
@@ -20,10 +22,10 @@ Der Pilot vergleicht das vorhandene Double-DQN-Lernziel mit dem Wert der tatsäc
 
 [Feste Methode](../../../docs/superpowers/specs/2026-11-08-sampled-target.md), [Umsetzungsplan](../../../docs/superpowers/plans/2026-11-08-sampled-target.md).
 
-1. Vier technische Spiele auf bekannter Karte4242, beide Modi und Seiten gegen default, keine Gradienten. Noch nicht ausgeführt.
+1. Vier technische Spiele auf bekannter Karte4242, beide Modi und Seiten gegen default, keine Gradienten. Vollständig akzeptiert.
 2. Zwei Starts45/46, jeweils Kontrolle und Sampled: 40 Vorlauf- und160 Lernspiele je Arm, insgesamt800 Ausführungen und96000 Lernupdates. Vor Gradienten muss je Startpaar vollständige Vorlaufgleichheit und ein tatsächlicher Targetunterschied nachgewiesen sein.
 3. Genau400 Leistungsprüfungen der vier finalen Einzelnetze gegen Solution92/sol92_sq und paarweise direkt. Keine V14-Promotion oder automatische Ensemble-/Nachschlagsstudie aus diesem Pilot.
 
 Der feste Maximalumfang beträgt1204 Spielausführungen, getrennt nach Technik, Vorlauf/Lernen und Leistung. Die sechs Kartenlisten und alle Aufnahmebedingungen stehen in der Methode. Fehler/fehlende Labels werden nicht durch STAY, Argmax oder ausgeschlossene Zeilen ersetzt. Der Core definiert Terminalgrenzen; die geerbte nahe Respawn-Heuristik wird dadurch nicht zu einem sicheren Identitätsnachweis. „Ausgeführt“ bedeutet an die Engine übergeben, nicht garantierte physische Wirkung.
 
-Studienrunner und Supervisor sind implementiert und statisch unabhängig geprüft. Nach diesem Werkzeugstand werden Quellen und Inputs für genau die vier bekannten Technikspiele gebunden. Erst deren vollständige Datenabnahme erlaubt die getrennte Aufnahme der Frischstudie; beide Stufen behalten dieselbe unveränderte Quelle. Die 400er-Leistungsprüfung ist noch umzusetzen. Keine neuen Gewichte oder verbesserte Siegquote werden durch diese Vorbereitung behauptet.
+Technik und Training sind abgeschlossen; die vier neuen Netze bleiben experimentell. Die feste 400er-Leistungsprüfung folgt nach eigener Werkzeug- und Datenaufnahme. Aktueller Laufstatus im gemeinsamen Arbeitsstand; noch kein bestätigter Stärkegewinn.

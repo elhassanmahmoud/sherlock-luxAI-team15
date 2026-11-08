@@ -1,0 +1,658 @@
+#!/usr/bin/env python3
+"""Independent four-game Sampled-Target data audit. PREPARATION / UNRUN.
+
+No repository imports, agent construction, forward passes, simulation or updates.
+Reads persisted tensors only with torch.load(weights_only=True). Do not run before
+Root has completed and explicitly admitted the four real technical executions.
+The adapter accepts only a hash-pinned, fully completed technical supervisor state.
+"""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+import numpy as np
+import torch
+
+PROFILE = "sampled_target_20261108"
+SOURCE_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+INTERFACE_WORKER_SHA = "40d18c9a8ad8c3ef9b497ce260b533a93e2581a6c7c158a06712d89537aee224"
+INTERFACE_SUPERVISOR_SHA = "df85b767962cffc9c903da86b4ac4f539143ef7b0b0faa24f21e017c2687d07d"
+BASE = ("s", "a", "r", "ns", "done", "mask")
+EXTRA = {"next_action": "int8", "episode_id": "int32", "source_step": "int16",
+         "match_idx": "int8", "uid": "int8", "next_action_env_steps": "int64"}
+JOBS = {f"technical_{role}_p{side}": {
+    "job": f"technical_{role}_p{side}", "arm": f"{role}45",
+    "bootstrap_mode": mode, "run_seed": 45, "seed": 4242,
+    "side": f"player_{side}", "opponent": "default"}
+    for side in (0, 1)
+    for role, mode in (("control", "double_dqn"), ("sampled", "sampled_successor"))}
+
+
+class AuditError(ValueError):
+    pass
+
+
+def need(ok, message):
+    if not ok:
+        raise AuditError(message)
+
+
+def integer(value, low, high, name):
+    need(type(value) is int and low <= value <= high, f"Invalid integer {name}: {value!r}")
+    return value
+
+
+def sha(value):
+    need(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value), "Invalid SHA-256")
+    return value
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode() + b"\n"
+
+
+def no_duplicates(pairs):
+    result = {}
+    for key, value in pairs:
+        need(key not in result, f"Duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def reject_constant(value):
+    raise AuditError(f"Nonfinite JSON constant: {value}")
+
+
+def parse_json(value):
+    return json.loads(value, object_pairs_hook=no_duplicates, parse_constant=reject_constant)
+
+
+def file_sha(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+class Evidence:
+    """Only the bounded files named by the four-game historical evidence chain."""
+    def __init__(self):
+        self.files = {}
+
+    def bind(self, path, expected):
+        path = Path(path).resolve(strict=True)
+        need(path.is_file(), f"Missing regular evidence file: {path}")
+        expected = sha(expected)
+        need(str(path) not in self.files or self.files[str(path)] == expected, f"Conflicting file binding: {path}")
+        need(file_sha(path) == expected, f"Changed evidence bytes: {path}")
+        self.files[str(path)] = expected
+        return path
+
+    def read(self, path, expected):
+        return parse_json(self.bind(path, expected).read_text())
+
+    def mapping(self, values):
+        need(isinstance(values, dict) and values, "Missing bound file inventory")
+        for path, digest in values.items():
+            need(Path(path).is_absolute(), "Bound input path is not absolute")
+            self.bind(path, digest)
+
+    def finish(self):
+        for path, digest in self.files.items():
+            need(file_sha(path) == digest, f"Input changed during audit: {path}")
+
+
+def typed_sha(value):
+    """Independent implementation of the documented length-prefixed typed encoding."""
+    result = hashlib.sha256()
+
+    def part(data):
+        result.update(len(data).to_bytes(8, "big"))
+        result.update(data)
+
+    def visit(item):
+        if isinstance(item, torch.Tensor):
+            tensor = item.detach().cpu().contiguous()
+            part(b"tensor"); part(str(tensor.dtype).encode()); visit(list(tensor.shape))
+            part(tensor.reshape(-1).view(torch.uint8).numpy().tobytes())
+        elif isinstance(item, np.ndarray):
+            part(b"ndarray"); part(item.dtype.str.encode()); visit(list(item.shape))
+            part(item.tobytes(order="C"))
+        elif isinstance(item, dict):
+            part(b"dict"); part(str(len(item)).encode())
+            for key in sorted(item, key=lambda k: (type(k).__name__, repr(k))):
+                visit(key); visit(item[key])
+        elif isinstance(item, (tuple, list)):
+            part(type(item).__name__.encode()); part(str(len(item)).encode())
+            for child in item:
+                visit(child)
+        elif isinstance(item, (str, int, float, bool, type(None))):
+            part(type(item).__name__.encode()); part(repr(item).encode())
+        elif isinstance(item, np.generic):
+            visit(item.item())
+        else:
+            raise AuditError(f"Unsupported typed evidence: {type(item).__name__}")
+
+    visit(value)
+    return result.hexdigest()
+
+
+def tensor_sha(state):
+    need(isinstance(state, dict) and state, "Missing tensor state")
+    digest = hashlib.sha256()
+    for key in sorted(state):
+        tensor = state[key]
+        need(isinstance(key, str) and isinstance(tensor, torch.Tensor), "Non-tensor state entry")
+        tensor = tensor.detach().cpu().contiguous()
+        need(bool(torch.isfinite(tensor).all()), f"Nonfinite tensor {key}")
+        header = json.dumps([key, str(tensor.dtype), list(tensor.shape)], separators=(",", ":"))
+        digest.update(header.encode() + b"\n")
+        digest.update(tensor.reshape(-1).view(torch.uint8).numpy().tobytes())
+    return digest.hexdigest()
+
+
+def replay_read(path):
+    with np.load(path, allow_pickle=False) as archive:
+        need(set(archive.files) == {*BASE, *EXTRA, "schema_version"}, "Replay keys differ")
+        rows = {name: archive[name] for name in archive.files}
+    version = rows.pop("schema_version")
+    need(version.shape == () and version.dtype == np.dtype("int64") and int(version) == 1,
+         "Replay schema differs")
+    need(rows["a"].ndim == 1, "Action rank differs")
+    count = len(rows["a"])
+    need(0 < count <= 303 * 16, "Unexpected single-game replay size")
+    dtypes = {"s": "float32", "ns": "float32", "a": "int64", "r": "float32",
+              "done": "float32", "mask": "bool", **EXTRA}
+    for name, dtype in dtypes.items():
+        shape = (count, 79) if name in ("s", "ns") else (count, 6) if name == "mask" else (count,)
+        need(rows[name].shape == shape and rows[name].dtype == np.dtype(dtype), f"Replay {name} schema differs")
+        if rows[name].dtype.kind == "f":
+            need(bool(np.isfinite(rows[name]).all()), f"Nonfinite replay {name}")
+    need(bool(np.isin(rows["done"], [0, 1]).all()), "Invalid done flags")
+    need(bool(((rows["a"] >= 0) & (rows["a"] <= 5)).all()), "Invalid source action")
+    need(bool(rows["mask"].any(axis=1).all()), "Empty next mask")
+    terminal = rows["done"] == 1
+    need(bool(((rows["next_action"][terminal] == -1) &
+               (rows["next_action_env_steps"][terminal] == -1)).all()), "Terminal sentinel differs")
+    need(bool(((rows["next_action"][~terminal] >= 0) &
+               (rows["next_action"][~terminal] <= 5)).all()), "Invalid successor action")
+    return rows
+
+
+def replay_sha(rows):
+    count = len(rows["a"])
+    digest = hashlib.sha256(canonical(dict(size=count, capacity=300000, obs_dim=79)))
+    for name in (*BASE, *EXTRA):
+        array = rows[name]
+        digest.update(canonical([name, array.dtype.str, list(array.shape)]))
+        digest.update(array.tobytes(order="C"))
+    return digest.hexdigest()
+
+
+def provenance_read(path, expected_episode, rows):
+    """Index one full game, then independently join frames, captures, commits and rows."""
+    events = []
+    semantic = hashlib.sha256()
+    with gzip.open(path, "rt", encoding="utf-8") as stream:
+        for line in stream:
+            need(bool(line.strip()), "Blank provenance line")
+            event = parse_json(line)
+            need(isinstance(event, dict), "Non-object provenance record")
+            events.append(event); semantic.update(canonical(event))
+    need(events and events[0] == {"event": "episode", **expected_episode}, "Wrong sole episode metadata")
+    episode = integer(expected_episode["episode_id"], 0, 2**31 - 1, "episode_id")
+    frames = {}; captures = {}; commits = {}; confirmations = {}
+    capture_order = []; commit_order = []; current = None
+    captures_per_frame = {}; positions = {}; native_digests = {}
+    for position, event in enumerate(events[1:], 1):
+        kind = event.get("event")
+        need(kind in {"frame", "capture", "commit", "confirmed"}, f"Unknown or repeated episode event {kind}")
+        if kind == "frame":
+            key = tuple(event["key"])
+            need(current is None and len(key) == 3 and all(type(value) is int for value in key) and key[0] == episode and
+                 key[2] == len(frames) and key[1] == key[2] // 101, "Frame order/match differs")
+            step = integer(key[2], 0, 302, "frame step")
+            need(event["env_steps"] == 60000 + step, "Wrong pre-update clock")
+            sha(event["observation_sha256"])
+            native = np.asarray(event["native"])
+            need(native.shape == (16, 3) and native.dtype.kind in "iu", "Invalid native output")
+            native = native.astype(np.int64, copy=False)
+            need(bool(((native[:, 0] >= 0) & (native[:, 0] <= 5)).all()), "Invalid native command")
+            units = event["units"]
+            need(isinstance(units, list) and len(units) <= 16, "Invalid unit list")
+            unit_map = {}
+            for unit in units:
+                uid = integer(unit["uid"], 0, 15, "uid")
+                action = integer(unit["action"], 0, 5, "canonical action")
+                need(uid not in unit_map, "Duplicate acted uid")
+                expected = [0, 2, 1, 4, 3][action] if expected_episode["side"] == "player_1" and action < 5 else action
+                need(int(native[uid, 0]) == expected, "Native/canonical direction differs")
+                if action < 5:
+                    need(bool((native[uid, 1:] == 0).all()), "Movement has SAP displacement")
+                sha(unit["features_sha256"]); sha(unit["mask_sha256"])
+                unit_map[uid] = unit
+            if step % 101 == 0:
+                need(not units, "Match-start no-op unexpectedly contains transitions")
+            frames[key] = dict(event=event, units=unit_map, position=position)
+            captures_per_frame[key] = []
+            native_digests[key] = typed_sha(native)
+            current = key
+        elif kind == "capture":
+            identity = tuple(event["identity"])
+            need(current is not None and len(identity) == 3 and identity[:2] == (episode, current[2]) and
+                 identity not in captures and identity[2] in frames[current]["units"], "Wrong/duplicate capture identity")
+            unit = frames[current]["units"][identity[2]]
+            need(event["match_idx"] == current[1] and event["action"] == unit["action"] and
+                 event["s_sha256"] == unit["features_sha256"] and event["done"] in (0.0, 1.0), "Capture/source differs")
+            need(isinstance(event["reward"], (float, int)) and math.isfinite(event["reward"]), "Invalid captured reward")
+            for field in ("s_sha256", "ns_sha256", "mask_sha256"):
+                sha(event[field])
+            captures[identity] = event; capture_order.append(identity)
+            captures_per_frame[current].append(identity)
+            positions[("capture", identity)] = position
+        elif kind == "commit":
+            identity = tuple(event["identity"])
+            need(current is not None and identity in captures and identity not in commits, "Uncaptured/duplicate commit")
+            need(event["ordinal"] == len(commit_order) + 1 and identity == capture_order[len(commit_order)], "Commit order differs")
+            commits[identity] = dict(event=event, frame=current, position=position)
+            commit_order.append(identity)
+        else:
+            key = tuple(event["key"])
+            need(current == key and key not in confirmations and event["native_sha256"] == native_digests[key], "Unconfirmed native action")
+            need([identity[2] for identity in captures_per_frame[key]] == list(frames[key]["units"]), "Missing/extra/reordered frame captures")
+            confirmations[key] = position; current = None
+    need(current is None and len(frames) == len(confirmations) == 303, "Incomplete 303-step game")
+    need(capture_order == commit_order and len(capture_order) == len(rows["a"]), "Pending/missing/extra replay transitions")
+    for index, identity in enumerate(capture_order):
+        source = captures[identity]; committed = commits[identity]; event = committed["event"]
+        key = (episode, source["match_idx"], identity[1]); frame = frames[key]
+        need(event["action"] == source["action"] and event["done"] == source["done"], "Commit/source metadata differs")
+        batch = [captures[value] for value in captures_per_frame[key]]
+        delayed = any(row["done"] == 0 for row in batch)
+        target_frame = (episode, key[1], key[2] + 1) if delayed else key
+        need(committed["frame"] == target_frame and target_frame in confirmations and
+             committed["position"] < confirmations[target_frame], "Commit happens in the wrong update")
+        if delayed:
+            current_captures = captures_per_frame[target_frame]
+            need(all(committed["position"] < positions[("capture", value)] for value in current_captures),
+                 "Delayed batch committed after new capture")
+        else:
+            need(all(positions[("capture", value)] < committed["position"] for value in captures_per_frame[key]),
+                 "Terminal batch committed before full capture")
+        if source["done"]:
+            need(event["successor_key"] is None and event["next_action"] == event["next_action_env_steps"] == -1,
+                 "Terminal transition has successor label")
+        else:
+            successor = tuple(event["successor_key"])
+            need(successor == target_frame and identity[2] in frames[successor]["units"], "Missing successor uid")
+            unit = frames[successor]["units"][identity[2]]
+            need(source["ns_sha256"] == unit["features_sha256"] and source["mask_sha256"] == unit["mask_sha256"] and
+                 event["next_action"] == unit["action"] and event["next_action_env_steps"] == frames[successor]["event"]["env_steps"],
+                 "Successor state/mask/action/clock not bound")
+        for name, value in {"episode_id": identity[0], "source_step": identity[1], "uid": identity[2],
+                            "match_idx": source["match_idx"], "a": source["action"], "done": source["done"],
+                            "next_action": event["next_action"], "next_action_env_steps": event["next_action_env_steps"]}.items():
+            need(rows[name][index].item() == value, f"Replay row {index} differs: {name}")
+        need(rows["r"][index].tobytes() == np.float32(source["reward"]).tobytes(), "Replay reward differs")
+        for name, field in (("s", "s_sha256"), ("ns", "ns_sha256"), ("mask", "mask_sha256")):
+            need(typed_sha(rows[name][index]) == source[field], f"Replay {name} bytes differ from capture")
+    terminal = int((rows["done"] == 1).sum())
+    need(len(captures) - terminal > 0, "Technical game contains no demonstrated successor labels")
+    counts = dict(episodes=1, frames=303, confirmed=303, captured=len(captures), committed=len(commits),
+                  terminal=terminal, nonterminal=len(captures)-terminal)
+    return (dict(counts=counts, semantic_sha256=semantic.hexdigest(), file_sha256=file_sha(path)),
+            {key[2]: value["event"]["native"] for key, value in frames.items()})
+
+
+def submitted_sha(actions):
+    """Exact typed encoding restricted to this recorder's submitted-action tuple."""
+    digest = hashlib.sha256()
+
+    def part(value):
+        digest.update(len(value).to_bytes(8, "big")); digest.update(value)
+
+    def visit(value):
+        if isinstance(value, dict):
+            part(b"dict")
+            for key in sorted(value, key=lambda k: (type(k).__name__, str(k))):
+                visit(key); visit(value[key])
+        elif isinstance(value, (tuple, list)):
+            part(type(value).__name__.encode()); part(str(len(value)).encode())
+            for item in value:
+                visit(item)
+        elif isinstance(value, np.ndarray):
+            part(b"array"); part(value.dtype.str.encode()); part(str(value.shape).encode()); part(value.tobytes())
+        elif isinstance(value, str):
+            part(b"str"); part(repr(value).encode())
+        else:
+            raise AuditError("Unsupported submitted-action evidence")
+
+    visit(("submitted", actions))
+    return digest.hexdigest()
+
+
+def trajectory_read(path, own_side, own_native, expected_digest):
+    with gzip.open(path, "rt", encoding="utf-8") as stream:
+        records = [parse_json(line) for line in stream]
+    chronology = [("reset", 0)] + [(kind, step + (kind == "result"))
+                                  for step in range(303) for kind in ("submitted", "result")]
+    need(len(records) == len(chronology) == 607, "Incomplete/extra engine transcript")
+    digest = hashlib.sha256()
+    for record, (kind, step) in zip(records, chronology):
+        fields = {"episode_id", "kind", "step", "sha256"} | ({"actions"} if kind == "submitted" else set())
+        need(set(record) == fields and record["episode_id"] == 0 and
+             record["kind"] == kind and record["step"] == step, "Engine transcript chronology/schema differs")
+        digest.update(sha(record["sha256"]).encode())
+        if kind == "submitted":
+            need(set(record["actions"]) == {"player_0", "player_1"}, "Engine action side missing")
+            arrays = {}
+            for side, values in record["actions"].items():
+                data = np.asarray(values)
+                need(data.shape == (16, 3) and data.dtype.kind in "iu", "Engine action schema differs")
+                arrays[side] = data.astype(np.int64, copy=False)
+            need(record["actions"][own_side] == own_native[step], "Engine-submitted own action differs from frame")
+            need(submitted_sha(arrays) == record["sha256"], "Recorded native actions do not reproduce submitted digest")
+    need(digest.hexdigest() == expected_digest, "Trajectory aggregate differs")
+    return records
+
+
+def checkpoint_read(path, identity, config, env_steps):
+    checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+    need(isinstance(checkpoint, dict) and checkpoint.get("feature_dim") == 79 and
+         checkpoint.get("n_actions") == 6 and checkpoint.get("ensemble") == [] and
+         checkpoint.get("ensemble_dims") == [] and checkpoint.get("cfg") == config and
+         checkpoint.get("env_steps") == env_steps and checkpoint.get("learn_steps") == 0,
+         "Technical checkpoint identity/config/counters differ")
+    optimizer = checkpoint["opt"]
+    need(isinstance(optimizer, dict) and set(optimizer) == {"state", "param_groups"} and
+         optimizer["state"] == {} and isinstance(optimizer["param_groups"], list) and
+         optimizer["param_groups"], "Technical Adam is not fresh and stateless")
+    parameters = []
+    for group in optimizer["param_groups"]:
+        need(group["lr"] == 5e-5 and isinstance(group["params"], list) and group["params"], "Wrong Adam group")
+        parameters.extend(group["params"])
+    need(len(parameters) == len(set(parameters)) == len(checkpoint["q"]), "Adam parameter set differs from Q state")
+    measured = dict(q=tensor_sha(checkpoint["q"]), target=tensor_sha(checkpoint["target_q"]),
+                    optimizer=typed_sha(optimizer))
+    need(all(identity.get(key) == value for key, value in measured.items()), "Saved tensors/Adam differ from recorded identity")
+    need(identity["env_steps"] == env_steps and identity["learn_steps"] == 0, "Identity counters differ")
+    sha(identity["agent_rng"]); sha(identity["global_rng"])
+    return measured
+
+
+def audit_game(ledger, receipt_path, receipt_hash, job, prepared, manifest, state_path, command):
+    expected = JOBS[job]
+    receipt_path = Path(receipt_path).resolve(strict=True)
+    directory = receipt_path.parent
+    receipt = ledger.read(receipt_path, receipt_hash)
+    fixed = dict(schema_version=1, status="done", profile=PROFILE, eligible=False,
+                 **expected, games=1, updates=0, prepared=str(prepared), pins=manifest["pins"],
+                 manifest_sha256=file_sha(prepared / "manifest.json"), command=command,
+                 name=f"20261108_sampled_target_{job}")
+    need(all(receipt.get(key) == value for key, value in fixed.items()), f"Wrong technical receipt: {job}")
+    need(directory.name == fixed["name"], "Run directory/name differs")
+    names = {"manifest.json", "rollouts.jsonl", "initial_agent.pth", "technical_agent.pth",
+             "technical_proof.json", "prefill/bundle.json", "prefill/replay.npz",
+             "prefill/provenance.jsonl.gz", "prefill/trajectory.jsonl.gz"}
+    need(set(receipt["artifacts"]) == names, "Technical artifact inventory differs")
+    for name, digest in receipt["artifacts"].items():
+        ledger.bind(directory / name, digest)
+    need(math.isfinite(receipt["started_at"]) and math.isfinite(receipt["finished_at"]) and
+         receipt["finished_at"] >= receipt["started_at"], "Receipt time order differs")
+    run = parse_json((directory / "manifest.json").read_text())
+    entry = manifest["arms"][expected["arm"]]
+    expected_inputs = {**manifest["input_sha256"], str(prepared / "manifest.json"): fixed["manifest_sha256"],
+                       str(prepared / expected["arm"] / "initial.pth"): entry["weights_sha256"]}
+    need(run == dict(schema_version=1, profile=PROFILE, pins=manifest["pins"], job=job,
+                     name=fixed["name"], entry=entry, prepared=str(prepared),
+                     prepared_manifest_sha256=fixed["manifest_sha256"], inputs=expected_inputs,
+                     command=command, supervisor_state=str(state_path)), "Historical run manifest differs")
+    ledger.mapping(expected_inputs)
+    config = entry["config"]
+    recipe = dict(frozen=False, lr=5e-5, gamma=.99, batch_size=256, buffer_capacity=300000,
+                  canonical=True, double_dqn=True, use_sap=True, eps_end=.05, eps_decay_steps=60000,
+                  learn_start=5000, train_every=2, target_update_every=500, guided_prob=.7,
+                  rules_in_training=True, rules_in_training_all=True, rescue_in_training=True,
+                  fog_unknown_reward_neutral=False, art_splash_in_training=False)
+    need(all(config.get(k) == v for k, v in recipe.items()), "Wrong technical learner configuration")
+    overrides = dict(frozen=False, lr=5e-5, rules_in_training=True, rules_in_training_all=True,
+                     rescue_in_training=True, fog_unknown_reward_neutral=False, art_splash_in_training=False)
+    need(config == {**manifest["source_config"], **overrides}, "Unexpected extra config change")
+    need(entry["run_seed"] == 45 and entry["component_index"] == 18 and
+         entry["bootstrap_mode"] == expected["bootstrap_mode"], "Wrong initial component/mode/seed")
+    bundle = parse_json((directory / "prefill/bundle.json").read_text())
+    proof = parse_json((directory / "technical_proof.json").read_text())
+    need(all(bundle.get(k) == v for k, v in dict(schema_version=1, profile=PROFILE, arm=expected["arm"],
+         prepared=str(prepared), entry=entry, manifest_sha256=fixed["manifest_sha256"], diagnosis=None).items()),
+         "Technical phase bundle differs")
+    need(set(bundle["artifacts"]) == {"replay.npz", "provenance.jsonl.gz", "trajectory.jsonl.gz"}, "Phase artifact set differs")
+    for name, digest in bundle["artifacts"].items():
+        ledger.bind(directory / "prefill" / name, digest)
+    rollouts = [parse_json(line) for line in (directory / "rollouts.jsonl").read_text().splitlines()]
+    need(len(rollouts) == 1 and rollouts == bundle["rows"], "Wrong single technical rollout")
+    row = rollouts[0]
+    schedule = dict(phase="prefill", game=0, seed=4242, side=expected["side"], opponent="default")
+    expected_row = dict(**schedule, steps=303, env_steps=60303, learn_steps=0, updates=0,
+                        point_counting_version=2, config_sha256=typed_sha(config))
+    need(all(row.get(k) == v for k, v in expected_row.items()), "Technical rollout identity/counters differ")
+    need(row["result"] in (0., .5, 1.) and math.isfinite(row["secs"]) and row["secs"] >= 0, "Invalid technical result metadata")
+    data = replay_read(directory / "prefill/replay.npz")
+    count = len(data["a"])
+    events, own_native = provenance_read(directory / "prefill/provenance.jsonl.gz", dict(episode_id=0, **schedule), data)
+    need(events == bundle["events"] and row["provenance"] == {k: events[k] for k in ("counts", "semantic_sha256")},
+         "Provenance totals/digest differ")
+    replay_digest = replay_sha(data)
+    need(replay_digest == bundle["replay_sha256"], "Replay semantic digest differs")
+    transcript = trajectory_read(directory / "prefill/trajectory.jsonl.gz", expected["side"], own_native, row["trajectory_sha256"])
+    initial, end = bundle["initial"], bundle["end"]
+    identity_keys = {"q", "target", "optimizer", "agent_rng", "global_rng", "env_steps", "learn_steps", "replay_size"}
+    need(set(initial) == set(end) == identity_keys and initial["replay_size"] == 0 and end["replay_size"] == count,
+         "Fresh/end learner identity differs")
+    start_tensors = checkpoint_read(directory / "initial_agent.pth", initial, config, 60000)
+    final_tensors = checkpoint_read(directory / "technical_agent.pth", end, config, 60303)
+    need(start_tensors == final_tensors and initial["q"] == initial["target"] == sha(entry["tensor_sha256"]),
+         "Q/Target/Adam changed in gradient-free technical game")
+    prepared_checkpoint = torch.load(prepared / expected["arm"] / "initial.pth", map_location="cpu", weights_only=True)
+    need(prepared_checkpoint["cfg"] == config and prepared_checkpoint["env_steps"] == 60000 and
+         prepared_checkpoint["learn_steps"] == 0 and tensor_sha(prepared_checkpoint["q"]) == initial["q"] and
+         tensor_sha(prepared_checkpoint["target_q"]) == initial["target"], "Saved initial network differs from prepared input")
+    shared = dict(config_sha256=typed_sha(config), initial=initial, end=end,
+                  schedule_sha256=typed_sha([schedule]), replay_sha256=replay_digest,
+                  events_semantic_sha256=events["semantic_sha256"],
+                  trajectory_sha256=typed_sha([row["trajectory_sha256"]]),
+                  rows_semantic_sha256=typed_sha([{k: v for k, v in row.items() if k != "secs"}]),
+                  **{k: events["counts"][k] for k in ("captured", "committed", "terminal", "nonterminal", "frames", "confirmed")})
+    need(receipt["shared"] == shared, "Technical shared summary differs from raw data")
+    need(proof == dict(schema_version=1, status="technical_ready", profile=PROFILE,
+                      arm=expected["arm"], run_seed=45, bootstrap_mode=expected["bootstrap_mode"], games=1,
+                      shared=shared, bundle_sha256=file_sha(directory / "prefill/bundle.json")), "Technical proof differs")
+    return dict(shared=shared, replay=data, transcript=transcript, result=row["result"],
+                started_at=receipt["started_at"], finished_at=receipt["finished_at"],
+                receipt=dict(path=str(receipt_path), sha256=receipt_hash))
+
+
+def prepared_read(ledger, state):
+    root = Path(state["root"]).resolve(strict=True)
+    prepared = Path(state["prepared"]).resolve(strict=True)
+    ledger.mapping(state["inputs"])
+    manifest_path = prepared / "manifest.json"
+    need(str(manifest_path) in state["inputs"], "Prepared manifest not bound by historical supervisor")
+    manifest = ledger.read(manifest_path, state["inputs"][str(manifest_path)])
+    need(manifest.get("schema_version") == 1 and manifest.get("profile") == PROFILE and
+         manifest.get("stage") == "technical" and manifest.get("technical_plan") == list(JOBS.values()),
+         "Preparation is not the exact four-game technical stage")
+    source = state["source"]
+    need(manifest["pins"] == {"source": source, "protected": state["protected"]}, "Frozen pins differ")
+    need(source["head"] == state["expected_head"] and re.fullmatch(r"[0-9a-f]{40}", source["head"]), "Invalid source HEAD")
+    observed_head = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    need(observed_head == source["head"], "Current HEAD differs from recorded technical freeze")
+    ledger.mapping(source["files"])
+    names = subprocess.check_output(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others",
+                                     "--exclude-standard", "--", "*.py"]).split(b"\0")
+    inventory = {root / name.decode() for name in names if name}
+    for directory in ("scripts", "agents", "lux"):
+        inventory.update((root / directory).rglob("*.py"))
+    inventory.update(Path(path) for path in state["plans"])
+    inventory.update(root / name for name in ("requirements.txt", "pyproject.toml") if (root / name).is_file())
+    environment = Path(source["python"]).parent.parent
+    if (environment / "pyvenv.cfg").is_file():
+        inventory.add(environment / "pyvenv.cfg")
+    for engine in (environment / "lib").glob("python*/site-packages/luxai_s3"):
+        inventory.update(engine.rglob("*.py"))
+    need({str(path) for path in inventory} == set(source["files"]), "Source file inventory changed since freeze")
+    need(source["python"] == state["python"] and Path(source["python"]).resolve() == Path(source["executable"]),
+         "Historical interpreter path differs")
+    ledger.bind(source["executable"], source["executable_sha256"])
+    required_sources = [root / "scripts" / f"{name}.py" for name in
+                        ("sampled_target_study", "sampled_target_supervisor", "sampled_target_agent", "common", "holder_rollout")]
+    required_sources += [root / "agents/sherlock/main.py", root / "agents/default/default.py"]
+    need(all(str(path) in source["files"] for path in required_sources), "Required actual execution source missing from freeze")
+    need(all(str(root / f"docs/superpowers/{kind}/2026-11-08-sampled-target.md") in source["files"]
+             for kind in ("specs", "plans")), "Method documents missing from freeze")
+    ledger.mapping(state["protected"])
+    need(all(state["protected"].get(str(root / f"agents/sherlock/weights/agent_p{i}.pth")) == SOURCE_SHA for i in (0, 1))
+         and str(root / "Gruppe15.zip") in state["protected"], "V14/ZIP protection absent")
+    ledger.mapping(manifest["input_sha256"])
+    admission = ledger.read(manifest["admission"], manifest["admission_sha256"])
+    need(all(admission.get(k) == v for k, v in dict(schema_version=1, status="PASS", profile=PROFILE,
+              stage="technical", pins=manifest["pins"], technical_acceptance=None).items()), "Wrong original Root admission")
+    for key in ("review", "seed_acceptance"):
+        item = admission[key]
+        need(set(item) == {"path", "sha256"} and manifest["input_sha256"].get(item["path"]) == item["sha256"],
+             "Admission artifact not bound in preparation")
+        ledger.bind(item["path"], item["sha256"])
+    seed = parse_json(Path(admission["seed_acceptance"]["path"]).read_text())
+    need(seed.get("status") == "PASS" and seed.get("profile") == PROFILE and seed.get("cohorts") == manifest["cohorts"],
+         "Prepared cohort identity differs from accepted artifact")
+    item = seed["audit"]; ledger.bind(root / item["path"], item["sha256"])
+    raw_audit = parse_json((root / item["path"]).read_text())
+    need(raw_audit.get("status") == "PASS" and raw_audit.get("no_observed_conflicts") is True and
+         raw_audit.get("limitations"), "Seed acceptance lacks bounded result/limitations")
+    ledger.bind(root / raw_audit["raw_audit"]["path"], raw_audit["raw_audit"]["sha256"])
+    for relative, digest in raw_audit["files"].items():
+        ledger.bind(root / relative, digest)
+    need(manifest["source_sha256"] == SOURCE_SHA, "Wrong source weight identity")
+    ledger.bind(manifest["source"], SOURCE_SHA)
+    source_checkpoint = torch.load(manifest["source"], map_location="cpu", weights_only=True)
+    components = [source_checkpoint["q"], *source_checkpoint.get("ensemble", [])]
+    need(len(components) == 36 and source_checkpoint["feature_dim"] == 79 and source_checkpoint["n_actions"] == 6,
+         "Source is not the original 36-net V14")
+    need(all(manifest["source_config"].get(k) == v for k, v in source_checkpoint["cfg"].items()),
+         "Recorded source configuration differs from stored source fields")
+    component_hash = tensor_sha(components[18])
+    need(all(manifest["arms"][arm]["tensor_sha256"] == component_hash for arm in ("control45", "sampled45")),
+         "Prepared networks do not originate from component18")
+    del source_checkpoint, components
+    return root, prepared, manifest
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--state", required=True, type=Path, help="Finished technical supervisor state.json")
+    parser.add_argument("--state-sha256", required=True, help="Externally observed final state SHA-256")
+    parser.add_argument("--out", required=True, type=Path, help="New, exclusive audit JSON; never an existing file")
+    args = parser.parse_args()
+    need(not args.out.exists() and args.out.parent.is_dir(), "Audit output must be a new file in an existing directory")
+    ledger = Evidence()
+    ledger.bind(Path(__file__), file_sha(Path(__file__)))
+    state_path = args.state.resolve(strict=True)
+    state = ledger.read(state_path, args.state_sha256)
+    expected = dict(schema_version=1, profile=PROFILE, stage="technical", status="done", eligible=False,
+                    active=[], queue=[], paired_prefill={})
+    need(all(state.get(k) == v for k, v in expected.items()) and
+         set(state["jobs"]) == set(state["receipts"]) == set(JOBS) and
+         set(state["technical_pairs"]) == {"player_0", "player_1"}, "Not a fully completed four-job technical state")
+    need(not state.get("error") and not state.get("cleanup_error"), "Supervisor has an error/cleanup failure")
+    need(Path(state["out"]).resolve() / "state.json" == state_path, "Supervisor state output path differs")
+    need(math.isfinite(state["started_at"]) and math.isfinite(state["finished_at"]) and
+         state["finished_at"] >= state["started_at"], "Supervisor timestamps differ")
+    owner = integer(state["owner_pid"], 1, 2**31 - 1, "supervisor owner")
+    wake = state["wake"]
+    need(wake.get("owner_pid") == owner and wake.get("pid") == wake.get("pgid") and
+         type(wake.get("returncode")) is int and wake.get("argv") == ["/usr/bin/caffeinate", "-i", "-w", str(owner)],
+         "Owned wake process lacks completed historical receipt")
+    root, prepared, manifest = prepared_read(ledger, state)
+    launch_path = prepared / "supervisor_launch.json"
+    need(str(launch_path) in state["inputs"], "Historical launch missing from pinned inputs")
+    launch = ledger.read(launch_path, state["inputs"][str(launch_path)])
+    need(set(launch) == {"owner_pid", "profile", "stage", "out", "started_at"} and
+         launch["owner_pid"] == owner and launch["profile"] == PROFILE and launch["stage"] == "technical" and
+         launch["out"] == state["out"] and math.isfinite(launch["started_at"]) and
+         launch["started_at"] <= state["started_at"], "Historical supervisor launch differs")
+    results = {}
+    for job in JOBS:
+        history = state["jobs"][job]
+        pid = integer(history["pid"], 1, 2**31 - 1, "worker pid")
+        command = [state["python"], "-B", "-m", "scripts.sampled_target_study", "technical",
+                   "--prepared", str(prepared), "--arm", job, "--name", f"20261108_sampled_target_{job}",
+                   "--supervisor-state", str(state_path)]
+        need(history["argv"] == command and history["pgid"] == pid and history["owner_pid"] == owner and
+             type(history["returncode"]) is int and history["returncode"] == 0 and
+             math.isfinite(history["started_at"]) and math.isfinite(history["finished_at"]) and
+             state["started_at"] <= history["started_at"] <= history["finished_at"] <= state["finished_at"],
+             f"Incomplete or different historical owned command: {job}")
+        receipt_path = root / "experiments/runs" / f"20261108_sampled_target_{job}" / "technical_receipt.json"
+        binding = state["receipts"][job]
+        need(set(binding) == {str(receipt_path)}, "Wrong receipt path in supervisor state")
+        result = audit_game(ledger, receipt_path, binding[str(receipt_path)], job, prepared, manifest, state_path, command)
+        need(history["started_at"] <= result["started_at"] <= result["finished_at"] <= history["finished_at"],
+             "Worker receipt lies outside its historical process interval")
+        results[job] = result
+    first_pair = ("technical_control_p0", "technical_sampled_p0")
+    second_pair = ("technical_control_p1", "technical_sampled_p1")
+    need(max(state["jobs"][job]["finished_at"] for job in first_pair) <=
+         min(state["jobs"][job]["started_at"] for job in second_pair), "Second technical pair started before first pair exited")
+    pair_checks = {}
+    for side in (0, 1):
+        control = results[f"technical_control_p{side}"]
+        sampled = results[f"technical_sampled_p{side}"]
+        need(control["shared"] == sampled["shared"], "Paired initial/end identities, RNG or semantic evidence differ")
+        need(control["transcript"] == sampled["transcript"], "Paired complete engine transcript differs")
+        for name in (*BASE, *EXTRA):
+            left, right = control["replay"][name], sampled["replay"][name]
+            need(left.dtype == right.dtype and left.shape == right.shape and left.tobytes() == right.tobytes(),
+                 f"Paired replay bytes differ: {name}")
+        pair = dict(status="matched", side=f"player_{side}", eligible=False, shared=control["shared"])
+        need(state["technical_pairs"][f"player_{side}"] == pair, "Supervisor pair summary differs from independent reconstruction")
+        pair_checks[f"player_{side}"] = dict(status="PASS", transitions_each=len(control["replay"]["a"]),
+                                             frames_each=303, engine_transcript_records_each=607)
+    ledger.finish()
+    report = dict(schema_version=1, status="PASS", profile=PROFILE, scope="four known technical games only",
+        audited_at=datetime.now(timezone.utc).isoformat(), games=4, env_steps=1212, updates=0, eligible=False,
+        state=dict(path=str(state_path), sha256=args.state_sha256),
+        pins=manifest["pins"], receipts={job: value["receipt"] for job, value in results.items()},
+        pairs=pair_checks, commands={job: state["jobs"][job]["argv"] for job in JOBS},
+        technical_results={job: value["result"] for job, value in results.items()},
+        audit_script_sha256=file_sha(Path(__file__)), interface_reference_worker_sha256=INTERFACE_WORKER_SHA,
+        interface_reference_supervisor_sha256=INTERFACE_SUPERVISOR_SHA,
+        input_sha256=ledger.files,
+        limitations=[
+            "No agent/model instance, forward, simulation, update, resampling, test or repository-helper import; tensor-only safe checkpoint reads.",
+            "Exact reset/result engine digests are compared and hash-bound, but cannot be recomputed without archived raw engine arrays; submitted action digests are independently recomputed.",
+            "RNG fingerprints are compared as recorded identities; complete RNG states are not archived in this technical format.",
+            "Submitted successor commands and Core-defined terminal boundaries are verified, not guaranteed engine effects or biological lifetime identity.",
+            "learn_enabled=False and clean live boundaries are enforced by the bound runner; the raw archives independently verify zero updates and no unmatched transition/frame evidence.",
+            "Historical commands/return codes are checked from bound receipts; this auditor does not relaunch jobs or independently reproduce the past process scheduler.",
+            "Known seed4242 is reused; this is neither a freshness/strength result nor training admission or V14 promotion."])
+    need(str(args.out.resolve()) not in ledger.files, "Audit output would replace an input")
+    with args.out.open("x") as stream:
+        stream.write(json.dumps(report, indent=2, allow_nan=False) + "\n")
+    print(json.dumps(dict(status="PASS", games=4, updates=0, output=str(args.out.resolve()), sha256=file_sha(args.out))))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as error:
+        print(f"AUDIT BLOCKED: {type(error).__name__}: {error}", file=sys.stderr)
+        raise SystemExit(1)

@@ -1,0 +1,337 @@
+#!/usr/bin/env python3
+"""One-use Root seal for frozen945e193 training. TEXT DRAFT; ENTIRELY UNRUN.
+
+Run only after Root review and after all training/audit processes have exited.
+No games, learning, numerical imports or repeated receipt/tensor validation.
+The original frozen supervisor already calls validate_final_receipt before it
+records each receipt hash; its complete done state is the execution evidence.
+This helper checks that bound evidence and the actual independent full audit.
+Never install this helper in the repository before sealing the training freeze.
+"""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import tempfile
+
+HEAD = "945e1938a1fb1fcc87eeaf10b58138a409266581"
+PROFILE = "sampled_target_20261108"
+WORKER_SHA = "40d18c9a8ad8c3ef9b497ce260b533a93e2581a6c7c158a06712d89537aee224"
+SUPERVISOR_SHA = "e6d5bb238fe0fd4d27f00c103ec4824f04c01ce3b7a5cd51297b877c5a1bb443"
+SOURCE_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+ARMS = ("control45", "sampled45", "control46", "sampled46")
+TECH_JOBS = {f"technical_{role}_p{side}" for side in (0, 1) for role in ("control", "sampled")}
+BASE = Path("experiments/analysis/sampled_target_20261108")
+COHORTS = {"prefill45": list(range(9915000, 9915020)), "train45": list(range(9910000, 9910080)),
+           "prefill46": list(range(9925000, 9925020)), "train46": list(range(9920000, 9920080)),
+           "panel": list(range(9930000, 9930020)), "direct": list(range(9930100, 9930120))}
+TOTALS = dict(technical_games=4, prefill_games=160, train_games=640, training_executions=800, updates=96000)
+FINAL_FILES = {"manifest.json", "initial_agent.pth", "rollouts.jsonl", "prefill_proof.json", "prefill/bundle.json",
+               "prefill/replay.npz", "prefill/provenance.jsonl.gz", "prefill/trajectory.jsonl.gz",
+               "train/provenance.jsonl.gz", "train/trajectory.jsonl.gz", "final/agent.pth",
+               "final/agent.buffer.npz", "final/pilot_state.json", "final_audit.json"}
+
+
+def need(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def sha(path):
+    h = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def hex64(value):
+    return isinstance(value, str) and re.fullmatch("[0-9a-f]{64}", value) is not None
+
+
+def absolute(value):
+    p = Path(value)
+    need(p.is_absolute() and ".." not in p.parts, "Expected absolute non-traversing path")
+    return p
+
+
+def read(path):
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            need(key not in result, "Duplicate JSON key")
+            result[key] = value
+        return result
+    def nonfinite(value):
+        raise ValueError("Nonfinite JSON constant: " + value)
+    return json.loads(Path(path).read_text(), object_pairs_hook=pairs, parse_constant=nonfinite)
+
+
+def publish(path, data):
+    """Complete bytes first; publish once, atomically, without replacing anything."""
+    need(not path.exists() and path.parent.is_dir(), "Output exists or parent missing")
+    if not isinstance(data, bytes):
+        data = (json.dumps(data, indent=2, allow_nan=False) + "\n").encode()
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=".seal-", delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(data); stream.flush(); os.fsync(stream.fileno())
+        os.link(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
+def verify(mapping):
+    need(isinstance(mapping, dict) and bool(mapping), "Empty hash inventory")
+    for path, expected in mapping.items():
+        need(hex64(expected) and sha(absolute(path)) == expected, "Changed input: " + path)
+
+
+def closed_processes(state):
+    """Read process table only; do not kill, wait for, or restart any process."""
+    owner = state["owner_pid"]; wake = state["wake"]
+    need(type(owner) is int and owner > 1 and type(wake.get("returncode")) is int
+         and wake.get("owner_pid") == owner and wake.get("pid") == wake.get("pgid")
+         and wake.get("argv") == ["/usr/bin/caffeinate", "-i", "-w", str(owner)], "Unclosed/incorrect wake record")
+    pids = {owner, wake["pid"]}; groups = {wake["pgid"]}
+    for job in state["jobs"].values():
+        need(job.get("owner_pid") == owner and type(job.get("pid")) is int and job["pid"] > 1
+             and job.get("pgid") == job["pid"] and type(job.get("returncode")) is int
+             and job["returncode"] == 0 and math.isfinite(job["finished_at"]), "Incomplete owned worker")
+        pids.add(job["pid"]); groups.add(job["pgid"])
+    snapshot = subprocess.check_output(["ps", "-axo", "pid=,pgid=,args="], text=True, timeout=5)
+    for line in snapshot.splitlines():
+        fields = line.strip().split(None, 2)
+        if len(fields) != 3:
+            continue
+        pid, pgid, command = int(fields[0]), int(fields[1]), fields[2]
+        need(pid not in pids and pgid not in groups, "Historical owned process/group is still present")
+        if pid == os.getpid():
+            continue
+        executable = Path(command.split()[0]).name.lower()
+        if "python" in executable or "pytest" in executable:
+            need(not re.search(r"(?:pytest|sampled[-_]target.*audit|(?:-m\s+scripts\.|scripts/)[\w]*(?:train|eval|study|supervisor|probe|distill|experiment))", command),
+                 "Other test/model/audit process is active")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--state", type=Path, required=True)
+    parser.add_argument("--state-sha256", required=True, help="Root-pinned final state bytes")
+    parser.add_argument("--audit", type=Path, required=True, help="Actual completed independent audit JSON")
+    parser.add_argument("--audit-sha256", required=True, help="Independently supplied actual audit SHA")
+    args = parser.parse_args()
+    helper_sha256 = sha(Path(__file__))
+    root = args.root.resolve(strict=True)
+    need(Path.cwd().resolve() == root and root.is_dir(), "Run from the frozen study checkout")
+    state_path, audit_path = args.state.resolve(strict=True), args.audit.resolve(strict=True)
+    operations = root / BASE / "operations"
+    original_path = operations / "original_training_validation.json"
+    archived_audit = operations / "training_independent_audit.json"
+    acceptance_path = operations / "historical_training_acceptance.json"
+    need(state_path == root / BASE / "training_v1/state.json", "Wrong fixed training state")
+    need(all(not p.exists() for p in (original_path, acceptance_path)) and operations.is_dir(), "Seal outputs already exist")
+    need(audit_path == archived_audit or not archived_audit.exists(), "Audit archive already exists; no replacement")
+    need(hex64(args.state_sha256) and sha(state_path) == args.state_sha256, "Root-pinned state changed")
+    need(hex64(args.audit_sha256) and sha(audit_path) == args.audit_sha256, "Root-pinned audit changed")
+    state, audit = read(state_path), read(audit_path)
+    expected = dict(schema_version=1, profile=PROFILE, stage="study", status="done", eligible=False,
+                    active=[], queue=[], technical_pairs={})
+    need(all(state.get(k) == v for k, v in expected.items()) and set(state.get("jobs", {})) == set(ARMS)
+         and set(state.get("receipts", {})) == set(ARMS) and set(state.get("paired_prefill", {})) == {"45", "46"}
+         and not state.get("error") and not state.get("cleanup_error"), "Four-arm training is not complete")
+    need(math.isfinite(state["finished_at"]) and math.isfinite(state["last_guard_at"])
+         and state["last_guard_at"] <= state["finished_at"], "Missing final supervisor guard/completion")
+    need(state["root"] == str(root) and state["out"] == str(state_path.parent)
+         and state["expected_head"] == state["source"]["head"] == HEAD
+         and sys.executable == state["python"] == state["source"]["python"], "Wrong root/source/interpreter")
+    need(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip() == HEAD,
+         "Original training HEAD is no longer active")
+    closed_processes(state)  # Before importing the project or its numerical libraries.
+    source, protected = state["source"], state["protected"]
+    verify(source["files"]); verify(protected)
+    need(sha(source["python"]) == source["executable_sha256"] and
+         Path(source["python"]).resolve() == Path(source["executable"]), "Runtime binding changed")
+    need(source["files"].get(str(root / "scripts/sampled_target_study.py")) == WORKER_SHA and
+         source["files"].get(str(root / "scripts/sampled_target_supervisor.py")) == SUPERVISOR_SHA,
+         "Original validator/supervisor source differs")
+    need(all(protected.get(str(root / f"agents/sherlock/weights/agent_p{i}.pth")) == SOURCE_SHA for i in (0, 1))
+         and str(root / "Gruppe15.zip") in protected, "Missing original V14/ZIP protection")
+
+    # Maintain an artifact inventory, not a rebasing inventory of runtime/source files.
+    files, external = {}, {}
+    def bind(path, expected=None):
+        p = absolute(path)
+        need(p.is_relative_to(root) and p.resolve(strict=True) == p and p.is_file(), "Artifact escapes repository: " + str(p))
+        key = str(p); measured = files.get(key) or sha(p)
+        need((expected is None or hex64(expected) and measured == expected), "Artifact hash differs: " + key)
+        files[key] = measured
+        return p
+    def ref(path, expected=None):
+        p = bind(path, expected)
+        return dict(path=str(p), sha256=files[str(p)])
+    def evidence(item):
+        need(isinstance(item, dict) and set(item) == {"path", "sha256"}, "Bad evidence reference")
+        return read(bind(item["path"], item["sha256"]))
+    def artifacts(mapping):
+        need(isinstance(mapping, dict) and bool(mapping), "Missing artifact inventory")
+        for p, expected_hash in mapping.items():
+            bind(p, expected_hash)
+    def audit_inventory(record):
+        mapping = record["input_sha256"]
+        need(isinstance(mapping, dict) and bool(mapping), "Audit inventory absent")
+        code_hashes = {record.get("audit_script_sha256"), record.get("independent_support_sha256")}
+        for value, expected_hash in mapping.items():
+            p = absolute(value)
+            need(hex64(expected_hash), "Invalid audit input hash")
+            if value in source["files"]:
+                need(source["files"][value] == expected_hash, "Audit source identity differs")
+            elif value in protected:
+                need(protected[value] == expected_hash, "Audit protected identity differs")
+            elif value == source["executable"]:
+                need(source["executable_sha256"] == expected_hash, "Audit executable differs")
+            elif p.is_relative_to(root):
+                bind(p, expected_hash)
+            else:
+                need(p.name in {"sampled-target-training-audit.py", "sampled-target-technical-audit.py"}
+                     and expected_hash in code_hashes and sha(p) == expected_hash,
+                     "Unclassified external audit input: " + value)
+                external[value] = expected_hash
+    artifacts(state["inputs"]); bind(state_path, args.state_sha256)
+    prepared = absolute(state["prepared"])
+    need(prepared == root / "experiments/runs/20261108_sampled_target_prepared", "Wrong fixed preparation")
+    manifest_path = bind(prepared / "manifest.json", state["inputs"][str(prepared / "manifest.json")])
+    manifest = read(manifest_path)
+    need(manifest["stage"] == "study" and manifest["profile"] == PROFILE and manifest["cohorts"] == COHORTS
+         and manifest["pins"] == dict(source=source, protected=protected) and set(manifest["arms"]) == set(ARMS),
+         "Prepared source/cohorts differ")
+    artifacts(manifest["input_sha256"])
+    admission = read(bind(manifest["admission"], manifest["admission_sha256"]))
+    need(admission["status"] == "PASS" and admission["stage"] == "study" and admission["pins"] == manifest["pins"],
+         "Original Root admission differs")
+    review = admission["review"]
+    need(isinstance(review, dict) and set(review) == {"path", "sha256"}, "Bad review reference")
+    bind(review["path"], review["sha256"])  # Actual evidence is Markdown, not JSON.
+    seeds = evidence(admission["seed_acceptance"])
+    need(seeds["status"] == "PASS" and seeds["profile"] == PROFILE and seeds["cohorts"] == COHORTS, "Wrong six seed cohorts")
+    seed_audit = read(bind(root / seeds["audit"]["path"], seeds["audit"]["sha256"]))
+    need(seed_audit["status"] == "PASS" and seed_audit["no_observed_conflicts"] is True and seed_audit["limitations"],
+         "Seed audit lacks accepted limits")
+    bind(root / seed_audit["raw_audit"]["path"], seed_audit["raw_audit"]["sha256"])
+    for p, h in seed_audit["files"].items(): bind(root / p, h)
+    technical = evidence(admission["technical_acceptance"])
+    need(technical["status"] == "PASS" and technical["profile"] == PROFILE and technical["games"] == 4
+         and technical["updates"] == 0 and technical["pins"] == manifest["pins"]
+         and set(technical["receipts"]) == TECH_JOBS, "Four accepted technical games absent")
+    audit_inventory(technical)
+    tech_state = evidence(technical["state"]); artifacts(tech_state["inputs"])
+    tech_admission_path = operations / "technical_admission_v2.json"
+    tech_admission = read(bind(tech_admission_path, tech_state["inputs"][str(tech_admission_path)]))
+    failed = evidence(tech_admission["previous_failure"])
+    need(failed["status"] == "CLOSED_FAILED_BEFORE_MODEL" and failed["profile"] == PROFILE
+         and failed["games_started"] == failed["games_completed"] == failed["updates"] == 0,
+         "Prior zero-game launcher failure is not preserved")
+    for item in technical["receipts"].values():
+        receipt = evidence(item); directory = Path(item["path"]).parent
+        for name, h in receipt["artifacts"].items(): bind(directory / name, h)
+    need(audit.get("schema_version") == 1 and audit.get("status") == "PASS" and audit.get("profile") == PROFILE
+         and audit.get("training_head") == HEAD and audit.get("eligible") is False
+         and audit.get("root") == str(root) and audit.get("source") == source
+         and audit.get("pins") == manifest["pins"] and audit.get("protected") == protected
+         and audit.get("prepared") == str(prepared) and audit.get("prepared_manifest_sha256") == files[str(manifest_path)]
+         and audit.get("supervisor") == dict(path=str(state_path), sha256=args.state_sha256)
+         and audit.get("totals") == dict(prefill_games=160, train_games=640, training_executions=800, updates=96000, actual_env_steps=242400)
+         and set(audit.get("arms", {})) == set(ARMS) and set(audit.get("paired_prefill", {})) == {"45", "46"}
+         and audit.get("limitations"), "Independent audit does not accept this complete frozen run")
+    audit_inventory(audit)
+    receipts, arms, receipt_hashes = {}, {}, {}
+    for arm in ARMS:
+        directory = root / "experiments/runs" / f"20261108_sampled_target_{arm}"
+        path = directory / "final_receipt.json"; expected_hash = state["receipts"][arm].get(str(path))
+        need(set(state["receipts"][arm]) == {str(path)} and hex64(expected_hash), "Wrong final receipt binding")
+        receipt = read(bind(path, expected_hash)); receipts[arm] = receipt; receipt_hashes[arm] = expected_hash
+        need(receipt["arm"] == arm and receipt["status"] == "done" and receipt["prepared"] == str(prepared)
+             and receipt["games"] == 200 and receipt["updates"] == 24000 and receipt["env_steps"] == 120600
+             and receipt["command"] == state["jobs"][arm]["argv"] and set(receipt["artifacts"]) == FINAL_FILES,
+             "Final arm/command/counts differ")
+        for name, h in receipt["artifacts"].items(): bind(directory / name, h)
+        bind(prepared / arm / "initial.pth", manifest["arms"][arm]["weights_sha256"])
+        arms[arm] = dict(receipt_path=str(path), receipt_sha256=expected_hash,
+                        checkpoint_path=str(directory / "final/agent.pth"), checkpoint_sha256=receipt["artifacts"]["final/agent.pth"])
+        need(all(audit["arms"][arm].get(k) == v for k, v in arms[arm].items()) and
+             audit["commands"][arm] == receipt["command"], "Independent arm/command binding differs")
+    need(audit["receipt_sha256"] == receipt_hashes, "Independent audit covers other receipts")
+    pair_refs = {}
+    for seed in (45, 46):
+        key = str(seed); path = state_path.parent / f"paired_prefill_{seed}.json"
+        h = receipts[f"control{seed}"]["paired_gate_sha256"]
+        pair_refs[key] = ref(path, h); gate = read(path)
+        need(receipts[f"sampled{seed}"]["paired_gate_sha256"] == h and gate == state["paired_prefill"][key]
+             and gate["status"] == "matched" and gate["run_seed"] == seed and gate["eligible"] is False
+             and gate["proof_sha256"] == {role + key: receipts[role + key]["artifacts"]["prefill_proof.json"] for role in ("control", "sampled")}
+             and audit["paired_prefill"][key]["status"] == "PASS" and audit["paired_prefill"][key]["gate_sha256"] == h,
+             "Paired gate/audit binding differs")
+
+    os.environ["PYTHONDONTWRITEBYTECODE"] = "1"; sys.dont_write_bytecode = True
+    sys.path.insert(0, str(root))
+    from scripts.early_curriculum_study import source_identity
+    def final_check():
+        closed_processes(state)
+        need(source_identity(root, state["python"], state["plans"]) == source, "Complete source inventory/HEAD changed")
+        verify(protected); verify(files)
+        if external: verify(external)
+        need(sha(audit_path) == args.audit_sha256 and sha(state_path) == args.state_sha256, "Audit/state changed")
+        need(sha(Path(__file__)) == helper_sha256, "Completion helper changed during execution")
+    final_check()
+    # Frozen supervisor e6d5bb...: collect_pair lines187-207 invokes the exact
+    # original validator, checks command/receipt stability, then stores its hash.
+    # run_queue lines242-266 requires all four receipts and a final source/input
+    # guard before status=done. These are historical calls, not calls by Root here.
+    checked = {arm: dict(status="PASS", receipt_sha256=receipt_hashes[arm],
+                         games=receipts[arm]["games"], updates=receipts[arm]["updates"],
+                         env_steps=receipts[arm]["env_steps"]) for arm in ARMS}
+    original_report = dict(status="PASS", training_head=HEAD,
+        validator="scripts.sampled_target_study.validate_final_receipt", arms=checked,
+        execution_origin="original frozen supervisor collect_pair", root_reexecuted=False,
+        original_supervisor=dict(path=str(root / "scripts/sampled_target_supervisor.py"), sha256=SUPERVISOR_SHA),
+        original_validator_source=dict(path=str(root / "scripts/sampled_target_study.py"), sha256=WORKER_SHA),
+        reported_at=datetime.now(timezone.utc).isoformat(), source=source,
+        supervisor=dict(path=str(state_path), sha256=args.state_sha256),
+        supervisor_finished_at=state["finished_at"], helper_sha256=helper_sha256,
+        note="PASS records successful original validator calls evidenced by the bound completed supervisor. "
+             "Root did not reexecute those validators; this helper seals their existing receipt hashes "
+             "after verifying the actual independent full audit and unchanged evidence/source/protected files.")
+    if audit_path != archived_audit:
+        raw = audit_path.read_bytes(); need(hashlib.sha256(raw).hexdigest() == args.audit_sha256, "Audit changed before archive")
+        publish(archived_audit, raw)
+    bind(archived_audit, args.audit_sha256)
+    publish(original_path, original_report); bind(original_path)
+    acceptance = dict(schema_version=1, status="PASS", profile=PROFILE, eligible_for_performance=True,
+        root=str(root), training_head=HEAD, source=source, protected=protected,
+        prepared=str(prepared), prepared_manifest_sha256=files[str(manifest_path)], totals=TOTALS,
+        supervisor=ref(state_path, args.state_sha256), seed_acceptance=admission["seed_acceptance"],
+        technical_acceptance=admission["technical_acceptance"], original_validation=ref(original_path),
+        independent_audit=ref(archived_audit, args.audit_sha256), paired_prefill=pair_refs, arms=arms,
+        files=dict(sorted(files.items())), sealed_at=datetime.now(timezone.utc).isoformat(),
+        audit_external_files=dict(sorted(external.items())), helper_sha256=helper_sha256,
+        limitations=audit["limitations"], seed_limitations=seed_audit["limitations"],
+        promotion_allowed=False, source_release="Root acceptance still required; helper changes no HEAD or weights")
+    final_check()
+    publish(acceptance_path, acceptance)
+    print(json.dumps(dict(status="PASS", original_validation=ref(original_path),
+                         historical_acceptance=dict(path=str(acceptance_path), sha256=sha(acceptance_path)))))
+
+
+if __name__ == "__main__":
+    main()

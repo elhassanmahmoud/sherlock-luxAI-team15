@@ -1,0 +1,615 @@
+#!/usr/bin/env python3
+"""Independent final Sampled-Target TRAINING audit: TEXT PREPARATION / UNRUN.
+
+Execute only after all four workers and supervisor have exited and Root explicitly
+authorizes the audit. Includes deterministic OFFLINE FORWARD CALCULATIONS for the
+prefill target diagnosis; no RNG draws, optimizer steps, games or repository imports.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from datetime import datetime, timezone
+import gzip
+import hashlib
+import importlib.util
+import json
+import math
+from pathlib import Path
+import random
+import subprocess
+import sys
+
+PROFILE = "sampled_target_20261108"
+HEAD = "945e1938a1fb1fcc87eeaf10b58138a409266581"
+SUPPORT_SHA = "384a0467a64e5b23a8e81cb5134321c79c0cad78c39a55e5411b3b324c14a408"
+WORKER_SHA = "40d18c9a8ad8c3ef9b497ce260b533a93e2581a6c7c158a06712d89537aee224"
+SUPERVISOR_SHA = "e6d5bb238fe0fd4d27f00c103ec4824f04c01ce3b7a5cd51297b877c5a1bb443"
+ARMS = {f"{role}{seed}": (seed, mode) for seed in (45, 46)
+        for role, mode in (("control", "double_dqn"), ("sampled", "sampled_successor"))}
+COHORTS = {"prefill45": list(range(9915000, 9915020)), "train45": list(range(9910000, 9910080)),
+           "prefill46": list(range(9925000, 9925020)), "train46": list(range(9920000, 9920080)),
+           "panel": list(range(9930000, 9930020)), "direct": list(range(9930100, 9930120))}
+PLAN_KEYS = ("phase", "game", "seed", "side", "opponent")
+NAMES = {"manifest.json", "initial_agent.pth", "rollouts.jsonl", "prefill_proof.json", "prefill/bundle.json",
+         "prefill/replay.npz", "prefill/provenance.jsonl.gz", "prefill/trajectory.jsonl.gz",
+         "train/provenance.jsonl.gz", "train/trajectory.jsonl.gz", "final/agent.pth",
+         "final/agent.buffer.npz", "final/pilot_state.json", "final_audit.json"}
+
+
+def need(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def digest(path):
+    result = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            result.update(block)
+    return result.hexdigest()
+
+
+def load_support(path):
+    global H, np, torch
+    need(digest(path) == SUPPORT_SHA, "Independent support code differs from reviewed technical auditor")
+    spec = importlib.util.spec_from_file_location("independent_sampled_technical_support", path)
+    H = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(H)
+    np, torch = H.np, H.torch
+
+
+def read(path):
+    return H.parse_json(Path(path).read_text())
+
+
+def replay(path):
+    with np.load(path, allow_pickle=False) as archive:
+        need(set(archive.files) == {*H.BASE, *H.EXTRA, "schema_version"}, "Wrong replay schema fields")
+        data = {key: archive[key] for key in archive.files}
+    version = data.pop("schema_version")
+    need(version.shape == () and version.dtype == np.dtype("int64") and int(version) == 1, "Wrong replay version")
+    need(data["a"].ndim == 1, "Wrong action rank")
+    count = len(data["a"])
+    need(0 < count <= 300000, "Wrong retained replay size")
+    dtypes = dict(s="float32", ns="float32", a="int64", r="float32", done="float32", mask="bool", **H.EXTRA)
+    for key, dtype in dtypes.items():
+        shape = (count, 79) if key in ("s", "ns") else (count, 6) if key == "mask" else (count,)
+        need(data[key].shape == shape and data[key].dtype == np.dtype(dtype), f"Replay {key} shape/dtype differs")
+        if data[key].dtype.kind == "f":
+            need(bool(np.isfinite(data[key]).all()), f"Nonfinite replay {key}")
+    need(bool(np.isin(data["done"], [0, 1]).all()) and bool(data["mask"].any(axis=1).all()), "Invalid done/mask")
+    need(bool(((data["a"] >= 0) & (data["a"] <= 5)).all()), "Invalid source action")
+    terminal = data["done"] == 1
+    need(bool(((data["next_action"][terminal] == -1) & (data["next_action_env_steps"][terminal] == -1)).all()),
+         "Terminal sentinels differ")
+    need(bool(((data["next_action"][~terminal] >= 0) & (data["next_action"][~terminal] <= 5) &
+               (data["next_action_env_steps"][~terminal] >= 60000)).all()), "Invalid nonterminal label/clock")
+    return data
+
+
+def architecture(config):
+    width = config["hidden"]
+    shapes = {"body.0.weight": (width, 79), "body.0.bias": (width,),
+              "body.2.weight": (width, width), "body.2.bias": (width,)}
+    if config["dueling"]:
+        for prefix, size in (("value", 1), ("adv", 6)):
+            shapes.update({f"{prefix}.0.weight": (128, width), f"{prefix}.0.bias": (128,),
+                           f"{prefix}.2.weight": (size, 128), f"{prefix}.2.bias": (size,)})
+    else:
+        shapes.update({"head.weight": (6, width), "head.bias": (6,)})
+    return shapes
+
+
+def checkpoint(path, config, identity, initial=None):
+    saved = torch.load(path, map_location="cpu", weights_only=True)
+    need(saved.get("cfg") == config and saved.get("feature_dim") == 79 and saved.get("n_actions") == 6 and
+         saved.get("ensemble") == [] and saved.get("ensemble_dims") == [] and
+         saved.get("env_steps") == identity["env_steps"] and saved.get("learn_steps") == identity["learn_steps"],
+         "Checkpoint config/counters differ")
+    shapes = architecture(config)
+    for key in ("q", "target_q"):
+        need(list(saved[key]) == list(shapes), "Q parameter identities/order differ")
+        for name, shape in shapes.items():
+            value = saved[key][name]
+            need(isinstance(value, torch.Tensor) and tuple(value.shape) == shape and value.dtype == torch.float32 and
+                 bool(torch.isfinite(value).all()), f"Invalid tensor {key}/{name}")
+    need(H.tensor_sha(saved["q"]) == identity["q"] and H.tensor_sha(saved["target_q"]) == identity["target"] and
+         H.typed_sha(saved["opt"]) == identity["optimizer"], "Checkpoint fingerprints differ")
+    opt = saved["opt"]
+    need(set(opt) == {"state", "param_groups"} and len(opt["param_groups"]) == 1, "Unexpected Adam structure")
+    group = opt["param_groups"][0]
+    need(group["params"] == list(range(len(shapes))) and group["lr"] == 5e-5 and group["amsgrad"] is False,
+         "Adam parameter mapping/configuration differs")
+    if initial is None:
+        need(saved["learn_steps"] == 0 and opt["state"] == {} and saved["env_steps"] == 60000,
+             "Initial Adam/clock not fresh")
+    else:
+        need(saved["learn_steps"] == 24000 and saved["env_steps"] == 120600 and
+             opt["param_groups"] == initial["opt"]["param_groups"] and set(opt["state"]) == set(group["params"]),
+             "Final Adam state or parameter groups incomplete")
+        for number, name in enumerate(shapes):
+            item = opt["state"][number]
+            need(set(item) == {"step", "exp_avg", "exp_avg_sq"}, "Missing/extra Adam moment fields")
+            step = item["step"]
+            need(isinstance(step, torch.Tensor) and step.numel() == 1 and bool(torch.isfinite(step).all()) and
+                 step.item() == 24000, "Adam parameter step is not 24000")
+            for key in ("exp_avg", "exp_avg_sq"):
+                value = item[key]
+                need(isinstance(value, torch.Tensor) and tuple(value.shape) == shapes[name] and
+                     value.dtype == saved["q"][name].dtype and bool(torch.isfinite(value).all()), "Adam moment schema/finiteness differs")
+            need(bool((item["exp_avg_sq"] >= 0).all()), "Negative Adam squared moment")
+        need(identity["q"] == identity["target"] != H.tensor_sha(initial["q"]), "Final sync/change evidence missing")
+    return saved
+
+
+def prefill_targets(saved, data, recorded):
+    """Actual offline forward computation, without model instances or RNG/optimizer use."""
+    def stable_state():
+        return (H.tensor_sha(saved["q"]), H.tensor_sha(saved["target_q"]), H.typed_sha(saved["opt"]), H.replay_sha(data),
+                H.typed_sha((random.getstate(), np.random.get_state(), torch.get_rng_state())))
+    before = stable_state()
+    functional = torch.nn.functional
+
+    def forward(parameters, x):
+        x = functional.relu(functional.linear(x, parameters["body.0.weight"], parameters["body.0.bias"]))
+        x = functional.relu(functional.linear(x, parameters["body.2.weight"], parameters["body.2.bias"]))
+        if not saved["cfg"]["dueling"]:
+            return functional.linear(x, parameters["head.weight"], parameters["head.bias"])
+        v = functional.relu(functional.linear(x, parameters["value.0.weight"], parameters["value.0.bias"]))
+        v = functional.linear(v, parameters["value.2.weight"], parameters["value.2.bias"])
+        a = functional.relu(functional.linear(x, parameters["adv.0.weight"], parameters["adv.0.bias"]))
+        a = functional.linear(a, parameters["adv.2.weight"], parameters["adv.2.bias"])
+        return v + a - a.mean(dim=-1, keepdim=True)
+
+    total = Counter()
+    with torch.no_grad():
+        for first in range(0, len(data["a"]), 256):
+            part = slice(first, min(first + 256, len(data["a"])))
+            ns = torch.as_tensor(data["ns"][part])
+            online, target = forward(saved["q"], ns), forward(saved["target_q"], ns)
+            need(bool(torch.isfinite(online).all()) and bool(torch.isfinite(target).all()), "Nonfinite offline Q")
+            reward = torch.as_tensor(data["r"][part, None]); done = torch.as_tensor(data["done"][part, None])
+            masks = torch.as_tensor(data["mask"][part]); labels = torch.as_tensor(data["next_action"][part]).long()
+            live = done[:, 0] == 0
+            best = online.masked_fill(~masks, -float("inf")).argmax(dim=1, keepdim=True)
+            selected = torch.nan_to_num(target.gather(1, best), neginf=0.0)
+            historical = torch.zeros_like(selected)
+            historical[live] = target[live].gather(1, labels[live, None])
+            control = reward + (1.0 - done) * .99 * selected
+            sampled = reward + (1.0 - done) * .99 * historical
+            delta = sampled - control
+            total.update(rows=len(ns), nonterminal=int(live.sum()), different_index=int((best[:, 0][live] != labels[live]).sum()),
+                         different_target=int((delta[live] != 0).sum()), outside_mask=int((~masks[live].gather(1, labels[live, None])).sum()),
+                         positive=int((delta[live] > 0).sum()), negative=int((delta[live] < 0).sum()), delta_sum=float(delta.double().sum()))
+    measured = dict(total, readonly=True)
+    need(set(measured) == set(recorded), "Target diagnosis fields differ")
+    for key, value in measured.items():
+        if key == "delta_sum":
+            need(math.isclose(value, recorded[key], rel_tol=1e-12, abs_tol=1e-9), "Offline target delta sum differs")
+        else:
+            need(value == recorded[key], f"Offline target diagnosis differs: {key}")
+    need(measured["different_index"] > 0 and measured["different_target"] > 0, "No demonstrated target intervention")
+    need(before == stable_state(), "Offline diagnosis changed input tensors/replay/optimizer/RNG")
+    return measured
+
+
+def game(events, episode, plan, ordinal, views):
+    """Independent per-game offline joins; at most 303 frames/4848 transitions in memory."""
+    need(events and events[0] == dict(event="episode", episode_id=episode, **plan), "Episode plan differs")
+    frames = {}; captures = {}; commits = {}; confirmed = {}; captures_by_frame = {}
+    capture_order = []; commit_order = []; active = None; positions = {}; checked = Counter()
+    for pos, event in enumerate(events[1:], 1):
+        kind = event["event"]
+        if kind == "frame":
+            key = tuple(event["key"])
+            need(active is None and len(key) == 3 and all(type(x) is int for x in key) and
+                 key == (episode, len(frames) // 101, len(frames)) and len(frames) < 303 and
+                 event["env_steps"] == 60000 + episode * 303 + key[2], "Frame identity/clock/order differs")
+            native = np.asarray(event["native"])
+            need(native.shape == (16, 3) and native.dtype.kind in "iu", "Native action schema differs")
+            H.sha(event["observation_sha256"])
+            units = {}
+            for unit in event["units"]:
+                uid = H.integer(unit["uid"], 0, 15, "uid"); action = H.integer(unit["action"], 0, 5, "action")
+                need(uid not in units, "Duplicate frame uid")
+                expected = [0, 2, 1, 4, 3][action] if plan["side"] == "player_1" and action < 5 else action
+                need(native[uid, 0] == expected and (action == 5 or bool((native[uid, 1:] == 0).all())), "Native/canonical output differs")
+                H.sha(unit["features_sha256"]); H.sha(unit["mask_sha256"]); units[uid] = unit
+            need(key[2] % 101 != 0 or not units, "Match-start no-op has captures")
+            frames[key] = dict(event=event, units=units, native_hash=H.typed_sha(native), position=pos)
+            captures_by_frame[key] = []; active = key
+        elif kind == "capture":
+            identity = tuple(event["identity"])
+            need(active is not None and len(identity) == 3 and all(type(x) is int for x in identity) and identity[:2] == (episode, active[2]) and
+                 identity not in captures and identity[2] in frames[active]["units"], "Wrong/duplicate capture")
+            unit = frames[active]["units"][identity[2]]
+            need(event["action"] == unit["action"] and event["s_sha256"] == unit["features_sha256"] and
+                 event["match_idx"] == active[1] and event["done"] in (0., 1.) and math.isfinite(event["reward"]), "Capture source differs")
+            for key in ("s_sha256", "ns_sha256", "mask_sha256"):
+                H.sha(event[key])
+            captures[identity] = event; capture_order.append(identity); captures_by_frame[active].append(identity)
+            positions[identity] = pos
+        elif kind == "commit":
+            identity = tuple(event["identity"])
+            need(active is not None and identity in captures and identity not in commits and
+                 identity == capture_order[len(commit_order)] and event["ordinal"] == ordinal + len(commit_order) + 1,
+                 "Commit order/completeness differs")
+            commits[identity] = dict(event=event, frame=active, position=pos); commit_order.append(identity)
+        elif kind == "confirmed":
+            key = tuple(event["key"])
+            need(active == key and key not in confirmed and event["native_sha256"] == frames[key]["native_hash"] and
+                 [x[2] for x in captures_by_frame[key]] == list(frames[key]["units"]), "Unconfirmed/incomplete frame")
+            confirmed[key] = pos; active = None
+        else:
+            raise ValueError(f"Unknown/repeated episode event: {kind}")
+    need(active is None and len(frames) == len(confirmed) == 303 and capture_order == commit_order, "Pending or incomplete game evidence")
+    for number, identity in enumerate(capture_order, ordinal + 1):
+        row = captures[identity]; commit = commits[identity]; event = commit["event"]
+        source = (episode, row["match_idx"], identity[1])
+        delayed = any(captures[x]["done"] == 0 for x in captures_by_frame[source])
+        target = (episode, source[1], source[2] + 1) if delayed else source
+        need(commit["frame"] == target and target in confirmed and commit["position"] < confirmed[target] and
+             event["action"] == row["action"] and event["done"] == row["done"], "Commit occurs in wrong update")
+        need(all(commit["position"] < positions[x] for x in captures_by_frame[target]) if delayed else
+             all(positions[x] < commit["position"] for x in captures_by_frame[source]), "Capture/commit phase order differs")
+        if row["done"]:
+            need(event["successor_key"] is None and event["next_action"] == event["next_action_env_steps"] == -1, "Wrong terminal sentinel")
+        else:
+            need(tuple(event["successor_key"]) == target and identity[2] in frames[target]["units"], "Wrong successor identity")
+            unit = frames[target]["units"][identity[2]]
+            need(row["ns_sha256"] == unit["features_sha256"] and row["mask_sha256"] == unit["mask_sha256"] and
+                 event["next_action"] == unit["action"] and event["next_action_env_steps"] == frames[target]["event"]["env_steps"],
+                 "Unbound successor state/mask/action/clock")
+        for name, data, omitted in views:
+            index = number - omitted - 1
+            if index < 0 or index >= len(data["a"]):
+                continue
+            values = dict(episode_id=episode, source_step=identity[1], uid=identity[2], match_idx=row["match_idx"],
+                          a=row["action"], done=row["done"], next_action=event["next_action"],
+                          next_action_env_steps=event["next_action_env_steps"])
+            need(all(data[k][index].item() == v for k, v in values.items()), f"Retained replay metadata differs: {name}/{index}")
+            need(data["r"][index].tobytes() == np.float32(row["reward"]).tobytes() and
+                 all(H.typed_sha(data[k][index]) == row[h] for k, h in (("s", "s_sha256"), ("ns", "ns_sha256"), ("mask", "mask_sha256"))),
+                 f"Retained replay bytes differ: {name}/{index}")
+            checked[name] += 1
+    terminal = sum(int(row["done"]) for row in captures.values())
+    checked["empty_captures"] = sum(not item["units"] for item in frames.values())
+    counts = dict(episodes=1, frames=303, confirmed=303, captured=len(captures), committed=len(commits),
+                  terminal=terminal, nonterminal=len(captures)-terminal)
+    return counts, checked, {key[2]: value["event"]["native"] for key, value in frames.items()}
+
+
+def phase(provenance, trajectory, rollouts, start, ordinal, views):
+    digest_all = hashlib.sha256(); counts_all = Counter(); checked_all = Counter(); current = []
+    trajectory_semantic = hashlib.sha256(); episode = start
+    with gzip.open(trajectory, "rt", encoding="utf-8") as trace:
+        def finish(events, episode, ordinal):
+            row = rollouts[episode]; plan = {key: row[key] for key in PLAN_KEYS}
+            counts, checked, own = game(events, episode, plan, ordinal, views)
+            h = hashlib.sha256()
+            for event in events:
+                raw = H.canonical(event); h.update(raw); digest_all.update(raw)
+            need(row["provenance"] == dict(counts=counts, semantic_sha256=h.hexdigest()), "Per-game provenance summary differs")
+            trajectory_hash = hashlib.sha256()
+            chronology = [("reset", 0)] + [(kind, step + (kind == "result")) for step in range(303) for kind in ("submitted", "result")]
+            for kind, step in chronology:
+                line = trace.readline(); need(bool(line), "Truncated engine transcript")
+                item = H.parse_json(line)
+                need(set(item) == {"episode_id", "kind", "step", "sha256"} | ({"actions"} if kind == "submitted" else set()) and
+                     item["episode_id"] == episode and item["kind"] == kind and item["step"] == step, "Engine transcript identity/order differs")
+                trajectory_hash.update(H.sha(item["sha256"]).encode()); trajectory_semantic.update(H.canonical(item))
+                if kind == "submitted":
+                    need(set(item["actions"]) == {"player_0", "player_1"} and item["actions"][plan["side"]] == own[step],
+                         "Engine-submitted action differs from agent frame")
+                    arrays = {side: np.asarray(value) for side, value in item["actions"].items()}
+                    need(all(a.shape == (16, 3) and a.dtype == np.dtype("int64") for a in arrays.values()) and
+                         H.submitted_sha(arrays) == item["sha256"], "Submitted-action digest does not reproduce")
+            need(trajectory_hash.hexdigest() == row["trajectory_sha256"], "Per-game trajectory digest differs")
+            counts_all.update(counts); checked_all.update(checked)
+            return ordinal + counts["committed"]
+
+        with gzip.open(provenance, "rt", encoding="utf-8") as stream:
+            for line in stream:
+                event = H.parse_json(line)
+                if event.get("event") == "episode" and current:
+                    ordinal = finish(current, episode, ordinal); episode += 1; current = []
+                current.append(event)
+            need(current, "Empty provenance stream")
+            ordinal = finish(current, episode, ordinal); episode += 1
+        need(episode == (40 if start == 0 else 200) and not trace.readline(), "Missing/extra phase games or engine records")
+    return dict(counts=dict(counts_all), semantic_sha256=digest_all.hexdigest(), file_sha256=digest(provenance)), dict(checked_all), ordinal, trajectory_semantic.hexdigest()
+
+
+def preparation(ledger, state):
+    root = Path(state["root"]).resolve(strict=True); prepared = Path(state["prepared"]).resolve(strict=True)
+    ledger.mapping(state["inputs"]); ledger.mapping(state["source"]["files"]); ledger.mapping(state["protected"])
+    source = state["source"]
+    need(source["head"] == state["expected_head"] == HEAD and
+         subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip() == HEAD,
+         "Training source HEAD differs")
+    ledger.bind(source["executable"], source["executable_sha256"])
+    need(source["python"] == state["python"] and Path(source["python"]).resolve() == Path(source["executable"]), "Interpreter binding differs")
+    names = subprocess.check_output(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "*.py"]).split(b"\0")
+    files = {root / name.decode() for name in names if name}
+    for name in ("scripts", "agents", "lux"):
+        files.update((root / name).rglob("*.py"))
+    files.update(Path(name) for name in state["plans"])
+    files.update(root / name for name in ("requirements.txt", "pyproject.toml") if (root / name).is_file())
+    environment = Path(source["python"]).parent.parent
+    if (environment / "pyvenv.cfg").is_file():
+        files.add(environment / "pyvenv.cfg")
+    for directory in (environment / "lib").glob("python*/site-packages/luxai_s3"):
+        files.update(directory.rglob("*.py"))
+    need({str(p) for p in files} == set(source["files"]), "Frozen source inventory changed")
+    need(source["files"].get(str(root / "scripts/sampled_target_study.py")) == WORKER_SHA and
+         source["files"].get(str(root / "scripts/sampled_target_supervisor.py")) == SUPERVISOR_SHA,
+         "Reviewed worker/supervisor source differs")
+    need(all(state["protected"].get(str(root / f"agents/sherlock/weights/agent_p{i}.pth")) == H.SOURCE_SHA for i in (0, 1))
+         and str(root / "Gruppe15.zip") in state["protected"], "V14/ZIP protection absent")
+    path = prepared / "manifest.json"
+    need(str(path) in state["inputs"], "Preparation manifest is not pinned")
+    manifest = ledger.read(path, state["inputs"][str(path)])
+    need(manifest["schema_version"] == 1 and manifest["profile"] == PROFILE and manifest["stage"] == "study" and
+         manifest["pins"] == dict(source=source, protected=state["protected"]) and manifest["cohorts"] == COHORTS and
+         set(manifest["arms"]) == set(ARMS) and manifest["settings"] == dict(prefill=40, train=160, updates_per_game=150,
+         env_start=60000, env_end=120600, updates=24000), "Prepared fixed study differs")
+    ledger.mapping(manifest["input_sha256"])
+    admission = ledger.read(manifest["admission"], manifest["admission_sha256"])
+    need(all(admission.get(k) == v for k, v in dict(schema_version=1, status="PASS", profile=PROFILE, stage="study",
+         pins=manifest["pins"]).items()), "Original study admission differs")
+    for name in ("review", "seed_acceptance", "technical_acceptance"):
+        item = admission[name]; need(set(item) == {"path", "sha256"}, "Incomplete admission artifact")
+        need(manifest["input_sha256"].get(item["path"]) == item["sha256"], "Admission artifact omitted from bound inputs")
+        ledger.bind(item["path"], item["sha256"])
+    seeds = read(admission["seed_acceptance"]["path"])
+    need(seeds.get("status") == "PASS" and seeds.get("profile") == PROFILE and seeds.get("cohorts") == COHORTS, "Wrong seed acceptance")
+    ledger.bind(root / seeds["audit"]["path"], seeds["audit"]["sha256"])
+    accepted = read(root / seeds["audit"]["path"])
+    need(accepted.get("status") == "PASS" and accepted.get("no_observed_conflicts") is True and accepted.get("limitations"), "Unbounded seed claim")
+    ledger.bind(root / accepted["raw_audit"]["path"], accepted["raw_audit"]["sha256"])
+    for relative, value in accepted["files"].items():
+        ledger.bind(root / relative, value)
+    technical = read(admission["technical_acceptance"]["path"])
+    need(technical.get("status") == "PASS" and technical.get("profile") == PROFILE and technical.get("games") == 4 and
+         technical.get("pins") == manifest["pins"] and set(technical["receipts"]) == set(H.JOBS), "Missing exact historical technical acceptance")
+    for item in technical["receipts"].values():
+        receipt_path = ledger.bind(item["path"], item["sha256"])
+        for name, value in read(receipt_path)["artifacts"].items():
+            ledger.bind(receipt_path.parent / name, value)
+    need(manifest["source_sha256"] == H.SOURCE_SHA, "Wrong original V14 source")
+    ledger.bind(manifest["source"], H.SOURCE_SHA)
+    original = torch.load(manifest["source"], map_location="cpu", weights_only=True)
+    members = [original["q"], *original["ensemble"]]
+    need(len(members) == 36 and original["feature_dim"] == 79 and original["n_actions"] == 6 and
+         all(manifest["source_config"].get(k) == v for k, v in original["cfg"].items()), "V14/source config differs")
+    component = H.tensor_sha(members[18]); del members, original
+    overrides = dict(frozen=False, lr=5e-5, rules_in_training=True, rules_in_training_all=True,
+                     rescue_in_training=True, fog_unknown_reward_neutral=False, art_splash_in_training=False)
+    config = dict(manifest["source_config"], **overrides)
+    recipe = dict(gamma=.99, batch_size=256, buffer_capacity=300000, canonical=True, double_dqn=True, use_sap=True,
+                  eps_end=.05, eps_decay_steps=60000, learn_start=5000, train_every=2, target_update_every=500, guided_prob=.7)
+    need(all(config.get(k) == v for k, v in recipe.items()), "Fixed learner recipe differs")
+    for arm, (seed, mode) in ARMS.items():
+        entry = manifest["arms"][arm]
+        need(entry["run_seed"] == seed and entry["bootstrap_mode"] == mode and entry["component_index"] == 18 and
+             entry["tensor_sha256"] == component and entry["config"] == config and len(entry["rollout_plan"]) == 200, "Wrong fixed arm")
+        ledger.bind(prepared / arm / "initial.pth", entry["weights_sha256"])
+        saved = torch.load(prepared / arm / "initial.pth", map_location="cpu", weights_only=True)
+        need(saved["cfg"] == config and saved["env_steps"] == 60000 and saved["learn_steps"] == 0 and
+             saved["feature_dim"] == 79 and saved["n_actions"] == 6 and saved["ensemble"] == [] and saved["ensemble_dims"] == [] and
+             H.tensor_sha(saved["q"]) == H.tensor_sha(saved["target_q"]) == component, "Prepared component checkpoint differs")
+        del saved
+        for index, plan in enumerate(entry["rollout_plan"]):
+            phase_name = "prefill" if index < 40 else "train"; game_index = index if index < 40 else index - 40
+            expected = dict(phase=phase_name, game=game_index, seed=COHORTS[f"{phase_name}{seed}"][game_index // 2],
+                            side=f"player_{game_index % 2}", opponent=plan["opponent"])
+            need(plan == expected and plan["opponent"] in ("solution92", "sol92_sq", "default", "rush"), "Exogenous card/side/game sequence differs")
+    for seed in (45, 46):
+        need(manifest["arms"][f"control{seed}"]["rollout_plan"] == manifest["arms"][f"sampled{seed}"]["rollout_plan"], "Paired exogenous plans differ")
+    return root, prepared, manifest
+
+
+def telemetry(stats):
+    names = {"updates", "nonterminal", "different_index", "different_target", "outside_mask",
+             "target_delta_positive", "target_delta_negative", "target_delta_sum", "label_age_sum"}
+    need(set(stats) == names and stats["updates"] == 24000 and math.isfinite(stats["target_delta_sum"]), "Missing/invalid learner telemetry")
+    for key in names - {"target_delta_sum"}:
+        need(type(stats[key]) is int and stats[key] >= 0, "Invalid telemetry count")
+    live = stats["nonterminal"]
+    need(live <= 24000 * 256 and all(stats[k] <= live for k in ("different_index", "different_target", "outside_mask")) and
+         stats["target_delta_positive"] + stats["target_delta_negative"] == stats["different_target"] and
+         live <= stats["label_age_sum"] <= live * 60600, "Inconsistent learner telemetry counters")
+
+
+def arm_audit(ledger, root, prepared, manifest, state_path, supervisor, arm):
+    seed, mode = ARMS[arm]; directory = root / "experiments/runs" / f"20261108_sampled_target_{arm}"
+    path = directory / "final_receipt.json"; binding = supervisor["receipts"][arm]
+    need(set(binding) == {str(path)}, "Final receipt path binding differs")
+    receipt = ledger.read(path, binding[str(path)])
+    command = [supervisor["python"], "-B", "-m", "scripts.sampled_target_study", "run", "--prepared", str(prepared),
+               "--arm", arm, "--name", directory.name, "--supervisor-state", str(state_path)]
+    history = supervisor["jobs"][arm]
+    need(history["argv"] == command and type(history["returncode"]) is int and history["returncode"] == 0 and history["owner_pid"] == supervisor["owner_pid"] and
+         type(history["pid"]) is int and history["pid"] > 0 and history["pgid"] == history["pid"] and
+         supervisor["started_at"] <= history["started_at"] <= receipt["started_at"] <= receipt["finished_at"] <= history["finished_at"] <= supervisor["finished_at"],
+         "Historical worker execution differs")
+    expected = dict(schema_version=1, status="done", profile=PROFILE, eligible=False, arm=arm, run_seed=seed,
+                    bootstrap_mode=mode, games=200, prefill_games=40, train_games=160, updates=24000, env_steps=120600,
+                    name=directory.name, command=command, prepared=str(prepared), pins=manifest["pins"],
+                    manifest_sha256=digest(prepared / "manifest.json"))
+    need(all(receipt.get(k) == v for k, v in expected.items()) and set(receipt["artifacts"]) == NAMES, "Incomplete final training receipt")
+    for name, value in receipt["artifacts"].items():
+        ledger.bind(directory / name, value)
+    entry = manifest["arms"][arm]; config = entry["config"]
+    inputs = dict(manifest["input_sha256"], **{str(prepared / "manifest.json"): expected["manifest_sha256"],
+                  str(prepared / arm / "initial.pth"): entry["weights_sha256"]})
+    run = read(directory / "manifest.json")
+    need(run == dict(schema_version=1, profile=PROFILE, pins=manifest["pins"], job=arm, name=directory.name, entry=entry,
+         prepared=str(prepared), prepared_manifest_sha256=expected["manifest_sha256"], inputs=inputs, command=command,
+         supervisor_state=str(state_path)), "Run manifest/inputs differ")
+    ledger.mapping(inputs)
+    rows = [H.parse_json(line) for line in (directory / "rollouts.jsonl").read_text().splitlines()]
+    need(len(rows) == 200, "Wrong actual rollout count")
+    for index, row in enumerate(rows):
+        plan = entry["rollout_plan"][index]
+        need({k: row[k] for k in PLAN_KEYS} == plan and row["steps"] == 303 and row["point_counting_version"] == 2 and
+             row["env_steps"] == 60000 + (index + 1) * 303 and row["learn_steps"] == max(0, index + 1 - 40) * 150 and
+             row["updates"] == (0 if index < 40 else 150) and row["config_sha256"] == H.typed_sha(config) and
+             row["result"] in (0., .5, 1.) and math.isfinite(row["secs"]) and row["secs"] >= 0,
+             "Rollout differs from bound schedule/update counts")
+        if index >= 40:
+            need(math.isfinite(row["mean_loss"]), "Nonfinite recorded training loss")
+    bundle = read(directory / "prefill/bundle.json"); proof = read(directory / "prefill_proof.json")
+    need(all(bundle.get(k) == v for k, v in dict(schema_version=1, profile=PROFILE, arm=arm, prepared=str(prepared), entry=entry,
+         manifest_sha256=expected["manifest_sha256"], rows=rows[:40]).items()) and
+         set(bundle["artifacts"]) == {"replay.npz", "provenance.jsonl.gz", "trajectory.jsonl.gz"}, "Prefill bundle identity differs")
+    for name, value in bundle["artifacts"].items():
+        ledger.bind(directory / "prefill" / name, value)
+    pilot = read(directory / "final/pilot_state.json"); audit = read(directory / "final_audit.json")
+    need(all(pilot.get(k) == v for k, v in dict(schema_version=1, arm=arm, bootstrap_mode=mode, config=config, env_steps=120600,
+         learn_steps=24000, input_hashes=inputs, rollout_progress=dict(prefill=40, train=160, total=200),
+         episode=dict(episode_id=199, **entry["rollout_plan"][-1])).items()) and set(pilot["files"]) == {"agent.pth", "agent.buffer.npz"},
+         "Final pilot state/progress differs")
+    for name, value in pilot["files"].items():
+        ledger.bind(directory / "final" / name, value)
+    pre = replay(directory / "prefill/replay.npz"); final = replay(directory / "final/agent.buffer.npz")
+    committed = H.integer(pilot["replay_counts"]["committed"], 1, 200 * 303 * 16, "total committed")
+    need(len(final["a"]) == pilot["replay_size"] == min(committed, 300000), "Final ring retention size differs")
+    views = [("prefill", pre, 0), ("final", final, committed - len(final["a"]))]
+    pre_events, pre_checked, pre_ordinal, pre_trace = phase(directory / "prefill/provenance.jsonl.gz", directory / "prefill/trajectory.jsonl.gz",
+                                                         rows, 0, 0, views)
+    train_events, train_checked, last_ordinal, _ = phase(directory / "train/provenance.jsonl.gz", directory / "train/trajectory.jsonl.gz",
+                                                       rows, 40, pre_ordinal, [("final", final, committed - len(final["a"]))])
+    totals = Counter(pre_events["counts"]); totals.update(train_events["counts"])
+    need(pre_events == bundle["events"] and pre_ordinal == len(pre["a"]) == pre_checked["prefill"] and
+         last_ordinal == committed and pre_checked.get("final", 0) + train_checked.get("final", 0) == len(final["a"]) and
+         totals["episodes"] == 200 and totals["frames"] == totals["confirmed"] == 60600 and
+         totals["captured"] == totals["committed"] == committed, "Incomplete provenance/ring reconciliation")
+    wanted_counts = {k: totals[k] for k in ("captured", "committed", "terminal", "nonterminal")}
+    wanted_counts["empty_captures"] = pre_checked["empty_captures"] + train_checked["empty_captures"]
+    need(pilot["replay_counts"] == wanted_counts, "Replay runtime counters differ from complete events")
+    need(H.replay_sha(pre) == bundle["replay_sha256"] and H.replay_sha(final) == audit["replay_sha256"], "Saved replay semantic digest differs")
+    initial_identity, pre_end = bundle["initial"], bundle["end"]
+    initial = checkpoint(directory / "initial_agent.pth", config, initial_identity)
+    need(initial_identity["q"] == initial_identity["target"] == entry["tensor_sha256"] and initial_identity["replay_size"] == 0 and
+         pre_end["env_steps"] == 72120 and pre_end["learn_steps"] == 0 and pre_end["replay_size"] == len(pre["a"]) >= 5000 and
+         all(initial_identity[k] == pre_end[k] for k in ("q", "target", "optimizer")), "Prefill changed learning or is incomplete")
+    for identity in (initial_identity, pre_end, audit["end"]):
+        H.sha(identity["agent_rng"]); H.sha(identity["global_rng"])
+    diagnosis = prefill_targets(initial, pre, bundle["diagnosis"])
+    shared = dict(config_sha256=H.typed_sha(config), initial=initial_identity, end=pre_end,
+        schedule_sha256=H.typed_sha(entry["rollout_plan"][:40]), replay_sha256=H.replay_sha(pre),
+        events_semantic_sha256=pre_events["semantic_sha256"], trajectory_sha256=H.typed_sha([r["trajectory_sha256"] for r in rows[:40]]),
+        rows_semantic_sha256=H.typed_sha([{k: v for k, v in r.items() if k != "secs"} for r in rows[:40]]),
+        **{k: pre_events["counts"][k] for k in ("captured", "committed", "terminal", "nonterminal", "frames", "confirmed")}, diagnosis=bundle["diagnosis"])
+    need(proof == dict(schema_version=1, status="prefill_ready", profile=PROFILE, arm=arm, run_seed=seed, bootstrap_mode=mode,
+         games=40, shared=shared, bundle_sha256=digest(directory / "prefill/bundle.json")), "Prefill proof differs from raw data")
+    final_saved = checkpoint(directory / "final/agent.pth", config, audit["end"], initial)
+    need(audit["reload_pass"] is True and audit["reloaded"] == {k: audit["end"][k] for k in
+         ("q", "target", "optimizer", "env_steps", "learn_steps", "replay_size")} and audit["end"]["replay_size"] == len(final["a"]) and
+         audit["end"]["agent_rng"] == pilot["agent_rng_sha256"] and audit["end"]["global_rng"] == pilot["global_rng_sha256"],
+         "Final reload/RNG metadata differs")
+    telemetry(pilot["bootstrap_stats"])
+    gate_path = state_path.parent / f"paired_prefill_{seed}.json"
+    ledger.bind(gate_path, receipt["paired_gate_sha256"])
+    need(read(gate_path) == supervisor["paired_prefill"][str(seed)], "Historical prefill gate differs from supervisor")
+    del final, final_saved, initial
+    return dict(receipt_path=str(path), receipt_sha256=binding[str(path)], games=200, prefill_games=40, train_games=160,
+                updates=24000, env_steps=120600, committed=committed, retained=min(committed, 300000),
+                checkpoint_path=str(directory / "final/agent.pth"), checkpoint_sha256=receipt["artifacts"]["final/agent.pth"],
+                shared=shared, prefill_data=pre, prefill_trace=pre_trace, prefill_proof_sha256=receipt["artifacts"]["prefill_proof.json"],
+                gate_sha256=receipt["paired_gate_sha256"], offline_target_diagnosis=diagnosis, bootstrap_stats=pilot["bootstrap_stats"])
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--state", type=Path, required=True)
+    parser.add_argument("--state-sha256", dest="state_sha256", required=True,
+                        help="Externally pinned final study supervisor state SHA-256")
+    parser.add_argument("--support", type=Path, default=Path("/tmp/sampled-target-technical-audit.py"))
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    need(not args.out.exists() and args.out.parent.is_dir(), "Output must be new in an existing directory")
+    state_path = args.state.resolve(strict=True)
+    need(digest(state_path) == args.state_sha256, "Externally pinned completed state hash differs")
+    # Fail before importing NumPy/Torch or support unless every actual worker is done.
+    early = json.loads(state_path.read_text())
+    need(early.get("status") == "done" and early.get("stage") == "study" and early.get("active") == [] and
+         set(early.get("jobs", {})) == set(ARMS) and all(j.get("returncode") == 0 for j in early["jobs"].values()) and
+         type(early.get("wake", {}).get("returncode")) is int, "Study jobs/wake are not fully completed")
+    load_support(args.support)
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+    ledger = H.Evidence(); ledger.bind(Path(__file__), digest(Path(__file__))); ledger.bind(args.support, SUPPORT_SHA)
+    state = ledger.read(state_path, args.state_sha256)
+    expected = dict(schema_version=1, profile=PROFILE, stage="study", status="done", eligible=False,
+                    active=[], queue=[], technical_pairs={})
+    need(all(state.get(k) == v for k, v in expected.items()) and set(state["receipts"]) == set(ARMS) and
+         set(state["paired_prefill"]) == {"45", "46"} and not state.get("error") and not state.get("cleanup_error"), "Incomplete final study state")
+    need(Path(state["out"]).resolve() / "state.json" == state_path and math.isfinite(state["started_at"]) and
+         math.isfinite(state["finished_at"]) and state["started_at"] <= state["finished_at"], "Supervisor path/time differs")
+    owner = H.integer(state["owner_pid"], 1, 2**31-1, "owner")
+    wake = state["wake"]
+    need(wake["owner_pid"] == owner and wake["pid"] == wake["pgid"] and
+         wake["argv"] == ["/usr/bin/caffeinate", "-i", "-w", str(owner)], "Historical owned wake process differs")
+    root, prepared, manifest = preparation(ledger, state)
+    launch_path = prepared / "supervisor_launch.json"
+    need(str(launch_path) in state["inputs"], "Original launch marker is not pinned")
+    launch = ledger.read(launch_path, state["inputs"][str(launch_path)])
+    need(set(launch) == {"owner_pid", "profile", "stage", "out", "started_at"} and launch["owner_pid"] == owner and
+         launch["profile"] == PROFILE and launch["stage"] == "study" and launch["out"] == state["out"] and
+         math.isfinite(launch["started_at"]) and launch["started_at"] <= state["started_at"], "Historical launch differs")
+    need(max(state["jobs"][role+"45"]["finished_at"] for role in ("control", "sampled")) <=
+         min(state["jobs"][role+"46"]["started_at"] for role in ("control", "sampled")), "Second start pair began before first pair exited")
+    results = {}; pair_results = {}
+    for seed in (45, 46):
+        pair = {role: arm_audit(ledger, root, prepared, manifest, state_path, state, f"{role}{seed}") for role in ("control", "sampled")}
+        control, sampled = pair["control"], pair["sampled"]
+        need(control["shared"] == sampled["shared"] and control["prefill_trace"] == sampled["prefill_trace"],
+             "Paired prefill learner/RNG/events/trajectory/results differ")
+        for key in (*H.BASE, *H.EXTRA):
+            left, right = control["prefill_data"][key], sampled["prefill_data"][key]
+            need(left.shape == right.shape and left.dtype == right.dtype and left.tobytes() == right.tobytes(),
+                 f"Paired prefill replay bytes differ: {key}")
+        expected_gate = dict(status="matched", run_seed=seed, eligible=False, shared=control["shared"],
+                             proof_sha256={f"{role}{seed}": result["prefill_proof_sha256"] for role, result in pair.items()})
+        need(state["paired_prefill"][str(seed)] == expected_gate and control["gate_sha256"] == sampled["gate_sha256"], "Original paired gate differs")
+        pair_results[str(seed)] = dict(status="PASS", gate_sha256=control["gate_sha256"], games_each=40,
+                                      transitions_each=len(control["prefill_data"]["a"]),
+                                      independent_offline_target_diagnosis=control["offline_target_diagnosis"])
+        for role, result in pair.items():
+            del result["prefill_data"]
+            results[f"{role}{seed}"] = result
+        del pair, control, sampled, left, right
+    ledger.finish()
+    report = dict(schema_version=1, status="PASS", profile=PROFILE, training_head=HEAD,
+        source=state["source"], pins=manifest["pins"], protected=state["protected"], root=str(root), prepared=str(prepared),
+        prepared_manifest_sha256=digest(prepared / "manifest.json"),
+        audited_at=datetime.now(timezone.utc).isoformat(), eligible=False,
+        totals=dict(prefill_games=160, train_games=640, training_executions=800, updates=96000, actual_env_steps=242400),
+        supervisor=dict(path=str(state_path), sha256=args.state_sha256), arms=results,
+        commands={arm: state["jobs"][arm]["argv"] for arm in ARMS},
+        receipt_sha256={arm: result["receipt_sha256"] for arm, result in results.items()}, paired_prefill=pair_results,
+        input_sha256=ledger.files, audit_script_sha256=digest(Path(__file__)), independent_support_sha256=SUPPORT_SHA,
+        limitations=[
+            "This audit includes deterministic offline forward calculations for the two prefill target formulas; it draws no RNG values, constructs no model/agent instance, performs no optimizer step and launches no game.",
+            "All generated transition links are checked; actual replay bytes are independently matched for the complete prefill buffers and the final retained chronological ring windows only. Earlier overwritten feature arrays are not archived.",
+            "Recorded reset/result engine digests support complete paired transcript comparison but cannot be recomputed without raw engine arrays. Submitted action digests are independently recomputed from both native outputs.",
+            "RNG fingerprints compare recorded identities; full historical RNG states are not archived. Frozen runtime checks enforce gradient gating and live clean boundaries; this audit does not reproduce the past scheduler.",
+            "Adam step24000, per-game counts, final tensors/target synchronization, raw transitions and telemetry consistency are verified; the original 24000 gradient updates are not replayed and intermediate gradients are not archived.",
+            "Functional prefill diagnosis uses fixed256-row float32 CPU batches and checks counts exactly; delta_sum tolerance is rel1e-12/abs1e-9. Inputs and RNG fingerprints before/after the offline calculation must remain identical.",
+            "Core-defined terminal/lifetime limitations remain; confirmed submitted commands are not proofs of physical movement or SAP effect.",
+            "No training-score interpretation, causal strength claim, performance admission or V14 promotion. Prior four technical games and known zero-game launcher failure remain separate historical records."])
+    need(str(args.out.resolve()) not in ledger.files, "Output would replace an input")
+    with args.out.open("x") as stream:
+        stream.write(json.dumps(report, indent=2, allow_nan=False) + "\n")
+    print(json.dumps(dict(status="PASS", games=800, updates=96000, output=str(args.out.resolve()), sha256=digest(args.out))))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as error:
+        print(f"AUDIT BLOCKED: {type(error).__name__}: {error}", file=sys.stderr)
+        raise SystemExit(1)

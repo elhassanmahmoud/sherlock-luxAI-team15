@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 08.11.2026 – Vier Folgeaktions-Lernarme vollständig akzeptiert
+
+- Alle vier Arme abgeschlossen: je40 Vorlauf +160 Lernspiele und24.000 Updates; insgesamt800 Ausführungen/96.000 Updates, zusätzlich vier bekannte Technikspiele. Beide Vorlaufpaare vollständig gleich und tatsächliche Targetintervention unabhängig nachgerechnet. [Trainingsbericht](../experiments/analysis/sampled_target_20261108/TRAININGSERGEBNIS.md).
+- Unabhängiger Vollaudit tatsächlich Exit0/PASS; sämtliche2.871.321 Capture-/Commitverknüpfungen sowie gespeicherte Replay-/Tensor-/Adamdaten geprüft. Originalvalidatoren bereits im eingefrorenen Supervisor erfolgreich; Root hat deren gebundenen Istnachweis übernommen, nicht nochmals dieselben Daten identisch geparst.
+- Historische Abnahme `dac732d042b700543aeec8e718771660165e5462abfa60d84a0170689ddac458` unter Quelle945e193 versiegelt. Alle eigenen Trainingsprozesse beendet; erst danach eigene6203332-Dokumentation in die Studienkopie übernommen. V14/ZIP unverändert, keine Stärkeaussage.
+- Große Replay-NPZs bleiben lokal mit Dateiindex/Hashes; für einen vollständigen erneuten Audit auf Mahmouds Rechner separat übertragen. Fester400-Spiel-Leistungsvergleich folgt nach Werkzeugaufnahme, nicht automatisch aus diesem Trainingsnachweis.
+
 ## 08.11.2026 – Folgeaktions-Lernvergleich gestartet; Quelle eingefroren
 
 - Vier bekannte technische Spiele auf Karte4242 abgeschlossen, beide Modi×Seiten, null Gradienten. Unabhängiger vollständiger Daten-/Tensorcheck PASS, anschließend Root-Originalvalidatoren ebenfalls PASS. Je Ausführung303 Frames und3720 vollständig gebundene Replayzeilen; Modi je Seite in Aktionen, Trajektorien, Erfahrungen und RNG identisch. Technik ist kein Stärkenachweis. Audit SHA-256 `d6be0ee133955b7c64309962a8bd629eb1f8ebf695c0bf8ec49737a196274158`, Belege zunächst lokal bis Ende der Quellensperre.

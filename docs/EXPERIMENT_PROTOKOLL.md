@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+08.11.2026: Folgeaktions-Pilot technisch abgeschlossen: vier Lernarme,800 Ausführungen/96.000 Updates, vier separate Technikspiele. Beide Vorläufe exakt gepaart, unabhängiger vollständiger Lernaudit PASS; Originalprüfungen durch Supervisor und historische Quelle945e193 gebunden. Keine Leistungsaussage/Übernahme. [Trainingsbericht](../experiments/analysis/sampled_target_20261108/TRAININGSERGEBNIS.md). V14/ZIP unverändert;400 feste Leistungsspiele folgen separat.
+
 - 08.11.2026, **technischer Sampled-Start vor erstem Spiel unterbrochen und diagnostiziert:** Mac-Framework-Python verändert den Programmnamen in `orig_argv`, wodurch die neue Startprüfung den richtigen Worker zurückwies. Null Spiele/Updates, alle eigenen Prozesse beendet, historische Belege erhalten. Enge Interpreter-/Argumentprüfung mit125 Tests PASS; gesonderte v2-Aufnahme nach Fixreview, unverändert vier bekannte Technikspiele. [Nachweis](../experiments/analysis/sampled_target_20261108/operations/launcher-fix.md).
 
 - 08.11.2026, **Sampled-Target-Werkzeuge vollständig synthetisch geprüft:** 123 gezielte Tests PASS, unabhängiger statischer Task3-Review PASS. Feste vier bekannte Technikspiele vor jeder frischen Paarstudie; atomare Vorlauf-Freigabe und vollständige Folgeaktions-/Replaybelege. Noch keine realen Pilotspiele oder Trainingsresultate, V14 unverändert. [Aufnahmestand](../experiments/analysis/sampled_target_20261108/README.md).

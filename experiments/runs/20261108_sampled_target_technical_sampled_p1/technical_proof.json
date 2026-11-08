@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "technical_ready",
+  "profile": "sampled_target_20261108",
+  "arm": "sampled45",
+  "run_seed": 45,
+  "bootstrap_mode": "sampled_successor",
+  "games": 1,
+  "shared": {
+    "config_sha256": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0",
+    "initial": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "4473951d48d0d020d705b77aee7b255b59221161ea4d1abca46966464cf7f2d3",
+      "global_rng": "b63b2b596c04698bfd7a355f7df79535549809cea2bca13aace12f6a1e5e8843",
+      "env_steps": 60000,
+      "learn_steps": 0,
+      "replay_size": 0
+    },
+    "end": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "b5910ba4e031ebc4d3920fc5b6c1d7b2531e0673926458628ee9493abb0a83af",
+      "global_rng": "6beab6f0c67f6885ea1f4be781e33bf72848649eaf873b7b4cff472683359740",
+      "env_steps": 60303,
+      "learn_steps": 0,
+      "replay_size": 3720
+    },
+    "schedule_sha256": "f43c4da65c8847a830f22c640e8c2aa2ee916e591b77b77759b160899c31c61d",
+    "replay_sha256": "8e67115a22c3a9615426a3407969681a83a36cfdc57acfbeeadd03eac688309d",
+    "events_semantic_sha256": "fa58ab3b43bb747d2e357251181b85cb8a5b93f8964b69c1186a5ae8fc22d7ca",
+    "trajectory_sha256": "1c2fc916b2b0e002e627b20fd2020b68ece49ce3b679edc8e8db1d72cc3032d1",
+    "rows_semantic_sha256": "6e99de2d06d08e6264632028a663bc60f2746d68213292551879e0ca85733c6b",
+    "captured": 3720,
+    "committed": 3720,
+    "terminal": 49,
+    "nonterminal": 3671,
+    "frames": 303,
+    "confirmed": 303
+  },
+  "bundle_sha256": "f8fcd17f412942401414158af1debaddae68ed11f9a0f2b831f662fe844ed1d6"
+}

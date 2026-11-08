@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "prefill_ready",
+  "profile": "sampled_target_20261108",
+  "arm": "sampled46",
+  "run_seed": 46,
+  "bootstrap_mode": "sampled_successor",
+  "games": 40,
+  "shared": {
+    "config_sha256": "0b91c82e92288e800b80ab718c389210dc17530934c2cff3bff0d435c08ba6f0",
+    "initial": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "161fb9672163aa6dd3482fd67cabddda6eb859dabe25645f156506f0c747adbf",
+      "global_rng": "297f6562ed1ac900fd24f91d4ea83efa5f7bd2432a16888dfa3b8fb6d291f3fa",
+      "env_steps": 60000,
+      "learn_steps": 0,
+      "replay_size": 0
+    },
+    "end": {
+      "q": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "target": "3c79c58371bc67badf7962e84276d474bad3bff690d1ad465cb3977a45ddb309",
+      "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+      "agent_rng": "04972300fcca713aafbb1a3730b03cef53ebcfc48cf545efc472dd74ea8a40fa",
+      "global_rng": "d4604fecffbe294ec1eb89fe5c1f37f62d46fbf7599a55b5a331084be7d05eef",
+      "env_steps": 72120,
+      "learn_steps": 0,
+      "replay_size": 143955
+    },
+    "schedule_sha256": "2d3c5f77354cd75208a3f92518b76eae16475ae933998377138604d03144a591",
+    "replay_sha256": "c40bd3dbd01ac68e31c6ceaa07d77dcef12c21c9685752991f4063d4f86a96bb",
+    "events_semantic_sha256": "b8004fe62073e5b07b43c8017aa8cf85e671b044eb3bed33aad9e95eccb3b920",
+    "trajectory_sha256": "856ad3ff0ef2fe9171f0617646a758a268380843e495052a24776fb9f2aefa7b",
+    "rows_semantic_sha256": "7b870c38c714db40b4d33369cceb22c0044a3c79a88c1b6194e8cfa8135ede48",
+    "captured": 143955,
+    "committed": 143955,
+    "terminal": 2859,
+    "nonterminal": 141096,
+    "frames": 12120,
+    "confirmed": 12120,
+    "diagnosis": {
+      "rows": 143955,
+      "nonterminal": 141096,
+      "different_index": 17733,
+      "different_target": 17733,
+      "outside_mask": 389,
+      "positive": 106,
+      "negative": 17627,
+      "delta_sum": -9960.513865308836,
+      "readonly": true
+    }
+  },
+  "bundle_sha256": "6052ba786def8d42d5b6a2cd7aaec13a3d2c4d47dad4f6a1150b2c1db1a2a871"
+}
