@@ -1,0 +1,17 @@
+# Conditional no-game influence diagnosis after the fixed Fog comparison
+
+Prepared before reading performance outcomes. This does not change the running440/optional1200 comparison, nomination or candidate weights. Only consider execution after its complete independent decision; no rerun/refit of the closed wave.
+
+Question: Do the exact new trained pairs materially alter legal neural action proposals compared with V14 on a fixed shared sample? No claim that disagreement is good, no weight search, no promotion.
+
+Inputs: exact archived V14, CONTROL38, NEUTRAL38 and four accepted final single checkpoints; four local ReplayBuffer NPZ files whose hashes are in final-independent-audit.json. ReplayBuffer stores ns and matching next_mask, not a current mask; only use ns/mask pairs with done==0 and >=1 legal action. Do not compare current s against nextmask. FixedPCG64seed0 sequentially select up to2500 eligible distinct rows without replacement from each arm in ordercontrol41,neutral41,control42,neutral42. Same pooled bank for every model. Persist row indices+bufferhash+bankhash beforeforwardpasses. Replay buffers are trained-on and trajectory-dependent; balanced pooleddiagnostic, no generalization/strengthestimate.
+
+Measure raw per-member six Qvalues in float32 eval/no_grad, originalnetworkstructure. Verify numericalmean of exact36+2 equals separatelyloadedcandidateQ. Mask beforeargmax exactlyasAgent for6actions. Report legalproposaldisagreement V14→CONTROL38/NEUTRAL38; changed-to/fromSAP counts; signed margin contribution of newpair versusoriginal36 at V14winner and candidatewinner; allmemberQ/actiongapdistributions. Also comparecontrol/neutral final41/42 against their commoninitialcomponent18 fordescriptivelearninginfluence. No thresholds/weightsselectedfromresults.
+
+Limits: cannot observe finalruleexecution fromfeaturesalone; recordedactiona describes previousstateandmustnotbeusedasgroundtruthnextaction. CannotstratifyexplicitunknownFogSAP absenttransitionlevelprovenance. Cannotlabelbetteractions orclaimcausalrewardbenefit. Existinghistorical20kstatemarginsconcernoldermembers, notthisnewpair. Noenvironmentrollouts, gradientupdates, testswhileactivecomparisonorprotectedchanges.
+
+Small standaloneanalysis undernewseparateplan ifuseful, allfourbufferhashesfirst. Independentreviewofindex/mask/mean/arithmetic; notnewframeworkandnoperformanceextension. Atmost10000featurestates, no additionalgames.
+
+Method-review clarifications fixed before any forward result: no replacement is within each buffer; report exact unique(ns,mask) count over the pooled rows and never interpret rows as independent samples or compute inferential CIs. Require no cnn_policy in all actual checkpoints; otherwise stop rather than claim this is full neural inference. Exact inference uses float32 torch.stack(member_outputs).mean and numpy mask value -1e9 beforeargmax; require allreportedwinnerslegal. Independentcandidateforward andassembledmembermean allclose rtol1e-6,atol1e-6; finiteinputs/outputs first.
+
+Define P=mean(two new Q), B=mean(original36Q), deltaQ=(2/38)*(P-B). Report P-B separatelyfromfullmean deltaQ. For allrows with>=2legalactions, also use fixed V14best-versus-runnerup margin: deltaMargin=deltaQ[V14best]-deltaQ[V14runnerup]. This doesnotdependonwhethercandidateargmaxchanges. Candidatewinner-versusV14winner margins separately forchangedrows. No threshold orweight fitting; descriptives only.

@@ -1,0 +1,8 @@
+# Kleine Offline-Diagnose des Netzeinflusses
+
+Spec: ../specs/2026-11-08-fog-influence.md. Fester Fog-Spielvergleich abgeschlossen, kein Nominierter. Diese Diagnose verlängert ihn nicht; keine neuen Spiele, Gewichte, Gewichtungen oder Lernupdates.
+
+1. Kleines eigenständiges scripts/fog_influence.py und gezielte tests/test_fog_influence.py. Akzeptierte Modelle und vier lokale Replay-Puffer an gespeicherte Hashes binden; alle Annahmen einschließlich fehlender CNN-Policy prüfen. Bank mit festem RNG0 und bis2500 geeigneten Zeilen proArm vor der ersten Vorhersage exklusiv sichern. ns und next_mask korrekt paaren; keine terminalen Zeilen. Gleiche Bank für alleNetze.
+2. CPU/float32/eval/no_grad, höchstens ein eigener Diagnoseprozess, keine aktiven anderen Modell-/Testjobs bei Ausführung. Aktuelle echte Quota<100 und AC prüfen; vorhandene Prozess-/Quell-/Inputschutzhelfer wiederverwenden, keine neue allgemeine Infrastruktur. Ursprüngliche36 plusvierneue Einzelnetze; unabhängig geladene38erKandidaten müssen dieselben gemittelten Q-Werte liefern. Modelle/Bank/Outputs/Zeilenindizes undMethoden anHashes binden. KeineAbgabedateiändern.
+3. Gezielte synthetischeMasken-/Sampling-/Marginprüfungen, unabhängigerMethoden-/Codecheck und Quellencommit vor tatsächlichem Lauf. Nurdeskriptiv: legaleArgmaxänderungen, SAPwechsel, exakteDuplikate, signierteBeiträge undQ-Verteilungen. KeineKonfidenzintervalle überkorrelierteReplayzeilen, keineAussagezurAktionsqualität/Regelübersteuerung/Fogkontexten.
+4. Befund fürMahmoud dokumentieren, daraus erst nächsten getrenntenAnsatzableiten. KeinNachoptimieren/Gewichtssuchen undkeinneuerLeistungsvergleich ausdieserDiagnose.
