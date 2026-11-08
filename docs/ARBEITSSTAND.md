@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Codex: Kontingentfreigabe und Fortsetzung des Ensemblevergleichs
+
+- Moayed hat ausdrücklich die Nutzung des gesamten restlichen Kontingents freigegeben; die 30-%-Reserve gilt für diesen Auftrag nicht mehr. Einen gegebenenfalls nötigen Reset übernimmt er selbst. Keine Reset-Einlösung durch Codex.
+- Sechs fertige Netze und A39/B39/ALL42/REPLACE36 aus `c624b09` bleiben unverändert. Null Auswahl-/Bestätigungsspiele zum Beginn dieser Fortsetzung; kein Stärkegewinn behauptet. Keine Wiederholung fertiger Trainings.
+- Der Vergleichscontroller erhält eine explizite Kontingentobergrenze (Standard65, dieser Lauf100), mit unveränderten Prüfungen für bekannte, aktuelle und erlaubte Nutzung. Quellen-/Modellbindung, höchstens zwei Spielprozesse und sämtliche statistischen Gates bleiben bestehen. [Enger Umsetzungs-/Fortsetzungsplan](superpowers/plans/2026-11-08-ensemble-budget-resume.md).
+- Startvorbereitung: Repository/Remote beide `c624b09`, keine neuen Mahmoud-Commits, keine aktiven Modellprozesse, Netzstrom100%. Umsetzung `9c103a1` geprüft: Root107Tests plus43Untertests bestanden (11,04s), unabhängigerReview ohne substantielleBefunde. AlleKandidatenhashes erneutidentisch. TatsächlicherStart folgt erst nach diesemCommit/Abgleich; dieseZeilen behaupten keinen laufendenVergleich.
+
 ## 07./08.11.2026 – Codex: sechs neue Netze fertig; größere Ensembles vorbereitet
 
 - Neuer Versuch r1 vollständig: sechs × 3000 Lernspiele, insgesamt 19.488 Ausführungen einschließlich Vorlauf/Validierung und 2.700.000 Updates. Alle sechs Endstände unabhängig technisch geprüft; Rohpläne, endliche veränderte Q/Target/Adam, 24 Validierungsgrenzen, Konfiguration und Prüfsummen bestanden. Keine parallelen Tests während Training; alle eigenen Rechen-/Wachhalteprozesse beendet.

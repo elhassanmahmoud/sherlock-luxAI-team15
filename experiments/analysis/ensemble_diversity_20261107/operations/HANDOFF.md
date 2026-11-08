@@ -1,3 +1,9 @@
+# Fortsetzung 08.11.2026 – neue Nutzerfreigabe
+
+Die bisherige30%-Reserve ist ausdrücklich aufgehoben. Nutzer erlaubt restlichesKontingent und übernimmt etwaigeResets selbst. Quellen-/Gewichts-/Datenintegrität undmaximalzweiWorker geltenweiter. Alle6Trainingsarme fertig, vierKandidaten geprüft. NochkeinAuswahlstart zumZeitpunktdieserNotiz. Controllermittels explizitemmax-used-percent100 vorbereiten, Tests/Reviewabschließen, dann39Jobs/7800Spiele. KeineTrainingswiederholung. AktuellerArbeitsstand hatVorrang; darunterhistorischerAbschluss.
+
+---
+
 # Aktuelle Übergabe – Trainingswelle abgeschlossen
 
 r1 vollständig, sechs Receipts, keine aktiven Prozesse. Unabhängiger Audit bestanden. Vier feste Kandidaten gebaut; Leistungsdaten noch nicht begonnen. Kontingent zuletzt64%, mindestens30%Reserve bleibt bis ausdrücklicher Änderung. Keine neue große Phase; nicht erneut trainieren. Remote-Abgleich pausiert. Details und nächsten Ablauf in docs/ENSEMBLE_TRAINING_20261107.md und jüngstem docs/ARBEITSSTAND.md. Quellstand des Trainings6ad3452; Arbeitskopie nach Ende sicher auf73119c7 aktualisiert. V14 undZIP unverändert. Die folgenden Betriebsnotizen sind historisch.

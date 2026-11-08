@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- At most two model processes; stop new work at 65 % account usage, retain at least 30 %.
+- At most two model processes. Update08.11: user explicitly permits remaining account quota; launch comparison with max-used-percent100, retain live known/allowed usage checks. The user handles any reset; never redeem one. Previous65% limit/30% reserve no longer applies to this task.
 - Protected V14 SHA256: 98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8.
 - Never rewrite historical evidence, active weights, or submitted ZIP.
 - Separate six training arms, fresh seed reservations, immutable source during runs.

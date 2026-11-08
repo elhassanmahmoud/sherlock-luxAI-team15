@@ -1,5 +1,7 @@
 # Neue Ensemble-Mitglieder nach der Battle-Präsentation
 
+**Aktualisierung 08.11.2026:** Moayed hat die 30-%-Reserve für diesen Auftrag ausdrücklich aufgehoben und die Nutzung des restlichen Kontingents freigegeben. Bei Erschöpfung übernimmt der Nutzer selbst einen Reset. Keine Reset-Einlösung durch den Agenten. Der neue Vergleich nutzt eine ausdrücklich protokollierte Kontingentobergrenze von 100 %; unbekanntes, veraltetes oder gesperrtes Kontingent beendet den Lauf kontrolliert. Die früheren Ressourcenangaben unten sind historische Planung. Kandidaten, Karten und statistische Gates bleiben unverändert.
+
 ## Auftrag und Ausgangslage
 
 Moayed hat am 07.11. die Präsentationsphase beendet und autonome weitere Trainings ohne feste Uhrzeit beauftragt, mit Schwerpunkt größere Ensembles. Das hebt den alten Experimentstopp auf. Die frühere Kontingentreserve bleibt bestehen: ab 65 % Verbrauch keine neuen Aufgaben, spätestens 70 % keine Entwicklung; kein Reset. V14 bleibt Referenz, bis ein Ersatz alle festgelegten Prüfungen besteht. Die erfolgte Moodle-Abgabe wird nicht verändert.

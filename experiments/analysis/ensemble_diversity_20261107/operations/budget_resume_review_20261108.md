@@ -1,0 +1,11 @@
+# Independent quota-ceiling review
+
+Verdict: PASS for the narrow change. No substantive correctness, scope, or policy findings.
+
+Reviewed baseline `c624b09` through implementation `9c103a1`, the staged policy documentation, the review package, the authorized continuation plan, and the implementer's report. Read the controller's surrounding launch, guard, reservation, queue, and shutdown paths and all changed tests. This was a read-only source review apart from this report; no tests, games, model processes, commits, or other file changes were performed by this reviewer.
+
+The implementation preserves default 65 and requires an explicit 100 for this task. It rejects booleans, nonnumeric values, nonfinite values, and ceilings outside `(0, 100]`. The receipt still must be current, known, and explicitly ordinary-use allowed, with usage strictly below the selected ceiling. The option flows from CLI through supervisor/build-state into persisted state and the input-hashed launch reservation; guards use that value and retain 65 for an absent legacy field. Validation precedes launch side effects. Source, model, protected artifacts, CSV receipts, ownership, two-worker limit, power handling, selection, and confirmation behavior are unchanged by the diff.
+
+The added tests address default/explicit forwarding, 65/99/100 usage boundaries, invalid ceilings, stale/future/disallowed/unknown receipts, state fallback, and launch-record persistence. The reported 23 tests plus 43 subtests are implementer evidence, not a fresh reviewer execution. Root's separate targeted verification remains the runtime evidence before launch.
+
+The staged documents consistently supersede the old reserve for this task, keep resets with the user, and do not claim games have started or strength has improved. Operational boundaries remain: finish tests and publish/synchronize before freezing the launch HEAD; supply `--max-used-percent 100`; refresh the genuine usage receipt within its existing 20-minute validity window; preserve the existing one-launch/no-automatic-resume behavior after any controlled stop. This review does not certify current live quota, power, processes, remote synchronization, model hashes, or actual selection results; root must establish those at launch.
