@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 08.11.2026: **Artillerie-Trainingsunterschied offline gemessen.** Zwei archivierte V14-Niederlagen, 1192 Helper-Aufrufe, davon 24 Eval-ja/Training-nein in einer Partie. Null neue Spiele oder Lernupdates. Root-Technik-/Hash-/Summenprüfung bestanden, unabhängiger Code-/Prämissenreview PASS; separate Ergebnisnachrechnung wegen tatsächlichem Kontingentende noch offen. Keine Aktionsqualitäts- oder Stärkeaussage, keine Promotion. [Ergebnis und Grenzen](../experiments/analysis/artillery_training_exposure_20261108/ERGEBNIS.md).
+
 08.11.2026: OfflineFog-Netzeinflussdiagnose abgeschlossen:10000vorhandeneZeilen, keineSpiele/Updates; C/N143/139VorschlagsänderungenvsV14, unabhängigerAuditPASS. KeinAktionsqualitäts-/Stärkenachweis. [Ergebnis](../experiments/analysis/fog_influence_20261108/ERGEBNIS.md).
 
 08.11.2026: Feste Fog-Auswahl440Spiele abgeschlossen, unabhängigPASS, keinNominierter. CONTROL38Panel75/80vsV1474/80, Solution38/40vs37, direkt28/40; NEUTRAL73/80,37/40,direkt26/40. BeidePanelhürde+2,5ppverfehlt; keineBestätigung/Verlängerung. [VollständigesErgebnis](../experiments/analysis/fog_comparison_20261108/ERGEBNIS.md). V14unverändert.

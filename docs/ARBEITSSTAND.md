@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Artillerie offline ausgewertet; kontrollierter Kontingentabschluss
+
+- Zwei vorhandene Spuren / 1192 Helper-Aufrufe: 24 unterschiedliche Verdikte in Partie 831006/player_1, null in 831043/player_0. Nur Training-Helper neu berechnet; historische Spielantwort unverändert aus dem Archiv. Null neue Spiele, Netzberechnungen oder Lernupdates. Kein Stärkegewinn behauptet.
+- Technischer Lauf und Root-Abschlussprüfung bestanden; unabhängiger Code-/Prämissenreview liegt vor. Unabhängige Ergebnisnachrechnung noch offen: bei tatsächlichen 100 % Kontingent vor Beginn gestoppt. Keine laufenden eigenen Jobs, Remote-Automation pausiert, kein Reset ausgelöst.
+- [Ergebnis](../experiments/analysis/artillery_training_exposure_20261108/ERGEBNIS.md), [Übergabe und nächste Schritte](../experiments/analysis/artillery_training_exposure_20261108/HANDOFF.md). V14 und ZIP bytegleich; nach Nutzer-Reset zuerst vorhandene Daten abnehmen, dann optional Trainingsregel angleichen und getrennt vergleichen. Keine neue Trainingsreihe gestartet.
+
 ## 08.11.2026 – Artillerie-Diagnose ohne neue Testspiele vorbereitet
 
 - Vorab von zwei Wiederholungsspielen auf die vorhandenen Targeting-Spuren umgestellt: alle benötigten Eingaben und historischen Helper-Rückgaben sind schon archiviert. Historischer und aktueller Helper sind identisch; unabhängige Prüfung bestätigt die Stabilität der nach dem Zug gespeicherten Eingaben.
