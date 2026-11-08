@@ -21,7 +21,7 @@ Das historische Eval-Verdikt wurde aus dem jeweiligen Event übernommen. Sein da
 - Root: zwei gezielte Tests bestanden, 2,41 Sekunden. Unabhängiger Code-/Methodenreview PASS.
 - Unabhängige Vorprüfung: historischer Helper-Code identisch; gespeicherte Karten/Zuordnungen bleiben während des Zuges stabil; alle 1192 Ereignisse passen zum aufgezeichneten Einheitenkontext.
 - Tatsächlicher Lauf beendet mit Status `complete`. Root-Abschlussprüfung bestätigt Quellenstand, Input-/Output-/Gewichtshashes, Zeilenzahlen, vier Verdiktsummen und unveränderte Zustandsfingerprints.
-- **Noch offen:** unabhängige Nachberechnung der Trainingsformel über die 1192 Ergebniszeilen. Sie wurde beim tatsächlichen Kontingentende noch vor Beginn gestoppt. Die Vorprüfung und der Code-Review ersetzen diesen Datenabschluss nicht.
+- **Nach Wiederaufnahme abgeschlossen:** unabhängige Nachberechnung aller 1192 Ergebniszeilen mit eigener Trainingsformel und rekonstruierten Zustandsdigests. 39590 Prüfungen PASS; historische Quellen gegen Git-Blobs gebunden, keine Agentimporte/Spiele. Root hat Bericht, Auditorhash und verfügbare Belege gegengeprüft. Siehe operations/independent_data_audit.md.
 
 Die zwei Spiele sind bekannte, ausgewählte Niederlagen. Diese Häufigkeiten sind keine allgemeine Schätzung. Ein Helper-Verdikt ist keine endgültige Aktion: Aufrufbedingungen und spätere Regeln können die Wirkung verändern. Keine bessere Entscheidung, Belohnung, Lernwirkung oder Siegquote ist damit bewiesen. Keine neuen Gewichte erzeugt oder übernommen.
 

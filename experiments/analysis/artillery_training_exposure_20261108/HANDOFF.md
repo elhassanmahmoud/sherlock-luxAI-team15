@@ -1,6 +1,10 @@
-# Übergabe nach tatsächlichem Kontingentende
+# Historische Übergabe und Wiederaufnahme
 
 Stand 08.11.2026, 14:11:46 UTC: tatsächliche Nutzungsanzeige 100 %. Nutzer übernimmt Resets; keiner wurde ausgelöst. Keine eigenen Trainings-, Test- oder Diagnoseprozesse mehr aktiv. Remote-Automation pausiert. Keine automatisch anstehenden Trainings.
+
+## Wiederaufnahme am 08.11.2026
+
+Moayed hat ausdrücklich zum Weiterarbeiten aufgefordert und den Ersatz von V14 bei belegtem Vorteil bestätigt. Tatsächlicher Reset auf0% geprüft, AC100%, beide Kopien und Remote dd15d99 ohne neue Mahmoud-Commits. Die unabhängige Ergebnisnachrechnung ist jetzt abgeschlossen:39590 Prüfungen PASS. Aktueller neuer Plan: docs/superpowers/plans/2026-11-08-artillery-alignment.md. Die folgenden Kontingentangaben und offenen Schritte beschreiben den vorherigen Abschluss.
 
 ## Abgeschlossene Arbeit
 

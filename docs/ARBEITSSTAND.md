@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Wiederaufnahme und unabhängiger Artillerie-Datenabschluss
+
+- Moayed autorisiert erneut selbstständige Weiterarbeit und V14-Ersatz bei belegtem Vorteil. Tatsächliches Kontingent auf0% zurückgesetzt, AC100%, keine laufenden Modelljobs, Repo/Remote aufdd15d99 ohne neue Mahmoud-Änderungen.
+- Offene Artillerie-Nachrechnung abgeschlossen:39590 unabhängige Prüfungen PASS,1192 Originalevents und sämtliche Vor-/Nachher-Digests rekonstruiert. Root hat Formel, Bericht und Hashbelege geprüft. Keine neuen Spiele oder Gewichtsänderungen.
+- [Neuer fester Lernplan](superpowers/plans/2026-11-08-artillery-alignment.md): nur art_splash optional imTraining aktivieren, vier Kontroll-/Aligned-Arme mit zweiStarts. Vor Gradienten tatsächliche zusätzliche SAP-Ausführung belegen; unterschiedliche Verläufe zwischen den Armen sind erwartet. Umsetzung begonnen, noch kein neuer Lernlauf.
+
 ## 08.11.2026 – Artillerie offline ausgewertet; kontrollierter Kontingentabschluss
 
 - Zwei vorhandene Spuren / 1192 Helper-Aufrufe: 24 unterschiedliche Verdikte in Partie 831006/player_1, null in 831043/player_0. Nur Training-Helper neu berechnet; historische Spielantwort unverändert aus dem Archiv. Null neue Spiele, Netzberechnungen oder Lernupdates. Kein Stärkegewinn behauptet.
