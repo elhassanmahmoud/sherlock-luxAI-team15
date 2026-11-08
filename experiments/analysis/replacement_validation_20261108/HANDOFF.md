@@ -1,0 +1,7 @@
+# Separate Validierung von REPLACE36
+
+Die vorherige kompakte Auswahl ist abgeschlossen, hat keinen Nominierten und wird nicht wieder geöffnet. Neue, durch das diagnostische Ergebnis motivierte Hypothese: genau das bereits vorhandene REPLACE36-Modell gegen V14 auf frischen Karten prüfen. Einmalig15 Jobs/3200 Spiele, danach bei negativem oder unklarem Ergebnis keine automatische weitere Studie. Originale Netze, Regeln, Rewards und Gewichte unverändert; keine Neuoptimierung.
+
+Vorabplan: docs/superpowers/plans/2026-11-08-replacement-validation.md. Feste Modelldateien und Entdeckungsnachweise: origin.json. Seedprüfung und validation_plan sind vorhanden. Getrenntes Werkzeug in e5b6345 umgesetzt, Root228 Tests plus43 Untertests bestanden, unabhängiger Review PASS. Prüfberichte liegen hier. Diese Notiz behauptet keinen laufenden Versuch. Nach Start: validation_launch.json und validation/state.json. Nicht doppelt starten; keine Tests parallel zu Modellprozessen; Quellstand über vollständigen Frischdatentest festhalten. Maximal zwei Spielprozesse.
+
+Nutzer erlaubt restliches Kontingent und übernimmt Resets selbst. Frische reale usage.json unter ../ensemble_diversity_20261107/operations/usage.json, explizite Grenze100; unbekannt/gesperrt/erschöpft kontrolliert stoppen, nie automatisch resetten. Stopps erhalten Teilstände und Reservierungen; kein automatischer Neustart. V14 und ZIP erst nach vollständiger unabhängiger Bestätigung plus technischen Prüfungen/Sicherung ersetzen.

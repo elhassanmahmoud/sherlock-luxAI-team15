@@ -4,6 +4,18 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Werkzeug für begrenzten Frischdatenvergleich geprüft
+
+- Separates Werkzeug `replacement_validation.py` in `e5b6345`; bestehende Auswahl, Nomination und Auswertungsregeln bleiben unverändert. Exakte REPLACE36-/V14-Dateien, Herkunft, Karten, Quellen, Prozessbesitz und vollständige Rohdaten vor Auswertung gebunden. Keine automatische Übernahme.
+- **Tatsächlich geprüft:** Root hat 228 Tests plus 43 Untertests erneut ausgeführt; bestanden. Unabhängiger Code-/Schema-Review PASS ohne offene Befunde. Prüfungen verwenden synthetische Daten und sind keine gespielten Leistungspartien. [Prüfbelege](../experiments/analysis/replacement_validation_20261108/).
+- Begrenzter Umfang unverändert: 200 Spiele je Modell/Gegner und 400 direkte Duelle, zusammen3200; deutlich weniger als frühere große Bestätigungen. Höchstens zwei Spielprozesse. Kein Nachlegen bei unklarem Ergebnis. Noch nicht gestartet; frischer Ressourcen-/Quellencheck nach Veröffentlichung erforderlich. V14 und ZIP unverändert, origin/main beim Abgleich06fecb5, keine neuen Mahmoud-Commits.
+
+## 08.11.2026 – getrennte Validierung der Austauschhypothese vorbereitet
+
+- Die kompakte Auswahl bleibt abgeschlossen mit `nominee:null`. Ein unabhängiger Methodenreview bewertet einen einmaligen Frischdatentest des exakt bestehenden REPLACE36 unter dem autonomen Auftrag als sinnvoll, wenn Entstehung aus den Diagnoseergebnissen und statistische Grenzen ausdrücklich benannt werden.
+- [Separater Vorabplan](superpowers/plans/2026-11-08-replacement-validation.md): nur V14 gegen REPLACE36, 100 frische Karten für sieben Gegner, 200 separate Direktkarten, beide Seiten, genau15 Jobs/3200 Spiele. Unveränderte sieben ursprüngliche Ensemble-Gates und drei Zusatzbedingungen. Kein Nachschlag, Nachrücker, Modelltraining oder automatischer weiterer Versuch bei negativem/unklarem Ausgang. Zusammen mit Auswahl1560 maximal4760 vollständige Leistungsspiele; unbekannte Ausführungen des früheren Abbruchs separat.
+- Origin-Beleg bindet die exakten beiden Modelle und sämtliche abgeschlossenen Entdeckungsdaten an Prüfsummen. Frühere Ergebnisse werden nicht gepoolt. Neue Karten2000000–2000099 und2100000–2100199 in acht lokalen Arbeitskopien ohne dokumentierte Überschneidung/Lesefehler. Werkzeuge werden separat umgesetzt, damit die alten Auswahlregeln unverändert bleiben. Noch kein Start oder Ergebnis dieser neuen Validierung.
+
 ## 08.11.2026 – kompakte Auswahl vollständig; kein nominierter Nachfolger
 
 - Alle39 Jobs/1560 Spiele vollständig, unabhängig gegen Rohdaten/Prüfsummen nachgerechnet. Sechserpanel V14 185/240; A39 202, B39 193, ALL42 205, REPLACE36 202. Solution V14 38/40, A39/B39/REPLACE36 39/40, ALL42 40/40; default überall40/40. Direkt A39/ALL42 je18/40, B39 14/40, REPLACE36 28/40.

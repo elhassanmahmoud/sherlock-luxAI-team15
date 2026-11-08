@@ -1,0 +1,15 @@
+{
+  "status": "admitted",
+  "roles": {
+    "V14": {
+      "path": "experiments/releases/20261101_v14_baseline/agent_p0.pth",
+      "sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+    },
+    "REPLACE36": {
+      "path": "experiments/candidates/ensemble_diversity_20261107/REPLACE36.pth",
+      "sha256": "5ce350a86d4ed90b319af298e64b98e7f725ed253f5df89d504e98a73a54db6b"
+    }
+  },
+  "scope": "technical artifact admission for independent fixed validation only; no promotion or retrospective compact nomination",
+  "prior_artifact_audit": "experiments/analysis/ensemble_diversity_20261107/operations/final_training_audit.json"
+}

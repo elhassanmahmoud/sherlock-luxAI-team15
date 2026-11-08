@@ -1,0 +1,7 @@
+# Replacement validation seed audit — 08 November 2026
+
+**No recorded collision found.** Checked panel/default **2000000–2000099** (100 maps) and direct **2100000–2100199** (200 maps) across all eight local Git worktrees: 8,722 CSV (7,251 with seed/map columns), 4,898 JSON and 122 JSONL. Overlaps: 0; read/parse errors: 0.
+
+Fixed prospective scope: 2 roles × 7 opponents × 100 maps × 2 sides = 2800 panel/default games, plus 200 maps × 2 sides = 400 direct games; **15 jobs / 3200 games**. These are planned, not executed counts. Compact discovery records on 1700000–1700019 and 1701000–1701019 are included as history. New replacement-validation origin/plans/subtree and new Markdown design are excluded as self-generated evidence. Old stopped selection contents remain unread and both complete 1400000–1400099 / 1401000–1401099 blocks remain quarantined.
+
+Same prior read-only method: seed/map integers and numeric strings in CSV columns and recursive JSON/JSONL contexts, conservative two-endpoint intervals plus recognized start/end and start/count forms. Detailed counts, worktree paths, exclusions, inventory digest and limitations are in `seed_audit.json`. Only local recorded data are covered; external/unrecorded/seedless runs and arbitrary implicit formulas are outside scope. Repeated worktree copies are not unique games. No games, model loads, tests, source/HEAD changes or commits were performed.

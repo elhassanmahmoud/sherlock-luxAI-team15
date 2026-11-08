@@ -1,0 +1,145 @@
+{
+  "audit_utc": "2026-11-08T05:08:28.085392+00:00",
+  "status": "clear_with_local_record_scope",
+  "protocol": "docs/superpowers/plans/2026-11-08-replacement-validation.md",
+  "planned_inclusive_ranges": [
+    {
+      "purpose": "validation_panel_default",
+      "start": 2000000,
+      "end": 2000099,
+      "maps": 100
+    },
+    {
+      "purpose": "validation_direct",
+      "start": 2100000,
+      "end": 2100199,
+      "maps": 200
+    }
+  ],
+  "planned_jobs": 15,
+  "planned_games": 3200,
+  "quarantined_old_blocks": [
+    [
+      1400000,
+      1400099
+    ],
+    [
+      1401000,
+      1401099
+    ]
+  ],
+  "compact_discovery_included_as_history": true,
+  "worktrees": [
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+      "counts": {
+        ".json": 1178,
+        ".csv": 1611,
+        "csv_with_seed_or_map_columns": 1329,
+        "csv_integer_seed_cells": 1382170,
+        ".jsonl": 37
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+      "counts": {
+        ".json": 1325,
+        ".csv": 1639,
+        "csv_with_seed_or_map_columns": 1343,
+        "csv_integer_seed_cells": 1387856,
+        ".jsonl": 69
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+      "counts": {
+        ".json": 220,
+        ".csv": 606,
+        "csv_with_seed_or_map_columns": 518,
+        "csv_integer_seed_cells": 369510,
+        ".jsonl": 1
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+      "counts": {
+        ".json": 239,
+        ".csv": 608,
+        "csv_with_seed_or_map_columns": 520,
+        "csv_integer_seed_cells": 369990,
+        ".jsonl": 1
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+      "counts": {
+        ".json": 265,
+        ".csv": 619,
+        "csv_with_seed_or_map_columns": 531,
+        "csv_integer_seed_cells": 372286,
+        ".jsonl": 1
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+      "counts": {
+        ".json": 755,
+        ".csv": 1529,
+        "csv_with_seed_or_map_columns": 1259,
+        "csv_integer_seed_cells": 1381290,
+        ".jsonl": 6
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+      "counts": {
+        ".json": 629,
+        ".csv": 1482,
+        "csv_with_seed_or_map_columns": 1212,
+        "csv_integer_seed_cells": 1333686,
+        ".jsonl": 6
+      }
+    },
+    {
+      "worktree": "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint",
+      "counts": {
+        ".json": 287,
+        ".csv": 628,
+        "csv_with_seed_or_map_columns": 539,
+        "csv_integer_seed_cells": 374970,
+        ".jsonl": 1
+      }
+    }
+  ],
+  "totals": {
+    ".json": 4898,
+    ".csv": 8722,
+    "csv_with_seed_or_map_columns": 7251,
+    "csv_integer_seed_cells": 6971758,
+    ".jsonl": 122
+  },
+  "overlaps": [],
+  "errors": [],
+  "excluded_paths": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/ensemble_diversity_20261107/selection/provenance.json",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/ensemble_diversity_20261107/selection/state.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_diversity_20261107/selection/provenance.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_diversity_20261107/selection/state.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/replacement_validation_20261108/origin.json"
+  ],
+  "scanned_path_size_mtime_inventory_sha256": "e015992327a43d250dad71abb559eca5006f44a963ecd53ba1a45feb907d32bf",
+  "method": [
+    "All local experiments CSV/JSON/JSONL via rg --files --hidden --no-ignore in all eight git worktrees.",
+    "CSV integer values including numeric strings under seed-bearing columns or exact map/map_id columns.",
+    "JSON/JSONL recursive seed/map keys and filename contexts, integer/numeric-string leaves, ascending two-value arrays as inclusive ranges.",
+    "Explicit start/end and start/count interval forms in seed contexts. Compact 1700000/1701000 discovery records included; new replacement study excluded before opening."
+  ],
+  "limitations": [
+    "Local recorded files only: external, unrecorded and seedless runs are not covered.",
+    "Arbitrary implicit formulas, undocumented CSV interval forms, nonnumeric encoded seeds and binary records are not covered.",
+    "Repeated copies across worktrees count repeatedly; file and seed-cell totals are not unique-game counts.",
+    "Stopped old selection subtree excluded before reading contents; both old blocks remain quarantined irrespective of unknown actual game count.",
+    "New replacement study subtree, origin/plans and new Markdown design are not historical evidence.",
+    "No games, models, tests, source/HEAD changes or commits; no claim about current processes, quota, power or model integrity."
+  ]
+}
