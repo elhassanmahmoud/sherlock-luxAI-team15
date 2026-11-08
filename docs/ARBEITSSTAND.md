@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – HOLD-Lernwerkzeuge geprüft
+
+- Die 16 öffentlichen Merkmale, einmalige gewichtete Ridge-Anpassung und festen Validierungsregeln sind umgesetzt. Der optionale experimentelle Kopf darf höchstens acht Gelegenheiten pro Spiel bewerten; abgelehnte Eingriffe starten ebenfalls die zwölf Schritte Wartezeit. Der Produktionsagent und V14 bleiben unverändert.
+- Root hat alle 102 gezielten Tests bestanden (2,88 Sekunden). Unabhängiger Integrationsreview PASS, keine Blocker. Alte Probeprüfungen bleiben erhalten. Reale neutrale Spielprüfung und Datensammlung stehen noch aus; kein bereits trainierter Kopf behauptet.
+- Nächste Reihenfolge: vier bekannte technische Spiele mit tatsächlich aufgerufenem neutralem Kopf; dann feste Trainingsdaten, genau ein Fit, Kopf einfrieren, erst danach getrennte Validierungsdaten. Quellen während der Läufe unverändert; keine parallelen Tests. [Werkzeugbelege](../experiments/analysis/holder_learning_20261108/operations/).
+
 ## 08.11.2026 – kleiner HOLD-Lernversuch vor neuen Daten festgelegt
 
 - Nach bestandener Einflussprobe eigener [Lernplan](superpowers/plans/2026-11-08-holder-learning.md):24Trainingskarten6500000–6500023 und8Validierungskarten6501000–6501007, beideSeiten, höchstens512Paare. Je Referenz+Sammler zusammen128volleAusführungen; keine frischen Leistungsspiele. Noch nicht gestartet.

@@ -170,9 +170,15 @@ class Intervention:
 
 class DiagnosticAgent(Agent_x):
     """A copied agent carries only data, never a closure pointing at live state."""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, head=None, **kwargs):
         super().__init__(*args, **kwargs)
         if self.training: raise ValueError('Diagnostic agent cannot train')
+        if head is not None:
+            from scripts.holder_learning import validate_head
+            head = validate_head(head)
+        self.head = head
+        self.head_opportunities = 0
+        self.last_opportunity_step = -HORIZON
         # Neither object is read by evaluation act. No mutable state is shared.
         self.buffer = None
         self.opt = None
@@ -185,13 +191,25 @@ class DiagnosticAgent(Agent_x):
     def update(self, *args, **kwargs):
         raise RuntimeError('Diagnostic agent cannot update')
 
+    def new_game(self, player=None):
+        super().new_game(player)
+        self.head_opportunities = 0
+        self.last_opportunity_step = -HORIZON
+
     def act(self, step, obs):
         self.candidate = None
         return super().act(step, obs)
 
     def _rule_override(self, ctx, uid, mask, a):
-        valid = eligible(ctx, uid, mask, a) if self.collect or self.intervention else False
-        if self.collect and self.candidate is None and valid:
+        head = getattr(self, 'head', None)
+        if head is not None and self.intervention is not None:
+            raise ValueError('Learned head and forced intervention cannot coexist')
+        score = (head is not None and self.head_opportunities < 8
+                 and int(ctx['step']) - self.last_opportunity_step >= HORIZON)
+        valid = eligible(ctx, uid, mask, a) if self.collect or self.intervention or score else False
+        if valid and ((self.collect and self.candidate is None) or score):
+            # Keep this in the direct Agent_x._act caller: wrapping this hook
+            # would hide its audited masked Q row and invalidate the check.
             caller = sys._getframe(1)
             try:
                 if caller.f_code is not Agent_x._act.__code__ or caller.f_locals.get('self') is not self:
@@ -202,9 +220,16 @@ class DiagnosticAgent(Agent_x):
                 del caller
             public = {k: _json(v) for k, v in ctx.items() if k in PUBLIC_FIELDS}
             public.update(assigned=_json(ctx['assigned']))
-            self.candidate = dict(step=int(ctx['step']), uid=int(uid), proposal=int(a),
-                                  match_step=int(ctx['match_step']), q=[float(v) if np.isfinite(v) else None for v in q],
-                                  mask=_json(mask), features=_json(self._cache[3][uid]), public=public)
+            candidate = dict(step=int(ctx['step']), uid=int(uid), proposal=int(a),
+                             match_step=int(ctx['match_step']), q=[float(v) if np.isfinite(v) else None for v in q],
+                             mask=_json(mask), features=_json(self._cache[3][uid]), public=public)
+            if self.collect and self.candidate is None: self.candidate = candidate
+            if score:
+                # An attempted decision consumes the opportunity even on reject.
+                self.head_opportunities += 1
+                self.last_opportunity_step = int(ctx['step'])
+                from scripts.holder_learning import predict_gain
+                if predict_gain(head, candidate) > head['threshold']: a = geo.STAY
         order = self.intervention
         if order is not None and int(ctx['step']) == order.step and uid == order.uid:
             if not valid or a != order.proposal: raise RuntimeError('Intervention precondition mismatch')

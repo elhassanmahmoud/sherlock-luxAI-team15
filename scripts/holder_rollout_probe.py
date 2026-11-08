@@ -88,7 +88,7 @@ class Guard:
         usage = check_usage(s['usage_file'], now=now, max_used_percent=100)
         power = read_power()
         require(power['ac'] is True, 'AC power required for the diagnostic')
-        require(source_identity(ROOT, sys.executable, PLANS) == s['source'], 'Frozen sources/HEAD changed')
+        require(source_identity(ROOT, sys.executable, s.get('source_plans', PLANS)) == s['source'], 'Frozen sources/HEAD changed')
         require(hashes(s['inputs']) == s['inputs'] and hashes(s['protected']) == s['protected'],
                 'Pinned inputs/weights/ZIP changed')
         processes = subprocess.check_output(['ps', '-axo', 'pid=,pgid=,args='], text=True, timeout=5)
@@ -103,7 +103,7 @@ def write_json(path, document):
     temporary.replace(path)
 
 
-def play(seed, side, weights, *, instrumented, frame_path, pair_path, guard, progress, max_pairs):
+def play(seed, side, weights, *, instrumented, frame_path, pair_path, guard, progress, max_pairs, head=None):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from agents.sherlock.main import Agent_x
     from agents.Solution_92_Kaggle.base import Global
@@ -115,7 +115,8 @@ def play(seed, side, weights, *, instrumented, frame_path, pair_path, guard, pro
     import torch
 
     cls = DiagnosticAgent if instrumented else Agent_x
-    agent = cls('player_0', agent_path=str(weights), cfg=build_cfg(str(weights), []), train=False, seed=0)
+    options = {'head': head} if instrumented and head is not None else {}
+    agent = cls('player_0', agent_path=str(weights), cfg=build_cfg(str(weights), []), train=False, seed=0, **options)
     agent.set_to_eval_mode(); agent.autosave_on_terminate = False
     # Freeze stateless inference modules without altering values or policy.
     for net in [agent.q, agent.target_q, *agent.extra_q]: net.eval().requires_grad_(False)
@@ -185,9 +186,13 @@ def play(seed, side, weights, *, instrumented, frame_path, pair_path, guard, pro
         require(pending is None and steps == 303 and resets == 3 and len(matches) == 3 and not agent.caught_errors,
                 'Incomplete game or unverified baseline future')
         require(module_fingerprint(agent) == frozen_modules, 'In-memory frozen Q modules changed')
-        return dict(seed=seed, side=side, steps=steps, resets=resets, wins=wins, points=totals.tolist(),
+        result = dict(seed=seed, side=side, steps=steps, resets=resets, wins=wins, points=totals.tolist(),
                     matches=matches, point_counting_version=POINT_COUNTING_VERSION,
                     trajectory_sha256=game_digest.hexdigest(), caught_errors=agent.caught_errors, pairs=pairs)
+        if instrumented and head is not None:
+            result.update(head_opportunities=agent.head_opportunities,
+                          last_opportunity_step=agent.last_opportunity_step)
+        return result
     finally:
         env.close()
 
@@ -196,20 +201,39 @@ def run_probe(weights, keys_path, out, *, expected_head, usage_file, stop_file, 
     weights, keys_path, out = Path(weights).resolve(), Path(keys_path).resolve(), Path(out).absolute()
     require(not out.exists(), 'Output directory already exists; no resume/overwrite')
     keys, historical = validate_keys(keys_path)
+    selected = [k for identity in SMOKE_KEYS for k in keys if (k['seed'], k['side']) == identity] if technical_smoke else keys
+    return run_collection(weights, out, selected=selected, all_keys=keys,
+                          frozen_inputs=[weights, keys_path, historical], source_plans=PLANS,
+                          expected_head=expected_head, usage_file=usage_file, stop_file=stop_file,
+                          kind='technical_smoke' if technical_smoke else 'historical_diagnostic',
+                          max_pairs=1 if technical_smoke else 8, historical_feasibility=True)
+
+
+def run_collection(weights, out, *, selected, all_keys, frozen_inputs, source_plans,
+                   expected_head, usage_file, stop_file, kind, max_pairs=8,
+                   historical_feasibility=False, metadata=None, head=None):
+    """Shared audited engine loop; callers validate their fixed key protocols first."""
+    weights, out = Path(weights).resolve(), Path(out).absolute()
+    require(not out.exists(), 'Output directory already exists; no resume/overwrite')
     require(digest(weights) == V14_SHA, 'Only the original V14 weights are allowed')
     protected = protected_inputs(ROOT)
-    source = source_identity(ROOT, sys.executable, PLANS)
+    source = source_identity(ROOT, sys.executable, source_plans)
     require(source['head'] == expected_head, 'Expected HEAD mismatch')
-    selected = [k for identity in SMOKE_KEYS for k in keys if (k['seed'], k['side']) == identity] if technical_smoke else keys
-    state = dict(schema_version=1, kind='technical_smoke' if technical_smoke else 'historical_diagnostic',
+    state = dict(schema_version=1, kind=kind,
                  status='running', pid=os.getpid(), started_at=time.time(), expected_head=expected_head,
-                 source=source, inputs=hashes([weights, keys_path, historical]), protected=hashes(protected),
+                 source=source, inputs=hashes(frozen_inputs), protected=hashes(protected),
                  usage_file=str(Path(usage_file).absolute()), stop_file=str(Path(stop_file).absolute()),
-                 keys=selected, all_keys=keys, planned_games=2*len(selected), max_pairs_per_game=1 if technical_smoke else 8,
+                 keys=selected, all_keys=all_keys, planned_games=2*len(selected), max_pairs_per_game=max_pairs,
                  horizon=12, completed_games=0, completed_pairs=0, additional_steps=0, diagnostic_steps=0, technical_extra_steps=0,
                  reference_steps=0, instrumented_steps=0, games=[],
                  limitations=['historically selected loss/control keys; no performance-strength claim',
                               'whole-team intervention consequences, not single-unit isolated causality'])
+    if source_plans != PLANS: state['source_plans'] = list(map(str, source_plans))
+    if metadata is not None:
+        require(not set(metadata).intersection(state), 'Study metadata shadows collector state')
+        state.update(metadata)
+        state['limitations'] = ['counterfactual opportunities on baseline trajectories; no policy-strength claim',
+                                'whole-team intervention consequences, not single-unit isolated causality']
     guard = Guard(state)
     guard(force=True)
     out.mkdir(parents=True, exist_ok=False)
@@ -230,9 +254,10 @@ def run_probe(weights, keys_path, out, *, expected_head, usage_file, stop_file, 
                 for instrumented in (False, True):
                     guard(force=True)
                     name = f'{seed}_{side}_' + ('collector' if instrumented else 'reference')
+                    options = {'head': head} if head is not None else {}
                     result = play(seed, side, weights, instrumented=instrumented,
                                   frame_path=out / (name + '.frames.jsonl.gz'), pair_path=out / (name + '.pairs.jsonl'),
-                                  guard=guard, progress=progress, max_pairs=state['max_pairs_per_game'])
+                                  guard=guard, progress=progress, max_pairs=state['max_pairs_per_game'], **options)
                     record['collector' if instrumented else 'reference'] = result
                     state['completed_games'] += 1
                     record[name.split('_')[-1] + '_artifacts'] = hashes([
@@ -242,15 +267,19 @@ def run_probe(weights, keys_path, out, *, expected_head, usage_file, stop_file, 
                 record['passivity'] = {k: ref[k] == col[k] for k in ref if k != 'pairs'}
                 save()
                 require(all(record['passivity'].values()), 'Reference/collector passivity failure')
+                if head is not None:
+                    require(1 <= col['head_opportunities'] <= 8,
+                            'Neutral head scored no opportunities or exceeded its budget')
             guard(force=True)
-        cases = [p for g in state['games'] for p in g['collector']['pairs']]
-        effective = [p for p in cases if p['effective']]
-        positive_games = {(g['key']['seed'], g['key']['side']) for g in state['games']
-                          if any(p['effective'] and p['label'] > 0 for p in g['collector']['pairs'])}
-        positive = sum(p['label'] > 0 for p in effective)
-        state['feasibility'] = dict(cases=len(cases), effective=len(effective), positive=positive,
-                                    positive_games=len(positive_games),
-                                    passed=(len(effective) >= 24 and positive >= 6 and len(positive_games) >= 3))
+        if historical_feasibility:
+            cases = [p for g in state['games'] for p in g['collector']['pairs']]
+            effective = [p for p in cases if p['effective']]
+            positive_games = {(g['key']['seed'], g['key']['side']) for g in state['games']
+                              if any(p['effective'] and p['label'] > 0 for p in g['collector']['pairs'])}
+            positive = sum(p['label'] > 0 for p in effective)
+            state['feasibility'] = dict(cases=len(cases), effective=len(effective), positive=positive,
+                                        positive_games=len(positive_games),
+                                        passed=(len(effective) >= 24 and positive >= 6 and len(positive_games) >= 3))
         state.update(status='complete', finished_at=time.time()); save()
     except BaseException as exc:
         state.update(status='failed', error=f'{type(exc).__name__}: {exc}', finished_at=time.time()); save()

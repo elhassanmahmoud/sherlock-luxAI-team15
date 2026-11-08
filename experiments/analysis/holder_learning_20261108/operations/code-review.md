@@ -1,0 +1,23 @@
+# Integrated HOLD learning review — 2026-11-08
+
+**Verdict: PASS for source freeze and the planned neutral runtime proof. No blocking correctness findings.** This is an independent read-only code review, not evidence of successful collection, fitting, offline validation, or stronger play.
+
+Reviewed the complete immutable `review.diff` against base `feb77e7`, both implementation reports, the fixed learning specification/plan, the current handoff, and relevant unchanged caller, context, collector, snapshot, and source-identity code. The reviewed change contains only the four experimental scripts and two test files; production Agent_x, V14 weights and submission ZIP have no changes in this diff.
+
+Reviewed diff SHA-256: `41261a68d9b9ad64bd6692282bca022878ffaca0e8edf6554435f22f86f451cd`.
+
+## Findings
+
+- All sixteen features match the declared formulas and order. The extractor uses only the permitted public candidate fields, ignores the old 79-vector and hidden/branch/label fields, retains legal-Q masking semantics, and operates in the existing canonical coordinates for either side. Empty enemy sets and negative enemy energies are handled consistently with the specification.
+- Fit retains all complete labels. Represented maps receive equal total weight across both sides; the same weights determine training-only population normalization and the ridge objective. The intercept is unpenalized, ridge is exactly 0.1, scales below 1e-6 become 1, standardized features clip to [-5,5], and inference uses strictly greater than 1.0. Training quantity/positive-label gates match the fixed 96/12/12/6 requirements.
+- Offline validation does not refit or tune. It uses all eight predeclared maps, including zero-selection maps, divides each selected-label map sum by two, and applies the fixed 5000-draw default_rng(0) map bootstrap and strict positive lower-bound/mean gates. Pair/map/selection minima and reported MSE/sign counts match the specification.
+- The optional head stays at the audited pre-rule proposal hook. Its first eligible UID consumes the opportunity immediately, including rejection; the twelve-step cooldown and eight-opportunity limit span matches and reset only on new_game. Accepted STAY proceeds through the ordinary rules and remaining team action processing. Missing heads preserve the prior path, and forced interventions cannot coexist with a supplied head. Generic snapshot deepcopy includes the new fields without sharing mutable state.
+- Collector extraction preserves the old historical CLI, smoke selection, branch sequence, point helper, post-act global/RNG restoration, live-future verification, reference passivity, and fixed module fingerprints. Learning collection remains head-free. The neutral proof uses the real zero-head hook on the two known opposite-side keys, disables branch collection, compares all original complete-game result fields/trajectory hashes, and rejects zero scored opportunities.
+- The study CLI fixes the exact 24/8 map split and both sides. Complete collection parsing verifies fixed keys/counts, bound artifacts, all 303 frames and action/frame hashes, trajectory continuity, reference/collector identity, every baseline branch against live frames, branch labels, first-pair repeat receipts, cadence/budget, and counters before fitting. All complete zero/negative pairs survive parsing.
+- Training manifest/artifacts/source/plan/baseline provenance is carried into the head and fit receipt. Validation collection requires a valid frozen receipt first and binds its head, report, training evidence and receipt as inputs. Validation report generation checks the receipt before reading validation labels. Existing source/protected-input, quota, AC, STOP and process/resource guards remain active; outputs are exclusive.
+
+## Evidence and remaining execution gate
+
+I read the complete source/test diff and relevant integration dependencies. I did not run tests, load checkpoints, inspect actual labels, fit a model, play games, spawn agents, or edit source. Root reports the combined focused run as 102 passing tests in 2.88 seconds; the implementation reports document their preceding synthetic checks. Those test results are reported evidence, not a new independent execution by this reviewer.
+
+Root still needs the already planned four-execution, nonvacuous neutral runtime proof before fresh training collection, followed by actual complete-data auditing and the fixed fit/validation sequence. Offline screening cannot establish repeated-policy strength; any passing frozen head still requires its separately predeclared actual-game comparison. No extra framework or broader testing requirement is introduced by this review.
