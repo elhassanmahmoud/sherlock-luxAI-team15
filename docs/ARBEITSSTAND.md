@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – HOLD-Kopf gelernt und getrennt geprüft: keine Freigabe
+
+- Tatsächlich ein kleiner Kopf mit16 öffentlichen Merkmalen gelernt:162 vollständige Trainingspaare auf20 von24 festgelegten Karten. Beide Seiten,96 Referenz-/Sammelausführungen. Alle positiven/negativen/Null-Labels genutzt; Normierung nurTraining, einmaliger Ridge-Fit. V14-Netze unverändert.
+- Getrennte Validierung auf acht Karten/32 Ausführungen:28 Paare,14 gewählte Eingriffe,10 positive und4 negative. Mittlerer Kartenwert+1,125, untere Bootstrap-Grenze−0,8765625. Zwei von sechs festen Bedingungen verfehlt (Menge und Unsicherheit). Keine Zusatzkarten, kein Refit, kein vollständiger Stärkevergleich oder Abgabeaustausch dieses Kopfes.
+- Insgesamt132 vollständige Ausführungen einschließlich neutraler Technik,190 Paare und5736 zusätzliche Simulationsschritte; keine neuen DQN-/RL-Updates. Root102 Werkzeugtests vorher bestanden. Unabhängige Code-, Rohdaten-, Koeffizienten- und Validierungsaudits PASS; deren Leistungsentscheidung lautet FAIL. Quelle759c8fa bis zum Ende unverändert, eigene Prozesse beendet, Gewichte/ZIP bytegleich.
+- [Vollständiger Bericht](../experiments/analysis/holder_learning_20261108/ERGEBNIS.md). Der Nutzer will autonome Weiterarbeit: nächster separater Ansatz ist die Herkunft/Behandlung unbekannter Fog-SAP-Treffer im Training. Noch kein neuer Trainingslauf dazu und keine Änderung am Produktionsagenten.
+
 ## 08.11.2026 – HOLD-Lernwerkzeuge geprüft
 
 - Die 16 öffentlichen Merkmale, einmalige gewichtete Ridge-Anpassung und festen Validierungsregeln sind umgesetzt. Der optionale experimentelle Kopf darf höchstens acht Gelegenheiten pro Spiel bewerten; abgelehnte Eingriffe starten ebenfalls die zwölf Schritte Wartezeit. Der Produktionsagent und V14 bleiben unverändert.

@@ -1,0 +1,1622 @@
+{
+  "verdict": "PASS",
+  "reviewed_at": "2026-11-08T11:20:37.100862+00:00",
+  "head": "759c8fa1908184de04421ee9fb3547e55bf7663a",
+  "checks": 209739,
+  "runs": [
+    {
+      "folder": "neutral_v1",
+      "manifest_sha256": "189f12b1738c5af46ba0999412ada396014989e3abbdd5e9dad6821b1531649c",
+      "games": 4,
+      "live_steps": 1212,
+      "pairs": 0,
+      "effective": 0,
+      "positive": 0,
+      "negative": 0,
+      "zero": 0,
+      "primary_steps": 0,
+      "repeat_steps": 0,
+      "boundary89_pairs": 0,
+      "represented_maps": 0,
+      "positive_maps": 0,
+      "training_adequacy": {
+        "pairs": 0,
+        "represented_maps": 0,
+        "positive": 0,
+        "positive_maps": 0,
+        "passed": false
+      },
+      "source_files": 330,
+      "per_game": [
+        {
+          "seed": 831006,
+          "side": "player_1",
+          "pairs": 0
+        },
+        {
+          "seed": 831043,
+          "side": "player_0",
+          "pairs": 0
+        }
+      ],
+      "labels": []
+    },
+    {
+      "folder": "train_v1",
+      "manifest_sha256": "66a57d8eac47a2c8877ea6365a45f632134b0364695e7759d78cb03fc0901dfe",
+      "games": 96,
+      "live_steps": 29088,
+      "pairs": 162,
+      "effective": 162,
+      "positive": 92,
+      "negative": 50,
+      "zero": 20,
+      "primary_steps": 3888,
+      "repeat_steps": 912,
+      "boundary89_pairs": 0,
+      "represented_maps": 20,
+      "positive_maps": 18,
+      "training_adequacy": {
+        "pairs": 162,
+        "represented_maps": 20,
+        "positive": 92,
+        "positive_maps": 18,
+        "passed": true
+      },
+      "source_files": 330,
+      "per_game": [
+        {
+          "seed": 6500000,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500000,
+          "side": "player_1",
+          "pairs": 1
+        },
+        {
+          "seed": 6500001,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500001,
+          "side": "player_1",
+          "pairs": 0
+        },
+        {
+          "seed": 6500002,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "pairs": 5
+        },
+        {
+          "seed": 6500003,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "pairs": 7
+        },
+        {
+          "seed": 6500004,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500004,
+          "side": "player_1",
+          "pairs": 0
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "pairs": 7
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "pairs": 8
+        },
+        {
+          "seed": 6500006,
+          "side": "player_0",
+          "pairs": 1
+        },
+        {
+          "seed": 6500006,
+          "side": "player_1",
+          "pairs": 3
+        },
+        {
+          "seed": 6500007,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500007,
+          "side": "player_1",
+          "pairs": 3
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "pairs": 5
+        },
+        {
+          "seed": 6500008,
+          "side": "player_1",
+          "pairs": 4
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "pairs": 8
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "pairs": 7
+        },
+        {
+          "seed": 6500010,
+          "side": "player_0",
+          "pairs": 3
+        },
+        {
+          "seed": 6500010,
+          "side": "player_1",
+          "pairs": 3
+        },
+        {
+          "seed": 6500011,
+          "side": "player_0",
+          "pairs": 3
+        },
+        {
+          "seed": 6500011,
+          "side": "player_1",
+          "pairs": 2
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "pairs": 6
+        },
+        {
+          "seed": 6500012,
+          "side": "player_1",
+          "pairs": 3
+        },
+        {
+          "seed": 6500013,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500013,
+          "side": "player_1",
+          "pairs": 4
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "pairs": 6
+        },
+        {
+          "seed": 6500014,
+          "side": "player_1",
+          "pairs": 4
+        },
+        {
+          "seed": 6500015,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500015,
+          "side": "player_1",
+          "pairs": 0
+        },
+        {
+          "seed": 6500016,
+          "side": "player_0",
+          "pairs": 1
+        },
+        {
+          "seed": 6500016,
+          "side": "player_1",
+          "pairs": 2
+        },
+        {
+          "seed": 6500017,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "pairs": 5
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "pairs": 8
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "pairs": 8
+        },
+        {
+          "seed": 6500019,
+          "side": "player_0",
+          "pairs": 2
+        },
+        {
+          "seed": 6500019,
+          "side": "player_1",
+          "pairs": 4
+        },
+        {
+          "seed": 6500020,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500020,
+          "side": "player_1",
+          "pairs": 1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_0",
+          "pairs": 4
+        },
+        {
+          "seed": 6500021,
+          "side": "player_1",
+          "pairs": 3
+        },
+        {
+          "seed": 6500022,
+          "side": "player_0",
+          "pairs": 0
+        },
+        {
+          "seed": 6500022,
+          "side": "player_1",
+          "pairs": 0
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "pairs": 5
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "pairs": 6
+        }
+      ],
+      "labels": [
+        {
+          "seed": 6500000,
+          "side": "player_1",
+          "step": 50,
+          "uid": 4,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500002,
+          "side": "player_0",
+          "step": 62,
+          "uid": 2,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 6500002,
+          "side": "player_0",
+          "step": 83,
+          "uid": 15,
+          "effective": true,
+          "label": -10
+        },
+        {
+          "seed": 6500002,
+          "side": "player_0",
+          "step": 152,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500002,
+          "side": "player_0",
+          "step": 165,
+          "uid": 3,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "step": 63,
+          "uid": 6,
+          "effective": true,
+          "label": -6
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "step": 78,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "step": 157,
+          "uid": 3,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "step": 182,
+          "uid": 6,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500002,
+          "side": "player_1",
+          "step": 289,
+          "uid": 3,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 6500003,
+          "side": "player_0",
+          "step": 172,
+          "uid": 8,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500003,
+          "side": "player_0",
+          "step": 249,
+          "uid": 1,
+          "effective": true,
+          "label": -5
+        },
+        {
+          "seed": 6500003,
+          "side": "player_0",
+          "step": 262,
+          "uid": 7,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500003,
+          "side": "player_0",
+          "step": 275,
+          "uid": 8,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 73,
+          "uid": 1,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 155,
+          "uid": 4,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 169,
+          "uid": 11,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 181,
+          "uid": 14,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 249,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 262,
+          "uid": 11,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500003,
+          "side": "player_1",
+          "step": 275,
+          "uid": 8,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 57,
+          "uid": 8,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 69,
+          "uid": 8,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 134,
+          "uid": 0,
+          "effective": true,
+          "label": 26
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 148,
+          "uid": 7,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 161,
+          "uid": 10,
+          "effective": true,
+          "label": -19
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 178,
+          "uid": 7,
+          "effective": true,
+          "label": -12
+        },
+        {
+          "seed": 6500005,
+          "side": "player_0",
+          "step": 265,
+          "uid": 6,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 47,
+          "uid": 5,
+          "effective": true,
+          "label": 15
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 59,
+          "uid": 5,
+          "effective": true,
+          "label": 7
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 72,
+          "uid": 8,
+          "effective": true,
+          "label": 15
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 140,
+          "uid": 2,
+          "effective": true,
+          "label": 10
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 152,
+          "uid": 8,
+          "effective": true,
+          "label": 12
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 167,
+          "uid": 2,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 256,
+          "uid": 4,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 6500005,
+          "side": "player_1",
+          "step": 278,
+          "uid": 0,
+          "effective": true,
+          "label": -8
+        },
+        {
+          "seed": 6500006,
+          "side": "player_0",
+          "step": 261,
+          "uid": 14,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500006,
+          "side": "player_1",
+          "step": 85,
+          "uid": 0,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500006,
+          "side": "player_1",
+          "step": 168,
+          "uid": 9,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 6500006,
+          "side": "player_1",
+          "step": 256,
+          "uid": 10,
+          "effective": true,
+          "label": -12
+        },
+        {
+          "seed": 6500007,
+          "side": "player_0",
+          "step": 153,
+          "uid": 2,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500007,
+          "side": "player_0",
+          "step": 166,
+          "uid": 6,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500007,
+          "side": "player_0",
+          "step": 260,
+          "uid": 9,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500007,
+          "side": "player_0",
+          "step": 273,
+          "uid": 10,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500007,
+          "side": "player_1",
+          "step": 160,
+          "uid": 2,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500007,
+          "side": "player_1",
+          "step": 260,
+          "uid": 9,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500007,
+          "side": "player_1",
+          "step": 273,
+          "uid": 10,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "step": 128,
+          "uid": 1,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "step": 157,
+          "uid": 4,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "step": 238,
+          "uid": 2,
+          "effective": true,
+          "label": -3
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "step": 250,
+          "uid": 3,
+          "effective": true,
+          "label": 14
+        },
+        {
+          "seed": 6500008,
+          "side": "player_0",
+          "step": 262,
+          "uid": 4,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500008,
+          "side": "player_1",
+          "step": 128,
+          "uid": 1,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500008,
+          "side": "player_1",
+          "step": 152,
+          "uid": 1,
+          "effective": true,
+          "label": 20
+        },
+        {
+          "seed": 6500008,
+          "side": "player_1",
+          "step": 238,
+          "uid": 2,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 6500008,
+          "side": "player_1",
+          "step": 261,
+          "uid": 5,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 39,
+          "uid": 0,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 51,
+          "uid": 5,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 63,
+          "uid": 7,
+          "effective": true,
+          "label": -17
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 80,
+          "uid": 1,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 134,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 149,
+          "uid": 0,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 162,
+          "uid": 4,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500009,
+          "side": "player_0",
+          "step": 178,
+          "uid": 5,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 50,
+          "uid": 2,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 62,
+          "uid": 11,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 139,
+          "uid": 1,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 152,
+          "uid": 2,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 167,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 236,
+          "uid": 2,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500009,
+          "side": "player_1",
+          "step": 259,
+          "uid": 2,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 6500010,
+          "side": "player_0",
+          "step": 170,
+          "uid": 8,
+          "effective": true,
+          "label": -16
+        },
+        {
+          "seed": 6500010,
+          "side": "player_0",
+          "step": 239,
+          "uid": 4,
+          "effective": true,
+          "label": 14
+        },
+        {
+          "seed": 6500010,
+          "side": "player_0",
+          "step": 266,
+          "uid": 6,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 6500010,
+          "side": "player_1",
+          "step": 163,
+          "uid": 8,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500010,
+          "side": "player_1",
+          "step": 241,
+          "uid": 4,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500010,
+          "side": "player_1",
+          "step": 266,
+          "uid": 10,
+          "effective": true,
+          "label": -10
+        },
+        {
+          "seed": 6500011,
+          "side": "player_0",
+          "step": 52,
+          "uid": 3,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500011,
+          "side": "player_0",
+          "step": 241,
+          "uid": 5,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500011,
+          "side": "player_0",
+          "step": 282,
+          "uid": 1,
+          "effective": true,
+          "label": -7
+        },
+        {
+          "seed": 6500011,
+          "side": "player_1",
+          "step": 241,
+          "uid": 5,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500011,
+          "side": "player_1",
+          "step": 278,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 70,
+          "uid": 14,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 137,
+          "uid": 0,
+          "effective": true,
+          "label": 16
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 149,
+          "uid": 6,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 238,
+          "uid": 4,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 254,
+          "uid": 3,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500012,
+          "side": "player_0",
+          "step": 277,
+          "uid": 4,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 6500012,
+          "side": "player_1",
+          "step": 136,
+          "uid": 4,
+          "effective": true,
+          "label": 12
+        },
+        {
+          "seed": 6500012,
+          "side": "player_1",
+          "step": 238,
+          "uid": 4,
+          "effective": true,
+          "label": 10
+        },
+        {
+          "seed": 6500012,
+          "side": "player_1",
+          "step": 253,
+          "uid": 2,
+          "effective": true,
+          "label": 4
+        },
+        {
+          "seed": 6500013,
+          "side": "player_0",
+          "step": 148,
+          "uid": 3,
+          "effective": true,
+          "label": 11
+        },
+        {
+          "seed": 6500013,
+          "side": "player_0",
+          "step": 163,
+          "uid": 7,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500013,
+          "side": "player_0",
+          "step": 238,
+          "uid": 3,
+          "effective": true,
+          "label": -3
+        },
+        {
+          "seed": 6500013,
+          "side": "player_0",
+          "step": 271,
+          "uid": 14,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500013,
+          "side": "player_1",
+          "step": 143,
+          "uid": 3,
+          "effective": true,
+          "label": 19
+        },
+        {
+          "seed": 6500013,
+          "side": "player_1",
+          "step": 171,
+          "uid": 14,
+          "effective": true,
+          "label": 10
+        },
+        {
+          "seed": 6500013,
+          "side": "player_1",
+          "step": 237,
+          "uid": 3,
+          "effective": true,
+          "label": -10
+        },
+        {
+          "seed": 6500013,
+          "side": "player_1",
+          "step": 286,
+          "uid": 8,
+          "effective": true,
+          "label": -18
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 56,
+          "uid": 0,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 74,
+          "uid": 9,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 150,
+          "uid": 5,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 164,
+          "uid": 5,
+          "effective": true,
+          "label": 5
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 176,
+          "uid": 14,
+          "effective": true,
+          "label": 7
+        },
+        {
+          "seed": 6500014,
+          "side": "player_0",
+          "step": 280,
+          "uid": 11,
+          "effective": true,
+          "label": -11
+        },
+        {
+          "seed": 6500014,
+          "side": "player_1",
+          "step": 70,
+          "uid": 1,
+          "effective": true,
+          "label": -9
+        },
+        {
+          "seed": 6500014,
+          "side": "player_1",
+          "step": 169,
+          "uid": 12,
+          "effective": true,
+          "label": 5
+        },
+        {
+          "seed": 6500014,
+          "side": "player_1",
+          "step": 245,
+          "uid": 6,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500014,
+          "side": "player_1",
+          "step": 271,
+          "uid": 5,
+          "effective": true,
+          "label": 5
+        },
+        {
+          "seed": 6500016,
+          "side": "player_0",
+          "step": 271,
+          "uid": 13,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500016,
+          "side": "player_1",
+          "step": 158,
+          "uid": 6,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500016,
+          "side": "player_1",
+          "step": 269,
+          "uid": 12,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500017,
+          "side": "player_0",
+          "step": 125,
+          "uid": 1,
+          "effective": true,
+          "label": 36
+        },
+        {
+          "seed": 6500017,
+          "side": "player_0",
+          "step": 138,
+          "uid": 2,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500017,
+          "side": "player_0",
+          "step": 259,
+          "uid": 9,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500017,
+          "side": "player_0",
+          "step": 273,
+          "uid": 6,
+          "effective": true,
+          "label": 19
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "step": 44,
+          "uid": 3,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "step": 125,
+          "uid": 1,
+          "effective": true,
+          "label": 14
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "step": 137,
+          "uid": 2,
+          "effective": true,
+          "label": 3
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "step": 155,
+          "uid": 4,
+          "effective": true,
+          "label": -7
+        },
+        {
+          "seed": 6500017,
+          "side": "player_1",
+          "step": 264,
+          "uid": 6,
+          "effective": true,
+          "label": 11
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 49,
+          "uid": 4,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 61,
+          "uid": 11,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 76,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 140,
+          "uid": 4,
+          "effective": true,
+          "label": 6
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 153,
+          "uid": 6,
+          "effective": true,
+          "label": -6
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 174,
+          "uid": 6,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 186,
+          "uid": 8,
+          "effective": true,
+          "label": 16
+        },
+        {
+          "seed": 6500018,
+          "side": "player_0",
+          "step": 242,
+          "uid": 5,
+          "effective": true,
+          "label": -8
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 50,
+          "uid": 6,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 63,
+          "uid": 4,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 77,
+          "uid": 4,
+          "effective": true,
+          "label": -8
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 146,
+          "uid": 6,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 159,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 172,
+          "uid": 1,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 242,
+          "uid": 5,
+          "effective": true,
+          "label": 8
+        },
+        {
+          "seed": 6500018,
+          "side": "player_1",
+          "step": 255,
+          "uid": 8,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500019,
+          "side": "player_0",
+          "step": 240,
+          "uid": 4,
+          "effective": true,
+          "label": -6
+        },
+        {
+          "seed": 6500019,
+          "side": "player_0",
+          "step": 276,
+          "uid": 5,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500019,
+          "side": "player_1",
+          "step": 52,
+          "uid": 0,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500019,
+          "side": "player_1",
+          "step": 238,
+          "uid": 4,
+          "effective": true,
+          "label": -4
+        },
+        {
+          "seed": 6500019,
+          "side": "player_1",
+          "step": 253,
+          "uid": 7,
+          "effective": true,
+          "label": 2
+        },
+        {
+          "seed": 6500019,
+          "side": "player_1",
+          "step": 272,
+          "uid": 4,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500020,
+          "side": "player_1",
+          "step": 156,
+          "uid": 8,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500021,
+          "side": "player_0",
+          "step": 55,
+          "uid": 0,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_0",
+          "step": 159,
+          "uid": 10,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_0",
+          "step": 175,
+          "uid": 12,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_0",
+          "step": 269,
+          "uid": 11,
+          "effective": true,
+          "label": 11
+        },
+        {
+          "seed": 6500021,
+          "side": "player_1",
+          "step": 159,
+          "uid": 10,
+          "effective": true,
+          "label": -1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_1",
+          "step": 175,
+          "uid": 12,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500021,
+          "side": "player_1",
+          "step": 269,
+          "uid": 11,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "step": 129,
+          "uid": 0,
+          "effective": true,
+          "label": 0
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "step": 169,
+          "uid": 7,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "step": 232,
+          "uid": 2,
+          "effective": true,
+          "label": 15
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "step": 253,
+          "uid": 7,
+          "effective": true,
+          "label": -12
+        },
+        {
+          "seed": 6500023,
+          "side": "player_0",
+          "step": 267,
+          "uid": 5,
+          "effective": true,
+          "label": -2
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 134,
+          "uid": 0,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 155,
+          "uid": 3,
+          "effective": true,
+          "label": -3
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 230,
+          "uid": 2,
+          "effective": true,
+          "label": 9
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 253,
+          "uid": 7,
+          "effective": true,
+          "label": 1
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 266,
+          "uid": 6,
+          "effective": true,
+          "label": 16
+        },
+        {
+          "seed": 6500023,
+          "side": "player_1",
+          "step": 278,
+          "uid": 10,
+          "effective": true,
+          "label": -2
+        }
+      ],
+      "label_summary": {
+        "mean": 1.4012345679012346,
+        "median": 1.0,
+        "min": -19,
+        "max": 36
+      }
+    }
+  ],
+  "method": "Independent standard-library arithmetic and hash audit; no production imports, tests, model loads, games or validation data reads.",
+  "limitations": [
+    "State tensors are not archived; state/observation hashes compared rather than regenerated.",
+    "Reverse/repeat equality uses runtime flags/counters; duplicate raw trajectories not separately archived.",
+    "Neutral scored opportunities use runtime counters.",
+    "Module fingerprints and resource guards are reviewed runtime protections, not reconstructed execution history."
+  ]
+}

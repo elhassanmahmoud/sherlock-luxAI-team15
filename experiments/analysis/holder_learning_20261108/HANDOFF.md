@@ -1,7 +1,7 @@
-# HOLD-Lernversuch – Implementierung
+# HOLD-Lernversuch abgeschlossen
 
-Die vorherige Einflussprobe ist vollständig und unabhängig geprüft. Rohdaten: `decision_learning_20261108`. Der neue verbindliche Plan steht unter `docs/superpowers/plans/2026-11-08-holder-learning.md`.
+[Ergebnis](ERGEBNIS.md): tatsächlicher Fit und getrennte Validierung, keine Freigabe.28 Validierungspaare,14 ausgewählt,10 hilfreich/4 schädlich; Mittel+1,125 je Kartenwert, untere Bootstrap-Grenze−0,877. Zwei feste Bedingungen verfehlt. Kein Refit, Nachschlag oder Leistungsnachtest dieses Kopfes.
 
-Geplant sind 24 Trainingskarten und acht Validierungskarten, jeweils beide Seiten. `plan.json` bindet die genauen Schlüssel. Noch keine neuen Spiele, Labels oder Modelle; kein aktiver Source-Freeze. Zwei Subagents implementieren getrennt Lernarithmetik und Spielanbindung. Danach folgen unabhängiger Review und neutrale Spielprüfung, bevor Daten gesammelt werden. V14 und ZIP bleiben unverändert.
+Quelle759c8fa während des kompletten Versuchs eingefroren; unabhängige Daten-/Fit-/Validierungsaudits abgeschlossen. Keine eigenen Modellprozesse mehr, Freeze beendet. V14 und ZIP unverändert. Das experimentelle JSON-Modell unter fit_v1 ist nicht zur Abgabe freigegeben.
 
-Aktive Arbeitskopie: `/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15`, Branch `improvement/decision-learning-20261108`. Root koordiniert die Starts; keine zweite Instanz starten. Keine Tests parallel zu Modellspielen. Quellen und Inputs bleiben während der Messung eingefroren, der Kopf zusätzlich während der Validierung. Das restliche Kontingent ist freigegeben; Resets übernimmt ausschließlich Moayed.
+Root arbeitet gemäß Moayeds fortlaufendem Auftrag an einer separaten Fog-Reward-Diagnose weiter. Deren neuer Plan/Start muss im Arbeitsstand stehen; diese Studie nicht erneut ausführen. Remote-Abgleich sichert das Gesamtprojekt weiter ab; aktuelle Laufzuständigkeit im neuesten docs/ARBEITSSTAND.md prüfen.
