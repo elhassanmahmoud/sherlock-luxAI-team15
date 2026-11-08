@@ -1,0 +1,8 @@
+{
+  "status": "prelaunch_rejected",
+  "reason": "macOS /tmp is a symlink; strict path guard rejected default before process launch",
+  "model_executions": 0,
+  "launch_marker_created": false,
+  "correction": "Use explicit canonical --stop-file /private/tmp/sherlock-fog-reward-20261108/STOP; same file as watcher /tmp path",
+  "source_unchanged": true
+}

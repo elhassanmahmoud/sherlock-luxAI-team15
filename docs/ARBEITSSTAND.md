@@ -4,6 +4,13 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Fog-Nachtraining vollständig geprüft; kleiner Ensemblevergleich folgt
+
+- Vier feste Arme ab V14-Komponente 18: je 40 Vorlauf-, 400 Lern- und 32 Diagnosepartien. Tatsächlich 1.888 Spielausführungen und 240.000 neue Lernupdates. Beide Kontroll-/Neutral-Paare vor Gradienten identisch bis auf das geplante Reward-Signal.
+- Unabhängiger finaler Tensor-/Daten-/Quellenaudit PASS; Root hat zusätzlich alle vier ursprünglichen Abschlussvalidatoren vor Aufhebung des Quellenstands `a3111c3` ausgeführt. Q/Target/Adam endlich und verändert, je 60.000 Updates, vollständige Rohdaten und Prüfsummen. Historische Abnahme gesichert; eigene Modell-/Wachhalteprozesse beendet.
+- [Trainingsbericht](../experiments/analysis/fog_reward_20261108/TRAININGSERGEBNIS.md). V14 und ZIP unverändert; noch kein nachgewiesener Stärkegewinn. Replay-Puffer lokal, Modelle und nachvollziehbare Rohdaten versioniert.
+- Nächster bereits vor Ergebnissen fixierter Vergleich: CONTROL38 und NEUTRAL38 mit exakt 36 ursprünglichen + zwei neuen Netzen. 440 Auswahlspiele; nur bei Qualifikation einmalig 1200 frische Bestätigungsspiele. Adapter in Umsetzung, noch keine Kandidaten/Leistungsspiele. Zwischenzeitliche eigene Dokumentation bis `8094c38` nach Ende des Freeze übernommen, keine neuen Mahmoud-Commits beobachtet.
+
 ## 08.11.2026, 13:07 Berlin – Fog-Nachtraining tatsächlich aktiv
 
 - Studienkopie sherlock-student-20261104 auf eingefrorenem a3111c3. Supervisor50389, erstes Paar control41/neutral41 mit Kindern50415/50416; Paare42 folgen automatisch erst nach vollständiger technischer Abnahme von41. Maßgeblich experiments/analysis/fog_reward_20261108/training_v1/state.json. Keine zweite Instanz, keine Tests/Quellen-/HEAD-/Gewichtsänderungen in der aktiven Studienkopie.

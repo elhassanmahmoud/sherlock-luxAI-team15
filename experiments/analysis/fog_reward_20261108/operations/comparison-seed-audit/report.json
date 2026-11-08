@@ -1,0 +1,271 @@
+{
+  "audit": "fog_comparison_seed_freshness_read_only",
+  "verdict": "NO_EARLIER_USE_OR_COMPETING_RESERVATION_OBSERVED; COMPARISON_SPEC_8094C38_IS_INTENDED_RESERVATION",
+  "planned_ranges_inclusive": {
+    "fog_selection": [
+      7700000,
+      7700019
+    ],
+    "fog_direct_selection": [
+      7700100,
+      7700119
+    ],
+    "fog_confirmation": [
+      7701000,
+      7701039
+    ],
+    "fog_direct_confirmation": [
+      7701100,
+      7701139
+    ]
+  },
+  "protocol_reservation_8094": "Correction: there is no separate protocol/audit reservation named 8094. Commit 8094c38 is the Git commit for the published comparison spec and is the intended reservation of all four listed 770xxxx ranges for this study. This planned reservation is not prior foreign consumption or a competing reservation. Bare 8094 occurrences in old logs can be update indices or decimal values, not seed use.",
+  "spec_read": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/docs/superpowers/specs/2026-11-08-fog-comparison.md",
+  "scan_scope": {
+    "registered_worktrees": 8,
+    "inventoried_paths": 15003,
+    "unique_csv": 1643,
+    "unique_jsonl": 370,
+    "unique_json": 1266,
+    "csv_numeric_seed_values": 1639644,
+    "jsonl_numeric_seed_values": 40795,
+    "json_interval_candidates": 686
+  },
+  "target_matches": {
+    "csv_jsonl_seed_consumption": 0,
+    "json_numeric_or_seed_mentions": 0,
+    "json_range_or_reservation_overlaps": 0,
+    "target_like_strings": 0
+  },
+  "scan_errors": 0,
+  "mutations_during_scan": [
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/progress.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/rollouts.jsonl",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/training_audit.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/progress.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/rollouts.jsonl",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/training_audit.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared/run_records/20261108_fog_reward_control42.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared/run_records/20261108_fog_reward_neutral42.json",
+      "stage": "after_read"
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/usage.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 82,
+        "mtime_ns": 1794142429249830824,
+        "ctime_ns": 1794142429250308448,
+        "inode": 86337931,
+        "device": 16777233
+      },
+      "after": {
+        "size": 82,
+        "mtime_ns": 1794142747200560280,
+        "ctime_ns": 1794142747200729196,
+        "inode": 86341873,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/progress.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 73547,
+        "mtime_ns": 1794142683030147403,
+        "ctime_ns": 1794142683030241154,
+        "inode": 86341555,
+        "device": 16777233
+      },
+      "after": {
+        "size": 73547,
+        "mtime_ns": 1794142756633777451,
+        "ctime_ns": 1794142756633902618,
+        "inode": 86341905,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/rollouts.jsonl",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 874965,
+        "mtime_ns": 1794142683028881516,
+        "ctime_ns": 1794142683028881516,
+        "inode": 86320559,
+        "device": 16777233
+      },
+      "after": {
+        "size": 910364,
+        "mtime_ns": 1794142756632035829,
+        "ctime_ns": 1794142756632035829,
+        "inode": 86320559,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/training_audit.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 57858,
+        "mtime_ns": 1794142683030693325,
+        "ctime_ns": 1794142683030771367,
+        "inode": 86341556,
+        "device": 16777233
+      },
+      "after": {
+        "size": 57858,
+        "mtime_ns": 1794142756634569783,
+        "ctime_ns": 1794142756634678075,
+        "inode": 86341906,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/progress.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 73547,
+        "mtime_ns": 1794142681160186016,
+        "ctime_ns": 1794142681160278392,
+        "inode": 86341552,
+        "device": 16777233
+      },
+      "after": {
+        "size": 73547,
+        "mtime_ns": 1794142755594316649,
+        "ctime_ns": 1794142755594426232,
+        "inode": 86341901,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/rollouts.jsonl",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 877406,
+        "mtime_ns": 1794142681158759667,
+        "ctime_ns": 1794142681158759667,
+        "inode": 86320558,
+        "device": 16777233
+      },
+      "after": {
+        "size": 913019,
+        "mtime_ns": 1794142755592567610,
+        "ctime_ns": 1794142755592567610,
+        "inode": 86320558,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/training_audit.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 57851,
+        "mtime_ns": 1794142681160748814,
+        "ctime_ns": 1794142681160825107,
+        "inode": 86341553,
+        "device": 16777233
+      },
+      "after": {
+        "size": 57851,
+        "mtime_ns": 1794142755595047106,
+        "ctime_ns": 1794142755595143439,
+        "inode": 86341902,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared/run_records/20261108_fog_reward_control42.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 73547,
+        "mtime_ns": 1794142683029607856,
+        "ctime_ns": 1794142683029771733,
+        "inode": 86341554,
+        "device": 16777233
+      },
+      "after": {
+        "size": 73547,
+        "mtime_ns": 1794142756633060286,
+        "ctime_ns": 1794142756633282035,
+        "inode": 86341904,
+        "device": 16777233
+      }
+    },
+    {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_prepared/run_records/20261108_fog_reward_neutral42.json",
+      "stage": "changed_during_scan",
+      "before": {
+        "size": 73547,
+        "mtime_ns": 1794142681159570426,
+        "ctime_ns": 1794142681159755512,
+        "inode": 86341551,
+        "device": 16777233
+      },
+      "after": {
+        "size": 73547,
+        "mtime_ns": 1794142755593611400,
+        "ctime_ns": 1794142755593811858,
+        "inode": 86341900,
+        "device": 16777233
+      }
+    }
+  ],
+  "schema_gaps": {
+    "csv_without_seed_column": 285,
+    "jsonl_without_numeric_seed": 219,
+    "jsonl_records_without_numeric_seed": 258913,
+    "invalid_nonblank_seed_fields": 893
+  },
+  "limits": [
+    "All 8 locally registered worktrees only; unregistered or external runs unknown.",
+    "Only experiments/logs/replays trees and JSON/JSONL/CSV plus gzip variants were scanned; other formats and paths were excluded by the inherited scanner.",
+    "The exact planned ranges were verified directly in the primary spec; no overlap candidates were found in result/log data.",
+    "17 active-training artifacts changed during this scan (8 after-read observations, 9 changed-during-scan records). These use the separate 741/742/760 training ranges, outside the 770xxxx evaluation ranges; scan remains an as-of snapshot, not a stable whole-run attestation.",
+    "Seedless records and invalid seed fields remain unknown; these are listed in the full scanner JSON."
+  ],
+  "full_scanner_evidence": "/tmp/sherlock-fog-comparison-seed-audit/seed_freshness.json",
+  "heads_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "8094c388b5932dfca21954ec11c19c79cc318102",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15": "a3111c3d0aa0aa974298daabe300bba7be157da1",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie": "694eda39ee006cb4644184db73ff2b0a5cbe4383",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation": "3dcf090b380918175c5d1d01262ddbd7a717d18f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics": "03e54e267242ff642c126313fe5f512ed9d959ac",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint": "ea8cd339829f398fd27e8f871f654fded2513589"
+  },
+  "heads_after": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "8094c388b5932dfca21954ec11c19c79cc318102",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15": "a3111c3d0aa0aa974298daabe300bba7be157da1",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie": "694eda39ee006cb4644184db73ff2b0a5cbe4383",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation": "3dcf090b380918175c5d1d01262ddbd7a717d18f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics": "03e54e267242ff642c126313fe5f512ed9d959ac",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint": "ea8cd339829f398fd27e8f871f654fded2513589"
+  }
+}

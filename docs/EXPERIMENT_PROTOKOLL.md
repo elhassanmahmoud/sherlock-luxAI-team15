@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+08.11.2026: Vier Fog-Reward-Arme technisch abgeschlossen: 1.888 Ausführungen / 240.000 Updates, unabhängig geprüft. Noch kein Stärkevergleich. [Trainingsbelege](../experiments/analysis/fog_reward_20261108/TRAININGSERGEBNIS.md); folgender begrenzter Vergleich bereits vorab [festgelegt](superpowers/specs/2026-11-08-fog-comparison.md). V14 unverändert.
+
 - 08.11.2026, neue separate [Fog-Reward-Studie](superpowers/specs/2026-11-08-fog-reward.md) vorab festgelegt: vier gepaarte Arme ab V14-Komponente18,40 Vorlauf/400 Lernen/32 Diagnosen jeArm, nur finales unbekanntes Fog-SAP-Hit-Shaping neutral statt negativ. Noch nicht gestartet. Geschlossene frühere SAP0-/HOLD-Ergebnisse nicht umgedeutet; kein Gewichts-/ZIP-Tausch.
 
 - 08.11.2026, **HOLD-Kopf abgeschlossen, keine Freigabe:** ein Ridge-Fit auf162 Paaren (24 Karten,20 mit geeigneten Fällen). Feste getrennte Validierung acht Karten/28 Paare:14 gewählt,10 positive/4 negative, mittlerer Kartenwert+1,125; untere Bootstrap-Grenze−0,8765625. Menge und Unsicherheitsgate verfehlt. Kein Nachschlag/Refit/Leistungstest dieses Kopfes.132 vollständige Ausführungen,5736 zusätzliche Simulationsschritte; keine DQN-Updates. Unabhängig bestätigt, V14/ZIP unverändert. [Bericht](../experiments/analysis/holder_learning_20261108/ERGEBNIS.md).

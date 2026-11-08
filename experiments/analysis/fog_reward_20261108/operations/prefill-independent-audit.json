@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "time_utc": "2026-11-08T12:35:27.176766+00:00",
+  "source_head": "a3111c3d0aa0aa974298daabe300bba7be157da1",
+  "supervisor_status": "running",
+  "pairs": {
+    "41": {
+      "status": "PASS",
+      "seed": 41,
+      "arms": {
+        "control41": {
+          "prefill_games": 40,
+          "unknown_sap_transitions": 615,
+          "unknown_reward_mass": 184.5000000000001,
+          "applied_reward_mass": 0,
+          "replay_transitions": 144264,
+          "complete_training_rows_observed": 400,
+          "actual_updates_observed": 60000
+        },
+        "neutral41": {
+          "prefill_games": 40,
+          "unknown_sap_transitions": 615,
+          "unknown_reward_mass": 184.5000000000001,
+          "applied_reward_mass": 184.5000000000001,
+          "replay_transitions": 144264,
+          "complete_training_rows_observed": 400,
+          "actual_updates_observed": 60000
+        }
+      },
+      "proof_evidence": {
+        "trajectory_sha256": "6effd93a1243e27b4061fb1a4ac32f7738665e02f030ea4fad1870e35f854fc3",
+        "replay_without_reward_sha256": "80144602efe72525f4eb07f02ebabe719d596ea2c80324d0e283d4f1c3a1fd6e",
+        "legacy_reward_sha256": "565b258a4020e87815260a8e402bc897f8aa7230133103dd7fedfa5f68c08008",
+        "neutral_reward_sha256": "745533470302c3c4746408d72a8a34a0e17271aac8c3d9b62c76e73ef508b426",
+        "unknown_sap_transitions": 615,
+        "unknown_reward_mass": 184.5000000000001
+      },
+      "files": {
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/paired_prefill_41.json": "064aaaaa9e97052738eb347957c81485d3d1157b05d24a95b493bea8f7c20821",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/prefill_bundle.json": "106fd1e10cfb33e4b5fa1b3fb2b7b19676fd11189b81f7689034c6d220bca2cf",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control41/prefill_proof.json": "16c7fe9c046cbd3c5cf21c5ee935403b282ec5a91ce493c49c083bf4b3d836aa",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/prefill_bundle.json": "5c9c94ede0de2665ac80383420032082037905cd5c27fda26e35c1559364fc30",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral41/prefill_proof.json": "012a9d87d5fab2f484516b30cd5e0e12ede4f6f1de76b0f847a819146f9cfd15"
+      },
+      "actual_learning_observed_in_both": true
+    },
+    "42": {
+      "status": "PASS",
+      "seed": 42,
+      "arms": {
+        "control42": {
+          "prefill_games": 40,
+          "unknown_sap_transitions": 411,
+          "unknown_reward_mass": 123.30000000000003,
+          "applied_reward_mass": 0,
+          "replay_transitions": 143087,
+          "complete_training_rows_observed": 11,
+          "actual_updates_observed": 1650
+        },
+        "neutral42": {
+          "prefill_games": 40,
+          "unknown_sap_transitions": 411,
+          "unknown_reward_mass": 123.30000000000003,
+          "applied_reward_mass": 123.30000000000003,
+          "replay_transitions": 143087,
+          "complete_training_rows_observed": 11,
+          "actual_updates_observed": 1650
+        }
+      },
+      "proof_evidence": {
+        "trajectory_sha256": "79ce8ad213f072c2518f186752bc73540d275febbf8394b66af62873858520ab",
+        "replay_without_reward_sha256": "20a652ff00d21543a30b0ff8c9d42d6b331f54434cd053d2bdba60489d66061c",
+        "legacy_reward_sha256": "473065f9508c1ca679c6a880919e8c399bcfb9f2aa72e04327f54fa30c885a13",
+        "neutral_reward_sha256": "14942ca28a259b13c492b0438bc24c1c1d4ea6ffc3bdc06cad3792a37ed7bc79",
+        "unknown_sap_transitions": 411,
+        "unknown_reward_mass": 123.30000000000003
+      },
+      "files": {
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/training_v1/paired_prefill_42.json": "bb4170e6355eee3efde90d839e9c78efd062a844ceff2ad8192ed88280217d7d",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/prefill_bundle.json": "1bdf1f8adf96e725c2306e6c7c5f3aad6dd86df1a90adc150bb04c06ac1808b8",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_control42/prefill_proof.json": "a00c7dcb5cc0d8f5f9c52495f3d3802d25b19f3ef963392e3feb1f0f3ea60c13",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/prefill_bundle.json": "050625979d49ec8e8a248f01ed0b6d92ae465a229e8c656524aa4fdd136f0fbb",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/runs/20261108_fog_reward_neutral42/prefill_proof.json": "62c8ab7c0287af9e6b5cf2012071488f0679c5aeea645fb4f4daa1dc8bed686a"
+      },
+      "actual_learning_observed_in_both": true
+    }
+  },
+  "scope": "Independent stdlib artifact audit; trajectory/replay hashes are recorded receipts, not independently replayed raw simulator states or replay arrays. No model imports, games, gradients or tests."
+}
