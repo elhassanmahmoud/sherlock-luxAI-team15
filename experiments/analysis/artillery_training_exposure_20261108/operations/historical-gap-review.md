@@ -1,0 +1,21 @@
+# Artillery training-alignment evidence check
+
+Read-only, bounded review at HEAD `bef2fc40dbce8b36d33222d807c21d470494562d`. No models, tests, games, or repository edits.
+
+## Finding: this exact alignment has not been experimentally tested
+
+The code/documentation has long identified `art_splash` as inference-only even with `rules_in_training_all=True`: `agents/sherlock/main.py:752–755`, `docs/RESCUE_NACHTRAINING_DIAGNOSE_20261103.md` §2C, `docs/ENSEMBLE_TRAINING_20261107.md:17`, and `scripts/ensemble_diversity_train.py:4,277`. The recent Fog influence report repeats the gap (`experiments/analysis/fog_influence_20261108/ERGEBNIS.md`). `tests/test_art_splash.py` covers inference behavior under different drop-off assumptions, not toggling the helper in training. October's reported `art_splash` policy comparison (working-state entries around lines 1150–1183) changed inference configuration against V10; it did not align the training branch. I found no training run that enabled the `art_splash` branch in `_artillery_ok`.
+
+The difference is precise: when `self.training` is true, `_artillery_ok` substitutes `drop_est=0.0`, so it retains `art_min_hits` and `art_safe`; evaluation may instead use the estimated drop-off to apply `art_splash_hits` and relax safety. `rules_in_training_all` does not change that helper. The outer `art_sap` caller also has its own later `art_still` condition (around line 486), so helper disagreement is not by itself a final-action disagreement.
+
+## Proposed two-trace exposure check is feasible without a game
+
+The archived logs `experiments/analysis/continuation_20261102/targeting/831006_player_1.jsonl.gz` and `831043_player_0.jsonl.gz` contain 300 decision records each across match indices 0–2, plus the original action rows. Across them, the logs record 404 and 788 `_artillery_ok` invocations, with 24 and 17 `True` returns respectively. Each event stores the actual `sap` argument, unit context, and original evaluation result. Its `public` payload contains the fields needed for a training-mode helper call: `W`, positions/energy, enemy coordinates/energies, assigned targets, first-on-tile, point tiles, sap cost/range, and config.
+
+`_artillery_ok` appears side-effect-free: it reads config/context/belief; its only estimator call is `ParamEstimator.dropoff`, which computes a posterior from existing arrays/counters and does not update them. In `training=True`, short-circuiting skips even that estimator read. Thus an isolated callback can temporarily set only `agent.training=True`, call the helper on reconstructed saved context, record the boolean, then restore the previous value in `finally`. It should fingerprint/compare the training boolean, estimator arrays/counters, belief `point_tiles`, and input context before/after. The original evaluation boolean can be checked against the archived event result; recomputing that evaluation call from scratch would require the step-specific estimator posterior, which these archived records do not serialize explicitly.
+
+Because this is a helper-only callback and must never feed the result back into actions, it can compare direct helper exposure without executing a game. The archived decision/action rows provide a full baseline action sequence; since these targeting traces contain no per-frame engine-state digest, they cannot alone prove independent equality of every hidden engine state. If “303 frames identical” is a strict evidence requirement, bind the already archived 303-frame state/observation/action digest record for the same exact baseline run (if provenance/hash linkage proves it is the same run); otherwise limit the claim to unchanged archived action rows and a non-mutating callback. Do not rerun the games merely to satisfy this helper check.
+
+## Limits
+
+A difference count estimates the direct `_artillery_ok` exposure on these two historically selected traces only. It does not establish how often the complete training policy's final SAP action would differ: the enclosing gate and subsequent `art_still`/rule path still apply. It provides no reward, learning, or strength effect. If exposure is absent or rare, that weakens the practical case for a dedicated alignment trial; if present, it motivates a separately authorized, bounded training comparison, not an immediate production change.

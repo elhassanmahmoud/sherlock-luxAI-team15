@@ -4,6 +4,12 @@ Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und C
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.
 
+## 08.11.2026 – Artillerie-Diagnose ohne neue Testspiele vorbereitet
+
+- Vorab von zwei Wiederholungsspielen auf die vorhandenen Targeting-Spuren umgestellt: alle benötigten Eingaben und historischen Helper-Rückgaben sind schon archiviert. Historischer und aktueller Helper sind identisch; unabhängige Prüfung bestätigt die Stabilität der nach dem Zug gespeicherten Eingaben.
+- Isoliertes Werkzeug berechnet ausschließlich das Trainingsverdikt, erhält die aufgezeichnete Spielantwort und prüft unveränderte Eingaben. Kein Netzladen, keine neuen Spiele oder Lernupdates. Root: zwei gezielte Tests bestanden (2,41 Sekunden), unabhängiger Code-/Methodenreview ohne Blocker. Reale Offline-Auswertung steht noch aus.
+- [Plan](superpowers/plans/2026-11-08-artillery-training-exposure.md). Keine Aussage über endgültige Aktionen oder Spielstärke. V14 und ZIP unverändert.
+
 ## 08.11.2026 – Offline-Netzeinfluss vollständig geprüft
 
 - 10.000 gespeicherte Folgezustände /9.996 eindeutige Feature-Maskenpaare, null neue Spiele/Updates. CONTROL38 verändert143 und NEUTRAL38 139 legale Vorschläge gegenüberV14. Einzelnetze verändern18,89–20,55% gegenüberElternkomponente18; verschiedeneReferenzen, keineBehauptungunterdrücktenhilfreichenLernens.
