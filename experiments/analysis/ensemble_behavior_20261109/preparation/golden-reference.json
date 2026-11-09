@@ -1,0 +1,282 @@
+{
+  "chronology": [
+    "limit_threads before setup",
+    "load original member-18 source before constructing Env",
+    "construct one LuxAIS3GymEnv before make_learner",
+    "make fresh control learner once for OFF arm, start48",
+    "case0 seed9946007/player_0, retain learner/replay/private RNG/counters",
+    "case1 seed831006/player_1, same learner and Env, never reconstruct/reset manually",
+    "new ON learner starts48 fresh; original old second MATCH20 arm was also freshly initialized on the same Env",
+    "start49 initial-only check: same weights/config/empty Adam, different declared private RNG seed49; no extra technical game"
+  ],
+  "control_technical_cases": [
+    {
+      "additional_exact": {
+        "before": {
+          "env_steps": 60000,
+          "learn_steps": 0
+        },
+        "current": {
+          "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+          "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+        },
+        "env_steps": 60303,
+        "epsilon": 0.050000000000000044,
+        "game_win": 1,
+        "initial": {
+          "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+          "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+        },
+        "learn_steps": 0,
+        "loss": null,
+        "point_counting_version": 2,
+        "point_win": 1.0,
+        "steps": 303
+      },
+      "paired_exact": {
+        "final_action_audit": {
+          "act_calls": 303,
+          "checked_replay_transitions": 3489,
+          "transcript_sha256": "d8719035893bbd8d0418f391367545f43ac72e29295aa9160305770543dc4811",
+          "update_calls": 303
+        },
+        "key": {
+          "game": 0,
+          "opponent": "solution92",
+          "phase": "technical",
+          "seed": 9946007,
+          "side": "player_0"
+        },
+        "native_sha256": "507606ce730ede254750f6b4c5e7701f4164e269fb45f848a4abcf436d0add28",
+        "opp_points": 304,
+        "opp_wins": 0,
+        "our_points": 785,
+        "our_wins": 3,
+        "result": 1.0,
+        "reward_audit": {
+          "counterfactual_sha256": "ccf4d13c25f557668f4f77312a4024b76e21259e9cb2ded3d55b13217eed3294",
+          "masked_final_actions": 16,
+          "nonreward_sha256": "39e9add58a32bed47a416cf18d777a99eb3fd96e0e2910c277cdfcc3f83978e4",
+          "nonzero_outcome_rows": 45,
+          "transitions": 3489,
+          "updates": 303
+        },
+        "trajectory_sha256": "6ff174ec13edfa023529c265d31d4d0a5e24b3907d3e87c10b4849eb13ebffdd"
+      },
+      "reward_evidence_recorded_only": {
+        "arrays_sha256": "bb807fe9c9e52b60144da93d4b6757d18c767719b20aa31efe5ae2dac8dd6a2b",
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v2/technical/control-0-reward-audit.npz",
+        "sha256": "f470067beff56a43ca1f071ecd8647ccdaa4602048155e55496098eace0a6e31"
+      }
+    },
+    {
+      "additional_exact": {
+        "before": {
+          "env_steps": 60303,
+          "learn_steps": 0
+        },
+        "current": {
+          "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+          "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+        },
+        "env_steps": 60606,
+        "epsilon": 0.050000000000000044,
+        "game_win": 0,
+        "initial": {
+          "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+          "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+          "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+        },
+        "learn_steps": 0,
+        "loss": null,
+        "point_counting_version": 2,
+        "point_win": 1.0,
+        "steps": 303
+      },
+      "paired_exact": {
+        "final_action_audit": {
+          "act_calls": 303,
+          "checked_replay_transitions": 3421,
+          "transcript_sha256": "b68df830de9f50f7bcc7d179bba4118d14ba19619af9d277fe69f6d4867a72bd",
+          "update_calls": 303
+        },
+        "key": {
+          "game": 1,
+          "opponent": "solution92",
+          "phase": "technical",
+          "seed": 831006,
+          "side": "player_1"
+        },
+        "native_sha256": "5c6f17b0865f14cc7abb42e37c6690dc93f47c38b1ad88adbbf6c46e5736a182",
+        "opp_points": 1037,
+        "opp_wins": 2,
+        "our_points": 1252,
+        "our_wins": 1,
+        "result": 0.0,
+        "reward_audit": {
+          "counterfactual_sha256": "eb68f9edd1ddb52fe26f618c8fefd83aea6aa9cbe92a726354581d2d952f3d51",
+          "masked_final_actions": 65,
+          "nonreward_sha256": "538fd6e55182ed074d5f426cf35eec771acaaff2b5b1fe06d5b2d2f469cd87a9",
+          "nonzero_outcome_rows": 38,
+          "transitions": 3421,
+          "updates": 303
+        },
+        "trajectory_sha256": "7f8b36b216f773685ce93892619283bccbbb2773e4eb96832702b4c02b01de52"
+      },
+      "reward_evidence_recorded_only": {
+        "arrays_sha256": "473d77d8fe4bf8717173d6477a1aff6b0064082bd54159c455332bbb1e9fcc3e",
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v2/technical/control-1-reward-audit.npz",
+        "sha256": "37ea941d8961543e84b0f7bea67cad588d4cbfea18b0ec38531052920ff77933"
+      }
+    }
+  ],
+  "do_not_compare_as_control_OFF": {
+    "reason": "Global final replay is the last MATCH20 arm, not historical control. Receipt final_identity happens to be shared q/target/empty-Adam because there were zero updates.",
+    "receipt_final_replay_sha256": "3b981f62945c66697317edab98b16a98a8dce292dbe89554d9046432fe795457"
+  },
+  "historical_profile": "match_weight_20261109",
+  "historical_source": {
+    "executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+    "executable_sha256": "bdc6b50ebbf1fa5d1fc4ed8f3ab7decb640e60b55088ae0be4bf63bb914a89d5",
+    "head": "207f504cf75920e4569ef3084b6cd916df76243c",
+    "python": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python"
+  },
+  "initial_controls": {
+    "48": {
+      "admission": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48-v2-admission.json",
+      "admission_sha256": "f49d770fb7f4f7688434b7a371151aa5b72bd75c752bf756fde4c7f69f23dcac",
+      "closure": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/pair48-v2-closure.json",
+      "closure_sha256": "c511c9e077f384cf43c5d976dd2f8ad18ee1bf90853bfd677ae72c758fa14580",
+      "config_json_sha256": "c2227c9b5a8b944ae76a7bccc7ca53f73df31e67b82841baefd4fe9db4e80360",
+      "control_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/receipt.json",
+      "control_receipt_sha256": "98d0a007ddc3698f18c385ec773adad61e0a4ad6062b6309f27de20247e78aad",
+      "final_archive_recorded_only": {
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/final.pth",
+        "receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/receipt.json",
+        "receipt_sha256": "98d0a007ddc3698f18c385ec773adad61e0a4ad6062b6309f27de20247e78aad",
+        "sha256": "931ae709779144d578cdf8134f8ef8bb777c653f3f390426a96e03eb141d2429"
+      },
+      "initial": {
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+      },
+      "initial_file": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/control-initial.json",
+      "initial_file_sha256": "a0657d10d13375aebb6797c6f203bd1b8ead937e962036363102e3406090b837",
+      "prefill_file": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/prefill.json",
+      "prefill_file_sha256": "ca972ec02071bb01ef2cf7f482487a53388bf7d6dfa5f9086234ba723df29ad5"
+    },
+    "49": {
+      "admission": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49-v2-admission.json",
+      "admission_sha256": "5db0e2def40c4dfa7542889bf92d082e9473b7ed775e09b411e4cbc04209958c",
+      "closure": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/pair49-v2-closure.json",
+      "closure_sha256": "6084fdba80e3e4fb1cbc729cc5d94ab75f957d1fa2ab0ef23d22557cfb729ad3",
+      "config_json_sha256": "c2227c9b5a8b944ae76a7bccc7ca53f73df31e67b82841baefd4fe9db4e80360",
+      "control_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/receipt.json",
+      "control_receipt_sha256": "9d41acd361d7a08505aa546c922e409f96dc838764aa273696ff4c196b32298a",
+      "final_archive_recorded_only": {
+        "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/final.pth",
+        "receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/receipt.json",
+        "receipt_sha256": "9d41acd361d7a08505aa546c922e409f96dc838764aa273696ff4c196b32298a",
+        "sha256": "499ff53fd318e507e31036b73920e5792b5c47443a24d91d880e7aa2a111ee01"
+      },
+      "initial": {
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+      },
+      "initial_file": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/control-initial.json",
+      "initial_file_sha256": "3ebb0f02dcd61d1ddd86bc8001eaad939f443c0927c75592f91c02953c569a39",
+      "prefill_file": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/prefill.json",
+      "prefill_file_sha256": "db89401cec09859816b15ffbca81fff4c12d9fc8d45226a42143838dc53f337f"
+    }
+  },
+  "json_bindings_verified": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/pair48-v2-closure.json": "c511c9e077f384cf43c5d976dd2f8ad18ee1bf90853bfd677ae72c758fa14580",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/pair49-v2-closure.json": "6084fdba80e3e4fb1cbc729cc5d94ab75f957d1fa2ab0ef23d22557cfb729ad3",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/technical-v2-acceptance.json": "97d30ecbd546871da07e1c43f2cfc7046ff54c64f8b9a6b62859a0fc3354d92d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/training-completion.json": "41cb8fa0689bb1a5b98bbd692e147fceb8471b5e72387b661b06e7484c244b94",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48-v2-admission.json": "f49d770fb7f4f7688434b7a371151aa5b72bd75c752bf756fde4c7f69f23dcac",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/control-initial.json": "a0657d10d13375aebb6797c6f203bd1b8ead937e962036363102e3406090b837",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/prefill.json": "ca972ec02071bb01ef2cf7f482487a53388bf7d6dfa5f9086234ba723df29ad5",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v2/control/receipt.json": "98d0a007ddc3698f18c385ec773adad61e0a4ad6062b6309f27de20247e78aad",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49-v2-admission.json": "5db0e2def40c4dfa7542889bf92d082e9473b7ed775e09b411e4cbc04209958c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/control-initial.json": "3ebb0f02dcd61d1ddd86bc8001eaad939f443c0927c75592f91c02953c569a39",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/prefill.json": "db89401cec09859816b15ffbca81fff4c12d9fc8d45226a42143838dc53f337f",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair49_v2/control/receipt.json": "9d41acd361d7a08505aa546c922e409f96dc838764aa273696ff4c196b32298a",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical-v2-admission.json": "aa2961c96284366d2b15174a2b3cebd7e8fd7adb3c94a94a6b9a2b5e89a9a25f",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v2/technical/control-initial.json": "a0657d10d13375aebb6797c6f203bd1b8ead937e962036363102e3406090b837",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v2/technical/receipt.json": "3e4de943b8dd74d1a674d6effeb18931bdcb87ebed57d08d523312f0b2ff285b"
+  },
+  "legacy_source_file_count": 406,
+  "legacy_source_map_bound_by": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/training-completion.json",
+  "limits": [
+    "No model or NPZ archive opened, no tensor recheck; archive hashes/array identities are recorded sealed evidence only.",
+    "Native digest includes submitted actions of both sides; trajectory digest covers each (old observation, actions, next observation, reward, terminated, truncated), excluding reset info and step info. Raw observations were not archived.",
+    "No independent reconstruction of raw observations, tensor contents or historical full RNG/library binary state from JSON.",
+    "Complete old source map/interpreter/engine bytes must remain unchanged at actual admission; only narrow files were read now, no broad runtime or old-game re-audit.",
+    "New OFF output paths/metadata differ; compare paired semantic fields, not whole JSON or container-file equality.",
+    "ON is not subject to trajectory equality with OFF. No actual reproduction performed in this reference-preparation task."
+  ],
+  "paired_exact_fields": [
+    "key",
+    "native_sha256",
+    "trajectory_sha256",
+    "reward_audit",
+    "final_action_audit",
+    "our_wins",
+    "opp_wins",
+    "our_points",
+    "opp_points",
+    "result"
+  ],
+  "profile": "ensemble_behavior_20261109",
+  "rng_recipe": {
+    "adapter_setup": "preserve all four RNG families and do not reseed them after installation",
+    "each_play_game": "agent.new_game(side), opponent.new_game(other_side) if present, random.seed(game_seed), np.random.seed(game_seed % 2**32), env.reset(seed=game_seed), set_env_cfg, act then update each step",
+    "global_initializer": "random.seed(start); np.random.seed(start); torch.manual_seed(start), inside original make_learner, after Env construction",
+    "historical_snapshots": "not archived; compare reconstructed current base/adapter states, never claim independent historical RNG recovery",
+    "learner_start_seed": {
+      "on48": 48,
+      "on49": 49,
+      "technical": 48
+    },
+    "new_game_preserves": [
+      "q",
+      "target",
+      "Adam",
+      "replay",
+      "env_steps",
+      "learn_steps",
+      "agent.rng"
+    ],
+    "private_agent_rng": "np.random.default_rng(start), continuous across games; no reset/reseed between the two cases"
+  },
+  "status": "REFERENCE_IDENTIFIED",
+  "technical_acceptance": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/technical-v2-acceptance.json",
+  "technical_acceptance_sha256": "97d30ecbd546871da07e1c43f2cfc7046ff54c64f8b9a6b62859a0fc3354d92d",
+  "technical_admission": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical-v2-admission.json",
+  "technical_admission_sha256": "aa2961c96284366d2b15174a2b3cebd7e8fd7adb3c94a94a6b9a2b5e89a9a25f",
+  "technical_receipt": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v2/technical/receipt.json",
+  "technical_receipt_sha256": "3e4de943b8dd74d1a674d6effeb18931bdcb87ebed57d08d523312f0b2ff285b",
+  "timing_excluded": [
+    "secs",
+    "started_at",
+    "finished_at",
+    "last_guard_at",
+    "last_power",
+    "last_usage",
+    "wall_clock_timestamps",
+    "PID_PGID",
+    "new_source_HEAD",
+    "new_admission_hash",
+    "new_profile_paths",
+    "new_reward_evidence.path",
+    "new_artifact_file_byte_hashes_as_semantic_equality"
+  ],
+  "training_completion": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/operations/training-completion.json",
+  "training_completion_sha256": "41cb8fa0689bb1a5b98bbd692e147fceb8471b5e72387b661b06e7484c244b94"
+}

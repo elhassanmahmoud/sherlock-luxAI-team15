@@ -1,0 +1,164 @@
+"""Prepare one exclusive JSON admission on explicit Root invocation; never start a phase.
+
+No Torch/NumPy/JAX imports, tensor/archive decoding, simulation or subprocess
+workers. Existing pure source/hash helpers may invoke read-only git commands.
+Use the original project interpreter, after the source commit. This preparation
+does not replace the study's admission check or Root's actual technical review.
+"""
+from importlib.metadata import version
+import argparse
+import json
+import os
+from pathlib import Path
+import sys
+import tempfile
+
+DEFAULT_ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+PROFILE = 'ensemble_behavior_20261109'
+COMPLETION_SHA = '41cb8fa0689bb1a5b98bbd692e147fceb8471b5e72387b661b06e7484c244b94'
+CONTROL_SHA = ('931ae709779144d578cdf8134f8ef8bb777c653f3f390426a96e03eb141d2429',
+               '499ff53fd318e507e31036b73920e5792b5c47443a24d91d880e7aa2a111ee01')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--stage', choices=('technical', 'training'), required=True)
+    parser.add_argument('--expected-head', required=True, help='Exact committed new source HEAD')
+    parser.add_argument('--root', type=Path, default=DEFAULT_ROOT)
+    parser.add_argument('--admission', type=Path, help='Default PROFILE/STAGE-v1-admission.json; exclusive')
+    parser.add_argument('--check-only', action='store_true', help='Validate metadata/bindings; write nothing')
+    parser.add_argument('--stop-file', type=Path, required=True)
+    parser.add_argument('--technical-acceptance', type=Path, help='Required only for training')
+    parser.add_argument('--input', action='append', type=Path, default=[], help='Additional bound evidence')
+    args = parser.parse_args()
+    root = args.root.resolve(strict=True)
+    if root != Path.cwd().resolve(): raise ValueError('Run from the admitted study checkout')
+    sys.path.insert(0, str(root))
+    from scripts.early_curriculum_study import digest, require, source_identity
+    from scripts.final_training_supervisor import safe_path
+
+    base = root/'experiments/analysis'/PROFILE
+    admission_path = safe_path(args.admission or base/f'{args.stage}-v1-admission.json')
+    output = safe_path(base/f'{args.stage}_v1')
+    require(not admission_path.exists() and not output.exists(), 'Admission/phase already exists; no overwrite/resume')
+    stop = safe_path(args.stop_file)
+    require(not stop.exists(), 'Existing STOP must be resolved explicitly by Root')
+    inputs = {}
+
+    def bind(path, expected=None):
+        path = safe_path(path)
+        require(path.is_file(), f'Missing input: {path}')
+        actual = digest(path)
+        require(expected is None or actual == expected, f'Original hash mismatch: {path}')
+        inputs[str(path)] = actual
+        return path
+
+    def read(path, expected=None):
+        return json.loads(bind(path, expected).read_text())
+
+    training_completion = root/'experiments/analysis/match_weight_20261109/operations/training-completion.json'
+    closure = read(training_completion, COMPLETION_SHA)
+    require(closure['status'] == 'COMPLETE_TRAINING_NO_STRENGTH_CLAIM'
+            and closure['source_and_input_bindings_valid'] is True, 'Unaccepted historical closure')
+    protected = closure['protected']
+    for path, sha in protected.items(): bind(path, sha)
+    config = None; initial = {}; rollouts = {}; plans = set()
+    for index, start in enumerate((48, 49)):
+        pair = closure['pairs'][str(start)]
+        train = read(pair['admission'], pair['admission_sha256'])
+        read(pair['state'], pair['state_sha256'])
+        read(pair['closure'], pair['closure_sha256'])
+        require(train['start'] == start and train['stage'] == f'pair{start}', 'Wrong historical start')
+        require(sys.executable == train['python'], 'Use the exact original project interpreter')
+        plans.update(train['plans'])
+        require(config is None or config == train['config']['control'], 'Historical control configs differ')
+        config = train['config']['control']
+        rollouts[str(start)] = train['rollout_plan']
+        for role in ('control', 'match'):
+            record = pair['models'][role]
+            model = bind(record['path'], record['sha256'])
+            receipt = read(record['receipt'], record['receipt_sha256'])
+            if role == 'control':
+                require(digest(model) == CONTROL_SHA[index], 'Wrong fixed historical control')
+                for name in ('control-initial.json', 'prefill.json'):
+                    p = model.parent/name
+                    value = read(p, receipt['files'][str(p)])
+                    if name == 'control-initial.json':
+                        require(value['config'] == config and value['start'] == start, 'Initial config/start differs')
+                        initial[str(start)] = value['initial']
+        tech_path = train['technical_receipt']
+        technical = read(tech_path, train['inputs'][tech_path])
+        for path, sha in technical['files'].items(): bind(path, sha)
+
+    require(config['w_match'] == 2, 'Only the original control reward is admitted')
+    plans.update(str(root/f'docs/superpowers/{kind}/2026-11-09-ensemble-behavior.md') for kind in ('specs', 'plans'))
+    plans = sorted(plans)
+    for path in plans: bind(path)
+    for name in ('scripts/ensemble_behavior_study.py', 'scripts/ensemble_behavior_owner.py',
+                 'tests/test_ensemble_behavior_study.py'):
+        bind(root/name)
+    # Existing bounded preparation evidence only; no new card scan or selection.
+    preparation = base/'preparation'
+    for name in ('method.json', 'runtime.json', 'golden-reference.json', 'golden-reference.md',
+                 'solution.json', 'direct_v14.json', 'direct_control.json'):
+        if (preparation/name).is_file(): bind(preparation/name)
+    if (preparation/'seed-acceptance.json').is_file():
+        proof = read(preparation/'seed-acceptance.json')
+        for path, sha in proof['files'].items(): bind(path, sha)
+    for path in args.input: bind(path)
+
+    source = source_identity(root, sys.executable, plans)
+    require(source['head'] == args.expected_head, 'Expected committed HEAD differs')
+    prior = closure['source']
+    require(all(source[k] == prior[k] for k in ('python', 'executable', 'executable_sha256'))
+            and all(source['files'].get(path) == sha for path,sha in prior['files'].items()),
+            'Historical interpreter/engine/source bytes differ')
+    a = dict(schema_version=1, profile=PROFILE, stage=args.stage, start_authorized=True, allow_battery=True,
+        starts=[48,49], historical_runtime_gap_acknowledged=True, root=str(root), out=str(output),
+        python=sys.executable, plans=plans, source=source, protected=protected, inputs=inputs,
+        stop_file=str(stop), training_completion=str(training_completion),
+        v14_source=str(root/'agents/sherlock/weights/agent_p0.pth'), config=config,
+        rollout_plans=rollouts, initial=initial,
+        runtime=dict(python=sys.version, packages={name:version(name) for name in ('torch','numpy','jax','jaxlib','luxai-s3')}))
+
+    if args.stage == 'training':
+        require(args.technical_acceptance is not None, 'Actual Root technical acceptance required')
+        technical_path = base/'technical_v1/technical/receipt.json'
+        technical = read(technical_path)
+        approval = read(args.technical_acceptance)
+        require(technical['profile'] == PROFILE and technical['status'] == 'complete'
+                and technical['stage'] == 'technical' and technical['source'] == source
+                and technical['config'] == config and len(technical['games']) == 4
+                and approval['status'] == 'PASS' and approval['profile'] == PROFILE
+                and approval['source'] == source
+                and approval['technical_receipt_sha256'] == digest(technical_path),
+                'Root technical acceptance/source/config differs')
+        for path, sha in technical['files'].items(): bind(path, sha)
+        a.update(technical_receipt=str(technical_path), technical_acceptance=str(safe_path(args.technical_acceptance)),
+                 source_members=technical['games'][0]['mechanism']['source_members'])
+    else:
+        require(args.technical_acceptance is None, 'Technical phase cannot consume a future acceptance')
+
+    require(str(admission_path) not in inputs and all(output != Path(p) and output not in Path(p).parents
+                                                    for p in inputs), 'Output overlaps input')
+    if args.check_only:
+        print(json.dumps(dict(status='PASS', stage=args.stage, head=source['head'], inputs=len(inputs),
+                              source_files=len(source['files']), historical_files=len(prior['files']),
+                              admission_written=False, started=False), sort_keys=True))
+        return
+    admission_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile('w', dir=admission_path.parent, prefix='.admission-', delete=False) as stream:
+            temporary = Path(stream.name)
+            json.dump(a, stream, sort_keys=True, indent=2, allow_nan=False); stream.write('\n')
+            stream.flush(); os.fsync(stream.fileno())
+        os.link(temporary, admission_path)  # Atomic exclusive publication; no overwrite.
+    finally:
+        if temporary is not None: temporary.unlink(missing_ok=True)
+    print(json.dumps(dict(admission=str(admission_path), sha256=digest(admission_path), stage=args.stage,
+                          head=source['head'], inputs=len(inputs), started=False), sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

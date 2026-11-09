@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Ensemble-Verhalten technisch vorbereitet
+
+- Drei getrennte Versuchswerkzeuge umgesetzt, ursprünglicher Agent und alte Studienquellen unverändert. 72 gezielte synthetische Tests bestanden; unabhängiger finaler Code-/Methodenreview und Root-Abgleich der tatsächlichen Dateien ohne offene Blocker. [Belege](../experiments/analysis/ensemble_behavior_20261109/README.md).
+- Einmaliger begrenzter Check der 60 vorab festen Auswahlkarten akzeptiert, Scanlücken dokumentiert. Historische Kontrollmodelle und ursprüngliche Technikbelege gebunden; fehlende vollständige frühere Bibliotheks-/RNG-Snapshots bleiben eine Grenze.
+- Noch keine neuen realen Spiele. Nach Quellencommit vier bekannte OFF/ON-Technikspiele; nur nach deren tatsächlicher Abnahme separate Aufnahme der beiden ON-Läufe mit je 40 Vorlauf- und 400 Lernspielen. Gemeinsame manuelle Freigabe vor Gradienten. Kein automatischer Ersatzlauf oder V14-Austausch. Akku und Restkontingent erlaubt.
+
 ## 09.11.2026 – Ensemble-Verhalten im Training wird vorbereitet
 
 - MATCH38-Bestätigung als `e1b8f8e` veröffentlicht und Hauptkopie aktuell; keine laufenden Modelle, Freeze geschlossen. V14/ZIP und fremde Dateien unverändert.

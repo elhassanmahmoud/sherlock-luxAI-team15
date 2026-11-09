@@ -1,0 +1,196 @@
+{
+  "profile": "ensemble_behavior_seedcheck_20261109",
+  "raw_verdict": "NO_OBSERVED_OTHER_CONSUMPTION_OR_RESERVATION_WITH_REPORTED_LIMITS",
+  "target_ranges_inclusive": {
+    "solution": [
+      9990000,
+      9990019
+    ],
+    "direct_v14": [
+      9990100,
+      9990119
+    ],
+    "direct_control": [
+      9990200,
+      9990219
+    ]
+  },
+  "target_card_id_count": 60,
+  "historical_training_ranges_excluded": "9960xxx historical control maps intentionally outside target ranges; no freshness claim or scan performed for them.",
+  "allowlisted_reservation_paths": [
+    "docs/superpowers/plans/2026-11-09-ensemble-behavior.md",
+    "docs/superpowers/specs/2026-11-09-ensemble-behavior.md"
+  ],
+  "scan_window_utc": {
+    "start": "2026-11-09T18:18:11.779460+00:00",
+    "finish": "2026-11-09T18:18:37.700192+00:00",
+    "seconds": 25.97348891699221,
+    "exit_code": 0
+  },
+  "worktrees": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint"
+  ],
+  "heads_before": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "e1b8f8e35399109de9cfa8431ed6cc46f97aad6c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15": "e1b8f8e35399109de9cfa8431ed6cc46f97aad6c",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie": "694eda39ee006cb4644184db73ff2b0a5cbe4383",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation": "3dcf090b380918175c5d1d01262ddbd7a717d18f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics": "03e54e267242ff642c126313fe5f512ed9d959ac",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint": "ea8cd339829f398fd27e8f871f654fded2513589"
+  },
+  "heads_after": {
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15": "e1b8f8e35399109de9cfa8431ed6cc46f97aad6c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15": "e1b8f8e35399109de9cfa8431ed6cc46f97aad6c",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-counterplay": "a5d2e61b0e8654bad64e31c29447ada1e439174d",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-enemy-tie": "694eda39ee006cb4644184db73ff2b0a5cbe4383",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-ensemble-validation": "3dcf090b380918175c5d1d01262ddbd7a717d18f",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-november-followup": "bed06df3335caa4d7a79c928132143a9c7e0a8fc",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics": "03e54e267242ff642c126313fe5f512ed9d959ac",
+    "/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint": "ea8cd339829f398fd27e8f871f654fded2513589"
+  },
+  "all_heads_unchanged": true,
+  "plan_spec_hashes": {
+    "docs/superpowers/plans/2026-11-09-ensemble-behavior.md": {
+      "scan_sha256": "d2b706abc9701f01498edae84f042d874188381a08ae23cd703625c5d9dd4b9b",
+      "postscan_sha256": "d2b706abc9701f01498edae84f042d874188381a08ae23cd703625c5d9dd4b9b",
+      "same_after_scan": true,
+      "bytes": 8195
+    },
+    "docs/superpowers/specs/2026-11-09-ensemble-behavior.md": {
+      "scan_sha256": "3fbad1bb1f283e9719463e94d438600270e0878809d3d995ce05382ab8a1a7fb",
+      "postscan_sha256": "3fbad1bb1f283e9719463e94d438600270e0878809d3d995ce05382ab8a1a7fb",
+      "same_after_scan": true,
+      "bytes": 7015
+    }
+  },
+  "scanner_lineage": {
+    "original_scanner_source": {
+      "path": "experiments/analysis/match_weight_20261109/preparation/seed-audit.py.txt",
+      "bytes": 20712,
+      "sha256": "ecfaf1e859394b0e2e6ee84edb4cdc91c680c9f6470d01ecbc1ec36d727e2c12"
+    },
+    "adaptation_base": {
+      "path": "/private/tmp/match-weight-confirmation-seeds/seed-audit.py",
+      "bytes": 20734,
+      "sha256": "0a05c8c68d5d1b3092760d77b513d413958333959e7f7f36d4a69e8670d3f8dc"
+    },
+    "adapted_script_sha256": "a03e8d991eaaab2cd7790f02506e2e8f636545ce6d8f283705eb34fa0b48b634",
+    "scanner_diff_sha256": "aacd26389ef3d4fc7c6ee4538520c1c426c569ff5f8e12016dc98d3f6dddefc9"
+  },
+  "prior_raw_archive_input": {
+    "path": "experiments/analysis/match_weight_20261109/preparation/seed-audit.json.gz",
+    "bytes": 1860873,
+    "sha256": "d7cd3b599394ddee754e641572ca77a873516aa41e4ce6ca5ba720aa738231f2",
+    "modified": false
+  },
+  "scan_results": {
+    "structured_paths": 15117,
+    "stored_bytes": 1918516011,
+    "text_paths": 9767,
+    "unique_csv": 1713,
+    "unique_json": 1779,
+    "csv_rows": 1649245,
+    "numeric_csv_seed_values": 1644184,
+    "numeric_json_seed_values": 127011,
+    "json_interval_candidates": 771,
+    "csv_seed_hits": 0,
+    "json_numeric_mentions": 0,
+    "json_interval_overlaps": 0,
+    "json_string_mentions": 0,
+    "text_hits": 1,
+    "text_hits_unallowlisted": 0,
+    "csv_files_without_seed_column": 288,
+    "csv_rows_without_seed_column": 5061,
+    "heuristically_non_numeric_json_seed_fields": 2543,
+    "excluded_raw_jsonl_paths": 2020,
+    "errors": 0,
+    "text_errors": 0,
+    "text_gaps": 0,
+    "mutations": 0
+  },
+  "reservation_text_hit": {
+    "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/docs/superpowers/specs/2026-11-09-ensemble-behavior.md",
+    "relative_path": "docs/superpowers/specs/2026-11-09-ensemble-behavior.md",
+    "line": 32,
+    "target_mentions": [
+      9990000,
+      9990019,
+      9990100,
+      9990119,
+      9990200,
+      9990219
+    ],
+    "range_overlaps": [
+      {
+        "start": 9990000,
+        "end_inclusive": 9990019,
+        "overlap": {
+          "solution": [
+            9990000,
+            9990019
+          ]
+        }
+      },
+      {
+        "start": 9990100,
+        "end_inclusive": 9990119,
+        "overlap": {
+          "direct_v14": [
+            9990100,
+            9990119
+          ]
+        }
+      },
+      {
+        "start": 9990200,
+        "end_inclusive": 9990219,
+        "overlap": {
+          "direct_control": [
+            9990200,
+            9990219
+          ]
+        }
+      }
+    ],
+    "text": "Feste 200 Auswahlspiele: alle drei Varianten gegen Solution auf9990000–9990019, beide Seiten (120); BEHAVIOR38 direkt gegen V14 auf9990100–9990119 und gegen CONTROL38 auf9990200–9990219 (80). Diese 60 Karten vor Start einmal begrenzt auf dokumentierte Nutzung prüfen. Vier Gates: tatsächliche Solution-Siege mindestens beide Referenzen; direkt mindestens 24 echte Siege von 40 gegen jede Referenz. Remis sind keine Siege. Je Statistik 5.000 PCG64-Seed-0-Ganzkarten-Bootstrapziehungen, 95%-Scoreintervalle, keine Familienkorrektur über frühere Versuche. Historische Kontrollen sind keine neu unabhängig trainierten Replikate.",
+    "classification": "allowed_current_spec_or_plan"
+  },
+  "limitations": [
+    "Only eight registered local worktrees; other machines, unregistered checkouts and undocumented runs remain unknown.",
+    "Seedless files/records do not prove non-consumption; path/schema gaps retained.",
+    "Targeted metadata scanner covers experiments/logs/replays CSV and JSON, including gzip. Raw JSONL traces, rollouts and provenance are deliberately NOT reparsed; metadata/CSV coverage cannot establish freshness for missing or exclusively JSONL histories.",
+    "Supplemental text scan covers root/docs/scripts/experiments/logs/replays .md/.py/.sh/.txt/.log files, numeric literal mentions and explicit intervals. Computed seed formulas, unsupported schemas and opaque binary formats can escape detection.",
+    "Directory symlinks not followed; .git/.venv/venv/node_modules/__pycache__ skipped.",
+    "Stored bytes deduplicated by SHA256 for structured formats; text content separately deduplicated.",
+    "Exactly two current ensemble-behavior paths (plan and spec) are allowlisted as these card reservations; every other matching text mention requires review. Historical 9960xxx training blocks are intentionally outside this scan. Any concurrent HEAD or observed file changes are recorded, not described as a freeze. Own script/results excluded.",
+    "No repository imports, model loading, tests or game execution; writes restricted to the two exclusive result files beside this external audit script. The CLI flag records operator acknowledgment, not independent proof of Root/Watcher approval."
+  ],
+  "outputs": {
+    "seed-audit.py": {
+      "bytes": 21111,
+      "sha256": "a03e8d991eaaab2cd7790f02506e2e8f636545ce6d8f283705eb34fa0b48b634"
+    },
+    "scanner-diff.txt": {
+      "bytes": 11853,
+      "sha256": "aacd26389ef3d4fc7c6ee4538520c1c426c569ff5f8e12016dc98d3f6dddefc9"
+    },
+    "seed-audit.json": {
+      "bytes": 18697565,
+      "sha256": "93aab0b5e88d8463fa3699200bc339ab5abb3d0bcae15cec81f47c3711d83d6f"
+    },
+    "seed-audit.md": {
+      "bytes": 1344,
+      "sha256": "e046d942b7fc128a0450b6a713d753f0ec609eb5c64b9149e3bf945916952d40"
+    }
+  },
+  "method_note": "Existing bounded metadata/CSV scanner reused; no search logic changes. External copy changed only the three target ranges, exact two-path plan/spec reservation allowlist, profile and summary wording. One scan execution; no tests, games, models or repository writes."
+}
