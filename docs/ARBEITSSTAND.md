@@ -8,6 +8,16 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – EXPOSURE38-Vergleich technisch vorbereitet
+
+- Zwei akzeptierte neue Netze werden zu den originalen 36 ergänzt. Vergleich mit unveränderten V14-/BEHAVIOR38-Kopien auf den vorab festen 60 Karten, insgesamt 200 Spiele; zunächst separate echte Montage-/Loaderabnahme. 178 synthetische Tests bestanden, unabhängiger integrierter Review und Root-Datei-/Vertragsprüfung ohne offene Quellenbefunde. [Belege](../experiments/analysis/frozen_v14_exposure_compare_20261109/README.md).
+- Noch keine tatsächlichen Vergleichsspiele oder Stärkeaussage. Ab 72 Prozent Verbrauch keine neue Phase; mindestens 25 Prozent Kontingent bleiben erhalten. Keine weitere Trainingsstudie, kein automatischer Übergang oder V14-/ZIP-Austausch.
+
+## 09.11.2026 – Neue Budgetgrenze: mindestens25Prozent übriglassen
+
+- Moayed begrenzt weitere Arbeit ausdrücklich auf höchstens75Prozent Kontingentverbrauch; alte Restkontingentfreigabe damit aufgehoben. Tatsächlich21:25:59UTC67Prozent verbraucht/33Prozent übrig. Root reserviert Abschlussraum: ab72Prozent keine neue Arbeit, laufende eigene Jobs kontrolliert abschließen/beenden, geprüften Stand sichern und Automation pausieren; keine Resets.
+- Ausschließlich aktuellen festen200er-Vergleich fertigstellen, sofern Budget reicht. Keine weitere Trainings-/Residualstudie beginnen. Unvollständige Ergebnisse ehrlich markieren; V14/ZIP bleiben bis belegtemVorteil. Trainingsdaten als427cf158 veröffentlicht undPrimaryaktuell, Vergleichswerkzeuge178Tests/ReviewPASS, tatsächlicheMontage/Leistung noch nicht gestartet.
+
 ## 09.11.2026 – Gezieltes Training gegen V14 vollständig abgeschlossen
 
 - Beide tatsächlichen Lernarme abgeschlossen: je40Vorlauf+400Lernspiele/60000Updates, einschließlich vier Technikspielen884Ausführungen/120000Updates. Neue Endtensoren, Adam, Replays und sämtliche Gegnerbelege unabhängig geprüft (5783Checks), Root-Originalvalidatoren PASS. [Trainingsbericht](../experiments/analysis/frozen_v14_exposure_20261109/TRAININGSERGEBNIS.md).
