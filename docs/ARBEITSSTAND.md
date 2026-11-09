@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Kleine zeitliche Niederlagendiagnose vorbereitet
+
+- Gefahrmerkmalsvergleich vollständig geschlossen, V14 bleibt; Ergebniscommit eb36583 plus bytegenaue CSV-Publikationskorrektur 3ab2cbb sind auf GitHub und in der Hauptkopie. Alle eigenen Prozesse beendet, Fremddateien erhalten.
+- Ein historischer Verlusttrace zeigt wiederholte netzgesteuerte Abgänge/Rückkehr vom weiter zugewiesenen Punktfeld. Pauschales pt_hold und alte HOLD-Studie sind bereits geprüft; sie werden nicht neu gestartet. Keine Alleinursache oder Regelerfolg behauptet.
+- [Neue enge Diagnose](superpowers/plans/2026-11-09-holder-oscillation-diagnosis.md): genau 9946007/player_0, bereits verbrauchte erste sortierte Niederlage trotz mehr Gesamtpunkten, zwei Ausführungen mit unverändertem targeting_probe zur Passivitäts-/Baselineprüfung. Noch nicht gestartet; nach Quellencommit separat aufnehmen. Keine neuen Trainings- oder Leistungskarten, keine neue Agentenregel.
+- V14/ZIP unverändert; Akku erlaubt und frische tatsächliche Quota vor Start. Quelle/HEAD während Probe festhalten, anschließend unabhängige Ereignisprüfung.
+
 ## 09.11.2026 – Gefahrmerkmalsvergleich abgeschlossen: V14 bleibt
 
 - Publikationskorrektur: Im ersten Ergebniscommit eb36583 hatte Git die fünf CSV-Zeilenenden normalisiert. Die CSV-Werte waren gleich, aber archivierte Bytehashes passten nicht. Mit dem vorhandenen `-text`-Attribut jetzt explizit neu aufgenommen; alle fünf Indexblobs sind exakt gleich den unveränderten Originaldateien und Audit-Hashes. Kein neues Spiel, keine geänderten Ergebnisse.
