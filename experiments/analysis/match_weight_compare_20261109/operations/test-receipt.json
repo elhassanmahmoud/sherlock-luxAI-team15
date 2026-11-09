@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "tests": 93,
+  "duration_seconds": 4.33,
+  "exit_code": 0,
+  "scope": "Synthetic comparison and existing match-weight study/owner suites; no production archive or engine games",
+  "command": "TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_match_weight_compare.py tests/test_match_weight_study.py tests/test_match_weight_owner.py",
+  "log_sha256": "91fda970c0c6be7c9ca949f72684661ff85fce8a129d6fc0391c44ffd031c0bf",
+  "files": {
+    "scripts/match_weight_compare.py": "d83bab3d6dc58c865662ff4e7c86301cd7971f404831edb761401575bbe76017",
+    "scripts/match_weight_compare_owner.py": "60882d55637603b6dfdb39b234bc4725fef88cd4ed9506ff80478165462d9a58",
+    "tests/test_match_weight_compare.py": "39a4a3e9a8ba7fa0b7b28c01a715d87f3008b15f3e4935f8296107ac7209f21f"
+  }
+}

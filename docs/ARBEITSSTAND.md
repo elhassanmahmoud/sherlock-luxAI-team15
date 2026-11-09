@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Matchgewichtsvergleich technisch vorbereitet
+
+- Die akzeptierten vier Endnetze und Trainingsbelege sind als fc795c2 auf GitHub und in der Hauptkopie; Schutz- und Fremddateien unverändert. Keine laufenden eigenen Modelljobs.
+- Vergleichswerkzeuge integriert: 93 synthetische Tests PASS, unabhängiger finaler Code-/Methodenreview und Root-Bytevergleich bestanden. Ursprüngliche 60 reservierte Leistungskarten aus dem festen Plan; alle 1.998 intervenierenden eigenen Ausführungen auf Überschneidung geprüft, keine gefunden. Alte Scanlücken bleiben ausdrücklich. [Belege](../experiments/analysis/match_weight_compare_20261109/README.md).
+- Nach Quellencommit separate tatsächliche Montage-/Loaderaufnahme ohne Spiele, anschließend nur nach Root-Abnahme eigene 200-Spiel-Aufnahme. Gleiche Inferenzkonfiguration; originale 36 plus beide jeweiligen Endnetze. Kein automatischer Phasenwechsel, Nachschlag oder V14-Ersatz. Akku/Restkontingent erlaubt, keine Resets durch Codex.
+
 ## 09.11.2026 – Vier Matchgewicht-Netze vollständig trainiert
 
 - Akzeptierte Ersatzrunde v2: vier bekannte Technikspiele, 160 Vorlauf- und 1.600 Lernspiele, 240.000 echte Updates. Beide Paare und alle gespeicherten Endzustände unabhängig und durch Root abgenommen; Quelle `207f504` erst nach versiegelter Gesamtabnahme freigegeben. Alle eigenen Trainingsprozesse beendet. [Bericht](../experiments/analysis/match_weight_20261109/TRAININGSERGEBNIS.md).
