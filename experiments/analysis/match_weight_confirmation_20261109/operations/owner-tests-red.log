@@ -1,0 +1,22 @@
+.E
+==================================== ERRORS ====================================
+_ ERROR at setup of test_owner_exact_two_plus_one_waves_receipt_sizes_and_no_restart _
+
+s = <module 'scripts.match_weight_confirmation' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_confirmation.py'>
+tmp_path = PosixPath('/private/tmp/pytest-of-moayedshawesh/pytest-1/test_owner_exact_two_plus_one_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1075d16e0>
+
+    @pytest.fixture
+    def owner_harness(s,tmp_path,monkeypatch):
+>       assert importlib.util.find_spec('scripts.match_weight_confirmation_owner'), 'Confirmation owner missing'
+E       AssertionError: Confirmation owner missing
+E       assert None
+E        +  where None = <function find_spec at 0x1019e1800>('scripts.match_weight_confirmation_owner')
+E        +    where <function find_spec at 0x1019e1800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_confirmation.py:227: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_match_weight_confirmation.py::test_owner_exact_two_plus_one_waves_receipt_sizes_and_no_restart
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 passed, 39 deselected, 1 error in 2.36s

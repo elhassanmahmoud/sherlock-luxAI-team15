@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Einmalige MATCH38-Bestätigung wird vorbereitet
+
+- Nominierung samt Rohdaten/Audits ist als `82161f8` auf GitHub und in der Hauptkopie. Keine laufenden eigenen Modelle; vorheriger Freeze geschlossen, V14/ZIP unverändert.
+- [Neuer vor Daten fester Plan](superpowers/plans/2026-11-09-match-weight-confirmation.md): genau 440 Spiele mit unveränderten eval-Kopien. Direktvergleich primär auf 60 neuen Karten; Viererpanel auf 20 weiteren Karten als empirische Stabilitätswache. Keine formale Nichtunterlegenheitsbehauptung aus degenerierten Intervallen. 94 synthetische Tests tatsächlich bestanden; unabhängiger finaler Code-/Methodenreview und Root-Abgleich ohne offene Blocker. Einmaliger Seedscan ohne gespielte Überschneidung; eigener neuer COHORTS-Treffer ausdrücklich als Reservierung eingeordnet, Rohverdikt und Lücken erhalten.
+- Noch keine tatsächliche Bestätigungsaufnahme, keine neuen Spiele oder Gradienten. Vor Modellstart Tests, unabhängigen Review, Kartenabnahme und Quellencommit abschließen. Keine alten Studien wiederholen oder Gewichte voreilig übernehmen. Verhaltensensemble-Idee bleibt zurückgestellt.
+
 ## 09.11.2026 – MATCH38 nach vollständigem Vergleich nominiert
 
 - Alle 200 festen Spiele abgeschlossen: Solution MATCH38 37/40 gegenüber V14 und CONTROL38 je 36/40; direkt gegen V14 26/40 und gegen Kontrolle 24/40. Alle vier vorab festen Gates erfüllt. Breite Ganzkartenintervalle, noch kein bestätigter allgemeiner Stärkezuwachs oder isolierter Rewardnachweis. [Vollständiger Bericht](../experiments/analysis/match_weight_compare_20261109/ERGEBNIS.md).
