@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Neue Richtung: Rangmittel im Ensemble
+
+- SAP-Bewegungsstudie geschlossen und als 26516e7 veröffentlicht; beide aktiven Arbeitskopien aktuell, keine laufenden eigenen Modelljobs. V14 und ZIP unverändert.
+- [Separater fester Plan](superpowers/plans/2026-11-09-rank-aggregation.md): dieselben 36 Netze, legale Aktionsränge statt rohe Q-Mittelwerte. Kein belegtes Skalenproblem, Nutzen offen; keine weiteren SAP-Varianten oder größere Trainingswelle.
+- Kleine getrennte Umsetzung und gezielte Tests, dann vier bekannte Technikspiele und bei tatsächlicher Abnahme genau120Vergleiche. Neue Bereiche9944000–9944019/9944100–9944119 vor Start prüfen. Noch keine neuen Modelle, Spiele oder Leistungsresultate. Akku erlaubt, letzte echte Quota88Prozent verbraucht.
+
 ## 09.11.2026 – Bewegungsmodell abgeschlossen: weiterhin V14
 
 - Vier Technik- und 120 Leistungsspiele vollständig: ON/OFF gegen Solution jeweils 38/40, direkt ON 21/40 [50; 57,5 %]. Zehn exponierte Panelkarten, 478 beziehungsweise zwölf geänderte Schüsse. Vorab festes Direktgate verfehlt; keine Verlängerung, kein bestätigter Nachfolger. [Ergebnis](../experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md).
