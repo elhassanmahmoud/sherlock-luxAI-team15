@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "checks": 3366,
+  "games": 0,
+  "models": {
+    "v14": {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_compare_20261109/technical_v1/v14.pth",
+      "sha256": "817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2",
+      "members": 36,
+      "original36_bit_equal": true,
+      "appended_finals": [],
+      "normalized_original_config_equal": true,
+      "original_target_equal": true,
+      "all_other_original_checkpoint_fields_equal": true,
+      "ordered_member_hashes_match": true,
+      "loader_pass_from_receipt": true,
+      "batches": [
+        1,
+        8,
+        16
+      ]
+    },
+    "control": {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_compare_20261109/technical_v1/control.pth",
+      "sha256": "b8118e6a8a5656a725fa407466833ebcef24d899f00c79e00b3f848086321a95",
+      "members": 38,
+      "original36_bit_equal": true,
+      "appended_finals": [],
+      "normalized_original_config_equal": true,
+      "original_target_equal": true,
+      "all_other_original_checkpoint_fields_equal": true,
+      "ordered_member_hashes_match": true,
+      "loader_pass_from_receipt": true,
+      "batches": [
+        1,
+        8,
+        16
+      ]
+    },
+    "behavior": {
+      "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_compare_20261109/technical_v1/behavior.pth",
+      "sha256": "caddf31310f7fc4f21fe089bb15c129f55d4c8bcddde789e7731f96c82e36858",
+      "members": 38,
+      "original36_bit_equal": true,
+      "appended_finals": [
+        {
+          "start": 48,
+          "final_sha256": "486b9b44e12be251213b00fd84b82964c7aa5a781bdf086da866da42eb95a3fd",
+          "q_sha256": "a324a4070d50e92154931c849dfd767c65662643e9abb0c29b2dd8e8e4d6fd49"
+        },
+        {
+          "start": 49,
+          "final_sha256": "e0668fdcfbf70b9c85180e81af9d3bfd684b65d8aba048addee36bb58bdf27d3",
+          "q_sha256": "cef238c5429a2cb254fd19fb4ef3b5a030c1285ccb1fe8204aa5f527b9110b2d"
+        }
+      ],
+      "normalized_original_config_equal": true,
+      "original_target_equal": true,
+      "all_other_original_checkpoint_fields_equal": true,
+      "ordered_member_hashes_match": true,
+      "loader_pass_from_receipt": true,
+      "batches": [
+        1,
+        8,
+        16
+      ]
+    }
+  },
+  "receipt_sha256": "d3e6fc3bfd367d7b4c43a436a3e4d21ea0d69a004033b0aa9898ec00aa0b8aa6",
+  "hash_bindings_checked": 550,
+  "unique_files_hashed": 526,
+  "script_sha256": "1b1d3fbb9930f203613da852e314005a081db69bfe930769482e45fe7d8d71ac"
+}

@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 09.11.2026 – BEHAVIOR38: beide Direktbedingungen verfehlt
+
+200 feste Spiele vollständig und unabhängig geprüft: Solution 40/40 statt V14 39/40 (Kontrolle ebenfalls 40/40), direkt 16/40 gegen V14 und 12/40 gegen Kontrolle. Kein Nominierter, kein Nachschlag, kein belegter stärkerer Agent. Root-Originalreproduktion und Abschluss unter 16fae8a bestanden, alle eigenen Prozesse beendet, V14/ZIP unverändert. [Bericht](../experiments/analysis/ensemble_behavior_compare_20261109/ERGEBNIS.md).
+
 ## 09.11.2026 – Ensemble-Aktionsauswahl beim Einzelnetztraining
 
 Zwei Starts 48/49 unter gemeinsamem Verhalten mit 35 eingefrorenen Netzen, eigenes DDQN und Kontrollreward unverändert. Tatsächlich 884 Spiele (4 Technik,80 Vorlauf,800 Lernen),120.000 Updates, keine Ersatzrunde. Alle tatsächlichen Endartefakte unabhängig und durch Root abgenommen; 11.298 finale Datenchecks, originale Validatoren bestanden. Historische Kontrollen gebunden, fehlende frühere Binär-/RNG-Snapshots offen. Noch kein Leistungs- oder Stärkenachweis; V14/ZIP unverändert. [Trainingsbericht](../experiments/analysis/ensemble_behavior_20261109/TRAININGSERGEBNIS.md). Separater fester 200er-Vergleich folgt erst nach Montage-/Quellenabnahme.

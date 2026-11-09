@@ -35,6 +35,8 @@
 **Ensemble-Verhalten am 09.11. vollständig trainiert:** Zwei neue Einzelnetze, je 40 Vorlauf- und 400 Lernspiele und 60.000 Updates; einschließlich vier Technikspielen insgesamt 884 Ausführungen und 120.000 Updates. Gemeinsame Aktionsauswahl mit 35 eingefrorenen ursprünglichen Netzen, eigenes DDQN/Reward unverändert. Tatsächliche Endarchive/Adam/Replays unabhängig und durch Root unter 71090f7 abgenommen; alle Jobs beendet. Noch kein Leistungsergebnis oder stärkerer Nachfolger, V14/ZIP unverändert. [Trainingsbericht](experiments/analysis/ensemble_behavior_20261109/TRAININGSERGEBNIS.md); feste 200er-Auswahl separat, aktuellen Arbeitsstand beachten.
 
 
+**Ensemble-Verhaltensvergleich am 09.11. abgeschlossen:** 200 feste Spiele, Solution BEHAVIOR38/CONTROL38 je 40/40 statt V14 39/40; direkt 16/40 gegen V14 und 12/40 gegen Kontrolle. Beide Direktgates verfehlt, keine Übernahme/Verlängerung. Originalanalyse und unabhängiger Audit bestanden, V14/ZIP unverändert. [Ergebnis](experiments/analysis/ensemble_behavior_compare_20261109/ERGEBNIS.md). Aktuelle getrennte Folgearbeit im Arbeitsstand.
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

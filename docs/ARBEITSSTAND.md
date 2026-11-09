@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – BEHAVIOR38-Vergleich abgeschlossen, kein Nachfolger
+
+- Alle 200 festen Spiele abgeschlossen: Solution BEHAVIOR38 und CONTROL38 je 40/40, V14 39/40; direkt gegen V14 16/40 [20;60 Prozent], gegen Kontrolle 12/40 [10;50]. Beide vorab festen Direktbedingungen verfehlt, kein Nominierter oder Nachschlag. [Ergebnis und Grenzen](../experiments/analysis/ensemble_behavior_compare_20261109/ERGEBNIS.md).
+- Tatsächlicher unabhängiger Daten-/Statistikaudit und Root-Originalreproduktion unter `16fae8a` bestanden; alle eigenen Prozesse/Wachhalter beendet. Quelle/Eingaben/Schutzdateien unverändert, Abschluss `6a89f00b8dc819637b7ccb702f6bb0219f570638581bd7f01008971ffa1c1cff` vor Freigabe des Quellenfreeze versiegelt. V14/ZIP bleiben.
+- Nächste getrennte Arbeit: Offlinecheck der bereits archivierten Vorlauf-Rewards bei positivem eigenem Punktzuwachs ohne bestätigte Punktfelder. Konkrete Code-/Tracebeobachtung, noch kein Kausalitäts- oder Stärkegewinnbeweis; keine neue Rewardvariante oder Modellphase. Akku/Restkontingent erlaubt, Resets nur durch Moayed. Geschlossene Studien nicht erneut starten.
+
+## 09.11.2026 – Fester BEHAVIOR38-Vergleich läuft
+
+- Quelle `16fae8a` auf GitHub und in der Hauptkopie. Tatsächliche Montage/Stock-Loaderprobe und unabhängiger Tensor-/Konfigurationsaudit bestanden; Root-Abnahme `73fdf5eabd99380882d2f13d9c7575c41bae8d2726e342b1ba801525ddd16c43`. Original36 sowie exakt die zwei akzeptierten ON-Endnetze, gleiche Inferenzconfig.
+- Performance separat aufgenommen: `experiments/analysis/ensemble_behavior_compare_20261109/performance_v1/state.json`, Aufnahme `78a6e3d52c5722e13fe0cae55e8ff0bcf439ce05d74558338f652c0428a96b9b`. Genau 200 Spiele, keine weitere Phase oder Zwischenwahl. Quelle/HEAD/Eingaben bleiben bis tatsächlichem Abschluss und Root-Abnahme fest; keine Tests parallel. Noch kein Leistungsergebnis oder belegter stärkerer Agent.
+- V14/ZIP unverändert, Akku/Restkontingent erlaubt. Dieser Laufvermerk wird erst nach Quellenfreeze committet.
+
 ## 09.11.2026 – Fester BEHAVIOR38-Vergleich technisch vorbereitet
 
 - Trainingsbelege als `07f3b47` auf GitHub und in der Hauptkopie; V14/ZIP und fremde Dateien unverändert. Alle Modelljobs beendet, Trainingsfreeze geschlossen.
