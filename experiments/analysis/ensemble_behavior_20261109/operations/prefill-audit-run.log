@@ -1,0 +1,77 @@
+{
+  "checks": 1084,
+  "games": 80,
+  "gradient_updates": 0,
+  "hash_bindings_checked": 494,
+  "prefill_sha256": {
+    "on48": "ee8fce7f3215e048e780dbca71e510774ae197eb2f2f8d846cfedf436d15bc6a",
+    "on49": "bd3bee8a1ea8f13e47ccd91acae8a58ceaea0cde16c72caa962c84dbfad17720"
+  },
+  "roles": {
+    "on48": {
+      "actual_checkpoint_identity": {
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+      },
+      "env_steps": 72120,
+      "example_checks": {
+        "examples": 3,
+        "max_mean_error": 4.6359168148768504e-07
+      },
+      "games": 40,
+      "learn_steps": 0,
+      "max_counterformula_residual": 3.552713678800501e-15,
+      "mechanism": {
+        "act_calls": 12120,
+        "member_forwards": 432000,
+        "network_calls": 12000,
+        "proposal_changed_units": 27616,
+        "unit_steps": 141704
+      },
+      "negative_outcome_rows": 253,
+      "nonzero_outcome_rows": 1772,
+      "optimizer_state_empty": true,
+      "positive_outcome_rows": 1519,
+      "prefill_sha256": "ee8fce7f3215e048e780dbca71e510774ae197eb2f2f8d846cfedf436d15bc6a",
+      "replay_rows": 141704,
+      "replay_sha256": "7fc253e382fde3b41ac004b8489986e5136c306942766bb880513f82e052ecd5",
+      "reward_audit_sha256": "a7b6f9821d733240879689159dc2deb30f3bcc1d2e7616a0aa6231b971da4a08",
+      "start": 48
+    },
+    "on49": {
+      "actual_checkpoint_identity": {
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+      },
+      "env_steps": 72120,
+      "example_checks": {
+        "examples": 3,
+        "max_mean_error": 3.112687005923931e-07
+      },
+      "games": 40,
+      "learn_steps": 0,
+      "max_counterformula_residual": 3.552713678800501e-15,
+      "mechanism": {
+        "act_calls": 12120,
+        "member_forwards": 432000,
+        "network_calls": 12000,
+        "proposal_changed_units": 29355,
+        "unit_steps": 141514
+      },
+      "negative_outcome_rows": 296,
+      "nonzero_outcome_rows": 1729,
+      "optimizer_state_empty": true,
+      "positive_outcome_rows": 1433,
+      "prefill_sha256": "bd3bee8a1ea8f13e47ccd91acae8a58ceaea0cde16c72caa962c84dbfad17720",
+      "replay_rows": 141514,
+      "replay_sha256": "77887b94596b93ad036b87f1d51726ac996c2ede7f22e96a9a6f24eacf43621e",
+      "reward_audit_sha256": "0d1c935658b261e59ae0f8310f36fc89c2a3cd361c237ad828189745684ed7bc",
+      "start": 49
+    }
+  },
+  "script_sha256": "6406efc4d39e331d824c8dc8c956dcb9e1acfbfa1047daa4d654c04f4730ae3e",
+  "status": "PASS",
+  "unique_files_hashed": 489
+}

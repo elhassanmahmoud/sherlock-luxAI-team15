@@ -1,6 +1,6 @@
 # Ensemble-Verhalten im Einzelnetztraining
 
-Neue getrennte Vorbereitung nach geschlossenem MATCH38-Versuch. Noch keine realen Modelle oder Spiele. Zwei ON-Arme mit fester Kontrollrewardformel und gemeinsamer manueller Vorlaufbarriere; die 35 eingefrorenen Netze wirken ausschließlich bei der Trainingshandlung, der eigene DDQN bleibt unverändert.
+Abgeschlossenes tatsächliches Training nach geschlossenem MATCH38-Versuch: vier Technikspiele, 80 Vorlauf- und 800 Lernspiele, 120.000 Updates. Alle Endartefakte unabhängig und durch Root angenommen; noch kein Leistungsergebnis. [Trainingsbericht](TRAININGSERGEBNIS.md). Zwei ON-Arme mit fester Kontrollrewardformel und gemeinsamer manueller Vorlaufbarriere; die 35 eingefrorenen Netze wirken ausschließlich bei der Trainingshandlung, der eigene DDQN bleibt unverändert.
 
 Adapter und getrennte Laufwerkzeuge sind implementiert. Die gezielte synthetische Prüfung besteht mit 72 Tests (28 neue und 44 bestehende Fälle); echte Spiele sind damit noch nicht abgenommen. Belege und Aufnahmevertrag liegen unter `operations/`. Alte Kontrollen werden nur nach tatsächlicher OFF-Reproduktion und Quellenbindung verwendet. Ihre fehlenden vollständigen historischen Bibliotheks-/RNG-Snapshots bleiben eine Beweisgrenze. Keine automatische Ersatzvariante. Der ursprüngliche externe Bauvertrag unter `operations/` ist historisch; seine sequentiellen Starts und sein Fallback sind durch die bindende Spec ausdrücklich verworfen.
 

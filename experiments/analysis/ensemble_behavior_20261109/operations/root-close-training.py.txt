@@ -1,0 +1,32 @@
+from pathlib import Path
+import json,datetime,subprocess,shutil
+from scripts import ensemble_behavior_study as s
+b=Path('experiments/analysis/ensemble_behavior_20261109').resolve();ap=b/'training-v1-admission.json';ah=s.digest(ap)
+assert ah=='be82efd30f0b7eb7beab40ac47a98dbba6c25f7ddf9f0cbfe376e3d773c2f24d'
+a=s.admission(ap,ah,'training');out=Path(a['out']);sp=out/'state.json';state=json.loads(sp.read_text())
+assert state['status']=='complete' and not state['active'] and state['awaiting_root_release'] is False
+assert set(state['jobs'])==set(s.ROLES) and all(j['returncode']==0 for j in state['jobs'].values())
+pids=[state['owner_pid'],*[j['pid'] for j in state['jobs'].values()]]
+assert all(subprocess.run(['ps','-p',str(pid)],stdout=subprocess.DEVNULL).returncode!=0 for pid in pids)
+models={};files={};checks={}
+for role in s.ROLES:
+ rp=out/role/'receipt.json';checks[role]=s.validate_final_receipt(rp,a,ah,role);r=json.loads(rp.read_text())
+ assert state['receipts'][role]==dict(path=str(rp),sha256=s.digest(rp)) and state['final_checks'][role]==checks[role]
+ cp=out/role/'final.pth';models[role]=dict(path=str(cp),sha256=s.digest(cp),receipt=str(rp),receipt_sha256=s.digest(rp))
+ files.update(r['files']);files[str(rp)]=s.digest(rp)
+audit=Path('/private/tmp/ensemble-behavior-final-audit');result=json.loads((audit/'results.json').read_text())
+assert result['status']=='PASS' and result['source']==a['source'] and result['admission_sha256']==ah and result['games']==880 and result['gradient_updates']==120000
+assert result['owner_state_sha256']==s.digest(sp) and result['receipt_sha256']=={r:models[r]['receipt_sha256'] for r in s.ROLES}
+assert result['release_sha256']==s.digest(out/'release.json')
+saved={}
+for src in sorted(audit.iterdir()):
+ if not src.is_file():continue
+ dest=b/'operations'/('final-audit-'+(src.name+'.txt' if src.suffix=='.py' else src.name))
+ assert not dest.exists();shutil.copyfile(src,dest);assert s.digest(src)==s.digest(dest);saved[str(dest)]=s.digest(dest)
+files.update(saved)
+for p in [ap,sp,Path(a['technical_acceptance']),out/'release.json',b/'operations/prefill-root-review.json',b/'technical-v1-admission.json',b/'technical_v1/state.json',b/'technical_v1/technical/receipt.json']:
+ files[str(p)]=s.digest(p)
+assert s.hashes(a['inputs'])==a['inputs'] and s.hashes(a['protected'])==a['protected'] and s.source_identity(s.ROOT,a['python'],a['plans'])==a['source']
+closure=dict(profile=s.PROFILE,status='COMPLETE_TRAINING_NO_STRENGTH_CLAIM',source=a['source'],admission=str(ap),admission_sha256=ah,state=str(sp),state_sha256=s.digest(sp),technical_acceptance=a['technical_acceptance'],models=models,files=files,protected=a['protected'],actual=dict(technical_games=4,prefill_games=80,learning_games=800,optimizer_updates=120000),original_processes_ended=True,own_process_pids_ended=pids,source_and_input_bindings_valid=True,original_final_checks=checks,independent_final_audit=saved,closed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),historical_runtime_gap_acknowledged=True,no_strength_claim=True)
+cp=b/'operations/training-completion.json';s.write(cp,closure)
+print(json.dumps(dict(status=closure['status'],closure_sha256=s.digest(cp),models=models,actual=closure['actual']),indent=2))

@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Ensemble-Verhalten vollständig trainiert
+
+- Zwei feste Endnetze abgeschlossen, je 40 Vorlauf- und 400 Lernspiele mit 60.000 Updates; zusätzlich vier bekannte Technikspiele, insgesamt 884 Ausführungen/120.000 Updates. Keine Unterbrechung, Wiederholung oder Zwischenwahl. [Bericht](../experiments/analysis/ensemble_behavior_20261109/TRAININGSERGEBNIS.md).
+- Tatsächliche eigene q/Target/Adam-/Replayarchive, Chronologie, unveränderte Vorläufe/Rootrelease und 35 eingefrorene Livebelege unabhängig (11.298 Checks) sowie durch originale Root-Validatoren geprüft. Alle eigenen Prozesse/Wachhalter beendet. Rootclosure `fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce` erst unter unveränderter Quelle `71090f7` versiegelt; Freeze danach geschlossen.
+- V14/ZIP unverändert, noch kein Stärkegewinn. Nächste getrennte Arbeit: bereits vorab feste 200er-Auswahl gegen V14/CONTROL38/Solution. Ausschließlich externe ungetestete Entwürfe wurden während des Lernens vorbereitet; Integration, echte Tests, Review, Quellencommit und tatsächliche Montageannahme stehen noch aus. Akku/Restkontingent erlaubt; keine Resets durch Codex.
+
+## 09.11.2026 – Zwei Ensemble-Verhaltensläufe gestartet
+
+- Quelle `71090f7` veröffentlicht und Hauptkopie aktualisiert. Vier tatsächliche Technikspiele durch Root und unabhängig angenommen (1.046 Checks); OFF reproduziert ursprüngliche Kontrollfälle exakt, ON zeigt geänderte legale Präferenzen und Aktionsfolgen. Null Lernupdates, kein Stärkenachweis. Root-Abnahme `291272e01e2bcab7430a7009d7a8bb9028525608651de7213d30182672031c41`.
+- Gemeinsame Trainingaufnahme `be82efd30f0b7eb7beab40ac47a98dbba6c25f7ddf9f0cbfe376e3d773c2f24d` gestartet; maßgeblich `experiments/analysis/ensemble_behavior_20261109/training_v1/state.json`. Genau zwei Originalworker on48/on49, je 40 Vorläufe abgeschlossen und unabhängig sowie durch Root tatsächlich angenommen (141.704/141.514 Replayzeilen, 0 Updates, gespeicherte q/Target/Adam unverändert). Originalworker manuell freigegeben, Release `eefa11400c04fce531e6c569f04fb6f408010bcafc6ba36229e10ab7fcab1689`; jetzt je 400 Lernspiele. Keine automatische Wiederholung oder nächste Phase.
+- Quelle/HEAD und Inputs bleiben bis vollständiger Endartefaktabnahme fest. Keine parallelen Tests. Akku/Restkontingent erlaubt, tatsächliche Quota frisch (43 Prozent verbraucht), keine Resets. V14/ZIP unverändert. Dieser reine Laufvermerk wird erst nach dem Freeze committet.
+
 ## 09.11.2026 – Ensemble-Verhalten technisch vorbereitet
 
 - Drei getrennte Versuchswerkzeuge umgesetzt, ursprünglicher Agent und alte Studienquellen unverändert. 72 gezielte synthetische Tests bestanden; unabhängiger finaler Code-/Methodenreview und Root-Abgleich der tatsächlichen Dateien ohne offene Blocker. [Belege](../experiments/analysis/ensemble_behavior_20261109/README.md).

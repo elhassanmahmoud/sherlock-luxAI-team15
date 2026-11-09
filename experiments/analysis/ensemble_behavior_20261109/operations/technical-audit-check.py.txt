@@ -1,0 +1,140 @@
+"""Independent data-only audit of exactly four completed behavior technical games."""
+from pathlib import Path
+import hashlib,json,math,random,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE=ROOT/'experiments/analysis/ensemble_behavior_20261109'
+OUT=Path('/private/tmp/ensemble-behavior-technical-audit')
+HEAD='71090f760788bdcec8d7158bc5aab4fd47d406cc'
+ADMISSION_SHA='61c9a89f09509525a1ed9a8a024ec6ac4711e26459f7ce6ced39db7622b31922'
+RECEIPT_SHA='61cb389468f835184e824f5838369e54442b6be7dcadd1a27ff1a8afa306ede3'
+GOLDEN_SHA='6a9629d4997865b91e817f3044f1a8aade80d04895c5cd296219eb390a991239'
+checks=0;bindings=[];cache={}
+def check(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if str(p) not in cache:cache[str(p)]=hashlib.sha256(p.read_bytes()).hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):
+ check(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,label=label))
+def tree_hash(value):
+ # Reimplementation of the persisted typed NumPy/primitive wire format; no project or Torch import.
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda k:(type(k).__name__,repr(k))):visit(k);visit(x[k])
+  elif isinstance(x,(list,tuple)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for v in x:visit(v)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+def processes(state,tag):
+ check(state['status']=='complete' and state['active']==[] and set(state['jobs'])=={'technical'},'complete original technical owner')
+ j=state['jobs']['technical']
+ check(state['owner_pid']==54667 and j['pid']==j['pgid']==54679 and j['owner_pid']==54667 and j['returncode']==0,'original successful owned worker')
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ check(not any(int(line.split()[0]) in (54667,54679) or int(line.split()[1])==54679 for line in snapshot.splitlines() if line.strip()),'original PIDs/PGID absent')
+ (OUT/(tag+'-process-snapshot.txt')).write_text(snapshot)
+ return dict(owner_pid=54667,worker_pid=54679,worker_pgid=54679,snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def main():
+ apath=BASE/'technical-v1-admission.json';spath=BASE/'technical_v1/state.json';rpath=BASE/'technical_v1/technical/receipt.json'
+ a=read(apath);state=read(spath);before=processes(state,'before');state_hash=sha(spath)
+ pin(apath,ADMISSION_SHA,'actual admission');pin(rpath,RECEIPT_SHA,'actual receipt')
+ check(a['source']['head']==HEAD and subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==HEAD,'actual frozen HEAD')
+ check(a['profile']==state['profile']=='ensemble_behavior_20261109' and a['stage']==state['stage']=='technical' and a['starts']==[48,49] and a['start_authorized'] is True,'exact admitted phase')
+ for k in ('root','out','python','plans','source','protected','allow_battery','starts','stop_file'):check(a[k]==state[k],'owner/admission '+k)
+ check(state['inputs']==dict(a['inputs'],**{str(apath):ADMISSION_SHA}) and state['admission_sha256']==ADMISSION_SHA,'exact owner inputs and admission')
+ for label,values in [('inputs',a['inputs']),('source',a['source']['files']),('protected',a['protected'])]:
+  for p,h in values.items():pin(p,h,label)
+ pin(a['source']['executable'],a['source']['executable_sha256'],'interpreter binary')
+ protected={str(ROOT/f'agents/sherlock/weights/agent_p{i}.pth'):'98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8' for i in (0,1)}
+ protected[str(ROOT/'Gruppe15.zip')]='88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6'
+ check(a['protected']==protected and sha(a['v14_source'])==protected[str(ROOT/'agents/sherlock/weights/agent_p0.pth')],'unchanged original V14 and ZIP')
+ gpath=BASE/'preparation/golden-reference.json';pin(gpath,GOLDEN_SHA,'accepted independent golden reference');g=read(gpath)
+ closure=read(g['training_completion']);pin(g['training_completion'],g['training_completion_sha256'],'sealed historical training closure')
+ for p,h in closure['source']['files'].items():check(a['source']['files'].get(p)==h,'complete legacy runtime subset')
+ for k in ('python','executable','executable_sha256'):check(a['source'][k]==closure['source'][k],'historical interpreter '+k)
+ check(len(closure['source']['files'])==406 and a['historical_runtime_gap_acknowledged'] is True,'full old source and explicit binary/RNG gap')
+ for p,h in g['json_bindings_verified'].items():pin(p,h,'golden JSON binding')
+ initial=g['initial_controls']['48']['initial']
+ check(a['initial']=={s:g['initial_controls'][s]['initial'] for s in ('48','49')},'both fixed initial identities')
+ check(a['config']==read(g['initial_controls']['48']['initial_file'])['config']==read(g['initial_controls']['49']['initial_file'])['config'],'full original control config')
+ r=read(rpath);rows=r['games'];rawrows=[json.loads(l) for l in (rpath.parent/'games.jsonl').read_text().splitlines()]
+ check(rows==rawrows and len(rows)==4,'exact four original JSONL/receipt rows')
+ check(r['source']==a['source'] and r['admission_sha256']==ADMISSION_SHA and r['profile']==a['profile'] and r['stage']=='technical' and r['status']=='complete' and r['role']=='technical' and r['starts']==[48,49] and r['start']==48 and r['config']==a['config'] and r['no_strength_claim'] is True and r['release_sha256'] is None,'receipt binding and zero release')
+ command=[a['python'],'-B','-m','scripts.ensemble_behavior_study','worker','--admission',str(apath),'--admission-sha',ADMISSION_SHA,'--owner-state',str(spath),'--role','technical']
+ check(r['command']==state['jobs']['technical']['argv']==command and state['receipts']=={'technical':{'path':str(rpath),'sha256':RECEIPT_SHA}},'actual original command and owner receipt')
+ check(len(r['files'])==7 and {p.name for p in rpath.parent.iterdir() if p.is_file()}=={Path(p).name for p in r['files']}|{'receipt.json'},'exact complete technical artifact set')
+ for p,h in r['files'].items():pin(p,h,'new technical artifact')
+ for mode in ('off','ensemble'):check(read(rpath.parent/(mode+'-initial.json'))==read(g['initial_controls']['48']['initial_file']),'initial file equality '+mode)
+ members=rows[0]['mechanism']['source_members'];check(len(members)==36 and members[18]==initial['q'] and all(len(h)==64 and set(h)<=set('0123456789abcdef') for h in members),'36 ordered source-member identities including member18')
+ examples={};outcomes=[];array_details=[]
+ # A priori rounding bound: <=35 float32 sum roundings plus division rounding.
+ u=2.**-24;gamma35=35*u/(1-35*u)
+ def mechanism(p,enabled,start):
+  check(p['enabled'] is enabled and p['source_members']==members and p['initial']==g['initial_controls'][str(start)]['initial'],'mechanism source/initial')
+  check(p['frozen']==({str(i):h for i,h in enumerate(members) if i!=18} if enabled else {}),'exact frozen35 identities/order')
+  check(set(p['rng_before'])=={'python','numpy','torch','agent'} and p['rng_before']==p['rng_after'],'setup preserves all four RNG identities')
+  expected={'python':tree_hash(random.Random(start).getstate()),'numpy':tree_hash(np.random.RandomState(start).get_state()),'agent':tree_hash(np.random.default_rng(start).bit_generator.state)}
+  for k,h in expected.items():check(p['rng_before'][k]==h,'independently reconstructed fresh RNG '+k)
+  stats=p['stats'];check(all(type(v) is int and v>=0 for v in stats.values()) and stats['member_forwards']==36*stats['network_calls'] and stats['network_calls']<=stats['act_calls'] and stats['proposal_changed_units']<=stats['unit_steps'],'actual mechanism counter arithmetic')
+  if not enabled:check(stats['network_calls']==stats['member_forwards']==stats['unit_steps']==stats['proposal_changed_units']==0 and not p['examples'],'OFF adapter bypass')
+  for ex in p['examples']:
+   key=json.dumps(ex,sort_keys=True)
+   if key in examples:continue
+   parts=np.asarray(ex['member_q'],dtype=np.float64);raw=np.asarray(ex['raw_q'],dtype=np.float64);mean=np.asarray(ex['mean_q'],dtype=np.float64);mask=np.asarray(ex['mask'])
+   check(parts.shape==(36,6) and raw.shape==mean.shape==mask.shape==(6,) and mask.dtype==bool and mask.any() and all(np.isfinite(x).all() for x in (parts,raw,mean)),'real example shape/masks/finite values')
+   check(all(np.array_equal(x,x.astype(np.float32).astype(np.float64)) for x in (parts,raw,mean)),'actual unmasked float32-representable copies')
+   check(np.array_equal(parts[18],raw),'example current learner exactly at index18')
+   exact=parts.mean(0);bound=(gamma35+u+gamma35*u)*np.abs(parts).mean(0)+1e-12;error=np.abs(mean-exact)
+   check(np.all(error<=bound),'36-member mean within prior float32 summation/division bound')
+   old_action=int(np.where(mask,raw,-np.inf).argmax());new_action=int(np.where(mask,mean,-np.inf).argmax());independent_action=int(np.where(mask,exact,-np.inf).argmax())
+   check(old_action!=new_action==independent_action and mask[old_action] and mask[new_action],'actual changed legal preference from independent mean')
+   examples[key]=dict(step=ex['step'],uid=ex['uid'],old_legal_action=old_action,new_legal_action=new_action,max_mean_abs_error=float(error.max()),max_allowed_rounding_bound=float(bound.max()))
+ for index,row in enumerate(rows):
+  i=index%2;enabled=index>=2;gold=g['control_technical_cases'][i];before_steps=60000+303*i
+  check(row['key']==gold['paired_exact']['key'] and row['behavior']==('ensemble' if enabled else 'off') and row['role']=='control' and row['start']==48,'four fixed ordered keys/modes')
+  check(row['before']==dict(env_steps=before_steps,learn_steps=0) and row['env_steps']==before_steps+303 and row['learn_steps']==0 and row['initial']==row['current']==initial and row['loss'] is None and row['epsilon']==gold['additional_exact']['epsilon'] and row['steps']==303 and row['point_counting_version']==2,'unchanged init/end and null gradients/counters')
+  check(row['result']==(1. if row['our_wins']>row['opp_wins'] else .5 if row['our_wins']==row['opp_wins'] else 0.) and row['game_win']==int(row['result']==1) and row['point_win']==(1. if row['our_points']>row['opp_points'] else .5 if row['our_points']==row['opp_points'] else 0.),'actual game/point arithmetic')
+  audit=row['reward_audit'];labels=row['final_action_audit']
+  check(audit['updates']==labels['act_calls']==labels['update_calls']==303 and audit['transitions']==labels['checked_replay_transitions']>0,'actual recorded replay/final action counts')
+  evidence=row['reward_evidence'];check(r['files'][evidence['path']]==evidence['sha256'],'bound per-game reward evidence')
+  with np.load(evidence['path'],allow_pickle=False) as f:data={k:f[k] for k in f.files}
+  n=audit['transitions'];check(set(data)=={'uid','outcome','control','match'} and all(v.shape==(n,) and np.isfinite(v).all() for v in data.values()),'actual compact reward arrays')
+  check(tree_hash(data)==evidence['arrays_sha256'] and np.isin(data['uid'],np.arange(16)).all() and np.isin(data['outcome'],[-1.,0.,1.]).all() and np.count_nonzero(data['outcome'])==audit['nonzero_outcome_rows'],'independent array hash/UID/outcome')
+  difference=data['match']-data['control'];check(np.allclose(difference,18*data['outcome'],atol=1e-10,rtol=1e-12) and np.isfinite(data['control'].astype(np.float32)).all(),'original reward contrast and finite control float32')
+  counter=hashlib.sha256()
+  for uid,outcome,control,match in zip(data['uid'],data['outcome'],data['control'],data['match']):counter.update(tree_hash(dict(uid=int(uid),outcome=float(outcome),control=float(control),match=float(match))).encode())
+  check(counter.hexdigest()==audit['counterfactual_sha256'],'independent original counterfactual digest')
+  mechanism(row['mechanism'],enabled,48);check(row['mechanism']['stats']['act_calls']==303*(i+1),'cumulative actual act calls')
+  if not enabled:
+   check({k:row[k] for k in g['paired_exact_fields']}==gold['paired_exact'],'exact historical OFF paired fields')
+   olde=gold['reward_evidence_recorded_only'];pin(olde['path'],olde['sha256'],'bound golden reward archive')
+   with np.load(olde['path'],allow_pickle=False) as f:olddata={k:f[k] for k in f.files}
+   check(set(data)==set(olddata) and all(data[k].dtype==olddata[k].dtype and np.array_equal(data[k],olddata[k]) for k in data) and evidence['arrays_sha256']==olde['arrays_sha256'],'actual OFF reward semantic equality')
+  else:
+   check(row['native_sha256']!=gold['paired_exact']['native_sha256'] and row['trajectory_sha256']!=gold['paired_exact']['trajectory_sha256'],'ON native/public trajectory divergence')
+   check(row['mechanism']['stats']['unit_steps']==sum(x['reward_audit']['transitions'] for x in rows[2:index+1]),'cumulative ON hook/replay unit count')
+  array_details.append(dict(mode=row['behavior'],game=i,rows=n,array_sha256=evidence['arrays_sha256'],nonzero_outcome_rows=audit['nonzero_outcome_rows'],max_original_contrast_residual=float(np.max(np.abs(difference-18*data['outcome'])))))
+  outcomes.append({k:row[k] for k in ('behavior','key','our_wins','opp_wins','our_points','opp_points','result','native_sha256','trajectory_sha256')})
+ check(rows[0]['mechanism']['rng_before']==rows[2]['mechanism']['rng_before'],'same reconstructed Start48 OFF/ON setup RNG')
+ check(r['mechanism']==rows[-1]['mechanism'] and r['final_identity']==initial and r['mechanism']['stats']['proposal_changed_units']>0 and len(examples)==3,'final actual ON proof and changed preferences')
+ mechanism(r['start49_setup'],True,49);check(all(v==0 for v in r['start49_setup']['stats'].values()) and not r['start49_setup']['examples'],'Start49 setup zero actions/forwards/games')
+ after=processes(read(spath),'after');check(hashlib.sha256(spath.read_bytes()).hexdigest()==state_hash,'completed owner state unchanged')
+ pin(rpath,RECEIPT_SHA,'receipt stable binding');check(subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==HEAD,'source still frozen after audit')
+ result=dict(status='PASS',profile='ensemble_behavior_20261109',stage='technical',games=4,gradient_updates=0,source=a['source'],admission_sha256=ADMISSION_SHA,receipt_sha256=RECEIPT_SHA,owner_state_sha256=state_hash,counts=outcomes,reward_arrays=array_details,mechanism=r['mechanism']['stats'],examples=list(examples.values()),mean_check=dict(method='float64 exact-input mean; gamma35 float32 summation plus division bound',u=u,gamma35=gamma35),off_paired_exact=True,off_actual_reward_arrays_equal=True,start49_setup_zero=True,recorded_frozen35_source_members_match=True,process_before=before,process_after=after,checks=checks,hash_bindings=len(bindings),unique_files_hashed=len(cache),script_sha256=sha(Path(__file__).resolve()),limits=['No tensor archive, Agent or original validator loaded; frozen35/q/target/Adam identities are bound live-recorded hashes, not an independent recovery of all raw tensors.','Three unique saved mechanism examples independently reconstruct the 36-member mean and legal preference change; not every live forward or rule provenance is archived.','Native hashes cover both sides. Divergence proves changed submitted action sequences on these fixed runs, not an isolated per-rule cause or a strength gain.','Actual compact reward NPZ arrays are checked. Full technical replay/observations were not saved, so source-enforced actual replay labeling and original unit reward formula are not independently regenerated from raw contexts.','Python/NumPy/private initial RNG reconstructed independently; Torch identity equality is recorded, with no archived raw Torch or historical full binary/RNG snapshots.','No training release, extra games, promotion or historical broad re-audit.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n')
+ print(json.dumps({k:result[k] for k in ('status','games','gradient_updates','checks','hash_bindings','unique_files_hashed','mechanism','examples','reward_arrays','receipt_sha256','script_sha256')},indent=2))
+if __name__=='__main__':
+ try:main()
+ except Exception as e:
+  (OUT/'failure.json').write_text(json.dumps(dict(status='FAIL',checks_completed=checks,error=f'{type(e).__name__}: {e}'),indent=2)+'\n');raise

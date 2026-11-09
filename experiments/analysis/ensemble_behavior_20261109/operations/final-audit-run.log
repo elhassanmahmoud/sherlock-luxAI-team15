@@ -1,0 +1,89 @@
+{
+  "checks": 11298,
+  "games": 880,
+  "gradient_updates": 120000,
+  "hash_bindings_checked": 521,
+  "receipt_sha256": {
+    "on48": "ab3429c4af89cc43a09470ef19f58aec0e142344c4a61db9c14dc6d0e87eb17e",
+    "on49": "6e2e3a8c3a02690b997691376685d36c790a254a6e4636c065a7e73305ca78cc"
+  },
+  "roles": {
+    "on48": {
+      "actual_final_identity": {
+        "optimizer": "30e82c9ab047827b575e458eb9bfde52b01a714bb0685c79f364b6239395ad38",
+        "q": "a324a4070d50e92154931c849dfd767c65662643e9abb0c29b2dd8e8e4d6fd49",
+        "target": "a324a4070d50e92154931c849dfd767c65662643e9abb0c29b2dd8e8e4d6fd49"
+      },
+      "actual_final_replay_sha256": "1a512033c06b7a45772f413e41c580fdc1ed074cd09cfaa464628792df872279",
+      "env_steps": 193320,
+      "final_checkpoint_sha256": "486b9b44e12be251213b00fd84b82964c7aa5a781bdf086da866da42eb95a3fd",
+      "final_replay_rows": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "mean_reported_game_loss": 0.7038508248324196,
+      "mechanism": {
+        "act_calls": 133320,
+        "member_forwards": 4752000,
+        "network_calls": 132000,
+        "proposal_changed_units": 357444,
+        "unit_steps": 1570353
+      },
+      "prefill": 40,
+      "receipt_sha256": "ab3429c4af89cc43a09470ef19f58aec0e142344c4a61db9c14dc6d0e87eb17e",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_action_counts": [
+        128212,
+        11804,
+        70701,
+        70533,
+        11232,
+        7518
+      ],
+      "retained_terminal_rows": 6053,
+      "start": 48,
+      "total_inserted_replay_rows": 1570353,
+      "total_live_outcome_rows": 19567,
+      "train": 400
+    },
+    "on49": {
+      "actual_final_identity": {
+        "optimizer": "51720345b19d9ba70459dc1f780f4166ffd88bdd51541a96c340bbb232a6a683",
+        "q": "cef238c5429a2cb254fd19fb4ef3b5a030c1285ccb1fe8204aa5f527b9110b2d",
+        "target": "cef238c5429a2cb254fd19fb4ef3b5a030c1285ccb1fe8204aa5f527b9110b2d"
+      },
+      "actual_final_replay_sha256": "2bde4d67a73fa5589313215662597578075e0671867bf13c1884ed5d84503de8",
+      "env_steps": 193320,
+      "final_checkpoint_sha256": "e0668fdcfbf70b9c85180e81af9d3bfd684b65d8aba048addee36bb58bdf27d3",
+      "final_replay_rows": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "mean_reported_game_loss": 0.7034712736715875,
+      "mechanism": {
+        "act_calls": 133320,
+        "member_forwards": 4752000,
+        "network_calls": 132000,
+        "proposal_changed_units": 345080,
+        "unit_steps": 1571694
+      },
+      "prefill": 40,
+      "receipt_sha256": "6e2e3a8c3a02690b997691376685d36c790a254a6e4636c065a7e73305ca78cc",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_action_counts": [
+        133523,
+        11528,
+        70841,
+        65681,
+        11035,
+        7392
+      ],
+      "retained_terminal_rows": 5960,
+      "start": 49,
+      "total_inserted_replay_rows": 1571694,
+      "total_live_outcome_rows": 19575,
+      "train": 400
+    }
+  },
+  "script_sha256": "1fa844d713e1a00098d0e1d364f4ebd119dd9b018d0bf52e3e75c993833ca4d1",
+  "status": "PASS",
+  "unique_files_hashed": 501
+}

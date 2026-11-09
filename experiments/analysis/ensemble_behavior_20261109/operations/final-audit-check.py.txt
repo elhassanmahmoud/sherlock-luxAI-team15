@@ -1,0 +1,167 @@
+"""Independent final data audit. Execute once only after actual owner/worker exit.
+No project imports, agents, forwards, games, tests or repository writes.
+Torch and final archives are inaccessible until actual completion/process gate.
+"""
+from pathlib import Path
+import argparse,hashlib,json,math,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+B=ROOT/'experiments/analysis/ensemble_behavior_20261109';PHASE=B/'training_v1'
+OUT=Path('/private/tmp/ensemble-behavior-final-audit')
+ADMISSION_SHA='be82efd30f0b7eb7beab40ac47a98dbba6c25f7ddf9f0cbfe376e3d773c2f24d'
+HEAD='71090f760788bdcec8d7158bc5aab4fd47d406cc';ROLES=('on48','on49')
+RELEASE_SHA='eefa11400c04fce531e6c569f04fb6f408010bcafc6ba36229e10ab7fcab1689'
+PREFILL_PINS={'on48':'ee8fce7f3215e048e780dbca71e510774ae197eb2f2f8d846cfedf436d15bc6a','on49':'bd3bee8a1ea8f13e47ccd91acae8a58ceaea0cde16c72caa962c84dbfad17720'}
+PRIOR=Path('/private/tmp/ensemble-behavior-prefill-audit')
+PRIOR_PINS={'results.json':'f5ceea097f18cd4abff7464d092ecc9ee90c21b1a55c1c8f2800f47828215b1e','check.py':'6406efc4d39e331d824c8dc8c956dcb9e1acfbfa1047daa4d654c04f4730ae3e','report.md':'4a820e995a1432e40869620d61acf3086d03477629e9c1d01161fa66841aac45'}
+checks=0;cache={};bindings=[];torch=None
+def ck(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):ck(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def typed(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if torch is not None and isinstance(x,torch.Tensor):
+   t=x.detach().cpu().contiguous();emit(b'tensor');emit(str(t.dtype).encode());visit(list(t.shape));emit(t.reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for y in x:visit(y)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+def gate(s,tag):
+ ck(s['status']=='complete' and s['stage']=='training' and s['starts']==[48,49] and s['profile']=='ensemble_behavior_20261109' and s['active']==[],'actual complete joint owner')
+ ck(s['owner_pid']==54950 and set(s['jobs'])==set(s['receipts'])==set(s['final_checks'])==set(ROLES),'original owner and exact two completed ON roles')
+ for role,pid in zip(ROLES,(54962,54967)):
+  j=s['jobs'][role];ck(j['pid']==j['pgid']==pid and j['owner_pid']==54950 and j['returncode']==0 and j.get('finished_at') is not None,'successful original worker '+role)
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ ck(not any(int(p) in (54950,54962,54967) or int(g) in (54962,54967) for p,g in (line.split() for line in snapshot.splitlines() if line.strip())),'actual original owner/workers/groups absent')
+ ck(s['awaiting_root_release'] is False and s['promotion'] is False and s['release_sha256']==RELEASE_SHA and s['prefill_ready']==PREFILL_PINS,'original manual barrier closed, no promotion')
+ (OUT/(tag+'-process-snapshot.txt')).write_text(snapshot)
+ return dict(owner_pid=54950,worker_pids={r:s['jobs'][r]['pid'] for r in ROLES},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+
+def mechanism(p,a,initial,prior_rng):
+ stats=p['stats'];members=a['source_members']
+ ck(p['enabled'] is True and len(members)==36 and p['source_members']==members and members[18]==initial['q'] and p['initial']==initial,'same ordered36 with current member18')
+ ck(p['frozen']=={str(i):v for i,v in enumerate(members) if i!=18},'exact unchanged recorded frozen35')
+ ck(p['rng_before']==p['rng_after']==prior_rng and set(prior_rng)=={'python','numpy','torch','agent'},'preserved accepted setup RNG identities')
+ ck(all(type(v) is int and v>=0 for v in stats.values()) and stats['member_forwards']==36*stats['network_calls'] and stats['network_calls']<=stats['act_calls'] and stats['proposal_changed_units']<=stats['unit_steps'],'actual mechanism counter arithmetic')
+ # The first three examples persist from the accepted prefill; later live outputs are not archived.
+ return stats
+
+def main():
+ global torch
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--run-after-owner-exit',action='store_true',required=True);args=parser.parse_args();ck(args.run_after_owner_exit,'authorized final-only execution')
+ # No Torch, final checkpoint or final NPZ before this real completion and PID/PGID gate.
+ state=read(PHASE/'state.json');before=gate(state,'before');state_pin=sha(PHASE/'state.json')
+ apath=B/'training-v1-admission.json';a=read(apath);pin(apath,ADMISSION_SHA,'actual original joint admission')
+ ck(a['profile']=='ensemble_behavior_20261109' and a['stage']=='training' and a['starts']==[48,49] and a['source']==state['source'] and a['source']['head']==HEAD and state['admission_sha256']==ADMISSION_SHA,'same frozen original admission')
+ ck(subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==HEAD,'current HEAD frozen')
+ ck(state['inputs']==dict(a['inputs'],**{str(apath):ADMISSION_SHA}) and state['protected']==a['protected'],'exact owner bindings')
+ for group in ('inputs','protected'):
+  for p,h in a[group].items():pin(p,h,group)
+ for p,h in a['source']['files'].items():pin(p,h,'source file')
+ pin(a['source']['executable'],a['source']['executable_sha256'],'source executable')
+ protected={str(ROOT/f'agents/sherlock/weights/agent_p{i}.pth'):'98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8' for i in (0,1)}
+ protected[str(ROOT/'Gruppe15.zip')]='88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6'
+ ck(a['protected']==protected,'exact unchanged original V14 and ZIP')
+ for name,h in PRIOR_PINS.items():pin(PRIOR/name,h,'accepted independent prefill '+name)
+ prior=read(PRIOR/'results.json');ck(prior['status']=='PASS' and prior['profile']==a['profile'] and prior['admission_sha256']==ADMISSION_SHA and prior['prefill_sha256']==PREFILL_PINS,'accepted independent actual prefill evidence')
+ release_path=PHASE/'release.json';pin(release_path,RELEASE_SHA,'actual manual joint Root release');release=read(release_path)
+ ck(release['profile']==a['profile'] and release['status']=='approved' and release['starts']==[48,49] and release['roles']==list(ROLES) and release['source']==a['source'] and release['admission_sha256']==ADMISSION_SHA and release['prefill_sha256']==PREFILL_PINS,'release binds both original prefills and starts')
+ pin(release['root_review'],release['root_review_sha256'],'manual Root review');review=read(release['root_review'])
+ ck(review['status']=='PASS' and review['profile']==a['profile'] and review['source']==a['source'] and review['admission_sha256']==ADMISSION_SHA and review['prefill_sha256']==PREFILL_PINS,'actual joint Root review identity')
+ import torch as torch_module
+ torch=torch_module;torch.set_num_threads(1)
+ shapes={'body.0.weight':(256,79),'body.0.bias':(256,),'body.2.weight':(256,256),'body.2.bias':(256,),'value.0.weight':(128,256),'value.0.bias':(128,),'value.2.weight':(1,128),'value.2.bias':(1,),'adv.0.weight':(128,256),'adv.0.bias':(128,),'adv.2.weight':(6,128),'adv.2.bias':(6,)}
+ summaries={};receipt_pins={};final_files={}
+ cfg=a['config'];ck(cfg['w_match']==2 and cfg['train_every']==2 and cfg['target_update_every']==500 and cfg['lr']==5e-5,'unchanged fixed control learning recipe')
+ for role,start in zip(ROLES,(48,49)):
+  directory=PHASE/role;rp=directory/'receipt.json';r=read(rp);prefill=read(directory/'prefill.json')
+  pin(rp,state['receipts'][role]['sha256'],'actual final receipt');receipt_pins[role]=sha(rp);final_files[role]=r['files']
+  ck(state['receipts'][role]['path']==str(rp) and state['final_checks'][role]==dict(status='PASS',role=role,start=start,games=440,learn_steps=60000,receipt_sha256=sha(rp)),'same original successful final validator receipt')
+  command=[a['python'],'-B','-m','scripts.ensemble_behavior_study','worker','--admission',str(apath),'--admission-sha',ADMISSION_SHA,'--owner-state',str(PHASE/'state.json'),'--role',role]
+  ck(r['status']=='complete' and r['profile']==a['profile'] and r['stage']=='training' and r['start']==start and r['starts']==[48,49] and r['role']==role and r['behavior']=='ensemble' and r['source']==a['source'] and r['config']==cfg and r['admission_sha256']==ADMISSION_SHA and r['command']==state['jobs'][role]['argv']==command and r['release_sha256']==RELEASE_SHA and r['no_strength_claim'] is True,'complete fixed final receipt/command')
+  for p,h in r['files'].items():pin(p,h,'actual receipt artifact')
+  ck({str(f) for f in directory.iterdir() if f.is_file()}==set(r['files'])|{str(rp)} and not any(f.name.startswith('incomplete') for f in directory.iterdir()),'all final artifacts bound and no incomplete candidate')
+  pin(directory/'prefill.json',PREFILL_PINS[role],'unchanged accepted prefill proof')
+  for p,h in prior['files'][role].items():
+   if Path(p).name!='games.jsonl':pin(p,h,'unchanged accepted prefill artifact, bytehash only')
+  ck(prefill['initial']==prefill['current']==a['initial'][str(start)] and prefill['replay_size']==prior['roles'][role]['replay_rows'] and prefill['learn_steps']==0,'preserved accepted prefill metadata')
+  ck(read(directory/'waiting.json')==dict(profile=a['profile'],role=role,admission_sha256=ADMISSION_SHA,prefill_sha256=PREFILL_PINS[role]),'original waiting marker retained')
+  opponent=np.random.default_rng(start).choice(['solution92','sol92_sq','default','rush'],440,p=[.6,.2,.1,.1]);plan=[];base=9960000+(start-48)*1000
+  for phase,count,offset in [('prefill',40,300),('train',400,0)]:
+   for i in range(count):plan.append(dict(phase=phase,game=i,seed=base+offset+i//2,side=('player_0','player_1')[i%2],opponent=str(opponent[len(plan)])))
+  ck(plan==a['rollout_plans'][str(start)],'independently regenerated exact complete start schedule')
+  rows=[json.loads(l) for l in (directory/'games.jsonl').read_text().splitlines()]
+  ck(len(rows)==440 and rows==r['games'] and [x['key'] for x in rows]==plan and rows[:40]==prefill['rows'],'actual440 raw chronological rows and accepted prefill prefix')
+  total=0;learn=0;losses=[];nonzero=0;previous_stats=None
+  for i,x in enumerate(rows):
+   env=60000+303*i;updates=0 if i<40 else sum((env+j+1)%cfg['train_every']==0 for j in range(303) if j%101!=0)
+   ck(x['role']=='control' and x['behavior']=='ensemble' and x['start']==start and x['before']==dict(env_steps=env,learn_steps=learn),'actual before counters/rewardrole')
+   learn+=updates;ck(x['env_steps']==env+303 and x['learn_steps']==learn and x['steps']==303 and x['point_counting_version']==2,'actual complete v2/update counters')
+   ck(x['seed']==x['key']['seed'] and x['side']==x['key']['side'] and math.isclose(x['epsilon'],.05,abs_tol=1e-12,rel_tol=0),'exact actual game key and exploration')
+   ck(x['loss'] is None if i<40 else type(x['loss']) in (int,float) and math.isfinite(x['loss']) and x['loss']>=0,'all reported training game mean losses finite')
+   if i>=40:losses.append(x['loss'])
+   audit=x['reward_audit'];labels=x['final_action_audit'];n=audit['transitions'];total+=n;nonzero+=audit['nonzero_outcome_rows']
+   ck(audit['updates']==labels['act_calls']==labels['update_calls']==303 and n==labels['checked_replay_transitions']>0 and 0<=audit['nonzero_outcome_rows']<=n and 0<=audit['masked_final_actions']<=n,'actual live reward/UID/final-label count coverage')
+   for h in (audit['nonreward_sha256'],audit['counterfactual_sha256'],labels['transcript_sha256'],x['native_sha256'],x['trajectory_sha256']):ck(len(h)==64 and set(h)<=set('0123456789abcdef'),'actual live digest schema')
+   ck(x['result']==(1. if x['our_wins']>x['opp_wins'] else .5 if x['our_wins']==x['opp_wins'] else 0.) and x['game_win']==int(x['result']==1) and x['point_win']==(1. if x['our_points']>x['opp_points'] else .5 if x['our_points']==x['opp_points'] else 0.),'actual outcome arithmetic')
+   stats=x['behavior_stats'];ck(all(type(v) is int and v>=0 for v in stats.values()) and stats['act_calls']==303*(i+1) and stats['member_forwards']==36*stats['network_calls'] and stats['network_calls']<=300*(i+1) and stats['unit_steps']==total and stats['proposal_changed_units']<=total and (previous_stats is None or all(stats[k]>=previous_stats[k] for k in stats)),'actual cumulative behavior/replay mechanism')
+   previous_stats=stats
+  ck(learn==60000 and rows[-1]['env_steps']==193320 and len(losses)==400,'exact400learn games60000updates193320env')
+  stats=mechanism(r['mechanism'],a,prefill['initial'],prefill['mechanism']['rng_before'])
+  ck(stats==rows[-1]['behavior_stats'] and stats['act_calls']==133320 and stats['unit_steps']==total and r['mechanism']['examples']==prefill['mechanism']['examples'],'final mechanism/cumulative frozen proof and preserved examples')
+  cp=torch.load(directory/'final.pth',map_location='cpu',weights_only=True)
+  ck(cp['cfg']==cfg and cp['feature_dim']==79 and cp['n_actions']==6 and cp['ensemble']==cp['ensemble_dims']==[] and cp['env_steps']==193320 and cp['learn_steps']==60000 and cp['behavior']==dict(profile=a['profile'],status='complete',role=role,start=start,source=a['source'],completed_games=440,component_index=18),'actual final own checkpoint identity and counters')
+  for name in ('q','target_q'):
+   net=cp[name];ck(set(net)==set(shapes),'actual exact Dueling parameter keys')
+   for key,shape in shapes.items():ck(isinstance(net[key],torch.Tensor) and tuple(net[key].shape)==shape and net[key].dtype==torch.float32 and bool(torch.isfinite(net[key]).all()),'actual finite parameter '+name+'.'+key)
+  actual=dict(q=typed(cp['q']),target=typed(cp['target_q']),optimizer=typed(cp['opt']))
+  ck(actual==r['final_identity'] and actual['q']!=prefill['initial']['q'],'actual changed q/Target/Adam identities match live final')
+  ck(all(torch.equal(cp['q'][k],cp['target_q'][k]) for k in shapes),'actual target copied at final update60000')
+  opt=cp['opt'];ck(len(opt['param_groups'])==1,'actual single Adam group');group=opt['param_groups'][0];ids=group['params']
+  ck(list(cp['q'])==list(shapes) and len(ids)==len(shapes) and len(set(ids))==len(ids) and set(opt['state'])==set(ids),'actual Adam state for all12 parameter tensors')
+  ck(group['lr']==cfg['lr'] and group['betas']==(0.9,0.999) and group['eps']==1e-8 and group['weight_decay']==0,'actual unchanged Adam settings')
+  for pid,key in zip(ids,shapes):
+   slot=opt['state'][pid];step=slot['step'];ck(isinstance(step,torch.Tensor) and step.numel()==1 and bool(torch.isfinite(step).all()) and float(step)==60000,'every actual Adam step60000')
+   for field in ('exp_avg','exp_avg_sq'):
+    t=slot[field];ck(isinstance(t,torch.Tensor) and tuple(t.shape)==shapes[key] and t.dtype==torch.float32 and bool(torch.isfinite(t).all()),'actual finite Adam moment')
+    if field=='exp_avg_sq':ck(bool((t>=0).all()),'actual nonnegative Adam second moment')
+  # Only final replay is deserialized; already accepted prefill arrays remain unopened.
+  with np.load(directory/'final-replay.npz',allow_pickle=False) as f:d={k:f[k] for k in f.files}
+  n=min(total,cfg['buffer_capacity'])
+  ck(set(d)=={'s','a','r','ns','done','mask'} and d['s'].shape==d['ns'].shape==(n,79) and d['mask'].shape==(n,6) and all(d[k].shape==(n,) for k in ('a','r','done')),'actual final replay ring shape/size')
+  ck({k:v.dtype.str for k,v in d.items()}==dict(s='<f4',a='<i8',r='<f4',ns='<f4',done='<f4',mask='|b1') and all(np.isfinite(v).all() for v in d.values()),'actual finite final replay dtypes')
+  ck(np.isin(d['a'],range(6)).all() and np.isin(d['done'],[0.,1.]).all() and d['mask'].any(1).all(),'actual final action/terminal/mask validity')
+  ck(typed(d)==r['final_replay_sha256'],'independently regenerated actual final replay identity')
+  summaries[role]=dict(start=start,games=440,prefill=40,train=400,env_steps=193320,learn_steps=60000,reported_finite_training_game_mean_losses=400,mean_reported_game_loss=float(np.mean(losses)),total_inserted_replay_rows=total,total_live_outcome_rows=nonzero,final_replay_rows=n,retained_terminal_rows=int(d['done'].sum()),retained_action_counts=np.bincount(d['a'],minlength=6).tolist(),actual_final_identity=actual,actual_final_replay_sha256=r['final_replay_sha256'],receipt_sha256=sha(rp),final_checkpoint_sha256=sha(directory/'final.pth'),mechanism=stats)
+  del cp,d,opt,net,slot,t,group,ids
+ after=gate(read(PHASE/'state.json'),'after')
+ ck(hashlib.sha256((PHASE/'state.json').read_bytes()).hexdigest()==state_pin,'completed final owner unchanged')
+ ck(hashlib.sha256(apath.read_bytes()).hexdigest()==ADMISSION_SHA and hashlib.sha256(release_path.read_bytes()).hexdigest()==RELEASE_SHA and subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==HEAD,'admission/release/source still frozen')
+ result=dict(status='PASS',profile=a['profile'],stage='training_final',checks=checks,games=880,gradient_updates=120000,source=a['source'],source_head=HEAD,admission_sha256=ADMISSION_SHA,release_sha256=RELEASE_SHA,prefill_sha256=PREFILL_PINS,receipt_sha256=receipt_pins,files=final_files,roles=summaries,process_before=before,process_after=after,owner_state_sha256=state_pin,hash_bindings_checked=len(bindings),unique_files_hashed=len(cache),script_sha256=sha(Path(__file__).resolve()),no_release_or_next_phase_written=True,limits=['Own actual final Q/Target/Adam tensors and all12 Adam step counters recovered independently; no Agent/model construction, forward, games, tests or source mutation.','Accepted prefill proofs/files/result/script/report reused by unchanged hashes; no second full prefill array audit.','400 recorded game mean losses per arm are finite; individual60000batch losses are not archived separately. Successful bound play_one refuses caught errors on both players; raw rows have no separate per-player error counter.','Actual final ring arrays recovered and hashed. All training UID/outcome/formula streams and full raw observations/actions were not archived; original unit reward provenance and per-game full replay digests cannot be regenerated from final ring alone.','Frozen35/source order/setup RNG identities are bound live records, not independently recovered unsaved frozen tensors. Three retained examples per role already independently checked in accepted prefill audit.','Distinct ON trajectories and both fixed starts are retained without selection. No strength, performance or promotion conclusion.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n')
+ print(json.dumps({k:result[k] for k in ('status','checks','games','gradient_updates','receipt_sha256','roles','hash_bindings_checked','unique_files_hashed','script_sha256')},indent=2,sort_keys=True))
+if __name__=='__main__':
+ try:main()
+ except Exception as exc:
+  (OUT/'failure.json').write_text(json.dumps(dict(status='FAIL',checks_completed=checks,error=f'{type(exc).__name__}: {exc}'),indent=2)+'\n');raise

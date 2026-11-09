@@ -32,6 +32,9 @@
 **Frische MATCH38-Bestätigung am 09.11. abgeschlossen, negativ:** 440 feste Spiele, Solution beide 38/40, Panel 155/160 statt 152/160 (Δ +1,875 pp [−1,25; +5,625]), direkt 58/120 [35; 61,67 %]. Beide Direktgates verfehlt; V14/ZIP bleiben, kein Nachschlag oder Schwellenwechsel. Originalanalyse und unabhängiger Audit unter 98f2b02 bestanden, alle Prozesse beendet. [Vollständiger Bericht](experiments/analysis/match_weight_confirmation_20261109/ERGEBNIS.md). Nächste getrennte Arbeit ausschließlich nach aktuellem Arbeitsstand; keine alten Studien wiederholen.
 
 
+**Ensemble-Verhalten am 09.11. vollständig trainiert:** Zwei neue Einzelnetze, je 40 Vorlauf- und 400 Lernspiele und 60.000 Updates; einschließlich vier Technikspielen insgesamt 884 Ausführungen und 120.000 Updates. Gemeinsame Aktionsauswahl mit 35 eingefrorenen ursprünglichen Netzen, eigenes DDQN/Reward unverändert. Tatsächliche Endarchive/Adam/Replays unabhängig und durch Root unter 71090f7 abgenommen; alle Jobs beendet. Noch kein Leistungsergebnis oder stärkerer Nachfolger, V14/ZIP unverändert. [Trainingsbericht](experiments/analysis/ensemble_behavior_20261109/TRAININGSERGEBNIS.md); feste 200er-Auswahl separat, aktuellen Arbeitsstand beachten.
+
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "games": 4,
+  "gradient_updates": 0,
+  "checks": 1046,
+  "hash_bindings": 503,
+  "unique_files_hashed": 477,
+  "mechanism": {
+    "act_calls": 606,
+    "member_forwards": 21600,
+    "network_calls": 600,
+    "proposal_changed_units": 1119,
+    "unit_steps": 6490
+  },
+  "examples": [
+    {
+      "step": 2,
+      "uid": 0,
+      "old_legal_action": 3,
+      "new_legal_action": 2,
+      "max_mean_abs_error": 5.678998098446186e-07,
+      "max_allowed_rounding_bound": 1.0509483930825988e-05
+    },
+    {
+      "step": 3,
+      "uid": 0,
+      "old_legal_action": 3,
+      "new_legal_action": 2,
+      "max_mean_abs_error": 3.6756197641096833e-07,
+      "max_allowed_rounding_bound": 1.0675572583089163e-05
+    },
+    {
+      "step": 5,
+      "uid": 1,
+      "old_legal_action": 3,
+      "new_legal_action": 2,
+      "max_mean_abs_error": 6.523397235724815e-07,
+      "max_allowed_rounding_bound": 1.0665987497907115e-05
+    }
+  ],
+  "reward_arrays": [
+    {
+      "mode": "off",
+      "game": 0,
+      "rows": 3489,
+      "array_sha256": "bb807fe9c9e52b60144da93d4b6757d18c767719b20aa31efe5ae2dac8dd6a2b",
+      "nonzero_outcome_rows": 45,
+      "max_original_contrast_residual": 3.552713678800501e-15
+    },
+    {
+      "mode": "off",
+      "game": 1,
+      "rows": 3421,
+      "array_sha256": "473d77d8fe4bf8717173d6477a1aff6b0064082bd54159c455332bbb1e9fcc3e",
+      "nonzero_outcome_rows": 38,
+      "max_original_contrast_residual": 3.552713678800501e-15
+    },
+    {
+      "mode": "ensemble",
+      "game": 0,
+      "rows": 3323,
+      "array_sha256": "522457b5c91099d5fc941c2c0414b1a7818380df350db16e0dc5b8f6af0aabde",
+      "nonzero_outcome_rows": 46,
+      "max_original_contrast_residual": 3.552713678800501e-15
+    },
+    {
+      "mode": "ensemble",
+      "game": 1,
+      "rows": 3167,
+      "array_sha256": "5129760cd456fdefed9b2c31f3af5f68ebde54614498e888c2d46755bdf004f2",
+      "nonzero_outcome_rows": 30,
+      "max_original_contrast_residual": 3.552713678800501e-15
+    }
+  ],
+  "receipt_sha256": "61cb389468f835184e824f5838369e54442b6be7dcadd1a27ff1a8afa306ede3",
+  "script_sha256": "04e981030a7764ed2e7eb175406e71a45167dab62a96db35f74c5f1cac9e5614"
+}
