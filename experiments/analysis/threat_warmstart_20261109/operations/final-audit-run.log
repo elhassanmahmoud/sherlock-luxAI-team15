@@ -1,0 +1,104 @@
+{
+  "arms": {
+    "control": {
+      "env_steps": 193320,
+      "final_identity": {
+        "optimizer": "2e0a83edafaa9ef50be79522d97ea99c16330541b7d47785fb396ad759f1a000",
+        "q": "dbe1ab7bd6fdbaa6d5c68c76258007af31a36849b5703233c3422f881ad2f9d7",
+        "target": "dbe1ab7bd6fdbaa6d5c68c76258007af31a36849b5703233c3422f881ad2f9d7"
+      },
+      "final_replay": {
+        "full": "c5d58ad103f7f1b26d9a671b54586f6da9203f738657fc585ea1300a65310583",
+        "prefix": "9e0b61e4f3a15ffdb533d30253de700d1d0d20c1837738ac1aa43623797abad7",
+        "size": 300000
+      },
+      "final_replay_size": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "learning_audit": {
+        "sampled_batches": 60000,
+        "sampled_exposed_next_rows": 0,
+        "sampled_exposed_rows": 0,
+        "tail_gradient_steps": 0
+      },
+      "nonzero_tail_rows": {
+        "ns": 0,
+        "s": 0
+      },
+      "prefill": 40,
+      "receipt_sha256": "9df5970859d768d984dc74fd8e630d6ac4f2a13a82c5917f8b65cfd6201cf93b",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_samples_matched": 332,
+      "retained_whole_games_rehashed": 83,
+      "total_replay_insertions": 1586176,
+      "train": 400
+    },
+    "threat": {
+      "env_steps": 193320,
+      "final_identity": {
+        "optimizer": "105f4948bf0c4e94d7342a78cd26b0c6b3bad171d4da0361bf44539e0f73c0d2",
+        "q": "d23f8b84372ac2f792480f587c4d6d66cca7a8abcaa72189028acc4399b75bae",
+        "target": "d23f8b84372ac2f792480f587c4d6d66cca7a8abcaa72189028acc4399b75bae"
+      },
+      "final_replay": {
+        "full": "67cb9e85ed02a788839cf819d5aba1c4892fbc6ac977ba22985297720574caee",
+        "prefix": "d572797c59e35037c5a937297818fb4c5d4b06368e9ea6446c10cb1ccc461648",
+        "size": 300000
+      },
+      "final_replay_size": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "learning_audit": {
+        "sampled_batches": 60000,
+        "sampled_exposed_next_rows": 5976672,
+        "sampled_exposed_rows": 5935791,
+        "tail_gradient_steps": 60000
+      },
+      "nonzero_tail_rows": {
+        "ns": 130096,
+        "s": 129339
+      },
+      "prefill": 40,
+      "receipt_sha256": "fee774761e9091b80cfcc993784ee43f916cd8efa035006473dcabc48e38946f",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_samples_matched": 332,
+      "retained_whole_games_rehashed": 83,
+      "total_replay_insertions": 1588556,
+      "train": 400
+    }
+  },
+  "checks": 32333,
+  "hash_bindings_checked": 481,
+  "limitations": [
+    "All400 reported per-game mean losses are independently checked finite; individual60000 batch losses were not archived and cannot all be reconstructed.",
+    "Actual final Q/Target/Adam tensors and counts are recovered; initial tensor identities and gradient/batch exposure counts remain live recorded assertions, linked to actual final suffix/replay contrast.",
+    "No full observations/native actions were archived: trajectory hashes, UID mapping and public feature provenance cannot independently be regenerated.",
+    "Only final retained ring-buffer whole-game suffixes are rehashed; displaced training transitions are unavailable. Prefill NPZ arrays were not reloaded; prior4555-check audit is pinned and reused.",
+    "Post-learning arm trajectories may differ; final replay original79/action/reward equality is not expected or required.",
+    "No evaluation or strength conclusion."
+  ],
+  "no_strength_claim": true,
+  "process_proof": {
+    "owner_pid": 92788,
+    "snapshot_sha256": "b1b77ff3830ebfa37212aad07ac989079ee37a668a50127db0c465338faf6f16",
+    "worker_pids": {
+      "control": 92800,
+      "threat": 92805
+    }
+  },
+  "process_proof_after": {
+    "owner_pid": 92788,
+    "snapshot_sha256": "582dde8b060401da1969f0ca11d6328028a007ec370d380263ccdbac810643a4",
+    "worker_pids": {
+      "control": 92800,
+      "threat": 92805
+    }
+  },
+  "retained_samples_matched": 664,
+  "retained_whole_game_digests_checked": 166,
+  "reused_prefill_result_sha256": "b18903ed1b713518821122eb71a9ca4bd5e1b8d852edbed78dcc776b3b3d303e",
+  "script_sha256": "b3a8875de3a8ae2c23e2bf6ae987bcd78841f7c94080d68c457f6587b7df967b",
+  "source_head_asserted": "af8b2711d37a9fd4509415972345c5849c21db62",
+  "status": "PASS",
+  "unique_input_files_hashed": 448
+}

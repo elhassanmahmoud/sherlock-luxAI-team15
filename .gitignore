@@ -28,3 +28,6 @@ experiments/ppo/**/*.pth
 # Fernspiel-Server (Zugangsschluessel und Zip mit Schluessel nie committen)
 /.fernspiel_token
 /Sherlock_Fernspiel.zip
+
+# Large raw replay arrays: lossless verified gzip copies are versioned alongside the study.
+experiments/analysis/threat_warmstart_20261109/**/*.npz

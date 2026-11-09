@@ -1,5 +1,8 @@
 # Experiment-Protokoll
 
+- 09.11.2026: Kontrollierter V14-Warmstart mit 22 öffentlichen Gefahrmerkmalen technisch vollständig: zwei identisch initialisierte 101er-Netze aus Mitglied 18, je 40 Vorlauf- und 400 Lernspiele, insgesamt 120.000 Updates, zuvor vier Technikspiele. Kontrolle nullt nur Zusatzmerkmale. Unabhängiger Daten-/Tensoraudit und Root-Abschluss bestanden; Quelle af8b271. Endmodelle und verlustfreie Replayarchive verfügbar. Keine Leistungsbehauptung, V14/ZIP unverändert; Vergleich folgt separat. [Bericht](../experiments/analysis/threat_warmstart_20261109/TRAININGSERGEBNIS.md).
+
+
 - 09.11.2026: Rangmittel derselben 36 V14-Netze geschlossen, vier Technik- und 120 Leistungsspiele. Solution beide 39/40, direkt 19/40 (47,5 % [25; 70]); feste Hürde verfehlt. Viele geänderte legale Präferenzen, kein belegter stärkerer Agent. Keine Lernupdates, V14/ZIP gleich. Originalanalyse und unabhängige Datenprüfung bestanden. [Bericht](../experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md).
 
 - 09.11.2026: Separates SAP-Bewegungsmodell abgeschlossen, vier Technik- und 120 Leistungsspiele. ON/OFF gegen Solution jeweils 38/40, direkt 21/40 (52,5 % [50; 57,5]); Direktgate verfehlt, keine Übernahme. Öffentliche Bewegungshäufigkeiten, gleiche 36 Netze, keine Lernupdates. Originalanalyse und unabhängiger Datencheck bestanden. [Bericht](../experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md).

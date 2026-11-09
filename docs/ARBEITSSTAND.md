@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Gefahrmerkmals-Nachtraining vollständig abgeschlossen
+
+- Tatsächlich vier Technikspiele, 80 Vorlauf- und 800 Lernspiele; zusammen 120.000 Adam-Updates. Beide 101er-Endmodelle und die Replaykontraste unabhängig geprüft. Originale Abschlussvalidatoren und Root-Abschluss unter Quelle af8b271 bestanden, alle eigenen Modellprozesse beendet. [Trainingsbericht](../experiments/analysis/threat_warmstart_20261109/TRAININGSERGEBNIS.md).
+- Keine höhere Spielstärke behauptet und V14/ZIP unverändert. Die Kontrollspalten blieben null, der Merkmalsarm lernte die neuen öffentlichen Gefahrinformationen tatsächlich. Beide finalen Einzelnetze sowie verlustfreie komprimierte Replays werden für Mahmoud mit diesem Ergebnisstand bereitgestellt.
+- Quellenfreeze erst nach tatsächlicher Abnahme gelöst. Nächster Schritt: separater kleiner 200-Spiel-Vergleich der finalen 36er-Kandidaten; noch nicht gestartet. Ein nicht ausführbarer Textentwurf wurde während des Trainings extern vorbereitet, noch nicht getestet oder übernommen. Vergangene Studien und dieses abgeschlossene Training nicht wiederholen.
+- Beim letzten Abgleich keine Mahmoud-Commits. Frischer Kontingentstand wieder verfügbar (zuletzt 1 % verbraucht), kein Reset durch Codex. Akkubetrieb bleibt ausdrücklich erlaubt.
+
 ## 09.11.2026 – Gefahrmerkmals-Warmstart technisch aufgenommen
 
 - Eigener 101er-Agentadapter und kompakter Zweiertrainer unabhängig geprüft;31 synthetische Tests tatsächlich PASS. Originale Regeln, Reward und Lerntarget bleiben erhalten. Root hat vollständige Implementierung, die drei konkreten Korrekturen und Nachweise geprüft. [Belege](../experiments/analysis/threat_warmstart_20261109/README.md).

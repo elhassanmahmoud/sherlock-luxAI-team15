@@ -1,0 +1,163 @@
+"""One-pass read-only audit. No project imports, torch, tests, games or mutations."""
+from pathlib import Path
+import hashlib, json, math, itertools
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+B=ROOT/'experiments/analysis/threat_warmstart_20261109'
+OUT=Path('/tmp/threat-prefill-audit')
+PROFILE='threat_warmstart_20261109'
+HEAD='af8b2711d37a9fd4509415972345c5849c21db62'
+checks=0; file_cache={}; bindings=[]
+def check(value,label):
+ global checks
+ checks+=1
+ if not value: raise AssertionError(label)
+def digest(p):
+ p=Path(p)
+ if not p.is_absolute(): p=ROOT/p
+ if str(p) not in file_cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for part in iter(lambda:f.read(1024*1024),b''): h.update(part)
+  file_cache[str(p)]=h.hexdigest()
+ return file_cache[str(p)]
+def pin(p,h,label):
+ check(digest(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def read(p): return json.loads(Path(p).read_text())
+def typed(value):
+ # Independently implemented serialization of the documented typed state hash.
+ h=hashlib.sha256()
+ def emit(b): h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if isinstance(x,np.ndarray):
+   emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))): visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for z in x:visit(z)
+  elif isinstance(x,(str,int,float,bool,type(None))): emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+def pair(r):return {k:r[k] for k in ['key','native_sha256','trajectory_sha256','replay_prefix_sha256']}
+def first_rows(p,n):
+ with Path(p).open() as f: rows=[json.loads(line) for line in itertools.islice(f,n)]
+ check(len(rows)==n,'completed prefix row count');return rows
+rng=np.random.default_rng(47)
+opponents=rng.choice(['solution92','sol92_sq','default','rush'],size=440,p=[.6,.2,.1,.1])
+plan=[]
+for phase,count,start in [('prefill',40,9950300),('train',400,9950000)]:
+ for g in range(count):plan.append(dict(phase=phase,game=g,seed=start+g//2,side=['player_0','player_1'][g%2],opponent=str(opponents[len(plan)])))
+tech=read(B/'technical_v1/technical/receipt.json')
+admissions={s:read(B/(s+'-admission.json')) for s in ['technical','training']}
+for stage,a in admissions.items():
+ check(a['profile']==PROFILE and a['stage']==stage and a['start_authorized'] is True,'phase scope')
+ check(a['source']['head']==HEAD and a['rollout_plan']==plan,'frozen source and independent rollout plan')
+ for group in ['protected','inputs']:
+  for p,h in a[group].items():pin(p,h,stage+'.'+group)
+ for p,h in a['source']['files'].items():pin(p,h,stage+'.source.files')
+ pin(a['source']['executable'],a['source']['executable_sha256'],stage+'.executable')
+ check(a['allow_battery'] is True,'explicit battery authorization')
+ manifest=read(a['config_manifest']); expected=dict(manifest['source_config'])
+ expected.update(threat_feats=True,frozen=False,lr=.00005,rules_in_training=True,rules_in_training_all=True,rescue_in_training=True,fog_unknown_reward_neutral=False,art_splash_in_training=False)
+ check(expected==a['config'],'config differs only by intended fixed overrides')
+ pin(manifest['metadata_source'],manifest['metadata_sha256'],'source-config metadata')
+ seeds=read(a['seed_acceptance'])
+ check(seeds['status']=='PASS' and seeds['no_observed_conflicts'] and bool(seeds['limitations']),'seed evidence with limits')
+ check(seeds['cohorts']==dict(train=list(range(9950000,9950200)),prefill=list(range(9950300,9950320))),'seed cohorts')
+ for p,h in seeds['files'].items():pin(p,h,'seed file');check(a['inputs'][p]==h,'seed admission binding')
+check(admissions['technical']['source']==admissions['training']['source'],'paired admissions source')
+for p,h in tech['files'].items():pin(p,h,'technical receipt file');check(admissions['training']['inputs'][p]==h,'training accepts actual technical files')
+pin(B/'technical-admission.json',tech['admission_sha256'],'technical admission')
+check(tech['status']=='complete' and tech['role']=='technical' and tech['stage']=='technical','technical receipt status')
+check(tech['source']==admissions['technical']['source'] and tech['config']==admissions['technical']['config'],'technical source config')
+check(not tech['learning_audit'] and tech['release_sha256'] is None and tech['no_strength_claim'],'technical no learning')
+trows=first_rows(B/'technical_v1/technical/games.jsonl',4)
+check(trows==tech['games'],'technical receipt contains exact recorded rows')
+initials=[]
+for directory,role in [('technical_v1/technical','control'),('technical_v1/technical','threat'),('training_v1/control','control'),('training_v1/threat','threat')]:
+ d=read(B/directory/(role+'_initial.json'));initials.append(d['initial'])
+ check(d['env_steps']==60000 and d['learn_steps']==0 and d['replay_size']==0,'empty pre-gradient initial state')
+ check(d['config']==admissions['technical']['config'],'initial config')
+ check(d['initial']['q']==d['initial']['target'],'Q target initial assertion')
+check(all(d==initials[0] for d in initials),'all recorded initial model optimizer identities equal')
+tech_keys=[dict(phase='technical',game=i,seed=seed,side=side,opponent='solution92') for i,(seed,side) in enumerate([(831006,'player_1'),(831000,'player_0')])]
+for role,rows in [('control',trows[:2]),('threat',trows[2:])]:
+ check([r['key'] for r in rows]==tech_keys,'fixed technical chronology')
+ for i,r in enumerate(rows):
+  check(r['role']==role and r['initial']==r['current']==initials[0],'technical no-update identity')
+  check(r['before']==dict(env_steps=60000+303*i,learn_steps=0) and r['env_steps']==60000+303*(i+1) and r['learn_steps']==0,'technical counters')
+check(tech['final_identity']==initials[0],'technical final no-update identity')
+proofs={role:read(B/'training_v1'/role/'prefill.json') for role in ['control','threat']}
+rows={role:first_rows(B/'training_v1'/role/'games.jsonl',40) for role in ['control','threat']}
+for role,p in proofs.items():
+ pin(B/'training-admission.json',p['admission_sha256'],'prefill admission')
+ check(p['status']=='prefill_ready' and p['profile']==PROFILE and p['role']==role and p['games']==40,'prefill scope')
+ check(p['source']==admissions['training']['source'] and p['config']==admissions['training']['config'],'prefill source config')
+ check(p['initial']==p['current']==initials[0] and p['learn_steps']==0 and p['env_steps']==72120,'prefill no-update counters identities')
+ check([r['key'] for r in rows[role]]==plan[:40] and p['paired_rows']==[pair(r) for r in rows[role]],'exact completed prefill chronology')
+ for i,r in enumerate(rows[role]):
+  check(r['role']==role and r['before']==dict(env_steps=60000+303*i,learn_steps=0) and r['env_steps']==60000+303*(i+1) and r['learn_steps']==0,'prefill row counters')
+ check(p['public_nonzero_rows']==sum(r['public_nonzero_rows'] for r in rows[role]) and p['actual_nonzero_rows']==sum(r['actual_nonzero_rows'] for r in rows[role]),'prefill exposure counts')
+for c,t in [(trows[i],trows[i+2]) for i in range(2)]+list(zip(rows['control'],rows['threat'])):
+ check(pair(c)==pair(t),'exact paired native trajectory replay prefix digests')
+ for k in ['seed','side','steps','our_wins','opp_wins','our_points','opp_points','result','game_win','point_win','point_counting_version','replay_rows','public_nonzero_rows','public_next_nonzero_rows','masked_final_rule_actions']:
+  check(c[k]==t[k],'paired outcome/count '+k)
+ check(c['actual_nonzero_rows']==0 and t['actual_nonzero_rows']==t['public_nonzero_rows']>0,'zero real contrast')
+ for r in [c,t]:
+  check(r['steps']==303 and r['point_counting_version']==2 and r['replay_rows']>0 and r['loss'] is None and math.isclose(r['epsilon'],.05,rel_tol=0,abs_tol=1e-12),'complete no-learning row')
+  check(r['result']==(1. if r['our_wins']>r['opp_wins'] else 0. if r['our_wins']<r['opp_wins'] else .5),'result from match wins')
+  check(r['point_win']==(1. if r['our_points']>r['opp_points'] else 0. if r['our_points']<r['opp_points'] else .5),'point result')
+  check(1<=len(r['examples'])<=4,'bounded public feature samples')
+arrays={}; summary={}; sample_matches=0
+for role,p in proofs.items():
+ pin(p['replay_file'],p['replay_sha256'],role+' actual replay file')
+ with np.load(p['replay_file'],allow_pickle=False) as z: d={k:z[k] for k in z.files}
+ arrays[role]=d;n=p['replay_size']
+ check(set(d)=={'s','ns','a','r','done','mask'} and d['s'].shape==d['ns'].shape==(n,101) and d['mask'].shape==(n,6),'full replay shapes and fields')
+ check(all(d[k].shape==(n,) for k in ['a','r','done']),'scalar replay shapes')
+ check({k:v.dtype.str for k,v in d.items()}==dict(s='<f4',ns='<f4',a='<i8',r='<f4',done='<f4',mask='|b1'),'replay dtypes')
+ check(all(np.isfinite(x).all() for x in d.values()) and ((d['a']>=0)&(d['a']<6)).all() and np.isin(d['done'],[0,1]).all() and d['mask'].any(1).all(),'finite legal labels done next masks')
+ check(typed(d)==p['replay_full_sha256'],'independent full array identity')
+ check(typed(dict(d,s=d['s'][:,:79],ns=d['ns'][:,:79]))==p['replay_prefix_sha256'],'independent original79 array identity')
+ counts={k:int(np.any(d[k][:,79:],axis=1).sum()) for k in ['s','ns']}
+ if role=='control':check(counts==dict(s=0,ns=0),'all control tails zero')
+ else:check(counts['s']>0 and counts['ns']>0,'actual saved threat current next exposure')
+ check(counts['s']==p['actual_nonzero_rows'],'saved current exposure agrees live counters')
+ offset=0
+ for r in rows[role]:
+  stop=offset+r['replay_rows'];full=hashlib.sha256();prefix=hashlib.sha256()
+  for j in range(offset,stop):
+   transition=(d['s'][j],int(d['a'][j]),d['r'][j],d['ns'][j],d['done'][j],d['mask'][j])
+   full.update(typed(transition).encode());prefix.update(typed((transition[0][:79],*transition[1:3],transition[3][:79],*transition[4:])).encode())
+  check(full.hexdigest()==r['replay_full_sha256'] and prefix.hexdigest()==r['replay_prefix_sha256'],'actual persisted per-game full/prefix digests')
+  for e in r['examples']:
+   valid=np.all(d['s'][offset:stop]==np.asarray(e['s'],np.float32),axis=1)&np.all(d['ns'][offset:stop]==np.asarray(e['ns'],np.float32),axis=1)&(d['a'][offset:stop]==e['action'])&(d['r'][offset:stop]==np.float32(e['reward']))&(d['done'][offset:stop]==float(e['done']))&np.all(d['mask'][offset:stop]==e['next_mask'],axis=1)
+   check(valid.any(),'compact sample in actual same-game archive');sample_matches+=1
+  offset=stop
+ check(offset==n and n<admissions['training']['config']['buffer_capacity'],'complete unwrapped persisted prefill')
+ check(counts['ns']==sum(r['public_next_nonzero_rows'] for r in rows[role]) if role=='threat' else counts['ns']==0,'saved next exposure agrees live counters')
+ summary[role]=dict(replay_rows=n,nonzero_current_tail_rows=counts['s'],nonzero_next_tail_rows=counts['ns'],action_counts=np.bincount(d['a'],minlength=6).tolist(),done_rows=int(d['done'].sum()),replay_sha256=p['replay_sha256'],full_sha256=p['replay_full_sha256'],prefix_sha256=p['replay_prefix_sha256'])
+c,t=arrays['control'],arrays['threat']
+for k in ['s','ns','a','r','done','mask']:
+ check(np.array_equal(c[k][:,:79],t[k][:,:79]) if k in ['s','ns'] else np.array_equal(c[k],t[k]),'actual exact paired field '+k)
+check(not np.array_equal(c['s'],t['s']) and not np.array_equal(c['ns'],t['ns']),'actual full states exhibit intended contrast')
+for groupc,groupt in [(trows[:2],trows[2:]),(rows['control'],rows['threat'])]:
+ for cr,tr in zip(groupc,groupt):
+  check(len(cr['examples'])==len(tr['examples']),'paired sample count')
+  for ce,te in zip(cr['examples'],tr['examples']):
+   for k in ['uid','action','reward','done','current_mask','next_mask','public_tail','public_next_tail']:check(ce[k]==te[k],'paired compact sample '+k)
+   for k,pub in [('s','public_tail'),('ns','public_next_tail')]:
+    cv=np.asarray(ce[k]);tv=np.asarray(te[k]);check(cv.shape==tv.shape==(101,) and np.isfinite(cv).all() and np.isfinite(tv).all(),'sample shape finite')
+    check(np.array_equal(cv[:79],tv[:79]) and not cv[79:].any() and np.array_equal(tv[79:],te[pub]),'sample public contrast (not independent feature recovery)')
+release=read(B/'training_v1/release.json');review=read(release['root_review'])
+pins={role:digest(B/'training_v1'/role/'prefill.json') for role in proofs}
+check(release['status']=='approved' and release['profile']==PROFILE and release['admission_sha256']==digest(B/'training-admission.json') and release['prefill_sha256']==pins,'released actual prefill bindings')
+pin(release['root_review'],release['root_review_sha256'],'actual root review file')
+check(review['status']=='PASS' and review['source']==admissions['training']['source'] and review['prefill_sha256']==pins and review['admission_sha256']==digest(B/'training-admission.json'),'actual root acceptance bindings')
+result=dict(status='PASS',scope='Completed technical4 and paired prefill40 only; training tail not inspected',checks=checks,source_head_asserted=HEAD,technical_games=4,prefill_games_per_arm=40,total_completed_no_gradient_game_executions=84,technical_outcomes=[{k:r[k] for k in ['role','key','our_wins','opp_wins','our_points','opp_points','result','replay_rows']} for r in trows],prefill_outcomes={role:dict(wins=sum(r['result']==1 for r in rr),draws=sum(r['result']==.5 for r in rr),losses=sum(r['result']==0 for r in rr),opponents={o:sum(r['key']['opponent']==o for r in rr) for o in ['solution92','sol92_sq','default','rush']}) for role,rr in rows.items()},saved_replays=summary,compact_samples_matched_to_actual_replays=sample_matches,technical_compact_samples=sum(len(r['examples']) for r in trows),unique_files_hashed=len(file_cache),hash_bindings_checked=len(bindings),script_sha256=digest(OUT/'audit.py'),limitations=['No archived full observations: native/trajectory digests can be paired and file-bound, not independently regenerated.','No saved initial tensors: initial/current Q target optimizer equality and zero-update counters are archived live assertions, not independent tensor recovery.','Public feature formula and current-mask/uid mapping cannot be independently reconstructed from compact samples; persisted sample/tail consistency and full replay contrast are independently checked.','No moving training tail, model load, games, tests, stops, releases, source or Git mutations. Hashing model files reads bytes only.','Seed freshness is accepted only within recorded bounded local-audit limits; no expanded discovery was performed.'])
+(OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n')
+print(json.dumps(result,indent=2))

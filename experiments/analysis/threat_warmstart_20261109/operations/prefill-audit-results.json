@@ -1,0 +1,147 @@
+{
+  "checks": 4555,
+  "compact_samples_matched_to_actual_replays": 320,
+  "hash_bindings_checked": 873,
+  "limitations": [
+    "No archived full observations: native/trajectory digests can be paired and file-bound, not independently regenerated.",
+    "No saved initial tensors: initial/current Q target optimizer equality and zero-update counters are archived live assertions, not independent tensor recovery.",
+    "Public feature formula and current-mask/uid mapping cannot be independently reconstructed from compact samples; persisted sample/tail consistency and full replay contrast are independently checked.",
+    "No moving training tail, model load, games, tests, stops, releases, source or Git mutations. Hashing model files reads bytes only.",
+    "Seed freshness is accepted only within recorded bounded local-audit limits; no expanded discovery was performed."
+  ],
+  "prefill_games_per_arm": 40,
+  "prefill_outcomes": {
+    "control": {
+      "draws": 0,
+      "losses": 7,
+      "opponents": {
+        "default": 4,
+        "rush": 6,
+        "sol92_sq": 13,
+        "solution92": 17
+      },
+      "wins": 33
+    },
+    "threat": {
+      "draws": 0,
+      "losses": 7,
+      "opponents": {
+        "default": 4,
+        "rush": 6,
+        "sol92_sq": 13,
+        "solution92": 17
+      },
+      "wins": 33
+    }
+  },
+  "saved_replays": {
+    "control": {
+      "action_counts": [
+        56764,
+        6959,
+        32721,
+        36624,
+        6867,
+        4051
+      ],
+      "done_rows": 2789,
+      "full_sha256": "e9846140b88f6054ae219c3d7f64fad8eccd38176b46111a45e36503aeef1405",
+      "nonzero_current_tail_rows": 0,
+      "nonzero_next_tail_rows": 0,
+      "prefix_sha256": "fe9297c64d466c1ee557337ae4c3adeef9696d05f692a6a1f32f9937c2cdc790",
+      "replay_rows": 143986,
+      "replay_sha256": "cb617f4d79a1dbeba2fe34648a98ae4f2bd85c82efc59d38916cb754acd27c21"
+    },
+    "threat": {
+      "action_counts": [
+        56764,
+        6959,
+        32721,
+        36624,
+        6867,
+        4051
+      ],
+      "done_rows": 2789,
+      "full_sha256": "27ca8cc05ddb74b949deb8fe6425c0b7e83461bb3e6757b9475f46042b314b04",
+      "nonzero_current_tail_rows": 60313,
+      "nonzero_next_tail_rows": 60658,
+      "prefix_sha256": "fe9297c64d466c1ee557337ae4c3adeef9696d05f692a6a1f32f9937c2cdc790",
+      "replay_rows": 143986,
+      "replay_sha256": "9c22c4b27f1d902988dff5b066d3d5613f242cb98d9c04314e98e7e6070d843d"
+    }
+  },
+  "scope": "Completed technical4 and paired prefill40 only; training tail not inspected",
+  "script_sha256": "901cc373b4eb123a200701735bd6c5f5d5cb8c55bc48920ff8bf9e2749698add",
+  "source_head_asserted": "af8b2711d37a9fd4509415972345c5849c21db62",
+  "status": "PASS",
+  "technical_compact_samples": 16,
+  "technical_games": 4,
+  "technical_outcomes": [
+    {
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "opp_points": 1322,
+      "opp_wins": 3,
+      "our_points": 948,
+      "our_wins": 0,
+      "replay_rows": 3266,
+      "result": 0.0,
+      "role": "control"
+    },
+    {
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831000,
+        "side": "player_0"
+      },
+      "opp_points": 430,
+      "opp_wins": 1,
+      "our_points": 712,
+      "our_wins": 2,
+      "replay_rows": 3489,
+      "result": 1.0,
+      "role": "control"
+    },
+    {
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "opp_points": 1322,
+      "opp_wins": 3,
+      "our_points": 948,
+      "our_wins": 0,
+      "replay_rows": 3266,
+      "result": 0.0,
+      "role": "threat"
+    },
+    {
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831000,
+        "side": "player_0"
+      },
+      "opp_points": 430,
+      "opp_wins": 1,
+      "our_points": 712,
+      "our_wins": 2,
+      "replay_rows": 3489,
+      "result": 1.0,
+      "role": "threat"
+    }
+  ],
+  "total_completed_no_gradient_game_executions": 84,
+  "unique_files_hashed": 435
+}

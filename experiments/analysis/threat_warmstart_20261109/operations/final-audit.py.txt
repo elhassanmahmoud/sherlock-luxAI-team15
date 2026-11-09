@@ -1,0 +1,217 @@
+"""Prepared independent final audit. Execute ONLY on explicit Root instruction.
+No project imports, agents, environment construction, tests or repository writes.
+Torch import/model reads occur only after local authorization and process gates.
+"""
+from pathlib import Path
+import argparse, hashlib, json, math, os, subprocess, sys
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+B=ROOT/'experiments/analysis/threat_warmstart_20261109'
+OUT=Path('/tmp/threat-final-audit')
+PROFILE='threat_warmstart_20261109'; HEAD='af8b2711d37a9fd4509415972345c5849c21db62'
+PREFILL_RESULT_SHA='b18903ed1b713518821122eb71a9ca4bd5e1b8d852edbed78dcc776b3b3d303e'
+PREFILL_SCRIPT_SHA='901cc373b4eb123a200701735bd6c5f5d5cb8c55bc48920ff8bf9e2749698add'
+PREFILL_REPORT_SHA='3d094308f12a2deff5c25e682313d9d6373117d97d2be46168ddfe87b9e0e5b0'
+checks=0; cache={}; bindings=[]; torch=None
+
+def check(ok,label):
+ global checks
+ checks+=1
+ if not ok: raise AssertionError(label)
+
+def file_sha(path):
+ p=Path(path)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+
+def pin(path,want,label):
+ check(file_sha(path)==want,label+': '+str(path))
+ bindings.append(dict(path=str(path),sha256=want,binding=label))
+
+def read(path):return json.loads(Path(path).read_text())
+
+def typed(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if torch is not None and isinstance(x,torch.Tensor):
+   t=x.detach().cpu().contiguous();emit(b'tensor');emit(str(t.dtype).encode());visit(list(t.shape));emit(t.reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for z in x:visit(z)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+
+def process_gate(state):
+ check(state['status']=='complete' and state['stage']=='training' and state['profile']==PROFILE,'owner completed training')
+ check(state['active']==[] and state.get('promotion') is False and state.get('awaiting_root_release') is False,'no active work or promotion')
+ check(set(state['jobs'])=={'control','threat'} and set(state['receipts'])=={'control','threat'},'exact worker ownership')
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ live=[tuple(map(int,line.split())) for line in snapshot.splitlines() if line.strip()]
+ banned_pids={state['owner_pid']};banned_groups=set()
+ for role,job in state['jobs'].items():
+  check(job['returncode']==0 and job.get('finished_at') is not None and job['owner_pid']==state['owner_pid'],'worker complete '+role)
+  banned_pids.add(job['pid']);banned_groups.add(job['pgid'])
+ check(not any(pid in banned_pids or pgid in banned_groups for pid,pgid in live),'owner and worker PIDs/groups actually absent')
+ return dict(owner_pid=state['owner_pid'],worker_pids={r:j['pid'] for r,j in state['jobs'].items()},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+
+def pair(r):return {k:r[k] for k in ['key','native_sha256','trajectory_sha256','replay_prefix_sha256']}
+
+def sample_check(example,role):
+ for k,pub in [('s','public_tail'),('ns','public_next_tail')]:
+  x=np.asarray(example[k],np.float32);public=np.asarray(example[pub],np.float32)
+  check(x.shape==(101,) and public.shape==(22,) and np.isfinite(x).all() and np.isfinite(public).all(),'sample finite shape')
+  check(not np.any(x[79:]) if role=='control' else np.array_equal(x[79:],public),'sample role contrast')
+ check(0<=example['action']<6 and math.isfinite(example['reward']) and type(example['done']) is bool,'sample scalar label')
+ check(np.asarray(example['next_mask']).shape==(6,) and any(example['next_mask']),'sample nonempty next mask')
+
+def main():
+ global torch
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--root-authorized-after-owner-exit',action='store_true',required=True,help='Set only after a new explicit Root message authorizes final loading.')
+ args=parser.parse_args()
+ # No final checkpoint/NPZ access or torch import before both gates below.
+ check(args.root_authorized_after_owner_exit,'explicit Root execution authorization')
+ state=read(B/'training_v1/state.json');process_proof=process_gate(state)
+ prior_dir=Path('/tmp/threat-prefill-audit')
+ for name,sha in [('results.json',PREFILL_RESULT_SHA),('audit.py',PREFILL_SCRIPT_SHA),('REPORT.md',PREFILL_REPORT_SHA)]:pin(prior_dir/name,sha,'reuse accepted prefill audit')
+ prior=read(prior_dir/'results.json');check(prior['status']=='PASS' and prior['checks']==4555,'accepted independent prefill audit')
+ a=read(B/'training-admission.json');asha=file_sha(B/'training-admission.json')
+ check(state['source']==a['source'] and a['source']['head']==HEAD and state['admission_sha256']==asha,'owner frozen source admission')
+ check(a['stage']=='training' and a['profile']==PROFILE and a['start_authorized'] is True,'authorized training scope')
+ for group in ['protected','inputs']:
+  for path,sha in a[group].items():pin(path,sha,'admission '+group)
+ for path,sha in a['source']['files'].items():pin(path,sha,'source file')
+ pin(a['source']['executable'],a['source']['executable_sha256'],'source executable')
+ for path,sha in state['inputs'].items():pin(path,sha,'owner input')
+ rng=np.random.default_rng(47);opps=rng.choice(['solution92','sol92_sq','default','rush'],440,p=[.6,.2,.1,.1])
+ plan=[]
+ for phase,count,start in [('prefill',40,9950300),('train',400,9950000)]:
+  for g in range(count):plan.append(dict(phase=phase,game=g,seed=start+g//2,side=['player_0','player_1'][g%2],opponent=str(opps[len(plan)])))
+ check(a['rollout_plan']==plan,'independent fixed plan')
+ cfg=a['config'];check(cfg['train_every']==2 and cfg['target_update_every']==500 and cfg['batch_size']==256,'fixed optimization cadence')
+ release=read(B/'training_v1/release.json');release_sha=file_sha(B/'training_v1/release.json')
+ pins={r:file_sha(B/'training_v1'/r/'prefill.json') for r in ['control','threat']}
+ check(release['profile']==PROFILE and release['status']=='approved' and release['prefill_sha256']==pins and release['admission_sha256']==asha,'actual preserved release')
+ pin(release['root_review'],release['root_review_sha256'],'root review')
+ review=read(release['root_review']);check(review['status']=='PASS' and review['source']==a['source'] and review['prefill_sha256']==pins and review['admission_sha256']==asha,'root review identity')
+ # This import is deliberately deferred past owner/PID/authorization gates.
+ import torch as torch_module
+ torch=torch_module;torch.set_num_threads(1)
+ summaries={};retained_sample_count=0;retained_game_digest_count=0
+ shapes={'body.0.weight':(256,101),'body.0.bias':(256,), 'body.2.weight':(256,256),'body.2.bias':(256,), 'value.0.weight':(128,256),'value.0.bias':(128,), 'value.2.weight':(1,128),'value.2.bias':(1,), 'adv.0.weight':(128,256),'adv.0.bias':(128,), 'adv.2.weight':(6,128),'adv.2.bias':(6,)}
+ for role in ['control','threat']:
+  directory=B/'training_v1'/role;rp=directory/'receipt.json';r=read(rp)
+  pin(rp,state['receipts'][role]['sha256'],'owner final receipt')
+  check(Path(state['receipts'][role]['path'])==rp,'owner receipt path')
+  check(r['status']=='complete' and r['profile']==PROFILE and r['stage']=='training' and r['role']==role and r['source']==a['source'] and r['config']==cfg and r['admission_sha256']==asha,'complete final receipt identity')
+  check(r['command']==state['jobs'][role]['argv'] and r['release_sha256']==release_sha and r['no_strength_claim'] is True,'receipt original command release')
+  files={str(p) for p in directory.iterdir() if p.is_file()}
+  check(files==set(r['files'])|{str(rp)},'all final directory artifacts explicitly bound')
+  for path,sha in r['files'].items():pin(path,sha,'final receipt artifact')
+  check(not any(p.name.startswith('incomplete') for p in directory.iterdir()),'no incomplete artifacts')
+  with (directory/'games.jsonl').open() as f:rows=[json.loads(line) for line in f]
+  check(rows==r['games'] and len(rows)==440 and [x['key'] for x in rows]==plan,'exact440 chronology raw rows receipt')
+  prefill=read(directory/'prefill.json')
+  check(prefill['initial']==prefill['current'] and prefill['learn_steps']==0 and prefill['env_steps']==72120 and prefill['paired_rows']==[pair(x) for x in rows[:40]],'reuse preserved prefill identity')
+  check(prefill['replay_sha256']==prior['saved_replays'][role]['replay_sha256'],'prefill is same previously inspected archive')
+  # Existing prefill NPZ is byte-hashed via receipt, never loaded/reparsed here.
+  count=0
+  for i,x in enumerate(rows):
+   before=60000+303*i;updates=0 if i<40 else sum((before+j+1)%2==0 for j in range(303) if j%101!=0)
+   check(x['role']==role and x['before']==dict(env_steps=before,learn_steps=count),'row exact pre-update counters')
+   count+=updates
+   check(x['env_steps']==before+303 and x['learn_steps']==count and x['steps']==303 and x['point_counting_version']==2,'row exact completed update count')
+   check(x['seed']==x['key']['seed'] and x['side']==x['key']['side'] and x['replay_rows']>0,'row key correspondence replay')
+   check(math.isclose(x['epsilon'],.05,rel_tol=0,abs_tol=1e-12),'fixed epsilon')
+   check(x['loss'] is None if i<40 else isinstance(x['loss'],(int,float)) and math.isfinite(x['loss']) and x['loss']>=0,'reported game mean losses finite')
+   check(x['actual_nonzero_rows']==0 if role=='control' else x['actual_nonzero_rows']==x['public_nonzero_rows'],'row live exposure contrast')
+   check(0<=x['public_nonzero_rows']<=x['replay_rows'] and 0<=x['public_next_nonzero_rows']<=x['replay_rows'],'row exposure bounds')
+   check(x['result']==(1. if x['our_wins']>x['opp_wins'] else 0. if x['our_wins']<x['opp_wins'] else .5),'recorded outcome arithmetic')
+   for field in ['native_sha256','trajectory_sha256','replay_prefix_sha256','replay_full_sha256']:check(len(x[field])==64 and all(z in '0123456789abcdef' for z in x[field]),'valid digest '+field)
+   if i>=40:
+    check(len(x['examples'])<=4,'bounded training examples')
+    for e in x['examples']:sample_check(e,role)
+  check(count==60000 and rows[-1]['env_steps']==193320,'exact60000 optimizer updates193320 environment steps')
+  cp=torch.load(directory/'final.pth',map_location='cpu',weights_only=True)
+  check(cp['cfg']==cfg and cp['feature_dim']==101 and cp['n_actions']==6 and cp['ensemble']==[] and cp['ensemble_dims']==[],'checkpoint fixed101 architecture config')
+  check(cp['env_steps']==193320 and cp['learn_steps']==60000,'actual checkpoint counters')
+  study=cp['threat_warmstart']
+  check(study['status']=='complete' and study['profile']==PROFILE and study['role']==role and study['source']==a['source'] and study['component_index']==18 and study['completed_games']==440,'actual checkpoint method identity')
+  for name in ['q','target_q']:
+   net=cp[name];check(set(net)==set(shapes),'all expected Dueling parameters')
+   for key,shape in shapes.items():check(isinstance(net[key],torch.Tensor) and tuple(net[key].shape)==shape and net[key].dtype==torch.float32 and bool(torch.isfinite(net[key]).all()),'finite101 tensor '+name+'.'+key)
+   tail=net['body.0.weight'][:,79:]
+   check(bool(torch.count_nonzero(tail))==(role=='threat'),'actual learned zero/real tensor suffix')
+  check(all(torch.equal(cp['q'][k],cp['target_q'][k]) for k in shapes),'final target sync at60000')
+  actual_identity=dict(q=typed(cp['q']),target=typed(cp['target_q']),optimizer=typed(cp['opt']))
+  check(actual_identity==r['final_identity'] and actual_identity['q']!=prefill['initial']['q'],'actual final identities and learned Q')
+  opt=cp['opt'];check(len(opt['param_groups'])==1,'single Adam group')
+  group=opt['param_groups'][0];param_ids=group['params'];check(len(param_ids)==len(shapes) and set(opt['state'])==set(param_ids),'Adam state for all parameters')
+  check(group['lr']==cfg['lr'] and group['betas']==(0.9,0.999) and group['eps']==1e-8 and group['weight_decay']==0,'fixed Adam settings')
+  # Parameter order is the preserved Q state order used by q.parameters().
+  check(list(cp['q'])==list(shapes),'explicit parameter order for optimizer mapping')
+  for pid,key in zip(param_ids,shapes):
+   slot=opt['state'][pid];check(float(slot['step'])==60000 and bool(torch.isfinite(slot['step'])),'actual Adam step60000')
+   for moment in ['exp_avg','exp_avg_sq']:
+    tensor=slot[moment];check(tuple(tensor.shape)==shapes[key] and tensor.dtype==torch.float32 and bool(torch.isfinite(tensor).all()),'finite actual Adam moment')
+    if moment=='exp_avg_sq':check(bool((tensor>=0).all()),'nonnegative Adam variance')
+    if role=='control' and key=='body.0.weight':check(not bool(torch.count_nonzero(tensor[:,79:])),'control Adam tail exactly zero')
+  audit=r['learning_audit'];check(study['learning_audit']==audit and audit['sampled_batches']==60000,'actual batch audit persisted')
+  for field in ['sampled_exposed_rows','sampled_exposed_next_rows']:
+   check(0<=audit.get(field,0)<=60000*256,'sampled exposure bound')
+   check(audit.get(field,0)>0 if role=='threat' else audit.get(field,0)==0,'sampled exposure contrast')
+  check(0<audit.get('tail_gradient_steps',0)<=60000 if role=='threat' else audit.get('tail_gradient_steps',0)==0,'recorded gradient contrast')
+  with np.load(directory/'final_replay.npz',allow_pickle=False) as archive:d={k:archive[k] for k in archive.files}
+  n=r['final_replay']['size'];total=sum(x['replay_rows'] for x in rows)
+  check(n==min(total,cfg['buffer_capacity']) and set(d)=={'s','ns','a','r','done','mask'},'actual final replay ring size schema')
+  check(d['s'].shape==d['ns'].shape==(n,101) and d['mask'].shape==(n,6) and all(d[k].shape==(n,) for k in ['a','r','done']),'final replay shapes')
+  check({k:v.dtype.str for k,v in d.items()}==dict(s='<f4',ns='<f4',a='<i8',r='<f4',done='<f4',mask='|b1'),'final replay dtypes')
+  check(all(np.isfinite(x).all() for x in d.values()) and ((d['a']>=0)&(d['a']<6)).all() and np.isin(d['done'],[0,1]).all() and d['mask'].any(1).all(),'finite legal actual final replay')
+  check(typed(d)==r['final_replay']['full'] and typed(dict(d,s=d['s'][:,:79],ns=d['ns'][:,:79]))==r['final_replay']['prefix'],'independent actual final replay full prefix identities')
+  exposure={k:int(np.any(d[k][:,79:],axis=1).sum()) for k in ['s','ns']}
+  check(all(exposure[k]>0 for k in exposure) if role=='threat' else all(exposure[k]==0 for k in exposure),'actual retained replay feature contrast')
+  global_start=total-n;offset=0;role_retained=0;role_samples=0
+  for x in rows:
+   stop=offset+x['replay_rows']
+   if offset>=global_start:
+    startidx=offset-global_start;endidx=stop-global_start;full=hashlib.sha256();prefix=hashlib.sha256()
+    for j in range(startidx,endidx):
+     transition=(d['s'][j],int(d['a'][j]),d['r'][j],d['ns'][j],d['done'][j],d['mask'][j])
+     full.update(typed(transition).encode());prefix.update(typed((transition[0][:79],*transition[1:3],transition[3][:79],*transition[4:])).encode())
+    check(full.hexdigest()==x['replay_full_sha256'] and prefix.hexdigest()==x['replay_prefix_sha256'],'retained whole-game replay identities')
+    check(int(np.any(d['s'][startidx:endidx,79:],axis=1).sum())==x['actual_nonzero_rows'],'retained actual exposure per game')
+    if role=='threat':check(int(np.any(d['ns'][startidx:endidx,79:],axis=1).sum())==x['public_next_nonzero_rows'],'retained next exposure per game')
+    role_retained+=1
+    for e in x['examples']:
+     match=np.all(d['s'][startidx:endidx]==np.asarray(e['s'],np.float32),axis=1)&np.all(d['ns'][startidx:endidx]==np.asarray(e['ns'],np.float32),axis=1)&(d['a'][startidx:endidx]==e['action'])&(d['r'][startidx:endidx]==np.float32(e['reward']))&(d['done'][startidx:endidx]==float(e['done']))&np.all(d['mask'][startidx:endidx]==e['next_mask'],axis=1)
+     check(match.any(),'retained actual training sample');role_samples+=1
+   offset=stop
+  check(offset==total and role_retained>0,'retained chronological suffix accounted')
+  retained_sample_count+=role_samples;retained_game_digest_count+=role_retained
+  summaries[role]=dict(games=440,prefill=40,train=400,learn_steps=60000,env_steps=193320,total_replay_insertions=total,final_replay_size=n,nonzero_tail_rows=exposure,retained_whole_games_rehashed=role_retained,retained_samples_matched=role_samples,reported_finite_training_game_mean_losses=400,learning_audit=audit,final_identity=actual_identity,final_replay=r['final_replay'],receipt_sha256=file_sha(rp))
+  del cp,d,opt,net,slot,tensor,tail
+ check(summaries['control']['final_identity']['q']!=summaries['threat']['final_identity']['q'],'final arms differ after actual learning')
+ process_proof_after=process_gate(read(B/'training_v1/state.json'))
+ result=dict(status='PASS',checks=checks,source_head_asserted=HEAD,process_proof=process_proof,process_proof_after=process_proof_after,arms=summaries,retained_whole_game_digests_checked=retained_game_digest_count,retained_samples_matched=retained_sample_count,hash_bindings_checked=len(bindings),unique_input_files_hashed=len(cache),reused_prefill_result_sha256=PREFILL_RESULT_SHA,script_sha256=file_sha(Path(__file__)),no_strength_claim=True,limitations=['All400 reported per-game mean losses are independently checked finite; individual60000 batch losses were not archived and cannot all be reconstructed.','Actual final Q/Target/Adam tensors and counts are recovered; initial tensor identities and gradient/batch exposure counts remain live recorded assertions, linked to actual final suffix/replay contrast.','No full observations/native actions were archived: trajectory hashes, UID mapping and public feature provenance cannot independently be regenerated.','Only final retained ring-buffer whole-game suffixes are rehashed; displaced training transitions are unavailable. Prefill NPZ arrays were not reloaded; prior4555-check audit is pinned and reused.','Post-learning arm trajectories may differ; final replay original79/action/reward equality is not expected or required.','No evaluation or strength conclusion.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+ (OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n')
+ print(json.dumps(result,indent=2,sort_keys=True))
+
+if __name__=='__main__':
+ try:main()
+ except Exception as exc:
+  failure=dict(status='FAIL',checks_completed=checks,error=f'{type(exc).__name__}: {exc}')
+  (OUT/'failure.json').write_text(json.dumps(failure,indent=2)+'\n')
+  raise
