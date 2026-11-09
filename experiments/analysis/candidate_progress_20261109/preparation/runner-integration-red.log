@@ -1,0 +1,61 @@
+....................FFFF.                                                [100%]
+=================================== FAILURES ===================================
+___ test_historical_missing_default_fields_normalize_without_changing_policy ___
+
+source = {'cfg': {'hidden': 256, 'dueling': True, 'gamma': 0.99, 'lr': 0.0003, ...}, 'q': {'body.0.weight': tensor([[ 0.0540, -...4, -0.0001,  0.0461,
+        -0.0264, -0.0499,  0.0511, -0.0258, -0.0241, -0.0146,  0.0304,  0.0472]), ...}, ...], ...}
+
+    def test_historical_missing_default_fields_normalize_without_changing_policy(source):
+        s = runner()
+        source["cfg"].pop("art_splash_in_training", None)
+        cp = s.mount(source,"off")
+>       assert cp["cfg"]["art_splash_in_training"] is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'art_splash_in_training'
+
+tests/test_candidate_progress_screen.py:186: KeyError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors0] _________
+
+errors = (0, 0)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors1] _________
+
+errors = (1, 0)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors2] _________
+
+errors = (0, 1)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_candidate_progress_screen.py::test_historical_missing_default_fields_normalize_without_changing_policy
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors0]
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors1]
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors2]
+4 failed, 21 passed in 2.76s

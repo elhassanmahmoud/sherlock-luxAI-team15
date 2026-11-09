@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Fortschrittsabhängige Kandidatenrettung in Umsetzung
+
+- Die aktuelle Niederlagendiagnose ist als 30800a7 veröffentlicht und in der Hauptkopie. Keine aktive Modellberechnung oder Quellenbindung aus alten Studien.
+- Ein enger [neuer Plan](superpowers/plans/2026-11-09-candidate-progress-rescue.md) ergänzt nur bei öffentlich beobachtetem Stillstand eine frühere Kandidatenrettung. Zwölf vollständige Übergänge, nur erstes Match und aktuelle Kandidatenziele; bisheriger 30er-Fallback unverändert. Das vorhandene Regelbündel umfasst auch Nebelausnahmen. Keine neuen Gewichte oder Rewards.
+- Konservativer Timer und Vergleichswerkzeuge umgesetzt; 49 gezielte synthetische Tests und unabhängiger Code-/Methodenreview bestanden. Kartencheck ohne beobachtete Vorverwendung; lokale Grenzen dokumentiert. par_eval bricht künftig bei abgefangenen Fehlern eines Spielers ab. Noch keine neuen Spiele; nach diesem Quellencommit vier bekannte Technikspiele vor separaten 120 Vergleichen. Kein automatischer Nachschlag oder V14-Ersatz.
+- Akkubetrieb ausdrücklich erlaubt, restliches Kontingent freigegeben, Resets nur durch Nutzer. Aktuellen tatsächlichen Stand vor jedem Start prüfen; maximal zwei Worker und keine parallelen Tests.
+
 ## 09.11.2026 – Aktuelle Niederlagendiagnose abgeschlossen
 
 - Genau zwei passive Probe-Ausführungen auf verbrauchtem Schlüssel 9946007/player_0, vollständige 303-Schritte-Reproduktion und Beobachtergleichheit. Matchpunkte 85:117, 200:263, 454:127; insgesamt 739:507 bei 1:2. Keine neuen Gewichte/Regeln/Gradienten. [Bericht](../experiments/analysis/holder_oscillation_20261109/ERGEBNIS.md).

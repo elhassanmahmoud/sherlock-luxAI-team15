@@ -1,0 +1,51 @@
+"""One fixed trace: public-only timer opportunity, NOT a full timer reconstruction."""
+from pathlib import Path
+import csv, gzip, hashlib, json
+
+TRACE=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109/probe_v1/9946007_player_0.jsonl.gz')
+OUT=Path('/tmp/candidate-progress-timer-check')
+def tiles(mask):
+    # Independent immutable snapshot: never retain the mutable source array.
+    return frozenset((x,y) for x,col in enumerate(mask) for y,v in enumerate(col) if v)
+def pairs(coords): return frozenset(map(tuple,coords))
+rows=[]; prev=None; count=0; first_relic=None
+with gzip.open(TRACE,'rt') as fh:
+    for line,raw in enumerate(fh,1):
+        frame=json.loads(raw)
+        key=frame['key']
+        if frame['status']!='decision':
+            prev=None; count=0
+            continue
+        p=frame['public']
+        if key['match_idx']!=0: continue
+        step=int(p['step']); relics=pairs(p['relic_coords']); points=tiles(p['point_tiles']); cand=tiles(p['candidate'])
+        assert cand==pairs(p['cand_coords']) and points==pairs(p['point_coords'])
+        if relics and first_relic is None: first_relic=step
+        # Dead-tile information is intentionally neither inferred from mask loss
+        # nor silently treated as complete. Therefore this is an upper bound on
+        # the actual no-progress streak, conditional on no unrecorded changes.
+        missing_dead='dead_tiles' not in p
+        occupied=[]; gain=False; new_relic=False; new_point=False; withdrawn=False
+        complete=prev is not None and key['seed']==prev['seed'] and key['side']==prev['side'] and key['match_idx']==prev['match'] and step==prev['step']+1
+        if complete:
+            occupied=[int(uid) for uid in p['ally_ids'] if p['ally_ene'][uid]>=0 and tuple(p['ally_pos'][uid]) in prev['candidate']]
+            gain=float(p['own_points'])>prev['points_total']
+            new_relic=bool(relics-prev['relics']); new_point=bool(points-prev['points'])
+            withdrawn=bool(prev['relics']-relics or prev['points']-points)
+        in_window=bool(relics and cand and not points)
+        progress=bool(occupied or gain or new_relic or new_point)
+        if not complete or not in_window or not prev['in_window'] or withdrawn or progress: count=0
+        else: count+=1
+        eligible=[int(uid) for uid in p['ally_ids'] if str(uid) in p['assigned'] and tuple(p['assigned'][str(uid)]) in cand]
+        old=bool(p['config']['cand_rescue'] and relics and not points and p['match_step']>=10 and first_relic is not None and step-first_relic>=p['config']['rescue_after'])
+        rows.append({'line':line,'step':step,'complete_transition':complete,'known':len(points),'candidates':len(cand),'occupied_previous_candidate_uids':occupied,'positive_own_points':gain,'new_relic':new_relic,'new_point':new_point,'knowledge_withdrawal_observed':withdrawn,'dead_tiles_missing':missing_dead,'observable_stall_upper_bound':count,'candidate_target_uids':eligible,'candidate_target_nonnegative_uids':[u for u in eligible if p['ally_ene'][u]>=0],'candidate_target_can_pay_move_uids':[u for u in eligible if p['ally_ene'][u]>=p['move_cost']],'conditional_12_trigger':bool(in_window and count>=12 and eligible),'original_30_rescue_reconstructed':old})
+        prev={'seed':key['seed'],'side':key['side'],'match':key['match_idx'],'step':step,'candidate':cand,'points':points,'relics':relics,'points_total':float(p['own_points']),'in_window':in_window}
+
+conditional=[r for r in rows if r['conditional_12_trigger']]
+original=[r for r in rows if r['original_30_rescue_reconstructed']]
+summary={'trace_sha256':hashlib.sha256(TRACE.read_bytes()).hexdigest(),'read_fields':'key/status and public only; no posthoc, future actions, private state or model imports','first_relic_step':first_relic,'first_conditional_trigger':conditional[0] if conditional else None,'conditional_trigger_steps':[r['step'] for r in conditional],'first_original_30_rescue':original[0]['step'] if original else None,'original_30_rescue_steps':[r['step'] for r in original],'missing_dead_tiles_steps':[r['step'] for r in rows if r['dead_tiles_missing']],'full_conservative_activation_proven':False,'reason':'dead_tiles and its new/withdrawn classifications are absent; visible-component streaks are conditional upper bounds. Old _rescue flag is not logged; timing is reconstructed from public first relic and config.'}
+OUT.with_suffix('.json').write_text(json.dumps({'summary':summary,'rows':rows},indent=2)+'\n')
+with OUT.with_suffix('.csv').open('w',newline='') as fh:
+    writer=csv.DictWriter(fh,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+print(json.dumps(summary,indent=2))
+print('PROGRESS EVENTS',json.dumps([{k:r[k] for k in ('step','occupied_previous_candidate_uids','positive_own_points','new_relic','new_point','observable_stall_upper_bound')} for r in rows if r['occupied_previous_candidate_uids'] or r['positive_own_points'] or r['new_relic'] or r['new_point']]))

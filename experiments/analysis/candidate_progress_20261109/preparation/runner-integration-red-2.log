@@ -1,0 +1,91 @@
+....................FFFF.F                                               [100%]
+=================================== FAILURES ===================================
+___ test_historical_missing_default_fields_normalize_without_changing_policy ___
+
+source = {'cfg': {'hidden': 256, 'dueling': True, 'gamma': 0.99, 'lr': 0.0003, ...}, 'q': {'body.0.weight': tensor([[ 0.1039, -...4,  0.0116,  0.0563,
+         0.0449,  0.0617, -0.0573, -0.0466, -0.0368, -0.0199,  0.0389, -0.0498]), ...}, ...], ...}
+
+    def test_historical_missing_default_fields_normalize_without_changing_policy(source):
+        s = runner()
+        source["cfg"].pop("art_splash_in_training", None)
+        cp = s.mount(source,"off")
+>       assert cp["cfg"]["art_splash_in_training"] is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'art_splash_in_training'
+
+tests/test_candidate_progress_screen.py:186: KeyError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors0] _________
+
+errors = (0, 0)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors1] _________
+
+errors = (1, 0)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+________ test_par_eval_rejects_caught_errors_on_either_player[errors2] _________
+
+errors = (0, 1)
+
+    @pytest.mark.parametrize("errors", [(0,0),(1,0),(0,1)])
+    def test_par_eval_rejects_caught_errors_on_either_player(errors):
+        from scripts import par_eval
+>       assert hasattr(par_eval,"require_no_agent_errors"), "par_eval drops caught errors"
+E       AssertionError: par_eval drops caught errors
+E       assert False
+E        +  where False = hasattr(<module 'scripts.par_eval' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py'>, 'require_no_agent_errors')
+
+tests/test_candidate_progress_screen.py:199: AssertionError
+__ test_real_par_eval_worker_propagates_game_error_counter_before_publishing ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f78e270>
+
+    def test_real_par_eval_worker_propagates_game_error_counter_before_publishing(monkeypatch):
+        import sys
+        import agents.sherlock.main as core
+        from scripts import common, par_eval
+        class FakeAgent:
+            def __init__(self,*args,**kwargs): self.caught_errors=0
+            def set_to_eval_mode(self): pass
+        class FakeEnv:
+            def __init__(self,**kwargs): pass
+            def close(self): pass
+        def game(_env,agent,_opp,*args,**kwargs):
+            agent.caught_errors += 1
+            return {"result":1.}
+        monkeypatch.setitem(sys.modules,"luxai_s3.wrappers",SimpleNamespace(LuxAIS3GymEnv=FakeEnv))
+        monkeypatch.setattr(torch,"load",lambda *args,**kwargs:{})
+        monkeypatch.setattr(core,"Agent_x",FakeAgent)
+        monkeypatch.setattr(par_eval,"limit_threads",lambda:None)
+        monkeypatch.setattr(par_eval,"build_cfg",lambda *args:None)
+        monkeypatch.setattr(common,"make_opponent",lambda *args:object())
+        monkeypatch.setattr(common,"play_game",game)
+>       with pytest.raises(RuntimeError): par_eval._worker(("synthetic.pth",[],[0],["solution92"]))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_candidate_progress_screen.py:245: Failed
+=========================== short test summary info ============================
+FAILED tests/test_candidate_progress_screen.py::test_historical_missing_default_fields_normalize_without_changing_policy
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors0]
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors1]
+FAILED tests/test_candidate_progress_screen.py::test_par_eval_rejects_caught_errors_on_either_player[errors2]
+FAILED tests/test_candidate_progress_screen.py::test_real_par_eval_worker_propagates_game_error_counter_before_publishing
+5 failed, 21 passed in 2.44s

@@ -222,6 +222,9 @@ class AgentConfig:
     cand_rescue: bool = False
     """True (22.10.2026): nur wenn trotz bekannter Relics kein Punkte-Tile bekannt ist, werden obey_target,
     neb_cand und idle_approach aktiv (Kandidaten gezielt testen). Sicherheitsnetz fuer 0-Punkte-Spiele."""
+    cand_stall_rescue: bool = False
+    """Nur Auswertung: Kandidatenziele in Match 0 nach 12 oeffentlich beobachteten
+    Uebergaengen ohne Fortschritt frueh retten. Der alte cand_rescue-Timer bleibt erhalten."""
     rescue_after: int = 0
     """cand_rescue greift erst, wenn das erste Relic seit mindestens so vielen Steps bekannt ist."""
     rescue_in_training: bool = False

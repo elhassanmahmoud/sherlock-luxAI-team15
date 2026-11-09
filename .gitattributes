@@ -27,3 +27,7 @@ experiments/analysis/threat_warmstart_compare_20261109/**/*.csv -text whitespace
 experiments/analysis/threat_warmstart_compare_20261109/preparation/*.log -text -whitespace
 experiments/analysis/holder_oscillation_20261109/**/*.csv -text whitespace=cr-at-eol
 experiments/analysis/holder_oscillation_20261109/**/*.jsonl -text -diff
+
+# Candidate progress study: preserve audited raw evidence bytes.
+experiments/analysis/candidate_progress_20261109/**/*.csv -text whitespace=cr-at-eol
+experiments/analysis/candidate_progress_20261109/**/*.log -text -whitespace

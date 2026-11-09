@@ -43,6 +43,7 @@ from . import geometry as geo
 from . import rules
 from .belief import Belief, MemorylessBelief
 from .assignment import improve_point_assignment
+from .candidate_progress import CandidateProgress
 from .config import AgentConfig
 from .features import FEATURE_DIM, THREAT_DIM, MAX_TILE_ENERGY, build_features, make_context, threat_features
 from .model import N_ACTIONS, QNet, checkpoint_ensemble_dims
@@ -192,9 +193,21 @@ class Agent_x:
         self._first_relic_step = None  # 22.10.2026: fuer cand_rescue/rescue_after
         self._relic_seen: dict = {}  # 01.11.2026: erster Schritt je Relic (cfg.zone_rescue)
         self._rescue_zones: set = set()
+        self._candidate_progress = CandidateProgress()
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
-                         "sap_attempts": 0, "sap_hits_est": 0}
+                         "sap_attempts": 0, "sap_hits_est": 0,
+                         "cand_stall_early_unit_steps": 0, "cand_stall_early_steps": 0}
+
+    def candidate_progress_status(self) -> dict:
+        """Copied current-step diagnostic; early_uids are actual early hook queries."""
+        return self._candidate_progress.status()
+
+    def _update_candidate_progress(self, ctx: dict) -> None:
+        if not self.cfg.cand_stall_rescue or self.training or not self.cfg.cand_rescue:
+            self._candidate_progress.reset("disabled")
+            return
+        self._candidate_progress.observe(ctx, self.player, self.belief.dead_tiles)
 
     def episode_stats(self) -> dict:
         """Agent-spezifische Kennzahlen des laufenden/letzten Spiels."""
@@ -323,6 +336,8 @@ class Agent_x:
         # Matches, die Engine setzt sie im naechsten Step zurueck -> No-op und
         # kein Lern-Uebergang (sonst falsche Tod-Strafe fuer alle Units).
         if int(np.asarray(obs["match_steps"])) == 0:
+            if self.cfg.cand_stall_rescue:
+                self._candidate_progress.reset("match_reset")
             self._prev_ctx = None
             self._shape_pending = []  # Units verschwinden beim Match-Reset, das ist kein Treffer
             self._pred_pending = []
@@ -330,6 +345,8 @@ class Agent_x:
 
         ctx, ids, feat_map, mask_map, sap_targets = self._decide(obs)
         self._prev_ctx = ctx
+        if self.cfg.cand_stall_rescue:
+            self._update_candidate_progress(ctx)
         if not ids:
             return actions
 
@@ -1328,6 +1345,20 @@ class Agent_x:
         (cfg.zone_rescue: Ziel ist ein Kandidat in der Zone eines Relics ohne bewiesenes Punkte-Tile)."""
         if getattr(self, "_rescue", False):
             return True
+        if self.cfg.cand_stall_rescue and not self.training and self.cfg.cand_rescue:
+            progress = self._candidate_progress
+            tgt = ctx["assigned"].get(int(uid))
+            if (progress.ready and progress.step == ctx["step"] and ctx["match_idx"] == 0
+                    and progress.previous["identity"][0] == self.player and tgt is not None
+                    and 0 <= int(tgt[0]) < self.belief.candidate.shape[0]
+                    and 0 <= int(tgt[1]) < self.belief.candidate.shape[1]
+                    and self.belief.candidate[tuple(tgt)]):
+                if int(uid) not in progress.early_uids:
+                    if not progress.early_uids:
+                        self.ep_stats["cand_stall_early_steps"] += 1
+                    progress.early_uids.add(int(uid))
+                    self.ep_stats["cand_stall_early_unit_steps"] += 1
+                return True
         zones = getattr(self, "_rescue_zones", None)
         if not zones:
             return False

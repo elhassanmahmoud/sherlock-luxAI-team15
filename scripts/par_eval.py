@@ -62,6 +62,13 @@ def build_cfg(weights: str, overrides: list[str]):
     return cfg
 
 
+def require_no_agent_errors(agent, opponent) -> None:
+    """A caught policy error invalidates the measurement on either side."""
+    for label, player in (("agent", agent), ("opponent", opponent)):
+        if getattr(player, "caught_errors", 0) > 0:
+            raise RuntimeError(f"{label} caught a policy error; refusing a successful evaluation result")
+
+
 def _worker(job: tuple) -> list[dict]:
     weights, overrides, seeds, opponents = job
     limit_threads()
@@ -100,6 +107,7 @@ def _worker(job: tuple) -> list[dict]:
                 else:
                     opp = make_opponent(opp_name, opp_side)
                 r = play_game(env, agent, opp, seed, side, train=False)
+                require_no_agent_errors(agent, opp)
                 r["opponent"] = opp_name
                 rows.append({k: r.get(k) for k in GAME_FIELDS})
     env.close()

@@ -1,0 +1,12 @@
+{
+  "source_script": "/tmp/threat-warmstart-seeds/seed-audit.py",
+  "source_sha256": "5538daf7f5bd2101d45515d7fe88886edbb41b9e910f00d6519ae8b7ecedfac3",
+  "script_sha256": "6071542f05a9d5ee1afe9976d6642c44bf87e83fbb03c2453da5ed8d4f266655",
+  "only_change": "RANGES; output folder automatically follows script location",
+  "command": [
+    "python3",
+    "-B",
+    "/tmp/candidate-progress-seeds/seed-audit.py",
+    "--targeted-readonly-scan"
+  ]
+}
