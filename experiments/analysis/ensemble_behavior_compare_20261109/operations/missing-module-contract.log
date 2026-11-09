@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+___________ ERROR collecting tests/test_ensemble_behavior_compare.py ___________
+ImportError while importing test module '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_behavior_compare.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_ensemble_behavior_compare.py:16: in <module>
+    from scripts import ensemble_behavior_compare as s
+E   ImportError: cannot import name 'ensemble_behavior_compare' from 'scripts' (/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/test_ensemble_behavior_compare.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 2.53s

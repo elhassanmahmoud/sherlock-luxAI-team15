@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Fester BEHAVIOR38-Vergleich technisch vorbereitet
+
+- Trainingsbelege als `07f3b47` auf GitHub und in der Hauptkopie; V14/ZIP und fremde Dateien unverändert. Alle Modelljobs beendet, Trainingsfreeze geschlossen.
+- Neue schmale Vergleichswerkzeuge nach Trainingsabnahme integriert; 109 tatsächliche synthetische Tests bestanden. Root und unabhängiger finaler Review ohne offene Blocker. Exakt ursprüngliche 36 plus beide Endnetze, unveränderte Inferenzconfig und bereits akzeptierte V14-/CONTROL38-Evalkopien. [Plan](superpowers/plans/2026-11-09-ensemble-behavior-comparison.md).
+- Vorab feste 60 Karten beibehalten; alle 884 intervenierenden eigenen Ausführungen auf Überschneidung geprüft, keine gefunden. Ursprüngliche Scanlücken bleiben. Noch keine neue Montageaufnahme oder Leistungsspiele. Nach Quellencommit separate tatsächliche Nullspiel-Montageabnahme, danach 200 feste Spiele mit vier ursprünglichen Gates; keine automatische Übernahme oder Wiederholung.
+
 ## 09.11.2026 – Ensemble-Verhalten vollständig trainiert
 
 - Zwei feste Endnetze abgeschlossen, je 40 Vorlauf- und 400 Lernspiele mit 60.000 Updates; zusätzlich vier bekannte Technikspiele, insgesamt 884 Ausführungen/120.000 Updates. Keine Unterbrechung, Wiederholung oder Zwischenwahl. [Bericht](../experiments/analysis/ensemble_behavior_20261109/TRAININGSERGEBNIS.md).

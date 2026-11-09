@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "All 884 actual intervening own executions since the one-time seed scan; not a repeated broad scan",
+  "checked_games": 884,
+  "reserved_cards": 60,
+  "conflicts": [],
+  "files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/technical_v1/technical/receipt.json": "61cb389468f835184e824f5838369e54442b6be7dcadd1a27ff1a8afa306ede3",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on48/receipt.json": "ab3429c4af89cc43a09470ef19f58aec0e142344c4a61db9c14dc6d0e87eb17e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on49/receipt.json": "6e2e3a8c3a02690b997691376685d36c790a254a6e4636c065a7e73305ca78cc"
+  },
+  "seed_acceptance_sha256": "c7b3dec724081a8e05a1d5df6900696c431d1f1a98937a956c0ce72cbf75b390",
+  "limitations": [
+    "Only eight registered local worktrees; other machines, unregistered checkouts and undocumented runs remain unknown.",
+    "Seedless files/records do not prove non-consumption; path/schema gaps retained.",
+    "Targeted metadata scanner covers experiments/logs/replays CSV and JSON, including gzip. Raw JSONL traces, rollouts and provenance are deliberately NOT reparsed; metadata/CSV coverage cannot establish freshness for missing or exclusively JSONL histories.",
+    "Supplemental text scan covers root/docs/scripts/experiments/logs/replays .md/.py/.sh/.txt/.log files, numeric literal mentions and explicit intervals. Computed seed formulas, unsupported schemas and opaque binary formats can escape detection.",
+    "Directory symlinks not followed; .git/.venv/venv/node_modules/__pycache__ skipped.",
+    "Stored bytes deduplicated by SHA256 for structured formats; text content separately deduplicated.",
+    "Exactly two current ensemble-behavior paths (plan and spec) are allowlisted as these card reservations; every other matching text mention requires review. Historical 9960xxx training blocks are intentionally outside this scan. Any concurrent HEAD or observed file changes are recorded, not described as a freeze. Own script/results excluded.",
+    "No repository imports, model loading, tests or game execution; writes restricted to the two exclusive result files beside this external audit script. The CLI flag records operator acknowledgment, not independent proof of Root/Watcher approval."
+  ],
+  "checked_at": "2026-11-09T19:35:12.094828+00:00"
+}

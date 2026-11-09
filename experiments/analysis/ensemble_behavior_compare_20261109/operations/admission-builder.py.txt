@@ -1,0 +1,163 @@
+"""Prepare one comparison admission on explicit Root invocation; never start work.
+
+Default is check-only. --write publishes the exclusive JSON after the source
+commit. Reads JSON/source/hash metadata only: no Torch/NumPy/JAX imports,
+archive decoding, agents, simulators, tests or worker subprocesses.
+"""
+import argparse
+import json
+import os
+from pathlib import Path
+import sys
+import tempfile
+
+DEFAULT_ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+PROFILE = 'ensemble_behavior_compare_20261109'
+TRAINING_CLOSURE_SHA = 'fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce'
+REFERENCE_ACCEPTANCE_SHA = 'd7267df0500fc66430adc1be8a96419c24bac06c8e9fc8c01c4304a02dc25db1'
+FINAL_SHA = dict(on48='486b9b44e12be251213b00fd84b82964c7aa5a781bdf086da866da42eb95a3fd',
+                 on49='e0668fdcfbf70b9c85180e81af9d3bfd684b65d8aba048addee36bb58bdf27d3')
+REFERENCE_SHA = dict(v14='817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2',
+                     control='b8118e6a8a5656a725fa407466833ebcef24d899f00c79e00b3f848086321a95')
+SEED_PROOF_SHA = 'c7b3dec724081a8e05a1d5df6900696c431d1f1a98937a956c0ce72cbf75b390'
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--stage',choices=('technical','performance'),required=True)
+    parser.add_argument('--expected-head',required=True,help='Exact full new comparison source commit')
+    parser.add_argument('--root',type=Path,default=DEFAULT_ROOT)
+    parser.add_argument('--stop-file',type=Path,required=True)
+    parser.add_argument('--technical-acceptance',type=Path,help='Required only for performance')
+    parser.add_argument('--input',action='append',type=Path,default=[],help='Additional bound evidence')
+    parser.add_argument('--write',action='store_true',help='Publish admission exclusively; default writes nothing')
+    args = parser.parse_args(); root = args.root.resolve(strict=True)
+    if root != Path.cwd().resolve(): raise ValueError('Run from the admitted study checkout')
+    sys.path.insert(0,str(root))
+    from scripts.early_curriculum_study import digest, require, source_identity
+    from scripts.final_training_supervisor import safe_path
+    require(len(args.expected_head) == 40 and all(c in '0123456789abcdef' for c in args.expected_head),
+            'An explicit full committed HEAD is required')
+    base = root/'experiments/analysis'/PROFILE
+    output = safe_path(base/f'{args.stage}_v1')
+    admission_path = safe_path(base/f'{args.stage}-v1-admission.json')
+    stop = safe_path(args.stop_file)
+    require(not output.exists() and not admission_path.exists(), 'Phase/admission exists; no overwrite/resume')
+    require(not stop.exists(), 'Existing STOP must be resolved explicitly by Root')
+    inputs = {}
+
+    def bind(path,expected=None):
+        path = safe_path(path); actual = digest(path)
+        require(expected is None or expected == actual,f'Original input hash mismatch: {path}')
+        require(str(path) not in inputs or inputs[str(path)] == actual,'Conflicting historical hashes')
+        inputs[str(path)] = actual
+        return path
+
+    def read(path,expected=None):
+        return json.loads(bind(path,expected).read_text())
+
+    training_base = root/'experiments/analysis/ensemble_behavior_20261109'
+    closure_path = training_base/'operations/training-completion.json'
+    closure = read(closure_path,TRAINING_CLOSURE_SHA)
+    require(closure['status'] == 'COMPLETE_TRAINING_NO_STRENGTH_CLAIM'
+            and closure['profile'] == 'ensemble_behavior_20261109'
+            and closure['original_processes_ended'] is True and closure['source_and_input_bindings_valid'] is True
+            and closure['actual'] == dict(technical_games=4,prefill_games=80,learning_games=800,optimizer_updates=120000),
+            'Unaccepted actual training completion')
+    for p,h in closure['files'].items(): bind(p,h)
+    train = read(closure['admission'],closure['admission_sha256'])
+    read(closure['state'],closure['state_sha256'])
+    for role,sha in FINAL_SHA.items():
+        entry = closure['models'][role]
+        require(entry['sha256'] == sha,'Wrong fixed final')
+        bind(entry['path'],sha); read(entry['receipt'],entry['receipt_sha256'])
+
+    reference_base = root/'experiments/analysis/match_weight_compare_20261109'
+    reference_admission = reference_base/'technical-v1-admission.json'
+    reference_state = reference_base/'technical_v1/state.json'
+    reference_receipt = reference_base/'technical_v1/technical-receipt.json'
+    reference_acceptance = reference_base/'operations/technical-acceptance.json'
+    old = read(reference_admission); receipt = read(reference_receipt)
+    approval = read(reference_acceptance,REFERENCE_ACCEPTANCE_SHA)
+    read(reference_state,approval['owner_state_sha256'])
+    require(digest(reference_admission) == approval['admission_sha256']
+            and digest(reference_receipt) == approval['technical_receipt_sha256'],'Reference assembly chain differs')
+    models = {}
+    for role,sha in REFERENCE_SHA.items():
+        record = receipt['models'][role]
+        require(record['sha256'] == sha,'Wrong original reference')
+        models[role] = str(bind(record['path'],sha))
+    protected = closure['protected']; plans = set()
+    for p,h in protected.items(): bind(p,h)
+    for historical in (train,old):
+        require(historical['python'] == sys.executable and historical['root'] == str(root)
+                and historical['protected'] == protected,'Historical interpreter/root/protection differs')
+        plans.update(historical['plans'])
+        for p,h in historical['inputs'].items(): bind(p,h)
+    plans.update(str(root/f'docs/superpowers/{kind}/2026-11-09-ensemble-behavior-comparison.md')
+                 for kind in ('specs','plans'))
+    plans = sorted(plans)
+    for p in plans: bind(p)
+    for p in ('scripts/ensemble_behavior_compare.py','scripts/ensemble_behavior_compare_owner.py',
+              'tests/test_ensemble_behavior_compare.py'): bind(root/p)
+    for p in args.input: bind(p)
+    preparation = training_base/'preparation'
+    seed_acceptance = preparation/'seed-acceptance.json'
+    proof = read(seed_acceptance,SEED_PROOF_SHA)
+    for p,h in proof['files'].items(): bind(p,h)
+    cohorts = {k:str(bind(preparation/(k+'.json'))) for k in ('solution','direct_v14','direct_control')}
+    require({k:read(p) for k,p in cohorts.items()} == proof['cohorts'],'Fixed cohort/proof mismatch')
+
+    source = source_identity(root,sys.executable,plans)
+    require(source['head'] == args.expected_head,'Expected committed HEAD differs')
+    for historical in (train,old):
+        previous = historical['source']
+        require(all(source[k] == previous[k] for k in ('python','executable','executable_sha256'))
+                and all(source['files'].get(p) == h for p,h in previous['files'].items()),
+                'Historical runtime byte subset changed')
+    a = dict(schema_version=1,profile=PROFILE,stage=args.stage,start_authorized=True,allow_battery=True,
+        root=str(root),out=str(output),python=sys.executable,plans=plans,source=source,
+        protected=protected,inputs=inputs,stop_file=str(stop),
+        v14_source=str(root/'agents/sherlock/weights/agent_p0.pth'),training_completion=str(closure_path),
+        training_completion_sha256=TRAINING_CLOSURE_SHA,reference_admission=str(reference_admission),
+        reference_state=str(reference_state),reference_receipt=str(reference_receipt),
+        reference_acceptance=str(reference_acceptance),cohorts=cohorts,seed_acceptance=str(seed_acceptance))
+    if args.stage == 'performance':
+        require(args.technical_acceptance is not None,'Separate actual Root technical acceptance required')
+        tech_admission = base/'technical-v1-admission.json'
+        tech_state = base/'technical_v1/state.json'; tech_receipt = base/'technical_v1/technical-receipt.json'
+        technical = read(tech_receipt); accepted = read(args.technical_acceptance)
+        previous = read(tech_admission); state = read(tech_state)
+        for p,h in previous['inputs'].items(): bind(p,h)
+        require(accepted['status'] == 'PASS' and accepted['profile'] == PROFILE
+                and accepted['source'] == previous['source'] == technical['source'] == source
+                and accepted['admission_sha256'] == digest(tech_admission)
+                and accepted['technical_receipt_sha256'] == digest(tech_receipt)
+                and accepted['owner_state_sha256'] == digest(tech_state)
+                and accepted['actual_assembly_and_stock_loader_pass'] is True
+                and accepted['original_processes_ended'] is True and technical['games'] == 0
+                and state['status'] == 'complete' and state['active'] == [],'Actual Root montage acceptance differs')
+        for role,record in technical['models'].items(): models[role] = str(bind(record['path'],record['sha256']))
+        require(set(models) == {'v14','control','behavior'},'Wrong eval model set')
+        a.update(technical_admission=str(tech_admission),technical_state=str(tech_state),
+                 technical_receipt=str(tech_receipt),technical_acceptance=str(safe_path(args.technical_acceptance)),
+                 models=models)
+    else:
+        require(args.technical_acceptance is None,'Technical phase cannot use future acceptance')
+    require(str(admission_path) not in inputs and all(output != Path(p) and output not in Path(p).parents
+                                                   for p in inputs),'Output overlaps input')
+    if args.write:
+        admission_path.parent.mkdir(parents=True,exist_ok=True); temporary = None
+        try:
+            with tempfile.NamedTemporaryFile('w',dir=admission_path.parent,prefix='.admission-',delete=False) as stream:
+                temporary = Path(stream.name); json.dump(a,stream,sort_keys=True,indent=2,allow_nan=False)
+                stream.write('\n'); stream.flush(); os.fsync(stream.fileno())
+            os.link(temporary,admission_path)
+        finally:
+            if temporary is not None: temporary.unlink(missing_ok=True)
+    print(json.dumps(dict(status='PASS',stage=args.stage,head=source['head'],inputs=len(inputs),
+        source_files=len(source['files']),admission_written=args.write,started=False,
+        admission=str(admission_path),sha256=digest(admission_path) if args.write else None),sort_keys=True))
+
+
+if __name__ == '__main__': main()
