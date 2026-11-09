@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "tests": 24,
+  "seconds": 1.69,
+  "exit_code": 0,
+  "command": "env PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_rank_mean_agent.py",
+  "sha256": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/rank_mean_agent.py": "d8d02d7df905462d13e4f56f4bfb3325800c2ce8e13ad6a3dab35c6b62165598",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_rank_mean_agent.py": "6922babc669528787cc5427cae0eb07a51407dba450c86be510fa79e3c49e700",
+    "/private/tmp/rank-mean-impl/final.log": "17ad00fd5cd683cb824660867ad8c04d20b343ff2c04da33a299309e4e70b635"
+  },
+  "scope": "Only synthetic tensors/member modules and patched core constructor/action; QNet, torch.load and torch.save forbidden. No games, real weights, repository core changes or commits."
+}

@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_off_never_computes_unused_ranks _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1096f6fd0>
+
+    def test_off_never_computes_unused_ranks(monkeypatch):
+        a,c=frame_case(False)
+        def forbidden(*args,**kwargs):raise AssertionError("Unused OFF rank computation")
+        monkeypatch.setattr(s,"numpy_rank_mean",forbidden)
+>       assert s.check_aggregation(a,c,3,3)["proposal_changes"]==0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rank_mean_screen.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/rank_mean_eval.py:261: in check_aggregation
+    member_q=np.stack(outputs);rank=numpy_rank_mean(member_q,masks);raw=member_q.mean(axis=0)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (array([[[100.,   0.,   0.,   0.,   0.,   0.],
+        [100.,   0.,   0.,   0.,   0.,   0.]],
+
+       [[  0.,   1.,   ...dtype=float32), array([[ True,  True, False, False, False, False],
+       [ True,  True, False, False, False, False]]))
+kwargs = {}
+
+>   def forbidden(*args,**kwargs):raise AssertionError("Unused OFF rank computation")
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Unused OFF rank computation
+
+tests/test_rank_mean_screen.py:70: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rank_mean_screen.py::test_off_never_computes_unused_ranks
+1 failed, 24 deselected in 0.05s

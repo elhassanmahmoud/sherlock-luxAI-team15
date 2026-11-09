@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Rangaggregation technisch aufgenommen
+
+- Separater Instanzprototyp und feste Vergleichswerkzeuge fertig. 24 Agent- und 25 Runnertests tatsächlich bestanden; unabhängiger enger Review ohne Blocker. Root hat finale Bytes, Code, Mathematik und Testbelege geprüft. [Stand](../experiments/analysis/rank_mean_screen_20261109/README.md).
+- Keine zusätzlichen Netze oder Gradienten. Originale 36 Mitglieder jeweils einmal ausgewertet; Ranggleichstände bleiben durch ganzzahlige Zähler stabil. Kartenbereiche ohne beobachtete fremde Nutzung, zwei eigene Planungsnennungen nachvollziehbar eingeordnet.
+- Nach Commit vier bekannte Technikspiele separat aufnehmen. Erst nach deren tatsächlicher Abnahme die festen 120 Leistungsspiele. Noch kein realer Rangvergleich und kein stärkerer Nachfolger behauptet. V14/ZIP bytegleich; Remote weiterhin ohne neue Mahmoud-Commits, Akku erlaubt.
+
 ## 09.11.2026 – Neue Richtung: Rangmittel im Ensemble
 
 - SAP-Bewegungsstudie geschlossen und als 26516e7 veröffentlicht; beide aktiven Arbeitskopien aktuell, keine laufenden eigenen Modelljobs. V14 und ZIP unverändert.

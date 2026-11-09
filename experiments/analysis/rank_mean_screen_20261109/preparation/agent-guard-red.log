@@ -1,0 +1,27 @@
+.......................F                                                 [100%]
+=================================== FAILURES ===================================
+_ test_constructor_rejects_non_v14_member_contract_and_silent_error_mode[frozen] _
+
+synthetic_core = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f2331c0>
+fault = 'frozen'
+
+    @pytest.mark.parametrize("fault", ["count", "duplicate", "width", "first_width", "frozen"])
+    def test_constructor_rejects_non_v14_member_contract_and_silent_error_mode(synthetic_core, monkeypatch, fault):
+        original_init = Agent_x.__init__
+        def init(self, *args, **kwargs):
+            original_init(self, *args, **kwargs)
+            if fault == "count": self.extra_q.pop()
+            if fault == "duplicate": self.extra_q[0] = self.q
+            if fault == "width": self.extra_q[0].feat_dim = 5
+            if fault == "first_width": self.q.feat_dim = 2
+            if fault == "frozen": self.cfg.frozen = True
+        monkeypatch.setattr(Agent_x, "__init__", init)
+>       with pytest.raises(ValueError): RankMeanAgent("player_0", rank_enabled=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_rank_mean_agent.py:230: Failed
+=========================== short test summary info ============================
+FAILED tests/test_rank_mean_agent.py::test_constructor_rejects_non_v14_member_contract_and_silent_error_mode[frozen]
+1 failed, 23 passed in 2.41s

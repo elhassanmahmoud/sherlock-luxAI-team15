@@ -1,0 +1,467 @@
+FFFFFFFFFFFFFFFFFFFFF                                                    [100%]
+=================================== FAILURES ===================================
+__________ test_fixed_new_profile_matrix_and_original_technical_keys ___________
+
+    def test_fixed_new_profile_matrix_and_original_technical_keys():
+>       assert s.PROFILE=="rank_mean_screen_20261109"
+E       AssertionError: assert 'sap_motion_screen_20261109' == 'rank_mean_screen_20261109'
+E         
+E         - rank_mean_screen_20261109
+E         ? ^ ^^  ^^
+E         + sap_motion_screen_20261109
+E         ? ^ ^  ^^^^
+
+tests/test_rank_mean_screen.py:14: AssertionError
+______ test_numpy_midranks_ignore_illegal_values_and_preserve_exact_ties _______
+
+    def test_numpy_midranks_ignore_illegal_values_and_preserve_exact_ties():
+        q=np.array([[[2,2,9,-20,0,0],[7,0,0,0,0,0]],
+                    [[1,3,-9,-20,0,0],[9,0,0,0,0,0]]],float)
+        mask=np.array([[1,1,0,0,0,0],[1,0,0,0,0,0]],bool)
+>       rank=s.numpy_rank_mean(q,mask)
+             ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'numpy_rank_mean'
+
+tests/test_rank_mean_screen.py:27: AttributeError
+_________________ test_numpy_reconstruction_fails_closed[nan] __________________
+
+fault = 'nan'
+
+    @pytest.mark.parametrize("fault",["nan","empty_mask","shape"])
+    def test_numpy_reconstruction_fails_closed(fault):
+        q=np.zeros((36,1,6));mask=np.ones((1,6),bool)
+        if fault=="nan":q[0,0,5]=float("nan")
+        if fault=="empty_mask":mask[:]=False
+        if fault=="shape":q=q[:,:,:5]
+>       with pytest.raises(ValueError):s.numpy_rank_mean(q,mask)
+                                       ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'numpy_rank_mean'
+
+tests/test_rank_mean_screen.py:41: AttributeError
+______________ test_numpy_reconstruction_fails_closed[empty_mask] ______________
+
+fault = 'empty_mask'
+
+    @pytest.mark.parametrize("fault",["nan","empty_mask","shape"])
+    def test_numpy_reconstruction_fails_closed(fault):
+        q=np.zeros((36,1,6));mask=np.ones((1,6),bool)
+        if fault=="nan":q[0,0,5]=float("nan")
+        if fault=="empty_mask":mask[:]=False
+        if fault=="shape":q=q[:,:,:5]
+>       with pytest.raises(ValueError):s.numpy_rank_mean(q,mask)
+                                       ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'numpy_rank_mean'
+
+tests/test_rank_mean_screen.py:41: AttributeError
+________________ test_numpy_reconstruction_fails_closed[shape] _________________
+
+fault = 'shape'
+
+    @pytest.mark.parametrize("fault",["nan","empty_mask","shape"])
+    def test_numpy_reconstruction_fails_closed(fault):
+        q=np.zeros((36,1,6));mask=np.ones((1,6),bool)
+        if fault=="nan":q[0,0,5]=float("nan")
+        if fault=="empty_mask":mask[:]=False
+        if fault=="shape":q=q[:,:,:5]
+>       with pytest.raises(ValueError):s.numpy_rank_mean(q,mask)
+                                       ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'numpy_rank_mean'
+
+tests/test_rank_mean_screen.py:41: AttributeError
+______ test_passive_forward_reconstruction_finds_changed_legal_proposals _______
+
+    def test_passive_forward_reconstruction_finds_changed_legal_proposals():
+        a,c=frame_case()
+>       record=s.check_aggregation(a,c,3,3)
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:61: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[double_forward] _
+
+fault = 'double_forward'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[missing_forward] _
+
+fault = 'missing_forward'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[features] __
+
+fault = 'features'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_ids] __
+
+fault = 'diag_ids'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_mask] _
+
+fault = 'diag_mask'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+__ test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_q] ___
+
+fault = 'diag_q'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[aggregate] _
+
+fault = 'aggregate'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[rank_greedy] _
+
+fault = 'rank_greedy'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[raw_greedy] _
+
+fault = 'raw_greedy'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+_ test_passive_validation_rejects_real_capture_or_diagnostic_faults[stale_cache] _
+
+fault = 'stale_cache'
+
+    @pytest.mark.parametrize("fault",["double_forward","missing_forward","features","diag_ids","diag_mask",
+                                      "diag_q","aggregate","rank_greedy","raw_greedy","stale_cache"])
+    def test_passive_validation_rejects_real_capture_or_diagnostic_faults(fault):
+        a,c=frame_case()
+        if fault=="double_forward":c["members"][1]*=2
+        if fault=="missing_forward":c["members"][1]=[]
+        if fault=="features":c["members"][2][0][0][0,0]+=1
+        if fault=="diag_ids":a.aggregation_last["ids"]=(2,5)
+        if fault=="diag_mask":a.aggregation_last["masks"][0,0]=False
+        if fault=="diag_q":a.aggregation_last["member_q"][0,0,0]+=1
+        if fault=="aggregate":c["aggregate"][0][1][0,0]+=.1
+        if fault=="rank_greedy":a.aggregation_last["rank_greedy"][0]=0
+        if fault=="raw_greedy":a.aggregation_last["raw_greedy"][0]=1
+        if fault=="stale_cache":a._cache=(2,*a._cache[1:])
+>       with pytest.raises(ValueError):s.check_aggregation(a,c,3,3)
+                                       ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:82: AttributeError
+___________ test_reset_needs_no_network_and_rejects_stale_diagnostic ___________
+
+    def test_reset_needs_no_network_and_rejects_stale_diagnostic():
+        a,c=frame_case();a.aggregation_last=None;c={"members":[[] for _ in range(36)],"aggregate":[]}
+>       assert s.check_aggregation(a,c,4,0)["proposal_changes"]==0
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.rank_mean_eval' has no attribute 'check_aggregation'
+
+tests/test_rank_mean_screen.py:87: AttributeError
+_____ test_rank_factory_preserves_config_weights_and_all_original_members ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10708fce0>
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-377/test_rank_factory_preserves_co0')
+
+    def test_rank_factory_preserves_config_weights_and_all_original_members(monkeypatch,tmp_path):
+        calls=[]
+        class Fake:
+            def __init__(self,player,**kw):
+                calls.append(kw);self.cfg=kw["cfg"];self.rank_enabled=kw["rank_enabled"]
+                self.training=False;self.epsilon=0;self.learn_enabled=False;self.cnn_policy=None
+                self.feat_dim=79;self.n_actions=6;self.aggregation_members=tuple(object() for _ in range(36))
+            def set_to_eval_mode(self):pass
+        monkeypatch.setitem(sys.modules,"scripts.rank_mean_agent",SimpleNamespace(RankMeanAgent=Fake))
+        monkeypatch.setitem(sys.modules,"scripts.par_eval",SimpleNamespace(build_cfg=lambda *_:SimpleNamespace(frozen=False)))
+        def wrong(*args,**kwargs):raise AssertionError("Wrong old factory")
+        monkeypatch.setitem(sys.modules,"scripts.sap_motion_agent",SimpleNamespace(SapMotionAgent=wrong))
+        a=dict(root=str(tmp_path),config={"frozen":False})
+>       off,on=s.make_agent(a,False),s.make_agent(a,True)
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rank_mean_screen.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/rank_mean_eval.py:194: in make_agent
+    agent=SapMotionAgent("player_0",agent_path=weights,cfg=cfg,train=False,seed=0,lead_enabled=enabled)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('player_0',)
+kwargs = {'agent_path': '/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-377/test_rank_...ry_preserves_co0/agents/sherlock/weights/agent_p0.pth', 'cfg': namespace(frozen=False), 'train': False, 'seed': 0, ...}
+
+>   def wrong(*args,**kwargs):raise AssertionError("Wrong old factory")
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Wrong old factory
+
+tests/test_rank_mean_screen.py:102: AssertionError
+_____ test_proposal_exposure_gates_use_aggregation_not_final_action_claims _____
+
+    def test_proposal_exposure_gates_use_aggregation_not_final_action_claims():
+>       r=rows();summary=s.summarize(r)
+                         ^^^^^^^^^^^^^^
+
+tests/test_rank_mean_screen.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = {'off_solution': [{'seed': 9942000, 'side': 'player_0', 'steps': 303, 'point_counting_version': 2, ...}, {'seed': 9942...ounting_version': 2, ...}, {'seed': 9942102, 'side': 'player_1', 'steps': 303, 'point_counting_version': 2, ...}, ...]}
+
+    def summarize(rows):
+        import numpy as np
+        from scripts.league_gates import _bootstrap
+        require(set(rows)==set(JOBS),"All three complete jobs required")
+        normalized, reports = {}, {}
+        for job in JOBS:
+            records=rows[job]; expected=set(keys(job)); found={}; counts={"W":0,"D":0,"L":0}
+            require(len(records)==40,"Exactly40 games per job required")
+            for r in records:
+                key=(r["seed"],r["side"])
+                require(type(r["seed"]) is int and key in expected and key not in found,"Duplicate/wrong game key")
+                require(r["steps"]==303 and r["point_counting_version"]==2 and r["caught_errors"]==0,"Invalid complete game")
+                require(all(type(r[k]) in (int,float) and math.isfinite(r[k]) and r[k]>=0
+                            for k in ("our_wins","opp_wins","our_points","opp_points")),"Invalid game numbers")
+                require(all(float(r[k]).is_integer() for k in ("our_wins","opp_wins","our_points","opp_points"))
+                        and r["our_wins"]<=3 and r["opp_wins"]<=3,"Noninteger game result")
+                score=1 if r["our_wins"]>r["opp_wins"] else 0 if r["our_wins"]<r["opp_wins"] else .5
+                require(r["result"]==score,"Result differs from match wins")
+>               changes=r["leading"].get("changes",0)
+                        ^^^^^^^^^^^^
+E               KeyError: 'leading'
+
+scripts/rank_mean_eval.py:79: KeyError
+_______ test_technical_needs_both_proposal_and_native_stream_divergence ________
+
+    def test_technical_needs_both_proposal_and_native_stream_divergence():
+        games=[dict(mode=mode,seed=seed,side=side,steps=303,off_reproduced=not mode,
+            observed_proposal_changed_steps=int(mode),native_divergent_frames=int(mode))
+            for mode in (False,True) for seed,side in s.TECH_KEYS]
+>       s.check_technical(games)
+
+tests/test_rank_mean_screen.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/rank_mean_eval.py:152: in check_technical
+    and sum(r["observed_changes"] for r in games if r["mode"])>0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x107157c40>
+
+>   and sum(r["observed_changes"] for r in games if r["mode"])>0,
+            ^^^^^^^^^^^^^^^^^^^^^
+    "Four technical proofs with OFF reproduction and actual ON intervention required")
+E   KeyError: 'observed_changes'
+
+scripts/rank_mean_eval.py:152: KeyError
+___________________ test_owner_is_only_a_module_name_change ____________________
+
+    def test_owner_is_only_a_module_name_change():
+        folder=Path(__file__).resolve().parents[1]/"scripts"
+>       assert (folder/"rank_mean_owner.py").read_text()==(folder/"sap_motion_owner.py").read_text().replace("sap_motion_eval","rank_mean_eval")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rank_mean_screen.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/rank_mean_owner.py')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/rank_mean_owner.py'
+
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_rank_mean_screen.py::test_fixed_new_profile_matrix_and_original_technical_keys
+FAILED tests/test_rank_mean_screen.py::test_numpy_midranks_ignore_illegal_values_and_preserve_exact_ties
+FAILED tests/test_rank_mean_screen.py::test_numpy_reconstruction_fails_closed[nan]
+FAILED tests/test_rank_mean_screen.py::test_numpy_reconstruction_fails_closed[empty_mask]
+FAILED tests/test_rank_mean_screen.py::test_numpy_reconstruction_fails_closed[shape]
+FAILED tests/test_rank_mean_screen.py::test_passive_forward_reconstruction_finds_changed_legal_proposals
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[double_forward]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[missing_forward]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[features]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_ids]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_mask]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[diag_q]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[aggregate]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[rank_greedy]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[raw_greedy]
+FAILED tests/test_rank_mean_screen.py::test_passive_validation_rejects_real_capture_or_diagnostic_faults[stale_cache]
+FAILED tests/test_rank_mean_screen.py::test_reset_needs_no_network_and_rejects_stale_diagnostic
+FAILED tests/test_rank_mean_screen.py::test_rank_factory_preserves_config_weights_and_all_original_members
+FAILED tests/test_rank_mean_screen.py::test_proposal_exposure_gates_use_aggregation_not_final_action_claims
+FAILED tests/test_rank_mean_screen.py::test_technical_needs_both_proposal_and_native_stream_divergence
+FAILED tests/test_rank_mean_screen.py::test_owner_is_only_a_module_name_change
+21 failed in 0.25s
