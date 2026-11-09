@@ -1,0 +1,62 @@
+{
+  "direct": {
+    "D": 0,
+    "L": 21,
+    "W": 19,
+    "ci95": [
+      0.25,
+      0.7
+    ],
+    "score": 0.475
+  },
+  "eligible_for_separate_design": false,
+  "exposed_panel_maps": 20,
+  "exposure_definition": "Changed legal network proposal; not proof of a changed final action after rules",
+  "games": 120,
+  "gates": {
+    "direct": false,
+    "exposure": true,
+    "solution": true
+  },
+  "input_sha256": {
+    "admission": "c0b7157c46f982fbb89b7d7d143c4ce29a41c7c2cae47001fa43f54c6768c086",
+    "receipts": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rank_mean_screen_20261109/performance_v1/off_solution/receipt.json": "2673a237e68417e8be3f354d077b11059d9247e782347a6c3098cb1d4b36c279",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rank_mean_screen_20261109/performance_v1/on_direct/receipt.json": "bda88d65d4badfcb9995e43cb369a6597c9b4b43fad8a12f8e6821cb92eb21d6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rank_mean_screen_20261109/performance_v1/on_solution/receipt.json": "7f007667264a19953cefef21e3144d28950b32c331097dd0c2eed995246b1fa0"
+    },
+    "state": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rank_mean_screen_20261109/performance_v1/state.json": "ba2a1def9a2fb536c01aa73248f7fb55be09fdb5af59ac9ce73ab1ada28a126b"
+    }
+  },
+  "promotion": false,
+  "solution": {
+    "off_solution": {
+      "D": 0,
+      "L": 1,
+      "W": 39,
+      "ci95": [
+        0.925,
+        1.0
+      ],
+      "score": 0.975
+    },
+    "on_solution": {
+      "D": 0,
+      "L": 1,
+      "W": 39,
+      "ci95": [
+        0.925,
+        1.0
+      ],
+      "score": 0.975
+    }
+  },
+  "solution_delta": 0.0,
+  "solution_delta_ci95": [
+    0.0,
+    0.0
+  ],
+  "status": "complete_descriptive",
+  "uncertainty": "20 whole-map clusters/block;5000 bootstrap draws,PCG64 seed0,unadjusted95%; descriptive"
+}

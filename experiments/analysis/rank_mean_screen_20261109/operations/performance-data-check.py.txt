@@ -1,0 +1,142 @@
+"""UNRUN preparation: narrow independent audit, execute only after Root closes all 120 games."""
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+
+JOBS=('off_solution','on_solution','on_direct')
+PROFILE='rank_mean_screen_20261109'
+BASE=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rank_mean_screen_20261109')
+checks=0
+def check(ok,message):
+    global checks
+    checks+=1
+    if not ok:raise AssertionError(message)
+def sha(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+    return h.hexdigest()
+def read(path):return json.loads(Path(path).read_text())
+def rows(path):return [json.loads(line) for line in Path(path).read_text().splitlines()]
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--state',type=Path,default=BASE/'performance_v1/state.json')
+    p.add_argument('--summary',type=Path,default=BASE/'performance_v1/summary.json')
+    p.add_argument('--out',type=Path,default=Path('/tmp/rank-mean-data-review/performance-data-review.json'))
+    args=p.parse_args();sp=args.state.resolve();mp=args.summary.resolve()
+    check(not args.out.exists(),'new exclusive audit output')
+    state_sha=sha(sp);summary_sha=sha(mp);state=read(sp);summary=read(mp)
+    check(state['profile']==PROFILE and state['stage']=='performance' and state['status']=='complete' and state['active']==[],'completed performance phase')
+    check(set(state['jobs'])==set(JOBS) and set(state['receipts'])==set(JOBS),'exact three jobs')
+    check(all(type(j.get('returncode')) is int and j['returncode']==0 and j.get('finished_at') is not None for j in state['jobs'].values()),'successful exits')
+    argv=state['jobs'][JOBS[0]]['argv'];ap=Path(argv[argv.index('--admission')+1]).resolve();a=read(ap);admission_sha=sha(ap)
+    check(a['profile']==PROFILE and a['stage']=='performance' and a['start_authorized'] is True,'performance admission')
+    check(admission_sha==state['admission_sha256'] and all(state.get(k)==a[k] for k in ('root','out','python','plans','source','protected','stop_file','allow_battery')),'state/admission binding')
+    check(type(a['allow_battery']) is bool and Path(a['out']).resolve()==sp.parent,'bound phase path')
+    data={};receipts={};raw_pins={};changes={};unit_changes={};stats={}
+    for job in JOBS:
+        folder=sp.parent/job;rp=folder/'receipt.json';receipt=read(rp);receipt_sha=sha(rp)
+        receipts[str(rp)]=receipt_sha
+        check(state['receipts'][job]==dict(path=str(rp),sha256=receipt_sha),'owned receipt '+job)
+        expected_argv=[a['python'],'-B','-m','scripts.rank_mean_eval','run','--admission',str(ap),'--admission-sha',admission_sha,'--owner-state',str(sp),'--job',job]
+        check(receipt['command']==state['jobs'][job]['argv']==expected_argv,'actual command '+job)
+        check(receipt['status']=='complete' and receipt['stage']=='performance' and receipt['job']==job and receipt['profile']==PROFILE,'receipt status '+job)
+        check(receipt['source']==a['source'] and receipt['config']==a['config'] and receipt['admission_sha256']==admission_sha,'receipt source/config '+job)
+        expected_files={str(folder/'games.jsonl'),*(str(folder/f'events_{i:02}.jsonl') for i in range(40))}
+        check(set(receipt['files'])==expected_files,'exact raw inventory '+job)
+        for path,digest in receipt['files'].items():check(sha(path)==digest,'raw hash '+path)
+        raw_pins.update(receipt['files']);records=rows(folder/'games.jsonl')
+        check(records==receipt['games'] and len(records)==40,'40 raw rows '+job)
+        start=9944100 if job=='on_direct' else 9944000
+        expected_keys=[(seed,side) for seed in range(start,start+20) for side in ('player_0','player_1')]
+        check([(r['seed'],r['side']) for r in records]==expected_keys,'exact ordered keys '+job)
+        values={};count={'W':0,'D':0,'L':0};changes[job]=0;unit_changes[job]=0
+        for i,r in enumerate(records):
+            check(type(r['seed']) is int and r['mode'] is (job!='off_solution'),'role '+job)
+            check(r['steps']==303 and r['caught_errors']==0 and r['point_counting_version']==2,'complete game '+job)
+            check(all(type(r[k]) in (int,float) and math.isfinite(r[k]) and r[k]>=0 and float(r[k]).is_integer() for k in ('our_wins','opp_wins','our_points','opp_points')),'result values '+job)
+            check(r['our_wins']<=3 and r['opp_wins']<=3,'three match limit')
+            result=1. if r['our_wins']>r['opp_wins'] else 0. if r['our_wins']<r['opp_wins'] else .5
+            check(r['result']==result and r['game_win']==int(result==1),'outcome from match wins')
+            team=int(r['side'][-1]);matches=r['matches']
+            check(len(matches)==3 and [m['match_idx'] for m in matches]==[0,1,2],'match sequence')
+            check(matches[-1]['cumulative_wins'][team]==r['our_wins'] and matches[-1]['cumulative_wins'][1-team]==r['opp_wins'],'final match wins')
+            check(sum(m['points'][team] for m in matches)==r['our_points'] and sum(m['points'][1-team] for m in matches)==r['opp_points'],'full match points')
+            events=rows(folder/f'events_{i:02}.jsonl');n=r['observed_proposal_changed_steps']
+            check(type(n) is int and 0<=n<=300 and n==r['aggregation'].get('proposal_changed_steps',0)==len(events),'actual event count')
+            check((job!='off_solution' or n==0) and len({e['step'] for e in events})==n,'OFF/unique events')
+            calls=r['aggregation'].get('calls',0);units=r['aggregation'].get('proposal_changes',0)
+            check(type(calls) is int and type(units) is int and 0<=n<=calls<=300 and n<=units<=16*n,
+                  'valid proposal batch/unit counters')
+            check(job!='off_solution' or calls==units==0,'OFF has no aggregation diagnostics')
+            event_units=0
+            for e in events:
+                check(e['proposal_changed'] is True and type(e['step']) is int and 0<=e['step']<303 and e['step']%101!=0,
+                      'changed legal-preference frame')
+                aggregation=e['aggregation'];ids=aggregation['ids'];masks=aggregation['masks']
+                check(aggregation['active'] is True and 1<=len(ids)<=16 and len(ids)==len(set(ids))
+                      and all(type(uid) is int and 0<=uid<16 for uid in ids),'active unique row IDs')
+                check(len(e['final'])==16 and all(len(command)==3 and all(type(v) is int for v in command)
+                      for command in e['final']),'final command shape')
+                check(len(masks)==len(ids) and all(len(mask)==6 and all(type(v) is bool for v in mask)
+                      and any(mask) for mask in masks),'legal preference masks')
+                raw=aggregation['raw_mean'];rank=aggregation['rank_mean']
+                check(len(raw)==len(rank)==len(ids) and all(len(row)==6 and all(type(v) in (int,float)
+                      and math.isfinite(v) for v in row) for matrix in (raw,rank) for row in matrix),
+                      'finite recorded mean shapes')
+                raw_greedy=[];rank_greedy=[]
+                for raw_row,rank_row,mask in zip(raw,rank,masks):
+                    legal=[action for action in range(6) if mask[action]]
+                    check(all((0<=rank_row[action]<=1) if mask[action] else rank_row[action]==-1
+                              for action in range(6)),'legal rank range and illegal sentinel')
+                    raw_greedy.append(max(legal,key=lambda action:raw_row[action]))
+                    rank_greedy.append(max(legal,key=lambda action:rank_row[action]))
+                changed_units=sum(before!=after for before,after in zip(raw_greedy,rank_greedy))
+                check(aggregation['raw_greedy']==raw_greedy and aggregation['rank_greedy']==rank_greedy,
+                      'recorded smallest-ID legal preferences')
+                check(type(aggregation['proposal_changes']) is int and 0<changed_units==aggregation['proposal_changes']<=len(ids),
+                      'actual changed legal unit preferences')
+                event_units+=changed_units
+            check(event_units==units,'event unit changes equal game aggregation counter')
+            unit_changes[job]+=units
+            count[{1.:'W',.5:'D',0.:'L'}[result]]+=1;changes[job]+=n;values[(r['seed'],r['side'])]=result
+        data[job]=(records,values);stats[job]=count
+    # Independent numeric calculation: no project analysis helper imports.
+    import numpy as np
+    def interval(values):
+        x=np.asarray(values,dtype=float)
+        rng=np.random.Generator(np.random.PCG64(0))
+        means=rng.choice(x,size=(5000,len(x)),replace=True).mean(axis=1)
+        return [float(x) for x in np.percentile(means,[2.5,97.5])]
+    for job in JOBS:
+        records,values=data[job];maps=sorted({r['seed'] for r in records})
+        clusters=[(values[(seed,'player_0')]+values[(seed,'player_1')])/2 for seed in maps]
+        stats[job].update(score=sum(clusters)/20,ci95=interval(clusters))
+    on=data['on_solution'][1];off=data['off_solution'][1]
+    contrasts=[sum(on[(seed,side)]-off[(seed,side)] for side in ('player_0','player_1'))/2 for seed in range(9944000,9944020)]
+    exposed={r['seed'] for r in data['on_solution'][0] if r['observed_proposal_changed_steps']>0}
+    twice=lambda j:2*stats[j]['W']+stats[j]['D']
+    gates=dict(exposure=len(exposed)>=5,solution=twice('on_solution')>=twice('off_solution'),direct=twice('on_direct')>=48)
+    calculated=dict(games=120,exposed_panel_maps=len(exposed),solution={j:stats[j] for j in JOBS[:2]},direct=stats['on_direct'],solution_delta=sum(contrasts)/20,solution_delta_ci95=interval(contrasts),gates=gates,eligible_for_separate_design=all(gates.values()),promotion=False)
+    def equal(actual,expected):
+        if isinstance(expected,dict):return isinstance(actual,dict) and set(actual)==set(expected) and all(equal(actual[k],v) for k,v in expected.items())
+        if isinstance(expected,list):return isinstance(actual,list) and len(actual)==len(expected) and all(equal(x,y) for x,y in zip(actual,expected))
+        if type(expected) is float:return type(actual) in (int,float) and math.isfinite(actual) and abs(actual-expected)<=1e-12
+        return type(actual) is type(expected) and actual==expected
+    for k,v in calculated.items():check(equal(summary.get(k),v),'original summary '+k)
+    check(summary['status']=='complete_descriptive','summary status')
+    check(summary['input_sha256']==dict(admission=admission_sha,state={str(sp):state_sha},receipts=receipts),'summary input chain')
+    check(sha(sp)==state_sha and sha(mp)==summary_sha,'stable completed state/summary')
+    report=dict(status='PASS',profile=PROFILE,source_head=a['source']['head'],checks=checks,calculated=calculated,actual_proposal_changed_steps=changes,actual_proposal_changes=unit_changes,exposed_panel_seeds=sorted(exposed),
+        input_sha256={str(sp):state_sha,str(mp):summary_sha,str(ap):admission_sha,**receipts,**raw_pins},
+        bootstrap=dict(samples=5000,rng='PCG64',seed=0,unit='whole map, both sides, paired panel contrast',ci_percentiles=[2.5,97.5]),
+        limitations=['Executed only after completed three-job owner state; no games, forwards, tensor loads or project imports.',
+            'Independent calculation of 120 rows, changed legal network preferences and descriptive statistics; preference exposure is not final-action change. No broad source audit or new technical-frame reconstruction.',
+            'Twenty map clusters per block; unadjusted descriptive intervals. A positive screen permits only a separately planned follow-up, not promotion or general strength proof.'])
+    with args.out.open('x') as f:json.dump(report,f,indent=2,allow_nan=False);f.write('\n')
+    print(json.dumps(dict(status='PASS',checks=checks,calculated=calculated,actual_proposal_changed_steps=changes,actual_proposal_changes=unit_changes,report_sha256=sha(args.out)),indent=2))
+
+if __name__=='__main__':main()

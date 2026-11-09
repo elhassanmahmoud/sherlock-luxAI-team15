@@ -1,0 +1,150 @@
+"""Bounded stdlib audit of four completed Rank-mean technical traces; no model imports."""
+import gzip
+import hashlib
+import json
+import math
+import statistics
+from pathlib import Path
+
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE=ROOT/'experiments/analysis/rank_mean_screen_20261109'
+OUT=BASE/'technical_v1'
+DEST=Path('/tmp/rank-mean-technical-review')
+checks=0
+pins={}
+def check(ok,message):
+    global checks
+    checks+=1
+    if not ok:raise AssertionError(message)
+def digest(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+    return h.hexdigest()
+def bind(path,expected=None):
+    path=str(path);h=digest(path)
+    if expected is not None:check(h==expected,'SHA '+path)
+    pins[path]=h
+    return h
+def read(path):return json.loads(Path(path).read_text())
+def lines(path):
+    with Path(path).open() as f:
+        for line in f:yield json.loads(line)
+
+a_path=BASE/'technical-admission.json';s_path=OUT/'state.json';r_path=OUT/'technical/receipt.json'
+a=read(a_path);s=read(s_path);r=read(r_path)
+ah=bind(a_path);sh=bind(s_path);rh=bind(r_path)
+check(s['status']=='complete' and s['active']==[] and set(s['jobs'])=={'technical'},'completed technical owner')
+j=s['jobs']['technical'];check(j['returncode']==0 and j['finished_at'] is not None,'exit0')
+check(a['stage']==s['stage']==r['stage']=='technical' and a['profile']==s['profile']==r['profile']=='rank_mean_screen_20261109','phase/profile')
+check(r['status']=='complete' and r['job']=='technical','receipt status')
+check(a['source']==s['source']==r['source'] and a['source']['head']=='32772fd971c1e65338b476438deda9f4aac9969b','frozen source')
+check(a['config']==r['config'] and a['config']['frozen'] is False,'config')
+check(a['allow_battery'] is s['allow_battery'] is True,'authorized battery binding')
+check(ah==s['admission_sha256']==r['admission_sha256'],'admission binding')
+check(s['receipts']['technical']==dict(path=str(r_path),sha256=rh),'receipt binding')
+argv=[a['python'],'-B','-m','scripts.rank_mean_eval','technical','--admission',str(a_path),'--admission-sha',ah,'--owner-state',str(s_path)]
+check(j['argv']==r['command']==argv and j['pid']==j['pgid'] and j['owner_pid']==s['owner_pid'],'recorded command/ownership')
+check(s['inputs']=={**a['inputs'],str(a_path):ah} and s['protected']==a['protected'],'input/protected binding')
+for p,h in {**a['inputs'],**a['protected']}.items():bind(p,h)
+for name in ('rank_mean_agent.py','rank_mean_eval.py','rank_mean_owner.py'):
+    p=ROOT/'scripts'/name;bind(p,a['source']['files'][str(p)])
+config=read(a['config_manifest'])
+check(a['config']==dict(config['source_config'],frozen=False),'bound config manifest')
+expected_files={str(OUT/'technical/games.jsonl'),*(str(OUT/f'technical/events_{i:02}.jsonl') for i in range(4))}
+check(set(r['files'])==expected_files,'five raw files')
+for p,h in r['files'].items():bind(p,h)
+games=list(lines(OUT/'technical/games.jsonl'))
+check(games==r['games'],'raw rows/receipt equality')
+keys=[(mode,seed,side) for mode in (False,True) for seed,side in ((831006,'player_1'),(831000,'player_0'))]
+check([(g['mode'],g['seed'],g['side']) for g in games]==keys,'four fixed keys')
+hist_path=ROOT/'experiments/analysis/continuation_20261102/targeting/manifest.json'
+hist=read(hist_path)
+span_sums=[0.]*36;span_rows=0;reports=[]
+for idx,g in enumerate(games):
+    old=[x for x in hist['games'] if (x['key']['seed'],x['key']['side'])==(g['seed'],g['side'])]
+    check(len(old)==1 and old[0]['complete'] is True,'historical unique game')
+    old=old[0];hp=hist_path.parent/old['trace']['path'];check(pins[str(hp)]==old['trace']['sha256'],'historical trace SHA binding')
+    with gzip.open(hp,'rt') as f:history=[json.loads(x) for x in f]
+    check(len(history)==303,'historical 303 frames')
+    check(g['steps']==303 and g['caught_errors']==0 and g['point_counting_version']==2,'complete raw game')
+    if not g['mode']:
+        check(g['off_reproduced'] is True,'OFF reproduction flag')
+        for k in ('seed','side','steps','our_wins','opp_wins','our_points','opp_points','result','point_counting_version','matches','action_sha256'):
+            check(g[k]==old['observed'][k],'OFF historical '+k)
+    team=int(g['side'][-1]);matches=g['matches']
+    check(len(matches)==3 and [m['match_idx'] for m in matches]==[0,1,2],'match records')
+    check(sum(m['points'][team] for m in matches)==g['our_points'] and sum(m['points'][1-team] for m in matches)==g['opp_points'],'match point totals')
+    wins=[0,0]
+    for m in matches:
+        for side in (0,1):wins[side]+=int(m['points'][side]>m['points'][1-side])
+        check(m['cumulative_wins']==wins,'match wins from points')
+    check(wins[team]==g['our_wins'] and wins[1-team]==g['opp_wins'],'game wins')
+    score=1 if wins[team]>wins[1-team] else 0 if wins[team]<wins[1-team] else .5
+    check(g['result']==score,'game result from matches')
+    frames=active=units=changed_frames=changed_units=divergent=ties=singletons=0
+    changed_steps=[];divergent_steps=[];max_raw_error=0.
+    for i,e in enumerate(lines(OUT/f'technical/events_{idx:02}.jsonl')):
+        frames+=1;h=history[i];d=e['aggregation']
+        check(e['step']==i==h['key']['obs_step'] and h['key']['seed']==g['seed'] and h['key']['side']==g['side'],'frame identity')
+        final=e['final'];check(len(final)==16 and all(len(row)==3 and all(type(v) is int for v in row) and 0<=row[0]<=5 for row in final),'native action shape/types')
+        different=final!=h['native_actions'];divergent+=different
+        if different:divergent_steps.append(i)
+        if not g['mode']:check(not different,'OFF native array equality')
+        if not d['active']:
+            check(i in (0,101,202) and all(d[k]==[] for k in ('ids','masks','member_q','features','raw_mean','rank_mean','raw_greedy','rank_greedy')) and d['proposal_changes']==0 and e['proposal_changed'] is False,'empty reset diagnostic')
+            check(final==[[0,0,0] for _ in range(16)],'reset native stay')
+            continue
+        check(i not in (0,101,202),'no reset aggregation')
+        active+=1;ids=d['ids'];n=len(ids);units+=n
+        check(0<n<=16 and len(set(ids))==n and all(type(u) is int and 0<=u<16 for u in ids),'unique unit IDs')
+        masks=d['masks'];qs=d['member_q'];features=d['features'];raw=d['raw_mean']
+        check(len(masks)==n and all(len(m)==6 and all(type(v) is bool for v in m) and any(m) for m in masks),'legal masks')
+        check(len(qs)==36 and all(len(member)==n and all(len(row)==6 and all(math.isfinite(v) for v in row) for row in member) for member in qs),'36 finite member outputs')
+        check(len(features)==n and all(len(f)==79 and all(math.isfinite(v) for v in f) for f in features),'finite 79-feature rows')
+        check(len(raw)==n and all(len(row)==6 and all(math.isfinite(v) for v in row) for row in raw),'raw mean shape')
+        ranks=[];raw_greedy=[];rank_greedy=[]
+        for row,mask in enumerate(masks):
+            legal=[a for a,v in enumerate(mask) if v];singletons+=len(legal)==1
+            numerator={a:sum(2*sum(qs[m][row][b]<qs[m][row][a] for b in legal)+sum(qs[m][row][b]==qs[m][row][a] for b in legal)-1 for m in range(36)) for a in legal}
+            rr=[-1.]*6
+            for action in legal:rr[action]=.5 if len(legal)==1 else numerator[action]/(72*(len(legal)-1))
+            ranks.append(rr)
+            winners=[a for a in legal if numerator[a]==max(numerator.values())];ties+=len(winners)>1
+            rank_greedy.append(min(winners));raw_greedy.append(max(legal,key=lambda a:raw[row][a]))
+            for action in range(6):
+                exact=math.fsum(qs[m][row][action] for m in range(36))/36;err=abs(exact-raw[row][action]);max_raw_error=max(max_raw_error,err)
+                check(err<=1e-6+1e-5*abs(exact),'raw mean numerical consistency')
+            if not g['mode']:
+                span_rows+=1
+                for m in range(36):span_sums[m]+=max(qs[m][row][a] for a in legal)-min(qs[m][row][a] for a in legal)
+        if g['mode']:
+            check(d['rank_mean']==ranks,'independent exact integer ranks')
+            check(d['rank_greedy']==rank_greedy and d['raw_greedy']==raw_greedy,'legal greedy/tie diagnostics')
+            changes=sum(a!=b for a,b in zip(raw_greedy,rank_greedy))
+        else:
+            check(d['rank_mean']==d['raw_greedy']==d['rank_greedy']==[],'OFF no rank diagnostics');changes=0
+        check(d['proposal_changes']==changes and e['proposal_changed'] is bool(changes),'frame proposal counts')
+        changed_units+=changes;changed_frames+=bool(changes)
+        if changes:changed_steps.append(i)
+    check(frames==303 and active==300,'303 frames / 300 active batches')
+    expected=dict(calls=active if g['mode'] else 0,proposal_changed_steps=changed_frames,proposal_changes=changed_units)
+    check(g['aggregation']==expected and g['observed_proposal_changed_steps']==changed_frames,'per-game aggregation counters')
+    check(g['native_divergent_frames']==divergent,'native divergent frame count')
+    reports.append(dict(mode='ON' if g['mode'] else 'OFF',seed=g['seed'],side=g['side'],frames=frames,active_batches=active,unit_frames=units,stored_member_batches=active*36,proposal_changed_steps=changed_frames,proposal_changes=changed_units,native_divergent_frames=divergent,rank_top_tie_unit_frames=ties,singleton_legal_unit_frames=singletons,max_raw_mean_absolute_error=max_raw_error,changed_steps=changed_steps,divergent_steps=divergent_steps,our_points=g['our_points'],opp_points=g['opp_points'],matches=matches,action_sha256=g['action_sha256'],off_historical_exact=not g['mode']))
+check([g['proposal_changed_steps'] for g in reports]==[0,0,47,131],'reported proposal exposure')
+check([g['native_divergent_frames'] for g in reports]==[0,0,199,226],'reported native divergence')
+for p in (s_path,a_path,r_path,*map(Path,r['files'])):check(digest(p)==pins[str(p)],'closed technical input unchanged during audit')
+means=[v/span_rows for v in span_sums]
+result=dict(status='PASS',profile=a['profile'],source_head=a['source']['head'],checks=checks,total_games=4,total_frames=1212,games=reports,input_sha256=pins,source_files_rehashed=3,source_identity_binding='Exact admission/owner/receipt equality; full source inventory not rehashed',
+    off_member_legal_q_span=dict(unit_frame_denominator=span_rows,weighting='equal unit-frame weight pooled over both OFF traces; singleton span=0',member_order='head then extra_q order, indices 0..35',member_means=means,minimum=min(means),maximum=max(means),median=statistics.median(means),interpretation='Descriptive Q-scale span only; no dominance, action-effect, strength claim or new gate'),
+    limitations=['Only stored completed technical data; no models, forwards, tests, project imports, games or performance data read.',
+      'Raw Q values/features/masks are stored runtime observations; no independent feature extraction or neural forward verification.',
+      'Stored ON rank_mean is the worker reconstruction; actual aggregate tensor equality was checked live but its separate tensor is not archived. This audit independently reconstructs ranks and proposal diagnostics from all stored member outputs.',
+      'ON raw_mean is the actual Torch diagnostic; checked against a high-precision mean with rtol1e-5/atol1e-6. Its stored values define raw greedy near floating-point ties; reduction order is not independently replayed.',
+      'Exactly one Core call, exactly one forward per member, current-input identity and Remember equality are assertions of the successful bound worker; individual call counts/member inputs/Remember arrays are not separately archived.',
+      'Shared both-player action SHA is compared with historical manifest; opponent commands are absent, so combined SHA is not independently recomputed. OFF own native arrays and match points are exhaustively compared.',
+      'ON native differences versus old trajectories are not same-state causal action effects after trajectories diverge. Proposal differences are within-frame legal greedy differences; rules may override them.',
+      'Known technical games only; no strength, promotion or performance acceptance claim.'])
+(DEST/'result.json').write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
+print(json.dumps(dict(status='PASS',checks=checks,games=[{k:g[k] for k in ('mode','seed','side','frames','proposal_changed_steps','proposal_changes','native_divergent_frames','unit_frames')} for g in reports],off_span=result['off_member_legal_q_span'],report_sha256=digest(DEST/'result.json')),indent=2))

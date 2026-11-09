@@ -50,3 +50,7 @@ Drei feste Hürden: geänderte legale Netzpräferenz auf mindestens fünf ON-Pan
 - [ ] Root tatsächliche technische Daten akzeptieren, dann separat Performance aufnehmen.
 - [ ] Vollständige Ergebnisse und Unsicherheit unabhängig nachrechnen, Quelle vor Änderung versiegelt abschließen.
 - [ ] Dokumentation für Mahmoud, sinnvolle Ergebniscommits und sicherer Push/Lokalabgleich. V14 bleibt bis belegtem besseren Kandidaten.
+
+## Tatsächlicher Abschluss am 09.11.
+
+124 Ausführungen vollständig, Solution beide 39/40, direkt 19/40. Direktgate verfehlt; kein Nachschlag oder V14-Ersatz. Originalanalyse und unabhängige Datenchecks bestanden. [Ergebnis](../../../experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md). Alle eigenen Prozesse beendet, Gewichte und ZIP unverändert.

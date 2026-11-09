@@ -1,0 +1,23 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "source": "/tmp/sap-motion-data-review/performance-data-check.py",
+  "source_sha256": "03a058464cb86819166ee1bbd8e641a511d2f8f87c4cc1e5340d94f0737211f7",
+  "checker": "/tmp/rank-mean-data-review/performance-data-check.py",
+  "checker_sha256": "96229932ee9de41a8b636159767a1d2f951dc985060e0301141af52f08193e4a",
+  "changes": "Fixed profile/module/output/seed literals; proposal-step and unit event contract replaces SAP offset contract.",
+  "statics": {
+    "syntax_parse": "PASS",
+    "unchanged_score_bootstrap_gates_except_fixed_seeds_and_exposure_field": true,
+    "imports": [
+      "pathlib",
+      "argparse",
+      "hashlib",
+      "json",
+      "math",
+      "numpy"
+    ]
+  },
+  "performance_values_read": false,
+  "tests_models_or_games_run": false,
+  "execution_requires": "New Root signal after all120 games and complete owner state and summary."
+}

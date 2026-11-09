@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Rangvergleich abgeschlossen, V14 bleibt
+
+- Vier Technik- und 120 Leistungsspiele vollständig. Solution ON/OFF jeweils 39/40, direkt Rangmittel 19/40 [25; 70 %]; vorab festes Direktgate verfehlt. Keine Verlängerung oder Übernahme. [Ergebnis](../experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md).
+- Neue Aggregation änderte viele legale Vorschläge, brachte aber keinen belegten Spielstärkegewinn. Originalanalyse und unabhängige Technik-/Ergebnisnachrechnung bestanden; Root hat Quellen, Aufnahme und Schutzdateien vor Freigabe der Quelle geprüft. Alle eigenen Jobs beendet, keine Trainingsupdates. V14/ZIP bytegleich, Laufquelle 32772fd, zuletzt 93 % Kontingent verbraucht.
+- Remote beim Abschluss ohne neue Mahmoud-Commits. Nächste getrennte Hypothese: kontrolliertes Nachtraining eines vorhandenen V14-Mitglieds mit 22 öffentlichen Gefahrmerkmalen gegen gleich große Nullmerkmalskontrolle. Noch nicht umgesetzt oder gestartet; historische negative Threat-Ergebnisse beachten. Geschlossene Rang- und SAP-Versuche nicht wiederholen.
+
 ## 09.11.2026 – Rangaggregation technisch aufgenommen
 
 - Separater Instanzprototyp und feste Vergleichswerkzeuge fertig. 24 Agent- und 25 Runnertests tatsächlich bestanden; unabhängiger enger Review ohne Blocker. Root hat finale Bytes, Code, Mathematik und Testbelege geprüft. [Stand](../experiments/analysis/rank_mean_screen_20261109/README.md).

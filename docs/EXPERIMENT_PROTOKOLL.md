@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 09.11.2026: Rangmittel derselben 36 V14-Netze geschlossen, vier Technik- und 120 Leistungsspiele. Solution beide 39/40, direkt 19/40 (47,5 % [25; 70]); feste Hürde verfehlt. Viele geänderte legale Präferenzen, kein belegter stärkerer Agent. Keine Lernupdates, V14/ZIP gleich. Originalanalyse und unabhängige Datenprüfung bestanden. [Bericht](../experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md).
+
 - 09.11.2026: Separates SAP-Bewegungsmodell abgeschlossen, vier Technik- und 120 Leistungsspiele. ON/OFF gegen Solution jeweils 38/40, direkt 21/40 (52,5 % [50; 57,5]); Direktgate verfehlt, keine Übernahme. Öffentliche Bewegungshäufigkeiten, gleiche 36 Netze, keine Lernupdates. Originalanalyse und unabhängiger Datencheck bestanden. [Bericht](../experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md).
 
 09.11.2026: **SAP-Vorhaltevergleich abgeschlossen:** vier bekannte Technikspiele plus 120 feste Vergleiche. ON Solution40/40 statt OFF39/40, direkt18/40 (45 %, Kartenbootstrap30–60 %). 14 exponierte Panelkarten, 917/430 geänderte Schüsse. Direktgate verfehlt; kein Nachschlag und kein V14-Ersatz. Originalanalyse und unabhängiger Istcheck bestanden; Quelle4b11f8a bis Root-Abschluss gebunden, eigene Prozesse beendet, V14/ZIP gleich. Null Lernupdates. 40/40 ist ausschließlich das beobachtete Stichprobenergebnis. [Bericht](../experiments/analysis/sap_leading_screen_20261109/ERGEBNIS.md).

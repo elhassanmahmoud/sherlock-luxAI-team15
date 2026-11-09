@@ -23,6 +23,8 @@
 
 **SAP-Bewegungsmodell am 09.11. ebenfalls abgeschlossen:** Vier Technikspiele und 120 Vergleiche, ON/OFF gegen Solution jeweils 38/40, direkt 21/40. Direktgate verfehlt, kein V14-Ersatz; keine Lernupdates, gleiche 36 Netze. Unabhängig geprüfter [Bericht](experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md). Folgearbeit im Arbeitsstand; geschlossene Studien nicht wiederholen.
 
+**Rangmittel am 09.11. abgeschlossen:** Vier Technikspiele und 120 Vergleiche mit denselben 36 Netzen. Solution beide 39/40, direkt 19/40; keine Übernahme. Originalanalyse und unabhängige Datenchecks bestanden, V14/ZIP unverändert. [Ergebnis](experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md). Aktuelle Folgearbeit im Arbeitsstand.
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)
