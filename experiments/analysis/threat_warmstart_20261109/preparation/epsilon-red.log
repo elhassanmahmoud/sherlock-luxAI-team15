@@ -1,0 +1,32 @@
+.......................F                                                 [100%]
+=================================== FAILURES ===================================
+_ test_make_learner_accepts_original_epsilon_rounding_with_identical_fresh_101_arms _
+
+    def test_make_learner_accepts_original_epsilon_rounding_with_identical_fresh_101_arms():
+        from agents.sherlock.model import QNet
+        # Artificial all-zero state; no files and no released model data.
+        initial = {name: torch.zeros_like(value) for name, value in QNet(101, 6, 256, True).state_dict().items()}
+        cfg = AgentConfig(threat_feats=True, hidden=256, dueling=True, buffer_capacity=32,
+                          frozen=False, eps_start=1., eps_end=.05, eps_decay_steps=60000).to_dict()
+        identities = []
+        for role in s.ARMS:
+>           agent = s.make_learner({"config": cfg}, initial, role)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_threat_warmstart.py:285: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/threat_warmstart.py:359: in make_learner
+    require(agent.training and agent.epsilon == .05 and not agent.extra_q and agent.cnn_policy is None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Warmstart is not exact/fresh'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Warmstart is not exact/fresh
+
+scripts/early_curriculum_study.py:52: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart.py::test_make_learner_accepts_original_epsilon_rounding_with_identical_fresh_101_arms
+1 failed, 23 passed in 3.12s

@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Gefahrmerkmals-Warmstart technisch aufgenommen
+
+- Eigener 101er-Agentadapter und kompakter Zweiertrainer unabhängig geprüft;31 synthetische Tests tatsächlich PASS. Originale Regeln, Reward und Lerntarget bleiben erhalten. Root hat vollständige Implementierung, die drei konkreten Korrekturen und Nachweise geprüft. [Belege](../experiments/analysis/threat_warmstart_20261109/README.md).
+- Feste Karten ohne beobachtete frühere Nutzung, lokale Grenzen dokumentiert. Noch null echte Spiele/Gradienten dieser Studie. Nach diesem Quellencommit vier bekannte Technikspiele aufnehmen; erst nach tatsächlicher Abnahme beide400er-Lernläufe mit gemeinsamem40er-Vorlauf und manueller Gradientenfreigabe starten. Keine automatischen Neustarts.
+- V14/ZIP unverändert, aktuelles echtes Kontingent97%verbraucht; Restnutzung und Akku erlaubt. Quelle vor realen Phasen einfrieren, Remote nur am sicheren Übergang integrieren. Keine bisherigen geschlossenen Studien erneut starten.
+
 ## 09.11.2026 – Kontrollierter Gefahrmerkmals-Warmstart vorbereitet
 
 - Neuer enger [Plan](superpowers/plans/2026-11-09-threat-warmstart.md): festes V14-Mitglied 18, identische 101-Eingabe-Netze mit 22 echten beziehungsweise nullgesetzten Zusatzmerkmalen. Zwei Arme, je 40 Vorlauf- und 400 Lernspiele, keine Zwischencheckpointwahl. Historische negative Threat-Befunde sind im Plan berücksichtigt; Nutzen ist offen.

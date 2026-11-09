@@ -1,0 +1,7 @@
+# Öffentliche Gefahrmerkmale: kontrollierter V14-Warmstart
+
+[Fester Plan](../../../docs/superpowers/plans/2026-11-09-threat-warmstart.md). Ein vorhandenes Mitglied 18 wird in zwei identischen 101er-Netzen nachtrainiert: 79 ursprüngliche Eingaben plus 22 Nullwerte beziehungsweise öffentliche Gefahrmerkmale. Je 40 Vorlauf- und 400 Lernspiele, feste Gegner und Karten, keine Zwischencheckpointwahl.
+
+Technische Umsetzung unabhängig geprüft, 31 synthetische Tests tatsächlich bestanden. Root las vollständige Quellen und Korrekturen. [Implementierungsbericht](preparation/implementation-report.md), [Review](preparation/code-review.md), [Korrekturprüfung](preparation/code-rereview.md), [Umgebungslebensdauer](preparation/env-review.md). Die ursprüngliche falsche Maskenpflicht für finale Fog-SAP-Regeln, ein zu strenger Floatvergleich und eine Veröffentlichungsrace wurden vor realen Spielen korrigiert. Eine Spielumgebung je Worker vermeidet unnötige JAX-Neukompilierungen.
+
+[Kartencheck](preparation/seed-REVIEW.md) ohne beobachtete frühere Nutzung der festen Bereiche, mit dokumentierten lokalen Suchlücken. Noch keine echten Technik-/Trainingsspiele aus diesem Vorbereitungsstand. Als Nächstes separat vier bekannte Technikspiele aufnehmen; Training erst nach deren tatsächlicher Abnahme und die Gradienten erst nach Vergleich beider tatsächlichen Vorläufe. V14 und ZIP unverändert. Neue Artefakte bleiben im Studienverzeichnis; unvollständige Endstände sind keine Kandidaten.

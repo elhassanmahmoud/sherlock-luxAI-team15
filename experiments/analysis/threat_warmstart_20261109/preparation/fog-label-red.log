@@ -1,0 +1,38 @@
+.........F..                                                             [100%]
+=================================== FAILURES ===================================
+_ test_fog_sap_final_label_is_valid_even_when_original_network_mask_excluded_sap _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f0ff070>
+
+    def test_fog_sap_final_label_is_valid_even_when_original_network_mask_excluded_sap(monkeypatch):
+        a = synthetic_agent("control")
+        current, following = public_context(), public_context(2)
+        values = np.r_[np.ones(79), np.zeros(22)].astype(np.float32)
+        a._prev_ctx = current; a._prev_feats = {0: values}
+        a._prev_masks = {0: np.array([True, True, True, True, True, False])}
+        a._prev_actions = {0: 5}; a._native_actions = np.array([[5, 1, 0]])
+        a._action_public = a._public_features = {0: np.ones(101, np.float32)}
+        a._cache = (2, following, [0], {0: values}, {0: np.ones(6, bool)}, {})
+        a._transition_uids = [0]; a._transition_terminated = False
+        monkeypatch.setattr(s, "surviving", lambda *args: {0})
+>       a.buffer.push(values, 5, .5, values, False, np.ones(6, bool))
+
+tests/test_threat_warmstart.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/threat_warmstart.py:89: in push
+    self.owner.check_transition(s, a, r, ns, done, next_mask)
+scripts/threat_warmstart.py:163: in check_transition
+    require(action == canonical == self._prev_actions[uid] and 0 <= action < 6
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = np.False_, message = 'Final replay label/reward differs'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Final replay label/reward differs
+
+scripts/early_curriculum_study.py:52: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart.py::test_fog_sap_final_label_is_valid_even_when_original_network_mask_excluded_sap
+1 failed, 11 passed in 2.88s

@@ -1,0 +1,106 @@
+........................F.FFF                                            [100%]
+=================================== FAILURES ===================================
+______ test_exclusive_json_is_visible_only_after_complete_synced_content _______
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_is_visible0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11da06900>
+
+    def test_exclusive_json_is_visible_only_after_complete_synced_content(tmp_path, monkeypatch):
+        target = tmp_path/"release.json"
+        synced = []
+        original_sync, original_link = s.os.fsync, s.os.link
+        def split_dump(document, stream, **kwargs):
+            assert not target.exists()
+            stream.write('{"value":')
+            stream.flush()
+            assert not target.exists()
+            stream.write('1}')
+        def sync(fd):
+            original_sync(fd); synced.append(fd)
+        def publish(source, destination):
+            assert synced and not target.exists()
+            assert json.loads(Path(source).read_text()) == {"value": 1}
+            original_link(source, destination)
+        monkeypatch.setattr(s.json, "dump", split_dump)
+        monkeypatch.setattr(s.os, "fsync", sync)
+        monkeypatch.setattr(s.os, "link", publish)
+>       s.write(target, {"value": 1})
+
+tests/test_threat_warmstart.py:314: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/threat_warmstart.py:46: in write
+    json.dump(plain(value), stream, indent=2, sort_keys=True, allow_nan=False)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+document = {'value': 1}
+stream = <_io.TextIOWrapper name='/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_is_visible0/release.json' mode='x' encoding='UTF-8'>
+kwargs = {'indent': 2, 'sort_keys': True, 'allow_nan': False}
+
+    def split_dump(document, stream, **kwargs):
+>       assert not target.exists()
+E       AssertionError: assert not True
+E        +  where True = exists()
+E        +    where exists = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_is_visible0/release.json').exists
+
+tests/test_threat_warmstart.py:300: AssertionError
+_ test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[json] _
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_cleans_tem0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11da07230>
+failure = 'json'
+
+    @pytest.mark.parametrize("failure", ["json", "fsync", "link"])
+    def test_exclusive_json_cleans_temporary_file_without_publishing_on_failure(tmp_path, monkeypatch, failure):
+        target = tmp_path/"release.json"
+        def fail(*args, **kwargs): raise OSError("synthetic write failure")
+        if failure in ("fsync", "link"): monkeypatch.setattr(s.os, failure, fail)
+        value = {"bad": object()} if failure == "json" else {"good": 1}
+        with pytest.raises((TypeError, OSError)): s.write(target, value)
+>       assert not target.exists() and list(tmp_path.iterdir()) == []
+E       AssertionError: assert (not True)
+E        +  where True = exists()
+E        +    where exists = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_cleans_tem0/release.json').exists
+
+tests/test_threat_warmstart.py:333: AssertionError
+_ test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[fsync] _
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_cleans_tem1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x12053c2f0>
+failure = 'fsync'
+
+    @pytest.mark.parametrize("failure", ["json", "fsync", "link"])
+    def test_exclusive_json_cleans_temporary_file_without_publishing_on_failure(tmp_path, monkeypatch, failure):
+        target = tmp_path/"release.json"
+        def fail(*args, **kwargs): raise OSError("synthetic write failure")
+        if failure in ("fsync", "link"): monkeypatch.setattr(s.os, failure, fail)
+        value = {"bad": object()} if failure == "json" else {"good": 1}
+        with pytest.raises((TypeError, OSError)): s.write(target, value)
+>       assert not target.exists() and list(tmp_path.iterdir()) == []
+E       AssertionError: assert (not True)
+E        +  where True = exists()
+E        +    where exists = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_cleans_tem1/release.json').exists
+
+tests/test_threat_warmstart.py:333: AssertionError
+_ test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[link] _
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-387/test_exclusive_json_cleans_tem2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x12053c050>
+failure = 'link'
+
+    @pytest.mark.parametrize("failure", ["json", "fsync", "link"])
+    def test_exclusive_json_cleans_temporary_file_without_publishing_on_failure(tmp_path, monkeypatch, failure):
+        target = tmp_path/"release.json"
+        def fail(*args, **kwargs): raise OSError("synthetic write failure")
+        if failure in ("fsync", "link"): monkeypatch.setattr(s.os, failure, fail)
+        value = {"bad": object()} if failure == "json" else {"good": 1}
+>       with pytest.raises((TypeError, OSError)): s.write(target, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (TypeError, OSError)
+
+tests/test_threat_warmstart.py:332: Failed
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart.py::test_exclusive_json_is_visible_only_after_complete_synced_content
+FAILED tests/test_threat_warmstart.py::test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[json]
+FAILED tests/test_threat_warmstart.py::test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[fsync]
+FAILED tests/test_threat_warmstart.py::test_exclusive_json_cleans_temporary_file_without_publishing_on_failure[link]
+4 failed, 25 passed in 2.81s

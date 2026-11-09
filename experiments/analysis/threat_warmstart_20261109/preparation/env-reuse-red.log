@@ -1,0 +1,122 @@
+.............................FF                                          [100%]
+=================================== FAILURES ===================================
+__ test_worker_reuses_one_environment_resets_each_game_and_closes_once[None] ___
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-389/test_worker_reuses_one_environ0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11be70360>
+fail_at = None
+
+    @pytest.mark.parametrize("fail_at", [None, 2])
+    def test_worker_reuses_one_environment_resets_each_game_and_closes_once(tmp_path, monkeypatch, fail_at):
+        from scripts import common, experiment
+        instances, used = [], []
+        class FakeEnv:
+            def __init__(self, *, numpy_output):
+                assert numpy_output is True
+                self.seeds = []; self.closed = 0; instances.append(self)
+            def reset(self, seed):
+                self.seeds.append(seed)
+                return {"public": seed}, {}
+            def close(self): self.closed += 1
+        class FakeGuard:
+            def __init__(self, *args): self.command = ["synthetic"]; self.release_sha = None
+            def __call__(self): pass
+        def make_agent(a, initial, role):
+            return SimpleNamespace(role=role, env_steps=60000, learn_steps=0, learn_enabled=False,
+                caught_errors=0, cfg=SimpleNamespace(train_every=2), epsilon=.05, buffer=[], learning_audit={},
+                begin_game=lambda: None, pop_mean_loss=lambda: float("nan"),
+                game_proof=lambda: dict(replay_rows=1, replay_prefix_sha256="same",
+                                       actual_nonzero_rows=int(role == "threat")))
+        def play_game(traced, agent, opponent, seed, side, train):
+            assert train is True
+            used.append(traced.env)
+            traced.reset(seed=seed)  # Preserve common.play_game's per-game reset contract.
+            if len(used) == fail_at: raise RuntimeError("synthetic game failure")
+            agent.env_steps += 303
+            return dict(steps=303, point_counting_version=2, our_wins=1, opp_wins=0,
+                        our_points=1, opp_points=0, result=1.)
+        monkeypatch.setitem(sys.modules, "luxai_s3.wrappers", SimpleNamespace(LuxAIS3GymEnv=FakeEnv))
+        monkeypatch.setattr(experiment, "limit_threads", lambda: None)
+        monkeypatch.setattr(s, "WorkerGuard", FakeGuard)
+        monkeypatch.setattr(s, "load_initial", lambda a: {})
+        monkeypatch.setattr(s, "make_learner", make_agent)
+        monkeypatch.setattr(s, "model_identity", lambda a: {"q": "q", "target": "q", "optimizer": "o"})
+        monkeypatch.setattr(s, "replay_identity", lambda b: {"size": 0, "full": "f", "prefix": "p"})
+        monkeypatch.setattr(s, "save_artifacts", lambda *args: {})
+        monkeypatch.setattr(common, "make_opponent", lambda *args: object())
+        monkeypatch.setattr(common, "play_game", play_game)
+        state = tmp_path/"state.json"; state.write_text(json.dumps({"jobs": {"technical": {}}}))
+        a = dict(stage="technical", out=str(tmp_path), config={}, source={"head": "synthetic"})
+        if fail_at:
+            with pytest.raises(RuntimeError, match="synthetic game failure"):
+                s.run_worker(a, tmp_path/"admission.json", "sha", state, "technical")
+            assert json.loads((tmp_path/"technical/incomplete.json").read_text())["status"] == "incomplete"
+        else:
+            assert s.run_worker(a, tmp_path/"admission.json", "sha", state, "technical")["status"] == "complete"
+>       assert len(instances) == 1 and instances[0].closed == 1
+E       assert (4 == 1)
+E        +  where 4 = len([<tests.test_threat_warmstart.test_worker_reuses_one_environment_resets_each_game_and_closes_once.<locals>.FakeEnv obj..._warmstart.test_worker_reuses_one_environment_resets_each_game_and_closes_once.<locals>.FakeEnv object at 0x11e92d6e0>])
+
+tests/test_threat_warmstart.py:385: AssertionError
+____ test_worker_reuses_one_environment_resets_each_game_and_closes_once[2] ____
+
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-389/test_worker_reuses_one_environ1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11beceeb0>
+fail_at = 2
+
+    @pytest.mark.parametrize("fail_at", [None, 2])
+    def test_worker_reuses_one_environment_resets_each_game_and_closes_once(tmp_path, monkeypatch, fail_at):
+        from scripts import common, experiment
+        instances, used = [], []
+        class FakeEnv:
+            def __init__(self, *, numpy_output):
+                assert numpy_output is True
+                self.seeds = []; self.closed = 0; instances.append(self)
+            def reset(self, seed):
+                self.seeds.append(seed)
+                return {"public": seed}, {}
+            def close(self): self.closed += 1
+        class FakeGuard:
+            def __init__(self, *args): self.command = ["synthetic"]; self.release_sha = None
+            def __call__(self): pass
+        def make_agent(a, initial, role):
+            return SimpleNamespace(role=role, env_steps=60000, learn_steps=0, learn_enabled=False,
+                caught_errors=0, cfg=SimpleNamespace(train_every=2), epsilon=.05, buffer=[], learning_audit={},
+                begin_game=lambda: None, pop_mean_loss=lambda: float("nan"),
+                game_proof=lambda: dict(replay_rows=1, replay_prefix_sha256="same",
+                                       actual_nonzero_rows=int(role == "threat")))
+        def play_game(traced, agent, opponent, seed, side, train):
+            assert train is True
+            used.append(traced.env)
+            traced.reset(seed=seed)  # Preserve common.play_game's per-game reset contract.
+            if len(used) == fail_at: raise RuntimeError("synthetic game failure")
+            agent.env_steps += 303
+            return dict(steps=303, point_counting_version=2, our_wins=1, opp_wins=0,
+                        our_points=1, opp_points=0, result=1.)
+        monkeypatch.setitem(sys.modules, "luxai_s3.wrappers", SimpleNamespace(LuxAIS3GymEnv=FakeEnv))
+        monkeypatch.setattr(experiment, "limit_threads", lambda: None)
+        monkeypatch.setattr(s, "WorkerGuard", FakeGuard)
+        monkeypatch.setattr(s, "load_initial", lambda a: {})
+        monkeypatch.setattr(s, "make_learner", make_agent)
+        monkeypatch.setattr(s, "model_identity", lambda a: {"q": "q", "target": "q", "optimizer": "o"})
+        monkeypatch.setattr(s, "replay_identity", lambda b: {"size": 0, "full": "f", "prefix": "p"})
+        monkeypatch.setattr(s, "save_artifacts", lambda *args: {})
+        monkeypatch.setattr(common, "make_opponent", lambda *args: object())
+        monkeypatch.setattr(common, "play_game", play_game)
+        state = tmp_path/"state.json"; state.write_text(json.dumps({"jobs": {"technical": {}}}))
+        a = dict(stage="technical", out=str(tmp_path), config={}, source={"head": "synthetic"})
+        if fail_at:
+            with pytest.raises(RuntimeError, match="synthetic game failure"):
+                s.run_worker(a, tmp_path/"admission.json", "sha", state, "technical")
+            assert json.loads((tmp_path/"technical/incomplete.json").read_text())["status"] == "incomplete"
+        else:
+            assert s.run_worker(a, tmp_path/"admission.json", "sha", state, "technical")["status"] == "complete"
+>       assert len(instances) == 1 and instances[0].closed == 1
+E       assert (2 == 1)
+E        +  where 2 = len([<tests.test_threat_warmstart.test_worker_reuses_one_environment_resets_each_game_and_closes_once.<locals>.FakeEnv obj..._warmstart.test_worker_reuses_one_environment_resets_each_game_and_closes_once.<locals>.FakeEnv object at 0x11e9e0cd0>])
+
+tests/test_threat_warmstart.py:385: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart.py::test_worker_reuses_one_environment_resets_each_game_and_closes_once[None]
+FAILED tests/test_threat_warmstart.py::test_worker_reuses_one_environment_resets_each_game_and_closes_once[2]
+2 failed, 29 passed in 3.09s

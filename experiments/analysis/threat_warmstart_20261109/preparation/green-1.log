@@ -1,0 +1,46 @@
+........F..                                                              [100%]
+=================================== FAILURES ===================================
+_____ test_replay_check_binds_final_labels_masks_and_actual_next_features ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11e8c7a70>
+
+    def test_replay_check_binds_final_labels_masks_and_actual_next_features(monkeypatch):
+        a = synthetic_agent("control")
+        current, following = public_context(), public_context(2)
+        a._prev_ctx = current; a._prev_feats = {0: np.r_[np.ones(79), np.zeros(22)].astype(np.float32)}
+        a._prev_masks = {0: np.ones(6, bool)}; a._prev_actions = {0: 2}
+        a._native_actions = np.array([[2, 0, 0]])
+        a._action_public = {0: np.ones(101, np.float32)}
+        a._public_features = {0: np.ones(101, np.float32)}
+        nxt = np.r_[np.full(79, 2), np.zeros(22)].astype(np.float32)
+        a._cache = (2, following, [0], {0: nxt}, {0: np.ones(6, bool)}, {})
+        a._transition_uids = [0]; a._transition_terminated = False
+        monkeypatch.setattr(s, "surviving", lambda *args: {0})
+        with pytest.raises(ValueError): a.buffer.push(a._prev_feats[0], 1, .5, nxt, False, np.ones(6, bool))
+        a._transition_uids = [0]
+        bad = nxt.copy(); bad[80] = 1
+        with pytest.raises(ValueError): a.buffer.push(a._prev_feats[0], 2, .5, bad, False, np.ones(6, bool))
+        a._transition_uids = [0]
+>       a.buffer.push(a._prev_feats[0], 2, .5, nxt, False, np.ones(6, bool))
+
+tests/test_threat_warmstart.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/threat_warmstart.py:89: in push
+    self.owner.check_transition(s, a, r, ns, done, next_mask)
+scripts/threat_warmstart.py:173: in check_transition
+    self.check_features(ns, next_public)
+scripts/threat_warmstart.py:151: in check_features
+    require(np.asarray(actual).shape == (101,) and np.isfinite(actual).all()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Replay feature prefix/shape differs'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Replay feature prefix/shape differs
+
+scripts/early_curriculum_study.py:52: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart.py::test_replay_check_binds_final_labels_masks_and_actual_next_features
+1 failed, 10 passed in 2.90s
