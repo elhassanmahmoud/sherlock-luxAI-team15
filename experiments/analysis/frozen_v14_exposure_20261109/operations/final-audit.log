@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "profile": "frozen_v14_exposure_20261109",
+  "source_head": "6839ebd3bd3f2a939aeb07c15bb470a73bfc74c4",
+  "admission_sha256": "592458e2eb2e6f672c80665cfbc54350f9573c60e412360d94f37787dcbd41c0",
+  "owner_state_sha256": "bee9083b903a66ea0c7f443a46f63a17c787922133f3664207f88227ecac6a09",
+  "release_sha256": "cca1ce73ea8616cbc27fd71e7946ef5852b8937e74ff4984f712b2599c66391d",
+  "prefill_sha256": {
+    "e48": "8fc19e7cc9ceea794147d4237cb734bce81df367981488cd2dc161a51cf71a47",
+    "e49": "ecef50e2ead684bccb2d38862272b170dbdb9442a76d1d0dfa0182e81a604852"
+  },
+  "roles": {
+    "e48": {
+      "start": 48,
+      "games": 440,
+      "prefill_games": 40,
+      "learning_games": 400,
+      "learn_steps": 60000,
+      "total_transitions": 1531509,
+      "final_replay_rows": 300000,
+      "opponents": {
+        "solution92": 264,
+        "frozen_v14": 176
+      },
+      "final_identity": {
+        "q": "e2de3526107815f49c285a7949a970f6f67b0b2936d2cc6aac10507303129779",
+        "target": "e2de3526107815f49c285a7949a970f6f67b0b2936d2cc6aac10507303129779",
+        "optimizer": "c61958d80252ae355cbad9cd66c3d227551a0f501b24f066d3bb11040e0b6f3b"
+      },
+      "final_sha256": "ea551bcad26a460d4da4b6315253140d0c275ffb940a53d93b34249a251f9061",
+      "receipt_sha256": "81bb725b4bf0e36edacd913e44f2f28ff9d479a5d2f0176ad4c85904bb015b8c"
+    },
+    "e49": {
+      "start": 49,
+      "games": 440,
+      "prefill_games": 40,
+      "learning_games": 400,
+      "learn_steps": 60000,
+      "total_transitions": 1518513,
+      "final_replay_rows": 300000,
+      "opponents": {
+        "solution92": 252,
+        "frozen_v14": 188
+      },
+      "final_identity": {
+        "q": "c8f884c8a7da08594d65f709dfd5421dd247f96ae23d5c2d55eb76144c41f328",
+        "target": "c8f884c8a7da08594d65f709dfd5421dd247f96ae23d5c2d55eb76144c41f328",
+        "optimizer": "80a8c772c27476893796452b77da34641e3c023013d8f70b1a7a91c9c726377b"
+      },
+      "final_sha256": "1ca4030a98ddc2f75c26d026cdfc0fe85f32d71630fd2c29d23218d5f538e4b6",
+      "receipt_sha256": "1cf62618990f8142db044f7bb4ba566c730fbb38c751ccc63826a10fd8717dc1"
+    }
+  },
+  "checks": 5783,
+  "actual": {
+    "prefill_games": 80,
+    "learning_games": 800,
+    "optimizer_updates": 120000,
+    "total_transitions": 3050022
+  },
+  "original_processes_ended": true,
+  "source_and_input_bindings_valid": true,
+  "loaded_saved_checkpoints_only": true,
+  "forwards_or_games_or_tests_executed": false,
+  "no_strength_claim": true,
+  "limitations": [
+    "Final replay is a ring buffer: checked actual content hashes, schema, capacity and finiteness, not a reconstruction of all historic transitions. All game-level live audit counts and frozen-opponent identities were checked."
+  ],
+  "script_sha256": "d59f68d051b439aa73f3c6ee1214268f4a794683ba4f9100efcf98f5489f8e8a"
+}
+report_sha256 4d744954efc67d30d790c2e56ea0ddb0d9d94575ce8a28ce0ed58c435814df58

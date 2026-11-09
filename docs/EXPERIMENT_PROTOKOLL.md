@@ -440,3 +440,8 @@ Zusammen mit Paar-Koordinator, Zielpilot und begrenzter CNN-Fortsetzung **3.336 
 
 6 × `full_rules_v3_threat` (Starts 40–45, je 3000 Spiele, 70 % Solution_92) gegen die Kontrolle `v3nets6` (gleiche Starts ohne Gefahr-Merkmale, 20.10.). Auswahlblock 503220–503419, je 400 Spiele: `threat6` 72,8 % vs. Kontrolle 73,3 % (Δ −0,5 [−6,0; +4,8]); vs. V3 76,7 %: `threat6` −4,0, `mix24` (+18 V3-Netze) +1,5 [−2,8; +5,8]; default 98,8–100 %. Vorab-Gate +3 pp verfehlt → beendet, frische Blöcke 503420–503819 unbenutzt. [Plan](superpowers/plans/2026-10-21-threat-features.md), Log `experiments/pipeline_threat.log`, Rohdaten `experiments/compare/regeln/T21_*_3220.csv`.
 
+
+
+## 09.11.2026 – Training gegen eingefrorenen V14
+
+Zwei kontrollierte Ensemble-Verhaltensarme e48/e49, ursprüngliche Solution-Positionen erhalten, andere Gegner durch den festen36er-V14 ersetzt. Je40Vorlauf+400Lernspiele/60000Updates; mit4Technikspielen884Ausführungen. Alle tatsächlichen Endarchive/Adam/Replays/Gegnerbelege unabhängig und Root geprüft, Rootclosure1b3a4ea3. Keine Stärkeaussage, V14/ZIP unverändert; feste200er-Auswahl separat. [Training und Grenzen](../experiments/analysis/frozen_v14_exposure_20261109/TRAININGSERGEBNIS.md).

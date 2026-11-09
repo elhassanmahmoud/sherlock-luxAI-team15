@@ -1,0 +1,110 @@
+"""Independent four-game data audit: JSON/NPZ/hash reads only, no project imports."""
+from pathlib import Path
+import hashlib,json,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE=ROOT/'experiments/analysis/frozen_v14_exposure_20261109'
+OUT=Path('/private/tmp/frozen-v14-exposure-review')
+EXPECTED_HEAD='6839ebd3bd3f2a939aeb07c15bb470a73bfc74c4'
+EXPECTED_ADMISSION='fae9fc9e383f640c5d492251757cbb850b2aad7d5e0fdf88fd6ba60cc3cc7000'
+V14_SHA='98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8'
+OPP_SHA='817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2'
+checks=[]
+def check(value,label):
+    checks.append({'check':label,'pass':bool(value)})
+    if not value: raise AssertionError(label)
+def read(path):return json.loads(Path(path).read_text())
+def digest(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+    return h.hexdigest()
+def state_hash(value):
+    h=hashlib.sha256()
+    def emit(v):h.update(len(v).to_bytes(8,'big'));h.update(v)
+    def visit(v):
+        if isinstance(v,np.ndarray):
+            emit(b'ndarray');emit(v.dtype.str.encode());visit(list(v.shape));emit(v.tobytes(order='C'))
+        elif isinstance(v,dict):
+            emit(b'dict');emit(str(len(v)).encode())
+            for k in sorted(v,key=lambda x:(type(x).__name__,repr(x))):visit(k);visit(v[k])
+        elif isinstance(v,(list,tuple)):
+            emit(type(v).__name__.encode());emit(str(len(v)).encode())
+            for x in v:visit(x)
+        elif isinstance(v,np.generic):visit(v.item())
+        else:emit(type(v).__name__.encode());emit(repr(v).encode())
+    visit(value);return h.hexdigest()
+a_path=BASE/'technical-v1-admission.json';a=read(a_path)
+s_path=BASE/'technical_v1/state.json';s=read(s_path)
+r_path=BASE/'technical_v1/technical/receipt.json';r=read(r_path)
+check(digest(a_path)==EXPECTED_ADMISSION,'exact Root admission digest')
+check(a['source']['head']==EXPECTED_HEAD==subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'frozen actual HEAD')
+for group,mapping in [('input',a['inputs']),('protected',a['protected']),('source',a['source']['files']),('receipt',r['files'])]:
+    for p,h in mapping.items():check(digest(p)==h,f'{group} bytes: {p}')
+check(digest(a['source']['executable'])==a['source']['executable_sha256'],'interpreter bytes')
+check(all(a['protected'][str(ROOT/f'agents/sherlock/weights/agent_p{i}.pth')]==V14_SHA for i in (0,1)),'original V14 protected')
+check(digest(a['opponent_model'])==OPP_SHA,'exact accepted 36-member opponent file')
+ref=read(a['reference_receipt']);approval=read(a['reference_acceptance'])
+check(ref['models']['v14']['path']==a['opponent_model'] and ref['models']['v14']['sha256']==OPP_SHA and ref['models']['v14']['member_sha256']==a['source_members'],'accepted ordered 36-member reference')
+check(len(a['source_members'])==36 and approval['technical_receipt_sha256']==digest(a['reference_receipt']) and approval['status']=='PASS','accepted reference receipt')
+closure=read(a['training_completion']);prior=read(closure['admission']);hist=read(prior['technical_receipt'])
+check(digest(a['training_completion'])=='fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce','accepted historical ON closure')
+check(a['config']==prior['config'] and a['runtime']==prior['runtime'],'same actual ON configuration/runtime')
+check(s['status']=='complete' and s['active']==[] and s['owner_pid']==74100 and list(s['jobs'])==['technical'],'complete exclusive technical owner')
+job=s['jobs']['technical']
+check(job['pid']==job['pgid']==74112 and job['owner_pid']==74100 and job['returncode']==0,'original successful worker identity')
+check(s['receipts']['technical']==dict(path=str(r_path),sha256=digest(r_path)),'owner receipt bytes')
+check(r['command']==job['argv'] and r['admission_sha256']==s['admission_sha256']==EXPECTED_ADMISSION,'exact worker command/admission')
+check(r['profile']==a['profile']==s['profile']=='frozen_v14_exposure_20261109' and r['stage']==a['stage']==s['stage']=='technical','phase/profile')
+check(r['source']==s['source']==a['source'] and r['config']==a['config'],'receipt source/config')
+check(r['status']=='complete' and r['role']=='technical' and r['start']==48 and r['starts']==[48,49] and r['release_sha256'] is None and r['no_strength_claim'] is True,'technical-only completed receipt')
+check(not (BASE/'technical_v1/release.json').exists() and not list((BASE/'technical_v1/technical').glob('*.pth')),'no learning release or candidate checkpoint')
+lines=[json.loads(x) for x in (BASE/'technical_v1/technical/games.jsonl').read_text().splitlines()]
+rows=r['games'];oldrows=[x for x in hist['games'] if x['behavior']=='ensemble']
+check(len(rows)==4 and rows==lines and len(oldrows)==2,'exact four persisted actual rows')
+keys=[(9946007,'player_0'),(831006,'player_1')]
+arrays=[];summaries=[]
+for index,row in enumerate(rows):
+    i=index%2;seed,side=keys[i];group='solution92' if index<2 else 'frozen_v14';ex=row['exposure'];m=row['mechanism']
+    check(row['key']==dict(phase='technical',game=i,seed=seed,side=side,opponent='solution92') and row['technical_group']==group,'exact fixed technical key '+str(index))
+    check(row['start']==48 and row['role']=='control' and row['behavior']=='ensemble' and row['steps']==303 and row['point_counting_version']==2,'exact behavior/counters '+str(index))
+    check(row['before']==dict(env_steps=60000+303*i,learn_steps=0) and row['env_steps']==60303+303*i and row['learn_steps']==0 and row['loss'] is None,'zero learning '+str(index))
+    check(row['initial']==row['current']==a['initial']['48']==m['initial'],'unchanged learner q/target/Adam '+str(index))
+    check(m['enabled'] is True and m['source_members']==a['source_members'] and m['frozen']=={str(k):h for k,h in enumerate(a['source_members']) if k!=18},'unchanged 35 behavior members '+str(index))
+    check(m['rng_before']==m['rng_after'] and m['stats']['act_calls']==303*(i+1) and m['stats']['member_forwards']==36*m['stats']['network_calls'],'behavior RNG/action counts '+str(index))
+    check(ex['original_opponent']=='solution92' and ex['actual_opponent']==group and ex['opponent_side']==('player_1' if side=='player_0' else 'player_0') and ex['act_calls']==303 and len(ex['action_sha256'])==64,'actual opponent participation '+str(index))
+    ev=row['reward_evidence'];check(digest(ev['path'])==ev['sha256']==r['files'][ev['path']],'actual reward archive '+str(index))
+    with np.load(ev['path'],allow_pickle=False) as f:data={k:f[k] for k in f.files}
+    n=len(data['uid']);arrays.append(data)
+    check(set(data)=={'uid','outcome','control','match'} and data['uid'].dtype==np.int64 and all(v.shape==(n,) and np.isfinite(v).all() for v in data.values()),'actual array schema/finiteness '+str(index))
+    check(state_hash(data)==ev['arrays_sha256'],'independent typed array digest '+str(index))
+    check(np.isin(data['uid'],np.arange(16)).all() and np.isin(data['outcome'],[-1.,0.,1.]).all(),'actual UID/outcome domain '+str(index))
+    check(np.allclose(data['match']-data['control'],18*data['outcome'],atol=1e-10,rtol=1e-12),'unchanged original reward contrast '+str(index))
+    cf=hashlib.sha256()
+    for j in range(n):cf.update(state_hash({k:data[k][j].item() for k in data}).encode())
+    check(cf.hexdigest()==row['reward_audit']['counterfactual_sha256'],'independent per-row counterfactual digest '+str(index))
+    check(n==row['reward_audit']['transitions']==row['final_action_audit']['checked_replay_transitions'] and row['reward_audit']['updates']==row['final_action_audit']['act_calls']==row['final_action_audit']['update_calls']==303 and np.count_nonzero(data['outcome'])==row['reward_audit']['nonzero_outcome_rows'],'actual reward/action label counts '+str(index))
+    check(m['stats']['unit_steps']==sum(len(x['uid']) for x in arrays[index-i:index+1]),'actual behavior/replay unit count '+str(index))
+    if index<2:
+        oldrow=oldrows[i]
+        for field in ('key','native_sha256','trajectory_sha256','reward_audit','final_action_audit','our_wins','opp_wins','our_points','opp_points','result','initial','current','mechanism'):
+            check(row[field]==oldrow[field],'historical ON exact '+str(index)+' '+field)
+        check(ev['sha256']==oldrow['reward_evidence']['sha256'] and ev['arrays_sha256']==oldrow['reward_evidence']['arrays_sha256'],'historical reward bytes exact '+str(index))
+        check(ex['opponent_class']=='agents.Solution_92_Kaggle.agent.Agent' and ex['new_game_calls']==0 and ex['env_cfg_calls']==1,'normal Solution lifecycle '+str(index))
+    else:
+        check(ex['opponent_class']=='agents.sherlock.main.Agent_x' and ex['model_sha256']==OPP_SHA and ex['fresh'] is True and ex['seed']==0 and ex['config']==a['opponent_config'],'actual frozen stock opponent '+str(index))
+        check(ex['new_game_calls']==ex['env_cfg_calls']==1 and ex['setup_rng']['before']==ex['setup_rng']['after'] and set(ex['setup_rng']['before'])=={'python','numpy','torch','agent'},'fresh reset/config and RNG-neutral load '+str(index))
+        check(ex['before']==ex['after'] and ex['before']['members']==a['source_members'] and ex['before']['buffer_size']==ex['before']['caught_errors']==0,'unchanged opponent tensors/Adam/counters/no errors '+str(index))
+        check(ex['before']['rng']==state_hash(np.random.default_rng(0).bit_generator.state),'exact private seed0 RNG '+str(index))
+    summaries.append(dict(group=group,seed=seed,side=side,steps=303,learn_steps=0,replay_rows=n,reward_archive_sha256=ev['sha256'],native_sha256=row['native_sha256']))
+check(rows[2]['exposure']['before']==rows[3]['exposure']['before'],'identical fresh opponent initial states across both sides')
+check(rows[0]['mechanism']['rng_before']==rows[2]['mechanism']['rng_before'],'same fresh start48 global/learner RNG across blocks')
+setup=r['start49_setup'];check(setup['initial']==a['initial']['49'] and setup['rng_before']==setup['rng_after'] and setup['source_members']==a['source_members'] and all(v==0 for v in setup['stats'].values()),'start49 zero-game setup')
+ps=subprocess.check_output(['ps','-axo','pid=,ppid=,pgid=,args='],text=True)
+(OUT/'technical-process-snapshot.txt').write_text(ps)
+parsed=[x.strip().split(None,3) for x in ps.splitlines() if x.strip()]
+check(not any(int(x[0]) in (74100,74112) or int(x[1]) in (74100,74112) or int(x[2])==74112 for x in parsed),'original owner/worker/descendant process groups ended')
+report=dict(status='PASS',profile=a['profile'],source_head=EXPECTED_HEAD,admission_sha256=EXPECTED_ADMISSION,receipt_sha256=digest(r_path),state_sha256=digest(s_path),checks=len(checks),games=summaries,actual=dict(technical_games=4,learning_updates=0,reward_rows=sum(len(x['uid']) for x in arrays)),historical_on_exact=True,frozen_v14_actual_exposure_verified=True,original_processes_ended=True,source_and_input_bindings_valid=True,models_loaded=False,forwards_or_games_or_tests_executed=False,no_strength_claim=True,limitations=['Independent replay reward checks use the actual saved UID/outcome/control/match arrays; no raw state reconstruction or new game replay.'],script_sha256=digest(__file__))
+(OUT/'technical-checks.json').write_text(json.dumps(checks,indent=2)+'\n')
+(OUT/'technical-audit.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(report,indent=2));print('report_sha256',digest(OUT/'technical-audit.json'))

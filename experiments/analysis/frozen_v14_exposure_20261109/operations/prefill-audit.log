@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "profile": "frozen_v14_exposure_20261109",
+  "source_head": "6839ebd3bd3f2a939aeb07c15bb470a73bfc74c4",
+  "admission_sha256": "592458e2eb2e6f672c80665cfbc54350f9573c60e412360d94f37787dcbd41c0",
+  "prefill_sha256": {
+    "e48": "8fc19e7cc9ceea794147d4237cb734bce81df367981488cd2dc161a51cf71a47",
+    "e49": "ecef50e2ead684bccb2d38862272b170dbdb9442a76d1d0dfa0182e81a604852"
+  },
+  "roles": {
+    "e48": {
+      "start": 48,
+      "games": 40,
+      "learn_steps": 0,
+      "replay_rows": 138229,
+      "opponents": {
+        "solution92": 25,
+        "frozen_v14": 15
+      },
+      "prefill_sha256": "8fc19e7cc9ceea794147d4237cb734bce81df367981488cd2dc161a51cf71a47",
+      "checkpoint_identity": {
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e"
+      }
+    },
+    "e49": {
+      "start": 49,
+      "games": 40,
+      "learn_steps": 0,
+      "replay_rows": 137758,
+      "opponents": {
+        "solution92": 23,
+        "frozen_v14": 17
+      },
+      "prefill_sha256": "ecef50e2ead684bccb2d38862272b170dbdb9442a76d1d0dfa0182e81a604852",
+      "checkpoint_identity": {
+        "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+        "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e"
+      }
+    }
+  },
+  "checks": 1074,
+  "actual": {
+    "prefill_games": 80,
+    "learning_updates": 0,
+    "replay_rows": 275987
+  },
+  "original_workers_waiting": true,
+  "no_release_exists": true,
+  "source_and_input_bindings_valid": true,
+  "loaded_saved_prefill_checkpoints_only": true,
+  "forwards_or_games_or_tests_executed": false,
+  "no_strength_claim": true,
+  "audit_correction": "macOS process executable is Python.app beneath the same pinned framework; compare exact derived executable and unchanged remaining argv. First overstrict venv-launcher comparison and log retained.",
+  "script_sha256": "f85618214fd293d64bbb4d05f874776d2a45ecdd37324b01fc316878435683df"
+}
+report_sha256 d4172d87e1dd371d0b7ce893195c8925b0577e83b4b6396f0710a64479952e84

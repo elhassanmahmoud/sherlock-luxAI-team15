@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/private/tmp/frozen-v14-exposure-review/prefill-audit.py", line 106, in <module>
+    check(p is not None and int(p[1])==job['owner_pid']==s['owner_pid'] and int(p[2])==job['pid']==job['pgid'] and p[3]==' '.join(job['argv']) and job.get('returncode') is None,role+' original live PID/PGID/argv')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/frozen-v14-exposure-review/prefill-audit.py", line 14, in check
+    if not value:raise AssertionError(label)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: e48 original live PID/PGID/argv

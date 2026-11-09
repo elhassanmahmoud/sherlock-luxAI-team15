@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "profile": "frozen_v14_exposure_20261109",
+  "source_head": "6839ebd3bd3f2a939aeb07c15bb470a73bfc74c4",
+  "admission_sha256": "fae9fc9e383f640c5d492251757cbb850b2aad7d5e0fdf88fd6ba60cc3cc7000",
+  "receipt_sha256": "72664de4de8e3a843e41aca7d515f1e6ff1b3bc388e19898491629b6d7cac6e0",
+  "state_sha256": "c5b59788902983eefc2c5322ed7c19e347f73fcbdfcbe193e7b81c25e2dd7997",
+  "checks": 670,
+  "games": [
+    {
+      "group": "solution92",
+      "seed": 9946007,
+      "side": "player_0",
+      "steps": 303,
+      "learn_steps": 0,
+      "replay_rows": 3323,
+      "reward_archive_sha256": "f00f75841ce5a40043a73e2daf3433e501bcda9920895f868081b4323f5cc802",
+      "native_sha256": "03cb42899cb4b283127df182d7dcc2ccf61b59178599201b33e70a526b00d370"
+    },
+    {
+      "group": "solution92",
+      "seed": 831006,
+      "side": "player_1",
+      "steps": 303,
+      "learn_steps": 0,
+      "replay_rows": 3167,
+      "reward_archive_sha256": "c65e09b763327376f6e682c5d07a4656b2fb1a5f2934e131b13630dec3559aec",
+      "native_sha256": "039ee424fc362fd8a6a937f585cf87137f97e7a349dde7533305399550f3a590"
+    },
+    {
+      "group": "frozen_v14",
+      "seed": 9946007,
+      "side": "player_0",
+      "steps": 303,
+      "learn_steps": 0,
+      "replay_rows": 3425,
+      "reward_archive_sha256": "906e22ba4321a8a76379cf61e1714e9cdea9f5177657be2c48a4a7f055a32000",
+      "native_sha256": "351e37c9a85240d986fc8e4739e72ddcb26aaf2da20f4e28007bbae200b4b4c4"
+    },
+    {
+      "group": "frozen_v14",
+      "seed": 831006,
+      "side": "player_1",
+      "steps": 303,
+      "learn_steps": 0,
+      "replay_rows": 3067,
+      "reward_archive_sha256": "e7c28435dd8988deffaf232f9c4aead5da33d342a4eed3c31fbd3afb6746ccf2",
+      "native_sha256": "b7954927173c8512f1a520a343c2a66f1b28cf768aaef76be15d7fdeb9d00380"
+    }
+  ],
+  "actual": {
+    "technical_games": 4,
+    "learning_updates": 0,
+    "reward_rows": 12982
+  },
+  "historical_on_exact": true,
+  "frozen_v14_actual_exposure_verified": true,
+  "original_processes_ended": true,
+  "source_and_input_bindings_valid": true,
+  "models_loaded": false,
+  "forwards_or_games_or_tests_executed": false,
+  "no_strength_claim": true,
+  "limitations": [
+    "Independent replay reward checks use the actual saved UID/outcome/control/match arrays; no raw state reconstruction or new game replay."
+  ],
+  "script_sha256": "20bd1e693a80940c4c769c20a0ad461a34f79306273c90c92f0e475a1068aae7"
+}

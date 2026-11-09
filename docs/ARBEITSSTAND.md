@@ -8,6 +8,19 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Gezieltes Training gegen V14 vollständig abgeschlossen
+
+- Beide tatsächlichen Lernarme abgeschlossen: je40Vorlauf+400Lernspiele/60000Updates, einschließlich vier Technikspielen884Ausführungen/120000Updates. Neue Endtensoren, Adam, Replays und sämtliche Gegnerbelege unabhängig geprüft (5783Checks), Root-Originalvalidatoren PASS. [Trainingsbericht](../experiments/analysis/frozen_v14_exposure_20261109/TRAININGSERGEBNIS.md).
+- Root-Abschluss `1b3a4ea33661420c6ee1be9dcd691109e6cd829d2b9b5f5d6c17c25fda230236` unter Quelle6839ebd versiegelt; erst danach Freeze gelöst. Alle eigenen Modellprozesse und Wachhalter beendet. V14/ZIP unverändert. Noch kein Leistungsergebnis oder bestätigter stärkerer Agent.
+- Als Nächstes ausschließlich feste200er-Auswahl nach separater tatsächlicher Montageabnahme. Externe ungetestete Vergleichsentwürfe werden jetzt integriert/geprüft, kein Leistungsstart vor Quellenprüfung. Keine neuen Karten/Gates/Trainingsarme, keine Wiederholung alter Studien. Akku/Restkontingent erlaubt, Resets nurMoayed.
+
+## 09.11.2026 – Gezieltes Lernen gegen V14 läuft
+
+- Werkzeuge als `6839ebd` auf GitHub und Primary aktualisiert. Vier echte Technikspiele bestanden: historische ON-Solutionverläufe exakt reproduziert, neue feste V14-Gegner unverändert. Unabhängiger Audit670Checks und Root-Originalvalidator PASS; technische Abnahme `cff32e0cdfdd997ab019922bffcc1a5aa98ffe645bb29a6d40cc3965ba7e09e1`.
+- Separate Trainingsaufnahme `592458e2eb2e6f672c80665cfbc54350f9573c60e412360d94f37787dcbd41c0`: beide40er-Vorläufe abgeschlossen,275987 echteReplayzeilen, q/Target unverändert,Adamleer,0Updates. Unabhängige1074Checks und Root-Originalvalidatoren bestanden. Manuelle gemeinsame Freigabe `cca1ce73ea8616cbc27fd71e7946ef5852b8937e74ff4984f712b2599c66391d` für dieselbenOriginalworker; je400Lernspiele/60000Updates vorgesehen.
+- Effizienzausnahme durch Root während der Rechenzeit: Vergleichswerkzeuge dürfen ausschließlich als nicht ausgeführter externer Textentwurf vorbereitet werden. Keine Repoquellenänderung, Imports, Tests, Modelle oder Vergleichsaufnahme vor tatsächlichem Trainingsabschluss. Feste200Karten/Gates unverändert; Integration/Red-Green/Review erst nach gelöstem Freeze.
+- Tatsächlichen Status in `experiments/analysis/frozen_v14_exposure_20261109/training_v1/state.json` lesen; kein Endergebnis oder Stärkenachweis. Quelle/HEAD6839ebd bis tatsächlicher Root-Abschluss eingefroren, keine parallelenTests/Neustarts. V14/ZIP unverändert. Dieser Laufvermerk wird nach Abschluss veröffentlicht. Akku/Restkontingent erlaubt, Resets nurMoayed.
+
 ## 09.11.2026 – Training gegen eingefrorenen V14 technisch vorbereitet
 
 - Offline-Rewarddiagnose abgeschlossen und als `a87a2c1` veröffentlicht; Hauptkopie aktuell. Kein Modelllauf aktiv. Kleine frühe Rewardlücke wird vorerst nicht verändert, damit die nächste Studie nur die Gegnerexposition ändert.
