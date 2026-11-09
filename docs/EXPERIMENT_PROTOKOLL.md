@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 09.11.2026 – MATCH38: frische Bestätigung negativ
+
+440 vorab feste Spiele: Solution beide 38/40, Panel 155/160 statt 152/160 (Δ +1,875 pp [−1,25; +5,625]), direkt 58/120 [35; 61,67 %]. Beide Direktgates verfehlt; kein V14-Ersatz oder Nachschlag. Vollständiger unabhängiger Datenaudit und Root-Reproduktion unter 98f2b02 bestanden. V14/ZIP unverändert. [Bericht](../experiments/analysis/match_weight_confirmation_20261109/ERGEBNIS.md).
+
 ## 09.11.2026 – Matchreward-Screen: MATCH38 nominiert
 
 200 feste Spiele, alle vier vorab festgelegten Auswahlbedingungen erfüllt: Solution 37/40 statt V14/Kontrolle je 36/40, direkt 26/40 gegen V14 und 24/40 gegen Kontrolle. Unabhängiger Daten-/Statistikaudit und originale Root-Reproduktion bestanden. Breite Intervalle, noch keine Übernahme oder bewiesene allgemeine Verbesserung. V14/ZIP unverändert; separate frische Bestätigung als nächster Schritt. [Bericht](../experiments/analysis/match_weight_compare_20261109/ERGEBNIS.md).

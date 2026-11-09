@@ -29,6 +29,9 @@
 
 **Matchgewicht-Studie am 09.11.: MATCH38 nominiert, V14 bleibt bis Bestätigung.** Vier Endnetze vollständig trainiert und geprüft; mit offen archivierter Überwachungsunterbrechung 1.998 Ausführungen und 262.500 Updates. Anschließender fester 200-Spiel-Screen: Solution MATCH38 37/40 statt V14/Kontrolle je 36/40, direkt 26/40 gegen V14 und 24/40 gegen Kontrolle. Alle vier vorab festen Gates erfüllt, unabhängiger Audit und Root-Reproduktion bestanden. Breite Intervalle, noch kein allgemeiner Stärkezuwachs oder 100-Prozent-Nachweis. V14/ZIP unverändert; separate frische Bestätigung zuerst festlegen, keine automatische Übernahme oder weiterer Trainingsstart. [Ergebnis](experiments/analysis/match_weight_compare_20261109/ERGEBNIS.md), [Training](experiments/analysis/match_weight_20261109/TRAININGSERGEBNIS.md). Aktuellen Phasenstand im Arbeitsstand lesen.
 
+**Frische MATCH38-Bestätigung am 09.11. abgeschlossen, negativ:** 440 feste Spiele, Solution beide 38/40, Panel 155/160 statt 152/160 (Δ +1,875 pp [−1,25; +5,625]), direkt 58/120 [35; 61,67 %]. Beide Direktgates verfehlt; V14/ZIP bleiben, kein Nachschlag oder Schwellenwechsel. Originalanalyse und unabhängiger Audit unter 98f2b02 bestanden, alle Prozesse beendet. [Vollständiger Bericht](experiments/analysis/match_weight_confirmation_20261109/ERGEBNIS.md). Nächste getrennte Arbeit ausschließlich nach aktuellem Arbeitsstand; keine alten Studien wiederholen.
+
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

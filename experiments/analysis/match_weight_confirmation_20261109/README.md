@@ -1,3 +1,9 @@
+# MATCH38-Bestätigung abgeschlossen
+
+**Nicht bestanden, V14/ZIP unverändert.** Alle 440 festen Spiele und unabhängige Datenprüfung fertig. Direkt 58/120, Solution beide 38/40; kein belegter stärkerer Agent. [Vollständiger Bericht](ERGEBNIS.md). Keine Wiederholung oder Verlängerung.
+
+## Historische Vorbereitung
+
 # MATCH38: einmalige frische Bestätigung
 
 Vorbereitung abgeschlossen, noch keine reale Aufnahme oder Bestätigungsspiele. Fester Plan: 440 Spiele, dieselben akzeptierten V14-/MATCH38-Evalkopien. 160 Spiele je Variante gegen vier Gegner auf 20 Karten, 120 direkte Spiele auf weiteren 60 Karten. Acht vorab festgelegte Gates; keine Verlängerung, neue Montage oder automatische Übernahme.

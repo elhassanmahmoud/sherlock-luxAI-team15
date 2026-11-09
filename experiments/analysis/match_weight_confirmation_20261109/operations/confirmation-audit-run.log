@@ -1,0 +1,96 @@
+{
+  "checks": 24837,
+  "counts": {
+    "direct": {
+      "draws": 0,
+      "losses": 62,
+      "wins": 58
+    },
+    "match": {
+      "default": {
+        "draws": 0,
+        "losses": 0,
+        "wins": 40
+      },
+      "rush": {
+        "draws": 0,
+        "losses": 0,
+        "wins": 40
+      },
+      "sol92_sq": {
+        "draws": 0,
+        "losses": 3,
+        "wins": 37
+      },
+      "solution92": {
+        "draws": 0,
+        "losses": 2,
+        "wins": 38
+      }
+    },
+    "v14": {
+      "default": {
+        "draws": 0,
+        "losses": 0,
+        "wins": 40
+      },
+      "rush": {
+        "draws": 0,
+        "losses": 0,
+        "wins": 40
+      },
+      "sol92_sq": {
+        "draws": 0,
+        "losses": 6,
+        "wins": 34
+      },
+      "solution92": {
+        "draws": 0,
+        "losses": 2,
+        "wins": 38
+      }
+    }
+  },
+  "degenerate": {
+    "direct": false,
+    "opponents": {
+      "default": true,
+      "rush": true,
+      "sol92_sq": false,
+      "solution92": false
+    },
+    "panel": false
+  },
+  "direct": {
+    "games": 120,
+    "high": 0.6166666666666667,
+    "low": 0.35,
+    "maps": 60,
+    "winrate": 0.48333333333333334
+  },
+  "games": 440,
+  "gates": {
+    "default_wins": true,
+    "direct_low": false,
+    "direct_wins": false,
+    "panel_low": true,
+    "panel_mean": true,
+    "rush_wins": true,
+    "solution_wins": true,
+    "square_wins": true
+  },
+  "hash_bindings_checked": 512,
+  "panel": {
+    "delta": 0.01875,
+    "high": 0.05625,
+    "low": -0.0125,
+    "maps": 20,
+    "ref_winrate": 0.95,
+    "winrate": 0.96875
+  },
+  "passed": false,
+  "script_sha256": "aeeb5b30fcfbedb59ce685755c9a64199744a95d4ca3d5ef8d21e1fe00268fff",
+  "status": "PASS",
+  "summary_sha256": "ab91bab17645443386e3106d90316dfc6d9eddb74ee617ec4d04068ad3ed589f",
+  "unique_files_hashed": 488
+}

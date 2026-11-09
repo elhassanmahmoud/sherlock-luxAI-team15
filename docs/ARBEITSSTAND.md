@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – MATCH38-Bestätigung geschlossen: V14 bleibt
+
+- Alle 440 festen Spiele vollständig und unabhängig nachgerechnet: Solution beide 38/40, Square MATCH38 37/40 statt V14 34/40, default/rush beide 40/40; direkt nur 58/120. Beide Direktgates verfehlt, sechs Panelgates erfüllt. Kein bestätigter stärkerer Nachfolger, kein Nachschlag oder Schwellenwechsel. [Ergebnis mit Grenzen](../experiments/analysis/match_weight_confirmation_20261109/ERGEBNIS.md).
+- Originalanalyse unter Quelle `98f2b02` exakt reproduziert, unabhängiger Audit mit 24.837 Checks PASS. Root-Abschluss `dddfebaa1abd444535734bc3424d81a64f880a6cfc41afb867828b3bd36e06ef`; erst danach Freeze gelöst. Alle eigenen Prozesse/Wachhalter beendet, V14/ZIP unverändert. Remote ohne Mahmoud-Änderungen.
+- Nächste getrennte Hypothese: Ensemble-Aktionsauswahl im Training bei unverändertem Einzelnetz-DDQN. Bisher nur read-only Machbarkeit; neue Spec/Plan und technische Abnahme vor echten Spielen. Historische Kontrollen nur bei belegbarer Init-/Runtime-/OFF-Gleichheit verwenden. Kein erneuter Matchreward- oder alter Studienstart. Akku und Restkontingent erlaubt, keine Resets durch Codex.
+
+## 09.11.2026 – Frische MATCH38-Bestätigung läuft
+
+- Vorbereitung als `98f2b02` veröffentlicht und Hauptkopie verlustfrei aktualisiert. Neue Aufnahme `3083a345f132d3e4fb51edbaf5fcaf8eb65f31f6507898a6140594359d736bdf` tatsächlich geprüft und gestartet; maßgeblich `experiments/analysis/match_weight_confirmation_20261109/confirmation_v1/state.json`.
+- Genau 440 Spiele, unveränderte akzeptierte Modelle und frühere Runtime, maximal zwei Worker. Quelle/HEAD bis Root-Abschluss einfrieren, keine parallelen Tests oder Neustarts. Aktueller Laufvermerk erst nach Abschluss committen.
+- Noch kein Bestätigungsergebnis. V14/ZIP unverändert; Nutzer erlaubt Akku und Restkontingent, Resets ausschließlich durch ihn. Eigener Watcher prüft reale Quota und Remote, unabhängiger Auditor prüft nach Ende sämtliche Rohdaten und Gates.
+
 ## 09.11.2026 – Einmalige MATCH38-Bestätigung wird vorbereitet
 
 - Nominierung samt Rohdaten/Audits ist als `82161f8` auf GitHub und in der Hauptkopie. Keine laufenden eigenen Modelle; vorheriger Freeze geschlossen, V14/ZIP unverändert.

@@ -1,0 +1,193 @@
+"""Independent CSV/JSON-only confirmation audit; only execute after actual completion."""
+from pathlib import Path
+import argparse,csv,gzip,hashlib,json,math,os,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+OUT=Path('/private/tmp/match-weight-confirmation-audit')
+PROFILE='match_weight_confirmation_20261109'
+HEAD='98f2b02de3923aa3b4b1c81ad2c2a56b620594e2'
+ADMISSION_SHA='3083a345f132d3e4fb51edbaf5fcaf8eb65f31f6507898a6140594359d736bdf'
+CLOSURE_SHA='574cc99f8b943eb68a805871c96fd6d9f6fd61c4ed42fa37872d5a7bc3d0f3f9'
+MODEL_SHA={'v14':'817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2','match':'ff66e696665019d304848ebf0e3b022fd1a1d08eaa9b25518f12f8c3e33e6a1b'}
+PANEL=('solution92','default','sol92_sq','rush');JOBS=('v14_panel','match_panel','match_v14')
+COHORTS={'panel':list(range(9980000,9980020)),'direct':list(range(9980100,9980160))}
+SIDES=('player_0','player_1');EPS=1e-12
+HEADER=['seed','side','opponent','result','game_win','point_win','our_wins','opp_wins','our_points','opp_points','point_counting_version','wait_frac','invalid_frac','greedy_masked_frac','sap_attempts','sap_hits','stack_frac','relics_found','relics_seen','known_point_tiles','belief_contradictions','unit_steps','steps','secs']
+checks=0;cache={};bindings=[]
+def check(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p,fresh=False):
+ p=Path(p)
+ check(p.is_absolute(),'absolute data path')
+ if fresh or str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):
+ p=Path(p);check(not any(q.is_symlink() for q in (p,*p.parents)),'no linked bound path')
+ check(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def equal(a,b,label):
+ if isinstance(a,dict):
+  check(isinstance(b,dict) and set(a)==set(b),label+' keys')
+  for k in a:equal(a[k],b[k],label+'.'+k)
+ elif isinstance(a,list):
+  check(isinstance(b,list) and len(a)==len(b),label+' length')
+  for i,(x,y) in enumerate(zip(a,b)):equal(x,y,label+f'[{i}]')
+ elif isinstance(a,float):check(type(b) in (int,float) and math.isfinite(b) and math.isclose(a,b,abs_tol=EPS,rel_tol=0),label)
+ else:check(type(a)==type(b) and a==b,label)
+def process_gate(state,which):
+ check(state['profile']==PROFILE and state['stage']=='confirmation' and state['status']=='complete' and state['active']==[],'completed inactive confirmation owner')
+ check(state['owner_pid']==49127 and set(state['jobs'])==set(JOBS) and set(state['receipts'])==set(JOBS),'original owner and exactly three completed jobs')
+ check(state['jobs']['v14_panel']['pid']==49144 and state['jobs']['match_panel']['pid']==49149,'original observed panel workers')
+ pids={state['owner_pid'],49266};groups=set()
+ for n,j in state['jobs'].items():
+  check(j['owner_pid']==state['owner_pid'] and j['pid']==j['pgid'] and j['returncode']==0 and j.get('finished_at') is not None,'completed owned job '+n)
+  pids.add(j['pid']);groups.add(j['pgid'])
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ live=[tuple(map(int,line.split())) for line in snapshot.splitlines() if line.strip()]
+ check(not any(p in pids or g in groups for p,g in live),'original owner/worker PIDs and all groups absent')
+ check(max(state['jobs'][n]['finished_at'] for n in JOBS[:2])<=state['jobs']['match_v14']['started_at'],'recorded two-plus-one wave barrier')
+ check(state['finished_at']>=max(j['finished_at'] for j in state['jobs'].values()),'owner completion after all jobs')
+ (OUT/(which+'-process-snapshot.txt')).write_text(snapshot)
+ return dict(owner_pid=state['owner_pid'],root_awake_pid=49266,worker_pids={n:j['pid'] for n,j in state['jobs'].items()},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def bootstrap(values):
+ # Reused independent earlier checker: draw indices of whole-map values, not game rows.
+ values=np.asarray(values,dtype=np.float64);rng=np.random.default_rng(0)
+ indices=rng.integers(0,len(values),size=(5000,len(values)))
+ low,high=np.percentile(values[indices].mean(axis=1),[2.5,97.5])
+ return float(low),float(high)
+def number(row,k,integer=False):
+ v=float(row[k]);check(math.isfinite(v),k+' finite')
+ if integer:check(v>=0 and v==math.floor(v),k+' nonnegative integer')
+ return int(v) if integer else v
+
+def main():
+ ap=argparse.ArgumentParser(description=__doc__)
+ ap.add_argument('--admission',type=Path,required=True)
+ ap.add_argument('--root-authorized-after-owner-exit',action='store_true',required=True)
+ args=ap.parse_args();check(args.root_authorized_after_owner_exit,'explicit Root completion audit instruction')
+ a=read(args.admission);out=Path(a['out']);state=read(out/'state.json')
+ # This guard precedes every CSV, summary or archive-byte audit.
+ before=process_gate(state,'before');state_sha=sha(out/'state.json')
+ pin(args.admission,ADMISSION_SHA,'actual Root admission')
+ check(a['schema_version']==1 and a['profile']==PROFILE and a['stage']=='confirmation' and a['start_authorized'] is True and a['allow_battery'] is True,'one fixed actual confirmation scope')
+ check(Path(a['root'])==ROOT and out==ROOT/'experiments/analysis'/PROFILE/'confirmation_v1','actual exact paths')
+ check(a['source']['head']==HEAD and subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=10).strip()==HEAD,'actual frozen source HEAD')
+ for k in ('root','out','python','plans','source','protected','inputs','stop_file','allow_battery'):equal(a[k],state[k],'owner admission '+k)
+ check(state['admission_sha256']==ADMISSION_SHA,'owner admission hash')
+ for group in ('inputs','protected'):
+  for p,h in a[group].items():pin(p,h,group)
+ for p,h in a['source']['files'].items():pin(p,h,'source')
+ pin(a['source']['executable'],a['source']['executable_sha256'],'interpreter')
+ check(a['source']['python']==a['python'] and str(Path(a['python']).resolve())==a['source']['executable'],'actual interpreter resolution')
+ # Independently inventory the admitted source scope, without importing project code.
+ names=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard','--','*.py'],cwd=ROOT).split(b'\0')
+ paths={ROOT/os.fsdecode(n) for n in names if n}
+ for name in ('scripts','agents','lux'):paths.update((ROOT/name).rglob('*.py'))
+ paths.update(map(Path,a['plans']))
+ for name in ('requirements.txt','pyproject.toml'):
+  if (ROOT/name).is_file():paths.add(ROOT/name)
+ venv=Path(a['python']).parent.parent
+ if (venv/'pyvenv.cfg').is_file():paths.add(venv/'pyvenv.cfg')
+ for engine in (venv/'lib').glob('python*/site-packages/luxai_s3'):paths.update(engine.rglob('*.py'))
+ check({str(p) for p in paths}==set(a['source']['files']),'complete actual source file inventory')
+ protected={str(ROOT/f'agents/sherlock/weights/agent_p{i}.pth'):'98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8' for i in (0,1)}
+ protected[str(ROOT/'Gruppe15.zip')]='88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6'
+ equal(protected,a['protected'],'exact unchanged V14 and ZIP')
+ # Historical closure is reused, not a repeat of the old 200-row or tensor audits.
+ pin(a['selection_closure'],CLOSURE_SHA,'sealed historical selection')
+ closure=read(a['selection_closure']);old=read(a['selection_admission']);old_owner=read(a['selection_state'])
+ check(closure['status']=='COMPLETE_RESULT_VERIFIED' and closure['profile']=='match_weight_compare_20261109' and closure['games']==200 and closure['nominated'] is True and closure['original_processes_ended'] is True and closure['source_and_input_bindings_valid'] is True,'accepted historical nomination/process closure')
+ for field,key in [('selection_admission','admission_sha256'),('selection_state','owner_state_sha256'),('selection_summary','summary_sha256'),('selection_audit','independent_results_sha256'),('selection_review','independent_review_sha256')]:pin(a[field],closure[key],'historical '+field)
+ for evidence in (read(a['selection_summary']),read(a['selection_audit'])):
+  for key in ('source','admission_sha256','games','nominated','gates','counts','files'):equal(closure[key],evidence[key],'sealed historical result '+key)
+ check(read(a['selection_audit'])['status']=='PASS' and old_owner['status']=='complete' and old_owner['active']==[] and all(j['returncode']==0 for j in old_owner['jobs'].values()),'historical independent PASS and complete exits')
+ check(all(v is True for v in closure['gates'].values()) and len(closure['files'])==5,'all original nomination gates and five files')
+ for p,h in closure['files'].items():pin(p,h,'accepted historical CSV bytes only')
+ for p,h in old['inputs'].items():check(a['inputs'].get(p)==h,'unchanged historical input subset')
+ for p,h in closure['source']['files'].items():check(a['source']['files'].get(p)==h,'unchanged historical runtime subset')
+ for k in ('python','executable','executable_sha256'):equal(closure['source'][k],a['source'][k],'historical interpreter '+k)
+ tech=read(old['technical_receipt']);approval=read(old['technical_acceptance'])
+ check(tech['status']=='complete' and tech['games']==0 and approval['status']=='PASS' and approval['actual_assembly_and_stock_loader_pass'] is True and approval['technical_receipt_sha256']==sha(old['technical_receipt']),'accepted prior assembly/loader receipt')
+ check(set(a['models'])==set(MODEL_SHA),'exact two frozen models')
+ for role,h in MODEL_SHA.items():
+  check(a['models'][role]==old['models'][role]==tech['models'][role]['path'] and tech['models'][role]['sha256']==h,'same accepted eval copy '+role)
+  pin(a['models'][role],h,'unchanged eval model bytes only '+role)
+ check(set(a['cohorts'])==set(COHORTS),'exact two fresh cohorts')
+ for name,seeds in COHORTS.items():equal(read(a['cohorts'][name]),seeds,'fixed cohort '+name)
+ proof=read(a['seed_acceptance'])
+ check(proof['status']=='PASS' and proof['profile']==PROFILE and proof['cohorts']==COHORTS and proof['no_observed_conflicts'] is True and bool(proof['limitations']) and proof['raw_verdict']=='REVIEW_REQUIRED','bounded seed acceptance keeps raw review verdict')
+ for p,h in proof['files'].items():check(a['inputs'].get(p)==h,'bound seed evidence');pin(p,h,'seed evidence')
+ raw_path=next(p for p in proof['files'] if p.endswith('seed-audit.json.gz'))
+ raw_bytes=gzip.decompress(Path(raw_path).read_bytes());raw=json.loads(raw_bytes)
+ check(hashlib.sha256(raw_bytes).hexdigest()==proof['raw_json_sha256'] and raw['verdict']=='REVIEW_REQUIRED','unaltered raw review-required seed report')
+ for k in ('consumption_overlaps','json_seed_or_numeric_mentions','json_interval_overlaps','json_string_mentions','errors','mutations','text_errors'):check(not raw[k],'no observed seed conflict/error '+k)
+ own=[h for h in raw['text_hits'] if h['classification']=='requires_review']
+ resolution=proof['resolution']
+ check(len(own)==1 and own[0]['relative_path']==resolution['path']=='scripts/match_weight_confirmation.py' and own[0]['line']==resolution['line']==21,'exact single own preparation definition')
+ check(resolution['sha256']==a['source']['files'][str(ROOT/resolution['path'])] and 'COHORTS' in own[0]['text'] and bool(resolution['classification']),'same reviewed own cohort source bytes')
+ frames={};counts={};filepins={};mapmeans={}
+ for name in JOBS:
+  role=name.split('_',1)[0];direct=name=='match_v14';cohort='direct' if direct else 'panel'
+  opponents=('self:'+a['models']['v14'],) if direct else PANEL
+  games=120 if direct else 160;path=out/(name+'.csv');receipt=state['receipts'][name]
+  check(receipt==dict(path=str(path),sha256=sha(path),games=games),'actual exact CSV receipt '+name)
+  pin(path,receipt['sha256'],'actual CSV '+name);filepins[str(path)]=sha(path)
+  command=[a['python'],'-B','-m','scripts.par_eval','--weights',a['models'][role],'--seed-list',a['cohorts'][cohort],'--workers','1','--opponents',','.join(opponents),'--out',str(path)]
+  equal(command,state['jobs'][name]['argv'],'fixed actual command '+name)
+  with path.open(newline='') as f:
+   reader=csv.DictReader(f);check(reader.fieldnames==HEADER,'declared exact CSV header');rows=list(reader)
+  check(len(rows)==games and all(None not in r and all(v is not None and v!='' for v in r.values()) for r in rows),'all expected complete raw CSV rows')
+  parsed={};per_opp={o:[] for o in opponents}
+  for row in rows:
+   seed=number(row,'seed',True);side=row['side'];opp=row['opponent'];key=(opp,seed,side)
+   check(opp in opponents and side in SIDES and key not in parsed,'unique expected opponent/seed/side')
+   for field in ('steps','point_counting_version','our_points','opp_points','our_wins','opp_wins','game_win'):number(row,field,True)
+   check(number(row,'steps',True)==303 and number(row,'point_counting_version',True)==2,'complete 303-step v2 game')
+   ow=number(row,'our_wins',True);lw=number(row,'opp_wins',True);op=number(row,'our_points',True);lp=number(row,'opp_points',True)
+   result=number(row,'result');point=number(row,'point_win')
+   check(ow+lw<=3 and result==(1. if ow>lw else .5 if ow==lw else 0.) and number(row,'game_win',True)==int(result==1) and point==(1. if op>lp else .5 if op==lp else 0.),'actual WDL/match/point arithmetic')
+   for field in ('wait_frac','invalid_frac','greedy_masked_frac','sap_attempts','sap_hits','stack_frac','relics_found','relics_seen','known_point_tiles','belief_contradictions','unit_steps','secs'):number(row,field)
+   parsed[key]=result;per_opp[opp].append(result)
+  check(set(parsed)=={(o,s,p) for o in opponents for s in COHORTS[cohort] for p in SIDES},'all exact admitted game keys')
+  frames[name]=parsed
+  def wdl(values):return dict(wins=values.count(1.),draws=values.count(.5),losses=values.count(0.))
+  if direct:counts['direct']=wdl(next(iter(per_opp.values())))
+  else:counts[role]={o:wdl(per_opp[o]) for o in PANEL}
+  mapmeans[name]={o:np.array([(parsed[o,s,'player_0']+parsed[o,s,'player_1'])/2 for s in COHORTS[cohort]]) for o in opponents}
+ ref=np.array([np.mean([frames['v14_panel'][o,s,p] for o in PANEL for p in SIDES]) for s in COHORTS['panel']])
+ candidate=np.array([np.mean([frames['match_panel'][o,s,p] for o in PANEL for p in SIDES]) for s in COHORTS['panel']])
+ contrast=candidate-ref;lo,hi=bootstrap(contrast)
+ panel=dict(maps=20,winrate=float(candidate.mean()),ref_winrate=float(ref.mean()),delta=float(contrast.mean()),low=lo,high=hi)
+ directmaps=next(iter(mapmeans['match_v14'].values()));lo,hi=bootstrap(directmaps)
+ direct=dict(maps=60,games=120,winrate=float(directmaps.mean()),low=lo,high=hi)
+ opponents={};opponent_contrasts={}
+ for o in PANEL:
+  c=mapmeans['match_panel'][o];r=mapmeans['v14_panel'][o];diff=c-r;lo,hi=bootstrap(diff);opponent_contrasts[o]=diff
+  opponents[o]=dict(opponent=o,maps=20,games=40,winrate=float(c.mean()),ref_winrate=float(r.mean()),delta=float(diff.mean()),low=lo,high=hi,excluded_candidate=0,excluded_reference=0)
+ gates=dict(direct_wins=counts['direct']['wins']>=72,direct_low=direct['low']>.5+EPS,panel_mean=panel['delta']>=-EPS,panel_low=panel['low']>=-.025-EPS,solution_wins=counts['match']['solution92']['wins']>=counts['v14']['solution92']['wins'],default_wins=counts['match']['default']['wins']>=counts['v14']['default']['wins'],square_wins=counts['match']['sol92_sq']['wins']>=counts['v14']['sol92_sq']['wins']-2,rush_wins=counts['match']['rush']['wins']>=counts['v14']['rush']['wins']-2)
+ def constant(values):return bool(np.all(values==values[0]))
+ degenerate=dict(panel=constant(contrast) or panel['low']==panel['high'],direct=constant(directmaps) or direct['low']==direct['high'],opponents={o:constant(opponent_contrasts[o]) or opponents[o]['low']==opponents[o]['high'] for o in PANEL})
+ expected=dict(profile=PROFILE,games=440,counts=counts,panel=panel,opponents=opponents,direct=direct,degenerate=degenerate,gates=gates,passed=all(gates.values()),promotion_authorized=False,files=filepins,source=a['source'],admission_sha256=ADMISSION_SHA)
+ summary=read(out/'summary.json');check(set(summary)==set(expected)|{'interpretation'},'exact original summary schema')
+ for k,v in expected.items():equal(v,summary[k],'independent summary '+k)
+ interpretation=summary['interpretation'].lower()
+ check(all(s in interpretation for s in ('empirical stability','not a formal','degenerate','no isolated','no automatic promotion','solution equality')),'limited interpretation and no promotion explicit')
+ # Final process and original completed-output bytes, no second result scan.
+ after=process_gate(read(out/'state.json'),'after');check(sha(out/'state.json',fresh=True)==state_sha,'completed owner state unchanged during audit')
+ for p,h in filepins.items():check(sha(p,fresh=True)==h,'CSV bytes unchanged during audit')
+ check(sha(args.admission,fresh=True)==ADMISSION_SHA,'admission unchanged during audit')
+ check(subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=10).strip()==HEAD,'frozen HEAD after audit')
+ result=dict(status='PASS',checks=checks,**expected,summary_sha256=sha(out/'summary.json'),process_before=before,process_after=after,hash_bindings_checked=len(bindings),unique_files_hashed=len(cache),script_sha256=sha(Path(__file__).resolve()),seed_raw_verdict=raw['verdict'],seed_resolution=resolution,map_values=dict(panel_contrast=contrast.tolist(),direct_scores=directmaps.tolist(),opponent_contrasts={o:v.tolist() for o,v in opponent_contrasts.items()}),limits=['Actual CSV records are independently recounted; engine actions or raw per-match points cannot be regenerated without archived traces.','The source enforces zero caught agent errors on both sides; successful original job exits bind that requirement, but CSVs contain no separate caught-error counters.','Original saved tensor assembly and stock-loader outcomes are historically accepted and unchanged by file hashes. No archive is deserialized, no forward pass or game is rerun.','Panel gates are empirical stability criteria, not a formal population noninferiority proof. Degenerate intervals do not capture unknown-map risk.','Intervals are descriptive whole-map PCG64 seed-0 percentile bootstrap, 5000 draws; no multiplicity correction across historical project selection.','Card freshness is bounded to the accepted local scan with explicit gaps; raw REVIEW_REQUIRED is retained for the classified own COHORTS definition.','No automatic promotion, extension, replacement games or isolated match-reward causal conclusion.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+ (OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n')
+ print(json.dumps({k:result[k] for k in ('status','checks','games','counts','gates','passed','panel','direct','degenerate','summary_sha256','script_sha256','hash_bindings_checked','unique_files_hashed')},indent=2,sort_keys=True))
+if __name__=='__main__':
+ try:main()
+ except Exception as e:
+  (OUT/'failure.json').write_text(json.dumps(dict(status='FAIL',checks_completed=checks,error=f'{type(e).__name__}: {e}'),indent=2)+'\n');raise
