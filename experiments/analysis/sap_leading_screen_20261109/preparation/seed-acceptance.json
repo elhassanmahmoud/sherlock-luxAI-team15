@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "profile": "sap_leading_screen_20261109",
+  "status": "PASS",
+  "no_observed_conflicts": true,
+  "cohorts": {
+    "panel": [
+      9940000,
+      9940001,
+      9940002,
+      9940003,
+      9940004,
+      9940005,
+      9940006,
+      9940007,
+      9940008,
+      9940009,
+      9940010,
+      9940011,
+      9940012,
+      9940013,
+      9940014,
+      9940015,
+      9940016,
+      9940017,
+      9940018,
+      9940019
+    ],
+    "direct": [
+      9940100,
+      9940101,
+      9940102,
+      9940103,
+      9940104,
+      9940105,
+      9940106,
+      9940107,
+      9940108,
+      9940109,
+      9940110,
+      9940111,
+      9940112,
+      9940113,
+      9940114,
+      9940115,
+      9940116,
+      9940117,
+      9940118,
+      9940119
+    ]
+  },
+  "limitations": [
+    "Bounded local audit, no worldwide or absolute freshness claim.",
+    "Raw JSONL, seedless data, undocumented and external history were not established.",
+    "Original REVIEW_REQUIRED due concurrent primary integration retained; all14changed files compared separately."
+  ],
+  "files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/preparation/seed-review.md": "0f64383279e2ba19291d6b916e95735068a5a6ac7f8ca8f4d216cff0ce70b4b3",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/preparation/seed-audit.py.txt": "fbff0c9963d71f2e09c4002d6fc5579b16eb3a03a6c9fb8d6950a9bbc5da96e1",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/preparation/seed-integration-delta.json": "094648697c93574b6b8198f6da6d3d0af48e9edd2681ca25bd35f38aca52f9e7",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/preparation/seed-audit.json.gz": "58b0a1c5b7c44c3d3aaec57b94698250834791e893f6ad62de988e4cbf6eab9f"
+  },
+  "raw_report_sha256": "2c800a2fcb7b4d42638b916ceee8dc5e8c164abd301439c609fa1ad7814aaff8",
+  "decision": "Root accepts no observed conflict in fixed cohorts, preserving audit limitations. No model/game start from this seed decision."
+}

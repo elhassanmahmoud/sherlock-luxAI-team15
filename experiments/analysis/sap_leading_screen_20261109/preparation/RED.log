@@ -1,0 +1,15 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_fixed_120_matrix_and_exact_gates _____________________
+
+    def test_fixed_120_matrix_and_exact_gates():
+        result = s.summarize(rows())
+>       assert result.get("eligible_for_separate_design") is True
+E       AssertionError: assert None is True
+E        +  where None = <built-in method get of dict object at 0x108e3b2c0>('eligible_for_separate_design')
+E        +    where <built-in method get of dict object at 0x108e3b2c0> = {}.get
+
+/tmp/sap-leading-screen/tests/test_sap_leading_screen.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../../../tmp/sap-leading-screen/tests/test_sap_leading_screen.py::test_fixed_120_matrix_and_exact_gates
+1 failed, 29 deselected in 0.08s

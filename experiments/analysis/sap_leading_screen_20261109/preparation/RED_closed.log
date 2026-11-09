@@ -1,0 +1,55 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_analysis_requires_owned_jobs_fully_closed[active] ____________
+
+fault = 'active'
+
+    @pytest.mark.parametrize("fault", ["active", "exit", "missing_job"])
+    def test_analysis_requires_owned_jobs_fully_closed(fault):
+        state=dict(profile=s.PROFILE,status="complete",active=[],admission_sha256="a"*64,
+                   jobs={j:dict(returncode=0) for j in s.JOBS})
+        if fault=="active":state["active"]=["on_direct"]
+        if fault=="exit":state["jobs"]["on_direct"]["returncode"]=1
+        if fault=="missing_job":del state["jobs"]["on_direct"]
+>       with pytest.raises(ValueError):s.check_closed_state(state,"a"*64)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+/tmp/sap-leading-screen/tests/test_sap_leading_screen.py:209: Failed
+_____________ test_analysis_requires_owned_jobs_fully_closed[exit] _____________
+
+fault = 'exit'
+
+    @pytest.mark.parametrize("fault", ["active", "exit", "missing_job"])
+    def test_analysis_requires_owned_jobs_fully_closed(fault):
+        state=dict(profile=s.PROFILE,status="complete",active=[],admission_sha256="a"*64,
+                   jobs={j:dict(returncode=0) for j in s.JOBS})
+        if fault=="active":state["active"]=["on_direct"]
+        if fault=="exit":state["jobs"]["on_direct"]["returncode"]=1
+        if fault=="missing_job":del state["jobs"]["on_direct"]
+>       with pytest.raises(ValueError):s.check_closed_state(state,"a"*64)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+/tmp/sap-leading-screen/tests/test_sap_leading_screen.py:209: Failed
+_________ test_analysis_requires_owned_jobs_fully_closed[missing_job] __________
+
+fault = 'missing_job'
+
+    @pytest.mark.parametrize("fault", ["active", "exit", "missing_job"])
+    def test_analysis_requires_owned_jobs_fully_closed(fault):
+        state=dict(profile=s.PROFILE,status="complete",active=[],admission_sha256="a"*64,
+                   jobs={j:dict(returncode=0) for j in s.JOBS})
+        if fault=="active":state["active"]=["on_direct"]
+        if fault=="exit":state["jobs"]["on_direct"]["returncode"]=1
+        if fault=="missing_job":del state["jobs"]["on_direct"]
+>       with pytest.raises(ValueError):s.check_closed_state(state,"a"*64)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+/tmp/sap-leading-screen/tests/test_sap_leading_screen.py:209: Failed
+=========================== short test summary info ============================
+FAILED ../../../../../../tmp/sap-leading-screen/tests/test_sap_leading_screen.py::test_analysis_requires_owned_jobs_fully_closed[active]
+FAILED ../../../../../../tmp/sap-leading-screen/tests/test_sap_leading_screen.py::test_analysis_requires_owned_jobs_fully_closed[exit]
+FAILED ../../../../../../tmp/sap-leading-screen/tests/test_sap_leading_screen.py::test_analysis_requires_owned_jobs_fully_closed[missing_job]
+3 failed, 34 deselected in 2.26s

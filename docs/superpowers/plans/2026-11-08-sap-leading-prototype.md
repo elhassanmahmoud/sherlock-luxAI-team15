@@ -25,10 +25,10 @@
 - [x] Kleinste lokale Unterklasse und synthetische Tests außerhalb des produktiven Agenten entwickeln. Bis Root-Review nur `/tmp/sap-leading-prototype/` beschreiben. Keine echten Netze laden oder Spiele starten.
 - [x] RED→GREEN-Prüfung von Spiegelung, Reset/Lücken, eigener/fremder Energie, Parametergrenze, unveränderten anderen Befehlen, höchstens einer Änderung, Erinnerung und Buchhaltung. Abgeschalteter Modus muss exakt originale Ausgabe/produktive Zustandsdaten liefern; Messzähler getrennt.
 - [x] Unabhängiger Review plus Root-Abgleich; erst dann Aufnahme in `scripts/`/`tests/`. V14/ZIP-Hashes prüfen.
-- [ ] Separaten begrenzten Leistungsvergleich festlegen, einschließlich frischer Karten, identischer V14-Konfiguration beider Seiten, Eingriffshäufigkeit und eindeutiger Auswahlbedingungen. Noch kein solcher Lauf und keine Abgabefreigabe.
+- [x] Separaten begrenzten Leistungsvergleich festlegen, einschließlich lokal geprüfter Karten, identischer V14-Konfiguration beider Seiten, Eingriffshäufigkeit und eindeutiger Auswahlbedingungen: [Folgeplan vom 09.11.](2026-11-09-sap-leading-screen.md). Noch kein solcher Lauf und keine Abgabefreigabe.
 
 ## Review-Fokus
 
 Kein zusätzlicher Core-Aufruf, native/kanonische Spiegelung, Parameterupdate vor Auswahl und remember nach Änderung, mutierbare öffentliche Positionskopien, SAP-Zählerdelta statt Doppelzählung. Ein geometrischer Vorteil ist kein Siegbeleg. Das unveränderte V14 bleibt bis zum unabhängig belegten besseren Kandidaten.
 
-Technische Aufnahme am09.11.: [tatsächliche Prüfungen](../../../experiments/analysis/sap_leading_prototype_20261109/README.md), bytegleicher Code nach unabhängiger statischer Prüfung,44Repo-TestsPASS. Keine echten Modelle/Spiele, letzter Schritt weiterhin offen.
+Technische Aufnahme am09.11.: [tatsächliche Prüfungen](../../../experiments/analysis/sap_leading_prototype_20261109/README.md), bytegleicher Code nach unabhängiger statischer Prüfung,44Repo-TestsPASS. Keine echten Modelle/Spiele. Die weitere Ausführung wird ausschließlich im getrennten Folgeplan und aktuellen Arbeitsstand geführt.

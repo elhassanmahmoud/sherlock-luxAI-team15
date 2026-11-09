@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Kleiner SAP-Vorhaltevergleich vorbereitet; Netzstrom fehlt
+
+- [Fester Folgeplan](superpowers/plans/2026-11-09-sap-leading-screen.md): höchstens vier bekannte Technikspiele, anschließend nur bei vollständiger technischer Abnahme getrennt 120 Leistungsspiele. Gleiche 36 V14-Netze in beiden Rollen; keine neue Trainingswelle. Kartenbereiche nach begrenztem lokalem Frischecheck mit ausdrücklich erhaltenen Lücken angenommen.
+- Runner, Tests und schmaler Root-Launcher unabhängig statisch geprüft, keine blockierenden Befunde. Root hat die geprüften Bytes übernommen und tatsächlich 37 gezielte Repo-Tests ausgeführt: PASS in 2,38 Sekunden. Launcher nur syntaktisch/statisch geprüft, noch nicht ausgeführt. [Belege und Ausführungsvertrag](../experiments/analysis/sap_leading_screen_20261109/README.md).
+- Null neue Modelle geladen, null neue Spiele und null Lernupdates in dieser Vorbereitung. Kein belegter stärkerer Nachfolger. V14 und ZIP erneut auf ursprüngliche Hashes geprüft, unverändert. Keine laufenden Modell-/Testprozesse oder neue Commits von Mahmoud beim Remote-Abgleich.
+- Vor realem Start offen: Netzstrom, frische Quota und separate Quellen-/Startaufnahme. Der Mac meldete bei der erneuten Prüfung Akkubetrieb mit 99 Prozent; Moayed wurde einmal um Anschluss gebeten. Kontingent zuletzt tatsächlich 76 Prozent verbraucht, Rest autorisiert, kein Reset. Quellen sind noch nicht für einen Lauf gesperrt; keinen bereits begonnenen Versuch behaupten oder doppelt starten.
+
 ## 09.11.2026 – Separater SAP-Vorhalteprototyp technisch aufgenommen
 
 - `scripts/sap_leading_agent.py` als standardmäßig inaktive Eval-Unterklasse, höchstens ein öffentlich begründeter SAP-Zentrumswechsel pro Schritt, gleiche V14-Netze. Keine Produktions-/Gewichtsänderung. [Technischer Plan](superpowers/plans/2026-11-08-sap-leading-prototype.md), [Nachweise und Grenzen](../experiments/analysis/sap_leading_prototype_20261109/README.md).

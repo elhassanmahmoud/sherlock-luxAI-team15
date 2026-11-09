@@ -1,0 +1,12 @@
+{
+  "command": "env PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_sap_leading_screen.py",
+  "exit_code": 0,
+  "stdout": ".....................................                                    [100%]\n37 passed in 2.38s\n",
+  "tool_chunk": "89c88a",
+  "worker_sha256": "e434dfcd81a159e3f0921c9c11011768fdb3910e4aaf79f5f58eeb071059226d",
+  "tests_sha256": "d365cc0846ce24857a63905427d8b8cdbb4fdad64c38fc93fd71a182796a15b3",
+  "owner_sha256": "0565b53366ad907b642846f6594a56a94f9cd772c5a455ba36f58b20d835d529",
+  "owner_check": "compile() syntax only; no execution of launcher or real models/games",
+  "real_games": 0,
+  "training_updates": 0
+}
