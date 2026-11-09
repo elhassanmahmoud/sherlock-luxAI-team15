@@ -1,0 +1,124 @@
+F..................F.F                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_fixed_configs_and_rollouts ________________________
+
+study = <module 'scripts.match_weight_study' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_study.py'>
+
+    def test_fixed_configs_and_rollouts(study):
+        original = AgentConfig().to_dict()
+        control, match = [study.training_config(original, role) for role in study.ARMS]
+        assert {k for k in control if control[k] != match[k]} == {'w_match'}
+        assert (control['w_match'], match['w_match']) == (2, 20)
+        assert control['lr'] == 5e-5 and control['rescue_in_training']
+        assert not any(control[k] for k in ('cand_stall_rescue','threat_feats','fog_unknown_reward_neutral','art_splash_in_training'))
+        for start, base in ((48,9960000),(49,9961000)):
+            rows=study.rollout_plan(start)
+            assert len(rows)==440 and sum(r['phase']=='prefill' for r in rows)==40
+            assert [r['seed'] for r in rows[:40]]==[base+300+i//2 for i in range(40)]
+            assert [r['seed'] for r in rows[40:]]==[base+i//2 for i in range(400)]
+            expected=np.random.default_rng(start).choice(['solution92','sol92_sq','default','rush'],440,p=[.6,.2,.1,.1])
+            assert [r['opponent'] for r in rows]==list(expected)
+>       assert set(study.COHORTS)=={'train48','prefill48','train49','prefill49','solution','direct_v14','direct_control'}
+E       AssertionError: assert {'48', '49'} == {'direct_cont...train48', ...}
+E         
+E         Extra items in the left set:
+E         '48'
+E         '49'
+E         Extra items in the right set:
+E         'prefill48'
+E         'train48'...
+E         
+E         ...Full output truncated (6 lines hidden), use '-vv' to show
+
+tests/test_match_weight_study.py:81: AssertionError
+_________ test_worker_one_env_cleanup_and_incomplete_checkpoint[False] _________
+
+study = <module 'scripts.match_weight_study' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_study.py'>
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-403/test_worker_one_env_cleanup_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d0b70d0>
+stop_after_game = False
+
+    @pytest.mark.parametrize('stop_after_game',[False,True])
+    def test_worker_one_env_cleanup_and_incomplete_checkpoint(study,tmp_path,monkeypatch,stop_after_game):
+        a=dict(stage='technical',start=48,out=str(tmp_path),stop_file=str(tmp_path/'STOP'),
+               source={'head':'fixed'},config={'control':{},'match':{}})
+        state=tmp_path/'state.json'; state.write_text(json.dumps({'jobs':{'technical':{}}}))
+        events=[]; calls=[]; saved=[]
+        class Guard:
+            command=['synthetic']; release_sha=None
+            def __init__(self,*args): pass
+            def __call__(self):
+                if stop_after_game and calls: raise ValueError('STOP at game boundary')
+        class Env:
+            def __init__(self,**kwargs): events.append('create')
+            def close(self): events.append('close')
+        monkeypatch.setitem(sys.modules,'luxai_s3.wrappers',SimpleNamespace(LuxAIS3GymEnv=Env))
+        monkeypatch.setattr(study,'WorkerGuard',Guard)
+        monkeypatch.setattr(study,'load_initial',lambda a:{})
+        monkeypatch.setattr(study,'make_learner',lambda a,w,role:SimpleNamespace(role=role,buffer=ReplayBuffer(4,79)))
+        monkeypatch.setattr(study,'model_identity',lambda agent:{'q':'q'})
+        def play(agent,key,env):
+            calls.append(id(env))
+            audit=dict(uid=np.array([2,0,1]),outcome=np.ones(3),control=np.array([2.,3.,4.]),match=np.array([20.,21.,22.]))
+            row=technical_row(study,agent.role,key)
+            return row,audit
+        monkeypatch.setattr(study,'play_one',play)
+        def save(path,agent,a,status,completed):
+            saved.append((status,completed)); path.write_bytes(b'incomplete synthetic')
+        monkeypatch.setattr(study,'save_checkpoint',save)
+        if stop_after_game:
+            with pytest.raises(ValueError,match='STOP'): study.run_worker(a,tmp_path/'admission','sha',state,'technical')
+            assert saved==[('incomplete',1)]
+            assert json.loads((tmp_path/'technical/incomplete.json').read_text())['eligible'] is False
+        else:
+            receipt=study.run_worker(a,tmp_path/'admission','sha',state,'technical')
+            assert len(receipt['games'])==4 and len(calls)==4
+            for row in receipt['games']:
+>               artifact=row['reward_evidence']
+                         ^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'reward_evidence'
+
+tests/test_match_weight_study.py:278: KeyError
+_________________ test_opponent_caught_error_invalidates_game __________________
+
+study = <module 'scripts.match_weight_study' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_study.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d023cb0>
+
+    def test_opponent_caught_error_invalidates_game(study,monkeypatch):
+        from scripts import common
+        agent=SimpleNamespace(env_steps=60000,learn_steps=0,caught_errors=0)
+        opponent=SimpleNamespace(caught_errors=1)
+        monkeypatch.setattr(common,'make_opponent',lambda *args:opponent)
+        monkeypatch.setattr(common,'play_game',lambda *args,**kwargs:dict(steps=303,point_counting_version=2))
+        monkeypatch.setattr(study,'reward_audit',lambda *args,**kwargs:nullcontext({}))
+        monkeypatch.setattr(study,'action_audit',lambda *args,**kwargs:nullcontext({}))
+        with pytest.raises(RuntimeError,match='caught'):
+>           study.play_one(agent,dict(phase='technical',opponent='solution92',seed=9946007,side='player_0'),object())
+
+tests/test_match_weight_study.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+agent = namespace(env_steps=60000, learn_steps=0, caught_errors=0)
+key = {'phase': 'technical', 'opponent': 'solution92', 'seed': 9946007, 'side': 'player_0'}
+env = <object object at 0x11f20e900>
+
+    def play_one(agent, key, env):
+        from scripts.common import make_opponent, play_game
+        before = dict(env_steps=agent.env_steps, learn_steps=agent.learn_steps)
+        traced = TraceEnv(env)
+        opponent = make_opponent(key["opponent"], "player_1" if key["side"] == "player_0" else "player_0")
+        with reward_audit(agent, retain=key["phase"] != "train") as audit, action_audit(agent) as labels:
+            row = play_game(traced, agent, opponent, key["seed"], key["side"], train=True)
+        records = audit.pop("records", None)
+        require(row["steps"] == 303 and row["point_counting_version"] == 2 and agent.caught_errors == 0
+>               and audit["updates"] == labels["update_calls"] == labels["act_calls"] == 303
+                    ^^^^^^^^^^^^^^^^
+                and audit["transitions"] == labels["checked_replay_transitions"] > 0, "Incomplete game/replay audit")
+E       KeyError: 'updates'
+
+scripts/match_weight_study.py:195: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_match_weight_study.py::test_fixed_configs_and_rollouts - As...
+FAILED tests/test_match_weight_study.py::test_worker_one_env_cleanup_and_incomplete_checkpoint[False]
+FAILED tests/test_match_weight_study.py::test_opponent_caught_error_invalidates_game
+3 failed, 19 passed in 2.76s

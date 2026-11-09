@@ -31,3 +31,8 @@ experiments/analysis/holder_oscillation_20261109/**/*.jsonl -text -diff
 # Candidate progress study: preserve audited raw evidence bytes.
 experiments/analysis/candidate_progress_20261109/**/*.csv -text whitespace=cr-at-eol
 experiments/analysis/candidate_progress_20261109/**/*.log -text -whitespace
+
+# Match-weight study: preserve raw evidence bytes.
+experiments/analysis/match_weight_20261109/**/*.csv -text whitespace=cr-at-eol
+experiments/analysis/match_weight_20261109/**/*.log -text -whitespace
+experiments/analysis/match_weight_20261109/**/*.jsonl -text -diff

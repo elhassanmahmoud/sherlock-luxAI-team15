@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Isolierter Matchgewichtsvergleich in Vorbereitung
+
+- Kandidatenrettung vollständig abgeschlossen und als 4e23ceb auf GitHub sowie in der Hauptkopie. Ergebnis 40/40 gegen Solution bei beiden Varianten, direkt 22/40, kein Nominierter; keine weiteren Spiele dieser Variante. Alle eigenen Modelljobs beendet, Quellenfreeze gelöst.
+- [Neue feste Lernhypothese](superpowers/plans/2026-11-09-match-weight-training.md): vorhandenes Matchgewicht 2 gegen 20, übrige Rewards identisch. Zwei Starts 48/49 aus V14-Mitglied 18, je 40 Vorlauf- und 400 Lernspiele pro Arm; tatsächlicher Rewardkontrast vor Gradienten prüfen. Noch keine Modelle, Spiele oder Gradienten dieser Studie.
+- Enger Runner und Paarowner mit vorhandenen Hilfen umgesetzt: 41 gezielte synthetische Tests, unabhängiger Code-/Methodenreview und Root-Abgleich bestanden. Einmaliger begrenzter Kartencheck ohne beobachtete Konflikte; Grenzen dokumentiert. Vier bekannte Technikspiele vor getrennten Aufnahmen der beiden Paare, jeweils manuelle Root-Vorlauffreigabe. Später exakt zwei 38er-Ensembles (originale 36 plus jeweilige zwei Endnetze), vorab fester 200-Spiel-Vergleich; kein automatischer Phasenwechsel oder V14-Ersatz.
+- Aktuelle Abgabe und ZIP unverändert; Akku ausdrücklich erlaubt, Nutzer übernimmt Resets, zuletzt echte Quota 19 Prozent. Maximal zwei Modellworker, keine parallelen Tests und keine Quellenänderungen während aufgenommener Modellphasen.
+
 ## 09.11.2026 – Fortschrittsabhängige Kandidatenrettung abgeschlossen
 
 - Vier Technik- und 120 feste Leistungsspiele abgeschlossen. Solution OFF/ON jeweils 40/40; direkt ON 22:18. Kleiner positiver Hinweis, aber die feste Hürde 24/40 verfehlt: keine Nominierung, Verlängerung oder V14-Übernahme. Ganzkartenintervall direkt 50–62,5 %. [Ergebnis](../experiments/analysis/candidate_progress_20261109/ERGEBNIS.md).

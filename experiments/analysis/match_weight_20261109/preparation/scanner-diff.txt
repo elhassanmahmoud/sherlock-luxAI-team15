@@ -1,0 +1,20 @@
+--- /tmp/candidate-progress-seeds/seed-audit.py
++++ /tmp/match-weight-seeds/seed-audit.py
+@@ -10,7 +10,7 @@
+ from pathlib import Path
+ OUT=Path(__file__).resolve().parent
+ SELF_OUTPUTS={OUT/'seed-audit.py',OUT/'seed-audit.json',OUT/'seed-audit.md'}
+-ALLOWED_CURRENT=set()  # Manually adjudicate any mention in the new uncommitted/external plan.
++ALLOWED_CURRENT={'docs/superpowers/plans/2026-11-09-match-weight-training.md'}  # Manually adjudicate any mention in the new uncommitted/external plan.
+ if __name__!='__main__':raise RuntimeError('Audit is a guarded standalone scan, not an importable module')
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--targeted-readonly-scan',action='store_true',help='Root-authorized bounded metadata/CSV check; no stable-window claim')
+@@ -18,7 +18,7 @@
+ if not args.targeted_readonly_scan:parser.error('Explicit targeted read-only scope required')
+ if (OUT/'seed-audit.json').exists() or (OUT/'seed-audit.md').exists():parser.error('Existing audit outputs; no overwrite or automatic repeat')
+ T=time.monotonic();NOW=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+-RANGES={'solution':[9948000,9948019], 'direct':[9948100,9948119]}
++RANGES={'train48': [9960000, 9960199], 'prefill48': [9960300, 9960319], 'train49': [9961000, 9961199], 'prefill49': [9961300, 9961319], 'solution': [9970000, 9970019], 'direct_v14': [9970100, 9970119], 'direct_control': [9970200, 9970219]}
+ EXPECTED_ROOTS={
+  '/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15',
+  '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15',

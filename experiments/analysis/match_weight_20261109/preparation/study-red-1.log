@@ -1,0 +1,214 @@
+EEEEEEEEEEEEEE                                                           [100%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_fixed_configs_and_rollouts _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1089996e0>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[-1-control] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cec15b0>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[-1-match] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d015a30>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[0-control] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cde3790>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[0-match] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11cde3f00>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[1-control] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d001a50>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_actual_push_formula_storage_dead_unit_and_uid_order[1-match] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d001f50>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_push_audit_rejects_real_mismatch_and_restores[reward] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d04e5d0>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_push_audit_rejects_real_mismatch_and_restores[order] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d04f110>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_push_audit_rejects_real_mismatch_and_restores[stored] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d064670>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_float32_contrast_uses_actual_quantization_not_exact_18 _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d064c90>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+_ ERROR at setup of test_fresh_learner_uses_seed_and_original_epsilon_formula __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d1a0d50>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+__ ERROR at setup of test_release_binds_start_both_prefills_and_manual_review __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d01dc10>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+________ ERROR at setup of test_replay_order_and_saved_reward_evidence _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11d01dcd0>
+
+    @pytest.fixture
+    def study(monkeypatch):
+>       assert importlib.util.find_spec("scripts.match_weight_study"), "Fixed study not implemented"
+E       AssertionError: Fixed study not implemented
+E       assert None
+E        +  where None = <function find_spec at 0x102d35800>('scripts.match_weight_study')
+E        +    where <function find_spec at 0x102d35800> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_match_weight_study.py:18: AssertionError
+=========================== short test summary info ============================
+ERROR tests/test_match_weight_study.py::test_fixed_configs_and_rollouts - Ass...
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[-1-control]
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[-1-match]
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[0-control]
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[0-match]
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[1-control]
+ERROR tests/test_match_weight_study.py::test_actual_push_formula_storage_dead_unit_and_uid_order[1-match]
+ERROR tests/test_match_weight_study.py::test_push_audit_rejects_real_mismatch_and_restores[reward]
+ERROR tests/test_match_weight_study.py::test_push_audit_rejects_real_mismatch_and_restores[order]
+ERROR tests/test_match_weight_study.py::test_push_audit_rejects_real_mismatch_and_restores[stored]
+ERROR tests/test_match_weight_study.py::test_float32_contrast_uses_actual_quantization_not_exact_18
+ERROR tests/test_match_weight_study.py::test_fresh_learner_uses_seed_and_original_epsilon_formula
+ERROR tests/test_match_weight_study.py::test_release_binds_start_both_prefills_and_manual_review
+ERROR tests/test_match_weight_study.py::test_replay_order_and_saved_reward_evidence
+14 errors in 2.13s
