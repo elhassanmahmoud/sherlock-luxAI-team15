@@ -8,6 +8,14 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Training gegen eingefrorenen V14 technisch vorbereitet
+
+- Offline-Rewarddiagnose abgeschlossen und als `a87a2c1` veröffentlicht; Hauptkopie aktuell. Kein Modelllauf aktiv. Kleine frühe Rewardlücke wird vorerst nicht verändert, damit die nächste Studie nur die Gegnerexposition ändert.
+- [Neue Spec](superpowers/specs/2026-11-09-frozen-v14-exposure.md): gleiche zwei Ensemble-Verhaltenslerner, Starts 48/49, je 40 Vorlauf und 400 Lernspiele, unverändertes DDQN/Reward/Regelwerk. Die ursprünglichen Solution-Positionen bleiben; jede ursprüngliche andere Gegnerposition wird durch exakt den festen aktuellen 36er-V14 ersetzt. Nominell 60 % Solution / 40 % V14, keine dynamischen Snapshots.
+- Vorhandene Belege zeigen früheres Selfplay gegen andere Versionen; für Training gegen exakt den aktuellen V14 wurde im fokussierten Review kein tatsächlicher Beleg gefunden. Nicht als erstmals erfundenes Selfplay darstellen. Tatsächlicher Nutzen unbewiesen. Technische vier Spiele, separate Lernaufnahme und spätere feste 200er-Auswahl erst nach Werkzeug-/Quellen-/Kartenabnahme. Noch keine neuen Modelle gestartet.
+- Drei neue Werkzeuge/Testdateien: 87 gezielte synthetische Prüfungen tatsächlich bestanden (34 neue), unabhängiger statischer Review ohne offene Befunde. Root hat beide Implementierungsdateien, Verträge und echte Abschlusslogs geprüft. Einmaliger Scan der 60 Leistungskarten ohne beobachtete Vornutzung, bekannte Lücken dokumentiert. Vier echte Technikspiele und Training noch nicht gestartet.
+- V14/ZIP bleiben bis belegtem Vorteil; keine Wiederholung geschlossener Studien. Akku/Restkontingent erlaubt, Resets nur Moayed. Tatsächliche Phasen werden durch Root separat aufgenommen.
+
 ## 09.11.2026 – Replay-Rewardcheck tatsächlich abgeschlossen
 
 - Genau 283218 archivierte Einheitenübergänge aus zwei akzeptierten Vorläufen geprüft; keine neuen Spiele/Updates. Positive Teamgewinne bei null bestätigten Punktefeldern: on48 1082/74576 (1,45 %), on49 389/72132 (0,54 %). Mittlerer gespeicherter Gesamt-r +0,01774 bzw. −0,003226; direkte Punktbelohnung dort null, andere Terme enthalten. [Ergebnis und Grenzen](../experiments/analysis/point_reward_replay_20261109/ERGEBNIS.md).

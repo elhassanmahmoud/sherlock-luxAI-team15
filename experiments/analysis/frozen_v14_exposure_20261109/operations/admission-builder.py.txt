@@ -1,0 +1,277 @@
+"""Check or explicitly publish one frozen-V14-exposure phase admission.
+
+Default is check-only and writes nothing. Reads JSON and file/hash metadata only:
+no tensor/model loading, archive decoding, simulator, game, test, or worker start.
+`--write` is exclusive and must be used only for a Root-authorized invocation.
+"""
+import argparse
+import copy
+import hashlib
+import importlib.metadata
+import json
+import os
+from pathlib import Path
+import sys
+import tempfile
+
+DEFAULT_ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+PROFILE='frozen_v14_exposure_20261109'
+ON_PROFILE='ensemble_behavior_20261109'
+REFERENCE_PROFILE='match_weight_compare_20261109'
+ON_COMPLETION_SHA='fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce'
+REFERENCE_ACCEPTANCE_SHA='d7267df0500fc66430adc1be8a96419c24bac06c8e9fc8c01c4304a02dc25db1'
+V14_EVAL_SHA='817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2'
+CONTROL_EVAL_SHA='b8118e6a8a5656a725fa407466833ebcef24d899f00c79e00b3f848086321a95'
+MATCH_EVAL_SHA='ff66e696665019d304848ebf0e3b022fd1a1d08eaa9b25518f12f8c3e33e6a1b'
+V14_SOURCE_SHA='98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8'
+SOURCE_CONFIG_SHA='a094376eca24e5054b0a14228f5861b9bccb832199954fd7957f1431af5ab69f'
+ON_FINAL_SHA={'on48':'486b9b44e12be251213b00fd84b82964c7aa5a781bdf086da866da42eb95a3fd',
+              'on49':'e0668fdcfbf70b9c85180e81af9d3bfd684b65d8aba048addee36bb58bdf27d3'}
+STARTS=[48,49]
+
+
+def main():
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--stage',choices=('technical','training'),required=True)
+    ap.add_argument('--expected-head',required=True,help='Exact full committed source HEAD')
+    ap.add_argument('--root',type=Path,default=DEFAULT_ROOT)
+    ap.add_argument('--stop-file',type=Path,required=True)
+    ap.add_argument('--write',action='store_true',help='Root-authorized exclusive admission publication; default writes nothing')
+    args=ap.parse_args()
+    root=args.root.resolve(strict=True)
+    if root!=Path.cwd().resolve(): raise ValueError('Run from the admitted study checkout')
+    if len(args.expected_head)!=40 or any(c not in '0123456789abcdef' for c in args.expected_head):
+        raise ValueError('An explicit full lowercase committed HEAD is required')
+    sys.path.insert(0,str(root))
+    from scripts.early_curriculum_study import digest,require,source_identity
+    from scripts.final_training_supervisor import safe_path
+
+    base=root/'experiments/analysis'/PROFILE
+    out=safe_path(base/f'{args.stage}_v1')
+    admission_path=safe_path(base/f'{args.stage}-v1-admission.json')
+    expected_stop=Path('/private/tmp/frozen-v14-exposure-20261109')/f'{args.stage}.STOP'
+    stop=safe_path(args.stop_file)
+    require(stop==expected_stop,'Wrong phase-specific STOP path')
+    require(not out.exists() and not admission_path.exists(),'Phase/admission exists; no overwrite or resume')
+    require(not stop.exists(),'Existing STOP must be resolved explicitly by Root')
+    inputs={}
+
+    def bind(path,expected=None):
+        path=safe_path(path)
+        # Reuse authenticated acceptance/receipt hashes for model checkpoints;
+        # do not read or rehash checkpoint bytes in this metadata-only builder.
+        if path.suffix=='.pth':
+            require(isinstance(expected,str) and len(expected)==64
+                    and all(c in '0123456789abcdef' for c in expected),
+                    f'Accepted model SHA-256 metadata missing: {path}')
+            actual=expected
+        else:
+            actual=digest(path)
+            require(expected is None or expected==actual,f'Input hash differs: {path}')
+        key=str(path)
+        require(key not in inputs or inputs[key]==actual,'Conflicting input hashes')
+        inputs[key]=actual
+        return path
+
+    def read(path,expected=None):
+        path=bind(path,expected)
+        return json.loads(path.read_text())
+
+    onbase=root/'experiments/analysis'/ON_PROFILE
+    closure_path=onbase/'operations/training-completion.json'
+    closure=read(closure_path,ON_COMPLETION_SHA)
+    require(closure.get('profile')==ON_PROFILE and closure.get('status')=='COMPLETE_TRAINING_NO_STRENGTH_CLAIM'
+            and closure.get('original_processes_ended') is True and closure.get('source_and_input_bindings_valid') is True
+            and closure.get('actual')==dict(technical_games=4,prefill_games=80,learning_games=800,optimizer_updates=120000)
+            and set(closure.get('models',{}))=={'on48','on49'},'Accepted ON training closure differs')
+    for p,h in closure['files'].items(): bind(p,h)
+    on_train=read(closure['admission'],closure['admission_sha256'])
+    on_state=read(closure['state'],closure['state_sha256'])
+    for role,expected in ON_FINAL_SHA.items():
+        record=closure['models'][role]
+        require(record.get('sha256')==expected,'Accepted ON final hash differs')
+        bind(record['path'],expected); read(record['receipt'],record['receipt_sha256'])
+    require(on_train.get('profile')==ON_PROFILE and on_train.get('stage')=='training'
+            and on_train.get('starts')==STARTS and on_train.get('root')==str(root)
+            and on_train.get('protected')==closure.get('protected')
+            and on_state.get('status')=='complete' and on_state.get('active')==[],'Accepted ON training state differs')
+    require(on_train.get('technical_receipt') and on_train.get('technical_acceptance'),
+            'Accepted ON technical evidence references missing')
+    on_tech_adm_path=onbase/'technical-v1-admission.json'
+    on_tech_state_path=onbase/'technical_v1/state.json'
+    on_tech_adm=read(on_tech_adm_path)
+    on_tech_receipt=read(on_train['technical_receipt'])
+    on_tech_accept=read(on_train['technical_acceptance'])
+    on_tech_state=read(on_tech_state_path,on_tech_accept['owner_state_sha256'])
+    ended=on_tech_accept.get('own_processes_ended')
+    require(on_tech_adm.get('profile')==ON_PROFILE and on_tech_adm.get('stage')=='technical'
+            and on_tech_adm.get('source')==on_train['source']
+            and on_tech_accept.get('status')=='PASS' and on_tech_accept.get('profile')==ON_PROFILE
+            and on_tech_accept.get('stage')=='technical' and on_tech_accept.get('games')==4
+            and on_tech_accept.get('source')==on_train['source']
+            and on_tech_accept.get('admission_sha256')==digest(on_tech_adm_path)
+            and on_tech_accept.get('technical_receipt_sha256')==digest(on_train['technical_receipt'])
+            and isinstance(ended,list) and set(ended)=={on_tech_state.get('owner_pid'),
+                on_tech_state.get('jobs',{}).get('technical',{}).get('pid')}
+            and on_tech_state.get('status')=='complete' and on_tech_state.get('active')==[]
+            and on_tech_state.get('source')==on_train['source']
+            and on_tech_state.get('admission_sha256')==digest(on_tech_adm_path)
+            and on_tech_state.get('jobs',{}).get('technical',{}).get('returncode')==0
+            and on_tech_receipt.get('status')=='complete' and on_tech_receipt.get('stage')=='technical'
+            and on_tech_receipt.get('source')==on_train['source']
+            and on_tech_receipt.get('admission_sha256')==digest(on_tech_adm_path)
+            and isinstance(on_tech_receipt.get('games'),list) and len(on_tech_receipt['games'])==4,
+            'Accepted ON technical evidence differs')
+
+    refbase=root/'experiments/analysis'/REFERENCE_PROFILE
+    ref_adm_path=refbase/'technical-v1-admission.json'
+    ref_state_path=refbase/'technical_v1/state.json'
+    ref_receipt_path=refbase/'technical_v1/technical-receipt.json'
+    ref_accept_path=refbase/'operations/technical-acceptance.json'
+    ref_adm=read(ref_adm_path)
+    ref_accept=read(ref_accept_path,REFERENCE_ACCEPTANCE_SHA)
+    ref_state=read(ref_state_path,ref_accept['owner_state_sha256'])
+    ref_receipt=read(ref_receipt_path,ref_accept['technical_receipt_sha256'])
+    require(ref_adm.get('profile')==REFERENCE_PROFILE and ref_adm.get('stage')=='technical'
+            and digest(ref_adm_path)==ref_accept.get('admission_sha256')
+            and ref_accept.get('status')=='PASS' and ref_accept.get('games')==0
+            and ref_accept.get('actual_assembly_and_stock_loader_pass') is True
+            and ref_accept.get('source_and_input_bindings_valid') is True
+            and ref_accept.get('original_processes_ended') is True
+            and ref_receipt.get('status')=='complete' and ref_receipt.get('profile')==REFERENCE_PROFILE
+            and ref_receipt.get('games')==0 and ref_receipt.get('no_strength_claim') is True
+            and ref_receipt.get('admission_sha256')==ref_accept.get('admission_sha256')
+            and ref_state.get('status')=='complete' and ref_state.get('active')==[]
+            and ref_state.get('profile')==REFERENCE_PROFILE and ref_state.get('stage')=='technical',
+            'Historical comparison assembly is not accepted')
+    bind(ref_adm_path,ref_accept['admission_sha256'])
+    protected=closure['protected']
+    require(on_train['protected']==protected==ref_adm.get('protected'),'Protected model/ZIP bindings differ')
+    for p,h in protected.items(): bind(p,h)
+    ref_models=ref_receipt.get('models',{})
+    require(set(ref_models)=={'v14','control','match'},'Wrong historical comparison model set')
+    expected_models={'v14':V14_EVAL_SHA,'control':CONTROL_EVAL_SHA,'match':MATCH_EVAL_SHA}
+    models={}
+    for role,sha in expected_models.items():
+        rec=ref_models[role]
+        require(rec.get('sha256')==sha,'Historical eval copy hash differs')
+        models[role]=str(bind(rec['path'],sha))
+    v14_record=ref_models['v14']
+    source_members=v14_record.get('member_sha256')
+    require(v14_record.get('members')==36 and isinstance(source_members,list) and len(source_members)==36
+            and all(isinstance(x,str) and len(x)==64 for x in source_members),
+            'Original 36-member V14 receipt is incomplete')
+    opponent_model=models['v14']
+
+    config_path=root/'experiments/analysis/match_weight_20261109/preparation/source-config.json'
+    # The fixed accepted wrapper is pinned directly: the separate comparison
+    # admission's own inputs do not include this preparation JSON.
+    wrapper=read(config_path,SOURCE_CONFIG_SHA)
+    require(wrapper.get('source_sha256')==V14_SOURCE_SHA and wrapper.get('metadata_source')
+            and wrapper.get('metadata_sha256'),'V14 source-config provenance is incomplete')
+    bind(wrapper['metadata_source'],wrapper['metadata_sha256'])
+    opponent_config=copy.deepcopy(wrapper.get('source_config'))
+    require(isinstance(opponent_config,dict) and len(opponent_config)>0,'Normalized V14 config missing')
+    opponent_config['frozen']=False
+    require(set(opponent_config)==set(on_train.get('config',{})),
+            'Normalized V14 config fields differ from the admitted AgentConfig schema')
+    v14_source=root/'agents/sherlock/weights/agent_p0.pth'
+    bind(v14_source,V14_SOURCE_SHA)
+
+    # Keep the old ON config/initials/rollout plans intact; the adapter performs
+    # the only opponent substitution at play time. Recompute runtime metadata
+    # without importing training/model modules, then require equality.
+    runtime=dict(python=sys.version,packages={name:importlib.metadata.version(name)
+        for name in ('torch','numpy','jax','jaxlib','luxai-s3')})
+    require(runtime==on_train.get('runtime'),'Current runtime differs from accepted ON runtime')
+    require(on_train.get('rollout_plans') and set(on_train['rollout_plans'])=={'48','49'}
+            and all(len(on_train['rollout_plans'][str(s)])==440 for s in STARTS)
+            and on_train.get('initial') and set(on_train['initial'])=={'48','49'}
+            and on_train.get('config') and on_train.get('historical_runtime_gap_acknowledged') is True,
+            'Historical ON config/initial/rollout plan fields are incomplete')
+
+    plans=set(on_train['plans'])|set(ref_adm['plans'])
+    newplans=[root/'docs/superpowers/specs/2026-11-09-frozen-v14-exposure.md',
+              root/'docs/superpowers/plans/2026-11-09-frozen-v14-exposure.md']
+    plans.update(str(p) for p in newplans)
+    plans=sorted(plans)
+    for p in plans: bind(p)
+    for historical in (on_train,ref_adm):
+        require(historical.get('root')==str(root) and historical.get('python')==sys.executable
+                and historical.get('protected')==protected,'Historical root/interpreter/protection differs')
+        for p,h in historical.get('inputs',{}).items(): bind(p,h)
+    for p in ('scripts/frozen_v14_exposure.py','scripts/frozen_v14_exposure_owner.py',
+              'tests/test_frozen_v14_exposure.py'): bind(root/p)
+
+    source=source_identity(root,sys.executable,plans)
+    require(source.get('head')==args.expected_head,'Expected committed HEAD differs')
+    for historical in (on_train,ref_adm):
+        old=historical['source']
+        require(all(source.get(k)==old.get(k) for k in ('python','executable','executable_sha256'))
+                and all(source['files'].get(p)==h for p,h in old['files'].items()),
+                'Historical source is not an unchanged subset')
+
+    admission=dict(schema_version=1,profile=PROFILE,stage=args.stage,start_authorized=True,allow_battery=True,
+        starts=STARTS,root=str(root),out=str(out),python=sys.executable,plans=plans,source=source,
+        protected=protected,inputs=inputs,stop_file=str(stop),runtime=runtime,
+        historical_runtime_gap_acknowledged=on_train['historical_runtime_gap_acknowledged'],
+        config=copy.deepcopy(on_train['config']),initial=copy.deepcopy(on_train['initial']),
+        rollout_plans=copy.deepcopy(on_train['rollout_plans']),
+        training_completion=str(closure_path),source_members=source_members,
+        reference_admission=str(ref_adm_path),reference_receipt=str(ref_receipt_path),
+        reference_acceptance=str(ref_accept_path),reference_state=str(ref_state_path),
+        opponent_model=opponent_model,opponent_config_source=str(config_path),opponent_config=opponent_config,
+        v14_source=str(v14_source))
+
+    if args.stage=='training':
+        tech_out=base/'technical_v1'; tech_adm_path=base/'technical-v1-admission.json'
+        tech_state_path=tech_out/'state.json'; tech_receipt_path=tech_out/'technical'/'receipt.json'
+        tech_accept_path=base/'operations/technical-acceptance.json'
+        tech_adm=read(tech_adm_path); tech_state=read(tech_state_path)
+        tech_receipt=read(tech_receipt_path); tech_accept=read(tech_accept_path)
+        for p,h in tech_adm.get('inputs',{}).items(): bind(p,h)
+        require(tech_adm.get('profile')==PROFILE and tech_adm.get('stage')=='technical'
+                and tech_adm.get('source')==source and tech_adm.get('start_authorized') is True
+                and tech_adm.get('starts')==STARTS,
+                'Prior technical source/admission differs')
+        tech_sha=digest(tech_adm_path)
+        for p,h in tech_receipt.get('files',{}).items(): bind(p,h)
+        require(tech_state.get('status')=='complete' and tech_state.get('active')==[]
+                and tech_state.get('source')==source and tech_state.get('admission_sha256')==tech_sha
+                and set(tech_state.get('jobs',{}))=={'technical'}
+                and tech_state['jobs']['technical'].get('returncode')==0
+                and tech_receipt.get('status')=='complete' and tech_receipt.get('profile')==PROFILE
+                and tech_receipt.get('stage')=='technical' and tech_receipt.get('role')=='technical'
+                and tech_receipt.get('source')==source and tech_receipt.get('config')==admission.get('config')
+                and tech_receipt.get('admission_sha256')==tech_sha and tech_receipt.get('start')==48
+                and tech_receipt.get('starts')==STARTS and tech_receipt.get('behavior')=='ensemble'
+                and tech_receipt.get('opponent_policy')=='original_solution_else_frozen_v14'
+                and isinstance(tech_receipt.get('games'),list) and len(tech_receipt['games'])==4
+                and tech_receipt.get('release_sha256') is None and tech_receipt.get('no_strength_claim') is True
+                and tech_accept.get('status')=='PASS' and tech_accept.get('profile')==PROFILE
+                and tech_accept.get('source')==source and tech_accept.get('admission_sha256')==tech_sha
+                and tech_accept.get('technical_receipt_sha256')==digest(tech_receipt_path)
+                and tech_accept.get('owner_state_sha256')==digest(tech_state_path)
+                and tech_accept.get('original_processes_ended') is True,
+                'Separate Root technical acceptance is missing or stale')
+        admission.update(technical_receipt=str(tech_receipt_path),technical_acceptance=str(tech_accept_path))
+    # The technical phase deliberately has no future technical acceptance fields.
+    require(str(admission_path) not in inputs and all(out!=Path(p) and out not in Path(p).parents for p in inputs),
+            'Admission output overlaps a bound input')
+
+    if args.write:
+        admission_path.parent.mkdir(parents=True,exist_ok=True)
+        temporary=None
+        try:
+            with tempfile.NamedTemporaryFile('w',dir=admission_path.parent,prefix='.admission-',delete=False) as stream:
+                temporary=Path(stream.name); json.dump(admission,stream,sort_keys=True,indent=2,allow_nan=False)
+                stream.write('\n'); stream.flush(); os.fsync(stream.fileno())
+            os.link(temporary,admission_path)
+        finally:
+            if temporary is not None: temporary.unlink(missing_ok=True)
+    print(json.dumps(dict(status='PASS',profile=PROFILE,stage=args.stage,head=source['head'],inputs=len(inputs),
+        source_files=len(source['files']),admission_written=args.write,started=False,
+        admission=str(admission_path),sha256=digest(admission_path) if args.write else None),sort_keys=True))
+
+
+if __name__=='__main__': main()

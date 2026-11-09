@@ -1,0 +1,31 @@
+{
+  "status": "PASS_STATIC_REVIEW",
+  "profile": "frozen_v14_exposure_20261109",
+  "base_head": "a87a2c14d2a3675fd567c22d43b9d328d5deb0f8",
+  "reviewed_files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/frozen_v14_exposure.py": "32c421bd0f1bd542c3cbf53471f515ab856e83cc441be79464e7c4fc3181153f",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/frozen_v14_exposure_owner.py": "67dded3fa08f84508251aff565e3fa4abdead1b22ed1cdbf11a660e0ef9435c6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_frozen_v14_exposure.py": "d5c084ddef9fc9377bc15403baaa791564abfd0d0a708c4d803c801bf7965c1c"
+  },
+  "findings": [],
+  "checks": [
+    "Exact old rollout keys; deterministic Solution/non-Solution mapping and separate actual exposure.",
+    "Fresh stock Agent_x per V14 game, seed 0, correct side, 36 ordered member identities and original normalized inference config.",
+    "Global and learner RNG restoration on successful and failed construction; private opponent RNG and q/target/Adam/counters unchanged across each game.",
+    "Opponent learning and save entrypoints blocked; parameters have no gradients; no BehaviorEnsemble hook on opponent.",
+    "Unchanged play_game lifecycle calls new_game and current set_env_cfg; actual 303 action calls and opponent actions hashed.",
+    "Historical accepted reference and ON closure chains are consumed through metadata and fixed digests; original config and initial states bound without rerunning old admissions.",
+    "Technical phase has two cumulative historical ON Solution cases then two fresh-start frozen V14 cases, exact old paired evidence checks, and start49 setup only.",
+    "Same BehaviorEnsemble and DDQN/reward/action/replay helpers; 40 prefill and 400 learning games, 60000 updates and original row keys validated.",
+    "Separate phase outputs, exact owner/worker identity, manual joint Root release, process group cleanup and final actual checkpoint/replay validators.",
+    "Synthetic test source and actual Red/Green logs inspected; original tracked scripts/tests unchanged."
+  ],
+  "test_evidence_inspected": {
+    "/private/tmp/frozen-v14-exposure-impl/green-6.log": "34 passed in 3.79s",
+    "/private/tmp/frozen-v14-exposure-impl/final-targeted.log": "87 passed in 5.18s"
+  },
+  "reviewer_executed_tests": false,
+  "reviewer_loaded_real_archives": false,
+  "reviewer_started_games_or_models": false,
+  "scope": "Static implementation/spec review only. Actual technical admission and data acceptance remain Root-owned planned phases."
+}

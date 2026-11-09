@@ -1,0 +1,27 @@
+{
+  "status": "PASS_STATIC_REVIEW_AFTER_METADATA_FIX",
+  "profile": "frozen_v14_exposure_20261109",
+  "supersedes": "static-review.json",
+  "reviewed_files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/frozen_v14_exposure.py": "b84e44520803a8a546a1d4101f82db8e126a83ddf7bd19e00e7b36b57d5b64ae",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/frozen_v14_exposure_owner.py": "67dded3fa08f84508251aff565e3fa4abdead1b22ed1cdbf11a660e0ef9435c6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_frozen_v14_exposure.py": "2ba29ec3538b36b0ac3fa15bafd9d6ab66992883690c578531c004224ab61945"
+  },
+  "resolved_finding": "Actual source-config wrapper was absent from both old admissions.inputs; replaced incorrect membership assumption with fixed accepted wrapper digest. Original V14 source SHA, full normalized inference config, full training config and historical accepted provenance checks remain.",
+  "metadata_independently_read": {
+    "path": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/preparation/source-config.json",
+    "sha256": "a094376eca24e5054b0a14228f5861b9bccb832199954fd7957f1431af5ab69f",
+    "source_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "original_reference_contains_wrapper": false,
+    "original_on_training_contains_wrapper": false
+  },
+  "tests_inspected": {
+    "/private/tmp/frozen-v14-exposure-impl/source-config-red.log": "1 failed at incorrect historical membership requirement",
+    "/private/tmp/frozen-v14-exposure-impl/source-config-green.log": "87 passed in 4.29s"
+  },
+  "findings": [],
+  "reviewer_executed_tests": false,
+  "reviewer_loaded_real_model_archives": false,
+  "reviewer_started_games_or_models": false,
+  "remaining": "Root actual metadata preflight and separate technical admission/data audit."
+}
