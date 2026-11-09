@@ -1,0 +1,90 @@
+"""Independent saved-assembly data check only; no agents, forward passes, games or tests."""
+from pathlib import Path
+import ast,hashlib,json,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15');B=ROOT/'experiments/analysis/match_weight_compare_20261109';OUT=Path('/tmp/match-weight-comparison-technical-audit');HEAD='e5b13d1ace7ae100fa73bd53bcfe4820495e0317';ADMISSION_SHA='21f61c4f342371c6dd43cb0361cbdf21efcddbb3a86cc3bc1fdf6206124ea0a6'
+checks=0;cache={};torch=None
+
+def ck(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):ck(sha(p)==h,label+': '+str(p))
+def gate(s):
+ ck(s['status']=='complete' and s['stage']=='technical' and s['active']==[] and set(s['jobs'])==set(s['receipts'])=={'technical'},'complete sole technical worker')
+ j=s['jobs']['technical'];ck(j['returncode']==0 and j['owner_pid']==s['owner_pid'],'successful original worker')
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ ck(not any(int(p) in {s['owner_pid'],j['pid']} or int(g)==j['pgid'] for p,g in (l.split() for l in snapshot.splitlines() if l.strip())),'original owner worker and group absent')
+ return dict(owner_pid=s['owner_pid'],worker_pid=j['pid'],snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def typed(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if isinstance(x,torch.Tensor):
+   t=x.detach().cpu().contiguous();emit(b'tensor');emit(str(t.dtype).encode());visit(list(t.shape));emit(t.reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for y in x:visit(y)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+s=read(B/'technical_v1/state.json');before=gate(s);a=read(B/'technical-v1-admission.json');r=read(B/'technical_v1/technical-receipt.json')
+pin(B/'technical-v1-admission.json',ADMISSION_SHA,'Root actual admission');pin(B/'technical_v1/technical-receipt.json',s['receipts']['technical']['sha256'],'owner actual receipt')
+ck(a['source']==s['source']==r['source'] and a['source']['head']==HEAD and subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==HEAD,'actual frozen comparison source')
+ck(r['status']=='complete' and r['profile']==a['profile']==s['profile'] and r['games']==0 and r['no_strength_claim'] is True and r['admission_sha256']==s['admission_sha256']==ADMISSION_SHA and r['command']==s['jobs']['technical']['argv'],'actual zero-game receipt identity')
+for group in ['inputs','protected']:
+ for p,h in a[group].items():pin(p,h,'admission '+group)
+for p,h in a['source']['files'].items():pin(p,h,'source file')
+pin(a['source']['executable'],a['source']['executable_sha256'],'source executable')
+ck(r['training_completion_sha256']==sha(a['training_completion']),'sealed actual training completion')
+closure=read(a['training_completion']);ck(closure['status']=='COMPLETE_TRAINING_NO_STRENGTH_CLAIM' and set(closure['pairs'])=={'48','49'},'both accepted original starts')
+import torch as torch_module
+torch=torch_module;torch.set_num_threads(1)
+source=torch.load(a['v14_source'],map_location='cpu',weights_only=True);originals=[source['q'],*source['ensemble']];ck(len(originals)==36 and source['feature_dim']==79 and source['n_actions']==6,'actual original36architecture')
+syntax=ast.parse((ROOT/'agents/sherlock/config.py').read_text());defaults={}
+for node in syntax.body:
+ if isinstance(node,ast.ClassDef) and node.name=='AgentConfig':
+  for item in node.body:
+   if isinstance(item,ast.AnnAssign) and isinstance(item.target,ast.Name):defaults[item.target.id]=ast.literal_eval(item.value)
+config=dict(defaults);config.update(source['cfg']);config['frozen']=False
+ck(config['cand_stall_rescue'] is False and config['threat_feats'] is False,'original inference method no new rule')
+models={}
+for role in ['v14','control','match']:
+ record=r['models'][role];pin(record['path'],record['sha256'],'actual eval copy');cp=torch.load(record['path'],map_location='cpu',weights_only=True)
+ expected=list(originals);additions=[]
+ if role!='v14':
+  for start in [48,49]:
+   entry=closure['pairs'][str(start)];item=entry['models'][role];pin(item['path'],item['sha256'],'accepted final source');pin(item['receipt'],item['receipt_sha256'],'accepted final receipt')
+   final=torch.load(item['path'],map_location='cpu',weights_only=True);fr=read(item['receipt']);train=read(entry['admission'])
+   ck(final['cfg']==train['config'][role] and final['env_steps']==193320 and final['learn_steps']==60000 and final['match_weight']==dict(profile='match_weight_20261109',status='complete',role=role,start=start,source=train['source'],completed_games=440,component_index=18),'actual accepted final role/start')
+   ck(typed(final['q'])==fr['final_identity']['q'],'actual final Q matches closed training identity')
+   expected.append(final['q']);additions.append(dict(start=start,final_sha256=item['sha256'],q_sha256=typed(final['q'])));del final
+ count=36 if role=='v14' else 38;members=[cp['q'],*cp['ensemble']]
+ ck(len(members)==record['members']==count and cp['ensemble_dims']==[79]*(count-1) and cp['feature_dim']==79 and cp['n_actions']==6,'actual exact36or38member layout')
+ ck(cp['cfg']==config and typed(cp['target_q'])==typed(source['target_q']),'same independently normalized inference config and original target')
+ ck(typed({k:v for k,v in cp.items() if k not in ['cfg','ensemble','ensemble_dims']})==typed({k:v for k,v in source.items() if k not in ['cfg','ensemble','ensemble_dims']}),'all other original checkpoint data preserved')
+ for index,(actual,want) in enumerate(zip(members,expected)):
+  ck(set(actual)==set(want),'exact member keys')
+  for key,t in actual.items():ck(isinstance(t,torch.Tensor) and t.dtype==want[key].dtype and t.shape==want[key].shape and bool(torch.isfinite(t).all()) and torch.equal(t,want[key]),'exact finite tensor/order '+str(index)+'.'+key)
+ member_hashes=[typed(m) for m in members];ck(member_hashes==record['member_sha256'],'actual ordered member hashes match receipt')
+ ck(record['loader_pass'] is True and record['batches']==[1,8,16],'recorded actual stock-loader and fixed batch check')
+ models[role]=dict(sha256=record['sha256'],members=count,original36_hashes_equal=True,appended_finals=additions,config_equal=True,original_target_equal=True,ordered_member_hashes_match=True)
+ del cp,members,expected
+process_after=gate(read(B/'technical_v1/state.json'))
+result=dict(status='PASS',checks=checks,games=0,source_head=HEAD,admission_sha256=ADMISSION_SHA,receipt_sha256=sha(B/'technical_v1/technical-receipt.json'),training_completion_sha256=sha(a['training_completion']),models=models,process_before=before,process_after=process_after,unique_input_files_hashed=len(cache),script_sha256=sha(Path(__file__)),no_release_written=True,limits=['Only actual saved checkpoint data was loaded; no Agent_x, stock-loader rerun, forward pass, environment, game or test.','Actual stock-loader and finite1/8/16batch outcomes are bound runtime receipt assertions; no raw outputs were archived for independent recovery.','Original36and both role-specific final48/49Q tensors, order, config and target are independently recovered and compared.','No prior replay archives reloaded, no performance/strength assertion.'])
+(OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');print(json.dumps(result,indent=2,sort_keys=True))

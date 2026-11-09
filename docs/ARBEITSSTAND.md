@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – MATCH38 nach vollständigem Vergleich nominiert
+
+- Alle 200 festen Spiele abgeschlossen: Solution MATCH38 37/40 gegenüber V14 und CONTROL38 je 36/40; direkt gegen V14 26/40 und gegen Kontrolle 24/40. Alle vier vorab festen Gates erfüllt. Breite Ganzkartenintervalle, noch kein bestätigter allgemeiner Stärkezuwachs oder isolierter Rewardnachweis. [Vollständiger Bericht](../experiments/analysis/match_weight_compare_20261109/ERGEBNIS.md).
+- Unabhängige Nachrechnung der tatsächlichen 200 CSV-Zeilen, Gates und Intervalle PASS; originale Auswertung durch Root unter e5b13d1 exakt reproduziert. Quellen/Eingaben/Schutzdateien und Ende aller eigenen Prozesse geprüft, Abschluss versiegelt, Freeze danach gelöst. V14/ZIP unverändert.
+- Nächster Schritt: einmalige getrennte Bestätigung mit unveränderten eval-Kopien auf neuen Karten, Bedingungen vor deren Daten fixieren. Noch keine neuen Spiele. Die read-only Vorlage zum Verhaltensensemble wird zurückgestellt, kein weiterer Trainingsstart neben der Bestätigung. Akku/Restkontingent erlaubt, Resets nur durch Moayed.
+
+## 09.11.2026 – Fester Matchgewichtsvergleich läuft
+
+- Quelle `e5b13d1` auf GitHub und in der Hauptkopie. Tatsächliche Zero-game-Montage/Stock-Loaderprobe sowie unabhängige Tensor-/Konfigurationsprüfung bestanden; Root-Abnahme versiegelt. V14 36, CONTROL38 und MATCH38 exakt je 38 geordnete Mitglieder, gleiche ursprüngliche Inferenzkonfiguration.
+- Performance separat aufgenommen und gestartet: `experiments/analysis/match_weight_compare_20261109/performance_v1/state.json`, Aufnahme `c56542d8da452082ab22db29093fb17c8599efcd7759f52f0ec5d216faaae5a1`. Genau fünf 40er-Jobs, insgesamt 200; keine weitere Phase, Wiederholung oder Zwischenwahl. Quelle/HEAD und Gewichte bis tatsächlicher Abschlussabnahme festhalten, keine parallelen Tests. Noch kein Endergebnis oder stärkerer Kandidat.
+- Kontingentschreiber verwendet echte aktuelle Antworten (zuletzt 32 Prozent verbraucht), Akku erlaubt. V14/ZIP unverändert. Dieser Laufvermerk wird nach dem Freeze committet.
+
 ## 09.11.2026 – Matchgewichtsvergleich technisch vorbereitet
 
 - Die akzeptierten vier Endnetze und Trainingsbelege sind als fc795c2 auf GitHub und in der Hauptkopie; Schutz- und Fremddateien unverändert. Keine laufenden eigenen Modelljobs.

@@ -1,0 +1,79 @@
+{
+  "admission_sha256": "21f61c4f342371c6dd43cb0361cbdf21efcddbb3a86cc3bc1fdf6206124ea0a6",
+  "checks": 1936,
+  "games": 0,
+  "limits": [
+    "Only actual saved checkpoint data was loaded; no Agent_x, stock-loader rerun, forward pass, environment, game or test.",
+    "Actual stock-loader and finite1/8/16batch outcomes are bound runtime receipt assertions; no raw outputs were archived for independent recovery.",
+    "Original36and both role-specific final48/49Q tensors, order, config and target are independently recovered and compared.",
+    "No prior replay archives reloaded, no performance/strength assertion."
+  ],
+  "models": {
+    "control": {
+      "appended_finals": [
+        {
+          "final_sha256": "931ae709779144d578cdf8134f8ef8bb777c653f3f390426a96e03eb141d2429",
+          "q_sha256": "5b0c52ed9b21990eb9864440e6ca0d74a699ecc55b9a42dfeafc352f6c47e2f4",
+          "start": 48
+        },
+        {
+          "final_sha256": "499ff53fd318e507e31036b73920e5792b5c47443a24d91d880e7aa2a111ee01",
+          "q_sha256": "228ebd9596f0b74be11225ad061915ef7bbbae7dd6b7dfed9717b735a39865e5",
+          "start": 49
+        }
+      ],
+      "config_equal": true,
+      "members": 38,
+      "ordered_member_hashes_match": true,
+      "original36_hashes_equal": true,
+      "original_target_equal": true,
+      "sha256": "b8118e6a8a5656a725fa407466833ebcef24d899f00c79e00b3f848086321a95"
+    },
+    "match": {
+      "appended_finals": [
+        {
+          "final_sha256": "9e8cef664136d5b5e5f36a9a3de43cc60425dcd3ad2c33cee043d59c6022b6d0",
+          "q_sha256": "1822e5028245e52a4274cda75bf5f5e6d24849e84810fb2356254b8f27a5c74a",
+          "start": 48
+        },
+        {
+          "final_sha256": "5e861a989c163f730db14d083ddf8413376036ac18a8ea9603e3b764dfe1708f",
+          "q_sha256": "ac727eb833912823e8f6d0a2106016d871077a88cdd22a1802f23f74ea5f7498",
+          "start": 49
+        }
+      ],
+      "config_equal": true,
+      "members": 38,
+      "ordered_member_hashes_match": true,
+      "original36_hashes_equal": true,
+      "original_target_equal": true,
+      "sha256": "ff66e696665019d304848ebf0e3b022fd1a1d08eaa9b25518f12f8c3e33e6a1b"
+    },
+    "v14": {
+      "appended_finals": [],
+      "config_equal": true,
+      "members": 36,
+      "ordered_member_hashes_match": true,
+      "original36_hashes_equal": true,
+      "original_target_equal": true,
+      "sha256": "817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2"
+    }
+  },
+  "no_release_written": true,
+  "process_after": {
+    "owner_pid": 45826,
+    "snapshot_sha256": "bbe3181f5a6bdf0a1098fa484f316085c968b0c512cd42ab131e96a74d3f45c5",
+    "worker_pid": 45843
+  },
+  "process_before": {
+    "owner_pid": 45826,
+    "snapshot_sha256": "c7433e7dc7da2880db75f6cbf80189d80154f81b192d00ecadd9c558af83bee5",
+    "worker_pid": 45843
+  },
+  "receipt_sha256": "15a20ada353c1de2caeca082b6deed7df954bbad9aae9d3c131501e85b298319",
+  "script_sha256": "4021adfef762dd7c2781301a17416d1df25f1c265f456611dd893dd4b4546908",
+  "source_head": "e5b13d1ace7ae100fa73bd53bcfe4820495e0317",
+  "status": "PASS",
+  "training_completion_sha256": "41cb8fa0689bb1a5b98bbd692e147fceb8471b5e72387b661b06e7484c244b94",
+  "unique_input_files_hashed": 434
+}

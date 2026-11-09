@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 09.11.2026 – Matchreward-Screen: MATCH38 nominiert
+
+200 feste Spiele, alle vier vorab festgelegten Auswahlbedingungen erfüllt: Solution 37/40 statt V14/Kontrolle je 36/40, direkt 26/40 gegen V14 und 24/40 gegen Kontrolle. Unabhängiger Daten-/Statistikaudit und originale Root-Reproduktion bestanden. Breite Intervalle, noch keine Übernahme oder bewiesene allgemeine Verbesserung. V14/ZIP unverändert; separate frische Bestätigung als nächster Schritt. [Bericht](../experiments/analysis/match_weight_compare_20261109/ERGEBNIS.md).
+
 ## 09.11.2026 – Matchgewicht 2 gegen 20: Training abgeschlossen
 
 Vier feste Endnetze aus V14-Mitglied 18, Starts 48/49, je 40 Vorlauf- und 400 Lernspiele; alle 240.000 Updates und gespeicherten Zustände unabhängig geprüft. Vier bekannte Technikspiele separat. V1-Unterbrechung offen archiviert; einschließlich dieser Mehrarbeit 1.998 Ausführungen und 262.500 Updates. Kein Leistungsergebnis oder V14-Ersatz. [Trainingsbericht](../experiments/analysis/match_weight_20261109/TRAININGSERGEBNIS.md), [fester anschließender 200-Spiel-Plan](superpowers/plans/2026-11-09-match-weight-training.md).
