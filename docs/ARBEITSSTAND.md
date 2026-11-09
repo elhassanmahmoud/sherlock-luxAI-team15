@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Akkubetrieb ausdrücklich freigegeben, SAP-Vergleich fortsetzen
+
+- Moayed verlangt die tatsächliche Durchführung jetzt auch auf Akku und übernimmt dessen Überwachung. Diese aktuelle Anweisung ersetzt für diesen Versuch die bisherige Netzstromvoraussetzung. Keine weitere Netzteilbestätigung abwarten.
+- Enge Änderung: `allow_battery=true` in der gehashten SAP-Aufnahme und demselben Owner-State hebt ausschließlich die AC-Pflicht auf. Ohne explizite Freigabe gilt weiterhin der bisherige Standard. Quota, STOP, Quellen-/Gewichtsprüfung und Prozesszuordnung bleiben aktiv; keine Änderung an Agentenentscheidungen, Gewichten, Karten oder Auswahlbedingungen.
+- Implementierer: 50 synthetische Tests PASS in 2,40 Sekunden (37 bestehende und 13 Batterie-/Bindungsfälle), vorher 13 erwartete Fehler. Root hat den gesamten Diff geprüft. Die frühere ungestartete Aufnahme auf `0fff2e9` bleibt historisch erhalten; neue tatsächliche Aufnahme unter dem folgenden Commit erstellen.
+- Nächster Schritt ohne weitere Planungsrunde: vier bekannte Technikspiele; nach vollständiger tatsächlicher Abnahme die festen 120 Vergleichsspiele. Status und Ergebnisse im Studienverzeichnis, nicht aus früheren Vorbereitungsnachweisen ableiten. V14 und ZIP bleiben erhalten.
+
 ## 09.11.2026 – Kleiner SAP-Vorhaltevergleich vorbereitet; Netzstrom fehlt
 
 - [Fester Folgeplan](superpowers/plans/2026-11-09-sap-leading-screen.md): höchstens vier bekannte Technikspiele, anschließend nur bei vollständiger technischer Abnahme getrennt 120 Leistungsspiele. Gleiche 36 V14-Netze in beiden Rollen; keine neue Trainingswelle. Kartenbereiche nach begrenztem lokalem Frischecheck mit ausdrücklich erhaltenen Lücken angenommen.

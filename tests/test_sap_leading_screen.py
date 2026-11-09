@@ -221,3 +221,86 @@ def test_public_reconstruction_requires_history_and_smallest_uid():
     assert expected.tolist()==[[0,0,0],[5,3,0],[5,2,0]]
     unchanged,_=s.expected_action(before,ctx,np.ones((6,6),bool),None,(10,10,0),.25,True,False)
     np.testing.assert_array_equal(unchanged,before)
+
+
+@pytest.fixture
+def battery_guard_fixture(monkeypatch,tmp_path):
+    from scripts import fog_reward_supervisor as fog
+    state=dict(stop_file=str(tmp_path/"STOP"),usage_file="usage",python="python",plans=[],
+               source={"head":"fixed"},inputs={"input":"sha"},protected={"weight":"sha"})
+    calls=[]
+    monkeypatch.setattr(fog,"check_usage",lambda *a,**kw:calls.append("quota") or {})
+    monkeypatch.setattr(fog,"read_power",lambda:dict(ac=False,percent=55))
+    monkeypatch.setattr(fog,"source_identity",lambda *a:calls.append("source") or state["source"])
+    monkeypatch.setattr(fog,"hashes",lambda paths:calls.append("hashes") or paths)
+    monkeypatch.setattr(fog,"check_model_processes",lambda *a:calls.append("ownership"))
+    return fog,state,calls
+
+
+def test_battery_permission_is_default_off_and_explicit_true_only(battery_guard_fixture):
+    fog,state,calls=battery_guard_fixture
+    with pytest.raises(ValueError,match="AC power"):fog.guard(state,{})
+    fog.guard(state,{},allow_battery=True)
+    assert calls[-5:]==["quota","source","hashes","hashes","ownership"]
+    assert state["last_power"]["ac"] is False
+    with pytest.raises(ValueError):fog.guard(state,{},allow_battery=1)
+
+
+@pytest.mark.parametrize("failure",["stop","quota","source","hashes","ownership"])
+def test_battery_permission_keeps_every_other_guard(battery_guard_fixture,monkeypatch,failure):
+    fog,state,_=battery_guard_fixture
+    def fail(*a,**kw):raise ValueError("preserved "+failure)
+    if failure=="stop":Path(state["stop_file"]).touch()
+    elif failure=="quota":monkeypatch.setattr(fog,"check_usage",fail)
+    elif failure=="source":monkeypatch.setattr(fog,"source_identity",lambda *a:{})
+    elif failure=="hashes":monkeypatch.setattr(fog,"hashes",lambda *a:{})
+    else:monkeypatch.setattr(fog,"check_model_processes",fail)
+    with pytest.raises(ValueError):fog.guard(state,{},allow_battery=True)
+
+
+@pytest.mark.parametrize("value",[None,1,"true"])
+def test_battery_admission_requires_hashed_boolean(tmp_path,value):
+    path=tmp_path/"admission.json"
+    s.write(path,dict(schema_version=1,profile=s.PROFILE,stage="technical",start_authorized=True,
+                      root=str(tmp_path),allow_battery=value))
+    with pytest.raises(ValueError,match="allow_battery"):
+        s.admission(path,s.digest(path),"technical")
+
+
+@pytest.mark.parametrize("state_value",[True,False,1])
+def test_battery_worker_forwards_only_matching_admitted_boolean(monkeypatch,tmp_path,state_value):
+    from scripts import fog_reward_supervisor as fog
+    a=dict(root="root",out="out",python="python",plans=[],source={},protected={},inputs={},
+           stop_file=str(tmp_path/"STOP"),allow_battery=True)
+    path=tmp_path/"admission.json";s.write(path,a);sha=s.digest(path)
+    state=dict(a,jobs={"technical":{}},inputs={str(path):sha},admission_sha256=sha,allow_battery=state_value)
+    statepath=tmp_path/"state.json";s.write(statepath,state)
+    observed=[]
+    monkeypatch.setattr(s,"check_owner",lambda *a,**kw:None)
+    monkeypatch.setattr(fog,"guard",lambda *a,**kw:observed.append(kw))
+    worker=s.Guard(a,path,sha,statepath,"technical",[])
+    if state_value is True:
+        worker(force=True);assert observed==[{"allow_battery":True}]
+    else:
+        with pytest.raises(ValueError):worker(force=True)
+        assert not observed
+
+
+def test_battery_owner_copies_admitted_boolean_before_first_guard(monkeypatch,tmp_path):
+    from contextlib import nullcontext
+    from scripts import sap_leading_owner as owner_module,sap_leading_eval as worker,fog_reward_supervisor as fog
+    from scripts import ensemble_diversity_supervisor as shared
+    launcher=str(Path(owner_module.__file__).resolve())
+    a=dict(root=str(tmp_path),out=str(tmp_path/"unused"),python=sys.executable,plans=[],source={},protected={},
+        stop_file=str(tmp_path/"STOP"),allow_battery=True,inputs={launcher:worker.digest(launcher)})
+    admission=tmp_path/"admission.json";admission.write_text("{}")
+    monkeypatch.setattr(worker,"admission",lambda *args:a)
+    monkeypatch.setattr(shared,"compute_lock",lambda *args:nullcontext())
+    def first_guard(state,owned,**kw):
+        assert state.get("allow_battery") is True and kw=={"allow_battery":True}
+        raise RuntimeError("stop before any output or child")
+    monkeypatch.setattr(fog,"guard",first_guard)
+    monkeypatch.setattr(sys,"argv",["owner","technical","--admission",str(admission),"--admission-sha","a"*64,
+                                   "--usage-file",str(tmp_path/"usage.json")])
+    with pytest.raises(RuntimeError,match="stop before any output"):owner_module.main()
+    assert not Path(a["out"]).exists()

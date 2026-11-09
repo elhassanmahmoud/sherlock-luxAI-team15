@@ -25,7 +25,7 @@ def main():
     s.require(a["inputs"].get(launcher)==s.digest(launcher),"External Root launcher must be a pinned input")
     s.require(sys.executable==a["python"],"Use the admitted interpreter for Root and workers")
     out=safe_path(a["out"]);s.require(not out.exists(),"Exclusive phase output already exists; no resume")
-    state={k:a[k] for k in ("root","out","python","plans","source","protected","stop_file")}
+    state={k:a[k] for k in ("root","out","python","plans","source","protected","stop_file","allow_battery")}
     state.update(profile=s.PROFILE,status="running",stage=args.stage,owner_pid=os.getpid(),
         usage_file=str(safe_path(args.usage_file)),inputs={**a["inputs"],str(path):args.admission_sha},
         admission_sha256=args.admission_sha,jobs={},active=[],receipts={},started_at=time.time())
@@ -34,13 +34,13 @@ def main():
     try:
         for sig in handlers:signal.signal(sig,lambda *_:request_stop(state["stop_file"]))
         with compute_lock(a["root"]):
-            guard(state,owned)  # AC/quota/STOP/source/process check before reserving or spawning.
+            guard(state,owned,allow_battery=a["allow_battery"])
             out.mkdir(parents=True,exist_ok=False)
             s.write(out/"state.json",state)  # Initial state exclusive; existing helper updates it atomically.
             try:
                 for wave in waves:
                     for name in wave:
-                        guard(state,owned)
+                        guard(state,owned,allow_battery=a["allow_battery"])
                         command=[a["python"],"-B","-m","scripts.sap_leading_eval",
                             "technical" if name=="technical" else "run",
                             "--admission",str(path),"--admission-sha",args.admission_sha,
@@ -51,7 +51,7 @@ def main():
                     while owned:
                         s.require(not Path(state["stop_file"]).exists(),"External STOP")
                         if time.monotonic()-checked>=10:
-                            guard(state,owned);checked=time.monotonic();save_state(state)
+                            guard(state,owned,allow_battery=a["allow_battery"]);checked=time.monotonic();save_state(state)
                         for name,child in list(owned.items()):
                             code=child["process"].poll()
                             if code is None:continue
@@ -66,7 +66,7 @@ def main():
                             state["receipts"][name]=dict(path=str(receipt),sha256=s.digest(receipt))
                             del owned[name];state["active"]=list(owned);save_state(state)
                         if owned:time.sleep(.25)
-                guard(state,owned)
+                guard(state,owned,allow_battery=a["allow_battery"])
                 state.update(status="complete",finished_at=time.time());save_state(state)
             except BaseException as exc:
                 request_stop(state["stop_file"])

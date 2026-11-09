@@ -135,12 +135,13 @@ class Guard:
                     and state["active"]==["on_direct"],"Direct job follows both completed panel jobs")
         check_owner(state,self.job,self.argv,pid=os.getpid(),pgid=os.getpgrp(),ppid=os.getppid(),
                     executable=sys.executable,actual=getattr(sys,"orig_argv",None))
-        require(all(state.get(k)==a[k] for k in ("root","out","python","plans","source","protected","stop_file")),
+        require(type(state.get("allow_battery")) is bool and all(state.get(k)==a[k] for k in
+                ("root","out","python","plans","source","protected","stop_file","allow_battery")),
                 "Ownership state differs from Root admission")
         require(state.get("admission_sha256")==self.sha and digest(self.path)==self.sha
                 and state["inputs"].get(str(self.path))==self.sha
                 and all(state["inputs"].get(k)==v for k,v in a["inputs"].items()),"Owner input/admission binding differs")
-        guard(state,{})  # Existing source/input, owned process, quota, AC and STOP checks.
+        guard(state,{},allow_battery=a["allow_battery"])
         self.last=time.monotonic()
 
 
@@ -158,6 +159,7 @@ def admission(path,sha,stage):
     a=json.loads(path.read_text());root=Path(a["root"]).resolve()
     require(a.get("schema_version")==1 and a.get("profile")==PROFILE and a.get("stage")==stage
             and a.get("start_authorized") is True,"Separate explicit Root start decision required")
+    require(type(a.get("allow_battery")) is bool,"Root admission must bind boolean allow_battery")
     require(root==Path(__file__).resolve().parents[1]==Path.cwd().resolve(),"Run only installed frozen checkout")
     require(source_identity(root,a["python"],a["plans"])==a["source"],"Frozen source differs")
     protected={str(root/f"agents/sherlock/weights/agent_p{i}.pth"):V14_SHA for i in (0,1)}
@@ -417,7 +419,8 @@ def check_closed_state(state,sha):
 def analyze(a,sha,state_path):
     state_path=Path(state_path).resolve();state_hash=digest(state_path)
     state=json.loads(state_path.read_text());check_closed_state(state,sha)
-    require(all(state.get(k)==a[k] for k in ("root","out","source","protected")),"Closed state provenance differs")
+    require(type(state.get("allow_battery")) is bool and all(state.get(k)==a[k] for k in
+            ("root","out","source","protected","allow_battery")),"Closed state provenance differs")
     rows={};receipts={}
     for job in JOBS:
         folder=Path(a["out"])/job;receipt=json.loads((folder/"receipt.json").read_text())

@@ -16,7 +16,7 @@ Der vollständige ursprüngliche Kartenbericht ist verlustfrei in `preparation/s
 
 ## Vor einem echten Lauf
 
-Aktuellen Arbeitsstand und tatsächliche Prozesse prüfen. Der Runner `scripts/sap_leading_eval.py` benötigt eine getrennte, gehashte Root-Aufnahme pro Phase; `scripts/sap_leading_owner.py` startet die festen Worker mit maximal zwei gleichzeitig. Quelle, Launcher und Eingaben binden, Netzstrom und echte frische Quota prüfen. Der [ursprüngliche Aufnahmevertrag](preparation/IMPLEMENTATION.md) beschreibt die Pflichtfelder; beim Aufruf den aufgenommenen Repo-Launcher statt des dort dokumentierten ursprünglichen `/tmp`-Pfads verwenden.
+Aktuellen Arbeitsstand und tatsächliche Prozesse prüfen. Der Runner `scripts/sap_leading_eval.py` benötigt eine getrennte, gehashte Root-Aufnahme pro Phase; `scripts/sap_leading_owner.py` startet die festen Worker mit maximal zwei gleichzeitig. Quelle, Launcher und Eingaben binden und echte frische Quota prüfen. **Moayeds ausdrückliche Freigabe vom 09.11. erlaubt Akkubetrieb für diesen Vergleich:** `allow_battery=true` in der gehashten Aufnahme und im gebundenen Owner-State; ohne diese Ausnahme bleibt Netzstrom erforderlich. Der [ursprüngliche Aufnahmevertrag](preparation/IMPLEMENTATION.md) bleibt als historischer Beleg erhalten; beim Aufruf den aufgenommenen Repo-Launcher statt des dort dokumentierten ursprünglichen `/tmp`-Pfads verwenden.
 
 Technik und Leistung schreiben ausschließlich in neue `technical_v1` beziehungsweise `performance_v1`-Verzeichnisse. Existierende Ausgaben und Startreservierungen niemals löschen, überschreiben oder als Wiederholungsfreigabe behandeln. Die Quellen bleiben während der Läufe fest. Tests vorher abschließen; keine Tests parallel zu Modellläufen.
 

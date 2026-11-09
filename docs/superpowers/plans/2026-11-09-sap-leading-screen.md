@@ -2,7 +2,7 @@
 
 **Ziel:** Prüfen, ob der separat vorbereitete SAP-Vorhalteprototyp einen weiteren Vergleich rechtfertigt. Kein Training, kein neuer Netzbestand und keine automatische Übernahme. V14 bleibt die Abgabe.
 
-**Status vor dem ersten Spiel:** Plan und Karten festgelegt; echte Integration noch offen. Der technische Prototyp ist auf `2ddf64b` aufgenommen. Runner und Aufnahme werden getrennt geprüft. Netzstrom, frisches tatsächliches Kontingent, freie Rechenprozesse und eine vollständige Quellenbindung sind vor jedem Start erforderlich.
+**Status vor dem ersten Spiel:** Plan und Karten festgelegt; echte Integration noch offen. Der technische Prototyp ist auf `2ddf64b` aufgenommen. Runner und Aufnahme werden getrennt geprüft. Frisches tatsächliches Kontingent, freie Rechenprozesse und eine vollständige Quellenbindung sind vor jedem Start erforderlich. Moayed hat am 09.11. ausdrücklich Akkubetrieb für diesen Vergleich erlaubt und übernimmt die Akkuüberwachung. Die gehashte Aufnahme darf dafür `allow_battery=true` festhalten; ohne diese ausdrückliche Ausnahme bleibt Netzstrom erforderlich. Spielumfang, Auswahlbedingungen und Gewichtsschutz ändern sich dadurch nicht.
 
 ## Rollen und Karten
 

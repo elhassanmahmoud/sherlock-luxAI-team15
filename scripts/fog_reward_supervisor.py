@@ -58,11 +58,12 @@ def check_model_processes(state, owned):
     require(not jobs,f'Foreign model/test processes active: {jobs}')
 
 
-def guard(state, owned):
+def guard(state, owned, *, allow_battery=False):
+    require(type(allow_battery) is bool,'allow_battery must be an explicit boolean')
     require(not Path(state['stop_file']).exists(),'External STOP requested')
     usage=check_usage(state['usage_file'],now=time.time(),max_used_percent=100)
     power=read_power()
-    require(power.get('ac') is True,'AC power required')
+    require(allow_battery is True or power.get('ac') is True,'AC power required')
     require(source_identity(ROOT,state['python'],state['plans'])==state['source'],'Frozen source/HEAD/plans changed')
     require(hashes(state['inputs'])==state['inputs'] and hashes(state['protected'])==state['protected'],
             'Prepared input/V14/ZIP hash changed')
