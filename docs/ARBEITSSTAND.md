@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Gefahrmerkmalsvergleich abgeschlossen: V14 bleibt
+
+- Vier technische und alle 200 festen Leistungsspiele vollständig. Solution V14 35/40, Kontrolle und Gefahrmerkmale jeweils 36/40; Gefahrmerkmale direkt 16/40 gegen V14 und 14/40 gegen Kontrolle. Beide Direktgates verfehlt; kein Nominierter und keine Verlängerung. [Bericht mit Unsicherheit](../experiments/analysis/threat_warmstart_compare_20261109/ERGEBNIS.md).
+- Originalanalyse und unabhängige Nachrechnung aller CSV-Zeilen/Gates/Intervalle bestanden. Root hat ursprüngliche Aufnahme, Quellen, Eingaben, Prozessende und Schutzdateien unter Messquelle ffc8b45 geprüft; Freeze erst danach gelöst. Alle eigenen Modelljobs und Wachhalter beendet, V14/ZIP unverändert.
+- Technisch erfolgreiches Training hat hier keinen nachgewiesenen Stärkegewinn geliefert. Vier V14-Niederlagen trotz höherer Gesamtpunkte motivieren eine zeitliche Diagnose. Ein vorhandener historischer Trace zeigt wiederholte Abgänge vom eigenen zugewiesenen Punkt; Ursache/Transfer zunächst separat prüfen, keine automatische allgemeine Halteregel oder neue Trainingswelle. Geschlossene Versuche nicht wiederholen.
+- Letzter tatsächlicher Kontingentstand 7 %, Rest freigegeben; kein Reset durch Codex. Beim Laufabgleich keine neuen Mahmoud-Commits, Akku weiterhin ausdrücklich erlaubt. Primäre Fremddateien erhalten.
+
 ## 09.11.2026 – Finalen Gefahrmerkmalsvergleich technisch vorbereitet
 
 - [Fester Plan](superpowers/plans/2026-11-09-threat-warmstart-comparison.md): zwei akzeptierte Endnetze ersetzen einzeln genau V14-Mitglied 18, übrige 35 erhalten. Vier bekannte Technikspiele vor separaten 200 Leistungsspielen; keine größere Testwelle oder automatische Übernahme.

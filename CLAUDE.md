@@ -63,6 +63,8 @@
 
 **Gefahrmerkmals-Warmstart am 09.11. technisch abgeschlossen:** Zwei 101er-Netze aus V14-Mitglied 18, echte 22 Zusatzmerkmale gegen Nullkontrolle. Vier Technikspiele, 80 Vorlauf- und 800 Lernspiele, 120.000 tatsächliche Updates. Beide Endstände und gespeicherte Daten unabhängig geprüft; [Bericht und Modelle](experiments/analysis/threat_warmstart_20261109/TRAININGSERGEBNIS.md). Noch kein Leistungsvergleich oder stärkerer Nachfolger; V14/ZIP unverändert. Abgeschlossene Trainingsläufe nicht erneut starten, aktuellen Folgeplan im Arbeitsstand lesen.
 
+**Gefahrmerkmalsvergleich am 09.11. abgeschlossen:** Vier Technikspiele und 200 feste Vergleiche. Solution V14 35/40, Kontrolle und Gefahrmerkmale jeweils 36/40; direkt Gefahrmerkmale nur 16/40 gegen V14 und 14/40 gegen Kontrolle. Beide Direktgates verfehlt, unabhängig bestätigt; keine Nominierung oder weitere Bestätigung. [Ergebnis](experiments/analysis/threat_warmstart_compare_20261109/ERGEBNIS.md). V14/ZIP unverändert, abgeschlossene Studie nicht wiederholen; aktuelle Folgearbeit im Arbeitsstand.
+
 ### Projektgrundlagen
 - Das ist UNSER eigenes Projekt (Kopie des Dozenten-Templates). Originale vom Dozenten liegen unverändert in `~/Documents/01_RL`, `02_LuxAI`, `AnwendKiLux` → dort nichts ändern.
 - Team baut einen RL-Agent (DQN/PPO/A2C, PyTorch) für Lux AI S3. Abgabe muss trainierte Gewichte (.pth) enthalten → rein regelbasiert reicht NICHT.

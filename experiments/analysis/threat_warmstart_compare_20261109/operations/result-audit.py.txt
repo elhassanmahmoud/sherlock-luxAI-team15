@@ -1,0 +1,126 @@
+"""Prepared CSV/JSON-only audit; execute only after fresh explicit Root release."""
+from pathlib import Path
+import argparse,csv,hashlib,json,math,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+OUT=Path('/tmp/threat-comparison-results-audit');PROFILE='threat_warmstart_compare_20261109'
+JOBS=('v14_solution','control_solution','threat_solution','threat_v14','threat_control')
+COHORTS={'solution':list(range(9946000,9946020)),'direct_v14':list(range(9946100,9946120)),'direct_control':list(range(9946200,9946220))}
+HEADER=['seed','side','opponent','result','game_win','point_win','our_wins','opp_wins','our_points','opp_points','point_counting_version','wait_frac','invalid_frac','greedy_masked_frac','sap_attempts','sap_hits','stack_frac','relics_found','relics_seen','known_point_tiles','belief_contradictions','unit_steps','steps','secs']
+checks=0;cache={};bindings=[]
+def check(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):check(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def gate(state):
+ check(state['profile']==PROFILE and state['stage']=='performance' and state['status']=='complete' and state['active']==[],'completed inactive performance owner')
+ check(set(state['jobs'])==set(JOBS) and set(state['receipts'])==set(JOBS),'exact five completed jobs')
+ pids={state['owner_pid']};groups=set()
+ for name,j in state['jobs'].items():
+  check(j['owner_pid']==state['owner_pid'] and j['returncode']==0 and j.get('finished_at') is not None,'completed owned job '+name)
+  pids.add(j['pid']);groups.add(j['pgid'])
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ live=[tuple(map(int,line.split())) for line in snapshot.splitlines() if line.strip()]
+ check(not any(p in pids or g in groups for p,g in live),'owner worker PIDs and groups actually absent')
+ for previous,nextwave in [(JOBS[:2],JOBS[2:4]),(JOBS[2:4],JOBS[4:])]:check(max(state['jobs'][j]['finished_at'] for j in previous)<=min(state['jobs'][j]['started_at'] for j in nextwave),'recorded2/2/1wave barriers')
+ return dict(owner_pid=state['owner_pid'],worker_pids={n:j['pid'] for n,j in state['jobs'].items()},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def bootstrap(values):
+ # Draw map indices rather than game rows; each value already includes both sides.
+ values=np.asarray(values,dtype=np.float64);rng=np.random.default_rng(0)
+ indices=rng.integers(0,len(values),size=(5000,len(values)))
+ low,high=np.percentile(values[indices].mean(axis=1),[2.5,97.5])
+ return float(low),float(high)
+def equal(a,b,label):
+ if isinstance(a,dict):
+  check(isinstance(b,dict) and set(a)==set(b),label+' keys')
+  for k in a:equal(a[k],b[k],label+'.'+k)
+ elif isinstance(a,list):
+  check(isinstance(b,list) and len(a)==len(b),label+' length')
+  for i,(x,y) in enumerate(zip(a,b)):equal(x,y,label+f'[{i}]')
+ elif isinstance(a,float):check(isinstance(b,(int,float)) and math.isfinite(b) and math.isclose(a,b,abs_tol=1e-12,rel_tol=0),label)
+ else:check(type(a)==type(b) and a==b,label)
+def number(row,k,integer=False):
+ v=float(row[k]);check(math.isfinite(v),k+' finite')
+ if integer:check(v>=0 and v==math.floor(v),k+' nonnegative integer')
+ return int(v) if integer else v
+
+def main():
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--admission',type=Path,required=True);ap.add_argument('--root-authorized-after-owner-exit',action='store_true',required=True);args=ap.parse_args()
+ check(args.root_authorized_after_owner_exit,'new explicit Root execution authorization')
+ a=read(args.admission);out=Path(a['out']);state=read(out/'state.json');process_before=gate(state)
+ check(a['profile']==PROFILE and a['stage']=='performance' and a['start_authorized'] is True and a['allow_battery'] is True,'actual performance admission scope')
+ check(state['source']==a['source'] and state['admission_sha256']==sha(args.admission),'actual source and admission owner binding')
+ for group in ['inputs','protected']:
+  for p,h in a[group].items():pin(p,h,group)
+ for p,h in a['source']['files'].items():pin(p,h,'source')
+ pin(a['source']['executable'],a['source']['executable_sha256'],'interpreter')
+ check(set(a['cohorts'])==set(COHORTS),'exact three cohorts')
+ for name,seeds in COHORTS.items():equal(read(a['cohorts'][name]),seeds,'fixed cohort '+name)
+ seedproof=read(a['seed_acceptance']);check(seedproof['status']=='PASS' and seedproof['cohorts']==COHORTS and seedproof['no_observed_conflicts'] is True and bool(seedproof['limitations']),'bounded accepted card freshness')
+ tech=read(a['technical_receipt']);approval=read(a['technical_acceptance'])
+ check(tech['profile']==PROFILE and tech['status']=='complete' and tech['source']==a['source'] and tech['stock_control_accepted'] is True,'recorded technical acceptance')
+ check(approval['profile']==PROFILE and approval['status']=='PASS' and approval['source']==a['source'] and approval['technical_receipt_sha256']==sha(a['technical_receipt']),'separate Root technical acceptance')
+ check(len(tech['batches'])==3 and [len(b['indices']) for b in tech['batches']]==[1,8,16] and all(b['equal'] is True and b['members']==36 for b in tech['batches']),'recorded same-width batch equality')
+ indices=tech['batches'][-1]['indices'];check(len(set(indices))==16 and indices==sorted(indices) and tech['batches'][0]['indices']==indices[:1] and tech['batches'][1]['indices']==indices[:8],'recorded batch index prefixes')
+ tr=tech['games'];expected=[(m,s,p) for m in ['stock','null_adapter'] for s,p in [(831006,'player_1'),(831000,'player_0')]]
+ check(len(tr)==4 and [(r['mode'],r['seed'],r['side']) for r in tr]==expected,'four technical recorded keys')
+ for left,right in zip(tr[:2],tr[2:]):
+  check(left['steps']==right['steps']==left['point_rows']==right['point_rows']==303 and left['point_counting_version']==right['point_counting_version']==2,'recorded technical completeness')
+  equal({k:v for k,v in left.items() if k!='mode'},{k:v for k,v in right.items() if k!='mode'},'recorded stock null-adapter equality')
+ models=tech['models'];check(set(models)=={'v14','control','threat'} and set(a['models'])==set(models),'three fixed models')
+ for role,m in models.items():
+  check(m['member_count']==36 and len(m['member_sha256'])==36 and m['feature_dim']==(79 if role=='v14' else 101) and m['path']==a['models'][role],'recorded model layout '+role)
+  pin(m['path'],m['sha256'],'technical model copy '+role)
+  if role!='v14':check(m['member_sha256'][1:]==models['v14']['member_sha256'][:18]+models['v14']['member_sha256'][19:],'recorded exact member18 replacement')
+ frames={};counts={};maps={};filepins={}
+ for name in JOBS:
+  role,suffix=name.split('_',1);cohort='solution' if suffix=='solution' else 'direct_'+suffix
+  opponent='solution92' if suffix=='solution' else 'self:'+a['models'][suffix]
+  path=out/(name+'.csv');receipt=state['receipts'][name]
+  check(receipt['path']==str(path) and receipt['games']==40,'actual CSV receipt');pin(path,receipt['sha256'],'actual CSV '+name);filepins[str(path)]=sha(path)
+  command=[a['python'],'-B','-m','scripts.par_eval','--weights',a['models'][role],'--seed-list',a['cohorts'][cohort],'--workers','1','--opponents',opponent,'--out',str(path)]
+  check(state['jobs'][name]['argv']==command,'actual fixed one-worker model command '+name)
+  with path.open(newline='') as f:
+   reader=csv.DictReader(f);check(reader.fieldnames==HEADER,'exact declared CSV header');raw=list(reader)
+  check(len(raw)==40 and all(None not in r and all(v is not None and v!='' for v in r.values()) for r in raw),'forty complete CSV rows')
+  parsed={};results=[]
+  for row in raw:
+   seed=number(row,'seed',True);side=row['side'];key=(seed,side)
+   check(row['opponent']==opponent and side in ['player_0','player_1'] and key not in parsed,'unique expected opponent seed side')
+   for field in ['steps','point_counting_version','our_points','opp_points','our_wins','opp_wins','game_win']:number(row,field,True)
+   check(number(row,'steps',True)==303 and number(row,'point_counting_version',True)==2,'303-step v2 game')
+   ow=number(row,'our_wins',True);lw=number(row,'opp_wins',True);op=number(row,'our_points',True);lp=number(row,'opp_points',True)
+   result=number(row,'result');point=number(row,'point_win');check(ow+lw<=3 and result==(1. if ow>lw else .5 if ow==lw else 0.) and number(row,'game_win',True)==int(result==1) and point==(1. if op>lp else .5 if op==lp else 0.),'WDL and point arithmetic')
+   for field in ['wait_frac','invalid_frac','greedy_masked_frac','sap_attempts','sap_hits','stack_frac','relics_found','relics_seen','known_point_tiles','belief_contradictions','unit_steps','secs']:number(row,field)
+   parsed[key]=result;results.append(result)
+  check(set(parsed)=={(s,p) for s in COHORTS[cohort] for p in ['player_0','player_1']},'exact twenty paired fixed cards')
+  frames[name]=parsed;maps[name]=np.array([(parsed[s,'player_0']+parsed[s,'player_1'])/2 for s in COHORTS[cohort]])
+  counts[name]=dict(wins=results.count(1.),draws=results.count(.5),losses=results.count(0.))
+ wins={k:v['wins'] for k,v in counts.items()}
+ gates=dict(solution_v14=wins['threat_solution']>=wins['v14_solution'],solution_control=wins['threat_solution']>=wins['control_solution'],direct_v14=wins['threat_v14']>=24,direct_control=wins['threat_control']>=24)
+ solution={};direct={}
+ for ref in ['v14','control']:
+  candidate=maps['threat_solution'];reference=maps[ref+'_solution'];diff=candidate-reference;lo,hi=bootstrap(diff)
+  solution[ref]=[dict(opponent='solution92',maps=20,games=40,winrate=float(candidate.mean()),ref_winrate=float(reference.mean()),delta=float(diff.mean()),low=lo,high=hi,excluded_candidate=0,excluded_reference=0)]
+  directmaps=maps['threat_'+ref];lo,hi=bootstrap(directmaps);direct[ref]=dict(maps=20,games=40,winrate=float(directmaps.mean()),low=lo,high=hi)
+ summary=read(out/'summary.json')
+ expected=dict(profile=PROFILE,games=200,counts=counts,gates=gates,nominated=all(gates.values()),solution=solution,direct=direct,files=filepins,source=a['source'],admission_sha256=sha(args.admission))
+ for k,v in expected.items():equal(v,summary[k],'summary '+k)
+ process_after=gate(read(out/'state.json'))
+ result=dict(status='PASS',checks=checks,games=200,technical_games_from_receipt=4,counts=counts,gates=gates,nominated=all(gates.values()),solution=solution,direct=direct,files=filepins,source=a['source'],admission_sha256=sha(args.admission),summary_sha256=sha(out/'summary.json'),process_before=process_before,process_after=process_after,hash_bindings_checked=len(bindings),unique_input_files_hashed=len(cache),script_sha256=sha(Path(__file__)),limits=['Technical stock/null-adapter and batch equality are recorded receipt assertions; no independent raw trace or model-output recovery.','CSV results are independently recounted; engine actions/points cannot be regenerated without raw traces.','Intervals use half-score draws and5000 whole-map bootstrap draws, PCG64 seed0; four gates count actual wins only.','One training initialization and repeated project selection; descriptive uncertainty, no multiplicity correction.','Nomination only: no promotion, extra games or training strength conclusion.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n');print(json.dumps(result,indent=2,sort_keys=True))
+if __name__=='__main__':
+ try:main()
+ except Exception as e:
+  (OUT/'failure.json').write_text(json.dumps(dict(status='FAIL',checks_completed=checks,error=f'{type(e).__name__}: {e}'),indent=2)+'\n');raise

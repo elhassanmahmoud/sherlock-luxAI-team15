@@ -1,5 +1,8 @@
 # Experiment-Protokoll
 
+- 09.11.2026: Gefahrmerkmalsvergleich geschlossen: vier technische plus 200 Leistungsspiele, identische 36er-Größe. Solution 36/40 versus V14 35/40 und Kontrolle 36/40; direkt nur 16/40 und 14/40, beide festen Hürden verfehlt. Unabhängige Nachrechnung bestätigt; keine Nominierung, Verlängerung oder Übernahme. V14/ZIP unverändert, Quelle ffc8b45. [Ergebnis](../experiments/analysis/threat_warmstart_compare_20261109/ERGEBNIS.md).
+
+
 - 09.11.2026: Kontrollierter V14-Warmstart mit 22 öffentlichen Gefahrmerkmalen technisch vollständig: zwei identisch initialisierte 101er-Netze aus Mitglied 18, je 40 Vorlauf- und 400 Lernspiele, insgesamt 120.000 Updates, zuvor vier Technikspiele. Kontrolle nullt nur Zusatzmerkmale. Unabhängiger Daten-/Tensoraudit und Root-Abschluss bestanden; Quelle af8b271. Endmodelle und verlustfreie Replayarchive verfügbar. Keine Leistungsbehauptung, V14/ZIP unverändert; Vergleich folgt separat. [Bericht](../experiments/analysis/threat_warmstart_20261109/TRAININGSERGEBNIS.md).
 
 

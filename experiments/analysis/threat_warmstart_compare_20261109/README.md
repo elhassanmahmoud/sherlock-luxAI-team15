@@ -1,8 +1,7 @@
-# Gefahrmerkmale im 36er-Ensemble: begrenzter Vergleich
+# Gefahrmerkmale im 36er-Ensemble: abgeschlossen
 
-Die beiden finalen Einzelnetze sind technisch abgenommen. Diese separate Studie prüft ihre Spielstärke im Ensemble; noch kein stärkerer Nachfolger behauptet. V14 und ZIP bleiben geschützt.
+**V14 bleibt.** Vier Technikspiele und alle 200 festen Vergleiche vollständig und unabhängig geprüft. Solution: V14 35/40, Kontrolle und Gefahrmerkmale jeweils 36/40. Gefahrmerkmale direkt nur 16/40 gegen V14 und 14/40 gegen Kontrolle; keine Nominierung, Übernahme oder Verlängerung.
 
-- [Verbindlicher Plan](../../../docs/superpowers/plans/2026-11-09-threat-warmstart-comparison.md): genau vier bekannte technische Ausführungen, danach nur mit tatsächlicher Root-Abnahme 200 feste Vergleichsspiele. Neue Modelle ersetzen genau Mitglied 18, keine größere Netzanzahl.
-- [Implementierung](preparation/implementation-REPORT.md), [20 tatsächlich bestandene synthetische Tests](preparation/implementation-final-tests.log), [unabhängiger Codereview](preparation/code-review.md), [Root-Abnahme](preparation/root-code-acceptance.json).
-- [Begrenzter Kartencheck](preparation/seed-REVIEW.md) und [Root-Kartenaufnahme](preparation/seed-admission.json); lokale Suchgrenzen ausdrücklich erhalten.
-- Beim Aufnahmecommit noch keine echten Modell-/Spielprüfungen dieses Vergleichs. Tatsächliche Aufnahme und Status später unter technical_v1 und performance_v1. Keine automatischen Starts, Wiederholungen oder Phasenwechsel.
+[Ergebnis und Unsicherheit](ERGEBNIS.md) · [Plan](../../../docs/superpowers/plans/2026-11-09-threat-warmstart-comparison.md) · [Originaldaten](performance_v1/summary.json) · [unabhängiger Audit](operations/result-audit-REPORT.md) · [Root-Abschluss](operations/closure.json).
+
+Die beiden trainierten Einzelnetze und verlustfreien Replayarchive bleiben in der [Trainingsstudie](../threat_warmstart_20261109/README.md). Alle eigenen Prozesse beendet, Quelle nach tatsächlicher Abnahme freigegeben, V14/ZIP geschützt. Abgeschlossene Studie nicht erneut starten.
