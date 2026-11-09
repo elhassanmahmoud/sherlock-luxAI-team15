@@ -175,6 +175,10 @@
 Festgelegt am **10.10.2026, vor dem Start der Trainingsläufe** (Commit, mit dem der Batch gestartet wurde: siehe `git` in jeder `manifest.json`).
 Änderungen am Protokoll nach Ansicht der Testergebnisse werden unten im Abschnitt *Änderungen* mit Datum und Grund eingetragen.
 
+## 09.11.2026: Kandidatenrettung nach öffentlichem Stillstand
+
+Vier bekannte Technikspiele und 120 feste Vergleiche, unveränderte 36 Netze, null Gradienten. Solution OFF/ON jeweils 40/40; direkt ON 22/40, CI 50–62,5 %. Vorab-Gate 24 tatsächliche Siege verfehlt; kein Nominierter oder Nachschlag. Gezielte bekannte Verlustkarte 9946007/player_0 verbessert sich von 1:2 auf 3:0, keine unabhängige Stärkeaussage daraus. Originalanalyse, unabhängige Nachrechnung und Quellen-/Schutzprüfung bestanden; V14/ZIP bleiben. [Bericht](../experiments/analysis/candidate_progress_20261109/ERGEBNIS.md).
+
 ## Messkorrektur vom 14.10.2026: vollständige Punkte
 
 Neue Einzelspiel-, Trainings-, Validierungs- und Diagnosezeilen tragen `point_counting_version=2`. In LuxAI S3 0.2.1 wird nach dem letzten Punktezuwachs eines Matches `team_points` bereits auf null gesetzt. `scripts/scoring.py` rekonstruiert diesen Zuwachs aus `info["final_state"]`: ein Punkt je aktivem Punktefeld und Team mit mindestens einer lebenden Einheit mit Energie ≥ 0; Stacking zählt nicht mehrfach. Die letzte Aktion und neu aktivierte Relics sind berücksichtigt. Die Engine entfernt die Einheiten erst im nächsten Schritt.

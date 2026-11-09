@@ -1,0 +1,84 @@
+{
+  "admission_sha256": "5b100207e346be17805132c96757426b7463272fdfacbbadf7607110a1f6b70a",
+  "checks": 4985,
+  "counts": {
+    "off_solution": {
+      "draws": 0,
+      "losses": 0,
+      "wins": 40
+    },
+    "on_off": {
+      "draws": 0,
+      "losses": 18,
+      "wins": 22
+    },
+    "on_solution": {
+      "draws": 0,
+      "losses": 0,
+      "wins": 40
+    }
+  },
+  "direct": {
+    "games": 40,
+    "high": 0.625,
+    "low": 0.5,
+    "maps": 20,
+    "winrate": 0.55
+  },
+  "files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/candidate_progress_20261109/performance_v1/off_solution.csv": "93ac18d8030fa43f1d6ced926dc54f2f80a96a3d33949fea03e332ad42bca4ec",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/candidate_progress_20261109/performance_v1/on_off.csv": "b666c77e411cf13b8f9c594198d96716a3eb4aaecc338c17089c964b2067bd66",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/candidate_progress_20261109/performance_v1/on_solution.csv": "ff1e4ed49f30326f0ab86bc57c53672108e89b751b3cd6e7faf7988a4cefc9dc"
+  },
+  "games": 120,
+  "gates": {
+    "direct": false,
+    "solution": true
+  },
+  "hash_bindings_checked": 494,
+  "limits": [
+    "No model deserialization: current model hashes match separately accepted actual tensor audit.",
+    "CSV arithmetic is independently checked; raw engine actions and per-match score trajectories are unavailable.",
+    "Whole-map5000PCG64seed0score intervals treat draws as0.5; gates use actual wins only.",
+    "Forty-of-forty Solution wins do not establish100% general success or a fresh successor. One fixed qualitative screen and repeated project attempts; no multiplicity correction.",
+    "Nomination allows separately preplanned fresh confirmation only, never direct promotion or extra games."
+  ],
+  "nominated": false,
+  "process_after": {
+    "owner_pid": 11665,
+    "snapshot_sha256": "9c060059fd80af944f5977af8434beda85bc85f2498408e40603efd38831430b",
+    "worker_pids": {
+      "off_solution": 11692,
+      "on_off": 12067,
+      "on_solution": 11698
+    }
+  },
+  "process_before": {
+    "owner_pid": 11665,
+    "snapshot_sha256": "401a8d78628f205c8a32ce37d75d4e104a1e9f1ac182bae020e54f8cdb0e01a0",
+    "worker_pids": {
+      "off_solution": 11692,
+      "on_off": 12067,
+      "on_solution": 11698
+    }
+  },
+  "script_sha256": "499e4351588ae9a49beac0a2d704f6eb7dc3ea32b0532bdb7f2baa03a10ab588",
+  "solution": [
+    {
+      "delta": 0.0,
+      "excluded_candidate": 0,
+      "excluded_reference": 0,
+      "games": 40,
+      "high": 0.0,
+      "low": 0.0,
+      "maps": 20,
+      "opponent": "solution92",
+      "ref_winrate": 1.0,
+      "winrate": 1.0
+    }
+  ],
+  "source_head": "c023b28bd4369ffc1c32b5347fb8574bdd42c472",
+  "status": "PASS",
+  "summary_sha256": "89d765de5f1eced5b5b6e8cc9d924b32135a013a15b74e1f31a27a18afc55b8f",
+  "unique_input_files_hashed": 450
+}

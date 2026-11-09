@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/candidate_progress_owner.py", line 102, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/candidate_progress_owner.py", line 33, in main
+    usage_file=str(safe_path(args.usage_file)),admission_sha256=args.admission_sha,
+                   ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/final_training_supervisor.py", line 114, in safe_path
+    require(not any(part.is_symlink() for part in (path, *path.parents)), "Symlink output/input path")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/early_curriculum_study.py", line 52, in require
+    raise ValueError(message)
+ValueError: Symlink output/input path

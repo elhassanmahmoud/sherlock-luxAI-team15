@@ -25,6 +25,8 @@
 
 **Rangmittel am 09.11. abgeschlossen:** Vier Technikspiele und 120 Vergleiche mit denselben 36 Netzen. Solution beide 39/40, direkt 19/40; keine Übernahme. Originalanalyse und unabhängige Datenchecks bestanden, V14/ZIP unverändert. [Ergebnis](experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md). Aktuelle Folgearbeit im Arbeitsstand.
 
+**Fortschrittsabhängige Kandidatenrettung am 09.11. abgeschlossen:** vier bekannte Technikspiele, 120 feste Vergleiche. Solution OFF/ON je 40/40, direkt ON 22/40 bei vorab geforderten 24; kein Nominierter. Die gezielte bekannte Verlustkarte dreht von 1:2 auf 3:0, aber das ist kein unabhängiger Stärkenachweis. Gleiche 36 Netze, neue Regel standardmäßig aus, V14/ZIP unverändert. [Ergebnis](experiments/analysis/candidate_progress_20261109/ERGEBNIS.md). par_eval bricht jetzt bei abgefangenen Fehlern eines Spielers ab. Nächste getrennte Arbeit im Arbeitsstand.
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

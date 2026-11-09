@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/candidate-progress-technical-audit/audit.py", line 88, in <module>
+    ck(cp['cfg']==expected_cfg==m['config'],'only exact frozen and OFF ON config changes')
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/candidate-progress-technical-audit/audit.py", line 8, in ck
+    if not ok:raise AssertionError(label)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: only exact frozen and OFF ON config changes

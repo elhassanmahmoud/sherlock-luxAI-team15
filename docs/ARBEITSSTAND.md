@@ -8,11 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Fortschrittsabhängige Kandidatenrettung abgeschlossen
+
+- Vier Technik- und 120 feste Leistungsspiele abgeschlossen. Solution OFF/ON jeweils 40/40; direkt ON 22:18. Kleiner positiver Hinweis, aber die feste Hürde 24/40 verfehlt: keine Nominierung, Verlängerung oder V14-Übernahme. Ganzkartenintervall direkt 50–62,5 %. [Ergebnis](../experiments/analysis/candidate_progress_20261109/ERGEBNIS.md).
+- Auf der zuvor gezielt untersuchten Niederlage gewinnt ON 3:0 statt 1:2; bekannte Kontrollkarte unverändert. Beide OFF-Aktionsfolgen exakt reproduziert, alle 36 Netze bytegleich. Technikbeispiel und allgemeine Leistungsaussage getrennt halten.
+- 49 synthetische Tests, unabhängiger Code-, Technik- und Ergebnisreview bestanden. Root schloss Originalaufnahme/Analyse unter c023b28 ab, Quellenbindung erst danach freigegeben; sämtliche eigenen Modellprozesse beendet. Abgabegewichte und ZIP unverändert. Kein Reset, Akku erlaubt, zuletzt echte Quota 16 %.
+- par_eval verweigert künftig erfolgreiche Messungen bei abgefangenen Fehlern beider Spieler. Nächste separate Lernhypothese nach Quellencheck: Matchgewicht isoliert erhöhen; noch kein neuer Trainingslauf. Vorherige Reserveschalter und abgeschlossene Studien nicht erneut starten.
+
 ## 09.11.2026 – Fortschrittsabhängige Kandidatenrettung in Umsetzung
 
 - Die aktuelle Niederlagendiagnose ist als 30800a7 veröffentlicht und in der Hauptkopie. Keine aktive Modellberechnung oder Quellenbindung aus alten Studien.
 - Ein enger [neuer Plan](superpowers/plans/2026-11-09-candidate-progress-rescue.md) ergänzt nur bei öffentlich beobachtetem Stillstand eine frühere Kandidatenrettung. Zwölf vollständige Übergänge, nur erstes Match und aktuelle Kandidatenziele; bisheriger 30er-Fallback unverändert. Das vorhandene Regelbündel umfasst auch Nebelausnahmen. Keine neuen Gewichte oder Rewards.
-- Konservativer Timer und Vergleichswerkzeuge umgesetzt; 49 gezielte synthetische Tests und unabhängiger Code-/Methodenreview bestanden. Kartencheck ohne beobachtete Vorverwendung; lokale Grenzen dokumentiert. par_eval bricht künftig bei abgefangenen Fehlern eines Spielers ab. Noch keine neuen Spiele; nach diesem Quellencommit vier bekannte Technikspiele vor separaten 120 Vergleichen. Kein automatischer Nachschlag oder V14-Ersatz.
+- Konservativer Timer und Vergleichswerkzeuge umgesetzt; 49 gezielte synthetische Tests und unabhängiger Code-/Methodenreview bestanden. Kartencheck ohne beobachtete Vorverwendung; lokale Grenzen dokumentiert. par_eval bricht künftig bei abgefangenen Fehlern eines Spielers ab. Quelle c023b28 veröffentlicht und Hauptkopie aktualisiert. Vier echte Technikspiele unter dieser Quelle abgeschlossen: OFF beide historischen Aktionsfolgen exakt, ON auf 9946007/player_0 drei frühe Eingriffsschritte und 3:0 statt 1:2; 831006/player_1 unverändert. Das ist eine gezielte Wirkungsprobe, kein allgemeiner Stärkegewinn. Unabhängige Technikabnahme und Root-Prüfung bestanden. Separate 120-Vergleichsaufnahme erfolgt, Performancephase gestartet; keine Zwischenwahl oder Verlängerung. Quellenfreeze bleibt bis zum Abschluss erhalten. Kein automatischer Nachschlag oder V14-Ersatz.
 - Akkubetrieb ausdrücklich erlaubt, restliches Kontingent freigegeben, Resets nur durch Nutzer. Aktuellen tatsächlichen Stand vor jedem Start prüfen; maximal zwei Worker und keine parallelen Tests.
 
 ## 09.11.2026 – Aktuelle Niederlagendiagnose abgeschlossen

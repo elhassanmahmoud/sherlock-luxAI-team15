@@ -1,7 +1,9 @@
-# Fortschrittsabhängige Kandidatenrettung
+# Kandidatenrettung nach Stillstand — abgeschlossen
 
-Ein einziger opt-in-Versuch mit den unveränderten 36 V14-Netzen. Bei zwölf vollständig beobachteten Übergängen ohne Kandidatenbesetzung, Punktgewinn oder neue öffentliche Klassifikation greift die bestehende Rettung früher für aktuelle Kandidatenziele. Nur erstes Match und noch keine bestätigten Punktfelder. Der bisherige globale 30-Schritte-Fallback bleibt erhalten. Nebelverhalten gehört zu den möglichen Nebenwirkungen.
+Vier bekannte Technikspiele und 120 feste Vergleiche vollständig, unabhängig geprüft. Solution OFF/ON je 40/40, direkt ON 22/40. Die vorab feste Direkt-Hürde 24/40 wurde verfehlt; kein Nachfolger und keine Verlängerung. V14 und ZIP bleiben unverändert, der opt-in-Schalter standardmäßig aus.
 
-[Fester Plan](../../../docs/superpowers/plans/2026-11-09-candidate-progress-rescue.md) · [Machbarkeitsreview](preparation/feasibility-review.md) · [Ausgangsdiagnose](../holder_oscillation_20261109/ERGEBNIS.md)
+[Ergebnis und Grenzen](ERGEBNIS.md) · [Plan](../../../docs/superpowers/plans/2026-11-09-candidate-progress-rescue.md) · [Originalanalyse](performance_v1/summary.json) · [Abschluss](operations/closure.json)
 
-Stand: Opt-in-Umsetzung und Vergleichswerkzeuge fertig; 49 gezielte synthetische Tests bestanden, unabhängiger Code-/Methodenreview ohne Blocker. Ein enger Fehlerabbruch verhindert künftig, dass par_eval abgefangene Agentenfehler als gültige Ergebnisse veröffentlicht. Noch keine echten Spiele oder Leistungsdaten dieser Studie. Geplant sind genau vier bekannte Technikspiele und nach getrennter Abnahme 120 feste Vergleiche. Erfolg würde nur eine separate Bestätigung erlauben. V14-Gewichte und Abgabe-ZIP bleiben unverändert.
+Alle 36 Originalnetze bleiben erhalten. Die Regel prüft zwölf vollständige Übergänge ohne öffentliche Fortschritte, nur im ersten Match ohne bestätigte Punktefelder und nur für aktuelle Kandidatenziele. Der alte 30-Schritte-Fallback bleibt unverändert. Das vorhandene Rescue-Bündel beeinflusst auch Nebelverhalten.
+
+Technische Belege und Rohdaten sind im Studienverzeichnis enthalten; externe Prüferprogramme wurden als nicht ausführbare .py.txt-Kopien abgelegt. Ihre Originalberichte nennen teilweise die damaligen /tmp-Arbeitsorte.

@@ -1,0 +1,101 @@
+from pathlib import Path
+import hashlib,json,subprocess
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15');B=ROOT/'experiments/analysis/candidate_progress_20261109';OUT=Path('/tmp/candidate-progress-technical-audit')
+checks=0;cache={};bindings=[];torch=None
+def ck(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for block in iter(lambda:f.read(1024*1024),b''):h.update(block)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):ck(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def gate(s):
+ ck(s['status']=='complete' and s['profile']=='candidate_progress_20261109' and s['stage']=='technical' and s['active']==[],'owner completed fixed technical phase')
+ ck(set(s['jobs'])=={'technical'} and set(s['receipts'])=={'technical'},'exact one worker and receipt')
+ j=s['jobs']['technical'];ck(j['returncode']==0 and j['owner_pid']==s['owner_pid'],'successful owned worker')
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ ck(not any(int(pid) in {s['owner_pid'],j['pid']} or int(pgid)==j['pgid'] for pid,pgid in (l.split() for l in snapshot.splitlines() if l.strip())),'owner worker and group absent')
+ return dict(owner_pid=s['owner_pid'],worker_pid=j['pid'],snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def typed(x):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if isinstance(x,torch.Tensor):
+   t=x.detach().cpu().contiguous();emit(b'tensor');emit(str(t.dtype).encode());visit(list(t.shape));emit(t.reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for child in x:visit(child)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  else:raise TypeError(type(x))
+ visit(x);return h.hexdigest()
+s=read(B/'technical_v1/state.json');process_before=gate(s)
+a=read(B/'technical-admission.json');r=read(B/'technical_v1/technical-receipt.json')
+pin(B/'technical-admission.json',s['admission_sha256'],'actual admission')
+pin(B/'technical_v1/technical-receipt.json',s['receipts']['technical']['sha256'],'owner receipt')
+ck(a['source']['head'].startswith('c023b28') and s['source']==r['source']==a['source'],'frozen original source')
+ck(a['stage']=='technical' and a['profile']==r['profile']==s['profile'] and a['start_authorized'] is True and r['status']=='complete' and r['no_strength_claim'] is True,'authorized completed receipt')
+ck(r['admission_sha256']==s['admission_sha256'] and r['command']==s['jobs']['technical']['argv'],'original admission command')
+for group in ['inputs','protected']:
+ for p,h in a[group].items():pin(p,h,'admission '+group)
+for p,h in a['source']['files'].items():pin(p,h,'source file')
+pin(a['source']['executable'],a['source']['executable_sha256'],'interpreter')
+for p,h in r['baseline_files'].items():pin(p,h,'historical baseline')
+keys=[(9946007,'player_0'),(831006,'player_1')];expected=[(role,seed,side) for role in ['off','on'] for seed,side in keys]
+ck([(g['role'],g['seed'],g['side']) for g in r['games']]==expected,'exact four games')
+BASE=['seed','side','steps','reset_steps','decision_steps','our_wins','opp_wins','our_points','opp_points','result','point_counting_version','matches','action_sha256','caught_errors']
+summary=[]
+for g in r['games']:
+ role,seed,side=g['role'],g['seed'],g['side'];p=B/'technical_v1'/f'{role}_{seed}_{side}.json';ck(read(p)==g,'actual four JSON rows equal receipt')
+ ck(g['steps']==303 and g['reset_steps']==3 and g['decision_steps']==300 and g['point_counting_version']==2 and g['caught_errors']==0 and len(g['matches'])==3,'complete error-free v2 game')
+ team=int(side[-1]);totals=[sum(m['points'][i] for m in g['matches']) for i in [0,1]]
+ ck(totals[team]==g['our_points'] and totals[1-team]==g['opp_points'],'side-correct sum of matchpoints')
+ wins=[0,0]
+ for idx,m in enumerate(g['matches']):
+  ck(m['match_idx']==idx and all(type(p) is int and p>=0 for p in m['points']),'matchpoint schema')
+  if m['points'][0]!=m['points'][1]:wins[int(m['points'][1]>m['points'][0])]+=1
+  ck(m['cumulative_wins']==wins,'cumulative match winners')
+ ck(wins[team]==g['our_wins'] and wins[1-team]==g['opp_wins'] and g['result']==(1. if wins[team]>wins[1-team] else .5 if wins[team]==wins[1-team] else 0.),'side-correct overall match result')
+ historical=read(a['baseline_manifests'][f'{seed}_{side}']);matches=[x for x in historical['games'] if (x['key']['seed'],x['key']['side'])==(seed,side)];ck(len(matches)==1,'unique archived key');old=matches[0]
+ ck(historical['status']=='complete' and old['complete'] and all(old['passivity'].values()) and all(old['baseline_reproduction'].values()),'accepted archived passive baseline')
+ ck(all(old['unobserved'][k]==old['observed'][k] for k in BASE),'archive observed unobserved fields')
+ equal=all(g[k]==old['observed'][k] for k in BASE);ck(equal==g['baseline_equal'],'actual baseline equality recalculated')
+ if role=='off':ck(equal and g['cand_stall_early_steps']==g['cand_stall_early_unit_steps']==0,'OFF actual exact baseline and no early rescue')
+ summary.append({k:g[k] for k in ['role','seed','side','action_sha256','our_wins','opp_wins','our_points','opp_points','result','cand_stall_early_steps','cand_stall_early_unit_steps','baseline_equal']})
+pairs=list(zip(r['games'][:2],r['games'][2:]));exposed=[(on['seed'],on['side']) for off,on in pairs if on['cand_stall_early_unit_steps']>0 and on['action_sha256']!=off['action_sha256']]
+ck(bool(exposed),'ON actual early hook exposure and native divergence same key')
+for off,on in pairs:ck(0<=on['cand_stall_early_steps']<=on['cand_stall_early_unit_steps']<=16*on['cand_stall_early_steps'],'plausible deduplicated UID step counters')
+# Deserialization only after actual complete owner/PID gate above.
+import torch as torch_module
+torch=torch_module;torch.set_num_threads(1)
+source=torch.load(a['v14_source'],map_location='cpu',weights_only=True)
+source_members=[source['q'],*source['ensemble']];ck(len(source_members)==36,'36 source members')
+source_identity=typed([source['q'],source['target_q'],*source['ensemble']]);model_summary={}
+for role in ['off','on']:
+ m=r['models'][role];pin(m['path'],m['sha256'],'actual eval copy')
+ cp=torch.load(m['path'],map_location='cpu',weights_only=True)
+ expected_cfg=dict(source['cfg'],frozen=False,cand_stall_rescue=role=='on')
+ ck(cp['cfg']==expected_cfg==m['config'],'only exact frozen and OFF ON config changes')
+ ck(cp['feature_dim']==79 and cp['n_actions']==6 and len(cp['ensemble'])==35 and cp.get('ensemble_dims',[79]*35)==[79]*35 and m['member_count']==36,'same 36 original79 model architecture')
+ ck(typed({k:v for k,v in cp.items() if k!='cfg'})==typed({k:v for k,v in source.items() if k!='cfg'}),'every persisted nonconfig field preserved exactly')
+ members=[cp['q'],*cp['ensemble']]
+ for i,(member,original) in enumerate(zip(members,source_members)):
+  ck(set(member)==set(original),'same tensor keys')
+  for k,t in member.items():ck(t.dtype==original[k].dtype and t.shape==original[k].shape and bool(torch.isfinite(t).all()) and torch.equal(t,original[k]),'actual exact finite member tensor')
+ identity=typed([cp['q'],cp['target_q'],*cp['ensemble']]);ck(identity==source_identity==m['tensor_sha256'],'independently recovered recorded tensor identity')
+ model_summary[role]=dict(sha256=m['sha256'],member_count=36,tensor_sha256=identity,only_config_changes=['frozen','cand_stall_rescue'])
+ del cp,members
+correction=read(B/'operations/prelaunch-path-correction.json')
+process_after=gate(read(B/'technical_v1/state.json'))
+result=dict(status='PASS',checks=checks,profile=s['profile'],source_head=a['source']['head'],admission_sha256=sha(B/'technical-admission.json'),receipt_sha256=sha(B/'technical_v1/technical-receipt.json'),games=summary,models=model_summary,exposed_and_native_diverged_keys=exposed,process_before=process_before,process_after=process_after,hash_bindings_checked=len(bindings),unique_input_files_hashed=len(cache),prelaunch_correction=correction,prelaunch_correction_sha256=sha(B/'operations/prelaunch-path-correction.json'),limits=['No raw action arrays or complete trajectories were saved by this technical runner: native digest reproduction/exposure counters are archived live assertions, independently compared and file-bound.','Actual persisted model/member tensors and all nonconfig checkpoint fields were independently recovered and compared with original V14. Post-game live tensor equality remains recorded runtime assertion.','Early counters record deduplicated actual per-UID hook queries in reviewed source, not a separately archived per-step target trace.','Four consumed technical games establish function/exposure only; no general performance or strength conclusion.','Prelaunch path error is separately recorded as zero games, not a repeated real model attempt.'])
+(OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n');print(json.dumps(result,indent=2,sort_keys=True))

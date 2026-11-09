@@ -1,0 +1,130 @@
+{
+  "admission_sha256": "ce1e7605c52e8fe8c65e5a4ca76f6349c1e18c73320fd63dfcd66b5e91951ab0",
+  "checker_correction": "First external checker incorrectly compared raw72-field historical config; corrected to independently AST-read170-field default-normalized config. No project changes or games.",
+  "checks": 1468,
+  "exposed_and_native_diverged_keys": [
+    [
+      9946007,
+      "player_0"
+    ]
+  ],
+  "games": [
+    {
+      "action_sha256": "b896825b5af59984e23ecabe521c41a8793b2c0b17f2fdf287b7e613640e1fd0",
+      "baseline_equal": true,
+      "cand_stall_early_steps": 0,
+      "cand_stall_early_unit_steps": 0,
+      "opp_points": 507,
+      "opp_wins": 2,
+      "our_points": 739,
+      "our_wins": 1,
+      "result": 0.0,
+      "role": "off",
+      "seed": 9946007,
+      "side": "player_0"
+    },
+    {
+      "action_sha256": "90b2269ed7f97e97aba7e5953a2020f1bafb7e99822165b39cc0ce904fc4386f",
+      "baseline_equal": true,
+      "cand_stall_early_steps": 0,
+      "cand_stall_early_unit_steps": 0,
+      "opp_points": 1205,
+      "opp_wins": 2,
+      "our_points": 1088,
+      "our_wins": 1,
+      "result": 0.0,
+      "role": "off",
+      "seed": 831006,
+      "side": "player_1"
+    },
+    {
+      "action_sha256": "d6ccf885373e8293f20c0807010021f1d74afe27ba6183a91948b223458bcd68",
+      "baseline_equal": false,
+      "cand_stall_early_steps": 3,
+      "cand_stall_early_unit_steps": 48,
+      "opp_points": 352,
+      "opp_wins": 0,
+      "our_points": 936,
+      "our_wins": 3,
+      "result": 1.0,
+      "role": "on",
+      "seed": 9946007,
+      "side": "player_0"
+    },
+    {
+      "action_sha256": "90b2269ed7f97e97aba7e5953a2020f1bafb7e99822165b39cc0ce904fc4386f",
+      "baseline_equal": true,
+      "cand_stall_early_steps": 0,
+      "cand_stall_early_unit_steps": 0,
+      "opp_points": 1205,
+      "opp_wins": 2,
+      "our_points": 1088,
+      "our_wins": 1,
+      "result": 0.0,
+      "role": "on",
+      "seed": 831006,
+      "side": "player_1"
+    }
+  ],
+  "hash_bindings_checked": 449,
+  "limits": [
+    "No raw action arrays or complete trajectories were saved by this technical runner: native digest reproduction/exposure counters are archived live assertions, independently compared and file-bound.",
+    "Actual persisted model/member tensors and all nonconfig checkpoint fields were independently recovered and compared with original V14. Post-game live tensor equality remains recorded runtime assertion.",
+    "Early counters record deduplicated actual per-UID hook queries in reviewed source, not a separately archived per-step target trace.",
+    "Four consumed technical games establish function/exposure only; no general performance or strength conclusion.",
+    "Prelaunch path error is separately recorded as zero games, not a repeated real model attempt."
+  ],
+  "models": {
+    "off": {
+      "member_count": 36,
+      "normalized_config_fields": 170,
+      "only_config_changes_after_default_normalization": [
+        "frozen",
+        "cand_stall_rescue"
+      ],
+      "sha256": "817e565f8628a3a860c3dcb84e69e9d68c5f0954f791fbd06e0f115bf6cf95d2",
+      "source_explicit_config_fields": 72,
+      "tensor_sha256": "6c9f2bc37e72f78c12269ebb48c06b16f091b1d338c0d9c7ba1a6566deaa5afd"
+    },
+    "on": {
+      "member_count": 36,
+      "normalized_config_fields": 170,
+      "only_config_changes_after_default_normalization": [
+        "frozen",
+        "cand_stall_rescue"
+      ],
+      "sha256": "e64884e66f73f38c13ec2a9a9973622ffcd8fa9a01f55d0b2ef82675d8be229d",
+      "source_explicit_config_fields": 72,
+      "tensor_sha256": "6c9f2bc37e72f78c12269ebb48c06b16f091b1d338c0d9c7ba1a6566deaa5afd"
+    }
+  },
+  "prelaunch_correction": {
+    "corrected_usage_path": "/private/tmp/sherlock-candidate-progress-usage.json",
+    "exit_code": 1,
+    "log_sha256": "a796726e430f7b00c225bda749bf4210ce4fddce1304e2b56a90f6ad231179e3",
+    "original_usage_path": "/tmp/sherlock-candidate-progress-usage.json",
+    "phase_output_absent": true,
+    "reason": "Mac /tmp is a symlink; safe_path requires physical path",
+    "root_manual_relaunch_authorized": true,
+    "session": 79281,
+    "source_and_admission_unchanged": true,
+    "status": "PREFLIGHT_PATH_REJECTED_NO_WORKER_OR_GAME",
+    "timestamp": "2026-11-09T14:50:06.836226+00:00"
+  },
+  "prelaunch_correction_sha256": "e05a680ce13ac85573a5a49394d5062872b6277c8085944daef4f0c643df0d64",
+  "process_after": {
+    "owner_pid": 11116,
+    "snapshot_sha256": "a574c99c55a4cd889414a51ddd8051fdd6557098b8c9274976f7d4643dbbeb5b",
+    "worker_pid": 11139
+  },
+  "process_before": {
+    "owner_pid": 11116,
+    "snapshot_sha256": "a9f5c77e0824f157a73301ec5ac05483ed82461c91642682e410ee68c84d84a8",
+    "worker_pid": 11139
+  },
+  "profile": "candidate_progress_20261109",
+  "receipt_sha256": "a8ce83fb94e36cace006976aecfad1b1036a7c96f4e71b338181ae57faec08d1",
+  "source_head": "c023b28bd4369ffc1c32b5347fb8574bdd42c472",
+  "status": "PASS",
+  "unique_input_files_hashed": 444
+}
