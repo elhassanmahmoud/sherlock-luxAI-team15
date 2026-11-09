@@ -1,0 +1,3481 @@
+{
+  "E1_early_information": [
+    {
+      "line": 41,
+      "step": 40,
+      "match_step": 40,
+      "score_before": [
+        0,
+        0
+      ],
+      "score_after": [
+        0,
+        1
+      ],
+      "known": 0,
+      "candidates": 0,
+      "relics": [],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            18,
+            8
+          ],
+          "energy": 24.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            21,
+            8
+          ],
+          "target_class": "exploration",
+          "target_bfs_distance": 3,
+          "masked_argmax": 0,
+          "q_values": [
+            2.8819892406463623,
+            2.611523151397705,
+            2.3686001300811768,
+            2.762679100036621,
+            2.836522340774536,
+            1.872190237045288
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            2,
+            0,
+            0
+          ],
+          "native_action": [
+            2,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            2
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": []
+      }
+    },
+    {
+      "line": 42,
+      "step": 41,
+      "match_step": 41,
+      "score_before": [
+        0,
+        1
+      ],
+      "score_after": [
+        0,
+        3
+      ],
+      "known": 0,
+      "candidates": 0,
+      "relics": [],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            20,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "line": 45,
+      "step": 44,
+      "match_step": 44,
+      "score_before": [
+        0,
+        5
+      ],
+      "score_after": [
+        0,
+        6
+      ],
+      "known": 0,
+      "candidates": 39,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          20,
+          5
+        ],
+        [
+          20,
+          8
+        ]
+      ],
+      "units": [
+        {
+          "uid": 4,
+          "position": [
+            19,
+            6
+          ],
+          "energy": 78.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            6
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 1,
+          "masked_argmax": 3,
+          "q_values": [
+            3.217806577682495,
+            3.3806447982788086,
+            3.5468313694000244,
+            3.5103585720062256,
+            3.3551323413848877,
+            2.989500045776367
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            4
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            20,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "line": 46,
+      "step": 45,
+      "match_step": 45,
+      "score_before": [
+        0,
+        6
+      ],
+      "score_after": [
+        0,
+        7
+      ],
+      "known": 0,
+      "candidates": 37,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          20,
+          7
+        ]
+      ],
+      "units": [
+        {
+          "uid": 4,
+          "position": [
+            19,
+            7
+          ],
+          "energy": 66.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            7
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 1,
+          "masked_argmax": 3,
+          "q_values": [
+            2.5978968143463135,
+            2.6352295875549316,
+            2.731405019760132,
+            2.857762575149536,
+            2.724724292755127,
+            2.2931089401245117
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            4
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    }
+  ],
+  "E2_first_productive_arrival": [
+    {
+      "line": 77,
+      "step": 76,
+      "match_step": 76,
+      "score_before": [
+        0,
+        61
+      ],
+      "score_after": [
+        0,
+        64
+      ],
+      "known": 0,
+      "candidates": 37,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [
+        {
+          "uid": 4,
+          "position": [
+            15,
+            5
+          ],
+          "energy": 111.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            5
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 1,
+          "masked_argmax": 3,
+          "q_values": [
+            0.16654907166957855,
+            0.18816505372524261,
+            0.34914612770080566,
+            0.355778306722641,
+            0.1828135848045349,
+            0.19301754236221313
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            2,
+            0,
+            0
+          ],
+          "native_action": [
+            2,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            2
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 82,
+      "step": 81,
+      "match_step": 81,
+      "score_before": [
+        0,
+        76
+      ],
+      "score_after": [
+        1,
+        79
+      ],
+      "known": 0,
+      "candidates": 30,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          10,
+          14
+        ]
+      ],
+      "units": [
+        {
+          "uid": 4,
+          "position": [
+            18,
+            5
+          ],
+          "energy": 56.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 1,
+          "masked_argmax": 2,
+          "q_values": [
+            -0.05031359940767288,
+            0.048309504985809326,
+            0.13328558206558228,
+            -0.15515869855880737,
+            -0.11698153614997864,
+            -0.3225101828575134
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            1
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [
+          [
+            18,
+            4
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 83,
+      "step": 82,
+      "match_step": 82,
+      "score_before": [
+        1,
+        79
+      ],
+      "score_after": [
+        3,
+        82
+      ],
+      "known": 0,
+      "candidates": 30,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          14,
+          10
+        ]
+      ],
+      "units": [
+        {
+          "uid": 1,
+          "position": [
+            20,
+            6
+          ],
+          "energy": 95.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            20,
+            6
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            0.6810414791107178,
+            0.6714388728141785,
+            0.6666969656944275,
+            0.5330420136451721,
+            0.5902374982833862,
+            0.46689367294311523
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 4,
+          "position": [
+            18,
+            4
+          ],
+          "energy": 59.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            0.442476361989975,
+            0.42249324917793274,
+            0.40352413058280945,
+            0.2615572214126587,
+            0.3392917811870575,
+            0.12347279489040375
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 13,
+          "position": [
+            16,
+            2
+          ],
+          "energy": 209.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            2
+          ],
+          "target_class": "candidate",
+          "target_bfs_distance": 0,
+          "masked_argmax": 2,
+          "q_values": [
+            0.8684337139129639,
+            0.8914045691490173,
+            0.9619621634483337,
+            0.8768914341926575,
+            0.8288235068321228,
+            0.8515275716781616
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            2,
+            0,
+            0
+          ],
+          "native_action": [
+            2,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            4
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            4
+          ],
+          [
+            19,
+            5
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 89,
+      "step": 88,
+      "match_step": 88,
+      "score_before": [
+        16,
+        94
+      ],
+      "score_after": [
+        18,
+        96
+      ],
+      "known": 0,
+      "candidates": 30,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            20,
+            5
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            3
+          ],
+          [
+            20,
+            5
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "line": 90,
+      "step": 89,
+      "match_step": 89,
+      "score_before": [
+        18,
+        96
+      ],
+      "score_after": [
+        23,
+        98
+      ],
+      "known": 6,
+      "candidates": 17,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 2,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            3
+          ],
+          [
+            20,
+            5
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            19,
+            5
+          ],
+          [
+            20,
+            5
+          ],
+          [
+            22,
+            7
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "line": 91,
+      "step": 90,
+      "match_step": 90,
+      "score_before": [
+        23,
+        98
+      ],
+      "score_after": [
+        28,
+        100
+      ],
+      "known": 8,
+      "candidates": 15,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 5,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            19,
+            5
+          ],
+          [
+            20,
+            5
+          ],
+          [
+            22,
+            7
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            19,
+            5
+          ],
+          [
+            20,
+            5
+          ],
+          [
+            22,
+            7
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            20,
+            2
+          ],
+          [
+            21,
+            3
+          ]
+        ]
+      }
+    }
+  ],
+  "E3_holder_energy_and_actions": [
+    {
+      "line": 136,
+      "step": 135,
+      "match_step": 34,
+      "score_before": [
+        34,
+        28
+      ],
+      "score_after": [
+        38,
+        30
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 4,
+      "visible_enemies": [],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            16,
+            1
+          ],
+          "energy": 41.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            48.60533905029297,
+            46.584774017333984,
+            46.6060791015625,
+            46.11906433105469,
+            46.260677337646484,
+            47.91002655029297
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 1,
+          "position": [
+            17,
+            1
+          ],
+          "energy": 67.0,
+          "holder": true,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            49.747440338134766,
+            47.870731353759766,
+            47.80004119873047,
+            47.62712860107422,
+            47.73484802246094,
+            49.45357894897461
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 2,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 38.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            44.02294921875,
+            42.0928955078125,
+            42.00974655151367,
+            40.57834243774414,
+            41.036869049072266,
+            41.61759948730469
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            4
+          ],
+          "energy": 28.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            38.08021926879883,
+            33.116371154785156,
+            32.80008316040039,
+            30.470441818237305,
+            31.13715934753418,
+            33.604278564453125
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 139,
+      "step": 138,
+      "match_step": 37,
+      "score_before": [
+        44,
+        35
+      ],
+      "score_after": [
+        46,
+        37
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 3,
+      "visible_enemies": [
+        [
+          18,
+          4
+        ]
+      ],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            16,
+            1
+          ],
+          "energy": 50.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            47.28178405761719,
+            44.72247314453125,
+            44.70737075805664,
+            44.00736618041992,
+            44.28184509277344,
+            46.02894592285156
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            5,
+            2,
+            3
+          ],
+          "native_action": [
+            5,
+            2,
+            3
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 1,
+          "position": [
+            17,
+            1
+          ],
+          "energy": 53.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            47.78406524658203,
+            44.56461715698242,
+            44.21501922607422,
+            43.9415168762207,
+            44.29103088378906,
+            46.44691467285156
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            5,
+            1,
+            3
+          ],
+          "native_action": [
+            5,
+            1,
+            3
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            18,
+            4
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 140,
+      "step": 139,
+      "match_step": 38,
+      "score_before": [
+        46,
+        37
+      ],
+      "score_after": [
+        48,
+        40
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 2,
+      "visible_enemies": [
+        [
+          16,
+          2
+        ],
+        [
+          18,
+          3
+        ]
+      ],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            16,
+            1
+          ],
+          "energy": 8.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            8.186972618103027,
+            8.477166175842285,
+            6.73893404006958,
+            3.47042179107666,
+            6.068113803863525,
+            -0.6751189827919006
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 1,
+          "position": [
+            17,
+            1
+          ],
+          "energy": 23.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            21.84874725341797,
+            21.587942123413086,
+            19.423660278320312,
+            18.072608947753906,
+            20.630104064941406,
+            15.966914176940918
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 141,
+      "step": 140,
+      "match_step": 39,
+      "score_before": [
+        48,
+        40
+      ],
+      "score_after": [
+        49,
+        44
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 2,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ]
+      ],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            16,
+            0
+          ],
+          "energy": 6.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 2,
+          "q_values": [
+            2.512179374694824,
+            2.8808107376098633,
+            2.577558994293213,
+            2.3286073207855225,
+            2.0224878787994385,
+            -4.139992713928223
+          ],
+          "mask": [
+            true,
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            2,
+            0,
+            0
+          ],
+          "native_action": [
+            2,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 1,
+          "position": [
+            17,
+            1
+          ],
+          "energy": 25.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            14.769929885864258,
+            17.95136260986328,
+            15.213643074035645,
+            14.30647087097168,
+            17.598909378051758,
+            8.764781951904297
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 26.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            28.65781021118164,
+            26.44683074951172,
+            24.817506790161133,
+            21.588672637939453,
+            23.472517013549805,
+            19.957805633544922
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 142,
+      "step": 141,
+      "match_step": 40,
+      "score_before": [
+        49,
+        44
+      ],
+      "score_after": [
+        49,
+        48
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 1,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ],
+        [
+          18,
+          4
+        ]
+      ],
+      "units": [
+        {
+          "uid": 0,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -37.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.542906641960144,
+            -2.2442331314086914,
+            -1.3176566362380981,
+            -1.2796692848205566,
+            -2.2104403972625732,
+            -9.610454559326172
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 0,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 1,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -18.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.3853500187397003,
+            -1.8429102897644043,
+            -0.9537698030471802,
+            -0.8527822494506836,
+            -1.697725534439087,
+            -7.73807430267334
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 0,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 20.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            5.523850917816162,
+            9.529627799987793,
+            6.217416286468506,
+            2.222344398498535,
+            5.6596784591674805,
+            -8.090970039367676
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 143,
+      "step": 142,
+      "match_step": 41,
+      "score_before": [
+        49,
+        48
+      ],
+      "score_after": [
+        50,
+        52
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          18,
+          3
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": -29.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.6357802152633667,
+            -3.582214832305908,
+            -1.8215283155441284,
+            -2.139085292816162,
+            -3.71207332611084,
+            -15.52018928527832
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 0,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [
+          [
+            17,
+            1
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    }
+  ],
+  "E4_permanent_deficit": [
+    {
+      "line": 142,
+      "step": 141,
+      "match_step": 40,
+      "score_before": [
+        49,
+        44
+      ],
+      "score_after": [
+        49,
+        48
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 1,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ],
+        [
+          18,
+          4
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 20.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            5.523850917816162,
+            9.529627799987793,
+            6.217416286468506,
+            2.222344398498535,
+            5.6596784591674805,
+            -8.090970039367676
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 143,
+      "step": 142,
+      "match_step": 41,
+      "score_before": [
+        49,
+        48
+      ],
+      "score_after": [
+        50,
+        52
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          18,
+          3
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": -29.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.6357802152633667,
+            -3.582214832305908,
+            -1.8215283155441284,
+            -2.139085292816162,
+            -3.71207332611084,
+            -15.52018928527832
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 0,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 5,
+          "position": [
+            18,
+            1
+          ],
+          "energy": 56.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 4,
+          "q_values": [
+            23.17030906677246,
+            21.24622344970703,
+            17.658950805664062,
+            16.858850479125977,
+            33.03285217285156,
+            17.75769805908203
+          ],
+          "mask": [
+            true,
+            true,
+            false,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            4,
+            0,
+            0
+          ],
+          "native_action": [
+            4,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            4
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [
+          [
+            17,
+            1
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 144,
+      "step": 143,
+      "match_step": 42,
+      "score_before": [
+        50,
+        52
+      ],
+      "score_after": [
+        50,
+        56
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 1,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ],
+        [
+          17,
+          6
+        ]
+      ],
+      "units": [
+        {
+          "uid": 5,
+          "position": [
+            17,
+            1
+          ],
+          "energy": 19.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            18.674123764038086,
+            20.30562973022461,
+            17.640623092651367,
+            16.624187469482422,
+            19.7359561920166,
+            11.924980163574219
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            17,
+            1
+          ]
+        ],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 145,
+      "step": 144,
+      "match_step": 43,
+      "score_before": [
+        50,
+        56
+      ],
+      "score_after": [
+        50,
+        60
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "units": [
+        {
+          "uid": 5,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -24.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.627926766872406,
+            -3.0121684074401855,
+            -1.700905680656433,
+            -1.6801111698150635,
+            -2.9246621131896973,
+            -11.267389297485352
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 0,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 153,
+      "step": 152,
+      "match_step": 51,
+      "score_before": [
+        50,
+        93
+      ],
+      "score_after": [
+        50,
+        98
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 154,
+      "step": 153,
+      "match_step": 52,
+      "score_before": [
+        50,
+        98
+      ],
+      "score_after": [
+        51,
+        103
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 0,
+      "visible_enemies": [],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [],
+        "own_tiles_after": [
+          [
+            18,
+            4
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 155,
+      "step": 154,
+      "match_step": 53,
+      "score_before": [
+        51,
+        103
+      ],
+      "score_after": [
+        52,
+        107
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 1,
+      "visible_enemies": [
+        [
+          18,
+          3
+        ]
+      ],
+      "units": [],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            18,
+            4
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            4
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    }
+  ],
+  "E5_oscillation_exclusion": [
+    {
+      "line": 137,
+      "step": 136,
+      "match_step": 35,
+      "score_before": [
+        38,
+        30
+      ],
+      "score_after": [
+        41,
+        32
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 4,
+      "visible_enemies": [
+        [
+          16,
+          5
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 38.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            24.600948333740234,
+            26.50586700439453,
+            22.97215461730957,
+            19.385412216186523,
+            22.747926712036133,
+            15.241814613342285
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            4
+          ],
+          "energy": 22.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            11.038168907165527,
+            11.254688262939453,
+            5.902791500091553,
+            3.110260248184204,
+            7.355894088745117,
+            -1.77739679813385
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ],
+          [
+            18,
+            4
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 138,
+      "step": 137,
+      "match_step": 36,
+      "score_before": [
+        41,
+        32
+      ],
+      "score_after": [
+        44,
+        35
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 3,
+      "visible_enemies": [],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 39.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 3,
+          "q_values": [
+            33.82007598876953,
+            30.55043601989746,
+            33.304256439208984,
+            35.80853271484375,
+            29.68709373474121,
+            26.581485748291016
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            3
+          ]
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 17.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            42.4549674987793,
+            39.37843322753906,
+            39.6689338684082,
+            38.132564544677734,
+            38.14667892456055,
+            39.44167709350586
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 139,
+      "step": 138,
+      "match_step": 37,
+      "score_before": [
+        44,
+        35
+      ],
+      "score_after": [
+        46,
+        37
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 3,
+      "visible_enemies": [
+        [
+          18,
+          4
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 32.0,
+          "holder": true,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            15.16623306274414,
+            18.912439346313477,
+            15.131420135498047,
+            11.678614616394043,
+            15.058652877807617,
+            3.368971824645996
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 2,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 15.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 1,
+          "q_values": [
+            3.047574996948242,
+            8.822795867919922,
+            4.82611608505249,
+            0.6917031407356262,
+            4.504383563995361,
+            -5.879579544067383
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 2,
+          "allowed_target_progress": []
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            18,
+            4
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 140,
+      "step": 139,
+      "match_step": 38,
+      "score_before": [
+        46,
+        37
+      ],
+      "score_after": [
+        48,
+        40
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 2,
+      "visible_enemies": [
+        [
+          16,
+          2
+        ],
+        [
+          18,
+          3
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 31.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 3,
+          "q_values": [
+            34.16326141357422,
+            28.587528228759766,
+            29.63404655456543,
+            35.951053619384766,
+            26.653093338012695,
+            25.495634078979492
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ],
+          "living_stack_size": 2,
+          "allowed_target_progress": [
+            3
+          ]
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 14.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 0,
+          "q_values": [
+            18.912487030029297,
+            17.49337387084961,
+            17.63799476623535,
+            16.053081512451172,
+            15.338802337646484,
+            11.651019096374512
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 2,
+          "allowed_target_progress": [
+            3
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "line": 141,
+      "step": 140,
+      "match_step": 39,
+      "score_before": [
+        48,
+        40
+      ],
+      "score_after": [
+        49,
+        44
+      ],
+      "known": 8,
+      "candidates": 11,
+      "relics": [
+        [
+          18,
+          3
+        ],
+        [
+          20,
+          5
+        ]
+      ],
+      "known_productive_tiles": 2,
+      "visible_enemies": [
+        [
+          16,
+          1
+        ]
+      ],
+      "units": [
+        {
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 26.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            28.65781021118164,
+            26.44683074951172,
+            24.817506790161133,
+            21.588672637939453,
+            23.472517013549805,
+            19.957805633544922
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": []
+        },
+        {
+          "uid": 3,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 20.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 1,
+          "q_values": [
+            12.941824913024902,
+            13.52665901184082,
+            12.168391227722168,
+            9.041399002075195,
+            11.02731990814209,
+            6.539830207824707
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ],
+          "living_stack_size": 1,
+          "allowed_target_progress": [
+            3
+          ]
+        }
+      ],
+      "posthoc_only": {
+        "own_tiles_before": [
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            3
+          ]
+        ],
+        "own_tiles_after": [
+          [
+            18,
+            3
+          ]
+        ],
+        "opponent_tiles_before": [
+          [
+            16,
+            1
+          ],
+          [
+            22,
+            6
+          ],
+          [
+            22,
+            7
+          ]
+        ]
+      }
+    }
+  ]
+}

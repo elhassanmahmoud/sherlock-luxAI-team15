@@ -1,0 +1,35 @@
+from pathlib import Path
+import csv,gzip,hashlib,json
+B=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109')
+O=Path('/tmp/current-holder-loss-review')
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+m=json.loads((B/'probe_v1/manifest.json').read_text());g=m['games'][0];t=B/'probe_v1'/g['trace']['path']
+assert m['status']=='complete' and m['planned_games']==m['completed_games']==2 and len(m['keys'])==len(m['games'])==1
+assert sha(t)==g['trace']['sha256']
+for p,h in m['sources'].items():assert sha(p)==h
+assert sha(m['weights']['path'])==m['weights']['sha256']
+assert sha(m['baseline']['path'])==m['baseline']['sha256']
+assert sha(B/'preparation/keys.json')==m['keys_sha256']
+with gzip.open(t,'rt') as f:rows=[json.loads(x) for x in f]
+assert len(rows)==303 and [r['key']['obs_step'] for r in rows]==list(range(303))
+assert all(r['key']['seed']==9946007 and r['key']['side']=='player_0' and r['key']['match_step']==i%101 and r['key']['match_idx']==i//101 for i,r in enumerate(rows))
+assert sum(r['status']=='reset' for r in rows)==3 and sum(r['status']=='decision' for r in rows)==300
+for k in g['passivity']:assert g['unobserved'][k]==g['observed'][k] and g['passivity'][k] is True
+assert all(g['baseline_reproduction'].values()) and g['complete'] is True
+with Path(m['baseline']['path']).open() as f:baseline=[r for r in csv.DictReader(f) if int(r['seed'])==9946007 and r['side']=='player_0']
+assert len(baseline)==1
+for k in ['steps','our_wins','opp_wins','our_points','opp_points','point_counting_version','result']:assert float(baseline[0][k])==g['observed'][k]
+points=[r['points'] for r in g['observed']['matches']]
+assert points==[[85,117],[200,263],[454,127]] and list(map(sum,zip(*points)))==[739,507]
+assert [sum(p[0]>p[1] for p in points),sum(p[0]<p[1] for p in points)]==[1,2]
+boundaries=[]
+for i in [100,201,302]:
+ r=rows[i];a=r['posthoc']['after'];counts=[]
+ for team in [0,1]:
+  productive={tuple(p) for p,e,alive in zip(a['positions'][team],a['energy'][team],a['unit_mask'][team]) if alive and e>=0 and a['point_tiles'][p[0]][p[1]]}
+  counts.append(len(productive))
+ pre=[r['public']['own_points'],r['public']['opp_points']]
+ boundaries.append(dict(obs_step=i,pre_points=pre,post_truth_productive_tiles=counts,proposed_final=[pre[k]+counts[k] for k in range(2)],recorded_final=points[i//101]))
+result=dict(status='PASS_INITIAL_BINDINGS_AND_RECORDED_RESULTS',manifest_sha256=sha(B/'probe_v1/manifest.json'),trace_sha256=sha(t),source_files_checked=len(m['sources']),trace_rows=len(rows),baseline_row=baseline[0],matches=points,boundary_check=boundaries,limits=['Passivity action hash is recorded and compared; opponent native actions are not in the trace so combined action digest cannot be reconstructed.','Manifest and baseline match results agree; boundary productive-tile check is shown explicitly and does not alone reconstruct every scoring step.'])
+(O/'initial-results.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

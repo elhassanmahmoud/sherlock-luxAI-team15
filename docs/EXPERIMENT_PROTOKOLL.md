@@ -1,5 +1,8 @@
 # Experiment-Protokoll
 
+- 09.11.2026: Qualitative aktuelle Verlustdiagnose genau zwei Ausführungen auf 9946007/player_0. V14-Screenbaseline reproduziert und Beobachter passiv; 303 Zeilen und Ereignisse unabhängig geprüft. Stabile Alleinhalter-Pendelhypothese nicht belegt; Kandidatentestlücke 45–75 in Match 1 und produktiver Belegungseinbruch in Match 2 beobachtet, keine kausale Stärkeaussage. Keine neue Regel/Gradienten; V14/ZIP unverändert. [Ergebnis](../experiments/analysis/holder_oscillation_20261109/ERGEBNIS.md).
+
+
 - 09.11.2026: Gefahrmerkmalsvergleich geschlossen: vier technische plus 200 Leistungsspiele, identische 36er-Größe. Solution 36/40 versus V14 35/40 und Kontrolle 36/40; direkt nur 16/40 und 14/40, beide festen Hürden verfehlt. Unabhängige Nachrechnung bestätigt; keine Nominierung, Verlängerung oder Übernahme. V14/ZIP unverändert, Quelle ffc8b45. [Ergebnis](../experiments/analysis/threat_warmstart_compare_20261109/ERGEBNIS.md).
 
 

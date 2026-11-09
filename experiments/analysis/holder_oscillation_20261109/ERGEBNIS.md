@@ -1,0 +1,13 @@
+# Aktuelle Niederlage verstanden: keine pauschale Halteregel
+
+**Zwei diagnostische Ausführungen abgeschlossen, keine neue Agentenvariante.** 9946007/player_0 reproduziert V14 gegen Solution exakt: 85:117 und 200:263 verloren, 454:127 gewonnen, insgesamt 739:507 Punkte und 1:2 Matchsiege. Beobachter und Originalausführung haben gleiche native Aktionen und Resultate; 303 Schritte, v2-Punkte. Quelle `db2d41ae61b8a867aa086b1c8c5079b151df00dd`.
+
+Die eng definierte Vermutung eines wiederholt abgehenden, durchgehend gleich zugewiesenen alleinigen Punktehalters ist hier nicht belegt: fünf passende Abgänge, null entsprechende vollständige Zyklen. Physisches Hin-und-her existiert, aber mit Zielwechsel beziehungsweise Mehrfachbelegung. Deshalb folgt keine allgemeine Halteregel oder Wiederholung der früheren HOLD-Studie.
+
+In Match 1 ist das erste Relic ab Schritt 44 bekannt. Ein Schiff betritt dabei auch eine Kandidatenkachel. Zwischen Aktionen 45–75 gibt es jedoch keinen weiteren Eintritt einer nichtnegativen Einheit in eine zuvor bekannte Kandidatenkachel; nächste Betretung 76, erste eigene Punkte nach 81. Sechs Punktfelder sind erst in Beobachtung 89 bestätigt. Das dokumentiert eine Verzögerung zwischen vorhandenem Wissen und produktiver Nutzung; die genaue interne Belief-Auflösung ist nicht aufgezeichnet.
+
+In Match 2 bricht die produktive Belegung unter Energieverlust und Gegnerkontakt ein. Nach Aktion 142 beginnt der bleibende Rückstand; Aktionen 143–152 bringen eigene 0 gegen 46 gegnerische Punkte. Netz-STAY und endgültiges SAP sind für zwei Halter vor dem Einbruch beobachtet. Eine alleinige kausale Zuschreibung oder der Gewinn einer alternativen Aktion ist daraus nicht bewiesen.
+
+[Ausführliche Ereignisanalyse](analysis/REPORT.md), [fünf Datenbeleggruppen](analysis/evidence.json), [zeitlicher Informationsverlauf](analysis/match1-information.json), [unabhängiger Review](review/REPORT.md), [Originaltrace und Passivität](probe_v1/manifest.json), [Root-Abschluss](operations/closure.json). Analyst und Reviewer verwendeten nur vorhandene Daten; keine zusätzlichen Karten, Modelle oder Spiele. Rohberichte enthalten ihre ursprünglichen lokalen Arbeitsverweise; alle erwähnten Auswertungsdateien sind daneben mit abgelegt, Python-Auswertungen als `.py.txt`.
+
+Nächste mögliche Hypothese: früheres gezieltes Kandidatentesten nur bei beobachtetem Ausbleiben von Fortschritt. Die alte pauschale Verkürzung von rescue_after war negativ; eine neue Variante müsste diese Abgrenzung technisch und mit vorab festen Vergleichen zeigen. Dieser Diagnosebericht aktiviert nichts. V14 und ZIP bleiben unverändert.

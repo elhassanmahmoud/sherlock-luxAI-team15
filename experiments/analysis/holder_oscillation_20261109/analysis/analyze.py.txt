@@ -1,0 +1,151 @@
+"""Read-only, stdlib-only analysis of one fixed, already completed trace."""
+from pathlib import Path
+import csv, gzip, hashlib, json
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE = ROOT / 'experiments/analysis/holder_oscillation_20261109'
+OUT = Path('/tmp/current-holder-loss-diagnosis')
+MANIFEST = BASE / 'probe_v1/manifest.json'
+TRACE = BASE / 'probe_v1/9946007_player_0.jsonl.gz'
+ADMISSION = BASE / 'operations/admission.json'
+PLAN = ROOT / 'docs/superpowers/plans/2026-11-09-holder-oscillation-diagnosis.md'
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+m = json.loads(MANIFEST.read_text())
+a = json.loads(ADMISSION.read_text())
+with gzip.open(TRACE, 'rt') as fh:
+    frames = [dict(json.loads(line), source_line=i) for i, line in enumerate(fh, 1)]
+g = m['games'][0]
+assert m['status'] == 'complete' and m['planned_games'] == m['completed_games'] == 2
+assert len(m['games']) == len(m['keys']) == 1
+assert m['keys'][0]['seed'] == 9946007 and m['keys'][0]['side'] == 'player_0'
+assert sha(TRACE) == g['trace']['sha256']
+assert m['git_head'] == a['source']['head'] == 'db2d41ae61b8a867aa086b1c8c5079b151df00dd'
+for key, ok in g['passivity'].items():
+    assert ok and g['observed'][key] == g['unobserved'][key], key
+assert all(g['baseline_reproduction'].values())
+assert len(frames) == 303 and [f['key']['obs_step'] for f in frames] == list(range(303))
+assert sum(f['status'] == 'decision' for f in frames) == 300
+assert sum(f['status'] == 'reset' for f in frames) == 3
+assert all(f['key']['seed'] == 9946007 and f['key']['side'] == 'player_0' for f in frames)
+
+DIR = {0:(0,0),1:(0,-1),2:(1,0),3:(0,1),4:(-1,0)}
+def dest(p, action):
+    if action not in DIR: return None
+    d = DIR[action]
+    return (p[0]+d[0], p[1]+d[1])
+def truth_holders(truth, team):
+    return sorted({tuple(p) for p,e,active in zip(truth['positions'][team], truth['energy'][team], truth['unit_mask'][team]) if active and e >= 0 and truth['point_tiles'][p[0]][p[1]]})
+def unit_short(u):
+    return {k:u[k] for k in ['uid','position','energy','holder','sole_holder','assigned_target','target_class','target_bfs_distance','masked_argmax','q_values','mask','final_action','native_action']}
+def score_before(f):
+    return [int(f['public']['own_points']), int(f['public']['opp_points'])]
+rows=[]
+for f in frames:
+    if f['status'] != 'decision': continue
+    step=f['key']['obs_step']; mid=f['key']['match_idx']; p=f['public']
+    after = score_before(frames[step+1]) if step+1<len(frames) and frames[step+1]['status']=='decision' else g['observed']['matches'][mid]['points']
+    known=set(map(tuple,p['point_coords']))
+    holders={tuple(u['position']) for u in f['units'] if u['energy']>=0 and tuple(u['position']) in known}
+    row={'line':f['source_line'], 'step':step,'match':mid+1,'match_step':f['key']['match_step'], 'before':score_before(f),'after':after,'known':len(known),'known_productive_tiles':len(holders), 'posthoc_own_tiles':len(truth_holders(f['posthoc']['before'],0)), 'posthoc_opp_tiles':len(truth_holders(f['posthoc']['before'],1)), 'holders':[unit_short(u) for u in f['units'] if tuple(u['position']) in known], 'targets_known':sum(u['target_class']=='known_point' for u in f['units']), 'alive':sum(u['energy']>=0 for u in f['units'])}
+    rows.append(row)
+
+matches=[]
+for mid in (1,2):
+    rr=[r for r in rows if r['match']==mid]
+    permanent=next((r for i,r in enumerate(rr) if all(z['after'][0]<z['after'][1] for z in rr[i:])),None)
+    discovery=[]; last=-1
+    for r in rr:
+        if r['known']!=last:
+            discovery.append({'step':r['step'],'line':r['line'],'known':r['known'],'before':r['before']}); last=r['known']
+    matches.append({'match':mid,'endpoint':rr[-1]['after'],'first_permanent_deficit':permanent,'first_own_points':next((r['step'] for r in rr if r['after'][0]>0),None),'first_opp_points':next((r['step'] for r in rr if r['after'][1]>0),None),'discovery':discovery})
+
+departures=[]; cycles=[]; repetitions=[]
+for i,f in enumerate(frames):
+    if f['status']!='decision' or f['key']['match_idx'] not in (0,1): continue
+    known=set(map(tuple,f['public']['point_coords']))
+    for u in f['units']:
+        A=tuple(u['position']); action=u['final_action'][0]; B=dest(A, action)
+        if not (u['sole_holder'] and u['energy']>=0 and A in known and u['assigned_target']==u['position'] and action in (1,2,3,4) and B not in known): continue
+        item={'step':i,'line':f['source_line'],'match':f['key']['match_idx']+1,'uid':u['uid'],'A':A,'B':B,'start':unit_short(u),'following':[]}
+        departures.append(item)
+        for j in range(1,5):
+            if i+j>=len(frames): break
+            nf=frames[i+j]
+            if nf['status']!='decision' or nf['key']['match_idx']!=f['key']['match_idx']: break
+            nu=next((v for v in nf['units'] if v['uid']==u['uid']),None)
+            if nu is None: break
+            item['following'].append({'step':i+j,'line':nf['source_line'],**unit_short(nu)})
+        nxt=item['following']
+        if len(nxt)<2: continue
+        v,w=nxt[:2]
+        if not (tuple(v['position'])==B and tuple(w['position'])==A and all(n['energy']>=0 and tuple(n['assigned_target'])==A for n in (v,w)) and dest(B,v['final_action'][0])==A and all(A in set(map(tuple,frames[i+j]['public']['point_coords'])) for j in (1,2))): continue
+        cycles.append(item)
+        if len(nxt)>=3 and w['sole_holder'] and dest(A,w['final_action'][0])==B and tuple(nxt[2]['position'])==B and nxt[2]['energy']>=0 and tuple(nxt[2]['assigned_target'])==A:
+            repetitions.append(item)
+
+summary={'input_sha256':{str(p):sha(p) for p in (MANIFEST,TRACE,ADMISSION,PLAN)}, 'validation':{'records':len(frames),'decision_records':len(rows),'manifest_passivity_fields_equal':list(g['passivity']),'recorded_baseline_reproduction':g['baseline_reproduction'],'recorded_native_action_sha256':g['observed']['action_sha256'],'limitations':'No model/source/baseline-CSV reread; recorded two-player native digest cannot be rebuilt from own-action trace alone. Productive tiles are observation-time unique nonnegative-energy occupants, not causal score-phase reconstruction.'}, 'matches':matches,'departure_count':len(departures),'cycle_count':len(cycles),'repeat_count':len(repetitions),'departures':departures,'cycles':cycles,'repetitions':repetitions}
+OUT.mkdir(exist_ok=True)
+(OUT/'analysis.json').write_text(json.dumps(summary,indent=2)+'\n')
+(OUT/'timeline.json').write_text(json.dumps(rows,indent=2)+'\n')
+with (OUT/'timeline.csv').open('w',newline='') as fh:
+    writer=csv.writer(fh); writer.writerow(['line','step','match','match_step','own_before','opp_before','own_after','opp_after','known','known_productive_tiles','posthoc_own_tiles','posthoc_opp_tiles','targets_known','alive'])
+    for r in rows: writer.writerow([r[k] for k in ('line','step','match','match_step')]+r['before']+r['after']+[r[k] for k in ('known','known_productive_tiles','posthoc_own_tiles','posthoc_opp_tiles','targets_known','alive')])
+print(json.dumps({k:v for k,v in summary.items() if k not in ('departures','cycles','repetitions')},indent=2))
+print('DEPARTURES',[(d['step'],d['uid']) for d in departures])
+print('CYCLES',[(d['step'],d['uid']) for d in cycles])
+print('REPETITIONS',[(d['step'],d['uid']) for d in repetitions])
+
+# Narrow follow-up requested by Root: only information and arrival in match 1.
+info=[]
+for f in frames:
+    if f['status']!='decision' or f['key']['match_idx']!=0: continue
+    p=f['public']; candidates=set(map(tuple,p['cand_coords']))
+    occupiers=[u for u in f['units'] if u['energy']>=0 and tuple(u['position']) in candidates]
+    info.append({'step':f['key']['obs_step'],'line':f['source_line'],'before':score_before(f),'relics':p['relic_coords'],'candidates':len(candidates),'known':len(p['point_coords']),'candidate_occupiers':[unit_short(u) for u in occupiers], 'candidate_targets':[unit_short(u) for u in f['units'] if u['target_class']=='candidate']})
+info_summary={'first_relic':next((r for r in info if r['relics']),None),'first_candidates':next((r for r in info if r['candidates']),None),'first_candidate_target':next((r for r in info if r['candidate_targets']),None),'first_candidate_occupation':next((r for r in info if r['candidate_occupiers']),None),'changes':[],'arrival_window':[r for r in info if 75<=r['step']<=90]}
+old=None
+for r in info:
+    sig=(r['relics'],r['candidates'],r['known'])
+    if sig!=old:
+        info_summary['changes'].append({k:r[k] for k in ('step','line','before','relics','candidates','known')}); old=sig
+(OUT/'match1-information.json').write_text(json.dumps(info_summary,indent=2)+'\n')
+print('MATCH1 INFORMATION',json.dumps({k:v for k,v in info_summary.items() if k!='arrival_window'}))
+
+# Current cand_coords is after belief update: a newly occupied zero-point tile
+# can already have been removed. Use the previous public candidate set to
+# distinguish arrival from survival in the updated candidate set.
+entries=[]
+for old,new in zip(frames,frames[1:]):
+    if old['status']!='decision' or new['status']!='decision' or old['key']['match_idx']!=0 or new['key']['match_idx']!=0: continue
+    prior=set(map(tuple,old['public']['cand_coords']))
+    for u in new['units']:
+        prev=next((v for v in old['units'] if v['uid']==u['uid']),None)
+        if prev and u['energy']>=0 and tuple(u['position']) in prior and u['position']!=prev['position']:
+            entries.append({'action_step':old['key']['obs_step'],'observation_step':new['key']['obs_step'],'lines':[old['source_line'],new['source_line']],'before':unit_short(prev),'after':unit_short(u),'still_candidate':u['position'] in new['public']['cand_coords'],'score_before':score_before(old),'score_after':score_before(new)})
+info_summary['first_entry_to_previous_candidate']=entries[0] if entries else None
+info_summary['candidate_entry_steps']=sorted(set(e['action_step'] for e in entries))
+(OUT/'match1-information.json').write_text(json.dumps(info_summary,indent=2)+'\n')
+print('FIRST PREVIOUS CANDIDATE ENTRY',json.dumps(entries[0] if entries else None))
+
+# Five bounded evidence groups, with original line references and only used units.
+groups = {
+    'E1_early_information': {40:[0],41:[],44:[4],45:[4]},
+    'E2_first_productive_arrival': {76:[4],81:[4],82:[1,4,13],88:[],89:[],90:[]},
+    'E3_holder_energy_and_actions': {135:[0,1,2,3],138:[0,1],139:[0,1],140:[0,1,2],141:[0,1,2],142:[2]},
+    'E4_permanent_deficit': {141:[2],142:[2,5],143:[5],144:[5],152:[],153:[],154:[]},
+    'E5_oscillation_exclusion': {136:[2,3],137:[2,3],138:[2,3],139:[2,3],140:[2,3]},
+}
+evidence={}
+for label, requests in groups.items():
+    evidence[label]=[]
+    for step, ids in requests.items():
+        f=frames[step]; p=f['public']; r=next(r for r in rows if r['step']==step)
+        units=[]
+        for u in f['units']:
+            if u['uid'] not in ids: continue
+            q=u['q_values']; mask=u['mask']
+            assert max((i for i,v in enumerate(mask) if v), key=lambda i:q[i])==u['masked_argmax']
+            units.append({**unit_short(u), 'living_stack_size':u['living_stack_size'],'allowed_target_progress':u['allowed_target_progress']})
+        evidence[label].append({'line':f['source_line'],'step':step,'match_step':f['key']['match_step'],'score_before':r['before'],'score_after':r['after'],'known':len(p['point_coords']),'candidates':len(p['cand_coords']),'relics':p['relic_coords'],'known_productive_tiles':r['known_productive_tiles'],'visible_enemies':p['enemy_coords'],'units':units,'posthoc_only':{'own_tiles_before':truth_holders(f['posthoc']['before'],0),'own_tiles_after':truth_holders(f['posthoc']['after'],0),'opponent_tiles_before':truth_holders(f['posthoc']['before'],1)}})
+(OUT/'evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')
+print('EVIDENCE GROUPS',json.dumps({k:[v['line'] for v in values] for k,values in evidence.items()}))

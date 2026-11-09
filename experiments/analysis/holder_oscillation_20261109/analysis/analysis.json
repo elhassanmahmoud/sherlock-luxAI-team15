@@ -1,0 +1,847 @@
+{
+  "input_sha256": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109/probe_v1/manifest.json": "d23ed6aa47bcbf8412a7b35fff162187713c13f8c5c03682fa17f96abb866083",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109/probe_v1/9946007_player_0.jsonl.gz": "2c577ce5898f7463971cefa15b5996c2331e7f5c94b0d6d68493025c86e42db2",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109/operations/admission.json": "ec02dbe17d0f9c309cc9e88801c6110c51c5f0ba45786c8c6393e501e80f0d05",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/docs/superpowers/plans/2026-11-09-holder-oscillation-diagnosis.md": "8cd0f61716e65ecd5410aab1587a0f114a34246a865ab923e43537f553d6ffcc"
+  },
+  "validation": {
+    "records": 303,
+    "decision_records": 300,
+    "manifest_passivity_fields_equal": [
+      "action_sha256",
+      "steps",
+      "reset_steps",
+      "decision_steps",
+      "our_wins",
+      "opp_wins",
+      "result",
+      "our_points",
+      "opp_points",
+      "point_counting_version",
+      "matches",
+      "config",
+      "caught_errors"
+    ],
+    "recorded_baseline_reproduction": {
+      "result": true,
+      "our_wins": true,
+      "opp_wins": true,
+      "our_points": true,
+      "opp_points": true,
+      "point_counting_version": true,
+      "steps": true
+    },
+    "recorded_native_action_sha256": "b896825b5af59984e23ecabe521c41a8793b2c0b17f2fdf287b7e613640e1fd0",
+    "limitations": "No model/source/baseline-CSV reread; recorded two-player native digest cannot be rebuilt from own-action trace alone. Productive tiles are observation-time unique nonnegative-energy occupants, not causal score-phase reconstruction."
+  },
+  "matches": [
+    {
+      "match": 1,
+      "endpoint": [
+        85,
+        117
+      ],
+      "first_permanent_deficit": {
+        "line": 41,
+        "step": 40,
+        "match": 1,
+        "match_step": 40,
+        "before": [
+          0,
+          0
+        ],
+        "after": [
+          0,
+          1
+        ],
+        "known": 0,
+        "known_productive_tiles": 0,
+        "posthoc_own_tiles": 0,
+        "posthoc_opp_tiles": 0,
+        "holders": [],
+        "targets_known": 0,
+        "alive": 14
+      },
+      "first_own_points": 81,
+      "first_opp_points": 40,
+      "discovery": [
+        {
+          "step": 1,
+          "line": 2,
+          "known": 0,
+          "before": [
+            0,
+            0
+          ]
+        },
+        {
+          "step": 89,
+          "line": 90,
+          "known": 6,
+          "before": [
+            18,
+            96
+          ]
+        },
+        {
+          "step": 90,
+          "line": 91,
+          "known": 8,
+          "before": [
+            23,
+            98
+          ]
+        }
+      ]
+    },
+    {
+      "match": 2,
+      "endpoint": [
+        200,
+        263
+      ],
+      "first_permanent_deficit": {
+        "line": 143,
+        "step": 142,
+        "match": 2,
+        "match_step": 41,
+        "before": [
+          49,
+          48
+        ],
+        "after": [
+          50,
+          52
+        ],
+        "known": 8,
+        "known_productive_tiles": 0,
+        "posthoc_own_tiles": 0,
+        "posthoc_opp_tiles": 4,
+        "holders": [],
+        "targets_known": 6,
+        "alive": 10
+      },
+      "first_own_points": 120,
+      "first_opp_points": 120,
+      "discovery": [
+        {
+          "step": 102,
+          "line": 103,
+          "known": 8,
+          "before": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "departure_count": 5,
+  "cycle_count": 0,
+  "repeat_count": 0,
+  "departures": [
+    {
+      "step": 136,
+      "line": 137,
+      "match": 2,
+      "uid": 2,
+      "A": [
+        18,
+        3
+      ],
+      "B": [
+        18,
+        2
+      ],
+      "start": {
+        "uid": 2,
+        "position": [
+          18,
+          3
+        ],
+        "energy": 38.0,
+        "holder": true,
+        "sole_holder": true,
+        "assigned_target": [
+          18,
+          3
+        ],
+        "target_class": "known_point",
+        "target_bfs_distance": 0,
+        "masked_argmax": 1,
+        "q_values": [
+          24.600948333740234,
+          26.50586700439453,
+          22.97215461730957,
+          19.385412216186523,
+          22.747926712036133,
+          15.241814613342285
+        ],
+        "mask": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "final_action": [
+          1,
+          0,
+          0
+        ],
+        "native_action": [
+          1,
+          0,
+          0
+        ]
+      },
+      "following": [
+        {
+          "step": 137,
+          "line": 138,
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 39.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            4
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 3,
+          "q_values": [
+            33.82007598876953,
+            30.55043601989746,
+            33.304256439208984,
+            35.80853271484375,
+            29.68709373474121,
+            26.581485748291016
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ]
+        },
+        {
+          "step": 138,
+          "line": 139,
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 32.0,
+          "holder": true,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 1,
+          "q_values": [
+            15.16623306274414,
+            18.912439346313477,
+            15.131420135498047,
+            11.678614616394043,
+            15.058652877807617,
+            3.368971824645996
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            1,
+            0,
+            0
+          ],
+          "native_action": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "step": 139,
+          "line": 140,
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": 31.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 3,
+          "q_values": [
+            34.16326141357422,
+            28.587528228759766,
+            29.63404655456543,
+            35.951053619384766,
+            26.653093338012695,
+            25.495634078979492
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false
+          ],
+          "final_action": [
+            3,
+            0,
+            0
+          ],
+          "native_action": [
+            3,
+            0,
+            0
+          ]
+        },
+        {
+          "step": 140,
+          "line": 141,
+          "uid": 2,
+          "position": [
+            18,
+            3
+          ],
+          "energy": 26.0,
+          "holder": true,
+          "sole_holder": true,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 0,
+          "masked_argmax": 0,
+          "q_values": [
+            28.65781021118164,
+            26.44683074951172,
+            24.817506790161133,
+            21.588672637939453,
+            23.472517013549805,
+            19.957805633544922
+          ],
+          "mask": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "step": 139,
+      "line": 140,
+      "match": 2,
+      "uid": 0,
+      "A": [
+        16,
+        1
+      ],
+      "B": [
+        16,
+        0
+      ],
+      "start": {
+        "uid": 0,
+        "position": [
+          16,
+          1
+        ],
+        "energy": 8.0,
+        "holder": true,
+        "sole_holder": true,
+        "assigned_target": [
+          16,
+          1
+        ],
+        "target_class": "known_point",
+        "target_bfs_distance": 0,
+        "masked_argmax": 1,
+        "q_values": [
+          8.186972618103027,
+          8.477166175842285,
+          6.73893404006958,
+          3.47042179107666,
+          6.068113803863525,
+          -0.6751189827919006
+        ],
+        "mask": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "final_action": [
+          1,
+          0,
+          0
+        ],
+        "native_action": [
+          1,
+          0,
+          0
+        ]
+      },
+      "following": [
+        {
+          "step": 140,
+          "line": 141,
+          "uid": 0,
+          "position": [
+            16,
+            0
+          ],
+          "energy": 6.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 2,
+          "q_values": [
+            2.512179374694824,
+            2.8808107376098633,
+            2.577558994293213,
+            2.3286073207855225,
+            2.0224878787994385,
+            -4.139992713928223
+          ],
+          "mask": [
+            true,
+            false,
+            true,
+            false,
+            true,
+            false
+          ],
+          "final_action": [
+            2,
+            0,
+            0
+          ],
+          "native_action": [
+            2,
+            0,
+            0
+          ]
+        },
+        {
+          "step": 141,
+          "line": 142,
+          "uid": 0,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -37.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.542906641960144,
+            -2.2442331314086914,
+            -1.3176566362380981,
+            -1.2796692848205566,
+            -2.2104403972625732,
+            -9.610454559326172
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "step": 140,
+      "line": 141,
+      "match": 2,
+      "uid": 1,
+      "A": [
+        17,
+        1
+      ],
+      "B": [
+        17,
+        0
+      ],
+      "start": {
+        "uid": 1,
+        "position": [
+          17,
+          1
+        ],
+        "energy": 25.0,
+        "holder": true,
+        "sole_holder": true,
+        "assigned_target": [
+          17,
+          1
+        ],
+        "target_class": "known_point",
+        "target_bfs_distance": 0,
+        "masked_argmax": 1,
+        "q_values": [
+          14.769929885864258,
+          17.95136260986328,
+          15.213643074035645,
+          14.30647087097168,
+          17.598909378051758,
+          8.764781951904297
+        ],
+        "mask": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "final_action": [
+          1,
+          0,
+          0
+        ],
+        "native_action": [
+          1,
+          0,
+          0
+        ]
+      },
+      "following": [
+        {
+          "step": 141,
+          "line": 142,
+          "uid": 1,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -18.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            16,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 2,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.3853500187397003,
+            -1.8429102897644043,
+            -0.9537698030471802,
+            -0.8527822494506836,
+            -1.697725534439087,
+            -7.73807430267334
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "step": 141,
+      "line": 142,
+      "match": 2,
+      "uid": 2,
+      "A": [
+        18,
+        3
+      ],
+      "B": [
+        18,
+        2
+      ],
+      "start": {
+        "uid": 2,
+        "position": [
+          18,
+          3
+        ],
+        "energy": 20.0,
+        "holder": true,
+        "sole_holder": true,
+        "assigned_target": [
+          18,
+          3
+        ],
+        "target_class": "known_point",
+        "target_bfs_distance": 0,
+        "masked_argmax": 1,
+        "q_values": [
+          5.523850917816162,
+          9.529627799987793,
+          6.217416286468506,
+          2.222344398498535,
+          5.6596784591674805,
+          -8.090970039367676
+        ],
+        "mask": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "final_action": [
+          1,
+          0,
+          0
+        ],
+        "native_action": [
+          1,
+          0,
+          0
+        ]
+      },
+      "following": [
+        {
+          "step": 142,
+          "line": 143,
+          "uid": 2,
+          "position": [
+            18,
+            2
+          ],
+          "energy": -29.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            18,
+            3
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.6357802152633667,
+            -3.582214832305908,
+            -1.8215283155441284,
+            -2.139085292816162,
+            -3.71207332611084,
+            -15.52018928527832
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "step": 143,
+      "line": 144,
+      "match": 2,
+      "uid": 5,
+      "A": [
+        17,
+        1
+      ],
+      "B": [
+        17,
+        0
+      ],
+      "start": {
+        "uid": 5,
+        "position": [
+          17,
+          1
+        ],
+        "energy": 19.0,
+        "holder": true,
+        "sole_holder": true,
+        "assigned_target": [
+          17,
+          1
+        ],
+        "target_class": "known_point",
+        "target_bfs_distance": 0,
+        "masked_argmax": 1,
+        "q_values": [
+          18.674123764038086,
+          20.30562973022461,
+          17.640623092651367,
+          16.624187469482422,
+          19.7359561920166,
+          11.924980163574219
+        ],
+        "mask": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "final_action": [
+          1,
+          0,
+          0
+        ],
+        "native_action": [
+          1,
+          0,
+          0
+        ]
+      },
+      "following": [
+        {
+          "step": 144,
+          "line": 145,
+          "uid": 5,
+          "position": [
+            17,
+            0
+          ],
+          "energy": -24.0,
+          "holder": false,
+          "sole_holder": false,
+          "assigned_target": [
+            17,
+            1
+          ],
+          "target_class": "known_point",
+          "target_bfs_distance": 1,
+          "masked_argmax": 0,
+          "q_values": [
+            -0.627926766872406,
+            -3.0121684074401855,
+            -1.700905680656433,
+            -1.6801111698150635,
+            -2.9246621131896973,
+            -11.267389297485352
+          ],
+          "mask": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_action": [
+            0,
+            0,
+            0
+          ],
+          "native_action": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "cycles": [],
+  "repetitions": []
+}

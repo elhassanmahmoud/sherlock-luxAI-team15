@@ -1,0 +1,110 @@
+{
+  "status": "PASS_INITIAL_BINDINGS_AND_RECORDED_RESULTS",
+  "manifest_sha256": "d23ed6aa47bcbf8412a7b35fff162187713c13f8c5c03682fa17f96abb866083",
+  "trace_sha256": "2c577ce5898f7463971cefa15b5996c2331e7f5c94b0d6d68493025c86e42db2",
+  "source_files_checked": 24,
+  "trace_rows": 303,
+  "baseline_row": {
+    "seed": "9946007",
+    "side": "player_0",
+    "opponent": "solution92",
+    "result": "0.0",
+    "game_win": "0",
+    "point_win": "1.0",
+    "our_wins": "1",
+    "opp_wins": "2",
+    "our_points": "739",
+    "opp_points": "507",
+    "point_counting_version": "2",
+    "wait_frac": "0.39012416979497544",
+    "invalid_frac": "0.0",
+    "greedy_masked_frac": "0.14414676761793827",
+    "sap_attempts": "69",
+    "sap_hits": "53",
+    "stack_frac": "0.12185965925498123",
+    "relics_found": "2",
+    "relics_seen": "2",
+    "known_point_tiles": "10",
+    "belief_contradictions": "0",
+    "unit_steps": "3463",
+    "steps": "303",
+    "secs": "4.11"
+  },
+  "matches": [
+    [
+      85,
+      117
+    ],
+    [
+      200,
+      263
+    ],
+    [
+      454,
+      127
+    ]
+  ],
+  "boundary_check": [
+    {
+      "obs_step": 100,
+      "pre_points": [
+        80.0,
+        116.0
+      ],
+      "post_truth_productive_tiles": [
+        5,
+        1
+      ],
+      "proposed_final": [
+        85.0,
+        117.0
+      ],
+      "recorded_final": [
+        85,
+        117
+      ]
+    },
+    {
+      "obs_step": 201,
+      "pre_points": [
+        196.0,
+        258.0
+      ],
+      "post_truth_productive_tiles": [
+        4,
+        5
+      ],
+      "proposed_final": [
+        200.0,
+        263.0
+      ],
+      "recorded_final": [
+        200,
+        263
+      ]
+    },
+    {
+      "obs_step": 302,
+      "pre_points": [
+        446.0,
+        127.0
+      ],
+      "post_truth_productive_tiles": [
+        8,
+        0
+      ],
+      "proposed_final": [
+        454.0,
+        127.0
+      ],
+      "recorded_final": [
+        454,
+        127
+      ]
+    }
+  ],
+  "limits": [
+    "Passivity action hash is recorded and compared; opponent native actions are not in the trace so combined action digest cannot be reconstructed.",
+    "Manifest and baseline match results agree; boundary productive-tile check is shown explicitly and does not alone reconstruct every scoring step."
+  ]
+}

@@ -1,0 +1,67 @@
+from pathlib import Path
+import gzip,json,hashlib
+B=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/holder_oscillation_20261109')
+D=Path('/tmp/current-holder-loss-diagnosis');O=Path('/tmp/current-holder-loss-review')
+with gzip.open(B/'probe_v1/9946007_player_0.jsonl.gz','rt') as f:rows=[json.loads(x) for x in f]
+evidence=json.loads((D/'evidence.json').read_text());analysis=json.loads((D/'analysis.json').read_text());checks=0
+
+def ck(ok,label):
+ global checks
+ checks+=1
+ assert ok,label
+
+def unit(step,uid):return next((u for u in rows[step]['units'] if u['uid']==uid),None)
+def truth_tiles(t,team):
+ return sorted({tuple(p) for p,e,m in zip(t['positions'][team],t['energy'][team],t['unit_mask'][team]) if m and e>=0 and t['point_tiles'][p[0]][p[1]]})
+def score(row):return [int(row['public']['own_points']),int(row['public']['opp_points'])]
+def post_score(i):return score(rows[i+1]) if i%101<100 else [[85,117],[200,263],[454,127]][i//101]
+for label,events in evidence.items():
+ for e in events:
+  i=e['step'];r=rows[i];p=r['public']
+  ck(e['line']==i+1 and e['match_step']==r['key']['match_step'],'exact raw line/time')
+  ck(e['score_before']==score(r) and e['score_after']==post_score(i),'pre/post points')
+  ck(e['known']==len(p['point_coords']) and e['candidates']==len(p['cand_coords']) and e['relics']==p['relic_coords'] and e['visible_enemies']==p['enemy_coords'],'information counts')
+  known=set(map(tuple,p['point_coords']));productive={tuple(u['position']) for u in r['units'] if u['energy']>=0 and tuple(u['position']) in known}
+  ck(e['known_productive_tiles']==len(productive),'nonnegative unique public occupancy')
+  for u in e['units']:
+   raw=unit(i,u['uid'])
+   ck(raw is not None and all(raw[k]==v for k,v in u.items()),'all quoted unit fields equal original')
+   best=max((j for j,v in enumerate(raw['mask']) if v),key=lambda j:raw['q_values'][j]);ck(best==raw['masked_argmax'],'quoted actual legal Q argmax')
+  t=e['posthoc_only']
+  ck(t['own_tiles_before']==[list(p) for p in truth_tiles(r['posthoc']['before'],0)] and t['own_tiles_after']==[list(p) for p in truth_tiles(r['posthoc']['after'],0)] and t['opponent_tiles_before']==[list(p) for p in truth_tiles(r['posthoc']['before'],1)],'quoted posthoc occupancy')
+# Verify first permanent deficits directly from later observed points on this same fixed trace.
+for match,expected in [(0,40),(1,142)]:
+ indices=list(range(match*101+1,(match+1)*101))
+ permanent=[i for j,i in enumerate(indices) if all(post_score(k)[0]<post_score(k)[1] for k in indices[j:])]
+ ck(permanent[0]==expected,'first persistent post-action deficit')
+# Exact, bounded claims motivating the interpretation.
+ck(all(len(rows[i]['public']['point_coords'])==0 for i in range(1,89)) and len(rows[89]['public']['point_coords'])==6,'first six known points at89')
+ck(all(not rows[i]['public']['relic_coords'] and not rows[i]['public']['cand_coords'] for i in range(1,44)) and len(rows[44]['public']['cand_coords'])==39,'first relic candidates at44')
+ck(all(post_score(i)[0]==0 for i in range(1,81)) and post_score(81)[0]==1,'first own score after81')
+u=unit(44,4);ck(u['position']==[19,6] and u['assigned_target']==[18,6] and u['target_bfs_distance']==1 and u['final_action'][0]==3 and unit(45,4)['position']==[19,7],'assigned target not reached44')
+ck([19,7] in rows[44]['public']['cand_coords'] and [19,7] not in rows[45]['public']['cand_coords'],'arrival into previous candidate removed by next observation')
+for uid,start,after in [(0,50,8),(1,53,23)]:
+ u=unit(138,uid);ck(u['energy']==start and u['masked_argmax']==0 and u['final_action'][0]==5 and unit(139,uid)['energy']==after,'Q stay versus final SAP and next energy')
+ck(unit(141,0)['energy']==-37 and unit(141,1)['energy']==-18 and unit(142,2)['energy']==-29,'negative energy sequence')
+ck(all(post_score(i)[0]==score(rows[i])[0]==50 for i in range(143,153)),'ten actual zero-own-increment actions143through152')
+ck([unit(i,2)['position'] for i in range(136,141)]==[[18,3],[18,2],[18,3],[18,2],[18,3]],'physical five-position sequence')
+ck(unit(137,2)['assigned_target']==[18,4] and unit(138,2)['living_stack_size']==2 and not unit(138,2)['sole_holder'],'sequence target-change and shared-tile exclusions')
+# Independently identify qualifying departures in the two lost matches.
+delta={1:(0,-1),2:(1,0),3:(0,1),4:(-1,0)};departures=[];outcomes=[]
+for i in list(range(1,101))+list(range(102,202)):
+ r=rows[i];known=set(map(tuple,r['public']['point_coords']))
+ for u in r['units']:
+  a=u['final_action'][0];A=tuple(u['position'])
+  if a not in delta:continue
+  Bp=(A[0]+delta[a][0],A[1]+delta[a][1])
+  if not (u['sole_holder'] and u['energy']>=0 and A in known and tuple(u['assigned_target'])==A and Bp not in known):continue
+  departures.append((i,u['uid']));n=unit(i+1,u['uid']) if (i+1)//101==i//101 else None;back=unit(i+2,u['uid']) if (i+2)//101==i//101 else None
+  valid=n is not None and back is not None and tuple(n['position'])==Bp and tuple(back['position'])==A and n['energy']>=0 and back['energy']>=0 and tuple(n['assigned_target'])==tuple(back['assigned_target'])==A
+  if valid:
+   action=n['final_action'][0];valid=action in delta and (Bp[0]+delta[action][0],Bp[1]+delta[action][1])==A and all(A in set(map(tuple,rows[j]['public']['point_coords'])) for j in [i+1,i+2])
+  outcomes.append(dict(step=i,uid=u['uid'],stable_immediate_cycle=valid,next_position=n['position'] if n else None,return_position=back['position'] if back else None,next_energy=n['energy'] if n else None,return_energy=back['energy'] if back else None,next_target=n['assigned_target'] if n else None))
+ck(departures==[(136,2),(139,0),(140,1),(141,2),(143,5)],'exact five strict qualifying departures')
+ck(not any(x['stable_immediate_cycle'] for x in outcomes),'zero qualifying immediate stable cycles')
+ck(analysis['departure_count']==5 and analysis['cycle_count']==analysis['repeat_count']==0,'analyst scoped totals agree')
+result=dict(status='PASS_EVENTS',checks=checks,evidence_groups={k:len(v) for k,v in evidence.items()},departure_cycle_exclusions=outcomes,evidence_sha256=hashlib.sha256((D/'evidence.json').read_bytes()).hexdigest(),analysis_sha256=hashlib.sha256((D/'analysis.json').read_bytes()).hexdigest(),notes=['All cited unit values and point/timing fields match the original trace.','At pre-observation82 own_points is1 from action81; action82 produces2 additional points to3.','Physical A-B-A-B-A exists for uid2; strict unchanged-assignment sole-holder hypothesis is not met.','Q-versus-final-action mismatch documents post-network modification, not exact unique rule ownership or causal energy attribution.'])
+(O/'event-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

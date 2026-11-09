@@ -1,5 +1,7 @@
-# Zeitliche Niederlagendiagnose
+# Zeitliche Niederlagendiagnose abgeschlossen
 
-[Enger Plan](../../../docs/superpowers/plans/2026-11-09-holder-oscillation-diagnosis.md): eine bereits ausgewertete V14-Niederlage, zwei passive Vergleichsausführungen mit vorhandenem Probe. Noch keine neue Variante, kein Training und keine behauptete Verbesserung.
+Genau zwei Ausführungen auf 9946007/player_0, keine Gradienten oder neue Variante. Reproduktion und Passivität bestanden; Ereignisse unabhängig geprüft. Die enge Pendelhypothese ist auf dieser Karte nicht belegt. Stattdessen sind eine lange Kandidaten-Testlücke in Match 1 und ein produktiver Belegungseinbruch in Match 2 beobachtet. Kein kausaler Regelerfolg behauptet.
 
-Historische Ergänzung und Prüfung bestehender Regeln liegen unter preparation. Der tatsächliche spätere Laufstatus steht im Probe-Manifest; dieser Aufnahmecommit behauptet noch keinen gestarteten Lauf.
+[Ergebnis](ERGEBNIS.md) · [Plan](../../../docs/superpowers/plans/2026-11-09-holder-oscillation-diagnosis.md) · [Originalmanifest](probe_v1/manifest.json) · [Ereignisanalyse](analysis/REPORT.md) · [unabhängiger Review](review/REPORT.md) · [Abschluss](operations/closure.json).
+
+V14/ZIP unverändert. Keine Wiederholung dieser Probe oder der geschlossenen HOLD-/Gefahrmerkmalsstudien.

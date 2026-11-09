@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Aktuelle Niederlagendiagnose abgeschlossen
+
+- Genau zwei passive Probe-Ausführungen auf verbrauchtem Schlüssel 9946007/player_0, vollständige 303-Schritte-Reproduktion und Beobachtergleichheit. Matchpunkte 85:117, 200:263, 454:127; insgesamt 739:507 bei 1:2. Keine neuen Gewichte/Regeln/Gradienten. [Bericht](../experiments/analysis/holder_oscillation_20261109/ERGEBNIS.md).
+- Fünf Ereignisgruppen unabhängig geprüft. Die enge stabile Alleinhalter-Pendelhypothese ist nicht belegt; physisches Pendeln mit Zielwechsel/Stack bleibt benannt. M1: Kandidaten ab44 und Eintritt44, dann keine weiteren Eintritte 45–75, erste Punkte 81 / Bestätigung 89. M2: Energie-/Belegungseinbruch, 0:46 Punkte über Aktionen 143–152. Keine Alleinursache oder neue Regelwirkung behauptet.
+- Root-Abschluss unter Quelle db2d41a, ursprüngliche Dateien/Schutzbytes unverändert, keine Modellprozesse mehr; Freeze danach freigegeben. Nächste Hypothese zunächst gesondert prüfen: progressabhängige frühe Kandidatenrettung statt pauschalem früherem Eingriff. Noch keine Umsetzung/Leistungsspiele daraus. Aktueller Akkuauftrag gilt, zuletzt tatsächliche Quota 8 Prozent.
+
 ## 09.11.2026 – Kleine zeitliche Niederlagendiagnose vorbereitet
 
 - Gefahrmerkmalsvergleich vollständig geschlossen, V14 bleibt; Ergebniscommit eb36583 plus bytegenaue CSV-Publikationskorrektur 3ab2cbb sind auf GitHub und in der Hauptkopie. Alle eigenen Prozesse beendet, Fremddateien erhalten.

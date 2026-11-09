@@ -1,0 +1,107 @@
+{
+  "status": "PASS_EVENTS",
+  "checks": 232,
+  "evidence_groups": {
+    "E1_early_information": 4,
+    "E2_first_productive_arrival": 6,
+    "E3_holder_energy_and_actions": 6,
+    "E4_permanent_deficit": 7,
+    "E5_oscillation_exclusion": 5
+  },
+  "departure_cycle_exclusions": [
+    {
+      "step": 136,
+      "uid": 2,
+      "stable_immediate_cycle": false,
+      "next_position": [
+        18,
+        2
+      ],
+      "return_position": [
+        18,
+        3
+      ],
+      "next_energy": 39.0,
+      "return_energy": 32.0,
+      "next_target": [
+        18,
+        4
+      ]
+    },
+    {
+      "step": 139,
+      "uid": 0,
+      "stable_immediate_cycle": false,
+      "next_position": [
+        16,
+        0
+      ],
+      "return_position": [
+        17,
+        0
+      ],
+      "next_energy": 6.0,
+      "return_energy": -37.0,
+      "next_target": [
+        16,
+        1
+      ]
+    },
+    {
+      "step": 140,
+      "uid": 1,
+      "stable_immediate_cycle": false,
+      "next_position": [
+        17,
+        0
+      ],
+      "return_position": null,
+      "next_energy": -18.0,
+      "return_energy": null,
+      "next_target": [
+        16,
+        1
+      ]
+    },
+    {
+      "step": 141,
+      "uid": 2,
+      "stable_immediate_cycle": false,
+      "next_position": [
+        18,
+        2
+      ],
+      "return_position": null,
+      "next_energy": -29.0,
+      "return_energy": null,
+      "next_target": [
+        18,
+        3
+      ]
+    },
+    {
+      "step": 143,
+      "uid": 5,
+      "stable_immediate_cycle": false,
+      "next_position": [
+        17,
+        0
+      ],
+      "return_position": null,
+      "next_energy": -24.0,
+      "return_energy": null,
+      "next_target": [
+        17,
+        1
+      ]
+    }
+  ],
+  "evidence_sha256": "0117e620332b763b7b58fbedcc1d2b088b952439bcf0c309d2a9ddd5e5761d7e",
+  "analysis_sha256": "30faea99143bb5496608402353d59b538f4b5f72f3ecb52e90025e66def7fa28",
+  "notes": [
+    "All cited unit values and point/timing fields match the original trace.",
+    "At pre-observation82 own_points is1 from action81; action82 produces2 additional points to3.",
+    "Physical A-B-A-B-A exists for uid2; strict unchanged-assignment sole-holder hypothesis is not met.",
+    "Q-versus-final-action mismatch documents post-network modification, not exact unique rule ownership or causal energy attribution."
+  ]
+}
