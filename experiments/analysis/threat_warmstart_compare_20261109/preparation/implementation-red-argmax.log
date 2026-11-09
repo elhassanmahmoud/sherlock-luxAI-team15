@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_legal_argmax_matches_core_even_below_minus_one_billion __________
+
+    def test_legal_argmax_matches_core_even_below_minus_one_billion():
+        from scripts.experiment import state_sha256
+        q = torch.nn.Linear(101,6); q.feat_dim = 101
+        extra = torch.nn.Linear(79,6); extra.feat_dim = 79
+        with torch.no_grad():
+            for model in (q,extra): model.weight.zero_(); model.bias.fill_(-2e9)
+        agent = SimpleNamespace(q=q,extra_q=[extra]*35,device=torch.device("cpu"))
+        states = np.ones((16,101),dtype=np.float32)
+        masks = np.zeros((16,6),dtype=bool); masks[:,1] = True
+        proof = s.equal_suffix_batches(agent,states,masks)
+        for record in proof:
+>           assert record["greedy_sha256"] == state_sha256(torch.ones(len(record["indices"]),dtype=torch.int64))
+E           AssertionError: assert 'e343385605ef...0f4433d1db146' == 'c8d613b45725...bd496b0dd1b46'
+E             
+E             - c8d613b45725ca24e8b3516857a052b7f7776f04fd1cd3697e2bd496b0dd1b46
+E             + e343385605ef3ae74929f58e8401c2b441757114ac2ab61d8100f4433d1db146
+
+tests/test_threat_warmstart_compare.py:111: AssertionError
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:530
+  <frozen importlib._bootstrap>:530: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.15; use exec_module() instead
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart_compare.py::test_legal_argmax_matches_core_even_below_minus_one_billion
+1 failed, 16 deselected, 1 warning in 2.55s

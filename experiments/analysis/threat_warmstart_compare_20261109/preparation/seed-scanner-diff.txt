@@ -1,0 +1,89 @@
+--- /tmp/threat-warmstart-seeds/seed-audit.py
++++ /tmp/threat-comparison-seeds/seed-audit.py
+@@ -6,7 +6,7 @@
+ Targeted Root-authorized check; raw JSONL traces/provenance are not reparsed.
+ Concurrent Root integration may change HEADs: preserve observations, never claim a freeze.
+ """
+-import argparse, collections, csv, datetime, gzip, hashlib, io, json, os, re, subprocess, time
++import argparse, collections, csv, datetime, gzip, hashlib, io, json, os, re, time
+ from pathlib import Path
+ OUT=Path(__file__).resolve().parent
+ SELF_OUTPUTS={OUT/'seed-audit.py',OUT/'seed-audit.json',OUT/'seed-audit.md'}
+@@ -18,7 +18,7 @@
+ if not args.targeted_readonly_scan:parser.error('Explicit targeted read-only scope required')
+ if (OUT/'seed-audit.json').exists() or (OUT/'seed-audit.md').exists():parser.error('Existing audit outputs; no overwrite or automatic repeat')
+ T=time.monotonic();NOW=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+-RANGES={'train':[9950000,9950199], 'prefill':[9950300,9950319]}
++RANGES={'solution':[9946000,9946019], 'direct_v14':[9946100,9946119], 'direct_control':[9946200,9946219]}
+ EXPECTED_ROOTS={
+  '/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15',
+  '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15',
+@@ -28,10 +28,46 @@
+  '/Users/moayedshawesh/Desktop/KI/sherlock-november-followup',
+  '/Users/moayedshawesh/Desktop/KI/sherlock-v10-mechanics',
+  '/Users/moayedshawesh/Desktop/KI/sherlock-v4-joint'}
+-WT=subprocess.check_output(['git','-C','/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15','worktree','list','--porcelain'],text=True)
++# Same metadata/CSV scanner; direct metadata reads replace every Git command.
++GIT_COMMON=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.git')
++GIT_METADATA_READS={}
++def metadata_text(path):
++ raw=Path(path).read_bytes();GIT_METADATA_READS[str(path)]={'sha256':hashlib.sha256(raw).hexdigest(),'size':len(raw)}
++ return raw.decode('utf-8').strip()
++def registered_worktree_text():
++ roots=[str(GIT_COMMON.parent)]
++ for entry in sorted((GIT_COMMON/'worktrees').iterdir()):
++  if entry.is_dir() and (entry/'gitdir').is_file():
++   marker=Path(metadata_text(entry/'gitdir'))
++   if not marker.is_file():raise RuntimeError('Stale registered worktree metadata: '+str(marker))
++   roots.append(str(marker.parent))
++ return '\n'.join('worktree '+root for root in roots)+'\n'
++def recorded_head(root):
++ marker=Path(root)/'.git'
++ if marker.is_dir():gitdir=marker
++ else:
++  pointer=metadata_text(marker)
++  if not pointer.startswith('gitdir: '):raise RuntimeError('Invalid worktree pointer')
++  gitdir=(marker.parent/pointer[8:]).resolve()
++ common=(gitdir/metadata_text(gitdir/'commondir')).resolve() if (gitdir/'commondir').is_file() else gitdir
++ value=metadata_text(gitdir/'HEAD')
++ for _ in range(8):
++  if not value.startswith('ref: '):
++   if not re.fullmatch('[0-9a-f]{40}',value):raise RuntimeError('Invalid HEAD hash')
++   return value
++  ref=value[5:]
++  if not ref.startswith('refs/') or '..' in Path(ref).parts:raise RuntimeError('Invalid ref name')
++  candidate=next((p for p in (gitdir/ref,common/ref) if p.is_file()),None)
++  if candidate is not None:value=metadata_text(candidate);continue
++  packed=metadata_text(common/'packed-refs') if (common/'packed-refs').is_file() else ''
++  hits=[line.split()[0] for line in packed.splitlines() if not line.startswith(('#','^')) and len(line.split())==2 and line.split()[1]==ref]
++  if len(hits)!=1:raise RuntimeError('Missing or ambiguous ref '+ref)
++  value=hits[0]
++ raise RuntimeError('Excessive symbolic-ref depth')
++WT=registered_worktree_text()
+ ROOTS=[x[9:] for x in WT.splitlines() if x.startswith('worktree ')]
+ if len(ROOTS)!=8 or set(ROOTS)!=EXPECTED_ROOTS:raise RuntimeError('Registered worktree set differs from the fixed eight; review before scanning')
+-HEADS={r:subprocess.check_output(['git','-C',r,'rev-parse','HEAD'],text=True).strip() for r in ROOTS}
++HEADS={r:recorded_head(r) for r in ROOTS}
+ SKIP={'.git','.venv','venv','node_modules','__pycache__'};EXTS=['.csv.gz','.json.gz','.csv','.json']
+ skipped_jsonl=set()
+ counts=collections.Counter();errors=[];mutations=[];seen={};files=[];gaps=[];invalid=[];actual_hits=[];json_hits=[];interval_hits=[];json_strings=[];seed_schema=collections.Counter();observed=set();interval_count=0;intervals=[];named_json=[]
+@@ -222,8 +258,8 @@
+  if p not in final:mutations.append({'path':p,'stage':'removed_during_scan'})
+  elif m['stat']!=final[p]['stat']:mutations.append({'path':p,'stage':'changed_during_scan','before':m['stat'],'after':final[p]['stat']})
+ for p in set(final)-set(initial):mutations.append({'path':p,'stage':'added_during_scan'})
+-heads_after={r:subprocess.check_output(['git','-C',r,'rev-parse','HEAD'],text=True).strip() for r in ROOTS}
+-wt_after=subprocess.check_output(['git','-C','/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15','worktree','list','--porcelain'],text=True)
++heads_after={r:recorded_head(r) for r in ROOTS}
++wt_after=registered_worktree_text()
+ if wt_after!=WT:mutations.append({'stage':'worktree_inventory_changed','before':WT,'after':wt_after})
+ for r in ROOTS:
+  if HEADS[r]!=heads_after[r]:mutations.append({'path':r,'stage':'HEAD_changed','before':HEADS[r],'after':heads_after[r]})
+@@ -232,7 +268,7 @@
+ counts['invalid_seed_values']=len(invalid)
+ verdict='NO_OBSERVED_OTHER_CONSUMPTION_OR_RESERVATION_WITH_REPORTED_LIMITS' if not actual_hits+json_hits+interval_hits+[x for x in json_strings if x['classification']=='requires_review']+[x for x in text_hits if x['classification']=='requires_review']+errors+text_errors+mutations else 'REVIEW_REQUIRED'
+ report={'schema':'local_seed_freshness_v2','verdict':verdict,'started_utc':started,'finished_utc':NOW(),'duration_seconds':time.monotonic()-T,'ranges_inclusive':RANGES,'worktrees':ROOTS,'heads_before':HEADS,'heads_after':heads_after,'counts':dict(counts),'consumption_overlaps':actual_hits,'json_seed_or_numeric_mentions':json_hits,'json_interval_overlaps':interval_hits,'json_string_mentions':json_strings,'json_interval_candidates':intervals,'manifest_state_plan_freeze_reservation_records':named_json,'schema_gaps':gaps,'invalid_seed_values':invalid,'seed_field_schema':[{'kind':k[0],'field':k[1],'value_type':k[2],'count':v} for k,v in sorted(seed_schema.items())],'errors':errors,'mutations':mutations,'files':files,'text_files':text_files,'text_hits':text_hits,'text_errors':text_errors,'text_gaps':text_gaps,'allowed_current_relative_paths':sorted(ALLOWED_CURRENT),'excluded_own_audit_paths':[str(p) for p in sorted(SELF_OUTPUTS)],'limits':['Only eight registered local worktrees; other machines, unregistered checkouts and undocumented runs remain unknown.','Seedless files/records do not prove non-consumption; path/schema gaps retained.','Structured scanner covers experiments/logs/replays CSV/JSONL/JSON including gzip; conservative JSON seed interval candidates require adjudication.','Supplemental text scan covers root/docs/scripts/experiments/logs/replays .md/.py/.sh/.txt/.log files, numeric literal mentions and explicit intervals. Computed seed formulas, unsupported schemas and opaque binary formats can escape detection.','Directory symlinks not followed; .git/.venv/venv/node_modules/__pycache__ skipped.','Stored bytes deduplicated by SHA256 for structured formats; text content separately deduplicated.','Current exact spec/plan references allowed as reservations, not consumption. Own three audit outputs excluded to avoid recursion.','No repository imports, model loading, tests or game execution; writes restricted to three authorized audit paths.']}
+-report.update(profile='sap_leading_screen_20261109',expected_worktrees=sorted(EXPECTED_ROOTS),
++report.update(metadata_access='Direct filesystem read only; no Git or other subprocess calls',git_metadata_reads=GIT_METADATA_READS,profile='sap_leading_screen_20261109',expected_worktrees=sorted(EXPECTED_ROOTS),
+               targeted_readonly_scope=True,stable_window_claim=False,excluded_jsonl_paths=sorted(skipped_jsonl),
+               script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
+ report['limits'][2]='Targeted metadata scanner covers experiments/logs/replays CSV and JSON, including gzip. Raw JSONL traces, rollouts and provenance are deliberately NOT reparsed; metadata/CSV coverage cannot establish freshness for missing or exclusively JSONL histories.'

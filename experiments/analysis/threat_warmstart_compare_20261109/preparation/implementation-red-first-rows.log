@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_fixed_first_exposed_rows_are_not_silently_replaced ____________
+
+    def test_fixed_first_exposed_rows_are_not_silently_replaced():
+        q = torch.nn.Linear(101,6); q.feat_dim = 101
+        extra = torch.nn.Linear(79,6); extra.feat_dim = 79
+        with torch.no_grad(): q.weight[:,79:] = 0
+        agent = SimpleNamespace(q=q,extra_q=[extra]*35,device=torch.device("cpu"))
+        states = np.ones((17,101),dtype=np.float32)
+        masks = np.ones((17,6),dtype=bool); masks[0] = False
+>       with pytest.raises(ValueError,match="legal next action"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_threat_warmstart_compare.py:118: Failed
+=========================== short test summary info ============================
+FAILED tests/test_threat_warmstart_compare.py::test_fixed_first_exposed_rows_are_not_silently_replaced
+1 failed, 19 deselected in 2.43s

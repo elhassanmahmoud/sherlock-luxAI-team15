@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Finalen Gefahrmerkmalsvergleich technisch vorbereitet
+
+- [Fester Plan](superpowers/plans/2026-11-09-threat-warmstart-comparison.md): zwei akzeptierte Endnetze ersetzen einzeln genau V14-Mitglied 18, übrige 35 erhalten. Vier bekannte Technikspiele vor separaten 200 Leistungsspielen; keine größere Testwelle oder automatische Übernahme.
+- 20 gezielte synthetische Tests PASS in 2,07 s; unabhängiger Review und vollständige Root-Codeprüfung bestanden. Lokaler Kartencheck ohne beobachtete frühere Nutzung, eigene Reservierungen und Synchronisierung eingeordnet. [Nachweise](../experiments/analysis/threat_warmstart_compare_20261109/README.md).
+- Noch keine realen Modelle oder Spiele dieser Vergleichsphase. Nach Quellencommit technische Aufnahme, dann tatsächliche Abnahme und getrennte Performanceaufnahme. Keine Tests oder Änderungen der eingefrorenen Quellen während Modellläufen. Training ist abgeschlossen und als 18c1b98 auf GitHub und in der primären Arbeitskopie; keine Wiederholung.
+- V14/ZIP unverändert, Akku ausdrücklich erlaubt. Frische tatsächliche Quota vor Start; Nutzer übernimmt Resets. Fremde ungesicherte Dateien erhalten.
+
 ## 09.11.2026 – Gefahrmerkmals-Nachtraining vollständig abgeschlossen
 
 - Tatsächlich vier Technikspiele, 80 Vorlauf- und 800 Lernspiele; zusammen 120.000 Adam-Updates. Beide 101er-Endmodelle und die Replaykontraste unabhängig geprüft. Originale Abschlussvalidatoren und Root-Abschluss unter Quelle af8b271 bestanden, alle eigenen Modellprozesse beendet. [Trainingsbericht](../experiments/analysis/threat_warmstart_20261109/TRAININGSERGEBNIS.md).
