@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Kontrollierter Gefahrmerkmals-Warmstart vorbereitet
+
+- Neuer enger [Plan](superpowers/plans/2026-11-09-threat-warmstart.md): festes V14-Mitglied 18, identische 101-Eingabe-Netze mit 22 echten beziehungsweise nullgesetzten Zusatzmerkmalen. Zwei Arme, je 40 Vorlauf- und 400 Lernspiele, keine Zwischencheckpointwahl. Historische negative Threat-Befunde sind im Plan berücksichtigt; Nutzen ist offen.
+- Implementierung und einmalige Kartenprüfung laufen getrennt; noch keine neuen Modelle, Spiele oder Gradienten. Nach gezielten Tests und unabhängiger Abnahme zuerst vier bekannte Technikspiele, danach separate Trainingsaufnahme mit gemeinsamer Vorlaufbarriere. Keine automatischen Neustarts.
+- Rangvergleich als 8234cbd auf GitHub und in der primären Arbeitskopie. Beim neuen Remote-Abgleich keine Mahmoud-Commits; keine eigenen Modelljobs aktiv. V14/ZIP unverändert. Akkubetrieb ausdrücklich erlaubt, zuletzt tatsächliche Quota 94 % verbraucht; Rest erlaubt, kein Reset.
+
 ## 09.11.2026 – Rangvergleich abgeschlossen, V14 bleibt
 
 - Vier Technik- und 120 Leistungsspiele vollständig. Solution ON/OFF jeweils 39/40, direkt Rangmittel 19/40 [25; 70 %]; vorab festes Direktgate verfehlt. Keine Verlängerung oder Übernahme. [Ergebnis](../experiments/analysis/rank_mean_screen_20261109/ERGEBNIS.md).
