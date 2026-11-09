@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_sap_motion_agent.py ________________
+ImportError while importing test module '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_motion_agent.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_sap_motion_agent.py:12: in <module>
+    from sap_motion_agent import SapMotionAgent
+E   ModuleNotFoundError: No module named 'sap_motion_agent'
+=========================== short test summary info ============================
+ERROR tests/test_sap_motion_agent.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 2.57s

@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Bewegungsmodell und Vergleichswerkzeuge aufgenommen
+
+- Getrennter SAP-Prototyp samt Laufwerkzeugen fertig;70Agent-/Hooktests und30neueRunnertests tatsächlich PASS. Unabhängiger enger Review ohne Blocker; Root hat Agent und vollständigen Runnerdiff sowie die Belege geprüft. [Technischer Stand](../experiments/analysis/sap_motion_screen_20261109/README.md).
+- Zwei neue feste Kartenbereiche ohne beobachtete Konflikte im begrenzten lokalen Audit; externe/seedlose/Roh-JSONL-Lücken bleiben. V14 und ZIP erneut bytegleich geprüft, Remote ohne neue Mahmoud-Commits. Akkubetrieb erlaubt.
+- Nach diesem Commit ausschließlich vier bekannte Technikspiele unter fester Quelle aufnehmen; erst nach deren tatsächlicher Abnahme separat120Spiele. Noch keine Motion-Leistungsdaten, keine Verbesserung behauptet. Gewichte und produktiver Core unverändert.
+
 ## 09.11.2026 – Gezielter Folgeprototyp: Bewegungsverteilung statt pauschalem Vorhalten
 
 - Der abgeschlossene 124-Ausführungen-Meilenstein ist als `97d04c2` tatsächlich auf main und in beiden aktiven Arbeitskopien. Keine offenen eigenen Modellprozesse. V14 und ZIP unverändert.

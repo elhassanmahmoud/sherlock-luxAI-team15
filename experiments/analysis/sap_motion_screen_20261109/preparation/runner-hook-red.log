@@ -1,0 +1,118 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[counts] _
+
+fault = 'counts'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+_ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[labels] _
+
+fault = 'labels'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+__ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[mean] __
+
+fault = 'mean'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+_ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[prior] __
+
+fault = 'prior'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+_ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[wrong_uid] _
+
+fault = 'wrong_uid'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+_ test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[spurious_diagnostic] _
+
+fault = 'spurious_diagnostic'
+
+    @pytest.mark.parametrize("fault",["counts","labels","mean","prior","wrong_uid","spurious_diagnostic"])
+    def test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch(fault):
+        before,ctx,sensor,previous,current=case()
+        counts=[32,0,0,0,0]
+        out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,counts)
+        chosen={k:v for k,v in eligible[0].items() if k!="target"}
+        chosen.update(step=10,match_step=10,match_idx=0,dropoff=.25,native_action=out[1].tolist())
+        a=SimpleNamespace(motion_counts=np.array(counts),leading_stats={"motion_labels":32,"motion_forward":32},
+                          leading_last=copy.deepcopy(chosen))
+>       s.check_motion(a,counts,eligible,current,.25,out)
+        ^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'check_motion'
+
+tests/test_sap_motion_screen.py:162: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[counts]
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[labels]
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[mean]
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[prior]
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[wrong_uid]
+FAILED tests/test_sap_motion_screen.py::test_live_motion_check_rejects_count_or_decision_diagnostic_mismatch[spurious_diagnostic]
+6 failed, 24 deselected in 0.05s

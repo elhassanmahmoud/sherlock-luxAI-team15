@@ -1,0 +1,443 @@
+FFFFFFFFFFFFFFFFFFFFFFFF                                                 [100%]
+=================================== FAILURES ===================================
+__________________ test_new_profile_and_disjoint_fixed_matrix __________________
+
+    def test_new_profile_and_disjoint_fixed_matrix():
+>       assert s.PROFILE == "sap_motion_screen_20261109"
+E       AssertionError: assert 'sap_leading_screen_20261109' == 'sap_motion_screen_20261109'
+E         
+E         - sap_motion_screen_20261109
+E         ?     ^^^ -
+E         + sap_leading_screen_20261109
+E         ?     ^^^^  +
+
+tests/test_sap_motion_screen.py:15: AssertionError
+____________ test_unchanged_integer_gates_use_new_whole_map_cohorts ____________
+
+    def test_unchanged_integer_gates_use_new_whole_map_cohorts():
+        rows={}
+        for job in s.JOBS:
+            rows[job]=[]
+            for i,(seed,side) in enumerate(s.keys(job)):
+                win=i<(24 if job=="on_direct" else 20)
+                changes=int(job!="off_solution" and i<10)
+                rows[job].append(dict(seed=seed,side=side,steps=303,point_counting_version=2,
+                    our_wins=2 if win else 1,opp_wins=1 if win else 2,result=float(win),
+                    our_points=100,opp_points=100,caught_errors=0,leading={"changes":changes},
+                    observed_changes=changes))
+        result=s.summarize(rows)
+        assert result["gates"] == dict(exposure=True,solution=True,direct=True)
+        assert result["games"]==120 and result["exposed_panel_maps"]==5
+        assert result["direct"]["score"]==.6 and result["promotion"] is False
+        rows["on_direct"][0].update(our_wins=1,opp_wins=1,result=.5)
+        assert s.summarize(rows)["gates"]["direct"] is False
+        rows["off_solution"][0]["seed"]=9940000
+>       with pytest.raises(ValueError,match="game key"):s.summarize(rows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_sap_motion_screen.py:43: Failed
+_________ test_factory_uses_motion_class_and_identical_explicit_config _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108e11cd0>
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-375/test_factory_uses_motion_class0')
+
+    def test_factory_uses_motion_class_and_identical_explicit_config(monkeypatch,tmp_path):
+        calls=[]
+        class Fake:
+            def __init__(self,player,**kw):
+                calls.append((player,kw));self.cfg=kw["cfg"]
+                self.training=False;self.epsilon=0;self.learn_enabled=False
+                self.extra_q=[None]*35;self.feat_dim=79;self.n_actions=6;self.cnn_policy=None
+            def set_to_eval_mode(self):pass
+        def cfg(path,flags):
+            assert flags==["frozen=false"]
+            return SimpleNamespace(frozen=False,canonical=True)
+        monkeypatch.setitem(sys.modules,"scripts.par_eval",SimpleNamespace(build_cfg=cfg))
+        monkeypatch.setitem(sys.modules,"scripts.sap_motion_agent",SimpleNamespace(SapMotionAgent=Fake))
+        def wrong_factory(*args,**kwargs):raise AssertionError("Old Leading factory selected")
+        monkeypatch.setitem(sys.modules,"scripts.sap_leading_agent",SimpleNamespace(SapLeadingAgent=wrong_factory))
+        a=dict(root=str(tmp_path),config=dict(frozen=False,canonical=True))
+>       off,on=s.make_agent(a,False),s.make_agent(a,True)
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sap_motion_screen.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/sap_motion_eval.py:194: in make_agent
+    agent=SapLeadingAgent("player_0",agent_path=weights,cfg=cfg,train=False,seed=0,lead_enabled=enabled)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('player_0',)
+kwargs = {'agent_path': '/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-375/test_facto.../agents/sherlock/weights/agent_p0.pth', 'cfg': namespace(frozen=False, canonical=True), 'train': False, 'seed': 0, ...}
+
+>   def wrong_factory(*args,**kwargs):raise AssertionError("Old Leading factory selected")
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Old Leading factory selected
+
+tests/test_sap_motion_screen.py:59: AssertionError
+__________ test_three_public_frames_count_relative_class_once[end0-0] __________
+
+end = (4, 2), category = 0
+
+    @pytest.mark.parametrize("end,category",[((4,2),0),((3,3),1),((2,2),2),((3,1),3),((3,2),4)])
+    def test_three_public_frames_count_relative_class_once(end,category):
+        history=[];counts=[0]*5
+        for record in (frame(1,(2,2)),frame(2,(3,2)),frame(3,end)):
+>           history,counts=s.observe_motion(history,record,counts,3)
+                           ^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:78: AttributeError
+__________ test_three_public_frames_count_relative_class_once[end1-1] __________
+
+end = (3, 3), category = 1
+
+    @pytest.mark.parametrize("end,category",[((4,2),0),((3,3),1),((2,2),2),((3,1),3),((3,2),4)])
+    def test_three_public_frames_count_relative_class_once(end,category):
+        history=[];counts=[0]*5
+        for record in (frame(1,(2,2)),frame(2,(3,2)),frame(3,end)):
+>           history,counts=s.observe_motion(history,record,counts,3)
+                           ^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:78: AttributeError
+__________ test_three_public_frames_count_relative_class_once[end2-2] __________
+
+end = (2, 2), category = 2
+
+    @pytest.mark.parametrize("end,category",[((4,2),0),((3,3),1),((2,2),2),((3,1),3),((3,2),4)])
+    def test_three_public_frames_count_relative_class_once(end,category):
+        history=[];counts=[0]*5
+        for record in (frame(1,(2,2)),frame(2,(3,2)),frame(3,end)):
+>           history,counts=s.observe_motion(history,record,counts,3)
+                           ^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:78: AttributeError
+__________ test_three_public_frames_count_relative_class_once[end3-3] __________
+
+end = (3, 1), category = 3
+
+    @pytest.mark.parametrize("end,category",[((4,2),0),((3,3),1),((2,2),2),((3,1),3),((3,2),4)])
+    def test_three_public_frames_count_relative_class_once(end,category):
+        history=[];counts=[0]*5
+        for record in (frame(1,(2,2)),frame(2,(3,2)),frame(3,end)):
+>           history,counts=s.observe_motion(history,record,counts,3)
+                           ^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:78: AttributeError
+__________ test_three_public_frames_count_relative_class_once[end4-4] __________
+
+end = (3, 2), category = 4
+
+    @pytest.mark.parametrize("end,category",[((4,2),0),((3,3),1),((2,2),2),((3,1),3),((3,2),4)])
+    def test_three_public_frames_count_relative_class_once(end,category):
+        history=[];counts=[0]*5
+        for record in (frame(1,(2,2)),frame(2,(3,2)),frame(3,end)):
+>           history,counts=s.observe_motion(history,record,counts,3)
+                           ^^^^^^^^^^^^^^^^
+E           AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:78: AttributeError
+_________ test_missing_or_invalid_transition_never_creates_label[gap] __________
+
+fault = 'gap'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+________ test_missing_or_invalid_transition_never_creates_label[match] _________
+
+fault = 'match'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+________ test_missing_or_invalid_transition_never_creates_label[mirror] ________
+
+fault = 'mirror'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+_____ test_missing_or_invalid_transition_never_creates_label[uid_missing] ______
+
+fault = 'uid_missing'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+_______ test_missing_or_invalid_transition_never_creates_label[negative] _______
+
+fault = 'negative'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+______ test_missing_or_invalid_transition_never_creates_label[low_energy] ______
+
+fault = 'low_energy'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+_________ test_missing_or_invalid_transition_never_creates_label[nan] __________
+
+fault = 'nan'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+_________ test_missing_or_invalid_transition_never_creates_label[jump] _________
+
+fault = 'jump'
+
+    @pytest.mark.parametrize("fault",["gap","match","mirror","uid_missing","negative","low_energy","nan","jump"])
+    def test_missing_or_invalid_transition_never_creates_label(fault):
+        first=frame(1,(2,2));middle=frame(2,(3,2));last=frame(3,(4,2))
+        if fault=="gap":last=frame(4,(4,2))
+        if fault=="match":last=frame(3,(4,2),match=1)
+        if fault=="mirror":last=frame(3,(4,2),mirrored=True)
+        if fault=="uid_missing":middle=(*middle[:4],{})
+        if fault=="negative":last=frame(3,(4,2),energy=-1)
+        if fault=="low_energy":middle=frame(2,(3,2),energy=2)
+        if fault=="nan":middle=frame(2,(3,2),energy=float("nan"))
+        if fault=="jump":last=frame(3,(5,2))
+>       history,counts=s.observe_motion([first,middle],last,[0]*5,3)
+                       ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'observe_motion'
+
+tests/test_sap_motion_screen.py:94: AttributeError
+_ test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed[False] _
+
+mirrored = False
+
+    @pytest.mark.parametrize("mirrored",[False,True])
+    def test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed(mirrored):
+        before,ctx,sensor,previous,current=case(mirrored)
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,mirrored,[32,0,0,0,0])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:112: TypeError
+_ test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed[True] _
+
+mirrored = True
+
+    @pytest.mark.parametrize("mirrored",[False,True])
+    def test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed(mirrored):
+        before,ctx,sensor,previous,current=case(mirrored)
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,mirrored,[32,0,0,0,0])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:112: TypeError
+_____ test_low_support_unfavorable_or_off_preserves_original[counts0-True] _____
+
+counts = [31, 0, 0, 0, 0], enabled = True
+
+    @pytest.mark.parametrize("counts,enabled",[([31,0,0,0,0],True),([0,0,0,0,32],True),([32,0,0,0,0],False)])
+    def test_low_support_unfavorable_or_off_preserves_original(counts,enabled):
+        before,ctx,sensor,previous,current=case()
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,enabled,False,counts)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:128: TypeError
+_____ test_low_support_unfavorable_or_off_preserves_original[counts1-True] _____
+
+counts = [0, 0, 0, 0, 32], enabled = True
+
+    @pytest.mark.parametrize("counts,enabled",[([31,0,0,0,0],True),([0,0,0,0,32],True),([32,0,0,0,0],False)])
+    def test_low_support_unfavorable_or_off_preserves_original(counts,enabled):
+        before,ctx,sensor,previous,current=case()
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,enabled,False,counts)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:128: TypeError
+____ test_low_support_unfavorable_or_off_preserves_original[counts2-False] _____
+
+counts = [32, 0, 0, 0, 0], enabled = False
+
+    @pytest.mark.parametrize("counts,enabled",[([31,0,0,0,0],True),([0,0,0,0,32],True),([32,0,0,0,0],False)])
+    def test_low_support_unfavorable_or_off_preserves_original(counts,enabled):
+        before,ctx,sensor,previous,current=case()
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,enabled,False,counts)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:128: TypeError
+________ test_known_obstacle_blocks_but_hidden_passability_is_not_used _________
+
+    def test_known_obstacle_blocks_but_hidden_passability_is_not_used():
+        _,ctx,sensor,_,_=case();ctx["passable"][3,3]=False
+>       a=s.motion_estimate(ctx,sensor,7,(3,2),(4,2),(1,0),.25,[32,0,0,0,0])
+          ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.sap_motion_eval' has no attribute 'motion_estimate'
+
+tests/test_sap_motion_screen.py:134: AttributeError
+_ test_other_visible_targets_can_veto_focus_gain_without_negative_unit_credit __
+
+    def test_other_visible_targets_can_veto_focus_gain_without_negative_unit_credit():
+        before,ctx,sensor,previous,current=case()
+        ctx.update(enemy_vis_ids=[7,8,9,10],enemy_coords=np.array([[3,2],[2,1],[2,2],[2,3]]),
+                   enemy_energies=[20,20,20,20])
+>       out,eligible=s.expected_action(before,ctx,sensor,previous,current,.25,True,False,[32,0,0,0,0])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: expected_action() takes 8 positional arguments but 9 were given
+
+tests/test_sap_motion_screen.py:146: TypeError
+____________________ test_owner_only_changes_worker_module _____________________
+
+    def test_owner_only_changes_worker_module():
+        root=Path(__file__).resolve().parents[1]/"scripts"
+        expected=(root/"sap_leading_owner.py").read_text().replace("sap_leading_eval","sap_motion_eval")
+>       assert (root/"sap_motion_owner.py").read_text()==expected
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sap_motion_screen.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_motion_owner.py')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_motion_owner.py'
+
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_sap_motion_screen.py::test_new_profile_and_disjoint_fixed_matrix
+FAILED tests/test_sap_motion_screen.py::test_unchanged_integer_gates_use_new_whole_map_cohorts
+FAILED tests/test_sap_motion_screen.py::test_factory_uses_motion_class_and_identical_explicit_config
+FAILED tests/test_sap_motion_screen.py::test_three_public_frames_count_relative_class_once[end0-0]
+FAILED tests/test_sap_motion_screen.py::test_three_public_frames_count_relative_class_once[end1-1]
+FAILED tests/test_sap_motion_screen.py::test_three_public_frames_count_relative_class_once[end2-2]
+FAILED tests/test_sap_motion_screen.py::test_three_public_frames_count_relative_class_once[end3-3]
+FAILED tests/test_sap_motion_screen.py::test_three_public_frames_count_relative_class_once[end4-4]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[gap]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[match]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[mirror]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[uid_missing]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[negative]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[low_energy]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[nan]
+FAILED tests/test_sap_motion_screen.py::test_missing_or_invalid_transition_never_creates_label[jump]
+FAILED tests/test_sap_motion_screen.py::test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed[False]
+FAILED tests/test_sap_motion_screen.py::test_posterior_uncertainty_and_smallest_uid_are_independently_reconstructed[True]
+FAILED tests/test_sap_motion_screen.py::test_low_support_unfavorable_or_off_preserves_original[counts0-True]
+FAILED tests/test_sap_motion_screen.py::test_low_support_unfavorable_or_off_preserves_original[counts1-True]
+FAILED tests/test_sap_motion_screen.py::test_low_support_unfavorable_or_off_preserves_original[counts2-False]
+FAILED tests/test_sap_motion_screen.py::test_known_obstacle_blocks_but_hidden_passability_is_not_used
+FAILED tests/test_sap_motion_screen.py::test_other_visible_targets_can_veto_focus_gain_without_negative_unit_credit
+FAILED tests/test_sap_motion_screen.py::test_owner_only_changes_worker_module
+24 failed in 0.28s

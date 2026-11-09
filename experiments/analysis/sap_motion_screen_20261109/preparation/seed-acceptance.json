@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "profile": "sap_motion_screen_20261109",
+  "status": "PASS",
+  "no_observed_conflicts": true,
+  "cohorts": {
+    "panel": [
+      9942000,
+      9942001,
+      9942002,
+      9942003,
+      9942004,
+      9942005,
+      9942006,
+      9942007,
+      9942008,
+      9942009,
+      9942010,
+      9942011,
+      9942012,
+      9942013,
+      9942014,
+      9942015,
+      9942016,
+      9942017,
+      9942018,
+      9942019
+    ],
+    "direct": [
+      9942100,
+      9942101,
+      9942102,
+      9942103,
+      9942104,
+      9942105,
+      9942106,
+      9942107,
+      9942108,
+      9942109,
+      9942110,
+      9942111,
+      9942112,
+      9942113,
+      9942114,
+      9942115,
+      9942116,
+      9942117,
+      9942118,
+      9942119
+    ]
+  },
+  "limitations": [
+    "Bounded local audit; no absolute/external freshness guarantee.",
+    "Seedless data, raw JSONL and undocumented external history not established.",
+    "Historical automatic profile label retained because only RANGES was changed; actual ranges and separate review correct.",
+    "Audit ended at97d04c2; subsequent1dfa022 adds only this plan and handoff, not games."
+  ],
+  "files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/preparation/seed-review.md": "b848b3eef766413536e71e9dbb19cf376099e869732a771389e818353a695991",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/preparation/seed-audit.py.txt": "d01a8c27451e09dffcf6d15b766a4ef94416589497914aa140f118138b139329",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/preparation/seed-audit.json.gz": "124ba89b7f914a8b544f78c77d39eb76085c36b04a8973247a9d66c42c69b70e"
+  },
+  "raw_report_sha256": "de914ac891136886f83ded7a3e41ee4f90ee5ba5eb0735566cdf23261d1f052b",
+  "decision": "Root accepts fixed new ranges preserving disclosed limitations; no automatic game start."
+}
