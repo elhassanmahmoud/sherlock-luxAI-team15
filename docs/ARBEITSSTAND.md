@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – SAP-Vorhaltevergleich tatsächlich abgeschlossen, V14 bleibt
+
+- Vier bekannte Technikspiele und alle 120 festen Leistungsspiele durchgeführt. ON gegen Solution **40/40** statt OFF **39/40**, direkt gegen OFF nur **18/40**. 14 exponierte Panelkarten, 917 beziehungsweise 430 geänderte Schüsse. Direktgate verfehlt, keine Verlängerung und kein V14-Ersatz. [Ergebnis und Rohbelege](../experiments/analysis/sap_leading_screen_20261109/ERGEBNIS.md).
+- Originalauswertung und unabhängige Nachrechnung PASS; tatsächlicher Datenaudit SHA `68d308228e987efaf093af27344e0a63dd5e7307dadaa1d36f889d98f4f822a0`. Solution-Kontrast +2,5 pp [0; +7,5], direkt 45 % [30; 60]; 40/40 auf 20 Karten ist keine allgemeine 100-Prozent-Garantie. Keine Trainingsupdates.
+- Alle drei Jobs Exit 0; eigene Worker, Owner und Wachhalter beendet. Quelle `4b11f8a` bis zum tatsächlichen Root-Abschluss unverändert; Quellensperre erst danach freigegeben. Beide V14-Gewichte und ZIP unverändert. Remote-Abgleich ohne Mahmoud-Neuigkeiten. Akkubetrieb ist ausdrücklich erlaubt, Nutzer überwacht Akku; zuletzt echte Quota 82 Prozent verbraucht, kein Reset.
+- Nächste Hypothese zunächst separat planen: beobachtete Bewegungsverteilung statt pauschalem Vorhalten, erwartete Mehrzieltreffer und Rückfall auf V14 bei Unsicherheit. Kein automatischer Neustart dieses geschlossenen Screens und keine bereits nachgewiesene Verbesserung behaupten.
+
 ## 09.11.2026 – Akkubetrieb ausdrücklich freigegeben, SAP-Vergleich fortsetzen
 
 - Moayed verlangt die tatsächliche Durchführung jetzt auch auf Akku und übernimmt dessen Überwachung. Diese aktuelle Anweisung ersetzt für diesen Versuch die bisherige Netzstromvoraussetzung. Keine weitere Netzteilbestätigung abwarten.

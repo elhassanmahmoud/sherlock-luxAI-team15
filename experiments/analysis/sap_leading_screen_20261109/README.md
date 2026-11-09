@@ -1,6 +1,6 @@
 # SAP-Vorhalten: technischer Nachweis und kleiner Vergleich
 
-**Noch keine neuen Spiele, kein Training und kein Stärkenachweis.** V14 und die bestehende ZIP bleiben unverändert. Diese Vorbereitung ergänzt den getrennten Prototyp; sie wiederholt keine abgeschlossene Studie.
+**Abgeschlossen: vier Technikspiele und 120 Vergleichsspiele.** ON erreicht gegen Solution 40/40 statt OFF 39/40, direkt jedoch nur 18/40. Das Direktgate wurde verfehlt; V14 und die bestehende ZIP bleiben unverändert. Null Trainingsupdates, keine Verlängerung. [Vollständiges Ergebnis und Grenzen](ERGEBNIS.md). Die folgenden Abschnitte dokumentieren die vorab abgeschlossene Vorbereitung; sie sind keine Freigabe zur Wiederholung.
 
 Der [feste Plan](../../../docs/superpowers/plans/2026-11-09-sap-leading-screen.md) sieht zuerst höchstens vier bekannte Technikspiele vor. Nur nach erfolgreicher Abnahme folgen 120 Leistungsspiele: OFF und ON jeweils 40 gegen Solution_92 sowie 40 direkte ON-gegen-OFF-Spiele. Beide Rollen haben dieselben 36 V14-Netze. Die einzige Verhaltensänderung ist höchstens ein öffentlich begründeter SAP-Offsetwechsel pro Schritt.
 

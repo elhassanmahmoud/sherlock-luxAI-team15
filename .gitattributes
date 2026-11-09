@@ -14,3 +14,4 @@ experiments/analysis/sampled_target_performance_20261108/**/*.csv -text whitespa
 # Preserve raw prototype test logs, including pytest whitespace.
 experiments/analysis/sap_leading_prototype_20261109/*.log -text -whitespace
 experiments/analysis/sap_leading_screen_20261109/preparation/*.log -text -whitespace
+experiments/analysis/sap_leading_screen_20261109/**/*.jsonl -text -diff

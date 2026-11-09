@@ -1,0 +1,126 @@
+"""One-off standard-library audit of the completed four-game SAP technical proof."""
+import copy
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE = ROOT / 'experiments/analysis/sap_leading_screen_20261109'
+OUT = BASE / 'technical_v1'
+checks = 0
+def check(ok, message):
+    global checks
+    checks += 1
+    if not ok: raise AssertionError(message)
+def digest(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+    return h.hexdigest()
+def read(path):return json.loads(Path(path).read_text())
+def lines(path):return [json.loads(x) for x in Path(path).read_text().splitlines()]
+state_path=OUT/'state.json';admission_path=BASE/'technical-admission-battery.json';receipt_path=OUT/'technical/receipt.json'
+state_hash=digest(state_path);state=read(state_path);a=read(admission_path);r=read(receipt_path)
+check(state['status']=='complete' and state['active']==[] and set(state['jobs'])=={'technical'},'closed state')
+job=state['jobs']['technical'];check(job['returncode']==0 and job['finished_at'] is not None,'exit')
+check(a['stage']==r['stage']==state['stage']=='technical' and a['allow_battery'] is state['allow_battery'] is True,'phase/battery')
+check(r['status']=='complete' and r['job']=='technical' and a['profile']==r['profile']==state['profile']=='sap_leading_screen_20261109','profile')
+check(r['source']==a['source']==state['source'] and r['source']['head']=='4b11f8a5ec61c63756bdab00748dd6779a2f2e61','source')
+check(r['config']==a['config'] and r['config']['frozen'] is False,'config')
+check(r['admission_sha256']==state['admission_sha256']==digest(admission_path),'admission hash')
+check(state['receipts']['technical']=={'path':str(receipt_path),'sha256':digest(receipt_path)},'receipt hash')
+expected_command=[a['python'],'-B','-m','scripts.sap_leading_eval','technical','--admission',str(admission_path),'--admission-sha',digest(admission_path),'--owner-state',str(state_path)]
+check(job['argv']==r['command']==expected_command and job['pid']==job['pgid'] and job['owner_pid']==state['owner_pid'],'command/ownership')
+for inventory in (a['source']['files'],a['inputs'],a['protected']):
+    for p,h in inventory.items():check(digest(p)==h,'source/input/protected bytes '+p)
+check(state['inputs']=={**a['inputs'],str(admission_path):digest(admission_path)} and state['protected']==a['protected'],'owner input binding')
+expected_files={str(OUT/'technical/games.jsonl'),*(str(OUT/f'technical/events_{i:02}.jsonl') for i in range(4))}
+check(set(r['files'])==expected_files,'five raw files')
+for p,h in r['files'].items():check(digest(p)==h,'raw bytes '+p)
+games=lines(OUT/'technical/games.jsonl');check(games==r['games'],'raw games/receipt')
+keys=[(mode,seed,side) for mode in (False,True) for seed,side in ((831006,'player_1'),(831000,'player_0'))]
+check([(g['mode'],g['seed'],g['side']) for g in games]==keys,'four fixed keys')
+hist_path=ROOT/'experiments/analysis/continuation_20261102/targeting/manifest.json';history=read(hist_path)
+reports=[];changed_steps=[]
+for index,g in enumerate(games):
+    events=lines(OUT/f'technical/events_{index:02}.jsonl')
+    check(len(events)==g['steps']==303 and g['caught_errors']==0 and g['point_counting_version']==2,'complete game')
+    old=[x for x in history['games'] if (x['key']['seed'],x['key']['side'])==(g['seed'],g['side'])][0]
+    if not g['mode']:
+        check(g['off_reproduced'] is True,'OFF receipt')
+        with gzip.open(hist_path.parent/old['trace']['path'],'rt') as f:frames=[json.loads(x) for x in f]
+        check(len(frames)==303,'historical frame count')
+        for k in ('seed','side','steps','our_wins','opp_wins','our_points','opp_points','result','point_counting_version','matches','action_sha256'):
+            check(g[k]==old['observed'][k],'OFF historical '+k)
+        for i,(e,f) in enumerate(zip(events,frames)):
+            check(f['key']['obs_step']==i and e['final']==f['native_actions'],'OFF native array')
+    team=int(g['side'][-1]);matches=g['matches']
+    check(len(matches)==3 and [m['match_idx'] for m in matches]==[0,1,2],'match records')
+    check(sum(m['points'][team] for m in matches)==g['our_points'] and sum(m['points'][1-team] for m in matches)==g['opp_points'],'point totals')
+    check(matches[-1]['cumulative_wins'][team]==g['our_wins'] and matches[-1]['cumulative_wins'][1-team]==g['opp_wins'],'match wins')
+    prior=None;changes=0;resets=0;saps=0;public_count=0;eligible_count=0;eligible_steps=0;confidence=[]
+    for i,e in enumerate(events):
+        check(e['step']==i and e['previous']==prior,'sequence/public history')
+        check(e['mirrored']==(team==1),'native/canonical orientation')
+        before,after=e['core'],e['final'];check(len(before)==len(after)==16 and all(len(x)==3 for x in before+after),'action arrays')
+        diff=[u for u in range(16) if before[u]!=after[u]]
+        check(len(diff)<=1 and all(before[u][0]==after[u][0] for u in range(16)) and (not diff or before[diff[0]][0]==5),'only one SAP offset')
+        check(e['changed'] is bool(diff),'actual change flag');changes+=bool(diff);saps+=sum(x[0]==5 for x in before)
+        log=e['posterior_log'];weights=[math.exp(v-max(log)) for v in log];prob=[v/sum(weights) for v in weights];best=max(range(3),key=lambda j:prob[j])
+        drop=(.25,.5,1.)[best] if e['parameter_samples'] and prob[best]>=.9 else 1.
+        check(drop==e['dropoff'],'posterior/dropoff')
+        p=e['public'];candidates=[]
+        if p is None:
+            resets+=1;check(i in (0,101,202) and not diff,'reset isolation')
+        else:
+            check(p['step']==i and p['match_step']==i%101 and p['match_idx']==i//101,'context step')
+            if g['mode'] and prior is not None and prior[:3]==[i-1,p['match_step']-1,p['match_idx']]:
+                for uid in sorted(p['ally_ids']):
+                    if before[uid][0]!=5 or not math.isfinite(p['ally_ene'][uid]) or p['ally_ene'][uid]<p['sap_cost']:continue
+                    x,y=p['ally_pos'][uid];dx,dy=before[uid][1:]
+                    if e['mirrored']:dx,dy=-dy,-dx
+                    center=[x+dx,y+dy]
+                    def legal(t):return 0<=t[0]<p['W'] and 0<=t[1]<p['H'] and max(abs(t[0]-x),abs(t[1]-y))<=p['sap_range']
+                    if not legal(center):continue
+                    found=[j for j,pos in enumerate(p['enemy_coords']) if pos==center]
+                    if len(found)!=1:continue
+                    j=found[0];enemy=p['enemy_vis_ids'][j];pre=prior[3].get(str(enemy))
+                    if pre is None:continue
+                    pos,energy=pre;now=p['enemy_energies'][j];vx,vy=center[0]-pos[0],center[1]-pos[1]
+                    if abs(vx)+abs(vy)!=1 or not all(math.isfinite(z) and z>=0 for z in (energy,now)) or now<p['move_cost']:continue
+                    target=[center[0]+vx,center[1]+vy]
+                    if not legal(target) or not e['sensor'][target[0]][target[1]] or not p['passable'][target[0]][target[1]]:continue
+                    candidates.append(dict(uid=uid,enemy_uid=enemy,target=target))
+        public_count+=len(candidates)
+        eligible=candidates if drop<1 else [];eligible_count+=len(eligible);eligible_steps+=bool(eligible)
+        check(e['eligible']==eligible,'public eligible set/smallest UID')
+        expected=copy.deepcopy(before);wanted=copy.deepcopy(e['book_before'])
+        if eligible:
+            c=eligible[0];uid=c['uid'];tx,ty=c['target'];x,y=p['ally_pos'][uid];dx,dy=tx-x,ty-y
+            expected[uid][1:]=[-dy,-dx] if e['mirrored'] else [dx,dy]
+            hits=sum(max(abs(ex-tx),abs(ey-ty))<=1 for ex,ey in p['enemy_coords']);oldhits=wanted['hits'][str(uid)]
+            wanted['hits'][str(uid)]=hits;wanted['unknown']=[u for u in wanted['unknown'] if u!=uid]
+            wanted['stats']['sap_hits_est']+=int(hits>0)-int(oldhits>0)
+            confidence.append(prob[best]);changed_steps.append(dict(game=index,step=i,uid=uid))
+        check(after==expected,'native final action and unchanged other rows')
+        check(e['book_after']==wanted,'exact bookkeeping/pending delta')
+        prior=None if p is None else [i,p['match_step'],p['match_idx'],{str(u):[pos,en] for u,pos,en in zip(p['enemy_vis_ids'],p['enemy_coords'],p['enemy_energies'])}]
+    check(resets==3 and changes==g['observed_changes']==g['leading'].get('changes',0),'reset/change totals')
+    if g['mode']:
+        for k,v in dict(calls=303,reset_calls=3,sap_total=saps,public_eligible_saps=public_count,eligible_saps=eligible_count,eligible_steps=eligible_steps,capped_eligible_saps=eligible_count-eligible_steps).items():
+            check(g['leading'].get(k,0)==v,'leading count '+k)
+    reports.append(dict(mode='ON' if g['mode'] else 'OFF',seed=g['seed'],side=g['side'],frames=303,changes=changes,off_reproduced=not g['mode'],min_intervention_posterior=min(confidence) if confidence else None))
+check([x['changes'] for x in reports]==[0,0,36,0],'observed exposure')
+check(digest(state_path)==state_hash,'state unchanged during review')
+result=dict(status='PASS',profile=a['profile'],source_head=a['source']['head'],checks=checks,games=reports,total_games=4,total_frames=1212,total_changes=36,
+    input_sha256={str(state_path):state_hash,str(admission_path):digest(admission_path),str(receipt_path):digest(receipt_path),**r['files']},
+    source_files_checked=len(a['source']['files']),inputs_checked=len(a['inputs']),protected_checked=len(a['protected']),changed_steps=changed_steps,
+    limitations=['Standard-library stored-data check; no models, forwards, tests, games or agent imports.',
+      'Both-player action stream SHA compared with historical manifest; opposing raw actions are not stored here, so combined SHA was not independently recomputed.',
+      'Remember equality and exactly one Core call are runtime assertions of the bound successful worker; remembered array/call count are not separately stored, so no independent per-frame remeasurement of those assertions.',
+      'Public snapshots and pre/post bookkeeping are stored execution observations; no engine replay or hidden-state reconstruction.',
+      'Known technical games only; no strength, causal improvement, performance result or promotion claim.'])
+Path('/tmp/sap-leading-technical-data-review.json').write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
+print(json.dumps({'status':result['status'],'checks':checks,'games':reports,'report_sha256':digest('/tmp/sap-leading-technical-data-review.json')},indent=2))

@@ -1,0 +1,249 @@
+{
+  "status": "PASS",
+  "profile": "sap_leading_screen_20261109",
+  "source_head": "4b11f8a5ec61c63756bdab00748dd6779a2f2e61",
+  "checks": 13212,
+  "games": [
+    {
+      "mode": "OFF",
+      "seed": 831006,
+      "side": "player_1",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": true,
+      "min_intervention_posterior": null
+    },
+    {
+      "mode": "OFF",
+      "seed": 831000,
+      "side": "player_0",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": true,
+      "min_intervention_posterior": null
+    },
+    {
+      "mode": "ON",
+      "seed": 831006,
+      "side": "player_1",
+      "frames": 303,
+      "changes": 36,
+      "off_reproduced": false,
+      "min_intervention_posterior": 0.9762045807300296
+    },
+    {
+      "mode": "ON",
+      "seed": 831000,
+      "side": "player_0",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": false,
+      "min_intervention_posterior": null
+    }
+  ],
+  "total_games": 4,
+  "total_frames": 1212,
+  "total_changes": 36,
+  "input_sha256": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/state.json": "bffb7b4b540d45677322ffb06061632e2dd76fd021030f2b567fc30d38136266",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical-admission-battery.json": "c6e9200884fde974a0e2224c0eb63bd51919fab3c1aae02c7f6603ef6af2189e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/receipt.json": "1ca7424208e4162074ec632066c24b04e143f59ecb1985d456417c4d13f4a8e8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/events_00.jsonl": "28409971a7c48d39434a1c880c6c31f245d42bc0ec956767cbe129ac5826e2af",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/events_01.jsonl": "a6f3bf226d6343f8410b8df31fc25e50a47099ddc5fc8c0645e62bf86c7323d1",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/events_02.jsonl": "037c643980628a4ae579406e67a849bab8d59e2a775d089778f0423211f414bd",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/events_03.jsonl": "a6f3bf226d6343f8410b8df31fc25e50a47099ddc5fc8c0645e62bf86c7323d1",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/technical_v1/technical/games.jsonl": "8a9abb713b737d00ee3ff4814e81c922522b1b5c1e32d842ee0c6eb14acd3b39"
+  },
+  "source_files_checked": 382,
+  "inputs_checked": 21,
+  "protected_checked": 3,
+  "changed_steps": [
+    {
+      "game": 2,
+      "step": 45,
+      "uid": 7
+    },
+    {
+      "game": 2,
+      "step": 46,
+      "uid": 0
+    },
+    {
+      "game": 2,
+      "step": 47,
+      "uid": 0
+    },
+    {
+      "game": 2,
+      "step": 53,
+      "uid": 8
+    },
+    {
+      "game": 2,
+      "step": 54,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 59,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 61,
+      "uid": 6
+    },
+    {
+      "game": 2,
+      "step": 62,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 69,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 70,
+      "uid": 0
+    },
+    {
+      "game": 2,
+      "step": 76,
+      "uid": 6
+    },
+    {
+      "game": 2,
+      "step": 77,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 80,
+      "uid": 13
+    },
+    {
+      "game": 2,
+      "step": 84,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 87,
+      "uid": 8
+    },
+    {
+      "game": 2,
+      "step": 96,
+      "uid": 11
+    },
+    {
+      "game": 2,
+      "step": 98,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 136,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 141,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 156,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 157,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 158,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 160,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 161,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 162,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 171,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 172,
+      "uid": 8
+    },
+    {
+      "game": 2,
+      "step": 180,
+      "uid": 8
+    },
+    {
+      "game": 2,
+      "step": 181,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 197,
+      "uid": 10
+    },
+    {
+      "game": 2,
+      "step": 200,
+      "uid": 14
+    },
+    {
+      "game": 2,
+      "step": 201,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 256,
+      "uid": 10
+    },
+    {
+      "game": 2,
+      "step": 263,
+      "uid": 0
+    },
+    {
+      "game": 2,
+      "step": 283,
+      "uid": 7
+    },
+    {
+      "game": 2,
+      "step": 284,
+      "uid": 4
+    }
+  ],
+  "limitations": [
+    "Standard-library stored-data check; no models, forwards, tests, games or agent imports.",
+    "Both-player action stream SHA compared with historical manifest; opposing raw actions are not stored here, so combined SHA was not independently recomputed.",
+    "Remember equality and exactly one Core call are runtime assertions of the bound successful worker; remembered array/call count are not separately stored, so no independent per-frame remeasurement of those assertions.",
+    "Public snapshots and pre/post bookkeeping are stored execution observations; no engine replay or hidden-state reconstruction.",
+    "Known technical games only; no strength, causal improvement, performance result or promotion claim."
+  ]
+}

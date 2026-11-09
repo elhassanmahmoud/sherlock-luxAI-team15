@@ -1,0 +1,61 @@
+{
+  "direct": {
+    "D": 0,
+    "L": 22,
+    "W": 18,
+    "ci95": [
+      0.3,
+      0.6
+    ],
+    "score": 0.45
+  },
+  "eligible_for_separate_design": false,
+  "exposed_panel_maps": 14,
+  "games": 120,
+  "gates": {
+    "direct": false,
+    "exposure": true,
+    "solution": true
+  },
+  "input_sha256": {
+    "admission": "1b129512bdb4456e8aa87b5333e48164dda6f015cc23a6397fcdc3a468725e13",
+    "receipts": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/performance_v1/off_solution/receipt.json": "88b47c34d6c4fc814acc303b389084446eda4443b4ebfbc960161e6a217985d6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/performance_v1/on_direct/receipt.json": "458aecade8425892aa5338f2e02dc332ae50fdd12a0b7ab8359807d62303e8db",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/performance_v1/on_solution/receipt.json": "142901bcb4d229d8fe9115e48a126a0050811c31b27cdb825dce68a0d506f54f"
+    },
+    "state": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/performance_v1/state.json": "0bf909c6a33481475dbddb7f50da4e168ec0bb2f713232b1c2ba554ea9b7c95d"
+    }
+  },
+  "promotion": false,
+  "solution": {
+    "off_solution": {
+      "D": 0,
+      "L": 1,
+      "W": 39,
+      "ci95": [
+        0.925,
+        1.0
+      ],
+      "score": 0.975
+    },
+    "on_solution": {
+      "D": 0,
+      "L": 0,
+      "W": 40,
+      "ci95": [
+        1.0,
+        1.0
+      ],
+      "score": 1.0
+    }
+  },
+  "solution_delta": 0.025,
+  "solution_delta_ci95": [
+    0.0,
+    0.075
+  ],
+  "status": "complete_descriptive",
+  "uncertainty": "20 whole-map clusters/block;5000 bootstrap draws,PCG64 seed0,unadjusted95%; descriptive"
+}

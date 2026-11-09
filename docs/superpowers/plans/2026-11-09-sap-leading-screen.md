@@ -1,5 +1,7 @@
 # SAP-Vorhalten: begrenzter Vergleich
 
+**Abgeschlossen am 09.11.:** vier Technikspiele und alle 120 Leistungsspiele. Direktgate verfehlt; keine Verlängerung/Übernahme. [Ergebnis](../../../experiments/analysis/sap_leading_screen_20261109/ERGEBNIS.md). Die folgenden Festlegungen wurden vor den Spielen getroffen; historische Messquelle `4b11f8a` bleibt in den Receipts gebunden.
+
 **Ziel:** Prüfen, ob der separat vorbereitete SAP-Vorhalteprototyp einen weiteren Vergleich rechtfertigt. Kein Training, kein neuer Netzbestand und keine automatische Übernahme. V14 bleibt die Abgabe.
 
 **Status vor dem ersten Spiel:** Plan und Karten festgelegt; echte Integration noch offen. Der technische Prototyp ist auf `2ddf64b` aufgenommen. Runner und Aufnahme werden getrennt geprüft. Frisches tatsächliches Kontingent, freie Rechenprozesse und eine vollständige Quellenbindung sind vor jedem Start erforderlich. Moayed hat am 09.11. ausdrücklich Akkubetrieb für diesen Vergleich erlaubt und übernimmt die Akkuüberwachung. Die gehashte Aufnahme darf dafür `allow_battery=true` festhalten; ohne diese ausdrückliche Ausnahme bleibt Netzstrom erforderlich. Spielumfang, Auswahlbedingungen und Gewichtsschutz ändern sich dadurch nicht.
@@ -42,8 +44,8 @@ Jeder Gatefehlschlag schließt diesen Screen ohne Nachschlag. Ein positives Erge
 - [x] Technischen Prototyp unabhängig prüfen und aufnehmen.
 - [x] Unveränderte Kartenbereiche lokal prüfen und begrenzt annehmen.
 - [x] Runner und schmale Orchestrierung unabhängig prüfen und aufnehmen; Root37 synthetische Repo-Tests PASS, Launcher zusätzlich syntaktisch/statisch geprüft, noch nicht ausgeführt.
-- [ ] Frische Ressourcen-/Quellenaufnahme erstellen und vier technische Spiele ausführen.
-- [ ] Tatsächliche technische Daten prüfen; bei Erfolg getrennte Performanceaufnahme erstellen.
-- [ ] Genau 120 Spiele abschließen und unabhängig auswerten; Ergebnis und Grenzen für Mahmoud dokumentieren.
+- [x] Frische Ressourcen-/Quellenaufnahme erstellen und vier technische Spiele ausführen.
+- [x] Tatsächliche technische Daten prüfen; bei Erfolg getrennte Performanceaufnahme erstellen.
+- [x] Genau 120 Spiele abschließen und unabhängig auswerten; Ergebnis und Grenzen für Mahmoud dokumentieren.
 
 Ruling vom 09.11.: Der autonome Auftrag deckt diesen kleinen, von abgeschlossenen Studien getrennten Vergleich ab. Die frühere Prototypplanung allein wird nicht als Spielstartfreigabe verwendet. Nachweise und tatsächliche Starts stehen im Arbeitsstand; geplante Schritte sind keine erledigten Läufe.

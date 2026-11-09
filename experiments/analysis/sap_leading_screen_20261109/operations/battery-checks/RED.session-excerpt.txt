@@ -1,0 +1,22 @@
+REKONSTRUIERTER SITZUNGSAUSZUG, KEIN URSPRÜNGLICHER VOLLSTÄNDIGER ROHLOG.
+Beobachteter Tool-Exitcode: 1. Die Toolausgabe war gekürzt.
+
+Sichtbare Fehlerbeispiele:
+E       TypeError: guard() got an unexpected keyword argument 'allow_battery'
+E       Failed: DID NOT RAISE ValueError
+
+Sichtbare pytest-Zusammenfassung:
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_is_default_off_and_explicit_true_only
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_keeps_every_other_guard[stop]
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_keeps_every_other_guard[quota]
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_keeps_every_other_guard[source]
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_keeps_every_other_guard[hashes]
+FAILED tests/test_sap_leading_screen.py::test_battery_permission_keeps_every_other_guard[ownership]
+FAILED tests/test_sap_leading_screen.py::test_battery_admission_requires_hashed_boolean[None]
+FAILED tests/test_sap_leading_screen.py::test_battery_admission_requires_hashed_boolean[1]
+FAILED tests/test_sap_leading_screen.py::test_battery_admission_requires_hashed_boolean[true]
+FAILED tests/test_sap_leading_screen.py::test_battery_worker_forwards_only_matching_admitted_boolean[True]
+FAILED tests/test_sap_leading_screen.py::test_battery_worker_forwards_only_matching_admitted_boolean[False]
+FAILED tests/test_sap_leading_screen.py::test_battery_worker_forwards_only_matching_admitted_boolean[1]
+FAILED tests/test_sap_leading_screen.py::test_battery_owner_copies_admitted_boolean_before_first_guard
+13 failed, 37 deselected in 2.77s
