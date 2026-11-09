@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – EXPOSURE38 abgeschlossen, Arbeit mit Budgetreserve beendet
+
+- Genau200 feste Spiele: Solution EXPOSURE38/V14 je37/40, BEHAVIOR38 39/40; direkt22/40 gegenV14 und20/40 gegenBEHAVIOR38. Drei/vier Bedingungen verfehlt, kein nominierter Nachfolger. [Ergebnis](../experiments/analysis/frozen_v14_exposure_compare_20261109/ERGEBNIS.md). 22/40 [35;75%] belegt keine Überlegenheit.
+- Unabhängiger tatsächlicher200CSV-/Intervallaudit PASS(10.705Checks), Root-Originalanalyse exakt reproduziert. Quellea9fc5b7 bis Rootclosure1bccee286c4a00745f34c5dedd7998271a290249c76f43f1eb464454acf11f18 festgehalten; alle eigenen Modelle/Wachhalter beendet, Freeze danach aufgehoben. Keine weiteren Spiele/Trainings, kein V14-/ZIP-Tausch.
+- Neue Nutzerreserve mindestens25Prozent; beim Abschluss tatsächlich30Prozent übrig. Remote-Automation pausiert, Watcher beendet. Keine nächste Studie oder automatische Bestätigung. Spätere residuale Machbarkeitsidee bleibt unausgeführt; erneute Arbeit benötigt neue Nutzerfortsetzung unter dann aktuellem Budget. Ergebnisse/Werkzeuge gezielt veröffentlichen, Primary verlustfrei aktualisieren, Fremddateien erhalten.
+
+## 09.11.2026 – Letzter begrenzter Vergleich läuft unter Budgetreserve
+
+- Tatsächliche Montage ohne Spiele durch Root und unabhängigen Tensor-/Konfigurationsaudit angenommen (3465 Checks), Abnahme233346c5. EXPOSURE38 besteht exakt aus den originalen36 plus e48/e49; beide Referenzen bytegleich. Quellea9fc5b7 auf GitHub und Primary.
+- Separate Performanceaufnahme1031fd04 mit genau200Spielen gestartet, maximalzweiWorker. Maßgeblich `experiments/analysis/frozen_v14_exposure_compare_20261109/performance_v1/state.json`. Quelle/HEAD bleiben bis Abschluss fest; keine parallelenTests oder Neustarts. Tatsächlich69Prozent verbraucht; ab72Prozent Abschluss/Stopp, mindestens25Prozent verbleiben. Keine weitereTrainings-/Bestätigungsstudie.
+- Erster Performance-Aufnahmecheck vor Start scheiterte, weil die reine Auditor-Textkopie versehentlich als zusätzliches .py archiviert wurde. Keine bestehendeQuelle geändert und keine Spiele gestartet. Exakt gleiche Auditorbytes als .py.txt archiviert, tatsächliche vollständige Quellenidentität erneut identisch; dann separate Aufnahme erfolgreich. V14/ZIP unverändert, noch kein Leistungsbefund.
+
 ## 09.11.2026 – EXPOSURE38-Vergleich technisch vorbereitet
 
 - Zwei akzeptierte neue Netze werden zu den originalen 36 ergänzt. Vergleich mit unveränderten V14-/BEHAVIOR38-Kopien auf den vorab festen 60 Karten, insgesamt 200 Spiele; zunächst separate echte Montage-/Loaderabnahme. 178 synthetische Tests bestanden, unabhängiger integrierter Review und Root-Datei-/Vertragsprüfung ohne offene Quellenbefunde. [Belege](../experiments/analysis/frozen_v14_exposure_compare_20261109/README.md).

@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 09.11.2026: **EXPOSURE38-Auswahl abgeschlossen, V14 bleibt.** Genau200 Spiele auf60 festen Karten: Solution37/40 wieV14 gegenüberBEHAVIOR38 39/40; direkt22/40vsV14 und20/40vsBEHAVIOR38. Drei/vierHürden verfehlt, unabhängig10.705Checks und originaleRoot-Reproduktion PASS. Keine Nominierung/Verlängerung, keine neuen Gewichte übernommen. Vorher separat884Trainingsausführungen/120.000Updates. Nutzerreserve25Prozent, Abschluss mit30ProzentRest; Jobs beendet, Automation pausiert. [Ergebnis](../experiments/analysis/frozen_v14_exposure_compare_20261109/ERGEBNIS.md).
+
 ## 09.11.2026 – Vorlauf-Punktreward: Offlinebefund
 
 Zwei akzeptierte Original-NPZs, 283218 Einheitenübergänge, null neue Spiele/Updates. Bei positiver Team-Punktdifferenz und noch unbekannten Punktfeldern direkter Punktterm null; mittlerer tatsächlich gespeicherter Gesamt-r +0,01774/−0,003226, Anteile 1,45/0,54 Prozent der qualifizierten positiven Zeilen. Unabhängig nachgerechnet, keine Kausalitäts- oder Stärkeaussage; keine Rewardänderung. [Bericht](../experiments/analysis/point_reward_replay_20261109/ERGEBNIS.md).

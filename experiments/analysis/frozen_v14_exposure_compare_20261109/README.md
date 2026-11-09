@@ -1,5 +1,5 @@
-# Fester Vergleich: EXPOSURE38
+# EXPOSURE38 abgeschlossen
 
-Zwei tatsächlich akzeptierte neue Netze ergänzen die originalen36. Referenzen sind die unveränderten akzeptierten V14- undBEHAVIOR38-Evalkopien. Erst getrennte echte Montage-/Loaderabnahme, dann genau200Spiele gemäß unveränderter Exposure-Spec.178gezielte synthetischeTests bestanden, unabhängiger ReviewPASS; keine tatsächlichen Vergleichsspiele gestartet. V14/ZIP unverändert.
+**Kein bestätigter Nachfolger; V14 und ZIP unverändert.** 200 feste Spiele vollständig und unabhängig geprüft. Gegen Solution37/40 wie V14, direkt22/40 gegenV14 und20/40 gegenBEHAVIOR38; drei vonvier vorab festen Hürden verfehlt.
 
-Neue Nutzergrenze: mindestens25Prozent Kontingent erhalten; keine weiteren Trainingsstudien.
+[Vollständiges Ergebnis und Grenzen](ERGEBNIS.md). Training separat884Ausführungen/120.000Updates. Budgetreserve mindestens25Prozent; automatischeFortsetzung pausiert, keine neueStudie.
