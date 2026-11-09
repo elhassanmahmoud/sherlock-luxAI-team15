@@ -1,0 +1,101 @@
+{
+  "actual_head": "207f504cf75920e4569ef3084b6cd916df76243c",
+  "admission_sha256": "5db0e2def40c4dfa7542889bf92d082e9473b7ed775e09b411e4cbc04209958c",
+  "checks": 7775,
+  "final_role_q_identities_differ": true,
+  "hash_bindings_checked": 526,
+  "limits": [
+    "Accepted prefill arrays were not rescanned; fixed proof/file/result/script/report hashes and raw40-row prefix are unchanged.",
+    "All actual final Q/Target/Adam tensors and60000steps are independently recovered.400reported game mean losses per arm are finite; individual60000batch losses were not archived.",
+    "Successful bound play_one path refuses caught errors on both players. Raw rows have no separate per-player caught-error counters, so zero-error status is a successful-runtime assertion.",
+    "Final ring-buffer arrays are recovered and hashed. UID/outcome/counterfactual streams for all training transitions are not archived; original reward provenance and per-game nonreward digests cannot be regenerated from final replay alone.",
+    "Post-learning paired trajectories may differ. No performance/strength claim, nomination or pair49 authorization."
+  ],
+  "no_release_or_next_phase_written": true,
+  "prefill_sha256": {
+    "control": "db89401cec09859816b15ffbca81fff4c12d9fc8d45226a42143838dc53f337f",
+    "match": "841d1d2365d91c51e014ad6a57923fcd4c6986b1857b4242570c5456ea45c527"
+  },
+  "process_after": {
+    "owner_pid": 31599,
+    "snapshot_sha256": "73f86e8e21e46378b3396bffa98950090451dfeaa27f0d7de755ad2a9271bd14",
+    "worker_pids": {
+      "control": 31622,
+      "match": 31627
+    }
+  },
+  "process_before": {
+    "owner_pid": 31599,
+    "snapshot_sha256": "0c8be56bfd2f4693d9d567cced148f17b31255c725f6e1ec83aef78f8227535f",
+    "worker_pids": {
+      "control": 31622,
+      "match": 31627
+    }
+  },
+  "release_sha256": "153425cd9b6fd716fa8b23e60aa2d4e0f4921629f152d6827dbcaeeb026c14b0",
+  "roles": {
+    "control": {
+      "actual_final_identity": {
+        "optimizer": "02268338eb89de1d31dadb0aca4a47f7a1b48e7f79e116ebcd37a6388f26f65e",
+        "q": "228ebd9596f0b74be11225ad061915ef7bbbae7dd6b7dfed9717b735a39865e5",
+        "target": "228ebd9596f0b74be11225ad061915ef7bbbae7dd6b7dfed9717b735a39865e5"
+      },
+      "actual_final_replay_sha256": "059daaa8154101dbe58f6520db2112d5262be11379428ab9cbee323c4c89855e",
+      "env_steps": 193320,
+      "final_checkpoint_sha256": "499ff53fd318e507e31036b73920e5792b5c47443a24d91d880e7aa2a111ee01",
+      "final_replay_rows": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "mean_reported_game_loss": 0.7417506939547758,
+      "prefill": 40,
+      "receipt_sha256": "9d41acd361d7a08505aa546c922e409f96dc838764aa273696ff4c196b32298a",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_action_counts": [
+        123985,
+        16212,
+        69269,
+        68417,
+        14464,
+        7653
+      ],
+      "retained_terminal_rows": 5792,
+      "total_inserted_replay_rows": 1579058,
+      "total_live_match_outcome_rows": 19795,
+      "train": 400
+    },
+    "match": {
+      "actual_final_identity": {
+        "optimizer": "7bcc20b3a0f4c9b1ef4049d74c40b683dac3acbf1cffc9917166acded4721d99",
+        "q": "ac727eb833912823e8f6d0a2106016d871077a88cdd22a1802f23f74ea5f7498",
+        "target": "ac727eb833912823e8f6d0a2106016d871077a88cdd22a1802f23f74ea5f7498"
+      },
+      "actual_final_replay_sha256": "93bed364f5cfc7f5a07aa214338f4dd1746954af7f014aedc8a6e913b95d2d6e",
+      "env_steps": 193320,
+      "final_checkpoint_sha256": "5e861a989c163f730db14d083ddf8413376036ac18a8ea9603e3b764dfe1708f",
+      "final_replay_rows": 300000,
+      "games": 440,
+      "learn_steps": 60000,
+      "mean_reported_game_loss": 1.065144870126744,
+      "prefill": 40,
+      "receipt_sha256": "93d0a96d861f5a3b14cd19456d06498d89c0fae69d0868f5df10f8315461b0ae",
+      "reported_finite_training_game_mean_losses": 400,
+      "retained_action_counts": [
+        125120,
+        17019,
+        69790,
+        67373,
+        13951,
+        6747
+      ],
+      "retained_terminal_rows": 5593,
+      "total_inserted_replay_rows": 1583947,
+      "total_live_match_outcome_rows": 19952,
+      "train": 400
+    }
+  },
+  "script_sha256": "44271ccae6089dda9698a387e42c97ecfed4f74a588ea575f9837a80401988cd",
+  "source_head": "207f504cf75920e4569ef3084b6cd916df76243c",
+  "start": 49,
+  "status": "PASS",
+  "unique_input_files_hashed": 475
+}

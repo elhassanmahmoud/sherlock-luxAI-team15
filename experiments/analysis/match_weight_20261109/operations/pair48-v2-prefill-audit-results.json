@@ -1,0 +1,74 @@
+{
+  "admission_sha256": "f49d770fb7f4f7688434b7a371151aa5b72bd75c752bf756fde4c7f69f23dcac",
+  "checks": 997,
+  "hash_bindings_checked": 455,
+  "limits": [
+    "No model/Torch loads. Unchanged Q/Target/Adam and zero-gradient counters are recorded live identities; Root independently checks saved checkpoint tensors separately.",
+    "Actual full prefill replay including stored Float32 r and ordered raw original formula/outcome streams are independently recovered. Original formula provenance cannot be rebuilt without full contexts.",
+    "Native/public/final-action digests are paired and bound; complete raw actions/trajectories were not archived.",
+    "This establishes paired prefill mechanism consistency, not learning completion or strength."
+  ],
+  "max_actual_float32_quantization_contrast": 9.536743190707853e-07,
+  "max_formula_error": 3.552713678800501e-15,
+  "max_unexplained_actual_float32_residual": 3.3306690738754696e-15,
+  "no_release_written": true,
+  "prefill_sha256": {
+    "control": "ca972ec02071bb01ef2cf7f482487a53388bf7d6dfa5f9086234ba723df29ad5",
+    "match": "2b8821c7c79b394f3a2a57210ab0886e3a33da3dac08e6d864e5a27ee2363068"
+  },
+  "process_after": {
+    "owner_pid": 21015,
+    "snapshot_sha256": "c1b93950807da27d7e229212b0c4f2eb4c5941bd8239827b93d78931ce0039b1",
+    "worker_pids": {
+      "control": 21033,
+      "match": 21038
+    }
+  },
+  "process_before": {
+    "owner_pid": 21015,
+    "snapshot_sha256": "7e4a3b46f16076143f4f01f34378647662d2583048aabb45335ef7feacb2d4eb",
+    "worker_pids": {
+      "control": 21033,
+      "match": 21038
+    }
+  },
+  "roles": {
+    "control": {
+      "actual_nonreward_hash": "93b1db587caf52552127eb518e3fc9831505f8600a165710225ae4894284dcfe",
+      "actual_replay_hash": "457b0baef721876c167d7afa8c42bacfffab4bc8e890f220b9407d490ee1baf8",
+      "draws": 0,
+      "env_steps": 72120,
+      "formula_stream_hash": "c5faf84af675a197e657a09c8d126f5189775713398fa15b10db184515ce3b42",
+      "games": 40,
+      "learn_steps": 0,
+      "losses": 10,
+      "negative_outcome_rows": 437,
+      "nonzero_outcome_rows": 1757,
+      "positive_outcome_rows": 1320,
+      "prefill_sha256": "ca972ec02071bb01ef2cf7f482487a53388bf7d6dfa5f9086234ba723df29ad5",
+      "replay_rows": 142110,
+      "wins": 30
+    },
+    "match": {
+      "actual_nonreward_hash": "93b1db587caf52552127eb518e3fc9831505f8600a165710225ae4894284dcfe",
+      "actual_replay_hash": "8591e1449a5e9616b56e99e609cba856c662e5631d73527a2816a0dd914147b6",
+      "draws": 0,
+      "env_steps": 72120,
+      "formula_stream_hash": "c5faf84af675a197e657a09c8d126f5189775713398fa15b10db184515ce3b42",
+      "games": 40,
+      "learn_steps": 0,
+      "losses": 10,
+      "negative_outcome_rows": 437,
+      "nonzero_outcome_rows": 1757,
+      "positive_outcome_rows": 1320,
+      "prefill_sha256": "2b8821c7c79b394f3a2a57210ab0886e3a33da3dac08e6d864e5a27ee2363068",
+      "replay_rows": 142110,
+      "wins": 30
+    }
+  },
+  "script_sha256": "86cc63b6fb06623af6a9876472522389cd6dddcb79058d95e2ee5e057bfd734d",
+  "source_head": "207f504cf75920e4569ef3084b6cd916df76243c",
+  "start": 48,
+  "status": "PASS",
+  "unique_input_files_hashed": 455
+}

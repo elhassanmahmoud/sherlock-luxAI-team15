@@ -27,6 +27,8 @@
 
 **Fortschrittsabhängige Kandidatenrettung am 09.11. abgeschlossen:** vier bekannte Technikspiele, 120 feste Vergleiche. Solution OFF/ON je 40/40, direkt ON 22/40 bei vorab geforderten 24; kein Nominierter. Die gezielte bekannte Verlustkarte dreht von 1:2 auf 3:0, aber das ist kein unabhängiger Stärkenachweis. Gleiche 36 Netze, neue Regel standardmäßig aus, V14/ZIP unverändert. [Ergebnis](experiments/analysis/candidate_progress_20261109/ERGEBNIS.md). par_eval bricht jetzt bei abgefangenen Fehlern eines Spielers ab. Nächste getrennte Arbeit im Arbeitsstand.
 
+**Matchgewicht-Training am 09.11. abgeschlossen:** vier neue Endnetze, Gewicht 2 gegenüber 20 bei zwei Starts, je 40 Vorlauf- und 400 Lernspiele. Akzeptierte v2-Runde: 1.764 Ausführungen, 240.000 Updates; mit offen archivierter Überwachungsunterbrechung v1 insgesamt 1.998 und 262.500. Tatsächliche Replay-/Reward-/Tensorprüfungen bestanden, Quelle `207f504` geschlossen. Noch kein Stärkenachweis oder Vergleich; V14/ZIP unverändert. [Trainingsbericht](experiments/analysis/match_weight_20261109/TRAININGSERGEBNIS.md). Nächster fester Schritt: zwei 38er-Ensembles separat gegen V14/Solution prüfen, keine automatische Übernahme. Aktuellen Phasenstand im Arbeitsstand lesen.
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

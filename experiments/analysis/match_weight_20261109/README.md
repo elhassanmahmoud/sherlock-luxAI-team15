@@ -6,11 +6,15 @@ Der [Plan](../../../docs/superpowers/plans/2026-11-09-match-weight-training.md) 
 
 ## Stand
 
+**Aktuell: Ersatzrunde v2 vollständig abgeschlossen und unabhängig geprüft.** Vier Endnetze, 1.764 akzeptierte Ausführungen und 240.000 Updates. Einschließlich unterbrochenem v1 insgesamt 1.998 Ausführungen und 262.500 Updates. Noch keine Leistungsprüfung; [Trainingsbericht](TRAININGSERGEBNIS.md). V14/ZIP unverändert.
+
+### Historische Unterbrechung
+
 Versuch v1 unvollständig durch einen Fehler in der Laufüberwachung: Nach vier akzeptierten Technikspielen und je 40 Vorlauf- plus 75 Lernspielen wurde ein falsch formatierter Kontingentzeitstempel geschrieben. Beide Worker wurden an einer Spielgrenze beendet, je 11.250 tatsächliche Updates. Zusammen 234 Ausführungen und 22.500 Updates; keine Leistungsprüfung, keine Schlussfolgerung über die Rewardhypothese.
 
 Originale v1-Dateien und unvollständige Gewichte bleiben unverändert erhalten. Die realen Vorläufe wurden zuvor unabhängig geprüft: je 142.110 Replayzeilen, ausschließlich erwartete Rewardunterschiede. Root schloss Quellen-/Eingabebindungen und Prozessende unter a96ddeb ab. V14 und ZIP unverändert.
 
-Der geprüfte Kontingentschreiber erzeugt Zeitstempel nun automatisch im richtigen Format. 44 gezielte integrierte Tests sowie unabhängiger Recovery-Review bestanden. Laut ausdrücklichem Plananhang folgt genau eine manuell aufgenommene technische Ersatzrunde v2 mit frischen Originalgewichten, denselben festen Karten und unverändertem 40+400-Lernumfang. Noch keine v2-Spiele. Keine automatische Wiederaufnahme und keine Auswahl unvollständiger Gewichte.
+Der geprüfte Kontingentschreiber erzeugt Zeitstempel nun automatisch im richtigen Format. 44 gezielte integrierte Tests sowie unabhängiger Recovery-Review bestanden. Laut ausdrücklichem Plananhang folgt genau eine manuell aufgenommene technische Ersatzrunde v2 mit frischen Originalgewichten, denselben festen Karten und unverändertem 40+400-Lernumfang. Die anschließend separat aufgenommene Ersatzrunde ist inzwischen vollständig abgeschlossen (Bericht oben). Keine automatische Wiederaufnahme und keine Auswahl unvollständiger Gewichte.
 
 ## Belege und Grenzen
 

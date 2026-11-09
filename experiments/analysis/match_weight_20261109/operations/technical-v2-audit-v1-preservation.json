@@ -1,0 +1,77 @@
+{
+  "status": "PASS_KNOWN_V1_HASHES",
+  "known_v1_files_rehashed": 20,
+  "checked_files": [
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/control-0-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/control-1-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/control-initial.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/games.jsonl",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/match-0-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/match-1-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/technical_v1/technical/match-initial.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/state.json",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/control/incomplete.pth",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/control/prefill-replay.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/control/prefill-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/control/prefill.pth",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/match/incomplete.pth",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/match/prefill-replay.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/match/prefill-reward-audit.npz",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_weight_20261109/pair48_v1/match/prefill.pth"
+  ],
+  "reproduction": [
+    {
+      "role": "control",
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 9946007,
+        "side": "player_0"
+      },
+      "native_equal": true,
+      "formula_npz_bytes_equal": true,
+      "outcomes_equal": true
+    },
+    {
+      "role": "control",
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "native_equal": true,
+      "formula_npz_bytes_equal": true,
+      "outcomes_equal": true
+    },
+    {
+      "role": "match",
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 9946007,
+        "side": "player_0"
+      },
+      "native_equal": true,
+      "formula_npz_bytes_equal": true,
+      "outcomes_equal": true
+    },
+    {
+      "role": "match",
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "native_equal": true,
+      "formula_npz_bytes_equal": true,
+      "outcomes_equal": true
+    }
+  ],
+  "limit": "Known prior hash-bound v1 technical files, stopped owner/checkpoints and accepted prefills are unchanged; no complete historical hash baseline exists here for every unbound v1 raw log."
+}

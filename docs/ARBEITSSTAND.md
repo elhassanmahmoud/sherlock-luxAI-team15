@@ -8,6 +8,24 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Vier Matchgewicht-Netze vollständig trainiert
+
+- Akzeptierte Ersatzrunde v2: vier bekannte Technikspiele, 160 Vorlauf- und 1.600 Lernspiele, 240.000 echte Updates. Beide Paare und alle gespeicherten Endzustände unabhängig und durch Root abgenommen; Quelle `207f504` erst nach versiegelter Gesamtabnahme freigegeben. Alle eigenen Trainingsprozesse beendet. [Bericht](../experiments/analysis/match_weight_20261109/TRAININGSERGEBNIS.md).
+- Unterbrochenes v1 bleibt vollständig archiviert und wird offen mitgezählt: insgesamt 1.998 Ausführungen und 262.500 Updates. Keine unvollständigen Gewichte ausgewählt. V14/ZIP unverändert; technisch erfolgreiches Training ist noch kein stärkerer Agent.
+- Nächster bereits festgelegter Schritt: tatsächliche Montage-/Loaderprüfung von V14, CONTROL38 und MATCH38, danach separat 200 Leistungsspiele. Vergleichswerkzeuge extern vorbereitet, noch nicht aufgenommen oder ausgeführt. Keine Tests parallel zu Modellen, keine automatischen Phasenwechsel/Neustarts. Akku und Restkontingent erlaubt, Resets ausschließlich durch Moayed.
+
+## 09.11.2026 – Erstes Matchgewichtspaar akzeptiert, zweites läuft
+
+- Paar 48 v2 vollständig: je 40 Vorlauf- und 400 Lernspiele, je 60.000 tatsächliche Adam-Updates. Originale Abschlussvalidatoren, unabhängige Prüfung aller Endtensoren/Adamzustände/finalen Replays und Root-Quellen-/Datei-/Prozessprüfung bestanden. Kein Stärkenachweis; noch keine Leistungsdaten.
+- Paar 49 v2 separat unter derselben unveränderten Quelle `207f504` gestartet. Maßgeblich `experiments/analysis/match_weight_20261109/pair49_v2/state.json`; eigene Originalworker nicht duplizieren. Wieder manuelle Root-Abnahme nach beiden 40er-Vorläufen, danach die festen 400 Lernspiele je Arm. Beide tatsächlichen Vorläufe jetzt durch Root und unabhängig akzeptiert (je 142.731 Replayzeilen, 1.768 Matchsignal-Übergänge); Originalworker manuell zum Lernen freigegeben. Release SHA `153425cd9b6fd716fa8b23e60aa2d4e0f4921629f152d6827dbcaeeb026c14b0`.
+- Quelle/HEAD bleiben bis vollständigem Trainingsabschluss fest; keine parallelen Tests. Kontingent wird über den geprüften ISO-Schreiber aktualisiert (zuletzt 27 Prozent). V1 bleibt unvollständig archiviert, V14/ZIP unverändert. Dieser reine Laufvermerk wird erst nach dem Freeze committet.
+
+## 09.11.2026 – Matchgewicht-Ersatzpaar 48 läuft unter fester Quelle
+
+- Quelle `207f504cf75920e4569ef3084b6cd916df76243c` ist auf GitHub und in der Hauptkopie. Vier Ersatztechnikspiele und beide tatsächlichen 40er-Vorläufe unabhängig abgenommen. Gleiche bekannten Technikverläufe wie v1, je 142.110 gepaarte Vorlaufübergänge und beabsichtigter Rewardkontrast; gespeicherte Checkpointtensoren zusätzlich durch Root geprüft.
+- Originalpaar 48 v2 manuell freigegeben, Release `9eae20cf3dd4dc376f07fa3e914c1f13baed4a7763b54a63be778149ddeb105e`. Tatsächliches Lernen läuft; maßgeblich `experiments/analysis/match_weight_20261109/pair48_v2/state.json`, Owner 21015, maximal zwei Worker. Keine Doppelstarts, Tests, Quellen-/HEADänderungen oder automatische nächste Phase.
+- Geprüfter Kontingentschreiber hat auch die erste reale Aktualisierung während des Lernens erfolgreich durchgeführt (16:04 UTC, 25 Prozent verbraucht). Kein Reset, Akku erlaubt. V1-Daten und Abgabe bleiben unverändert. Dieser reine Laufvermerk wird erst nach dem Quellenfreeze committet; er behauptet keinen Trainingsabschluss oder Stärkegewinn.
+
 ## 09.11.2026 – Matchgewicht: Überwachungsfehler behoben, v1 unvollständig
 
 - Vier echte Technikspiele und beide 40er-Vorläufe unabhängig bestanden; danach je 75 Lernspiele und 11.250 Updates. Die Kontingentüberwachung schrieb einen ungültigen UTC-Zeitstempel statt ISO 8601. Deshalb stoppte der Guard beide Worker an einer Spielgrenze; echte Quota war verfügbar (23 Prozent). Verantwortlich ist die Laufsteuerung, kein belegter Fehler des Lernansatzes. Kein Leistungstest oder stärkerer Nachfolger.

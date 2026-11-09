@@ -1,0 +1,149 @@
+"""Pair48 actual final audit; execute only after actual owner and worker exit.
+No project imports, agents, environments, games, tests or repository writes.
+Torch import and actual final checkpoint/NPZ reads are deferred past process gate.
+"""
+from pathlib import Path
+import argparse,hashlib,json,math,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15');B=ROOT/'experiments/analysis/match_weight_20261109';PHASE=B/'pair48_v2';OUT=Path('/tmp/match-weight-pair48-v2-final-audit')
+ADMISSION_SHA='f49d770fb7f4f7688434b7a371151aa5b72bd75c752bf756fde4c7f69f23dcac';HEAD='207f504cf75920e4569ef3084b6cd916df76243c';ROLES=['control','match']
+PREFILL_PINS={'control':'ca972ec02071bb01ef2cf7f482487a53388bf7d6dfa5f9086234ba723df29ad5','match':'2b8821c7c79b394f3a2a57210ab0886e3a33da3dac08e6d864e5a27ee2363068'}
+PRIOR_RESULT_SHA='62cf2c59dde2d62f2081aa3acec8648466e3cd05ca72466d75738fea040980b6';PRIOR_SCRIPT_SHA='86cc63b6fb06623af6a9876472522389cd6dddcb79058d95e2ee5e057bfd734d';PRIOR_REPORT_SHA='025a3c68241afb121898c7dca3d6cf39aebe37d78e6ba46a0cc0db3ecacfba35'
+checks=0;cache={};bindings=[];torch=None
+
+def ck(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):ck(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def typed(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if torch is not None and isinstance(x,torch.Tensor):
+   t=x.detach().cpu().contiguous();emit(b'tensor');emit(str(t.dtype).encode());visit(list(t.shape));emit(t.reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for y in x:visit(y)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+def gate(s):
+ ck(s['status']=='complete' and s['stage']=='pair48' and s['start']==48 and s['profile']=='match_weight_20261109' and s['active']==[],'actual complete pair48 owner')
+ ck(set(s['jobs'])==set(s['receipts'])==set(s['final_checks'])==set(ROLES),'exact completed two-role pair')
+ pids={s['owner_pid']};groups=set()
+ for role,j in s['jobs'].items():
+  ck(j['returncode']==0 and j['owner_pid']==s['owner_pid'] and j.get('finished_at') is not None,'successful original worker '+role);pids.add(j['pid']);groups.add(j['pgid'])
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid='],text=True,timeout=10)
+ ck(not any(int(p) in pids or int(g) in groups for p,g in (l.split() for l in snapshot.splitlines() if l.strip())),'actual owner and original workers/groups absent')
+ ck(s.get('awaiting_root_release') is False and s.get('promotion') is False,'owner final inactive no promotion')
+ return dict(owner_pid=s['owner_pid'],worker_pids={r:j['pid'] for r,j in s['jobs'].items()},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+def paired(x):return {k:x[k] for k in ['key','native_sha256','trajectory_sha256','reward_audit','final_action_audit','our_wins','opp_wins','our_points','opp_points','result']}
+
+def main():
+ global torch
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--run-after-owner-exit',action='store_true',required=True);args=p.parse_args();ck(args.run_after_owner_exit,'explicit final-only execution')
+ # No final models, final NPZs or torch before this real process gate.
+ state=read(PHASE/'state.json');process_before=gate(state)
+ a=read(B/'pair48-v2-admission.json');pin(B/'pair48-v2-admission.json',ADMISSION_SHA,'actual pair48 admission')
+ ck(a['source']==state['source'] and a['source']['head']==HEAD and state['admission_sha256']==ADMISSION_SHA,'same original frozen source admission')
+ actual_head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=10).strip();ck(actual_head==HEAD,'current HEAD still frozen')
+ for group in ['inputs','protected']:
+  for path,h in a[group].items():pin(path,h,'admission '+group)
+ for path,h in a['source']['files'].items():pin(path,h,'source file')
+ pin(a['source']['executable'],a['source']['executable_sha256'],'source executable')
+ for path,h in state['inputs'].items():pin(path,h,'owner input')
+ prior_dir=Path('/tmp/match-weight-pair48-v2-prefill-audit')
+ pin(prior_dir/'results.json',PRIOR_RESULT_SHA,'accepted independent prefill result');pin(prior_dir/'check.py',PRIOR_SCRIPT_SHA,'accepted prefill script');pin('/tmp/match-weight-pair48-v2-prefill-review.md',PRIOR_REPORT_SHA,'accepted prefill report')
+ prior=read(prior_dir/'results.json');ck(prior['status']=='PASS' and prior['prefill_sha256']==PREFILL_PINS and prior['start']==48,'reuse accepted40game prefills')
+ opp=np.random.default_rng(48).choice(['solution92','sol92_sq','default','rush'],440,p=[.6,.2,.1,.1]);plan=[]
+ for phase,count,offset in [('prefill',40,300),('train',400,0)]:
+  for i in range(count):plan.append(dict(phase=phase,game=i,seed=9960000+offset+i//2,side=['player_0','player_1'][i%2],opponent=str(opp[len(plan)])))
+ ck(a['rollout_plan']==plan and dict(a['config']['control'],w_match=20)==a['config']['match'] and a['config']['control']['w_match']==2,'fixed full schedule and only reward contrast')
+ for role,prefill_pin in PREFILL_PINS.items():pin(PHASE/role/'prefill.json',prefill_pin,'unchanged accepted prefill proof')
+ release_path=PHASE/'release.json';release=read(release_path);release_sha=sha(release_path)
+ ck(release['profile']=='match_weight_20261109' and release['status']=='approved' and release['start']==48 and release['roles']==ROLES and release['source']==a['source'] and release['admission_sha256']==ADMISSION_SHA and release['prefill_sha256']==PREFILL_PINS,'actual manual release bound to both accepted prefills')
+ pin(release['root_review'],release['root_review_sha256'],'accepted manual Root review');review=read(release['root_review'])
+ ck(review['status']=='PASS' and review['profile']==a['profile'] and review['start']==48 and review['source']==a['source'] and review['admission_sha256']==ADMISSION_SHA and review['prefill_sha256']==PREFILL_PINS,'actual Root review identity')
+ import torch as torch_module
+ torch=torch_module;torch.set_num_threads(1)
+ shapes={'body.0.weight':(256,79),'body.0.bias':(256,),'body.2.weight':(256,256),'body.2.bias':(256,),'value.0.weight':(128,256),'value.0.bias':(128,),'value.2.weight':(1,128),'value.2.bias':(1,),'adv.0.weight':(128,256),'adv.0.bias':(128,),'adv.2.weight':(6,128),'adv.2.bias':(6,)}
+ summaries={}
+ for role in ROLES:
+  directory=PHASE/role;receipt_path=directory/'receipt.json';r=read(receipt_path);prefill=read(directory/'prefill.json');cfg=a['config'][role]
+  pin(receipt_path,state['receipts'][role]['sha256'],'actual owner final receipt');ck(state['receipts'][role]['path']==str(receipt_path),'exact receipt path')
+  ck(state['final_checks'][role]==dict(status='PASS',role=role,start=48,games=440,learn_steps=60000,receipt_sha256=sha(receipt_path)),'actual owner original final validator receipt')
+  expected_cmd=[a['python'],'-B','-m','scripts.match_weight_study','worker','--admission',str(B/'pair48-v2-admission.json'),'--admission-sha',ADMISSION_SHA,'--owner-state',str(PHASE/'state.json'),'--role',role]
+  ck(r['status']=='complete' and r['profile']==a['profile'] and r['stage']=='pair48' and r['start']==48 and r['role']==role and r['source']==a['source'] and r['config']==a['config'] and r['admission_sha256']==ADMISSION_SHA and r['command']==state['jobs'][role]['argv']==expected_cmd and r['release_sha256']==release_sha and r['no_strength_claim'] is True,'complete fixed final receipt')
+  for path,h in r['files'].items():pin(path,h,'actual receipt artifact')
+  ck({str(f) for f in directory.iterdir() if f.is_file()}==set(r['files'])|{str(receipt_path)},'all actual final artifacts bound')
+  ck(not any(f.name.startswith('incomplete') for f in directory.iterdir()),'no incomplete candidate artifacts')
+  for path,h in prefill['files'].items():pin(path,h,'unchanged accepted prefill file')
+  ck(prefill['replay_size']==prior['roles'][role]['replay_rows'] and prefill['initial']==prefill['current'] and prefill['learn_steps']==0,'unchanged accepted prefill metadata')
+  ck(read(directory/'waiting.json')==dict(profile=a['profile'],role=role,start=48,admission_sha256=ADMISSION_SHA,prefill_sha256=PREFILL_PINS[role]),'unchanged original waiting marker')
+  with (directory/'games.jsonl').open() as f:rows=[json.loads(line) for line in f]
+  ck(len(rows)==440 and rows==r['games'] and [x['key'] for x in rows]==plan,'actual440raw rows exact fixed chronological plan')
+  ck([paired(x) for x in rows[:40]]==prefill['paired_rows'],'previously accepted prefill prefix preserved')
+  learn=0;total=0;nonzero=0;finite_loss=[]
+  for i,x in enumerate(rows):
+   env=60000+303*i;expected_updates=0 if i<40 else sum((env+j+1)%cfg['train_every']==0 for j in range(303) if j%101!=0)
+   ck(x['role']==role and x['before']==dict(env_steps=env,learn_steps=learn),'actual before counters')
+   learn+=expected_updates;ck(x['env_steps']==env+303 and x['learn_steps']==learn and x['steps']==303 and x['point_counting_version']==2,'actual complete v2/update counters')
+   ck(x['seed']==x['key']['seed'] and x['side']==x['key']['side'] and math.isclose(x['epsilon'],.05,abs_tol=1e-12,rel_tol=0),'exact game key epsilon')
+   ck(x['loss'] is None if i<40 else isinstance(x['loss'],(int,float)) and math.isfinite(x['loss']) and x['loss']>=0,'reported game mean loss finite')
+   if i>=40:finite_loss.append(x['loss'])
+   audit=x['reward_audit'];labels=x['final_action_audit'];n=audit['transitions'];total+=n;nonzero+=audit['nonzero_outcome_rows']
+   ck(audit['updates']==labels['act_calls']==labels['update_calls']==303 and n==labels['checked_replay_transitions']>0 and 0<=audit['nonzero_outcome_rows']<=n and 0<=audit['masked_final_actions']<=n,'actual live reward/UID/final-label coverage')
+   for field in ['counterfactual_sha256','nonreward_sha256']:ck(len(audit[field])==64 and all(c in '0123456789abcdef' for c in audit[field]),'live reward digest schema')
+   ck(x['result']==(1. if x['our_wins']>x['opp_wins'] else .5 if x['our_wins']==x['opp_wins'] else 0.) and x['point_win']==(1. if x['our_points']>x['opp_points'] else .5 if x['our_points']==x['opp_points'] else 0.),'actual outcome arithmetic')
+   if 'caught_errors' in x:ck(x['caught_errors']==0,'explicit zero error field')
+  ck(learn==60000 and rows[-1]['env_steps']==193320 and len(finite_loss)==400,'exact completed400learn games60000updates193320env')
+  cp=torch.load(directory/'final.pth',map_location='cpu',weights_only=True)
+  ck(cp['cfg']==cfg and cp['feature_dim']==79 and cp['n_actions']==6 and cp['ensemble']==[] and cp['ensemble_dims']==[] and cp['env_steps']==193320 and cp['learn_steps']==60000,'actual final checkpoint config architecture counters')
+  ck(cp['match_weight']==dict(profile=a['profile'],status='complete',role=role,start=48,source=a['source'],completed_games=440,component_index=18),'actual final method identity')
+  for name in ['q','target_q']:
+   net=cp[name];ck(set(net)==set(shapes),'actual exact Dueling parameter keys')
+   for key,shape in shapes.items():ck(isinstance(net[key],torch.Tensor) and tuple(net[key].shape)==shape and net[key].dtype==torch.float32 and bool(torch.isfinite(net[key]).all()),'actual finite parameter '+name+'.'+key)
+  actual_identity=dict(q=typed(cp['q']),target=typed(cp['target_q']),optimizer=typed(cp['opt']))
+  ck(actual_identity==r['final_identity'] and actual_identity['q']!=prefill['initial']['q'],'actual final tensor/Adam identities and changed learning weights')
+  ck(all(torch.equal(cp['q'][key],cp['target_q'][key]) for key in shapes),'actual final target sync at60000')
+  opt=cp['opt'];ck(len(opt['param_groups'])==1,'single actual Adam group');group=opt['param_groups'][0];ids=group['params']
+  ck(list(cp['q'])==list(shapes) and len(ids)==len(shapes) and len(set(ids))==len(ids) and set(opt['state'])==set(ids),'actual Adam state mapped to every parameter')
+  ck(group['lr']==cfg['lr'] and group['betas']==(0.9,0.999) and group['eps']==1e-8 and group['weight_decay']==0,'fixed actual Adam settings')
+  for pid,key in zip(ids,shapes):
+   slot=opt['state'][pid];step=slot['step'];ck(isinstance(step,torch.Tensor) and step.numel()==1 and bool(torch.isfinite(step).all()) and float(step)==60000,'every actual Adam step exactly60000')
+   for field in ['exp_avg','exp_avg_sq']:
+    t=slot[field];ck(isinstance(t,torch.Tensor) and tuple(t.shape)==shapes[key] and t.dtype==torch.float32 and bool(torch.isfinite(t).all()),'actual finite Adam moment')
+    if field=='exp_avg_sq':ck(bool((t>=0).all()),'nonnegative actual Adam second moment')
+  # Load only final replay. Accepted prefill NPZ arrays are never loaded again.
+  with np.load(directory/'final-replay.npz',allow_pickle=False) as z:d={k:z[k] for k in z.files}
+  n=min(total,cfg['buffer_capacity'])
+  ck(set(d)=={'s','a','r','ns','done','mask'} and d['s'].shape==d['ns'].shape==(n,79) and d['mask'].shape==(n,6) and all(d[k].shape==(n,) for k in ['a','r','done']),'actual final replay ring schema size')
+  ck({k:v.dtype.str for k,v in d.items()}==dict(s='<f4',a='<i8',r='<f4',ns='<f4',done='<f4',mask='|b1') and all(np.isfinite(v).all() for v in d.values()),'actual final finite replay dtypes')
+  ck(((d['a']>=0)&(d['a']<6)).all() and np.isin(d['done'],[0,1]).all() and d['mask'].any(1).all(),'actual final legal actions terminals masks')
+  ck(typed(d)==r['final_replay_sha256'],'independently reconstructed actual final replay identity')
+  summaries[role]=dict(games=440,prefill=40,train=400,env_steps=193320,learn_steps=60000,reported_finite_training_game_mean_losses=400,mean_reported_game_loss=float(np.mean(finite_loss)),total_inserted_replay_rows=total,total_live_match_outcome_rows=nonzero,final_replay_rows=n,retained_terminal_rows=int(d['done'].sum()),retained_action_counts=np.bincount(d['a'],minlength=6).tolist(),actual_final_identity=actual_identity,actual_final_replay_sha256=r['final_replay_sha256'],receipt_sha256=sha(receipt_path),final_checkpoint_sha256=sha(directory/'final.pth'))
+  del cp,d,opt,net,slot,t,group,ids
+ process_after=gate(read(PHASE/'state.json'))
+ result=dict(status='PASS',checks=checks,start=48,source_head=HEAD,actual_head=actual_head,admission_sha256=ADMISSION_SHA,release_sha256=release_sha,prefill_sha256=PREFILL_PINS,roles=summaries,final_role_q_identities_differ=summaries['control']['actual_final_identity']['q']!=summaries['match']['actual_final_identity']['q'],process_before=process_before,process_after=process_after,hash_bindings_checked=len(bindings),unique_input_files_hashed=len(cache),script_sha256=sha(Path(__file__)),no_release_or_next_phase_written=True,limits=['Accepted prefill arrays were not rescanned; fixed proof/file/result/script/report hashes and raw40-row prefix are unchanged.','All actual final Q/Target/Adam tensors and60000steps are independently recovered.400reported game mean losses per arm are finite; individual60000batch losses were not archived.','Successful bound play_one path refuses caught errors on both players. Raw rows have no separate per-player caught-error counters, so zero-error status is a successful-runtime assertion.','Final ring-buffer arrays are recovered and hashed. UID/outcome/counterfactual streams for all training transitions are not archived; original reward provenance and per-game nonreward digests cannot be regenerated from final replay alone.','Post-learning paired trajectories may differ. No performance/strength claim, nomination or pair49 authorization.'])
+ (OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n');print(json.dumps(result,indent=2,sort_keys=True))
+
+if __name__=='__main__':
+ try:main()
+ except Exception as exc:
+  (OUT/'failure.json').write_text(json.dumps(dict(status='FAIL',checks_completed=checks,error=f'{type(exc).__name__}: {exc}'),indent=2)+'\n');raise
