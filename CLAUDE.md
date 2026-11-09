@@ -21,6 +21,8 @@
 
 **Separater SAP-Vorhaltevergleich 09.11. abgeschlossen:** vier bekannte Technikspiele und 120 feste Vergleiche. Neue Variante Solution40/40 statt V1439/40, direkt jedoch18/40; Direktgate verfehlt, kein Nachschlag und kein V14-Ersatz. Null Trainingsupdates, gleiche36Netze. Originalanalyse und unabhängiger Datencheck bestanden; [Ergebnis mit Unsicherheit](experiments/analysis/sap_leading_screen_20261109/ERGEBNIS.md). 40/40 auf20Karten belegt keine allgemeine100%-Quote. Moayed hat für diesen Vergleich ausdrücklich Akkubetrieb erlaubt und überwacht den Akku; übrige Quellen-/Prozess-/Quota-/Gewichtskontrollen bleiben aktiv. Aktuelle Folgearbeit im Arbeitsstand, abgeschlossenen Versuch nicht erneut starten.
 
+**SAP-Bewegungsmodell am 09.11. ebenfalls abgeschlossen:** Vier Technikspiele und 120 Vergleiche, ON/OFF gegen Solution jeweils 38/40, direkt 21/40. Direktgate verfehlt, kein V14-Ersatz; keine Lernupdates, gleiche 36 Netze. Unabhängig geprüfter [Bericht](experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md). Folgearbeit im Arbeitsstand; geschlossene Studien nicht wiederholen.
+
 ## Kontext
 
 ### Aktuelle Orientierung nach dem Review (21.10.2026)

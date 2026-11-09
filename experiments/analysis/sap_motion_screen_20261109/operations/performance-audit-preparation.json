@@ -1,0 +1,37 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "source": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_leading_screen_20261109/operations/performance-data-check.py.txt",
+  "source_sha256": "dfb3d9d918e8f826126b1d1c1e8ab7975a0516fc70d0d33760b31a2a861e812e",
+  "checker": "/tmp/sap-motion-data-review/performance-data-check.py",
+  "checker_sha256": "03a058464cb86819166ee1bbd8e641a511d2f8f87c4cc1e5340d94f0737211f7",
+  "literal_replacements": {
+    "sap_leading_screen_20261109": "sap_motion_screen_20261109",
+    "scripts.sap_leading_eval": "scripts.sap_motion_eval",
+    "/tmp/sap-leading-performance-data-review.json": "/tmp/sap-motion-data-review/performance-data-review.json",
+    "9940100": "9942100",
+    "9940000": "9942000",
+    "9940020": "9942020"
+  },
+  "occurrences": {
+    "sap_leading_screen_20261109": 2,
+    "scripts.sap_leading_eval": 1,
+    "/tmp/sap-leading-performance-data-review.json": 1,
+    "9940100": 1,
+    "9940000": 2,
+    "9940020": 1
+  },
+  "statics": {
+    "syntax_parse": "PASS",
+    "inverse_replacement_byte_identity": true,
+    "imports": [
+      "pathlib",
+      "argparse",
+      "hashlib",
+      "json",
+      "math",
+      "numpy"
+    ]
+  },
+  "required_before_execution": "Root signal after all 120 games and completed owner state and summary",
+  "no_data_checks_games_or_tests_executed": true
+}

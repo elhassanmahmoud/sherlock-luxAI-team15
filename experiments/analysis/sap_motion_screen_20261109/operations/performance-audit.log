@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "checks": 2833,
+  "calculated": {
+    "games": 120,
+    "exposed_panel_maps": 10,
+    "solution": {
+      "off_solution": {
+        "W": 38,
+        "D": 0,
+        "L": 2,
+        "score": 0.95,
+        "ci95": [
+          0.875,
+          1.0
+        ]
+      },
+      "on_solution": {
+        "W": 38,
+        "D": 0,
+        "L": 2,
+        "score": 0.95,
+        "ci95": [
+          0.875,
+          1.0
+        ]
+      }
+    },
+    "direct": {
+      "W": 21,
+      "D": 0,
+      "L": 19,
+      "score": 0.525,
+      "ci95": [
+        0.5,
+        0.575
+      ]
+    },
+    "solution_delta": 0.0,
+    "solution_delta_ci95": [
+      0.0,
+      0.0
+    ],
+    "gates": {
+      "exposure": true,
+      "solution": true,
+      "direct": false
+    },
+    "eligible_for_separate_design": false,
+    "promotion": false
+  },
+  "actual_changes": {
+    "off_solution": 0,
+    "on_solution": 478,
+    "on_direct": 12
+  },
+  "report_sha256": "9639c2869d33ebadf0b6d8203b8b4523cedfb09f90f2ce5107256dffcccb8347"
+}

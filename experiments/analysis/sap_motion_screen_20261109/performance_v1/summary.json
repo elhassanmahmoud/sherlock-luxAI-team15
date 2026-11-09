@@ -1,0 +1,61 @@
+{
+  "direct": {
+    "D": 0,
+    "L": 19,
+    "W": 21,
+    "ci95": [
+      0.5,
+      0.575
+    ],
+    "score": 0.525
+  },
+  "eligible_for_separate_design": false,
+  "exposed_panel_maps": 10,
+  "games": 120,
+  "gates": {
+    "direct": false,
+    "exposure": true,
+    "solution": true
+  },
+  "input_sha256": {
+    "admission": "d2c1b12891f3cbb6cdf4be6b9b41f6b1fb2581ff002cbb4ace57d8d18faf5d92",
+    "receipts": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/off_solution/receipt.json": "e7fe22beee7cbf8097f0ab30bdf83e31265b12e298b31734b0d695373b8c5989",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_direct/receipt.json": "f4fef3c84e369b374f2dede12ca9334c7deb61cdbb077005f8431b18fc47be0a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/receipt.json": "d59ca12cb0652123002f5cb609f62f0329ebe997cf3ebfb0fcec02593a0f7faf"
+    },
+    "state": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/state.json": "fea7c686d169735437b853b61a7bd5935d2bae0793994dee49b867a58339c262"
+    }
+  },
+  "promotion": false,
+  "solution": {
+    "off_solution": {
+      "D": 0,
+      "L": 2,
+      "W": 38,
+      "ci95": [
+        0.875,
+        1.0
+      ],
+      "score": 0.95
+    },
+    "on_solution": {
+      "D": 0,
+      "L": 2,
+      "W": 38,
+      "ci95": [
+        0.875,
+        1.0
+      ],
+      "score": 0.95
+    }
+  },
+  "solution_delta": 0.0,
+  "solution_delta_ci95": [
+    0.0,
+    0.0
+  ],
+  "status": "complete_descriptive",
+  "uncertainty": "20 whole-map clusters/block;5000 bootstrap draws,PCG64 seed0,unadjusted95%; descriptive"
+}

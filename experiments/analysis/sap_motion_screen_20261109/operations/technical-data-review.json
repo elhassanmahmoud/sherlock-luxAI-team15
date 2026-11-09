@@ -1,0 +1,283 @@
+{
+  "status": "PASS",
+  "profile": "sap_motion_screen_20261109",
+  "source_head": "4ceff1943e274f476dab82c37b9a93e682a00c63",
+  "checks": 16462,
+  "games": [
+    {
+      "mode": "OFF",
+      "seed": 831006,
+      "side": "player_1",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": true,
+      "min_intervention_posterior": null,
+      "motion_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "motion_decisions": []
+    },
+    {
+      "mode": "OFF",
+      "seed": 831000,
+      "side": "player_0",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": true,
+      "min_intervention_posterior": null,
+      "motion_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "motion_decisions": []
+    },
+    {
+      "mode": "ON",
+      "seed": 831006,
+      "side": "player_1",
+      "frames": 303,
+      "changes": 18,
+      "off_reproduced": false,
+      "min_intervention_posterior": 0.9999942870558913,
+      "motion_counts": [
+        31,
+        13,
+        0,
+        10,
+        5
+      ],
+      "motion_decisions": [
+        {
+          "step": 90,
+          "samples": 37,
+          "lower_bound": 0.08549303540498214
+        },
+        {
+          "step": 136,
+          "samples": 40,
+          "lower_bound": 0.08445163967635431
+        },
+        {
+          "step": 141,
+          "samples": 40,
+          "lower_bound": 0.08445163967635431
+        },
+        {
+          "step": 156,
+          "samples": 40,
+          "lower_bound": 0.08445163967635431
+        },
+        {
+          "step": 157,
+          "samples": 41,
+          "lower_bound": 0.09260758323297448
+        },
+        {
+          "step": 158,
+          "samples": 42,
+          "lower_bound": 0.10045906959694005
+        },
+        {
+          "step": 160,
+          "samples": 42,
+          "lower_bound": 0.10045906959694005
+        },
+        {
+          "step": 162,
+          "samples": 44,
+          "lower_bound": 0.10544452266453411
+        },
+        {
+          "step": 172,
+          "samples": 47,
+          "lower_bound": 0.10760090035155329
+        },
+        {
+          "step": 181,
+          "samples": 49,
+          "lower_bound": 0.11188878770227628
+        },
+        {
+          "step": 201,
+          "samples": 54,
+          "lower_bound": 0.11729881288677765
+        },
+        {
+          "step": 256,
+          "samples": 54,
+          "lower_bound": 0.11729881288677765
+        },
+        {
+          "step": 261,
+          "samples": 55,
+          "lower_bound": 0.008612170532583813
+        },
+        {
+          "step": 262,
+          "samples": 56,
+          "lower_bound": 0.015936787803039726
+        },
+        {
+          "step": 281,
+          "samples": 57,
+          "lower_bound": 0.10781538394853563
+        },
+        {
+          "step": 282,
+          "samples": 58,
+          "lower_bound": 0.11348835492447341
+        },
+        {
+          "step": 292,
+          "samples": 58,
+          "lower_bound": 0.11348835492447341
+        },
+        {
+          "step": 293,
+          "samples": 59,
+          "lower_bound": 0.11148235034974222
+        }
+      ]
+    },
+    {
+      "mode": "ON",
+      "seed": 831000,
+      "side": "player_0",
+      "frames": 303,
+      "changes": 0,
+      "off_reproduced": false,
+      "min_intervention_posterior": null,
+      "motion_counts": [
+        24,
+        10,
+        1,
+        4,
+        6
+      ],
+      "motion_decisions": []
+    }
+  ],
+  "total_games": 4,
+  "total_frames": 1212,
+  "total_changes": 18,
+  "input_sha256": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/state.json": "28eb835586f58ee68a3ade5b44db63d228ad1e3736c468af3117425e53720a0c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical-admission.json": "4f8cd240b1fe8b8070c4521f4f6f01798186eb3108e08c1e51e6e62d6f9e2b50",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/receipt.json": "f056852a7d5a9791b82ba20acea83b7f54d0960038a9fbb4ab56111f3af8110e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/events_00.jsonl": "55056dd981230af3f86075eda55645320e6112a5e35b97981a8eb7c2c7c7288b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/events_01.jsonl": "753807b664f7df82aaaa0f458ee66a4f41dd63bb3f96408b30b0079f5c253d1a",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/events_02.jsonl": "85f3be6964f10aed8e0ce2f57f465512cab686404aa27c56ed9a0cfd82e4f46e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/events_03.jsonl": "7834d16aa5318ad8c1be34c122a2c53085834bb16fc9fcb04425dab199cd0840",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/technical_v1/technical/games.jsonl": "9e67eb75dd0235a2f584fb1284c4740fa397954e38ba8058e68b5a045e87d702"
+  },
+  "source_files_checked": 0,
+  "inputs_checked": 17,
+  "protected_checked": 3,
+  "changed_steps": [
+    {
+      "game": 2,
+      "step": 90,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 136,
+      "uid": 5
+    },
+    {
+      "game": 2,
+      "step": 141,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 156,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 157,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 158,
+      "uid": 3
+    },
+    {
+      "game": 2,
+      "step": 160,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 162,
+      "uid": 1
+    },
+    {
+      "game": 2,
+      "step": 172,
+      "uid": 8
+    },
+    {
+      "game": 2,
+      "step": 181,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 201,
+      "uid": 2
+    },
+    {
+      "game": 2,
+      "step": 256,
+      "uid": 10
+    },
+    {
+      "game": 2,
+      "step": 261,
+      "uid": 11
+    },
+    {
+      "game": 2,
+      "step": 262,
+      "uid": 11
+    },
+    {
+      "game": 2,
+      "step": 281,
+      "uid": 4
+    },
+    {
+      "game": 2,
+      "step": 282,
+      "uid": 4
+    },
+    {
+      "game": 2,
+      "step": 292,
+      "uid": 11
+    },
+    {
+      "game": 2,
+      "step": 293,
+      "uid": 11
+    }
+  ],
+  "limitations": [
+    "Standard-library stored-data check; no models, forwards, tests, games or agent imports.",
+    "Both-player action stream SHA compared with historical manifest; opposing raw actions are not stored here, so combined SHA was not independently recomputed.",
+    "Remember equality and exactly one Core call are runtime assertions of the bound successful worker; remembered array/call count are not separately stored, so no independent per-frame remeasurement of those assertions.",
+    "Public snapshots and pre/post bookkeeping are stored execution observations; no engine replay or hidden-state reconstruction. Completed three-frame labels, Dirichlet moments and stored decisions were independently recomputed.",
+    "Source objects are matched across admission/owner/receipt; no broad source inventory rehash or repeated code audit.",
+    "Known technical games only; no strength, causal improvement, performance result or promotion claim."
+  ]
+}

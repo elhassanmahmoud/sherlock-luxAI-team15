@@ -1,7 +1,5 @@
-# Separater SAP-Bewegungsvergleich, 09.11.2026
+# SAP-Bewegungsmodell abgeschlossen
 
-Ein öffentliches fünfklassiges Bewegungsmodell ergänzt V14 ausschließlich in der experimentellen Eval-Unterklasse. Es zählt abgeschlossene Bewegungen im aktuellen Spiel, berücksichtigt mögliche verlorene Nebentreffer und verändert höchstens einen SAP-Offset pro Schritt. Die 36 Netze werden nicht nachtrainiert. V14 und ZIP bleiben unverändert.
+[Ergebnis und Grenzen](ERGEBNIS.md): Vier Technikspiele und 120 Vergleiche vollständig. Solution ON/OFF jeweils 38/40, direkt 21/40; vorab festes Direktgate verfehlt. Kein Nachschlag, kein V14-Ersatz. Netze und ZIP unverändert.
 
-[Vorab festgelegte Methode und Grenzen](../../../docs/superpowers/plans/2026-11-09-sap-motion-model.md). Vier bekannte Technikspiele müssen OFF exakt reproduzieren und mindestens einen realen ON-Eingriff zeigen. Anschließend separat aufgenommene120Spiele: je40OFF/ONgegenSolution auf9942000–9942019 und40direkt auf9942100–9942119. Keine Nachschläge oder automatische Übernahme.
-
-Implementiererprüfungen:70Agent-/Hooktests PASS in2,37s und30engeRunnertests PASS in0,24s. OriginaleLogs unter preparation. Unabhängiger enger Review und Root-Code-/Hashprüfung PASS; Belege in preparation. Diese Vorbereitung enthält noch keine Leistungsspiele. Der Kartencheck fand keine beobachteten Konflikte; seine Datenlücken bleiben im seed-review.md ausdrücklich erhalten. Nutzer erlaubt Akkubetrieb, alle übrigen Laufkontrollen bleiben aktiv.
+Methode: [Vorabplan](../../../docs/superpowers/plans/2026-11-09-sap-motion-model.md). Originale Rohdaten unter technical_v1/performance_v1, Umsetzungsbelege unter preparation, tatsächliche Datenprüfungen und Abschluss unter operations. Produktiver V14-Core und 36 Gewichte nicht geändert, keine Gradientenupdates.

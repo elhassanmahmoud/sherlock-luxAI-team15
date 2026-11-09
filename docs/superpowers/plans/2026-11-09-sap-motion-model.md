@@ -30,3 +30,7 @@ Vor diesen120Spielen genau dieselben zwei bekannten technischen Schlüssel mit b
 Alle drei vorab festgelegten Screenhürden gelten unverändert: EingriffeaufmindestensfünfPanelkarten, Solution-ScoreON≥OFF, direktmindestens60Prozent (`2W+D>=48` bei40Spielen). ScoreausMatchsiegen, Remishalb. GanzeKarten einschließlichbeiderSeiten/gepaartenRollen gemeinsamresamplen,5000ZiehungenPCG64Seed0; Intervalledeskriptiv. EinFehlschlag schließt diesenVersuch ohneNachschlag. EinErfolg erlaubt nurseparateBestätigung, keineautomatischeÜbernahme. KeineStärkeausdenbekanntenTechnikkartenableiten.
 
 TatsächlicherStart erst nach aufgenommenenWerkzeugen, realemfrischemKontingent undgehashterRoot-Aufnahme. Code/HEADbleiben imLauffest. DieStromausnahme istbereitsvomNutzerautorisiert; keineweitereNetzteilfrage.
+
+## Tatsächlicher Abschluss am 09.11.
+
+124 Ausführungen vollständig; Solution beide 38/40, direkt 21/40. Direktgate verfehlt, kein Nachschlag oder Ersatz für V14. Originalanalyse und unabhängige Datenchecks bestanden, V14/ZIP unverändert. [Ergebnis](../../../experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md). Neue Aggregation ist eine separate Hypothese.

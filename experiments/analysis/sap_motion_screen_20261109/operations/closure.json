@@ -1,0 +1,78 @@
+{
+  "decision": "No extension/retry/promotion. Source freeze released only after this original admission/source check and successful independent data review.",
+  "owned_pids_gone": true,
+  "performance_audit_sha256": "9639c2869d33ebadf0b6d8203b8b4523cedfb09f90f2ce5107256dffcccb8347",
+  "protected": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "result": {
+    "direct": {
+      "D": 0,
+      "L": 19,
+      "W": 21,
+      "ci95": [
+        0.5,
+        0.575
+      ],
+      "score": 0.525
+    },
+    "eligible_for_separate_design": false,
+    "exposed_panel_maps": 10,
+    "games": 120,
+    "gates": {
+      "direct": false,
+      "exposure": true,
+      "solution": true
+    },
+    "input_sha256": {
+      "admission": "d2c1b12891f3cbb6cdf4be6b9b41f6b1fb2581ff002cbb4ace57d8d18faf5d92",
+      "receipts": {
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/off_solution/receipt.json": "e7fe22beee7cbf8097f0ab30bdf83e31265b12e298b31734b0d695373b8c5989",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_direct/receipt.json": "f4fef3c84e369b374f2dede12ca9334c7deb61cdbb077005f8431b18fc47be0a",
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/receipt.json": "d59ca12cb0652123002f5cb609f62f0329ebe997cf3ebfb0fcec02593a0f7faf"
+      },
+      "state": {
+        "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/state.json": "fea7c686d169735437b853b61a7bd5935d2bae0793994dee49b867a58339c262"
+      }
+    },
+    "promotion": false,
+    "solution": {
+      "off_solution": {
+        "D": 0,
+        "L": 2,
+        "W": 38,
+        "ci95": [
+          0.875,
+          1.0
+        ],
+        "score": 0.95
+      },
+      "on_solution": {
+        "D": 0,
+        "L": 2,
+        "W": 38,
+        "ci95": [
+          0.875,
+          1.0
+        ],
+        "score": 0.95
+      }
+    },
+    "solution_delta": 0.0,
+    "solution_delta_ci95": [
+      0.0,
+      0.0
+    ],
+    "status": "complete_descriptive",
+    "uncertainty": "20 whole-map clusters/block;5000 bootstrap draws,PCG64 seed0,unadjusted95%; descriptive"
+  },
+  "source": "4ceff1943e274f476dab82c37b9a93e682a00c63",
+  "source_and_all_admission_bindings_valid": true,
+  "state_sha256": "fea7c686d169735437b853b61a7bd5935d2bae0793994dee49b867a58339c262",
+  "status": "CLOSED_NO_PROMOTION",
+  "summary_sha256": "d159d40c6679200fa1b374d1627de81ac4f30f8f45848a322d0adeef92d524f1",
+  "technical_audit_sha256": "4282de55de23475cd93606804622b15e6b44712b8d4fea9a46588893f0fd3f4d",
+  "time": "2026-11-09T11:51:15.876880+00:00"
+}

@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Bewegungsmodell abgeschlossen: weiterhin V14
+
+- Vier Technik- und 120 Leistungsspiele vollständig: ON/OFF gegen Solution jeweils 38/40, direkt ON 21/40 [50; 57,5 %]. Zehn exponierte Panelkarten, 478 beziehungsweise zwölf geänderte Schüsse. Vorab festes Direktgate verfehlt; keine Verlängerung, kein bestätigter Nachfolger. [Ergebnis](../experiments/analysis/sap_motion_screen_20261109/ERGEBNIS.md).
+- Originalanalyse Exit 0; unabhängiger Technikcheck mit 16.462 und Leistungscheck mit 2.833 Prüfungen bestanden. Root hat ursprüngliche Aufnahme, Quellen und Dateibindungen vor Freigabe der Quelle geprüft. Alle eigenen Prozesse beendet, V14/ZIP bytegleich. Quelle 4ceff19 bis Abschluss fest; zuletzt 88 % Kontingent verbraucht, Restnutzung erlaubt, kein Reset.
+- Neue getrennte Hypothese: legale Aktionsränge aller 36 Netze gleichgewichtig mitteln. Noch keine Umsetzung oder Leistungsdaten, kein Beweis problematischer Q-Skalen. Aktuellen Folgeplan vor Start lesen; geschlossene SAP-Screens nicht wiederholen. Beim Abschlussabgleich keine neuen Mahmoud-Commits.
+
 ## 09.11.2026 – Bewegungsmodell und Vergleichswerkzeuge aufgenommen
 
 - Getrennter SAP-Prototyp samt Laufwerkzeugen fertig;70Agent-/Hooktests und30neueRunnertests tatsächlich PASS. Unabhängiger enger Review ohne Blocker; Root hat Agent und vollständigen Runnerdiff sowie die Belege geprüft. [Technischer Stand](../experiments/analysis/sap_motion_screen_20261109/README.md).

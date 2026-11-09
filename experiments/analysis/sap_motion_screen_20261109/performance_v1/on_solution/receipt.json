@@ -1,0 +1,4025 @@
+{
+  "admission_sha256": "d2c1b12891f3cbb6cdf4be6b9b41f6b1fb2581ff002cbb4ace57d8d18faf5d92",
+  "command": [
+    "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python",
+    "-B",
+    "-m",
+    "scripts.sap_motion_eval",
+    "run",
+    "--admission",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance-admission.json",
+    "--admission-sha",
+    "d2c1b12891f3cbb6cdf4be6b9b41f6b1fb2581ff002cbb4ace57d8d18faf5d92",
+    "--owner-state",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/state.json",
+    "--job",
+    "on_solution"
+  ],
+  "config": {
+    "active_targets": false,
+    "art_min_hits": 3,
+    "art_move_guard": false,
+    "art_reserve": 0,
+    "art_safe": true,
+    "art_safe_cheb": false,
+    "art_sap": true,
+    "art_splash": true,
+    "art_splash_hits": 2,
+    "art_splash_in_training": false,
+    "art_still": false,
+    "art_surplus": false,
+    "batch_size": 256,
+    "buffer_capacity": 300000,
+    "cand_boost": 0.0,
+    "cand_post": 0.0,
+    "cand_quota": 0,
+    "cand_rescue": true,
+    "canonical": true,
+    "collision_guard": true,
+    "contest_sap": false,
+    "dodge": false,
+    "dodge_auto": false,
+    "dodge_auto_max": 0.5,
+    "dodge_bait": false,
+    "dodge_distrust": 0.0,
+    "dodge_mode": "lethal",
+    "dodge_shape": false,
+    "dodge_verify": false,
+    "double_dqn": true,
+    "drift_track": true,
+    "dueling": true,
+    "early_inference": true,
+    "end_sap": 0,
+    "end_sap_hold": 1.0,
+    "energy_pref": 0.0,
+    "eps_decay_steps": 60000,
+    "eps_end": 0.05,
+    "eps_start": 1.0,
+    "est_censor": true,
+    "explore_grid": true,
+    "explore_memory": true,
+    "explore_quota": 0,
+    "explore_stale": 20,
+    "explore_until": 75,
+    "far_cand": true,
+    "far_opp": 10,
+    "fog_any": false,
+    "fog_drop_est": false,
+    "fog_prior": false,
+    "fog_reserve": 30.0,
+    "fog_sap": true,
+    "fog_sap_max_sensor": 4,
+    "fog_unknown_reward_neutral": false,
+    "fog_v2": true,
+    "fog_w_empty": 0.25,
+    "fog_w_occ": 4.0,
+    "frozen": false,
+    "gamma": 0.99,
+    "grad_clip": 5.0,
+    "guided_prob": 0.7,
+    "hidden": 256,
+    "holder_guard": false,
+    "home_first": false,
+    "home_last_only": false,
+    "home_penalty": 0.0,
+    "home_reserve": false,
+    "idle_approach": false,
+    "idle_sap": false,
+    "idle_sap_reserve": 30,
+    "keep_dead": false,
+    "keep_dead_fast": true,
+    "learn_start": 5000,
+    "lr": 0.0003,
+    "mask_actions": true,
+    "mobile_seen": false,
+    "neb_cand": false,
+    "neb_cross": true,
+    "nebula_avoid": true,
+    "nebula_avoid_min": 25,
+    "nebula_avoid_mode": "soft",
+    "nebula_infer": true,
+    "nebula_infer_drift_safe": false,
+    "no_strand": false,
+    "obey_target": false,
+    "opp_infer": false,
+    "opp_point_infer": false,
+    "overlap_infer": false,
+    "path_fix": true,
+    "point_pair_swap": false,
+    "pt_hold": false,
+    "pt_sap": true,
+    "pt_sap_reserve": 0,
+    "pt_sap_zone": false,
+    "pt_walk": false,
+    "pt_walk_from_match": 0,
+    "pt_walk_own": false,
+    "ram": false,
+    "ram_margin": 10.0,
+    "reach_assign": true,
+    "relic_filter": true,
+    "relic_prior": 0.0,
+    "relic_scout": 0,
+    "relic_search": false,
+    "relic_search_stale": 25,
+    "relic_search_until": 75,
+    "rescue_after": 30,
+    "rescue_in_training": false,
+    "reserve_sap": false,
+    "reward_fix": true,
+    "rules_in_training": false,
+    "rules_in_training_all": false,
+    "safe_moves": true,
+    "sap_dropoff_est": false,
+    "sap_geometry": false,
+    "sap_kill_first": false,
+    "sap_kill_safe": false,
+    "sap_no_overkill": true,
+    "sap_overkill_recovery": false,
+    "sap_pt_first": false,
+    "sap_relevant": false,
+    "sap_reserve_k": 0.0,
+    "sap_still": true,
+    "sap_still_all": false,
+    "sap_still_splash": true,
+    "scout_stale": 20,
+    "scout_until": 60,
+    "scripted_explore": true,
+    "siege": false,
+    "siege_min_score": 1.5,
+    "siege_prob": 0.5,
+    "siege_reserve": 0.0,
+    "smart_sap": false,
+    "spawn_proof": false,
+    "splash_dodge": false,
+    "splash_dodge_min": 0.5,
+    "splash_min_drop": 0.5,
+    "splash_safe_below": 1.0,
+    "stack_guard": false,
+    "stage_attack": false,
+    "stage_min": 3,
+    "stage_until": 70,
+    "stale_all": false,
+    "sticky": 0.0,
+    "subset_infer": true,
+    "sym_map": false,
+    "tactics_when_behind": false,
+    "target_update_every": 500,
+    "terminal_death_potential": false,
+    "threat_feats": false,
+    "train_every": 2,
+    "unstack": false,
+    "use_belief": true,
+    "use_sap": true,
+    "use_shaping": true,
+    "use_symmetry": true,
+    "w_death": 0.5,
+    "w_discovery": 0.5,
+    "w_energy": 0.1,
+    "w_explore": 0.3,
+    "w_match": 2.0,
+    "w_opp_points": 0.0,
+    "w_point": 1.0,
+    "w_sap_hit": 0.3,
+    "w_shape": 0.5,
+    "w_stack": 0.3,
+    "window_infer": false,
+    "window_infer_all": false,
+    "zone_rescue": false
+  },
+  "files": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_00.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_01.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_02.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_03.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_04.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_05.jsonl": "39d0fb1c95ceab7f1b8f17d9432a80fc9bcd9fd1dd567acb10b6360927d53309",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_06.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_07.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_08.jsonl": "694789ead65d3c24426d3ca30a92f3e8862cc5908a5c818add00ac947fd524b0",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_09.jsonl": "504b537dfb9a8a5e8654cf993fbebb6124cac889de7b8a9043e891f4429b6f63",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_10.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_11.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_12.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_13.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_14.jsonl": "4ce0145d88d94c74cffa6be3795ae8c98b401433325c00d222abd7b8256e3d44",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_15.jsonl": "fdd100c566f0743b559d699b1d38f9cd321119503114c23f00f4d0dcdcc641a2",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_16.jsonl": "8098b09ae4a074434572ebc284a126bba23cd134b27368b91ae4a1e89f13ea1e",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_17.jsonl": "2f85a1073282683e46096b6871fde94567bf42460fbc9d31ed54a0a514a670e4",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_18.jsonl": "0d1bf724c30c8457594fff2461e54822e7e0679ca7a19b2fa92b5edfa0441eba",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_19.jsonl": "62b5efa3269a86ab4cfd6b470bfbea875151d00b062e8c836973fa1426c4ea60",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_20.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_21.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_22.jsonl": "bf0fc98133fab3aaa175511fa71aa9b470d9ae16c2d58572fb103fe19519cbc0",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_23.jsonl": "fc13814956f341c6323cd72563ef3a257f2a1df63b5c1c4a7a9def975985296d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_24.jsonl": "3a09d98771186018224cbe1d2b6fb9dd8b70db37b5c84eea340a85485a26706b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_25.jsonl": "b3988a20fc15ab44f8fc768f53381eeb8965b433298693b319ed7e16edab3140",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_26.jsonl": "44d035f26822644eeea29c7d22c998f392bb5c0024596682e66ec16bedaa363c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_27.jsonl": "da0bb0cd176f6649bbefadbb5be5a2298885f9d65ea30cb716608165b7948b6c",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_28.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_29.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_30.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_31.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_32.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_33.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_34.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_35.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_36.jsonl": "d09fa7a3a8ea2eaa5a615690a336b50a9a3f62ec69395f874557122c0f88dd1d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_37.jsonl": "adaf2f95393a70d252d50392ea8f0128e5d2154c97f3cd2115b9218616bdfdeb",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_38.jsonl": "47cecc2c5ade39127f5f2c0ffa7f8f135aa6c143dd6df48e562e22eed52bac40",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/events_39.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sap_motion_screen_20261109/performance_v1/on_solution/games.jsonl": "bcf5e37aa21d7765591a8350707d944bcf1ce639114628728756dec4acbeba14"
+  },
+  "games": [
+    {
+      "action_sha256": "68d601015fe689c0e2001605447e53a2e5470610696b29044f155e49de4a2305",
+      "belief_contradictions": 5,
+      "caught_errors": 0,
+      "game_win": 0,
+      "greedy_masked_frac": 0.12354988399071926,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 22,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 2,
+        "excluded_history": 9,
+        "excluded_motion": 2,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_parameter": 10,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 18,
+        "motion_forward": 15,
+        "motion_labels": 22,
+        "motion_left": 4,
+        "motion_right": 2,
+        "motion_stay": 1,
+        "public_eligible_saps": 10,
+        "reset_calls": 3,
+        "sap_total": 44
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            149,
+            199
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            404,
+            414
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            2
+          ],
+          "match_idx": 2,
+          "points": [
+            553,
+            365
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 978,
+      "opp_wins": 2,
+      "our_points": 1106,
+      "our_wins": 1,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 4,
+      "result": 0.0,
+      "sap_attempts": 44,
+      "sap_hits": 26,
+      "secs": 6.08,
+      "seed": 9942000,
+      "side": "player_0",
+      "stack_frac": 0.1144994246260069,
+      "steps": 303,
+      "unit_steps": 3476,
+      "wait_frac": 0.4266398158803222
+    },
+    {
+      "action_sha256": "cf994f269ebbbbf41bce5a396b92f1b1e34afa93a99aa671591ddedebf185cb8",
+      "belief_contradictions": 6,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.12599118942731277,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 22,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 1,
+        "excluded_history": 14,
+        "excluded_motion": 1,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_parameter": 12,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 13,
+        "motion_forward": 17,
+        "motion_labels": 25,
+        "motion_left": 4,
+        "motion_right": 3,
+        "motion_stay": 1,
+        "public_eligible_saps": 12,
+        "reset_calls": 3,
+        "sap_total": 44
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            60,
+            187
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            1
+          ],
+          "match_idx": 1,
+          "points": [
+            408,
+            378
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            2
+          ],
+          "match_idx": 2,
+          "points": [
+            410,
+            532
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 878,
+      "opp_wins": 1,
+      "our_points": 1097,
+      "our_wins": 2,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 44,
+      "sap_hits": 31,
+      "secs": 5.78,
+      "seed": 9942000,
+      "side": "player_1",
+      "stack_frac": 0.13752913752913754,
+      "steps": 303,
+      "unit_steps": 3432,
+      "wait_frac": 0.4385198135198135
+    },
+    {
+      "action_sha256": "75cc7ac3910874587b1aaa654182698545f3dbba3892483eb0e945ba4d95f614",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.17140513942044833,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 28,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 21,
+        "excluded_parameter": 3,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 5,
+        "motion_forward": 7,
+        "motion_labels": 10,
+        "motion_left": 1,
+        "motion_right": 2,
+        "public_eligible_saps": 3,
+        "reset_calls": 3,
+        "sap_total": 29
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            371,
+            151
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            1
+          ],
+          "match_idx": 1,
+          "points": [
+            422,
+            494
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            1
+          ],
+          "match_idx": 2,
+          "points": [
+            822,
+            739
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 1384,
+      "opp_wins": 1,
+      "our_points": 1615,
+      "our_wins": 2,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 29,
+      "sap_hits": 25,
+      "secs": 5.26,
+      "seed": 9942001,
+      "side": "player_0",
+      "stack_frac": 0.10390667390124797,
+      "steps": 303,
+      "unit_steps": 3686,
+      "wait_frac": 0.530113944655453
+    },
+    {
+      "action_sha256": "7b3532eac3bbfb022c57391184b52a69ded1ce3a5551a762f00b3b39996d9fe1",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.2356290672451193,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 28,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 30,
+        "excluded_motion": 1,
+        "excluded_parameter": 1,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 7,
+        "motion_forward": 9,
+        "motion_labels": 14,
+        "motion_left": 1,
+        "motion_right": 4,
+        "public_eligible_saps": 1,
+        "reset_calls": 3,
+        "sap_total": 39
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            185,
+            350
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            446,
+            599
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            763,
+            894
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 1394,
+      "opp_wins": 0,
+      "our_points": 1843,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 39,
+      "sap_hits": 32,
+      "secs": 5.72,
+      "seed": 9942001,
+      "side": "player_1",
+      "stack_frac": 0.0890024200053778,
+      "steps": 303,
+      "unit_steps": 3719,
+      "wait_frac": 0.5622479161064803
+    },
+    {
+      "action_sha256": "f37b63f128620e9da523f845de617bca808473bf2ac0f3d25cbcf5d835118fa0",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.16662121625306792,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 18,
+        "excluded_motion": 23,
+        "excluded_new_center": 3,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 60,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 6,
+        "motion_backward": 30,
+        "motion_forward": 165,
+        "motion_labels": 289,
+        "motion_left": 34,
+        "motion_right": 50,
+        "motion_stay": 10,
+        "public_eligible_saps": 60,
+        "reset_calls": 3,
+        "sap_total": 112
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            418,
+            35
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            516,
+            145
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            371,
+            156
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 336,
+      "opp_wins": 0,
+      "our_points": 1305,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 112,
+      "sap_hits": 110,
+      "secs": 5.4,
+      "seed": 9942002,
+      "side": "player_0",
+      "stack_frac": 0.1357123546904569,
+      "steps": 303,
+      "unit_steps": 3699,
+      "wait_frac": 0.44660719113273856
+    },
+    {
+      "action_sha256": "06d6c7cc985aefb1b587120f67dd1bf7ed22f293829d1d7320c29aab99267255",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.19384699156003268,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 7,
+        "changes": 24,
+        "eligible_saps": 31,
+        "eligible_steps": 24,
+        "excluded_enemy_energy": 2,
+        "excluded_gain": 3,
+        "excluded_history": 29,
+        "excluded_motion": 10,
+        "excluded_new_center": 4,
+        "excluded_new_visibility_or_passability": 7,
+        "excluded_parameter": 27,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 9,
+        "motion_backward": 13,
+        "motion_forward": 220,
+        "motion_labels": 362,
+        "motion_left": 52,
+        "motion_right": 62,
+        "motion_stay": 15,
+        "public_eligible_saps": 61,
+        "reset_calls": 3,
+        "sap_total": 122
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            7,
+            407
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            96,
+            602
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            95,
+            472
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 24,
+      "off_reproduced": false,
+      "opp_points": 198,
+      "opp_wins": 0,
+      "our_points": 1481,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 122,
+      "sap_hits": 118,
+      "secs": 5.31,
+      "seed": 9942002,
+      "side": "player_1",
+      "stack_frac": 0.12739541160593792,
+      "steps": 303,
+      "unit_steps": 3705,
+      "wait_frac": 0.46747638326585694
+    },
+    {
+      "action_sha256": "74c9d88efd12dce6c3a346b252e21998d32141547fbfc7fa22c169353cb92d16",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.43827493261455525,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 8,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 1,
+        "excluded_reset": 0,
+        "public_eligible_saps": 0,
+        "reset_calls": 3,
+        "sap_total": 1
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            21,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            149,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            407,
+            3
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 3,
+      "opp_wins": 0,
+      "our_points": 577,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 1,
+      "sap_hits": 1,
+      "secs": 5.72,
+      "seed": 9942003,
+      "side": "player_0",
+      "stack_frac": 0.27792624265098875,
+      "steps": 303,
+      "unit_steps": 3742,
+      "wait_frac": 0.6074291822554784
+    },
+    {
+      "action_sha256": "cef9cad989c80f53516c4ab1438e9bff4ac88b9250ac40025368ead06971cfcc",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.501749663526245,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 6,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 2,
+        "excluded_reset": 0,
+        "motion_forward": 1,
+        "motion_labels": 2,
+        "motion_left": 1,
+        "public_eligible_saps": 0,
+        "reset_calls": 3,
+        "sap_total": 2
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            0,
+            6
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            0,
+            98
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            0,
+            261
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 0,
+      "opp_wins": 0,
+      "our_points": 365,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 2,
+      "sap_hits": 2,
+      "secs": 5.61,
+      "seed": 9942003,
+      "side": "player_1",
+      "stack_frac": 0.30317587403255936,
+      "steps": 303,
+      "unit_steps": 3747,
+      "wait_frac": 0.6322391246330398
+    },
+    {
+      "action_sha256": "e557c549ad31b869cb7f029d716883f33b7f0bfdf4b9716a1ba7b0b40fe9c85a",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.14430095451993263,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 20,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 6,
+        "changes": 37,
+        "eligible_saps": 43,
+        "eligible_steps": 37,
+        "excluded_enemy_energy": 4,
+        "excluded_gain": 5,
+        "excluded_history": 30,
+        "excluded_motion": 15,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 6,
+        "excluded_reset": 0,
+        "excluded_samples": 1,
+        "excluded_target_ambiguous_or_missing": 1,
+        "motion_backward": 3,
+        "motion_forward": 88,
+        "motion_labels": 183,
+        "motion_left": 31,
+        "motion_right": 40,
+        "motion_stay": 21,
+        "public_eligible_saps": 55,
+        "reset_calls": 3,
+        "sap_total": 108
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            121,
+            96
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            646,
+            18
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            753,
+            63
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 37,
+      "off_reproduced": false,
+      "opp_points": 177,
+      "opp_wins": 0,
+      "our_points": 1520,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 5,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 108,
+      "sap_hits": 108,
+      "secs": 5.3,
+      "seed": 9942004,
+      "side": "player_0",
+      "stack_frac": 0.06957973838018369,
+      "steps": 303,
+      "unit_steps": 3593,
+      "wait_frac": 0.5276927358753131
+    },
+    {
+      "action_sha256": "3b794ec1c0232c9bf6258d0b1478a751d598eef24467ba03eaec734aa4f6c170",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.15,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 20,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 17,
+        "changes": 41,
+        "eligible_saps": 58,
+        "eligible_steps": 41,
+        "excluded_gain": 11,
+        "excluded_history": 27,
+        "excluded_motion": 21,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_parameter": 3,
+        "excluded_reset": 0,
+        "excluded_samples": 7,
+        "excluded_target_ambiguous_or_missing": 4,
+        "motion_backward": 4,
+        "motion_forward": 93,
+        "motion_labels": 191,
+        "motion_left": 38,
+        "motion_right": 32,
+        "motion_stay": 24,
+        "public_eligible_saps": 79,
+        "reset_calls": 3,
+        "sap_total": 136
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            17,
+            257
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            92,
+            414
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            81,
+            600
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 41,
+      "off_reproduced": false,
+      "opp_points": 190,
+      "opp_wins": 0,
+      "our_points": 1271,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 5,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 136,
+      "sap_hits": 136,
+      "secs": 5.44,
+      "seed": 9942004,
+      "side": "player_1",
+      "stack_frac": 0.0992052617155385,
+      "steps": 303,
+      "unit_steps": 3649,
+      "wait_frac": 0.5113729788983283
+    },
+    {
+      "action_sha256": "9b12dddb1cba8eb4032033fc531f95c5dec8378a06e9e106cc17669983b26bab",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.12712116701399226,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 16,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 45,
+        "excluded_motion": 4,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_parameter": 19,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 29,
+        "motion_forward": 17,
+        "motion_labels": 37,
+        "motion_left": 5,
+        "motion_right": 8,
+        "motion_stay": 7,
+        "public_eligible_saps": 19,
+        "reset_calls": 3,
+        "sap_total": 101
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            248,
+            81
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            337,
+            273
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            392,
+            280
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 634,
+      "opp_wins": 0,
+      "our_points": 977,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 101,
+      "sap_hits": 73,
+      "secs": 5.38,
+      "seed": 9942005,
+      "side": "player_0",
+      "stack_frac": 0.12890855457227138,
+      "steps": 303,
+      "unit_steps": 3390,
+      "wait_frac": 0.3315634218289086
+    },
+    {
+      "action_sha256": "61416b6ceb9b127269bdb99b91b88ad994740229254c838bd5c66cbf4259e022",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.1324683162341581,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 14,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 26,
+        "excluded_motion": 4,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 14,
+        "excluded_reset": 0,
+        "excluded_samples": 12,
+        "excluded_target_ambiguous_or_missing": 26,
+        "motion_forward": 18,
+        "motion_labels": 36,
+        "motion_left": 8,
+        "motion_right": 6,
+        "motion_stay": 4,
+        "public_eligible_saps": 26,
+        "reset_calls": 3,
+        "sap_total": 84
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            84,
+            266
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            157,
+            357
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            283,
+            323
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 524,
+      "opp_wins": 0,
+      "our_points": 946,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 84,
+      "sap_hits": 59,
+      "secs": 5.43,
+      "seed": 9942005,
+      "side": "player_1",
+      "stack_frac": 0.11803475134811264,
+      "steps": 303,
+      "unit_steps": 3338,
+      "wait_frac": 0.3304373876572798
+    },
+    {
+      "action_sha256": "afc5989172d2b0fe57655e187f8ccfb17e7e5f73b93590a45f88d83ce5718e95",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.25458025704129067,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 14,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 3,
+        "excluded_history": 36,
+        "excluded_motion": 13,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 35,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 14,
+        "motion_backward": 8,
+        "motion_forward": 53,
+        "motion_labels": 117,
+        "motion_left": 21,
+        "motion_right": 26,
+        "motion_stay": 9,
+        "public_eligible_saps": 35,
+        "reset_calls": 3,
+        "sap_total": 104
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            229,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            501,
+            73
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            643,
+            272
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 345,
+      "opp_wins": 0,
+      "our_points": 1373,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 104,
+      "sap_hits": 102,
+      "secs": 5.92,
+      "seed": 9942006,
+      "side": "player_0",
+      "stack_frac": 0.1049349240780911,
+      "steps": 303,
+      "unit_steps": 3688,
+      "wait_frac": 0.46475054229934926
+    },
+    {
+      "action_sha256": "5c977bfb7e4fef4c59eb523e3ecb4b482443ff658ea79a797962b33313e561a9",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.19632070291048875,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 14,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 1,
+        "excluded_history": 29,
+        "excluded_motion": 18,
+        "excluded_new_visibility_or_passability": 1,
+        "excluded_parameter": 43,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 6,
+        "motion_forward": 48,
+        "motion_labels": 102,
+        "motion_left": 23,
+        "motion_right": 24,
+        "motion_stay": 7,
+        "public_eligible_saps": 43,
+        "reset_calls": 3,
+        "sap_total": 98
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            2,
+            254
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            150,
+            421
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            432,
+            517
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 584,
+      "opp_wins": 0,
+      "our_points": 1192,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 98,
+      "sap_hits": 95,
+      "secs": 6.15,
+      "seed": 9942006,
+      "side": "player_1",
+      "stack_frac": 0.08219923788786064,
+      "steps": 303,
+      "unit_steps": 3674,
+      "wait_frac": 0.40636908002177463
+    },
+    {
+      "action_sha256": "a0c931834319732f6b15e72c2558e68db14a57dacfe9156c38c195fe11a4d0b0",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.19029017857142858,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 6,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 3,
+        "changes": 2,
+        "eligible_saps": 5,
+        "eligible_steps": 2,
+        "excluded_enemy_energy": 1,
+        "excluded_gain": 5,
+        "excluded_history": 23,
+        "excluded_motion": 8,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_parameter": 1,
+        "excluded_reset": 0,
+        "excluded_samples": 21,
+        "excluded_target_ambiguous_or_missing": 5,
+        "motion_backward": 6,
+        "motion_forward": 34,
+        "motion_labels": 56,
+        "motion_left": 7,
+        "motion_right": 7,
+        "motion_stay": 2,
+        "public_eligible_saps": 32,
+        "reset_calls": 3,
+        "sap_total": 73
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            178,
+            15
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            293,
+            65
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            149,
+            81
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 2,
+      "off_reproduced": false,
+      "opp_points": 161,
+      "opp_wins": 0,
+      "our_points": 620,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 73,
+      "sap_hits": 69,
+      "secs": 5.99,
+      "seed": 9942007,
+      "side": "player_0",
+      "stack_frac": 0.16583610188261352,
+      "steps": 303,
+      "unit_steps": 3612,
+      "wait_frac": 0.33970099667774084
+    },
+    {
+      "action_sha256": "0a154bb447a2468bf3d8612d5ce6410662a462a3644d7aabc67132fac6e81469",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.28893905191873587,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 6,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 13,
+        "changes": 8,
+        "eligible_saps": 21,
+        "eligible_steps": 8,
+        "excluded_gain": 5,
+        "excluded_history": 26,
+        "excluded_motion": 7,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_parameter": 4,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 16,
+        "motion_backward": 6,
+        "motion_forward": 37,
+        "motion_labels": 82,
+        "motion_left": 14,
+        "motion_right": 17,
+        "motion_stay": 8,
+        "public_eligible_saps": 30,
+        "reset_calls": 3,
+        "sap_total": 82
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            66,
+            164
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            38,
+            307
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            136,
+            162
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 8,
+      "off_reproduced": false,
+      "opp_points": 240,
+      "opp_wins": 0,
+      "our_points": 633,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 82,
+      "sap_hits": 81,
+      "secs": 5.4,
+      "seed": 9942007,
+      "side": "player_1",
+      "stack_frac": 0.10330347144456888,
+      "steps": 303,
+      "unit_steps": 3572,
+      "wait_frac": 0.47620380739081747
+    },
+    {
+      "action_sha256": "f951cd8b3774d567fb5b166d2410992fb1530b586ac83cc37025b0e9a0f70ce0",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.13641304347826086,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 26,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 21,
+        "changes": 34,
+        "eligible_saps": 55,
+        "eligible_steps": 34,
+        "excluded_gain": 1,
+        "excluded_motion": 35,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 8,
+        "motion_backward": 3,
+        "motion_forward": 203,
+        "motion_labels": 340,
+        "motion_left": 67,
+        "motion_right": 52,
+        "motion_stay": 15,
+        "public_eligible_saps": 56,
+        "reset_calls": 3,
+        "sap_total": 103
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            427,
+            151
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            523,
+            325
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            676,
+            599
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 34,
+      "off_reproduced": false,
+      "opp_points": 1075,
+      "opp_wins": 0,
+      "our_points": 1626,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 103,
+      "sap_hits": 103,
+      "secs": 5.62,
+      "seed": 9942008,
+      "side": "player_0",
+      "stack_frac": 0.14847749932632714,
+      "steps": 303,
+      "unit_steps": 3711,
+      "wait_frac": 0.5028294260307195
+    },
+    {
+      "action_sha256": "f23d8834310ed58dd52153f7e4feeb6a6be9268711bbc1be0c120ce285b17b42",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.13306010928961748,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 24,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 24,
+        "changes": 35,
+        "eligible_saps": 59,
+        "eligible_steps": 35,
+        "excluded_gain": 7,
+        "excluded_history": 1,
+        "excluded_motion": 39,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_parameter": 3,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 8,
+        "motion_backward": 2,
+        "motion_forward": 180,
+        "motion_labels": 319,
+        "motion_left": 69,
+        "motion_right": 53,
+        "motion_stay": 15,
+        "public_eligible_saps": 69,
+        "reset_calls": 3,
+        "sap_total": 120
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            201,
+            363
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            324,
+            563
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            513,
+            650
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 35,
+      "off_reproduced": false,
+      "opp_points": 1038,
+      "opp_wins": 0,
+      "our_points": 1576,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 120,
+      "sap_hits": 120,
+      "secs": 5.52,
+      "seed": 9942008,
+      "side": "player_1",
+      "stack_frac": 0.13976164680390032,
+      "steps": 303,
+      "unit_steps": 3692,
+      "wait_frac": 0.4964788732394366
+    },
+    {
+      "action_sha256": "c8f2a48d2844b244040c943390314706224c40e2a7ba1845e41006ca28a98e23",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.1265474552957359,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 15,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 13,
+        "changes": 37,
+        "eligible_saps": 50,
+        "eligible_steps": 37,
+        "excluded_gain": 3,
+        "excluded_history": 74,
+        "excluded_motion": 15,
+        "excluded_new_center": 4,
+        "excluded_new_visibility_or_passability": 14,
+        "excluded_parameter": 25,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 18,
+        "motion_backward": 10,
+        "motion_forward": 113,
+        "motion_labels": 215,
+        "motion_left": 35,
+        "motion_right": 38,
+        "motion_stay": 19,
+        "public_eligible_saps": 78,
+        "reset_calls": 3,
+        "sap_total": 203
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            217,
+            32
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            339,
+            157
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            442,
+            298
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 37,
+      "off_reproduced": false,
+      "opp_points": 487,
+      "opp_wins": 0,
+      "our_points": 998,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 203,
+      "sap_hits": 191,
+      "secs": 5.59,
+      "seed": 9942009,
+      "side": "player_0",
+      "stack_frac": 0.07119476268412439,
+      "steps": 303,
+      "unit_steps": 3666,
+      "wait_frac": 0.31069285324604473
+    },
+    {
+      "action_sha256": "befbee291dc6a435406e12c9867d0ea23ceceb22f8b5e95c6ac1be2eb5ba5812",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.12757767390706626,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 15,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 8,
+        "changes": 19,
+        "eligible_saps": 27,
+        "eligible_steps": 19,
+        "excluded_enemy_energy": 1,
+        "excluded_gain": 2,
+        "excluded_history": 73,
+        "excluded_motion": 10,
+        "excluded_new_center": 3,
+        "excluded_new_visibility_or_passability": 12,
+        "excluded_parameter": 26,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 25,
+        "motion_backward": 5,
+        "motion_forward": 104,
+        "motion_labels": 170,
+        "motion_left": 22,
+        "motion_right": 31,
+        "motion_stay": 8,
+        "public_eligible_saps": 55,
+        "reset_calls": 3,
+        "sap_total": 179
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            5,
+            245
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            164,
+            303
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            2
+          ],
+          "match_idx": 2,
+          "points": [
+            411,
+            326
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 19,
+      "off_reproduced": false,
+      "opp_points": 580,
+      "opp_wins": 1,
+      "our_points": 874,
+      "our_wins": 2,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 179,
+      "sap_hits": 162,
+      "secs": 5.64,
+      "seed": 9942009,
+      "side": "player_1",
+      "stack_frac": 0.07522485690923958,
+      "steps": 303,
+      "unit_steps": 3669,
+      "wait_frac": 0.2998092123194331
+    },
+    {
+      "action_sha256": "4f8090183017723b1bbe626a7e18902d4ea53b3fcfcbcf0dd8e464c51234f2aa",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.23585418933623503,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 22,
+        "excluded_motion": 3,
+        "excluded_new_center": 2,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 4,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 4,
+        "motion_forward": 17,
+        "motion_labels": 34,
+        "motion_left": 8,
+        "motion_right": 9,
+        "public_eligible_saps": 4,
+        "reset_calls": 3,
+        "sap_total": 37
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            109,
+            23
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            350,
+            57
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            482,
+            113
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 193,
+      "opp_wins": 0,
+      "our_points": 941,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 37,
+      "sap_hits": 34,
+      "secs": 5.53,
+      "seed": 9942010,
+      "side": "player_0",
+      "stack_frac": 0.04558942541138387,
+      "steps": 303,
+      "unit_steps": 3707,
+      "wait_frac": 0.4488804963582412
+    },
+    {
+      "action_sha256": "4158324dcf0d86b53f47614e346ee7d84841f9f02479bc5ce3acad41a677a2a0",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.22394678492239467,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 1,
+        "excluded_history": 20,
+        "excluded_motion": 4,
+        "excluded_parameter": 2,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 6,
+        "motion_backward": 1,
+        "motion_forward": 9,
+        "motion_labels": 14,
+        "motion_left": 2,
+        "motion_right": 2,
+        "public_eligible_saps": 2,
+        "reset_calls": 3,
+        "sap_total": 33
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            30,
+            105
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            119,
+            257
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            258,
+            491
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 407,
+      "opp_wins": 0,
+      "our_points": 853,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 33,
+      "sap_hits": 30,
+      "secs": 5.64,
+      "seed": 9942010,
+      "side": "player_1",
+      "stack_frac": 0.04313186813186813,
+      "steps": 303,
+      "unit_steps": 3640,
+      "wait_frac": 0.41318681318681316
+    },
+    {
+      "action_sha256": "9b3cbfaedf49e8ad433600f9b75530fcd7df5d864bed9c30405554420b6841b2",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.195472114853672,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 30,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 30,
+        "changes": 40,
+        "eligible_saps": 70,
+        "eligible_steps": 40,
+        "excluded_gain": 3,
+        "excluded_history": 1,
+        "excluded_motion": 17,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_parameter": 10,
+        "excluded_reset": 0,
+        "motion_backward": 1,
+        "motion_forward": 115,
+        "motion_labels": 223,
+        "motion_left": 50,
+        "motion_right": 52,
+        "motion_stay": 5,
+        "public_eligible_saps": 83,
+        "reset_calls": 3,
+        "sap_total": 105
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            393,
+            265
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            772,
+            767
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            972,
+            871
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 40,
+      "off_reproduced": false,
+      "opp_points": 1903,
+      "opp_wins": 0,
+      "our_points": 2137,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 105,
+      "sap_hits": 105,
+      "secs": 5.27,
+      "seed": 9942011,
+      "side": "player_0",
+      "stack_frac": 0.14712328767123287,
+      "steps": 303,
+      "unit_steps": 3650,
+      "wait_frac": 0.5742465753424657
+    },
+    {
+      "action_sha256": "d158d8d0fc5f177bf2c537ba9861e8538554c72bfc6bafd24aad945c40c4fddb",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.1614785992217899,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 30,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 39,
+        "changes": 53,
+        "eligible_saps": 92,
+        "eligible_steps": 53,
+        "excluded_motion": 8,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_parameter": 3,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 4,
+        "motion_backward": 1,
+        "motion_forward": 166,
+        "motion_labels": 297,
+        "motion_left": 65,
+        "motion_right": 61,
+        "motion_stay": 4,
+        "public_eligible_saps": 95,
+        "reset_calls": 3,
+        "sap_total": 111
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            236,
+            461
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            674,
+            702
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            873,
+            935
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 53,
+      "off_reproduced": false,
+      "opp_points": 1783,
+      "opp_wins": 0,
+      "our_points": 2098,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 111,
+      "sap_hits": 111,
+      "secs": 5.22,
+      "seed": 9942011,
+      "side": "player_1",
+      "stack_frac": 0.12613855920507866,
+      "steps": 303,
+      "unit_steps": 3623,
+      "wait_frac": 0.5534087772564174
+    },
+    {
+      "action_sha256": "0de2462aadad0ee79ce377e27efcc1726cb4239591dce19de3bb80f9fdf6481a",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.1218187017443523,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 17,
+        "changes": 16,
+        "eligible_saps": 33,
+        "eligible_steps": 16,
+        "excluded_enemy_energy": 1,
+        "excluded_gain": 12,
+        "excluded_history": 17,
+        "excluded_motion": 11,
+        "excluded_new_center": 3,
+        "excluded_new_visibility_or_passability": 1,
+        "excluded_parameter": 21,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 13,
+        "motion_backward": 2,
+        "motion_forward": 71,
+        "motion_labels": 136,
+        "motion_left": 23,
+        "motion_right": 25,
+        "motion_stay": 15,
+        "public_eligible_saps": 66,
+        "reset_calls": 3,
+        "sap_total": 112
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            273,
+            5
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            260,
+            132
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            298,
+            142
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 16,
+      "off_reproduced": false,
+      "opp_points": 279,
+      "opp_wins": 0,
+      "our_points": 831,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 112,
+      "sap_hits": 109,
+      "secs": 5.56,
+      "seed": 9942012,
+      "side": "player_0",
+      "stack_frac": 0.14411347517730497,
+      "steps": 303,
+      "unit_steps": 3525,
+      "wait_frac": 0.31460992907801416
+    },
+    {
+      "action_sha256": "8addf79e79e985514f8e4e2e0f0e2635ad60cd7660c7190fc7635bddf73422c3",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.0862312694373763,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 10,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 14,
+        "changes": 17,
+        "eligible_saps": 31,
+        "eligible_steps": 17,
+        "excluded_gain": 13,
+        "excluded_history": 16,
+        "excluded_motion": 5,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 7,
+        "excluded_parameter": 2,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 34,
+        "motion_backward": 5,
+        "motion_forward": 92,
+        "motion_labels": 176,
+        "motion_left": 29,
+        "motion_right": 33,
+        "motion_stay": 17,
+        "public_eligible_saps": 46,
+        "reset_calls": 3,
+        "sap_total": 109
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            26,
+            201
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            154,
+            366
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            145,
+            278
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 17,
+      "off_reproduced": false,
+      "opp_points": 325,
+      "opp_wins": 0,
+      "our_points": 845,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 109,
+      "sap_hits": 103,
+      "secs": 5.61,
+      "seed": 9942012,
+      "side": "player_1",
+      "stack_frac": 0.1522899690924417,
+      "steps": 303,
+      "unit_steps": 3559,
+      "wait_frac": 0.3034560269738691
+    },
+    {
+      "action_sha256": "6cd57b586b711f3720336d7233d8d5674f6b10b512109e190655c6610c9b98aa",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.3104849634245462,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 28,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 6,
+        "changes": 11,
+        "eligible_saps": 17,
+        "eligible_steps": 11,
+        "excluded_enemy_energy": 1,
+        "excluded_gain": 3,
+        "excluded_history": 18,
+        "excluded_motion": 10,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 2,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 4,
+        "motion_backward": 1,
+        "motion_forward": 67,
+        "motion_labels": 115,
+        "motion_left": 24,
+        "motion_right": 16,
+        "motion_stay": 7,
+        "public_eligible_saps": 22,
+        "reset_calls": 3,
+        "sap_total": 57
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            183,
+            207
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            1
+          ],
+          "match_idx": 1,
+          "points": [
+            803,
+            700
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            1
+          ],
+          "match_idx": 2,
+          "points": [
+            1048,
+            968
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 11,
+      "off_reproduced": false,
+      "opp_points": 1875,
+      "opp_wins": 1,
+      "our_points": 2034,
+      "our_wins": 2,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 57,
+      "sap_hits": 56,
+      "secs": 5.21,
+      "seed": 9942013,
+      "side": "player_0",
+      "stack_frac": 0.12036539494895218,
+      "steps": 303,
+      "unit_steps": 3722,
+      "wait_frac": 0.6491133799032778
+    },
+    {
+      "action_sha256": "fa215c9cfca2f98d2d1a2b9efbbf1f13d08d69480bb4ac6cf80ac0ea39215b55",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.2665764546684709,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 28,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 3,
+        "changes": 12,
+        "eligible_saps": 15,
+        "eligible_steps": 12,
+        "excluded_gain": 3,
+        "excluded_history": 20,
+        "excluded_motion": 1,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 11,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 14,
+        "motion_backward": 2,
+        "motion_forward": 52,
+        "motion_labels": 111,
+        "motion_left": 25,
+        "motion_right": 25,
+        "motion_stay": 7,
+        "public_eligible_saps": 29,
+        "reset_calls": 3,
+        "sap_total": 66
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            149,
+            168
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            737,
+            792
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            1010,
+            1056
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 12,
+      "off_reproduced": false,
+      "opp_points": 1896,
+      "opp_wins": 0,
+      "our_points": 2016,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 6,
+      "result": 1.0,
+      "sap_attempts": 66,
+      "sap_hits": 66,
+      "secs": 5.2,
+      "seed": 9942013,
+      "side": "player_1",
+      "stack_frac": 0.14327877649584117,
+      "steps": 303,
+      "unit_steps": 3727,
+      "wait_frac": 0.659779983901261
+    },
+    {
+      "action_sha256": "5486558db342ce49c008f507bdf019c21c4ea6fbc5085d327dd6a07269b1bd12",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.3076507164098405,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 0,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 42,
+        "excluded_motion": 5,
+        "excluded_new_center": 1,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_reset": 0,
+        "excluded_samples": 5,
+        "motion_backward": 1,
+        "motion_forward": 6,
+        "motion_labels": 11,
+        "motion_left": 2,
+        "motion_right": 2,
+        "public_eligible_saps": 5,
+        "reset_calls": 3,
+        "sap_total": 55
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            0,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            0,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            0,
+            0
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 0,
+      "opp_wins": 0,
+      "our_points": 0,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 0.5,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 55,
+      "sap_hits": 55,
+      "secs": 5.96,
+      "seed": 9942014,
+      "side": "player_0",
+      "stack_frac": 0.22540873760385954,
+      "steps": 303,
+      "unit_steps": 3731,
+      "wait_frac": 0.09943714821763602
+    },
+    {
+      "action_sha256": "279f4c24d56b36991d977a58993fdae80931491e9232d3bd91614f5cb6d7dadc",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.28582995951417006,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 0,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 26,
+        "excluded_motion": 19,
+        "excluded_reset": 0,
+        "excluded_samples": 2,
+        "excluded_target_ambiguous_or_missing": 2,
+        "motion_forward": 13,
+        "motion_labels": 27,
+        "motion_left": 4,
+        "motion_right": 7,
+        "motion_stay": 3,
+        "public_eligible_saps": 2,
+        "reset_calls": 3,
+        "sap_total": 49
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            0,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            0,
+            0
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            0,
+            0
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 0,
+      "opp_wins": 0,
+      "our_points": 0,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 0.5,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 49,
+      "sap_hits": 49,
+      "secs": 5.78,
+      "seed": 9942014,
+      "side": "player_1",
+      "stack_frac": 0.19186513245919187,
+      "steps": 303,
+      "unit_steps": 3737,
+      "wait_frac": 0.1097136740701097
+    },
+    {
+      "action_sha256": "965b36e9cb99cae3334ef7ac311a81c2c2289fbbb42d0b1b37b8a32d7da18236",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.09274074074074073,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 18,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 25,
+        "excluded_motion": 7,
+        "excluded_parameter": 5,
+        "excluded_reset": 0,
+        "excluded_samples": 2,
+        "excluded_target_ambiguous_or_missing": 47,
+        "motion_backward": 1,
+        "motion_forward": 7,
+        "motion_labels": 20,
+        "motion_left": 4,
+        "motion_right": 4,
+        "motion_stay": 4,
+        "public_eligible_saps": 7,
+        "reset_calls": 3,
+        "sap_total": 86
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            249,
+            2
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            400,
+            291
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            480,
+            205
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 498,
+      "opp_wins": 0,
+      "our_points": 1129,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 86,
+      "sap_hits": 43,
+      "secs": 5.34,
+      "seed": 9942015,
+      "side": "player_0",
+      "stack_frac": 0.06823529411764706,
+      "steps": 303,
+      "unit_steps": 3400,
+      "wait_frac": 0.3726470588235294
+    },
+    {
+      "action_sha256": "6d754038edab61cb1497378fecf69b837e1a09290dd56890d6d3ce4a36cc9b9b",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.09202453987730061,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 14,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 32,
+        "excluded_motion": 5,
+        "excluded_parameter": 4,
+        "excluded_reset": 0,
+        "excluded_samples": 1,
+        "excluded_target_ambiguous_or_missing": 45,
+        "motion_backward": 1,
+        "motion_forward": 3,
+        "motion_labels": 14,
+        "motion_left": 2,
+        "motion_right": 3,
+        "motion_stay": 5,
+        "public_eligible_saps": 5,
+        "reset_calls": 3,
+        "sap_total": 87
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            16,
+            245
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            233,
+            375
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            2
+          ],
+          "match_idx": 2,
+          "points": [
+            306,
+            291
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 555,
+      "opp_wins": 1,
+      "our_points": 911,
+      "our_wins": 2,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 4,
+      "relics_seen": 4,
+      "result": 1.0,
+      "sap_attempts": 87,
+      "sap_hits": 44,
+      "secs": 5.77,
+      "seed": 9942015,
+      "side": "player_1",
+      "stack_frac": 0.06875599616245603,
+      "steps": 303,
+      "unit_steps": 3127,
+      "wait_frac": 0.31307962903741604
+    },
+    {
+      "action_sha256": "9d7860fa41a344d1c1cc0e35945837c3fdea5f0834401c60f68df4df79c5f2c5",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 0,
+      "greedy_masked_frac": 0.11818478615736207,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 15,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 60,
+        "excluded_motion": 18,
+        "excluded_new_center": 5,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 34,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 17,
+        "motion_backward": 18,
+        "motion_forward": 91,
+        "motion_labels": 193,
+        "motion_left": 29,
+        "motion_right": 34,
+        "motion_stay": 21,
+        "public_eligible_saps": 34,
+        "reset_calls": 3,
+        "sap_total": 136
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            226,
+            5
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            1
+          ],
+          "match_idx": 1,
+          "points": [
+            97,
+            178
+          ]
+        },
+        {
+          "cumulative_wins": [
+            1,
+            2
+          ],
+          "match_idx": 2,
+          "points": [
+            130,
+            191
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 374,
+      "opp_wins": 2,
+      "our_points": 453,
+      "our_wins": 1,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 3,
+      "relics_seen": 3,
+      "result": 0.0,
+      "sap_attempts": 136,
+      "sap_hits": 135,
+      "secs": 5.38,
+      "seed": 9942016,
+      "side": "player_0",
+      "stack_frac": 0.1642903434867142,
+      "steps": 303,
+      "unit_steps": 3086,
+      "wait_frac": 0.30784186649384315
+    },
+    {
+      "action_sha256": "9811adc9552a9011f4437b22ca006192c1fa8ba9b447597da2f86bf5ed7d6263",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.14417910447761195,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 18,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 67,
+        "excluded_motion": 23,
+        "excluded_new_visibility_or_passability": 5,
+        "excluded_parameter": 66,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 6,
+        "motion_backward": 19,
+        "motion_forward": 152,
+        "motion_labels": 285,
+        "motion_left": 48,
+        "motion_right": 43,
+        "motion_stay": 23,
+        "public_eligible_saps": 66,
+        "reset_calls": 3,
+        "sap_total": 167
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            0,
+            221
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            74,
+            322
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            182,
+            200
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 256,
+      "opp_wins": 0,
+      "our_points": 743,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 3,
+      "relics_seen": 3,
+      "result": 1.0,
+      "sap_attempts": 167,
+      "sap_hits": 166,
+      "secs": 5.49,
+      "seed": 9942016,
+      "side": "player_1",
+      "stack_frac": 0.13867534003548196,
+      "steps": 303,
+      "unit_steps": 3382,
+      "wait_frac": 0.3533412182140745
+    },
+    {
+      "action_sha256": "928e658c0920c8c40e6c813571f3a1c8fc17acb79a9567d3c75cdd6059d03ab8",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.30864879801050016,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 26,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 2,
+        "excluded_history": 9,
+        "excluded_motion": 1,
+        "excluded_new_visibility_or_passability": 1,
+        "excluded_parameter": 2,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 6,
+        "motion_labels": 4,
+        "motion_left": 2,
+        "motion_right": 1,
+        "motion_stay": 1,
+        "public_eligible_saps": 2,
+        "reset_calls": 3,
+        "sap_total": 21
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            204,
+            78
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            518,
+            289
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            753,
+            588
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 955,
+      "opp_wins": 0,
+      "our_points": 1475,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 21,
+      "sap_hits": 15,
+      "secs": 5.25,
+      "seed": 9942017,
+      "side": "player_0",
+      "stack_frac": 0.22170457659632775,
+      "steps": 303,
+      "unit_steps": 3649,
+      "wait_frac": 0.6574403946286654
+    },
+    {
+      "action_sha256": "ac302c354968e947fd270df5c6c0edddf679416cdbb82b85660c109081f5c842",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.3408845738942826,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 26,
+      "leading": {
+        "calls": 303,
+        "excluded_history": 5,
+        "excluded_new_visibility_or_passability": 2,
+        "excluded_parameter": 1,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 7,
+        "motion_forward": 2,
+        "motion_labels": 8,
+        "motion_left": 3,
+        "motion_right": 2,
+        "motion_stay": 1,
+        "public_eligible_saps": 1,
+        "reset_calls": 3,
+        "sap_total": 15
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            0,
+            318
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            96,
+            597
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            482,
+            806
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 578,
+      "opp_wins": 0,
+      "our_points": 1721,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 15,
+      "sap_hits": 10,
+      "secs": 5.3,
+      "seed": 9942017,
+      "side": "player_1",
+      "stack_frac": 0.1631452259962557,
+      "steps": 303,
+      "unit_steps": 3739,
+      "wait_frac": 0.7122225193902113
+    },
+    {
+      "action_sha256": "919d14f66f078a9743fda5c9db61adecc1e58121d7cd1db8df1e3379603107dd",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.21467098166127294,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 6,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 16,
+        "changes": 47,
+        "eligible_saps": 63,
+        "eligible_steps": 47,
+        "excluded_enemy_energy": 3,
+        "excluded_gain": 4,
+        "excluded_history": 19,
+        "excluded_motion": 31,
+        "excluded_new_center": 2,
+        "excluded_new_visibility_or_passability": 5,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 3,
+        "motion_backward": 5,
+        "motion_forward": 251,
+        "motion_labels": 396,
+        "motion_left": 60,
+        "motion_right": 64,
+        "motion_stay": 16,
+        "public_eligible_saps": 67,
+        "reset_calls": 3,
+        "sap_total": 130
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            344,
+            153
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            284,
+            202
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            290,
+            213
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 47,
+      "off_reproduced": false,
+      "opp_points": 568,
+      "opp_wins": 0,
+      "our_points": 918,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 130,
+      "sap_hits": 130,
+      "secs": 5.65,
+      "seed": 9942018,
+      "side": "player_0",
+      "stack_frac": 0.13800481412142285,
+      "steps": 303,
+      "unit_steps": 3739,
+      "wait_frac": 0.490772933939556
+    },
+    {
+      "action_sha256": "531c907a2358365f2a5f2a0e43f54962d2f74520765f7c4a16042ec8010f9590",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.15750412314458492,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 6,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 24,
+        "changes": 43,
+        "eligible_saps": 67,
+        "eligible_steps": 43,
+        "excluded_enemy_energy": 4,
+        "excluded_gain": 13,
+        "excluded_history": 30,
+        "excluded_motion": 31,
+        "excluded_new_center": 3,
+        "excluded_new_visibility_or_passability": 13,
+        "excluded_parameter": 13,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 13,
+        "motion_backward": 7,
+        "motion_forward": 268,
+        "motion_labels": 441,
+        "motion_left": 71,
+        "motion_right": 77,
+        "motion_stay": 18,
+        "public_eligible_saps": 93,
+        "reset_calls": 3,
+        "sap_total": 187
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            168,
+            319
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            204,
+            294
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            199,
+            291
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 43,
+      "off_reproduced": false,
+      "opp_points": 571,
+      "opp_wins": 0,
+      "our_points": 904,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 2,
+      "relics_seen": 2,
+      "result": 1.0,
+      "sap_attempts": 187,
+      "sap_hits": 187,
+      "secs": 5.01,
+      "seed": 9942018,
+      "side": "player_1",
+      "stack_frac": 0.14908694467157263,
+      "steps": 303,
+      "unit_steps": 3669,
+      "wait_frac": 0.44289997274461707
+    },
+    {
+      "action_sha256": "85fc806bdde85c12811c63e41ddbf7a3bf1e38418d0b501db5c97eb3b96a1e3c",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.232450150232177,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 24,
+      "leading": {
+        "calls": 303,
+        "capped_eligible_saps": 2,
+        "changes": 2,
+        "eligible_saps": 4,
+        "eligible_steps": 2,
+        "excluded_history": 46,
+        "excluded_motion": 5,
+        "excluded_new_visibility_or_passability": 3,
+        "excluded_parameter": 64,
+        "excluded_reset": 0,
+        "excluded_target_ambiguous_or_missing": 14,
+        "motion_forward": 24,
+        "motion_labels": 34,
+        "motion_left": 2,
+        "motion_right": 7,
+        "motion_stay": 1,
+        "public_eligible_saps": 68,
+        "reset_calls": 3,
+        "sap_total": 136
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            1,
+            0
+          ],
+          "match_idx": 0,
+          "points": [
+            388,
+            252
+          ]
+        },
+        {
+          "cumulative_wins": [
+            2,
+            0
+          ],
+          "match_idx": 1,
+          "points": [
+            654,
+            620
+          ]
+        },
+        {
+          "cumulative_wins": [
+            3,
+            0
+          ],
+          "match_idx": 2,
+          "points": [
+            826,
+            799
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 2,
+      "off_reproduced": false,
+      "opp_points": 1671,
+      "opp_wins": 0,
+      "our_points": 1868,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 136,
+      "sap_hits": 122,
+      "secs": 5.36,
+      "seed": 9942019,
+      "side": "player_0",
+      "stack_frac": 0.1478472786352559,
+      "steps": 303,
+      "unit_steps": 3693,
+      "wait_frac": 0.487408610885459
+    },
+    {
+      "action_sha256": "0f4eef2fb1f90ab63a74f5a8243ad1f4d7e5e947993a5cf45b686649c92d67cd",
+      "belief_contradictions": 0,
+      "caught_errors": 0,
+      "game_win": 1,
+      "greedy_masked_frac": 0.22478702940368234,
+      "invalid_frac": 0.0,
+      "known_point_tiles": 24,
+      "leading": {
+        "calls": 303,
+        "excluded_enemy_energy": 1,
+        "excluded_history": 78,
+        "excluded_motion": 10,
+        "excluded_new_visibility_or_passability": 4,
+        "excluded_reset": 0,
+        "excluded_samples": 74,
+        "excluded_target_ambiguous_or_missing": 17,
+        "motion_forward": 27,
+        "motion_labels": 32,
+        "motion_left": 2,
+        "motion_right": 3,
+        "public_eligible_saps": 74,
+        "reset_calls": 3,
+        "sap_total": 184
+      },
+      "matches": [
+        {
+          "cumulative_wins": [
+            0,
+            1
+          ],
+          "match_idx": 0,
+          "points": [
+            254,
+            402
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            2
+          ],
+          "match_idx": 1,
+          "points": [
+            585,
+            629
+          ]
+        },
+        {
+          "cumulative_wins": [
+            0,
+            3
+          ],
+          "match_idx": 2,
+          "points": [
+            760,
+            831
+          ]
+        }
+      ],
+      "mode": true,
+      "observed_changes": 0,
+      "off_reproduced": false,
+      "opp_points": 1599,
+      "opp_wins": 0,
+      "our_points": 1862,
+      "our_wins": 3,
+      "point_counting_version": 2,
+      "point_win": 1.0,
+      "relics_found": 6,
+      "relics_seen": 5,
+      "result": 1.0,
+      "sap_attempts": 184,
+      "sap_hits": 168,
+      "secs": 5.39,
+      "seed": 9942019,
+      "side": "player_1",
+      "stack_frac": 0.1239444293108145,
+      "steps": 303,
+      "unit_steps": 3671,
+      "wait_frac": 0.4816126396077363
+    }
+  ],
+  "job": "on_solution",
+  "profile": "sap_motion_screen_20261109",
+  "source": {
+    "executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+    "executable_sha256": "bdc6b50ebbf1fa5d1fc4ed8f3ab7decb640e60b55088ae0be4bf63bb914a89d5",
+    "files": {
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/DQN/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/DQN/feat_generator.py": "fab42beace7099bbf70ff6a85df9fe5ef027b67ed0bfc162380f5215c77e5128",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/DQN/main.py": "ec26aa60799ed3e4a7ac0238e7b00c64bf111bd5ddc84ff9cadc8f58f1476843",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/Solution_92_Kaggle/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/Solution_92_Kaggle/agent.py": "de835c2cc24960695229b092d7a2fd66627f49e4fe1f99a31d2e03360c1cdcc5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/Solution_92_Kaggle/base.py": "ec227fc8873ea09c6579cfe28e67f5b7e4e1913e9997c9841c23faeddb9aa33c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/Solution_92_Kaggle/pathfinding.py": "87307cf0948c78a57f5316cb82e8e29ea4408cb3cd71bf12ac5987f9ef6afeaf",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/__init__.py": "6c326dbf6ca0bf31b95766f311b1b6c24d83529a4485cb887a1fb98ae51e77dc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/default/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/default/default.py": "07c6b27d3f7c8a3a169deaa0f93ba02ae47b3f0a07659787e00a596225d6d0c0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/assignment.py": "399e84a6a3ccef3906e3f39749db86412d05947ba3c7676d3c607154ef047db4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/config.py": "7c08fe21a66c581f84efef15fffd64c309fb2f45aabe4a2b73a1e0ec40fca03f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/main.py": "108ea9cb072bbdba0987d91873a7001cedda420b965da96cd9e9090e7c1d33bc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/model.py": "df21cb3cfd68795cb59b3925e8d9099337c81104596df2adadf65d3300bc80ab",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/opp_model.py": "d6e0f65bd754fb7eb267b17f5e6c69753a0fd01cde16152f6ea1fa2827363da9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/param_est.py": "c98eae7b8afba125bc7df3b2e8371b3c00a89ead149d3058a1dbc448affd8419",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/reward.py": "9953671c54315132ee28cdcbfe3968e23e0bbdce9e67298d794cd02633639bc8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/tactics.py": "b90122ed687c72530461baf385529c02b81b0f986c635172e36d13a99d003fce",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/docs/presentation/source/fortschritt_0611.py": "75ad255b8377aa8fb52e40d102484ac98fa9ebe072598cf582134ca54fc4c8a1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/docs/presentation/source/fortschritt_2310.py": "83358b963aae110df18501e17745cbab2005428718f60616fbba18e6ac491453",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/docs/superpowers/plans/2026-11-09-sap-motion-model.md": "bc199fc94c400d1dfe7bc1487ca7a2f8f5ed35c9f0eb0ef07870b79c7a987d99",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/admit_seed26.py": "963a34a337b60f5a3028fb448630b94edae90c1b55185fd5f2f3721cdb17e031",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/archive_completed.py": "f30c4032a3e09b82c904df0a6502d22c71eb7f84c801dbb966e23dbe9a15867a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/audit_results.py": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/crosscheck_diagnostic.py": "39f178bd4b506b2ed8c589e37505ff65140f80810bc519a7a361fb783fd77ca7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/learning_completion_auditor.failed_attempt1.py": "b0d2044da2565c5279fde69e3b0662c6ab374ca49cb7d1b13c23e1c522ee9026",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/learning_completion_auditor.py": "8731231b56a514f882736b06040188703e0887d717f181b86a446bb0a9f2acbc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/prepare_diagnostic.py": "56b457344961f7149fed33a178857408be8a2bb933f94c911204f24bb32e84de",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/retention_after_independent_audit.py": "00580d893fb160b10b938f3f462a8f800c48690bdc6f8dfbd51b30f7102b7e66",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/retention_independent_audit.py": "43e6163b54a9e452d7ecd3761abf6a0674229fda7ede627296724484ab3e3c49",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/run_diagnostic.py": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/completion/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/audit_results.py": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/crosscheck_diagnostic.py": "39f178bd4b506b2ed8c589e37505ff65140f80810bc519a7a361fb783fd77ca7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/learning_completion_auditor.py": "8731231b56a514f882736b06040188703e0887d717f181b86a446bb0a9f2acbc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/prepare_diagnostic.py": "56b457344961f7149fed33a178857408be8a2bb933f94c911204f24bb32e84de",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/run_diagnostic.py": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/diagnostic/admission/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/analyze_traces.py": "0e063b471abd719633b711e0516f678b318a750a51b0e765dd9b2ce3084796dc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/audit_results.py": "0ef14611b23bb8c14eb86ea7bfa44aae3cd2dc10e27e98c1f96826d1030a2d04",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/check_diagnostic_cleanup.py": "e5f900da7430f7c1dde1107a1daed4941a98a4019eb3f9f51669090d0a193cc7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/run_diagnostic.py": "430655d60a3a3b1318d3426075f8035dac5a6e95a8190953801b7ca294893e3d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/run_traces.py": "29060588c5d049c2f65f6c8f4509bd3872c174191678053401bd7293500510f4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/scan_seed_freshness.py": "0cb9c3c59b1a5ca69e21c0779835f8b11aa3e31580a8f601475308c831d3660d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/summarize_trace_analysis.py": "17bf8fcaf395d16af604a4e9e628af416823c0f7f77a08b2b480741fcc778d10",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/a2_anchor_20261104/preflight/teacher_on_trace_rows.py": "70fd1028d8e58810a5ec2782644f35cda6286d6242092db6216afa03a13fc320",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/operations/watch_observer.py": "9063bd672169ae5b245be677eb29cb9051a9eca44210240bb1afbfcfacfbc24a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/audit_final.py": "123a330c4ff8e408b6e1a31460b472f2b3e55b4d4436a5b86d6cd7cea7a4d884",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/check_diagnostic_cleanup.py": "cfc56bacc5f51776909c7f82f6f66c42466738b0c00b719377c2e540dc67cf2e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/crosscheck_diagnostic.py": "5114e0b6096cc7ae0bf99cf7a47ef21dd1b9139442889bdc00ffe3d84bb89ea2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/learning_audit_version_30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd.py": "30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/learning_audit_version_332cf34de54c02f2a2135a14d69fb441c8e1fe0391713905893620c18924cfa1.py": "332cf34de54c02f2a2135a14d69fb441c8e1fe0391713905893620c18924cfa1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/learning_audit_version_67ec20bcb2d1053f808b0fe1689e981337e1c58172c749ad4be8d408e8b42904.py": "67ec20bcb2d1053f808b0fe1689e981337e1c58172c749ad4be8d408e8b42904",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/learning_audit_version_ca06d40c43abe6db27846caedef038345c82c210b5cc1a5f841be6d983d9a499.py": "ca06d40c43abe6db27846caedef038345c82c210b5cc1a5f841be6d983d9a499",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/make_result_sections.py": "72df215f83f4b8a195adcd29b98ae90d30d3bc32d0b22804c8a4bb5f9d5dae4b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/observer_equivalence.py": "4f71f6997a4bc5c0f723e09bb4d27f2ddcd2b9b650c62ba0318feb34ba4dd702",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/prepare_diagnostic.py": "ef0ae22498a5e32780a345f7c8479a1208334be0a91662f0c4d8c067ea7f0285",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/prepare_diagnostic_draft.py": "41e74bf160fd8a801f78685124a9213288cf480819201287463fcff268db8e83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/run_diagnostic.py": "25b66cdcd40a542928a74c4f9949f25d6b1243d932dc864bfdd3001694865640",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/preflight/scan_seed_freshness.py": "d5cd0a56d10144e6cfa4a5ad0fd63373aa58d21b4ba5e68ec39f8b804ac8ad9a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/review_final_static.py": "29ad500ce9e7e8cb3ea7725946a7182a2d482e134e51d944d0a7121dcaddfeb8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/rl/seed27/independent_audit/learning_audit_version_30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd.py": "30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/action_student_20261104/rl/seed28/independent_audit/learning_audit_version_30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd.py": "30c026726d2a2aa6fe84b102a9996403a60cc3b24b6aae1a3e568b0a71608bbd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/art_sap_confirm_20261021/independent_development_audit.py": "793da7a224a9ce8c779151e594288ab5a042d67509039ce18f2c932c18cf9665",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/art_sap_confirm_20261021/independent_final_audit.py": "bc8113c103a140074c3986eb49cde648e12d929ddc710c89460e29a7b10e31d4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/operations/artillery-root-closeout.py": "1004b6e9ca9bd39d76d83e403395d9eb609fa67dba00c64df606db8288730e94",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/operations/artillery-training-audit.py": "7976fd4adf9b88da611abd5381bddc64ac76ca715495161fd6c8a19e1b1261b7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/operations/artillery-training-tensor-audit.py": "5bf71269659ffb01f7ecb99da44bd111fbdacb939cb6853278358e71bef8e06b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/operations/seed-audit.py": "86e255baf9e41bbf584d97a642501ed82e9d959b9c321fa276a503f09622dd08",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_alignment_20261108/operations/technical_trace.py": "b5f4d3bb3e3dc77faab218bfa5251f581a102146424b909680a36fa52a11fef4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_comparison_20261108/operations/artillery-confirmation-audit.py": "bb40f83eb52cea1b4e2bcc0252d3a39b52b8cad7217942f14d73e05ee20817d6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_comparison_20261108/operations/artillery-selection-audit.py": "f9ff8f3d58669b20225d1e8e69d904e372306ba67673118a10b4397629b080bc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_comparison_20261108/operations/seed-audit.py": "b21292538e425f0caa709b01f96d6125f297a1a2ab2c8c006d438eb757ceb414",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/artillery_training_exposure_20261108/operations/independent_data_audit.py": "e89adb60ab127308f56e71568841c818db2f9934ac6d152fa02f582b790de510",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/exploration_replication.py": "5128c4cd02cc17947d8cdd00ecea63b4ef4a3b45477a3bb0089211a26b62d238",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/inference_development2.py": "7191c27caf84043f6873b1faf871f72297ff4c910760918d8a99fdc94af7ca06",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/observe_sap_geometry.py": "7bc0d8cf18d078b54de45252f288a76b8eef9ab5b8718517797f0e5e7db2d2ff",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/reward_pilot.py": "398adf9008bf3be694207894993c6575f03c5d088d5929b7c8d00ba485c731c0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/sap_geometry_helper.py": "f2422b44bd40dd14e03415a2a0fdba3b97651132affcd51908a7ca22817c3767",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/sherlock-target-diagnosis-20261020.py": "eb839a6523dc94451422474c8605463cc71c7bc33ee0141a012407a0408d4d68",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/source_snapshots/inference_development2_analysis_original.py": "f45d1c658499fa64421848c86e832e92c3ca0236ef8fda9037384f28771864c8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/source_snapshots/proposed_rules.py": "730437c9f9c95e54036e019e7e17fc9715766634210bfa52b186b23be946d94e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/source_snapshots/reward_pilot_analysis_original.py": "7ab4d6ce25707226c9c582041c4eb8bddd18e2a0e813c22be7237058d6e84cca",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/summarize_diagnosis.py": "76ad42ca31d837b8c934972d46c4688fb637483911710dc4836847fdad46b78e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/autonomous_20261020/tools/test_observer_edge_cases.py": "845cd215649d43a87cb79f9f3ad50fe3fb3dec3bccff81ec6767b428cd73f768",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/backup_adaptation_20261102/study_driver.py": "e8094cae362a14f374cdc06833199c46423be3c588b5ab72d15756eb59f784e5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/backup_adaptation_20261102/study_stats.py": "7abf4ad3f126d301bdf95831d2eb05577a6e673ca63d285ff17bd32db46c70f8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/backup_adaptation_20261102/test_study_driver.py": "3feb205e0d27ff9f695408e50bc77cc4f3ef0bc80295d5a9df2efffbdfc9d099",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/backup_adaptation_20261102/test_study_stats.py": "dcbc95e6f1dc52dab4067548258097a637bde5236309d639a3a24b0054531ab5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_by_param.py": "149be0690457d68e5ccbed89d29580c1a9d203f5fbf91ba12f3fac28c61286ef",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_exact_probe.py": "38bd5df35f2320a3b47c5130dee3a6234a8953fb365ba70eef7156e5a0777855",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_fire_probe.py": "031c0d0166bfc53dbb19be1f3b1cc87b870e4d8bb37b4059bbb8a357fbbdef2e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_fog_probe.py": "9db363b33905571f788bec2acd71f9c0eeb3ddb4be423c56470df62c26404a3b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_loss_matches.py": "70d8cd4d32a23f201a5605076821620f49aba687df31144208744e5879d33bdd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_loss_mechanisms.py": "690ecf9f9530a10e5c9cc59a59ee5fab737db2f0d15eaeec831edbcac04c4094",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_pred_probe.py": "8afe9d467cd7ac4ebb5a94718ba023da1846bc97f88391673dd0e7f2c8461022",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_relic_delay.py": "65e773aab0ad12b911734ace6a00c511a34bcbd49c5c3b5d5509b9c2a3141231",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v11_render_zoom.py": "3053de9e9dea400c4b580d1ebd699775e80f13170444985c5e8ed333f73146e5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v12_end_probe.py": "42be551d4e5fa06ae3e76601dac4e84bd20eb80b862b8c8622104abbd62cb4c6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v12_fog_eval.py": "be23a91da7b84b9200851e8ffc4929a5fdbd6a7f0b4914fbfd1424ba7eecb76b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v12_fog_hits.py": "c215473c82d8ec8e9f72c62841a0ea8acc0b79904adc140469b3f4563a94dac2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle/v13_by_param.py": "666d46a8d66f25aff469025399725567a360478f244668d46b5b50fb0ef6c06d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle_params_20261030/cmp_params.py": "f566cd41d95adb2b77a74c1a7d20d5739d0a1709c4df70151f8cd287411c5a69",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle_params_20261030/contested_probe.py": "031dece39076a02a439d15e8415e8d5f8c38bc7d0f084541891f406e1140c379",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle_params_20261030/drop_timing.py": "7010b4df8ae428a9afdadb645129ad6275a586d43eb3505d25386642059ddd2e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle_params_20261030/drop_timing2.py": "2075d5bc8598a973ff9fc9a09bb6910240b6ffab3d1ff074b12b6e5736f14e33",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/battle_params_20261030/map_params.py": "91a567668b139976cf8905e79ca8a8405b827c8dfa4ac5ec1f0438e799beddf1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/audit_targeting.py": "a12155c0ce4d6102f3abb59569ae47549da2e941807a89577045ef24761df192",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/build_targeting_candidates.py": "7be85c7f8bc2f55888c78ae3603a56df0d7ae546225fcb8c1f196cb1df550102",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/review/first_wave_independent_audit.py": "40e7e851de65c6733715975c7930e47c0e02469532b27f4b5f403665ce260898",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/review/MM_review/check.py": "ef673dce2183fa53d8784dc80d3a5fbdb762c7a0cf5ef5e48c5b5b30b56e0fe9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/study_P_only_20261102/review/P_performance_independent_audit.py": "2e208b1caa5f05049bba3529fe9cf7a31a920ee0d33f2405003f52582a91a98c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/targeting_eval_driver.py": "7700ba0ab0bb2eda3d7ced9b252da615af10669ddb42b58f23e3ae0940610308",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/targeting_stats.py": "2916fd4e8e68dcd1cabac45c210bb871a97e0587cd408217b51d34ae39f8378e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/test_build_targeting_candidates.py": "63755f457c47501e0f0adb4041991fb8ccfd1c126a5e95658485dafbcffdbc59",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/test_targeting_eval_driver.py": "0735ca5d27afccfff32a013497f7f06161eb24761c629b12dbf644d4f8b92125",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/performance/test_targeting_stats.py": "b7936e8ea09d9087eb9a5faf15a9fcc38672bc52d14f6fc761a9a4028e45a40f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/release_tools/install_qualified_P.py": "87c3f94cc050a7dba7701f997b9a7067e924a76aba2b4ef28a7aa46e953ea2d2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/release_tools/python310_upstream_params.py": "fa530e77c39e443ffa8c020d381c9eccf1a8092655655108452c63d8130cde7b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/release_tools/test_install_qualified_P.py": "f15222ece004efa276b57106b066a7e120a90ed90f6b239d6afb325031b0f5ff",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/release_tools/test_verify_P_package.py": "f37630930c34e0f8115207b6ad0032c137df353b16d70788bf033879d4142ac4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/release_tools/verify_P_package.py": "02825ba95de9e5781e0f3e29e04e8fe838be4f5d663099f2998cc42e7c115945",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/run_targeting_guard.py": "a11b62231aaafe27bf99fc41d60ec7d8b802b4e0c5b1c93edd7ed8c57fb1f142",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting_audit_details.py": "e59c5f25defd19d0ad538caf92c9d42d2e63d2ea9cf29bfc7910ac3772666468",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuation_20261102/targeting_technical.py": "2d5bb19a65dfe5d70c5557195f25262f6c823283ac328b4f643512caf6ffbaa0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuous_20261021/loss_observation/locality_followup/inspect_locality.py": "854ae605850e696ac279675fad0fc9092e62caddb50201b7a5da28eb0f2b2b5a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/continuous_20261021/representation_probe/probe.py": "bfc313de5c5382dd7a5abff538640bf7ceaac30968ac43c9c89aebe8777d6567",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/count_games.py": "2cb9527654766fd2c62946d9d4bd1eae8236d7c95ea08e44cec44556a84f61d3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/decision_learning_20261108/origin/energy-next.py": "7ac023da9907674aa02567caf495db06e7b514640e9f94e35992897c0d8af5c5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/decision_learning_20261108/origin/holder-diagnostic.py": "d14487b8eefe2f1629802d3e248c9244f45e20edc422bd1bf4124b72eec2561e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_comparison_20261108/operations/selection_independent_audit.py": "8f4cd35022eaee53f62dc18ab02ba3d4e95a9473cf1c3f117ab5fa91e28a9bb3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_influence_20261108/operations/independent_data_audit.py": "9127c4727301c03f38fb87e5e85302397c9ad7583b5c77594a8571278f5647d0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/comparison-seed-audit/scan.py": "fa88653ce1f5e1441c8f141a8bbed840d120c904f84370d759f12700f40a8477",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/default_trace_check.py": "6037d38c80742b38820f1429fc0d14eb7f617b53604c347bd0e9246f2d4127a3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/final_admission.py": "b0889e1c1893fe19726a8f2b1cef896e484addfbbe8fa4b17f93e1821f07dbf1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/final_independent_audit.py": "0a75211933f00c18ca360c1f1ea26de835e69d6ba19ba299ce3278c0b5d0f075",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/prefill_independent_audit.py": "78f60c9a4d59f35ca53f2615ed5d6ed586b79cd7df23e958406dc6ca8058296d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/fog_reward_20261108/operations/seed-audit-scan.py": "7b109e7aa4d35091102c5432fb25898a898cf81b47067be4009be4c213608979",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/guided_path_20261108/data-audit.py": "88f89fbe3d54fce12e05d20e2ee9caa70a7e774e6a1fa092a1fe58cf82c0f65f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/guided_path_20261108/diagnose.py": "997dc49f332de7aa6fba18cb314725c89b3824a6fde6d87b521bcfc7d12bafa2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/hard_map_training_20261021/map_features.py": "1923d4780e874a93ebd8ab78febc071dff11788ef7704a028f74220431c0d4af",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/hard_map_training_20261021/select_hard.py": "be0ce2d197db0bcdc12b8554b89a749b98009ca022616ecc9782a3056259eb36",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/confirmation200-independent-audit.py": "b14f91a9b321f5f33eaf3bc8870ae819ed85738b8a5bcda8678b1392a037f0b9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/confirmation200-summary.py": "83430c9f2b8aadede9da807d88026c2416b07b89a5d2eccbac28ce8829216c4d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/probe_overlap.py": "a3da445770d752184f6607819370896a4237c584cc7580e9ce4d8113ad4dda7f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/remaining_solution_losses/execution_guard.py": "9a061d920d16fae00401b75e389db8d77f633c06662b341f750faf872d19a221",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/run_jobs.py": "c66618b51206cb2b5d2b49c54de8fd5551980e4b2accadf35089fe59787e274c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/run_training.py": "da11721cf1d79e2893f648843563d0e3101d1fb8f871624ff6e756b806ea246f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/selection-independent-audit.py": "aa19d5790c4fe311e0de6f9a1cd1c520e4e2c195edcce3eebf844af06dbc8683",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/night_20261101/summarize.py": "306425e2ce926805c6dac6cf4a4c6cf5d0cffca2e564a04cbe830df98419721f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/replacement_validation_20261108/independent_audit_script.py": "c1f816070bff44698029647aea41698656d1632a7fef50fc4dd5badd79bf3f5e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/replay_support_20261108/data-audit.py": "e566df3bae5357f71310d13247e108fe345ceffb70599c293d862697c68b2115",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/replay_support_20261108/support.py": "e1dc7a4a2e72a159e6477e00c7f024d172db0116702c115b76dbe31e14b9cdbb",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/rules_vs_net_20261019.py": "6628c2ec4472fefbb5db56826a8b09a8366ea8fafcc7095a68e9c97597b19a29",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/sampled_target_20261108/operations/seed-audit.py": "f29a816897c411c8e7c133847b5f3793ca85e037a7a549fd8093ff0b64da6b4d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/student_reward_20261104/preflight/audit_diagnostic.py": "5c509232ee56c5e71a1e4f5975cd1ec98f6ed0ac29dcddc8b591c087748235ef",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/student_reward_20261104/preflight/audit_rl.py": "fdf11a7ebe3cf59236950329647758317bd9b47ebe804d5a6ea6acf6e4db8a51",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/student_reward_20261104/preflight/run_guarded.py": "dc013bbf3fd27513b6857a387df174d5f8b8f55b0cc0dd98eb3fce25008fad83",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/student_reward_20261104/preflight/scan_seed_freshness.py": "8e45a901904d61112d2e2697d6935744d7875a687b4900cd8ef878c5e6fb833e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/student_reward_20261104/rl/audit_rl.py": "fdf11a7ebe3cf59236950329647758317bd9b47ebe804d5a6ea6acf6e4db8a51",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v10_mechanics_20261022/audit_pair.py": "d81d3cf93c23cac2c88015fdde01ae5e5687c39847d888079f04fc4d6e743819",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v10_mechanics_20261022/capture_compatibility.py": "a092dde5b57f8ab656dd5420ca36e2e27d936c23f983e2d0c6557f9655b645c7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v10_mechanics_20261022/confirmation_data_audit.py": "0fc4463bbc9912cc7cd5bd11fddc78ca62f831e16e12b16ba98a073c40b64165",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v10_mechanics_20261022/run_jobs.py": "369f8ab8984df801fba950f1ea2af270538d5d3eb6cee068f9628f2e2ccfadf9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v10_mechanics_20261022/selection_data_audit.py": "17565deab62855be831a0cb2917c7dd2ac114fdda3b0ce4757c713d4ac235664",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/v4_joint_pairs_v1_20261021/analyze.py": "27c3dee8dd5bfffa75889df8dc072cd5490d1fab601853130aec133d2db8d5f8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/lux/__init__.py": "40687d2d1aae048b8e57e8727ee37d64c8e39f542f4fd3b568a32cd6839c5917",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/lux/kit.py": "8ae5f85c57b37de6eeb1f670667c96b844a0325553c7562b3266372bb8584f15",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/lux/runner.py": "8b8a69f18ff8d1d32b84648804803cb798b5bf0a8747a5c9f97259be59816912",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/lux/utils.py": "1ec78a4ad40d85be439a380a77077b8aa5f602e5b6262894ed2c9c1c0b6057f5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/main.py": "3c988f7c6250ff7bdd0d7052f2b957f9406afc1320360f61fcb75f8146516892",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/requirements.txt": "b5483ca4d0c67b63fd0edc48c483d36a49d9d98ed5f6e6592877a5b5ea648dfd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/analyze_losses.py": "45600f579e1ec117459267c7608a8944f251e2f67944a001d804471f824682c6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/analyze_timing.py": "691461d7cdd5eb5504c1dd819445c58bd3b04244fb73864acb5bbc62604b2e50",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/artillery_alignment_compare.py": "f9f2599deede9fa992cc08304f1cbbbd7758b42aba312aa30ea252b514e88056",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/artillery_alignment_eval.py": "98a2adc7a19d8b2efaecaa242dd227702f9348ea40504480e950d727feced793",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/artillery_alignment_study.py": "e02dec465f0e4ec931c5f7ad8294176b4f0cea0e57766874bbf64890160c2aeb",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/artillery_alignment_supervisor.py": "1c6b37c33f5a2c2098417cf50da07b911976111a2e95a366347b7e26874e929f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/artillery_training_exposure.py": "e82533145e3cd85a2633082b2db468ed2030760e497f886f425267387e1ccd1b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/belief_truth_check.py": "595fe3c2f66d35de6297feb33644b85d5735c24818b7b144b77e7eec77542460",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/build_cnn_ensemble.py": "e9c21299549bce576978fc2ecabf28b79a93d07f24fd3b4e9db348170a165725",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/build_ensemble.py": "7d2c5a982a4eaca7f13f0892b84ac947b37dd17463e005f27ff1cd88708748a9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/build_submission.py": "d0c85a3086769dcc8194fb99b5f740d4c94b167d97dd6925c42692e6068ad973",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/check_candidate_runner.py": "a5e671b12805bfa3ad0aad06a8b44379e1e6127f157ea708dff4e4ad86f73c2f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/common.py": "3f1a17515a588145c145999fe60293553473414900a3b2b77076ed4c2223d7a1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/compare_report.py": "c43355f08fc71a07242e087ce67ec1d2aac2a7d0951fb1150754c60a642eea72",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/compare_weights.py": "f451fbc3fa12f4ff8e9092f9acc352740bac6cac2092be4af3debd6784bbfd43",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/decision_trace.py": "e6adc48d3c7a28721c59cdd45fb60bc2fb9ab03f32ca5fa76b6c8babd9777ec5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/demo_server.py": "7a6da1805ea0528f6d186c4cd35d3e1a0a917bb8c1ad85fef3e7230785e117cf",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/early_curriculum_analysis.py": "ccb254c37e3be5e913f856a963c41fc0ffe0a73e69f1804d6780a23198e5d447",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/early_curriculum_study.py": "62a317f634da7db8f1945ccc8a7f69224d87de72751e074e9300144a35926252",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_candidates.py": "956565e663dc4e43102c4682d82158a47df1ced362328eadc266d7cd214d8aa1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_compare.py": "fc10d420acd13ce6eccb61c801213f5be9205717e2790b9a4cfdcf6182b8f808",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_eval_supervisor.py": "18ae1b9fac25854a9cc90adfc2b4b2044867a936a2ad4080e8867e9e439486db",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_supervisor.py": "2028d15f07ab292bfcef92209c341a782e445b3abc4bd46193d06708540b3c24",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_train.py": "5247fc72de131d7021b5c8c54a5ce388948547b57a2c6d3a68c12bdb235a72c8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/evaluate.py": "b787f238492e440408593e34f9f2f6e80cd9ab77135e569634fdfe67ba0b24a2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/experiment.py": "00b316de7233cbfdfd07f33751d49a9f1711a93db643aa3a5e6352c337170405",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/final_battle_candidates.py": "5e5a5c25e81376b0d8f1a24028393abe7834dfdbcd782c889d259d76a6722812",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/final_battle_study.py": "5794caadd90d5a87f0538077664e8808904d692ef81b85a6979a07c2a1e5641e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/final_rescue_train.py": "d17f7f92862b23a1493e7b78ab4bce1daa939ec39f300066ddf23600d06a9053",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/final_training_supervisor.py": "1b35745c175f5adca714e9762768c9ca81224a5ee456abad1dea64132e9fdb76",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/finetune.py": "4eff762d6c4b8e2341d8abe854dea483ab7acd15bc83167109efac3f54034507",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_influence.py": "be6da3adccc23c5d4fd7a0f20e62a1a9c62b602e67c1629be8e3ea4ed7fa80e0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_reward_compare.py": "f69a51dc77bf65cb821384680b4a3653ff2d1318ae735f211aa26a48bff5d338",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_reward_eval.py": "2db055294c02f21a4f82b7083be04162a797c694db161cfbe3485588a26bdf26",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_reward_study.py": "ffe261ab8764eab0bc58f23a493a7f29f78637446f71d44ac1a6db246f342df5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_reward_supervisor.py": "84a04f5c9b542c676211b6b28eefbe74f3fcc280d36e1a1580281766e0b70073",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/holder_learning.py": "969451bb3183b8af6e26d2e8e096c6ddedb228a38ba718ac92cdb63693b67dce",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/holder_learning_study.py": "66ee9b8393f287102c086fd4e17d44c78336d47ed5213c26cf1961552f2ef9d2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/holder_rollout.py": "a468125b090d548f08aa176df3e80bdf5afe3b67f61d93eeeb8f7ebe807a436a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/holder_rollout_probe.py": "f14de2262522b06320ab7e77ebbf7d6621d3c062ac875c32c71f4ee24091c981",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/league_gates.py": "47b2884f11c2f8fbc4bb41742c39d3db74a7c010abadea3bf481f8917fb3e22a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/make_demo_icon.py": "4ec8b4d4fd1bf3399afef3ada68f1cbd2655edf464158cbb4ffd86e8c318aa38",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/mechanism_probe.py": "8a982f7e75c7c694b8ffcfc618f5b5445fd881bf6d34fe5f0d1e0b988b6a64af",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/mechanism_report.py": "ddde090969293c6f997d23fd18759e9c757ee81c9976d28d1f89cb0516539ab7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/metrics.py": "35944cc163617af3d7e63fd6a1da992b60cda6ba28d2e7891c24963f1bb3853e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/network_breadth_candidates.py": "28ed012c8b9051763bdcf79e3660cff78acabe4bd2bd5ca9e9d0aabc5e2808d5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/network_breadth_study.py": "ddbe007a5486ec02e838c344dc59559ea5da9b9ef60c390ff4c8f9ae88e3900f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/night_train_pilot.py": "69650408717a0bca74ee3ee80eb8af167983f9aa303efe6631e4b271a720898f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/observe_loss_mechanisms.py": "2fab40331acc220cf0cfac30641ffb55eff8951f1903625390bbc69f9b1d8a06",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/oracle_probe.py": "ec21a9ce1e75c86c538273257d20f4ec0b4f1296623f96a63f76e699409a3ac1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/output_paths.py": "850603ec73be07ae1e26aa00dbd6f4336bc11588dc5cf5f0d585da1f72920893",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_eval.py": "f525506d5268600e00c180d2a1fc4c9cc6bfb02ff2d63c6dcc7a8da33bf58a61",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/par_losses.py": "28a6de8766d88369b6f856cc583e741b7e6db591d53ad98f014ddcd3e939f42a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/play_and_view.py": "aed9c980584afece1327c943639ee62169ba66957fa5353bd544ff4cf349c8a1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ppo_train.py": "0a561339e8a1167cb6132df3a69a4f99a14de1602c5c2ab5ba321b88deb4e635",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/protocol.py": "44d35c70faee2e6251a65636f74976bb232704459cfe088dee156fcc6c43fcc4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/record_replay.py": "94a29e73b7d754e4f9ff43791126d0f05e47f83d2eccbcfc2425a03260106f4c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/release_candidate.py": "bf304b584d4eca61a8c2163509684e758ba5c8720466c65be7515d6d3620e676",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/render_snapshots.py": "4b896e5654998520fbaf90acc169bee8a4dbe926ea41905ebabc562f0d5fbaaa",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/replacement_validation.py": "3507311235ee0b813c1b2f33167936ac88468074e85ce079873a3360c2400137",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/report.py": "12d94c1f97d907e7ef984b3f633217f5cdfffd133ffc2e5963a3e5984a287b89",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/run_experiments.py": "000ef470ed61f651a6f88414bec2d1413e1a0e4845f5c25f00186033da6f788a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_agent.py": "c767ee07a6fcf9566e762e105eec36a3b51e44664cb1b4b77e82d93ddd414bf9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_compare.py": "62319ce1897334c91972d260a65305625c80d5d7f213831628fb07ff99169cb0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_eval.py": "8ebe13119ce57d4f1f41f87275eae2aa0dd194172ff700e3c72581c26c2d5329",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_study.py": "40d18c9a8ad8c3ef9b497ce260b533a93e2581a6c7c158a06712d89537aee224",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sampled_target_supervisor.py": "e6d5bb238fe0fd4d27f00c103ec4824f04c01ce3b7a5cd51297b877c5a1bb443",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_leading_agent.py": "3b4b779f25f32af9f523b69b169a68eea78b862ce89ede77a3138ef2db26c2eb",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_leading_archive.py": "02bc4cbdd017e6f3336f9cf6a63012606756951e1ab7664dd50162ad8acbf785",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_leading_eval.py": "bb92fa880a8adcaaf05f02bdf08a5fc3c689a8df8387077749dd7974b4f1acca",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_leading_owner.py": "5cfdc4b0f25f34a7a9823cf7b5f1a69bfcb8e75c56b6f4ae7488901fd73319d0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_motion_agent.py": "1bfa0e34ba60545a7e6806360da6c1d520eb80c2ad4bea6ccb5a74f028b00900",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_motion_eval.py": "10485a00a24b571ec03eacfa0c9f6725771f25592267d6dc315be5f657fbcb59",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sap_motion_owner.py": "ef7432694b1f8e2de8842a0c1b640af3c84e1ab1bc8355232981f6ea5ca80e53",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/screen_table.py": "23ae948bcc2fb9c198c7ce01010f1686b0344eabf242510fb0e465ac5ee46bb4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/set_cfg.py": "41eed8354cbfbaa8ccf02fb475c285f555bfbd937789aaf8e83e18501d1fd338",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/set_match_count.py": "8f27a91cf13dfb5b8acdb8ea5a1fcecc94dcae34f9ecb05a4ccabf801b3a6bec",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sherlock_remote_stub.py": "8ecd3e6050de31a03ebf4ccc6066c9e2108c631fef4cb38a1b5ef718e418cb9c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/sherlock_server.py": "d1b274a0263ce0118aa44f08ac37c504a03490c122ba93863947340a701a8a23",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_action_distill.py": "ac499f02a0d6df8ef24b146936326f02fe16cdd71e42f6cc0c24e11a3f682ccf",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_anchor_train.py": "6e62fc97679de9132ae643f7ddb7e60074717f8af0e00a373df0dff7196a89ce",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_collect.py": "ea4aac4f86e013b7305c8e1836e2c4bf0e27e1f489caabb99cea289153e74f7e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_distill.py": "d79c07ba4df4dcd56f2784a4ad51201be5a1818c2a22a85b22b8cfea7095a6fa",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_failure_trace.py": "202983823faee06d21a8d17a39dd1f0fd48529b98ccbed650b66728baed10f16",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_retention.py": "c144cbce939f312c6cf8cce40f5ccc6ecd190828258fde1960e3711c6f698b77",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/student_reward_train.py": "414460a6eab48364af3dca30c33ab690c018e2acf412728b19becd0d0841e842",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/style_opponents.py": "e92edef4212c1f3c990efd1b6c992b247f123d9399303e2d9952f5d9e4cd340a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_adapt.py": "3ea5e2c2122c8fc756daa7826a7f85508a915318023359331a97784f97d315d0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_adapt_backup.py": "a01f6bc81158c5f2f652d0cfa78ffcb8c65a481eae77b376b591c3f7cd6ee475",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/targeting_probe.py": "f22d4b6c44ddef0ef0f0cc04f358451c559328391328047a3a25d8bac87becee",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/train.py": "5c8073b9e4f957f81ca3edc5f6290888b4b88751a8610113b81c720b6dec45ab",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/v5_gates.py": "6fbf32d372bac7fcc32cc401ea77f4a82e8ed0e05d906225f085fa2d3a2491bd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/variants.py": "be550a92ce1f10153a82418116c0b618d1cb6b9b6895f9531d178193aa6b0ff5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/xversion_replay.py": "6302d3361c83bc8cebee23ccedbede792e35ee101ef412fcee2cfee36d96a7ba",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/archive_import_isolation.py": "575583ed7f9e82dfa313688a0fca7758167076d3723a2090eccf141114114a3d",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/conftest.py": "278bcbb16ec9c7fff74c3728d2b942b2da0ad5f9b006574de8d4df19a3490048",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_active_targets.py": "d51a263e1eb6b09ea255e4e3e80b413882abbe42ddce69c44d308435c9c3fd18",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_art_splash.py": "78fb15fa9d37f413e1dc243118a3e0bc5c6a3a35240f93289c399922eaae462f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_art_splash_training.py": "fdac777f5e7be8482e8786706979b3c486762fa75ce5524b4267048ac12dd56b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_artillery_alignment_compare.py": "fc9bd1716ec438e6420e7988ef4092fc5eb3c51ec3670fe8e3189ddc59d4fec1",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_artillery_alignment_study.py": "70787cbb76ebae54e190cb7afc41718d63d8e93ef175f297e5eeb64ed42d2711",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_artillery_training_exposure.py": "a852fa1a64b20836dabe4818e922f70eefeb72f5a4a84ff3334b52ff571bb49e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_battle_rules.py": "4c5a95917989d34341290ba084b3955dd9e5f89f84b467cf982012ca120afa63",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_battle_submission.py": "0becf4794c3d5cd69093f9582df3ff60acd1161965b40653c2af5f337ad839ae",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_belief.py": "3d44530b8c6e2fe8dc6f6d485d5dbfe31b7487559530a0683352f86327c6b0f2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_candidate_runner.py": "4a36f782773bcfca8e85fc7ee9f42e42902350a681da224f138ab465319a417f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_cnn_ensemble.py": "c5307df25be46ae8403077792057ea5a86d7642f6e4ea517c8ea90b8d0398381",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_compare_report.py": "4a8f5f80505f42c0773a5ee1b077d033cc2fdec3736f37e2d73798d5fb239b58",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_crash_guard.py": "1c2dc57de0dd2e07e31e5be96dd2eb1f709e4dc810b7a2b7bfb3c6879fe077e0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_decision_trace.py": "31571095effe09d6dcf96e339f7cc5a8482135d9d02637836ef569fe69f2a62b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_demo_server.py": "216da0fa7ddc821dd0778743f751309b151c46036adede09c448954613b4abf2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_dodge_shape.py": "cf1ed8f708fafbd6e0f0da6db3bbf124229024eab75da40ed2a9903b16d17cef",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_early_curriculum.py": "24e1f914c0014912cd51fe0b4bc17685dca9f371ddc1f1015d98e83313791d23",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_early_curriculum_analysis.py": "4b596e1d28f68d7e1a6768edb5ccc82f262c9179ea91b6d9580a422779d04ee4",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_early_curriculum_study.py": "1ab0fd9d73c24c518977a4ff68a86993b9bf1e8c9443c47809b7e17a16cea858",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_end_sap.py": "cd848a9371890f2599cee8eaf08ba95c97cbf567f1d3866c539aa8d204104502",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_dimensions.py": "c80e0c8bd401b4316f2012445ab110cb7e24acd02c7f22a9f9ef37b25377ea04",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_diversity_candidates.py": "a0232f6601dcf783d8c059ebac4913ccfaf2f12049719f1a50aaf848650448f0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_diversity_compare.py": "7a1b4ddd71523f2e080563d2355f8f58eae621272d9aa4f31e5b2146924044d2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_diversity_eval_supervisor.py": "0991af3ab681e2d5e9a9a7795a3d2f2a0dd33c02ac25e052931ca2c18adfcbc3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_diversity_supervisor.py": "5f1788e7b85119a9e9a42554cd4e70cc3a0ab82bc2c65037503c568c0f3bbb6b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ensemble_diversity_train.py": "ee8d96b1ac6ef8f626eca89b50283bea8a83ad59e61e5d6baa92bb1ea22e9d80",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_final_battle_candidates.py": "c1734f71b1250130858e16fe4284d1d24c75102b7e61fcdd2c0f3eb10415ea03",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_final_battle_study.py": "2e301e9b19b8c942593874479298a90d0d3ce504997fa0f9ebcceabba2d64e4e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_final_rescue_training.py": "d9ed133f20a7d2b7338c71ae3f86bde46078de8da652a09d9d602de7c9ef0897",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_final_training_supervisor.py": "927c9f2f87211577b7b7c391f168929d54a01e3204e151e74eb4896ab2736194",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_finetune.py": "eb4e90218ce481101ba90fdd0d7fb71c3782b303beb34bc5e1629f44e2658ce0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_fog_influence.py": "c6bfb049f6890c53aa63eb25716f458e052e73e2eca19c1eee852691787d8cff",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_fog_reward_compare.py": "7e429bf60c038a974932cb28d05c9a2587fe677f09f3125d6cc7aa240d7f63f9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_fog_reward_study.py": "cfa928dbcffabbec2851a3af06a6ac59f01b9732feb1de76eb4a490c0e0dded5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_fog_sap.py": "e0e84fe3e584a22585d3f97e844ddb62df4ebde96b87eabdef96d1c4edd07dc3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_fog_unknown_reward.py": "fcf0644db82a8f61146d157de6bbda29101a052f284b4edfc392e411a89e865a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_geometry.py": "a31836fb00d1d6ba2270148719bc739040806ef91406c2bb1b3c172d028aa628",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_holder_learning.py": "891579125d610f6aa4983cacdb8166e1d87ef52266b703961f1d92cadb094199",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_holder_learning_study.py": "10c8bf15bcddd9b4a723a6eb72d95c626ad2f4725d877313f633b19752295c81",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_holder_rollout.py": "d043937d189b896baefb6bd111a31e30bb0f887301e9f75475899a5e0ae43efc",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_league.py": "fe397c30e36cd817fa23bc8e65947d20cc1e49054c33972e3f1e1e3ed6d687f6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_league_gates.py": "0fd7c7befac90a5cb3c964ad152efea80303cdfdb1c996ddc100d38502b7a7e5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_loss_mechanisms.py": "efabe8b95846806002c428b543d5cc5c38755c8e26206355d92846965d9a180e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_mask_and_act.py": "d9c04e8748155dd702365ab6b6ad633fc67d3ca3f42947a6b947c54442cb207a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_match1.py": "1db8efa5f15ebbbf191e8661ff303557f68f937f2f73dcafefdf43464a1de8c2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_nebula_fix.py": "a815743ce95ef41b74603f5adb223a5accd573205b59f35e832bb5b1f702bc5a",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_network_breadth_candidates.py": "dab5eb3f399d4e8a7b08eb8fd5a1eb938150e1b6339723ba23fe05f48590d5d9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_network_breadth_study.py": "b8aea9fa18588058dc15782035efed28884affbbf0b100754f86d14bca34da16",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_night_eval_journal.py": "5cb0e95606ddcd73ea232853cc6755db5c53741922705289e74f6009ecc18523",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_night_train_pilot.py": "602562f70819fea751919d910757281874d049e9cb17f1f6ae13e86077d0668b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_no_strand.py": "bb928dfdae203506845fe3a79dce1ecb5ce7ea9b346e273a4fc3ed9e2d9ced43",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_opp_point_infer.py": "114752ad82d9f7f5b4d9009642dacc01a9cad1c8ff2eaef529019f4c3431d982",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_overlap_inference.py": "1f3702520497803b9f6eb879616554497a1e3b19eb2fd46d7cd860e6b7eb3eb6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_par_losses.py": "7dcc41cb7c98db4dee8aaff1cc2cc7aa1e18ad4282f9db06d0054b15243233cb",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_persistence.py": "1966c21e11b5227a992b2eff1a017459e51e7c47640d3a9ab11bb31dfc3a84e6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_play_and_view.py": "6be69a558a49728f0f3864c102e53f7807055d77206ee8faed5d4b494f0c3c76",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_point_counting.py": "588b3d42c39cd1aca0b8e4ea3a1f3803d4fa7dbe4327d8084958e3119ee01e1f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_ppo_seeding.py": "ed61b2ea17589baa111c809fcc648abd95599b296822f3ef0de95200074f0b13",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_release_gate.py": "266e0193183082bc5cb88a44a591a233219cecc3d4a5368a5c6d8c15a3ae97d5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_relic_prior.py": "b17538b42ca66193cd2254551e9101e8e5de1d8c0d1d84e69073f26a2288baf0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_replacement_validation.py": "f203bb33625162f19f4a810dcca8a2ad4771ae97bd5209bd5d2db1dd215c1697",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_reward.py": "7f82643cc2923205dab2ba8aa6866624d1877ce11eec6dad25645b8c9dbd26d8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_rules_1910.py": "adfdd9a6ba02fa621d7c30858a94b1cd8e60d4cbba0044c917d519e83d24b1e2",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_rules_2110.py": "e0b5514af76bb78699ee86af7b0c923f58d6a018a2a9cb66969c6efac61e39b3",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_runner.py": "6c2bf7864cac8b1643ec23f67c53f20f01de864da45b9ed46cb75b1e769672ec",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sampled_target_agent.py": "020819bc80df0b1ff81d4c390110bf8ca13fbff84ee74f54636d3625252657eb",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sampled_target_performance.py": "43ad791a021d04b6892c5b489af83b1aad923d0d17e1056814823ecf2f116255",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sampled_target_study.py": "ef5ee98e0cba3ec57650130ee622e87735d2349c9c5b3abbd52d2af43425ad92",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_geometry.py": "4a77563612a57511c8c7584be321daeb5acfa4c08c5379e83ad71eaf931bd3d7",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_leading_agent.py": "1e3c5835af3bc8f823a7383de2bcec5a11bf188377f699a3a5b3d03b6b50ea22",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_leading_screen.py": "29148c10e3852e3a946623e92b4604e25a2a036233919716ba044aea5cb036b8",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_motion_agent.py": "4bb1fdfcbc4f2b9527662cb921b164b598cb6e66e70627afff44163df55aabc6",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sap_motion_screen.py": "97c414462fcee1f8f67b5f762cf2639b6cf396566f699f61e62f6b2a861da2de",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_screen_table.py": "158df37d913adf4eed91eced18223c234960ce8979df29133bdd82d006403bc9",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_sherlock_remote.py": "ebe2e211a6d50bab73c49fc21333e2317c2157e635528b1cde09df7637713428",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_slow_exploration.py": "a7d528a9173ac85680c0d3776f086c26ac2b86e4a7947fa1c5f55f63d390999e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_splash_dodge.py": "d233d37b40bdd4913612b5c2144dbc18608572ca120b8cc9aa00d20c73ef770b",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_action_distill.py": "588903c2d5a4d74e7c06a465730bfc35023eff2c5c25281c4c442ef1ac7ea04c",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_anchor_train.py": "3cf3ea779e183aa0de31098e2c02d877365e4c8ed4fd470f51a115f683c87136",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_collect.py": "50bda79ebb5bee11284fb6a30b3ab5f813ee78836c6543bd96cceca49575cc33",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_distill.py": "3b86de3b8b0ff771000aaff90b0f7aa10da4d28f62f4017dd8c7d688b8969b6f",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_failure_trace.py": "5e58093f18b7f2596df7fec44e5a1cf488355e45a6bf735822278c8fc571d551",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_retention.py": "fdc411dafb267f628b26ced686fc37cdfb6f8cb5b941f2d535d0c47305d588cf",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_student_reward_train.py": "841f9643947c49698b6cc417c27d001049c6fb6f02b2c4dea83e243f7d8b26e5",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_submission_sources.py": "97bb8202c172cb889bf8c49cf1b30ff6b8e228ccc2ad85d615705a229c38fa66",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_targeting_adapt.py": "aca5859093b99c48d0c9c04a7082e8a5a11682ad9e4ade11da00ee2550488944",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_targeting_adapt_backup_contract.py": "03d83878cf13a7ef3faa13b69fb137d2b7991f3edd2cc8d5526fc5eda1406a86",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_targeting_probe.py": "a96ffb8c39ffe254eea81d30e741652f8e11d6ecb4572da86c2f07706472082e",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_targeting_prototypes.py": "8bf7b2526e243259d4e37fef419d55a38cc2c64b205a2a6767f7dab68aabfea0",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_terminal_death_potential.py": "a4fd29b22a3377749e1e67216c227ca2b173edd574b6670427e41c0958fe2bdd",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_v10_mechanics.py": "1a0b78f76ad09dc0f9482664e1ca683bf9db408d354dd50fc37332c76f40f768",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_validation_isolation.py": "4a01f5e8111a41dafd41a6b9d6fb5027eb4bba6a1b186fd336260327346d2018",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_variants.py": "22d3013c2f549086296ef7e45f54e019765aeda36a6eef9d10c5b316cc3a3e76",
+      "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/tests/test_weight_protection.py": "ed13890c8180ffa753372e167fe6f63562d6644df86aab1b3dc5c43736d47472",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/lib/python3.13/site-packages/luxai_s3/wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+      "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/pyvenv.cfg": "3adf01f0317f45285080025f56936cffc5ffdca58b996c4c7cc25018a5e11d12"
+    },
+    "head": "4ceff1943e274f476dab82c37b9a93e682a00c63",
+    "python": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/.venv/bin/python"
+  },
+  "stage": "performance",
+  "status": "complete"
+}
