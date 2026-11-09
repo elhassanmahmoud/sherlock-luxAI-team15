@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Ensemble-Verhalten im Training wird vorbereitet
+
+- MATCH38-Bestätigung als `e1b8f8e` veröffentlicht und Hauptkopie aktuell; keine laufenden Modelle, Freeze geschlossen. V14/ZIP und fremde Dateien unverändert.
+- [Separater fester Ansatz](superpowers/plans/2026-11-09-ensemble-behavior.md): zwei neue ON-Arme mit Ensemble-Aktionsauswahl im regulären Einzelnetz-DDQN, gleiche ursprüngliche Kontrollkonfiguration mit w_match=2. Vorhandene Kontrollen 48/49 nur nach Quellenbindung und tatsächlicher OFF-Reproduktion wiederverwenden; fehlende historische Binär-/RNG-Snapshots ausdrücklich nennen.
+- Vor neuen Lernspielen vier bekannte Technikspiele, dann getrennte Aufnahme mit zwei ON-Workern und manueller Root-Barriere nach je 40 Vorlaufspielen. Anschließend je 400 Lernspiele ohne Zwischenwahl. Methodischer Review bestanden; Adapter/Runner und synthetische Tests werden umgesetzt, einmaliger Check der 60 festen zukünftigen Auswahlkarten läuft. Noch keine realen Aufnahmen oder neuen Spiele.
+- Alter Matchreward-/Ensemble-/SAP-Stand bleibt geschlossen. Akku und Restkontingent erlaubt, Resets nur durch Moayed. Quelle und Grenzen vor jeder Phase separat festhalten.
+
 ## 09.11.2026 – MATCH38-Bestätigung geschlossen: V14 bleibt
 
 - Alle 440 festen Spiele vollständig und unabhängig nachgerechnet: Solution beide 38/40, Square MATCH38 37/40 statt V14 34/40, default/rush beide 40/40; direkt nur 58/120. Beide Direktgates verfehlt, sechs Panelgates erfüllt. Kein bestätigter stärkerer Nachfolger, kein Nachschlag oder Schwellenwechsel. [Ergebnis mit Grenzen](../experiments/analysis/match_weight_confirmation_20261109/ERGEBNIS.md).
