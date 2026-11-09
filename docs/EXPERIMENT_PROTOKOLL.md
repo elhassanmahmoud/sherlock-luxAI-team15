@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 09.11.2026: Matchgewicht-v1 technisch unterbrochen: vier Technikspiele, 80 Vorlauf- und 150 Lernspiele, 22.500 tatsächliche Updates. Ungültiges Zeitformat im externen Kontingentbeleg führte zum sicheren Stopp, kein Leistungsbefund. Originaldaten und unvollständige Checkpoints erhalten; V14/ZIP unverändert. Exakte manuelle Ersatzaufnahme vor Leistungsdaten festgelegt, übrige Methode und 200er-Auswahl unverändert. [Stand und Belege](../experiments/analysis/match_weight_20261109/README.md).
+
 - 09.11.2026: Qualitative aktuelle Verlustdiagnose genau zwei Ausführungen auf 9946007/player_0. V14-Screenbaseline reproduziert und Beobachter passiv; 303 Zeilen und Ereignisse unabhängig geprüft. Stabile Alleinhalter-Pendelhypothese nicht belegt; Kandidatentestlücke 45–75 in Match 1 und produktiver Belegungseinbruch in Match 2 beobachtet, keine kausale Stärkeaussage. Keine neue Regel/Gradienten; V14/ZIP unverändert. [Ergebnis](../experiments/analysis/holder_oscillation_20261109/ERGEBNIS.md).
 
 

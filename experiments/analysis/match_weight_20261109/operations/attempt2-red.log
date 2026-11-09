@@ -1,0 +1,72 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_attempt_paths_keep_v1_default_and_allow_only_explicit_v2 _________
+
+study = <module 'scripts.match_weight_study' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_study.py'>
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-406/test_attempt_paths_keep_v1_def0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abf96e0>
+
+    def test_attempt_paths_keep_v1_default_and_allow_only_explicit_v2(study,tmp_path,monkeypatch):
+        a,_,_=replacement_admission(study,tmp_path,monkeypatch)
+        root=tmp_path/'experiments/analysis'/study.PROFILE
+        sentinel=root/'pair48_v1'/'untouched.txt'; sentinel.parent.mkdir(parents=True); sentinel.write_text('original')
+        for stage in ('technical','pair48','pair49'):
+            a.update(stage=stage,out=str(root/(stage+'_v2')))
+>           assert study.output_dir(a)==root/(stage+'_v2')
+                   ^^^^^^^^^^^^^^^^^^^
+
+tests/test_match_weight_study.py:322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/match_weight_study.py:258: in output_dir
+    require(out.parent == ROOT/"experiments/analysis"/PROFILE and out.name == a["stage"]+"_v1"
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Unsafe fixed output'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Unsafe fixed output
+
+scripts/early_curriculum_study.py:52: ValueError
+___________ test_attempt_two_requires_exact_bound_interruption_facts ___________
+
+study = <module 'scripts.match_weight_study' from '/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_study.py'>
+tmp_path = PosixPath('/private/var/folders/k4/j2416rf564nfrzw9jlxpvvch0000gn/T/pytest-of-moayedshawesh/pytest-406/test_attempt_two_requires_exac0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f2ebe30>
+
+    def test_attempt_two_requires_exact_bound_interruption_facts(study,tmp_path,monkeypatch):
+        a,closure,path=replacement_admission(study,tmp_path,monkeypatch)
+        broken=[]
+        for key,value in (('status','complete'),('profile','another_study'),
+                          ('original_processes_ended',False),('source_and_input_bindings_valid',False)):
+            broken.append(dict(closure,**{key:value}))
+        broken.append(dict(closure,actual={'control':closure['actual']['control']}))
+        for role in study.ARMS:
+            for key,value in (('prefill_games',39),('learning_games',76),('optimizer_updates',11249)):
+                changed=copy.deepcopy(closure); changed['actual'][role][key]=value; broken.append(changed)
+        for value in broken:
+            path.write_text(json.dumps(value)); a['inputs'][str(path)]=study.digest(path)
+            with pytest.raises(ValueError): study.output_dir(a)
+        path.write_text(json.dumps(closure)); a['inputs'][str(path)]=study.digest(path)
+>       assert study.output_dir(a).name=='technical_v2'
+               ^^^^^^^^^^^^^^^^^^^
+
+tests/test_match_weight_study.py:352: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/match_weight_study.py:258: in output_dir
+    require(out.parent == ROOT/"experiments/analysis"/PROFILE and out.name == a["stage"]+"_v1"
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Unsafe fixed output'
+
+    def require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Unsafe fixed output
+
+scripts/early_curriculum_study.py:52: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_match_weight_study.py::test_attempt_paths_keep_v1_default_and_allow_only_explicit_v2
+FAILED tests/test_match_weight_study.py::test_attempt_two_requires_exact_bound_interruption_facts
+2 failed, 1 passed, 22 deselected in 2.48s

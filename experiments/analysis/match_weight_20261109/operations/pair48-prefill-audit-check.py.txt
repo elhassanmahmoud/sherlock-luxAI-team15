@@ -1,0 +1,110 @@
+"""Independent completed prefill data check only. No torch/project imports or writes."""
+from pathlib import Path
+import hashlib,json,math,subprocess
+import numpy as np
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15');B=ROOT/'experiments/analysis/match_weight_20261109';PHASE=B/'pair48_v1';OUT=Path('/tmp/match-weight-pair48-prefill-audit')
+ADMISSION_SHA='317e315d7008d58df45d5eb807f9e7a09561f106952338faa07f4d583f510f75';ROLES=['control','match'];checks=0;cache={};bindings=[]
+def ck(ok,label):
+ global checks
+ checks+=1
+ if not ok:raise AssertionError(label)
+def read(p):return json.loads(Path(p).read_text())
+def sha(p):
+ p=Path(p)
+ if not p.is_absolute():p=ROOT/p
+ if str(p) not in cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+  cache[str(p)]=h.hexdigest()
+ return cache[str(p)]
+def pin(p,h,label):ck(sha(p)==h,label+': '+str(p));bindings.append(dict(path=str(p),sha256=h,binding=label))
+def typed(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if isinstance(x,np.ndarray):emit(b'ndarray');emit(x.dtype.str.encode());visit(list(x.shape));emit(x.tobytes(order='C'))
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda z:(type(z).__name__,repr(z))):visit(k);visit(x[k])
+  elif isinstance(x,(tuple,list)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for y in x:visit(y)
+  elif isinstance(x,(str,int,float,bool,type(None))):emit(type(x).__name__.encode());emit(repr(x).encode())
+  elif isinstance(x,np.generic):visit(x.item())
+  else:raise TypeError(type(x))
+ visit(value);return h.hexdigest()
+def bits_equal(x,y):return x.shape==y.shape and x.dtype==y.dtype and x.tobytes(order='C')==y.tobytes(order='C')
+def waiting_gate(state):
+ ck(state['status']=='running' and state['stage']=='pair48' and state['start']==48 and set(state['active'])==set(ROLES),'same original pair waiting')
+ ck(state['admission_sha256']==ADMISSION_SHA and not (PHASE/'release.json').exists(),'no gradient release exists')
+ ck(set(state['jobs'])==set(ROLES) and all(j['returncode'] is None for j in state['jobs'].values()),'both original workers still pending')
+ snapshot=subprocess.check_output(['ps','-axo','pid=,pgid=,ppid='],text=True,timeout=10)
+ live={int(p):(int(g),int(parent)) for p,g,parent in (line.split() for line in snapshot.splitlines() if line.strip())}
+ ck(state['owner_pid'] in live,'actual owner alive')
+ for role,j in state['jobs'].items():ck(j['owner_pid']==state['owner_pid'] and live.get(j['pid'])==(j['pgid'],state['owner_pid']),'actual original worker alive '+role)
+ return dict(owner_pid=state['owner_pid'],worker_pids={r:j['pid'] for r,j in state['jobs'].items()},snapshot_sha256=hashlib.sha256(snapshot.encode()).hexdigest())
+s=read(PHASE/'state.json');before=waiting_gate(s);a=read(B/'pair48-admission.json');pin(B/'pair48-admission.json',ADMISSION_SHA,'actual pair admission')
+ck(a['profile']=='match_weight_20261109' and a['stage']=='pair48' and a['start']==48 and a['source']==s['source'] and a['source']['head'].startswith('a96ddeb'),'frozen source stage start')
+for group in ['inputs','protected']:
+ for p,h in a[group].items():pin(p,h,'admission '+group)
+for p,h in a['source']['files'].items():pin(p,h,'source file')
+pin(a['source']['executable'],a['source']['executable_sha256'],'interpreter')
+ck(dict(a['config']['control'],w_match=20)==a['config']['match'] and a['config']['control']['w_match']==2,'only fixed reward config contrast')
+opp=np.random.default_rng(48).choice(['solution92','sol92_sq','default','rush'],440,p=[.6,.2,.1,.1])
+plan=[dict(phase='prefill',game=i,seed=9960300+i//2,side=['player_0','player_1'][i%2],opponent=str(opp[i])) for i in range(40)]
+ck(a['rollout_plan'][:40]==plan,'independently regenerated first40 fixed keys')
+proofs={};arrays={};audits={};rows={};summary={};pins={}
+for role in ROLES:
+ directory=PHASE/role;proof=read(directory/'prefill.json');proofs[role]=proof;pins[role]=sha(directory/'prefill.json');wait=read(directory/'waiting.json')
+ ck(wait==dict(profile=a['profile'],role=role,start=48,admission_sha256=ADMISSION_SHA,prefill_sha256=pins[role]),'actual waiting marker bound to current proof')
+ ck(proof['status']=='prefill_ready' and proof['profile']==a['profile'] and proof['role']==role and proof['stage']=='pair48' and proof['start']==48 and proof['source']==a['source'] and proof['admission_sha256']==ADMISSION_SHA and proof['config']==a['config'][role],'actual fixed proof identity')
+ ck(proof['games']==40 and proof['env_steps']==72120 and proof['learn_steps']==0 and proof['initial']==proof['current'] and proof['initial']['q']==proof['initial']['target'],'recorded unchanged Q target optimizer zero learning')
+ initial=read(directory/(role+'-initial.json'));ck(initial['initial']==proof['initial'] and initial['config']==proof['config'] and initial['start']==48,'original initial file agrees')
+ for p,h in proof['files'].items():pin(p,h,'actual prefill artifact')
+ ck(set(proof['files'])=={str(directory/n) for n in ['prefill.pth','prefill-replay.npz','prefill-reward-audit.npz']},'exact three preserved artifacts')
+ with (directory/'games.jsonl').open() as f:rr=[json.loads(line) for line in f]
+ rows[role]=rr;ck(len(rr)==40 and [x['key'] for x in rr]==plan,'exact40 completed raw rows')
+ for i,x in enumerate(rr):
+  ck(x['role']==role and x['before']==dict(env_steps=60000+303*i,learn_steps=0) and x['env_steps']==60000+303*(i+1) and x['learn_steps']==0 and x['loss'] is None,'no-gradient row counters')
+  ck(x['steps']==303 and x['point_counting_version']==2 and math.isclose(x['epsilon'],.05,abs_tol=1e-12,rel_tol=0),'complete fixed v2 game')
+  ck(x['reward_audit']['updates']==x['final_action_audit']['act_calls']==x['final_action_audit']['update_calls']==303 and x['reward_audit']['transitions']==x['final_action_audit']['checked_replay_transitions']>0,'actual audited replay/label counts')
+  ck(x['result']==(1. if x['our_wins']>x['opp_wins'] else .5 if x['our_wins']==x['opp_wins'] else 0.),'recorded match result arithmetic')
+ with np.load(directory/'prefill-replay.npz',allow_pickle=False) as z:d={k:z[k] for k in z.files}
+ with np.load(directory/'prefill-reward-audit.npz',allow_pickle=False) as z:au={k:z[k] for k in z.files}
+ arrays[role]=d;audits[role]=au;n=proof['replay_size'];meta=proof['replay_metadata']
+ ck(n>=a['config'][role]['learn_start'] and n<a['config'][role]['buffer_capacity'] and meta==dict(size=n,pos=n,capacity=a['config'][role]['buffer_capacity'],mask_dim=6),'full unwrapped sufficient prefill metadata')
+ ck(set(d)=={'s','a','r','ns','done','mask'} and d['s'].shape==d['ns'].shape==(n,79) and d['mask'].shape==(n,6) and all(d[k].shape==(n,) for k in ['a','r','done']),'actual replay shape/schema')
+ ck({k:v.dtype.str for k,v in d.items()}==dict(s='<f4',a='<i8',r='<f4',ns='<f4',done='<f4',mask='|b1') and all(np.isfinite(v).all() for v in d.values()),'actual finite replay dtypes')
+ ck(((d['a']>=0)&(d['a']<6)).all() and np.isin(d['done'],[0,1]).all() and d['mask'].any(1).all(),'actual labels terminals masks valid')
+ ck(set(au)=={'uid','outcome','control','match'} and all(v.shape==(n,) and np.isfinite(v).all() for v in au.values()) and au['uid'].dtype==np.int64 and all(au[k].dtype==np.float64 for k in ['outcome','control','match']),'actual original formula stream schema')
+ ck(((au['uid']>=0)&(au['uid']<16)).all() and np.isin(au['outcome'],[-1.,0.,1.]).all(),'UID outcome validity')
+ ck(typed(d)==proof['replay_sha256'] and typed(dict(meta,**{k:v for k,v in d.items() if k!='r'}))==proof['replay_without_reward_sha256'] and typed(au)==proof['reward_audit_sha256'],'independently recovered preserved replay/formula identities')
+ ck(bits_equal(d['r'],au[role].astype(np.float32)),'actual stored r bit-exact Float32 original formula')
+ offset=0
+ for x in rr:
+  end=offset+x['reward_audit']['transitions'];counter=hashlib.sha256();nonreward=hashlib.sha256()
+  for j in range(offset,end):
+   counter.update(typed(dict(uid=int(au['uid'][j]),outcome=float(au['outcome'][j]),control=float(au['control'][j]),match=float(au['match'][j]))).encode())
+   nonreward.update(typed((int(au['uid'][j]),d['s'][j],int(d['a'][j]),d['ns'][j],bool(d['done'][j]),d['mask'][j])).encode())
+  ck(counter.hexdigest()==x['reward_audit']['counterfactual_sha256'] and nonreward.hexdigest()==x['reward_audit']['nonreward_sha256'],'actual per-game ordered original formulas and nonreward rows')
+  ck(int(np.count_nonzero(au['outcome'][offset:end]))==x['reward_audit']['nonzero_outcome_rows'],'actual per-game exposure count')
+  offset=end
+ ck(offset==n and int(np.count_nonzero(au['outcome']))==proof['nonzero_outcome_rows']>0,'all40 game transitions/exposure preserved')
+ paired=[{k:x[k] for k in ['key','native_sha256','trajectory_sha256','reward_audit','final_action_audit','our_wins','opp_wins','our_points','opp_points','result']} for x in rr]
+ ck(paired==proof['paired_rows'],'raw rows exactly bind paired proof')
+ summary[role]=dict(games=40,replay_rows=n,nonzero_outcome_rows=proof['nonzero_outcome_rows'],positive_outcome_rows=int((au['outcome']==1).sum()),negative_outcome_rows=int((au['outcome']==-1).sum()),env_steps=72120,learn_steps=0,wins=sum(x['result']==1 for x in rr),draws=sum(x['result']==.5 for x in rr),losses=sum(x['result']==0 for x in rr),prefill_sha256=pins[role],actual_replay_hash=proof['replay_sha256'],actual_nonreward_hash=proof['replay_without_reward_sha256'],formula_stream_hash=proof['reward_audit_sha256'])
+for k in ['s','a','ns','done','mask']:ck(bits_equal(arrays['control'][k],arrays['match'][k]),'actual paired replay bits equal '+k)
+for k in audits['control']:ck(bits_equal(audits['control'][k],audits['match'][k]),'actual paired formula/outcome/UID stream equal '+k)
+same=['profile','start','stage','source','admission_sha256','games','initial','current','env_steps','learn_steps','replay_size','replay_metadata','replay_without_reward_sha256','reward_audit_sha256','nonzero_outcome_rows','paired_rows']
+ck(all(proofs['control'][k]==proofs['match'][k] for k in same),'all actual paired proof bindings')
+au=audits['control'];c,m,o=au['control'],au['match'],au['outcome'];formula_error=(m-c)-18*o
+ck((np.abs(formula_error)<=1e-10+1e-12*np.abs(18*o)).all(),'fixed prespecified Float64 formula contrast')
+cstored=arrays['control']['r'].astype(np.float64);mstored=arrays['match']['r'].astype(np.float64);quant=(mstored-m)-(cstored-c);residual=(mstored-cstored)-18*o-quant
+ck((np.abs(residual)<=1e-10).all(),'actual stored contrast explained by concrete quantization only')
+ck(not bits_equal(arrays['control']['r'],arrays['match']['r']),'actual reward intervention present')
+ck(bits_equal(arrays['control']['r'][o==0],arrays['match']['r'][o==0]),'stored rewards unchanged without outcome')
+afterstate=read(PHASE/'state.json');after=waiting_gate(afterstate)
+if 'prefill_ready' in afterstate:ck(afterstate['prefill_ready']==pins and afterstate['awaiting_root_release'] is True,'owner readiness pins actual current prefills')
+result=dict(status='PASS',checks=checks,start=48,source_head=a['source']['head'],admission_sha256=ADMISSION_SHA,prefill_sha256=pins,roles=summary,max_formula_error=float(np.max(np.abs(formula_error))),max_actual_float32_quantization_contrast=float(np.max(np.abs(quant))),max_unexplained_actual_float32_residual=float(np.max(np.abs(residual))),process_before=before,process_after=after,hash_bindings_checked=len(bindings),unique_input_files_hashed=len(cache),script_sha256=sha(Path(__file__)),no_release_written=True,limits=['No model/Torch loads. Unchanged Q/Target/Adam and zero-gradient counters are recorded live identities; Root independently checks saved checkpoint tensors separately.','Actual full prefill replay including stored Float32 r and ordered raw original formula/outcome streams are independently recovered. Original formula provenance cannot be rebuilt without full contexts.','Native/public/final-action digests are paired and bound; complete raw actions/trajectories were not archived.','This establishes paired prefill mechanism consistency, not learning completion or strength.'])
+(OUT/'results.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');(OUT/'bindings.json').write_text(json.dumps(bindings,indent=2,sort_keys=True)+'\n');print(json.dumps(result,indent=2,sort_keys=True))

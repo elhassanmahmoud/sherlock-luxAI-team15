@@ -1,0 +1,33 @@
+"""Write a fresh, real get_usage_limits JSON response from stdin atomically."""
+import json,math,os,sys,tempfile
+from pathlib import Path
+from datetime import datetime,timezone
+
+def receipt(raw, observed=None):
+    if 'content' in raw:
+        raw=json.loads(next(c['text'] for c in raw['content'] if c.get('type')=='text'))
+    bucket=raw.get('rateLimitsByLimitId',{}).get('codex') or raw.get('rateLimits')
+    assert bucket and bucket.get('limitId')=='codex','No actual Codex limit'
+    windows=[bucket[k] for k in ('primary','secondary') if bucket.get(k) is not None]
+    assert windows,'No actual usage window'
+    values=[w['usedPercent'] for w in windows]
+    assert all(type(v) in (int,float) and math.isfinite(v) and 0<=v<=100 for v in values)
+    assert type(raw.get('ordinaryUsageAllowed')) is bool
+    now=observed or datetime.now(timezone.utc)
+    assert now.tzinfo is not None
+    value=dict(timestamp=now.astimezone(timezone.utc).isoformat(),usedPercent=max(values),ordinaryUsageAllowed=raw['ordinaryUsageAllowed'])
+    assert datetime.fromisoformat(value['timestamp']).tzinfo is not None
+    return value
+
+def main():
+    assert len(sys.argv)==2
+    target=Path(sys.argv[1]);assert target.is_absolute() and target.parent.resolve()==target.parent
+    value=receipt(json.load(sys.stdin))
+    fd,name=tempfile.mkstemp(prefix='.usage-',dir=target.parent)
+    try:
+        with os.fdopen(fd,'w') as stream:json.dump(value,stream);stream.write('\n');stream.flush();os.fsync(stream.fileno())
+        os.replace(name,target)
+    finally:
+        Path(name).unlink(missing_ok=True)
+    print(json.dumps(value))
+if __name__=='__main__':main()

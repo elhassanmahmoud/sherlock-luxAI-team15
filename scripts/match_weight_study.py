@@ -254,8 +254,23 @@ def bound(a, path):
 
 
 def output_dir(a):
+    attempt = a.get("attempt", 1)
+    require(type(attempt) is int and attempt in (1, 2), "Only fixed attempts 1/2 admitted")
+    if attempt == 2:
+        require(a.get("restart_reason") == "monitor_timestamp_format"
+                and isinstance(a.get("interruption_closure"), str) and a["interruption_closure"],
+                "Explicit monitor-error replacement admission required")
+        closure = bound(a, a["interruption_closure"])
+        actual = closure.get("actual", {})
+        require(closure.get("profile") == PROFILE and closure.get("status") == "INCOMPLETE_MONITOR_TIMESTAMP_ERROR"
+                and closure.get("original_processes_ended") is True
+                and closure.get("source_and_input_bindings_valid") is True
+                and set(actual) == set(ARMS)
+                and all(type(actual[r].get(k)) is int and actual[r][k] == count for r in ARMS
+                        for k, count in (("prefill_games", 40), ("learning_games", 75), ("optimizer_updates", 11250))),
+                "Accepted original interruption facts differ")
     out = safe_path(a["out"])
-    require(out.parent == ROOT/"experiments/analysis"/PROFILE and out.name == a["stage"]+"_v1"
+    require(out.parent == ROOT/"experiments/analysis"/PROFILE and out.name == a["stage"]+f"_v{attempt}"
             and all(out != Path(p) and out not in Path(p).parents for p in a["inputs"]), "Unsafe fixed output")
     return out
 

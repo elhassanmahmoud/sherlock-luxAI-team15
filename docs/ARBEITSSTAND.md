@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Matchgewicht: Überwachungsfehler behoben, v1 unvollständig
+
+- Vier echte Technikspiele und beide 40er-Vorläufe unabhängig bestanden; danach je 75 Lernspiele und 11.250 Updates. Die Kontingentüberwachung schrieb einen ungültigen UTC-Zeitstempel statt ISO 8601. Deshalb stoppte der Guard beide Worker an einer Spielgrenze; echte Quota war verfügbar (23 Prozent). Verantwortlich ist die Laufsteuerung, kein belegter Fehler des Lernansatzes. Kein Leistungstest oder stärkerer Nachfolger.
+- Root hat beide tatsächlichen unvollständigen Checkpoints, Zähler, Ende eigener Prozesse und Quellen-/Eingabe-/Abgabeidentität unter a96ddeb geprüft. Alle v1-Daten bleiben unverändert; alter Freeze geschlossen. [Belege](../experiments/analysis/match_weight_20261109/README.md).
+- Kontingentschreiber erzeugt und prüft ISO-Zeitstempel automatisch aus echten Toolantworten. Enge Aufnahmeänderung erlaubt ausschließlich eine explizite, an den Unterbrechungsbeleg gebundene Ersatzrunde v2; keine Lernlogikänderung. 44 integrierte synthetische Tests, tatsächlicher Guard-Formatcheck und unabhängiger Recovery-Review bestanden.
+- [Plananhang](superpowers/plans/2026-11-09-match-weight-training.md): neue vier Technikspiele, danach frische Originalstarts 48/49 mit denselben vorab festen 40+400 Spielen und manuellen Vorlaufbarrieren. Keine Fortsetzung/Übernahme der unvollständigen Gewichte, keine Ergebniswahl, keine automatische Wiederholung. Noch keine v2-Modelle gestartet; V14/ZIP unverändert.
+
 ## 09.11.2026 – Isolierter Matchgewichtsvergleich in Vorbereitung
 
 - Kandidatenrettung vollständig abgeschlossen und als 4e23ceb auf GitHub sowie in der Hauptkopie. Ergebnis 40/40 gegen Solution bei beiden Varianten, direkt 22/40, kein Nominierter; keine weiteren Spiele dieser Variante. Alle eigenen Modelljobs beendet, Quellenfreeze gelöst.

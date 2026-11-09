@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_owner.py", line 122, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_owner.py", line 65, in main
+    check(); checked = time.monotonic(); save_state(state)
+    ~~~~~^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/match_weight_owner.py", line 48, in check
+    guard(state, owned, allow_battery=a["allow_battery"])
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/fog_reward_supervisor.py", line 64, in guard
+    usage=check_usage(state['usage_file'],now=time.time(),max_used_percent=100)
+  File "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/scripts/ensemble_diversity_eval_supervisor.py", line 59, in check_usage
+    when = datetime.fromisoformat(usage['timestamp'].replace('Z', '+00:00'))
+ValueError: Invalid isoformat string: '2026-11-09 15:42:52 UTC'

@@ -298,3 +298,57 @@ def test_opponent_caught_error_invalidates_game(study,monkeypatch):
     monkeypatch.setattr(study,'action_audit',lambda *args,**kwargs:nullcontext({}))
     with pytest.raises(RuntimeError,match='caught'):
         study.play_one(agent,dict(phase='technical',opponent='solution92',seed=9946007,side='player_0'),object())
+
+
+def replacement_admission(study,tmp_path,monkeypatch):
+    monkeypatch.setattr(study,'ROOT',tmp_path)
+    closure=dict(profile=study.PROFILE,status='INCOMPLETE_MONITOR_TIMESTAMP_ERROR',
+                 original_processes_ended=True,source_and_input_bindings_valid=True,
+                 actual={r:dict(prefill_games=40,learning_games=75,optimizer_updates=11250) for r in study.ARMS})
+    path=tmp_path/'interruption-closure.json'
+    study.write(path,closure)
+    a=dict(stage='technical',attempt=2,restart_reason='monitor_timestamp_format',
+           interruption_closure=str(path),inputs={str(path):study.digest(path)},
+           out=str(tmp_path/'experiments/analysis'/study.PROFILE/'technical_v2'))
+    return a,closure,path
+
+
+def test_attempt_paths_keep_v1_default_and_allow_only_explicit_v2(study,tmp_path,monkeypatch):
+    a,_,_=replacement_admission(study,tmp_path,monkeypatch)
+    root=tmp_path/'experiments/analysis'/study.PROFILE
+    sentinel=root/'pair48_v1'/'untouched.txt'; sentinel.parent.mkdir(parents=True); sentinel.write_text('original')
+    for stage in ('technical','pair48','pair49'):
+        a.update(stage=stage,out=str(root/(stage+'_v2')))
+        assert study.output_dir(a)==root/(stage+'_v2')
+        with pytest.raises(ValueError): study.output_dir(dict(a,out=str(root/(stage+'_v1'))))
+        old=dict(stage=stage,out=str(root/(stage+'_v1')),inputs={})
+        assert study.output_dir(old)==study.output_dir(dict(old,attempt=1))==root/(stage+'_v1')
+    assert sentinel.read_text()=='original' and not (root/'technical_v2').exists()
+
+
+def test_attempt_rejects_other_versions_or_missing_manual_restart_reason(study,tmp_path,monkeypatch):
+    a,_,_=replacement_admission(study,tmp_path,monkeypatch)
+    for attempt in (0,3,True,1.0,'2',None):
+        with pytest.raises(ValueError): study.output_dir(dict(a,attempt=attempt))
+    for key,value in (('restart_reason',None),('restart_reason','resume'),('interruption_closure',None)):
+        with pytest.raises(ValueError): study.output_dir(dict(a,**{key:value}))
+    with pytest.raises(ValueError): study.output_dir(dict(a,inputs={}))
+
+
+def test_attempt_two_requires_exact_bound_interruption_facts(study,tmp_path,monkeypatch):
+    a,closure,path=replacement_admission(study,tmp_path,monkeypatch)
+    broken=[]
+    for key,value in (('status','complete'),('profile','another_study'),
+                      ('original_processes_ended',False),('source_and_input_bindings_valid',False)):
+        broken.append(dict(closure,**{key:value}))
+    broken.append(dict(closure,actual={'control':closure['actual']['control']}))
+    for role in study.ARMS:
+        for key,value in (('prefill_games',39),('learning_games',76),('optimizer_updates',11249)):
+            changed=copy.deepcopy(closure); changed['actual'][role][key]=value; broken.append(changed)
+    for value in broken:
+        path.write_text(json.dumps(value)); a['inputs'][str(path)]=study.digest(path)
+        with pytest.raises(ValueError): study.output_dir(a)
+    path.write_text(json.dumps(closure)); a['inputs'][str(path)]=study.digest(path)
+    assert study.output_dir(a).name=='technical_v2'
+    path.write_text(json.dumps(dict(closure,note='changed after binding')))
+    with pytest.raises(ValueError,match='Unbound/changed'): study.output_dir(a)

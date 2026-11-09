@@ -1,0 +1,132 @@
+{
+  "admission_sha256": "552484350cc80c9fabcd58478c136ed14fd6a94d7b9ec8d1198430df9e4aa326",
+  "checks": 528,
+  "games": 4,
+  "hash_bindings_checked": 449,
+  "initial_final_identities": {
+    "optimizer": "e792320c12ea2f52219d0b177d630df0bfe99e53787969098c6fb67510a1012e",
+    "q": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6",
+    "target": "43e2c214143f4354aaaa9b8db945941f2d6b8d04f09d9792d4eec6e3d17c45b6"
+  },
+  "limits": [
+    "No model deserialization or tensor recovery: initial/current/final Q Target Adam identities and zero-update counts are archived live assertions.",
+    "No full technical replay or actual stored-r array is archived; actual slot equality to Float32 original formula was checked live. Offline recovers both raw original formula streams, outcomes and their exact quantization contrast.",
+    "Native/public/nonreward/final-label digests are independently paired and file-bound; full action/context/state streams cannot be regenerated.",
+    "No independent recovery of original unit_rewards from full contexts, which are not archived.",
+    "Four fixed technical games establish mechanism consistency and exposure only, not strength."
+  ],
+  "paired_nonreward_and_counterfactual_streams_equal": true,
+  "process_after": {
+    "owner_pid": 15472,
+    "snapshot_sha256": "c655369cdd08e62a82c90376ac68cc2c61136e39e52243f5201cdeca20056f46",
+    "worker_pid": 15489
+  },
+  "process_before": {
+    "owner_pid": 15472,
+    "snapshot_sha256": "b0870943865fb0d4301abcdda5793fc1fb4e0bf6965e91b9913818442bb2d6fb",
+    "worker_pid": 15489
+  },
+  "receipt_sha256": "fadbcc9c16b229f356b4c09e7eec02aa841898f88615b79aa8acf269179fdf9d",
+  "rows": [
+    {
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 9946007,
+        "side": "player_0"
+      },
+      "loss_outcome_rows": 0,
+      "max_float32_quantization_contrast": 9.5367431640625e-07,
+      "max_formula_error": 3.552713678800501e-15,
+      "max_unexplained_float32_residual": 2.6645352591003757e-15,
+      "native_sha256": "507606ce730ede254750f6b4c5e7701f4164e269fb45f848a4abcf436d0add28",
+      "nonzero_outcome_rows": 45,
+      "opp_points": 304,
+      "opp_wins": 0,
+      "our_points": 785,
+      "our_wins": 3,
+      "result": 1.0,
+      "reward_file_sha256": "f470067beff56a43ca1f071ecd8647ccdaa4602048155e55496098eace0a6e31",
+      "role": "control",
+      "transitions": 3489,
+      "win_outcome_rows": 45
+    },
+    {
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "loss_outcome_rows": 23,
+      "max_float32_quantization_contrast": 9.536743190707853e-07,
+      "max_formula_error": 3.552713678800501e-15,
+      "max_unexplained_float32_residual": 2.6645352591003757e-15,
+      "native_sha256": "5c6f17b0865f14cc7abb42e37c6690dc93f47c38b1ad88adbbf6c46e5736a182",
+      "nonzero_outcome_rows": 38,
+      "opp_points": 1037,
+      "opp_wins": 2,
+      "our_points": 1252,
+      "our_wins": 1,
+      "result": 0.0,
+      "reward_file_sha256": "37ea941d8961543e84b0f7bea67cad588d4cbfea18b0ec38531052920ff77933",
+      "role": "control",
+      "transitions": 3421,
+      "win_outcome_rows": 15
+    },
+    {
+      "key": {
+        "game": 0,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 9946007,
+        "side": "player_0"
+      },
+      "loss_outcome_rows": 0,
+      "max_float32_quantization_contrast": 9.5367431640625e-07,
+      "max_formula_error": 3.552713678800501e-15,
+      "max_unexplained_float32_residual": 2.6645352591003757e-15,
+      "native_sha256": "507606ce730ede254750f6b4c5e7701f4164e269fb45f848a4abcf436d0add28",
+      "nonzero_outcome_rows": 45,
+      "opp_points": 304,
+      "opp_wins": 0,
+      "our_points": 785,
+      "our_wins": 3,
+      "result": 1.0,
+      "reward_file_sha256": "f470067beff56a43ca1f071ecd8647ccdaa4602048155e55496098eace0a6e31",
+      "role": "match",
+      "transitions": 3489,
+      "win_outcome_rows": 45
+    },
+    {
+      "key": {
+        "game": 1,
+        "opponent": "solution92",
+        "phase": "technical",
+        "seed": 831006,
+        "side": "player_1"
+      },
+      "loss_outcome_rows": 23,
+      "max_float32_quantization_contrast": 9.536743190707853e-07,
+      "max_formula_error": 3.552713678800501e-15,
+      "max_unexplained_float32_residual": 2.6645352591003757e-15,
+      "native_sha256": "5c6f17b0865f14cc7abb42e37c6690dc93f47c38b1ad88adbbf6c46e5736a182",
+      "nonzero_outcome_rows": 38,
+      "opp_points": 1037,
+      "opp_wins": 2,
+      "our_points": 1252,
+      "our_wins": 1,
+      "result": 0.0,
+      "reward_file_sha256": "37ea941d8961543e84b0f7bea67cad588d4cbfea18b0ec38531052920ff77933",
+      "role": "match",
+      "transitions": 3421,
+      "win_outcome_rows": 15
+    }
+  ],
+  "script_sha256": "aff8cceb69228747aae3ffec108981637972da7f68d805990d58b67b12933d46",
+  "source_head": "a96ddebacc57d44945fe925f259ec72ddd58a02b",
+  "status": "PASS",
+  "unique_input_files_hashed": 443
+}
