@@ -1,0 +1,26 @@
+{
+  "status": "accepted_technical_prototype_only",
+  "at": "2026-11-09T04:07:15.469007+00:00",
+  "source_head": "a856274fc1cd8eccd551c0792919b842add0e0fe",
+  "code_and_test_pins": {
+    "scripts/sap_leading_agent.py": "3b4b779f25f32af9f523b69b169a68eea78b862ce89ede77a3138ef2db26c2eb",
+    "tests/test_sap_leading_agent.py": "1e3c5835af3bc8f823a7383de2bcec5a11bf188377f699a3a5b3d03b6b50ea22"
+  },
+  "protected": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+  },
+  "real_models_loaded": 0,
+  "new_games": 0,
+  "new_training_updates": 0,
+  "root_review": "Read full code, full tests, independent static review and prior bookkeeping review. Re-run only synthetic tests after import path relocation; real model/game integration remains unverified.",
+  "root_repository_tests": {
+    "command": "env PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 <project-python> -B -m pytest -q -p no:cacheprovider tests/test_sap_leading_agent.py",
+    "returncode": 0,
+    "passed": 44,
+    "seconds": 2.57,
+    "reason": "Verify relocated import paths and repository test integration after exact source copy",
+    "raw_log_sha256": "42f604567968441a51fbdd7890382b711f49a7d3277c568525973dbbe7b1d449"
+  }
+}

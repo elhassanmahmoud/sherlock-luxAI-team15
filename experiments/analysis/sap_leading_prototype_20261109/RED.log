@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________ test_known_public_lead_changes_only_smallest_uid[False-want0] _________
+
+mirrored = False, want = [5, 3, 0]
+
+    @pytest.mark.parametrize("mirrored,want", [(False, [5, 3, 0]), (True, [5, 0, -3])])
+    def test_known_public_lead_changes_only_smallest_uid(mirrored, want):
+        a = agent(mirrored=mirrored)
+        prime(a)
+        obs = frame(mirrored=mirrored)
+        before = obs["actions"].copy()
+        result = a._act(10, obs)
+>       assert result[1].tolist() == want
+E       assert [5, 2, 0] == [5, 3, 0]
+E         
+E         At index 1 diff: 2 != 3
+E         Use -v to get more diff
+
+/tmp/sap-leading-prototype/tests/test_sap_leading_agent.py:103: AssertionError
+_________ test_known_public_lead_changes_only_smallest_uid[True-want1] _________
+
+mirrored = True, want = [5, 0, -3]
+
+    @pytest.mark.parametrize("mirrored,want", [(False, [5, 3, 0]), (True, [5, 0, -3])])
+    def test_known_public_lead_changes_only_smallest_uid(mirrored, want):
+        a = agent(mirrored=mirrored)
+        prime(a)
+        obs = frame(mirrored=mirrored)
+        before = obs["actions"].copy()
+        result = a._act(10, obs)
+>       assert result[1].tolist() == want
+E       assert [5, 0, -2] == [5, 0, -3]
+E         
+E         At index 2 diff: -2 != -3
+E         Use -v to get more diff
+
+/tmp/sap-leading-prototype/tests/test_sap_leading_agent.py:103: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../../../tmp/sap-leading-prototype/tests/test_sap_leading_agent.py::test_known_public_lead_changes_only_smallest_uid[False-want0]
+FAILED ../../../../../../tmp/sap-leading-prototype/tests/test_sap_leading_agent.py::test_known_public_lead_changes_only_smallest_uid[True-want1]
+2 failed, 40 deselected in 2.45s

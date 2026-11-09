@@ -1,0 +1,42 @@
+......F.F.................................                               [100%]
+=================================== FAILURES ===================================
+____________ test_real_estimator_confidence_boundary[probs0-1-True] ____________
+
+probs = [0.9, 0.05, 0.05], n = 1, want = True
+
+    @pytest.mark.parametrize("probs,n,want", [
+        ([.9, .05, .05], 1, True), ([.899, .051, .05], 1, False),
+        ([.05, .9, .05], 1, True), ([.05, .05, .9], 1, False),
+        ([.99, .005, .005], 0, False),
+    ])
+    def test_real_estimator_confidence_boundary(probs, n, want):
+        a = agent(); prime(a)
+        a.param_est.log_drop = np.log(probs)
+        a.param_est.n_drop = n
+        result = a._act(10, frame())
+>       assert (result[1, 1] == 3) == want
+E       assert (np.int64(2) == 3) == True
+
+/tmp/sap-leading-prototype/tests/test_sap_leading_agent.py:149: AssertionError
+____________ test_real_estimator_confidence_boundary[probs2-1-True] ____________
+
+probs = [0.05, 0.9, 0.05], n = 1, want = True
+
+    @pytest.mark.parametrize("probs,n,want", [
+        ([.9, .05, .05], 1, True), ([.899, .051, .05], 1, False),
+        ([.05, .9, .05], 1, True), ([.05, .05, .9], 1, False),
+        ([.99, .005, .005], 0, False),
+    ])
+    def test_real_estimator_confidence_boundary(probs, n, want):
+        a = agent(); prime(a)
+        a.param_est.log_drop = np.log(probs)
+        a.param_est.n_drop = n
+        result = a._act(10, frame())
+>       assert (result[1, 1] == 3) == want
+E       assert (np.int64(2) == 3) == True
+
+/tmp/sap-leading-prototype/tests/test_sap_leading_agent.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../../../tmp/sap-leading-prototype/tests/test_sap_leading_agent.py::test_real_estimator_confidence_boundary[probs0-1-True]
+FAILED ../../../../../../tmp/sap-leading-prototype/tests/test_sap_leading_agent.py::test_real_estimator_confidence_boundary[probs2-1-True]
+2 failed, 40 passed in 2.32s

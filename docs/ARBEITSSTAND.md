@@ -8,6 +8,13 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Separater SAP-Vorhalteprototyp technisch aufgenommen
+
+- `scripts/sap_leading_agent.py` als standardmäßig inaktive Eval-Unterklasse, höchstens ein öffentlich begründeter SAP-Zentrumswechsel pro Schritt, gleiche V14-Netze. Keine Produktions-/Gewichtsänderung. [Technischer Plan](superpowers/plans/2026-11-08-sap-leading-prototype.md), [Nachweise und Grenzen](../experiments/analysis/sap_leading_prototype_20261109/README.md).
+- Unabhängiger vollständiger statischer Code-/Testreview PASS. Root hat den gesamten geprüften Stand gelesen und bytegleich übernommen;44Repo-TestsPASS in2,57s. Frühere44synthetischeTests des Implementierers gesondert erhalten. Keine echten Netze geladen oder Spiele/Trainings ausgeführt, kein Stärkenachweis.
+- Frischer Remote-Abgleich ohne neue Commits von Mahmoud. Primäre Fremddateien erhalten, V14/ZIP-Schutzhashes erneut bestätigt. Quota74%verbraucht, Rest ausdrücklich freigegeben; keine Resets. Reiner Warteschleifen-Agent beendet, 3-Stunden-Repoautomation bleibt aktiv; vor echten Läufen bei Bedarf gezielt reaktivieren.
+- Offen: minimaler echter Integrationsnachweis und separat vorab begrenzter120-Spiel-Entwurf mit Frischeprüfung. Kein automatischer Start oder V14-Ersatz aus dem technischen Prototyp.
+
 ## 08.11.2026 – SAP-Bewegungsdiagnose ohne neue Spiele abgeschlossen
 
 - Folgeaktions-Abschluss47b9f11 tatsächlich aufmain veröffentlicht und primäre Arbeitskopie aktualisiert; fünf fremde Dateien sowie beide V14-Gewichte/ZIP unverändert. Die zehn veröffentlichten CSVs bleiben auch nach Git-Übernahme bytegleich zu den Audit-Hashes.
