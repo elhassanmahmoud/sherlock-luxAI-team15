@@ -8,6 +8,12 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Gezielter Folgeprototyp: Bewegungsverteilung statt pauschalem Vorhalten
+
+- Der abgeschlossene 124-Ausführungen-Meilenstein ist als `97d04c2` tatsächlich auf main und in beiden aktiven Arbeitskopien. Keine offenen eigenen Modellprozesse. V14 und ZIP unverändert.
+- Autonomer Folgeauftrag: [neuer separater Plan](superpowers/plans/2026-11-09-sap-motion-model.md). Ein öffentliches 5-Klassen-Bewegungsmodell lernt Übergangshäufigkeiten nur im aktuellen Spiel. Erwartete Mehrzieltreffer plus fester Unsicherheitsabzug entscheiden, ob der ursprüngliche SAP-Offset geändert werden darf. Neue Hypothese, noch kein Stärkeergebnis oder Q-Netztraining.
+- Subagents implementieren getrennten Agenten und eng angepasste Laufwerkzeuge; ein dritter prüft die beiden neuen Kartenbereiche. Keine neuen Spiele bis zur technischen Aufnahme. Fest vorgesehen: vier bekannte Technikspiele und genau120frischeVergleiche; keine Verlängerung des alten Screens. Ausdrückliche Akku-Freigabe gilt weiterhin, tatsächliche Quota vor Start prüfen.
+
 ## 09.11.2026 – SAP-Vorhaltevergleich tatsächlich abgeschlossen, V14 bleibt
 
 - Vier bekannte Technikspiele und alle 120 festen Leistungsspiele durchgeführt. ON gegen Solution **40/40** statt OFF **39/40**, direkt gegen OFF nur **18/40**. 14 exponierte Panelkarten, 917 beziehungsweise 430 geänderte Schüsse. Direktgate verfehlt, keine Verlängerung und kein V14-Ersatz. [Ergebnis und Rohbelege](../experiments/analysis/sap_leading_screen_20261109/ERGEBNIS.md).
