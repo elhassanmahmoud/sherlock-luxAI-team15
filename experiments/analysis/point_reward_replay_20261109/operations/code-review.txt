@@ -1,0 +1,10 @@
+Independent static code/spec review: PASS, no blocking findings.
+Reviewed script SHA256 93f584027831850d0fe1f5b5ab15f09f7cf7bb4c8152c1b26e174b7b1147dbb2.
+Reviewed tests SHA256 371b9a2ac57f5b856933e6fcf3ae4db74f345e058cdb743ad5611785760fbdc3.
+Scope: script/tests, original source semantics and original JSON metadata; no actual NPZ opened, no model/simulator import, no tests run by reviewer, no repository edits.
+Evidence read: red-contracts.log (30 expected failures from unimplemented interfaces), green.log (30 passed in 0.05s), implementation report.
+Findings: no actionable issue within the bounded two-archive task.
+Checked: fixed closure digest anchors original admission, source bytes, both exact prefill JSONs and both exact NPZ file digests; semantic replay_sha256 is correctly not mistaken for NPZ byte hash. Metadata pins 40 games, zero updates, expected row counts, original config and original source. Feature/reward/main/replay-buffer sources are hash-bound without importing them.
+Checked against original feature construction: indices 4/5/10/12/13/34/76, own_points cap at 200, known_points zero semantics, and on_point boolean. Original update stores the same next-context features and total unit reward; deaths/reset terminals are excluded. The positive subset applies all prespecified cap, time, match-index and win-reset filters.
+Checked: finite schema, raw unit-transition counts, separate known/unknown descriptive total reward statistics, float64 reduction, empty JSON nulls, at most five original row examples, no invented IDs or adjacent-action joins, exclusive output file creation and preserved preparation files. The selected unknown rows must have on_point zero; inference is limited to no direct w_point term, not to total reward failure or individual scoring causation.
+Remaining: root's real archive execution and independent numerical recalculation are not yet performed by this reviewer.

@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 09.11.2026 – Vorlauf-Punktreward: Offlinebefund
+
+Zwei akzeptierte Original-NPZs, 283218 Einheitenübergänge, null neue Spiele/Updates. Bei positiver Team-Punktdifferenz und noch unbekannten Punktfeldern direkter Punktterm null; mittlerer tatsächlich gespeicherter Gesamt-r +0,01774/−0,003226, Anteile 1,45/0,54 Prozent der qualifizierten positiven Zeilen. Unabhängig nachgerechnet, keine Kausalitäts- oder Stärkeaussage; keine Rewardänderung. [Bericht](../experiments/analysis/point_reward_replay_20261109/ERGEBNIS.md).
+
 ## 09.11.2026 – BEHAVIOR38: beide Direktbedingungen verfehlt
 
 200 feste Spiele vollständig und unabhängig geprüft: Solution 40/40 statt V14 39/40 (Kontrolle ebenfalls 40/40), direkt 16/40 gegen V14 und 12/40 gegen Kontrolle. Kein Nominierter, kein Nachschlag, kein belegter stärkerer Agent. Root-Originalreproduktion und Abschluss unter 16fae8a bestanden, alle eigenen Prozesse beendet, V14/ZIP unverändert. [Bericht](../experiments/analysis/ensemble_behavior_compare_20261109/ERGEBNIS.md).

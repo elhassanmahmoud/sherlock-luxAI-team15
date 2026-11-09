@@ -1,0 +1,327 @@
+{
+  "profile": "point_reward_replay_20261109",
+  "unit": "unit_transition",
+  "phase": "initial_policy_prefill_no_gradient_updates",
+  "provenance": {
+    "training_closure": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/operations/training-completion.json",
+    "training_closure_sha256": "fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce",
+    "admission_sha256": "be82efd30f0b7eb7beab40ac47a98dbba6c25f7ddf9f0cbfe376e3d773c2f24d",
+    "source_hashes": {
+      "agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+      "agents/sherlock/reward.py": "9953671c54315132ee28cdcbfe3968e23e0bbdce9e67298d794cd02633639bc8",
+      "agents/sherlock/main.py": "9946a7194a0757963db10195335d3dbd692b6ba95175f5c7debac9e198358f45",
+      "agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311"
+    },
+    "feature_indices": {
+      "match_step_frac": 4,
+      "match_idx_frac": 5,
+      "own_points": 10,
+      "own_wins": 12,
+      "opp_wins": 13,
+      "on_point": 34,
+      "known_points": 76
+    },
+    "inputs": {
+      "on48": {
+        "archive": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on48/prefill-replay.npz",
+        "archive_sha256": "d46b52cb330d674484ee6b3e0d723a7f22147c6fd6714b85c633301d0123a3c7",
+        "metadata": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on48/prefill.json",
+        "metadata_sha256": "ee8fce7f3215e048e780dbca71e510774ae197eb2f2f8d846cfedf436d15bc6a",
+        "expected_rows": 141704
+      },
+      "on49": {
+        "archive": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on49/prefill-replay.npz",
+        "archive_sha256": "9638ba41cd18434a7d02d6b197997616a2818c4923aed141915cda689d697db3",
+        "metadata": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/ensemble_behavior_20261109/training_v1/on49/prefill.json",
+        "metadata_sha256": "bd3bee8a1ea8f13e47ccd91acae8a58ceaea0cde16c72caa962c84dbfad17720",
+        "expected_rows": 141514
+      }
+    }
+  },
+  "arms": {
+    "on48": {
+      "total_rows": 141704,
+      "eligible_rows": 90013,
+      "positive_rows": 74576,
+      "unknown_point_rows": 1082,
+      "unknown_point_fraction": 0.0145086891225059,
+      "unknown_point_rewards": {
+        "n": 1082,
+        "min": -2.991374969482422,
+        "median": 0.04068939387798309,
+        "mean": 0.01773991103394155,
+        "max": 1.777833342552185,
+        "negative": 262,
+        "zero": 0,
+        "positive": 820
+      },
+      "known_point_rewards": {
+        "n": 73494,
+        "min": -4.21875,
+        "median": 0.1236666664481163,
+        "mean": 0.3574217630293961,
+        "max": 5.062250137329102,
+        "negative": 10484,
+        "zero": 683,
+        "positive": 62327
+      },
+      "examples": [
+        {
+          "row_index": 234,
+          "r": 0.008291666395962238,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 235,
+          "r": 0.11429166793823242,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 236,
+          "r": 0.12291666865348816,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 237,
+          "r": 0.12549999356269836,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 238,
+          "r": 0.12549999356269836,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        }
+      ]
+    },
+    "on49": {
+      "total_rows": 141514,
+      "eligible_rows": 89766,
+      "positive_rows": 72132,
+      "unknown_point_rows": 389,
+      "unknown_point_fraction": 0.005392890811290412,
+      "unknown_point_rewards": {
+        "n": 389,
+        "min": -3.5056071281433105,
+        "median": 0.019708333536982536,
+        "mean": -0.00322622241286841,
+        "max": 2.8227736949920654,
+        "negative": 104,
+        "zero": 0,
+        "positive": 285
+      },
+      "known_point_rewards": {
+        "n": 71743,
+        "min": -4.8354997634887695,
+        "median": 0.12166666984558105,
+        "mean": 0.35544522625570535,
+        "max": 4.5995001792907715,
+        "negative": 10531,
+        "zero": 885,
+        "positive": 60327
+      },
+      "examples": [
+        {
+          "row_index": 9939,
+          "r": 0.12945833802223206,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9940,
+          "r": 0.1327083259820938,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9941,
+          "r": 0.13329166173934937,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9942,
+          "r": 0.019874999299645424,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9943,
+          "r": 0.02212500013411045,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Team point gains repeat across units; rows are not point events.",
+    "Capped, terminal and match-changing transitions are excluded.",
+    "Known-point rewards are descriptive, not a fair causal comparison.",
+    "No individual attribution, strength or reward-change benefit is established."
+  ]
+}

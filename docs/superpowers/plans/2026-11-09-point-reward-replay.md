@@ -1,0 +1,9 @@
+# Replay-Punktreward – Umsetzung
+
+Goal: Einmalige kleine reproduzierbare Offline-Diagnose gemäß Spec /private/tmp/point-reward-diagnostic-spec.md; nach Übernahme docs/superpowers/specs/2026-11-09-point-reward-replay.md. Bestehende Studien bleiben geschlossen. Keine Modelle/Spiele, Tests erst nach Ende und Abnahme der laufenden BEHAVIOR38-Phase. Produktionsdateien/V14/ZIP unverändert.
+
+Task 1: Neue schmale scripts/point_reward_replay_diagnostic.py und tests/test_point_reward_replay_diagnostic.py. summarize_arrays prüft reine Arrays und liefert die festen Auswahl-/Rewardstatistiken; CLI bindet genau beide akzeptierten Archive/Metadaten, Originalquellen und tatsächlichen Trainingsabschluss, schreibt exklusiv in experiments/analysis/point_reward_replay_20261109. Keine Neuschöpfung von Quellen-/Überwachungsframeworks, keine Simulatorimporte. Für Datei-Hash stdlib, Arrays NumPy. Archivprüfung und Auswertung in einem Datenlauf, keine Modellzulassung nötig.
+
+Zuerst sinnvolle synthetische Auswahlfälle: positiver Teamgewinn ohne bekannte Felder; bekannte Felder; kein Gewinn; gedeckelte Punkte; terminal; Matchreset/Index-/Siegeswechsel; stillstehender Zeitschritt; bekannte0/on_point1 als inkonsistent; falsche Formen/Nichtendlichkeit; leere Gruppe; gespeicherte r-Verteilung. Tatsächlicher Red/Green-Nachweis, keine Gesamtsuite. Quelle und tatsächlicher Featuremappingvertrag durch Root reviewen.
+
+Task 2: Einmalige Auswertung der beiden echten Archive nach unveränderter akzeptierter Herkunft. Tatsächliche Ergebnisse unabhängig direkt aus denselben NPZs nachrechnen; Root liest Resultate/Beispiele und überprüft Quelle/Eingaben/Schutzdateien. Aussage auf Rowgrain und dokumentierte Anfangspolitik beschränken. Erst danach eigener nächster Ansatz entscheiden; nicht bereits neues Reward/Training wählen. Belege, Bericht, Arbeitsstand sinnvoll committen und sicher pushen/Primary aktualisieren.

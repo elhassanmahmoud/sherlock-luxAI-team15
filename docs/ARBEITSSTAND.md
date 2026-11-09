@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 09.11.2026 – Replay-Rewardcheck tatsächlich abgeschlossen
+
+- Genau 283218 archivierte Einheitenübergänge aus zwei akzeptierten Vorläufen geprüft; keine neuen Spiele/Updates. Positive Teamgewinne bei null bestätigten Punktefeldern: on48 1082/74576 (1,45 %), on49 389/72132 (0,54 %). Mittlerer gespeicherter Gesamt-r +0,01774 bzw. −0,003226; direkte Punktbelohnung dort null, andere Terme enthalten. [Ergebnis und Grenzen](../experiments/analysis/point_reward_replay_20261109/ERGEBNIS.md).
+- 30 gezielte Tests nach tatsächlichem Red/Green, unabhängiger Codereview und echte zeilenweise Nachrechnung bestanden (309 Prüfungen). Root hat konkrete Daten/Beispiele und unveränderte Eingaben/Schutzdateien geprüft. Kein Beweis individueller Punkteverursachung, einer Niederlagenursache oder eines Rewardänderungsnutzens; Reward/V14/ZIP unverändert.
+- Kein automatischer weiterer Modellstart. Vor neuer Studie getrennt entscheiden: enger punktbezogener Bonus oder Training gegen einen eingefrorenen stärkeren Gegner. Zweite Hypothese aktuell nur lesend auf frühere Versuche und vorhandene technische Unterstützung prüfen; keine alten Studien wiederholen. Akku/Restkontingent erlaubt, Resets nur durch Moayed.
+
+## 09.11.2026 – Kleiner Replay-Rewardcheck in Vorbereitung
+
+- BEHAVIOR38 vollständig negativ abgeschlossen und als `dcc4e15` auf GitHub sowie in der Hauptkopie; V14/ZIP und Fremddateien unverändert. Alle Modelljobs/Wachhalter beendet, alter Freeze geschlossen.
+- Konkrete offene Beobachtung: eigener positiver Punktzuwachs kann vor Belief-Bestätigung auftreten, während der direkte Punktterm noch null ist. Ob andere Rewards das bereits auffangen, wird an vorhandenen tatsächlichen Replayzeilen geprüft. [Spec](superpowers/specs/2026-11-09-point-reward-replay.md), [Plan](superpowers/plans/2026-11-09-point-reward-replay.md).
+- Genau zwei akzeptierte ON-Vorläufe, konservative Row-Auswahl ohne Tracejoin oder erfundene IDs. Noch keine Implementierung/Auswertung. Kein neues Reward, Modelllauf oder automatische Folgephase; aus diesem Check allein folgt kein Stärkezuwachs.
+
 ## 09.11.2026 – BEHAVIOR38-Vergleich abgeschlossen, kein Nachfolger
 
 - Alle 200 festen Spiele abgeschlossen: Solution BEHAVIOR38 und CONTROL38 je 40/40, V14 39/40; direkt gegen V14 16/40 [20;60 Prozent], gegen Kontrolle 12/40 [10;50]. Beide vorab festen Direktbedingungen verfehlt, kein Nominierter oder Nachschlag. [Ergebnis und Grenzen](../experiments/analysis/ensemble_behavior_compare_20261109/ERGEBNIS.md).

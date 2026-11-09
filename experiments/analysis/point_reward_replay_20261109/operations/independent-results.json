@@ -1,0 +1,298 @@
+{
+  "status": "PASS",
+  "checks": 309,
+  "method": "Independent per-row selection and Python statistics from NumPy archives; no diagnostic, agent, model, simulator or project module imported. No tests or games executed.",
+  "result_sha256": "f0e4caed25fa1a742321956c71d2cf1c96adb1f650bc166ad749b10a89f87b7a",
+  "audit_source_sha256": "f2d279c134ee799de702cf6a24f26e5128a173b3ed9da9491f5df8392e0691be",
+  "training_closure_sha256": "fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce",
+  "inputs": {
+    "on48": {
+      "metadata_sha256": "ee8fce7f3215e048e780dbca71e510774ae197eb2f2f8d846cfedf436d15bc6a",
+      "archive_sha256": "d46b52cb330d674484ee6b3e0d723a7f22147c6fd6714b85c633301d0123a3c7"
+    },
+    "on49": {
+      "metadata_sha256": "bd3bee8a1ea8f13e47ccd91acae8a58ceaea0cde16c72caa962c84dbfad17720",
+      "archive_sha256": "9638ba41cd18434a7d02d6b197997616a2818c4923aed141915cda689d697db3"
+    }
+  },
+  "arms": {
+    "on48": {
+      "total_rows": 141704,
+      "eligible_rows": 90013,
+      "positive_rows": 74576,
+      "unknown_point_rows": 1082,
+      "unknown_point_fraction": 0.0145086891225059,
+      "unknown_point_rewards": {
+        "n": 1082,
+        "min": -2.991374969482422,
+        "median": 0.04068939387798309,
+        "mean": 0.01773991103394155,
+        "max": 1.777833342552185,
+        "negative": 262,
+        "zero": 0,
+        "positive": 820
+      },
+      "known_point_rewards": {
+        "n": 73494,
+        "min": -4.21875,
+        "median": 0.1236666664481163,
+        "mean": 0.3574217630293961,
+        "max": 5.062250137329102,
+        "negative": 10484,
+        "zero": 683,
+        "positive": 62327
+      },
+      "examples": [
+        {
+          "row_index": 234,
+          "r": 0.008291666395962238,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 235,
+          "r": 0.11429166793823242,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 236,
+          "r": 0.12291666865348816,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 237,
+          "r": 0.12549999356269836,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 238,
+          "r": 0.12549999356269836,
+          "s": {
+            "match_step_frac": 0.3700000047683716,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.3799999952316284,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        }
+      ]
+    },
+    "on49": {
+      "total_rows": 141514,
+      "eligible_rows": 89766,
+      "positive_rows": 72132,
+      "unknown_point_rows": 389,
+      "unknown_point_fraction": 0.005392890811290412,
+      "unknown_point_rewards": {
+        "n": 389,
+        "min": -3.5056071281433105,
+        "median": 0.019708333536982536,
+        "mean": -0.00322622241286841,
+        "max": 2.8227736949920654,
+        "negative": 104,
+        "zero": 0,
+        "positive": 285
+      },
+      "known_point_rewards": {
+        "n": 71743,
+        "min": -4.8354997634887695,
+        "median": 0.12166666984558105,
+        "mean": 0.35544522625570535,
+        "max": 4.5995001792907715,
+        "negative": 10531,
+        "zero": 885,
+        "positive": 60327
+      },
+      "examples": [
+        {
+          "row_index": 9939,
+          "r": 0.12945833802223206,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9940,
+          "r": 0.1327083259820938,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9941,
+          "r": 0.13329166173934937,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9942,
+          "r": 0.019874999299645424,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        },
+        {
+          "row_index": 9943,
+          "r": 0.02212500013411045,
+          "s": {
+            "match_step_frac": 0.3499999940395355,
+            "match_idx_frac": 0.0,
+            "own_points": 0.0,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          },
+          "ns": {
+            "match_step_frac": 0.36000001430511475,
+            "match_idx_frac": 0.0,
+            "own_points": 0.004999999888241291,
+            "own_wins": 0.0,
+            "opp_wins": 0.0,
+            "on_point": 0.0,
+            "known_points": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

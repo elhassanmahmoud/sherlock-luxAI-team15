@@ -1,0 +1,115 @@
+import hashlib, json, math, statistics
+from pathlib import Path
+import numpy as np
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+PROFILE = ROOT / 'experiments/analysis/ensemble_behavior_20261109'
+RESULT = ROOT / 'experiments/analysis/point_reward_replay_20261109/result.json'
+OUT = Path('/private/tmp/point-reward-review/data-review.json')
+CHECKS = 0
+
+def check(condition, label):
+    global CHECKS
+    CHECKS += 1
+    if not condition:
+        raise AssertionError(label)
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def json_read(path):
+    return json.loads(Path(path).read_text())
+
+def equal_tree(actual, expected, label):
+    if isinstance(expected, dict):
+        check(actual.keys() == expected.keys(), label + ': keys')
+        for k in expected:
+            equal_tree(actual[k], expected[k], label + '.' + k)
+    elif isinstance(expected, list):
+        check(len(actual) == len(expected), label + ': length')
+        for i, e in enumerate(expected):
+            equal_tree(actual[i], e, label + ':' + str(i))
+    elif isinstance(expected, float):
+        check(isinstance(actual, (int, float)) and math.isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-12), label)
+    else:
+        check(actual == expected, label)
+
+closure_path = PROFILE / 'operations/training-completion.json'
+closure_hash = 'fca3a077e57f079605db362f9dc68facadf787b0a3e819d1aca85050a84b23ce'
+check(sha(closure_path) == closure_hash, 'fixed original training closure')
+closure = json_read(closure_path)
+check(closure['status'] == 'COMPLETE_TRAINING_NO_STRENGTH_CLAIM', 'accepted closure status')
+admission_path = PROFILE / 'training-v1-admission.json'
+check(str(admission_path) == closure['admission'], 'admission path')
+check(sha(admission_path) == closure['admission_sha256'], 'admission digest')
+admission = json_read(admission_path)
+check(admission['source'] == closure['source'], 'source closure/admission equality')
+check(admission['config']['use_belief'] is True and admission['config']['use_shaping'] is True and admission['config']['threat_feats'] is False, 'source config')
+result = json_read(RESULT)
+check(result['profile'] == 'point_reward_replay_20261109', 'result profile')
+check(result['unit'] == 'unit_transition', 'declared grain')
+check(result['phase'] == 'initial_policy_prefill_no_gradient_updates', 'declared phase')
+check(set(result['arms']) == {'on48', 'on49'}, 'exactly two arms')
+provenance = result['provenance']
+check(provenance['training_closure'] == str(closure_path) and provenance['training_closure_sha256'] == closure_hash, 'reported closure binding')
+check(provenance['admission_sha256'] == closure['admission_sha256'], 'reported admission binding')
+features = {'match_step_frac':4, 'match_idx_frac':5, 'own_points':10, 'own_wins':12, 'opp_wins':13, 'on_point':34, 'known_points':76}
+check(provenance['feature_indices'] == features, 'reported original feature indices')
+source_names = ['agents/sherlock/features.py', 'agents/sherlock/reward.py', 'agents/sherlock/main.py', 'agents/sherlock/replay_buffer.py']
+check(set(provenance['source_hashes']) == set(source_names), 'reported source set')
+for name in source_names:
+    expected = closure['source']['files'][str(ROOT/name)]
+    check(sha(ROOT/name) == expected == provenance['source_hashes'][name], 'source bytes: ' + name)
+
+summaries = {}
+input_hashes = {}
+for arm, total in [('on48',141704), ('on49',141514)]:
+    folder = PROFILE / 'training_v1' / arm
+    metadata_path, npz_path = folder/'prefill.json', folder/'prefill-replay.npz'
+    check(sha(metadata_path) == closure['files'][str(metadata_path)], arm+' original metadata')
+    metadata = json_read(metadata_path)
+    npz_hash = sha(npz_path)
+    check(npz_hash == metadata['files'][str(npz_path)] == closure['files'][str(npz_path)], arm+' original archive bytes')
+    check(metadata['source'] == closure['source'] and metadata['config'] == admission['config'], arm+' original source and config')
+    check(metadata['admission_sha256'] == closure['admission_sha256'] and metadata['learn_steps'] == 0 and metadata['games'] == 40 and metadata['replay_size'] == total, arm+' prefill scope')
+    equal_tree(provenance['inputs'][arm], {'archive':str(npz_path),'archive_sha256':npz_hash,'metadata':str(metadata_path),'metadata_sha256':sha(metadata_path),'expected_rows':total}, arm+' reported inputs')
+    with np.load(npz_path, allow_pickle=False) as archive:
+        check(set(archive.files) == {'s','ns','a','r','done','mask'}, arm+' exact array names')
+        data = {key:archive[key] for key in archive.files}
+    for key in ['s','ns','r','done']:
+        check(data[key].dtype == np.float32, arm+' float32 '+key)
+    check(data['a'].dtype == np.int64 and data['mask'].dtype == bool, arm+' action and mask dtype')
+    for key, value in data.items():
+        target_shape = (total,79) if key in ['s','ns'] else ((total,6) if key=='mask' else (total,))
+        check(value.shape == target_shape and np.isfinite(value).all(), arm+' schema '+key)
+    check(np.isin(data['a'],np.arange(6)).all() and np.isin(data['done'],[0,1]).all() and data['mask'].any(axis=1).all(), arm+' discrete values')
+    eligible_indices, positive_indices, unknown_indices, known_indices = [], [], [], []
+    for i, (s, ns, done) in enumerate(zip(data['s'], data['ns'], data['done'])):
+        if done != 0 or not (0 <= float(s[10]) < 1 and 0 <= float(ns[10]) < 1):
+            continue
+        if tuple(s[[5,12,13]]) != tuple(ns[[5,12,13]]) or float(ns[4]) <= float(s[4]):
+            continue
+        eligible_indices.append(i)
+        if float(ns[10]) <= float(s[10]):
+            continue
+        positive_indices.append(i)
+        if ns[76] == 0:
+            unknown_indices.append(i)
+        else:
+            known_indices.append(i)
+    check(np.all(data['ns'][unknown_indices,34] == 0), arm+' no direct on-point feature')
+    check(np.all(data['ns'][known_indices,76] > 0), arm+' known reference positive')
+    def stats(indices):
+        vals = [float(data['r'][i]) for i in indices]
+        return {'n':len(vals),'min':min(vals) if vals else None,'median':statistics.median(vals) if vals else None,'mean':statistics.fmean(vals) if vals else None,'max':max(vals) if vals else None,'negative':sum(v<0 for v in vals),'zero':sum(v==0 for v in vals),'positive':sum(v>0 for v in vals)}
+    examples = []
+    for i in unknown_indices[:5]:
+        examples.append({'row_index':i,'r':float(data['r'][i]),'s':{k:float(data['s'][i,v]) for k,v in features.items()},'ns':{k:float(data['ns'][i,v]) for k,v in features.items()}})
+    expected = {'total_rows':total,'eligible_rows':len(eligible_indices),'positive_rows':len(positive_indices),'unknown_point_rows':len(unknown_indices),'unknown_point_fraction':len(unknown_indices)/len(positive_indices) if positive_indices else None,'unknown_point_rewards':stats(unknown_indices),'known_point_rewards':stats(known_indices),'examples':examples}
+    equal_tree(result['arms'][arm], expected, arm+' full result')
+    summaries[arm] = expected
+    input_hashes[arm] = {'metadata_sha256':sha(metadata_path),'archive_sha256':npz_hash}
+check(len(result['limitations']) == 4 and any('not point events' in t for t in result['limitations']) and any('not a fair causal' in t for t in result['limitations']) and any('No individual attribution' in t for t in result['limitations']), 'reported inferential limits')
+output = {'status':'PASS','checks':CHECKS,'method':'Independent per-row selection and Python statistics from NumPy archives; no diagnostic, agent, model, simulator or project module imported. No tests or games executed.','result_sha256':sha(RESULT),'audit_source_sha256':sha(__file__),'training_closure_sha256':closure_hash,'inputs':input_hashes,'arms':summaries}
+OUT.write_text(json.dumps(output, indent=2, allow_nan=False)+'\n')
+print(json.dumps({'status':output['status'],'checks':CHECKS,'result_sha256':output['result_sha256'],'arms':{k:{name:value for name,value in v.items() if name!='examples'} for k,v in summaries.items()}},indent=2))
