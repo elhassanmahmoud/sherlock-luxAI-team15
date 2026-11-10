@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Residual-Nullkorrektur tatsächlich abgenommen
+
+- Genau acht bekannte Ausführungen abgeschlossen, vier Stock-/Null-R-Paare gegen Solution und V14. Finale Aktions- und öffentliche Verlaufshashes, Ergebnisse und Punkte exakt gleich; originale36 Tensoren/Reihenfolge gleich. Keine Lernupdates, Cacheprobe maximal1,15e-5 absolute Rundungsdifferenz innerhalb vorab gesetzter Toleranz. Rund37Sekunden technische Gesamtlaufzeit, Prozessspitze895MB; keine Langlaufzusage daraus. [Root-Abnahme](../experiments/analysis/residual_ensemble_20261110/technical/accepted.json).
+- Worker beendet, Quellen-/Eingabe-/Schutzdateien verifiziert, technischer Freeze erst danach aufgehoben. Als Nächstes separate Aufnahme der beiden40+80-Läufe, nach tatsächlichen Vorläufen erneut prüfen. Noch keine Leistungsverbesserung oder neue Abgabe.
+
+
 ## 10.11.2026 – Additiver V14-Pilot technisch umgesetzt
 
 - Neue kleine Korrektur R nach dem unveränderten 36er-Mittelwert; DDQN verwendet überall M+R. Nur R erhält Gradienten. Auswertungsregeln bleiben aktiv, Exploration erfolgt davor; tatsächliche Weltaktionen und rohe Baselinewerte werden gemeinsam gespeichert. Verzögerte Übergänge vermeiden eine vorgezogene Merkmalsberechnung. [Methodik und Grenzen](../experiments/analysis/residual_ensemble_20261110/README.md).
