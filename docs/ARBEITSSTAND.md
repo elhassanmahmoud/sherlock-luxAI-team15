@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Matchausgang-Pilot zur Umsetzung freigegeben
+
+- Moayed beauftragt Umsetzung des Plans und selbstständige bedingte Fortsetzung; mindestens 5 % Reserve. Bestehende Studienkopie auf `codex/match-outcome-20261110`, Ausgang `ab7364e`, Remote/Primary gleich, keine alten aktiven Modellworker.
+- Experimenteller Aktionsadapter und Sammler implementiert, produktiver Agent unverändert. Ein zweitbester legaler Vorschlag vor allen Regeln, öffentliche Auswahl, höchstens eine Gelegenheit pro Match; externe Engine-Endlabels einschließlich Energie/Zufall. 45 neue/betroffene synthetische und Snapshot-Prüfungen bestanden, unabhängiger Kernreview läuft. Noch keine neuen Spiele oder Lernupdates.
+- Nächste tatsächliche Phase: vier bereits eingerechnete technische Ausführungen; erst nach echter Abnahme weitere 28. Obergrenzen48 Hauptpaare/5.856 Fortsetzungsschritte plus976 technische Schritte. Nur bei bestandenen Einfluss-/Lernzielgates getrennte Lernphase vorbereiten. Kein automatischer Neustart oder Ersatzspiel; V14/ZIP erhalten. Quota aktuell23 % Rest, vor Modellstart erneut prüfen. Frühere Nutzerfreigabe zu selbst überwachten Akkuläufen gilt.
+
 ## 10.11.2026 – Residual-Nachanalyse und neuer Plan, keine weiteren Spiele
 
 - Neuer Nutzerauftrag ausdrücklich Analyse und Planung; mindestens 5 % Kontingent erhalten. R61/R62 bleiben geschlossen. Kein Training, keine Agentenänderung, kein neues Leistungs-/Technikspiel oder Gewichtsaustausch in dieser Runde.

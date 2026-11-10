@@ -1,5 +1,7 @@
 # Matchausgang statt weiterer Q-Korrektur – nächster Umsetzungsplan
 
+**Umsetzungsfreigabe 10.11.:** Nutzer hat den Plan einschließlich bedingter Fortsetzung freigegeben. Die ursprünglichen Hinweise „nur Planung“ dokumentieren die damalige Phase, nicht einen noch offenen Erlaubnisbedarf. Gates und 5-%-Reserve bleiben verbindlich.
+
 > **For agentic workers:** Bei späterer Umsetzungsfreigabe `superpowers:executing-plans` verwenden. Root implementiert den zusammenhängenden kleinen Pilot; unabhängige Subagents nur für die gezielte Snapshot-/Labelprüfung. Die folgenden Aufgaben sind noch nicht ausgeführt.
 
 **Goal:** Herausfinden, ob öffentlich auswählbare Alternativen zur V14-Policy tatsächlich bessere Matchausgänge liefern und damit eine neue Lerngrundlage bieten.

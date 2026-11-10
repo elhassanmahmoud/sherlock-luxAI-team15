@@ -1,5 +1,7 @@
 # V14 durch gelernte Matchentscheidungen ergänzen – Designvorschlag
 
+**Spätere Freigabe 10.11.:** Moayed hat Umsetzung und selbstständige bedingte Fortsetzung beauftragt. Die folgenden ursprünglichen Planungsgrenzen bleiben als Verlauf erhalten; der jüngste Arbeitsstand beschreibt die tatsächliche Phase. Noch keine automatische Leistungsfreigabe oder Übernahme.
+
 **Status: nur vorgeschlagen, nicht umgesetzt oder gestartet.** Nutzerauftrag vom 10.11.: schwächere Kandidaten analysieren und den nächsten sinnvollen Plan entwickeln, mindestens 5 % Kontingent erhalten. [Befund](../../../experiments/analysis/residual_postmortem_20261110/ERGEBNIS.md).
 
 ## Entscheidung und Hypothese
