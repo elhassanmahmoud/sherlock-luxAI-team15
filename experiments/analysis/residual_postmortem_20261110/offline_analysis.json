@@ -1,0 +1,2246 @@
+{
+  "scope": "Offline existing records only; no new games/gradient steps",
+  "created_at": 1794331581.744297,
+  "inputs": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/selection/V14_solution92/games.jsonl": "eb1f1621cbd4624023f516ed0281dabd3babc7731cdf821664d782da74d4c482",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/selection/R61_solution92/games.jsonl": "9d13c467871a24b32046f82048fda079adae05249223712a4be104bcb9a95e9b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/selection/R62_solution92/games.jsonl": "7d31933faf1dd543f742f370ca1b409e515d18cbd84347be2f847d9393c20fee",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R61/final.pth": "4302e796442caa88a5d4fc7a30b2cde603a070c830ad558f8edd3d0261febb16",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R62/final.pth": "5aef68e3179db607d539ca37b461c4f6cf0317ec72742b87fecee34bd58579cd",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R61/prefill_replay.npz": "44719a37b68992892ec8b7ff46ecd3a9d9192a3fd6755fa39598678b644c1667",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R61/final_replay.npz": "80268ebe41fbff698c0aa0986de845b9adfe33cbe99ef41ea7e6070db3ae910b",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R62/prefill_replay.npz": "8cccad24b7511d925d8341c49a74d16af1e4fda0365454f72d27eaa710ad2b44",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/residual_ensemble_20261110/training/R62/final_replay.npz": "0fc3c9d142ca57fae6e2ad03e3a6f6e146a2a82970902545ee238d4cfa6a19f8"
+  },
+  "results": {
+    "R61": {
+      "all_games": {
+        "our_points": {
+          "candidate": 1384.675,
+          "baseline": 1410.95,
+          "paired_delta": -26.275
+        },
+        "opp_points": {
+          "candidate": 897.1,
+          "baseline": 883.125,
+          "paired_delta": 13.975
+        },
+        "unit_steps": {
+          "candidate": 3662.825,
+          "baseline": 3639.675,
+          "paired_delta": 23.15
+        },
+        "wait_frac": {
+          "candidate": 0.5002442876750047,
+          "baseline": 0.4907056835549467,
+          "paired_delta": 0.009538604120058126
+        },
+        "stack_frac": {
+          "candidate": 0.10971185870791145,
+          "baseline": 0.10601422856708471,
+          "paired_delta": 0.003697630140826744
+        },
+        "sap_attempts": {
+          "candidate": 98.2,
+          "baseline": 96.65,
+          "paired_delta": 1.55
+        },
+        "sap_hits": {
+          "candidate": 81.975,
+          "baseline": 79.65,
+          "paired_delta": 2.325
+        },
+        "known_point_tiles": {
+          "candidate": 18.55,
+          "baseline": 18.625,
+          "paired_delta": -0.075
+        },
+        "belief_contradictions": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        },
+        "invalid_frac": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        }
+      },
+      "loss_games": {
+        "our_points": {
+          "candidate": 917.0,
+          "baseline": 1010.6,
+          "paired_delta": -93.6
+        },
+        "opp_points": {
+          "candidate": 1005.4,
+          "baseline": 970.4,
+          "paired_delta": 35.0
+        },
+        "unit_steps": {
+          "candidate": 3615.4,
+          "baseline": 3644.0,
+          "paired_delta": -28.6
+        },
+        "wait_frac": {
+          "candidate": 0.5287016390315232,
+          "baseline": 0.5128935485025775,
+          "paired_delta": 0.015808090528945672
+        },
+        "stack_frac": {
+          "candidate": 0.17519923076000593,
+          "baseline": 0.1606809402776657,
+          "paired_delta": 0.014518290482340273
+        },
+        "sap_attempts": {
+          "candidate": 40.0,
+          "baseline": 39.2,
+          "paired_delta": 0.8
+        },
+        "sap_hits": {
+          "candidate": 31.6,
+          "baseline": 29.4,
+          "paired_delta": 2.2
+        },
+        "known_point_tiles": {
+          "candidate": 12.8,
+          "baseline": 13.2,
+          "paired_delta": -0.4
+        },
+        "belief_contradictions": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        },
+        "invalid_frac": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        }
+      },
+      "loss_keys": [
+        {
+          "seed": 11011002,
+          "side": "player_0",
+          "candidate_points": [
+            1496,
+            1433
+          ],
+          "baseline_points": [
+            1500,
+            1398
+          ]
+        },
+        {
+          "seed": 11011002,
+          "side": "player_1",
+          "candidate_points": [
+            1308,
+            1334
+          ],
+          "baseline_points": [
+            1460,
+            1372
+          ]
+        },
+        {
+          "seed": 11011004,
+          "side": "player_0",
+          "candidate_points": [
+            732,
+            865
+          ],
+          "baseline_points": [
+            910,
+            777
+          ]
+        },
+        {
+          "seed": 11011013,
+          "side": "player_0",
+          "candidate_points": [
+            1049,
+            1395
+          ],
+          "baseline_points": [
+            1183,
+            1305
+          ]
+        },
+        {
+          "seed": 11011017,
+          "side": "player_0",
+          "candidate_points": [
+            0,
+            0
+          ],
+          "baseline_points": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "R62": {
+      "all_games": {
+        "our_points": {
+          "candidate": 1397.45,
+          "baseline": 1410.95,
+          "paired_delta": -13.5
+        },
+        "opp_points": {
+          "candidate": 870.65,
+          "baseline": 883.125,
+          "paired_delta": -12.475
+        },
+        "unit_steps": {
+          "candidate": 3674.825,
+          "baseline": 3639.675,
+          "paired_delta": 35.15
+        },
+        "wait_frac": {
+          "candidate": 0.5056389674414798,
+          "baseline": 0.4907056835549467,
+          "paired_delta": 0.01493328388653321
+        },
+        "stack_frac": {
+          "candidate": 0.11424875807151987,
+          "baseline": 0.10601422856708471,
+          "paired_delta": 0.008234529504435168
+        },
+        "sap_attempts": {
+          "candidate": 101.5,
+          "baseline": 96.65,
+          "paired_delta": 4.85
+        },
+        "sap_hits": {
+          "candidate": 84.475,
+          "baseline": 79.65,
+          "paired_delta": 4.825
+        },
+        "known_point_tiles": {
+          "candidate": 18.6,
+          "baseline": 18.625,
+          "paired_delta": -0.025
+        },
+        "belief_contradictions": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        },
+        "invalid_frac": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        }
+      },
+      "loss_games": {
+        "our_points": {
+          "candidate": 528.5,
+          "baseline": 652.0,
+          "paired_delta": -123.5
+        },
+        "opp_points": {
+          "candidate": 420.0,
+          "baseline": 307.5,
+          "paired_delta": 112.5
+        },
+        "unit_steps": {
+          "candidate": 3603.5,
+          "baseline": 3606.0,
+          "paired_delta": -2.5
+        },
+        "wait_frac": {
+          "candidate": 0.4177632253891186,
+          "baseline": 0.4187066435586366,
+          "paired_delta": -0.0009434181695180122
+        },
+        "stack_frac": {
+          "candidate": 0.18987137653518865,
+          "baseline": 0.16815875216637782,
+          "paired_delta": 0.02171262436881083
+        },
+        "sap_attempts": {
+          "candidate": 118.0,
+          "baseline": 105.0,
+          "paired_delta": 13.0
+        },
+        "sap_hits": {
+          "candidate": 115.5,
+          "baseline": 101.0,
+          "paired_delta": 14.5
+        },
+        "known_point_tiles": {
+          "candidate": 9.5,
+          "baseline": 10.5,
+          "paired_delta": -1.0
+        },
+        "belief_contradictions": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        },
+        "invalid_frac": {
+          "candidate": 0.0,
+          "baseline": 0.0,
+          "paired_delta": 0.0
+        }
+      },
+      "loss_keys": [
+        {
+          "seed": 11011001,
+          "side": "player_1",
+          "candidate_points": [
+            1057,
+            840
+          ],
+          "baseline_points": [
+            1304,
+            615
+          ]
+        },
+        {
+          "seed": 11011017,
+          "side": "player_0",
+          "candidate_points": [
+            0,
+            0
+          ],
+          "baseline_points": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "replays": {
+    "R61_prefill": {
+      "sample_rows": 8192,
+      "available_nonterminal_rows": 137542,
+      "sample_seed": 11010,
+      "index_sha256": "6df99dc99a26ef58a2439cad1b56dc8b5fc34dc6d352f274f498ac0295efdf27",
+      "candidate": {
+        "R61": {
+          "mean_abs_common": 1.5276298522949219,
+          "mean_abs_centered": 0.18051046133041382,
+          "action_transition": [
+            [
+              3710,
+              32,
+              33,
+              38,
+              32,
+              19
+            ],
+            [
+              11,
+              207,
+              11,
+              1,
+              6,
+              4
+            ],
+            [
+              84,
+              71,
+              1567,
+              192,
+              13,
+              10
+            ],
+            [
+              109,
+              27,
+              129,
+              1504,
+              23,
+              4
+            ],
+            [
+              27,
+              22,
+              2,
+              19,
+              144,
+              1
+            ],
+            [
+              24,
+              1,
+              1,
+              3,
+              0,
+              111
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 949,
+              "changed_frac": 0.1158447265625,
+              "mean_R_by_action": [
+                1.4440635442733765,
+                1.4950954914093018,
+                1.4853383302688599,
+                1.4196690320968628,
+                1.4021157026290894,
+                1.3641029596328735
+              ],
+              "base_choices": [
+                3864,
+                240,
+                1937,
+                1796,
+                215,
+                140
+              ],
+              "new_choices": [
+                3965,
+                360,
+                1743,
+                1757,
+                218,
+                149
+              ],
+              "changed_margin_median": 0.03061199188232422
+            },
+            "point_holder": {
+              "rows": 2385,
+              "changed": 63,
+              "changed_frac": 0.026415094339622643,
+              "mean_R_by_action": [
+                1.1025503873825073,
+                1.3044559955596924,
+                1.459758996963501,
+                1.3355433940887451,
+                1.239127278327942,
+                0.7854512333869934
+              ],
+              "base_choices": [
+                2301,
+                17,
+                1,
+                0,
+                4,
+                62
+              ],
+              "new_choices": [
+                2270,
+                25,
+                18,
+                2,
+                6,
+                64
+              ],
+              "changed_margin_median": 0.150604248046875
+            },
+            "on_candidate": {
+              "rows": 59,
+              "changed": 16,
+              "changed_frac": 0.2711864406779661,
+              "mean_R_by_action": [
+                1.057088851928711,
+                1.1487644910812378,
+                0.769224226474762,
+                0.675605833530426,
+                0.9699208736419678,
+                1.2136532068252563
+              ],
+              "base_choices": [
+                11,
+                5,
+                15,
+                22,
+                6,
+                0
+              ],
+              "new_choices": [
+                15,
+                10,
+                8,
+                21,
+                5,
+                0
+              ],
+              "changed_margin_median": 0.05616414546966553
+            },
+            "early_match": {
+              "rows": 754,
+              "changed": 79,
+              "changed_frac": 0.10477453580901856,
+              "mean_R_by_action": [
+                1.6747632026672363,
+                1.6398561000823975,
+                1.527035117149353,
+                1.4490766525268555,
+                1.4731053113937378,
+                2.0763373374938965
+              ],
+              "base_choices": [
+                151,
+                8,
+                312,
+                273,
+                10,
+                0
+              ],
+              "new_choices": [
+                154,
+                14,
+                294,
+                283,
+                9,
+                0
+              ],
+              "changed_margin_median": 0.040169477462768555
+            },
+            "late_match": {
+              "rows": 2649,
+              "changed": 315,
+              "changed_frac": 0.11891279728199321,
+              "mean_R_by_action": [
+                0.5257169604301453,
+                0.5866191983222961,
+                0.6345878839492798,
+                0.580700159072876,
+                0.5585567951202393,
+                0.3890093266963959
+              ],
+              "base_choices": [
+                1529,
+                60,
+                487,
+                395,
+                72,
+                106
+              ],
+              "new_choices": [
+                1591,
+                80,
+                439,
+                367,
+                82,
+                90
+              ],
+              "changed_margin_median": 0.01936936378479004
+            },
+            "visible_enemy": {
+              "rows": 4826,
+              "changed": 619,
+              "changed_frac": 0.1282635723166183,
+              "mean_R_by_action": [
+                1.0843124389648438,
+                1.1618236303329468,
+                1.1636109352111816,
+                1.0951508283615112,
+                1.0815500020980835,
+                0.931195855140686
+              ],
+              "base_choices": [
+                2407,
+                181,
+                1045,
+                900,
+                153,
+                140
+              ],
+              "new_choices": [
+                2481,
+                261,
+                876,
+                898,
+                161,
+                149
+              ],
+              "changed_margin_median": 0.02754974365234375
+            }
+          }
+        },
+        "R62": {
+          "mean_abs_common": 1.5120620727539062,
+          "mean_abs_centered": 0.17857061326503754,
+          "action_transition": [
+            [
+              3681,
+              54,
+              28,
+              54,
+              22,
+              25
+            ],
+            [
+              13,
+              210,
+              2,
+              3,
+              6,
+              6
+            ],
+            [
+              123,
+              68,
+              1467,
+              240,
+              15,
+              24
+            ],
+            [
+              127,
+              20,
+              68,
+              1534,
+              34,
+              13
+            ],
+            [
+              27,
+              12,
+              2,
+              11,
+              158,
+              5
+            ],
+            [
+              31,
+              0,
+              2,
+              2,
+              0,
+              105
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 1037,
+              "changed_frac": 0.1265869140625,
+              "mean_R_by_action": [
+                1.4046474695205688,
+                1.4688708782196045,
+                1.4269604682922363,
+                1.5007519721984863,
+                1.4134396314620972,
+                1.482269525527954
+              ],
+              "base_choices": [
+                3864,
+                240,
+                1937,
+                1796,
+                215,
+                140
+              ],
+              "new_choices": [
+                4002,
+                364,
+                1569,
+                1844,
+                235,
+                178
+              ],
+              "changed_margin_median": 0.0386199951171875
+            },
+            "point_holder": {
+              "rows": 2385,
+              "changed": 94,
+              "changed_frac": 0.039412997903563944,
+              "mean_R_by_action": [
+                1.0336062908172607,
+                1.3579742908477783,
+                1.3978712558746338,
+                1.5989266633987427,
+                1.1931122541427612,
+                0.9480977654457092
+              ],
+              "base_choices": [
+                2301,
+                17,
+                1,
+                0,
+                4,
+                62
+              ],
+              "new_choices": [
+                2263,
+                28,
+                6,
+                35,
+                6,
+                47
+              ],
+              "changed_margin_median": 0.41142404079437256
+            },
+            "on_candidate": {
+              "rows": 59,
+              "changed": 23,
+              "changed_frac": 0.3898305084745763,
+              "mean_R_by_action": [
+                1.3095237016677856,
+                1.2953765392303467,
+                1.0270901918411255,
+                1.0617471933364868,
+                1.3008880615234375,
+                1.661718487739563
+              ],
+              "base_choices": [
+                11,
+                5,
+                15,
+                22,
+                6,
+                0
+              ],
+              "new_choices": [
+                22,
+                11,
+                10,
+                9,
+                6,
+                1
+              ],
+              "changed_margin_median": 0.02359771728515625
+            },
+            "early_match": {
+              "rows": 754,
+              "changed": 101,
+              "changed_frac": 0.13395225464190982,
+              "mean_R_by_action": [
+                1.7033013105392456,
+                1.5537919998168945,
+                1.4406111240386963,
+                1.5299396514892578,
+                1.6035726070404053,
+                2.144976854324341
+              ],
+              "base_choices": [
+                151,
+                8,
+                312,
+                273,
+                10,
+                0
+              ],
+              "new_choices": [
+                171,
+                15,
+                253,
+                305,
+                10,
+                0
+              ],
+              "changed_margin_median": 0.08056068420410156
+            },
+            "late_match": {
+              "rows": 2649,
+              "changed": 310,
+              "changed_frac": 0.11702529256323141,
+              "mean_R_by_action": [
+                0.43930506706237793,
+                0.5768985748291016,
+                0.5919389724731445,
+                0.5962156653404236,
+                0.5178426504135132,
+                0.462605744600296
+              ],
+              "base_choices": [
+                1529,
+                60,
+                487,
+                395,
+                72,
+                106
+              ],
+              "new_choices": [
+                1583,
+                85,
+                408,
+                392,
+                81,
+                100
+              ],
+              "changed_margin_median": 0.023116976022720337
+            },
+            "visible_enemy": {
+              "rows": 4826,
+              "changed": 662,
+              "changed_frac": 0.13717364276833816,
+              "mean_R_by_action": [
+                1.067231297492981,
+                1.1837363243103027,
+                1.1474393606185913,
+                1.201439619064331,
+                1.113215684890747,
+                1.1084390878677368
+              ],
+              "base_choices": [
+                2407,
+                181,
+                1045,
+                900,
+                153,
+                140
+              ],
+              "new_choices": [
+                2477,
+                268,
+                824,
+                907,
+                172,
+                178
+              ],
+              "changed_margin_median": 0.03727102279663086
+            }
+          }
+        }
+      }
+    },
+    "R61_final": {
+      "sample_rows": 8192,
+      "available_nonterminal_rows": 293467,
+      "sample_seed": 11010,
+      "index_sha256": "fb2886b63b029ae237b9ba8053c1e6209e2d365426cdf6a34fc3b1ccef068263",
+      "candidate": {
+        "R61": {
+          "mean_abs_common": 1.5722229480743408,
+          "mean_abs_centered": 0.1774313598871231,
+          "action_transition": [
+            [
+              3300,
+              31,
+              21,
+              39,
+              20,
+              12
+            ],
+            [
+              16,
+              164,
+              14,
+              7,
+              7,
+              2
+            ],
+            [
+              117,
+              47,
+              1750,
+              207,
+              13,
+              8
+            ],
+            [
+              115,
+              28,
+              111,
+              1815,
+              38,
+              13
+            ],
+            [
+              25,
+              18,
+              0,
+              12,
+              147,
+              2
+            ],
+            [
+              15,
+              1,
+              2,
+              2,
+              1,
+              72
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 944,
+              "changed_frac": 0.115234375,
+              "mean_R_by_action": [
+                1.4869670867919922,
+                1.5452545881271362,
+                1.5298700332641602,
+                1.4621481895446777,
+                1.4530695676803589,
+                1.420793056488037
+              ],
+              "base_choices": [
+                3423,
+                210,
+                2142,
+                2120,
+                204,
+                93
+              ],
+              "new_choices": [
+                3588,
+                289,
+                1898,
+                2082,
+                226,
+                109
+              ],
+              "changed_margin_median": 0.030887603759765625
+            },
+            "point_holder": {
+              "rows": 2194,
+              "changed": 40,
+              "changed_frac": 0.018231540565177756,
+              "mean_R_by_action": [
+                1.0775107145309448,
+                1.3009063005447388,
+                1.442733645439148,
+                1.2843880653381348,
+                1.211996078491211,
+                0.7298515439033508
+              ],
+              "base_choices": [
+                2133,
+                15,
+                3,
+                0,
+                7,
+                36
+              ],
+              "new_choices": [
+                2114,
+                23,
+                12,
+                0,
+                10,
+                35
+              ],
+              "changed_margin_median": 0.1668710708618164
+            },
+            "on_candidate": {
+              "rows": 62,
+              "changed": 15,
+              "changed_frac": 0.24193548387096775,
+              "mean_R_by_action": [
+                1.3908027410507202,
+                1.4564698934555054,
+                1.1761159896850586,
+                1.1029181480407715,
+                1.2576711177825928,
+                1.6629290580749512
+              ],
+              "base_choices": [
+                10,
+                7,
+                18,
+                25,
+                1,
+                1
+              ],
+              "new_choices": [
+                16,
+                12,
+                8,
+                24,
+                1,
+                1
+              ],
+              "changed_margin_median": 0.0412750244140625
+            },
+            "early_match": {
+              "rows": 749,
+              "changed": 63,
+              "changed_frac": 0.08411214953271028,
+              "mean_R_by_action": [
+                1.8235243558883667,
+                1.8221849203109741,
+                1.7384305000305176,
+                1.6669846773147583,
+                1.662177324295044,
+                2.2229270935058594
+              ],
+              "base_choices": [
+                168,
+                8,
+                308,
+                255,
+                10,
+                0
+              ],
+              "new_choices": [
+                172,
+                11,
+                286,
+                270,
+                10,
+                0
+              ],
+              "changed_margin_median": 0.032813072204589844
+            },
+            "late_match": {
+              "rows": 2645,
+              "changed": 323,
+              "changed_frac": 0.12211720226843101,
+              "mean_R_by_action": [
+                0.5346978306770325,
+                0.6178236603736877,
+                0.652251124382019,
+                0.5876291394233704,
+                0.5934256315231323,
+                0.41340798139572144
+              ],
+              "base_choices": [
+                1422,
+                59,
+                501,
+                533,
+                58,
+                72
+              ],
+              "new_choices": [
+                1485,
+                66,
+                434,
+                515,
+                81,
+                64
+              ],
+              "changed_margin_median": 0.018404722213745117
+            },
+            "visible_enemy": {
+              "rows": 4961,
+              "changed": 660,
+              "changed_frac": 0.13303769401330376,
+              "mean_R_by_action": [
+                1.2693097591400146,
+                1.3380941152572632,
+                1.3226884603500366,
+                1.248992681503296,
+                1.25374174118042,
+                1.1227352619171143
+              ],
+              "base_choices": [
+                2076,
+                152,
+                1243,
+                1247,
+                150,
+                93
+              ],
+              "new_choices": [
+                2178,
+                215,
+                1060,
+                1229,
+                170,
+                109
+              ],
+              "changed_margin_median": 0.03028935194015503
+            }
+          }
+        },
+        "R62": {
+          "mean_abs_common": 1.5698826313018799,
+          "mean_abs_centered": 0.1803021878004074,
+          "action_transition": [
+            [
+              3280,
+              48,
+              25,
+              29,
+              20,
+              21
+            ],
+            [
+              15,
+              174,
+              6,
+              6,
+              6,
+              3
+            ],
+            [
+              124,
+              76,
+              1657,
+              246,
+              18,
+              21
+            ],
+            [
+              140,
+              27,
+              72,
+              1815,
+              52,
+              14
+            ],
+            [
+              21,
+              17,
+              2,
+              5,
+              155,
+              4
+            ],
+            [
+              19,
+              0,
+              2,
+              1,
+              0,
+              71
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 1040,
+              "changed_frac": 0.126953125,
+              "mean_R_by_action": [
+                1.4740585088729858,
+                1.5198407173156738,
+                1.483119249343872,
+                1.5403289794921875,
+                1.4705959558486938,
+                1.550511121749878
+              ],
+              "base_choices": [
+                3423,
+                210,
+                2142,
+                2120,
+                204,
+                93
+              ],
+              "new_choices": [
+                3599,
+                342,
+                1764,
+                2102,
+                251,
+                134
+              ],
+              "changed_margin_median": 0.044422924518585205
+            },
+            "point_holder": {
+              "rows": 2194,
+              "changed": 64,
+              "changed_frac": 0.02917046490428441,
+              "mean_R_by_action": [
+                1.0469118356704712,
+                1.3443816900253296,
+                1.3867385387420654,
+                1.5509374141693115,
+                1.1752766370773315,
+                0.9179327487945557
+              ],
+              "base_choices": [
+                2133,
+                15,
+                3,
+                0,
+                7,
+                36
+              ],
+              "new_choices": [
+                2105,
+                29,
+                9,
+                12,
+                11,
+                28
+              ],
+              "changed_margin_median": 0.33129119873046875
+            },
+            "on_candidate": {
+              "rows": 62,
+              "changed": 21,
+              "changed_frac": 0.3387096774193548,
+              "mean_R_by_action": [
+                1.5271426439285278,
+                1.5082656145095825,
+                1.2566691637039185,
+                1.2678062915802002,
+                1.4744213819503784,
+                1.9734753370285034
+              ],
+              "base_choices": [
+                10,
+                7,
+                18,
+                25,
+                1,
+                1
+              ],
+              "new_choices": [
+                20,
+                10,
+                7,
+                19,
+                5,
+                1
+              ],
+              "changed_margin_median": 0.024356842041015625
+            },
+            "early_match": {
+              "rows": 749,
+              "changed": 86,
+              "changed_frac": 0.11481975967957277,
+              "mean_R_by_action": [
+                1.830220103263855,
+                1.6849925518035889,
+                1.6166131496429443,
+                1.6743626594543457,
+                1.7392067909240723,
+                2.263356924057007
+              ],
+              "base_choices": [
+                168,
+                8,
+                308,
+                255,
+                10,
+                0
+              ],
+              "new_choices": [
+                191,
+                15,
+                266,
+                267,
+                10,
+                0
+              ],
+              "changed_margin_median": 0.07239627838134766
+            },
+            "late_match": {
+              "rows": 2645,
+              "changed": 301,
+              "changed_frac": 0.11379962192816635,
+              "mean_R_by_action": [
+                0.47498515248298645,
+                0.6255249977111816,
+                0.6235770583152771,
+                0.6253775358200073,
+                0.567236065864563,
+                0.5229705572128296
+              ],
+              "base_choices": [
+                1422,
+                59,
+                501,
+                533,
+                58,
+                72
+              ],
+              "new_choices": [
+                1461,
+                82,
+                413,
+                539,
+                81,
+                69
+              ],
+              "changed_margin_median": 0.02537250518798828
+            },
+            "visible_enemy": {
+              "rows": 4961,
+              "changed": 698,
+              "changed_frac": 0.14069744003225157,
+              "mean_R_by_action": [
+                1.2811707258224487,
+                1.3590458631515503,
+                1.3125227689743042,
+                1.3598403930664062,
+                1.2994965314865112,
+                1.3122185468673706
+              ],
+              "base_choices": [
+                2076,
+                152,
+                1243,
+                1247,
+                150,
+                93
+              ],
+              "new_choices": [
+                2165,
+                256,
+                1015,
+                1197,
+                194,
+                134
+              ],
+              "changed_margin_median": 0.04077041149139404
+            }
+          }
+        }
+      }
+    },
+    "R62_prefill": {
+      "sample_rows": 8192,
+      "available_nonterminal_rows": 138730,
+      "sample_seed": 11010,
+      "index_sha256": "aa00d347b8b5f959698438722872a0f7cd680d6df58ccc66fe171641034ed69c",
+      "candidate": {
+        "R61": {
+          "mean_abs_common": 1.496835470199585,
+          "mean_abs_centered": 0.18286055326461792,
+          "action_transition": [
+            [
+              3758,
+              44,
+              40,
+              36,
+              27,
+              24
+            ],
+            [
+              9,
+              192,
+              12,
+              8,
+              7,
+              3
+            ],
+            [
+              102,
+              55,
+              1560,
+              197,
+              11,
+              8
+            ],
+            [
+              103,
+              24,
+              97,
+              1504,
+              31,
+              5
+            ],
+            [
+              24,
+              23,
+              5,
+              9,
+              161,
+              3
+            ],
+            [
+              11,
+              0,
+              2,
+              5,
+              2,
+              90
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 927,
+              "changed_frac": 0.1131591796875,
+              "mean_R_by_action": [
+                1.3920786380767822,
+                1.4486870765686035,
+                1.4458224773406982,
+                1.3754442930221558,
+                1.3553944826126099,
+                1.3010295629501343
+              ],
+              "base_choices": [
+                3929,
+                231,
+                1933,
+                1764,
+                225,
+                110
+              ],
+              "new_choices": [
+                4007,
+                338,
+                1716,
+                1759,
+                239,
+                133
+              ],
+              "changed_margin_median": 0.030649244785308838
+            },
+            "point_holder": {
+              "rows": 2459,
+              "changed": 72,
+              "changed_frac": 0.029280195201301342,
+              "mean_R_by_action": [
+                1.0413179397583008,
+                1.251121997833252,
+                1.4182785749435425,
+                1.289518117904663,
+                1.1865191459655762,
+                0.7098720073699951
+              ],
+              "base_choices": [
+                2381,
+                13,
+                2,
+                0,
+                12,
+                51
+              ],
+              "new_choices": [
+                2332,
+                22,
+                34,
+                1,
+                8,
+                62
+              ],
+              "changed_margin_median": 0.186210036277771
+            },
+            "on_candidate": {
+              "rows": 55,
+              "changed": 14,
+              "changed_frac": 0.2545454545454545,
+              "mean_R_by_action": [
+                0.4160759449005127,
+                0.4738752841949463,
+                0.2956542372703552,
+                0.287283718585968,
+                0.3808457851409912,
+                0.6730926036834717
+              ],
+              "base_choices": [
+                11,
+                1,
+                16,
+                24,
+                3,
+                0
+              ],
+              "new_choices": [
+                16,
+                5,
+                7,
+                24,
+                3,
+                0
+              ],
+              "changed_margin_median": 0.033823251724243164
+            },
+            "early_match": {
+              "rows": 749,
+              "changed": 92,
+              "changed_frac": 0.12283044058744993,
+              "mean_R_by_action": [
+                1.6702747344970703,
+                1.636419415473938,
+                1.5357275009155273,
+                1.4592927694320679,
+                1.4749906063079834,
+                2.0245790481567383
+              ],
+              "base_choices": [
+                150,
+                15,
+                327,
+                249,
+                8,
+                0
+              ],
+              "new_choices": [
+                155,
+                19,
+                304,
+                265,
+                6,
+                0
+              ],
+              "changed_margin_median": 0.02540874481201172
+            },
+            "late_match": {
+              "rows": 2664,
+              "changed": 307,
+              "changed_frac": 0.11524024024024024,
+              "mean_R_by_action": [
+                0.4635829031467438,
+                0.5347665548324585,
+                0.5902475118637085,
+                0.5201976895332336,
+                0.4970315098762512,
+                0.3000655174255371
+              ],
+              "base_choices": [
+                1592,
+                65,
+                431,
+                430,
+                76,
+                70
+              ],
+              "new_choices": [
+                1627,
+                74,
+                389,
+                419,
+                92,
+                63
+              ],
+              "changed_margin_median": 0.01666092872619629
+            },
+            "visible_enemy": {
+              "rows": 4795,
+              "changed": 605,
+              "changed_frac": 0.1261730969760167,
+              "mean_R_by_action": [
+                1.0146222114562988,
+                1.092769980430603,
+                1.1090896129608154,
+                1.0306460857391357,
+                1.0116478204727173,
+                0.8540047407150269
+              ],
+              "base_choices": [
+                2409,
+                164,
+                1023,
+                922,
+                167,
+                110
+              ],
+              "new_choices": [
+                2438,
+                235,
+                870,
+                936,
+                183,
+                133
+              ],
+              "changed_margin_median": 0.030649244785308838
+            }
+          }
+        },
+        "R62": {
+          "mean_abs_common": 1.4922082424163818,
+          "mean_abs_centered": 0.18382728099822998,
+          "action_transition": [
+            [
+              3725,
+              64,
+              34,
+              58,
+              21,
+              27
+            ],
+            [
+              17,
+              197,
+              2,
+              4,
+              3,
+              8
+            ],
+            [
+              145,
+              74,
+              1446,
+              226,
+              19,
+              23
+            ],
+            [
+              112,
+              15,
+              68,
+              1515,
+              44,
+              10
+            ],
+            [
+              22,
+              19,
+              1,
+              8,
+              168,
+              7
+            ],
+            [
+              16,
+              0,
+              0,
+              3,
+              0,
+              91
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 1050,
+              "changed_frac": 0.128173828125,
+              "mean_R_by_action": [
+                1.3651131391525269,
+                1.436944603919983,
+                1.3985308408737183,
+                1.475791573524475,
+                1.3800464868545532,
+                1.4534547328948975
+              ],
+              "base_choices": [
+                3929,
+                231,
+                1933,
+                1764,
+                225,
+                110
+              ],
+              "new_choices": [
+                4037,
+                369,
+                1551,
+                1814,
+                255,
+                166
+              ],
+              "changed_margin_median": 0.042550086975097656
+            },
+            "point_holder": {
+              "rows": 2459,
+              "changed": 90,
+              "changed_frac": 0.036600244001626675,
+              "mean_R_by_action": [
+                0.9498901963233948,
+                1.2875409126281738,
+                1.3364109992980957,
+                1.533430814743042,
+                1.1225106716156006,
+                0.872913658618927
+              ],
+              "base_choices": [
+                2381,
+                13,
+                2,
+                0,
+                12,
+                51
+              ],
+              "new_choices": [
+                2330,
+                33,
+                6,
+                35,
+                8,
+                47
+              ],
+              "changed_margin_median": 0.5172247886657715
+            },
+            "on_candidate": {
+              "rows": 55,
+              "changed": 24,
+              "changed_frac": 0.43636363636363634,
+              "mean_R_by_action": [
+                0.6721533536911011,
+                0.638329267501831,
+                0.46780070662498474,
+                0.48170632123947144,
+                0.6048957705497742,
+                1.096071481704712
+              ],
+              "base_choices": [
+                11,
+                1,
+                16,
+                24,
+                3,
+                0
+              ],
+              "new_choices": [
+                28,
+                4,
+                7,
+                12,
+                2,
+                2
+              ],
+              "changed_margin_median": 0.020958781242370605
+            },
+            "early_match": {
+              "rows": 749,
+              "changed": 108,
+              "changed_frac": 0.14419225634178906,
+              "mean_R_by_action": [
+                1.6625016927719116,
+                1.497994065284729,
+                1.4112428426742554,
+                1.5012232065200806,
+                1.56833815574646,
+                2.0821094512939453
+              ],
+              "base_choices": [
+                150,
+                15,
+                327,
+                249,
+                8,
+                0
+              ],
+              "new_choices": [
+                171,
+                23,
+                278,
+                267,
+                10,
+                0
+              ],
+              "changed_margin_median": 0.0635671615600586
+            },
+            "late_match": {
+              "rows": 2664,
+              "changed": 302,
+              "changed_frac": 0.11336336336336336,
+              "mean_R_by_action": [
+                0.39244019985198975,
+                0.5511910915374756,
+                0.568922758102417,
+                0.5713219046592712,
+                0.48476365208625793,
+                0.4252080023288727
+              ],
+              "base_choices": [
+                1592,
+                65,
+                431,
+                430,
+                76,
+                70
+              ],
+              "new_choices": [
+                1602,
+                98,
+                348,
+                450,
+                92,
+                74
+              ],
+              "changed_margin_median": 0.02006852626800537
+            },
+            "visible_enemy": {
+              "rows": 4795,
+              "changed": 663,
+              "changed_frac": 0.13826903023983317,
+              "mean_R_by_action": [
+                1.0131018161773682,
+                1.1381944417953491,
+                1.1029962301254272,
+                1.1638836860656738,
+                1.0665470361709595,
+                1.0801993608474731
+              ],
+              "base_choices": [
+                2409,
+                164,
+                1023,
+                922,
+                167,
+                110
+              ],
+              "new_choices": [
+                2442,
+                265,
+                800,
+                946,
+                176,
+                166
+              ],
+              "changed_margin_median": 0.04254961013793945
+            }
+          }
+        }
+      }
+    },
+    "R62_final": {
+      "sample_rows": 8192,
+      "available_nonterminal_rows": 293525,
+      "sample_seed": 11010,
+      "index_sha256": "92125df8b46d79c5b55baa85c097610a11b494b160cdf0c3269eb2087d68f5fb",
+      "candidate": {
+        "R61": {
+          "mean_abs_common": 1.6195518970489502,
+          "mean_abs_centered": 0.17513461410999298,
+          "action_transition": [
+            [
+              3209,
+              28,
+              17,
+              37,
+              31,
+              10
+            ],
+            [
+              19,
+              154,
+              12,
+              2,
+              13,
+              1
+            ],
+            [
+              126,
+              80,
+              1808,
+              222,
+              7,
+              2
+            ],
+            [
+              103,
+              29,
+              88,
+              1849,
+              29,
+              3
+            ],
+            [
+              18,
+              17,
+              1,
+              11,
+              185,
+              3
+            ],
+            [
+              8,
+              0,
+              1,
+              8,
+              1,
+              60
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 927,
+              "changed_frac": 0.1131591796875,
+              "mean_R_by_action": [
+                1.5399380922317505,
+                1.591355800628662,
+                1.577452540397644,
+                1.5207992792129517,
+                1.5105167627334595,
+                1.486404299736023
+              ],
+              "base_choices": [
+                3332,
+                201,
+                2245,
+                2101,
+                235,
+                78
+              ],
+              "new_choices": [
+                3483,
+                308,
+                1927,
+                2129,
+                266,
+                79
+              ],
+              "changed_margin_median": 0.029541969299316406
+            },
+            "point_holder": {
+              "rows": 2185,
+              "changed": 32,
+              "changed_frac": 0.014645308924485127,
+              "mean_R_by_action": [
+                1.1172404289245605,
+                1.3300601243972778,
+                1.4732352495193481,
+                1.3418974876403809,
+                1.254390001296997,
+                0.8050429821014404
+              ],
+              "base_choices": [
+                2133,
+                7,
+                2,
+                0,
+                7,
+                36
+              ],
+              "new_choices": [
+                2110,
+                13,
+                12,
+                0,
+                9,
+                41
+              ],
+              "changed_margin_median": 0.21883010864257812
+            },
+            "on_candidate": {
+              "rows": 66,
+              "changed": 21,
+              "changed_frac": 0.3181818181818182,
+              "mean_R_by_action": [
+                1.0730655193328857,
+                1.158395767211914,
+                0.8431137204170227,
+                0.7980983853340149,
+                0.9901731014251709,
+                1.3771477937698364
+              ],
+              "base_choices": [
+                11,
+                2,
+                26,
+                23,
+                4,
+                0
+              ],
+              "new_choices": [
+                20,
+                11,
+                15,
+                18,
+                2,
+                0
+              ],
+              "changed_margin_median": 0.06693077087402344
+            },
+            "early_match": {
+              "rows": 804,
+              "changed": 74,
+              "changed_frac": 0.09203980099502487,
+              "mean_R_by_action": [
+                1.6979179382324219,
+                1.6970008611679077,
+                1.6340047121047974,
+                1.5911026000976562,
+                1.578658103942871,
+                2.113903284072876
+              ],
+              "base_choices": [
+                155,
+                10,
+                356,
+                275,
+                8,
+                0
+              ],
+              "new_choices": [
+                153,
+                15,
+                328,
+                301,
+                7,
+                0
+              ],
+              "changed_margin_median": 0.021122455596923828
+            },
+            "late_match": {
+              "rows": 2635,
+              "changed": 321,
+              "changed_frac": 0.12182163187855788,
+              "mean_R_by_action": [
+                0.663092851638794,
+                0.7255527973175049,
+                0.7562152743339539,
+                0.6992146372795105,
+                0.6994689702987671,
+                0.5515179634094238
+              ],
+              "base_choices": [
+                1331,
+                73,
+                566,
+                541,
+                71,
+                53
+              ],
+              "new_choices": [
+                1396,
+                76,
+                486,
+                542,
+                87,
+                48
+              ],
+              "changed_margin_median": 0.01790487766265869
+            },
+            "visible_enemy": {
+              "rows": 4774,
+              "changed": 600,
+              "changed_frac": 0.12568077084206117,
+              "mean_R_by_action": [
+                1.327318787574768,
+                1.3903063535690308,
+                1.3778804540634155,
+                1.3148995637893677,
+                1.3151037693023682,
+                1.1968603134155273
+              ],
+              "base_choices": [
+                1975,
+                152,
+                1192,
+                1195,
+                182,
+                78
+              ],
+              "new_choices": [
+                2056,
+                210,
+                977,
+                1243,
+                209,
+                79
+              ],
+              "changed_margin_median": 0.026358436793088913
+            }
+          }
+        },
+        "R62": {
+          "mean_abs_common": 1.6028854846954346,
+          "mean_abs_centered": 0.1791927069425583,
+          "action_transition": [
+            [
+              3199,
+              42,
+              17,
+              30,
+              23,
+              21
+            ],
+            [
+              23,
+              154,
+              6,
+              2,
+              14,
+              2
+            ],
+            [
+              169,
+              83,
+              1707,
+              257,
+              24,
+              5
+            ],
+            [
+              119,
+              29,
+              71,
+              1825,
+              45,
+              12
+            ],
+            [
+              24,
+              17,
+              0,
+              11,
+              173,
+              10
+            ],
+            [
+              10,
+              0,
+              1,
+              5,
+              0,
+              62
+            ]
+          ],
+          "cohorts": {
+            "all": {
+              "rows": 8192,
+              "changed": 1072,
+              "changed_frac": 0.130859375,
+              "mean_R_by_action": [
+                1.510629415512085,
+                1.5529216527938843,
+                1.5208494663238525,
+                1.5791138410568237,
+                1.507173776626587,
+                1.592460036277771
+              ],
+              "base_choices": [
+                3332,
+                201,
+                2245,
+                2101,
+                235,
+                78
+              ],
+              "new_choices": [
+                3544,
+                325,
+                1802,
+                2130,
+                279,
+                112
+              ],
+              "changed_margin_median": 0.04361426830291748
+            },
+            "point_holder": {
+              "rows": 2185,
+              "changed": 41,
+              "changed_frac": 0.018764302059496567,
+              "mean_R_by_action": [
+                1.0557031631469727,
+                1.3472884893417358,
+                1.402152419090271,
+                1.5590851306915283,
+                1.177086591720581,
+                0.9382485151290894
+              ],
+              "base_choices": [
+                2133,
+                7,
+                2,
+                0,
+                7,
+                36
+              ],
+              "new_choices": [
+                2112,
+                12,
+                7,
+                9,
+                10,
+                35
+              ],
+              "changed_margin_median": 0.3074913024902344
+            },
+            "on_candidate": {
+              "rows": 66,
+              "changed": 27,
+              "changed_frac": 0.4090909090909091,
+              "mean_R_by_action": [
+                1.1612379550933838,
+                1.1369471549987793,
+                0.9001206755638123,
+                0.9216486215591431,
+                1.1045726537704468,
+                1.6319659948349
+              ],
+              "base_choices": [
+                11,
+                2,
+                26,
+                23,
+                4,
+                0
+              ],
+              "new_choices": [
+                26,
+                7,
+                10,
+                20,
+                2,
+                1
+              ],
+              "changed_margin_median": 0.032341718673706055
+            },
+            "early_match": {
+              "rows": 804,
+              "changed": 82,
+              "changed_frac": 0.10199004975124377,
+              "mean_R_by_action": [
+                1.7290421724319458,
+                1.6223605871200562,
+                1.5489712953567505,
+                1.6075295209884644,
+                1.643582820892334,
+                2.1611287593841553
+              ],
+              "base_choices": [
+                155,
+                10,
+                356,
+                275,
+                8,
+                0
+              ],
+              "new_choices": [
+                165,
+                20,
+                304,
+                305,
+                10,
+                0
+              ],
+              "changed_margin_median": 0.06165266036987305
+            },
+            "late_match": {
+              "rows": 2635,
+              "changed": 339,
+              "changed_frac": 0.1286527514231499,
+              "mean_R_by_action": [
+                0.6010211706161499,
+                0.722500205039978,
+                0.7230263352394104,
+                0.721881091594696,
+                0.6693482398986816,
+                0.6409244537353516
+              ],
+              "base_choices": [
+                1331,
+                73,
+                566,
+                541,
+                71,
+                53
+              ],
+              "new_choices": [
+                1401,
+                83,
+                463,
+                544,
+                87,
+                57
+              ],
+              "changed_margin_median": 0.027085065841674805
+            },
+            "visible_enemy": {
+              "rows": 4774,
+              "changed": 709,
+              "changed_frac": 0.1485127775450356,
+              "mean_R_by_action": [
+                1.329768180847168,
+                1.3957442045211792,
+                1.3609070777893066,
+                1.4078699350357056,
+                1.3447014093399048,
+                1.3596681356430054
+              ],
+              "base_choices": [
+                1975,
+                152,
+                1192,
+                1195,
+                182,
+                78
+              ],
+              "new_choices": [
+                2089,
+                229,
+                943,
+                1187,
+                214,
+                112
+              ],
+              "changed_margin_median": 0.04173469543457031
+            }
+          }
+        }
+      }
+    }
+  },
+  "limits": [
+    "Replay mask is next-state mask: exclusively ns/base_ns analyzed, never applied to s.",
+    "Samples are training/prefill next-state distributions, not independent evaluation states; rows correlated.",
+    "Proposals are before rules; no claim of emitted action changes or causal loss reason.",
+    "sap_hits is visible-target proximity proxy, not engine damage/hits.",
+    "Loss-only subsets are postselected descriptions, not fresh effects or independent evidence."
+  ]
+}

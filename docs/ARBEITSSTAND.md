@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Residual-Nachanalyse und neuer Plan, keine weiteren Spiele
+
+- Neuer Nutzerauftrag ausdrücklich Analyse und Planung; mindestens 5 % Kontingent erhalten. R61/R62 bleiben geschlossen. Kein Training, keine Agentenänderung, kein neues Leistungs-/Technikspiel oder Gewichtsaustausch in dieser Runde.
+- [Offlinebefund](../experiments/analysis/residual_postmortem_20261110/ERGEBNIS.md): vorhandene 40er-Solutiondaten und vier Replaystichproben nachgerechnet, 32.768 gezogene Folgezustände mit beiden Endkorrekturen bewertet. Rund 11–13 % geänderte legale Rohvorschläge, keine Behauptung ebenso vieler finaler Änderungen. Daten sind Trainings-/Vorlaufzustände, keine neue Validierung. Alle neun gebundenen Eingaben unverändert.
+- Konkrete Zielgrenze: R62 verliert trotz 1.057:840 Gesamtpunkten; auf einer 0:0-Karte gewinnt V14 3:0 Matches und beide Korrekturen verlieren 1:2. Engine-Gleichstandsauflösung nach Energie/Zufall verifiziert, konkrete terminale Energien fehlen im alten Archiv. Daher keine behauptete Einzelursache der Niederlagen. Bereits vorhandenen Matchreward und geschlossene Reward-/HOLD-Studien berücksichtigt.
+- [Nächster Designvorschlag](superpowers/specs/2026-11-10-match-outcome-selector-design.md) und [Umsetzungsplan](superpowers/plans/2026-11-10-match-outcome-selector.md): zuerst höchstens 32 vollständige bekannte Ausführungen und begrenzte gepaarte Fortsetzungen bis Matchende, null Gradienten; nur bei wirksamen Alternativen mit echten positiven Matchflips eine getrennte Lernphase. V14 bleibt Standard, späterer Kopf nur mit öffentlichen Informationen und eigener Validierung. Noch nicht umgesetzt oder zur Ausführung aufgenommen. Ein fokussierter unabhängiger Methodenreview statt paralleler Entwicklungsarme.
+- V14/ZIP unverändert; keine eigenen aktiven Modellworker. Remote-Automation weiterhin pausiert. Bei nächster Arbeitsaufnahme Umfang/Quota/Git erneut prüfen; ab 92 % Verbrauch Abschlussraum, spätestens 95 % stoppen.
+
 ## 10.11.2026 – Residual-Pilot geschlossen, V14 bleibt unverändert
 
 - Plan vollständig bis zur vorab festen Abbruchentscheidung umgesetzt:8 Technikspiele,240 Vorlauf-/Trainingsspiele mit24.000 Updates,200 Auswahlspiele, insgesamt448 Ausführungen. Beide additiven Kandidaten gescheitert: Solution R61 **35/40**, R62 **38/40**, V14 **40/40**; direkt gegenV14 **14/40** bzw. **10/40**. Beide Direkt- und Solution-Hürden verfehlt, keine Nominierung/600er-Bestätigung/Kursprüfung oder automatische Verlängerung. [Vollständiger Bericht](../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md).

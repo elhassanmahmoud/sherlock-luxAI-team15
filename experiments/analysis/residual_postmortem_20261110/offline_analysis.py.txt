@@ -1,0 +1,61 @@
+from pathlib import Path
+import json,hashlib,time
+import numpy as np
+import torch
+from agents.sherlock.model import QNet
+from agents.sherlock.features import FEATURE_NAMES
+ROOT=Path.cwd();BASE=ROOT/'experiments/analysis/residual_ensemble_20261110'
+OUT=Path('/private/tmp/residual-postmortem-20261110.json')
+torch.set_num_threads(1)
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+inputs={};defrows=lambda p:[json.loads(x) for x in p.read_text().splitlines()]
+report=dict(scope='Offline existing records only; no new games/gradient steps',created_at=time.time(),inputs=inputs,results={},replays={})
+sel={}
+for a in ('V14','R61','R62'):
+ p=BASE/'selection'/f'{a}_solution92/games.jsonl';inputs[str(p)]=sha(p);sel[a]=defrows(p)
+fields=['our_points','opp_points','unit_steps','wait_frac','stack_frac','sap_attempts','sap_hits','known_point_tiles','belief_contradictions','invalid_frac']
+for a in ('R61','R62'):
+ rows=sel[a];base=sel['V14'];assert [(r['seed'],r['side']) for r in rows]==[(r['seed'],r['side']) for r in base]
+ losses=[i for i,r in enumerate(rows) if r['result']==0]
+ def means(indices):
+  return {f:dict(candidate=float(np.mean([rows[i][f] for i in indices])),baseline=float(np.mean([base[i][f] for i in indices])),paired_delta=float(np.mean([rows[i][f]-base[i][f] for i in indices]))) for f in fields}
+ report['results'][a]=dict(all_games=means(range(40)),loss_games=means(losses),loss_keys=[{'seed':rows[i]['seed'],'side':rows[i]['side'],'candidate_points':[rows[i]['our_points'],rows[i]['opp_points']],'baseline_points':[base[i]['our_points'],base[i]['opp_points']]} for i in losses])
+models={}
+for a in ('R61','R62'):
+ p=BASE/'training'/a/'final.pth';inputs[str(p)]=sha(p)
+ cp=torch.load(p,map_location='cpu',weights_only=True)
+ m=QNet(79,6,256,True);m.load_state_dict(cp['residual']);m.eval().requires_grad_(False);models[a]=m
+F={n:i for i,n in enumerate(FEATURE_NAMES)}
+for arm in ('R61','R62'):
+ for phase in ('prefill','final'):
+  p=BASE/'training'/arm/f'{phase}_replay.npz';inputs[str(p)]=sha(p)
+  with np.load(p,allow_pickle=False) as z:
+   valid=np.flatnonzero(z['done']==0);idx=np.random.default_rng(11010).choice(valid,min(8192,len(valid)),replace=False)
+   ns=z['ns'][idx];mask=z['mask'][idx];M=z['base_ns'][idx]
+  assert mask.any(1).all() and len(ns)==8192
+  B=np.where(mask,M,-np.inf);b=B.argmax(1);sortedB=np.sort(B,axis=1);margin=sortedB[:,-1]-sortedB[:,-2]
+  cohorts={'all':np.ones(len(ns),bool),'point_holder':(ns[:,F['on_point']]>0)&(ns[:,F['redundant_here']]==0)&(ns[:,F['self_energy']]>0),'on_candidate':ns[:,F['on_cand']]>0,'early_match':ns[:,F['match_step_frac']]<=.25,'late_match':ns[:,F['match_step_frac']]>=.75,'visible_enemy':ns[:,F['enemies_visible']]>0}
+  detail={}
+  with torch.no_grad():
+   for name,model in models.items():
+    R=model(torch.from_numpy(ns)).numpy();C=np.where(mask,M+R,-np.inf);c=C.argmax(1);changed=c!=b
+    transition=np.zeros((6,6),int);np.add.at(transition,(b,c),1)
+    def cohort(index):
+     take=index&changed
+     return dict(rows=int(index.sum()),changed=int(take.sum()),changed_frac=float(changed[index].mean()) if index.any() else None,
+       mean_R_by_action=R[index].mean(0).tolist() if index.any() else [],
+       base_choices=np.bincount(b[index],minlength=6).tolist(),new_choices=np.bincount(c[index],minlength=6).tolist(),
+       changed_margin_median=float(np.median(margin[take])) if take.any() else None)
+    detail[name]=dict(mean_abs_common=float(np.abs(R.mean(1)).mean()),mean_abs_centered=float(np.abs(R-R.mean(1,keepdims=True)).mean()),
+      action_transition=transition.tolist(),cohorts={k:cohort(v) for k,v in cohorts.items()})
+  report['replays'][arm+'_'+phase]=dict(sample_rows=8192,available_nonterminal_rows=int(len(valid)),sample_seed=11010,index_sha256=hashlib.sha256(idx.tobytes()).hexdigest(),candidate=detail)
+report['limits']=['Replay mask is next-state mask: exclusively ns/base_ns analyzed, never applied to s.', 'Samples are training/prefill next-state distributions, not independent evaluation states; rows correlated.', 'Proposals are before rules; no claim of emitted action changes or causal loss reason.', 'sap_hits is visible-target proximity proxy, not engine damage/hits.', 'Loss-only subsets are postselected descriptions, not fresh effects or independent evidence.']
+assert all(sha(p)==v for p,v in inputs.items())
+OUT.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+print('saved',OUT)
+for arm,r in report['results'].items():
+ print(arm,'lost',r['loss_keys'])
+ print('all', {k:round(v['paired_delta'],4) for k,v in r['all_games'].items()})
+for ds,v in report['replays'].items():
+ for arm,r in v['candidate'].items():
+  print(ds,arm,'change',round(r['cohorts']['all']['changed_frac'],4),'margin',round(r['cohorts']['all']['changed_margin_median'],4),'base/actions',r['cohorts']['all']['base_choices'],r['cohorts']['all']['new_choices'],'meanR',np.round(r['cohorts']['all']['mean_R_by_action'],3).tolist())

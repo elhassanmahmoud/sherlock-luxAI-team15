@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+- 10.11.2026: **Residual-Nachanalyse, keine neue Studie ausgeführt.** Vorhandene Auswahl-/Replaydaten offline untersucht; 32.768 gezogene Folgezustände, beide gespeicherten Korrekturen, keine neuen Spiele/Updates. Rohvorschläge ändern sich in 11,3–13,1 %; konkrete Verlustbeispiele zeigen Unterschied zwischen Gesamtpunkten und Matchsiegen. Engine-Energie-/Zufallsgleichstand verifiziert, keine kausale Energie-/SAP-Verlustdiagnose aus fehlenden Endtraces erfunden. [Befund und Belege](../experiments/analysis/residual_postmortem_20261110/ERGEBNIS.md). [Bedingter nächster Plan](superpowers/plans/2026-11-10-match-outcome-selector.md): kleine gepaarte Matchendprobe, erst bei Signal öffentliches Entscheidungslernen. Nur vorgeschlagen, null Ausführungen; V14/ZIP erhalten.
+
 - 10.11.2026: **Residualer V14-Pilot abgeschlossen, negativ.** Original36 eingefroren, additiveKorrektur R und gemeinsames DDQN-Ziel M+R. Acht exakte Null-R-Kontrollen, zwei40+80-Läufe/24.000Updates,200 feste Auswahlspiele: Solution35/40 und38/40 stattV14 40/40; direkt14/40 und10/40. Beide Starts verfehlen beide Auswahlhürden. Insgesamt448 Ausführungen; keine Bestätigung/Verlängerung/Übernahme. Root und unabhängiger tatsächlicher Audit stimmen überein, V14/ZIP unverändert. [Bericht](../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md).
 
 
