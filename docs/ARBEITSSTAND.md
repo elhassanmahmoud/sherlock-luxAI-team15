@@ -8,6 +8,18 @@ Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und
 
 
 
+## 10.11.2026 – Residualplan zur Umsetzung freigegeben
+
+- Moayed beauftragt die selbstständige Umsetzung des festgelegten Residualplans. Reserve mindestens 5 Prozent; ab 92 Prozent Abschlussraum, spätestens 95 Prozent stoppen. V14/ZIP nur nach belegtem Vorteil ersetzen.
+- Root arbeitet im vorhandenen isolierten Worktree auf `codex/residual-ensemble-20261110`. Keine laufenden alten Modelle; Remote und Primary auf346e013. Originale V14-Quellen separat für die Nullkorrektur-Reproduktion gesichert. Zunächst minimale Aktionsschnittstelle und separater Sammler/Lerner; noch keine neuen Spiele.
+
+## 10.11.2026 – Nur Planung: additiver Korrekturlerner für V14
+
+- Neuer Nutzerauftrag: zunächst einen begründeten Plan entwickeln, keine Trainings starten. Neue Kontingentreserve mindestens 5 Prozent statt 25 Prozent. Vorgeschlagener Abschlussraum: ab 92 Prozent Verbrauch keine neue Phase, spätestens 95 Prozent stoppen; keine Resets. Automation bleibt pausiert.
+- Quellen, abgeschlossene Ensemble-/Schüler-/Reward-/Gegnertrainings und die tatsächliche DDQN-/Aktionspipeline gelesen. Ein eng begrenzter unabhängiger Gegenreview: gemeinsames M+R-Lernziel bisher ungetestet, aber weder Verlustursache noch Stärkenutzen bewiesen. Nachgelagerte Regeln und mögliche reine Wertkalibrierung bleiben ausdrücklich Grenzen.
+- [Designvorschlag](superpowers/specs/2026-11-10-residual-ensemble-design.md) und [Umsetzungsplan](superpowers/plans/2026-11-10-residual-ensemble.md) lokal erstellt. Ursprüngliche 36 Netze einfrieren, explizit additive Nullkorrektur, kurze zwei Starts, feste 200er-Auswahl, nur bei Erfolg separate 600er-Bestätigung. Keine Standard-37er-Mittelung oder neue Rewards/Regeln. Acht Technikspiele + 240 Vorlauf-/Lernspiele + 200 Auswahl = höchstens 448 Ausführungen bis zur ersten Entscheidung; mit Erfolg/Bestätigung/Kursprüfung höchstens 1056.
+- Tatsächlich geprüft: Code-/Ergebnisbelege, Planung auf Summen-/Pfad-/Vertragskonsistenz, bestehende Gewichts-/ZIP-Hashes. Keine Implementierung, Modellloads, Tests oder Spiele in dieser Planungsrunde. Keine Checkbox als erledigt markieren. Nur Entwurf; Ausführung erst nach Nutzerfortsetzung. Aktueller veröffentlichter Agent bleibt V14.
+
 ## 09.11.2026 – EXPOSURE38 abgeschlossen, Arbeit mit Budgetreserve beendet
 
 - Genau200 feste Spiele: Solution EXPOSURE38/V14 je37/40, BEHAVIOR38 39/40; direkt22/40 gegenV14 und20/40 gegenBEHAVIOR38. Drei/vier Bedingungen verfehlt, kein nominierter Nachfolger. [Ergebnis](../experiments/analysis/frozen_v14_exposure_compare_20261109/ERGEBNIS.md). 22/40 [35;75%] belegt keine Überlegenheit.
