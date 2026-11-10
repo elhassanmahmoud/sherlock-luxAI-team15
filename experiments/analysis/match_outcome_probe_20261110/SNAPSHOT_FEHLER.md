@@ -25,6 +25,8 @@ Zwei rein synthetische Gegenbeispiele mit tatsächlichem Solution-Code, null Spi
 
 Diese Belege zeigen, dass das Kopieren die Gegnerpolicy verändern kann. Ohne gespeicherte interne Mengen am echten Schritt141 ist dies **nicht die abschließend bewiesene Einzelursache von Schritt175**. Die Methode ist dennoch nicht zuverlässig genug für die geplanten Labels. Alte HOLD-Snapshot-Ergebnisse sind vor einer erneuten Verwendung ebenfalls auf diese Grenze zu prüfen; frühere Studien werden nicht neu gestartet.
 
+Die Grenze betrifft zusätzliche Snapshot-Fortsetzungen. Reguläre vollständige Vergleichsspiele ohne solche Kopien und V14s abgegebene Policy sind davon nicht automatisch betroffen; es wird kein Fehler in ihren bestehenden Siegstatistiken behauptet.
+
 ## Reparaturentscheidung unter dem autonomen Auftrag
 
 Keine Änderung oder Sortierung in Solution, keine Manipulation des Gegners. Stattdessen jede Alternative mit frischen unveränderten Agenten vom ursprünglichen Seed neu abspielen; alle Frames vor dem Eingriff müssen exakt dem vollständigen Referenzverlauf entsprechen. Erst dann genau denselben öffentlichen Vorschlag ändern. Das baut den Gegnerzustand durch dieselbe tatsächliche Historie auf und vermeidet Objektkopien vollständig.

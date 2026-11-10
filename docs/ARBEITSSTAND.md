@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Prefix-Reparatur implementiert, vor tatsächlichem Erststart
+
+- Neuer getrennter Sammler rekonstruiert Originalverläufe, ohne Gegnerzustände zu kopieren. Öffentliche Auswahl, V14 und Solution unverändert. Abweichungsframe wird jetzt vor einem Fehler gespeichert; alle vollständigen/kurzen/fehlgeschlagenen Läufe und Engineaufrufe separat gezählt.
+- Rootreview und59 neue/betroffene synthetische Tests bestanden; auch zweiphasiger Controller vollständig mit Spielzeugzuständen geprüft, keine echten Spiele darin. [Prüfung](../experiments/analysis/match_outcome_probe_20261110/PREFIX_REVIEW.md). Nur zwei neue Pythondateien für Reparatur; alte fehlerhafte Rohdaten bleiben unverändert.
+- Nächste Aufnahme ausschließlich Prefix-Technik auf Fehlerkarte11011007/p0 und Kontrolle11011017/p0. Vor weiteren14Schlüsseln echte Datenabnahme. Noch keine Prefixergebnisse/kein Lernlauf. Mindestens5% Reserve, aktuell19%übrig. Alte Snapshotlabels bleiben ausgeschlossen.
+
 ## 10.11.2026 – Matchprobe technisch gestoppt, getrennte Reparatur vorbereitet
 
 - Snapshotvergleich nach19vollständigen und1unvollständigen Ausführungen gestoppt: auf11011007/p0 weicht der Baselinebranch bei175 vom tatsächlichen Verlauf ab. 10.203 Engine-Schritte insgesamt, keine Updates oder Leistungsfreigabe. Quellen/Gewichte nach Ende geprüft, alter Worker beendet. [Fehlerbelege/Abschluss](../experiments/analysis/match_outcome_probe_20261110/SNAPSHOT_FEHLER.md).
