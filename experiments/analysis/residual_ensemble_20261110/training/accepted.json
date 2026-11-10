@@ -1,0 +1,33 @@
+{
+  "completion_sha256": "cae92caf236660105cb78b7efb83ce89dd1a31030e46f3a844d5fad20aca790e",
+  "accepted_at": 1794308216.96879,
+  "proofs": {
+    "R61": {
+      "games": 120,
+      "learning_games": 80,
+      "updates": 12000,
+      "replay_writes": 422298,
+      "replay_size": 300000,
+      "baseline_hash": "350c2706ad324a4f34f710d66c10413e1b21c8b37775a7b1256a78cff9a00784",
+      "final_sha256": "4302e796442caa88a5d4fc7a30b2cde603a070c830ad558f8edd3d0261febb16",
+      "residual_hash": "8d0bd37d8f7ef91a9a06c465fb37a3eef2c7967450142342da798d0d1f1199c3",
+      "replay_residual_abs_common_mean": 1.5299265384674072,
+      "replay_residual_abs_advantage_mean": 0.17136140167713165,
+      "checks": "Root full ring signatures, fixed game keys/updates, Adam steps, final target, finite losses/tensors, actual candidate reload/additive inference/cache probe, frozen baseline identity"
+    },
+    "R62": {
+      "games": 120,
+      "learning_games": 80,
+      "updates": 12000,
+      "replay_writes": 424175,
+      "replay_size": 300000,
+      "baseline_hash": "350c2706ad324a4f34f710d66c10413e1b21c8b37775a7b1256a78cff9a00784",
+      "final_sha256": "5aef68e3179db607d539ca37b461c4f6cf0317ec72742b87fecee34bd58579cd",
+      "residual_hash": "64aaced9176db1a58fe624a809a6b42f3b1397f52e898d13f221d305d99e7c4b",
+      "replay_residual_abs_common_mean": 1.5888512134552002,
+      "replay_residual_abs_advantage_mean": 0.17939554154872894,
+      "checks": "Root full ring signatures, fixed game keys/updates, Adam steps, final target, finite losses/tensors, actual candidate reload/additive inference/cache probe, frozen baseline identity"
+    }
+  },
+  "freeze_released": true
+}

@@ -1,0 +1,55 @@
+from pathlib import Path
+import copy,json,time
+import numpy as np
+import torch
+from scripts.residual_ensemble_run import OUT, BASE, file_sha, read_json, read_rows, protected
+from scripts.residual_ensemble_train import ResidualReplay, CACHE_ID
+from scripts.threat_warmstart import state_sha256
+from agents.sherlock.geometry import MIRROR_DIR
+from agents.sherlock.residual import V14_SHA
+
+torch.set_num_threads(1)
+base=torch.load(BASE,map_location='cpu',weights_only=True)
+nets=[base['q']]+base['ensemble'];assert len(nets)==36
+expected={k:v.clone() for k,v in nets[18].items()}
+for k in ['value.2.weight','value.2.bias','adv.2.weight','adv.2.bias']: expected[k].zero_()
+baseline_hash=state_sha256({f'{i}.{k}':v for i,n in enumerate(nets) for k,v in n.items()})
+proofs={}
+for arm in ('R61','R62'):
+ out=OUT/'training'/arm
+ p=read_json(out/'prefill_proof.json')
+ cp=torch.load(out/'prefill.pth',map_location='cpu',weights_only=True)
+ rows=read_rows(out/'games.jsonl')
+ assert len(rows)==40 and rows[-1]['updates']==0
+ assert cp['base_sha256']==V14_SHA and cp['updates']==0 and cp['eligible_steps']==12000
+ assert not cp['optimizer']['state']
+ assert set(cp['residual'])==set(expected)==set(cp['target'])
+ assert all(torch.equal(cp['residual'][k],v) and torch.equal(cp['target'][k],v) for k,v in expected.items())
+ assert p['baseline_hash']==baseline_hash and p['residual_hash']==state_sha256(expected)
+ assert all(file_sha(path)==sha for path,sha in p['files'].items())
+ b=ResidualReplay.load(out/'prefill_replay.npz',CACHE_ID)
+ assert b.writes==rows[-1]['rows']==len(b) and np.array_equal(b.generation[:b.size],np.arange(1,b.size+1))
+ assert b.mask[:b.size].any(1).all()
+ assert all(np.isfinite(getattr(b,k)[:b.size]).all() for k in ('s','ns','r','done','base_s','base_ns'))
+ prev=0
+ for i,r in enumerate(rows):
+  assert r['seed']==11010000+i//2 and r['side']==f'player_{i%2}'
+  assert r['opponent']==('solution92' if (i//2)%5<3 else 'self')
+  assert r['steps']==303 and r['point_counting_version']==2 and r['caught_errors']==0
+  stop=r['rows'];expected_actions=b.world[prev:stop,0].astype(int).copy()
+  if i%2: expected_actions[expected_actions<5]=MIRROR_DIR[expected_actions[expected_actions<5]]
+  assert np.array_equal(b.a[prev:stop],expected_actions)
+  prev=stop
+ done=b.done[:b.size].astype(bool)
+ assert np.all(b.ns[:b.size][done]==0) and np.all(b.mask[:b.size][done,0]) and not b.mask[:b.size][done,1:].any()
+ proof=dict(proof_sha256=file_sha(out/'prefill_proof.json'),accepted_at=time.time(),
+            row_count=b.writes,terminal_rows=int(done.sum()),baseline_hash=baseline_hash,
+            initial_residual_hash=state_sha256(expected),checks='Root full ring signatures/generations, finite values, terminal next states, all emitted action labels by role, 40 fixed keys, exact original warmstart/zero heads/target/empty Adam, 0 updates')
+ proofs[arm]=proof
+ del b,cp
+assert proofs['R61']['initial_residual_hash']==proofs['R62']['initial_residual_hash']
+protected()
+for arm,proof in proofs.items():
+ path=OUT/'training'/arm/'prefill_accepted.json'
+ with path.open('x') as f: json.dump(proof,f,indent=2);f.write('\n')
+print(json.dumps(proofs,indent=2))

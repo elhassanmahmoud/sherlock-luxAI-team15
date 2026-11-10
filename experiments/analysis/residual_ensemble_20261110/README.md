@@ -2,7 +2,8 @@
 
 Freigegebene [Spec](../../../docs/superpowers/specs/2026-11-10-residual-ensemble-design.md)
 und [Plan](../../../docs/superpowers/plans/2026-11-10-residual-ensemble.md).
-Stand: technische Umsetzung, noch keine Spiele oder Stärkeaussage.
+Stand: acht Technikspiele und beide Trainingsläufe abgeschlossen;
+[Trainingsbericht](TRAININGSERGEBNIS.md). Noch keine Stärkeaussage.
 
 ## Methode
 

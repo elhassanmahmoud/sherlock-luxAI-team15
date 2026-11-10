@@ -1,0 +1,52 @@
+from pathlib import Path
+import json,time
+import numpy as np
+import torch
+from scripts.residual_ensemble_run import OUT, BASE, read_json, read_rows, file_sha, protected, ROOT, PLANS
+from scripts.residual_ensemble_train import ResidualReplay,CACHE_ID
+from scripts.early_curriculum_study import hashes,source_identity
+from agents.sherlock.residual import ResidualActor
+from scripts.threat_warmstart import state_sha256
+
+torch.set_num_threads(1)
+b=OUT/'training';c=read_json(b/'completion.json');state=read_json(b/'state.json')
+assert state['status']=='complete' and not state['active'] and all(j['returncode']==0 for j in state['jobs'].values())
+assert hashes(c['outputs'])==c['outputs'] and hashes(c['inputs'])==c['inputs'] and protected()==c['protected']
+assert source_identity(ROOT,state['python'],PLANS)==c['source']
+proofs={}
+for name in ['R61','R62']:
+ p=b/name;rows=read_rows(p/'games.jsonl');assert len(rows)==120
+ for i,r in enumerate(rows):
+  assert r['seed']==11010000+i//2 and r['side']==f'player_{i%2}'
+  assert r['opponent']==('solution92' if (i//2)%5<3 else 'self')
+  assert r['steps']==303 and r['caught_errors']==0 and r['point_counting_version']==2
+  assert r['updates']==max(0,i-39)*150
+ cp=torch.load(p/'final.pth',map_location='cpu',weights_only=True)
+ initial=torch.load(p/'prefill.pth',map_location='cpu',weights_only=True)
+ assert cp['updates']==12000 and cp['eligible_steps']==36000
+ assert all(torch.equal(cp['residual'][k],cp['target'][k]) and torch.isfinite(v).all() for k,v in cp['residual'].items())
+ assert any(not torch.equal(v,initial['residual'][k]) for k,v in cp['residual'].items())
+ assert len(cp['optimizer']['state'])==len(cp['residual'])
+ assert all(int(s['step'])==12000 and torch.isfinite(s['exp_avg']).all() and torch.isfinite(s['exp_avg_sq']).all() for s in cp['optimizer']['state'].values())
+ replay=ResidualReplay.load(p/'final_replay.npz',CACHE_ID)
+ assert replay.writes==rows[-1]['rows'] and replay.size==300000
+ batch=replay.sample(1024,np.random.default_rng(9))
+ actor=ResidualActor('player_0',BASE,p/'final.pth')
+ assert all(torch.equal(v,cp['residual'][k]) for k,v in actor.policy.residual.state_dict().items())
+ assert state_sha256(actor.policy.bases.state_dict())==read_json(p/'proof.json')['baseline_hash']
+ with torch.no_grad():
+  x=torch.from_numpy(batch['s']);M=actor.policy.baseline(x);R=actor.policy.residual(x)
+  assert torch.equal(actor.policy.values(x),M+R)
+  assert np.allclose(M.numpy(),batch['base_s'],rtol=1e-5,atol=2e-5)
+  value=float(R.mean(1).abs().mean());adv=float((R-R.mean(1,keepdim=True)).abs().mean())
+ losses=np.load(p/'losses.npy');assert losses.shape==(12000,4) and np.isfinite(losses).all()
+ proof=dict(games=120,learning_games=80,updates=12000,replay_writes=replay.writes,
+            replay_size=replay.size,baseline_hash=read_json(p/'proof.json')['baseline_hash'],
+            final_sha256=file_sha(p/'final.pth'),residual_hash=state_sha256(cp['residual']),
+            replay_residual_abs_common_mean=value,replay_residual_abs_advantage_mean=adv,
+            checks='Root full ring signatures, fixed game keys/updates, Adam steps, final target, finite losses/tensors, actual candidate reload/additive inference/cache probe, frozen baseline identity')
+ proofs[name]=proof
+ del actor,replay,cp,initial
+out=dict(completion_sha256=file_sha(b/'completion.json'),accepted_at=time.time(),proofs=proofs,freeze_released=True)
+with (b/'accepted.json').open('x') as f:json.dump(out,f,indent=2);f.write('\n')
+print(json.dumps(out,indent=2))

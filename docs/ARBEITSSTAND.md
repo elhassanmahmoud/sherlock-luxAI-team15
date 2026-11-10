@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Beide Residual-Lernläufe vollständig geprüft
+
+- Nach acht Technikspielen zwei feste40+80-Läufe beendet:240 Spiele,160 Lernspiele,24.000 Updates. Vorläufe vor Lernen wirklich abgenommen. Endmodelle/Ringreplays/Adam/Target/Wiederladen additiver Inferenz geprüft; Original36/V14/ZIP unverändert. [Ergebnis](../experiments/analysis/residual_ensemble_20261110/TRAININGSERGEBNIS.md), [Root-Abnahme](../experiments/analysis/residual_ensemble_20261110/training/accepted.json).
+- Alle eigenen Modellworker beendet; Quellen-/Eingabebindung unterbd24e01 verifiziert, erst danach Freeze freigegeben. Noch kein Leistungsbefund. Als Nächstes separate200er-Auswahl mit beiden unveränderten Endständen; nur bei beiden bestandenen Gates eine600er-Bestätigung. Mindestens5%Reserve, derzeit26%übrig. Fremde Primary-Dateien bleiben erhalten.
+
+
 ## 10.11.2026 – Residual-Nullkorrektur tatsächlich abgenommen
 
 - Genau acht bekannte Ausführungen abgeschlossen, vier Stock-/Null-R-Paare gegen Solution und V14. Finale Aktions- und öffentliche Verlaufshashes, Ergebnisse und Punkte exakt gleich; originale36 Tensoren/Reihenfolge gleich. Keine Lernupdates, Cacheprobe maximal1,15e-5 absolute Rundungsdifferenz innerhalb vorab gesetzter Toleranz. Rund37Sekunden technische Gesamtlaufzeit, Prozessspitze895MB; keine Langlaufzusage daraus. [Root-Abnahme](../experiments/analysis/residual_ensemble_20261110/technical/accepted.json).
