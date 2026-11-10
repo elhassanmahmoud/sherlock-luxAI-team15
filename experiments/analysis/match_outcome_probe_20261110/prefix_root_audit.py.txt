@@ -1,0 +1,85 @@
+from pathlib import Path
+import json,gzip,hashlib,sys
+from scripts.holder_rollout import exact_digest
+from scripts.early_curriculum_study import source_identity,hashes
+from scripts.match_outcome_replay import ROOT,PLANS,KEYS,LIMITS
+
+checks=0
+def check(c,why):
+ global checks
+ checks+=1
+ if not c:raise AssertionError(why)
+def rows(path):
+ with gzip.open(path,'rt') as f:return [json.loads(x) for x in f]
+manifests=list(map(Path,sys.argv[1:]));games=[];runs=[];pairs=[];counts={k:0 for k in LIMITS};original_refs=0
+for manifest in manifests:
+ s=json.loads(manifest.read_text());check(s['status']=='complete','phase complete')
+ check(source_identity(ROOT,sys.executable,PLANS)==s['source'],'source unchanged')
+ check(hashes(s['inputs'])==s['inputs'] and hashes(s['protected'])==s['protected'],'inputs unchanged')
+ check(hashes(s['artifacts'])==s['artifacts'],'artifacts unchanged')
+ cache={}
+ for run in s['runs']:
+  check(run['status']=='complete','run complete');r=rows(run['frame_path']);cache[run['frame_path']]=r
+  check(len(r)==run['steps']==run['attempted_steps']==run['archived_frames']==run['planned_steps'],'physical run counts')
+  check([f['step'] for f in r]==list(range(len(r))),'step sequence')
+  check([f['step'] for f in r if f['terminal'] is not None]==list(range(100,len(r),101)),'match ends')
+  for f in r:
+   check(exact_digest({k:v for k,v in f.items() if k!='sha256'})==f['sha256'],'frame hash')
+   if f['terminal'] is not None:
+    t=f['terminal'];v=t['points'];e=t['energies']
+    reason='points' if v[0]!=v[1] else 'energy' if e[0]!=e[1] else 'random'
+    check(t['reason']==reason,'terminal reason')
+    if reason!='random':
+     compare=v if reason=='points' else e
+     check(t['winner']==int(compare[1]>compare[0]),'terminal winner')
+  for a,b in zip(r,r[1:]):check(a['after_state']==b['before_state'] and a['after_obs']==b['before_obs'],'state continuity')
+ runs.extend(s['runs']);games.extend(s['games'])
+ for k,v in s['counters'].items():counts[k]+=v
+ for game in s['games']:
+  key=game['key'];check(all(game['passivity'].values()),'passivity')
+  ref=cache[next(iter(game['reference']['artifacts']))];base=cache[next(iter(game['collector']['artifacts']))]
+  check(ref==base and len(base)==303,'actual full baseline parity')
+  for old_phase in ['technical','remaining']:
+   old=manifest.parent.parent/old_phase/f"{key['seed']}_{key['side']}_reference.frames.jsonl.gz"
+   if old.is_file():check(ref==rows(old),'original frozen reference unchanged');original_refs+=1;break
+  raw=rows(next(p for p in game['pair_artifacts'] if '.pairs.' in p))
+  check(len(raw)==len(game['collector']['pairs'])==len(game['collector']['candidates']),'all public opportunities')
+  for p,brief,candidate in zip(raw,game['collector']['pairs'],game['collector']['candidates']):
+   c=p['candidate'];check(c==candidate==brief['candidate'],'candidate binding')
+   check(p['live_verified'] and p['prefix_verified'],'verified labels')
+   start=c['step'];end=(c['match']+1)*101
+   alt=cache[next(iter(p['alternative_run']))]
+   check(alt[:start]==base[:start] and len(alt)==end,'whole original prefix')
+   check(p['baseline']['frames']==base[start:end] and p['alternative']['frames']==alt[start:end],'actual branch slices')
+   for role in ['baseline','alternative']:
+    b=p[role];fs=b['frames'];check(b['sha256']==exact_digest(fs),'branch hash')
+    check(len(fs)==101-c['match_step'] and b['h12_points']==fs[11]['point_state'],'branch boundaries/H12')
+    check(b['outcome']==fs[-1]['terminal'],'outcome binding')
+   t=int(p['side'][-1]);o=1-t;b=p['baseline'];a=p['alternative']
+   check(p['effective']==(b['frames'][0]['actions']!=a['frames'][0]['actions']),'effective')
+   if not p['effective']:check(a==b,'unchanged first action implies same rest')
+   dw=int(a['outcome']['winner']==t)-int(b['outcome']['winner']==t)
+   dp=a['outcome']['points'][t]-a['outcome']['points'][o]-b['outcome']['points'][t]+b['outcome']['points'][o]
+   dh=a['h12_points'][t]-a['h12_points'][o]-b['h12_points'][t]+b['h12_points'][o]
+   check(p['delta_win']==dw==brief['delta_win'] and p['delta_points']==dp==brief['delta_points'] and p['delta_h12']==dh==brief['delta_h12'],'all labels')
+   legal=[i for i,m in enumerate(c['mask']) if m];rank=sorted(legal,key=lambda i:(-c['q'][i],i))
+   check(rank[:2]==[c['proposal'],c['alternative']],'legal runner-up')
+   if p['reverse_repeat'] is not None:
+    check(alt==cache[next(iter(p['repeat_run']))],'whole repeated prefix/alternative')
+   pairs.append(p)
+check([(g['key']['seed'],g['key']['side']) for g in games]==list(KEYS[:len(games)]),'fixed key order')
+check(len(pairs)==counts['completed_pairs'] and len(runs)==counts['completed_runs']==counts['started_runs'],'run/pair counts')
+check(sum(r['steps'] for r in runs)==counts['total_steps'],'all actual steps')
+check(all(counts[k]<=v for k,v in LIMITS.items()),'bounds')
+effective=[p for p in pairs if p['effective']];pos=[p for p in pairs if p['delta_win']>0]
+summary={'cases':len(pairs),'effective_pairs':len(effective),'effective_maps':len({p['seed'] for p in effective}),
+         'positive_flips':len(pos),'positive_maps':len({p['seed'] for p in pos}),
+         'negative_flips':sum(p['delta_win']<0 for p in pairs),'zero_flips':sum(p['delta_win']==0 for p in pairs),
+         'delta_points_sum':sum(p['delta_points'] for p in pairs),'h12_end_sign_reversals':sum(p['delta_points']*p['delta_h12']<0 for p in pairs)}
+summary.update(influence_gate=summary['effective_pairs']>=24 and summary['effective_maps']>=6,
+               label_gate=summary['positive_flips']>=3 and summary['positive_maps']>=3)
+summary['passed']=summary['influence_gate'] and summary['label_gate']
+check(summary==s['summary'],'independent summary')
+print(json.dumps({'status':'passed','checks':checks,'manifests':hashes(manifests),'counts':counts,'summary':summary,
+ 'physical_full_games':sum(r['steps']==303 for r in runs),'short_completed_runs':sum(r['steps']<303 for r in runs),
+ 'original_reference_games_identical':original_refs,'new_training_updates':0},indent=2))

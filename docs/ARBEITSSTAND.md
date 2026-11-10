@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Matchausgang-Pilot vollständig geprüft und geschlossen: V14 bleibt
+
+- Reparierter Originalpräfixvergleich abgeschlossen: 48 Paare, 43 wirksame Eingriffe auf acht bekannten Karten; **1 positiver / 1 negativer / 46 unveränderte Matchausgänge**. Einflussbedingung bestanden, Lernzielbedingung verfehlt (gefordert drei positive auf drei Karten). Keine Phase B, neuen Gradienten, Verlängerung oder Übernahme. [Ergebnis mit konkreten Fällen und Grenzen](../experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md).
+- Tatsächlich 88 abgeschlossene Ausführungen: 48 vollständige Partien und 40 kurze Präfixläufe, 20.200 Engine-Schritte. Alter technisch ungültiger Snapshotversuch separat: 19 vollständige +1 teilweise Ausführung, 10.203 Schritte; seine Labels bleiben ausgeschlossen. Beide Versuche zusammen 30.403 Schritte, null Updates.
+- 59 gezielte Tests vor Modellstart; Root-Nachrechnung 41.772 und unabhängiger Datencheck 268.489 Prüfungen bestanden. Alle Originalverläufe, Präfixe, acht Wiederholungen, Endlabels und Zähler stimmen überein; zehn historische vollständige Originalreferenzen exakt reproduziert. Auditgrenzen im Bericht, keine allgemeine 100-%- oder Stärkeaussage.
+- Quelle53ee70c, Eingaben und Schutzdateien bis tatsächlicher [Abschlussabnahme](../experiments/analysis/match_outcome_probe_20261110/prefix_remaining/accepted.json) unverändert. Eigene Worker und Wachhalter beendet, erst danach Freeze gelöst. V14/ZIP bleiben bytegleich, fremde Dateien erhalten. Kontingentprüfung18% Rest, Mindestreserve5% eingehalten; Remote-Automation weiterhin pausiert.
+- Der freigegebene Plan ist an seiner festen Stoppen-Entscheidung beendet. Keine nächste Studie oder neue Auswahlregel begonnen. Für eine spätere Fortsetzung zuerst eine getrennt begründete kritische Entscheidungssituation bestimmen; dieser seltene Rang-2-Eingriff liefert keine ausreichende Lernbasis. Beim abschließenden Remote-Abgleich keine neuen fremden Commits.
+
 ## 10.11.2026 – Prefix-Reparatur implementiert, vor tatsächlichem Erststart
 
 - Neuer getrennter Sammler rekonstruiert Originalverläufe, ohne Gegnerzustände zu kopieren. Öffentliche Auswahl, V14 und Solution unverändert. Abweichungsframe wird jetzt vor einem Fehler gespeichert; alle vollständigen/kurzen/fehlgeschlagenen Läufe und Engineaufrufe separat gezählt.

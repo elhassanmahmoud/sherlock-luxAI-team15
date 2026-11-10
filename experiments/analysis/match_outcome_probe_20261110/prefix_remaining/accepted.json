@@ -1,0 +1,55 @@
+{
+  "status": "accepted_negative_closed",
+  "timestamp_utc": "2026-11-10T19:23:40.500674+00:00",
+  "source_head": "53ee70c0c46a0fab0f9a6b9554b26c639883e507",
+  "summary": {
+    "cases": 48,
+    "effective_pairs": 43,
+    "effective_maps": 8,
+    "positive_flips": 1,
+    "positive_maps": 1,
+    "negative_flips": 1,
+    "zero_flips": 46,
+    "delta_points_sum": 144,
+    "h12_end_sign_reversals": 3,
+    "influence_gate": true,
+    "label_gate": false,
+    "passed": false
+  },
+  "execution_totals": {
+    "entered_runs": 88,
+    "completed_runs": 88,
+    "failed_runs": 0,
+    "entered_planned_full_length_runs": 48,
+    "returned_full_length_runs": 48,
+    "observed_episode_ends": 48,
+    "completed_short_runs": 40,
+    "incomplete_runs": 0,
+    "attempted_engine_steps": 20200,
+    "returned_engine_steps": 20200,
+    "archived_frames": 20200
+  },
+  "training_updates": 0,
+  "phase_b_started": false,
+  "decision": "Gate C failed. No learned head, no extension, no V14 or ZIP replacement.",
+  "own_worker_and_wake_pids_confirmed_ended": [
+    12504,
+    13078
+  ],
+  "audits": {
+    "experiments/analysis/match_outcome_probe_20261110/prefix_remaining/root_audit.json": "06b0fe23c6f918c64c351ce91ed5d8dea7a6f60876d6e28e76a1b72c5f29fecd",
+    "experiments/analysis/match_outcome_probe_20261110/prefix_remaining/independent_audit.json": "2065ad77a2475ac4b6698fa6be79b5306bb90a1eb6bcfbef991eed52d6b76ae0",
+    "experiments/analysis/match_outcome_probe_20261110/prefix_technical/independent_audit.json": "1e4cbedf962a0a26475a97f17a06b34d5dbe2e8f6f65884a2a8f412918e0c003",
+    "experiments/analysis/match_outcome_probe_20261110/prefix_independent_audit.py.txt": "5df90f26a24c4ee9af0a0dc1f07296d6e2574e9179f8ce476c5541c8b13bfed6"
+  },
+  "manifests": {
+    "experiments/analysis/match_outcome_probe_20261110/prefix_remaining/manifest.json": "52dd3960511ff9502188f6a91d566352ea547dcfe5d2a0ffb585034c76321e72",
+    "experiments/analysis/match_outcome_probe_20261110/prefix_technical/manifest.json": "176487c1e6c1d4129806a96f247fd9d3f53828edff9f878ee8700eee3d3630b9"
+  },
+  "protected": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "notes": "Source/input/artifact hashes rechecked before releasing source freeze; previous failed snapshot data excluded."
+}

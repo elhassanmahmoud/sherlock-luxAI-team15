@@ -1,5 +1,7 @@
 # Matchausgang statt weiterer Q-Korrektur – nächster Umsetzungsplan
 
+**Abschluss 10.11.:** Aufgaben 1–3 einschließlich der datiert festgelegten technischen Reparatur sind umgesetzt und geprüft. Neuer Präfixvergleich: 48 Paare, 43 wirksam auf acht Karten, +1/−1/46 Null. Gates A/B bestanden, Gate C verfehlt. Damit ist die feste Stoppen-Entscheidung erreicht; Aufgabe 4 wird nicht ausgeführt, kein neuer Kopf oder V14-Ersatz. 48 ganze Partien +40 kurze Läufe/20.200 Schritte, alter ungültiger Versuch separat. [Ergebnis und tatsächliche Abnahme](../../../experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md). Die folgenden ursprünglichen Checklisten und Phasenangaben bleiben als Planhistorie erhalten; sie sind kein offener Startauftrag.
+
 **Umsetzungsfreigabe 10.11.:** Nutzer hat den Plan einschließlich bedingter Fortsetzung freigegeben. Die ursprünglichen Hinweise „nur Planung“ dokumentieren die damalige Phase, nicht einen noch offenen Erlaubnisbedarf. Gates und 5-%-Reserve bleiben verbindlich.
 
 **Reparatur nach technischem Abbruch:** Der Snapshotversuch ist mit19vollständigen/1teilweisen Ausführungen geschlossen. Maßgeblich ist jetzt die datierte technische Reparaturfestlegung oben in der Spec: keine Sets kopieren, sondern echte Historie neu abspielen. Einmalig32vollständige Referenz-/Sammelläufe, maximal48Alternativpräfixe und8Wiederholungspräfixe, insgesamt höchstens21.816neue Engine-Schritte. Karten/Gates unverändert; zuerst Fehlerkarte11011007/p0 und Kontrolle11011017/p0. Alte29Snapshotpaare nicht zum Lernen verwenden.

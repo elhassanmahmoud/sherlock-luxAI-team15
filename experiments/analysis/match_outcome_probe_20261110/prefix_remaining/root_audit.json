@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "checks": 41772,
+  "manifests": {
+    "experiments/analysis/match_outcome_probe_20261110/prefix_remaining/manifest.json": "52dd3960511ff9502188f6a91d566352ea547dcfe5d2a0ffb585034c76321e72",
+    "experiments/analysis/match_outcome_probe_20261110/prefix_technical/manifest.json": "176487c1e6c1d4129806a96f247fd9d3f53828edff9f878ee8700eee3d3630b9"
+  },
+  "counts": {
+    "reference_steps": 4848,
+    "instrumented_steps": 4848,
+    "diagnostic_steps": 9696,
+    "technical_extra_steps": 808,
+    "total_steps": 20200,
+    "started_games": 32,
+    "completed_games": 32,
+    "started_alternatives": 48,
+    "completed_alternatives": 48,
+    "started_repeats": 8,
+    "completed_repeats": 8,
+    "started_runs": 88,
+    "completed_runs": 88,
+    "completed_pairs": 48
+  },
+  "summary": {
+    "cases": 48,
+    "effective_pairs": 43,
+    "effective_maps": 8,
+    "positive_flips": 1,
+    "positive_maps": 1,
+    "negative_flips": 1,
+    "zero_flips": 46,
+    "delta_points_sum": 144,
+    "h12_end_sign_reversals": 3,
+    "influence_gate": true,
+    "label_gate": false,
+    "passed": false
+  },
+  "physical_full_games": 48,
+  "short_completed_runs": 40,
+  "original_reference_games_identical": 10,
+  "new_training_updates": 0
+}

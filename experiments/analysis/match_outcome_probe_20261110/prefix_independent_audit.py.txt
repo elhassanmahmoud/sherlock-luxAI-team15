@@ -1,0 +1,297 @@
+"""Independent read-only stdlib audit. No repository imports, models, tests, or games.
+
+Default audits ONLY completed prefix_technical. --combined is an explicit operator
+opt-in for completed prefix_remaining; incomplete manifests are rejected before
+artifact reads. Outputs go outside the repository.
+"""
+import argparse
+import collections
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import struct
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE = ROOT/'experiments/analysis/match_outcome_probe_20261110'
+MAPS = (11011000,11011001,11011002,11011004,11011007,11011011,11011013,11011017)
+FIRST = ((11011007,'player_0'),(11011017,'player_0'))
+KEYS = FIRST + tuple((s,p) for s in MAPS for p in ('player_0','player_1') if (s,p) not in FIRST)
+LIMITS = dict(reference_steps=4848,instrumented_steps=4848,diagnostic_steps=9696,
+ technical_extra_steps=2424,total_steps=21816,started_games=32,completed_games=32,
+ started_alternatives=48,completed_alternatives=48,started_repeats=8,completed_repeats=8,
+ started_runs=88,completed_runs=88,completed_pairs=48)
+ROLE = {'reference':('games','reference_steps'),'collector':('games','instrumented_steps'),
+ 'alternative':('alternatives','diagnostic_steps'),'repeat':('repeats','technical_extra_steps')}
+checks=0
+category_checks=collections.Counter()
+
+def check(test,message,category='integrity'):
+ global checks
+ checks+=1;category_checks[category]+=1
+ if not test: raise AssertionError(message)
+
+def sha(path):
+ h=hashlib.sha256()
+ with open(path,'rb') as f:
+  for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)
+ return h.hexdigest()
+
+def exact(value):
+ h=hashlib.sha256()
+ def emit(b):h.update(struct.pack('!Q',len(b)));h.update(b)
+ def visit(o):
+  if isinstance(o,dict):
+   emit(b'dict')
+   for k in sorted(o,key=lambda k:(type(k).__name__,str(k))):visit(k);visit(o[k])
+  elif isinstance(o,(list,tuple)):
+   emit(type(o).__name__.encode());emit(str(len(o)).encode())
+   for x in o:visit(x)
+  elif o is None or type(o) in (str,bool,int,float):
+   emit(type(o).__name__.encode());emit(repr(o).encode())
+  else:raise TypeError(type(o))
+ visit(value);return h.hexdigest()
+
+def action_sha(actions):
+ check(set(actions)=={'player_0','player_1'},'Exactly two teams','actions')
+ data=bytearray()
+ for side in sorted(actions):
+  a=actions[side]
+  check(len(a)==16 and all(len(row)==3 and all(type(x) is int for x in row) for row in a),'Integer 16x3 actions','actions')
+  check(all(0<=row[0]<=5 for row in a),'Action IDs in engine range','actions')
+  header=json.dumps(dict(side=side,shape=[16,3],dtype='<i8'),sort_keys=True).encode()
+  raw=struct.pack('<48q',*(x for row in a for x in row))
+  data.extend(struct.pack('!Q',len(header)));data.extend(header)
+  data.extend(struct.pack('!Q',len(raw)));data.extend(raw)
+ return hashlib.sha256(data).hexdigest()
+
+def read_rows(path):
+ with gzip.open(path,'rt') as f:return [json.loads(line) for line in f]
+
+def inspect_frames(frames):
+ check(len(frames) in (101,202,303),'A complete current-match prefix length')
+ check([f['step'] for f in frames]==list(range(len(frames))),'Original-prefix global clock')
+ points=[0,0];wins=[0,0];terminals=[]
+ for i,f in enumerate(frames):
+  check(exact({k:v for k,v in f.items() if k!='sha256'})==f['sha256'],'Frame typed hash','hashes')
+  check(action_sha(f['actions'])==f['action_sha256'],'Action raw-byte hash','hashes')
+  check(all(type(x) is int and x>=0 for x in f['points']) and len(f['points'])==2,'Nonnegative point increments','labels')
+  points=[points[t]+f['points'][t] for t in (0,1)]
+  check(points==f['point_state'],'Point balance including every final action','labels')
+  if i:
+   check(f['before_state']==frames[i-1]['after_state'],'State continuity','frames')
+   check(f['before_obs']==frames[i-1]['after_obs'],'Observation continuity','frames')
+  term=f['terminal']
+  check(bool(term)==(i%101==100),'Match endpoint clock','labels')
+  check(f['done']==(i==302),'Episode endpoint clock','labels')
+  if term:
+   check(term['points']==points,'Terminal points','labels')
+   check(len(term['wins'])==2 and all(type(x) is int for x in term['wins']),'Integer terminal wins','labels')
+   delta=[term['wins'][t]-wins[t] for t in (0,1)]
+   check(delta in ([1,0],[0,1]),'Exactly one winner from wins increment','labels')
+   winner=delta.index(1)
+   check(term['winner']==winner,'Recorded winner matches actual wins increment','labels')
+   energy=term['energies']
+   check(len(energy)==2 and all(type(x) is int and math.isfinite(x) for x in energy),'Recorded terminal energy shape','labels')
+   reason='points' if points[0]!=points[1] else 'energy' if energy[0]!=energy[1] else 'random'
+   check(term['reason']==reason,'Point, energy, random priority','labels')
+   if reason!='random':
+    decisive=points if reason=='points' else energy
+    check(winner==int(decisive[1]>decisive[0]),'Winner agrees with decisive total','labels')
+   terminals.append(term);wins=term['wins'][:];points=[0,0]
+ return terminals
+
+def execution(runs):
+ return dict(entered_runs=len(runs),completed_runs=sum(r['status']=='complete' for r in runs),
+  failed_runs=sum(r['status']=='failed' for r in runs),
+  entered_planned_full_length_runs=sum(r['planned_steps']==303 for r in runs),
+  returned_full_length_runs=sum(r['steps']==303 for r in runs),
+  observed_episode_ends=sum(bool(r['ended_episode']) for r in runs),
+  completed_short_runs=sum(r['status']=='complete' and r['steps']<303 for r in runs),
+  incomplete_runs=sum(r['status']!='complete' for r in runs),
+  attempted_engine_steps=sum(r['attempted_steps'] for r in runs),
+  returned_engine_steps=sum(r['steps'] for r in runs),archived_frames=sum(r['archived_frames'] for r in runs))
+
+def summary(rows):
+ eff=[r for r in rows if r['effective']];pos=[r for r in rows if r['delta_win']>0]
+ b=len(eff)>=24 and len({r['seed'] for r in eff})>=6
+ c=len(pos)>=3 and len({r['seed'] for r in pos})>=3
+ return dict(cases=len(rows),effective_pairs=len(eff),effective_maps=len({r['seed'] for r in eff}),
+  positive_flips=len(pos),positive_maps=len({r['seed'] for r in pos}),
+  negative_flips=sum(r['delta_win']<0 for r in rows),zero_flips=sum(r['delta_win']==0 for r in rows),
+  delta_points_sum=sum(r['delta_points'] for r in rows),
+  h12_end_sign_reversals=sum(r['delta_h12']*r['delta_points']<0 for r in rows),
+  influence_gate=b,label_gate=c,passed=b and c)
+
+def audit(combined=False):
+ paths=[BASE/'prefix_technical/manifest.json']
+ if combined:paths.append(BASE/'prefix_remaining/manifest.json')
+ manifest_hashes={str(p):sha(p) for p in paths}
+ states=[json.loads(p.read_text()) for p in paths]
+ # Reject partial input before reading any artifacts.
+ check(all(s['status']=='complete' for s in states),'Only completed manifest inputs')
+ check([s['phase'] for s in states]==(['technical','remaining'] if combined else ['technical']),'Expected phase sequence')
+ rows=[];all_runs=[];all_counts={k:0 for k in LIMITS};verified_maps=set();source=states[0]['source']
+ all_artifacts={};source_hashes={};manifests=[];reasons=collections.Counter()
+ for phase_index,(path,state) in enumerate(zip(paths,states)):
+  check(state['schema_version']==2 and state['method']=='fresh_prefix_v1','Repaired schema identity')
+  expected_keys=KEYS[:2] if phase_index==0 else KEYS[2:]
+  check(state['keys']==[list(k) for k in expected_keys],'Exact phase key order')
+  check([(g['key']['seed'],g['key']['side']) for g in state['games']]==list(expected_keys),'Actual exact game key order')
+  check(state['limits']==LIMITS,'Fixed predeclared limits')
+  check(state['prior_counters']==all_counts,'Prior counters bind all earlier completed work','accounting')
+  check(state['source']==source,'Same source across phases','hashes')
+  for namespace,inventory in [('source',state['source']['files']),('input',state['inputs']),('protected',state['protected'])]:
+   for filename,h in inventory.items():
+    check(sha(filename)==h,f'{namespace} byte hash: {filename}','hashes');source_hashes[filename]=h
+  check(sha(state['source']['executable'])==state['source']['executable_sha256'],'Python executable identity','hashes')
+  check(all(h=='98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8' for p,h in state['protected'].items() if p.endswith('.pth')),'V14 protected hashes','hashes')
+  check(all(h=='88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6' for p,h in state['protected'].items() if p.endswith('.zip')),'ZIP protected hash','hashes')
+  inv={};cache={};by_name={};counts={k:0 for k in LIMITS}
+  for run in state['runs']:
+   check(run['name'] not in by_name,'Unique execution name');by_name[run['name']]=run
+   check(run['role'] in ROLE and (run['seed'],run['side']) in expected_keys,'Run within authorized keys and roles')
+   check(run['status']=='complete','Run complete')
+   check(run['steps']==run['attempted_steps']==run['archived_frames']==run['planned_steps'],'No partial or failed attempts','accounting')
+   check(run['planned_steps'] in (101,202,303),'Bounded physical execution length','accounting')
+   check(run['planned_full_game']==(run['steps']==303) and run['ended_episode']==(run['steps']==303),'Physical full-game markers','accounting')
+   check(run['artifacts']=={run['frame_path']:state['artifacts'][run['frame_path']]},'Single complete-run artifact')
+   check(not Path(run['mismatch_path']).exists(),'No omitted mismatch evidence')
+   for filename,h in run['artifacts'].items():
+    check(Path(filename).resolve().is_relative_to(path.parent.resolve()),'Artifacts inside correct repaired phase')
+    check(sha(filename)==h,'Run artifact byte hash','hashes');inv[filename]=h
+   frames=read_rows(run['frame_path']);cache[run['frame_path']]=frames
+   check(len(frames)==run['steps'],'Actual archived physical frame count','accounting')
+   inspect_frames(frames)
+   family,counter=ROLE[run['role']]
+   counts['started_'+family]+=1;counts['completed_'+family]+=1
+   counts['started_runs']+=1;counts['completed_runs']+=1
+   counts[counter]+=len(frames);counts['total_steps']+=len(frames)
+  expected_runs=[]
+  def get_run(seed,side,role,match=None):
+   name=f'{seed}_{side}_{role}'+(f'_m{match}' if match is not None else '')
+   check(name in by_name,'Required physical execution exists')
+   expected_runs.append(name)
+   run=by_name[name];return run,cache[run['frame_path']]
+  for game in state['games']:
+   seed,side=game['key']['seed'],game['key']['side'];team=int(side[-1]);other=1-team
+   frames_by_role={}
+   for role in ('reference','collector'):
+    run,frames=get_run(seed,side,role);frames_by_role[role]=frames;res=game[role]
+    check((res['seed'],res['side'],res['role'])==(seed,side,role),'Role key identity')
+    check(res['steps']==res['planned_steps']==303 and res['resets']==3 and res['full_game'] is True,'Full reference/collector accounting','accounting')
+    check(res['artifacts']==run['artifacts'],'Role result binds physical trace')
+    terms=[f['terminal'] for f in frames if f['terminal']]
+    check(res['matches']==terms and res['wins']==terms[-1]['wins'],'Role terminal summary')
+    check(res['points']==[sum(f['points'][t] for f in frames) for t in (0,1)],'Role accumulated points','labels')
+    check(res['trajectory_sha256']==hashlib.sha256(b''.join(bytes.fromhex(f['sha256']) for f in frames)).hexdigest(),'Whole physical trajectory hash','hashes')
+   base=frames_by_role['collector']
+   check(frames_by_role['reference']==base,'All reference and passive frames exactly equal','prefixes')
+   check(game['reference']['candidates']==[],'Uninstrumented reference has no candidates')
+   check(game['passivity']=={'full_frames':True},'Passivity evidence matches full equality')
+   check(len(game['pair_artifacts'])==1,'One paired raw file per game')
+   pair_path,pair_hash=next(iter(game['pair_artifacts'].items()))
+   check(Path(pair_path).resolve().is_relative_to(path.parent.resolve()),'Pair file inside phase')
+   check(sha(pair_path)==pair_hash,'Paired artifact byte hash','hashes');inv[pair_path]=pair_hash
+   pairs=read_rows(pair_path);collector=game['collector']
+   check(len(pairs)==len(collector['pairs'])==len(collector['candidates'])<=3,'At most one pair per match')
+   check([p['candidate'] for p in pairs]==collector['candidates'],'Every collected opportunity yields its exact pair')
+   check(len({p['candidate']['match'] for p in pairs})==len(pairs),'No repeated match opportunities')
+   repeated=0
+   for index,(pair,brief) in enumerate(zip(pairs,collector['pairs'])):
+    c=pair['candidate'];m=c['match'];start=c['step'];end=(m+1)*101
+    check(0<=m<=2 and 40<=c['match_step']<=70 and start==m*101+c['match_step'],'Fixed opportunity window')
+    check(0<=c['uid']<16 and 0<=c['row']<16,'Candidate unit/row bounds')
+    check(len(c['q'])==len(c['mask'])==6 and all(type(x) is bool for x in c['mask']),'Candidate action vector shapes')
+    legal=[a for a,allowed in enumerate(c['mask']) if allowed and math.isfinite(c['q'][a])]
+    check(len(legal)>=2,'Two finite legal candidates')
+    rank=sorted(legal,key=lambda a:(-c['q'][a],a))
+    check([c['proposal'],c['alternative']]==rank[:2],'Top-two proposal with action tie break')
+    check(c['gap']==c['q'][rank[0]]-c['q'][rank[1]],'Exact Q-gap')
+    check(len(c['features'])==79 and all(math.isfinite(x) for x in c['features']),'Public features shape/finiteness')
+    alt_run,alt=get_run(seed,side,'alternative',m)
+    check(pair['alternative_run']==alt_run['artifacts'],'Alternative binds actual separate trace')
+    check(len(alt)==end,'Alternative ends at current match, no next match','accounting')
+    check(alt[:start]==base[:start],'Every prefix frame equals original baseline','prefixes')
+    check(alt[start]['before_state']==base[start]['before_state'] and alt[start]['before_obs']==base[start]['before_obs'],'Same pre-intervention state and observation','prefixes')
+    b,a=pair['baseline'],pair['alternative']
+    for branch,physical in ((b,base),(a,alt)):
+     fs=branch['frames']
+     check(fs==physical[start:end],'Branch equals actual file slice','prefixes')
+     check(len(fs)==101-c['match_step']<=61,'Branch continuation bound','accounting')
+     check(branch['outcome']==fs[-1]['terminal'],'Branch terminal identity','labels')
+     check(branch['h12_points']==fs[11]['point_state'],'H12 includes actual first twelve steps','labels')
+     check(branch['won']==int(branch['outcome']['winner']==team),'Binary current-match outcome','labels')
+     check(branch['point_margin']==branch['outcome']['points'][team]-branch['outcome']['points'][other],'Terminal point margin','labels')
+     check(branch['sha256']==exact(fs),'Branch typed hash','hashes')
+     reasons[branch['outcome']['reason']]+=1
+    check(b['frames'][0]['actions'][f'player_{other}']==a['frames'][0]['actions'][f'player_{other}'],'Opponent first action unchanged')
+    effective=b['frames'][0]['actions']!=a['frames'][0]['actions']
+    check(pair['effective']==effective,'Effective whole-team actions including SAP offsets','labels')
+    if not effective:check(b==a,'Ineffective action yields exact same continuation','prefixes')
+    dw=a['won']-b['won'];dp=a['point_margin']-b['point_margin']
+    dh=a['h12_points'][team]-a['h12_points'][other]-b['h12_points'][team]+b['h12_points'][other]
+    check((pair['delta_win'],pair['delta_points'],pair['delta_h12'])==(dw,dp,dh),'All labels independently recomputed','labels')
+    check(pair['seed']==seed and pair['side']==side and pair['pair_id']==index,'Pair key identity')
+    check(pair['status']=='live_verified' and pair['prefix_verified'] is True and pair['live_verified'] is True,'Pair integrity flags')
+    for k in ('seed','side','pair_id','candidate','effective','delta_win','delta_points','delta_h12','reverse_repeat','live_verified','prefix_verified'):
+     check(brief[k]==pair[k],'Manifest versus actual pair: '+k)
+    check(brief['baseline_outcome']==b['outcome'] and brief['alternative_outcome']==a['outcome'],'Manifest branch outcomes')
+    needs_repeat=seed not in verified_maps
+    check((pair['reverse_repeat'] is not None)==needs_repeat,'Repeat exactly first available opportunity per map')
+    if needs_repeat:
+     repeat_run,repeat=get_run(seed,side,'repeat',m)
+     check(pair['repeat_run']==repeat_run['artifacts'],'Repeat binds separately archived actual trace')
+     check(repeat==alt,'Entire independently repeated trajectory exactly equal','prefixes')
+     check(pair['reverse_repeat']=={'alternative_repeat':True,'fresh_prefix_repeat':True},'Repeat verdict identity')
+     repeated+=1;verified_maps.add(seed)
+    else:check('repeat_run' not in pair,'No unaccounted repeat')
+    rows.append(dict(seed=seed,side=side,match=m,step=start,effective=effective,delta_win=dw,delta_points=dp,delta_h12=dh,
+      baseline_won=b['won'],alternative_won=a['won'],baseline_reason=b['outcome']['reason'],alternative_reason=a['outcome']['reason']))
+   check(collector['verified_map']==bool(repeated),'Per-game map verification marker')
+   counts['completed_pairs']+=len(pairs)
+  check(expected_runs==[r['name'] for r in state['runs']],'Exact physical execution order and no extra runs','accounting')
+  check(inv==state['artifacts'],'Complete exact artifact inventory','hashes')
+  check(counts==state['counters'],'Every counter independently reconstructed','accounting')
+  check(execution(state['runs'])==state['execution_totals'],'Physical execution totals','accounting')
+  all_runs.extend(state['runs']);all_artifacts.update(inv)
+  all_counts={k:all_counts[k]+counts[k] for k in LIMITS}
+  check(execution(all_runs)==state['combined_execution_totals'],'Cumulative physical totals','accounting')
+  check(all(all_counts[k]<=LIMITS[k] for k in LIMITS),'All fixed cumulative limits','accounting')
+  check(summary(rows)==state['summary'],'Cumulative summary independently recomputed','labels')
+  manifests.append(dict(path=str(path),sha256=manifest_hashes[str(path)],counters=counts,execution_totals=execution(state['runs'])))
+ check(len(verified_maps)==len({r['seed'] for r in rows}),'Exactly one repeat for each available map')
+ if combined:
+  check(len(states[0]['keys'])==2 and len(states[1]['keys'])==14,'Full fixed 2+14 keys')
+  check(len(all_runs)<=88 and sum(r['steps'] for r in all_runs)<=21816,'Absolute physical caps','accounting')
+  if all(r['steps']==101 for r in all_runs if r['role']=='repeat'):
+   check(all_counts['total_steps']<=20200,'Tighter actual bound for first-match repeats','accounting')
+ for path,h in manifest_hashes.items():check(sha(path)==h,'Manifest unchanged throughout audit','hashes')
+ map_rows=[]
+ for seed in sorted({r['seed'] for r in rows}):
+  subset=[r for r in rows if r['seed']==seed]
+  map_rows.append(dict(seed=seed,cases=len(subset),effective=sum(r['effective'] for r in subset),positive=sum(r['delta_win']>0 for r in subset),negative=sum(r['delta_win']<0 for r in subset),zero=sum(r['delta_win']==0 for r in subset),delta_win_sum=sum(r['delta_win'] for r in subset),delta_points_sum=sum(r['delta_points'] for r in subset)))
+ return dict(status='PASS',scope='combined' if combined else 'technical_only',checks=checks,category_checks=dict(category_checks),
+  script_sha256=sha(__file__),manifests=manifests,source_head=source['head'],
+  counters=all_counts,execution_totals=execution(all_runs),summary=summary(rows),by_map=map_rows,pairs=rows,
+  branch_terminal_reasons=dict(reasons),artifacts=all_artifacts,bound_inputs_and_sources=source_hashes,
+  gate_a='PASS: archived actual physical traces and fixed source/input hashes verified',
+  limitations=[
+   'Terminal unit arrays are not archived. Recorded energy totals are assumed correct and checked for tie-break priority and winner consistency; they cannot be independently summed from units.',
+   'State and observation contents are opaque hashes. Their frame inclusion, equality, and continuity are verified; the hashes cannot be recalculated from unarchived raw objects.',
+   'Only the selected unit Q row is archived. Its legal top-two ranking, gap, and tie rule are checked, but smallest gap across all units and first eligible step cannot be reconstructed from these artifacts.',
+   'No policy/model execution, engine resimulation, or test suite was run. Caught-error absence, frozen tensor checks, public-feature provenance, and environment generation rely on frozen reviewed source plus successful complete manifests.',
+   'These are historical development keys; counterfactual current-match flips are not independent performance evidence or attainable additive full-game wins.',
+   'Failed deepcopy snapshot data are excluded entirely.'])
+
+if __name__=='__main__':
+ parser=argparse.ArgumentParser();parser.add_argument('--combined',action='store_true');parser.add_argument('--output',type=Path)
+ args=parser.parse_args()
+ output=args.output or Path('/private/tmp/match-prefix-'+('combined' if args.combined else 'technical')+'-audit.json')
+ try:report=audit(args.combined)
+ except BaseException as e:
+  report=dict(status='FAIL',checks=checks,category_checks=dict(category_checks),error=f'{type(e).__name__}: {e}',script_sha256=sha(__file__))
+  output.write_text(json.dumps(report,indent=2)+'\n');raise
+ output.write_text(json.dumps(report,indent=2)+'\n')
+ print(json.dumps({k:report[k] for k in ('status','scope','checks','counters','execution_totals','summary','by_map','branch_terminal_reasons')},indent=2))

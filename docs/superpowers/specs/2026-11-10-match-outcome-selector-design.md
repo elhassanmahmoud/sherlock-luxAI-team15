@@ -1,5 +1,7 @@
 # V14 durch gelernte Matchentscheidungen ergänzen – Designvorschlag
 
+**Endstand 10.11.:** Autorisierter Pilot einschließlich der unten vorab festgelegten Reparatur vollständig geprüft und geschlossen. Gates A/B bestanden, C verfehlt: nur ein positiver Flip auf einer Karte bei 48 Paaren. Kein Phase-B-Training, keine Verlängerung oder Übernahme. [Tatsächliche Ergebnisse und Grenzen](../../../experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md). Ursprüngliche Statusangaben unten dokumentieren die damalige Planung und berechtigen nicht zum Neustart.
+
 **Spätere Freigabe 10.11.:** Moayed hat Umsetzung und selbstständige bedingte Fortsetzung beauftragt. Die folgenden ursprünglichen Planungsgrenzen bleiben als Verlauf erhalten; der jüngste Arbeitsstand beschreibt die tatsächliche Phase. Noch keine automatische Leistungsfreigabe oder Übernahme.
 
 ## Technische Reparaturfestlegung nach tatsächlichem Abbruch, 10.11.
