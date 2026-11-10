@@ -1,0 +1,78 @@
+from pathlib import Path
+import json,gzip,hashlib,sys
+from scripts.holder_rollout import exact_digest
+from scripts.early_curriculum_study import source_identity,hashes
+from scripts.match_outcome_probe import ROOT,PLANS,KEYS,LIMITS
+
+checks=0
+def check(condition,message):
+ global checks
+ checks+=1
+ if not condition:raise AssertionError(message)
+def lines(p):
+ with gzip.open(p,'rt') as f:return [json.loads(x) for x in f]
+manifests=[Path(x) for x in sys.argv[1:]];all_records=[];counts={k:0 for k in LIMITS};pairs=[]
+for path in manifests:
+ s=json.loads(path.read_text());check(s['status']=='complete','phase complete')
+ check(source_identity(ROOT,sys.executable,PLANS)==s['source'],'sources')
+ check(hashes(s['inputs'])==s['inputs'] and hashes(s['protected'])==s['protected'],'inputs')
+ for k,v in s['counters'].items():counts[k]+=v
+ for game in s['games']:
+  all_records.append(game);check(all(game['passivity'].values()),'passivity record')
+  data={}
+  for role in ('reference','collector'):
+   rec=game[role];check(hashes(rec['artifacts'])==rec['artifacts'],'artifacts')
+   frames=lines(next(p for p in rec['artifacts'] if '.frames.' in p));data[role]=frames
+   check(len(frames)==303 and [f['step'] for f in frames]==list(range(303)),'full game')
+   trace=hashlib.sha256()
+   for f in frames:
+    content={k:v for k,v in f.items() if k!='sha256'}
+    check(exact_digest(content)==f['sha256'],'frame hash');trace.update(bytes.fromhex(f['sha256']))
+   check(trace.hexdigest()==rec['trajectory_sha256'],'trajectory hash')
+   check([f['step'] for f in frames if f['terminal'] is not None]==[100,201,302],'match boundaries')
+   check([f['terminal'] for f in frames if f['terminal'] is not None]==rec['matches'],'terminal summaries')
+  check(data['reference']==data['collector'],'actual passivity')
+  evidence=lines(next(p for p in game['collector']['artifacts'] if '.pairs.' in p))
+  pending=[p for p in evidence if p['status']=='pending_live_verification']
+  verified=[p for p in evidence if p['status']=='live_verified']
+  check(len(pending)==len(verified)==len(game['collector']['pairs']),'all pairs verified')
+  for p,b,v in zip(pending,game['collector']['pairs'],verified):
+   c=p['candidate'];team=int(p['side'][-1]);opp=1-team
+   check(c==b['candidate'] and b['live_verified'],'brief/candidate')
+   check(40<=c['match_step']<=70 and c['step']//101==c['match'],'opportunity scope')
+   legal=[a for a,m in enumerate(c['mask']) if m]
+   order=sorted(legal,key=lambda a:(-c['q'][a],a))
+   check(order[:2]==[c['proposal'],c['alternative']],'runner up')
+   for role in ('baseline','alternative'):
+    branch=p[role];fs=branch['frames'];check(len(fs)==101-c['match_step'],'branch length')
+    check(branch['sha256']==exact_digest(fs),'branch hash')
+    check([f['terminal'] is not None for f in fs]==[False]*(len(fs)-1)+[True],'branch one match end')
+    check(branch['h12_points']==fs[11]['point_state'],'H12')
+    t=fs[-1]['terminal'];check(t==branch['outcome'],'branch outcome')
+    expected='points' if t['points'][0]!=t['points'][1] else 'energy' if t['energies'][0]!=t['energies'][1] else 'random'
+    check(t['reason']==expected,'reason')
+    if expected!='random':
+     val=t['points'] if expected=='points' else t['energies'];check(t['winner']==int(val[1]>val[0]),'priority winner')
+    check(branch['won']==int(t['winner']==team),'won label')
+   base,alt=p['baseline'],p['alternative']
+   check(base['frames']==data['collector'][c['step']:c['step']+len(base['frames'])],'actual baseline continuation')
+   check(v['baseline_sha256']==base['sha256'],'live verification binding')
+   check(p['effective']==(base['frames'][0]['actions']!=alt['frames'][0]['actions']),'effective')
+   if not p['effective']:check(base==alt,'ineffective identical continuation')
+   check(p['delta_win']==alt['won']-base['won']==b['delta_win'],'delta win')
+   dp=(alt['outcome']['points'][team]-alt['outcome']['points'][opp]-base['outcome']['points'][team]+base['outcome']['points'][opp])
+   dh=(alt['h12_points'][team]-alt['h12_points'][opp]-base['h12_points'][team]+base['h12_points'][opp])
+   check(p['delta_points']==dp==b['delta_points'] and p['delta_h12']==dh==b['delta_h12'],'point labels')
+   pairs.append(p)
+check([(g['key']['seed'],g['key']['side']) for g in all_records]==list(KEYS[:len(all_records)]),'exact planned key order')
+check(all(counts[k]<=v for k,v in LIMITS.items()),'bounds')
+check(counts['completed_games']==counts['started_games']==len(all_records)*2,'game counts')
+check(counts['completed_pairs']==len(pairs),'pair counts')
+check(counts['diagnostic_steps']==sum(len(p[r]['frames']) for p in pairs for r in ('baseline','alternative')),'diagnostic step counts')
+check(counts['technical_extra_steps']==sum(len(p[r]['frames']) for p in pairs if p['reverse_repeat'] is not None for r in ('baseline','alternative')),'technical step counts')
+repeated=[p for p in pairs if p['reverse_repeat'] is not None]
+check(len(repeated)==len({p['seed'] for p in repeated}),'one repeat per map')
+result={'status':'passed','checks':checks,'phase_manifests':hashes(manifests),'counts':counts,
+        'effective_pairs':sum(p['effective'] for p in pairs),'positive':sum(p['delta_win']>0 for p in pairs),
+        'negative':sum(p['delta_win']<0 for p in pairs),'zero':sum(p['delta_win']==0 for p in pairs)}
+print(json.dumps(result,indent=2))

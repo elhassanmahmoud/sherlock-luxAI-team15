@@ -2,6 +2,10 @@
 
 **Umsetzungsfreigabe 10.11.:** Nutzer hat den Plan einschließlich bedingter Fortsetzung freigegeben. Die ursprünglichen Hinweise „nur Planung“ dokumentieren die damalige Phase, nicht einen noch offenen Erlaubnisbedarf. Gates und 5-%-Reserve bleiben verbindlich.
 
+**Reparatur nach technischem Abbruch:** Der Snapshotversuch ist mit19vollständigen/1teilweisen Ausführungen geschlossen. Maßgeblich ist jetzt die datierte technische Reparaturfestlegung oben in der Spec: keine Sets kopieren, sondern echte Historie neu abspielen. Einmalig32vollständige Referenz-/Sammelläufe, maximal48Alternativpräfixe und8Wiederholungspräfixe, insgesamt höchstens21.816neue Engine-Schritte. Karten/Gates unverändert; zuerst Fehlerkarte11011007/p0 und Kontrolle11011017/p0. Alte29Snapshotpaare nicht zum Lernen verwenden.
+
+Reparaturaufgaben: separaten `scripts/match_outcome_replay.py` und synthetische `tests/test_match_outcome_replay.py` erstellen; vor jedem Eingriff alle Präfixframes exakt reproduzieren; echten Abweichungsframe vor Fehler speichern; frischen Root-Review und gezielte Tests abschließen; neue Quellen binden; erst technische Phase, tatsächliche Abnahme, dann Rest. Der bisherige Kernreviewer übernimmt die klar getrennte Reparaturdatei, Root prüft sie unabhängig und koordiniert die Datenabnahme. Keine parallelen Modelle oder Änderungen an Sherlock/Solution. Diese begrenzte Delegation spart Wiederlesen des bereits untersuchten Snapshotfehlers.
+
 > **For agentic workers:** Bei späterer Umsetzungsfreigabe `superpowers:executing-plans` verwenden. Root implementiert den zusammenhängenden kleinen Pilot; unabhängige Subagents nur für die gezielte Snapshot-/Labelprüfung. Die folgenden Aufgaben sind noch nicht ausgeführt.
 
 **Goal:** Herausfinden, ob öffentlich auswählbare Alternativen zur V14-Policy tatsächlich bessere Matchausgänge liefern und damit eine neue Lerngrundlage bieten.

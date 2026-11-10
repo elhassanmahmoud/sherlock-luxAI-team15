@@ -1,0 +1,221 @@
+"""Independent stdlib-only audit of the four fixed technical executions.
+
+Does not import repository code, NumPy, Torch, JAX, or the game engine.
+"""
+import collections
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import struct
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+MANIFEST = ROOT / 'experiments/analysis/match_outcome_probe_20261110/technical/manifest.json'
+OUTPUT = Path('/private/tmp/match-outcome-technical-review.json')
+checks = 0
+
+def check(condition, message):
+    global checks
+    checks += 1
+    if not condition:
+        raise AssertionError(message)
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def exact(value):
+    result = hashlib.sha256()
+    def emit(data):
+        result.update(struct.pack('!Q', len(data)))
+        result.update(data)
+    def visit(obj):
+        if isinstance(obj, dict):
+            emit(b'dict')
+            for key in sorted(obj, key=lambda k: (type(k).__name__, str(k))):
+                visit(key)
+                visit(obj[key])
+        elif isinstance(obj, (list, tuple)):
+            emit(type(obj).__name__.encode())
+            emit(str(len(obj)).encode())
+            for child in obj:
+                visit(child)
+        elif obj is None or type(obj) in (str, bool, int, float):
+            emit(type(obj).__name__.encode())
+            emit(repr(obj).encode())
+        else:
+            raise TypeError(type(obj))
+    visit(value)
+    return result.hexdigest()
+
+def action_hash(actions):
+    data = bytearray()
+    for side in sorted(actions):
+        arr = actions[side]
+        check(len(arr) == 16 and all(len(row) == 3 for row in arr), 'Action shape')
+        header = json.dumps(dict(side=side, shape=[16, 3], dtype='<i8'), sort_keys=True).encode()
+        raw = struct.pack('<48q', *(x for row in arr for x in row))
+        data.extend(struct.pack('!Q', len(header)))
+        data.extend(header)
+        data.extend(struct.pack('!Q', len(raw)))
+        data.extend(raw)
+    return hashlib.sha256(data).hexdigest()
+
+def read_rows(path):
+    with gzip.open(path, 'rt') as stream:
+        return [json.loads(line) for line in stream]
+
+def inspect_frames(frames, initial_points, initial_wins, first, last):
+    check([f['step'] for f in frames] == list(range(first, last + 1)), 'Frame clock range')
+    balance = initial_points[:]
+    wins = initial_wins[:]
+    terminals = []
+    for index, frame in enumerate(frames):
+        check(exact({k:v for k,v in frame.items() if k != 'sha256'}) == frame['sha256'], 'Frame hash')
+        check(action_hash(frame['actions']) == frame['action_sha256'], 'Action bytes hash')
+        check(all(type(x) is int and x >= 0 for x in frame['points']), 'Point increments')
+        balance = [balance[t] + frame['points'][t] for t in (0, 1)]
+        check(balance == frame['point_state'], 'Point balance includes starting points and final tick')
+        if index:
+            check(frame['before_state'] == frames[index-1]['after_state'], 'Continuous state digest')
+            check(frame['before_obs'] == frames[index-1]['after_obs'], 'Continuous observation digest')
+        terminal = frame['terminal']
+        check(bool(terminal) == (frame['step'] % 101 == 100), 'Terminal only at final match action')
+        check(frame['done'] == (frame['step'] == 302), 'Episode done only at final game action')
+        if terminal:
+            check(terminal['points'] == balance, 'Terminal final points')
+            delta = [terminal['wins'][t] - wins[t] for t in (0, 1)]
+            check(delta in ([1, 0], [0, 1]), 'Exactly one actual match winner')
+            winner = delta.index(1)
+            check(terminal['winner'] == winner, 'Winner from actual wins increment')
+            energy = terminal['energies']
+            check(len(energy) == 2 and all(type(x) is int and math.isfinite(x) for x in energy), 'Terminal energy pair')
+            reason = 'points' if balance[0] != balance[1] else 'energy' if energy[0] != energy[1] else 'random'
+            check(terminal['reason'] == reason, 'Engine tie-break priority')
+            if reason != 'random':
+                values = balance if reason == 'points' else energy
+                check(winner == int(values[1] > values[0]), 'Winner matches decisive total')
+            terminals.append(terminal)
+            wins = terminal['wins'][:]
+            balance = [0, 0]
+    return terminals
+
+def audit():
+    manifest = json.loads(MANIFEST.read_text())
+    check(manifest['status'] == 'complete' and manifest['phase'] == 'technical', 'Completed technical phase')
+    keys = [(11011017, 'player_0'), (11011000, 'player_0')]
+    check(manifest['keys'] == [list(k) for k in keys], 'Fixed technical keys/order')
+    check([(g['key']['seed'], g['key']['side']) for g in manifest['games']] == keys, 'Actual game keys/order')
+    check(all(v == 0 for v in manifest['prior_counters'].values()), 'No prior hidden execution counters')
+    pair_summaries = []
+    reasons = collections.Counter()
+    artifacts = {}
+    primary_steps = technical_steps = 0
+    for game in manifest['games']:
+        seed, side = game['key']['seed'], game['key']['side']
+        team, other = int(side[-1]), 1 - int(side[-1])
+        role_frames = {}
+        role_pairs = {}
+        for role in ('reference', 'collector'):
+            result = game[role]
+            check((result['seed'], result['side']) == (seed, side), 'Role key identity')
+            check(result['steps'] == 303 and result['resets'] == 3, 'Complete game and three matches')
+            check(len(result['artifacts']) == 2, 'Two raw artifacts per game')
+            for path, expected in result['artifacts'].items():
+                check(sha(path) == expected, 'Raw artifact SHA256')
+                artifacts[path] = expected
+                if '.frames.' in path:
+                    role_frames[role] = read_rows(path)
+                elif '.pairs.' in path:
+                    role_pairs[role] = read_rows(path)
+                else:
+                    raise AssertionError('Unexpected artifact')
+            frames = role_frames[role]
+            terminal = inspect_frames(frames, [0, 0], [0, 0], 0, 302)
+            check(terminal == result['matches'], 'Recorded match results equal raw frames')
+            check(terminal[-1]['wins'] == result['wins'], 'Final game wins')
+            check([sum(f['points'][t] for f in frames) for t in (0, 1)] == result['points'], 'Game point total')
+            trajectory = hashlib.sha256(b''.join(bytes.fromhex(f['sha256']) for f in frames)).hexdigest()
+            check(trajectory == result['trajectory_sha256'], 'Complete game trajectory hash')
+        check(role_frames['reference'] == role_frames['collector'], 'Actual reference/collector frame equality')
+        check(role_pairs['reference'] == [] and game['reference']['pairs'] == [], 'No reference interventions')
+        check(game['passivity'] and all(game['passivity'].values()), 'Recorded passivity verdict')
+        collector = role_frames['collector']
+        pair_rows = role_pairs['collector']
+        raw_pairs = [r for r in pair_rows if 'candidate' in r]
+        verified = [r for r in pair_rows if r.get('status') == 'live_verified']
+        check(len(raw_pairs) == len(game['collector']['pairs']) == len(verified), 'Pair/verification/manifest counts')
+        check(len(pair_rows) == 2 * len(raw_pairs), 'No unexpected pair stream rows')
+        check(len(raw_pairs) <= 3, 'At most three opportunities per game')
+        check(len({r['candidate']['match'] for r in raw_pairs}) == len(raw_pairs), 'One opportunity per match')
+        repeated = 0
+        for index, pair in enumerate(raw_pairs):
+            brief = game['collector']['pairs'][index]
+            c = pair['candidate']
+            check((pair['seed'],pair['side'],pair['pair_id']) == (seed,side,index), 'Pair identity')
+            check(c['match'] in range(3) and 40 <= c['match_step'] <= 70, 'Opportunity match/window')
+            check(c['step'] == c['match']*101+c['match_step'], 'Opportunity global clock')
+            legal = [a for a, allowed in enumerate(c['mask']) if allowed]
+            check(len(legal) >= 2 and all(math.isfinite(c['q'][a]) for a in legal), 'Finite legal candidates')
+            ranked = sorted(legal, key=lambda a: (-c['q'][a], a))
+            check([c['proposal'],c['alternative']] == ranked[:2], 'Selected unit top-two order/ties')
+            check(c['gap'] == c['q'][ranked[0]]-c['q'][ranked[1]], 'Recorded Q gap')
+            check(len(c['features']) == 79 and all(math.isfinite(x) for x in c['features']), 'Public feature vector shape/finiteness')
+            start = c['step']; end = (c['match']+1)*101-1
+            old_points = collector[start-1]['point_state'][:]
+            old_wins = [0,0] if c['match'] == 0 else collector[c['match']*101-1]['terminal']['wins'][:]
+            for branch_name in ('baseline', 'alternative'):
+                branch = pair[branch_name]
+                frames = branch['frames']
+                ends = inspect_frames(frames, old_points, old_wins, start, end)
+                check(len(frames) == 101-c['match_step'] <= 61, 'Branch bound and final action included')
+                primary_steps += len(frames)
+                check(len(ends) == 1 and branch['outcome'] == ends[0], 'Single current-match terminal')
+                check(branch['h12_points'] == frames[11]['point_state'], 'H12 observation')
+                check(branch['won'] == int(ends[0]['winner'] == team), 'Current-match binary win')
+                check(branch['point_margin'] == ends[0]['points'][team]-ends[0]['points'][other], 'Current-match point margin')
+                check(exact(frames) == branch['sha256'], 'Branch trajectory hash')
+                reasons[ends[0]['reason']] += 1
+            base, alt = pair['baseline'], pair['alternative']
+            check(base['frames'] == collector[start:end+1], 'Baseline branch equals actual collector continuation')
+            check(verified[index]['pair_id'] == index and verified[index]['baseline_sha256'] == base['sha256'], 'Verification binds correct baseline')
+            effective = base['frames'][0]['actions'] != alt['frames'][0]['actions']
+            check(pair['effective'] == effective, 'Effectiveness from full team actions including offsets')
+            check(base['frames'][0]['actions'][f'player_{other}'] == alt['frames'][0]['actions'][f'player_{other}'], 'Opponent initial action unchanged')
+            if not effective:
+                check(base == alt, 'Ineffective pair has exactly identical continuations')
+            dw = alt['won']-base['won']
+            dp = alt['point_margin']-base['point_margin']
+            dh = alt['h12_points'][team]-alt['h12_points'][other]-base['h12_points'][team]+base['h12_points'][other]
+            check((pair['delta_win'],pair['delta_points'],pair['delta_h12']) == (dw,dp,dh), 'All pair labels recomputed')
+            check(brief['live_verified'] is True, 'Manifest live verification')
+            for key in ('seed','side','pair_id','candidate','effective','delta_win','delta_points','delta_h12','reverse_repeat'):
+                check(brief[key] == pair[key], 'Manifest/raw pair agreement: '+key)
+            check(brief['baseline_outcome'] == base['outcome'] and brief['alternative_outcome'] == alt['outcome'], 'Manifest/raw branch outcomes')
+            if pair['reverse_repeat'] is not None:
+                repeated += 1
+                check(index == 0 and pair['reverse_repeat'] == {'alternative_repeat':True,'baseline_reverse_repeat':True}, 'First-pair repeat verdict')
+                technical_steps += len(base['frames'])+len(alt['frames'])
+            pair_summaries.append(dict(seed=seed,side=side,match=c['match'],step=start,effective=effective,delta_win=dw,delta_points=dp,delta_h12=dh))
+        check(repeated == int(bool(raw_pairs)) and game['collector']['verified_map'] == bool(raw_pairs), 'One reverse repeat per available map')
+    counters = dict(reference_steps=606,instrumented_steps=606,diagnostic_steps=primary_steps,technical_extra_steps=technical_steps,completed_pairs=len(pair_summaries),started_games=4,completed_games=4)
+    check(counters == manifest['counters'], 'All execution counters')
+    check(len(pair_summaries)<=6 and primary_steps<=732 and technical_steps<=244, 'Technical fixed ceilings')
+    effective=[r for r in pair_summaries if r['effective']]
+    positive=[r for r in pair_summaries if r['delta_win']>0]
+    b=len(effective)>=24 and len({r['seed'] for r in effective})>=6
+    c=len(positive)>=3 and len({r['seed'] for r in positive})>=3
+    summary=dict(cases=len(pair_summaries),effective_pairs=len(effective),effective_maps=len({r['seed'] for r in effective}),positive_flips=len(positive),positive_maps=len({r['seed'] for r in positive}),negative_flips=sum(r['delta_win']<0 for r in pair_summaries),zero_flips=sum(r['delta_win']==0 for r in pair_summaries),delta_points_sum=sum(r['delta_points'] for r in pair_summaries),h12_end_sign_reversals=sum(r['delta_h12']*r['delta_points']<0 for r in pair_summaries),influence_gate=b,label_gate=c,passed=b and c)
+    check(summary == manifest['summary'], 'Summary independently recomputed')
+    check(sha(MANIFEST) == initial_manifest_sha, 'Manifest unchanged during audit')
+    return dict(status='PASS',checks=checks,manifest=str(MANIFEST),manifest_sha256=initial_manifest_sha,script_sha256=sha(__file__),counters=counters,summary=summary,branch_terminal_reasons=dict(reasons),pairs=pair_summaries,artifacts=artifacts,limitations=['Terminal unit arrays are not archived; energy totals are checked for priority consistency, not recalculated from units.','Reverse-repeat trajectories are not archived separately; actual recorded equality verdicts and their budget counters are checked.','Only the selected unit Q row is archived; smallest gap across all units cannot be independently recalculated from these artifacts.','Source, checkpoint, and protected-file identity are handled separately by root.'])
+
+initial_manifest_sha = sha(MANIFEST)
+try:
+    report = audit()
+except BaseException as exc:
+    report = dict(status='FAIL',checks=checks,manifest_sha256=initial_manifest_sha,error=f'{type(exc).__name__}: {exc}')
+    OUTPUT.write_text(json.dumps(report, indent=2)+'\n')
+    raise
+OUTPUT.write_text(json.dumps(report, indent=2)+'\n')
+print(json.dumps({k:report[k] for k in ('status','checks','counters','summary','branch_terminal_reasons')}))

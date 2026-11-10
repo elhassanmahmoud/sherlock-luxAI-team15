@@ -2,6 +2,22 @@
 
 **Spätere Freigabe 10.11.:** Moayed hat Umsetzung und selbstständige bedingte Fortsetzung beauftragt. Die folgenden ursprünglichen Planungsgrenzen bleiben als Verlauf erhalten; der jüngste Arbeitsstand beschreibt die tatsächliche Phase. Noch keine automatische Leistungsfreigabe oder Übernahme.
 
+## Technische Reparaturfestlegung nach tatsächlichem Abbruch, 10.11.
+
+Der erste Snapshot-Durchlauf ist wegen nachgewiesener Baseline-Abweichung technisch geschlossen:19 vollständige und1 teilweise Ausführung, insgesamt10.203 Engine-Schritte, kein Stärke-/Lernzielbefund. Set-Kopien können die Reihenfolge gegnerischer Gleichstandsentscheidungen ändern; die konkrete gegnerinterne Ursache des realen Fehlerschritts ist mangels internem Zustandsdump nicht vollständig bewiesen. [Fehlerbeleg und Grenzen](../../../experiments/analysis/match_outcome_probe_20261110/SNAPSHOT_FEHLER.md).
+
+Unter der ausdrücklichen autonomen Umsetzungsfreigabe ersetzt Root die ungeeignete Kopiertechnik einmalig durch **Rekonstruktion vom Spielanfang**. Das ist eine transparent vergrößerte technische Messung, kein automatischer Neustart, Ersatz verlorener Spiele oder neuer Kandidatenversuch. Alte Dateien bleiben erhalten und werden nicht mit neuen Labels vermischt. Karten, Auswahlregel, Eingriffsstelle, Matchziel und Gates B/C ändern sich nicht.
+
+- Neue Dateien/Outputs getrennt: `scripts/match_outcome_replay.py`, neue `prefix_technical/` und `prefix_remaining/` unter derselben Studie. Originaler Sammler bleibt als historischer Fehlerstand erhalten, nicht weiter ausführen.
+- Pro16Schlüssel ein vollständiger Stock-V14-Referenzlauf und ein vollständiger passiver Sammler,303Schritte jeweils. Beide gesamten Verläufe müssen gleich sein; der Sammler zeichnet öffentliche Gelegenheiten auf, ohne Snapshots/Branchspiele einzuschieben.
+- Jede der maximal48Alternativen erhält neue Agenten, zurückgesetzte Solution-Globals und RNGs, denselben Seed. Jeden Schritt vor dem Eingriff exakt mit dem Baselineverlauf vergleichen; danach bis Ende des aktuellen Matches, niemals zusätzlich das nächste Match. Der Baselineast ist der entsprechende Abschnitt des bereits vollständig reproduzierten Referenzlaufs. **Keine Objektkopie und keine Gegneränderung.**
+- Erste vorhandene Alternative je Karte einmal unabhängig vom Anfang wiederholen, exakt gleicher vollständiger Verlauf; maximal8Wiederholungen. Ein abweichender Frame wird vor Abbruch gespeichert.
+- Neue feste Obergrenze:32Referenz-/Sammelläufe +48Alternativläufe +8Wiederholungsläufe = höchstens88 gestartete Ausführungen; **21.816 Engine-Schritte** =32×303 +16×(101+202+303)+8×303. Prefixläufe bis Match1/2 sind Teilpartien, bis Match3 vollständige Partien. Tatsächliche vollständige/teilweise Läufe und alle Schritte getrennt berichten; diese Last nicht als nur32Spiele ausgeben.
+- Technik zuerst auf `11011007/player_0` (tatsächlicher Fehler) und `11011017/player_0` (Kontrolle), dann übrige14Schlüssel derselben acht Karten. Die vier vollständigen Technikreferenzen sind in32enthalten; ihre Alternativ-/Wiederholungsläufe in48/8. Nach vollständiger tatsächlicher Prüfung ausdrückliche Root-Aufnahme der restlichen Phase, gleiche eingefrorene Quelle.
+- Bei erneutem Integritätsfehler den Reparaturversuch ebenfalls stoppen und ehrlich dokumentieren, keine automatische weitere Reparaturrunde. Keine Gradienten oder Übernahme. Laufende neue Phase bindet alte technische Rohdateien der neuen Prefix-Phase, nicht die fehlerhaften Snapshotlabels.
+
+Diese datierte Festlegung ersetzt ausschließlich Kopiermechanik, technische Reihenfolge und Ausführungsobergrenzen der ursprünglichen PhaseA unten. Die5-%-Reserve, unveränderte V14-/ZIP-Hashes und bedingte spätere Lern-/Leistungsprüfung bleiben bestehen.
+
 **Status: nur vorgeschlagen, nicht umgesetzt oder gestartet.** Nutzerauftrag vom 10.11.: schwächere Kandidaten analysieren und den nächsten sinnvollen Plan entwickeln, mindestens 5 % Kontingent erhalten. [Befund](../../../experiments/analysis/residual_postmortem_20261110/ERGEBNIS.md).
 
 ## Entscheidung und Hypothese

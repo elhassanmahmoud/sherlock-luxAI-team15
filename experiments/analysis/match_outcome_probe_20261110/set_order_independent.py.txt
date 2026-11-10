@@ -1,0 +1,82 @@
+"""Actual Solution Node/hash/closest-target code, isolated via AST; no game/model.
+
+Loads no repository modules or third-party packages. Exercises exactly the
+ordinary deepcopy operations used by Snapshot.capture and Snapshot.fork.
+"""
+import ast
+import copy
+import hashlib
+import json
+from pathlib import Path
+import random
+import runpy
+from types import SimpleNamespace
+
+ROOT = Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+BASE = ROOT/'agents/Solution_92_Kaggle/base.py'
+AGENT = ROOT/'agents/Solution_92_Kaggle/agent.py'
+PATHFIND = ROOT/'agents/Solution_92_Kaggle/pathfinding.py'
+OUT = Path('/private/tmp/match-outcome-set-copy-proof.json')
+namespace = runpy.run_path(str(BASE))
+for path, names in [(AGENT, {'Node'}), (PATHFIND, {'find_closest_target','manhattan_distance'})]:
+    parsed = ast.parse(path.read_text(), filename=str(path))
+    selected = [node for node in parsed.body if isinstance(node, (ast.ClassDef,ast.FunctionDef)) and node.name in names]
+    exec(compile(ast.Module(body=selected, type_ignores=[]), str(path), 'exec'), namespace)
+Node, closest = namespace['Node'], namespace['find_closest_target']
+randomizer = random.Random(20261110)
+all_coords = [(x,y) for x in range(24) for y in range(24)]
+found = None
+for trial in range(10000):
+    draws = randomizer.sample(all_coords, randomizer.randint(3,18))
+    insertions = []
+    for x,y in draws:
+        insertions.extend([(x,y),(23-y,23-x)])
+    nodes = {coord:Node(*coord) for coord in insertions}
+    live_set = set()
+    for coord in insertions:
+        live_set.add(nodes[coord])
+    # Joint graph with a second alias, as Solution Globals reference its nodes.
+    live = SimpleNamespace(reward_nodes=live_set, nodes=nodes)
+    captured, captured_globals = copy.deepcopy((live, {'nodes':live_set}))
+    forked, forked_globals = copy.deepcopy((captured, captured_globals))
+    assert forked.reward_nodes is forked_globals['nodes']
+    assert all(forked.nodes[node.coordinates] is node for node in forked.reward_nodes)
+    assert live_set == captured.reward_nodes == forked.reward_nodes
+    original_iteration = [n.coordinates for n in live_set]
+    fork_iteration = [n.coordinates for n in forked.reward_nodes]
+    if original_iteration == fork_iteration:
+        continue
+    # Actual harvest constructs a fresh coordinate set by iterating reward_nodes.
+    live_targets = set()
+    fork_targets = set()
+    for n in live_set:
+        live_targets.add(n.coordinates)
+    for n in forked.reward_nodes:
+        fork_targets.add(n.coordinates)
+    for start in all_coords:
+        live_choice = closest(start,live_targets)
+        fork_choice = closest(start,fork_targets)
+        if live_choice != fork_choice:
+            # Repeat fork from same captured graph: repeat tests can pass while
+            # differing from the untouched original agent's tie-breaking order.
+            again, _ = copy.deepcopy((captured,captured_globals))
+            again_targets=set()
+            for n in again.reward_nodes:
+                again_targets.add(n.coordinates)
+            again_choice=closest(start,again_targets)
+            assert again_choice == fork_choice
+            assert live_choice[1] == fork_choice[1]
+            found=dict(status='DEMONSTRATED',trial=trial,insertions=insertions,start=start,
+                live_node_iteration=original_iteration,fork_node_iteration=fork_iteration,
+                live_target_iteration=list(live_targets),fork_target_iteration=list(fork_targets),
+                live_choice=live_choice,fork_choice=fork_choice,repeated_fork_choice=again_choice,
+                membership_equal=True,joint_aliases_preserved=True,repeated_fork_stable=True,
+                source_sha256={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in (BASE,AGENT,PATHFIND)},
+                limitation='Synthetic counterexample proves cloning risk, not the specific actual step175 cause. No failed-run internal snapshot was archived.')
+            break
+    if found:
+        break
+if found is None:
+    found=dict(status='NOT_FOUND',trials=10000)
+OUT.write_text(json.dumps(found,indent=2)+'\n')
+print(json.dumps({k:v for k,v in found.items() if k not in ('live_node_iteration','fork_node_iteration','live_target_iteration','fork_target_iteration','source_sha256','insertions')}))

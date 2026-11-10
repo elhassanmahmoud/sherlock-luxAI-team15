@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Matchprobe technisch gestoppt, getrennte Reparatur vorbereitet
+
+- Snapshotvergleich nach19vollständigen und1unvollständigen Ausführungen gestoppt: auf11011007/p0 weicht der Baselinebranch bei175 vom tatsächlichen Verlauf ab. 10.203 Engine-Schritte insgesamt, keine Updates oder Leistungsfreigabe. Quellen/Gewichte nach Ende geprüft, alter Worker beendet. [Fehlerbelege/Abschluss](../experiments/analysis/match_outcome_probe_20261110/SNAPSHOT_FEHLER.md).
+- Ursache der Methodenunsicherheit demonstriert: `deepcopy` kann Set-Reihenfolgen ändern, Solution entscheidet gleich weit entfernte Ziele anhand dieser Reihenfolge. Mitgliedschaft und wiederholte Kopien können gleich aussehen, die Policy dennoch anders sein. Konkreter interner Zustand bei175 fehlt; nicht als vollständig bewiesene Einzelursache ausgeben. Alte Snapshotlabels nicht zum Lernen verwenden.
+- Root setzt die autorisierte Arbeit mit einem einmalig begrenzten, separat dokumentierten technischen Ersatz fort: volle Originalhistorie pro Alternative neu abspielen und jeden Präfixframe prüfen, keine Gegneränderung. Dieselben8Karten/Gates, neue Grenzen32Referenz-/Sammelläufe +max48Alternativ-/8Wiederholungsläufe, maximal21.816Schritte. Zuerst Fehlerkarte/Kontrolle, nur nach echter Abnahme Rest. [Datierte Festlegung](superpowers/specs/2026-11-10-match-outcome-selector-design.md). Noch kein neuer Prefixlauf; ein Subagent implementiert die isolierte Reparaturdatei, Root prüft und koordiniert. V14/ZIP unverändert,5-%-Reserve gilt.
+
 ## 10.11.2026 – Matchausgang-Pilot zur Umsetzung freigegeben
 
 - Moayed beauftragt Umsetzung des Plans und selbstständige bedingte Fortsetzung; mindestens 5 % Reserve. Bestehende Studienkopie auf `codex/match-outcome-20261110`, Ausgang `ab7364e`, Remote/Primary gleich, keine alten aktiven Modellworker.

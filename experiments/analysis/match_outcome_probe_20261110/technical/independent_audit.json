@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "checks": 19841,
+  "manifest": "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/manifest.json",
+  "manifest_sha256": "818ad5f26617afe09851d7df68ebb54301a5c4e23cadfd77415d13ba118abf2a",
+  "script_sha256": "089eeb4f516997bd0f0855cd02c300d2b3645dd7f8098bc71ef97c746bf1ee45",
+  "counters": {
+    "reference_steps": 606,
+    "instrumented_steps": 606,
+    "diagnostic_steps": 732,
+    "technical_extra_steps": 244,
+    "completed_pairs": 6,
+    "started_games": 4,
+    "completed_games": 4
+  },
+  "summary": {
+    "cases": 6,
+    "effective_pairs": 5,
+    "effective_maps": 2,
+    "positive_flips": 0,
+    "positive_maps": 0,
+    "negative_flips": 0,
+    "zero_flips": 6,
+    "delta_points_sum": 7,
+    "h12_end_sign_reversals": 0,
+    "influence_gate": false,
+    "label_gate": false,
+    "passed": false
+  },
+  "branch_terminal_reasons": {
+    "energy": 6,
+    "points": 6
+  },
+  "pairs": [
+    {
+      "seed": 11011017,
+      "side": "player_0",
+      "match": 0,
+      "step": 40,
+      "effective": true,
+      "delta_win": 0,
+      "delta_points": 0,
+      "delta_h12": 0
+    },
+    {
+      "seed": 11011017,
+      "side": "player_0",
+      "match": 1,
+      "step": 141,
+      "effective": true,
+      "delta_win": 0,
+      "delta_points": 0,
+      "delta_h12": 0
+    },
+    {
+      "seed": 11011017,
+      "side": "player_0",
+      "match": 2,
+      "step": 242,
+      "effective": false,
+      "delta_win": 0,
+      "delta_points": 0,
+      "delta_h12": 0
+    },
+    {
+      "seed": 11011000,
+      "side": "player_0",
+      "match": 0,
+      "step": 40,
+      "effective": true,
+      "delta_win": 0,
+      "delta_points": 0,
+      "delta_h12": 0
+    },
+    {
+      "seed": 11011000,
+      "side": "player_0",
+      "match": 1,
+      "step": 141,
+      "effective": true,
+      "delta_win": 0,
+      "delta_points": 0,
+      "delta_h12": 0
+    },
+    {
+      "seed": 11011000,
+      "side": "player_0",
+      "match": 2,
+      "step": 242,
+      "effective": true,
+      "delta_win": 0,
+      "delta_points": 7,
+      "delta_h12": 0
+    }
+  ],
+  "artifacts": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011017_player_0_reference.frames.jsonl.gz": "a7b6bd1d7a34a3a9e2011eaea0e29f0b393bfee0e5f1a51dd17efd1aa971a8fc",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011017_player_0_reference.pairs.jsonl.gz": "98f722f165d23051b45a1bc8410d7af7441f37fd3070195359a56ada525fcadf",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011017_player_0_collector.frames.jsonl.gz": "33c87a36d9f1f5f4c0a3c38bf663611d8e59c9a3f122fc90be7387bb91af7737",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011017_player_0_collector.pairs.jsonl.gz": "fa7eba295a24a2a100b9e554ac7c00462fe29b6b8e3f3e48ebd8bb70105a899d",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011000_player_0_reference.frames.jsonl.gz": "a2fecad5ac5921ee944e3e691698de58a2a37fa715ba87bbdfbcac415be2e583",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011000_player_0_reference.pairs.jsonl.gz": "7a67831556df5ffe33c096365b20ada1757cc5a5b453fcf5bebce42e408f2493",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011000_player_0_collector.frames.jsonl.gz": "d010202f1d628a8e37cc312e72f8be38379fee7b8f3169e98c761b48633eb296",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/experiments/analysis/match_outcome_probe_20261110/technical/11011000_player_0_collector.pairs.jsonl.gz": "fd9236a1a04b1c138ee5fb8d31e88494fb90b74c60e1f4f5513db2899a0f4595"
+  },
+  "limitations": [
+    "Terminal unit arrays are not archived; energy totals are checked for priority consistency, not recalculated from units.",
+    "Reverse-repeat trajectories are not archived separately; actual recorded equality verdicts and their budget counters are checked.",
+    "Only the selected unit Q row is archived; smallest gap across all units cannot be independently recalculated from these artifacts.",
+    "Source, checkpoint, and protected-file identity are handled separately by root."
+  ]
+}

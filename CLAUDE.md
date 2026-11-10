@@ -1,5 +1,7 @@
 # Projekt: Lux AI Season 3 – RL-Agent (HTW Berlin, Anwendungen KI, WS 26/27)
 
+**Methodische Grenze10.11.:** Gepaarte Matchfortsetzungen mit `deepcopy`-Snapshots haben eine reale Baselineabweichung gezeigt. Unabhängig demonstriert: Kopieren von Sets kann Solutions Reihenfolge bei gleichwertigen Zielen ändern. Historische HOLD-/Snapshotlabels vor einer erneuten Verwendung neu auf diese Grenze prüfen; geschlossene Studien nicht automatisch starten. Neue Messungen rekonstruieren Originalhistorien durch erneutes Abspielen statt Gegnerobjekte zu kopieren. [Fehlerbeleg und begrenzte Reparatur](experiments/analysis/match_outcome_probe_20261110/SNAPSHOT_FEHLER.md). Aktuellen Laufstand im Arbeitsstand lesen.
+
 **Aktueller Abschluss10.11.:** Additiver Residual-Pilot vollständig geprüft und negativ geschlossen. Zwei neue Netze für Korrekturen bei eingefrorenen 36 V14-Netzen, 24.000 Updates; Auswahl Solution35/40 und38/40 gegenüberV14 40/40, direkt14/40 und10/40. Keine Nominierung, kein V14-/ZIP-Ersatz oder Nachtraining. [Ergebnis und Grenzen](experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md). Experimenteller Loader verwendet explizit M+R, keinen normalen37er-Mittelwert. Aktuellen Arbeitsumfang wie immer im jüngsten Arbeitsstand lesen.
 
 

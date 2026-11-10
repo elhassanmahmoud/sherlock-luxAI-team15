@@ -1,5 +1,7 @@
 # Gepaarte Matchausgang-Probe
 
+**Aktuell: Snapshotversuch technisch ungültig geschlossen.** 19 vollständige +1 teilweise Ausführung,10.203 Engine-Schritte. Baselineabweichung und unabhängig demonstrierte Set-Kopierreihenfolge; keine Lern-/Stärkenaussage aus alten Paaren. [Fehlerbericht](SNAPSHOT_FEHLER.md). Einmalige getrennte Präfixreparatur gemäß datiertem Zusatz in der Spec wird vorbereitet. Die folgenden Angaben dokumentieren die ursprüngliche Aufnahme, nicht einen weiterlaufenden Snapshotversuch.
+
 Freigegebener Pilot aus docs/superpowers/specs/2026-11-10-match-outcome-selector-design.md.
 Maximal32 Vollausführungen inkl4 technischer,48 Hauptpaare mit maximal5856 Fortsetzungsschritten und976 Wiederholungsschritten. Null Gradienten. Bekannte Entwicklungskarten, keine frische Leistungsbewertung.
 
