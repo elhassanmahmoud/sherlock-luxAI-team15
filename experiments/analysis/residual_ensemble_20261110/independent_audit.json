@@ -1,0 +1,224 @@
+{
+  "scope": "Independent final audit of raw technical/training artifacts and all 200 completed selection records. No project code imports, games, model instantiation, inference or tests.",
+  "started_at": 1794308831.779943,
+  "findings": [],
+  "phases": {
+    "technical": {
+      "receipt_sha256": "c52b4eca7c1fa37eafc380b81472ea04e0ff7d16f8514aebe0845dd188bddd88",
+      "completion_sha256": "881077ce8bc32b83b29bd7153ef813ae2c0875ff24b711ae4cb01d64013a1b01",
+      "historical_source": "8d8d96a59ff43897560ddd34eeef1387b2796718",
+      "hash_checks": {
+        "inputs": 21,
+        "outputs": 2,
+        "protected": 6
+      }
+    },
+    "training": {
+      "receipt_sha256": "aae7ec5d5e24a7a6161eb93d50d4b755f044dbe15002cb660cfbcc7a523d6a62",
+      "completion_sha256": "cae92caf236660105cb78b7efb83ce89dd1a31030e46f3a844d5fad20aca790e",
+      "historical_source": "bd24e018ace10b889f953c0d03255f1ea56de360",
+      "hash_checks": {
+        "inputs": 23,
+        "outputs": 20,
+        "protected": 6
+      }
+    }
+  },
+  "technical": {
+    "games": 8,
+    "exact_pairs": 4,
+    "non_timing_row_parity": true,
+    "original36_list_hash": "4403ca87fd6eacfcbc84436aa0c308da69d1342aca348827a400c7b5efe5f939",
+    "trace_limitation": "Only logged action/public-trajectory digests remain; did not replay games or reconstruct hashes from absent stepwise action archives."
+  },
+  "training": {
+    "R61": {
+      "games": 120,
+      "prefill_games": 40,
+      "learning_games": 80,
+      "updates": 12000,
+      "eligible_steps": 36000,
+      "opponents": {
+        "solution92": 72,
+        "self": 48
+      },
+      "parameter_count": 152967,
+      "final_sha256": "4302e796442caa88a5d4fc7a30b2cde603a070c830ad558f8edd3d0261febb16",
+      "residual_hash": "8d0bd37d8f7ef91a9a06c465fb37a3eef2c7967450142342da798d0d1f1199c3",
+      "initial_hash": "54e3a15748151a7d9afeda217b7d404cdad25d8f38e1500a1d0fc55f5829ce01",
+      "replay": {
+        "prefill": {
+          "writes": 140532,
+          "size": 140532,
+          "pos": 140532,
+          "terminal_rows": 2990
+        },
+        "final": {
+          "writes": 422298,
+          "size": 300000,
+          "pos": 122298,
+          "terminal_rows": 6533
+        }
+      },
+      "loss_first100": 0.7652859550714493,
+      "loss_last100": 0.7686501130461693
+    },
+    "R62": {
+      "games": 120,
+      "prefill_games": 40,
+      "learning_games": 80,
+      "updates": 12000,
+      "eligible_steps": 36000,
+      "opponents": {
+        "solution92": 72,
+        "self": 48
+      },
+      "parameter_count": 152967,
+      "final_sha256": "5aef68e3179db607d539ca37b461c4f6cf0317ec72742b87fecee34bd58579cd",
+      "residual_hash": "64aaced9176db1a58fe624a809a6b42f3b1397f52e898d13f221d305d99e7c4b",
+      "initial_hash": "54e3a15748151a7d9afeda217b7d404cdad25d8f38e1500a1d0fc55f5829ce01",
+      "replay": {
+        "prefill": {
+          "writes": 141702,
+          "size": 141702,
+          "pos": 141702,
+          "terminal_rows": 2972
+        },
+        "final": {
+          "writes": 424175,
+          "size": 300000,
+          "pos": 124175,
+          "terminal_rows": 6475
+        }
+      },
+      "loss_first100": 0.7260055440664291,
+      "loss_last100": 0.7589654171466828
+    }
+  },
+  "checks": 6623,
+  "hashed_unique_files": 52,
+  "status": "PASS within reviewed scope: technical, training and final selection",
+  "limits": [
+    "No independent neural inference/cache-value recomputation, causal diagnosis, or claim of strength. Root already performed replay signatures and additive inference; this audit checked full raw array finiteness/shape/generations/terminal labels, not all replay signatures again.",
+    "Historical source identities read from accepted completion and matching state; no attempt to treat later selection source changes as training tampering.",
+    "Technical raw game records contain digests rather than complete stepwise traces; exact digest/score parity is verified, not independently rerun.",
+    "Stored checkpoint counters and Adam/loss rows cross-correlate 12000 updates per arm, but historical gradient execution cannot be independently replayed without rerunning training."
+  ],
+  "ended_at": 1794308832.560985,
+  "selection": {
+    "status": "PASS: independent final selection decision agrees; no nominee",
+    "checked_at": 1794308994.202791,
+    "checks": 4538,
+    "source_head": "c1fdff2b5f339ad48f606ac0bab63a04647b17d0",
+    "source_files_checked": 436,
+    "hash_checks": {
+      "inputs": 25,
+      "outputs": 15,
+      "protected": 6
+    },
+    "completion_sha256": "6155d0cd86b216aaf2dc9bc58861ebbee18bb09908c67b15146550fc29fa35fd",
+    "games": 200,
+    "rows_excluded": 0,
+    "duplicate_keys": 0,
+    "results": {
+      "R61_solution92": {
+        "games": 40,
+        "maps": 20,
+        "wins": 35,
+        "draws": 0,
+        "losses": 5,
+        "result_mean": 0.875,
+        "score_interval": [
+          0.75,
+          0.975
+        ]
+      },
+      "R62_solution92": {
+        "games": 40,
+        "maps": 20,
+        "wins": 38,
+        "draws": 0,
+        "losses": 2,
+        "result_mean": 0.95,
+        "score_interval": [
+          0.875,
+          1.0
+        ]
+      },
+      "V14_solution92": {
+        "games": 40,
+        "maps": 20,
+        "wins": 40,
+        "draws": 0,
+        "losses": 0,
+        "result_mean": 1.0,
+        "score_interval": [
+          1.0,
+          1.0
+        ]
+      },
+      "R61_direct": {
+        "games": 40,
+        "maps": 20,
+        "wins": 14,
+        "draws": 0,
+        "losses": 26,
+        "result_mean": 0.35,
+        "score_interval": [
+          0.15,
+          0.55
+        ]
+      },
+      "R62_direct": {
+        "games": 40,
+        "maps": 20,
+        "wins": 10,
+        "draws": 0,
+        "losses": 30,
+        "result_mean": 0.25,
+        "score_interval": [
+          0.09875000000000043,
+          0.45
+        ]
+      }
+    },
+    "gates": {
+      "R61": {
+        "direct_min24": false,
+        "solution_at_least_V14": false,
+        "passes_both": false
+      },
+      "R62": {
+        "direct_min24": false,
+        "solution_at_least_V14": false,
+        "passes_both": false
+      }
+    },
+    "paired_solution": {
+      "R61": {
+        "mean_difference": -0.125,
+        "interval": [
+          -0.25,
+          -0.025
+        ]
+      },
+      "R62": {
+        "mean_difference": -0.05,
+        "interval": [
+          -0.125,
+          0.0
+        ]
+      }
+    },
+    "nominee": null,
+    "bootstrap": "5000 PCG64(seed=0) draws of 20 complete maps with replacement, retaining both sides. Paired Solution contrasts join all identical map/side keys before map averaging; linear 2.5/97.5 percentiles. Separate training and selection data.",
+    "limitations": [
+      "V14 Solution 40/40 gives an empirical bootstrap [1,1] because every observed map is all-wins. This degenerate interval does not express zero population uncertainty and is not evidence of a universal 100% win rate.",
+      "This fixed screen rejects both starts under the preregistered practical gates; it does not show that all residual methods fail. No confirmation, candidate replacement or extra sampling is authorized by this result.",
+      "No games, model inference or tests were rerun. Scores and action-trace digests are checked for internal consistency and recorded-file integrity, not recomputed from unavailable full simulator traces.",
+      "The recorded source/input/output identities are currently exact, including all source files and executable bytes; this is evidence of artifact identity, not an independent reconstruction of every past process event."
+    ]
+  },
+  "checks_training_technical": 6623,
+  "checks_total": 11161
+}

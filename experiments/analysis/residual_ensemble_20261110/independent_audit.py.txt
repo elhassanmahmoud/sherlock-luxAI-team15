@@ -1,0 +1,229 @@
+"""Read-only residual data audit; deliberately imports no project code or models."""
+from pathlib import Path
+import collections, hashlib, json, math, subprocess, time
+import numpy as np
+import torch
+ROOT=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+B=ROOT/'experiments/analysis/residual_ensemble_20261110'
+PREFIX=Path('/private/tmp/residual-independent-audit-20261110')
+torch.set_num_threads(1)
+checks=0
+hash_cache={}
+report={'scope':'Independent read-only technical/training raw artifact audit; no inference, games, model instantiation or tests. Selection excluded until complete.', 'started_at':time.time(), 'findings':[], 'phases':{}}
+def ck(ok, message):
+ global checks
+ checks+=1
+ if not bool(ok): raise AssertionError(message)
+def read(p): return json.loads(Path(p).read_text())
+def rows(p): return [json.loads(s) for s in Path(p).read_text().splitlines() if s]
+def sha(p):
+ p=Path(p)
+ key=(str(p),p.stat().st_size,p.stat().st_mtime_ns)
+ if key not in hash_cache:
+  h=hashlib.sha256()
+  with p.open('rb') as f:
+   for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)
+  hash_cache[key]=h.hexdigest()
+ return hash_cache[key]
+def treehash(v):
+ h=hashlib.sha256()
+ def emit(b):h.update(len(b).to_bytes(8,'big'));h.update(b)
+ def visit(x):
+  if torch.is_tensor(x):
+   emit(b'tensor');emit(str(x.dtype).encode());visit(list(x.shape));emit(x.detach().cpu().contiguous().reshape(-1).view(torch.uint8).numpy().tobytes())
+  elif isinstance(x,dict):
+   emit(b'dict');emit(str(len(x)).encode())
+   for k in sorted(x,key=lambda k:(type(k).__name__,repr(k))):visit(k);visit(x[k])
+  elif isinstance(x,(list,tuple)):
+   emit(type(x).__name__.encode());emit(str(len(x)).encode())
+   for t in x:visit(t)
+  else:emit(type(x).__name__.encode());emit(repr(x).encode())
+ visit(v);return h.hexdigest()
+def rowcheck(r):
+ ck(r['steps']==303,'steps');ck(r['point_counting_version']==2,'point count');ck(r['caught_errors']==0,'caught error')
+ ck(r['side'] in ['player_0','player_1'],'side');ck(r['invalid_frac']==0,'invalid action fraction')
+ for k in ['native_sha256','trajectory_sha256']:ck(len(r[k])==64 and all(x in '0123456789abcdef' for x in r[k]),'row hash')
+ for k in ['our_wins','opp_wins','our_points','opp_points']:ck(isinstance(r[k],int) and r[k]>=0,'score type')
+ result=1.0 if r['our_wins']>r['opp_wins'] else 0.0 if r['our_wins']<r['opp_wins'] else .5
+ ck(r['result']==result and r['game_win']==int(result==1),'result/win from match wins')
+ ck(r['point_win']==(1. if r['our_points']>r['opp_points'] else 0. if r['our_points']<r['opp_points'] else .5),'point win')
+ for v in r.values():
+  if isinstance(v,float):ck(math.isfinite(v),'row finite numeric')
+import sys
+if '--selection-only' not in sys.argv:
+ for phase in ['technical','training']:
+  c=read(B/phase/'completion.json');a=read(B/phase/'accepted.json');s=read(B/phase/'state.json')
+  ck(a['completion_sha256']==sha(B/phase/'completion.json'),'receipt completion binding')
+  ck(s['status']=='complete' and s['active']==[],'completed phase state')
+  ck(all(x['returncode']==0 for x in c['jobs'].values()),'worker exit receipt')
+  ck(c['source']==s['source'] and c['inputs']==s['inputs'] and c['protected']==s['protected'],'state/completion identity')
+  for category in ['inputs','outputs','protected']:
+   for p,d in c[category].items():ck(sha(p)==d,f'{phase} {category} hash {p}')
+  ck(a['accepted_at']>c['ended_at'],'acceptance after completion')
+  report['phases'][phase]={'receipt_sha256':sha(B/phase/'accepted.json'),'completion_sha256':sha(B/phase/'completion.json'),'historical_source':c['source']['head'],'hash_checks':{k:len(c[k]) for k in ['inputs','outputs','protected']}}
+ basefile=ROOT/'agents/sherlock/weights/agent_p0.pth'
+ V14='98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8'
+ ck(sha(basefile)==V14,'protected V14 spec hash')
+ ck(sha(ROOT/'Gruppe15.zip')=='88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6','ZIP spec hash')
+ v=torch.load(basefile,map_location='cpu',weights_only=True)
+ bases=[v['q']]+v['ensemble'];ck(len(bases)==36,'36 original networks')
+ ck(v['feature_dim']==79 and v['n_actions']==6 and v['cfg']['gamma']==.99,'base config')
+ base_hash=treehash({f'{i}.{k}':t for i,m in enumerate(bases) for k,t in m.items()})
+ list_hash=treehash(bases)
+ tech=rows(B/'technical/parity/games.jsonl');ck(len(tech)==8,'exact 8 technical rows')
+ expected={(seed,side,opp,role) for seed,side in [(9946007,'player_0'),(831006,'player_1')] for opp in ['solution92','self'] for role in ['original','zero_residual_collector']}
+ ck({(r['seed'],r['side'],r['opponent'],r['role']) for r in tech}==expected,'exact technical keys')
+ for r in tech:rowcheck(r)
+ for i in range(0,8,2):
+  left,right=tech[i:i+2]
+  ck({k:v for k,v in left.items() if k not in ['role','secs']}=={k:v for k,v in right.items() if k not in ['role','secs']},'technical raw pair parity all non-time fields')
+ proof=read(B/'technical/parity/proof.json')
+ ck(proof['games']==8 and len(proof['pairs'])==4,'technical proof totals')
+ for p in proof['pairs']:ck(p['original_tensor_hash']==list_hash,'technical original tensor hash')
+ report['technical']={'games':len(tech),'exact_pairs':4,'non_timing_row_parity':True,'original36_list_hash':list_hash,'trace_limitation':'Only logged action/public-trajectory digests remain; did not replay games or reconstruct hashes from absent stepwise action archives.'}
+ report['training']={}
+ initial_hashes=[];final_hashes=[];rngs=[]
+ for name in ['R61','R62']:
+  p=B/'training'/name;rr=rows(p/'games.jsonl');ck(len(rr)==120,'120 train rows')
+  ck(len({(r['seed'],r['side']) for r in rr})==120,'unique train keys')
+  for i,r in enumerate(rr):
+   rowcheck(r);ck((r['index'],r['seed'],r['side'])==(i,11010000+i//2,f'player_{i%2}'),'fixed ordered train key')
+   ck(r['opponent']==('solution92' if (i//2)%5<3 else 'self'),'fixed opponent')
+   ck(r['phase']==('prefill' if i<40 else 'learning'),'phase')
+   ck(r['updates']==max(0,i-39)*150,'150 updates per learning game')
+   ck(r['rows']> (rr[i-1]['rows'] if i else 0),'increasing replay writes')
+  c=torch.load(p/'final.pth',map_location='cpu',weights_only=True)
+  z=torch.load(p/'prefill.pth',map_location='cpu',weights_only=True)
+  pr=read(p/'proof.json');pp=read(p/'prefill_proof.json');pa=read(p/'prefill_accepted.json')
+  ck(pa['proof_sha256']==sha(p/'prefill_proof.json'),'prefill acceptance binding')
+  ck(pa['row_count']==rr[39]['rows'],'prefill accepted rows')
+  ck(c['updates']==12000 and c['eligible_steps']==36000,'final update counters')
+  ck(z['updates']==0 and z['eligible_steps']==12000 and not z['optimizer']['state'],'prefill zero updates/Adam')
+  for cp in [c,z]:
+   ck(cp['schema']=='sherlock.residual-additive.v1' and cp['base_sha256']==V14,'additive metadata')
+   ck(cp['cache_identity']==V14+':ordered-mean36:canonical79-float32-cpu:v1','cache identity')
+   ck(set(cp['residual'])==set(bases[18]) and len(cp['residual'])==12,'residual only 12 tensors')
+   ck(cp['optimizer']['param_groups'][0]['lr']==5e-5,'fixed learning rate')
+   for k,t in cp['residual'].items():
+    ck(t.shape==bases[18][k].shape and t.dtype==torch.float32,'tensor dimensions and dtype')
+    ck(torch.isfinite(t).all() and torch.equal(t,cp['target'][k]),'finite and final target equality')
+  for k,t in z['residual'].items():
+   if k in ['value.2.weight','value.2.bias','adv.2.weight','adv.2.bias']:ck(torch.count_nonzero(t)==0,'zero initial heads')
+   else:ck(torch.equal(t,bases[18][k]),'original member18 inner warmstart')
+  ck(all(not torch.equal(t,z['residual'][k]) for k,t in c['residual'].items()),'all residual tensors changed')
+  ck(len(c['optimizer']['state'])==12 and c['optimizer']['param_groups'][0]['params']==list(range(12)),'optimizer only residual params')
+  for k,state in c['optimizer']['state'].items():
+   ck(int(state['step'])==12000,'Adam steps')
+   for field in ['exp_avg','exp_avg_sq']:ck(torch.isfinite(state[field]).all(),'finite Adam')
+   ck((state['exp_avg_sq']>=0).all(),'Adam squared moment nonnegative')
+  ih,fh=treehash(z['residual']),treehash(c['residual']);initial_hashes.append(ih);final_hashes.append(fh);rngs.append((c['actor_rng'],c['sample_rng']))
+  ck(ih==pr['initial_residual_hash']==pp['residual_hash']==pa['initial_residual_hash'],'initial residual hashes')
+  ck(fh==pr['final_residual_hash'],'final residual hash')
+  ck(base_hash==pr['baseline_hash']==pp['baseline_hash']==pa['baseline_hash'],'baseline hash computed from protected original tensors')
+  losses=np.load(p/'losses.npy',allow_pickle=False)
+  ck(losses.shape==(12000,4) and np.isfinite(losses).all(),'12000 finite loss diagnostics')
+  ck((losses[:,0]>=0).all() and (losses[:,1]>=0).all(),'nonnegative Huber and grad norms')
+  ck(float(losses[:100,0].mean())==pr['loss_first100'] and float(losses[-100:,0].mean())==pr['loss_last100'],'loss summary raw recomputation')
+  reps={}
+  for stem,rowidx in [('prefill',39),('final',119)]:
+   with np.load(p/f'{stem}_replay.npz',allow_pickle=False) as a:
+    n=int(a['size']);w=int(a['writes']);cap=int(a['capacity']);pos=int(a['pos'])
+    ck(w==rr[rowidx]['rows'] and n==min(cap,w) and cap==300000 and pos==w%cap,'raw replay counters')
+    ck(int(a['obs_dim'])==79 and int(a['schema'])==1 and str(a['identity'])==c['cache_identity'],'raw replay metadata')
+    gen=a['generation'];exp=np.arange(1,n+1,dtype=np.int64)
+    if w>cap:exp+=((w-exp)//cap)*cap
+    ck(np.array_equal(gen,exp),'full ring physical generation chronology')
+    for k,shape,dtype in [('s',(n,79),'float32'),('ns',(n,79),'float32'),('base_s',(n,6),'float32'),('base_ns',(n,6),'float32'),('a',(n,),'int64'),('r',(n,),'float32'),('done',(n,),'float32'),('mask',(n,6),'bool'),('world',(n,3),'int16'),('signatures',(n,32),'uint8')]:
+     arr=a[k];ck(arr.shape==shape and str(arr.dtype)==dtype,'replay field shape/dtype')
+     if arr.dtype.kind=='f':ck(np.isfinite(arr).all(),'all replay float values finite')
+     del arr
+    aa=a['a'];done=a['done'];mask=a['mask'];world=a['world'];ns=a['ns']
+    ck(((aa>=0)&(aa<6)).all() and np.isin(done,[0.,1.]).all(),'action/done domain')
+    ck(mask.any(1).all(),'nonempty next action masks')
+    ck(((world[:,0]>=0)&(world[:,0]<6)).all() and np.array_equal(aa==5,world[:,0]==5),'world action domain/SAP labels')
+    terminal=done.astype(bool)
+    ck((ns[terminal]==0).all() and mask[terminal,0].all() and not mask[terminal,1:].any(),'all terminal next states and masks')
+    reps[stem]={'writes':w,'size':n,'pos':pos,'terminal_rows':int(terminal.sum())}
+    if stem=='prefill':ck(int(terminal.sum())==pa['terminal_rows'],'prefill terminal receipt')
+    del aa,done,mask,world,ns,terminal,gen,exp
+  ck(reps['final']['writes']==pr['cache']['writes'] and reps['final']['size']==pr['cache']['size'],'final replay proof totals')
+  ck(pr['games']==120 and pr['learning_games']==80 and pr['updates']==12000,'training proof totals')
+  report['training'][name]={'games':120,'prefill_games':40,'learning_games':80,'updates':12000,'eligible_steps':36000,'opponents':dict(collections.Counter(r['opponent'] for r in rr)),'parameter_count':sum(t.numel() for t in c['residual'].values()),'final_sha256':sha(p/'final.pth'),'residual_hash':fh,'initial_hash':ih,'replay':reps,'loss_first100':float(losses[:100,0].mean()),'loss_last100':float(losses[-100:,0].mean())}
+  del c,z,losses
+ ck(initial_hashes[0]==initial_hashes[1] and final_hashes[0]!=final_hashes[1],'common initial and separate trained ends')
+ ck(rngs[0][0]!=rngs[1][0] and rngs[0][1]!=rngs[1][1],'separate final actor/sample RNG states')
+ report['checks']=checks;report['hashed_unique_files']=len(hash_cache);report['status']='PASS within reviewed scope'
+ report['limits']=['No independent neural inference/cache-value recomputation, causal diagnosis, or claim of strength. Root already performed replay signatures and additive inference; this audit checked full raw array finiteness/shape/generations/terminal labels, not all replay signatures again.','Historical source identities read from accepted completion and matching state; no attempt to treat later selection source changes as training tampering.','Technical raw game records contain digests rather than complete stepwise traces; exact digest/score parity is verified, not independently rerun.','Stored checkpoint counters and Adam/loss rows cross-correlate 12000 updates per arm, but historical gradient execution cannot be independently replayed without rerunning training.']
+ report['ended_at']=time.time()
+ PREFIX.with_suffix('.json').write_text(json.dumps(report,indent=2)+'\n')
+ PREFIX.with_suffix('.md').write_text('# Independent residual artifact audit\n\n'+report['status']+f". {checks} checks; 8 technical and 240 training game records; 24,000 total updates.\n\n"+'Both exact fixed 120-game sequences, 40 zero-update prefills and 80 learning games at 150 updates each, 12,000 finite loss rows and Adam steps per arm, target equality, 79→256→256 Dueling residual tensors, shared zero-head member18 initialization, and distinct finite trained residuals verified directly. Full replay array schemas/finiteness/generations/terminal rows inspected. Input/output/protected-file hashes and receipt bindings agree. V14/ZIP unchanged in worktree and Primary.\n\n'+ '\n'.join('- '+x for x in report['limits'])+'\n\nSelection not read or analyzed in this stage. Ready for completed-selection follow-up.\n')
+ print(json.dumps({'status':report['status'],'checks':checks,'hashed_unique_files':len(hash_cache),'training':report['training']},indent=2))
+
+# Final completed-selection continuation, requested only after all 200 rows existed.
+if (B/'selection/completion.json').exists():
+ prior=read(PREFIX.with_suffix('.json'));checks=0
+ b=B/'selection';c=read(b/'completion.json');s=read(b/'state.json')
+ ck(s['status']=='complete' and s['active']==[],'selection complete without active jobs')
+ ck(c['phase']=='selection' and s['phase']=='selection','selection phase')
+ ck(c['source']==s['source'] and c['inputs']==s['inputs'] and c['protected']==s['protected'],'selection completion binding')
+ for category in ['inputs','outputs','protected']:
+  for path,digest in c[category].items():ck(sha(path)==digest,'selection '+category+' hash '+path)
+ for path,digest in c['source']['files'].items():ck(sha(path)==digest,'selection source file hash '+path)
+ ck(sha(c['source']['executable'])==c['source']['executable_sha256'],'runtime executable hash')
+ head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+ ck(head==c['source']['head'],'current selection source HEAD')
+ expected_jobs={'R61_solution92':('R61','solution92',11011000),'R62_solution92':('R62','solution92',11011000),'V14_solution92':('V14','solution92',11011000),'R61_direct':('R61','self',11011100),'R62_direct':('R62','self',11011100)}
+ ck(set(c['jobs'])==set(expected_jobs)==set(s['jobs']),'exact five selection jobs')
+ ck({j['name'] for j in s['fixed_jobs']}==set(expected_jobs) and len(s['fixed_jobs'])==5,'exact five fixed jobs')
+ ck({p.parent.name for p in b.glob('*/games.jsonl')}==set(expected_jobs),'only five games files')
+ fixed={j['name']:j for j in s['fixed_jobs']}
+ rr_by_name={};summary={};allkeys=[]
+ def boot(values):
+  values=np.asarray(values,np.float64)
+  ck(values.shape==(20,) and np.isfinite(values).all(),'20 finite whole-card means')
+  generator=np.random.Generator(np.random.PCG64(0))
+  draws=generator.integers(low=0,high=20,size=(5000,20))
+  means=values[draws].mean(axis=1)
+  return np.quantile(means,[.025,.975],method='linear').tolist()
+ for name,(agent,opponent,seedbase) in expected_jobs.items():
+  rr=rows(b/name/'games.jsonl');rr_by_name[name]=rr
+  expkeys=[{'seed':seed,'side':f'player_{side}'} for seed in range(seedbase,seedbase+20) for side in range(2)]
+  ck(fixed[name]==dict(name=name,agent=agent,opponent=opponent,keys=expkeys),'job role and fixed keys')
+  ck(c['jobs'][name]['returncode']==0 and s['jobs'][name]['returncode']==0,'finished selection worker')
+  ck(c['jobs'][name]['ended_at']<=c['ended_at'],'worker ended before completion')
+  ck(len(rr)==40,'40 raw rows per job')
+  ck([{'seed':r['seed'],'side':r['side']} for r in rr]==expkeys,'exact ordered raw keys, no omitted or replaced rows')
+  for r in rr:rowcheck(r);allkeys.append((agent,opponent,r['seed'],r['side']))
+  proof=read(b/name/'proof.json');progress=read(b/name/'progress.json')
+  ck(proof['games']==progress['completed']==40,'completed raw count agrees')
+  if agent!='V14':ck(proof['diagnostics']['explored']==0,'evaluation no exploration')
+  vals=np.array([r['result'] for r in rr],np.float64).reshape(20,2).mean(axis=1)
+  wins=sum(r['result']==1 for r in rr);draws=sum(r['result']==.5 for r in rr)
+  summary[name]={'games':40,'maps':20,'wins':wins,'draws':draws,'losses':40-wins-draws,'result_mean':float(vals.mean()),'score_interval':boot(vals)}
+ ck(len(allkeys)==len(set(allkeys))==200,'exact 200 unique expected role/map/side keys')
+ solution_keys={ (r['seed'],r['side']) for r in rr_by_name['V14_solution92'] }
+ direct_keys={ (r['seed'],r['side']) for r in rr_by_name['R61_direct'] }
+ training_keys={ (r['seed'],r['side']) for r in rows(B/'training/R61/games.jsonl') }
+ ck(not solution_keys.intersection(direct_keys) and not training_keys.intersection(solution_keys|direct_keys),'study training/selection blocks disjoint')
+ gates={};paired={}
+ baseline={ (r['seed'],r['side']):r['result'] for r in rr_by_name['V14_solution92'] }
+ for agent in ['R61','R62']:
+  d=summary[agent+'_direct'];t=summary[agent+'_solution92']
+  gates[agent]={'direct_min24':d['wins']>=24,'solution_at_least_V14':t['wins']>=summary['V14_solution92']['wins']}
+  gates[agent]['passes_both']=all(gates[agent].values())
+  rr=rr_by_name[agent+'_solution92']
+  ck({(r['seed'],r['side']) for r in rr}==set(baseline),'paired all Solution keys')
+  delta=np.array([r['result']-baseline[(r['seed'],r['side'])] for r in rr]).reshape(20,2).mean(axis=1)
+  paired[agent]={'mean_difference':float(delta.mean()),'interval':boot(delta)}
+  cp=str(B/'training'/agent/'final.pth')
+  ck(c['inputs'][cp]==prior['training'][agent]['final_sha256']==sha(cp),'candidate same as independently audited accepted training')
+ qualifies=all(gates[a]['passes_both'] for a in ['R61','R62'])
+ nominee=sorted(['R61','R62'],key=lambda a:(-summary[a+'_direct']['wins'],-summary[a+'_solution92']['wins'],int(a[1:])))[0] if qualifies else None
+ expected_analysis={'phase':'selection','wins':{n:v['wins'] for n,v in summary.items()},'games':{n:40 for n in summary},'score_intervals':{n:v['score_interval'] for n,v in summary.items()},'gates':{a:gates[a]['passes_both'] for a in gates},'nominee':nominee,'solution_paired_intervals':{a:v['interval'] for a,v in paired.items()}}
+ ck(expected_analysis==c['analysis'],'independent calculation agrees exactly with original selection analysis')
+ final={'status':'PASS: independent final selection decision agrees; no nominee','checked_at':time.time(),'checks':checks,'source_head':head,'source_files_checked':len(c['source']['files']),'hash_checks':{k:len(c[k]) for k in ['inputs','outputs','protected']},'completion_sha256':sha(b/'completion.json'),'games':200,'rows_excluded':0,'duplicate_keys':0,'results':summary,'gates':gates,'paired_solution':paired,'nominee':nominee,'bootstrap':'5000 PCG64(seed=0) draws of 20 complete maps with replacement, retaining both sides. Paired Solution contrasts join all identical map/side keys before map averaging; linear 2.5/97.5 percentiles. Separate training and selection data.','limitations':['V14 Solution 40/40 gives an empirical bootstrap [1,1] because every observed map is all-wins. This degenerate interval does not express zero population uncertainty and is not evidence of a universal 100% win rate.','This fixed screen rejects both starts under the preregistered practical gates; it does not show that all residual methods fail. No confirmation, candidate replacement or extra sampling is authorized by this result.','No games, model inference or tests were rerun. Scores and action-trace digests are checked for internal consistency and recorded-file integrity, not recomputed from unavailable full simulator traces.','The recorded source/input/output identities are currently exact, including all source files and executable bytes; this is evidence of artifact identity, not an independent reconstruction of every past process event.']}
+ prior['selection']=final;prior['checks_training_technical']=prior['checks'];prior['checks_total']=prior['checks']+checks;prior['status']='PASS within reviewed scope: technical, training and final selection';prior['scope']='Independent final audit of raw technical/training artifacts and all 200 completed selection records. No project code imports, games, model instantiation, inference or tests.'
+ PREFIX.with_suffix('.json').write_text(json.dumps(prior,indent=2)+'\n')
+ lines=['\n# Completed selection audit\n',f"PASS. {checks} additional checks; {prior['checks_total']} combined. Exactly 200 records across the five fixed jobs, no missing/duplicate/excluded/replaced role-map-side keys. All 303-step, scoring-v2, result/win, zero-caught-error and file identity checks agree. All {len(c['source']['files'])} recorded source files and the runtime executable match; both candidates match the previously independently audited training hashes.\n",'| Agent | Solution wins | Direct wins | Direct map-bootstrap 95% | Solution delta vs V14, 95% |\n|---|---:|---:|---:|---:|\n','| R61 | 35/40 | 14/40 | 15–55% | −12.5 pp [−25; −2.5] |\n','| R62 | 38/40 | 10/40 | 9.875–45% | −5 pp [−12.5; 0] |\n','| V14 | 40/40 | — | — | reference |\n','\nBoth starts fail both fixed gates (direct ≥24/40 and Solution ≥V14). No nominee, no confirmation, no V14/ZIP replacement. The independent calculations agree exactly with the original analysis.\n','\n'+final['bootstrap']+'\n','\n'+'\n'.join('- '+x for x in final['limitations'])+'\n']
+ with PREFIX.with_suffix('.md').open('a') as f:f.writelines(lines)
+ print(json.dumps(final,indent=2))

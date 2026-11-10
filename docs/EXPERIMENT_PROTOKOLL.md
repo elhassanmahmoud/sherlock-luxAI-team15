@@ -1,5 +1,8 @@
 # Experiment-Protokoll
 
+- 10.11.2026: **Residualer V14-Pilot abgeschlossen, negativ.** Original36 eingefroren, additiveKorrektur R und gemeinsames DDQN-Ziel M+R. Acht exakte Null-R-Kontrollen, zwei40+80-Läufe/24.000Updates,200 feste Auswahlspiele: Solution35/40 und38/40 stattV14 40/40; direkt14/40 und10/40. Beide Starts verfehlen beide Auswahlhürden. Insgesamt448 Ausführungen; keine Bestätigung/Verlängerung/Übernahme. Root und unabhängiger tatsächlicher Audit stimmen überein, V14/ZIP unverändert. [Bericht](../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md).
+
+
 - 09.11.2026: **EXPOSURE38-Auswahl abgeschlossen, V14 bleibt.** Genau200 Spiele auf60 festen Karten: Solution37/40 wieV14 gegenüberBEHAVIOR38 39/40; direkt22/40vsV14 und20/40vsBEHAVIOR38. Drei/vierHürden verfehlt, unabhängig10.705Checks und originaleRoot-Reproduktion PASS. Keine Nominierung/Verlängerung, keine neuen Gewichte übernommen. Vorher separat884Trainingsausführungen/120.000Updates. Nutzerreserve25Prozent, Abschluss mit30ProzentRest; Jobs beendet, Automation pausiert. [Ergebnis](../experiments/analysis/frozen_v14_exposure_compare_20261109/ERGEBNIS.md).
 
 ## 09.11.2026 – Vorlauf-Punktreward: Offlinebefund

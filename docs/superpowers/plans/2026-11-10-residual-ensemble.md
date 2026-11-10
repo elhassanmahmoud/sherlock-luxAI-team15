@@ -1,5 +1,8 @@
 # Residualer V14-Kandidat: vorgeschlagener Umsetzungsplan
 
+**Abschluss10.11.2026:** Nach späterer Nutzerfreigabe umgesetzt. Beide Starts haben die feste200er-Auswahl verfehlt; Pilot nach448 Ausführungen geschlossen, V14/ZIP unverändert. [Endergebnis](../../../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md). Der folgende Planungs-/Freigabeverlauf bleibt als ursprüngliche Festlegung erhalten; er autorisiert keinen Neustart.
+
+
 > **For agentic workers:** Nach ausdrücklicher Fortsetzung `superpowers:executing-plans` verwenden. Root implementiert selbst; Subagents nur für die hier benannten unabhängigen Prüfungen. Dieser Plan ist noch nicht umgesetzt.
 
 **Goal:** Einen kleinen additiven Korrekturlerner für V14 prüfen und nur bei belegtem Vorteil einen Kandidaten übernehmen.

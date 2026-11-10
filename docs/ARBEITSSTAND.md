@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Residual-Pilot geschlossen, V14 bleibt unverändert
+
+- Plan vollständig bis zur vorab festen Abbruchentscheidung umgesetzt:8 Technikspiele,240 Vorlauf-/Trainingsspiele mit24.000 Updates,200 Auswahlspiele, insgesamt448 Ausführungen. Beide additiven Kandidaten gescheitert: Solution R61 **35/40**, R62 **38/40**, V14 **40/40**; direkt gegenV14 **14/40** bzw. **10/40**. Beide Direkt- und Solution-Hürden verfehlt, keine Nominierung/600er-Bestätigung/Kursprüfung oder automatische Verlängerung. [Vollständiger Bericht](../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md).
+- Tatsächlicher unabhängiger Datenaudit11.161 kombinierteChecks und Root-Reproduktion stimmen exakt überein. Direkte95%-Kartenintervalle[15;55]% und[9,875;45]%. V14s40/40 auf20 Karten ist keine allgemeine100%-Garantie; der empirisch degenerierte Bootstrap wird nicht als Gewissheit verkauft.
+- Quelle/Eingaben/Modelle/Schutzdateien bis tatsächlichem [Root-Abschluss](../experiments/analysis/residual_ensemble_20261110/selection/accepted.json) unverändert; erst danach Freeze aufgehoben. Alle eigenen Worker und Wachhalter beendet. Endmodelle und Belege imRepo, vier große Replay-NPZs lokal in beiden Kopien. V14 undZIP sowie fremde Primary-Dateien erhalten.
+- Der begrenzte Plan ist beendet. Keine nächste Studie, Wiederholung oder Gewichtsübernahme gestartet. Remote-Automation weiterPAUSED. Bei Abschluss25%Kontingent übrig, Mindestreserve5% eingehalten. Ein weiterer Ansatz braucht eine neue begründete Entscheidung; diese Daten zeigen keinen stärkeren Sherlock.
+
+
 ## 10.11.2026 – Beide Residual-Lernläufe vollständig geprüft
 
 - Nach acht Technikspielen zwei feste40+80-Läufe beendet:240 Spiele,160 Lernspiele,24.000 Updates. Vorläufe vor Lernen wirklich abgenommen. Endmodelle/Ringreplays/Adam/Target/Wiederladen additiver Inferenz geprüft; Original36/V14/ZIP unverändert. [Ergebnis](../experiments/analysis/residual_ensemble_20261110/TRAININGSERGEBNIS.md), [Root-Abnahme](../experiments/analysis/residual_ensemble_20261110/training/accepted.json).

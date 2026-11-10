@@ -1,5 +1,8 @@
 # V14 gezielt korrigieren: Planvorschlag vom 10.11.2026
 
+**Abschluss10.11.2026:** Nach späterer Nutzerfreigabe umgesetzt. Beide Starts haben die feste200er-Auswahl verfehlt; Pilot nach448 Ausführungen geschlossen, V14/ZIP unverändert. [Endergebnis](../../../experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md). Der folgende Planungs-/Freigabeverlauf bleibt als ursprüngliche Festlegung erhalten; er autorisiert keinen Neustart.
+
+
 **Status: Vorschlag zur Besprechung, keine Ausführungsfreigabe aus diesem Dokument.** Moayed beauftragt zunächst Planung. Kein Training, keine Agentenänderung, kein Gewichtstausch, keine reaktivierte Automation. Neue Budgetgrenze: mindestens 5 % Codex-Kontingent erhalten. Die folgenden Zahlen sind vorab vorgeschlagene Entscheidungen, keine gemessenen Resultate.
 
 ## Ziel und belegter Ausgangspunkt

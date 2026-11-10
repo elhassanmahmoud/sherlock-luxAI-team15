@@ -1,5 +1,8 @@
 # Projekt: Lux AI Season 3 – RL-Agent (HTW Berlin, Anwendungen KI, WS 26/27)
 
+**Aktueller Abschluss10.11.:** Additiver Residual-Pilot vollständig geprüft und negativ geschlossen. Zwei neue Netze für Korrekturen bei eingefrorenen 36 V14-Netzen, 24.000 Updates; Auswahl Solution35/40 und38/40 gegenüberV14 40/40, direkt14/40 und10/40. Keine Nominierung, kein V14-/ZIP-Ersatz oder Nachtraining. [Ergebnis und Grenzen](experiments/analysis/residual_ensemble_20261110/ERGEBNIS.md). Experimenteller Loader verwendet explizit M+R, keinen normalen37er-Mittelwert. Aktuellen Arbeitsumfang wie immer im jüngsten Arbeitsstand lesen.
+
+
 ## Gemeinsame Arbeitsweise: Claude Code und Codex
 
 - Diese Datei ist die gemeinsame Quelle für Projektregeln und fachlichen Überblick. Codex wird über [AGENTS.md](AGENTS.md) hierher verwiesen.

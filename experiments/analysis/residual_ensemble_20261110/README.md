@@ -2,8 +2,9 @@
 
 Freigegebene [Spec](../../../docs/superpowers/specs/2026-11-10-residual-ensemble-design.md)
 und [Plan](../../../docs/superpowers/plans/2026-11-10-residual-ensemble.md).
-Stand: acht Technikspiele und beide Trainingsläufe abgeschlossen;
-[Trainingsbericht](TRAININGSERGEBNIS.md). Noch keine Stärkeaussage.
+**Abgeschlossen, negativ:** Beide Kandidaten scheitern in200 festen Auswahlspielen.
+V14/ZIP bleiben unverändert. [Endergebnis](ERGEBNIS.md),
+[Trainingsbericht](TRAININGSERGEBNIS.md). Keine weitere Phase starten.
 
 ## Methode
 
