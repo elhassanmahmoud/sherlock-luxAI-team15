@@ -1,0 +1,19 @@
+# Independent residual core review — 2026-11-10
+
+Read-only static review of `agents/sherlock/residual.py`, `scripts/residual_ensemble_train.py`, their two test files, and the two minimal `Agent_x` hooks, against the approved residual spec/plan. No games, checkpoint loads, imports, or tests were executed. Orchestration/compare work in progress was excluded.
+
+## Findings
+
+1. **P2 — The diagnostics cannot establish final residual influence or the fraction removed by rules.** `agents/sherlock/residual.py:101–125` compares the executed action with a *raw masked baseline argmax*, not the baseline action after the same complete rule chain. For example, base proposes STAY, residual proposes RIGHT, and a rule maps both to UP: the residual effect is completely removed, but `changed_returned_to_base` stays zero. Conversely, ordinary baseline rule changes can be counted as differences from that raw baseline even with R=0. Exploration is also folded into `proposed`. These counters are valid only as raw-proposal/rule-return diagnostics; they do not fulfill the spec's requested actual final-action changes or rule-cancellation fraction. The recorded `final` also comes from `_prev_actions`, while the collector itself correctly documents that emitted world actions are the authoritative source (including SAP-to-STAY fallback). Report the counters with their precise limited meaning, and use isolated same-state baseline rule evaluation if claiming actual residual-induced final action changes; include canonicalized emitted actions and SAP offsets for that comparison. This does not invalidate the DDQN labels, which the learner reconstructs from emitted actions.
+
+2. **P2 — Critical collector lifecycle remains untested by the focused synthetic tests.** `tests/test_residual_ensemble_train.py:80–104` calls `finish_transition` directly with preconstructed next features, so its name overstates coverage: it never exercises `ResidualLearner.act/update/new_game`, `_reward_shadow`, or exploration through the normal evaluation rule chain (`scripts/residual_ensemble_train.py:162–214`). A regression that finalizes before the next real decision, observes twice, changes live sticky/searcher state in a shadow, fails to flush on terminal, or stores a mirrored/fallback action incorrectly would still pass every current test. Add small deterministic lifecycle tests without real games/checkpoint loads: delayed capture and flush; reset/no-unit/terminal cases; shadow mutation isolation; actual mirrored world-action labels; epsilon=1 before a rule that must still override. The eight planned zero-R traces are valuable but do not exercise nonzero exploration and should not substitute for these focused branch checks.
+
+## No blocking defect found in the inspected learning path
+
+- All prediction/online selection/target terms use the same additive M+R definition; masks and terminal multiplication are correct, and target computation has no gradient.
+- R copies member 18 and zeros only both final head layers. The original models are frozen, and Adam owns only R.
+- Raw baseline vectors are copied before masking; ring writes bind all transition/cache/world fields to one slot/generation and sample from one index draw. Save/load preserve physical slots.
+- Nonterminal transitions are completed only after the next actual evaluation decision; terminal/reset reward contexts use a detached belief shadow. Existing reward and respawn helpers are reused.
+- The learner stores the canonicalized emitted action type and the emitted world action. It keeps `training=False`, so exploration reaches the full normal evaluation rule chain.
+
+Limits still requiring the planned technical admission: actual original-file tensor identity, stock/zero-R full traces, direct-vs-cached numerical comparison on collected rows, exact 300 eligible steps/150 updates per learning game, and actual residual checkpoint reload. No assertion here that those runtime checks have passed.

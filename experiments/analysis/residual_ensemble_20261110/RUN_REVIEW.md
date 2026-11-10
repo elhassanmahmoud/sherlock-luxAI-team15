@@ -1,0 +1,25 @@
+# Residual runner follow-up review — 2026-11-10
+
+**Final assessment: no open blocking finding in the bounded reviewed scope.** Read-only static review; I did not execute tests, imports, models, or games. Reviewed the updated core diagnostics/lifecycle tests, `scripts/residual_ensemble_run.py`, `scripts/residual_ensemble_compare.py`, their tests, and the ownership/hash/shutdown helpers they call. Root's reported test passes are not represented as independently rerun here.
+
+## Findings raised and resolved
+
+- **P1, cross-phase model continuity — resolved.** Originally the next phase only verified the accepted completion JSON, then admitted whatever candidate bytes currently existed. `scripts/residual_ensemble_run.py:69–81` now verifies every input and output hash bound by that accepted completion. Selection therefore checks the accepted training model outputs; confirmation checks the exact candidate hashes retained in selection inputs. `launch` invokes this before admitting workers at lines 132–138. The new mutation test checks both changed inputs and changed outputs. This closes the concrete model-substitution gap found in review.
+
+- **P1, normal supervisor cancellation bypassed cleanup — resolved.** Originally SIGTERM/SIGHUP could terminate the supervisor outside Python cleanup while its separately sessioned workers continued until their next owner check. `scripts/residual_ensemble_run.py:84–93` now maps INT/TERM/HUP to the shared STOP request and restores prior handlers. The context encloses the owned-worker try/finally at lines 152–192, so normal cancellation reaches the existing owned-group shutdown. The handler test verifies STOP dispatch and restoration.
+
+- **Earlier P2, diagnostic overinterpretation — resolved as a precisely documented limitation.** `agents/sherlock/residual.py:122–131` reconstructs final canonical action types from emitted world actions and explicitly names the comparisons `final_differs_from_proposal` and `returned_to_raw_base`. The code states that this is a comparison with a raw proposal, includes exploration, and is not a counterfactual final baseline policy. It must retain that meaning in the eventual result report; it does not establish causal final residual influence.
+
+- **Earlier P2, collector lifecycle coverage — addressed.** `tests/test_residual_ensemble_train.py:127–185` now exercises real learner act/update methods using small synthetic networks: delayed replay availability, next actual features, mirrored emitted actions, pending/new-game rejection, terminal flush without advancing live belief, reset/no-unit behavior, sticky/searcher shadow isolation, and epsilon=1 before the normal rule override. These supplement, rather than replace, the planned real zero-R trace admission.
+
+## Bounded runner and gate checks
+
+- Technical loop contains exactly four stock/zero-residual-collector pairs, eight executions. It compares both action and full public-trajectory digests, outcomes, unchanged bases, zero updates, empty Adam, no pending transition, and 300 eligible steps. Its cache audit recomputes M(s) and M(s') with explicit numerical tolerance.
+- Training contains exactly two roles, starts 61/62, each 40 prefill plus 80 learning games. Each map is played from both sides, with the declared 3:2 Solution/fixed-V14 schedule. Prefill waits for a root receipt bound to the actual proof. Per-game update assertions and final 12,000-update/36,000-eligible-step assertions enforce the fixed budget. There is no retry or extension path.
+- The launch loop permits at most two owned workers, holds the existing compute locks, continuously checks frozen sources/input/release hashes and quota, and requires fresh output directories. Each later phase requires a separate invocation and prior root acceptance. It contains no promotion or release-weight write.
+- Selection has exactly 200 executions. Both starts must independently reach 24/40 real direct wins and match V14's Solution wins. Ranking is direct wins, Solution wins, then smaller start.
+- Confirmation has exactly 600 executions and binds the selected nominee. Its direct-win/95% map-bootstrap, Solution 95/100 and V14-retention, equal-weight Square/V13 panel, per-opponent regression, and default 20/20 gates match the approved design. Whole-map resampling retains both sides; panel differences retain the shared Square/V13 maps. Missing/reordered/duplicate game keys, scoring mismatches, incomplete games, and caught agent errors are rejected.
+
+## Remaining admission evidence
+
+The actual zero-R traces, original/candidate tensor identities, runtime/resource feasibility, prefill/final artifact audits, and independent final performance-data review remain runtime work. No such evidence was inferred from static correctness or the reported unit tests. The seed-audit artifact and original-source snapshot are pinned by the launcher; root still owns the substantive once-only historical-card audit and original-snapshot provenance check before admission, as planned.

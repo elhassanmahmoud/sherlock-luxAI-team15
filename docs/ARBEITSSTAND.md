@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 10.11.2026 – Additiver V14-Pilot technisch umgesetzt
+
+- Neue kleine Korrektur R nach dem unveränderten 36er-Mittelwert; DDQN verwendet überall M+R. Nur R erhält Gradienten. Auswertungsregeln bleiben aktiv, Exploration erfolgt davor; tatsächliche Weltaktionen und rohe Baselinewerte werden gemeinsam gespeichert. Verzögerte Übergänge vermeiden eine vorgezogene Merkmalsberechnung. [Methodik und Grenzen](../experiments/analysis/residual_ensemble_20261110/README.md).
+- 18 gezielte neue Tests bestanden; zusätzlich 63 vorhandene Ensemble-/Reward-/Verhaltenstests bestanden. Einmalige Kartenprüfung ohne beobachtete Überschneidung, Archivlücken ausdrücklich dokumentiert. Unabhängiger Kernreview: Diagnosebegriffe präzisiert, Lebenszyklustests ergänzt. Startschutz bindet die tatsächlichen Modellbytes über Phasen hinweg und beendet eigene Prozesse bei Abbruch.
+- Noch keine neuen Spiele oder Lernupdates. Nächster Schritt sind ausschließlich acht bekannte Kontrollausführungen gegen die archivierte Originalquelle346e013; dann separate tatsächliche Abnahme vor zwei40+80-Trainingsläufen. Bestehende V14-/ZIP-Hashes unverändert. Keine automatischen Neustarts oder Erweiterungen.
+- Mindestens5% Kontingent erhalten, kontrollierter Abschluss ab92% Verbrauch. Root arbeitet selbst; ein Kartencheck und ein fokussierter Review wurden unabhängig delegiert. Remote-Automation bleibt pausiert. Quellen während einer tatsächlichen Phase nicht ändern.
+
+
 Dieses Protokoll dient der Übergabe zwischen Mahmoud, Moayed, Claude Code und Codex. Neueste Einträge stehen oben. Gemeinsame Regeln und fachlicher Überblick: [CLAUDE.md](../CLAUDE.md). Messreihen und Entscheidungen über Agentenvarianten: [EXPERIMENT_PROTOKOLL.md](EXPERIMENT_PROTOKOLL.md).
 
 Pro abgeschlossener Arbeit knapp festhalten: Datum und Bearbeiter, Änderung und Grund, tatsächlich ausgeführte Prüfungen, offene Punkte. Frühere Messergebnisse als solche kennzeichnen. Ein geplanter Schritt ist noch kein Auftrag zur Umsetzung. Änderungen werden für das andere Teammitglied erst nach Übertragung über Git und Aktualisierung seiner Arbeitskopie sichtbar; Chatverläufe gehören nicht automatisch dazu.

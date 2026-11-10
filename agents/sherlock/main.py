@@ -355,16 +355,14 @@ class Agent_x:
 
         with torch.no_grad():
             t = torch.as_tensor(feats, dtype=torch.float32, device=self.device)
-            qt = self.q(t)
-            if self.extra_q and not self.training:
-                # gemischtes Ensemble: Netze mit weniger Eingaben sehen die ersten Merkmale
-                qt = torch.stack([qt] + [m(t[:, :m.feat_dim]) for m in self.extra_q]).mean(dim=0)
+            qt = self._network_values(t)
             q = qt.cpu().numpy()
         if self.cnn_policy is not None and not self.training:
             q = self._mix_cnn(ctx, ids, feats, masks, q)
         raw_greedy = q.argmax(axis=1)
         q[~masks] = -np.inf
         greedy = q.argmax(axis=1)
+        greedy = self._policy_greedy(ctx, ids, masks, greedy)
         st = self.ep_stats
         st["unit_steps"] += len(ids)
         st["greedy_masked"] += int((~masks[np.arange(len(ids)), raw_greedy]).sum())
@@ -628,6 +626,17 @@ class Agent_x:
         if self.cfg.dodge_shape and not self.training:
             self._record_shapes(ctx)
         return actions
+
+    def _network_values(self, features: torch.Tensor) -> torch.Tensor:
+        qt = self.q(features)
+        if self.extra_q and not self.training:
+            qt = torch.stack([qt] + [m(features[:, :m.feat_dim]) for m in self.extra_q]).mean(dim=0)
+        return qt
+
+    def _policy_greedy(self, ctx, ids, masks, greedy):
+        # Identity for existing agents; an experimental actor may explore here,
+        # before the complete evaluation rule chain, without enabling training.
+        return greedy
 
     def set_cnn_policy(self, net, weight: float = 1.0, temp: float = 0.2) -> None:
         """CNN-Policy (cnn_model.PolicyNet) zum Abstimmen mit den Q-Netzen."""
