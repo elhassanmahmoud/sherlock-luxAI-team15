@@ -182,6 +182,16 @@ def equal_or_evidence(expected, actual, path, kind, step=None):
     raise ValueError(f'{kind} mismatch; actual evidence saved')
 
 
+def verify_historical_config(current, historical):
+    # c023b28 added this disabled experiment after the Nov9 trace; no behavior
+    # changes when False. Reconcile only this documented absent default.
+    expected = dict(historical)
+    if 'cand_stall_rescue' not in expected:
+        require(current.get('cand_stall_rescue') is False, 'Historical rescue experiment must remain disabled')
+        expected['cand_stall_rescue'] = False
+    require(current == expected, 'Historical/current config differs; reconcile before admission')
+
+
 def make_runtime(seed, side, weights, instrumented):
     """Fresh policies and engine, with the original reviewed initialization."""
     from luxai_s3.wrappers import LuxAIS3GymEnv
@@ -194,8 +204,7 @@ def make_runtime(seed, side, weights, instrumented):
     cls = HolderSapProbeAgent if instrumented else reference_cls
     cfg = build_cfg(str(weights), []) if instrumented else reference_cls._cfg_from_checkpoint(str(weights))
     require(cfg is not None and not cfg.smart_sap, 'Original non-smart-SAP config required')
-    require(asdict(cfg) == json.loads(HISTORY.read_text())['games'][0]['unobserved']['config'],
-            'Historical/current config differs; reconcile before admission')
+    verify_historical_config(asdict(cfg), json.loads(HISTORY.read_text())['games'][0]['unobserved']['config'])
     agent = cls('player_0', agent_path=str(weights), cfg=cfg,
                 train=False, seed=0)
     agent.set_to_eval_mode()

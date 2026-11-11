@@ -302,3 +302,15 @@ def test_runtime_creation_failure_is_entered_before_loading(monkeypatch, tmp_pat
     assert state['status'] == 'failed' and state['counters']['started_runs'] == 1
     assert state['counters']['total_steps'] == 0 and state['runs'][0]['status'] == 'failed'
     p.verify_ledger(state, complete=False)
+
+
+def test_historical_config_only_allows_documented_inactive_added_flag():
+    p=implementation()
+    assert hasattr(p,'verify_historical_config')
+    original={'smart_sap':False,'ram':False}
+    p.verify_historical_config({**original,'cand_stall_rescue':False},original)
+    assert original=={'smart_sap':False,'ram':False}
+    for changed in ({**original,'cand_stall_rescue':True},
+                    {**original,'cand_stall_rescue':False,'ram':True},
+                    {**original,'cand_stall_rescue':False,'another_flag':False}):
+        with pytest.raises(ValueError): p.verify_historical_config(changed,original)
