@@ -32,11 +32,11 @@
 
 **Schnittstellen:** `PublicEquation(tiles, residual, observed_step)`; `advance_public_history(previous, current, history) -> history`; `choose_probe(public, ids, masks, greedy, history) -> ProbeProposal | None`; `audit_archived_traces(manifest, output) -> report`. Proposal enthält ausgewählte UIDs/Aktionen, x, alte/neue Mengen, öffentliche Voraussetzungen, Originalvorschlag und festen Entscheidungsgrund. Keine Modelle in der Offlinefunktion laden.
 
-- [ ] Eingabemanifest/zwölf tatsächliche Traces binden, Schema und historische Config prüfen. Öffentlich erlaubte Felder explizit auswählen; `posthoc` nicht an die Policy übergeben. Fehlende Informationen als Ausschluss protokollieren.
-- [ ] Zuerst synthetische Tests schreiben/fehlschlagen lassen: A+B=1 und B isolierbar; bekannter Punktbeitrag; Stapel; Energie −1; Punktzuwachs am aktuellen Frame; Symmetrie ohne falsche Zusammenfassung; Matchreset/Widerspruch; keine eigenen Gleichungen/Nullannahmen vor Schritt 50; fehlende Sicht-/Kostenfelder; Originalvorschlag bereits informativ; zwei gleichrangige Vorschläge deterministisch; keine echten Spiele in Tests.
-- [ ] Minimalen öffentlichen Gleichungsspeicher und exakt den Auswahlalgorithmus der Spec implementieren. Höchstens 113 Entwürfe, 400 Gleichungen. Keine freie Reward- oder Q-Schwelle ergänzen.
-- [ ] Präfixtest: Änderungen an späteren Frames und versteckten `posthoc`-Werten verändern frühere Vorschläge nicht. Gezielte Tests mit Projekt-Python ausführen; unabhängigen Beweisreview einmalig einholen.
-- [ ] Die zwölf alten Traces einmal auswerten: erste Gelegenheit/Spiel, Gates und Ausschlussgründe, konkrete öffentliche Gleichung pro Gelegenheit. Bei Gate-A-Verfehlung dokumentieren und schließen; keine Engineaufnahme. Offlinebelege/Werkzeug sinnvoll committen.
+- [x] Eingabemanifest/zwölf tatsächliche Traces binden, Schema und historische Config prüfen. Öffentlich erlaubte Felder explizit auswählen; `posthoc` nicht an die Policy übergeben. Fehlende Informationen als Ausschluss protokollieren.
+- [x] Zuerst synthetische Tests schreiben/fehlschlagen lassen: A+B=1 und B isolierbar; bekannter Punktbeitrag; Stapel; Energie −1; Punktzuwachs am aktuellen Frame; Symmetrie ohne falsche Zusammenfassung; Matchreset/Widerspruch; keine eigenen Gleichungen/Nullannahmen vor Schritt 50; fehlende Sicht-/Kostenfelder; Originalvorschlag bereits informativ; zwei gleichrangige Vorschläge deterministisch; keine echten Spiele in Tests.
+- [x] Minimalen öffentlichen Gleichungsspeicher und exakt den Auswahlalgorithmus der Spec implementieren. Höchstens 113 Entwürfe, 400 Gleichungen. Keine freie Reward- oder Q-Schwelle ergänzen.
+- [x] Präfixtest: Änderungen an späteren Frames und versteckten `posthoc`-Werten verändern frühere Vorschläge nicht. Gezielte Tests mit Projekt-Python ausführen; unabhängigen Beweisreview einmalig einholen.
+- [x] Die zwölf alten Traces einmal auswerten: erste Gelegenheit/Spiel, Gates und Ausschlussgründe, konkrete öffentliche Gleichung pro Gelegenheit. Bei Gate-A-Verfehlung dokumentieren und schließen; keine Engineaufnahme. Offlinebelege/Werkzeug sinnvoll committen.
 
 ## Aufgabe 2: Prototyp und tatsächliche Informationswirkung
 
@@ -67,3 +67,8 @@
 ## Abschluss dieser Planungsrunde
 
 Der ursprüngliche Plan war zunächst ein Vorschlag, kein erreichter Agent. Nach ausdrücklicher Nutzerfortsetzung ist Aufgabe 1 freigegeben; spätere Aufgaben nur nach tatsächlichem Bestehen der jeweiligen Gates und erneuter Kontingentprüfung. Keine Dauerexperimente oder vorgezogenen Folgeschritte.
+
+
+## Tatsächlicher Abschluss 11.11.2026
+
+Aufgabe 1 vollständig ausgeführt und unabhängig geprüft: vier geeignete Schlüssel statt mindestens sechs. Gate A verfehlt; Aufgaben 2 und 3 entfallen gemäß vorab fester Stoppen-Entscheidung und sind nicht als erledigt markiert. Keine neuen Spiele, Modellloads oder Updates. V14/ZIP unverändert. [Ergebnis](../../../experiments/analysis/information_probe_20261111/ERGEBNIS.md).

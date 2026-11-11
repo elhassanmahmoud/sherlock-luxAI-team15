@@ -1,0 +1,20 @@
+{
+  "status": "root_verified_phase_a_stop",
+  "source_commit": "c2fa026fbe0f12cbf2a772bdfb5d579a6cd033b2",
+  "report_sha256": "2cff77521eb7e8725f0b7fe655b609aceefc095cf45bbbea9abdb6d9f3caf39b",
+  "auditor_sha256": "e4de579f6ec1c5b83316e5443548b4a967f3629eb1527022dfe0c1e7b0301580",
+  "input_traces": 12,
+  "examined_frames": 302,
+  "qualifying_keys": 4,
+  "qualifying_maps": 4,
+  "new_engine_games": 0,
+  "new_model_loads": 0,
+  "updates": 0,
+  "phase_b_admitted": false,
+  "protected": {
+    "agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6"
+  },
+  "verification": "All12 chronological scans, full serialized decisions and provenance reproduced exactly; fixed six-key gate failed."
+}

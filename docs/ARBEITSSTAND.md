@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 11.11.2026 – Gezielte Feldtests geprüft und an Gate A geschlossen
+
+- Zwölf gebundene historische Traces, 302 tatsächlich untersuchte Fensterframes bis zur jeweils ersten Gelegenheit: **vier geeignete Spielschlüssel auf vier Karten**, davon zwei Verlust- und zwei Kontrollspiele. Gefordert waren mindestens sechs Schlüssel; Gate A verfehlt. Keine Phase B/C/D, keine neue Engineausführung, kein Modellload oder Update. [Vollständiger Befund](../experiments/analysis/information_probe_20261111/ERGEBNIS.md).
+- 26 synthetische Tests bestanden. Root hat die vollständige Auswertung und Herkunft exakt reproduziert; unabhängige eigene Rekonstruktion bestätigt alle vier Vorschläge, Grenzen und Stoppen-Entscheidung (129.805 Einzelprüfungen laut Datenreview). [Datenreview](../experiments/analysis/information_probe_20261111/DATENREVIEW.md). Alle vier Vorschläge lassen ein unbekanntes Feld in der projizierten Belegung übrig; noch kein tatsächlicher Informations- oder Stärkezuwachs.
+- Werkzeug/Belege unter Quellec2fa026 aufgenommen. Geplante Live-Unterklasse und Spielrunner nach festem Gate nicht gebaut; keine nachträgliche Fenstererweiterung, Zusatzkarten oder abgesenkte Hürde. Dieser konkrete Ansatz ist geschlossen, keine automatische weitere Studie. V14 mit 36 Netzen, beide Gewichte und ZIP bytegleich; fremde Dateien bleiben erhalten. Keine eigenen Modell-/Wachhalteprozesse gestartet, Automation weiterhin pausiert. Mindestens 5 % Reserve eingehalten; bei letzter Prüfung 12 % übrig.
+
 ## 11.11.2026 – Gezielte Feldtests zur bedingten Umsetzung freigegeben
 
 - Moayed autorisiert den Plan einschließlich selbstständiger Fortsetzung nur bei bestandenen Phasenbedingungen; mindestens 5 % Kontingent erhalten. Branch `codex/information-probing-20261111`, Ausgang668cfad, vorhandener isolierter Worktree. Keine neuen fremden Commits oder laufenden Modelle.
