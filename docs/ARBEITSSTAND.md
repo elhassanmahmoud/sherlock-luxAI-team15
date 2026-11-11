@@ -1,5 +1,12 @@
 # Gemeinsamer Arbeitsstand
 
+## 11.11.2026 – Schussverzicht zur Umsetzung freigegeben; technische Vorbereitung
+
+- Moayed autorisiert den begrenzten Plan und selbstständige bedingte Fortsetzung; mindestens 5 % Kontingent erhalten. V14 und ZIP bleiben unverändert. Kein neuer Trainingslauf und noch keine neue Spielausführung.
+- Originale vollständige Agentenquelle aus `021d13e` vor dem Eingriff separat archiviert. Optionaler neutraler finaler SAP-Hook und experimenteller einmaliger SAP→STAY-Adapter implementiert; Regelherkunft, öffentliche Voraussetzungen und native Aktionen werden getrennt protokolliert. Frühere Einheiten behalten ihre Reservierungen; der gestrichene Schuss hinterlässt keinen geplanten Schaden.
+- 23 fokussierte synthetische Tests bestanden, außerdem zuvor 136 neue/betroffene Prüfungen; unabhängiger Eingriffsreview ohne blockierenden Befund. Vollständiger Runner und dessen unabhängige Prüfung folgen vor tatsächlichem Spielstart. Ausgangsquelle `bf1b7df`, Arbeitsbranch `codex/holder-sap-probe-20261111`.
+- Installierte Engine stellt keine passiven Zwischenenergiezustände bereit. Keine Engineänderung und keine erfundene Aufteilung des Energieverlusts in Schusskosten, Gegnerangriffe und Nebel. Entscheidendes Maß bleibt der vollständig neu gerechnete Spielausgang.
+
 ## 11.11.2026 – Nächster Plan: finale Halter-Schüsse kausal prüfen, noch keine Umsetzung
 
 - Neuer Auftrag ausdrücklich Planung aus bisherigen Ergebnissen, mindestens5% Restkontingent. Keine neuen Modelle, Tests, Spiele oder Agentenänderungen. Quota zuletzt17% Rest; V14/ZIP unverändert, keine eigenen Modellworker und Remote-Automation weiterhin pausiert. Remote geprüft, kein neuer fremder Commit gegenüber021d13e.

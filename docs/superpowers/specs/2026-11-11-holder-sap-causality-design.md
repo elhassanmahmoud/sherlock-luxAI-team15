@@ -1,6 +1,6 @@
 # Produktive Halter schützen: zuerst den Nutzen eines Schussverzichts nachweisen
 
-**Status: Planung, keine Umsetzung oder neuen Spiele.** Moayed beauftragt am 11.11. einen nächsten sinnvollen Plan aus den bisherigen Ergebnissen. Mindestens 5 % Kontingent erhalten; ab 92 % Verbrauch keine neue Phase, spätestens bei 95 % kontrolliert stoppen. V14 und ZIP bleiben bis zu einem belegten besseren vollständigen Agenten unverändert. Dieser Vorschlag ist Codex' Empfehlung, keine bereits bestätigte Verlustursache.
+**Status: Umsetzung vom Nutzer nach Planprüfung ausdrücklich freigegeben.** Moayed beauftragt am 11.11. einen nächsten sinnvollen Plan aus den bisherigen Ergebnissen. Mindestens 5 % Kontingent erhalten; ab 92 % Verbrauch keine neue Phase, spätestens bei 95 % kontrolliert stoppen. V14 und ZIP bleiben bis zu einem belegten besseren vollständigen Agenten unverändert. Dieser Vorschlag ist Codex' Empfehlung, keine bereits bestätigte Verlustursache.
 
 ## Warum dieser nächste Schritt?
 
@@ -63,6 +63,6 @@ Für genau einen danach eingefrorenen Kandidaten: kompakter Screen auf getrennte
 
 ## Zusammenarbeit und Budget
 
-Root implementiert später die zusammenhängende kleine Messung; ein unabhängiger Reviewer prüft die Eingriffsstelle und Daten. Keine vielen parallelen Versuchsarme. Vor jedem Modellstart frische Quota, Prozesse, Source-Freeze und Remote prüfen; tatsächliche Nutzerfreigabe zu selbst überwachten Akkuläufen beachten. Keine Resets, fremde Dateien erhalten. Aktueller Auftrag endet mit diesem dokumentierten Plan, nicht mit Trainingsstarts.
+Root implementiert später die zusammenhängende kleine Messung; ein unabhängiger Reviewer prüft die Eingriffsstelle und Daten. Keine vielen parallelen Versuchsarme. Vor jedem Modellstart frische Quota, Prozesse, Source-Freeze und Remote prüfen; tatsächliche Nutzerfreigabe zu selbst überwachten Akkuläufen beachten. Keine Resets, fremde Dateien erhalten. Aktueller Folgeauftrag erlaubt die Umsetzung und den begrenzten Pilot nach technischer Abnahme; weitere Phasen bleiben an die oben festgelegten Gates gebunden.
 
 **Planprüfung 11.11.:** Ein unabhängiger Bestandsreview prüfte die Abgrenzung zu alten Ziel-/HOLD-/Reserveversuchen. Ein frischer Implementierungsreview präzisierte die echte vorab eingefrorene Referenz und ausschließlich vetoabhängige Buchhaltungskorrekturen. Diese Punkte sind eingearbeitet; keine Modell-/Spiel-/Testausführung in der Planprüfung. Spätere Bestätigung weiterhin separat quantitativ festlegen.

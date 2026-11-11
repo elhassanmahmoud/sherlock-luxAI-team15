@@ -362,6 +362,8 @@ class Agent_x:
         raw_greedy = q.argmax(axis=1)
         q[~masks] = -np.inf
         greedy = q.argmax(axis=1)
+        final_probe = bool(getattr(self, "_final_sap_experiment", False) and not self.training)
+        network_greedy = greedy.copy() if final_probe else None
         greedy = self._policy_greedy(ctx, ids, masks, greedy)
         st = self.ep_stats
         st["unit_steps"] += len(ids)
@@ -425,6 +427,10 @@ class Agent_x:
                             and not pt[max(0, rx - 2):rx + 3, max(0, ry - 2):ry + 3].any():
                         self._rescue_zones.add((rx, ry))
         for k, uid in enumerate(ids):
+            if final_probe:
+                self._final_sap_rule_origin = None
+                prior_planned, prior_fog, prior_rammed = planned.copy(), planned_fog.copy(), rammed.copy()
+                prior_predictions = len(getattr(self, "_pred_pending", []))
             legal = np.nonzero(masks[k])[0]
             rescue_training = bool(self.training and self.cfg.rescue_in_training
                                    and self._rescue_for(ctx, uid))
@@ -441,6 +447,8 @@ class Agent_x:
                 if self.cfg.scripted_explore and a != geo.SAP:
                     a = self._explore_action(ctx, uid, masks[k], a)
                 a = self._rule_override(ctx, uid, masks[k], a)
+                if final_probe and a == geo.SAP:
+                    self._final_sap_rule_origin = "rule_override"
                 if self.cfg.path_fix and (not self.training or self.cfg.rules_in_training) and 1 <= a <= 4:
                     a = self._path_fix(ctx, uid, masks[k], a)
                 if self.cfg.stage_attack and not self.training and 1 <= a <= 4:
@@ -471,6 +479,8 @@ class Agent_x:
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
                 if sap is not sap_targets[uid]:
                     fog_origin = sap
+                    if final_probe:
+                        self._final_sap_rule_origin = "fog_sap"
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if self.cfg.contest_sap and a != geo.SAP and masks[k][geo.SAP]:
@@ -479,6 +489,8 @@ class Agent_x:
                 c_sap = self._contest_sap(ctx, uid)
                 if c_sap is not None:
                     sap, a = c_sap, geo.SAP
+                    if final_probe:
+                        self._final_sap_rule_origin = "contest_sap"
                     self._prev_actions[uid] = a
             if self.cfg.pt_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]:
                 # 20.10.2026: auf eigenem Punkte-Tile stehen bleiben UND sappen (Tile bleibt
@@ -496,6 +508,8 @@ class Agent_x:
                         and (not self.cfg.sap_relevant or self.training or self._sap_relevant(ctx, uid, sap))
                         and (not self.cfg.sap_still or (self.training and not self.cfg.rules_in_training_all)
                              or self._sap_still(ctx, uid, sap, stationary))):
+                    if final_probe:
+                        self._final_sap_rule_origin = "pt_sap"
                     a = geo.SAP
                     self._prev_actions[uid] = a
             if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
@@ -508,15 +522,21 @@ class Agent_x:
                     st["art_move_kept"] = st.get("art_move_kept", 0) + 1
                 else:
                     a = geo.SAP  # 21.10.2026: aus sicherer Position in einen Gegnerhaufen sappen
+                    if final_probe:
+                        self._final_sap_rule_origin = "art_sap"
                     self._prev_actions[uid] = a
             if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
+                if final_probe:
+                    self._final_sap_rule_origin = "idle_sap"
                 self._prev_actions[uid] = a
             if self.cfg.end_sap > 0 and not self.training and sap is not None and masks[k][geo.SAP]:
                 t = self._end_sap(ctx, uid, a, planned_dmg, stationary)
                 if t is not None:
                     sap, a = t, geo.SAP  # 31.10.2026: Restenergie am Matchende auf gegnerische Halter
+                    if final_probe:
+                        self._final_sap_rule_origin = "end_sap"
                     self._prev_actions[uid] = a
                     st["end_saps"] = st.get("end_saps", 0) + 1
             if (self.cfg.nebula_avoid_mode == "soft" and 1 <= a <= 4
@@ -581,6 +601,8 @@ class Agent_x:
                         kind, val = res
                         a = geo.SAP if kind == "sap" else (val if kind == "move" else geo.STAY)
                         sap = val if kind == "sap" else sap
+                        if final_probe and a == geo.SAP:
+                            self._final_sap_rule_origin = "siege"
                         self._prev_actions[uid] = a
                         st["siege_steps"] = st.get("siege_steps", 0) + 1
             if (a == geo.SAP and sap is not None and self.cfg.sap_still_all and not self.training
@@ -605,6 +627,25 @@ class Agent_x:
                 if sap is None:
                     a = geo.STAY
                     self._prev_actions[uid] = a
+            if final_probe:
+                final_a, final_sap = self._final_sap_policy(
+                    ctx, uid, masks[k], int(network_greedy[k]), a, sap, fog_origin)
+                if final_a != a:
+                    if not (a == geo.SAP and final_a == geo.STAY and final_sap is None and masks[k][geo.STAY]):
+                        raise ValueError("Final SAP experiment only permits legal SAP-to-STAY")
+                    # Undo this unit's reservations only; prior units remain committed.
+                    planned[:] = prior_planned
+                    planned_fog[:] = prior_fog
+                    rammed.clear()
+                    rammed.update(prior_rammed)
+                    if hasattr(self, "_pred_pending"):
+                        self._pred_pending[prior_predictions:] = [
+                            (*item[:-1], False) if item[0] == uid else item
+                            for item in self._pred_pending[prior_predictions:]]
+                    a, sap = final_a, final_sap
+                    self._prev_actions[uid] = a
+                elif final_sap is not sap:
+                    raise ValueError("Final SAP experiment cannot retarget")
             if (a == geo.SAP and sap is not None and self.cfg.sap_no_overkill
                     and (not self.training or self.cfg.rules_in_training)):
                 self._plan_damage(ctx, uid, sap, planned_dmg)
@@ -626,6 +667,10 @@ class Agent_x:
         if self.cfg.dodge_shape and not self.training:
             self._record_shapes(ctx)
         return actions
+
+    def _final_sap_policy(self, ctx, uid, mask, network_action, action, sap, fog_origin):
+        # Neutral by default; isolated causal probes may veto one final shot.
+        return action, sap
 
     def _network_values(self, features: torch.Tensor) -> torch.Tensor:
         qt = self.q(features)
