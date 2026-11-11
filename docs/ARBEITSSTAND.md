@@ -1,5 +1,12 @@
 # Gemeinsamer Arbeitsstand
 
+## 11.11.2026 – Nächster Plan: finale Halter-Schüsse kausal prüfen, noch keine Umsetzung
+
+- Neuer Auftrag ausdrücklich Planung aus bisherigen Ergebnissen, mindestens5% Restkontingent. Keine neuen Modelle, Tests, Spiele oder Agentenänderungen. Quota zuletzt17% Rest; V14/ZIP unverändert, keine eigenen Modellworker und Remote-Automation weiterhin pausiert. Remote geprüft, kein neuer fremder Commit gegenüber021d13e.
+- [Design](superpowers/specs/2026-11-11-holder-sap-causality-design.md) und [Umsetzungsplan](superpowers/plans/2026-11-11-holder-sap-causality.md): protokolliertes Netz-STAY→Regel-SAP vor Belegungsverlust untersuchen, nicht als bewiesene Ursache darstellen. Einmaliger finaler sichtbarer SAP→STAY-Eingriff alleiniger produktiver Halter vor Schadensbuchhaltung; echte Originalpräfixe, volle Spielenden, acht bekannte Verlust-/Kontrollkarten. Maximal88 ganze Ausführungen/26.664 Schritte, null Gradienten. Keine bisherigen HOLD-/Reserve-/Rang-2-Studien neu starten.
+- Mindestens12 wirksame Fälle auf vier Karten und mindestens zwei gerettete ganze Spiele auf zwei Karten bei positivem Spiel-Flipsaldo als reine Machbarkeitshürden. Erst danach ein gesondert festgelegter kleiner öffentlicher Entscheider. Neue Trainingsmenge und Bestätigung noch nicht freigegeben oder ausgeführt; der aktuelle Plan startet nichts automatisch.
+- Ein unabhängiger Bestandsreview und ein frischer Planreview durchgeführt. Wichtige Präzisierung übernommen: Referenz aus eingefrorener Quelle vor dem Hook; Buchhaltung nur beim tatsächlichen Veto korrigieren. Späterer40er-Solution-Screen darf bei Gleichstand40/40 und Direktvorteil nominieren, behauptet aber keinen Solution-Vorteil. Übernahme verlangt separat festgelegte belastbare Bestätigung; keine universelle100%-Garantie.
+
 ## 10.11.2026 – Matchausgang-Pilot vollständig geprüft und geschlossen: V14 bleibt
 
 - Reparierter Originalpräfixvergleich abgeschlossen: 48 Paare, 43 wirksame Eingriffe auf acht bekannten Karten; **1 positiver / 1 negativer / 46 unveränderte Matchausgänge**. Einflussbedingung bestanden, Lernzielbedingung verfehlt (gefordert drei positive auf drei Karten). Keine Phase B, neuen Gradienten, Verlängerung oder Übernahme. [Ergebnis mit konkreten Fällen und Grenzen](../experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md).
