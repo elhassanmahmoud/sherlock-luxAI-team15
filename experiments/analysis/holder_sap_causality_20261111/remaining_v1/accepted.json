@@ -1,0 +1,47 @@
+{
+  "status": "accepted",
+  "accepted_at": "2026-11-11T10:13:47.338997+00:00",
+  "manifest_sha256": "0d9ca1e93303591572d52c24fbdd385647ca36d028eff6bae468c7d6201f5f45",
+  "source_head": "3b1a4562a470373f14d1c07381207c92c8db5b93",
+  "source_frozen_until_this_acceptance": true,
+  "audits": {
+    "experiments/analysis/holder_sap_causality_20261111/remaining_v1/independent_audit.json": "9f84bf6312c62e653f8a8f79100f7db2f75ab3da0baf392feac58b376aaa9b1c",
+    "experiments/analysis/holder_sap_causality_20261111/remaining_v1/root_audit.json": "2967d2a2c773d6d4efa874c2b9bbd9f4be871d70f005ca0a12c6cb7b1dc92b2b"
+  },
+  "protected": {
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/Gruppe15.zip": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "decision": "Pilot closed at predeclared failed match-win-sum gate; no learning, extension or replacement.",
+  "summary": {
+    "cases": 46,
+    "effective_pairs": 46,
+    "effective_maps": 8,
+    "positive_game_flips": 2,
+    "negative_game_flips": 1,
+    "zero_game_flips": 43,
+    "rescued_maps": 2,
+    "delta_match_wins_sum": -2,
+    "delta_points_sum": -914,
+    "positive_current_match_flips": 2,
+    "negative_current_match_flips": 4,
+    "technical_gate": true,
+    "influence_gate": true,
+    "label_gate": false,
+    "passed": false
+  },
+  "execution_totals": {
+    "entered_runs": 86,
+    "completed_runs": 86,
+    "failed_runs": 0,
+    "entered_planned_full_length_runs": 86,
+    "returned_full_length_runs": 86,
+    "observed_episode_ends": 86,
+    "completed_short_runs": 0,
+    "incomplete_runs": 0,
+    "attempted_engine_steps": 26058,
+    "returned_engine_steps": 26058,
+    "archived_frames": 26058
+  }
+}

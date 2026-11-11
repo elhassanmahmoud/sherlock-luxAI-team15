@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 11.11.2026 – Halter-Schussverzicht vollständig geprüft und geschlossen: V14 bleibt
+
+- **86 vollständige Ausführungen, 26.058 Engine-Schritte, null Lernupdates.** 46 wirksame Einzelverzichte auf acht bekannten Karten: zwei gerettete ganze Spiele, ein zusätzlicher ganzer Verlust, 43 unverändert. Summe der Matchsiegänderungen −2; Punktedifferenzsumme −914. Die vorab feste Stabilitätsbedingung ist verfehlt; keine Lernphase, neue allgemeine Regel, Verlängerung oder V14-/ZIP-Übernahme. [Vollständiger Bericht, positive und negative Fälle](../experiments/analysis/holder_sap_causality_20261111/ERGEBNIS.md).
+- Erste zwölf tatsächliche Ausführungen separat abgenommen, danach 74 weitere. 32 Referenz-/Sammler-, 46 Alternativ- und acht Wiederholungspartien; zwei Matches ohne geeignetes Ereignis, keine Ersatzfälle. Alle Originalverläufe/Präfixe/Wiederholungen, 14 historische CSV-Schlüssel und 303 historische eigene Aktionen stimmen. Kein Spielabbruch oder abgefangener Agentenfehler.
+- 150 neue/betroffene synthetische Tests bestanden; nach dem ausdrücklich dokumentierten historischen Schemaabgleich 37 gezielte Tests einschließlich eines neuen Regressionstests. Unabhängiger Code-Review ohne offenen Befund, Root-Datenaudit 105.431 und unabhängiger Audit 107.071 Prüfungen. Quellen/Eingaben/Modelle/ZIP bis [tatsächlicher Abschlussabnahme](../experiments/analysis/holder_sap_causality_20261111/remaining_v1/accepted.json) unter `3b1a456` eingefroren und unverändert; erst danach Freeze freigegeben.
+- Alle untersuchten Eingriffe betreffen `pt_sap`. Schritt 138 auf 9946007/p0 verbessert die Punktedifferenz um 65, rettet aber das Spiel nicht. Die zwei geretteten Spiele (2000045/p1 und 2000055/p0) und der zusätzliche Verlust (2000045/p0) sind getrennte Gegenfakten, keine Siegquote einer ausführbaren Policy. Keine Aufteilung von Energieverlusten in nicht beobachtete Engine-Zwischenursachen behauptet.
+- V14 mit 36 Netzen und ZIP bleiben bytegleich; experimenteller Hook ist im normalen Agenten inaktiv. Bestehende Sicherungen und fremde lokale Dateien erhalten. Eigene Modellworker/Wachhalter beendet, Remote-Automation weiterhin pausiert. Letzte Kontingentprüfung 14 % Rest, Mindestreserve 5 % eingehalten. Kein neuer Folgeversuch gestartet; abgeschlossene Studien nicht automatisch neu starten.
+
 ## 11.11.2026 – Schussverzicht zur Umsetzung freigegeben; technische Vorbereitung
 
 - Moayed autorisiert den begrenzten Plan und selbstständige bedingte Fortsetzung; mindestens 5 % Kontingent erhalten. V14 und ZIP bleiben unverändert. Kein neuer Trainingslauf und noch keine neue Spielausführung.

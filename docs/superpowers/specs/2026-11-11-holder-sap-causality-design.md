@@ -1,6 +1,6 @@
 # Produktive Halter schützen: zuerst den Nutzen eines Schussverzichts nachweisen
 
-**Status: Umsetzung vom Nutzer nach Planprüfung ausdrücklich freigegeben.** Moayed beauftragt am 11.11. einen nächsten sinnvollen Plan aus den bisherigen Ergebnissen. Mindestens 5 % Kontingent erhalten; ab 92 % Verbrauch keine neue Phase, spätestens bei 95 % kontrolliert stoppen. V14 und ZIP bleiben bis zu einem belegten besseren vollständigen Agenten unverändert. Dieser Vorschlag ist Codex' Empfehlung, keine bereits bestätigte Verlustursache.
+**Status: am 11.11.2026 vollständig umgesetzt und an der festen Stabilitätsbedingung geschlossen; kein Nachtraining oder Ersatz.** Moayed beauftragt am 11.11. einen nächsten sinnvollen Plan aus den bisherigen Ergebnissen. Mindestens 5 % Kontingent erhalten; ab 92 % Verbrauch keine neue Phase, spätestens bei 95 % kontrolliert stoppen. V14 und ZIP bleiben bis zu einem belegten besseren vollständigen Agenten unverändert. Dieser Vorschlag ist Codex' Empfehlung, keine bereits bestätigte Verlustursache.
 
 ## Warum dieser nächste Schritt?
 

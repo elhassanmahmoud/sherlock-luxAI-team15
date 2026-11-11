@@ -51,12 +51,12 @@
 
 ## Task 3: reale kleine Probe und feste Entscheidung
 
-- [ ] Nutzerumfang, Quota, Git/Remote, laufende Jobs und geschlossene Studien prüfen; Gewichte und Quellen binden. Herkunfts-CSV und vorhandenen Trace erneut hashen. Aktuell unterschiedliche Config/Ergebnisse vor Beginn aufklären, nicht still ignorieren.
-- [ ] Nur Technikschlüssel `9946007/player_0` und `2000000/player_0`, alle bereits im Gesamtbudget. Neutralität, Originalpräfix, ganze Wiederholung, mögliche Regelübersteuerung und Buchhaltung anhand realer Daten abnehmen. Kein technisches Bestehen aus Testnamen ableiten.
-- [ ] Erst danach restliche 14 Schlüssel. Keine Tests/Quellenänderung parallel, keine Zusatzgelegenheiten. Jeder vollständige/fehlgeschlagene Lauf und jeder echte Schritt wird gezählt.
-- [ ] Unabhängig anhand tatsächlicher Rohdaten nachrechnen: mindestens 12 wirksame Paare auf vier Karten; mindestens zwei negative ganze Spiele auf zwei Karten zu Siegen; positive Spiel-Flips überwiegen negative; Matchsiegkontrast insgesamt nicht negativ. Technische Integrität zwingend. Alle Ergebnisse einschließlich neutraler Karten berichten.
-- [ ] Bei Verfehlung diesen Pilot schließen. Bei Bestehen ausschließlich Anlass für getrennt festgelegtes öffentliches Entscheidungslernen feststellen; noch keine Stärke- oder Übernahmebehauptung. Keine Implementierung einer Wiederholungspolicy aus dem besten Einzelbeispiel.
-- [ ] Eigene Jobs beenden, tatsächliche Quellen-/Gewichtshashes und Reserven prüfen, Freeze erst danach lösen. Berichte/Arbeitsstand/Experimentprotokoll aktualisieren, sinnvoll committen/pushen und Hauptkopie sicher abgleichen.
+- [x] Nutzerumfang, Quota, Git/Remote, laufende Jobs und geschlossene Studien prüfen; Gewichte und Quellen binden. Herkunfts-CSV und vorhandenen Trace erneut hashen. Aktuell unterschiedliche Config/Ergebnisse vor Beginn aufklären, nicht still ignorieren.
+- [x] Nur Technikschlüssel `9946007/player_0` und `2000000/player_0`, alle bereits im Gesamtbudget. Neutralität, Originalpräfix, ganze Wiederholung, mögliche Regelübersteuerung und Buchhaltung anhand realer Daten abnehmen. Kein technisches Bestehen aus Testnamen ableiten.
+- [x] Erst danach restliche 14 Schlüssel. Keine Tests/Quellenänderung parallel, keine Zusatzgelegenheiten. Jeder vollständige/fehlgeschlagene Lauf und jeder echte Schritt wird gezählt.
+- [x] Unabhängig anhand tatsächlicher Rohdaten nachrechnen: mindestens 12 wirksame Paare auf vier Karten; mindestens zwei negative ganze Spiele auf zwei Karten zu Siegen; positive Spiel-Flips überwiegen negative; Matchsiegkontrast insgesamt nicht negativ. Technische Integrität zwingend. Alle Ergebnisse einschließlich neutraler Karten berichten.
+- [x] Bei Verfehlung diesen Pilot schließen. Bei Bestehen ausschließlich Anlass für getrennt festgelegtes öffentliches Entscheidungslernen feststellen; noch keine Stärke- oder Übernahmebehauptung. Keine Implementierung einer Wiederholungspolicy aus dem besten Einzelbeispiel.
+- [x] Eigene Jobs beenden, tatsächliche Quellen-/Gewichtshashes und Reserven prüfen, Freeze erst danach lösen. Berichte/Arbeitsstand/Experimentprotokoll aktualisieren, sinnvoll committen/pushen und Hauptkopie sicher abgleichen.
 
 ## Nachgelagerte Entscheidung, hier keine ausführbare Aufgabe
 
@@ -65,3 +65,5 @@ Nur bei brauchbarem Pilot folgt ein eigener Plan mit klarer Datenmenge, öffentl
 ## Erfolg dieses Plans
 
 Ein technisch korrekter kausaler Befund über eine konkret protokollierte Entscheidungsklasse. Der Plan garantiert weder einen besseren V14 noch allgemeine 100 % gegen Solution. Er begrenzt den Aufwand, bevor erneut trainiert wird, und lässt einen negativen Befund ausdrücklich zu.
+
+**Tatsächlicher Abschluss 11.11.:** 86 ganze Ausführungen, 46 Paare; +2/−1 ganze Spiel-Flips, aber Matchsiegsumme −2. Gate verfehlt, keine Folgephase. [Ergebnis](../../../experiments/analysis/holder_sap_causality_20261111/ERGEBNIS.md).
