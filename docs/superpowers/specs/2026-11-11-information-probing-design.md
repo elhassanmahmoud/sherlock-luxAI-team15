@@ -1,6 +1,6 @@
 # Gezielte Feldtests: früher verwertbares Punktewissen
 
-**Status 11.11.2026: Vorschlag, nur dokumentiert.** Keine Umsetzung, neuen Spiele oder Lernupdates in dieser Planungsrunde. V14 und ZIP bleiben unverändert. [Umsetzungsplan](../plans/2026-11-11-information-probing.md).
+**Status 11.11.2026: nach der Planungsrunde zur bedingten Umsetzung freigegeben.** Aktuellen tatsächlichen Stand im [Arbeitsstand](../../ARBEITSSTAND.md) lesen. Die vorab festgelegten Bedingungen bleiben unverändert; V14 und ZIP bis zum nachgewiesenen Vorteil erhalten. [Umsetzungsplan](../plans/2026-11-11-information-probing.md).
 
 ## Entscheidung und Begründung
 

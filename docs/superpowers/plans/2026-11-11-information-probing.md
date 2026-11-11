@@ -1,6 +1,6 @@
 # Gezielte Feldtests Implementation Plan
 
-> **For agentic workers:** Bei einem Umsetzungsauftrag `superpowers:executing-plans` nutzen. Root implementiert inline; gezielte unabhängige Reviews für öffentliche Beweise/Aktionsfolge und tatsächliche Resultate. Dieser Auftrag betrifft zunächst nur Planung, keine Ausführung.
+> **For agentic workers:** `superpowers:executing-plans` nutzen. Root implementiert inline; gezielte unabhängige Reviews für öffentliche Beweise/Aktionsfolge und tatsächliche Resultate. Moayed hat nach der Planung die Umsetzung und bedingte autonome Fortsetzung freigegeben; feste Gates und Budgetreserve gelten unverändert.
 
 **Goal:** Nachweisen, ob gezielt koordinierte Besetzung unbekannter Felder frühere nutzbare Information und anschließend einen stärkeren Agenten als V14 ergibt.
 
@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Nur Planung freigegeben; alle folgenden Kästchen bleiben offen. Kein Agenten-/Gewichtstausch ohne bestandene Bestätigung und Kursprüfung.
+- Bedingte Umsetzung freigegeben; nur tatsächlich ausgeführte Schritte abhaken. Kein Agenten-/Gewichtstausch ohne bestandene Bestätigung und Kursprüfung.
 - A: zwölf vorhandene Traces, null neue Spiele. B: höchstens 38 ganze Partien/11.514 Schritte. C: 120 und D: 680 Partien, jeweils nur nach tatsächlichem Bestehen der vorherigen Phase. Keine Gradienten.
 - Genau ein Kandidat: einmal pro Spiel, erstes Match, Schritte 50–80, höchstens zwei Nicht-Halter, höchstens 113 Belegungsentwürfe und 400 Gleichungen. Keine Ausweitung bei zu wenigen Gelegenheiten.
 - Originale Referenz und Schutzdateien binden; keine Engine-/Gegner-Deepcopies, stillen Ersatzspiele oder Wiederstarts. Quellenfreeze während jeder realen Phase, keine parallelen Tests.
@@ -66,4 +66,4 @@
 
 ## Abschluss dieser Planungsrunde
 
-Diese Dateien enthalten einen Vorschlag, keinen erreichten Agenten. Die nächste ausführbare Arbeit ist ausschließlich Aufgabe 1. Ergebnisabhängige spätere Schritte dürfen nicht vorgezogen oder als bereits freigegebene Dauerexperimente gestartet werden.
+Der ursprüngliche Plan war zunächst ein Vorschlag, kein erreichter Agent. Nach ausdrücklicher Nutzerfortsetzung ist Aufgabe 1 freigegeben; spätere Aufgaben nur nach tatsächlichem Bestehen der jeweiligen Gates und erneuter Kontingentprüfung. Keine Dauerexperimente oder vorgezogenen Folgeschritte.

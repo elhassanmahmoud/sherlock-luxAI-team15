@@ -1,5 +1,12 @@
 # Gemeinsamer Arbeitsstand
 
+## 11.11.2026 – Gezielte Feldtests zur bedingten Umsetzung freigegeben
+
+- Moayed autorisiert den Plan einschließlich selbstständiger Fortsetzung nur bei bestandenen Phasenbedingungen; mindestens 5 % Kontingent erhalten. Branch `codex/information-probing-20261111`, Ausgang668cfad, vorhandener isolierter Worktree. Keine neuen fremden Commits oder laufenden Modelle.
+- Öffentlicher Offline-Sammler und begrenzte gemeinsame Aktionsprüfung implementiert. 26 synthetische Tests bestanden, einschließlich zweier gemeinsam nötiger Bewegungen, 113-Entwurfsgrenze, widersprüchlicher Gleichungen und Unabhängigkeit von versteckten/späteren Informationen. Unabhängiger Code-Review: ein konkreter Widerspruchsfehler reproduziert und mit Regressionstests korrigiert.
+- Historische Herkunft unabhängig sowie durch Root geprüft: zwölf Traces, 22 historische Source-Blobs, Engine, aktuelle Gewichte, Kartenliste und Baseline; 156 Passivitäts- und 84 Ergebnisvergleiche stimmen. Sieben neue Config-Felder explizit als inaktiv abgeglichen. Aktuelle Laufgleichheit noch nicht behauptet; die wäre erst in Phase B zu prüfen.
+- Noch keine tatsächliche Gelegenheitsauswertung, neuen Spiele, Modelle oder Gradienten. Nächster Schritt ausschließlich Phase A auf den zwölf festgelegten Aufzeichnungen. Bei weniger als sechs geeigneten Schlüsseln auf drei Karten schließen, nicht ausweiten. V14/ZIP unverändert.
+
 ## 11.11.2026 – Nächster Plan: koordinierte Feldtests, noch keine Umsetzung
 
 - Neuer Auftrag ausdrücklich Analyse und Planung, mindestens 5 % Kontingent erhalten. [Design](superpowers/specs/2026-11-11-information-probing-design.md) und [Umsetzungsplan](superpowers/plans/2026-11-11-information-probing.md): gemeinsam gewählte Bewegungen sollen das öffentliche Punktesignal für ein unbekanntes Feld eindeutig machen. Bestehende Teilmengen-Inferenz bleibt unverändert; höchstens zwei Nicht-Halter, ein Probeversuch im ersten Match. Keine neuen Netze, Rewards oder Schussregeln.
