@@ -44,10 +44,10 @@
 
 **Schnittstellen:** `run_phase(phase, output, weights, quota_receipt, previous_acceptance=None) -> Path` für `technical`/`remaining`; `summarize(pairs, executions) -> dict` mit Spiel- und Matchkontrasten sowie drei getrennten Gates. Paar enthält öffentlichen Eventdatensatz, originale vollständige Baseline, tatsächlichen Alternativverlauf, aktuelle Matchnummer und volle Drei-Match-Ergebnisse.
 
-- [ ] Rote Tests für exakt 16 Schlüssel, first-event-per-match, leere Ereignismengen, 88/26.664 Obergrenzen, Zählen vor Start/Engineaufruf, Abbruch, exklusive Outputs und verweigerte Folgephase ohne tatsächliche Abnahme.
-- [ ] Jeder Alternativlauf beginnt mit frischen ursprünglichen Agenten und RNGs beim Spielanfang. Alle Frames vor dem Eingriff exakt vergleichen; tatsächlichen Abweichungsframe vor Fehler archivieren. Danach bis zum ganzen Spielende, nicht nur Matchende. Pro Karte erste vorhandene Alternative vollständig wiederholen.
-- [ ] Match-/Spielpunkte, echte `team_wins`, terminale Energie-/Zufallsentscheidung, native Teamaktionen, Belief-/Ereignisbelege und Nullfälle archivieren. Instrumentierte Energiephasen nur nach verifiziertem passivem Enginevergleich als ursächlich ausgeben; sonst Grenze offen lassen.
-- [ ] Vollständigen zweiphasigen Controller synthetisch testen, inklusive positiver/negativer Spiel-Flips bei gleichem aktuellen Matchresultat und umgekehrtem Fall. Originaldateien/keine Modellmutation prüfen; gezielter Review und zusammenhängender Commit vor realem Start.
+- [x] Rote Tests für exakt 16 Schlüssel, first-event-per-match, leere Ereignismengen, 88/26.664 Obergrenzen, Zählen vor Start/Engineaufruf, Abbruch, exklusive Outputs und verweigerte Folgephase ohne tatsächliche Abnahme.
+- [x] Jeder Alternativlauf beginnt mit frischen ursprünglichen Agenten und RNGs beim Spielanfang. Alle Frames vor dem Eingriff exakt vergleichen; tatsächlichen Abweichungsframe vor Fehler archivieren. Danach bis zum ganzen Spielende, nicht nur Matchende. Pro Karte erste vorhandene Alternative vollständig wiederholen.
+- [x] Match-/Spielpunkte, echte `team_wins`, terminale Energie-/Zufallsentscheidung, native Teamaktionen, Belief-/Ereignisbelege und Nullfälle archivieren. Instrumentierte Energiephasen nur nach verifiziertem passivem Enginevergleich als ursächlich ausgeben; sonst Grenze offen lassen.
+- [x] Vollständigen zweiphasigen Controller synthetisch testen, inklusive positiver/negativer Spiel-Flips bei gleichem aktuellen Matchresultat und umgekehrtem Fall. Originaldateien/keine Modellmutation prüfen; gezielter Review und zusammenhängender Commit vor realem Start.
 
 ## Task 3: reale kleine Probe und feste Entscheidung
 
