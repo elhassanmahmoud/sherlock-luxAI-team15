@@ -391,6 +391,12 @@ class AgentConfig:
     hunt_min: float = 150.0
     hunt_radius: int = 6
     hunt_margin: float = 20.0
+    imit_stay_bias: float = 0.0
+    """> 0 (15.11.2026, nur ImitationAgent): von der Log-Wahrscheinlichkeit fuer STAY abziehen. Der Schueler sieht
+    die mehrschrittigen Plaene des Lehrers nicht und bleibt im Zweifel stehen (58-67 % statt 46 % beim Lehrer)."""
+    imit_unstack: bool = False
+    """True (15.11.2026, nur ImitationAgent): je Feld bleibt hoechstens eine eigene Unit stehen (der erste Halter bzw.
+    die mit der hoechsten STAY-Bewertung), die anderen nehmen ihre beste erlaubte Bewegung."""
     fog_sap: bool = False
     """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
     unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte
