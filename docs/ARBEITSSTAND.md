@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Zwei Ansichten von R3 erfüllen die Kriterien für einen Spieltest
+
+Auf 24 Diagnosekarten wiegt die Netzbewertung aus der zweiten Kartenansicht 244 zusätzliche Treffer der Lehreraktion auf. Die Zahl der zuvor korrekten V14-Befehle, die der Berater fälschlich ändert, sinkt von 2.343 auf 1.909. Auf den acht älteren Karten +112 richtige Empfehlungen. Je Archiv wurde die ursprüngliche R3-Zählung reproduziert. [Auswertung und Richtungssplits](../experiments/analysis/movement_reflection_20261115/ARCHIVVERGLEICH.md).
+
 ## 15.11.2026 – Auch die verzögerte Wegregel scheidet aus
 
 Schritt 13 als früheste Rückkehr rettete weiterhin 7273148/P0, verlor jedoch beide Sitze auf 7273105. Auf den 14 gezielt ausgewählten Positionen gewannen die verzögerte Variante 12, der ursprüngliche R3 und die sofortige Regel jeweils 13. Die beiden Problemfälle mussten beide gewonnen werden. Alle Befehlsverläufe und Prüfsummen sind gesichert. [Bericht und 126 Matchzeilen](../experiments/analysis/movement_soft_20261115/restart_route/verzoegerung/dev/BERICHT.md).
