@@ -1,0 +1,149 @@
+{
+  "options": [
+    {
+      "field": "unit_move_cost",
+      "half": "low",
+      "limit": 3.0,
+      "counts": [
+        [
+          6,
+          440
+        ],
+        [
+          6,
+          360
+        ]
+      ],
+      "rate_difference": -0.0030303030303030307
+    },
+    {
+      "field": "unit_move_cost",
+      "half": "high",
+      "limit": 3.0,
+      "counts": [
+        [
+          6,
+          360
+        ],
+        [
+          6,
+          440
+        ]
+      ],
+      "rate_difference": 0.0030303030303030307
+    },
+    {
+      "field": "unit_sap_cost",
+      "half": "low",
+      "limit": 40.0,
+      "counts": [
+        [
+          2,
+          428
+        ],
+        [
+          10,
+          372
+        ]
+      ],
+      "rate_difference": -0.022208823233845845
+    },
+    {
+      "field": "unit_sap_cost",
+      "half": "high",
+      "limit": 40.0,
+      "counts": [
+        [
+          10,
+          372
+        ],
+        [
+          2,
+          428
+        ]
+      ],
+      "rate_difference": 0.022208823233845845
+    },
+    {
+      "field": "unit_sap_range",
+      "half": "low",
+      "limit": 5.0,
+      "counts": [
+        [
+          12,
+          460
+        ],
+        [
+          0,
+          340
+        ]
+      ],
+      "rate_difference": 0.02608695652173913
+    },
+    {
+      "field": "unit_sap_range",
+      "half": "high",
+      "limit": 5.0,
+      "counts": [
+        [
+          0,
+          340
+        ],
+        [
+          12,
+          460
+        ]
+      ],
+      "rate_difference": -0.02608695652173913
+    },
+    {
+      "field": "unit_sensor_range",
+      "half": "low",
+      "limit": 2.5,
+      "counts": [
+        [
+          10,
+          438
+        ],
+        [
+          2,
+          362
+        ]
+      ],
+      "rate_difference": 0.017306188349857463
+    },
+    {
+      "field": "unit_sensor_range",
+      "half": "high",
+      "limit": 2.5,
+      "counts": [
+        [
+          2,
+          362
+        ],
+        [
+          10,
+          438
+        ]
+      ],
+      "rate_difference": -0.017306188349857463
+    }
+  ],
+  "chosen": {
+    "field": "unit_sap_range",
+    "half": "low",
+    "limit": 5.0,
+    "counts": [
+      [
+        12,
+        460
+      ],
+      [
+        0,
+        340
+      ]
+    ],
+    "rate_difference": 0.02608695652173913
+  },
+  "sha": "957ac8668e10b6a118b40cb81338a86b3ec356556d68a116535b16d4130bfa05"
+}

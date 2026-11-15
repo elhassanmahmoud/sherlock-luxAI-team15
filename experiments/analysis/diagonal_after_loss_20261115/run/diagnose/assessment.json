@@ -1,0 +1,845 @@
+{
+  "candidate_files": {
+    "games_sha256": "41ad3ab55abe1bc4602c3c87b335443dd8dbc66bb2461f1b838f00d8d0b7a6cf",
+    "manifest_sha256": "319a2610b12fa6f0e4da243bae52a24cf5634bca0048c7c82c76e56f87bf9cda"
+  },
+  "cases": [
+    {
+      "candidate": {
+        "actions_sha256": "fb25dbdbc35ec3c47ba71e644f4afb10e4eb5e327c9bfd7b5e6239a9c003ba92",
+        "first_match": {
+          "actions_sha256": "c2fc2fb859b18a4db3b71844fe9923489956a9186d4b190d522d1ce0713f56e0",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              201,
+              248
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              395,
+              308
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              734,
+              713
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              1
+            ]
+          }
+        ],
+        "opp_points": 1269,
+        "points": 1330,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 78,
+          "changed_unit_orders": 158,
+          "fallback_calls": 202,
+          "movement": 158
+        },
+        "wins": 2
+      },
+      "key": [
+        "kaggle3",
+        7286135,
+        "player_0"
+      ],
+      "original": {
+        "losses": 3,
+        "opp_points": 1361,
+        "points": 1038,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 0
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "176782327e5c24804384180aaebbf912990312ee296573ed077780df6eb63d6a",
+        "first_match": {
+          "actions_sha256": "6afda06a706b96132c51df85d15ab6b6d79f7d1e3747b33c54d8463c033dc3dd",
+          "wins_world": [
+            1,
+            0
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              248,
+              201
+            ],
+            "step": 101,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              308,
+              395
+            ],
+            "step": 202,
+            "winner": "player_1",
+            "wins_world": [
+              1,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              713,
+              734
+            ],
+            "step": 303,
+            "winner": "player_1",
+            "wins_world": [
+              1,
+              2
+            ]
+          }
+        ],
+        "opp_points": 1269,
+        "points": 1330,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 78,
+          "changed_unit_orders": 158,
+          "fallback_calls": 202,
+          "movement": 158
+        },
+        "wins": 2
+      },
+      "key": [
+        "kaggle3",
+        7286135,
+        "player_1"
+      ],
+      "original": {
+        "losses": 3,
+        "opp_points": 1361,
+        "points": 1038,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 0
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "f3e982da3515fa205d972384a86346564218dd1f26a97d099ab751e5cedb6d4c",
+        "first_match": {
+          "actions_sha256": "d7ca28ad1423c588693daa3bcf7c9b247a7865ca05ee38303d2bd769a766b771",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 2,
+        "matches": [
+          {
+            "points_world": [
+              316,
+              414
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              685,
+              703
+            ],
+            "step": 202,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              2
+            ]
+          },
+          {
+            "points_world": [
+              1068,
+              996
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              2
+            ]
+          }
+        ],
+        "opp_points": 2113,
+        "points": 2069,
+        "result": 0.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 79,
+          "changed_unit_orders": 312,
+          "fallback_calls": 202,
+          "movement": 312
+        },
+        "wins": 1
+      },
+      "key": [
+        "kaggle3",
+        7286141,
+        "player_0"
+      ],
+      "original": {
+        "losses": 2,
+        "opp_points": 2004,
+        "points": 1931,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 1
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "f3f1c38470b3880706bcb025d4d4c67be50270060e6e65218182fe5adbc838c4",
+        "first_match": {
+          "actions_sha256": "bad2aa2c84d8873252caa71322b56d747f1fa7a3c8e8e65fc5dd77f33dbbe9bf",
+          "wins_world": [
+            1,
+            0
+          ]
+        },
+        "losses": 2,
+        "matches": [
+          {
+            "points_world": [
+              414,
+              316
+            ],
+            "step": 101,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              703,
+              685
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              996,
+              1068
+            ],
+            "step": 303,
+            "winner": "player_1",
+            "wins_world": [
+              2,
+              1
+            ]
+          }
+        ],
+        "opp_points": 2113,
+        "points": 2069,
+        "result": 0.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 79,
+          "changed_unit_orders": 312,
+          "fallback_calls": 202,
+          "movement": 312
+        },
+        "wins": 1
+      },
+      "key": [
+        "kaggle3",
+        7286141,
+        "player_1"
+      ],
+      "original": {
+        "losses": 2,
+        "opp_points": 2004,
+        "points": 1931,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 1
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "d8fe66763aa693bbffb546b99ee4b9412df8f978f84abc0ca35a2e7a9ed469f7",
+        "first_match": {
+          "actions_sha256": "a8c7ae2ce372ba224e14bb44956b81a0eeb3147ebfce97fc5c6a44fc952d58fb",
+          "wins_world": [
+            1,
+            0
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              328,
+              137
+            ],
+            "step": 101,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              628,
+              555
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              617,
+              792
+            ],
+            "step": 303,
+            "winner": "player_1",
+            "wins_world": [
+              2,
+              1
+            ]
+          }
+        ],
+        "opp_points": 1484,
+        "points": 1573,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 235,
+          "changed_unit_orders": 576,
+          "movement": 576
+        },
+        "wins": 2
+      },
+      "key": [
+        "solution92",
+        7286124,
+        "player_0"
+      ],
+      "original": {
+        "losses": 1,
+        "opp_points": 1484,
+        "points": 1573,
+        "result": 1.0,
+        "steps": 303,
+        "wins": 2
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "3652c2e5dc3a76b26415eb0cc3a66e58b75cc70e48e9821c14e32411c4710081",
+        "first_match": {
+          "actions_sha256": "e2681895b349a6b51677e54bb03a50a8d645b6234c340abe1b7df83256c81ddd",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              76,
+              442
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              600,
+              639
+            ],
+            "step": 202,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              2
+            ]
+          },
+          {
+            "points_world": [
+              820,
+              605
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              2
+            ]
+          }
+        ],
+        "opp_points": 1496,
+        "points": 1686,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 251,
+          "changed_unit_orders": 630,
+          "movement": 630
+        },
+        "wins": 2
+      },
+      "key": [
+        "solution92",
+        7286124,
+        "player_1"
+      ],
+      "original": {
+        "losses": 1,
+        "opp_points": 1496,
+        "points": 1686,
+        "result": 1.0,
+        "steps": 303,
+        "wins": 2
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "d2b505e516179daf022a6a284dbefbdb4152f1894b415a0bf8d130f8d0de55d0",
+        "first_match": {
+          "actions_sha256": "0f601593e1f5c0246a088ed5029a6691c8d8d7dd7a566f21fdb92f7c8ff4a0f4",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              48,
+              233
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              391,
+              575
+            ],
+            "step": 202,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              2
+            ]
+          },
+          {
+            "points_world": [
+              851,
+              836
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              2
+            ]
+          }
+        ],
+        "opp_points": 1290,
+        "points": 1644,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 244,
+          "changed_unit_orders": 714,
+          "movement": 714
+        },
+        "wins": 2
+      },
+      "key": [
+        "solution92",
+        7286142,
+        "player_1"
+      ],
+      "original": {
+        "losses": 1,
+        "opp_points": 1290,
+        "points": 1644,
+        "result": 1.0,
+        "steps": 303,
+        "wins": 2
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "bc49f6fef9b14b54c113e41f3a6a368a9673633798364192ac3daa378c357620",
+        "first_match": {
+          "actions_sha256": "57752a2719f4402deebf7fd69dd8dfdab57babf0aeda467230c7c8dd9339ee01",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 1,
+        "matches": [
+          {
+            "points_world": [
+              461,
+              506
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              1072,
+              1066
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              1057,
+              1046
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              1
+            ]
+          }
+        ],
+        "opp_points": 2618,
+        "points": 2590,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 91,
+          "changed_unit_orders": 208,
+          "fallback_calls": 202,
+          "movement": 208
+        },
+        "wins": 2
+      },
+      "key": [
+        "solution92",
+        7286137,
+        "player_0"
+      ],
+      "original": {
+        "losses": 3,
+        "opp_points": 2632,
+        "points": 2410,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 0
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "336ac25549d864f0ad9e06bf86d74df21dd12bbf7a07ce38818c30d4b45462d6",
+        "first_match": {
+          "actions_sha256": "f486d09b4d84be5d654b3788482f7a86303a50a28f71ebec0e4819aa3533fcd4",
+          "wins_world": [
+            1,
+            0
+          ]
+        },
+        "losses": 2,
+        "matches": [
+          {
+            "points_world": [
+              467,
+              459
+            ],
+            "step": 101,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              1075,
+              1054
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              1046,
+              1058
+            ],
+            "step": 303,
+            "winner": "player_1",
+            "wins_world": [
+              2,
+              1
+            ]
+          }
+        ],
+        "opp_points": 2588,
+        "points": 2571,
+        "result": 0.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 83,
+          "changed_unit_orders": 190,
+          "fallback_calls": 202,
+          "movement": 190
+        },
+        "wins": 1
+      },
+      "key": [
+        "solution92",
+        7286137,
+        "player_1"
+      ],
+      "original": {
+        "losses": 3,
+        "opp_points": 2585,
+        "points": 2498,
+        "result": 0.0,
+        "steps": 303,
+        "wins": 0
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "612391b79ae40ec260d8b72bf8d37b002682a646b4f9700f8e02346c9e39eb4f",
+        "first_match": {
+          "actions_sha256": "ab4414ac6271fcbbbfebe1481b3c1443d4b7a47a7f1a3cf85618d86bdea1d3ac",
+          "wins_world": [
+            1,
+            0
+          ]
+        },
+        "losses": 0,
+        "matches": [
+          {
+            "points_world": [
+              203,
+              1
+            ],
+            "step": 101,
+            "winner": "player_0",
+            "wins_world": [
+              1,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              532,
+              4
+            ],
+            "step": 202,
+            "winner": "player_0",
+            "wins_world": [
+              2,
+              0
+            ]
+          },
+          {
+            "points_world": [
+              414,
+              48
+            ],
+            "step": 303,
+            "winner": "player_0",
+            "wins_world": [
+              3,
+              0
+            ]
+          }
+        ],
+        "opp_points": 53,
+        "points": 1149,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 225,
+          "changed_unit_orders": 494,
+          "movement": 494
+        },
+        "wins": 3
+      },
+      "key": [
+        "solution92",
+        7286100,
+        "player_0"
+      ],
+      "original": {
+        "losses": 0,
+        "opp_points": 53,
+        "points": 1149,
+        "result": 1.0,
+        "steps": 303,
+        "wins": 3
+      }
+    },
+    {
+      "candidate": {
+        "actions_sha256": "18469f1438c2f1f2d3a6c86a7dbaf1dab88bb69032ef3f8d30925773e2e59a6f",
+        "first_match": {
+          "actions_sha256": "0e0d871d87d5ca3ccf5f73a9f94ba9a7c15978618c1902eb48a07e86328d834f",
+          "wins_world": [
+            0,
+            1
+          ]
+        },
+        "losses": 0,
+        "matches": [
+          {
+            "points_world": [
+              5,
+              263
+            ],
+            "step": 101,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              1
+            ]
+          },
+          {
+            "points_world": [
+              64,
+              196
+            ],
+            "step": 202,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              2
+            ]
+          },
+          {
+            "points_world": [
+              38,
+              250
+            ],
+            "step": 303,
+            "winner": "player_1",
+            "wins_world": [
+              0,
+              3
+            ]
+          }
+        ],
+        "opp_points": 107,
+        "points": 709,
+        "result": 1.0,
+        "steps": 303,
+        "study": {
+          "changed_steps": 246,
+          "changed_unit_orders": 695,
+          "movement": 695
+        },
+        "wins": 3
+      },
+      "key": [
+        "solution92",
+        7286101,
+        "player_1"
+      ],
+      "original": {
+        "losses": 0,
+        "opp_points": 107,
+        "points": 709,
+        "result": 1.0,
+        "steps": 303,
+        "wins": 3
+      }
+    }
+  ],
+  "control_files": {
+    "games_sha256": "ca9b619f668de7a602411d2ea9d9458a807a997c85df0bd99efc5c42e103361a",
+    "manifest_sha256": "f9ce9bb2d3b473c749fb58621920044db4d85695a32ec8de84394d2ea45b4625"
+  },
+  "game_gates_pass": true,
+  "gates": {
+    "all_three_solution_preserved": true,
+    "neutral_identical": true,
+    "one_kaggle_recovered": true
+  },
+  "solution_target_gates": {
+    "all_three_solution_preserved": true,
+    "neutral_identical": true,
+    "one_solution_target_recovered": true
+  },
+  "solution_target_pass": true,
+  "stage": "diagnose"
+}

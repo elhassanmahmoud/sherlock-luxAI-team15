@@ -1,0 +1,379 @@
+{
+  "trained_rule": {
+    "field": "unit_sap_range",
+    "half": "low",
+    "limit": 5.0,
+    "counts": [
+      [
+        12,
+        460
+      ],
+      [
+        0,
+        340
+      ]
+    ],
+    "rate_difference": 0.02608695652173913
+  },
+  "external_delta_ci95": [
+    -0.04583333333333333,
+    0.029166666666666667
+  ],
+  "opponents": {
+    "kaggle3": {
+      "counts": {
+        "switch_maps": 36,
+        "base_wins": 4,
+        "diagonal_wins": 0,
+        "routed_wins": 4,
+        "base_only": 4,
+        "diag_only": 0,
+        "switch_base_only": 4,
+        "switch_diag_only": 0,
+        "routed_match_wins": 12,
+        "diag_match_wins": 10
+      },
+      "changes": [
+        {
+          "seed": 7286135,
+          "side": "player_0",
+          "base": 1,
+          "diag": 0,
+          "take": true,
+          "public": {
+            "unit_move_cost": 5,
+            "unit_sap_cost": 37,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 2
+          }
+        },
+        {
+          "seed": 7286135,
+          "side": "player_1",
+          "base": 1,
+          "diag": 0,
+          "take": true,
+          "public": {
+            "unit_move_cost": 5,
+            "unit_sap_cost": 37,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 2
+          }
+        },
+        {
+          "seed": 7286141,
+          "side": "player_0",
+          "base": 1,
+          "diag": 0,
+          "take": true,
+          "public": {
+            "unit_move_cost": 1,
+            "unit_sap_cost": 45,
+            "unit_sap_range": 4,
+            "unit_sensor_range": 4
+          }
+        },
+        {
+          "seed": 7286141,
+          "side": "player_1",
+          "base": 1,
+          "diag": 0,
+          "take": true,
+          "public": {
+            "unit_move_cost": 1,
+            "unit_sap_cost": 45,
+            "unit_sap_range": 4,
+            "unit_sensor_range": 4
+          }
+        }
+      ],
+      "per_map_delta": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "solution92": {
+      "counts": {
+        "switch_maps": 36,
+        "base_wins": 109,
+        "diagonal_wins": 118,
+        "routed_wins": 112,
+        "base_only": 1,
+        "diag_only": 10,
+        "switch_base_only": 1,
+        "switch_diag_only": 7,
+        "routed_match_wins": 325,
+        "diag_match_wins": 337
+      },
+      "changes": [
+        {
+          "seed": 7286102,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 4,
+            "unit_sap_cost": 47,
+            "unit_sap_range": 3,
+            "unit_sensor_range": 1
+          }
+        },
+        {
+          "seed": 7286115,
+          "side": "player_0",
+          "base": 0,
+          "diag": 1,
+          "take": false,
+          "public": {
+            "unit_move_cost": 3,
+            "unit_sap_cost": 46,
+            "unit_sap_range": 7,
+            "unit_sensor_range": 2
+          }
+        },
+        {
+          "seed": 7286115,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": false,
+          "public": {
+            "unit_move_cost": 3,
+            "unit_sap_cost": 46,
+            "unit_sap_range": 7,
+            "unit_sensor_range": 2
+          }
+        },
+        {
+          "seed": 7286124,
+          "side": "player_0",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 1,
+            "unit_sap_cost": 41,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 3
+          }
+        },
+        {
+          "seed": 7286124,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 1,
+            "unit_sap_cost": 41,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 3
+          }
+        },
+        {
+          "seed": 7286137,
+          "side": "player_1",
+          "base": 1,
+          "diag": 0,
+          "take": true,
+          "public": {
+            "unit_move_cost": 3,
+            "unit_sap_cost": 36,
+            "unit_sap_range": 3,
+            "unit_sensor_range": 3
+          }
+        },
+        {
+          "seed": 7286142,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 5,
+            "unit_sap_cost": 31,
+            "unit_sap_range": 3,
+            "unit_sensor_range": 1
+          }
+        },
+        {
+          "seed": 7286144,
+          "side": "player_0",
+          "base": 0,
+          "diag": 1,
+          "take": false,
+          "public": {
+            "unit_move_cost": 3,
+            "unit_sap_cost": 44,
+            "unit_sap_range": 7,
+            "unit_sensor_range": 1
+          }
+        },
+        {
+          "seed": 7286147,
+          "side": "player_0",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 2,
+            "unit_sap_cost": 46,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 4
+          }
+        },
+        {
+          "seed": 7286147,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 2,
+            "unit_sap_cost": 46,
+            "unit_sap_range": 5,
+            "unit_sensor_range": 4
+          }
+        },
+        {
+          "seed": 7286159,
+          "side": "player_1",
+          "base": 0,
+          "diag": 1,
+          "take": true,
+          "public": {
+            "unit_move_cost": 5,
+            "unit_sap_cost": 48,
+            "unit_sap_range": 4,
+            "unit_sensor_range": 2
+          }
+        }
+      ],
+      "per_map_delta": [
+        0.0,
+        0.0,
+        -0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.5
+      ]
+    }
+  },
+  "source_files": {
+    "v14": "88ade28462a24f96d7e7120b2d6157a04d65d034bd8cc5a2bdbcec656904f41f",
+    "diagonal": "3aa62eee437e849e1c745d48adf25891b83973b76e4b50052bd96b077daa0e84"
+  }
+}
