@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der Wechsel im dritten Match gewinnt und verliert gleich viele Solution-Partien
+
+Über sechs vollständige Kartengruppen gewinnen der ursprüngliche R3 und der Wechsel zu V15 nach Sieg–Niederlage jeweils **364/368** gegen Solution. Alle 46 knappen Kontrollen wurden aus der ursprünglichen Startstellung wiederholt. In 15 Fällen war der Wechsel erreichbar. Zwei Niederlagen wurden zu Siegen, zwei Siege zu Niederlagen. Auf 322 weiteren Sitzen schließt der belegte 3:0-Verlauf eine Umschaltung aus. Das 95-%-Kartenintervall des Unterschieds reicht von −1,09 bis +1,09 Prozentpunkten. [Rohdaten und alle vier Wechsel der Spielsieger](../experiments/analysis/r3_v4_wl_20261115/SOLUTION_AUSWERTUNG.md).
+
 ## 15.11.2026 – R3 darf zwei verschiedene Bewegungsrichtungen früher unterscheiden
 
 Wenn V14 und R3 zwei verschiedene zulässige Laufrichtungen vorschlagen, übernimmt der neue Kandidat den Vorschlag des R3-Netzes schon ab 50 % Vertrauen. Auf den 16 Auswahlkarten gewann er 32/32 gegen Solution, der ursprüngliche R3 31/32 und V14 29/32. Gegen Kaggle gewannen alle 0/32. Im Direktduell schlug der Kandidat V14 28/32. Alle sieben Bedingungen für einen Vergleich auf neuen Karten sind erfüllt. [Verhalten auf gespeicherten Situationen](../experiments/analysis/r3_turn_advice_20261115/ARCHIVPRUEFUNG.md) · [Auswahlspiele](../experiments/analysis/r3_turn_advice_20261115/VORAUSWAHL.md).
