@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Nachtraining mit echten Schülerzügen läuft
+
+Der erste Vergleich ist abgeschlossen: 20/32 direkt gegen V14, 30/32 gegen Solution bei beiden und 0/32 gegen Kaggle3 gegenüber 2/32. Für die nächste Runde spielt der eingefrorene Schüler selbst. Der Lehrer bewertet seine tatsächlich erreichten Stellungen. Vorgesehen sind 120 neue Trainings- und 24 getrennte Diagnosekarten, jeweils beide Sitze. Parallel wird eine Regel geprüft, die auf bereits gemeinsam belegten Feldern die energieärmeren Einheiten bei Bewegungsbefehlen stehen lässt. Beide Varianten verwenden eine gemeinsame neue V14-Referenz. [Schülertraining](superpowers/plans/2026-11-15-bewegung-dagger.md) · [Stapelregel](../experiments/analysis/stack_reserve_20261115/PLAN.md) · [Getrennter Folgeversuch mit Lehrerbewertungen](../experiments/analysis/combat_advice_20261115/SOFTZIELE.md).
+
+Mahmouds Stand `899b86f` ist integriert. Sein vollständiger CNN-Schüler hat einen eigenen Schalter zum Auflösen mehrfacher Stillstände und eine einstellbare Präferenz für Bewegung. Seine drei Datenrunden enthalten zusammen 1.800 Partien. Die hier laufenden Versuche verwenden den getrennt ausgepackten Stand `0105658`. Mahmouds Schalter sind in diesen Versuchen inaktiv. [Mahmouds eigener Versuchsstand](../experiments/analysis/umbau_20261115/README.md).
+
 ## 15.11.2026 – Ursachen ausgewählter Solution-Niederlagen mit öffentlichen Daten geprüft
 
 Vier bekannte Fälle und 16 gezielt ausgewählte Kontrollpartien liefen in unveränderter V14-Besetzung. Für jede Partie stimmen die historischen Kennzahlen. In einem Fall schoss der Halter mit 38 Energie, zahlte 32 und stand danach mit −26 auf seinem Punktefeld. Ein Schussverzicht hätte den nächsten Punkt gerettet. Ähnliche Situationen waren im Kontrollpanel pro gewonnenem und verlorenem Match fast gleich häufig. Auf einer anderen Karte trafen beide Teams früh in derselben Region ein, aber die eigenen Punktefelder wurden auf einem Sitz erst spät und auf dem anderen gar nicht bestätigt. Die Daten stützen mehrere unterschiedliche Verlustursachen. [Fallanalyse, Kontrollgruppe und Grenzen](../experiments/analysis/solution_public_20261115/evidence/ERGEBNIS.md).
