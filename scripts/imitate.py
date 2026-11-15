@@ -292,6 +292,18 @@ def action_loss(logits, teachers, base_actions=None):
     return (per_row * weights).sum() / weights.sum()
 
 
+def movement_distillation_loss(student, teacher, legal, temperature):
+    """T² KL(teacher || student) over the legal movement classes of the selected rows."""
+    import torch
+    import torch.nn.functional as F
+
+    teacher_logp = F.log_softmax((teacher / temperature).masked_fill(~legal, -torch.inf), dim=1)
+    student_logp = F.log_softmax((student / temperature).masked_fill(~legal, -torch.inf), dim=1)
+    # Exactly zero contribution and gradient off the legal support; avoid (-inf) - (-inf).
+    difference = teacher_logp.masked_fill(~legal, 0) - student_logp.masked_fill(~legal, 0)
+    return temperature ** 2 * (teacher_logp.exp() * difference).sum() / max(1, len(student))
+
+
 def prepare_labels(rows, width, height):
     """Rekonstruiert die Spielmaske aus ganzzahligen Spielwerten im Float16-Archiv.
 
@@ -438,14 +450,24 @@ def train_student(train, val, a, log):
         return acc, per, joint_correct / (stop - start), exact, near
 
     log(f"Minibatch: {k_steps} Spielschritte (im Mittel etwa {a.mb} Unit-Entscheidungen), Geraet {dev}")
+    distill = getattr(a, "movement_distillation", None)
     for ep in range(a.epochs):
         tot, cnt, t0 = 0.0, 0, time.time()
+        used_soft = 0
         for idx, uniq, inv in step_batches(train_step_np, k_steps, True):
             idx = train_idx[idx]
             lg, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
             loss = action_loss(lg, R["act"][idx], R["base_act"][idx] if selective else None)
             if s_lg is not None:
                 loss = loss + a.sap_weight * F.cross_entropy(s_lg, s_tgt)
+            if distill is not None:
+                selected = torch.where(R["distill_ok"][idx])[0]
+                if selected.numel():
+                    soft_rows = idx[selected]
+                    soft_loss = movement_distillation_loss(lg[selected, :5], R["movement_scores"][soft_rows],
+                                                          R["mask"][soft_rows, :5], distill["temperature"])
+                    loss = loss + distill["weight"] * soft_loss
+                    used_soft += selected.numel()
             opt.zero_grad(set_to_none=True)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(net.parameters(), 1.0)
@@ -453,6 +475,12 @@ def train_student(train, val, a, log):
             sched.step()
             tot += loss.item() * len(idx)
             cnt += len(idx)
+        if distill is not None:
+            if used_soft != distill["eligible_train_rows"]:
+                raise ValueError("Soft movement rows used differ from the eligible training rows")
+            distill["used_train_rows_per_epoch"].append(used_soft)
+            log(f"Epoche {ep+1}: {used_soft}/{cnt} Trainingszeilen mit Bewegungs-KL "
+                f"(T={distill['temperature']}, Gewicht {distill['weight']})")
         acc, per, joint_acc, s_acc, s_near = evaluate()
         log(f"Epoche {ep + 1}/{a.epochs}: Loss {tot / cnt:.4f} | Validierung Aktion {100 * acc:.1f} % "
             f"| vollstaendiger Befehl {100 * joint_acc:.1f} % | je Aktion " +

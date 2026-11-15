@@ -152,7 +152,22 @@ def collect_mixed(a):
                 pool.map(worker,jobs)
 
 
-def mapped_part(records, path):
+def movement_targets(archive, rows, span):
+    """Read a teacher trace in its own canonical frame, before applying the board index offset."""
+    scores = archive["teacher_action_scores"]
+    labels = rows["act"][span]
+    legal = rows["mask"][span, :5]
+    frames = archive["global_step"][rows["step"][span]]
+    valid = archive["teacher_frame_status"][frames] == 1
+    valid &= (archive["teacher_selected"] == 1) & np.isfinite(scores).all(axis=1)
+    valid &= (rows["base_act"][span] != 5) & (labels >= 0) & (labels < 5)
+    valid &= legal[np.arange(len(labels)), labels.clip(0, 4)]
+    best = np.where(legal, scores[:, :5], -np.inf).argmax(axis=1)
+    valid &= labels == best
+    return valid, scores[:, :5]
+
+
+def mapped_part(records, path, *, distill_movement=False):
     """Disk map for the 16 int8 board channels; allocate row columns once, one decompressed archive at a time."""
     sizes = []
     for record in records:
@@ -162,6 +177,10 @@ def mapped_part(records, path):
     n = sum(u for _,u in sizes)
     widths = dict(step=(),pos=(2,),feats=(79,),mask=(6,),act=(),sdx=(),sdy=(),base_act=())
     rows = {k: np.empty((n,*shape), np.int64 if k=="step" else collect.ROW_DTYPES[k]) for k,shape in widths.items()}
+    if distill_movement:
+        # Original archives have hard labels only. A missing/invalid trace contributes zero soft rows.
+        rows["distill_ok"] = np.zeros(n, dtype=bool)
+        rows["movement_scores"] = np.zeros((n, 5), dtype=np.float32)
     b0 = u0 = 0
     for r,(b,u) in zip(records,sizes):
         filename = Path(r["path"])
@@ -169,9 +188,14 @@ def mapped_part(records, path):
             raise ValueError(f"Archive changed before training: {filename}")
         with np.load(filename,allow_pickle=False) as z:
             boards[b0:b0+b] = z["planes"]
-            for key,target in rows.items():
-                target[u0:u0+u] = z[key]
-            rows["step"][u0:u0+u] += b0
+            span = slice(u0, u0 + u)
+            for key in widths:
+                rows[key][span] = z[key]
+            if distill_movement and "teacher_action_scores" in z:
+                eligible, scores = movement_targets(z, rows, span)
+                rows["distill_ok"][span] = eligible
+                rows["movement_scores"][span] = np.where(eligible[:, None], scores, 0.0)
+            rows["step"][span] += b0
         b0 += b
         u0 += u
     return boards, rows, [u for _,u in sizes]
@@ -199,12 +223,23 @@ def train_mixed(a):
         with log_path.open("a") as f:
             f.write(msg+"\n")
     with tempfile.TemporaryDirectory(prefix=".dagger-boards-",dir=out.parent) as tmp:
-        train_boards, train_rows, _ = mapped_part(original["train"]+mixed["train"], Path(tmp)/"train.int8")
+        train_boards, train_rows, _ = mapped_part(original["train"]+mixed["train"], Path(tmp)/"train.int8",
+                                                   distill_movement=a.distill_movement)
         val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8")
         cut = sum(val_sizes[:len(original["val"])])
         cfg = SimpleNamespace(device=a.device, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
                               lr=0.001,sap_weight=0.5,validation_groups=[
                                   ("eight original V14 maps",0,cut),("held-out mixed maps",cut,sum(val_sizes))])
+        soft_metadata = {}
+        if a.distill_movement:
+            multiple = train_rows["mask"][:, :5].sum(axis=1, dtype=np.int8) > 1
+            cfg.movement_distillation = dict(temperature=2.0, weight=0.5,
+                                             eligible_train_rows=int(train_rows["distill_ok"].sum()),
+                                             rows_with_multiple_legal_moves=int((train_rows["distill_ok"] & multiple).sum()),
+                                             used_train_rows_per_epoch=[])
+            soft_metadata["movement_distillation"] = cfg.movement_distillation
+            log(f"Bewegungs-KL: {cfg.movement_distillation['eligible_train_rows']} geeignete Trainingszeilen, "
+                f"davon {cfg.movement_distillation['rows_with_multiple_legal_moves']} mit mindestens zwei legalen Aktionen")
         log(f"Train: {len(train_rows['act'])} rows; validation: {cut} V14 + {sum(val_sizes)-cut} mixed rows")
         log(f"CPU board storage: {train_boards.nbytes+val_boards.nbytes} bytes in temporary disk files")
         net = imitate.train_student((train_boards,train_rows),(val_boards,val_rows),cfg,log)
@@ -214,7 +249,7 @@ def train_mixed(a):
         save_policy(str(candidate),net,imitate.v14_cfg(),extra=dict(kind="imitation",sap_own_tile=True,epochs=5,
                     teacher="kaggle3 lux3-bot 0.4.8_fn",selective_training=dict(parent_sha256=parent_sha,
                     initialized_from="fixed random seed 2711", inputs=identity, combat_action_weight=3, other_action_weight=1,
-                    target_weight=0.5,mb=256,seed=2711,lr=.001,lr_schedule="OneCycleLR",optimizer="AdamW")))
+                    target_weight=0.5,mb=256,seed=2711,lr=.001,lr_schedule="OneCycleLR",optimizer="AdamW", **soft_metadata)))
         os.link(candidate,out)
     log(f"Saved {out} {collect.file_sha(out)}")
 
@@ -232,6 +267,8 @@ def main():
     coll.add_argument("--workers",choices=(1,2),type=int,default=1)
     fit.add_argument("--original-data",type=Path,nargs="+",required=True)
     fit.add_argument("--mixed-data",type=Path,nargs="+",required=True)
+    fit.add_argument("--distill-movement", action="store_true",
+                     help="Add temperature-2 KL for selected legal teacher movements with an observed raw policy")
     fit.add_argument("--device",choices=("auto","cpu","mps"),default="auto")
     a = ap.parse_args()
     (collect_mixed if a.command=="collect" else train_mixed)(a)
