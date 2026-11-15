@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Ursachen ausgewählter Solution-Niederlagen mit öffentlichen Daten geprüft
+
+Vier bekannte Fälle und 16 gezielt ausgewählte Kontrollpartien liefen in unveränderter V14-Besetzung. Für jede Partie stimmen die historischen Kennzahlen. In einem Fall schoss der Halter mit 38 Energie, zahlte 32 und stand danach mit −26 auf seinem Punktefeld. Ein Schussverzicht hätte den nächsten Punkt gerettet. Ähnliche Situationen waren im Kontrollpanel pro gewonnenem und verlorenem Match fast gleich häufig. Auf einer anderen Karte trafen beide Teams früh in derselben Region ein, aber die eigenen Punktefelder wurden auf einem Sitz erst spät und auf dem anderen gar nicht bestätigt. Die Daten stützen mehrere unterschiedliche Verlustursachen. [Fallanalyse, Kontrollgruppe und Grenzen](../experiments/analysis/solution_public_20261115/evidence/ERGEBNIS.md).
+
 ## 15.11.2026 – Der eigene Bewegungsschüler gewinnt 20 von 32 direkten Duellen
 
 Auf dem unabhängigen Auswahlblock gewinnt der Bewegungsschüler gegen Solution 30/32 wie V14, gegen Kaggle3 0/32 gegenüber 2/32. Direkt 20/32, mit 95-%-Kartenintervall 37,5–87,5 %. Die externe Hürde ist verfehlt. Für Mahmoud liegen die eigenen Gewichte, alle 160 Spiele und der Folgeplan vor. [Vergleich und nächste Trainingsrunde](../experiments/analysis/combat_advice_20261115/BEWEGUNGSSPIELE.md).
