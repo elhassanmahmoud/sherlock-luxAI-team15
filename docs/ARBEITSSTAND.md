@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Spiegelung beim Training und Spiegelung im Spiel haben unterschiedliche Wirkung
+
+Ein neuer R3-Schüler erhielt dieselben 262.144 gezogenen Beispiele und 1.024 AdamW-Schritte wie der ungespiegelte R8-Vergleich. In 512 Updates wurden x/y-Achsen, Richtungen, Masken und Lehrerziele gemeinsam vertauscht. Auf 96 unabhängigen Sitzarchiven traf der neue Kandidat gegenüber dem bestätigten Zwei-Ansichten-R3 auf den eigenen R3-Stellungen 436 und auf den älteren Stellungen 840 weniger Lehrerentscheidungen. Alle vier Auswahlbedingungen sind verfehlt. Die gemessene Verbesserung der Zwei-Ansichten-Auswertung im Spiel stammt vom früheren Netz. [Training und Auswertung](../experiments/analysis/r3_trained_reflection_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Beide verbleibenden Solution-Verluste stammen von einer Karte
 
 Auf 7286137 gewinnt V15 beide Startseiten 2:1, der Zwei-Ansichten-Berater verliert beide 0:3. Ein neuer Kandidat behält dessen Eröffnung und verwendet nach einer Niederlage im ersten Match V14 für den Rest der Partie. In 13 gezielten Diagnosepartien holte er einen der beiden Solution-Sitze und zwei frühere Kaggle-Niederlagen. Die drei knappen Solution-Siege und beide neutralen Kontrollverläufe blieben erhalten. Ein Vergleich auf neuen Karten läuft. [Acht Vergleichsverläufe](../experiments/analysis/movement_reflection_20261115/last_solution_map/ERGEBNIS.md) · [Rückschaltung](../experiments/analysis/diagonal_after_loss_20261115/BEKANNTE_KARTEN.md).
