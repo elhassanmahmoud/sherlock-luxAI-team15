@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Nach 224 Auswahlspielen qualifiziert sich der diagonal gespiegelte R3 mit vier zusätzlichen externen Siegen gegenüber V14 für den unabhängigen Vergleich. Der getrennte FT18-Kandidat verfehlt nach 160 Ausführungen die direkte Mehrheit. [Zwei Ansichten](../experiments/analysis/movement_reflection_20261115/VORAUSWAHL.md) · [FT18](../experiments/analysis/late_ft18_20261115/after_win/fresh/ERGEBNIS.md).
+
 15.11.2026 – 5.600 Spiele auf den 400 Bestätigungskarten für v4 mixed. Direkt 730/800 gegen V14, extern Solution 764/800 gegenüber 767/800, Kaggle 12/800 bei beiden, Default 800/800 bei beiden. Drei der vier Spielbedingungen erfüllt. [Rohdaten und Gegenprüfung](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
 
 15.11.2026 – Der ursprüngliche R3 gewann auf einem zweiten festen Solution-Satz **120/120**, V14 119/120 und die zusätzliche Wegregel 118/120. Zusammen auf den zwei Sätzen R3 **239/240**, V14 234/240. Die sofortige Wegregel ist aus dem Vergleich ausgeschieden. [360 Spielausführungen](../experiments/analysis/movement_soft_20261115/restart_route/FRISCHE_KARTEN.md).

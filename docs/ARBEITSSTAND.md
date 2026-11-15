@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 mit zweiter Kartenansicht erreicht die Bestätigung
+
+32/32 gegen Solution, 2/32 gegen Kaggle, 22/32 gegen V14. Der ursprüngliche R3 erzielt extern 31/32 und 0/32, V14 30/32 und 0/32. Die Kaggle-Siege liegen auf derselben Karte. Für die 224 Auswahlspiele wurden Sitzschlüssel, Matchsummen, Prüfsummen und Rohdaten nachgerechnet. Die 600 unabhängigen Bestätigungsspiele sind gestartet. [R3-Vorauswahl](../experiments/analysis/movement_reflection_20261115/VORAUSWAHL.md).
+
+Der späte FT18-Wechsel nach eigenem Auftaktsieg endet nach 160 vollständigen Ausführungen mit 31/32 gegen Solution, 2/32 gegen Kaggle und 12/32 direkt. [FT18-Ergebnis](../experiments/analysis/late_ft18_20261115/after_win/fresh/ERGEBNIS.md). Für den folgenden R3-Kontextversuch werden auf neuen Karten tatsächlich gespielte Lehrerbeispiele aufgenommen. Die beiden kontrollierten R8-Trainings starten vom selben R3-Gewicht. 29 gezielte Prüfungen im Arbeitsbaum sowie sechs Kontext- und drei Trainingsprüfungen in den eingefrorenen Ständen bestanden. [Kontext](../experiments/analysis/r3_context_selector_20261115/AUSFUEHRUNG.md) · [R8](../experiments/analysis/r8_warm_20261115/PLAN.md).
+
 ## 15.11.2026, 20:44 Berlin – Claude Code mit Mahmoud: V15-Kandidat bestätigt – 91 % gegen V14, gleich gegen Solution, kein Kaggle-Vorteil; Entscheidung offen
 
 - **Einmalige Bestätigung** des vorab registrierten Kandidaten (Hybrid v4 mixed, SHA-256 `28933a3b…`) auf 7158000–7158399, je 800 Spiele, eingefrorene Quelle `ddbdb4b`: kaggle3 1,50 % wie V14 (Matches 4,25 statt 3,58 %), **Hürde 1 verfehlt**; Solution 95,50 % statt 95,88 % (bestanden); **direkt gegen V14 91,25 % [88,49; 94,00]** (bestanden); default 100 % (bestanden). Technik: Kurs-Runner 8/8, Zip-Kursprüfung, isoliertes Nachspielen 0 Abweichungen. [Entscheidungsvorlage](../experiments/analysis/umbau_20261115/V15_ENTSCHEIDUNG.md).
