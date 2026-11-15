@@ -12,3 +12,18 @@ Auf den 32 Lernkarten mit je zwei Sitzplätzen standen 201.432 Entscheidungen le
 Diese Diagnose misst Übereinstimmung mit einem Lehrer in V14-Zuständen. Der folgende Spielvergleich prüft Siege gegen Kaggle3 und Solution_92 auf 16 neuen Karten. Unterschiedlich quantisierte Eingaben zwischen NPZ und Spiel können einzelne Schwellenentscheidungen ändern.
 
 [Validierungszahlen nach Karte und Sitz](validation.json) · [Schussanalyse und Prüfsummen der NPZ-Dateien](v14_advice_audit.json) · [Erhebungsprotokoll](data_protocol.json) · [Eigener Schusskopf](../../candidates/combat_advice_20261115/aim.pth) · [Vorabplan](PLAN.md).
+
+## Nachvollziehen auf einem zweiten Rechner
+
+Aus einem eigenen Checkout des getesteten Commits `edc580c` mit installierter Kursumgebung. Die Befehle verwenden lokale Versuchsordner. Für eine reine Spielprüfung genügt der kleine gespeicherte Kopf `experiments/candidates/combat_advice_20261115/aim.pth` aus dem Ergebniscommit.
+
+```sh
+python -m scripts.fetch_kaggle3
+python -m scripts.collect_combat_advice --first 7271000 --maps 40 --workers 2 --out experiments/imitation/final_20261115_v14_advice
+python -m scripts.train_combat_advice train --data experiments/imitation/final_20261115_v14_advice --out experiments/imitation/final_20261115_combat_fit
+python -m scripts.train_combat_advice diagnose --data experiments/imitation/final_20261115_v14_advice --out experiments/imitation/final_20261115_combat_fit
+python -m scripts.final_battle_compare --candidate v14 --first 7271100 --maps 16 --workers 2 --out experiments/analysis/combat_advice_20261115/screen/v14
+python -m scripts.final_battle_compare --candidate aim --model experiments/imitation/final_20261115_combat_fit/model.pth --first 7271100 --maps 16 --workers 2 --out experiments/analysis/combat_advice_20261115/screen/aim
+```
+
+Die Zielklassifikation für den M3-Lauf entstand auf MPS. Der Trainer speichert nach jeder vollständigen Epoche und prüft bei der Fortsetzung das Gerät, die Eingabepfade und die Prüfsummen. Eine Reproduktion auf anderer Hardware kann numerisch abweichen.

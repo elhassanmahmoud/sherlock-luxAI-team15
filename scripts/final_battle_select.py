@@ -10,15 +10,15 @@ SEATS = ("player_0", "player_1")
 SEEDS = range(7163000, 7163012)
 
 
-def checked_games(directory, name):
+def checked_games(directory, name, seeds):
     manifest = json.loads((directory / "manifest.json").read_text())
     finished = json.loads((directory / "completed.json").read_text())
     raw = (directory / "games.jsonl").read_bytes()
     if (hashlib.sha256(raw).hexdigest() != finished["rows_sha256"]
-            or manifest["candidate"] != name or manifest["first"] != SEEDS.start
-            or manifest["maps"] != len(SEEDS) or tuple(manifest["opponents"]) != OPPONENTS):
+            or manifest["candidate"] != name or manifest["first"] != seeds.start
+            or manifest["maps"] != len(seeds) or tuple(manifest["opponents"]) != OPPONENTS):
         raise ValueError(f"Inconsistent screen in {directory}")
-    expected = {(o, s, side) for o in OPPONENTS for s in SEEDS for side in SEATS}
+    expected = {(o, s, side) for o in OPPONENTS for s in seeds for side in SEATS}
     games = {}
     for line in raw.splitlines():
         row = json.loads(line)
@@ -33,15 +33,33 @@ def checked_games(directory, name):
     return games, manifest
 
 
-def summarize(root, include_learned):
-    baseline, reference = checked_games(root / "v14", "v14")
-    names = CANDIDATES if include_learned else CANDIDATES[:2]
+def combat_arms(diagnosis):
+    aim = diagnosis["all"]["aim"]["counts"]
+    fire = diagnosis["all"]["fire"]["counts"]
+    names = []
+    if aim["aim_changes"] >= 30 and aim["deployed_target_hits"] > aim["base_target_hits"]:
+        names.append("aim")
+        if fire["new_saps"] >= 30 and fire["new_teacher_saps"] >= 0.75 * fire["new_saps"]:
+            names.append("fire")
+    return names
+
+
+def summarize(root, diagnosis, combat=False):
+    if combat:
+        seeds = range(7271100, 7271116)
+        names = combat_arms(diagnosis)
+    else:
+        seeds = SEEDS
+        names = CANDIDATES if diagnosis["screen_gate"] else CANDIDATES[:2]
+    baseline, reference = checked_games(root / "v14", "v14", seeds)
     results, eligible = {}, []
     for name in ("v14", *names):
-        games, manifest = checked_games(root / name, name)
+        games, manifest = checked_games(root / name, name, seeds)
         if (manifest["weights"] != reference["weights"] or manifest["engine"] != reference["engine"]
                 or any(manifest["sources"].get(k) != v for k, v in reference["sources"].items())):
             raise ValueError(f"Reference inputs differ for {name}")
+        if combat and name != "v14" and manifest["model"] != diagnosis["model_sha256"]:
+            raise ValueError(f"Screened a different combat model: {name}")
         score = {}
         for o in OPPONENTS:
             pairs = [(games[k], base) for k, base in baseline.items() if k[0] == o]
@@ -52,7 +70,10 @@ def summarize(root, include_learned):
         results[name] = score
         if name != "v14":
             k3, sol = (score[o]["wins"] - results["v14"][o]["wins"] for o in OPPONENTS)
-            if (k3 >= 1 and sol >= -1) or (sol >= 1 and k3 >= 0):
+            qualifies = (k3 >= 1 and sol >= -1) or (sol >= 1 and k3 >= 0)
+            if combat:
+                qualifies = k3 + sol >= 2 and sol >= 0
+            if qualifies:
                 eligible.append((k3 + sol, sum(s["matches"] for s in score.values()), -names.index(name), name))
     return dict(results=results, nominee=max(eligible)[-1] if eligible else None)
 
@@ -61,7 +82,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--diagnosis", type=Path, required=True)
+    parser.add_argument("--combat", action="store_true", help="Use the prespecified combat-advice screen")
     args = parser.parse_args()
     diagnosis = json.loads(args.diagnosis.read_text())
-    include = diagnosis["screen_gate"]
-    print(json.dumps(summarize(args.root, include), indent=2))
+    print(json.dumps(summarize(args.root, diagnosis, args.combat), indent=2))
