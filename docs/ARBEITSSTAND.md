@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Zusätzliche Felddeckung und zeitliches Gegnerbild ausgewertet
+
+Die Felddeckung griff in allen 96 Partien ein. Gegen Solution und Kaggle änderte sich kein Spielausgang gegenüber R2. Direkt gegen V14 waren es 20 statt 22 Siege. R4 mit dem Gegnerbild des vorherigen Zugs erreichte im festgelegten Nahbereich drei zusätzliche Lehrerbefehle weniger als R2 und insgesamt 21 weniger. Beide Versuche enden nach den vorher vereinbarten Vergleichen. [Felddeckung im Spiel](../experiments/analysis/coverage_restore_20261115/ERGEBNIS.md) · [Zeitliches Gegnerbild](../experiments/analysis/temporal_movement_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Der letzte tatsächlich gespielte Befehl hilft auf 21 von 24 Diagnosekarten
 
 Eine Häufigkeitstabelle traf mit diesem zusätzlichen Hinweis 1.868 weitere Lehreraktionen unter 147.228 Entscheidungen. Der Unterschied beträgt +1,27 Prozentpunkte, mit einem 95-%-Kartenintervall von +0,82 bis +1,71. R5 soll prüfen, ob der vollständige Bewegungsberater davon im Spiel profitiert. [Daten und Einschränkungen](../experiments/analysis/own_command_20261115/archive/ERGEBNIS.md) · [Vorab festgelegter Vergleich](../experiments/analysis/own_command_20261115/PLAN.md).

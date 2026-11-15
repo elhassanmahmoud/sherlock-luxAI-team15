@@ -1,0 +1,264 @@
+{
+  "stage": "development_screen",
+  "first": 7272300,
+  "maps": 16,
+  "model_sha256": "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96",
+  "input_hashes": {
+    "v14": {
+      "manifest_sha256": "556181de82f3613167e7bdb19a4c7408e39d5d8981dfb6773941ae665e2fa2f0",
+      "games_sha256": "47fac1b6d55ac27cf5230f81e595ec65369cd288b53b13f074f8e0004a02d9f4"
+    },
+    "r2": {
+      "manifest_sha256": "bb01f5b68d49c9db47b35b1950a92c1bdb21d3a75aaa0172c7505d212f0c5a55",
+      "games_sha256": "d2c37c13eeecbf70fe5936b943350fcd7819fc20203f48ce2915bda68ed45900"
+    },
+    "coverage_restore": {
+      "manifest_sha256": "af7adff6ce237df54bb3ec4bf3d381b68b4eadf6b1c3eea12fee8a9e0d599172",
+      "games_sha256": "118caf296a9258e60386770e4cd162fffcf0ec4e4d62d70cdfc0c5b75a9a5105"
+    }
+  },
+  "source_set_sha256": {
+    "v14": "b838dc94ca403992d92d1b38a086b957ddaa9f09d53f7c9621599cbd80fd0a62",
+    "selective_movement": "adab51bd97b625718c0a9eb387afa61b45f3f66d409421dca08a7b3d148812ba"
+  },
+  "engine_set_sha256": "e268dee1dfffb818ddf92ae3e6d5f716a4aab10f25b6d1dec74265f1ea42d1b3",
+  "coverage_sources": {
+    "scripts/coverage_restore.py": "b9cace02d583802d88d25f87a4c04a8203e85255394e150ad46cb642c11399b8",
+    "scripts/coverage_restore_compare.py": "4c3a018ad52df3c4fcf0a6e3c0992d37d0e0a4c1f42c9e9692a1c0a1d61874f9"
+  },
+  "candidate_minus": {
+    "r2": {
+      "kaggle3": {
+        "games": 32,
+        "wins": 0,
+        "game_losses": 32,
+        "reference_wins": 0,
+        "reference_game_losses": 32,
+        "match_wins": 2,
+        "reference_match_wins": 2,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "solution92": {
+        "games": 32,
+        "wins": 32,
+        "game_losses": 0,
+        "reference_wins": 32,
+        "reference_game_losses": 0,
+        "match_wins": 90,
+        "reference_match_wins": 90,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "v14": {
+        "games": 32,
+        "wins": 20,
+        "game_losses": 12,
+        "reference_wins": 22,
+        "reference_game_losses": 10,
+        "match_wins": 62,
+        "reference_match_wins": 64,
+        "rescued": 4,
+        "lost": 6,
+        "rescued_keys": [
+          {
+            "opponent": "v14",
+            "seed": 7272302,
+            "side": "player_0"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272302,
+            "side": "player_1"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272315,
+            "side": "player_0"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272315,
+            "side": "player_1"
+          }
+        ],
+        "lost_keys": [
+          {
+            "opponent": "v14",
+            "seed": 7272306,
+            "side": "player_0"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272306,
+            "side": "player_1"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272312,
+            "side": "player_0"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272312,
+            "side": "player_1"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272314,
+            "side": "player_0"
+          },
+          {
+            "opponent": "v14",
+            "seed": 7272314,
+            "side": "player_1"
+          }
+        ],
+        "net_wins": -2,
+        "delta_rate": -0.0625,
+        "paired_95": [
+          -0.3125,
+          0.1875
+        ]
+      },
+      "external": {
+        "games": 64,
+        "wins": 32,
+        "game_losses": 32,
+        "reference_wins": 32,
+        "reference_game_losses": 32,
+        "match_wins": 92,
+        "reference_match_wins": 92,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "v14": {
+      "kaggle3": {
+        "games": 32,
+        "wins": 0,
+        "game_losses": 32,
+        "reference_wins": 0,
+        "reference_game_losses": 32,
+        "match_wins": 2,
+        "reference_match_wins": 2,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "solution92": {
+        "games": 32,
+        "wins": 32,
+        "game_losses": 0,
+        "reference_wins": 32,
+        "reference_game_losses": 0,
+        "match_wins": 90,
+        "reference_match_wins": 93,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "external": {
+        "games": 64,
+        "wins": 32,
+        "game_losses": 32,
+        "reference_wins": 32,
+        "reference_game_losses": 32,
+        "match_wins": 92,
+        "reference_match_wins": 95,
+        "rescued": 0,
+        "lost": 0,
+        "rescued_keys": [],
+        "lost_keys": [],
+        "net_wins": 0,
+        "delta_rate": 0.0,
+        "paired_95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "technical": {
+    "kaggle3": {
+      "games": 32,
+      "games_with_restore": 32,
+      "restored_fields": 758,
+      "affected_steps": 702,
+      "original_r2_changes": 16678,
+      "final_changes_vs_base": 15920,
+      "skipped_visible_enemy": 158,
+      "skipped_last_cover": 110,
+      "maps_with_restore": 16
+    },
+    "solution92": {
+      "games": 32,
+      "games_with_restore": 32,
+      "restored_fields": 813,
+      "affected_steps": 766,
+      "original_r2_changes": 18032,
+      "final_changes_vs_base": 17219,
+      "skipped_visible_enemy": 244,
+      "skipped_last_cover": 126,
+      "maps_with_restore": 16
+    },
+    "v14": {
+      "games": 32,
+      "games_with_restore": 32,
+      "restored_fields": 722,
+      "affected_steps": 686,
+      "original_r2_changes": 17808,
+      "final_changes_vs_base": 17086,
+      "skipped_visible_enemy": 96,
+      "skipped_last_cover": 102,
+      "maps_with_restore": 16
+    }
+  },
+  "gates": {
+    "external_gain_over_r2_at_least_two": false,
+    "solution_at_least_r2": true,
+    "direct_at_least_r2": false,
+    "external_at_least_v14": true
+  },
+  "game_gates_pass": false,
+  "interval": "Paired game-win-rate difference. 95% percentile, 10000 PCG64 draws, seed 2711. Each draw keeps both seats and all included opponents together.",
+  "scope": "Development screen only. Qualification permits the separate fresh-map confirmation in PLAN.md."
+}
