@@ -14,6 +14,8 @@ from pathlib import Path
 
 import numpy as np
 
+from scripts.scoring import match_points_after_step
+
 WEIGHTS = "agents/sherlock/weights/agent_p0.pth"
 
 
@@ -61,6 +63,7 @@ def play(job):
         ms_next = int(np.asarray(o_next["match_steps"]))
         ms_now = int(np.asarray(o_now["match_steps"]))
         reset = ms_next == 0 or done
+        tp = match_points_after_step(o_now, o_next, info)
         start = ms_now == 0  # Reste des alten Matches verschwinden jetzt: keine Tode
         for t in (0, 1):
             own_now, own_next = obs[sides[t]], nxt[sides[t]]  # jedes Team sieht die eigenen Units immer
@@ -71,14 +74,13 @@ def play(job):
                 m_next = np.asarray(own_next["units_mask"])[t].astype(bool)
                 acc["deaths"][t] += int((m_now & ~m_next).sum())
                 acc["spawned"][t] += int((~m_now & m_next).sum())
-                gain = int(np.asarray(own_next["team_points"])[t]) - int(np.asarray(own_now["team_points"])[t])
-                acc["tiles_sum"][t] += max(gain, 0)
-                if gain > 0 and acc["first_point"][t] < 0:
-                    acc["first_point"][t] = ms_now + 1
+            gain = int(tp[t]) - int(np.asarray(own_now["team_points"])[t])
+            acc["tiles_sum"][t] += max(gain, 0)
+            if gain > 0 and acc["first_point"][t] < 0:
+                acc["first_point"][t] = ms_now + 1
         if reset:  # Match zu Ende (Reset) oder Spielende
             wins_before = np.asarray(o_now["team_wins"]).astype(int)
             wins_after = np.asarray(o_next["team_wins"]).astype(int)
-            tp = np.asarray(o_now["team_points"]).astype(int)
             winner = int(np.argmax(wins_after - wins_before)) if (wins_after - wins_before).sum() else -1
             alive = [int(np.asarray(obs[sides[t]]["units_mask"])[t].sum()) for t in (0, 1)]
             rows.append(dict(

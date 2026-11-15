@@ -61,13 +61,13 @@
 
 - Ein Spiel umfasst im Kurs drei Matches. Hier vergleichen wir ausschließlich das **erste** Match auf 30 Karten, jede auf beiden Seiten.
 - Für ein greifbares Einzelbeispiel: Auf Karte 7150000, Sherlock auf Seite 0, verliert Sherlock 18 Einheiten, der Gegner zwei. Der Gegner schießt 25-mal, Sherlock neunmal. Dann auf die Mittelwerte aller 60 ersten Matches zeigen.
-- Sherlock verliert im Mittel 23 Einheiten und hat am Ende nur noch rund 390 Teamenergie. Der Gegner verliert gut eine Einheit und hat über 3.300 Energie. Wer Energie übrig hat, kann weiter schießen.
+- Sherlock verliert im Mittel 23 Einheiten und hat vor dem letzten Zug nur noch rund 390 Teamenergie. Der Gegner verliert gut eine Einheit und hat über 3.300 Energie. Wer Energie übrig hat, kann weiter schießen.
 - Der erste Punkt kommt bei Sherlock meist ähnlich früh. Beim früheren Tanken überleben tatsächlich mehr Einheiten. Ob sie auch punkten, zeigt die nächste Folie.
 
 ### 9 · Moe
 
 - Das Gedächtnis hilft Sherlock, Punktefelder zu finden. Gegen den Kaggle-Agenten sehen wir, wie schnell Einheiten im Kampf verloren gehen.
-- „Wir haben das Tanken vorgezogen. Dadurch verlieren wir im ersten Match im Schnitt fünf Einheiten weniger. Unsere Punktausbeute verbessert sich dabei kaum. Deshalb trainieren wir jetzt einen Schüler mit Entscheidungen des Kaggle-Agenten. Er lernt unter anderem, welche Einheit auf welches Feld schießen soll.“
+- „Wir haben das Tanken vorgezogen. Dadurch verlieren wir im ersten Match im Schnitt fünf Einheiten weniger. Vor dem letzten Zug stehen im Mittel 79 statt 82 Punkte auf der Anzeige. Deshalb trainieren wir jetzt einen Schüler mit Entscheidungen des Kaggle-Agenten. Er lernt unter anderem, welche Einheit auf welches Feld schießen soll.“
 - Der letzte bestätigte Abgabestand ist V14 (Datenstand 15.11.). Vor einer Änderung brauchen wir neue Karten, den bisherigen Vergleichsgegner und das direkte Duell. Mit einer kurzen Pause enden, dann Fragen aufnehmen.
 
 ## Stand und Quellen für das Team
