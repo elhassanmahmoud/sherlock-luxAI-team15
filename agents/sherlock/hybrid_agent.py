@@ -9,6 +9,8 @@ Beobachtung entscheiden und waehlt je Unit:
   spielen V14; alle anderen den Schueler.
 - mode "combat": Units mit sichtbarem Gegner im Umkreis `combat_radius` (Chebyshev) spielen den Schueler, sonst V14.
 - mode "sap": Will der Schueler schiessen, gilt sein Schuss; sonst V14.
+- mode "mixed": wie points, aber sobald ein sichtbarer Gegner im Umkreis `combat_radius` steht, spielt auch ein
+  Halter oder eine Unit auf dem Weg zum Punktefeld den kampfstaerkeren Schueler.
 
 Beide Teilagenten fuehren ihr eigenes Gedaechtnis aus denselben Beobachtungen.
 """
@@ -20,7 +22,7 @@ import numpy as np
 
 from . import geometry as geo
 
-MODES = ("points", "combat", "sap")
+MODES = ("points", "combat", "sap", "mixed")
 
 
 class HybridAgent:
@@ -92,14 +94,16 @@ class HybridAgent:
         x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
         if self.mode == "sap":
             return int(student_action[0]) == geo.SAP
+        def near() -> bool:
+            ec = np.asarray(ctx.get("enemy_coords", np.zeros((0, 2), dtype=int))).reshape(-1, 2)
+            return bool(len(ec)) and bool((np.maximum(np.abs(ec[:, 0] - x), np.abs(ec[:, 1] - y))
+                                           <= self.combat_radius).any())
         if self.mode == "combat":
-            ec = ctx["enemy_coords"]
-            if len(ec) == 0:
-                return False
-            d = np.maximum(np.abs(ec[:, 0] - x), np.abs(ec[:, 1] - y))
-            return bool((d <= self.combat_radius).any())
+            return near()
         # points: Halter und Units mit bewiesenem Punktefeld als Ziel bleiben bei V14
         holder = bool(belief.point_tiles[x, y]) and ctx["first_on_tile"].get((x, y)) == uid
         tgt = ctx["assigned"].get(uid)
         to_point = tgt is not None and bool(belief.point_tiles[int(tgt[0]), int(tgt[1])])
+        if self.mode == "mixed" and near():
+            return True
         return not (holder or to_point)

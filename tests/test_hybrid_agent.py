@@ -20,7 +20,7 @@ def student(tmp_path):
     return str(path)
 
 
-@pytest.mark.parametrize("mode", ["points", "combat", "sap"])
+@pytest.mark.parametrize("mode", ["points", "combat", "sap", "mixed"])
 def test_hybrid_plays_valid_actions(student, mode):
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
