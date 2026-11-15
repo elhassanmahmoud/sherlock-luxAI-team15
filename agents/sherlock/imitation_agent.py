@@ -148,6 +148,9 @@ class ImitationAgent(PPOAgent):
             stay_bias = float(getattr(self.cfg, "imit_stay_bias", 0.0) or 0.0)
             if stay_bias:
                 logp[:, geo.STAY] -= stay_bias
+            sap_bias = float(getattr(self.cfg, "imit_sap_bias", 0.0) or 0.0)
+            if sap_bias:
+                logp[:, geo.SAP] += sap_bias  # gesperrte Schuesse bleiben -inf
             acts = logp.argmax(dim=1).numpy()
             if getattr(self.cfg, "imit_unstack", False):
                 acts = self._unstack_actions(ctx, ids, pos, logp.numpy(), acts)

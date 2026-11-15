@@ -513,6 +513,20 @@ def cmd_ensemble(a) -> None:
     print(f"Ensemble mit {len(cks)} Schuelern: {out}")
 
 
+def cmd_hybrid(a) -> None:
+    """Kleine Beschreibungsdatei fuer einen Hybrid aus V14 und einem Schueler (agents/sherlock/hybrid_agent.py)."""
+    import torch
+    out = _check_out(Path(a.out))
+    if out.exists():
+        raise SystemExit(f"{out} existiert schon")
+    from agents.sherlock.main import Agent_x
+    cfg = Agent_x._cfg_from_checkpoint(str(V14))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    torch.save({"kind": "hybrid", "v14": str(V14), "student": str(Path(a.student).resolve()), "mode": a.mode,
+                "combat_radius": a.combat_radius, "cfg": cfg.to_dict()}, out)
+    print(f"Hybrid {a.mode}: {out}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -532,6 +546,11 @@ def main() -> None:
     e = sub.add_parser("ensemble")
     e.add_argument("--students", nargs="+", required=True)
     e.add_argument("--out", required=True)
+    h = sub.add_parser("hybrid")
+    h.add_argument("--student", required=True)
+    h.add_argument("--mode", choices=("points", "combat", "sap"), default="points")
+    h.add_argument("--combat-radius", type=int, default=5)
+    h.add_argument("--out", required=True)
     t = sub.add_parser("train")
     t.add_argument("--data", nargs="+", required=True)
     t.add_argument("--out", required=True)
@@ -552,7 +571,7 @@ def main() -> None:
     focused.set_defaults(selective=True, epochs=5, mb=256, lr=0.001, ch=32, blocks=3, hidden=128,
                          seed=2711, sap_weight=0.5)
     a = ap.parse_args()
-    commands = {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble,
+    commands = {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble, "hybrid": cmd_hybrid,
                 "train": cmd_train, "train-selective": cmd_train}
     commands[a.cmd](a)
 

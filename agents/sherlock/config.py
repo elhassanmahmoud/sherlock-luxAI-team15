@@ -394,6 +394,9 @@ class AgentConfig:
     imit_stay_bias: float = 0.0
     """> 0 (15.11.2026, nur ImitationAgent): von der Log-Wahrscheinlichkeit fuer STAY abziehen. Der Schueler sieht
     die mehrschrittigen Plaene des Lehrers nicht und bleibt im Zweifel stehen (58-67 % statt 46 % beim Lehrer)."""
+    imit_sap_bias: float = 0.0
+    """> 0 (15.11.2026, nur ImitationAgent): zur Log-Wahrscheinlichkeit fuer SAP addieren (der Schueler erkennt
+    nur rund 34 % der Lehrerschuesse und schiesst zu selten)."""
     imit_unstack: bool = False
     """True (15.11.2026, nur ImitationAgent): je Feld bleibt hoechstens eine eigene Unit stehen (der erste Halter bzw.
     die mit der hoechsten STAY-Bewertung), die anderen nehmen ihre beste erlaubte Bewegung."""
