@@ -34,3 +34,7 @@ experiments/analysis/threat_warmstart_20261109/**/*.npz
 
 # Fremde Testgegner (z. B. Kaggle-Platz-3-Agent, scripts/fetch_kaggle3.py), nie committen
 experiments/opponents/
+
+# Imitation Learning (15.11.2026): Lehrer-Daten und Schueler-Gewichte nicht versionieren (gross, reproduzierbar)
+experiments/imitation/**/*.npz
+experiments/imitation/**/*.pth

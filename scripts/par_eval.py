@@ -80,7 +80,11 @@ def _worker(job: tuple) -> list[dict]:
     import torch
     env = LuxAIS3GymEnv(numpy_output=True)
     ckpt = torch.load(weights, map_location="cpu", weights_only=False)
-    if isinstance(ckpt, dict) and ckpt.get("kind") == "ppo":
+    if isinstance(ckpt, dict) and ckpt.get("kind") == "imitation":
+        # 15.11.2026: nachgeahmte Policy (scripts/imitate.py), gleiche Vorverarbeitung wie beim Sammeln
+        from agents.sherlock.imitation_agent import ImitationAgent
+        agent = ImitationAgent("player_0", agent_path=weights, train=False)
+    elif isinstance(ckpt, dict) and ckpt.get("kind") == "ppo":
         from agents.sherlock.ppo_agent import PPOAgent
         agent = PPOAgent("player_0", agent_path=weights, train=False,
                          cfg=build_cfg(weights, overrides) if overrides else None)
@@ -100,6 +104,10 @@ def _worker(job: tuple) -> list[dict]:
                 opp_side = "player_1" if side == "player_0" else "player_0"
                 if opp_name.startswith("self:"):  # eigener Checkpoint als Gegner
                     opp = make_opponent("self", opp_side, self_play_path=opp_name[5:])
+                elif opp_name.startswith("imit:"):  # 15.11.2026: nachgeahmte Policy als Gegner
+                    from agents.sherlock.imitation_agent import ImitationAgent
+                    opp = ImitationAgent(opp_side, agent_path=opp_name[5:], train=False)
+                    opp.set_to_eval_mode()
                 elif opp_name.startswith("ppo:"):  # 22.10.2026: CNN-PPO-Checkpoint als Gegner
                     from agents.sherlock.ppo_agent import PPOAgent
                     opp = PPOAgent(opp_side, agent_path=opp_name[4:], train=False)
