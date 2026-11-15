@@ -1,0 +1,93 @@
+{
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 2711,
+    "unit": "whole map"
+  },
+  "by_opponent": {
+    "kaggle3": {
+      "candidate_wins": 4,
+      "difference_ci95": [
+        -0.05,
+        0.05
+      ],
+      "gained": 2,
+      "games": 120,
+      "lost": 2,
+      "net_wins": 0,
+      "v14_wins": 4,
+      "winrate_difference": 0.0
+    },
+    "solution92": {
+      "candidate_wins": 116,
+      "difference_ci95": [
+        -0.016666666666666666,
+        0.1
+      ],
+      "gained": 8,
+      "games": 120,
+      "lost": 3,
+      "net_wins": 5,
+      "v14_wins": 111,
+      "winrate_difference": 0.041666666666666664
+    }
+  },
+  "candidate": "midpoint",
+  "candidate_files": {
+    "games_sha256": "3701de4bc8995eddc23c3ccdf3467c6c67f51f5fac6f815f28d36423370f729c",
+    "manifest_sha256": "938b33c3dfd0e3d1bb20f944784604ee1d9f25ec9ee944f1e7c68a4274ab1645"
+  },
+  "direct": {
+    "games": 120,
+    "losses": 24,
+    "winrate": 0.8,
+    "winrate_ci95": [
+      0.7,
+      0.9
+    ],
+    "wins": 96
+  },
+  "direct_files": {
+    "games_sha256": "1da5e66e2d2ccb2374b1aacca67b809279abadf65bb632cc97bb0d8f90a51768",
+    "manifest_sha256": "48f47825ac1949c5b46519ae0df77eef91fcefe3fa11805bf99b54db97681089"
+  },
+  "direct_first": 7170400,
+  "external": {
+    "difference_ci95": [
+      -0.016666666666666666,
+      0.058333333333333334
+    ],
+    "games": 240,
+    "net_wins": 5,
+    "winrate_difference": 0.020833333333333332
+  },
+  "external_first": 7170300,
+  "game_gates_pass": false,
+  "gates": {
+    "direct_lower_bound_above_half": true,
+    "direct_majority": true,
+    "external_lower_bound_positive": false,
+    "solution_at_least_reference": true
+  },
+  "matches": {
+    "direct": {
+      "v14": 276
+    },
+    "midpoint": {
+      "kaggle3": 18,
+      "solution92": 339
+    },
+    "v14": {
+      "kaggle3": 12,
+      "solution92": 306
+    }
+  },
+  "model": "51a52f0453d5ac8e9a4ea70b3792572356761054cb2890520005160f77097cf2",
+  "protocol_sha256": "14fbef07e70090dc0d96eff822bf28ed3f51a1876225cc7bb0e072c8c40edff4",
+  "reference_files": {
+    "games_sha256": "d3935ce7d3ca1086a6e537d50ad5c2f8f112a7a69a57f32b7a5e42fe8557f811",
+    "manifest_sha256": "b65433086ddb4c7cc13a68bc0af417213cb163b6e31b319d9651ae70f7b871f0"
+  },
+  "selection_sha256": "dbff39a2529c4db4812812223bc8e8a2eb716e9f4d967da33a75e8f76d48c1c1",
+  "stage": "confirm"
+}

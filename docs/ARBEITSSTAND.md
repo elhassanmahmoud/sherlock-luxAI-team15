@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Nachtrainierter Bewegungsberater gewinnt 96 von 120 gegen V14
+
+600 unabhängige, vollständige Spiele. Gegen Solution gewinnt der Kandidat 116/120, V14 auf denselben Karten 111/120. Gegen Kaggle erreichen beide 4/120. Direkt gegen V14 beträgt die Siegquote 80 % (95-%-Kartenintervall 70 bis 90 %). Über beide externen Gegner liegt das Intervall des Vorteils zwischen −1,67 und +5,83 Prozentpunkten. Drei von vier Bedingungen sind erfüllt. Der direkte Vorteil ist nachgewiesen, die vorgesehene Gesamtfreigabe verfehlt. Sitzschlüssel, Rohzeilen, Dateihashes und Siege wurden erneut geprüft. [Ergebnisbericht](../experiments/analysis/r8_midpoint_20261115/BESTAETIGUNG.md).
+
 ## 16.11.2026 – Zusätzlicher Solution-Vergleich nutzt einen fünften Rechenplatz
 
 Bei vier aufgewärmten Reihen konnte der Mac weitere 80 bereits geplante R3-Kontrollspiele auf einem fünften Platz ausführen. Insgesamt wurden in 611 Sekunden 330 Spiele beendet. Es gab zeitweise Speicherwarnungen und keine zusätzliche Auslagerung. Damit liegen getrennte Werte für den identischen V14-Referenzversuch und für den tatsächlichen gemischten Betrieb vor. [Zeit- und Speicherverlauf](../experiments/analysis/macos_durchsatz_20261115/ERGEBNIS.md).
