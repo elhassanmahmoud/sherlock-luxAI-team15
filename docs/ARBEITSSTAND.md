@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Die verbleibende Solution-Niederlage von R3
+
+Sechs echte Wiederholungen reproduzierten Sieger, Matchzahlen, Punkte und Eingriffszähler auf drei ausgewählten Sitzpartien. Auf 7273148/P0 gewann bzw. verlor allein Match 2 den Vergleich zwischen den beiden Strategien. V14 punktete erstmals in Zug 20, R3 in Zug 40, obwohl beide bereits acht Punktefelder kannten. Der erste von R3 weggeschickte Halter folgte erst in Zug 42. Auf einem der geretteten Sitze gewann R3 gerade das zweite Match mit 434 zu 101. Eine begrenzte Gegenprobe untersucht den frühen Weg zu bereits zugewiesenen Feldern. [Verläufe, Einschränkungen und Reproduktion](../experiments/analysis/movement_soft_20261115/solution_diagnostic/BEFUND.md).
+
 ## 15.11.2026 – Abschlussfolien zeigen die unabhängigen Ergebnisse
 
 Folie 6 führt den R3-Bewegungsberater hinter V14s fertigem Befehl vor. Folie 7 trennt davon Mahmouds vollständigen v3-Schüler. Folie 9 zeigt 119/120 gegen Solution und 88/120 direkt sowie die offene externe Freigabebedingung. Neun Seiten mit je 960 × 540 pt wurden gerendert und visuell geprüft. Die Planzeit ist 9:55 Minuten. Moe präsentiert 1–3 und 8–9, Mahmoud 4–7. Die gemeinsame Zeitprobe steht aus. [Aktuelle PDF](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Sprechstichpunkte](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md).
