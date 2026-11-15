@@ -5,10 +5,7 @@ import hashlib
 import importlib
 import json
 import multiprocessing
-import os
 from pathlib import Path
-import random
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 WEIGHTS = ROOT / 'agents/sherlock/weights/agent_p0.pth'
@@ -37,7 +34,8 @@ def evaluate(job):
                 result=row['result'], wins=row['our_wins'], losses=row['opp_wins'],
                 points=row['our_points'], opp_points=row['opp_points'], steps=row['steps'], secs=row['secs'],
                 study=dict(getattr(agent,'study_stats',{})), charge_moves=extra.get('charge_moves',0),
-                focus_saps=extra.get('focus_saps',0))
+                focus_saps=extra.get('focus_saps',0), energy_changes=extra.get('energy_changes',0),
+                energy_probes=extra.get('energy_probes',0))
 
 
 def init_worker(policy, model):

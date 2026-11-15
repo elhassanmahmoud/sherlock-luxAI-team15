@@ -5,7 +5,7 @@ Festlegung vom 15.11. vor den neuen Spielergebnissen. Ausgang 020a1ae, beide V14
 ## Kandidaten
 
 1. **Energierückstand erkennen**. Die öffentlichen Energien von mindestens zwei sichtbaren Gegnern zeigen in drei der letzten fünf beobachteten Spielschritte einen Median von mindestens 150 und mindestens 40 mehr als bei unseren lebenden Schiffen. Dann wechselt Sherlock für dieses Spiel auf frühzeitiges Tanken (Beginn unter 125, Ziel 210) und koordinierten Beschuss. Das Startverhalten stammt aus V14. Der Vergleich misst ausdrücklich das gesamte Paket. Das Verfahren kennt den Gegnernamen nicht.
-2. **Kontaktreserve**. Ein experimenteller Entscheider prüft, ob ein eigener geplante(r) Schritt neben mehreren sichtbaren starken Gegnern Energie unter die Schussreserve kosten würde. Er prüft legale Bewegungsalternativen unter derselben Sicht. Die gewählte Annahme über den Sogfaktor wird für alle Karten festgehalten.
+2. **Kontaktreserve**. Ein experimenteller Entscheider prüft, ob ein geplanter eigener Schritt neben mehreren sichtbaren starken Gegnern Energie unter die Schussreserve kosten würde. Er prüft legale Bewegungsalternativen unter derselben Sicht. Die gewählte Annahme über den Sogfaktor wird für alle Karten festgehalten.
 3. **Gelernte Bewegungswahl**. Ein begrenzter Scoutversuch sammelt auf den acht Karten 7162000–7162007 (beide Seiten) zufällig gewählte zulässige eigene Bewegungen und deren Energiefolge nach vier Zügen. Vier separate Diagnosekarten 7162100–7162103. Ein kleiner Regressor lernt aus den Trainingskarten. Merkmalsdefinition, Modell und Testentscheidung vor dem Spielvergleich dokumentieren. Herkunft der Labels sind Sherlocks öffentliche Beobachtungen.
 
 ## Vergleich und Entscheidung
