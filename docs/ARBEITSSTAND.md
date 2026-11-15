@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Abschlussfolien zeigen die unabhängigen Ergebnisse
+
+Folie 6 führt den R3-Bewegungsberater hinter V14s fertigem Befehl vor. Folie 7 trennt davon Mahmouds vollständigen v3-Schüler. Folie 9 zeigt 119/120 gegen Solution und 88/120 direkt sowie die offene externe Freigabebedingung. Neun Seiten mit je 960 × 540 pt wurden gerendert und visuell geprüft. Die Planzeit ist 9:55 Minuten. Moe präsentiert 1–3 und 8–9, Mahmoud 4–7. Die gemeinsame Zeitprobe steht aus. [Aktuelle PDF](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Sprechstichpunkte](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md).
+
 ## 15.11.2026 – R3 gewinnt 119/120 gegen Solution und 88/120 direkt gegen V14
 
 600 unabhängige Spielausführungen auf den vorab reservierten Karten sind abgeschlossen. V14 gewann gegen Solution 115/120. Gegen Kaggle liegen beide bei 0/120. Der direkte Vorsprung ist statistisch belegt. Die Untergrenze des gepaarten externen Vorteils liegt genau bei null, die Übernahme verlangt einen Wert darüber. V14 bleibt die Turnierversion. Im offenen Einzelfall 7273148/P0 verlor R3 trotz 887 zu 660 Gesamtpunkten zwei Matches. Die Rohdaten und das Ergebnis sind archiviert. [Bestätigung und Datengrundlage](../experiments/analysis/movement_soft_20261115/BESTAETIGUNG.md).

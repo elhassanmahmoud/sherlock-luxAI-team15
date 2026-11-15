@@ -2,7 +2,7 @@
 
 [Präsentations-PDF](Sherlock_Finale_27-11-2026.pdf) · [Editierbare Folien](Sherlock_Finale_27-11-2026.html)
 
-**Planzeit 9:55 Minuten, noch keine gemeinsame Zeitprobe.** Moe übernimmt den Einstieg, die Spielanalyse und den Schluss (4:50). Mahmoud erklärt Aktionswahl, Training, Hybrid und Gegnertest (5:05). Die Zeiten enthalten Zeige- und Übergabepausen. In eigenen Worten sprechen.
+**Planzeit 9:55 Minuten, noch keine gemeinsame Zeitprobe.** Moe übernimmt den Einstieg, die Spielanalyse und den Schluss (4:50). Mahmoud erklärt Aktionswahl, Training, Bewegungsberatung und Gegnertest (5:05). Die Zeiten enthalten Zeige- und Übergabepausen. In eigenen Worten sprechen.
 
 | Folie | Wer | Dauer | Bis |
 |---|---|---:|---:|
@@ -11,15 +11,15 @@
 | 3 · Entscheidungsablauf | Moe | 1:10 | 3:00 |
 | 4 · Der gesperrte Zug | Mahmoud | 1:25 | 4:25 |
 | 5 · Lernen | Mahmoud | 1:15 | 5:40 |
-| 6 · Wie der Hybrid je Einheit entscheidet | Mahmoud | 1:05 | 6:45 |
+| 6 · Wann R3 den Zug ändert | Mahmoud | 1:05 | 6:45 |
 | 7 · Turnier und lokale Gegner | Mahmoud | 1:20 | 8:05 |
 | 8 · Energie im ersten Match | Moe | 1:10 | 9:15 |
-| 9 · Der Hybrid im Vergleich | Moe | 0:40 | 9:55 |
+| 9 · R3 auf frischen Karten | Moe | 0:40 | 9:55 |
 
 ### 1 · Moe
 
-- Im Kurs-Battle belegten wir mit Sherlock Platz drei. Unser Spielziel war, verborgene Punktefelder zu finden und zu halten. Beides erfordert unterschiedliche Entscheidungen.
-- Am einfachen Beispiel zeigen, wie Sherlock aus Punkten auf Felder schließt. Danach erklärt Mahmoud einen echten Zug und unseren neuen Hybrid aus zwei Agenten. Am Ende sehen wir, gegen wen die Kombination mehr Spiele gewinnt.
+- Im Kurs-Battle belegten wir mit Sherlock Platz drei. Sherlock muss verborgene Punktefelder erst finden und sie dann lange genug halten.
+- Am einfachen Beispiel zeigen, wie Sherlock aus Punkten auf Felder schließt. Danach erklärt Mahmoud an einem echten Zug, wie V14 entscheidet und wann unser neuer Bewegungsberater R3 eingreift. Am Ende zeigen wir, wie oft das gegen andere Agenten hilft.
 
 ### 2 · Moe
 
@@ -47,40 +47,40 @@
 
 ### 6 · Mahmoud
 
-- Auf die beiden Kästen links zeigen. „Beide bekommen dieselbe Beobachtung. V14 macht zuerst seinen vollständigen Zugvorschlag. Der Schüler berechnet seinen eigenen, auch mit Schussziel, wenn er schießen möchte.“
-- Den Pfeil nach rechts verfolgen. Beispiel: Eine Einheit hält ein bestätigtes Punktefeld, eine zweite erkundet. Für den Halter übernimmt der Hybrid den gesamten V14-Befehl. Für den Erkunder übernimmt er den gesamten Schülerbefehl. Auch für Einheiten, die V14 gerade einem bestätigten Punktefeld zugewiesen hat, gilt der V14-Befehl.
-- „Der Schüler hat zuerst Züge des Kaggle-Agenten nachgeahmt. Dann haben wir ihn in 400 Spielen selbst ziehen lassen. In den Stellungen, in die er dadurch kommt, fragen wir den Lehrer nach seinem Zug. Mit diesen zusätzlichen Beispielen trainieren wir weiter. Das nennt man DAgger.“
-- Übergang: „Wie viel bringt die Kombination? Zum Vergleich schauen wir erst, wo V14 im Turnier und gegen unsere beiden Testgegner stand.“
+- Links beginnen. „V14 hat hier schon alles gemacht, was wir gerade gezeigt haben. Der Befehl für diese Einheit steht also fest. Jetzt kommt ein einzelnes zusätzliches Netz dazu. Es sieht die Karte und die Merkmale der Einheit.“
+- Den Pfeil verfolgen. „Nehmen wir an, V14 will nach rechts. Empfiehlt der Schüler mit 80 Prozent Sicherheit einen erlaubten Zug nach oben, spielen wir oben. Bei 60 Prozent bleibt es bei rechts. Hatte V14 bereits einen Schuss gewählt, führen wir ihn mit genau diesem Ziel aus.“ Das Beispiel ist zur Veranschaulichung konstruiert. 70 Prozent ist die Mindestschwelle für den Schülerzug.
+- „Der Schüler lernt auf 152 Trainingskarten aus Zügen des Kaggle-Agenten. Er bekommt für geeignete Stellungen außerdem dessen Bewertungen der anderen Richtungen. So sieht er auch, wann zwei Züge für den Lehrer fast gleich gut sind.“
+- Überleitung in einem Satz. „Woran messen wir, ob diese Änderung hilft? Dafür brauchen wir Gegner mit unterschiedlichen Stärken.“
 
 ### 7 · Mahmoud
 
-- Links der echte Hochschulwettbewerb. Im Halbfinale verlor Sherlock dreimal gegen das Team, das später Zweiter wurde. Der rechte Teil zeigt zwei lokale Testgegner.
-- Auf exakt denselben 100 Karten, jeweils beide Seiten: 188 von 200 Spielen gegen Solution_92 gewonnen, acht gegen den Kaggle-Agenten. Er war Dritter im öffentlichen Kaggle-Wettbewerb und diente uns als Testgegner.
-- Für die acht Siege lief der Kaggle-Agent mit seiner ursprünglichen Einstellung für fünf Matches. Der Kursrunner beendet jedes Spiel nach drei. Die frühere Vergleichszahl 6/200 mit anderer Gegnereinstellung gehört nicht zu dieser Grafik. **Übergabe an Moe:** „Was macht dieser Gegner schon im ersten Match anders?“
+- Links der echte Kurswettbewerb. Im Halbfinale verlor Sherlock dreimal gegen das Team, das später Zweiter wurde. Rechts zwei lokale Testgegner. V14 gewann auf denselben 100 Entwicklungskarten 188 der 200 Spiele gegen Solution und acht gegen den Kaggle-Drittplatzierten. Gezählt werden ganze Spiele aus drei Matches.
+- „Wir haben auch ausprobiert, unserem Schüler für bestimmte Einheiten den ganzen Befehl zu überlassen. Dieser andere Hybrid hieß v3. Auf diesen Entwicklungskarten gewann er 194 gegen Solution und sechs gegen Kaggle. Auf der letzten Folie sehen wir den unabhängigen Test des Bewegungsberaters R3 auf neuen Karten.“
+- **Übergabe an Moe.** „Warum ist der Kaggle-Agent so schwierig für Sherlock? Das sieht man schon im ersten Match.“
 
 ### 8 · Moe
 
 - Ein Spiel umfasst im Kurs drei Matches. Hier vergleichen wir ausschließlich das **erste** Match auf 30 Karten, jede auf beiden Seiten.
 - Für ein greifbares Einzelbeispiel: Auf Karte 7150000, Sherlock auf Seite 0, verliert Sherlock 18 Einheiten, der Gegner zwei. Der Gegner schießt 25-mal, Sherlock neunmal. Dann auf die Mittelwerte aller 60 ersten Matches zeigen.
 - Sherlock verliert im Mittel 23 Einheiten und hat vor dem letzten Zug nur noch rund 390 Teamenergie. Der Gegner verliert gut eine Einheit und hat über 3.300 Energie. Wer Energie übrig hat, kann weiter schießen.
-- Der erste Punkt kommt bei Sherlock meist ähnlich früh. Die Verluste im Kampf sind groß. Übergang: „Kann uns der neue Hybrid helfen, aus unseren Punktefeldern mehr gewonnene Spiele zu machen?“
+- Der erste Punkt kommt bei Sherlock meist ähnlich früh. Die Verluste im Kampf sind groß. Überleitung zur letzten Folie. „Jetzt zu unserem Bewegungsberater. Hilft seine veränderte Zugwahl auch auf Karten, die wir vorher nicht zum Auswählen benutzt haben?“
 
 ### 9 · Moe
 
-- „Hier spielt jeder Agent dieselben hundert Karten von beiden Seiten. Gegen Solution gewinnt V14 188 Spiele, der Schüler allein 179. Zusammen gewinnen sie 194.“
-- Auf Strich und Punkt zeigen. „Zehn Niederlagen drehen sich in Siege, vier Siege gehen verloren. Das sind sechs Siege mehr, also drei Prozentpunkte. Die Spanne reicht von minus eins bis plus sieben. Auch null liegt darin.“
-- „Gegen den Kaggle-Agenten gewinnt der Hybrid sechs Spiele, V14 acht. Der nächste Vergleich braucht neue Karten. Bis dahin bleibt V14 unser Abgabeagent.“
+- Auf die erste Zeile zeigen. „Auf 60 frischen Karten gewinnt V14 mit R3 119 von 120 Spielen gegen Solution. V14 allein gewinnt 115. Fünf Niederlagen drehen wir in Siege, dafür verlieren wir ein Spiel neu.“
+- „Das sind gut drei Prozentpunkte mehr. Die Spanne rechts beginnt bei null. Gegen Kaggle gewinnt keiner der beiden.“
+- „Im direkten Duell gewinnt R3 88 von 120 Spielen gegen V14. Da ist der Vorteil deutlich. Für einen Wechsel wollen wir auch gegen die externen Gegner einen klaren Vorsprung sehen. Deshalb bleibt V14 vorerst unser Abgabeagent. Vielen Dank!“
 
 ## Stand und Quellen für das Team
 
 - **Finale am 27.11.** Die Kursfolien „Reinforcement Learning_upload“ aus Moodle nennen drei benotete Präsentationen zu je 33 % (Folie 8), ein Finalturnier (Folie 10), die Bewertungsrubrik (Folie 11) und die Abgabe von Präsentation und Agenten-ZIP (Folie 51). Die zehn Minuten auf Folie 10 stehen beim Zwischen-Battle. Genaue Dauer, Frist und Benennung der Final-ZIP in Moodle prüfen. Diese Fassung zeigt den belegten Stand vom 15.11. und ist für eine erste Probe gedacht.
-- **Rubrik für die Probe.** Die Frage vom Einstieg am Ende beantworten. Jede Übergabe an einem Spielzug oder Befund festmachen. Begriffe wie Q-Wert einmal in Alltagssprache erklären. Auf eine Zahl zeigen, sie einordnen und frei weitersprechen. Die eigene Entscheidung am Beispiel der Aufgabenverteilung im Hybrid erläutern.
+- **Rubrik für die Probe.** Die Frage vom Einstieg am Ende beantworten. Jede Übergabe an einem Spielzug oder Befund festmachen. Begriffe wie Q-Wert einmal in Alltagssprache erklären. Auf eine Zahl zeigen, sie einordnen und frei weitersprechen. Die eigene Entscheidung an der Schwelle für den Bewegungsberater erläutern.
 - **Folien 2–5.** [Ablauf von V14](../../ENTSCHEIDUNGSABLAUF_V14_P.md), [Geprüfte Battle-Fassung mit Beispiel und Training](../Sherlock_Battle_06-11-2026.html), [Nachweis zur Netzarchitektur und Herkunft](../source/ENSEMBLE_BATTLE_0611_20261104.json).
-- **Folie 6.** [Mahmouds Training und Auswahlvergleich](../../../experiments/analysis/umbau_20261115/README.md) und [Hybrid im Modus points](../../../agents/sherlock/hybrid_agent.py), ausgewertet ab Teamstand `b2033c1` / Integration `e724ce6`. V14 und v3 berechnen nacheinander je einen vollständigen Befehl pro Einheit aus derselben Beobachtung. Auf einem mehrfach belegten bestätigten Feld gilt nur die zuerst geführte Einheit als Halter. Weitere Einheiten erhalten den V14-Befehl, wenn ihr eigenes zugewiesenes Ziel ein bestätigtes Punktefeld ist. Alle übrigen erhalten den Schülerbefehl. Beim Schülerteil in beiden ausgewerteten v3-Varianten waren Stay-Bias 1,5 und Entstapeln aktiv. Für die DAgger-Runde wurden 400 Schülerpartien mit rund 1,36 Mio. Lehrerentscheidungen ergänzt. Der Lehrer verfolgt die tatsächlich gespielte Zughistorie.
+- **Folie 6.** Die 36 V14-Netze bewerten sechs Aktionen. Der zusätzliche Schüler hat eine andere Architektur und ein anderes Lernziel. Seine Eingaben sind 16 räumliche Kartenebenen und 79 Merkmale je Einheit. Beim Spielen wählt das einzelne CNN die wahrscheinlichste zulässige Aktionsklasse. Die 70 % beschreiben seine eigene Bewertung dieser Klasse nach Maskierung, nicht die Gewinnchance der Partie. Nur wenn beide Befehle Bewegung oder Stillstand sind, der Schüler hinreichend sicher ist und sein Befehl die Ausführbarkeitsprüfung besteht, kann er V14s fertigen Befehl ersetzen. Matchanfänge sind ausgenommen. Der Lehrer ist nur beim Sammeln der Lernbeispiele dabei. Das Training umfasst 32 ursprüngliche V14-Karten und 120 weitere Karten mit tatsächlich gespielten Schülerverläufen, fünf Trainingsdurchgänge. Die Zusatzsignale sind die relativen Bewertungen der legalen Bewegungen auf geeigneten Stellungen. [Training und Vergleich](../../../experiments/analysis/movement_soft_20261115/TRAINING.md) · [Spielverläufe und Kartentrennung](../../../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md) · [Entscheidungsweg](../../../scripts/selective_advice_agent.py) · [Prüfung des endgültigen Befehls](../../../scripts/combat_teacher_counterfactual.py).
 - **Folie 7.** [Turnierbericht im Arbeitsstand vom 15.11.](../../ARBEITSSTAND.md), [lokaler Vergleich und zweite Kaggle-Einstellung](../../../experiments/analysis/kaggle3_20261115/README.md), [Einzelspiele gegen Solution_92](../../../experiments/analysis/kaggle3_20261115/v14_devA.csv) und [200 native Kaggle-Spiele, 8 Siege](../../../experiments/analysis/kaggle3_20261115/screen1/baseline.csv).
+- **Mahmouds separater Versuch auf Folie 7.** Auf Dev A, 100 Karten mit beiden Sitzen, gewann der reine v3-Schüler 179/200 gegen Solution. Im Modus „points“ führt V14 den vollständigen Befehl für Punktehalter und Einheiten mit bestätigtem Punktefeld als Ziel aus. Die übrigen erhalten den vollständigen Schülerbefehl samt möglichem Schussziel. Dieser Hybrid gewann 194/200 gegen Solution und 6/200 gegen den nativen Kaggle-Gegner. Bei den acht V14-Siegen auf denselben Karten lief Kaggle mit seiner ursprünglichen Einstellung für fünf Matches, der Kursrunner beendet das Spiel nach drei. Diese Entwicklungszahlen erlauben keine direkte Rangliste mit R3s frischen Karten auf Folie 9. [Vergleich mit eigenständigem v3-Schüler und Hybrid](../../../experiments/analysis/umbau_20261115/README.md) · [Entscheidungsregel v3](../../../agents/sherlock/hybrid_agent.py).
 - **Folie 8.** [Native Matchverläufe für die 30 Karten](../../../experiments/analysis/kaggle3_20261115/trace_v14_k3_30maps.csv). Mittelwerte über 60 erste Matches, einschließlich beider Seiten. Median bis zum ersten eigenen Punkt unter den Matches mit Punktgewinn: Schritt 39 (58 von 60) für Sherlock und 43 (60 von 60) für den Gegner. Der dokumentierte Zählfehler bei Einheitenverlusten nach einem Matchwechsel betrifft die hier gewählte erste Runde nicht.
-- **Folie 9.** [V14-Referenz](../../../experiments/analysis/kaggle3_20261115/v14_ref_devA.csv), [Schüler v3 allein](../../../experiments/analysis/kaggle3_20261115/student_v3_b15u.csv), [Hybrid v3 points](../../../experiments/analysis/kaggle3_20261115/student_hyb_v3_points.csv). Eigene Nachrechnung aus den ganzen Spielen auf Dev A (Seeds 7150000–7150099) mit den Schlüsseln Gegner, Karte und Sitz. Gegen Solution gewinnt der Hybrid zehn zuvor verlorene Spiele und verliert vier zuvor gewonnene, gegen den nativen Kaggle-Agenten gewinnt er keines hinzu und verliert zwei. 95-%-Perzentilintervall der Differenz der Spielsiegquoten aus 10.000 Ziehungen mit Zurücklegen (PCG64, Seed 2711), beide Sitze einer Karte gemeinsam. Gegen Solution +3 Prozentpunkte [−1; +7], gegen Kaggle −1 [−3; 0]. Mahmouds ebenfalls positives Matchintervall zählt einzelne Matches eines Spiels und beantwortet eine andere Frage.
-- **Einordnung für Rückfragen.** Der separat entwickelte Bewegungsberater R1 darf nur sichere Bewegungen/Stillstände ersetzen und überlässt alle Schüsse V14. Seine 20/32 direkt gegen V14, 30/32 gegen Solution und 0/32 gegen Kaggle stammen von anderen Karten. [Vergleich des Bewegungsberaters](../../../experiments/analysis/combat_advice_20261115/BEWEGUNGSSPIELE.md). Der auf Folie 6 und 9 gezeigte Hybrid verwendet Mahmouds eigenständigen v3-Schüler.
-- **Vor der letzten Probe.** Für einen inzwischen abgeschlossenen, unabhängigen Vergleich Folie 9, Datenstand und Moes letzten Sprechpunkt aktualisieren. Falls ein anderer Agent präsentiert wird, auch dessen Auswahlregel auf Folie 6 abgleichen. Für Hybrid v3 points stehen eine unabhängige Bestätigung, direkte Duelle mit V14 und die Kursprüfung laut ausgewertetem Teamstand noch aus.
+- **Folie 9.** 60 unabhängige Karten gegen die externen Gegner (7273100–7273159), beide Spielerpositionen und je Agent dieselben Gegner und Karten. Für die direkten Duelle wurden 60 andere Karten (7273200–7273259) mit getauschten Seiten gespielt. Das ergibt 600 vollständige Partien, 480 extern und 120 direkt. Gegen Solution gewann R3 119/120 (99,17 %) gegenüber 115/120 (95,83 %). Der Unterschied von +3,33 Prozentpunkten hat ein gepaartes 95-%-Intervall von 0 bis +7,5. Im direkten Duell gewann R3 88 gegen 32 Spiele (73,33 %, Intervall 61,67 bis 83,33 %). Gegen den nativen Kaggle-Agenten gewannen beide 0/120. Unter beiden externen Gegnern zusammen beträgt der Vorteil +1,67 Prozentpunkte (0 bis +3,75). Die festgelegte Freigabe verlangt eine externe Untergrenze über null. Für die Intervalle wurden ganze Karten mit beiden Sitzen zusammen 10.000-mal mit Zurücklegen gezogen. Der Punkt auf der Folie gibt den beobachteten Solution-Unterschied wieder. [Unabhängige Vergleichsdaten](../../../experiments/analysis/movement_soft_20261115/confirmation/assessment.json) · [Vorher festgelegte Entscheidung](../../../experiments/analysis/combat_advice_20261115/SOFTZIELE.md).
+- **Für die letzte Probe.** Gemeinsam mit Uhr sprechen und Übergaben üben. Vor dem Finale den tatsächlichen Abgabeagenten, Datenstand, Moodle-Frist und Dateinamen kontrollieren. Wenn sich der Agent ändert, müssen sein Entscheidungsweg und die Messwerte auf den Folien zum selben Stand gehören.
 
 **Bearbeiten und exportieren.** Die HTML-Quelle ist eigenständig. Bei Änderungen im Browser öffnen und als PDF drucken, mit Hintergrundgrafiken, ohne Browser-Kopf- und Fußzeilen, bei 100 % und mit der im Dokument definierten Seitengröße (16:9). Ergebnis vor dem Vortrag im Vollbild prüfen.
