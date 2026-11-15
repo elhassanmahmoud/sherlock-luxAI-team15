@@ -38,3 +38,15 @@ einmalig auf 7158000–7158399 (400 Karten, beide Seiten), erst nach Abschluss d
 
 Verfehlt der beste Schüler eine Hürde, bleibt V14 die Abgabe, außer Mahmoud entscheidet ausdrücklich anders
 (mit Begründung im Übernahmebericht). Freeze spätestens 23.11.
+
+## Nachtrag 15.11.2026, 19:45 Berlin: Kandidat für die Bestätigung (vor dem ersten Spiel auf 7158000–7158399)
+
+Gewählt auf Dev A und Dev B: **Hybrid v4 mixed** (V14 hält Punktefelder; Units mit sichtbarem Gegner im Umkreis 5
+und alle übrigen Units spielen den Schüler v4 mit Stay-Bias 1,5 und Entstapeln). Gepackte Datei
+`experiments/imitation/releases/v15_candidate/weights/agent.pth`, SHA-256 `28933a3b7810037b0af37b9ccfbf261c7c9b2b1353c8e0e8ef3b25e2c77cae45`; Schüler v4 SHA-256 `0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f`.
+Begründung: Dev B Solution 95 % (V14 92,5 %), kaggle3 2 % Spiele bei 5,0 % Matches (V14 0 % / 3,3 %), direkt gegen V14
+89 % [82; 95]; Dev A 97 % / 5 % (Matches 9,3 %) / 90 % direkt. Der reine Schüler v4 lag gegen Solution niedriger
+(92,5 %) und direkt gleichauf bis schwächer (86–92 %).
+Bestätigung: diese Datei unverändert über `Agent_x` auf 400 Karten, beide Seiten, gegen solution92, kaggle3, default
+und direkt gegen V14; V14 als Referenz auf denselben Karten gegen solution92, kaggle3, default. Auswertung nach den
+Hürden oben (gepaarter Bootstrap über Karten). Danach Kursprüfung der Zip.
