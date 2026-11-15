@@ -75,3 +75,21 @@ Code: `scripts/imitate.py` (collect, dagger, train, ensemble), `agents/sherlock/
 `agents/sherlock/imitation_net.py`. Moayed/Codex prüfte und korrigierte am 15.11. die Zughistorie des
 DAgger-Lehrers und die gemeinsame Zielmaske für Training, Messung und Spiel.
 Daten und Gewichte liegen nur lokal unter `experiments/imitation/` (gitignoriert, reproduzierbar).
+
+## Unabhängige Messung aus den DAgger-Runden (Trainingskarten, je Spiel eine neue Karte)
+
+| Schüler (spielt selbst, Lehrer beschriftet nur) | gegen V14 | gegen Solution_92 | gegen Kaggle-Agent |
+|---|---|---|---|
+| v1 pur (DAgger 1, Karten ab 7250000) | 41/85 Spiele (48 %), Matches 123:132 | 56/86 (65 %) | 0/229 (Matches 17:670) |
+| **v3 + Stay-Bias 1,5 + Entstapeln** (DAgger 2, ab 7251000) | **107/122 (88 %), Matches 301:65** | 117/132 (89 %) | 1/346 (Matches 34:1004) |
+
+Diese Spiele dienten zum Sammeln, nicht zur Auswahl; sie sind daher keine nach oben verzerrte Auswahlmessung.
+Der Schüler v3 schlägt V14 im direkten Duell deutlich, liegt gegen Solution_92 knapp unter V14 und bleibt gegen
+den Kaggle-Agenten chancenlos.
+
+## Betrieb
+
+15.11., etwa 17:43: Das Training von v4 (11,4 Mio. Entscheidungen, alles auf dem Grafikchip) lief gleichzeitig
+mit 12 Hybrid-Spielprozessen, die je V14 mit 36 Netzen und den Schüler laden. Claude Code beendete alle drei
+Jobs wegen Speichermangel (Auslagerung 7 von 8 GB). Ohne Rückfrage wird nichts neu gestartet. Künftig großes
+Training und viele Hybrid-Spiele nicht gleichzeitig ausführen.
