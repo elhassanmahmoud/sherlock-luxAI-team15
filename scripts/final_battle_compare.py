@@ -21,7 +21,7 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def evaluate(job):
+def evaluate(job, *, metrics=()):
     # Reuse the JIT environment and the model per worker, clean agent/game state for each key.
     policy, opponent, seed, side, model = job
     from scripts.common import make_opponent, play_game
@@ -40,7 +40,7 @@ def evaluate(job):
                 study=dict(getattr(agent,'study_stats',getattr(agent,'selective_counts',{}))), charge_moves=extra.get('charge_moves',0),
                 focus_saps=extra.get('focus_saps',0), energy_changes=extra.get('energy_changes',0),
                 energy_probes=extra.get('energy_probes',0), advice_retargeted=extra.get('advice_retargeted',0),
-                advice_new_saps=extra.get('advice_new_saps',0))
+                advice_new_saps=extra.get('advice_new_saps',0), **{k:row[k] for k in metrics})
 
 
 def init_worker(policy, model):
@@ -95,10 +95,15 @@ def main():
     p.add_argument('--workers',type=int,choices=[1,2],default=2)
     a = p.parse_args(); a.out.mkdir(parents=True,exist_ok=True)
     if a.maps <= 0 or bool(a.model) != (a.candidate in ('learned', 'aim', 'fire', 'selective_movement', 'selective_combat')): p.error('invalid map count or model argument')
+    run(a)
+
+
+def run(a, *, get_contract=contract, initializer=init_worker, play=evaluate):
+    """Run resumable paired jobs with the same scheduling, row sealing and worker isolation."""
     import fcntl
     with (a.out/'.run.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        config=contract(a); manifest=a.out/'manifest.json'
+        config=get_contract(a); manifest=a.out/'manifest.json'
         if manifest.exists() and json.loads(manifest.read_text()) != config: raise ValueError('source/config change on resume')
         if not manifest.exists(): manifest.write_text(json.dumps(config,indent=2)+'\n')
         jobs=[(a.candidate,o,s,side,a.model) for s in range(a.first,a.first+a.maps)
@@ -112,11 +117,11 @@ def main():
         pending=[j for j in jobs if j not in completed]
         if pending:
             with concurrent.futures.ProcessPoolExecutor(max_workers=a.workers, mp_context=multiprocessing.get_context('spawn'),
-                    initializer=init_worker,initargs=(a.candidate,a.model)) as pool, path.open('a') as f:
-                for row in pool.map(evaluate,pending,chunksize=1):
+                    initializer=initializer,initargs=(a.candidate,a.model)) as pool, path.open('a') as f:
+                for row in pool.map(play,pending,chunksize=1):
                     f.write(json.dumps(row)+'\n'); f.flush()
                     print(row['opponent'],row['seed'],row['side'],row['result'],flush=True)
-        if config != contract(a): raise RuntimeError('bound sources changed during play')
+        if config != get_contract(a): raise RuntimeError('bound sources changed during play')
         rows=[json.loads(line) for line in path.read_text().splitlines()]
         assert len(rows)==len(jobs)
         summary={o:dict(played=sum(r['opponent']==o for r in rows),
