@@ -5,6 +5,7 @@ import numpy as np
 import torch
 
 from agents.sherlock import geometry as geo
+from agents.sherlock import own_command
 from agents.sherlock.cnn_model import map_planes
 from agents.sherlock.imitation_agent import sap_legal
 from agents.sherlock.imitation_net import ImitationNet, masked_sap_logits
@@ -35,13 +36,16 @@ def live_history_board(current, step, match_step, prior):
 def load_heads(path):
     """Eigene Checkpoints aus scripts.imitate train/ensemble. Die Beratungsnetze laufen auf der CPU."""
     checkpoint = torch.load(path, map_location="cpu", weights_only=True)
-    if checkpoint.get("kind") not in ("imitation", HISTORY_KIND):
+    if checkpoint.get("kind") not in ("imitation", HISTORY_KIND, own_command.KIND):
         raise ValueError("Fuer advice_path wird ein Checkpoint vom Typ imitation benoetigt")
     members = []
     for entry in [checkpoint, *checkpoint.get("imitation_ensemble", [])]:
         expected_channels = 17 if checkpoint["kind"] == HISTORY_KIND else 16
         if entry["arch"].get("in_ch", 16) != expected_channels:
             raise ValueError("Unerwartete Anzahl Kartenebenen fuer diesen Beratertyp")
+        width = 85 if checkpoint["kind"] == own_command.KIND else 79
+        if entry["arch"]["feat_dim"] != width:
+            raise ValueError("Movement adviser feature count disagrees with its checkpoint type")
         if not entry["arch"].get("sap_head"):
             raise ValueError("Ein gelernter Schusszielkopf wird fuer selektive Beratung benoetigt")
         model = ImitationNet(**entry["arch"])
@@ -52,6 +56,7 @@ def load_heads(path):
 
 class SelectiveAdviceAgent(Agent_x):
     previous_enemy = False
+    own_command_input = False
 
     def __init__(self, player, agent_path, name="Sherlock mit selektiver Imitation", cfg=None,
                  train=False, seed=None, *, advice_path, mode):
@@ -65,11 +70,15 @@ class SelectiveAdviceAgent(Agent_x):
         self.previous_enemy = self.members[0].arch["in_ch"] == 17
         if self.previous_enemy and mode != "movement":
             raise ValueError("Der historisierte Berater wurde nur fuer Bewegung festgelegt")
+        self.own_command_input = self.members[0].arch["feat_dim"] == 85
+        if self.own_command_input and (mode != "movement" or len(self.members) != 1):
+            raise ValueError("Own-command study requires a single movement adviser")
         self.autosave_on_terminate = False
 
     def _reset_episode_state(self):
         super()._reset_episode_state()
         self.selective_counts = Counter()
+        self.played_commands = own_command.PlayedCommands()
         self._previous_frame = None
 
     def _input_board(self, current, step, match_step):
@@ -81,7 +90,16 @@ class SelectiveAdviceAgent(Agent_x):
     def _act(self, step, obs):
         # _act_est protokolliert die hier zurueckgegebenen Befehle im Parameterschaetzer.
         base = super()._act(step, obs)
-        return self._advise(step, obs, base)
+        played = self._advise(step, obs, base)
+        if self.own_command_input:
+            ctx = self._prev_ctx
+            if ctx is None:
+                self.played_commands = own_command.PlayedCommands()
+            else:
+                ids = [int(u) for u in ctx["ally_ids"] if ctx["ally_ene"][u] >= 0]
+                self.played_commands.record(int(obs["steps"]), int(obs["match_steps"]), ids,
+                                            np.asarray(ctx["ally_pos"])[ids], played, self.belief.mirrored)
+        return played
 
     def _advise(self, step, obs, base):
         if self.training or int(obs["match_steps"]) == 0:
@@ -97,7 +115,11 @@ class SelectiveAdviceAgent(Agent_x):
         planes = torch.from_numpy(board[None])
         step_idx = torch.zeros(len(ids), dtype=torch.long)
         pos = torch.as_tensor(np.asarray(ctx["ally_pos"])[ids], dtype=torch.long)
-        features = torch.from_numpy(np.stack([feats[u] for u in ids]))
+        features = np.stack([feats[u] for u in ids])
+        if self.own_command_input:
+            extra = self.played_commands.features(int(obs["steps"]), int(obs["match_steps"]), ids, pos.numpy())
+            features = np.column_stack((features, extra))
+        features = torch.from_numpy(features)
         masks = np.stack([mask_map[u] for u in ids])
         masks = sap_legal(masks, np.asarray(ctx["ally_ene"])[ids], ctx["sap_cost"])
         advice = base.copy()

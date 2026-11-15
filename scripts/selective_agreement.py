@@ -24,11 +24,22 @@ def read_rows(data, planes):
     return rows, played
 
 
-def measure(members, archive):
+def measure(members, archive, *, with_history_scope=False):
     with np.load(archive, allow_pickle=False) as data:
         planes = torch.from_numpy(data["planes"])
         rows, played = read_rows(data, planes)
-    return count_agreement(members, planes, rows, played)["all"]
+        own_input = getattr(members[0], "arch", {}).get("feat_dim") == 85
+        known = None
+        if own_input or with_history_scope:
+            from agents.sherlock.own_command import archive_features
+            bit = torch.from_numpy(archive_features(data))
+            known = bit.any(1).bool()
+            if own_input:
+                rows["feats"] = torch.cat((rows["feats"], bit.to(rows["feats"].dtype)),1)
+    counts = count_agreement(members, planes, rows, played, near=known if with_history_scope else None)
+    if with_history_scope:
+        counts["all"].update({"history_" + k:v for k,v in counts["near"].items()})
+    return counts["all"]
 
 
 def count_agreement(members, planes, rows, played=None, near=None):

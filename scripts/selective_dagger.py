@@ -179,17 +179,17 @@ def fill_previous_enemy(part, global_steps):
     part[following,16] = part[following-1,10]
 
 
-def mapped_part(records, path, *, distill_movement=False, previous_enemy=False):
+def mapped_part(records, path, *, distill_movement=False, previous_enemy=False, own_commands=False):
     """Disk map for archived boards, with one optional intervention at a time."""
-    if previous_enemy and distill_movement:
-        raise ValueError("Soft movement targets and previous enemy history are separate experiments")
+    if sum(map(bool, (previous_enemy, distill_movement, own_commands))) > 1:
+        raise ValueError("Movement-training variants are separate experiments; select at most one")
     sizes = []
     for record in records:
         with np.load(record["path"],allow_pickle=False) as z:
             sizes.append((len(z["global_step"]),len(z["act"])))
     boards = np.memmap(path,mode="w+",dtype=np.int8,shape=(sum(b for b,_ in sizes),17 if previous_enemy else 16,24,24))
     n = sum(u for _,u in sizes)
-    widths = dict(step=(),pos=(2,),feats=(79,),mask=(6,),act=(),sdx=(),sdy=(),base_act=())
+    widths = dict(step=(),pos=(2,),feats=(85 if own_commands else 79,),mask=(6,),act=(),sdx=(),sdy=(),base_act=())
     rows = {k: np.empty((n,*shape), np.int64 if k=="step" else collect.ROW_DTYPES[k]) for k,shape in widths.items()}
     if distill_movement:
         # Original archives have hard labels only. A missing/invalid trace contributes zero soft rows.
@@ -207,7 +207,12 @@ def mapped_part(records, path, *, distill_movement=False, previous_enemy=False):
                 fill_previous_enemy(part, z["global_step"])
             span = slice(u0, u0 + u)
             for key in widths:
-                rows[key][span] = z[key]
+                if key == "feats" and own_commands:
+                    from agents.sherlock.own_command import archive_features
+                    rows[key][span, :79] = z[key]
+                    rows[key][span, 79:] = archive_features(z)
+                else:
+                    rows[key][span] = z[key]
             if distill_movement and "teacher_action_scores" in z:
                 eligible, scores = movement_targets(z, rows, span)
                 rows["distill_ok"][span] = eligible
@@ -260,6 +265,12 @@ def train_mixed(a):
                     seed=2711, lr=.001, lr_schedule="OneCycleLR", optimizer="AdamW")
     if history:
         training["previous_enemy_r2_sha256"] = require_r2_inputs(r2_path, training)
+    r2 = getattr(a, "own_command_r2", None)
+    extra = {}
+    if r2 is not None:
+        from scripts import own_command_study
+        extra = {"kind": own_command_study.KIND, "feature_dim": 85,
+                 "own_command": own_command_study.bind_control(r2, parent_sha, identity)}
     with log_path.open("x") as f:
         f.write(f"Movement adviser parent SHA256 {parent_sha}\n")
     def log(msg):
@@ -268,10 +279,10 @@ def train_mixed(a):
             f.write(msg+"\n")
     with tempfile.TemporaryDirectory(prefix=".dagger-boards-",dir=out.parent) as tmp:
         train_boards, train_rows, _ = mapped_part(original["train"]+mixed["train"], Path(tmp)/"train.int8",
-                                                   distill_movement=a.distill_movement, previous_enemy=history)
-        val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8", previous_enemy=history)
+                                                   distill_movement=a.distill_movement, previous_enemy=history, own_commands=r2 is not None)
+        val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8", previous_enemy=history, own_commands=r2 is not None)
         cut = sum(val_sizes[:len(original["val"])])
-        cfg = SimpleNamespace(device=a.device, previous_enemy=history, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
+        cfg = SimpleNamespace(device=a.device, previous_enemy=history, own_command_input=r2 is not None, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
                               lr=0.001,sap_weight=0.5,validation_groups=[
                                   ("eight original V14 maps",0,cut),("held-out mixed maps",cut,sum(val_sizes))])
         soft_metadata = {}
@@ -290,10 +301,12 @@ def train_mixed(a):
         training.update(soft_metadata)
         if history:
             training["initial_parity"] = cfg.previous_enemy_initial_parity
+        if r2 is not None:
+            extra["own_command"]["initial_parity"] = cfg.initial_parity
         candidate = Path(tmp)/"student.pth"
         save_policy(str(candidate),net,imitate.v14_cfg(),
-                    extra=dict(kind=HISTORY_KIND if history else "imitation", sap_own_tile=True, epochs=5,
-                               teacher="kaggle3 lux3-bot 0.4.8_fn", selective_training=training))
+                    extra=(dict(kind=HISTORY_KIND if history else "imitation", sap_own_tile=True, epochs=5,
+                               teacher="kaggle3 lux3-bot 0.4.8_fn", selective_training=training) | extra))
         os.link(candidate,out)
     log(f"Saved {out} {collect.file_sha(out)}")
 
@@ -316,6 +329,8 @@ def main():
                          help="Add previous observed enemy plane; verify every input against the fixed 16-channel R2")
     options.add_argument("--distill-movement", action="store_true",
                      help="Add temperature-2 KL for selected legal teacher movements with an observed raw policy")
+    options.add_argument("--own-command-r2", type=Path,
+                     help="Add six previous-issued-order inputs and bind to the exact R2 control checkpoint")
     fit.add_argument("--device",choices=("auto","cpu","mps"),default="auto")
     a = ap.parse_args()
     (collect_mixed if a.command=="collect" else train_mixed)(a)

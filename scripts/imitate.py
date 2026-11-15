@@ -401,6 +401,10 @@ def train_student(train, val, a, log):
     if train[0].shape[1] != net.arch["in_ch"] or val[0].shape[1] != net.arch["in_ch"]:
         raise ValueError("Wrong number of input board channels")
 
+    if getattr(a, "own_command_input", False):
+        from scripts.own_command_study import widen_and_check
+        a.initial_parity = widen_and_check(net)
+        log(f"Before the first update, own-command input parity: {a.initial_parity}")
     selective = "base_act" in train[1]
     step_rng = np.random.default_rng(a.seed) if selective else np.random
 
