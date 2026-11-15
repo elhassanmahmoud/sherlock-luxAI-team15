@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Mahmouds v4 mit zwei Aufgabenteilungen verglichen
+
+Beide Varianten verwenden denselben Schüler und gewinnen 194/200 gegen Solution. Fünf Siege wechseln in jeder Richtung. Gegen Kaggle gewinnt der gemischte Hybrid zwei Spiele mehr (10/200 gegenüber 8/200). Der Unterschied hat ein gepaartes 95-%-Intervall von −3 bis +6 Prozentpunkten. Die sechs konkreten Solution-Restfälle samt direktem Vergleich der Einzelmatches stehen bereit. [Gepaarte v4-Auswertung](../experiments/analysis/umbau_20261115/V4_ZUWEISUNG.md).
+
 ## 15.11.2026 – Das getrennte R3-Kurspaket reproduziert 606 Schritte
 
 Der entpackte ursprüngliche R3-Bewegungsberater lieferte auf beiden Sitzen einer vollständigen Lux-Partie exakt die Aktionsmatrizen der Forschungsversion. 781 Bewegungsänderungen, 120 Schüsse mit Versatz, 606 Kurs-Updates, keine abgefangenen Fehler. Die drei neuen und bestehenden Studienwerkzeuge wurden im gemeinsamen Lauf mit insgesamt 80 Tests geprüft. Im eingefrorenen R7- und Vollschüler-Trainingsstand bestanden zusätzlich 20 bzw. 9 gezielte Tests. Das R3-Paket ist ein separater Kandidat. [Dateipfad, Aufbau und Nachweis](../experiments/analysis/movement_soft_20261115/candidate_package/README.md).
