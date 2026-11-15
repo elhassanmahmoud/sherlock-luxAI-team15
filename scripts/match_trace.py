@@ -16,7 +16,7 @@ import numpy as np
 
 from scripts.scoring import match_points_after_step
 
-WEIGHTS = "agents/sherlock/weights/agent_p0.pth"
+WEIGHTS = "agents/sherlock/weights/agent_p0.pth"  # mit --weights ersetzbar (auch Imitation-Checkpoints)
 
 
 def _energy(obs, team):
@@ -105,10 +105,11 @@ def main():
     ap.add_argument("--seeds", required=True, help="first:end")
     ap.add_argument("--set", action="append", default=[])
     ap.add_argument("--workers", type=int, default=12)
+    ap.add_argument("--weights", default=WEIGHTS)
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     lo, hi = (int(x) for x in a.seeds.split(":"))
-    jobs = [(WEIGHTS, a.set, a.opponent, s, side) for s in range(lo, hi) for side in ("player_0", "player_1")]
+    jobs = [(a.weights, a.set, a.opponent, s, side) for s in range(lo, hi) for side in ("player_0", "player_1")]
     with mp.get_context("spawn").Pool(min(a.workers, len(jobs))) as pool:
         rows = [r for part in pool.map(play, jobs) for r in part]
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)

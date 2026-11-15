@@ -92,6 +92,28 @@ class ImitationAgent(PPOAgent):
         if members:
             self.extra_nets = members
 
+    def _unstack_actions(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray) -> np.ndarray:
+        """cfg.imit_unstack: je Feld bleibt hoechstens eine Unit stehen; die anderen nehmen ihre beste erlaubte
+        Bewegung (nach der Netzbewertung). Schuesse bleiben erhalten (Schuetzen stehen ebenfalls)."""
+        acts = acts.copy()
+        by_tile: dict[tuple[int, int], list[int]] = {}
+        for k in range(len(ids)):
+            if acts[k] == geo.STAY:
+                by_tile.setdefault((int(pos[k][0]), int(pos[k][1])), []).append(k)
+        for tile, rows in by_tile.items():
+            if len(rows) < 2:
+                continue
+            holder = ctx["first_on_tile"].get(tile)
+            keep = next((k for k in rows if int(ids[k]) == holder), max(rows, key=lambda k: logp[k, geo.STAY]))
+            for k in rows:
+                if k == keep:
+                    continue
+                moves = logp[k, 1:5]
+                if np.isfinite(moves).any():
+                    acts[k] = 1 + int(np.argmax(moves))
+                    self.ep_stats["unstack_moves"] = self.ep_stats.get("unstack_moves", 0) + 1
+        return acts
+
     def act(self, step: int, obs) -> np.ndarray:
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
@@ -123,7 +145,12 @@ class ImitationAgent(PPOAgent):
                 else:
                     lg = extra(*inputs)[0]
                 logp = logp + torch.log_softmax(lg.masked_fill(~m, -torch.inf), dim=1)
+            stay_bias = float(getattr(self.cfg, "imit_stay_bias", 0.0) or 0.0)
+            if stay_bias:
+                logp[:, geo.STAY] -= stay_bias
             acts = logp.argmax(dim=1).numpy()
+            if getattr(self.cfg, "imit_unstack", False):
+                acts = self._unstack_actions(ctx, ids, pos, logp.numpy(), acts)
             # 15.11.2026 (cfg.end_sap > 0): in den letzten end_sap Schritten eines Matches verfaellt die Energie
             # ohnehin; stehende Units mit genug Energie schiessen dann (der Lehrer tut das kaum: rund 3 %).
             end_sap = int(getattr(self.cfg, "end_sap", 0) or 0)
