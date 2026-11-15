@@ -16,10 +16,13 @@ from tempfile import TemporaryDirectory
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 from scripts.build_submission import yaml_text
-from scripts.r3_course_entry import KIND, check_payload
+from scripts.r3_course_entry import KIND, R3_SHA, V14_SHA, check_payload
 
 RESEARCH = "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8"
 PUBLICATION = "bd202fb26c5b6e919007760c62eb5830a1439191"
+MIDPOINT_PUBLICATION = "6a2ea9096182aed8641543414b1c91aee3b66702"
+MIDPOINT_SHA = "51a52f0453d5ac8e9a4ea70b3792572356761054cb2890520005160f77097cf2"
+MIDPOINT_KIND = "sherlock_r8_midpoint_single_view"
 SOURCE = "agents/sherlock/"
 HERE = Path(__file__).resolve().parent
 IMPORT_PATH = "agents.sherlock.main.Agent_x"
@@ -66,7 +69,7 @@ def final_layout(sources, weights):
     return files
 
 
-def build(repo, output):
+def build(repo, output, *, midpoint=False):
     import torch
 
     output = Path(output).expanduser().absolute()
@@ -82,6 +85,18 @@ def build(repo, output):
         "r3": git(repo, "show", f"{PUBLICATION}:experiments/candidates/movement_dagger_20261115/r3_soft.pth"),
     }
     check_payload(bundle)
+    if midpoint:
+        student = git(repo, "show", f"{MIDPOINT_PUBLICATION}:experiments/candidates/r8_warm_20261115/midpoint.pth")
+        if sha256(student).hexdigest() != MIDPOINT_SHA or sha256(bundle["v14"]).hexdigest() != V14_SHA:
+            raise ValueError("Unexpected midpoint course inputs")
+        entry = files["main.py"]
+        for before, after in ((KIND, MIDPOINT_KIND), (R3_SHA, MIDPOINT_SHA),
+                              ("Sherlock R3 Agent_X", "Sherlock Midpoint Agent_X")):
+            if entry.count(before) != 1:
+                raise ValueError("Unexpected course loader when binding the midpoint")
+            entry = entry.replace(before, after)
+        files["main.py"] = entry
+        bundle.update(kind=MIDPOINT_KIND, r3=student)
     packed = BytesIO()
     torch.save(bundle, packed)
     files = final_layout(files, packed.getvalue())
@@ -101,8 +116,9 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--repo", type=Path, default=HERE.parent)
     p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--midpoint", action="store_true", help="Use the registered single-view movement adviser")
     args = p.parse_args()
-    print(build(args.repo, args.out), args.out)
+    print(build(args.repo, args.out, midpoint=args.midpoint), args.out)
 
 
 if __name__ == "__main__":

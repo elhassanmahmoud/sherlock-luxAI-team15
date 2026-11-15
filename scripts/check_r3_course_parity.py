@@ -27,6 +27,8 @@ COMMIT = "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8"
 SOURCES = "178af787fa828ac4b3572dfa7bbdd96cdf2f9c1c16b4b11eca3a80e1a61fa55e"
 V14 = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
 R3 = "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+MIDPOINT = "51a52f0453d5ac8e9a4ea70b3792572356761054cb2890520005160f77097cf2"
+MIDPOINT_ZIP = "b9bb2c26cdd0fc7ad88906e287fac6f50e6e9ed9c1a1540fb285999999c292a2"
 DIAGONAL_COMMIT = "aa5cd60354014ac33ddc4d6b1013e1842ba27aa7"
 DIAGONAL_SOURCES = "2ede35c0e544c06b079b7ef7eaf7d1c0f56dd0c92f33347c172f30f48245c736"
 DIAGONAL_ZIP = "feaf20aa7058ad856634cd8a5a2daf56bfc6da4f6be296cff6d98fc55eefac25"
@@ -275,6 +277,7 @@ def main():
     variants = parser.add_mutually_exclusive_group()
     variants.add_argument("--after-loss", action="store_true", help="Exercise both public first-match branches")
     variants.add_argument("--diagonal", action="store_true", help="Compare the registered diagonal course and research policies")
+    variants.add_argument("--midpoint", action="store_true", help="Compare the fixed single-view midpoint and its isolated course package")
     for key in ("zip", "research", "v14", "r3", "out"):
         parser.add_argument("--" + key, type=lambda p: Path(p).resolve(), required=True)
     args = parser.parse_args()
@@ -293,16 +296,24 @@ def main():
                 report.update(format="final_diagonal", diagonal_source_commit=DIAGONAL_COMMIT)
                 if report["zip_sha256"] != DIAGONAL_ZIP:
                     raise ValueError("Different registered two-view ZIP")
+            if args.midpoint:
+                report.update(format="final_single_view_midpoint", student_commit="6a2ea9096182aed8641543414b1c91aee3b66702")
+                if report["zip_sha256"] != MIDPOINT_ZIP:
+                    raise ValueError("Different single-view midpoint ZIP")
             sources = DIAGONAL_SOURCES if args.diagonal else SOURCES
             if args.after_loss:
                 sources = AFTER_LOSS_SOURCES
-            if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (sources, V14, R3):
+            student = MIDPOINT if args.midpoint else R3
+            if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (sources, V14, student):
                 raise ValueError("Research archive or input checkpoint differs from pinned sources")
             sys.dont_write_bytecode = True
             sys.path.insert(0, str(args.research))
             os.environ["CUDA_VISIBLE_DEVICES"] = ""
             os.environ["JAX_PLATFORMS"] = "cpu"
             import torch
+            from importlib.metadata import version
+            report["versions"] = {key: version(key) for key in ("torch", "jax", "numpy", "luxai-s3")}
+            report["python"] = sys.version.split()[0]
             from luxai_s3 import env, params, wrappers
             torch.set_num_threads(1)
             torch.manual_seed(0)
@@ -316,7 +327,7 @@ def main():
                     report["games"].append(run_side(folder, args, side))
                     if digest(folder / WEIGHTS) != report["course_weights_sha256"]:
                         raise ValueError(f"Course save/update changed weights on {side}")
-                if args.diagonal:
+                if args.diagonal or args.midpoint:
                     for game in report["games"]:
                         original = STANDARD_ACTIONS[game["side"]]
                         game["standard_r3_actions_sha256"] = original

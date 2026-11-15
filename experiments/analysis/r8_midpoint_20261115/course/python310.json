@@ -1,0 +1,125 @@
+{
+  "format": "final_single_view_midpoint",
+  "import_path": "agents.sherlock.main.Agent_x",
+  "load_paths": [
+    "agents/sherlock/weights/agent.pth",
+    "agents/sherlock/weights/agent.pth"
+  ],
+  "research_commit": "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8",
+  "games": [
+    {
+      "seed": 7271000,
+      "side": "player_0",
+      "opponent": "solution92",
+      "equal_action_matrices": 303,
+      "course_updates": 303,
+      "match_start_steps": [
+        0,
+        101,
+        202
+      ],
+      "team_wins_at_match_start": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "final_wins": [
+        3,
+        0
+      ],
+      "movements_per_match": [
+        200,
+        133,
+        97
+      ],
+      "selective_counts": {
+        "movement": 430,
+        "changed_steps": 220,
+        "changed_unit_orders": 430
+      },
+      "caught_errors": 0,
+      "rejected_orders": 0,
+      "sap_orders": 75,
+      "nonzero_sap_offsets": 75,
+      "world_actions_int64_le_sha256": "f17aca071b19ebd207a39785af254bcab9daf2dcf8106668d6bea6478bf323ea",
+      "standard_r3_actions_sha256": "e749bc4ba8fd124eea24627d60a03f7e430f3966ba4c032e33bc63f924fbbae7",
+      "differs_from_standard_r3": true
+    },
+    {
+      "seed": 7271000,
+      "side": "player_1",
+      "opponent": "solution92",
+      "equal_action_matrices": 303,
+      "course_updates": 303,
+      "match_start_steps": [
+        0,
+        101,
+        202
+      ],
+      "team_wins_at_match_start": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "final_wins": [
+        3,
+        0
+      ],
+      "movements_per_match": [
+        209,
+        141,
+        107
+      ],
+      "selective_counts": {
+        "movement": 457,
+        "changed_steps": 216,
+        "changed_unit_orders": 457
+      },
+      "caught_errors": 0,
+      "rejected_orders": 0,
+      "sap_orders": 59,
+      "nonzero_sap_offsets": 59,
+      "world_actions_int64_le_sha256": "38759175069661b6b4658fa74ec4ce224a5201fe6b7b12b8060c7707d1d3a8fa",
+      "standard_r3_actions_sha256": "1dbeaa80a5dd81ba168a9382d76eaff65aa3820b118158bdafc41425e9cb413d",
+      "differs_from_standard_r3": true
+    }
+  ],
+  "result": "passed",
+  "zip_sha256": "b9bb2c26cdd0fc7ad88906e287fac6f50e6e9ed9c1a1540fb285999999c292a2",
+  "v14_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "r3_sha256": "51a52f0453d5ac8e9a4ea70b3792572356761054cb2890520005160f77097cf2",
+  "original_python_sources_sha256": "178af787fa828ac4b3572dfa7bbdd96cdf2f9c1c16b4b11eca3a80e1a61fa55e",
+  "checker_sha256": "e9313d181176631f3a3c3fb7d6033cd63248ea768fb0baf6ad9a48593a4dabbe",
+  "student_commit": "6a2ea9096182aed8641543414b1c91aee3b66702",
+  "versions": {
+    "torch": "2.14.1",
+    "jax": "0.6.2",
+    "numpy": "2.2.6",
+    "luxai-s3": "0.2.1"
+  },
+  "python": "3.10.15",
+  "engine_sha256": {
+    "luxai_s3.env": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+    "luxai_s3.params": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+    "luxai_s3.wrappers": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26"
+  },
+  "course_weights_sha256": "61b495be9c87dfba36f5747154a367402f49c76897eb63098caadedd7a919e8f"
+}
