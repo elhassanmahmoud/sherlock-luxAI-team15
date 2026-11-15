@@ -4,6 +4,7 @@ python -I scripts/check_r3_course_parity.py --zip r3-final-candidate.zip --resea
 
 The same historical map is played once per seat against native Solution_92. This
 checks implementation parity on visited positions, without estimating win rate.
+Use --diagonal for the fixed two-view candidate and its separate source snapshot.
 """
 import argparse
 from copy import deepcopy
@@ -26,6 +27,14 @@ COMMIT = "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8"
 SOURCES = "178af787fa828ac4b3572dfa7bbdd96cdf2f9c1c16b4b11eca3a80e1a61fa55e"
 V14 = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
 R3 = "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+DIAGONAL_COMMIT = "aa5cd60354014ac33ddc4d6b1013e1842ba27aa7"
+DIAGONAL_SOURCES = "2ede35c0e544c06b079b7ef7eaf7d1c0f56dd0c92f33347c172f30f48245c736"
+DIAGONAL_ZIP = "feaf20aa7058ad856634cd8a5a2daf56bfc6da4f6be296cff6d98fc55eefac25"
+# Same diagnostic seed, original 606-step reference from candidate_package/parity.json.
+STANDARD_ACTIONS = {
+    "player_0": "e749bc4ba8fd124eea24627d60a03f7e430f3966ba4c032e33bc63f924fbbae7",
+    "player_1": "1dbeaa80a5dd81ba168a9382d76eaff65aa3820b118158bdafc41425e9cb413d",
+}
 SEED = 7271000
 IMPORT = "agents.sherlock.main.Agent_x"
 WEIGHTS = "agents/sherlock/weights/agent.pth"
@@ -45,11 +54,13 @@ def research_digest(root):
     return h.hexdigest()
 
 
-def extract_entrant(archive, folder, research):
+def extract_entrant(archive, folder, research, diagonal=False):
     support = {f"sherlock/v14/{p.name}": p for p in (research / "agents/sherlock").glob("*.py")
                if p.name != "residual.py"}
     team = ("__init__.py", "main.py", "r3_adviser.py", "orders.py", "weights/agent.pth", "agents.yaml")
     expected = {"paths.csv", *support} | {"sherlock/" + name for name in team}
+    if diagonal:
+        expected.add("sherlock/r3_diagonal.py")
     if sorted(archive.namelist()) != sorted(expected):
         raise ValueError("Unexpected final ZIP contents (files missing, duplicated or added)")
     for member, original in support.items():
@@ -188,9 +199,11 @@ class ComparedPlayer:
 def run_side(folder, args, side):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from scripts.common import make_opponent, play_game
-    from scripts.selective_advice_agent import SelectiveAdviceAgent
-    ref = SelectiveAdviceAgent(side, agent_path=str(args.v14), advice_path=str(args.r3),
-                               mode="movement", train=False, seed=0)
+    if args.diagonal:
+        from scripts.r3_diagonal import DiagonalAgent as Adviser
+    else:
+        from scripts.selective_advice_agent import SelectiveAdviceAgent as Adviser
+    ref = Adviser(side, agent_path=str(args.v14), advice_path=str(args.r3), mode="movement", train=False, seed=0)
     ref.set_to_eval_mode()
     rival = make_opponent("solution92", "player_1" if side == "player_0" else "player_0")
     ctx = mp.get_context("spawn")
@@ -228,6 +241,7 @@ def run_side(folder, args, side):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--diagonal", action="store_true", help="Compare the registered diagonal course and research policies")
     for key in ("zip", "research", "v14", "r3", "out"):
         parser.add_argument("--" + key, type=lambda p: Path(p).resolve(), required=True)
     args = parser.parse_args()
@@ -237,7 +251,12 @@ def main():
         try:
             report.update(zip_sha256=digest(args.zip), v14_sha256=digest(args.v14), r3_sha256=digest(args.r3),
                           original_python_sources_sha256=research_digest(args.research), checker_sha256=digest(__file__))
-            if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (SOURCES, V14, R3):
+            if args.diagonal:
+                report.update(format="final_diagonal", diagonal_source_commit=DIAGONAL_COMMIT)
+                if report["zip_sha256"] != DIAGONAL_ZIP:
+                    raise ValueError("Different registered two-view ZIP")
+            sources = DIAGONAL_SOURCES if args.diagonal else SOURCES
+            if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (sources, V14, R3):
                 raise ValueError("Research archive or input checkpoint differs from pinned sources")
             sys.dont_write_bytecode = True
             sys.path.insert(0, str(args.research))
@@ -250,13 +269,22 @@ def main():
             report["engine_sha256"] = {m.__name__: digest(m.__file__) for m in (env, params, wrappers)}
             with tempfile.TemporaryDirectory() as tmp, zipfile.ZipFile(args.zip) as z:
                 folder = Path(tmp).resolve()
-                extract_entrant(z, folder, args.research)
+                extract_entrant(z, folder, args.research, args.diagonal)
                 report["course_weights_sha256"] = digest(folder / WEIGHTS)
                 for side in ("player_0", "player_1"):
                     report["active_side"] = side
                     report["games"].append(run_side(folder, args, side))
                     if digest(folder / WEIGHTS) != report["course_weights_sha256"]:
                         raise ValueError(f"Course save/update changed weights on {side}")
+                if args.diagonal:
+                    for game in report["games"]:
+                        original = STANDARD_ACTIONS[game["side"]]
+                        game["standard_r3_actions_sha256"] = original
+                        game["differs_from_standard_r3"] = original != game["world_actions_int64_le_sha256"]
+                        if not game["nonzero_sap_offsets"]:
+                            raise ValueError(f"No nonzero SAP offset observed on {game['side']}")
+                    if not any(game["differs_from_standard_r3"] for game in report["games"]):
+                        raise ValueError("Neither trajectory exercised a different final order than standard R3")
                 del report["active_side"]
             if any(not Path(m.__file__).resolve().is_relative_to(args.research) for n, m in sys.modules.items()
                    if n.split(".", 1)[0] in ("agents", "scripts") and getattr(m, "__file__", None)):
