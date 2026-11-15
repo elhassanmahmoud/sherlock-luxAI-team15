@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Wechsel im Entscheidungsmatch gezielt geprüft
+
+Nach gewonnenem ersten und verlorenem zweiten Match übernahm V15 auf zehn vorab festgelegten Sitzen im dritten Match. In 20 Ausführungen reproduzierten die ersten 202 Züge beider Spieler ihre Kontrollverläufe. Der Wechsel rettete die zwei primären Solution-Niederlagen und eine separat betrachtete Niederlage. Er kostete beide geschützten Direktduelle auf einer Karte. Das allgemeine Kriterium ist verfehlt. Für eine reine Solution-Frage enthalten sechs weitere vollständige R3-Vergleiche insgesamt 364/368 Siege. In höchstens 46 dieser Partien könnte der Wechsel einen Befehl beeinflussen. [Gezielter Vergleich und Archivbestand](../experiments/analysis/r3_v4_wl_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Rückwechsel nach einem verlorenen Auftakt abgeschlossen
 
 Im getrennten Folgeversuch gewannen Diagonal-R3, der Rückwechsel-Kandidat und V14 jeweils 32/32 gegen Solution. Der Rückwechsel-Kandidat verlor kein erstes Match. Alle Aktionsfolgen beider Spieler stimmen über 303 Züge mit Diagonal-R3 überein. Zusammengenommen gab es auf den zwei frischen Kartengruppen in 64 Solution-Partien keine Umschaltung. Ein zusätzlicher Sieg durch diese Regel auf neuen Karten wurde damit nicht nachgewiesen. [Vergleich und getrennte Matchausgänge](../experiments/analysis/diagonal_after_loss_20261115/SOLUTION_FOLGEPRUEFUNG.md).

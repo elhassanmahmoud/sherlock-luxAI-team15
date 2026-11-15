@@ -1,0 +1,285 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "losses": 0,
+        "opp_points": 193,
+        "points": 997,
+        "result": 1,
+        "steps": 303,
+        "wins": 3
+      },
+      "group": "neutral",
+      "opponent": "solution92",
+      "seed": 7150079,
+      "sequence": "WWW",
+      "side": "player_0"
+    },
+    {
+      "expected": {
+        "losses": 2,
+        "opp_points": 494,
+        "points": 545,
+        "result": 0,
+        "steps": 303,
+        "wins": 1
+      },
+      "group": "dev_a_target",
+      "opponent": "solution92",
+      "seed": 7150079,
+      "sequence": "WLL",
+      "side": "player_1"
+    },
+    {
+      "expected": {
+        "losses": 2,
+        "opp_points": 1367,
+        "points": 1629,
+        "result": 0,
+        "steps": 303,
+        "wins": 1
+      },
+      "group": "dev_a_target",
+      "opponent": "solution92",
+      "seed": 7150096,
+      "sequence": "WLL",
+      "side": "player_0"
+    },
+    {
+      "expected": {
+        "losses": 0,
+        "opp_points": 1291,
+        "points": 1703,
+        "result": 1,
+        "steps": 303,
+        "wins": 3
+      },
+      "group": "neutral",
+      "opponent": "solution92",
+      "seed": 7150096,
+      "sequence": "WWW",
+      "side": "player_1"
+    },
+    {
+      "expected": {
+        "losses": 1,
+        "opp_points": 1333,
+        "points": 1220,
+        "result": 1,
+        "steps": 303,
+        "wins": 2
+      },
+      "group": "direct_risk",
+      "opponent": "v4_mixed",
+      "seed": 7170018,
+      "sequence": "WLW",
+      "side": "player_0"
+    },
+    {
+      "expected": {
+        "losses": 1,
+        "opp_points": 1333,
+        "points": 1220,
+        "result": 1,
+        "steps": 303,
+        "wins": 2
+      },
+      "group": "direct_risk",
+      "opponent": "v4_mixed",
+      "seed": 7170018,
+      "sequence": "WLW",
+      "side": "player_1"
+    },
+    {
+      "expected": {
+        "losses": 2,
+        "opp_points": 2654,
+        "points": 2558,
+        "result": 0,
+        "steps": 303,
+        "wins": 1
+      },
+      "group": "neutral",
+      "opponent": "solution92",
+      "seed": 7286137,
+      "sequence": "LLW",
+      "side": "player_0"
+    },
+    {
+      "expected": {
+        "losses": 2,
+        "opp_points": 2465,
+        "points": 2566,
+        "result": 0,
+        "steps": 303,
+        "wins": 1
+      },
+      "group": "hard_map_target",
+      "opponent": "solution92",
+      "seed": 7286137,
+      "sequence": "WLL",
+      "side": "player_1"
+    },
+    {
+      "expected": {
+        "losses": 1,
+        "result": 1,
+        "steps": 303,
+        "wins": 2
+      },
+      "group": "solution_risk",
+      "opponent": "solution92",
+      "seed": 7287108,
+      "sequence": "WLW",
+      "side": "player_0"
+    },
+    {
+      "expected": {
+        "losses": 0,
+        "result": 1,
+        "steps": 303,
+        "wins": 3
+      },
+      "group": "neutral",
+      "opponent": "solution92",
+      "seed": 7287108,
+      "sequence": "WWW",
+      "side": "player_1"
+    }
+  ],
+  "direct_games": "a27b75757b1d66aef21ec30f513875f5bc6199715b82cf8be06f92ebb6d5a310",
+  "files_sha256": {
+    "common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "metrics.py": "35944cc163617af3d7e63fd6a1da992b60cda6ba28d2e7891c24963f1bb3853e",
+    "r3_v4_mixed_duel.py": "b006fc1a8ac9965b4df2e176de4a83ebd622eca762657583b9dcfed57683ae73",
+    "r3_v4_wl_agent.py": "eac15aea06f4baa3bcba772f53110aca6b6e9a0fc82e86ecead7f271d3175544",
+    "r3_v4_wl_games.py": "c2fbdc36f5387ad8d7045752dbd821895ef093acaf9ea514fe2d4c84c64b0a22",
+    "r3_v4_wl_plan.py": "df19b0d172eb5881b35f9f5be959101242a68a1e8949a566efbe0d93fe377dca",
+    "scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0"
+  },
+  "plan": {
+    "files": {
+      "experiments/analysis/kaggle3_20261115/student_hyb_v4_mixed.csv": "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/diagonal_player_0.json": "02c3ec3768fb13c381a2d1ce0b614b0ad0fff9fc9ce2ca97c822087a637696a2",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/diagonal_player_0.json.gz": "e57d9405854ba07ecfc46715364184d89d65bfd199310a222bb63e8e44be072c",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/diagonal_player_1.json": "79045b7d14f861ad93cdac10ce014137ae05e2959707bd76732754defd73ae79",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/diagonal_player_1.json.gz": "97a8843ae94c1df8d882e51355574c5237c72fbfa9e6abf2e145c7cb675f5a8b",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/r3_player_0.json": "24a6d79bfacc13dae220b72cff095984cae2058d04990468d4d470da65106b63",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/r3_player_0.json.gz": "86b16c9e133222034c6fd7ce698d00fb6232cc8d16baae0d57912e355e5cda7e",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/r3_player_1.json": "86685de69baa59a83970db0fd1a006e80a4aeca8ea15db27f5bd5da22bf5b326",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/r3_player_1.json.gz": "39956b678e094f3dd9fe607539e5d4719d0643f4b29ddeac84747a017c4a9b37",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/v4_player_0.json": "cd3128e7a724e786fa08bc29f8e9cd92bb0d31cf34ec2deb78025aef9cdf1cce",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/v4_player_0.json.gz": "2e544156d8aed8947af082a0fe2227b49ba08a68319a693dc6925699eec1a611",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/v4_player_1.json": "7427f3788d70db0dcf1b954e4222a326510791a4892a283fd211791d694c0202",
+      "experiments/analysis/movement_reflection_20261115/last_solution_map/run/v4_player_1.json.gz": "0fc7664e83f8905deaf85b81450c2dddf7f5a5efbba728660641cf4079acaeff",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150003_player_0.json": "24af1230871426b52b0339a9a2223ad0cbb70ea6e397847c0381923bff7035c0",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150011_player_0.json": "901e627dfab0a5cf8b774928131886e50d7a2afc20a013225164ec4e2318b367",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150011_player_1.json": "5ed53ab1f27e42d5fce700932a163eadc164412ad017b28963fdd635707a0012",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150035_player_0.json": "1b760b60561b9052465518e325da8c4f0c240d71c60d9c67b28937d38789bf61",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150035_player_1.json": "b1921ebe49fce87871b1244baf69ed2feaf190e99a281496d4b404e8676e2db4",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150037_player_1.json": "b23ec72297ea7dbbc45daef83fd3b176be0f0e4a3fab714fc53985b03c27717a",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150079_player_1.json": "777bd34150fcdaf66219b73203f8ea22010f6617d4ae509352ca2414f4e7c978",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/7150096_player_0.json": "d264e9ef3875b919b11317d80e42a01946b0f1b04e16462e9c9581af927d2be3",
+      "experiments/analysis/movement_soft_20261115/dev_a_retrace/run1/r3/complete.json": "9aa10a8dbd9297f6c80de407ea5a635d53f954ee6773b1977a9114ee0fb5b664",
+      "experiments/analysis/movement_soft_20261115/dev_a_solution/r3/games.jsonl": "7d407d4fd7322f65d6ae5d27a87a157e2cf0a144b9eac303a93c86db9fea27ae",
+      "experiments/analysis/r3_v4_contact_20261115/observed/screen_assessment.json": "fb24b2570afd86eeb4aa97429ff882daba445b89af3447f1e4fa39ff6063b9c2",
+      "experiments/analysis/r3_v4_mixed_duel_20261115/run/games.jsonl": "a27b75757b1d66aef21ec30f513875f5bc6199715b82cf8be06f92ebb6d5a310",
+      "experiments/imitation/final_20261115_r3_context/g7287000_player_0_solution92.npz": "7b3f703a2bb59c62312880ca62e96a379a5d8f55112fe9c2e1aa1f1df73a2c67",
+      "experiments/imitation/final_20261115_r3_context/g7287000_player_1_solution92.npz": "74202ded42812a338eae3f77d9ae932d3dff294803bead2ed6062e66759b8567",
+      "experiments/imitation/final_20261115_r3_context/g7287003_player_0_solution92.npz": "fb3ceba929d766e307708c50d8afc748d051cc6e58900b5fed24409398a4bbb0",
+      "experiments/imitation/final_20261115_r3_context/g7287003_player_1_solution92.npz": "fb30ceada17d6801d7624a0458717a9877ae28891e174d7c00108255bebc93e2",
+      "experiments/imitation/final_20261115_r3_context/g7287006_player_0_solution92.npz": "8a44771d7e4e376b553e45cdc87ace479ca6ff8b1c58b05504c9e0ba7fce6716",
+      "experiments/imitation/final_20261115_r3_context/g7287006_player_1_solution92.npz": "a09b84ecc6a0b5990b16927df2c01f02976a300f91ffdb621ff87385f6a99b76",
+      "experiments/imitation/final_20261115_r3_context/g7287009_player_0_solution92.npz": "2a42292e822c3e417cbfb2294a0f300c40f083198a1d3225c3fa54a3bc1aeae1",
+      "experiments/imitation/final_20261115_r3_context/g7287009_player_1_solution92.npz": "6f68b00020999ed2fdacff102711e1eb545bdadffe990a39d6c2c32c8effbdf3",
+      "experiments/imitation/final_20261115_r3_context/g7287012_player_0_solution92.npz": "9c7d28f777f10fc7204f8640f106b9e15960452a78235a832fd800a892c46702",
+      "experiments/imitation/final_20261115_r3_context/g7287012_player_1_solution92.npz": "da8b7be072ea50ce8ffd4e4bfaa9bcfd5e56404a7bb6f04ae0894b1c9cb1346f",
+      "experiments/imitation/final_20261115_r3_context/g7287015_player_0_solution92.npz": "6c70b32ba994016832ac5734196fda419302571a6aa275e952a37711830c1708",
+      "experiments/imitation/final_20261115_r3_context/g7287015_player_1_solution92.npz": "387cc64dc15ff1691d22b5ebc5f02ed59932fac098505bd585d74f2c97adcbd4",
+      "experiments/imitation/final_20261115_r3_context/g7287018_player_0_solution92.npz": "e4db84e0e5e664765e2666b61511212e803ee046fed6bb36e25ca35eb9445964",
+      "experiments/imitation/final_20261115_r3_context/g7287018_player_1_solution92.npz": "f35aa33ad016b5e8bfdf92cb7f51690b17632c022fe8afe7308b4b9d001736f5",
+      "experiments/imitation/final_20261115_r3_context/g7287021_player_0_solution92.npz": "d8eeb4f2b21dec4f9c805e3ac8e948e1a2d73fac0ca0d9e702164e3525234b1b",
+      "experiments/imitation/final_20261115_r3_context/g7287021_player_1_solution92.npz": "14403e807d60c533859bb3d1c4fc3075eddd498f4f3948bda282cc3764da5100",
+      "experiments/imitation/final_20261115_r3_context/g7287024_player_0_solution92.npz": "3c99c225ad7d111c4dd9a5ff97ad42fb88e84c9d4257a8f9a7a577cb7ff8a24c",
+      "experiments/imitation/final_20261115_r3_context/g7287024_player_1_solution92.npz": "198420de9bd01d8a5e49faa92641b27b371b701ee5d30845bd17a7700c73a3af",
+      "experiments/imitation/final_20261115_r3_context/g7287027_player_0_solution92.npz": "1350b56f716d3be578627033a3ca44e297410ae70e1dfe5bdd975f693e328681",
+      "experiments/imitation/final_20261115_r3_context/g7287027_player_1_solution92.npz": "98c3d89fbca24f0d4cb2e4a4622b1380ca8b2409ad7f299b0545601d6c0c9617",
+      "experiments/imitation/final_20261115_r3_context/g7287030_player_0_solution92.npz": "93eabefdd16d998fbed7b7c953e5b4f1f40f4a8723b609e77a0e53bb12b6a83c",
+      "experiments/imitation/final_20261115_r3_context/g7287030_player_1_solution92.npz": "7dadf986414eb56f43681721530f99b281e4d96e0e46a7becb065a785c9b1bb3",
+      "experiments/imitation/final_20261115_r3_context/g7287033_player_0_solution92.npz": "6b43ba2b9e215d0fb5fa2f173368768c140882f49d31fcda0766283a8314fae9",
+      "experiments/imitation/final_20261115_r3_context/g7287033_player_1_solution92.npz": "3fa557c29ae954e2cc080627c326b4447d304da3ef682d72b0f8109cbfe8b120",
+      "experiments/imitation/final_20261115_r3_context/g7287036_player_0_solution92.npz": "a6f81d8dcbd77b5d981db1c883c55e3a3504c44a4141586e6fb313704a0680eb",
+      "experiments/imitation/final_20261115_r3_context/g7287036_player_1_solution92.npz": "c2566e1ecc1be1370fc70f92f4a5808a4512d0780bd44a8224102325a19f1e0e",
+      "experiments/imitation/final_20261115_r3_context/g7287039_player_0_solution92.npz": "bf2e29bbb42aef8a7bf4b06b50a6c0181227516f24959a73f10c366afdc16897",
+      "experiments/imitation/final_20261115_r3_context/g7287039_player_1_solution92.npz": "0f3a73f89cb5090b6c8a54650e82727f2613a759e1cd18f85c340fd64269ab44",
+      "experiments/imitation/final_20261115_r3_context/g7287042_player_0_solution92.npz": "fb1367556dcb1cce45b3fc15aa917937579105c8ae02aec2b810987b09cb7573",
+      "experiments/imitation/final_20261115_r3_context/g7287042_player_1_solution92.npz": "be88f49e76bd9cee1da9ad8b69ae84b780bd2c35617aea1827681ea7d8b5df43",
+      "experiments/imitation/final_20261115_r3_context/g7287045_player_0_solution92.npz": "1f13b048b3a6d3b2905cc17d6734527b4677c800100bb4f2a4fe60d6f7926419",
+      "experiments/imitation/final_20261115_r3_context/g7287045_player_1_solution92.npz": "1e421568dd99598d79d30823fc8cac820db36c9ea46337f444a21ee407bf3ab2",
+      "experiments/imitation/final_20261115_r3_context/g7287102_player_0_solution92.npz": "41ed3881a78d88af6e8e6be5b45a0746e4961cb6dbf3f64ff03d5ebd35780ad2",
+      "experiments/imitation/final_20261115_r3_context/g7287102_player_1_solution92.npz": "3cbcf7318ea74de4198974422e6886d715eb77e37b4c2cb73ab395475da65144",
+      "experiments/imitation/final_20261115_r3_context/g7287105_player_0_solution92.npz": "661839e101236149c3dc676768a5c0e4b210b9250f72e29fe6bdc8fb3379941b",
+      "experiments/imitation/final_20261115_r3_context/g7287105_player_1_solution92.npz": "6ed5aa5936b2bf53e59a4db3c5b5b417d8f687287156589110927db10bcdd4ba",
+      "experiments/imitation/final_20261115_r3_context/g7287108_player_0_solution92.npz": "ee1c014c825d70a986810620831212fb40adf6709baf35ab41b2a8c47ffb1bf7",
+      "experiments/imitation/final_20261115_r3_context/g7287108_player_1_solution92.npz": "62e45a8894e016738a0979e7a8dded96816450ef791aaa7a0b0f00b3461fe1b2",
+      "experiments/imitation/final_20261115_r3_context/g7287111_player_0_solution92.npz": "3c1cc337599496f8d09efcff8323fa4865abec210ab85f929e6a8584f986f234",
+      "experiments/imitation/final_20261115_r3_context/g7287111_player_1_solution92.npz": "048adb713cf76335af4ebd5cfb3ca75385652025eccbc0be310d5ce1a0a492ab",
+      "experiments/imitation/final_20261115_r3_context/g7287114_player_0_solution92.npz": "38dafe2e78c08b8c06ae8ee7ec21c7dc15b296175c38b1e857587fc59f7c9334",
+      "experiments/imitation/final_20261115_r3_context/g7287114_player_1_solution92.npz": "a30c608a2dc93f703cddec750fcb76e3b2ffd163ce5cfafc5e28988fc183eca5",
+      "experiments/imitation/final_20261115_r3_context/g7287117_player_0_solution92.npz": "2628754ccfc079d1d99fe7001445feba03a531ba57976bb3f6f275ff209b02a6",
+      "experiments/imitation/final_20261115_r3_context/g7287117_player_1_solution92.npz": "63df2a63494d89dc0bb483220ede772e56c84ddd7f1aa472cb9851332cc371e6",
+      "experiments/imitation/final_20261115_r3_context/g7287120_player_0_solution92.npz": "c5e37ff0b27d4a022a7188c10012fe7be1e56fc7bebbefd087399c5ffbd06e57",
+      "experiments/imitation/final_20261115_r3_context/g7287120_player_1_solution92.npz": "612d4a1b7c4520f285c3ef8f9315899433fd9ad21c7e922538fd0ce8ae4293b6",
+      "experiments/imitation/final_20261115_r3_context/g7287123_player_0_solution92.npz": "9593a89cb293a7f1128d3c22899a7def3bc01046945c80693c3d18f22fe171ba",
+      "experiments/imitation/final_20261115_r3_context/g7287123_player_1_solution92.npz": "78e2dccdf30887552c7e8c4e91b1f960c13cb23a52c89f1ac0b4bf92391002ad",
+      "experiments/imitation/final_20261115_r3_context/protocol.json": "3476e80f57ff23f76fb4d8aa00269e647116ca9c468c0d2d0f6278af85567a03"
+    },
+    "plan": "49f2aea0a5e8593ebc17263da958d3cecd8a32806809abd959e9756a6e7ade89",
+    "registration": "40a4fcef18b4556ecf8b1c97873c9758fc818459879bbb7bc4adf82dd21a9c0d"
+  },
+  "source": {
+    "engine": {
+      "lux_modules": {
+        "__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+        "env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+        "globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+        "params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+        "profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+        "pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+        "spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+        "state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+        "utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+        "wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26"
+      },
+      "machine": "arm64",
+      "platform": "Darwin",
+      "python": "3.13.13",
+      "runtime_flags": {
+        "CUDA_VISIBLE_DEVICES": null,
+        "JAX_PLATFORMS": null,
+        "PYTHONHASHSEED": null,
+        "XLA_FLAGS": null
+      },
+      "versions": {
+        "jax": "0.12.0",
+        "jaxlib": "0.12.0",
+        "luxai-s3": "0.2.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "torch": "2.14.1"
+      }
+    },
+    "files_sha256": "5e2a323f07b544950c80b6fb74769406498c3ed3d60fdfa69bb1cb36d5464b53",
+    "historical": [
+      "06452ab615c2dd35f1b4e63261ce0f3d5014dabe8c35840b3113fef705e67dde",
+      "7d407d4fd7322f65d6ae5d27a87a157e2cf0a144b9eac303a93c86db9fea27ae",
+      "75cb58f9439c12784688b2eac1dcb4cbe753d040027993be863c0a214d5049fe",
+      "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c"
+    ],
+    "r3": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+    "r3_parent": "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8",
+    "v14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "v4": "0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f",
+    "v4_parent": "b2bd67e43f213cd99669bf3eee759e3fdeb1c0f5"
+  }
+}
