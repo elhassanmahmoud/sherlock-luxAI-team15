@@ -265,7 +265,7 @@ def concat_games(files, *, with_base=False):
     return np.concatenate(planes), {k: np.concatenate(v) for k, v in rows.items()}
 
 
-def load_data(dirs: list[str], val_frac: float, seed: int):
+def partition_files(dirs: list[str], val_frac: float, seed: int):
     files = sorted(f for d in dirs for f in Path(d).glob("g*.npz"))
     rng = random.Random(seed)
     games = sorted({f.name.split("_")[0] for f in files})
@@ -274,6 +274,11 @@ def load_data(dirs: list[str], val_frac: float, seed: int):
     for f in files:
         parts["val" if f.name.split("_")[0] in val_games else "train"].append(f)
 
+    return parts
+
+
+def load_data(dirs: list[str], val_frac: float, seed: int):
+    parts = partition_files(dirs,val_frac,seed)
     return concat_games(parts["train"]), concat_games(parts["val"]), len(parts["train"]), len(parts["val"])
 
 
@@ -405,10 +410,13 @@ def train_student(train, val, a, log):
         from scripts.own_command_study import widen_and_check
         a.initial_parity = widen_and_check(net)
         log(f"Before the first update, own-command input parity: {a.initial_parity}")
+    low_memory = getattr(a, "low_memory", False)
     selective = "base_act" in train[1]
     step_rng = np.random.default_rng(a.seed) if selective else np.random
 
     def to_dev(planes, rows):
+        if low_memory:
+            return torch.from_numpy(planes), {k:torch.from_numpy(v) for k,v in rows.items()}
         # Beim kleinen Fokuslauf bleiben die kompakten int8-Karten im Hauptspeicher.
         return (torch.as_tensor(planes, device="cpu" if selective else dev),
                 {k: torch.as_tensor(v.astype(np.float32) if k == "feats" else v).to(dev) for k, v in rows.items()})
@@ -419,7 +427,8 @@ def train_student(train, val, a, log):
         raise ValueError("Training und Validierung haben unterschiedliche Kartengroessen")
     width, height = P.shape[-2:]
     for name, rows in (("Training", R), ("Validierung", Rv)):
-        prepare_labels(rows, width, height)
+        if not low_memory:
+            prepare_labels(rows, width, height)
         shot = rows["act"] == 5
         center = rows["sap_label"] & (rows["sdx"] == 0) & (rows["sdy"] == 0)
         log(f"{name}: {int(rows['admitted'].sum())}/{len(shot)} Befehle im Spiel ausfuehrbar, "
@@ -429,7 +438,7 @@ def train_student(train, val, a, log):
     n = len(train_idx)
     if n == 0:
         raise ValueError("Keine ausfuehrbaren Lehrerbefehle im Training")
-    counts = torch.bincount(R["act"][train_idx].cpu(), minlength=6).float()
+    counts = torch.bincount(R["act"][train_idx].long().cpu(), minlength=6).float()
     if selective:
         focused = ((R["act"][train_idx] == 5) | (R["base_act"][train_idx] == 5)).sum().item()
         log(f"Aktionsverlust: {int(focused)}/{n} ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3")
@@ -455,36 +464,45 @@ def train_student(train, val, a, log):
             counts = ends[sel] - starts[sel]
             idx = np.repeat(starts[sel] - np.concatenate([[0], np.cumsum(counts)[:-1]]), counts) + np.arange(counts.sum())
             inv = np.repeat(np.arange(len(sel)), counts)
-            yield (torch.as_tensor(idx, device=dev), torch.as_tensor(steps_all[sel], device=dev),
-                   torch.as_tensor(inv, device=dev))
+            index_device = "cpu" if low_memory else dev
+            yield (torch.as_tensor(idx, device=index_device), torch.as_tensor(steps_all[sel], device=index_device),
+                   torch.as_tensor(inv, device=index_device))
 
-    def batch_logits(Pt, Rt, idx, uniq=None, inv=None):
-        if uniq is None:
-            uniq, inv = torch.unique(Rt["step"][idx], return_inverse=True)
-        planes = Pt[uniq.to(Pt.device)].to(dev, dtype=torch.float32) / PLANE_SCALE
-        logits, _, smap = net.forward_all(planes, inv, Rt["pos"][idx], Rt["feats"][idx])
-        logits = logits.masked_fill(~Rt["mask"][idx], -torch.inf)
-        sel = Rt["sap_label"][idx]
+    def batch_logits(Pt, Rt, idx, uniq, inv, model, target_device):
+        planes = Pt[uniq.to(Pt.device)].to(target_device, dtype=torch.float32) / PLANE_SCALE
+        pos = Rt["pos"][idx].to(target_device, dtype=torch.long)
+        feats = Rt["feats"][idx].to(target_device, dtype=torch.float32)
+        inv = inv.to(target_device)
+        logits, _, smap = model.forward_all(planes, inv, pos, feats)
+        logits = logits.masked_fill(~Rt["mask"][idx].to(target_device), -torch.inf)
+        sel = Rt["sap_label"][idx].to(target_device)
         s_logits = s_tgt = None
         if bool(sel.any()):
-            s_logits = masked_sap_logits(smap, inv[sel], Rt["pos"][idx][sel], Rt["rng"][idx][sel])
-            s_tgt = Rt["tgt"][idx][sel]
+            radius = Rt["rng"][idx].to(target_device, dtype=torch.long)
+            s_logits = masked_sap_logits(smap, inv[sel], pos[sel], radius[sel])
+            s_tgt = Rt["tgt"][idx].to(target_device, dtype=torch.long)[sel]
         return logits, sel, s_logits, s_tgt
 
     def evaluate(start=0, stop=None):
-        net.eval()
-        correct = torch.zeros(6, device=dev)
-        total = torch.zeros(6, device=dev)
+        # Keep optimizer parameters and moments on the training device. Only validation uses a CPU copy.
+        if low_memory and dev.type != "cpu":
+            from copy import deepcopy
+            eval_net = deepcopy(net).to("cpu").eval()
+        else:
+            eval_net = net.eval()
+        eval_device = torch.device("cpu") if low_memory else dev
+        correct = torch.zeros(6, device=eval_device)
+        total = torch.zeros(6, device=eval_device)
         stop = len(val_step_np) if stop is None else stop
         joint_correct = 0
         sap_n = sap_hit = sap_near = 0
         with torch.no_grad():
-            for idx, uniq, inv in step_batches(val_step_np[start:stop], 32 if selective else 512, False):
+            for idx, uniq, inv in step_batches(val_step_np[start:stop], 32 if selective or low_memory else 512, False):
                 if start:
                     idx = idx + start
-                lg, sel, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
+                lg, sel, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv, eval_net, eval_device)
                 pred = lg.argmax(1)
-                y = Rv["act"][idx]
+                y = Rv["act"][idx].to(eval_device, dtype=torch.long)
                 joint, hit, near = agreement(lg, y, sel, s_lg, s_tgt, height)
                 joint_correct += int(joint)
                 sap_n += int(sel.sum())
@@ -508,8 +526,8 @@ def train_student(train, val, a, log):
         used_soft = 0
         for idx, uniq, inv in step_batches(train_step_np, k_steps, True):
             idx = train_idx[idx]
-            lg, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
-            loss = action_loss(lg, R["act"][idx], R["base_act"][idx] if selective else None)
+            lg, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv, net, dev)
+            loss = action_loss(lg, R["act"][idx].to(dev, dtype=torch.long), R["base_act"][idx] if selective else None)
             if s_lg is not None:
                 loss = loss + a.sap_weight * F.cross_entropy(s_lg, s_tgt)
             if distill is not None:
@@ -546,6 +564,7 @@ def train_student(train, val, a, log):
 
 
 def cmd_train(a) -> None:
+    from contextlib import ExitStack
     from agents.sherlock.ppo_agent import save_policy
 
     out = _check_out(Path(a.out))
@@ -561,15 +580,26 @@ def cmd_train(a) -> None:
 
     t0 = time.time()
     extra = {}
-    if getattr(a, "selective", False):
-        train, val, nt, nv, inputs = selective_data(a.data)
-        extra["selective_training"] = dict(inputs=inputs, combat_action_weight=3, other_action_weight=1,
-                                           target_weight=a.sap_weight, mb=a.mb, seed=a.seed, lr=a.lr,
-                                           lr_schedule="OneCycleLR", optimizer="AdamW")
-    else:
-        train, val, nt, nv = load_data(a.data, a.val_frac, a.seed)
-    log(f"Dateien: {nt} Training, {nv} Validierung (getrennt nach Spiel), geladen in {time.time() - t0:.0f}s")
-    net = train_student(train, val, a, log)
+    with ExitStack() as resources:
+        if getattr(a, "selective", False):
+            train, val, nt, nv, inputs = selective_data(a.data)
+            extra["selective_training"] = dict(inputs=inputs, combat_action_weight=3, other_action_weight=1,
+                                               target_weight=a.sap_weight, mb=a.mb, seed=a.seed, lr=a.lr,
+                                               lr_schedule="OneCycleLR", optimizer="AdamW")
+        elif getattr(a, "low_memory", False):
+            import tempfile
+            from scripts.imitation_storage import store_partition
+            parts = partition_files(a.data, a.val_frac, a.seed)
+            nt, nv = len(parts["train"]), len(parts["val"])
+            tmp = Path(resources.enter_context(tempfile.TemporaryDirectory(prefix=".imitation-data-",dir=out.parent)))
+            train, val = (store_partition(parts[k],tmp/k,prepare_labels) for k in ("train","val"))
+            disk_bytes = sum(f.stat().st_size for f in tmp.glob("*/*"))
+            log(f"Temporärer Plattenspeicher {disk_bytes / 2**30:.2f} GiB; Validierung auf CPU")
+        else:
+            train, val, nt, nv = load_data(a.data, a.val_frac, a.seed)
+        log(f"Dateien: {nt} Training, {nv} Validierung (getrennt nach Spiel), geladen in {time.time() - t0:.0f}s")
+        net = train_student(train, val, a, log)
+        del train, val
     cfg = v14_cfg()
     save_policy(str(out), net, cfg, extra={"kind": "imitation", "teacher": "kaggle3 lux3-bot 0.4.8_fn",
                                            "data": a.data, "epochs": a.epochs,
@@ -668,6 +698,8 @@ def main() -> None:
     t.add_argument("--ch", type=int, default=64)
     t.add_argument("--blocks", type=int, default=6)
     t.add_argument("--hidden", type=int, default=256)
+    t.add_argument("--low-memory", action="store_true",
+                   help="Dateigruppen auf Platte halten, nur Trainingsbatches auf das Gerät laden, auf CPU validieren")
     t.add_argument("--val-frac", type=float, default=0.08)
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--device", default="auto")

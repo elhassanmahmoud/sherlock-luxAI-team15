@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Speicherarmer Trainer für Mahmouds größeren Datensatz
+
+Nach dem gemeldeten Speicherabbruch kann der normale Imitationstrainer Archivdaten spielweise auf Platte vorbereiten und nur den jeweiligen Trainingsbatch auf den Grafikchip laden. Im zweiepochigen CPU-Test waren sämtliche Endgewichte bitgleich zum bisherigen Weg. Die Tests verwenden echte maskierte Trainingsschritte einschließlich Schusszielkopf. Eine Messung mit Mahmouds vollständigem 11,4-Millionen-Datensatz steht aus. [Verwendung, Speicherbedarf und Prüfungsumfang](../experiments/analysis/umbau_20261115/SPEICHER.md).
+
 ## 15.11.2026 – R3 gewinnt zwei zusätzliche Kaggle-Spiele und erreicht die Bestätigung
 
 Auf 16 Karten gewann R3 gegen Solution 31/32 wie V14. Gegen Kaggle gewann er auf beiden Seiten von 7273015, insgesamt 2/32 gegenüber 0/32 bei V14. Direkt gewann er 22/32 gegen V14. Die 224 vollständigen Spiele erfüllen die vier Auswahlkriterien, der externe Kartenbereich schließt null noch ein. Die unabhängige Prüfung hat Vorrang. Mahmoud berichtet separat 107/122 direkte Siege seines vollständigen v3-Schülers gegen V14 auf DAgger-Sammelkarten. [Eigene Auswahl](../experiments/analysis/movement_soft_20261115/AUSWAHL.md) · [Mahmouds Vergleich](../experiments/analysis/umbau_20261115/README.md).
