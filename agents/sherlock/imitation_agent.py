@@ -16,7 +16,7 @@ import torch
 
 from . import geometry as geo
 from .cnn_model import map_planes
-from .imitation_net import ImitationNet
+from .imitation_net import ImitationNet, masked_sap_logits
 from .ppo_agent import PPOAgent
 
 
@@ -100,7 +100,7 @@ class ImitationAgent(PPOAgent):
         energy = np.array([float(ctx["ally_ene"][u]) for u in ids])
         if self.has_sap_head:
             masks = sap_legal(masks, energy, float(ctx["sap_cost"]))
-        sapmap = None
+        targets = {}
         with torch.no_grad():
             inputs = (torch.as_tensor(planes[None]), torch.zeros(len(ids), dtype=torch.long),
                       torch.as_tensor(pos), torch.as_tensor(feats))
@@ -110,19 +110,24 @@ class ImitationAgent(PPOAgent):
                 smap = torch.log_softmax(smap[0].flatten(), 0)
             else:
                 logits = self.net(*inputs)[0]
-            logp = torch.log_softmax(logits.masked_fill(~m, -1e9), dim=1)
+            logp = torch.log_softmax(logits.masked_fill(~m, -torch.inf), dim=1)
             for extra in self.extra_nets:
                 if self.has_sap_head and isinstance(extra, ImitationNet):
                     lg, _, sm = extra.forward_all(*inputs)
                     smap = smap + torch.log_softmax(sm[0].flatten(), 0)
                 else:
                     lg = extra(*inputs)[0]
-                logp = logp + torch.log_softmax(lg.masked_fill(~m, -1e9), dim=1)
+                logp = logp + torch.log_softmax(lg.masked_fill(~m, -torch.inf), dim=1)
             acts = logp.argmax(dim=1).numpy()
             if self.has_sap_head:
-                sapmap = smap.view(planes.shape[1], planes.shape[2]).numpy()
-        R = int(ctx["sap_range"])
-        W, H = ctx["W"], ctx["H"]
+                shots = torch.from_numpy(np.flatnonzero(acts == geo.SAP))
+                if shots.numel():
+                    positions = inputs[2][shots]
+                    radii = torch.full_like(shots, int(ctx["sap_range"]))
+                    scores = masked_sap_logits(smap.reshape(1, *planes.shape[1:]), inputs[1][shots], positions, radii)
+                    for row, flat in zip(shots.tolist(), scores.argmax(1).tolist()):
+                        tx, ty = divmod(flat, ctx["H"])
+                        targets[row] = (tx - int(pos[row, 0]), ty - int(pos[row, 1]), 0)
         focus = {}
         if self.cfg.focus_sap:
             # 15.11.2026: sichere gemeinsame Abschuesse stehender Gegner (wie V14-Schalter focus_sap)
@@ -139,14 +144,8 @@ class ImitationAgent(PPOAgent):
             target = None
             if int(uid) in focus:
                 target = focus[int(uid)]
-            elif a == geo.SAP and sapmap is not None:
-                x, y = int(pos[k][0]), int(pos[k][1])
-                x0, x1, y0, y1 = max(0, x - R), min(W, x + R + 1), max(0, y - R), min(H, y + R + 1)
-                win = sapmap[x0:x1, y0:y1].copy()
-                if x0 <= x < x1 and y0 <= y < y1:
-                    win[x - x0, y - y0] = -np.inf  # nie auf das eigene Feld
-                tx, ty = np.unravel_index(int(np.argmax(win)), win.shape)
-                target = (int(tx) + x0 - x, int(ty) + y0 - y, 0)
+            elif a == geo.SAP and self.has_sap_head:
+                target = targets[k]
             elif a == geo.SAP:
                 target = sap_targets[uid]
             if a == geo.SAP and target is not None:

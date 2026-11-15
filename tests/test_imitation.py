@@ -64,7 +64,10 @@ def test_imitation_agent_plays_with_sap_head(tmp_path):
         for u in np.nonzero(acts[:, 0] == 5)[0]:
             saw_sap = True
             assert own[u] and ene[u] >= cost
-            assert max(abs(acts[u, 1]), abs(acts[u, 2])) <= R and (acts[u, 1], acts[u, 2]) != (0, 0)
+            assert max(abs(acts[u, 1]), abs(acts[u, 2])) <= R
+            target = np.asarray(obs["player_1"]["units"]["position"])[1, u] + acts[u, 1:]
+            shape = np.asarray(obs["player_1"]["map_features"]["tile_type"]).shape
+            assert (target >= 0).all() and (target < shape).all()
         obs, *_ = env.step({"player_0": np.zeros((16, 3), int), "player_1": acts})
     env.close()
     assert saw_sap

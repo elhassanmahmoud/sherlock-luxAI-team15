@@ -267,12 +267,49 @@ def load_data(dirs: list[str], val_frac: float, seed: int):
     return cat(parts["train"]), cat(parts["val"]), len(parts["train"]), len(parts["val"])
 
 
+def prepare_labels(rows, width, height):
+    """Rekonstruiert die Spielmaske aus ganzzahligen Spielwerten im Float16-Archiv.
+
+    Die Demonstration wird erst danach auf Lernbarkeit geprueft. Beide Zielkoordinaten
+    vor dem Abflachen pruefen, damit ein Randueberlauf kein anderes Feld bezeichnet.
+    """
+    import torch
+
+    rows["act"], rows["pos"] = rows["act"].long(), rows["pos"].long()
+    feats = rows["feats"].float()
+    rows["mask"][:, 5] = torch.round(feats[:, 2] * 400) >= torch.round(feats[:, 7] * 50)
+    rows["rng"] = torch.round(feats[:, 8] * 7).long()
+    dx, dy = rows["sdx"].long(), rows["sdy"].long()
+    tx, ty = rows["pos"][:, 0] + dx, rows["pos"][:, 1] + dy
+    on_board = (tx >= 0) & (tx < width) & (ty >= 0) & (ty < height)
+    in_range = torch.maximum(dx.abs(), dy.abs()) <= rows["rng"]
+    action_ok = rows["mask"].gather(1, rows["act"][:, None]).squeeze(1)
+    shot = rows["act"] == 5
+    rows["sap_label"] = shot & action_ok & on_board & in_range
+    rows["admitted"] = action_ok & (~shot | rows["sap_label"])
+    rows["tgt"] = tx * height + ty
+
+
+def agreement(action_logits, labels, valid_shots, shot_logits, targets, height):
+    """Vollstaendig richtige Befehle; Zielgenauigkeit separat fuer legale Lehrer-Schuesse."""
+    actions = action_logits.argmax(1)
+    joint = ((labels != 5) & (actions == labels)).sum()
+    if shot_logits is None:
+        return joint, 0, 0
+    pred = shot_logits.argmax(1)
+    exact = pred == targets
+    near = ((pred // height - targets // height).abs().maximum(
+        (pred % height - targets % height).abs()) <= 1)
+    joint += ((actions[valid_shots] == 5) & exact).sum()
+    return joint, exact.sum(), near.sum()
+
+
 def train_student(train, val, a, log):
     import torch
     import torch.nn.functional as F
 
     from agents.sherlock.features import FEATURE_DIM
-    from agents.sherlock.imitation_net import ImitationNet, window_mask
+    from agents.sherlock.imitation_net import ImitationNet, masked_sap_logits
 
     dev = torch.device(a.device if a.device != "auto" else ("mps" if torch.backends.mps.is_available() else "cpu"))
     torch.manual_seed(a.seed)
@@ -285,20 +322,26 @@ def train_student(train, val, a, log):
 
     P, R = to_dev(*train)
     Pv, Rv = to_dev(*val)
-    for T in (R, Rv):
-        T["act"], T["pos"] = T["act"].long(), T["pos"].long()
-        # Wie im Spiel (imitation_agent.sap_legal): schiessen darf, wer die Sap-Kosten bezahlen kann.
-        # Energie, Kosten und Reichweite stehen in den Merkmalen 2, 7, 8 (energy/400, cost/50, range/7).
-        energy, cost = T["feats"][:, 2] * 400.0, T["feats"][:, 7] * 50.0
-        T["mask"][:, 5] = energy >= cost - 0.5
-        T["rng"] = torch.round(T["feats"][:, 8] * 7.0).long()
-        T["tgt"] = (T["pos"][:, 0] + T["sdx"].long()) * 24 + (T["pos"][:, 1] + T["sdy"].long())
-    n = len(R["act"])
-    counts = torch.bincount(R["act"], minlength=6).float()
+    if P.shape[-2:] != Pv.shape[-2:]:
+        raise ValueError("Training und Validierung haben unterschiedliche Kartengroessen")
+    width, height = P.shape[-2:]
+    for name, rows in (("Training", R), ("Validierung", Rv)):
+        prepare_labels(rows, width, height)
+        shot = rows["act"] == 5
+        center = rows["sap_label"] & (rows["sdx"] == 0) & (rows["sdy"] == 0)
+        log(f"{name}: {int(rows['admitted'].sum())}/{len(shot)} Befehle im Spiel ausfuehrbar, "
+            f"{int(rows['sap_label'].sum())}/{int(shot.sum())} legale Schusslabels, "
+            f"davon {int(center.sum())} auf das eigene Feld")
+    train_idx = torch.where(R["admitted"])[0]
+    n = len(train_idx)
+    if n == 0:
+        raise ValueError("Keine ausfuehrbaren Lehrerbefehle im Training")
+    counts = torch.bincount(R["act"][train_idx], minlength=6).float()
     log(f"Trainingsdaten: {n} Unit-Entscheidungen, Verteilung " +
         ", ".join(f"{nm} {100 * c / n:.1f} %" for nm, c in zip(("stay", "up", "right", "down", "left", "sap"), counts.tolist())))
     opt = torch.optim.AdamW(net.parameters(), lr=a.lr, weight_decay=1e-4)
-    train_step_np, val_step_np = train[1]["step"], val[1]["step"]
+    train_step_np = train[1]["step"][train_idx.cpu().numpy()]
+    val_step_np = val[1]["step"]
     n_steps = len(np.unique(train_step_np))
     k_steps = max(8, int(round(a.mb * n_steps / max(1, n))))
     steps_total = a.epochs * ((n_steps + k_steps - 1) // k_steps)
@@ -320,57 +363,51 @@ def train_student(train, val, a, log):
                    torch.as_tensor(inv, device=dev))
 
     def batch_logits(Pt, Rt, idx, uniq=None, inv=None):
-        """(Logits mit erzwungen erlaubter Lehreraktion, rohe Logits, Maske, Ziel-Logits der Schuesse, Ziele)."""
         if uniq is None:
             uniq, inv = torch.unique(Rt["step"][idx], return_inverse=True)
         planes = Pt[uniq].float() / PLANE_SCALE
         logits, _, smap = net.forward_all(planes, inv, Rt["pos"][idx], Rt["feats"][idx])
-        mask = Rt["mask"][idx].clone()
-        mask[torch.arange(len(idx), device=dev), Rt["act"][idx]] = True  # Lehreraktion immer erlaubt
-        sel = Rt["act"][idx] == 5
-        s_logits, s_tgt = None, None
+        logits = logits.masked_fill(~Rt["mask"][idx], -torch.inf)
+        sel = Rt["sap_label"][idx]
+        s_logits = s_tgt = None
         if bool(sel.any()):
-            pos_s = Rt["pos"][idx][sel]
-            win = window_mask(pos_s, Rt["rng"][idx][sel], 24, 24)
-            win[torch.arange(len(pos_s), device=dev), pos_s[:, 0], pos_s[:, 1]] = False
+            s_logits = masked_sap_logits(smap, inv[sel], Rt["pos"][idx][sel], Rt["rng"][idx][sel])
             s_tgt = Rt["tgt"][idx][sel]
-            win.view(len(pos_s), -1)[torch.arange(len(pos_s), device=dev), s_tgt] = True
-            s_logits = smap[inv[sel]].masked_fill(~win, -1e4).view(len(pos_s), -1)
-        return logits.masked_fill(~mask, -1e4), logits, Rt["mask"][idx], s_logits, s_tgt
+        return logits, sel, s_logits, s_tgt
 
     def evaluate():
         net.eval()
         correct = torch.zeros(6, device=dev)
         total = torch.zeros(6, device=dev)
-        legal_correct = 0
+        joint_correct = 0
         sap_n = sap_hit = sap_near = 0
         with torch.no_grad():
             for idx, uniq, inv in step_batches(val_step_np, 512, False):
-                lg, raw, m, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
-                if s_lg is not None:
-                    pred_t = s_lg.argmax(1)
-                    sap_n += len(s_tgt)
-                    sap_hit += int((pred_t == s_tgt).sum())
-                    sap_near += int((((pred_t // 24) - (s_tgt // 24)).abs().maximum(
-                        ((pred_t % 24) - (s_tgt % 24)).abs()) <= 1).sum())
+                lg, sel, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
                 pred = lg.argmax(1)
                 y = Rv["act"][idx]
+                joint, hit, near = agreement(lg, y, sel, s_lg, s_tgt, height)
+                joint_correct += int(joint)
+                sap_n += int(sel.sum())
+                sap_hit += int(hit)
+                sap_near += int(near)
                 for c in range(6):
                     sel = y == c
                     total[c] += sel.sum()
                     correct[c] += (pred[sel] == c).sum()
-                # wie im Spiel: nur Sherlocks Maske, Lehreraktion nicht erzwungen
-                legal_correct += int((raw.masked_fill(~m, -1e4).argmax(1) == y).sum())
         net.train()
         acc = float(correct.sum() / total.sum())
         per = [float(correct[c] / total[c]) if total[c] > 0 else float("nan") for c in range(6)]
-        return acc, per, legal_correct / max(1, len(Rv["act"])), sap_hit / max(1, sap_n), sap_near / max(1, sap_n)
+        exact = sap_hit / sap_n if sap_n else float("nan")
+        near = sap_near / sap_n if sap_n else float("nan")
+        return acc, per, joint_correct / len(Rv["act"]), exact, near
 
     log(f"Minibatch: {k_steps} Spielschritte (im Mittel etwa {a.mb} Unit-Entscheidungen), Geraet {dev}")
     for ep in range(a.epochs):
         tot, cnt, t0 = 0.0, 0, time.time()
         for idx, uniq, inv in step_batches(train_step_np, k_steps, True):
-            lg, _, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
+            idx = train_idx[idx]
+            lg, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
             loss = F.cross_entropy(lg, R["act"][idx])  # keine Glaettung: gesperrte Aktionen bekaemen sonst Masse
             if s_lg is not None:
                 loss = loss + a.sap_weight * F.cross_entropy(s_lg, s_tgt)
@@ -381,11 +418,11 @@ def train_student(train, val, a, log):
             sched.step()
             tot += loss.item() * len(idx)
             cnt += len(idx)
-        acc, per, acc_game, s_acc, s_near = evaluate()
-        log(f"Epoche {ep + 1}/{a.epochs}: Loss {tot / cnt:.4f} | Validierung Trefferquote {100 * acc:.1f} % "
-            f"(wie im Spiel {100 * acc_game:.1f} %) | je Aktion " +
+        acc, per, joint_acc, s_acc, s_near = evaluate()
+        log(f"Epoche {ep + 1}/{a.epochs}: Loss {tot / cnt:.4f} | Validierung Aktion {100 * acc:.1f} % "
+            f"| vollstaendiger Befehl {100 * joint_acc:.1f} % | je Aktion " +
             " ".join(f"{nm} {100 * p:.0f}" for nm, p in zip(("stay", "up", "right", "down", "left", "sap"), per)) +
-            f" | Schussziel exakt {100 * s_acc:.0f} %, +-1 Feld {100 * s_near:.0f} % | {time.time() - t0:.0f}s")
+            f" | Ziel bei legalem Lehrerschuss exakt {100 * s_acc:.0f} %, +-1 Feld {100 * s_near:.0f} % | {time.time() - t0:.0f}s")
     return net.to("cpu").eval()
 
 

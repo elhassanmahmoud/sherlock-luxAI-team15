@@ -45,3 +45,10 @@ def window_mask(pos: torch.Tensor, rng: torch.Tensor, W: int, H: int) -> torch.T
     dx = (xs - pos[:, 0].view(-1, 1, 1)).abs()
     dy = (ys - pos[:, 1].view(-1, 1, 1)).abs()
     return torch.maximum(dx, dy) <= rng.view(-1, 1, 1)
+
+
+def masked_sap_logits(smap: torch.Tensor, step_idx: torch.Tensor, pos: torch.Tensor, rng: torch.Tensor):
+    """Eine Zeile je Schuetze. Innerhalb der Karte und Reichweite ist auch sein eigenes Feld ein Ziel."""
+    width, height = smap.shape[-2:]
+    legal = window_mask(pos, rng, width, height)
+    return smap[step_idx].masked_fill(~legal, -torch.inf).flatten(1)
