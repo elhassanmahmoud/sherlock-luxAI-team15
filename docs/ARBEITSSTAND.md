@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Eigener Bewegungsschüler trainiert, vier Solution-Spielverläufe geprüft
+
+Das eigene Netz ist nach fünf Epochen gespeichert. Auf acht zurückgehaltenen Karten stimmt seine Aktionsklasse in 62,4 % der ausführbaren Beispiele mit dem Lehrer überein. Der nominierte Bewegungsmodus läuft im gepaarten Vergleich gegen Kaggle3, Solution_92 und V14. [Modell und Training](../experiments/analysis/combat_advice_20261115/BEWEGUNGSTRAINING.md)
+
+Vier frühere Dev-A-Partien gegen Solution wurden einschließlich des letzten Zuges jedes Matches nachgespielt. Alle 1.212 Schritte, die Punkte und die historischen Ergebniskennzahlen stimmen. Auf 7150096 war Sherlock in Match 2 auf beiden Seiten fünf Züge vor Schluss zehn Punkte hinten. Die letzten fünf Züge brachten auf der einen Seite netto +39 Punkte, auf der anderen −11. Eine konkrete Ursache für die unterschiedlichen Befehle ist offen. [Spielstände und Belegungen](../experiments/analysis/solution_passive_20261115/ERGEBNIS.md)
+
 ## 15.11.2026 – Lehrerbewegungen für einen eigenen Schüler ausgewählt
 
 In 72 gepaarten Kontroll- und Eingriffsspielen gewannen die echten Lehrerbewegungen sechs zuvor verlorene Spiele. Die Kampfberatung gewann ebenfalls sechs dazu, aber drei Einzelmatches weniger. Auf allen zwölf Karten war die Kontrolle reproduzierbar. Der eigene Bewegungsschüler lernt aus 32 Karten, acht andere Karten dienen zur Lerndiagnose. Er behält V14 als Basis und kann eine sichere Bewegungsentscheidung übernehmen. 23 fokussierte Tests für Training, Ausführung, Gegenprobe und vollständige Matchzählung bestanden. [Ergebnisse](../experiments/analysis/combat_advice_20261115/LEHRERENTSCHEIDUNGEN.md) · [Festgelegte Auswahl](../experiments/analysis/combat_advice_20261115/SELEKTIVER_SCHUELER.md)

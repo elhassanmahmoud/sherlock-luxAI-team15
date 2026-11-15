@@ -1,0 +1,12 @@
+Dateien: 64 Training, 16 Validierung (getrennt nach Spiel), geladen in 0s
+Training: 193764/201432 Befehle im Spiel ausfuehrbar, 10476/10476 legale Schusslabels, davon 3 auf das eigene Feld
+Validierung: 49338/51048 Befehle im Spiel ausfuehrbar, 2716/2716 legale Schusslabels, davon 2 auf das eigene Feld
+Aktionsverlust: 14281/193764 ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3
+Trainingsdaten: 193764 Unit-Entscheidungen, Verteilung stay 29.7 %, up 6.6 %, right 25.3 %, down 26.1 %, left 6.8 %, sap 5.4 %
+Minibatch: 25 Spielschritte (im Mittel etwa 256 Unit-Entscheidungen), Geraet mps
+Epoche 1/5: Loss 2.2487 | Validierung Aktion 58.6 % | vollstaendiger Befehl 57.1 % | je Aktion stay 78 up 9 right 73 down 49 left 11 sap 54 | Ziel bei legalem Lehrerschuss exakt 53 %, +-1 Feld 75 % | 26s
+Epoche 2/5: Loss 1.5252 | Validierung Aktion 61.0 % | vollstaendiger Befehl 59.9 % | je Aktion stay 79 up 19 right 76 down 53 left 16 sap 42 | Ziel bei legalem Lehrerschuss exakt 56 %, +-1 Feld 79 % | 17s
+Epoche 3/5: Loss 1.3248 | Validierung Aktion 61.5 % | vollstaendiger Befehl 60.3 % | je Aktion stay 86 up 31 right 64 down 52 left 21 sap 49 | Ziel bei legalem Lehrerschuss exakt 59 %, +-1 Feld 79 % | 22s
+Epoche 4/5: Loss 1.1616 | Validierung Aktion 62.4 % | vollstaendiger Befehl 61.2 % | je Aktion stay 80 up 29 right 71 down 55 left 23 sap 52 | Ziel bei legalem Lehrerschuss exakt 60 %, +-1 Feld 81 % | 22s
+Epoche 5/5: Loss 1.0735 | Validierung Aktion 62.4 % | vollstaendiger Befehl 61.2 % | je Aktion stay 81 up 30 right 70 down 55 left 23 sap 53 | Ziel bei legalem Lehrerschuss exakt 60 %, +-1 Feld 81 % | 24s
+gespeichert: /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_selective/student.pth (155049 Parameter)
