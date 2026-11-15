@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "v14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "kaggle3_archive": "08911888b550aa102a8edae8345be78ce3bac08ce5402fac416d59a2e5503b44",
+  "kaggle3_weights": {
+    "imitation_learning/weights/unit_unet.pth": "f807fdaa29a6410c17012ac7aac10169c4ded3bb7827483ca7c8d0df6bc3d987",
+    "imitation_learning/weights/sap_unet.pth": "40053d180d014f5e6ab1692e44680517c358e071255ff703ff3d9699667b4a88"
+  },
+  "sources": {
+    "scripts/final_learning_agent.py": "cd465458bb112b0b0cba24362e9dc23e87a2fa00d8bffc4e7a796797ef57327e",
+    "scripts/final_learning_study.py": "8588b4df3bb12497f72e37767b06922060a7531ab868a4a042594792756e002d",
+    "scripts/kaggle3_opponent.py": "2844ef6e632a20f3b5dab305227248897a7f9a4551766e9a075e8a445d74baf2",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "agents/sherlock/main.py": "764aae575b626f1a8b4d1468939a10e34e5a0724ab4970ada3ab1ab1627d5e66",
+    "agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56"
+  },
+  "commit": "915736bd1f6aa5bad92da56e57b76ebe3d11fde9",
+  "horizon": 4,
+  "margin": 6.0,
+  "death_cost": 40.0,
+  "ridge": 5.0,
+  "features": [
+    "bias",
+    "start_energy",
+    "start_field",
+    "match_phase",
+    "start_pressure",
+    "stay",
+    "move_cost",
+    "field",
+    "adjacent_best_field",
+    "nebula",
+    "explored",
+    "enemy_same",
+    "enemy_adjacent_energy",
+    "enemy_close",
+    "allies_here",
+    "goal_progress",
+    "field_when_low",
+    "near_enemy_when_low",
+    "on_candidate"
+  ],
+  "train": [
+    [
+      7162000,
+      0
+    ],
+    [
+      7162000,
+      1
+    ],
+    [
+      7162001,
+      0
+    ],
+    [
+      7162001,
+      1
+    ],
+    [
+      7162002,
+      0
+    ],
+    [
+      7162002,
+      1
+    ],
+    [
+      7162003,
+      0
+    ],
+    [
+      7162003,
+      1
+    ],
+    [
+      7162004,
+      0
+    ],
+    [
+      7162004,
+      1
+    ],
+    [
+      7162005,
+      0
+    ],
+    [
+      7162005,
+      1
+    ],
+    [
+      7162006,
+      0
+    ],
+    [
+      7162006,
+      1
+    ],
+    [
+      7162007,
+      0
+    ],
+    [
+      7162007,
+      1
+    ]
+  ],
+  "diagnose": [
+    [
+      7162100,
+      0
+    ],
+    [
+      7162100,
+      1
+    ],
+    [
+      7162101,
+      0
+    ],
+    [
+      7162101,
+      1
+    ],
+    [
+      7162102,
+      0
+    ],
+    [
+      7162102,
+      1
+    ],
+    [
+      7162103,
+      0
+    ],
+    [
+      7162103,
+      1
+    ]
+  ]
+}
