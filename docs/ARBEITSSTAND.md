@@ -3,7 +3,7 @@
 ## 15.11.2026, 21:13 Berlin – Claude Code: Tagesabschluss Umbau
 
 - Offen für Mahmoud: Entscheidung über die Übernahme von V15 ([Vorlage](../experiments/analysis/umbau_20261115/V15_ENTSCHEIDUNG.md)). Bis dahin bleibt V14 die Abgabe; `Gruppe15.zip` und die V14-Gewichte sind unverändert.
-- Beim Abschluss lief noch: DAgger-Runde 3 mit Schüler v4 und Schaltern (600 Spiele ab 7252000), danach v5 im Sparmodus und der Test von Hybrid v5 mixed auf Dev A gegen Solution, kaggle3, V14 und direkt gegen den V15-Kandidaten (`experiments/analysis/umbau_20261115/v5/`). Ergebnisse liegen erst vor, wenn der Lauf vollständig ist; abgebrochene Teile nicht als Ergebnis werten.
+- **Auf Mahmouds Wunsch gestoppt** (für morgen): DAgger-Runde 3 mit Schüler v4 und Schaltern (geplant 600 Spiele ab 7252000), danach v5 im Sparmodus und Test von Hybrid v5 mixed auf Dev A gegen Solution, kaggle3, V14 und direkt gegen den V15-Kandidaten. Beim Stopp lagen 63 Teilspiele vor; sie liegen jetzt als `experiments/imitation/k3_dagger3_teil_abgebrochen/` (lokal) und fließen in kein Training ein. Morgen den Lauf vollständig neu starten. Keine eigenen Prozesse laufen mehr.
 - Betriebslehren: großes Training nicht gleichzeitig mit vielen Hybrid-Spielprozessen (Speicher, 15.11. 17:43 gestoppt); `--low-memory` für Trainings mit mehr als 9 Mio. Entscheidungen; Hintergrund-Wartebedingungen nicht mit `pgrep -f` auf eigene Befehlstexte (findet sich selbst).
 
 ## 15.11.2026 – R3 mit zweiter Kartenansicht erreicht die Bestätigung
