@@ -155,3 +155,22 @@ def test_old_students_never_target_their_own_tile(tmp_path):
             assert (acts[u, 1], acts[u, 2]) != (0, 0)
         obs, *_ = env.step({"player_0": acts, "player_1": np.zeros((16, 3), int)})
     env.close()
+
+
+def test_cover_prefers_hidden_tile_only_when_nearly_as_good():
+    """Tarnung: gesehene Zielfelder werden nur durch fast gleich gute verborgene ersetzt; nie durch Stehenbleiben."""
+    agent = ImitationAgent.__new__(ImitationAgent)
+    agent.ep_stats = {}
+    W = H = 10
+    neb = np.zeros((W, H), dtype=bool)
+    ctx = {"enemy_coords": np.array([[6, 2]]), "W": W, "H": H, "sensor_range": 2, "nebula": neb}
+    pos = np.array([[3, 2]])
+    logp = np.full((1, 6), -np.inf)
+    logp[0, geo.RIGHT] = -0.5   # (4, 2): vom Gegner (6, 2) gesehen
+    logp[0, geo.DOWN] = -0.9    # (3, 3): ausser Sicht
+    logp[0, geo.STAY] = -0.1
+    acts = np.array([geo.RIGHT])
+    assert agent._cover_moves(ctx, [0], pos, logp, acts, 0.5)[0] == geo.DOWN
+    assert agent._cover_moves(ctx, [0], pos, logp, acts, 0.2)[0] == geo.RIGHT  # Abstand 0,4 > 0,2
+    neb[4, 2] = True  # Nebel als Deckung: Ziel nicht mehr gesehen -> bleibt
+    assert agent._cover_moves(ctx, [0], pos, logp, acts, 0.5)[0] == geo.RIGHT

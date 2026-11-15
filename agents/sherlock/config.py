@@ -397,6 +397,10 @@ class AgentConfig:
     imit_sap_bias: float = 0.0
     """> 0 (15.11.2026, nur ImitationAgent): zur Log-Wahrscheinlichkeit fuer SAP addieren (der Schueler erkennt
     nur rund 34 % der Lehrerschuesse und schiesst zu selten)."""
+    imit_cover: float = 0.0
+    """> 0 (15.11.2026, nur ImitationAgent, "Tarnung"): Zieht eine Unit auf ein Feld, das ein sichtbarer Gegner sieht
+    (Sichtweite, Nebel zaehlt als Deckung), und ist eine andere Bewegung auf ein verborgenes Feld hoechstens um diesen
+    Wert (Log-Wahrscheinlichkeit) schlechter, nimmt sie die verborgene. Ungesehen naehern, ueberraschend auftauchen."""
     imit_unstack: bool = False
     """True (15.11.2026, nur ImitationAgent): je Feld bleibt hoechstens eine eigene Unit stehen (der erste Halter bzw.
     die mit der hoechsten STAY-Bewertung), die anderen nehmen ihre beste erlaubte Bewegung."""

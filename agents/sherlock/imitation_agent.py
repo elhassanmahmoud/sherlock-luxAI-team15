@@ -114,6 +114,40 @@ class ImitationAgent(PPOAgent):
                     self.ep_stats["unstack_moves"] = self.ep_stats.get("unstack_moves", 0) + 1
         return acts
 
+    def _cover_moves(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray, margin: float) -> np.ndarray:
+        """cfg.imit_cover ("Tarnung"): Bewegungen auf vom Gegner gesehene Felder durch fast gleich gute Bewegungen auf
+        verborgene Felder ersetzen. Gesehen = Chebyshev-Abstand zu einem sichtbaren Gegner hoechstens seine Sichtweite,
+        Nebelfelder gelten als Deckung. Stehenbleiben ist keine Alternative (keine zusaetzliche Passivitaet)."""
+        ec = np.asarray(ctx.get("enemy_coords", np.zeros((0, 2), dtype=int))).reshape(-1, 2)
+        if len(ec) == 0:
+            return acts
+        W, H = int(ctx["W"]), int(ctx["H"])
+        rng = int(ctx.get("sensor_range") or 2)
+        seen = np.zeros((W, H), dtype=bool)
+        for ex, ey in ec:
+            seen[max(0, int(ex) - rng):int(ex) + rng + 1, max(0, int(ey) - rng):int(ey) + rng + 1] = True
+        seen &= ~np.asarray(ctx["nebula"], dtype=bool)
+        acts = acts.copy()
+        for k in range(len(ids)):
+            a = int(acts[k])
+            if not 1 <= a <= 4:
+                continue
+            x, y = int(pos[k][0]), int(pos[k][1])
+            tx, ty = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+            if not (0 <= tx < W and 0 <= ty < H) or not seen[tx, ty]:
+                continue
+            best, best_lp = None, -np.inf
+            for d in range(1, 5):
+                if d == a or not np.isfinite(logp[k, d]):
+                    continue
+                nx, ny = x + int(geo.DIR_DX[d]), y + int(geo.DIR_DY[d])
+                if 0 <= nx < W and 0 <= ny < H and not seen[nx, ny] and logp[k, d] > best_lp:
+                    best, best_lp = d, float(logp[k, d])
+            if best is not None and best_lp >= float(logp[k, a]) - margin:
+                acts[k] = best
+                self.ep_stats["cover_moves"] = self.ep_stats.get("cover_moves", 0) + 1
+        return acts
+
     def act(self, step: int, obs) -> np.ndarray:
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
@@ -154,6 +188,9 @@ class ImitationAgent(PPOAgent):
             acts = logp.argmax(dim=1).numpy()
             if getattr(self.cfg, "imit_unstack", False):
                 acts = self._unstack_actions(ctx, ids, pos, logp.numpy(), acts)
+            cover = float(getattr(self.cfg, "imit_cover", 0.0) or 0.0)
+            if cover > 0:
+                acts = self._cover_moves(ctx, ids, pos, logp.numpy(), acts, cover)
             # 15.11.2026 (cfg.end_sap > 0): in den letzten end_sap Schritten eines Matches verfaellt die Energie
             # ohnehin; stehende Units mit genug Energie schiessen dann (der Lehrer tut das kaum: rund 3 %).
             end_sap = int(getattr(self.cfg, "end_sap", 0) or 0)
