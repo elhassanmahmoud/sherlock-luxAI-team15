@@ -41,6 +41,7 @@ class Kaggle3Opponent:
         # Matchsiegen fuer entschieden und schaltet in Match 3 in GameOverParams (spielt kaum noch),
         # ausserdem bleibt sein Netzmerkmal match_number/5 so wie im Training.
         self._module = importlib.import_module("agent.agent")
+        self._path = importlib.import_module("agent.path")
         self.agent = None
 
     def set_env_cfg(self, env_cfg) -> None:
@@ -54,3 +55,13 @@ class Kaggle3Opponent:
         o = {k: ({kk: np.asarray(vv) for kk, vv in v.items()} if isinstance(v, dict) else np.asarray(v))
              for k, v in obs.items()}
         return np.asarray(self.agent.act(step, o, 60), dtype=int)
+
+    def remember_played_actions(self, actions: np.ndarray) -> None:
+        """Nur fuer DAgger: vor dem naechsten act die Vorschlaege durch die gespielten Weltaktionen ersetzen."""
+        if self.agent is None:
+            raise RuntimeError("set_env_cfg() muss vor remember_played_actions() aufgerufen werden")
+        # lux3-bot 0.4.8_fn kopiert diese Queues vor der naechsten Beobachtung.
+        # Fleet iteriert nur aktive Schiffe. Die Zeile im Engine-Array gehoert zur Unit-ID.
+        for ship in self.agent.state.fleet:
+            action, dx, dy = actions[ship.unit_id]
+            ship.action_queue = [self._path.Action(self._path.ActionType(int(action)), int(dx), int(dy))]

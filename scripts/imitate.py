@@ -176,11 +176,13 @@ def _dagger_worker(job) -> list[dict]:
             if student.last_fz is not None:
                 rec.add(student.last_fz, label, student.belief.mirrored)
             obs, _, term, trunc, info = env.step(acts)
+            teacher.remember_played_actions(acts[sside])
             done = bool(np.asarray(term[sside])) or bool(np.asarray(trunc[sside]))
             step += 1
         wins = np.asarray(obs[sside]["team_wins"]).tolist()
         team = 0 if sside == "player_0" else 1
         meta = dict(seed=seed, side=sside, opponent=opp_kind, dagger=True, student=str(student_path),
+                    teacher_history="played_student_actions",
                     student_wins=int(wins[team]), opp_wins=int(wins[1 - team]))
         n = rec.save(Path(out_dir) / f"g{seed}_{sside}_{opp_kind}_dagger.npz", meta)
         done_meta.append({**meta, "samples": n})
