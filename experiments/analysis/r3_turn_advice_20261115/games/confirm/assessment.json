@@ -1,0 +1,195 @@
+{
+  "additional_directions_by_side_and_opponent": {
+    "player_0": {
+      "kaggle3": 8432,
+      "solution92": 9499,
+      "v14": 9629
+    },
+    "player_1": {
+      "kaggle3": 8432,
+      "solution92": 9692,
+      "v14": 9629
+    }
+  },
+  "against_r3_solution": {
+    "candidate_wins": 80,
+    "demonstrated_solution_gain_over_r3": false,
+    "difference_ci95": [
+      0.0,
+      0.0
+    ],
+    "flips": [],
+    "gained": 0,
+    "games": 80,
+    "lost": 0,
+    "net_wins": 0,
+    "r3_wins": 80,
+    "reference_files": {
+      "games_sha256": "503afde5b455eb6798c755b6259b7b0856ac69cb9b95287fd615be07ef1a2574",
+      "manifest_sha256": "7b8519489f24cd02315eafe1eabf80145f7e44e8fa4735653e63bbae277234f6"
+    },
+    "winrate_difference": 0.0
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 2711,
+    "unit": "whole map with both seats and external opponents"
+  },
+  "by_opponent": {
+    "kaggle3": {
+      "candidate_wins": 0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gained": 0,
+      "games": 80,
+      "lost": 0,
+      "net_wins": 0,
+      "v14_wins": 0,
+      "winrate_difference": 0.0
+    },
+    "solution92": {
+      "candidate_wins": 80,
+      "difference_ci95": [
+        0.0,
+        0.1
+      ],
+      "gained": 3,
+      "games": 80,
+      "lost": 0,
+      "net_wins": 3,
+      "v14_wins": 77,
+      "winrate_difference": 0.0375
+    }
+  },
+  "candidate": "r3_turn_advice",
+  "candidate_files": {
+    "games_sha256": "2af56fd0200d672e057ba7490688da9e5f21b457fe3ee173ce80036200ac4d14",
+    "manifest_sha256": "b05b79996291aedf1c4f7a14ef32a14fd75cad8141c63b5227b31d4104d423cb"
+  },
+  "direct": {
+    "games": 80,
+    "losses": 12,
+    "winrate": 0.85,
+    "winrate_ci95": [
+      0.725,
+      0.95
+    ],
+    "wins": 68
+  },
+  "direct_files": {
+    "games_sha256": "a0fab43c2b8457dbfc49097cf1fa4635115958e598f19203972d9a396fc6daf2",
+    "manifest_sha256": "368dd98ec23114524a30522c8cc3fca7ae3691aa34fcce2ae4f6e33371b5094e"
+  },
+  "direct_first": 7170660,
+  "external": {
+    "difference_ci95": [
+      0.0,
+      0.05
+    ],
+    "games": 160,
+    "net_wins": 3,
+    "winrate_difference": 0.01875
+  },
+  "external_first": 7170560,
+  "external_flips_vs_v14": [
+    {
+      "opponent": "solution92",
+      "seed": 7170591,
+      "side": "player_0",
+      "turn": 1.0,
+      "v14": 0.0
+    },
+    {
+      "opponent": "solution92",
+      "seed": 7170594,
+      "side": "player_0",
+      "turn": 1.0,
+      "v14": 0.0
+    },
+    {
+      "opponent": "solution92",
+      "seed": 7170594,
+      "side": "player_1",
+      "turn": 1.0,
+      "v14": 0.0
+    }
+  ],
+  "game_gates_pass": false,
+  "gates": {
+    "direct_lower_bound_above_half": true,
+    "external_lower_bound_positive": false,
+    "player_0_additional_directions": true,
+    "player_1_additional_directions": true,
+    "solution_at_least_reference": true
+  },
+  "match_wins": {
+    "direct": {
+      "v14": 194
+    },
+    "r3_solution": {
+      "solution92": 238
+    },
+    "turn_external": {
+      "kaggle3": 6,
+      "solution92": 232
+    },
+    "v14_external": {
+      "kaggle3": 8,
+      "solution92": 212
+    }
+  },
+  "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "receipt": {
+    "game_loop": "e1dd43bb4c8926e394d686b0f61bfd9b14c5a41611e3faea68856fc8a6a34cc9",
+    "plan": "74aada4d81feee020f2f9efbbf4f327b751bcc32a62f1b18df8b8b52e294f1ee",
+    "runner": "181dc03936e99f17ac2d91a0256cb8605f73133088604e48ef525ff4ec240b8a",
+    "screen_receipt": {
+      "actor": "1c300c6ad4cf2f92107c804c29e20414d86c5a2d3faa66ae5feb8100450e6e7b",
+      "archive": "7067483ced3edd0d2b3beca65880f4bd87b518c919b309e2bc0c9dc58bf0628d",
+      "control_files": {
+        "r3": {
+          "games_sha256": "7cbed3071d716f66dfc864eb455a4f1ba6ea5c7fa03f9fd9814ed0eea6f4df14",
+          "manifest_sha256": "cea5e2c073e99f7c033aaccb609129eac5a6cfa61cca043d430242259d835fba"
+        },
+        "v14": {
+          "games_sha256": "8ad616a468ca56a32748af3742205c759db05a23f45487f329f92bcd8a934c6c",
+          "manifest_sha256": "534384f537dea6e882de9daf237026c1dea90e43655e09c3137f8499f7e3bf51"
+        }
+      },
+      "environment": {
+        "engine": "551a263ede77ef6d64c0cac6faa02b5990eba3134942118783bb28cbdfb92b80",
+        "flags": {
+          "CUDA_VISIBLE_DEVICES": null,
+          "JAX_PLATFORMS": null,
+          "PYTHONHASHSEED": null,
+          "XLA_FLAGS": null
+        },
+        "machine": "arm64",
+        "platform": "Darwin",
+        "python": "3.13.13",
+        "support": "fb1e9c1e55c2707a362a6ee08b6807fe528629d8bce8d2b77dbc77d0fb90691e",
+        "versions": {
+          "jax": "0.12.0",
+          "jaxlib": "0.12.0",
+          "luxai-s3": "0.2.1",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.14.1"
+        }
+      },
+      "original_protocol": "14fbef07e70090dc0d96eff822bf28ed3f51a1876225cc7bb0e072c8c40edff4",
+      "original_report": "dbff39a2529c4db4812812223bc8e8a2eb716e9f4d967da33a75e8f76d48c1c1",
+      "plan": "145a810e6444cf61458216caa478763ffdd7ead5cb5eec36a8816074924a259c",
+      "runner": "918a6c725e5e01325564bc5453d66f5b0996c97efe20efcea34bf21509ce8565"
+    },
+    "screen_source": "918a6c725e5e01325564bc5453d66f5b0996c97efe20efcea34bf21509ce8565",
+    "selection": "bff2a30023edfae57aa85bad1410a9696469dc641c506648764a04c930f08afe"
+  },
+  "reference_files": {
+    "games_sha256": "24316908bb801e1b356dd0b1cd122f4d8507b9d57a1c1c35d190f0fecbf3e649",
+    "manifest_sha256": "306da7214cf861f141fbc647dea74bd44ac6ae18565e9d75106b955e836afe39"
+  },
+  "stage": "confirm"
+}

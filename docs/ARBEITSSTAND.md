@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Beide R3-Berater gewinnen gegen Solution 80/80
+
+Der Richtungsberater gewinnt den unabhängigen Direktvergleich gegen V14 mit 68/80 (85 %, 95-%-Intervall 72,5 bis 95 %). Gegen die originale Solution gewinnen Kandidat und ursprünglicher R3 80/80, V14 77/80 auf denselben 40 Karten. Die zusätzliche frühere Richtungswahl ändert 19.191 Befehle, aber keinen ganzen Solution-Spielsieg. Gegen Kaggle gewinnen Kandidat und V14 0/80. Das gepaarte Intervall des gemeinsamen externen Vorteils beträgt 0 bis +5 Prozentpunkte und verfehlt die Freigabeschwelle. Die vier Spielreihen mit 480 Schlüsseln, die Rohzeilen und die Dateiprüfsummen wurden nachgerechnet. [Vergleich der Kandidaten](../experiments/analysis/r3_turn_advice_20261115/BESTAETIGUNG.md).
+
 ## 16.11.2026 – Nachtrainierter Bewegungsberater gewinnt 96 von 120 gegen V14
 
 600 unabhängige, vollständige Spiele. Gegen Solution gewinnt der Kandidat 116/120, V14 auf denselben Karten 111/120. Gegen Kaggle erreichen beide 4/120. Direkt gegen V14 beträgt die Siegquote 80 % (95-%-Kartenintervall 70 bis 90 %). Über beide externen Gegner liegt das Intervall des Vorteils zwischen −1,67 und +5,83 Prozentpunkten. Drei von vier Bedingungen sind erfüllt. Der direkte Vorteil ist nachgewiesen, die vorgesehene Gesamtfreigabe verfehlt. Sitzschlüssel, Rohzeilen, Dateihashes und Siege wurden erneut geprüft. [Ergebnisbericht](../experiments/analysis/r8_midpoint_20261115/BESTAETIGUNG.md).
