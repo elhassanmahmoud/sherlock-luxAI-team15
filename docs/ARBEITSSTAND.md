@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 gewinnt zwei zusätzliche Kaggle-Spiele und erreicht die Bestätigung
+
+Auf 16 Karten gewann R3 gegen Solution 31/32 wie V14. Gegen Kaggle gewann er auf beiden Seiten von 7273015, insgesamt 2/32 gegenüber 0/32 bei V14. Direkt gewann er 22/32 gegen V14. Die 224 vollständigen Spiele erfüllen die vier Auswahlkriterien, der externe Kartenbereich schließt null noch ein. Die unabhängige Prüfung hat Vorrang. Mahmoud berichtet separat 107/122 direkte Siege seines vollständigen v3-Schülers gegen V14 auf DAgger-Sammelkarten. [Eigene Auswahl](../experiments/analysis/movement_soft_20261115/AUSWAHL.md) · [Mahmouds Vergleich](../experiments/analysis/umbau_20261115/README.md).
+
 ## 15.11.2026 – Gepackter Hybrid räumt Hilfsdateien nach dem Laden auf
 
 Mahmouds Kursformat enthält V14 und den vollständigen Schüler in einer Gewichtsdatei. Der Kurs erzeugt Agenten je Partie neu. Beide Teilgewichte werden jetzt unmittelbar nach dem Laden aus dem temporären Ordner entfernt, auch wenn das Laden fehlschlägt. Der Test deckt beide Sitze sowie die unveränderte Paketdatei ab. Für die gemessene points-Konfiguration beim Packen explizit Schüler-Bias 1,5 und Entstapeln einschalten. Mahmouds kompletter v3-Schüler bleibt für eine lokale Wiederholung erforderlich. [Paketweg](../agents/sherlock/hybrid_agent.py) · [Gezielte Tests](../tests/test_hybrid_agent.py).

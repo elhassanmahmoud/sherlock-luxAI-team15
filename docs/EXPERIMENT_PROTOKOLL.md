@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – R3 mit weichen Bewegungszielen erfüllt nach 224 Ausführungen die vier festgelegten Auswahlkriterien. Gegen Kaggle zwei Siege mehr als V14 auf derselben Karte. Gegen Solution 31/32 wie V14, direkt 22/32. Freigabe ausschließlich für den unabhängigen Vergleich. [Auswertung](../experiments/analysis/movement_soft_20261115/AUSWAHL.md).
+
 15.11.2026 – Team-Felddeckung mit R2 in 96 neuen Spielen gegen die bestehenden gepaarten Referenzen geprüft. Extern identisch, direkt 20/32 gegenüber 22/32. Die R4-Netzvariante mit vorheriger Gegnerbelegung verfehlt nach fünf Epochen zwei ihrer drei Offline-Ziele. [Felddeckung](../experiments/analysis/coverage_restore_20261115/ERGEBNIS.md) · [R4](../experiments/analysis/temporal_movement_20261115/ERGEBNIS.md).
 
 15.11.2026 – R2 erreicht direkt 22/32, extern Gleichstand mit V14 nach 160 Ausführungen. Keine Nominierung. R3 erfüllt beide vorab festgelegten Offline-Kriterien für eigene Auswahlspiele. [R2-Spielergebnisse](../experiments/analysis/movement_dagger_20261115/ERGEBNIS.md) · [R3-Training](../experiments/analysis/movement_soft_20261115/TRAINING.md).
