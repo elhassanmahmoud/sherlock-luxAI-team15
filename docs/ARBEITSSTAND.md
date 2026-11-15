@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Nachtrainiertes Bewegungsnetz qualifiziert sich für den unabhängigen Vergleich
+
+Im Vergleich auf 16 Karten mit beiden Startseiten gewann der Ein-Ansicht-Midpoint 32/32 gegen Solution (V14 29, R3 31), 0/32 gegen Kaggle (beide Referenzen 0) und 24/32 direkt gegen V14. Alle fünf Auswahlbedingungen sind erfüllt. Die drei zusätzlichen Solution-Siege gegenüber V14 stammen von zwei Karten. Die getrennte Bestätigung umfasst 60 externe Karten und 60 weitere Karten für das Direktduell. Der Kontaktagent gewann in seinem eigenen Vergleich 30/32 direkt gegen V14, gegen beide externen Gegner insgesamt aber zwei Spiele weniger als V15. Sein separates Duell gegen V15 prüft die direkte Spielstärke. [Ein-Ansicht-Midpoint](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md) · [Kontakt im Spiel](../experiments/analysis/r3_v4_contact_20261115/FRISCHE_KARTEN.md).
+
 ## 15.11.2026 – Spiegelung beim Training und Spiegelung im Spiel haben unterschiedliche Wirkung
 
 Ein neuer R3-Schüler erhielt dieselben 262.144 gezogenen Beispiele und 1.024 AdamW-Schritte wie der ungespiegelte R8-Vergleich. In 512 Updates wurden x/y-Achsen, Richtungen, Masken und Lehrerziele gemeinsam vertauscht. Auf 96 unabhängigen Sitzarchiven traf der neue Kandidat gegenüber dem bestätigten Zwei-Ansichten-R3 auf den eigenen R3-Stellungen 436 und auf den älteren Stellungen 840 weniger Lehrerentscheidungen. Alle vier Auswahlbedingungen sind verfehlt. Die gemessene Verbesserung der Zwei-Ansichten-Auswertung im Spiel stammt vom früheren Netz. [Training und Auswertung](../experiments/analysis/r3_trained_reflection_20261115/ERGEBNIS.md).

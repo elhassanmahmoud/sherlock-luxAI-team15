@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – 224 vollständige Auswahlspiele für den Mittelwert zweier auf eigenen Stellungen nachtrainierter Bewegungsnetze. 32/32 Solution, 0/32 Kaggle und 24/32 direkt gegen V14. Drei zusätzliche externe Siege gegenüber V14 und einer gegenüber R3. Die vorab festgelegten fünf Bedingungen für den unabhängigen Vergleich sind erfüllt. [Gepaarte Ergebnisse, Rohdaten und Unsicherheit](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md).
+
 15.11.2026 – 24 frische Karten, beide Startseiten. Auf 18 Karten gewinnt der gemischte v4-Hybrid beide Partien, auf sechs R3. V15 gewinnt 100/144 Einzelmatches. Acht historische Referenzpartien reproduzierten zuvor die ursprünglichen Endstände beider Agenten. [Spielreihen und Kartenintervall](../experiments/analysis/r3_v4_mixed_duel_20261115/ERGEBNIS.md).
 
 15.11.2026 – Beide R3-Nachtrainings sind mit je 1.024 tatsächlich ausgeführten Updates beendet. R8 gewinnt auf neuen Stellungen netto 267 korrekte Befehle gegenüber der Warmkontrolle. Auf älteren Stellungen unterschreitet R8 den ursprünglichen R3. Zwei von drei Bedingungen für Auswahlspiele erfüllt. [Beide Checkpoints und alle 96 Auswertungen](../experiments/analysis/r8_warm_20261115/ERGEBNIS.md).
