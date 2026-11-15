@@ -179,9 +179,12 @@ def fill_previous_enemy(part, global_steps):
     part[following,16] = part[following-1,10]
 
 
-def mapped_part(records, path, *, distill_movement=False, previous_enemy=False, own_commands=False):
-    """Disk map for archived boards, with one optional intervention at a time."""
-    if sum(map(bool, (previous_enemy, distill_movement, own_commands))) > 1:
+def mapped_part(records, path, *, distill_movement=False, previous_enemy=False, own_commands=False, combined_movement=False):
+    """Map one intervention, or the predeclared pair of R3 targets and R5 inputs."""
+    if combined_movement:
+        if previous_enemy or not (distill_movement and own_commands):
+            raise ValueError("The combined variant needs own commands and soft movement targets")
+    elif sum(map(bool, (previous_enemy, distill_movement, own_commands))) > 1:
         raise ValueError("Movement-training variants are separate experiments; select at most one")
     sizes = []
     for record in records:
@@ -240,6 +243,7 @@ def require_r2_inputs(path, metadata):
 
 
 def train_mixed(a):
+    combined = getattr(a, "combined_controls", None)
     r2_path = getattr(a, "previous_enemy_r2", None)
     history = r2_path is not None
     if history and a.distill_movement:
@@ -271,6 +275,11 @@ def train_mixed(a):
         from scripts import own_command_study
         extra = {"kind": own_command_study.KIND, "feature_dim": 85,
                  "own_command": own_command_study.bind_control(r2, parent_sha, identity)}
+    if combined is not None:
+        from scripts import combined_movement
+        if r2 is None or not a.distill_movement or history:
+            raise ValueError("R7 requires soft targets and one own-command input")
+        extra["combined_movement"] = combined_movement.bind_controls(combined, parent_sha, identity)
     with log_path.open("x") as f:
         f.write(f"Movement adviser parent SHA256 {parent_sha}\n")
     def log(msg):
@@ -279,7 +288,8 @@ def train_mixed(a):
             f.write(msg+"\n")
     with tempfile.TemporaryDirectory(prefix=".dagger-boards-",dir=out.parent) as tmp:
         train_boards, train_rows, _ = mapped_part(original["train"]+mixed["train"], Path(tmp)/"train.int8",
-                                                   distill_movement=a.distill_movement, previous_enemy=history, own_commands=r2 is not None)
+                                                   distill_movement=a.distill_movement, previous_enemy=history, own_commands=r2 is not None,
+                                                   combined_movement=combined is not None)
         val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8", previous_enemy=history, own_commands=r2 is not None)
         cut = sum(val_sizes[:len(original["val"])])
         cfg = SimpleNamespace(device=a.device, previous_enemy=history, own_command_input=r2 is not None, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
@@ -292,6 +302,8 @@ def train_mixed(a):
                                              eligible_train_rows=int(train_rows["distill_ok"].sum()),
                                              rows_with_multiple_legal_moves=int((train_rows["distill_ok"] & multiple).sum()),
                                              used_train_rows_per_epoch=[])
+            if combined is not None:
+                combined_movement.verify_targets(cfg.movement_distillation)
             soft_metadata["movement_distillation"] = cfg.movement_distillation
             log(f"Bewegungs-KL: {cfg.movement_distillation['eligible_train_rows']} geeignete Trainingszeilen, "
                 f"davon {cfg.movement_distillation['rows_with_multiple_legal_moves']} mit mindestens zwei legalen Aktionen")
@@ -303,6 +315,8 @@ def train_mixed(a):
             training["initial_parity"] = cfg.previous_enemy_initial_parity
         if r2 is not None:
             extra["own_command"]["initial_parity"] = cfg.initial_parity
+        if combined is not None:
+            combined_movement.verify_fit(extra, training)
         candidate = Path(tmp)/"student.pth"
         save_policy(str(candidate),net,imitate.v14_cfg(),
                     extra=(dict(kind=HISTORY_KIND if history else "imitation", sap_own_tile=True, epochs=5,
