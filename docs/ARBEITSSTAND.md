@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Abschlusspräsentation erklärt den getesteten Hybrid
+
+Die aktuelle Fassung für den 27. November zeigt zuerst V14s Entscheidung und Training. Folie 6 erklärt anhand der zwei vollständigen Befehle, wann V14 und wann der v3-Schüler eine Einheit steuert. Folie 9 vergleicht 188, 179 und 194 Siege gegen Solution auf denselben 200 Spielschlüsseln. Die sechs zusätzlichen Hybridsiege ergeben ein 95-%-Kartenintervall von −1 bis +7 Prozentpunkten. Gegen den nativen Kaggle-Gegner gewann der Hybrid sechs Spiele, V14 acht. Alle neun Seiten visuell geprüft, Planzeit 9:55. Moe übernimmt 1–3 und 8–9, Mahmoud 4–7. Die gemeinsame Zeitprobe und die Aktualisierung nach einem möglichen unabhängigen Bestätigungsversuch stehen aus. [PDF](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Sprechstichpunkte und Belege](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md).
+
 ## 15.11.2026 – Späte Bewegungswahl der 18 Netze auf bekannten schwierigen Karten
 
 Alle 28 Referenzen reproduziert. Beide Seiten spielten im ersten Match Zug für Zug identisch. Die späte Bewegungswahl gewann 21/28 statt 16/28 gegen Solution, rettete acht Niederlagen auf sieben Karten und verlor drei frühere Siege. Damit ist die vorab gesetzte Obergrenze von einem neuen Verlust überschritten. Der angereicherte Kartensatz ist keine allgemeine Siegquote. [Spiele und Entscheidung](../experiments/analysis/late_ft18_20261115/ERGEBNIS.md).
