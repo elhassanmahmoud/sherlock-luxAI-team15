@@ -199,13 +199,18 @@ missing = [m for m in sys.argv[5].split(",") if not callable(getattr(cls, m, Non
 assert not missing, f"Pflichtmethoden fehlen: {missing}"
 env = LuxAIS3GymEnv(numpy_output=True)
 obs, info = env.reset(seed=1)
+
+def nets(a):  # 15.11.2026: nachgeahmte CNN-Policy (Agent_x delegiert an ImitationAgent) oder DQN-Ensemble
+    im = getattr(a, "_imitation", None)
+    return ("CNN", 1 + len(im.extra_nets)) if im is not None else ("DQN", 1 + len(a.extra_q))
+
 for side, path in (("player_0", p0), ("player_1", p1)):
     a = cls(side, agent_path=path)
     a.set_to_eval_mode(); a.set_env_cfg(info["params"])
     act = a.act(0, obs[side])
     assert np.asarray(act).shape == (16, 3), act.shape
-    assert a.env_steps > 0, "Gewichte nicht geladen (env_steps == 0)"
-    print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={1 + len(a.extra_q)}")
+    assert a.env_steps > 0 or getattr(a, "_imitation", None) is not None, "Gewichte nicht geladen"
+    print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={nets(a)}")
 if sys.argv[6] == "frozen":
     # Runner mit train=True: kein set_to_eval_mode, save_agent() vor dem Spiel, update() bis Spielende
     for side, path in (("player_0", p0), ("player_1", p1)):
@@ -216,7 +221,7 @@ if sys.argv[6] == "frozen":
         b.update(0, obs[side], 0.0, act, True, obs[side])
         assert b.cfg.frozen and not b.training and b.epsilon == 0.0, "train=True schaltet die Abgabe um"
         assert open(b.agent_path, "rb").read() == data, "train=True hat die .pth ueberschrieben"
-        print(f"  {side}: train=True eingefroren ok (Netze={1 + len(b.extra_q)}, .pth unveraendert)")
+        print(f"  {side}: train=True eingefroren ok (Netze={nets(b)}, .pth unveraendert)")
 print("Check ok")
 '''
 

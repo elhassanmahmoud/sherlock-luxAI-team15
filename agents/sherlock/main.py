@@ -54,6 +54,17 @@ from .reward import surviving, unit_rewards
 SAP_DROPOFF_ASSUMED = 0.5  # unit_sap_dropoff_factor ist nicht beobachtbar
 
 
+def checkpoint_kind(path: Optional[str]) -> Optional[str]:
+    """kind-Eintrag eines Checkpoints (z. B. "imitation", "ppo") oder None (DQN/altes Format/fehlt)."""
+    if not path or not os.path.isfile(path):
+        return None
+    try:
+        ckpt = torch.load(path, map_location="cpu", weights_only=False)
+    except Exception:
+        return None
+    return ckpt.get("kind") if isinstance(ckpt, dict) else None
+
+
 def resolve_weights(path: Optional[str]) -> Optional[str]:
     """Gewichte neben main.py finden, wenn der Pfad vom Arbeitsverzeichnis aus fehlt.
 
@@ -141,7 +152,17 @@ class Agent_x:
         self._reset_episode_state()
 
         self.target_q.load_state_dict(self.q.state_dict())
-        if agent_path:
+        # 15.11.2026 (Umbau): Checkpoints mit kind="imitation" enthalten die nachgeahmte CNN-Policy. Dann spielt
+        # ein ImitationAgent (gleiche Vorverarbeitung wie beim Lernen), Agent_x bleibt die Kurs-Schnittstelle.
+        self._imitation = None
+        if agent_path and type(self) is Agent_x and checkpoint_kind(agent_path) == "imitation":
+            from .imitation_agent import ImitationAgent
+            self._imitation = ImitationAgent(player, agent_path=agent_path, name=name, train=False)
+            self.training = False
+            self.autosave_on_terminate = False
+            print(f"[{self.name}] geladen: {agent_path} (nachgeahmte CNN-Policy, "
+                  f"Netze={1 + len(self._imitation.extra_nets)})")
+        elif agent_path:
             self.load_agent(agent_path)  # laedt auch target_q (nicht danach ueberschreiben)
 
     # ------------------------------------------------------------- identitaet
@@ -155,6 +176,8 @@ class Agent_x:
 
     def new_game(self, player: Optional[str] = None) -> None:
         """Vor jedem Spiel aufrufen (Netz/Buffer/Epsilon bleiben erhalten)."""
+        if getattr(self, "_imitation", None) is not None:
+            self._imitation.new_game(player)
         if player is not None and player != self.player:
             self._set_player(player)
         for b in {id(self.belief): self.belief, id(self.feat_belief): self.feat_belief}.values():
@@ -224,6 +247,8 @@ class Agent_x:
     # ------------------------------------------------------------ runner API
     def set_env_cfg(self, env_cfg) -> None:
         self.env_cfg = env_cfg
+        if getattr(self, "_imitation", None) is not None:
+            self._imitation.set_env_cfg(env_cfg)
         W = int(env_cfg.get("map_width", 24))
         H = int(env_cfg.get("map_height", 24))
         for b in (self.belief, self.feat_belief):
@@ -238,7 +263,7 @@ class Agent_x:
         self.belief.spawn_proof = bool(self.cfg.spawn_proof)
 
     def set_to_train_mode(self) -> None:
-        if self.cfg.frozen:  # Battle-Abgabe bleibt im Spielmodus
+        if self.cfg.frozen or getattr(self, "_imitation", None) is not None:  # Abgabe bleibt im Spielmodus
             return
         self.training = True
         self.q.train()
@@ -316,6 +341,8 @@ class Agent_x:
         return np.zeros((n, 3), dtype=int)
 
     def _act_est(self, step: int, obs) -> np.ndarray:
+        if getattr(self, "_imitation", None) is not None:
+            return self._imitation.act(step, obs)  # liegt in act() hinter dem Absturzschutz (cfg.frozen)
         use_est = ((self.cfg.nebula_avoid or self.cfg.dodge_auto or self.cfg.sap_dropoff_est or self.cfg.art_splash
                     or self.cfg.sap_still_splash) and (not self.training or self.cfg.rules_in_training_all))
         use_est = use_est or (self.training and self.cfg.art_splash and self.cfg.art_splash_in_training)
@@ -1696,6 +1723,8 @@ class Agent_x:
     # ------------------------------------------------------------- lernen
     def update(self, step: int, obs, reward, action, terminated: bool, next_obs) -> None:
         # Der Kurs-Runner ruft update() bei train=True nach jedem Schritt auf; Absicherung wie in act()
+        if getattr(self, "_imitation", None) is not None:
+            return  # die nachgeahmte Policy lernt nicht im Spiel
         if not self.cfg.frozen:
             return self._update(step, obs, reward, action, terminated, next_obs)
         try:
@@ -1791,6 +1820,8 @@ class Agent_x:
 
     # ------------------------------------------------------- persistenz
     def save_agent(self, path: Optional[str] = None) -> None:
+        if getattr(self, "_imitation", None) is not None:
+            return  # nie ueberschreiben: Gewichte entstehen nur in scripts/imitate.py
         if self.cfg.frozen and not path:  # Runner-Aufruf: Battle-Abgabe nicht ueberschreiben
             return
         path = path or self.agent_path

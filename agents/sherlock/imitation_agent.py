@@ -69,15 +69,23 @@ class ImitationAgent(PPOAgent):
 
     def __init__(self, player: str, agent_path: Optional[str] = None, name: str = "Sherlock Imitation", **kw):
         net = kw.pop("net", None)
+        members = []
         if net is None and agent_path:
             ckpt = torch.load(agent_path, map_location="cpu", weights_only=False)
             arch = ckpt.get("arch") or {}
             if arch.get("sap_head"):
                 net = ImitationNet(**arch)
                 net.load_state_dict(ckpt["policy"])
+            # Ensemble mehrerer Schueler (scripts/imitate.py ensemble): gemittelte Aktions- und Zielbewertung
+            for m in ckpt.get("imitation_ensemble", []):
+                extra = ImitationNet(**m["arch"])
+                extra.load_state_dict(m["policy"])
+                members.append(extra.eval())
         super().__init__(player, agent_path=agent_path, name=name, net=net, **kw)
         self.sample = False
         self.has_sap_head = isinstance(self.net, ImitationNet)
+        if members:
+            self.extra_nets = members
 
     def act(self, step: int, obs) -> np.ndarray:
         max_units = int((self.env_cfg or {}).get("max_units", 16))
@@ -99,20 +107,39 @@ class ImitationAgent(PPOAgent):
             m = torch.as_tensor(masks)
             if self.has_sap_head:
                 logits, _, smap = self.net.forward_all(*inputs)
-                sapmap = smap[0].numpy()
+                smap = torch.log_softmax(smap[0].flatten(), 0)
             else:
                 logits = self.net(*inputs)[0]
             logp = torch.log_softmax(logits.masked_fill(~m, -1e9), dim=1)
             for extra in self.extra_nets:
-                logp = logp + torch.log_softmax(extra(*inputs)[0].masked_fill(~m, -1e9), dim=1)
+                if self.has_sap_head and isinstance(extra, ImitationNet):
+                    lg, _, sm = extra.forward_all(*inputs)
+                    smap = smap + torch.log_softmax(sm[0].flatten(), 0)
+                else:
+                    lg = extra(*inputs)[0]
+                logp = logp + torch.log_softmax(lg.masked_fill(~m, -1e9), dim=1)
             acts = logp.argmax(dim=1).numpy()
+            if self.has_sap_head:
+                sapmap = smap.view(planes.shape[1], planes.shape[2]).numpy()
         R = int(ctx["sap_range"])
         W, H = ctx["W"], ctx["H"]
+        focus = {}
+        if self.cfg.focus_sap:
+            # 15.11.2026: sichere gemeinsame Abschuesse stehender Gegner (wie V14-Schalter focus_sap)
+            from . import combat
+            stationary = self._enemy_stationary(ctx)
+            focus = combat.focus_plan(ctx, [int(u) for u in ids], self.belief.point_tiles, stationary,
+                                      self._holders(ctx, ids), dropoff=self.cfg.focus_dropoff,
+                                      reserve=self.cfg.focus_reserve)
         for k, uid in enumerate(ids):
             a = int(acts[k])
+            if int(uid) in focus:
+                a = geo.SAP
             self._prev_actions[uid] = a
             target = None
-            if a == geo.SAP and sapmap is not None:
+            if int(uid) in focus:
+                target = focus[int(uid)]
+            elif a == geo.SAP and sapmap is not None:
                 x, y = int(pos[k][0]), int(pos[k][1])
                 x0, x1, y0, y1 = max(0, x - R), min(W, x + R + 1), max(0, y - R), min(H, y + R + 1)
                 win = sapmap[x0:x1, y0:y1].copy()

@@ -82,3 +82,46 @@ def test_featurize_skips_match_start():
     assert featurize(d, {"match_steps": np.int32(0)}) is None
     assert d._prev_ctx is None and d.belief.seen
     assert geo.SAP == 5
+
+
+def _student(tmp_path, name, seed):
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.ppo_agent import save_policy
+    torch.manual_seed(seed)
+    net = ImitationNet(feat_dim=FEATURE_DIM, ch=8, blocks=1, hidden=32)
+    path = tmp_path / name
+    save_policy(str(path), net, AgentConfig(), extra={"kind": "imitation"})
+    return path
+
+
+def test_agent_x_delegates_imitation_checkpoint_and_never_overwrites(tmp_path):
+    from luxai_s3.wrappers import LuxAIS3GymEnv
+
+    from agents.sherlock.main import Agent_x
+    path = _student(tmp_path, "s.pth", 1)
+    data = path.read_bytes()
+    env = LuxAIS3GymEnv(numpy_output=True)
+    obs, info = env.reset(seed=7159996)
+    a = Agent_x("player_0", agent_path=str(path))  # wie der Kurs-Runner (train=True)
+    assert a._imitation is not None and not a.training
+    a.set_env_cfg(info["params"])
+    a.save_agent()
+    for step in range(5):
+        act = a.act(step, obs["player_0"])
+        assert np.asarray(act).shape == (16, 3)
+        a.update(step, obs["player_0"], 0.0, act, False, obs["player_0"])
+        obs, *_ = env.step({"player_0": act, "player_1": np.zeros((16, 3), int)})
+    env.close()
+    assert path.read_bytes() == data
+
+
+def test_student_ensemble_loads_all_members(tmp_path):
+    import argparse
+
+    from scripts.imitate import cmd_ensemble
+    p1, p2 = _student(tmp_path, "a.pth", 1), _student(tmp_path, "b.pth", 2)
+    out = tmp_path / "ens" / "ens.pth"
+    cmd_ensemble(argparse.Namespace(students=[str(p1), str(p2)], out=str(out)))
+    agent = ImitationAgent("player_0", agent_path=str(out), train=False)
+    assert agent.has_sap_head and len(agent.extra_nets) == 1
+    assert isinstance(agent.extra_nets[0], ImitationNet)

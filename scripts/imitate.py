@@ -296,13 +296,31 @@ def train_student(train, val, a, log):
     log(f"Trainingsdaten: {n} Unit-Entscheidungen, Verteilung " +
         ", ".join(f"{nm} {100 * c / n:.1f} %" for nm, c in zip(("stay", "up", "right", "down", "left", "sap"), counts.tolist())))
     opt = torch.optim.AdamW(net.parameters(), lr=a.lr, weight_decay=1e-4)
-    steps_total = a.epochs * ((n + a.mb - 1) // a.mb)
+    train_step_np, val_step_np = train[1]["step"], val[1]["step"]
+    n_steps = len(np.unique(train_step_np))
+    k_steps = max(8, int(round(a.mb * n_steps / max(1, n))))
+    steps_total = a.epochs * ((n_steps + k_steps - 1) // k_steps)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=a.lr, total_steps=steps_total, pct_start=0.1)
 
-    def batch_logits(Pt, Rt, idx):
+    def step_batches(Rt_step_np, k, shuffle):
+        """Minibatches aus k Spielschritten mit allen Units (Zeilen eines Schritts liegen zusammen).
+        Liefert (Zeilenindex, Schritte, inverse Zuordnung Zeile -> Schritt im Batch)."""
+        steps_all = np.unique(Rt_step_np)
+        starts = np.searchsorted(Rt_step_np, steps_all, side="left")
+        ends = np.searchsorted(Rt_step_np, steps_all, side="right")
+        order = np.random.permutation(len(steps_all)) if shuffle else np.arange(len(steps_all))
+        for b in range(0, len(order), k):
+            sel = order[b:b + k]
+            counts = ends[sel] - starts[sel]
+            idx = np.repeat(starts[sel] - np.concatenate([[0], np.cumsum(counts)[:-1]]), counts) + np.arange(counts.sum())
+            inv = np.repeat(np.arange(len(sel)), counts)
+            yield (torch.as_tensor(idx, device=dev), torch.as_tensor(steps_all[sel], device=dev),
+                   torch.as_tensor(inv, device=dev))
+
+    def batch_logits(Pt, Rt, idx, uniq=None, inv=None):
         """(Logits mit erzwungen erlaubter Lehreraktion, rohe Logits, Maske, Ziel-Logits der Schuesse, Ziele)."""
-        st = Rt["step"][idx]
-        uniq, inv = torch.unique(st, return_inverse=True)
+        if uniq is None:
+            uniq, inv = torch.unique(Rt["step"][idx], return_inverse=True)
         planes = Pt[uniq].float() / PLANE_SCALE
         logits, _, smap = net.forward_all(planes, inv, Rt["pos"][idx], Rt["feats"][idx])
         mask = Rt["mask"][idx].clone()
@@ -325,9 +343,8 @@ def train_student(train, val, a, log):
         legal_correct = 0
         sap_n = sap_hit = sap_near = 0
         with torch.no_grad():
-            for s in range(0, len(Rv["act"]), 8192):
-                idx = torch.arange(s, min(s + 8192, len(Rv["act"])), device=dev)
-                lg, raw, m, s_lg, s_tgt = batch_logits(Pv, Rv, idx)
+            for idx, uniq, inv in step_batches(val_step_np, 512, False):
+                lg, raw, m, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
                 if s_lg is not None:
                     pred_t = s_lg.argmax(1)
                     sap_n += len(s_tgt)
@@ -347,12 +364,11 @@ def train_student(train, val, a, log):
         per = [float(correct[c] / total[c]) if total[c] > 0 else float("nan") for c in range(6)]
         return acc, per, legal_correct / max(1, len(Rv["act"])), sap_hit / max(1, sap_n), sap_near / max(1, sap_n)
 
+    log(f"Minibatch: {k_steps} Spielschritte (im Mittel etwa {a.mb} Unit-Entscheidungen), Geraet {dev}")
     for ep in range(a.epochs):
-        perm = torch.randperm(n, device=dev)
         tot, cnt, t0 = 0.0, 0, time.time()
-        for s in range(0, n, a.mb):
-            idx = perm[s:s + a.mb]
-            lg, _, _, s_lg, s_tgt = batch_logits(P, R, idx)
+        for idx, uniq, inv in step_batches(train_step_np, k_steps, True):
+            lg, _, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
             loss = F.cross_entropy(lg, R["act"][idx])  # keine Glaettung: gesperrte Aktionen bekaemen sonst Masse
             if s_lg is not None:
                 loss = loss + a.sap_weight * F.cross_entropy(s_lg, s_tgt)
@@ -395,6 +411,21 @@ def cmd_train(a) -> None:
     log(f"gespeichert: {out} ({sum(p.numel() for p in net.parameters())} Parameter)")
 
 
+def cmd_ensemble(a) -> None:
+    """Mehrere Schueler zu einem Checkpoint buendeln (erster = Hauptnetz, Rest = imitation_ensemble)."""
+    import torch
+    out = _check_out(Path(a.out))
+    if out.exists():
+        raise SystemExit(f"{out} existiert schon")
+    cks = [torch.load(p, map_location="cpu", weights_only=False) for p in a.students]
+    main_ck = dict(cks[0])
+    main_ck["imitation_ensemble"] = [{"arch": c["arch"], "policy": c["policy"]} for c in cks[1:]]
+    main_ck["members"] = [str(p) for p in a.students]
+    out.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(main_ck, out)
+    print(f"Ensemble mit {len(cks)} Schuelern: {out}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -411,6 +442,9 @@ def main() -> None:
     d.add_argument("--workers", type=int, default=12)
     d.add_argument("--seed0", type=int, default=TRAIN_SEED0 + 50_000)
     d.add_argument("--mix", default="kaggle3:0.5,v14:0.25,solution92:0.25")
+    e = sub.add_parser("ensemble")
+    e.add_argument("--students", nargs="+", required=True)
+    e.add_argument("--out", required=True)
     t = sub.add_parser("train")
     t.add_argument("--data", nargs="+", required=True)
     t.add_argument("--out", required=True)
@@ -425,7 +459,7 @@ def main() -> None:
     t.add_argument("--device", default="auto")
     t.add_argument("--sap-weight", type=float, default=0.5)
     a = ap.parse_args()
-    {"collect": cmd_collect, "dagger": cmd_dagger, "train": cmd_train}[a.cmd](a)
+    {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble, "train": cmd_train}[a.cmd](a)
 
 
 if __name__ == "__main__":
