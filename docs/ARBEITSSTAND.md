@@ -4,6 +4,13 @@
 
 Die frühe Wegprüfung rettete die ursprüngliche R3-Niederlage, verlor jedoch einen zuvor gewonnenen Sitz auf 7273105. Dort erzielte die Mannschaft ihren ersten Punkt sogar drei Züge früher und verlor das zweite und dritte Match. Alle 120 Ergebnisse sind jetzt vollständig. Das Verfahren auf 60 neuen Karten ist vorab festgelegt. [Rohdaten und Wiederholung des Rückfalls](../experiments/analysis/movement_soft_20261115/restart_route/ENTWICKLUNG.md).
 
+## 15.11.2026, 19:25 Berlin – Claude Code mit Mahmoud: Schüler v4 schlägt V14 direkt 92 %, Hybrid vorn gegen Solution und Kaggle (Auswahl Dev A)
+
+- Nach Mahmouds Freigabe („ja weiter“) die wegen Speichermangel gestoppten Jobs nacheinander neu gestartet: v4 allein im Sparmodus `--low-memory` (11,4 Mio. Entscheidungen inkl. DAgger 1+2; freier Speicher blieb bei mindestens 54 %), danach Tests mit 8 Spielprozessen.
+- **Dev A (100 Karten, beide Seiten):** Schüler v4 mit Stay-Bias 1,5 und Entstapeln: Solution 92,5 %, kaggle3 3 % (Matches 6,7 %), **direkt gegen V14 92 % [87; 97]**. Hybrid v4 mixed: **Solution 97 %** (Matches +5,8 pp [+2,2; +9,5]), **kaggle3 5 % bei Matches 9,3 %** (+4,3 pp [+1,0; +7,7]). Hybrid v4 points: 97 % / 4 % (Matches 8,7 %), direkt gegen V14 83 %. V14 auf denselben Karten: 94 % / 4 % (Matches 5,0 %). Das sind Auswahlwerte; Dev B und der zurückgehaltene Bestätigungssatz folgen ([Bericht](../experiments/analysis/umbau_20261115/README.md)).
+- **Verpackung:** Hybride lassen sich als eine `agent.pth` packen (`scripts/imitate.py pack-hybrid`); eine v3-points-Zip bestand die Kursprüfung. V14 und `Gruppe15.zip` unverändert.
+- **Läuft:** Duell Hybrid v4 mixed gegen V14 (Dev A), danach Dev B (7151000–7151099) für Schüler v4, Hybrid v4 mixed und V14.
+
 ## 15.11.2026 – 1.194.451 Entscheidungen aus echten Lehrerpartien
 
 Alle vier Sammlungen sind fertig. Auf 240 neuen Karten entstanden 337 Sitzarchive, davon 33 aus den 24 getrennten Diagnosekarten. Die Byteprüfsummen und die vorab festgelegten Karten, Sitze und Gegner stimmen in allen 337 Fällen. Zwei vollständige Schüler vergleichen das Lernen mit und ohne diese zusätzlichen Lehrerpartien. [Sammlung und lokale Datenpfade](../experiments/analysis/full_student_20261115/SAMMLUNG.md).
