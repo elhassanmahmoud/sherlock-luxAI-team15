@@ -121,3 +121,31 @@ def test_packed_hybrid_loads_through_agent_x_and_never_overwrites(student, tmp_p
         obs, *_ = env.step({"player_0": act, "player_1": np.zeros((16, 3), int)})
     env.close()
     assert out.read_bytes() == data
+
+
+@pytest.mark.parametrize("load_fails", [False, True])
+def test_unpack_cleans_temporary_checkpoints_after_construction(monkeypatch, load_fails):
+    from pathlib import Path
+
+    from agents.sherlock import hybrid_agent
+
+    dirs = []
+    sentinel = object()
+
+    def construct(player, v14_path, student_path, **kwargs):
+        v14, student = Path(v14_path), Path(student_path)
+        assert v14.is_file() and student.is_file() and v14.parent == student.parent
+        dirs.append(v14.parent)
+        if load_fails:
+            raise ValueError("bad weights")
+        return sentinel
+
+    monkeypatch.setattr(hybrid_agent, "HybridAgent", construct)
+    packed = {"v14_ckpt": {}, "student_ckpt": {"cfg": {}}}
+    for side in ("player_0", "player_1"):
+        if load_fails:
+            with pytest.raises(ValueError, match="bad weights"):
+                hybrid_agent.unpack_hybrid(packed, side)
+        else:
+            assert hybrid_agent.unpack_hybrid(packed, side) is sentinel
+        assert not dirs[-1].exists()

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Gepackter Hybrid räumt Hilfsdateien nach dem Laden auf
+
+Mahmouds Kursformat enthält V14 und den vollständigen Schüler in einer Gewichtsdatei. Der Kurs erzeugt Agenten je Partie neu. Beide Teilgewichte werden jetzt unmittelbar nach dem Laden aus dem temporären Ordner entfernt, auch wenn das Laden fehlschlägt. Der Test deckt beide Sitze sowie die unveränderte Paketdatei ab. Für die gemessene points-Konfiguration beim Packen explizit Schüler-Bias 1,5 und Entstapeln einschalten. Mahmouds kompletter v3-Schüler bleibt für eine lokale Wiederholung erforderlich. [Paketweg](../agents/sherlock/hybrid_agent.py) · [Gezielte Tests](../tests/test_hybrid_agent.py).
+
 ## 15.11.2026 – Zusätzliche Felddeckung und zeitliches Gegnerbild ausgewertet
 
 Die Felddeckung griff in allen 96 Partien ein. Gegen Solution und Kaggle änderte sich kein Spielausgang gegenüber R2. Direkt gegen V14 waren es 20 statt 22 Siege. R4 mit dem Gegnerbild des vorherigen Zugs erreichte im festgelegten Nahbereich drei zusätzliche Lehrerbefehle weniger als R2 und insgesamt 21 weniger. Beide Versuche enden nach den vorher vereinbarten Vergleichen. [Felddeckung im Spiel](../experiments/analysis/coverage_restore_20261115/ERGEBNIS.md) · [Zeitliches Gegnerbild](../experiments/analysis/temporal_movement_20261115/ERGEBNIS.md).

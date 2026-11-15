@@ -29,23 +29,21 @@ def unpack_hybrid(ckpt: dict, player: str, name: str = "Sherlock Agent_X") -> "H
     """Gepackten Hybrid (eine agent.pth fuer die Kursabgabe) laden: V14- und Schueler-Checkpoint liegen eingebettet
     vor und werden fuer die Teilagenten in einen temporaeren Ordner geschrieben; die Schueler-Schalter stehen in
     student_overrides."""
-    import atexit
-    import shutil
-    import tempfile
+    from tempfile import TemporaryDirectory
     from dataclasses import replace
 
     import torch
 
     from .config import AgentConfig
-    tmp = tempfile.mkdtemp(prefix="sherlock_hybrid_")
-    atexit.register(shutil.rmtree, tmp, True)
-    v14_path, student_path = f"{tmp}/v14.pth", f"{tmp}/student.pth"
-    torch.save(ckpt["v14_ckpt"], v14_path)
-    torch.save(ckpt["student_ckpt"], student_path)
     student_cfg = AgentConfig.from_dict(ckpt["student_ckpt"]["cfg"])
     student_cfg = replace(student_cfg, **dict(ckpt.get("student_overrides", {})))
-    return HybridAgent(player, v14_path, student_path, mode=ckpt.get("mode", "points"),
-                       combat_radius=int(ckpt.get("combat_radius", 5)), name=name, student_cfg=student_cfg)
+    # Der Kurs erzeugt die Agenten je Partie neu. Beide Teilagenten laden synchron.
+    with TemporaryDirectory(prefix="sherlock_hybrid_") as tmp:
+        v14_path, student_path = f"{tmp}/v14.pth", f"{tmp}/student.pth"
+        torch.save(ckpt["v14_ckpt"], v14_path)
+        torch.save(ckpt["student_ckpt"], student_path)
+        return HybridAgent(player, v14_path, student_path, mode=ckpt.get("mode", "points"),
+                           combat_radius=int(ckpt.get("combat_radius", 5)), name=name, student_cfg=student_cfg)
 
 
 class HybridAgent:
