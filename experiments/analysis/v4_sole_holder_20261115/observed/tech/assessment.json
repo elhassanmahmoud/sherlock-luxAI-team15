@@ -1,0 +1,185 @@
+{
+  "actual_player1_parity": {
+    "mixed": true,
+    "points": true
+  },
+  "archive_reproductions": 6,
+  "assessor_sha256": "6fc4639365b167e36c4aab5a7b8fda80c487a36e0ec20fe4cb00546fe6d947b6",
+  "controls": {
+    "player_0/mixed": {
+      "actions_sha256": [
+        "f05d0aa154d9d85ff888b6d1cd6d4e18abd7a67f77c5908a6d08552b006be00d",
+        "dd65db2169efa0919a426f4d5f5ecbbd395266d99e1a8375afb3a238e781823f"
+      ],
+      "matches": [
+        {
+          "match": 1,
+          "opp_points": 229,
+          "our_points": 207,
+          "won": 0
+        },
+        {
+          "match": 2,
+          "opp_points": 363,
+          "our_points": 370,
+          "won": 1
+        },
+        {
+          "match": 3,
+          "opp_points": 364,
+          "our_points": 370,
+          "won": 1
+        }
+      ],
+      "qualified": 0,
+      "restored": 0,
+      "source_disagreements": 1,
+      "vacant_immediately": 0
+    },
+    "player_0/points": {
+      "actions_sha256": [
+        "90d67785a24a28cec0b9f9369e4716203e16e81bc508f4856dbceaf22827d639",
+        "9c3cbb6b123178d607d75876ef8f75ef9091a6eb2740c26d703af502a48a8cc4"
+      ],
+      "matches": [
+        {
+          "match": 1,
+          "opp_points": 177,
+          "our_points": 225,
+          "won": 1
+        },
+        {
+          "match": 2,
+          "opp_points": 356,
+          "our_points": 318,
+          "won": 0
+        },
+        {
+          "match": 3,
+          "opp_points": 365,
+          "our_points": 324,
+          "won": 0
+        }
+      ],
+      "qualified": 0,
+      "restored": 0,
+      "source_disagreements": 23,
+      "vacant_immediately": 0
+    },
+    "player_1/mixed": {
+      "actions_sha256": [
+        "87e8fdd390585585c2a324a5457ee65b2de27ced8732e0daed667d90be859e22",
+        "c70c115b129f0cc606a1fce74cf0b89f94cccd6b27ffaae5bb63dc342ec0b304"
+      ],
+      "matches": [
+        {
+          "match": 1,
+          "opp_points": 228,
+          "our_points": 201,
+          "won": 0
+        },
+        {
+          "match": 2,
+          "opp_points": 364,
+          "our_points": 318,
+          "won": 0
+        },
+        {
+          "match": 3,
+          "opp_points": 363,
+          "our_points": 329,
+          "won": 0
+        }
+      ],
+      "qualified": 0,
+      "restored": 0,
+      "source_disagreements": 1,
+      "vacant_immediately": 0
+    },
+    "player_1/points": {
+      "actions_sha256": [
+        "68fd769afae13040c99f90bfd381ccfc57f9228aa56be8d833a9461d1bb43906",
+        "7d018e1c1b261f218e4e43e1f2c31ea25cafbb3875bbfe483401dedef2407bc1"
+      ],
+      "matches": [
+        {
+          "match": 1,
+          "opp_points": 255,
+          "our_points": 220,
+          "won": 0
+        },
+        {
+          "match": 2,
+          "opp_points": 334,
+          "our_points": 381,
+          "won": 1
+        },
+        {
+          "match": 3,
+          "opp_points": 347,
+          "our_points": 385,
+          "won": 1
+        }
+      ],
+      "qualified": 0,
+      "restored": 0,
+      "source_disagreements": 10,
+      "vacant_immediately": 0
+    }
+  },
+  "eligible_mixed_departure_caused_observed_vacancy": false,
+  "files": {
+    "tech/7150068_player_0_solution92_mixed.json": "4352459a3171284114496d919d623ea98b378e54f9a9980a2bcd25505f0b05d2",
+    "tech/7150068_player_0_solution92_points.json": "aa7383d15359bd0a02ce71eba4560e304a8c14b90d9922ae3ac9af608c98317c",
+    "tech/7150068_player_1_solution92_mixed.json": "12950e53e48ec70e053ebc4ff71ef2f8863e023bee71616cd9f6e9ebc5b8184c",
+    "tech/7150068_player_1_solution92_native_mixed.json": "889d8be43bd49d590ecaba00269738f985ef77098d36b1b9e21992f2fc6009fc",
+    "tech/7150068_player_1_solution92_native_points.json": "de95892e43622c2296143f685be44f82efcce626a474814c4e554df5268eef8c",
+    "tech/7150068_player_1_solution92_points.json": "32004682f987b6be7ffe71868c53411c5acc8b14c64b3c49f30f4a11e40b11de"
+  },
+  "passes": false,
+  "source": {
+    "csv": {
+      "mixed": "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c",
+      "points": "0dba9a914e11564a1f767182fe0230ee4e92bfe88fdafd9419e93cc3d3da7189"
+    },
+    "environment": {
+      "lux_modules": {
+        "__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+        "env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+        "globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+        "params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+        "profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+        "pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+        "spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+        "state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+        "utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+        "wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26"
+      },
+      "machine": "arm64",
+      "platform": "Darwin",
+      "python": "3.13.13",
+      "runtime_flags": {
+        "CUDA_VISIBLE_DEVICES": null,
+        "JAX_PLATFORMS": null,
+        "PYTHONHASHSEED": null,
+        "XLA_FLAGS": null
+      },
+      "versions": {
+        "jax": "0.12.0",
+        "jaxlib": "0.12.0",
+        "luxai-s3": "0.2.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "torch": "2.14.1"
+      }
+    },
+    "plan": "e014550ec0da44c71716713165b2a65c303d5a0d924287ec4eaca7c77e2dcf16",
+    "radius": 5,
+    "sources": "6587bc89fd2b6418089df25fbba73a61a5713bcadb67b6f5ee74d6c37ce7e0a5",
+    "stay_bias": 1.5,
+    "student": "0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f",
+    "unstack": true,
+    "v14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+  },
+  "stage": "tech"
+}
