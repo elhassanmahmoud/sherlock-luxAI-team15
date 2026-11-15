@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – V14 gewinnt den neuen Solution-Vergleich 32/32; einfache Stapelregel verworfen
+
+Die isolierte Übernahme des Lehrer-Stillstands bei energieärmeren, gestapelten Einheiten kostete zehn von 32 Solution-Spielen. Direkt gewann diese Variante nur 2/32 gegen V14. Auf denselben Karten gewann keines der beiden Teams gegen den nativen Kaggle-Gegner. Das Nachtraining des lernenden Bewegungsberaters verwendet davon getrennte Karten und läuft weiter. [Ergebnisse und Unsicherheit](../experiments/analysis/stack_reserve_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Nachtraining mit echten Schülerzügen läuft
 
 Der erste Vergleich ist abgeschlossen: 20/32 direkt gegen V14, 30/32 gegen Solution bei beiden und 0/32 gegen Kaggle3 gegenüber 2/32. Für die nächste Runde spielt der eingefrorene Schüler selbst. Der Lehrer bewertet seine tatsächlich erreichten Stellungen. Vorgesehen sind 120 neue Trainings- und 24 getrennte Diagnosekarten, jeweils beide Sitze. Parallel wird eine Regel geprüft, die auf bereits gemeinsam belegten Feldern die energieärmeren Einheiten bei Bewegungsbefehlen stehen lässt. Beide Varianten verwenden eine gemeinsame neue V14-Referenz. [Schülertraining](superpowers/plans/2026-11-15-bewegung-dagger.md) · [Stapelregel](../experiments/analysis/stack_reserve_20261115/PLAN.md) · [Getrennter Folgeversuch mit Lehrerbewertungen](../experiments/analysis/combat_advice_20261115/SOFTZIELE.md).

@@ -1,0 +1,81 @@
+{
+  "stage": "screen",
+  "candidate": "stack_reserve",
+  "model": null,
+  "reference_files": {
+    "manifest_sha256": "556181de82f3613167e7bdb19a4c7408e39d5d8981dfb6773941ae665e2fa2f0",
+    "games_sha256": "47fac1b6d55ac27cf5230f81e595ec65369cd288b53b13f074f8e0004a02d9f4"
+  },
+  "candidate_files": {
+    "manifest_sha256": "7e49dbc8a1b2ec5b38c56b5f9f1d2681ba7ad025aaba6afdc339355a69485fd8",
+    "games_sha256": "ad4b2a4bf462696c24442a10ddb6961d6285c885505b89de31e5b0d4c13b7f03"
+  },
+  "direct_files": {
+    "manifest_sha256": "7e49dbc8a1b2ec5b38c56b5f9f1d2681ba7ad025aaba6afdc339355a69485fd8",
+    "games_sha256": "ad4b2a4bf462696c24442a10ddb6961d6285c885505b89de31e5b0d4c13b7f03"
+  },
+  "external_first": 7272300,
+  "direct_first": 7272300,
+  "by_opponent": {
+    "kaggle3": {
+      "games": 32,
+      "v14_wins": 0,
+      "candidate_wins": 0,
+      "gained": 0,
+      "lost": 0,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "solution92": {
+      "games": 32,
+      "v14_wins": 32,
+      "candidate_wins": 22,
+      "gained": 0,
+      "lost": 10,
+      "net_wins": -10,
+      "winrate_difference": -0.3125,
+      "difference_ci95": [
+        -0.5625,
+        -0.125
+      ]
+    }
+  },
+  "external": {
+    "games": 64,
+    "net_wins": -10,
+    "winrate_difference": -0.15625,
+    "difference_ci95": [
+      -0.28125,
+      -0.0625
+    ]
+  },
+  "direct": {
+    "games": 32,
+    "wins": 2,
+    "losses": 30,
+    "winrate": 0.0625,
+    "winrate_ci95": [
+      0.0,
+      0.1875
+    ]
+  },
+  "gates": {
+    "solution_at_least_reference": false,
+    "direct_majority": false,
+    "two_additional_external_wins": false
+  },
+  "game_gates_pass": false,
+  "policy_sha256": "ed19e3df648821ad54b1fa3c2dbf0148f30f496dceeb4a921ba095f712af24c6",
+  "protocol": "stack_reserve",
+  "bootstrap": {
+    "unit": "whole map, both seats; external opponents sampled together",
+    "draws": 10000,
+    "seed": 2711,
+    "generator": "PCG64",
+    "interval": "95% percentile"
+  }
+}
