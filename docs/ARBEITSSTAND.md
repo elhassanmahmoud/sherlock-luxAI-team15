@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Sherlock holt im Entscheidungsmatch häufig noch auf
+
+Beim Stand 1:1 prüften wir ab der Mitte des dritten Matches den öffentlich sichtbaren Punktestand. Auf dem festen Archiv von 184 Karten erfasste der erste Rückstand alle vier später verlorenen Solution-Spiele und zwölf der 13 geschützten Siege. Zwei Grenztests bestanden. Der Kursmotor bestätigte die 51 ursprünglichen Matchausgänge aus 5.151 Befehlspaaren. Für eine Aussage zur Wirkung müssen alle 16 betroffenen Partien mit den geänderten Befehlen gespielt werden. [Archivdiagnose](../experiments/analysis/r3_m3_deficit_20261115/ARCHIVPRUEFUNG.md).
+
 ## 15.11.2026 – Vier parallele Vergleiche auf Moayeds M3
 
 Auf derselben Solution-Karte schaffte V14 bei zwei, drei und vier Prozessen rund 31, 37 und 52 vollständige Spiele pro Minute. Beim Aufwärmen der Fünferstufe begann das System auszulagern. Anschließend lieferten vier unabhängige laufende Vergleiche 81 neue Spiele in 200 Sekunden, ohne neue Auslagerung in diesem Fenster. Der zweite Wert umfasst auch den Kaggle-Gegner. [Messung, Grenzen und Reproduktion](../experiments/analysis/macos_durchsatz_20261115/ERGEBNIS.md).
