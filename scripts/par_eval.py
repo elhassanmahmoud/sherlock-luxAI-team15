@@ -64,9 +64,10 @@ def build_cfg(weights: str, overrides: list[str]):
 
 def require_no_agent_errors(agent, opponent) -> None:
     """A caught policy error invalidates the measurement on either side."""
-    for label, player in (("agent", agent), ("opponent", opponent)):
-        if getattr(player, "caught_errors", 0) > 0:
-            raise RuntimeError(f"{label} caught a policy error; refusing a successful evaluation result")
+    from scripts.xversion_replay import require_clean_policy
+
+    require_clean_policy(agent, "agent")
+    require_clean_policy(opponent, "opponent")
 
 
 def _worker(job: tuple) -> list[dict]:

@@ -11,6 +11,7 @@ torch und numpy hat (replay) bzw. zusaetzlich luxai_s3 (record).
     /pfad/zu/python3.10 -I scripts/xversion_replay.py replay Gruppe15.zip spiel.pkl
 """
 import argparse
+from functools import partial
 import atexit
 import os
 import pickle
@@ -20,6 +21,41 @@ import tempfile
 import zipfile
 
 import numpy as np
+
+
+def require_clean_policy(player, label):
+    """Check a course instance (or bare hybrid) and its actual delegated policy objects."""
+    pending = [(player, label)]
+    seen = set()
+    while pending:
+        actor, path = pending.pop()
+        if id(actor) in seen:
+            continue
+        seen.add(id(actor))
+        errors = getattr(actor, "caught_errors", 0)
+        if errors:
+            raise RuntimeError(f"{path} caught a policy error ({errors})")
+        # These are actual policy fields on Agent_x and HybridAgent. Inspect stored
+        # objects so a proxy cannot manufacture children via __getattr__.
+        fields = getattr(actor, "__dict__", {})
+        for name in ("_imitation", "v14", "student"):
+            child = fields.get(name)
+            if child is not None:
+                pending.append((child, f"{path}.{name}"))
+
+
+def guard_course_calls(player):
+    """Make a caught act/update error visible immediately, preserving missing methods."""
+    def checked(method, call, *args, **kwargs):
+        result = call(*args, **kwargs)
+        require_clean_policy(player, f"{getattr(player, 'player', type(player).__name__)}.{method}")
+        return result
+
+    for name in ("act", "update"):
+        call = getattr(player, name, None)
+        if callable(call):
+            setattr(player, name, partial(checked, name, call))
+    return player
 
 
 def unpack(zip_path):
@@ -58,7 +94,7 @@ def record(args):
     env = LuxAIS3GymEnv(numpy_output=True)
     obs, info = env.reset(seed=args.seed)
     cfg = plain(info["params"])
-    agents = [agent_cls("player_0", agent_path=weights), agent_cls("player_1", agent_path=weights)]
+    agents = [guard_course_calls(agent_cls(side, agent_path=weights)) for side in ("player_0", "player_1")]
     for a in agents:
         a.set_env_cfg(cfg)
     rec, step, done = [], 0, False
@@ -85,7 +121,7 @@ def replay(args):
     agent_cls, weights = unpack(args.zip)
     with open(args.pkl, "rb") as f:
         d = pickle.load(f)
-    agents = [agent_cls("player_0", agent_path=weights), agent_cls("player_1", agent_path=weights)]
+    agents = [guard_course_calls(agent_cls(side, agent_path=weights)) for side in ("player_0", "player_1")]
     for a in agents:
         a.set_env_cfg(d["cfg"])
     diff, first = 0, None

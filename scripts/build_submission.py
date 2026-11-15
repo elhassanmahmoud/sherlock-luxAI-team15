@@ -189,6 +189,8 @@ def build_battle(group: int, out: Path, from_run: Path | None = None,
 
 CHECK = r'''
 import sys, numpy as np
+from runpy import run_path
+guard_course_calls = run_path(sys.argv[7])["guard_course_calls"]
 sys.path.insert(0, sys.argv[1])
 import agents  # wie beim Prof: agents/__init__.py importiert alle Unterpakete
 from lux.runner import load_class_from_path
@@ -207,7 +209,7 @@ def nets(a):  # 15.11.2026: nachgeahmte CNN-Policy (Agent_x delegiert an Imitati
     return ("CNN", 1 + len(im.extra_nets)) if im is not None else ("DQN", 1 + len(a.extra_q))
 
 for side, path in (("player_0", p0), ("player_1", p1)):
-    a = cls(side, agent_path=path)
+    a = guard_course_calls(cls(side, agent_path=path))
     a.set_to_eval_mode(); a.set_env_cfg(info["params"])
     act = a.act(0, obs[side])
     assert np.asarray(act).shape == (16, 3), act.shape
@@ -216,7 +218,7 @@ for side, path in (("player_0", p0), ("player_1", p1)):
 if sys.argv[6] == "frozen":
     # Runner mit train=True: kein set_to_eval_mode, save_agent() vor dem Spiel, update() bis Spielende
     for side, path in (("player_0", p0), ("player_1", p1)):
-        b = cls(side, agent_path=path)
+        b = guard_course_calls(cls(side, agent_path=path))
         data = open(b.agent_path, "rb").read()
         b.set_env_cfg(info["params"]); b.save_agent()
         act = b.act(0, obs[side])
@@ -238,7 +240,8 @@ def project_copy(tmp: Path) -> None:
 
 def run_check(tmp: Path, imp: str, lp0: str, lp1: str, frozen: bool = False) -> None:
     subprocess.run([sys.executable, "-c", CHECK, str(tmp), imp, lp0, lp1, ",".join(REQUIRED),
-                    "frozen" if frozen else "-"], cwd=tmp, check=True)
+                    "frozen" if frozen else "-", str(Path(__file__).with_name("xversion_replay.py").resolve())],
+                   cwd=tmp, check=True)
 
 
 def check(zip_path: Path, team: str) -> None:

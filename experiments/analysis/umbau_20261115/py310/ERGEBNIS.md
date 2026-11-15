@@ -22,6 +22,8 @@ Unter Python 3.10.15 mit torch 2.14.1, numpy 2.2.6 und SciPy 1.14.1 absolvierte 
 
 Der erste Runner-Start scheiterte beim Import des standardmäßig gewählten SciPy-1.15.3-Wheels. Er hatte noch keine Partie begonnen. Das kompatible SciPy-1.14.1-Wheel lud denselben Kurscode und die ursprüngliche Paketdatei. Das neue Runner-Protokoll und die Vorbelegung der beiden Karten sind separat gebunden. Der statische Prüfer von `b2bd67e` kann intern abgefangene Fehler nur teilweise erkennen. In den tatsächlichen Spiel- und Replayprotokollen taucht keine Fehlermeldung des Agenten auf. Beide offiziellen Gewichtsdateien und die bisherige `Gruppe15.zip` hatten vor und nach der Prüfung dieselben Prüfsummen.
 
+Im anschließend verschärften Prüfer werden auch intern abgefangene Fehler des V14-Teils und des Schülers nach jedem `act` und `update` sichtbar. Beide Python-3.10-Umgebungen spielten den vollständigen gespeicherten Verlauf mit diesen Prüfungen erneut ab. Auf beiden Sitzen stimmten wieder alle 606 Aktionsmatrizen. 77 Tests zu Runner, Paketbau und den zugehörigen Vergleichswerkzeugen bestanden. [Nachprüfung der Unteragenten](gepruefte_unteragenten.json).
+
 Damit liegt ein Kompatibilitätsnachweis für macOS 27.0.1 auf Apple Silicon vor. Die Siegquoten und die Übernahmeentscheidung stammen aus der unabhängigen [V15-Bestätigung](../V15_ENTSCHEIDUNG.md).
 
 Die geprüfte Kandidaten-ZIP liegt in Moes Hauptcheckout unter `experiments/analysis/umbau_20261115/py310/Gruppe15_V15.zip`. Der geprüfte lokale Hybrid liegt unter `experiments/imitation/releases/v15_codex/weights/agent.pth`. Beide sind aus den im Repository verfügbaren Gewichtedateien wiederherstellbar.

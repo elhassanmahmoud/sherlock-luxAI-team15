@@ -20,6 +20,11 @@ from unittest.mock import patch
 
 import numpy as np
 
+if __package__:
+    from .xversion_replay import guard_course_calls
+else:
+    from xversion_replay import guard_course_calls
+
 ROOT = Path(__file__).resolve().parent.parent
 SEEDS = (500720, 500721)
 
@@ -160,7 +165,11 @@ def run_check(weights: Path) -> dict:
     loader = runner.load_class_from_path
 
     def load(path):
-        return ObservedAgent if path == "agents.sherlock.main.Agent_x" else loader(path)
+        cls = ObservedAgent if path == "agents.sherlock.main.Agent_x" else loader(path)
+
+        def create(*args, **kwargs):
+            return guard_course_calls(cls(*args, **kwargs))
+        return create
 
     initial_cwd = Path.cwd()
     try:

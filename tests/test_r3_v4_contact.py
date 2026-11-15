@@ -1,10 +1,22 @@
+from pathlib import Path
 from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from scripts.r3_v4_contact_agent import ContactAgent, routing, sync
+from scripts.r3_v4_parent_source import materialize
 from scripts.r3_v4_contact_study import panel
 from scripts.r3_v4_contact_assess import diagnostic_report, fresh_report
+
+
+@pytest.fixture(scope="module")
+def contact_module(tmp_path_factory):
+    root = Path(__file__).resolve().parents[1]
+    historical = tmp_path_factory.mktemp("original_r3")
+    materialize(root, historical)
+    with pytest.MonkeyPatch.context() as paths:
+        paths.syspath_prepend(str(historical))
+        from scripts import r3_v4_contact_agent
+        yield r3_v4_contact_agent
 
 
 def obs(side=0, step=1):
@@ -20,7 +32,8 @@ def obs(side=0, step=1):
 
 
 @pytest.mark.parametrize("side",[0,1])
-def test_visible_contact_includes_chebyshev_five_and_excludes_hidden_or_dead(side):
+def test_visible_contact_includes_chebyshev_five_and_excludes_hidden_or_dead(side, contact_module):
+    routing = contact_module.routing
     public=obs(side)
     live,near=routing(public,side)
     assert live.tolist()==[True,True,True,False,False]
@@ -30,7 +43,8 @@ def test_visible_contact_includes_chebyshev_five_and_excludes_hidden_or_dead(sid
     assert not routing(public,side)[1].any()
 
 
-def test_world_action_feedback_stays_unmirrored_in_estimator_and_canonical_in_caches():
+def test_world_action_feedback_stays_unmirrored_in_estimator_and_canonical_in_caches(contact_module):
+    sync = contact_module.sync
     p=obs(1)
     ctx={"ally_pos":np.array([[20,20],[13,8]]),"enemy_coords":np.array([[18,21]]),"enemy_energies":np.array([40])}
     def actor():
@@ -51,9 +65,10 @@ def test_world_action_feedback_stays_unmirrored_in_estimator_and_canonical_in_ca
     assert a.param_est._prev is None
 
 
-def test_route_keeps_entire_selected_parent_sap_row(monkeypatch):
+def test_route_keeps_entire_selected_parent_sap_row(monkeypatch, contact_module):
     from collections import Counter
-    from scripts import r3_v4_contact_agent as module
+    module = contact_module
+    ContactAgent = module.ContactAgent
     parent=lambda rows:SimpleNamespace(act=lambda *args:np.array(rows),caught_errors=0)
     a=ContactAgent.__new__(ContactAgent)
     a.r3=parent([[5,2,1]]*5)
