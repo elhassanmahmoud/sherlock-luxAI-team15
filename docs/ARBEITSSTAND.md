@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Neue Lehrerdaten überspringen ausgeschiedene Einheiten
+
+Bei allen 705 bisherigen Sitzarchiven wurden die Prüfsummen gegengeprüft. Mindestens 4.479 zusätzliche Lernzeilen und 703 Diagnosezeilen stammen von Einheiten mit negativer Energie. Die Maske zwingt für alle betroffenen Diagnosezeilen beide Schüler zu derselben Aktion. Die Differenz der korrekten Befehle zwischen ihnen bleibt gültig. Der Sammler behält Einheiten mit genau null Energie. Grenzwerte und Ausrichtung von Befehlen, Zielen und Merkmalen wurden im gemeinsamen Lauf geprüft. [Befund und Wiederholung](../experiments/analysis/full_student_20261115/AKTIVE_EINHEITEN.md).
+
 ## 15.11.2026 – Die V15-Bestätigung verlangt vollständige Kartenpaare
 
 Das Auswertungsprogramm lehnt fehlende oder doppelte Sitze, falsche Kartensätze, fremde Duellgegner und fehlerhafte Partieenden ab, bevor es ein Intervall berechnet. Die zuvor festgelegten Schwellen und Bootstrap-Rechnungen sind identisch. Neun absichtlich fehlerhafte Tabellen wurden vom bisherigen Programm akzeptiert und werden jetzt zurückgewiesen. Die vollständige Kontrolltabelle erreicht dieselben Berechnungen. 62 gezielte Regressionen im gemeinsamen freien Prüffenster bestanden. [Auswertung](../experiments/analysis/umbau_20261115/tools/gates.py).

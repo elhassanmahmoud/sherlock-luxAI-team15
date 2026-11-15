@@ -1,0 +1,131 @@
+{
+  "corpus_sha256": "bd6744c9d4ac08eda6958e3dff637f257ac96b5ae8a3b6098238c4453a0bebea",
+  "counts": {
+    "expert/train": {
+      "negative_not_forced_stay": 0,
+      "negative_stay_teacher": 2620,
+      "proven_negative": 4479,
+      "proven_true_zero": 14024,
+      "rows": 1079558,
+      "zero_energy_code": 28414,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 7854,
+      "zero_stay_teacher": 20560
+    },
+    "expert/val": {
+      "negative_not_forced_stay": 0,
+      "negative_stay_teacher": 300,
+      "proven_negative": 703,
+      "proven_true_zero": 1552,
+      "rows": 114893,
+      "zero_energy_code": 3234,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 1270,
+      "zero_stay_teacher": 1964
+    },
+    "mixed/train": {
+      "proven_true_zero": 26816,
+      "rows": 787631,
+      "zero_energy_code": 47024,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 18559,
+      "zero_stay_teacher": 28465
+    },
+    "mixed/val": {
+      "proven_true_zero": 4229,
+      "rows": 156243,
+      "zero_energy_code": 9695,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 6017,
+      "zero_stay_teacher": 3678
+    },
+    "v14/train": {
+      "proven_true_zero": 7366,
+      "rows": 201432,
+      "zero_energy_code": 12079,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 6224,
+      "zero_stay_teacher": 5855
+    },
+    "v14/val": {
+      "proven_true_zero": 1700,
+      "rows": 51048,
+      "zero_energy_code": 2601,
+      "zero_not_forced_stay": 0,
+      "zero_other_teacher": 1293,
+      "zero_stay_teacher": 1308
+    }
+  },
+  "examples": [
+    {
+      "enemy_energy": [
+        51,
+        51
+      ],
+      "energy_difference": [
+        -92,
+        -92
+      ],
+      "file": "g7280000_player_0_kaggle3.npz",
+      "frame": 85,
+      "label": 0,
+      "uid": 13
+    },
+    {
+      "enemy_energy": [
+        -75,
+        -75
+      ],
+      "energy_difference": [
+        0,
+        0
+      ],
+      "file": "g7280000_player_0_kaggle3.npz",
+      "frame": 176,
+      "label": 1,
+      "uid": 12
+    },
+    {
+      "enemy_energy": [
+        176,
+        176
+      ],
+      "energy_difference": [
+        -192,
+        -192
+      ],
+      "file": "g7280000_player_0_kaggle3.npz",
+      "frame": 279,
+      "label": 0,
+      "uid": 6
+    },
+    {
+      "enemy_energy": [
+        51,
+        51
+      ],
+      "energy_difference": [
+        -92,
+        -92
+      ],
+      "file": "g7280000_player_1_kaggle3.npz",
+      "frame": 85,
+      "label": 0,
+      "uid": 13
+    },
+    {
+      "enemy_energy": [
+        -75,
+        -75
+      ],
+      "energy_difference": [
+        0,
+        0
+      ],
+      "file": "g7280000_player_1_kaggle3.npz",
+      "frame": 176,
+      "label": 1,
+      "uid": 12
+    }
+  ]
+}

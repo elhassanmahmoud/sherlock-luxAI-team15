@@ -71,9 +71,13 @@ class SideRecord:
     def add(self, fz, teacher_actions, mirrored: bool) -> None:
         from agents.sherlock.imitation_agent import canonical_action
         ctx, ids, feats, masks, _, planes, pos = fz
+        # Lux removes negative-energy ships before applying their next command. Zero survives.
+        live = [(k, u) for k, u in enumerate(ids) if ctx["ally_ene"][u] >= 0]
+        if not live:
+            return
         si = len(self.planes)
         self.planes.append(np.round(planes * PLANE_SCALE).astype(np.int8))
-        for k, u in enumerate(ids):
+        for k, u in live:
             a, dx, dy = canonical_action(teacher_actions[u], mirrored)
             self.step.append(si)
             self.pos.append(pos[k])
@@ -93,7 +97,7 @@ class SideRecord:
             pos=np.array(self.pos, np.int8), uid=np.array(self.uid, np.int8),
             feats=np.array(self.feats, np.float16), mask=np.array(self.mask, bool),
             act=np.array(self.act, np.int8), sdx=np.array(self.sdx, np.int8), sdy=np.array(self.sdy, np.int8),
-            mstep=np.array(self.mstep, np.int16), meta=json.dumps(meta))
+            mstep=np.array(self.mstep, np.int16), meta=json.dumps({**meta, "row_filter": "unit_energy>=0"}))
         return len(self.act)
 
 
