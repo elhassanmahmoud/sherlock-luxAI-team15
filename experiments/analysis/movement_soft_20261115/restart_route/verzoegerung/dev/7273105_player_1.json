@@ -1,0 +1,522 @@
+{
+  "comparison": {
+    "actions_sha256": "5d4000496e2c7bca827663d3a83442ff8fcfde44b0e75686c04c51802f5c43ea",
+    "applied": 3,
+    "evidence": "historical shared prefix digest, per-UID events, full digests when no switch; raw reference streams unavailable",
+    "first_difference_global_step": {
+      "original": 114,
+      "restart": 105
+    },
+    "withheld": 9
+  },
+  "delayed": {
+    "matches": [
+      {
+        "first_own_point": 16,
+        "first_public_positive": 17,
+        "points_ours": 591,
+        "points_rival": 387,
+        "won": 1
+      },
+      {
+        "first_own_point": 14,
+        "first_public_positive": 15,
+        "points_ours": 774,
+        "points_rival": 794,
+        "won": 0
+      },
+      {
+        "first_own_point": 11,
+        "first_public_positive": 12,
+        "points_ours": 810,
+        "points_rival": 811,
+        "won": 0
+      }
+    ],
+    "matches_won": 1,
+    "points": 2175,
+    "rival_points": 1992,
+    "won": 0
+  },
+  "delayed_record": {
+    "game": {
+      "advice_new_saps": 0,
+      "advice_retargeted": 0,
+      "candidate": "selective_movement",
+      "charge_moves": 0,
+      "energy_changes": 0,
+      "energy_probes": 0,
+      "focus_saps": 0,
+      "losses": 2,
+      "opp_points": 1992,
+      "opponent": "solution92",
+      "points": 2175,
+      "result": 0.0,
+      "secs": 3.68,
+      "seed": 7273105,
+      "side": "player_1",
+      "steps": 303,
+      "study": {
+        "changed_steps": 270,
+        "changed_unit_orders": 603,
+        "movement": 603
+      },
+      "wins": 1
+    },
+    "matches": [
+      {
+        "first_own_point": 16,
+        "points_ours": 591,
+        "points_rival": 387,
+        "won": 1
+      },
+      {
+        "first_own_point": 14,
+        "points_ours": 774,
+        "points_rival": 794,
+        "won": 0
+      },
+      {
+        "first_own_point": 11,
+        "points_ours": 810,
+        "points_rival": 811,
+        "won": 0
+      }
+    ],
+    "opportunities": [
+      {
+        "applied": false,
+        "distances": [
+          8,
+          7,
+          9
+        ],
+        "energy": 93,
+        "match": 2,
+        "match_step": 4,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 105,
+        "uid": 0,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          22,
+          21
+        ],
+        "world_target": [
+          21,
+          14
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          8,
+          7,
+          9
+        ],
+        "energy": 93,
+        "match": 2,
+        "match_step": 7,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 108,
+        "uid": 1,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          22,
+          21
+        ],
+        "world_target": [
+          21,
+          14
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          5,
+          4,
+          6
+        ],
+        "energy": 94,
+        "match": 2,
+        "match_step": 8,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 109,
+        "uid": 0,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          20,
+          19
+        ],
+        "world_target": [
+          20,
+          14
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          8,
+          7,
+          9
+        ],
+        "energy": 93,
+        "match": 2,
+        "match_step": 10,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 111,
+        "uid": 2,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          22,
+          21
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          6,
+          5,
+          7
+        ],
+        "energy": 94,
+        "match": 2,
+        "match_step": 11,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 112,
+        "uid": 1,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          20,
+          19
+        ],
+        "world_target": [
+          21,
+          14
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          9,
+          8,
+          10
+        ],
+        "energy": 91,
+        "match": 2,
+        "match_step": 11,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 112,
+        "uid": 2,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          21,
+          21
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": true,
+        "distances": [
+          8,
+          7,
+          9
+        ],
+        "energy": 93,
+        "match": 2,
+        "match_step": 13,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 114,
+        "uid": 3,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          22,
+          21
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": true,
+        "distances": [
+          6,
+          5,
+          7
+        ],
+        "energy": 94,
+        "match": 2,
+        "match_step": 14,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 115,
+        "uid": 2,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          20,
+          19
+        ],
+        "world_target": [
+          20,
+          13
+        ]
+      },
+      {
+        "applied": true,
+        "distances": [
+          7,
+          6,
+          8
+        ],
+        "energy": 90,
+        "match": 2,
+        "match_step": 14,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 115,
+        "uid": 3,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          22,
+          20
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          11,
+          10,
+          12
+        ],
+        "energy": 100,
+        "match": 3,
+        "match_step": 4,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 206,
+        "uid": 1,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          23,
+          23
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          11,
+          10,
+          12
+        ],
+        "energy": 100,
+        "match": 3,
+        "match_step": 7,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 209,
+        "uid": 2,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          23,
+          23
+        ],
+        "world_target": [
+          22,
+          13
+        ]
+      },
+      {
+        "applied": false,
+        "distances": [
+          11,
+          10,
+          12
+        ],
+        "energy": 100,
+        "match": 3,
+        "match_step": 10,
+        "r3_world": [
+          4,
+          0,
+          0
+        ],
+        "step": 212,
+        "uid": 3,
+        "v14_world": [
+          1,
+          0,
+          0
+        ],
+        "world_origin": [
+          23,
+          23
+        ],
+        "world_target": [
+          23,
+          12
+        ]
+      }
+    ]
+  },
+  "orders_file_sha256": "35410178b3bf38a158bf708872c3ef9cead911e90b3ce12bd0dd5bc272b717da",
+  "original": {
+    "matches": [
+      {
+        "first_own_point": 16,
+        "first_public_positive": 17,
+        "points_ours": 591,
+        "points_rival": 387,
+        "won": 1
+      },
+      {
+        "first_own_point": 14,
+        "first_public_positive": 15,
+        "points_ours": 833,
+        "points_rival": 793,
+        "won": 1
+      },
+      {
+        "first_own_point": 11,
+        "first_public_positive": 12,
+        "points_ours": 869,
+        "points_rival": 813,
+        "won": 1
+      }
+    ],
+    "matches_won": 3,
+    "points": 2293,
+    "rival_points": 1993,
+    "won": 1
+  },
+  "restart": {
+    "matches": [
+      {
+        "first_own_point": 16,
+        "first_public_positive": 17,
+        "points_ours": 591,
+        "points_rival": 387,
+        "won": 1
+      },
+      {
+        "first_own_point": 11,
+        "first_public_positive": 12,
+        "points_ours": 789,
+        "points_rival": 746,
+        "won": 1
+      },
+      {
+        "first_own_point": 11,
+        "first_public_positive": 12,
+        "points_ours": 785,
+        "points_rival": 815,
+        "won": 0
+      }
+    ],
+    "matches_won": 2,
+    "points": 2165,
+    "rival_points": 1948,
+    "won": 1
+  },
+  "seed": 7273105,
+  "side": "player_1"
+}

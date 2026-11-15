@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Auch die verzögerte Wegregel scheidet aus
+
+Schritt 13 als früheste Rückkehr rettete weiterhin 7273148/P0, verlor jedoch beide Sitze auf 7273105. Auf den 14 gezielt ausgewählten Positionen gewannen die verzögerte Variante 12, der ursprüngliche R3 und die sofortige Regel jeweils 13. Die beiden Problemfälle mussten beide gewonnen werden. Alle Befehlsverläufe und Prüfsummen sind gesichert. [Bericht und 126 Matchzeilen](../experiments/analysis/movement_soft_20261115/restart_route/verzoegerung/dev/BERICHT.md).
+
 ## 15.11.2026 – R3 gewinnt 120/120 auf 60 neuen Karten gegen Solution
 
 Der ursprüngliche R3 gewann auf einem zweiten festen Solution-Satz **120/120**, V14 119/120 und die zusätzliche Wegregel 118/120. Zusammen auf den zwei Sätzen R3 **239/240**, V14 234/240. Die sofortige Wegregel ist aus dem Vergleich ausgeschieden. Vollständige Paare, Sieger und Prüfsummen wurden nachgerechnet. [Ergebnisse und Einzelpartien](../experiments/analysis/movement_soft_20261115/restart_route/FRISCHE_KARTEN.md).
