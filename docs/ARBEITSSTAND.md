@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Zweite Ansicht auf 100 weiteren Karten gegen Solution
+
+Die Diagonalvariante gewinnt 191/200, derselbe R3 mit einer Ansicht 192/200, V14 194/200 und V15 188/200. Vier Siege hinzugewonnen, fünf verloren gegenüber R3. Das 95-%-Intervall (−2,5 bis +1,0 Prozentpunkte) stützt keinen Vorteil der zweiten Ansicht. Alle neuen Sitzschlüssel, Spielenden und Prüfsummen sind geprüft. Diese 100 Karten bilden das erste Viertel des 400-Karten-Vergleichs. [Bericht und Zahlen pro Sitz](../experiments/analysis/movement_reflection_20261115/solution_quarter/ERGEBNIS.md).
+
 ## 16.11.2026 – Erste 25 zusätzliche Lehrerspiele für Mahmoud geprüft
 
 Der reine v4-Schüler hat 25 neue Karten gespielt. Der Kaggle-Lehrer hat 81.564 Entscheidungen beschriftet, darunter 2.839 legale Schüsse. 79.780 Entscheidungen lässt der Trainer zu. Beide Sitze und alle drei Gegner sind vertreten. Der unabhängige Neuaufbau aus Git reproduziert alle 293 eingefrorenen Dateien sowie das Laufprotokoll. Zwei Prozesse sammeln die übrigen 375 Karten. [Datensatz und Reproduktion](../experiments/analysis/umbau_20261115/dagger_zusatz/README.md).

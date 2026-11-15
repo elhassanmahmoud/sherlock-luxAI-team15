@@ -1,0 +1,423 @@
+{
+  "arm_totals": {
+    "r3": {
+      "games": 200,
+      "wins": 192,
+      "match_wins": 560,
+      "matches": 600,
+      "winrate_ci95": [
+        0.925,
+        0.99
+      ],
+      "wins_per_seat": {
+        "player_0": 96,
+        "player_1": 96
+      },
+      "losses": [
+        [
+          7158020,
+          "player_0"
+        ],
+        [
+          7158020,
+          "player_1"
+        ],
+        [
+          7158030,
+          "player_0"
+        ],
+        [
+          7158030,
+          "player_1"
+        ],
+        [
+          7158056,
+          "player_1"
+        ],
+        [
+          7158059,
+          "player_0"
+        ],
+        [
+          7158077,
+          "player_0"
+        ],
+        [
+          7158098,
+          "player_1"
+        ]
+      ]
+    },
+    "v14": {
+      "games": 200,
+      "wins": 194,
+      "match_wins": 531,
+      "matches": 600,
+      "winrate_ci95": [
+        0.945,
+        0.99
+      ],
+      "wins_per_seat": {
+        "player_0": 98,
+        "player_1": 96
+      },
+      "losses": [
+        [
+          7158030,
+          "player_1"
+        ],
+        [
+          7158063,
+          "player_0"
+        ],
+        [
+          7158070,
+          "player_1"
+        ],
+        [
+          7158077,
+          "player_0"
+        ],
+        [
+          7158080,
+          "player_1"
+        ],
+        [
+          7158088,
+          "player_1"
+        ]
+      ]
+    },
+    "v15": {
+      "games": 200,
+      "wins": 188,
+      "match_wins": 544,
+      "matches": 600,
+      "winrate_ci95": [
+        0.895,
+        0.98
+      ],
+      "wins_per_seat": {
+        "player_0": 94,
+        "player_1": 94
+      },
+      "losses": [
+        [
+          7158053,
+          "player_1"
+        ],
+        [
+          7158056,
+          "player_0"
+        ],
+        [
+          7158056,
+          "player_1"
+        ],
+        [
+          7158059,
+          "player_0"
+        ],
+        [
+          7158059,
+          "player_1"
+        ],
+        [
+          7158060,
+          "player_1"
+        ],
+        [
+          7158070,
+          "player_0"
+        ],
+        [
+          7158073,
+          "player_0"
+        ],
+        [
+          7158076,
+          "player_0"
+        ],
+        [
+          7158076,
+          "player_1"
+        ],
+        [
+          7158082,
+          "player_0"
+        ],
+        [
+          7158082,
+          "player_1"
+        ]
+      ]
+    },
+    "diagonal": {
+      "games": 200,
+      "wins": 191,
+      "match_wins": 559,
+      "matches": 600,
+      "winrate_ci95": [
+        0.92,
+        0.985
+      ],
+      "wins_per_seat": {
+        "player_0": 96,
+        "player_1": 95
+      },
+      "losses": [
+        [
+          7158020,
+          "player_0"
+        ],
+        [
+          7158020,
+          "player_1"
+        ],
+        [
+          7158030,
+          "player_0"
+        ],
+        [
+          7158030,
+          "player_1"
+        ],
+        [
+          7158056,
+          "player_0"
+        ],
+        [
+          7158059,
+          "player_1"
+        ],
+        [
+          7158072,
+          "player_1"
+        ],
+        [
+          7158073,
+          "player_0"
+        ],
+        [
+          7158077,
+          "player_1"
+        ]
+      ]
+    }
+  },
+  "paired_candidate_minus_reference": {
+    "r3": {
+      "gained": [
+        [
+          7158056,
+          "player_1"
+        ],
+        [
+          7158059,
+          "player_0"
+        ],
+        [
+          7158077,
+          "player_0"
+        ],
+        [
+          7158098,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7158056,
+          "player_0"
+        ],
+        [
+          7158059,
+          "player_1"
+        ],
+        [
+          7158072,
+          "player_1"
+        ],
+        [
+          7158073,
+          "player_0"
+        ],
+        [
+          7158077,
+          "player_1"
+        ]
+      ],
+      "net_games": -1,
+      "winrate_delta": -0.005,
+      "ci95": [
+        -0.025,
+        0.01
+      ],
+      "match_rate_delta": -0.0016666666666666668,
+      "match_ci95": [
+        -0.021666666666666664,
+        0.018333333333333333
+      ]
+    },
+    "v14": {
+      "gained": [
+        [
+          7158063,
+          "player_0"
+        ],
+        [
+          7158070,
+          "player_1"
+        ],
+        [
+          7158077,
+          "player_0"
+        ],
+        [
+          7158080,
+          "player_1"
+        ],
+        [
+          7158088,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7158020,
+          "player_0"
+        ],
+        [
+          7158020,
+          "player_1"
+        ],
+        [
+          7158030,
+          "player_0"
+        ],
+        [
+          7158056,
+          "player_0"
+        ],
+        [
+          7158059,
+          "player_1"
+        ],
+        [
+          7158072,
+          "player_1"
+        ],
+        [
+          7158073,
+          "player_0"
+        ],
+        [
+          7158077,
+          "player_1"
+        ]
+      ],
+      "net_games": -3,
+      "winrate_delta": -0.015,
+      "ci95": [
+        -0.05,
+        0.02
+      ],
+      "match_rate_delta": 0.04666666666666667,
+      "match_ci95": [
+        0.008333333333333335,
+        0.08333333333333334
+      ]
+    },
+    "v15": {
+      "gained": [
+        [
+          7158053,
+          "player_1"
+        ],
+        [
+          7158056,
+          "player_1"
+        ],
+        [
+          7158059,
+          "player_0"
+        ],
+        [
+          7158060,
+          "player_1"
+        ],
+        [
+          7158070,
+          "player_0"
+        ],
+        [
+          7158076,
+          "player_0"
+        ],
+        [
+          7158076,
+          "player_1"
+        ],
+        [
+          7158082,
+          "player_0"
+        ],
+        [
+          7158082,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7158020,
+          "player_0"
+        ],
+        [
+          7158020,
+          "player_1"
+        ],
+        [
+          7158030,
+          "player_0"
+        ],
+        [
+          7158030,
+          "player_1"
+        ],
+        [
+          7158072,
+          "player_1"
+        ],
+        [
+          7158077,
+          "player_1"
+        ]
+      ],
+      "net_games": 3,
+      "winrate_delta": 0.015,
+      "ci95": [
+        -0.03,
+        0.06
+      ],
+      "match_rate_delta": 0.024999999999999998,
+      "match_ci95": [
+        -0.009999999999999998,
+        0.06
+      ]
+    }
+  },
+  "files": {
+    "diagonal": {
+      "manifest_sha256": "5762c85894366ebff0b3a8a471ff5b6ce640daeb8b6635a647fb04bc307d10fe",
+      "games_sha256": "81aeb41f9ae75c82959fe7fd5184d1fa3744958c736e6b8f796427e9205a2088"
+    },
+    "csv": {
+      "v14": "957ac8668e10b6a118b40cb81338a86b3ec356556d68a116535b16d4130bfa05",
+      "v4_mixed": "1cc603732dafff379e57f236be4fc37a0bdd7dfcfa35fcc0e7ce78c95387c4cd"
+    },
+    "r3_400row_prefix": "c0e04b915ad6cfd60f010c1a694222d72184c11e4bb2bf8defe167d3976f33c4",
+    "r3_manifest": "27f6033f8a509e7b0a63b38586abebc4c0870f6cb5cb7780e1ead86a7054ecba"
+  },
+  "bootstrap": "10000 whole paired maps with both seats, RNG 2711",
+  "scope": "Solution_92 only; no release decision"
+}
