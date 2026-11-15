@@ -1,0 +1,65 @@
+Training: 958870/989063 Befehle im Spiel ausfuehrbar, 44677/44677 legale Schusslabels, davon 61 auf das eigene Feld
+Validierung: 312389/322184 Befehle im Spiel ausfuehrbar, 12924/12924 legale Schusslabels, davon 8 auf das eigene Feld
+Trainingsdaten: 958870 Unit-Entscheidungen, Verteilung stay 32.3 %, up 6.2 %, right 24.2 %, down 25.8 %, left 6.8 %, sap 4.7 %
+Minibatch: 24 Spielschritte (im Mittel etwa 256 Unit-Entscheidungen), Geraet mps
+Epoche 1/5: Loss 1.7839 | Validierung Aktion 65.7 % | vollstaendiger Befehl 65.3 % | je Aktion stay 78 up 39 right 70 down 65 left 37 sap 24 | Ziel bei legalem Lehrerschuss exakt 58 %, +-1 Feld 84 % | 151s
+Epoche 2/5: Loss 1.2282 | Validierung Aktion 65.0 % | vollstaendiger Befehl 64.7 % | je Aktion stay 67 up 39 right 82 down 65 left 44 sap 20 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 135s
+Epoche 3/5: Loss 1.0485 | Validierung Aktion 68.8 % | vollstaendiger Befehl 68.5 % | je Aktion stay 76 up 40 right 73 down 77 left 39 sap 21 | Ziel bei legalem Lehrerschuss exakt 64 %, +-1 Feld 87 % | 130s
+Epoche 4/5: Loss 0.9120 | Validierung Aktion 70.4 % | vollstaendiger Befehl 70.0 % | je Aktion stay 83 up 39 right 72 down 74 left 46 sap 22 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 86 % | 129s
+Epoche 5/5: Loss 0.8292 | Validierung Aktion 70.3 % | vollstaendiger Befehl 70.0 % | je Aktion stay 81 up 42 right 73 down 74 left 46 sap 22 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 86 % | 129s
+Fixe letzte Epoche, v14: 51048 Zeilen | Aktion 70.83 % | voller Befehl 70.30 % | Ziel bei legalem Lehrerschuss 65.61 %
+Fixe letzte Epoche, mixed: 156243 Zeilen | Aktion 69.72 % | voller Befehl 69.40 % | Ziel bei legalem Lehrerschuss 61.56 %
+Fixe letzte Epoche, expert: 114893 Zeilen | Aktion 70.85 % | voller Befehl 70.58 % | Ziel bei legalem Lehrerschuss 60.62 %
+{
+  "checkpoint_sha256": "fc5bb7f3b3116221aaab9e981900c14550c0ce195bff152327101382831ee8c4",
+  "study": "whole_policy_20261115",
+  "arm": "historical",
+  "manifest_sha256": "bd6744c9d4ac08eda6958e3dff637f257ac96b5ae8a3b6098238c4453a0bebea",
+  "validation": {
+    "v14": {
+      "rows": 51048,
+      "action": 0.7082745432853699,
+      "full_order": 0.7029854254818994,
+      "legal_teacher_saps": 2716,
+      "target_exact": 0.6561119293078056,
+      "target_near": 0.8622974963181149
+    },
+    "mixed": {
+      "rows": 156243,
+      "action": 0.6972216367721558,
+      "full_order": 0.6940342927363146,
+      "legal_teacher_saps": 6313,
+      "target_exact": 0.6155552035482338,
+      "target_near": 0.8645651829558055
+    },
+    "expert": {
+      "rows": 114893,
+      "action": 0.7085114121437073,
+      "full_order": 0.7057958274220362,
+      "legal_teacher_saps": 3895,
+      "target_exact": 0.6061617458279845,
+      "target_near": 0.8485237483953787
+    }
+  },
+  "settings": {
+    "seed": 2711,
+    "epochs": 5,
+    "mb": 256,
+    "lr": 0.001,
+    "ch": 32,
+    "blocks": 3,
+    "hidden": 128,
+    "sap_weight": 0.5
+  },
+  "training_device": "mps",
+  "torch_version": "2.14.1",
+  "numpy_version": "2.5.4",
+  "training_sources_sha256": {
+    "scripts/full_student_study.py": "b279597199e832d28eea66e612f6a22d499b0f0886a07ed5351c95380c0b5080",
+    "scripts/imitation_storage.py": "67a37400e3d990327ff161088baa285c7ba084f4c7c96971a91c9f01f038ac39",
+    "scripts/imitate.py": "f6fc9e07191c681a2d6f280d8fee14ed8aa6ea609fc2474e2ea7464b98cd5c14",
+    "agents/sherlock/imitation_net.py": "5112d1b005fb6e7328715e072a3137c975f6d306813350de511b0df4439c1ac8",
+    "agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+    "agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78"
+  }
+}

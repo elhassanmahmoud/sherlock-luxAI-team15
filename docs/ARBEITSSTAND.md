@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der neue Einzelschüler gewinnt 9.269 Lehrerbefehle auf dessen eigenen Stellungen hinzu
+
+Der Kandidat und seine Kontrolle sind nach je fünf Epochen fertig. Auf eigenen Schülerstellungen gewinnt der Kandidat 565 genaue Lehrerbefehle hinzu, auf den älteren V14-Stellungen 340. Beide festgelegten Vergleiche auf archivierten Stellungen bestanden. Der Vergleich in vollständigen Spielen ist angelaufen. Beide Gewichtedateien sind als getrennte Studienmodelle verfügbar. [Training und Modelle](../experiments/analysis/full_student_20261115/TRAINING.md).
+
 ## 15.11.2026 – Zwei Ansichten von R3 erfüllen die Kriterien für einen Spieltest
 
 Auf 24 Diagnosekarten wiegt die Netzbewertung aus der zweiten Kartenansicht 244 zusätzliche Treffer der Lehreraktion auf. Die Zahl der zuvor korrekten V14-Befehle, die der Berater fälschlich ändert, sinkt von 2.343 auf 1.909. Auf den acht älteren Karten +112 richtige Empfehlungen. Je Archiv wurde die ursprüngliche R3-Zählung reproduziert. [Auswertung und Richtungssplits](../experiments/analysis/movement_reflection_20261115/ARCHIVVERGLEICH.md).

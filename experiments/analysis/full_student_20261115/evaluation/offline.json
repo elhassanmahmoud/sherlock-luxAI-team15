@@ -1,0 +1,38 @@
+{
+  "checks": {
+    "expert_above_control": true,
+    "mixed_at_least_control": true
+  },
+  "complete_orders": {
+    "expert": {
+      "historical": 81091,
+      "legal_teacher_saps": 3895,
+      "plus_teacher": 90360,
+      "rows": 114893
+    },
+    "mixed": {
+      "historical": 108438,
+      "legal_teacher_saps": 6313,
+      "plus_teacher": 109003,
+      "rows": 156243
+    },
+    "v14": {
+      "historical": 35886,
+      "legal_teacher_saps": 2716,
+      "plus_teacher": 36226,
+      "rows": 51048
+    }
+  },
+  "manifest_sha256": "bd6744c9d4ac08eda6958e3dff637f257ac96b5ae8a3b6098238c4453a0bebea",
+  "models": {
+    "historical": "fc5bb7f3b3116221aaab9e981900c14550c0ce195bff152327101382831ee8c4",
+    "plus_teacher": "16da8af0dcc1f5624f7309619c0b9f1f7671077723daaca98fad990a3ebc046e"
+  },
+  "passes": true,
+  "runtime": {
+    "numpy_version": "2.5.4",
+    "torch_version": "2.14.1",
+    "training_device": "mps"
+  },
+  "training_source_digest": "4b4501d3b62b6a53ddad4772f5bb447665745c6435fb0ef9fd7d79b98074687f"
+}
