@@ -1,0 +1,52 @@
+{
+  "files": {
+    "after_loss": {
+      "games_sha256": "d5ff3876f827037a291e25cdba6aefd3075d03bf921c6e681ca60c8679b7be72",
+      "manifest_sha256": "1ebd6913c7841fda85394cc4bf0df5b5b36a7c3613ea6880c43298e99582a395"
+    },
+    "diagonal": {
+      "games_sha256": "c8ebf3422872d5241b29a027597d658b51238bcd3a491b5cea1acda814f7ea01",
+      "manifest_sha256": "6c8bf341e58c0f34fed71003c69398e3645a12346cb88f5ceaf641c19bea5a11"
+    },
+    "v14": {
+      "games_sha256": "d2317de1fceb3b5869ab41a6657128eb258c8ce3bb6ee84523bb98119556afe5",
+      "manifest_sha256": "1005dd495b264a909eb719593894b4429d71430c82c67de7356e93dce9d57604"
+    }
+  },
+  "game_gates_pass": false,
+  "gates": {
+    "solution_at_least_v14": true,
+    "solution_strictly_above_diagonal": false
+  },
+  "matches": {
+    "after_loss": 94,
+    "diagonal": 94,
+    "v14": 89
+  },
+  "paired": {
+    "diagonal": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "gained": 0,
+      "lost": 0
+    },
+    "v14": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "gained": 0,
+      "lost": 0
+    }
+  },
+  "previous_stage_sha256": "576338cf344cafdf52740fcef9d5668cb84c99449d5dc9591155288a1494a585",
+  "purpose": "separate Solution hypothesis",
+  "stage": "solution",
+  "wins": {
+    "after_loss": 32,
+    "diagonal": 32,
+    "v14": 32
+  }
+}

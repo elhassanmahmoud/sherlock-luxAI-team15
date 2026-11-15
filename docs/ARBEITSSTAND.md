@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Rückwechsel nach einem verlorenen Auftakt abgeschlossen
+
+Im getrennten Folgeversuch gewannen Diagonal-R3, der Rückwechsel-Kandidat und V14 jeweils 32/32 gegen Solution. Der Rückwechsel-Kandidat verlor kein erstes Match. Alle Aktionsfolgen beider Spieler stimmen über 303 Züge mit Diagonal-R3 überein. Zusammengenommen gab es auf den zwei frischen Kartengruppen in 64 Solution-Partien keine Umschaltung. Ein zusätzlicher Sieg durch diese Regel auf neuen Karten wurde damit nicht nachgewiesen. [Vergleich und getrennte Matchausgänge](../experiments/analysis/diagonal_after_loss_20261115/SOLUTION_FOLGEPRUEFUNG.md).
+
 ## 15.11.2026 – Im direkten Vergleich mit V15 hilft sichtbarer Gegnerkontakt
 
 Auf identischen 24 Karten gewinnt der Kontaktagent 26/48 gegen V15, der reine R3 hatte 12/48 gewonnen. Das gepaarte Kartenintervall des Zuwachses beträgt +4,2 bis +54,2 Prozentpunkte. Das Intervall für die Siegquote gegen V15 selbst (33,3 bis 75,0 %) lässt eine allgemeine Überlegenheit offen. [Direktduell und Begegnungen je Karte](../experiments/analysis/r3_v4_contact_20261115/direct_v4/ERGEBNIS.md).
