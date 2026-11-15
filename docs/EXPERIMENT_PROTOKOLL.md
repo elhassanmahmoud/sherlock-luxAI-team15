@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – 288 zusätzliche Spiele für das Nachtraining des Bewegungsberaters abgeschlossen. 120 Lernkarten und 24 getrennte Diagnosekarten, jeweils beide Sitze, gegenüber Kaggle3, Solution und V14. [Sammlung und Befehlsprüfung](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
+
 15.11.2026 – In 80 archivierten Spielen und zwölf älteren Traces die Fortdauer einer sichtbaren gegnerischen Feldbesetzung gemessen. Beobachtungszahlen und Gegenprobe gegen die tatsächliche Folgebesetzung reproduziert. [Zähler und Quellen](../experiments/analysis/temporal_movement_20261115/BEOBACHTUNG.md).
 
 15.11.2026 – Auswahl zwischen zwei vorliegenden Agenten über die vor dem ersten Zug bekannte Schussreichweite. Archivprüfung mit 80 Auswahlkarten und 400 getrennten Karten, beide Sitze gegen Solution. Drei zusätzliche Siege in 800 Partien, das Kartenintervall schließt null ein. [Ergebnis, Herkunft der Ausgänge und Nachrechnung](../experiments/analysis/late_ft18_20261115/public_selector/ERGEBNIS.md).

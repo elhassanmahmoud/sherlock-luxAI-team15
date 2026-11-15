@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Alle 288 eigenen Spielverläufe vollständig, Refit gestartet
+
+Die getrennten Karten lieferten 787.631 neue Lern- und 156.243 Diagnoseentscheidungen. Auf den neuen Diagnosekarten stellte der erste Bewegungsberater 12.165 Übereinstimmungen mit dem Lehrer her und zerstörte 3.926 zuvor übereinstimmende Befehle. Die Mischung mit den älteren V14-Stellungen liefert insgesamt 958.870 ausführbare Befehle für das neue Training. Alle 288 Dateiidentitäten und die Trennung von Bewegung und Schuss sind geprüft. [Daten, Zähler und Reproduktion](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
+
 ## 15.11.2026 – Energiebuchhaltung in Mahmouds Hybrid berichtigt
 
 Der Hybrid entscheidet für jedes Schiff zwischen V14 und dem Nachahmungsnetz. Wenn der Schüler den Befehl ersetzte, stand im V14-Energieschätzer noch der ursprüngliche Vorschlag. Der Hybrid übergibt dem Schätzer jetzt die tatsächlich gesendete Befehlsmatrix in Weltkoordinaten. Für beide Spielerpositionen wurde ein gemischter Zug geprüft. Nach einem Schuss mit Kosten 30 und einem Energieabfall von 100 auf 67 misst der Schätzer den verbleibenden Nebelverlust von drei korrekt. Die fokussierte integrierte Prüfung bestand mit 38 Tests. Die spielerische Wirkung dieses Buchhaltungsfixes ist offen. Unser Bewegungsberater protokollierte den endgültigen Befehl bereits zuvor. [Hybrid](../agents/sherlock/hybrid_agent.py) · [Regressionstest](../tests/test_hybrid_agent.py).
