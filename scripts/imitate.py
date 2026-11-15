@@ -243,6 +243,21 @@ def cmd_collect(a) -> None:
 
 
 # ------------------------------------------------------------------ Training
+def concat_games(files, *, with_base=False):
+    columns = ("pos", "feats", "mask", "act", "sdx", "sdy") + (("base_act",) if with_base else ())
+    planes, rows = [], {k: [] for k in ("step", *columns)}
+    off = 0
+    for path in files:
+        with np.load(path, allow_pickle=False) as z:
+            board = z["planes"]
+            planes.append(board)
+            rows["step"].append(z["step"].astype(np.int64) + off)
+            off += len(board)
+            for k in columns:
+                rows[k].append(z[k])
+    return np.concatenate(planes), {k: np.concatenate(v) for k, v in rows.items()}
+
+
 def load_data(dirs: list[str], val_frac: float, seed: int):
     files = sorted(f for d in dirs for f in Path(d).glob("g*.npz"))
     rng = random.Random(seed)
@@ -252,19 +267,29 @@ def load_data(dirs: list[str], val_frac: float, seed: int):
     for f in files:
         parts["val" if f.name.split("_")[0] in val_games else "train"].append(f)
 
-    def cat(fs):
-        planes, rows = [], {k: [] for k in ("step", "pos", "feats", "mask", "act", "sdx", "sdy")}
-        off = 0
-        for f in fs:
-            z = np.load(f)
-            planes.append(z["planes"])
-            rows["step"].append(z["step"].astype(np.int64) + off)
-            off += len(z["planes"])
-            for k in ("pos", "feats", "mask", "act", "sdx", "sdy"):
-                rows[k].append(z[k])
-        return np.concatenate(planes), {k: np.concatenate(v) for k, v in rows.items()}
+    return concat_games(parts["train"]), concat_games(parts["val"]), len(parts["train"]), len(parts["val"])
 
-    return cat(parts["train"]), cat(parts["val"]), len(parts["train"]), len(parts["val"])
+
+def selective_data(dirs):
+    """Nutze exakt die pruefsummengebundenen Karten/Sitze der Kampfspezialisten-Diagnose."""
+    from scripts.train_combat_advice import input_index, make_plan
+
+    plan = make_plan(7271000, 32, 7271032, 8)
+    records = input_index(dirs, plan)
+    train, val = (concat_games([r["path"] for r in records[k]], with_base=True) for k in ("train","val"))
+    identities = {k: [{name: r[name] for name in ("seed","side","sha256")} for r in group]
+                  for k, group in records.items()}
+    return train, val, len(records["train"]), len(records["val"]), identities
+
+
+def action_loss(logits, teachers, base_actions=None):
+    import torch.nn.functional as F
+
+    if base_actions is None:
+        return F.cross_entropy(logits, teachers)
+    per_row = F.cross_entropy(logits, teachers, reduction="none")
+    weights = 1 + 2 * ((base_actions == 5) | (teachers == 5)).to(per_row.dtype)
+    return (per_row * weights).sum() / weights.sum()
 
 
 def prepare_labels(rows, width, height):
@@ -316,8 +341,12 @@ def train_student(train, val, a, log):
     net = ImitationNet(feat_dim=FEATURE_DIM, n_actions=6, ch=a.ch, blocks=a.blocks, hidden=a.hidden,
                        detach_value=True, sap_head=True).to(dev)
 
+    selective = "base_act" in train[1]
+    step_rng = np.random.default_rng(a.seed) if selective else np.random
+
     def to_dev(planes, rows):
-        return (torch.as_tensor(planes).to(dev),
+        # Beim kleinen Fokuslauf bleiben die kompakten int8-Karten im Hauptspeicher.
+        return (torch.as_tensor(planes, device="cpu" if selective else dev),
                 {k: torch.as_tensor(v.astype(np.float32) if k == "feats" else v).to(dev) for k, v in rows.items()})
 
     P, R = to_dev(*train)
@@ -336,7 +365,10 @@ def train_student(train, val, a, log):
     n = len(train_idx)
     if n == 0:
         raise ValueError("Keine ausfuehrbaren Lehrerbefehle im Training")
-    counts = torch.bincount(R["act"][train_idx], minlength=6).float()
+    counts = torch.bincount(R["act"][train_idx].cpu(), minlength=6).float()
+    if selective:
+        focused = ((R["act"][train_idx] == 5) | (R["base_act"][train_idx] == 5)).sum().item()
+        log(f"Aktionsverlust: {int(focused)}/{n} ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3")
     log(f"Trainingsdaten: {n} Unit-Entscheidungen, Verteilung " +
         ", ".join(f"{nm} {100 * c / n:.1f} %" for nm, c in zip(("stay", "up", "right", "down", "left", "sap"), counts.tolist())))
     opt = torch.optim.AdamW(net.parameters(), lr=a.lr, weight_decay=1e-4)
@@ -353,7 +385,7 @@ def train_student(train, val, a, log):
         steps_all = np.unique(Rt_step_np)
         starts = np.searchsorted(Rt_step_np, steps_all, side="left")
         ends = np.searchsorted(Rt_step_np, steps_all, side="right")
-        order = np.random.permutation(len(steps_all)) if shuffle else np.arange(len(steps_all))
+        order = step_rng.permutation(len(steps_all)) if shuffle else np.arange(len(steps_all))
         for b in range(0, len(order), k):
             sel = order[b:b + k]
             counts = ends[sel] - starts[sel]
@@ -365,7 +397,7 @@ def train_student(train, val, a, log):
     def batch_logits(Pt, Rt, idx, uniq=None, inv=None):
         if uniq is None:
             uniq, inv = torch.unique(Rt["step"][idx], return_inverse=True)
-        planes = Pt[uniq].float() / PLANE_SCALE
+        planes = Pt[uniq.to(Pt.device)].to(dev, dtype=torch.float32) / PLANE_SCALE
         logits, _, smap = net.forward_all(planes, inv, Rt["pos"][idx], Rt["feats"][idx])
         logits = logits.masked_fill(~Rt["mask"][idx], -torch.inf)
         sel = Rt["sap_label"][idx]
@@ -382,7 +414,7 @@ def train_student(train, val, a, log):
         joint_correct = 0
         sap_n = sap_hit = sap_near = 0
         with torch.no_grad():
-            for idx, uniq, inv in step_batches(val_step_np, 512, False):
+            for idx, uniq, inv in step_batches(val_step_np, 32 if selective else 512, False):
                 lg, sel, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
                 pred = lg.argmax(1)
                 y = Rv["act"][idx]
@@ -408,7 +440,7 @@ def train_student(train, val, a, log):
         for idx, uniq, inv in step_batches(train_step_np, k_steps, True):
             idx = train_idx[idx]
             lg, _, s_lg, s_tgt = batch_logits(P, R, idx, uniq, inv)
-            loss = F.cross_entropy(lg, R["act"][idx])  # keine Glaettung: gesperrte Aktionen bekaemen sonst Masse
+            loss = action_loss(lg, R["act"][idx], R["base_act"][idx] if selective else None)
             if s_lg is not None:
                 loss = loss + a.sap_weight * F.cross_entropy(s_lg, s_tgt)
             opt.zero_grad(set_to_none=True)
@@ -441,14 +473,21 @@ def cmd_train(a) -> None:
             fh.write(msg + "\n")
 
     t0 = time.time()
-    train, val, nt, nv = load_data(a.data, a.val_frac, a.seed)
+    extra = {}
+    if getattr(a, "selective", False):
+        train, val, nt, nv, inputs = selective_data(a.data)
+        extra["selective_training"] = dict(inputs=inputs, combat_action_weight=3, other_action_weight=1,
+                                           target_weight=a.sap_weight, mb=a.mb, seed=a.seed, lr=a.lr,
+                                           lr_schedule="OneCycleLR", optimizer="AdamW")
+    else:
+        train, val, nt, nv = load_data(a.data, a.val_frac, a.seed)
     log(f"Dateien: {nt} Training, {nv} Validierung (getrennt nach Spiel), geladen in {time.time() - t0:.0f}s")
     net = train_student(train, val, a, log)
     cfg = v14_cfg()
     save_policy(str(out), net, cfg, extra={"kind": "imitation", "teacher": "kaggle3 lux3-bot 0.4.8_fn",
                                            "data": a.data, "epochs": a.epochs,
                                            # Zielkopf mit dem eigenen Feld als legalem Ziel trainiert (masked_sap_logits)
-                                           "sap_own_tile": True})
+                                           "sap_own_tile": True, **extra})
     log(f"gespeichert: {out} ({sum(p.numel() for p in net.parameters())} Parameter)")
 
 
@@ -499,8 +538,16 @@ def main() -> None:
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--device", default="auto")
     t.add_argument("--sap-weight", type=float, default=0.5)
+    focused = sub.add_parser("train-selective", help="6 Aktionsklassen; feste Kampfkarten und SAP-Gewichtung")
+    focused.add_argument("--data", nargs="+", required=True)
+    focused.add_argument("--out", required=True)
+    focused.add_argument("--device", choices=("auto","mps","cpu"), default="auto")
+    focused.set_defaults(selective=True, epochs=5, mb=256, lr=0.001, ch=32, blocks=3, hidden=128,
+                         seed=2711, sap_weight=0.5)
     a = ap.parse_args()
-    {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble, "train": cmd_train}[a.cmd](a)
+    commands = {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble,
+                "train": cmd_train, "train-selective": cmd_train}
+    commands[a.cmd](a)
 
 
 if __name__ == "__main__":

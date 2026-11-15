@@ -11,7 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 WEIGHTS = ROOT / 'agents/sherlock/weights/agent_p0.pth'
 POLICIES = {'v14': 'agents.sherlock.main:Agent_x', 'pressure': 'scripts.final_pressure:PressureAgent',
             'contact': 'scripts.contact_reserve:ContactReserveAgent', 'learned': 'scripts.final_learning_agent:EnergyReturnAgent',
-            'aim': 'scripts.combat_advice_agent:CombatAdviceAgent', 'fire': 'scripts.combat_advice_agent:CombatAdviceAgent'}
+            'aim': 'scripts.combat_advice_agent:CombatAdviceAgent', 'fire': 'scripts.combat_advice_agent:CombatAdviceAgent',
+            'selective_combat': 'scripts.selective_advice_agent:SelectiveAdviceAgent',
+            'selective_movement': 'scripts.selective_advice_agent:SelectiveAdviceAgent'}
 
 
 def digest(path):
@@ -34,7 +36,7 @@ def evaluate(job):
     return dict(candidate=policy, opponent=opponent, seed=seed, side=side,
                 result=row['result'], wins=row['our_wins'], losses=row['opp_wins'],
                 points=row['our_points'], opp_points=row['opp_points'], steps=row['steps'], secs=row['secs'],
-                study=dict(getattr(agent,'study_stats',{})), charge_moves=extra.get('charge_moves',0),
+                study=dict(getattr(agent,'study_stats',getattr(agent,'selective_counts',{}))), charge_moves=extra.get('charge_moves',0),
                 focus_saps=extra.get('focus_saps',0), energy_changes=extra.get('energy_changes',0),
                 energy_probes=extra.get('energy_probes',0), advice_retargeted=extra.get('advice_retargeted',0),
                 advice_new_saps=extra.get('advice_new_saps',0))
@@ -54,6 +56,8 @@ def init_worker(policy, model):
         extra['model_path'] = model
     elif policy in ('aim', 'fire'):
         extra = {'advice_path': model, 'mode': policy}
+    elif policy.startswith('selective_'):
+        extra = {'advice_path': model, 'mode': policy.removeprefix('selective_')}
     agent = klass('player_0', agent_path=str(WEIGHTS), cfg=build_cfg(str(WEIGHTS),[]), train=False, seed=0, **extra)
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
@@ -65,6 +69,8 @@ def contract(args):
     tracked += [ROOT/'scripts'/f for f in ('final_battle_compare.py','common.py','scoring.py','par_eval.py','metrics.py','kaggle3_opponent.py','experiment.py')]
     tracked.append(ROOT/(POLICIES[args.candidate].split(':')[0].replace('.','/')+'.py'))
     if args.candidate == 'learned': tracked.extend((ROOT/'scripts').glob('final_learning_*.py'))
+    if args.candidate.startswith('selective_'):
+        tracked += [ROOT/'scripts'/f for f in ('combat_teacher_counterfactual.py','collect_combat_advice.py','imitate.py')]
     # Include installed opponent source/weights when that opponent is actually evaluated.
     if 'kaggle3' in args.opponents.split(','):
         from scripts.fetch_kaggle3 import TARGET, verify
@@ -85,7 +91,7 @@ def main():
     p.add_argument('--maps',type=int,required=True); p.add_argument('--out',required=True,type=Path)
     p.add_argument('--workers',type=int,choices=[1,2],default=2)
     a = p.parse_args(); a.out.mkdir(parents=True,exist_ok=True)
-    if a.maps <= 0 or bool(a.model) != (a.candidate in ('learned', 'aim', 'fire')): p.error('invalid map count or model argument')
+    if a.maps <= 0 or bool(a.model) != (a.candidate in ('learned', 'aim', 'fire', 'selective_movement', 'selective_combat')): p.error('invalid map count or model argument')
     import fcntl
     with (a.out/'.run.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
