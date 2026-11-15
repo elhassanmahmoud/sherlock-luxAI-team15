@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – V15 gewinnt 36/48 direkt gegen den ursprünglichen R3
+
+24 frische Karten, beide Startseiten. Auf 18 Karten gewinnt der gemischte v4-Hybrid beide Partien, auf sechs R3. V15 gewinnt 100/144 Einzelmatches. Acht historische Referenzpartien reproduzierten zuvor die ursprünglichen Endstände beider Agenten. [Spielreihen und Kartenintervall](../experiments/analysis/r3_v4_mixed_duel_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Fünf Solution-Niederlagen bis zum entscheidenden Match nachgespielt
 
 16 vollständige Partien von R3 und V14, 48 Einzelmatches. Drei zusätzliche Niederlagen entstehen in verschiedenen Spielphasen. Auch erfolgreiche R3-Partien lassen zwischenzeitlich allein besetzte Felder frei. Ein pauschaler Haltebefehl lässt sich aus diesen Verläufen nicht begründen. [Nachrechnung und Verlauf je Karte](../experiments/analysis/movement_soft_20261115/dev_a_retrace/ERGEBNIS.md).

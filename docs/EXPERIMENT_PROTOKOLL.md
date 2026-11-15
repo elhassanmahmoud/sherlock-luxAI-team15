@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – 24 frische Karten, beide Startseiten. Auf 18 Karten gewinnt der gemischte v4-Hybrid beide Partien, auf sechs R3. V15 gewinnt 100/144 Einzelmatches. Acht historische Referenzpartien reproduzierten zuvor die ursprünglichen Endstände beider Agenten. [Spielreihen und Kartenintervall](../experiments/analysis/r3_v4_mixed_duel_20261115/ERGEBNIS.md).
+
 15.11.2026 – Beide R3-Nachtrainings sind mit je 1.024 tatsächlich ausgeführten Updates beendet. R8 gewinnt auf neuen Stellungen netto 267 korrekte Befehle gegenüber der Warmkontrolle. Auf älteren Stellungen unterschreitet R8 den ursprünglichen R3. Zwei von drei Bedingungen für Auswahlspiele erfüllt. [Beide Checkpoints und alle 96 Auswertungen](../experiments/analysis/r8_warm_20261115/ERGEBNIS.md).
 
 15.11.2026 – Nach 224 Auswahlspielen qualifiziert sich der diagonal gespiegelte R3 mit vier zusätzlichen externen Siegen gegenüber V14 für den unabhängigen Vergleich. Der getrennte FT18-Kandidat verfehlt nach 160 Ausführungen die direkte Mehrheit. [Zwei Ansichten](../experiments/analysis/movement_reflection_20261115/VORAUSWAHL.md) · [FT18](../experiments/analysis/late_ft18_20261115/after_win/fresh/ERGEBNIS.md).
