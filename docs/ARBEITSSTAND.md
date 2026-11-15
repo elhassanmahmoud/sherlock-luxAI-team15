@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – V15 auf dem M3 unter Python 3.10 im Kurs-Runner geprüft
+
+Acht vollständige Partien gegen Default und Solution auf beiden Sitzen. Zwei Torch-/NumPy-Kombinationen unter Python 3.10 reproduzierten jeweils 606 Aktionsmatrizen ohne Abweichung. Alle 480 V14-Tensoren und 44 Schülertensoren wurden mit den Originalen verglichen. Die getestete ZIP liegt getrennt im Hauptcheckout. [Versionen, Pfade und Fehlerbehebung](../experiments/analysis/umbau_20261115/py310/ERGEBNIS.md).
+
 ## 15.11.2026 – V15 gewinnt 36/48 direkt gegen den ursprünglichen R3
 
 24 frische Karten, beide Startseiten. Auf 18 Karten gewinnt der gemischte v4-Hybrid beide Partien, auf sechs R3. V15 gewinnt 100/144 Einzelmatches. Acht historische Referenzpartien reproduzierten zuvor die ursprünglichen Endstände beider Agenten. [Spielreihen und Kartenintervall](../experiments/analysis/r3_v4_mixed_duel_20261115/ERGEBNIS.md).
