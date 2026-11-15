@@ -35,6 +35,14 @@ STANDARD_ACTIONS = {
     "player_0": "e749bc4ba8fd124eea24627d60a03f7e430f3966ba4c032e33bc63f924fbbae7",
     "player_1": "1dbeaa80a5dd81ba168a9382d76eaff65aa3820b118158bdafc41425e9cb413d",
 }
+AFTER_LOSS_COMMIT = "86f18fa1b3c968f2bbd98fefe5483ed4e9d113c5"
+AFTER_LOSS_SOURCES = "1e2b7c2ede2b4bb59637fefebaf84360ac7473c853032d9aa5ab9814c8a1c8d8"
+AFTER_LOSS_ZIP = "dafeefecd9d032ff64cd20ebc7f92f089d11680f34a1576957f4aa4a721eeaf9"
+# Both teams' 303 ordered matrices from the 13-game study, 41ad3ab5…7a6cf.
+AFTER_LOSS_CASES = {
+    "player_0": (7286100, False, "612391b79ae40ec260d8b72bf8d37b002682a646b4f9700f8e02346c9e39eb4f"),
+    "player_1": (7286137, True, "336ac25549d864f0ad9e06bf86d74df21dd12bbf7a07ce38818c30d4b45462d6"),
+}
 SEED = 7271000
 IMPORT = "agents.sherlock.main.Agent_x"
 WEIGHTS = "agents/sherlock/weights/agent.pth"
@@ -134,7 +142,7 @@ def course_process(pipe, folder, research, side):
                 raise RuntimeError(f"Course agent caught an error during {method}")
             if not any(m.startswith("agents.sherlock.v14.") for m in sys.modules):
                 raise RuntimeError("Private packaged V14 was not imported")
-            pipe.send((True, (value, dict(actor.selective_counts))))
+            pipe.send((True, (value, dict(actor.selective_counts), getattr(actor, "first_match_lost", None))))
     except Exception:
         pipe.send((False, traceback.format_exc()))
     finally:
@@ -143,8 +151,8 @@ def course_process(pipe, folder, research, side):
 
 class ComparedPlayer:
     """Adapter for the original play_game, which supplies the real transition to update."""
-    def __init__(self, ref, pipe):
-        self.ref, self.pipe = ref, pipe
+    def __init__(self, ref, pipe, expected_loss=None):
+        self.ref, self.pipe, self.expected_loss = ref, pipe, expected_loss
         self.resets, self.match_wins = [], []
         self.movement = [0, 0, 0]
         self.sap_orders = self.nonzero_sap_offsets = 0
@@ -156,7 +164,9 @@ class ComparedPlayer:
         success, result = self.pipe.recv()
         if not success:
             raise RuntimeError(result)
-        value, counts = result
+        value, counts, latch = result
+        if self.expected_loss is not None and getattr(self.ref, "first_match_lost") is not latch:
+            raise ValueError(f"Different course and research first-match decision after {method}")
         if self.ref.caught_errors or counts != dict(self.ref.selective_counts):
             raise ValueError(f"{method}, step {self.updates}: reference errors={self.ref.caught_errors}, "
                              f"counts reference={dict(self.ref.selective_counts)} course={counts}")
@@ -184,6 +194,11 @@ class ComparedPlayer:
         if not np.array_equal(actual, want):
             uid = int(np.flatnonzero(np.any(actual != want, axis=1))[0])
             raise ValueError(f"Step {step}, unit {uid}: reference={want[uid].tolist()} course={actual[uid].tolist()}")
+        if self.expected_loss is not None:
+            expected = None if step < 101 else self.expected_loss
+            calls = max(0, step - 100) if self.expected_loss else 0
+            if self.ref.first_match_lost is not expected or self.ref.selective_counts.get("fallback_calls", 0) != calls:
+                raise ValueError(f"Incorrect public match switch at step {step}")
         self.actions.update(actual.astype("<i8").tobytes())
         shots = actual[actual[:, 0] == 5, 1:]
         self.sap_orders += len(shots)
@@ -199,7 +214,10 @@ class ComparedPlayer:
 def run_side(folder, args, side):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from scripts.common import make_opponent, play_game
-    if args.diagonal:
+    if args.after_loss:
+        from scripts.r3_diag_after_loss import AfterLossAgent as Adviser
+        from scripts.r3_diag_after_loss_games import Actions
+    elif args.diagonal:
         from scripts.r3_diagonal import DiagonalAgent as Adviser
     else:
         from scripts.selective_advice_agent import SelectiveAdviceAgent as Adviser
@@ -212,9 +230,11 @@ def run_side(folder, args, side):
     env = LuxAIS3GymEnv(numpy_output=True)
     proc.start()
     child.close()
-    player = ComparedPlayer(ref, parent)
+    seed, expected_loss, expected_world = AFTER_LOSS_CASES[side] if args.after_loss else (SEED, None, None)
+    player = ComparedPlayer(ref, parent, expected_loss)
+    watcher = Actions(env) if args.after_loss else env
     try:
-        result = play_game(env, player, rival, SEED, side, train=True)
+        result = play_game(watcher, player, rival, seed, side, train=True)
         parent.send(None)
         proc.join()
         counts = dict(ref.selective_counts)
@@ -224,7 +244,18 @@ def run_side(folder, args, side):
                 or not counts.get("changed_steps")):
             raise ValueError(f"Incomplete parity run for {side}: steps={result['steps']}, resets={player.resets}, "
                              f"course updates={player.updates}, counts={counts}")
-        return dict(seed=SEED, side=side, opponent="solution92", equal_action_matrices=result["steps"],
+        branch = {}
+        if args.after_loss:
+            later_movements = player.movement[1:]
+            if (watcher.steps != 303 or watcher.full.hexdigest() != expected_world
+                    or (player.match_wins[1][int(side[-1])] == 0) != expected_loss
+                    or player.movement[0] <= 0 or (expected_loss and any(later_movements))
+                    or (not expected_loss and not all(n > 0 for n in later_movements))
+                    or counts.get("rejected_orders", 0)):
+                raise ValueError(f"Course game does not reproduce the registered fallback case on {side}")
+            branch = dict(first_match_lost=expected_loss, fallback_calls=counts.get("fallback_calls",0),
+                          paired_world_actions_sha256=watcher.full.hexdigest())
+        return dict(seed=seed, side=side, opponent="solution92", **branch, equal_action_matrices=result["steps"],
                     course_updates=player.updates, match_start_steps=player.resets,
                     team_wins_at_match_start=player.match_wins, final_wins=[result["our_wins"], result["opp_wins"]],
                     movements_per_match=player.movement, selective_counts=counts, caught_errors=0,
@@ -241,7 +272,9 @@ def run_side(folder, args, side):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--diagonal", action="store_true", help="Compare the registered diagonal course and research policies")
+    variants = parser.add_mutually_exclusive_group()
+    variants.add_argument("--after-loss", action="store_true", help="Exercise both public first-match branches")
+    variants.add_argument("--diagonal", action="store_true", help="Compare the registered diagonal course and research policies")
     for key in ("zip", "research", "v14", "r3", "out"):
         parser.add_argument("--" + key, type=lambda p: Path(p).resolve(), required=True)
     args = parser.parse_args()
@@ -251,11 +284,18 @@ def main():
         try:
             report.update(zip_sha256=digest(args.zip), v14_sha256=digest(args.v14), r3_sha256=digest(args.r3),
                           original_python_sources_sha256=research_digest(args.research), checker_sha256=digest(__file__))
+            if args.after_loss:
+                report.update(format="final_diagonal_after_loss", diagonal_source_commit=DIAGONAL_COMMIT,
+                              fallback_source_commit=AFTER_LOSS_COMMIT)
+                if report["zip_sha256"] != AFTER_LOSS_ZIP:
+                    raise ValueError("Different registered after-loss candidate ZIP")
             if args.diagonal:
                 report.update(format="final_diagonal", diagonal_source_commit=DIAGONAL_COMMIT)
                 if report["zip_sha256"] != DIAGONAL_ZIP:
                     raise ValueError("Different registered two-view ZIP")
             sources = DIAGONAL_SOURCES if args.diagonal else SOURCES
+            if args.after_loss:
+                sources = AFTER_LOSS_SOURCES
             if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (sources, V14, R3):
                 raise ValueError("Research archive or input checkpoint differs from pinned sources")
             sys.dont_write_bytecode = True
@@ -269,7 +309,7 @@ def main():
             report["engine_sha256"] = {m.__name__: digest(m.__file__) for m in (env, params, wrappers)}
             with tempfile.TemporaryDirectory() as tmp, zipfile.ZipFile(args.zip) as z:
                 folder = Path(tmp).resolve()
-                extract_entrant(z, folder, args.research, args.diagonal)
+                extract_entrant(z, folder, args.research, args.diagonal or args.after_loss)
                 report["course_weights_sha256"] = digest(folder / WEIGHTS)
                 for side in ("player_0", "player_1"):
                     report["active_side"] = side

@@ -9,6 +9,8 @@ from tempfile import TemporaryDirectory
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 STANDARD_ZIP = "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d"
+DIAGONAL_ZIP = "feaf20aa7058ad856634cd8a5a2daf56bfc6da4f6be296cff6d98fc55eefac25"
+AFTER_LOSS_SOURCE = "734108bcbb2caac1c8b545e4b0690436afaf8f99537ea3732454f3acd2d0132f"
 DIAGONAL_SOURCE = "13758f9a8566e587322ea3f8ab12920feb34a8bd1864ee50cb35b478ce564194"
 
 
@@ -49,20 +51,36 @@ def course_entry(source):
     return source
 
 
-def build(base, out):
+def build(base, out, *, after_loss=False):
     if out.suffix.lower() != ".zip" or out.name.casefold() in {"gruppe15.zip", "agent.zip"} or out.exists():
         raise ValueError("Choose a new, separate candidate .zip path")
-    source = checked_bytes(Path(__file__).with_name("r3_diagonal.py"), DIAGONAL_SOURCE).decode()
-    original = checked_bytes(base, STANDARD_ZIP)
+    if after_loss:
+        if not any(word in out.stem.casefold() for word in ("kandidat", "candidate")):
+            raise ValueError("Name the separate after-loss candidate explicitly")
+        source = checked_bytes(Path(__file__).with_name("r3_diag_after_loss.py"), AFTER_LOSS_SOURCE).decode()
+        policy = next(node for node in ast.parse(source).body if isinstance(node, ast.ClassDef) and node.name == "AfterLossAgent")
+        addition = ast.get_source_segment(source, policy)
+    else:
+        source = checked_bytes(Path(__file__).with_name("r3_diagonal.py"), DIAGONAL_SOURCE).decode()
+    original = checked_bytes(base, DIAGONAL_ZIP if after_loss else STANDARD_ZIP)
     out.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(dir=out.parent) as tmp, ZipFile(BytesIO(original)) as src:
         staged = Path(tmp) / "diagonal.zip"
         with ZipFile(staged, "x") as dst:
-            for name in sorted([*src.namelist(), "sherlock/r3_diagonal.py"]):
+            for name in sorted(set(src.namelist()) | {"sherlock/r3_diagonal.py"}):
                 if name == "sherlock/r3_diagonal.py":
-                    data = course_diagonal(source).encode()
+                    if after_loss:
+                        data = src.read(name) + ("\n\n" + addition + "\n").encode()
+                    else:
+                        data = course_diagonal(source).encode()
                 elif name == "sherlock/main.py":
-                    data = course_entry(src.read(name).decode()).encode()
+                    if after_loss:
+                        entry = src.read(name)
+                        if entry.count(b"DiagonalAgent") != 2:
+                            raise ValueError("Unexpected verified two-view import or constructor")
+                        data = entry.replace(b"DiagonalAgent", b"AfterLossAgent")
+                    else:
+                        data = course_entry(src.read(name).decode()).encode()
                 else:
                     data = src.read(name)
                 info = ZipInfo(name)
@@ -74,7 +92,8 @@ def build(base, out):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", type=Path, required=True, help="Verified single-view R3 course ZIP")
+    parser.add_argument("--after-loss", action="store_true", help="Use the verified diagonal ZIP as input")
+    parser.add_argument("--base", type=Path, required=True, help="Verified R3 course ZIP, or the diagonal ZIP with --after-loss")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    print(build(args.base, args.out), args.out)
+    print(build(args.base, args.out, after_loss=args.after_loss), args.out)
