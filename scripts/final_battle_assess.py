@@ -4,7 +4,9 @@ python -m scripts.final_battle_assess screen --reference V14_EXT --candidate NEW
 python -m scripts.final_battle_assess confirm --reference CONF_V14 --candidate CONF_EXT --direct CONF_DIRECT \
     --screen-reference V14_EXT --screen-candidate NEW_ALL
 
-Use --protocol dagger or --protocol stack_reserve for the registered follow-ups. Fractions and confidence bounds are on the 0–1 scale.
+For distill and previous_enemy, pass --selection-control R2_EXT in both stages. For
+previous_enemy also pass --model-sha256 with the SHA-256 of the temporal training output.
+Fractions and confidence bounds are on the 0–1 scale.
 completed.json binds the JSONL rows. Manifest hashes in the report identify the configurations
 actually compared; the runner does not issue a signed manifest or separately log runtime parameters.
 """
@@ -24,6 +26,30 @@ from scripts.final_battle_select import OPPONENTS, SEATS, checked_run_files
 V14_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
 FIRST_MOVEMENT_MODEL = "5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad176813575"
 STACK_RESERVE_SHA = "ed19e3df648821ad54b1fa3c2dbf0148f30f496dceeb4a921ba095f712af24c6"
+R2_MODEL = "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96"
+DISTILL_MODEL = "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+SEED_BLOCKS = {
+    "selective": (7271400, 7271500, 7271600),
+    "dagger": (7272300, 7272400, 7272500),
+    "stack_reserve": (7272300, 7272400, 7272500),
+    "distill": (7273000, 7273100, 7273200),
+    "previous_enemy": (7275000, 7275100, 7275200),
+}
+# In both snapshots the registered runner maps selective_movement to mode="movement".
+# Temporal and ordinary agents share a manifest name. Pin the actual implementation.
+_COMMON_MOVEMENT = {
+    "scripts/final_battle_compare.py": "de6931510d847b0baa4dc7065ab01ef2a37613baed361ca85df1fe3b27e5d764",
+    "scripts/combat_teacher_counterfactual.py": "9cfb62c6488b5ffae122487642e4ac72e2e054e728e5aa4d24635efa609d385d",
+    "scripts/collect_combat_advice.py": "6d54e866cbb2e451216eea10679d71a04b164d403a9f624faab8895fe61ac24c",
+}
+MOVEMENT_SOURCES = {
+    "distill": {**_COMMON_MOVEMENT,
+                "scripts/selective_advice_agent.py": "fc7540ce2e299ff4601bfa5c25e390b477ae65cc91a796b56432b9cb0a6759f1",
+                "scripts/imitate.py": "fa80f17712f52e4236e2ff771e62c1a8a8cac616c76d02ce493a0b8635af2ccb"},
+    "previous_enemy": {**_COMMON_MOVEMENT,
+                       "scripts/selective_advice_agent.py": "21e333187eb6eec47ede4bb7461ecd1a17ca2f5bd248d0dffa775f1b859e0254",
+                       "scripts/imitate.py": "710abbad1152f0e48e0fd8c0270bcb2cd067bcfce34cf9ecea7fe35dbf9de58e"},
+}
 KAGGLE = "experiments/opponents/kaggle3_lux3_048fn/"
 CORE = {"agents/sherlock/main.py", "agents/sherlock/config.py", "agents/sherlock/features.py",
         "agents/Solution_92_Kaggle/agent.py", "scripts/common.py", "scripts/scoring.py",
@@ -72,7 +98,7 @@ def load_run(directory, name, seeds, opponents):
     return Run(m, games, provenance)
 
 
-def compatible(left, right):
+def compatible(left, right, *, compare_checkpoint=True):
     a, b = left.manifest, right.manifest
     if a["weights"] != b["weights"] or a["engine"] != b["engine"]:
         raise ValueError("Incompatible V14/engine bindings")
@@ -83,7 +109,7 @@ def compatible(left, right):
         return {k:v for k,v in m["sources"].items() if both_kaggle or not k.startswith(KAGGLE)}
     sa, sb = relevant(a), relevant(b)
     if a["candidate"] == b["candidate"]:
-        if a["model"] != b["model"] or sa != sb:
+        if (compare_checkpoint and a["model"] != b["model"]) or sa != sb:
             raise ValueError("Candidate checkpoint or implementation changed across runs")
     else:
         # Called with the V14 reference first. A candidate may bind additional implementation files.
@@ -119,18 +145,18 @@ def bounds(map_values):
     return interval(map_values, seed=2711, draws=10000)
 
 
-def summarize(phase, stage):
-    n_games = len(phase.external_seeds) * len(SEATS)
+def external_comparison(reference, candidate, seeds, reference_label):
+    n_games = len(seeds) * len(SEATS)
     by_opp, deltas = {}, {}
     for opponent in OPPONENTS:
         gains = losses = before = after = 0
         per_map = []
-        for seed in phase.external_seeds:
+        for seed in seeds:
             difference = 0
             for side in SEATS:
                 key = (opponent, seed, side)
-                a = int(phase.reference.games[key]["result"])
-                b = int(phase.candidate.games[key]["result"])
+                a = int(reference.games[key]["result"])
+                b = int(candidate.games[key]["result"])
                 before += a
                 after += b
                 gains += b > a
@@ -138,14 +164,20 @@ def summarize(phase, stage):
                 difference += b - a
             per_map.append(difference / len(SEATS))
         deltas[opponent] = per_map
-        by_opp[opponent] = dict(games=n_games, v14_wins=before, candidate_wins=after,
+        by_opp[opponent] = dict(games=n_games, candidate_wins=after,
                                 gained=gains, lost=losses, net_wins=after-before,
                                 winrate_difference=(after-before)/n_games, difference_ci95=bounds(per_map))
+        by_opp[opponent][reference_label] = before
     # One draw picks the entire map, retaining BOTH seats and BOTH external opponents.
     panel = [sum(row) / len(OPPONENTS) for row in zip(*(deltas[o] for o in OPPONENTS))]
     total_gain = sum(v["net_wins"] for v in by_opp.values())
     external = dict(games=n_games*len(OPPONENTS), net_wins=total_gain,
                     winrate_difference=sum(panel)/len(panel), difference_ci95=bounds(panel))
+    return by_opp, external
+
+
+def summarize(phase, stage):
+    by_opp, external = external_comparison(phase.reference, phase.candidate, phase.external_seeds, "v14_wins")
     duel = phase.direct.games
     direct_by_map = [sum(duel["v14",seed,s]["result"] for s in SEATS)/len(SEATS) for seed in phase.direct_seeds]
     direct_wins = int(sum(direct_by_map)*len(SEATS))
@@ -155,7 +187,7 @@ def summarize(phase, stage):
     gates = {"solution_at_least_reference":by_opp["solution92"]["net_wins"] >= 0,
              "direct_majority":direct["winrate"] > .5}
     if stage == "screen":
-        gates["two_additional_external_wins"] = total_gain >= 2
+        gates["two_additional_external_wins"] = external["net_wins"] >= 2
     elif stage == "confirm":
         gates["external_lower_bound_positive"] = external["difference_ci95"][0] > 0
         gates["direct_lower_bound_above_half"] = direct["winrate_ci95"][0] > .5
@@ -170,26 +202,69 @@ def summarize(phase, stage):
     return report
 
 
+def selection_control(phase, directory, protocol):
+    control = load_run(directory, "selective_movement", phase.external_seeds, OPPONENTS)
+    if control.manifest["model"] != R2_MODEL:
+        raise ValueError("Selection control must use the registered R2 checkpoint")
+    compatible(phase.reference, control)
+    compatible(control, phase.candidate, compare_checkpoint=False)
+    # The registered runner adds only the bound movement sources to the V14 manifest.
+    expected = {**phase.reference.manifest["sources"], **MOVEMENT_SOURCES[protocol]}
+    if control.manifest["sources"] != expected:
+        raise ValueError(f"Movement or reference implementation differs from the registered {protocol} snapshot")
+    by_opp, paired = external_comparison(control, phase.candidate, phase.external_seeds, "r2_wins")
+    return {**paired, "by_opponent": by_opp, "model": R2_MODEL, "files": control.hashes,
+            "r2_wins": sum(v["r2_wins"] for v in by_opp.values()),
+            "candidate_wins": sum(v["candidate_wins"] for v in by_opp.values())}
+
+
 def assess(args):
-    name = "stack_reserve" if getattr(args, "protocol", "selective") == "stack_reserve" else "selective_movement"
-    if name == "stack_reserve" and args.model_sha256 is not None:
+    protocol = getattr(args, "protocol", "selective")
+    name = "stack_reserve" if protocol == "stack_reserve" else "selective_movement"
+    model = args.model_sha256
+    control_dir = getattr(args, "selection_control", None)
+    if protocol in MOVEMENT_SOURCES:
+        if not control_dir:
+            raise ValueError(f"{protocol} requires --selection-control from the original 16 selection maps")
+        if (args.screen_first, args.confirm_first, args.confirm_direct_first) != SEED_BLOCKS[protocol] or (
+                args.screen_maps, args.confirm_maps) != (16, 60) or args.screen_direct_first not in (None, args.screen_first):
+            raise ValueError(f"Map blocks differ from the registered {protocol} protocol")
+        if protocol == "distill":
+            if model not in (None, DISTILL_MODEL):
+                raise ValueError("Distill requires the registered soft-target checkpoint")
+            model = DISTILL_MODEL
+        elif (not model or not re.fullmatch(r"[0-9a-f]{64}", model)
+              or model in (FIRST_MOVEMENT_MODEL, R2_MODEL, DISTILL_MODEL, V14_SHA)):
+            raise ValueError("previous_enemy requires --model-sha256 of the temporal training output")
+    elif control_dir:
+        raise ValueError("--selection-control applies only to distill and previous_enemy")
+    if name == "stack_reserve" and model is not None:
         raise ValueError("stack_reserve uses the registered policy source without an extra checkpoint")
     first = args.screen_first
     screen_direct = first if args.screen_direct_first is None else args.screen_direct_first
     screen_maps = range(first, first + args.screen_maps)
     direct_maps = range(screen_direct, screen_direct + args.screen_maps)
     if args.stage == "screen":
-        phase = load_phase(args.reference, args.candidate, args.direct, screen_maps, direct_maps, name)
-        if args.model_sha256 is not None and phase.candidate.manifest["model"] != args.model_sha256:
-            raise ValueError("Model differs from the registered checkpoint")
-        return summarize(phase, "screen")
-    if not args.screen_reference or not args.screen_candidate:
-        raise ValueError("Confirmation requires the actual completed selection runs")
-    screen = load_phase(args.screen_reference, args.screen_candidate, args.screen_direct, screen_maps, direct_maps, name)
-    if args.model_sha256 is not None and screen.candidate.manifest["model"] != args.model_sha256:
+        paths = args.reference, args.candidate, args.direct
+    else:
+        if not args.screen_reference or not args.screen_candidate:
+            raise ValueError("Confirmation requires the actual completed selection runs")
+        paths = args.screen_reference, args.screen_candidate, args.screen_direct
+    screen = load_phase(*paths, screen_maps, direct_maps, name)
+    if model is not None and screen.candidate.manifest["model"] != model:
         raise ValueError("Model differs from the registered checkpoint")
     report = summarize(screen, "screen")
+    if control_dir:
+        control = selection_control(screen, control_dir, protocol)
+        report["selection_control"] = control
+        report["gates"]["external_at_least_r2"] = control["net_wins"] >= 0
+        report["game_gates_pass"] = all(report["gates"].values())
+    if args.stage == "screen":
+        return report
     if not report["game_gates_pass"]:
+        if control_dir:
+            raise ValueError(f"This candidate failed registered selection: {report['gates']}; "
+                             f"external wins candidate {control['candidate_wins']}, R2 {control['r2_wins']}")
         raise ValueError("This candidate failed registered selection")
     external = range(args.confirm_first, args.confirm_first + args.confirm_maps)
     direct = range(args.confirm_direct_first, args.confirm_direct_first + args.confirm_maps)
@@ -200,6 +275,8 @@ def assess(args):
     if screen.candidate.manifest["candidate"] != confirmation.candidate.manifest["candidate"]:
         raise ValueError("Confirmation is for a different candidate")
     compatible(screen.candidate, confirmation.candidate)
+    if control_dir:
+        compatible(screen.reference, confirmation.reference)
     result = summarize(confirmation, "confirm")
     result["selection"] = report
     result["scope"] = "Whole-game gates only. Default, course and submission-package checks remain separate."
@@ -209,10 +286,11 @@ def assess(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("stage", choices=("screen", "confirm"))
-    parser.add_argument("--protocol", choices=("selective", "dagger", "stack_reserve"), default="selective")
+    parser.add_argument("--protocol", choices=tuple(SEED_BLOCKS), default="selective")
     parser.add_argument("--reference", type=Path, required=True)
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--direct", type=Path, help="Separate direct-only run; otherwise read V14 duels from --candidate")
+    parser.add_argument("--selection-control", type=Path, help="External R2 run on the original 16 selection maps")
     parser.add_argument("--model-sha256", help="Also pin the candidate to the registered training output")
     for flag in ("screen-reference", "screen-candidate", "screen-direct"):
         parser.add_argument("--"+flag, type=Path)
@@ -223,8 +301,7 @@ def main():
             parser.error("The selective protocol uses the frozen first movement checkpoint")
         args.model_sha256 = FIRST_MOVEMENT_MODEL
     args.screen_maps, args.confirm_maps = 16, 60
-    args.screen_first, args.confirm_first, args.confirm_direct_first = (
-        (7271400, 7271500, 7271600) if args.protocol == "selective" else (7272300, 7272400, 7272500))
+    args.screen_first, args.confirm_first, args.confirm_direct_first = SEED_BLOCKS[args.protocol]
     try:
         result = assess(args)
     except (OSError, ValueError, KeyError, TypeError) as error:

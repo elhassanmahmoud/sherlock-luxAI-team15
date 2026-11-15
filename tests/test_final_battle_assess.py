@@ -166,3 +166,124 @@ def test_stack_protocol_requires_registered_rule_and_consistent_correction_helpe
     path.write_text(json.dumps({**original, "model": MODEL}))
     with pytest.raises(ValueError, match="checkpoint"):
         audit.assess(args)
+
+
+R2_MODEL = "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96"
+R3_MODEL = "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+R4_EXAMPLE = "9" * 64
+MOVEMENT_PANELS = {"distill": (7273000, 7273100, 7273200),
+                   "previous_enemy": (7275000, 7275100, 7275200)}
+
+
+def movement_fixture(tmp_path, protocol, *, r2_extra_win=False, model=None, shift=0):
+    """Write fully paired synthetic selection runs with intentional swaps of the winning seat."""
+    model = model or (R3_MODEL if protocol == "distill" else R4_EXAMPLE)
+    first, confirm_first, confirm_direct = MOVEMENT_PANELS[protocol]
+    first += shift
+
+    def make_run(dirname, role, start, count, opponents, winner):
+        base = role == "v14"
+        name = "v14" if base else "selective_movement"
+        path = write_run(tmp_path / dirname, name, start, count, opponents, winner,
+                         model=R2_MODEL if role == "control" else model)
+        mf = path / "manifest.json"
+        manifest = json.loads(mf.read_text())
+        for file, digest in audit.MOVEMENT_SOURCES[protocol].items():
+            if not base or file == "scripts/final_battle_compare.py":
+                manifest["sources"][file] = digest
+        mf.write_text(json.dumps(manifest))
+        return path
+
+    def lost(*args):
+        return False
+
+    def candidate(seed, opponent, seat):
+        return opponent == "v14" or seat == "player_0"
+
+    def control(seed, opponent, seat):
+        return seat == "player_1" or (r2_extra_win and seed == first and opponent == "kaggle3")
+
+    reference = make_run("selection_v14", "v14", first, 16, EXT, lost)
+    study = make_run("selection_new", "candidate", first, 16, (*EXT, "v14"), candidate)
+    r2 = make_run("selection_r2", "control", first, 16, EXT, control)
+    args = SimpleNamespace(protocol=protocol, stage="screen", model_sha256=model,
+                           screen_first=first, screen_maps=16, screen_direct_first=None,
+                           confirm_first=confirm_first, confirm_maps=60, confirm_direct_first=confirm_direct,
+                           reference=reference, candidate=study, direct=None, selection_control=r2,
+                           screen_reference=reference, screen_candidate=study, screen_direct=None)
+    return args, make_run
+
+
+def use_movement_confirmation(args, make_run):
+    args.stage = "confirm"
+    args.reference = make_run("confirm_v14", "v14", args.confirm_first, 60, EXT, lambda *_: False)
+    args.candidate = make_run("confirm_new", "candidate", args.confirm_first, 60, EXT, lambda *_: True)
+    args.direct = make_run("confirm_direct", "candidate", args.confirm_direct_first, 60,
+                           ("v14",), lambda *_: True)
+
+
+@pytest.mark.parametrize("protocol", ["distill", "previous_enemy"])
+def test_new_movement_screen_preserves_r2_tie_and_map_pairs_in_confirmation(tmp_path, protocol):
+    args, make_run = movement_fixture(tmp_path, protocol)
+    screen = audit.assess(args)
+    vs_r2 = screen["selection_control"]
+    assert (vs_r2["candidate_wins"], vs_r2["r2_wins"], vs_r2["net_wins"]) == (32, 32, 0)
+    # Both seats swap winners on every map, but the paired per-map difference never changes.
+    assert list(vs_r2["difference_ci95"]) == [0, 0]
+    assert screen["gates"]["external_at_least_r2"] and screen["game_gates_pass"]
+
+    use_movement_confirmation(args, make_run)
+    result = audit.assess(args)
+    assert result["selection"]["selection_control"] == vs_r2
+    assert result["selection"]["gates"]["external_at_least_r2"] and result["game_gates_pass"]
+
+
+@pytest.mark.parametrize("protocol", ["distill", "previous_enemy"])
+def test_new_movement_screen_refuses_confirmation_one_external_game_below_r2(tmp_path, protocol):
+    args, make_run = movement_fixture(tmp_path, protocol, r2_extra_win=True)
+    report = audit.assess(args)
+    assert report["selection_control"]["net_wins"] == -1
+    assert not report["gates"]["external_at_least_r2"] and not report["game_gates_pass"]
+    assert all(value for k, value in report["gates"].items() if k != "external_at_least_r2")
+    use_movement_confirmation(args, make_run)
+    with pytest.raises(ValueError):
+        audit.assess(args)
+
+
+@pytest.mark.parametrize("model", [audit.FIRST_MOVEMENT_MODEL, R2_MODEL, R3_MODEL])
+def test_previous_enemy_rejects_an_older_checkpoint_even_if_run_matches_requested_hash(tmp_path, model):
+    args, _ = movement_fixture(tmp_path, "previous_enemy", model=model)
+    with pytest.raises(ValueError):
+        audit.assess(args)
+
+
+@pytest.mark.parametrize("fault", ["missing_control", "r2_model", "rehashed_control_rows", "registered_sources", "panel"])
+def test_learning_selection_requires_actual_control_and_registered_inputs(tmp_path, fault):
+    args, _ = movement_fixture(tmp_path, "distill", shift=int(fault == "panel"))
+    if fault == "missing_control":
+        args.selection_control = None
+    elif fault == "r2_model":
+        mf = args.selection_control / "manifest.json"
+        manifest = json.loads(mf.read_text())
+        manifest["model"] = R3_MODEL
+        mf.write_text(json.dumps(manifest))
+    elif fault == "rehashed_control_rows":
+        rows = [json.loads(line) for line in (args.selection_control / "games.jsonl").read_text().splitlines()]
+        rows[0]["seed"] += 10000
+        save_rows(args.selection_control, rows)
+    elif fault == "registered_sources":
+        # Two agreeing but unregistered advisor implementations must still be rejected.
+        for d in (args.selection_control, args.candidate):
+            mf = d / "manifest.json"
+            manifest = json.loads(mf.read_text())
+            manifest["sources"]["scripts/selective_advice_agent.py"] = "0" * 64
+            mf.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError):
+        audit.assess(args)
+
+
+def test_previous_enemy_requires_explicit_training_hash(tmp_path):
+    args, _ = movement_fixture(tmp_path, "previous_enemy")
+    args.model_sha256 = None
+    with pytest.raises(ValueError, match="model-sha256"):
+        audit.assess(args)
