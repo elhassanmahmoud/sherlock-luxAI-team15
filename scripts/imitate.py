@@ -145,7 +145,8 @@ def _collect_worker(job) -> list[dict]:
 def _dagger_worker(job) -> list[dict]:
     """DAgger: der Schueler spielt selbst, ein Schatten-Lehrer auf seiner Seite sagt fuer genau diese Lagen,
     was er getan haette. So lernt das Netz auch Zustaende, in die nur seine eigenen Fehler fuehren."""
-    games, out_dir, student_path = job
+    games, out_dir, student_path = job[:3]
+    overrides = job[3] if len(job) > 3 else []
     from scripts.experiment import limit_threads
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
@@ -157,7 +158,12 @@ def _dagger_worker(job) -> list[dict]:
     done_meta = []
     for seed, sside, opp_kind in games:
         oside = "player_1" if sside == "player_0" else "player_0"
-        student = ImitationAgent(sside, agent_path=student_path, train=False)
+        if overrides:
+            from scripts.par_eval import build_cfg
+            student = ImitationAgent(sside, agent_path=student_path, train=False,
+                                     cfg=build_cfg(student_path, overrides))
+        else:
+            student = ImitationAgent(sside, agent_path=student_path, train=False)
         student.set_to_eval_mode()
         opp = make_player(opp_kind, oside)
         teacher = Kaggle3Opponent(sside)
@@ -202,9 +208,10 @@ def cmd_dagger(a) -> None:
     t0 = time.time()
     student = str(Path(a.student).resolve())
     with mp.get_context("spawn").Pool(len(chunks)) as pool:
-        metas = [m for part in pool.map(_dagger_worker, [(c, str(out), student) for c in chunks]) for m in part]
+        metas = [m for part in pool.map(_dagger_worker, [(c, str(out), student, a.set) for c in chunks]) for m in part]
     (out / "collect.json").write_text(json.dumps(dict(
-        games=a.games, seed0=a.seed0, mix=a.mix, dagger=True, student=student, teacher="kaggle3 lux3-bot 0.4.8_fn",
+        games=a.games, seed0=a.seed0, mix=a.mix, dagger=True, student=student, student_set=a.set,
+        teacher="kaggle3 lux3-bot 0.4.8_fn",
         samples=sum(m["samples"] for m in metas), secs=round(time.time() - t0)), indent=1))
     by = {}
     for m in metas:
@@ -571,6 +578,8 @@ def main() -> None:
     d.add_argument("--workers", type=int, default=12)
     d.add_argument("--seed0", type=int, default=TRAIN_SEED0 + 50_000)
     d.add_argument("--mix", default="kaggle3:0.5,v14:0.25,solution92:0.25")
+    d.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                   help="Schalter fuer den spielenden Schueler (z. B. imit_stay_bias=1.5)")
     e = sub.add_parser("ensemble")
     e.add_argument("--students", nargs="+", required=True)
     e.add_argument("--out", required=True)
