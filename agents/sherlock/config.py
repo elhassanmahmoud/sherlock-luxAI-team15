@@ -374,6 +374,23 @@ class AgentConfig:
     """True: Units fahren auf Nachbar-Tiles mit schwaecheren Gegnern und
     zerstoeren sie per Kollision (rules.ram_move)."""
     ram_margin: float = 10.0
+    charge: bool = False
+    """True (15.11.2026, combat.charge_goal): Units ohne gehaltenes Punkte-Tile tanken unter
+    charge_low Energie am besten erreichbaren Energiefeld (Radius charge_radius), bis charge_high."""
+    charge_low: float = 60.0
+    charge_high: float = 150.0
+    charge_radius: int = 6
+    focus_sap: bool = False
+    """True (15.11.2026, combat.focus_plan): Team plant je Schritt sichere Abschuesse stehender
+    Gegner mit mehreren Schuetzen (Schaden > Energie + Feld-Erholung) und feuert gemeinsam."""
+    focus_reserve: float = 10.0
+    focus_dropoff: float = 0.25
+    hunt: bool = False
+    """True (15.11.2026, combat.hunt_target): Units ab hunt_min Energie laufen auf schwaechere stehende
+    Gegner im Umkreis hunt_radius zu und zerstoeren sie per Kollision."""
+    hunt_min: float = 150.0
+    hunt_radius: int = 6
+    hunt_margin: float = 20.0
     fog_sap: bool = False
     """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
     unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte

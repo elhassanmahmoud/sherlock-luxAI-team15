@@ -39,6 +39,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+from . import combat
 from . import geometry as geo
 from . import rules
 from .belief import Belief, MemorylessBelief
@@ -194,6 +195,7 @@ class Agent_x:
         self._relic_seen: dict = {}  # 01.11.2026: erster Schritt je Relic (cfg.zone_rescue)
         self._rescue_zones: set = set()
         self._candidate_progress = CandidateProgress()
+        self._charging: set[int] = set()  # 15.11.2026: cfg.charge, Units im Tank-Modus
         # Diagnose pro Spiel (experiments: masked_frac, sap_attempts, ...)
         self.ep_stats = {"unit_steps": 0, "greedy_masked": 0, "explore_steps": 0,
                          "sap_attempts": 0, "sap_hits_est": 0,
@@ -339,6 +341,7 @@ class Agent_x:
             if self.cfg.cand_stall_rescue:
                 self._candidate_progress.reset("match_reset")
             self._prev_ctx = None
+            self._charging = set()
             self._shape_pending = []  # Units verschwinden beim Match-Reset, das ist kein Treffer
             self._pred_pending = []
             return actions
@@ -401,6 +404,16 @@ class Agent_x:
         splash_hits = ((incoming or predicted or self._predicted_hits(ctx, stationary))
                        if splash_drop >= 0.5 and fight and trusted else {})
         stage_info = self._stage_prepare(ctx) if self.cfg.stage_attack and not self.training else None
+        # 15.11.2026: Kampftechniken gegen starke Gegner (combat.py), nur ausserhalb des Trainings
+        combat_on = not self.training
+        threats = combat.threat_maps(ctx) if combat_on and (self.cfg.charge or self.cfg.hunt) else None
+        charge_claimed: set = set()
+        hunt_taken: set = set()
+        focus: dict = {}
+        if self.cfg.focus_sap and combat_on:
+            focus = combat.focus_plan(ctx, [int(u) for u in ids], self.belief.point_tiles, stationary,
+                                      self._holders(ctx, ids), dropoff=self.cfg.focus_dropoff,
+                                      reserve=self.cfg.focus_reserve)
         eps = self.epsilon
         # 22.10.2026 (cfg.cand_rescue): Notfall, wenn trotz bekannter Relics kein Punkte-Tile bekannt ist
         # (z. B. 361050: Haufen im Nebel; 361255: Units laufen von Kandidaten weg) -> Kandidaten gezielt
@@ -461,6 +474,17 @@ class Agent_x:
                         st["training_rescue_action_changes"] = st.get("training_rescue_action_changes", 0) + 1
                 if self.cfg.unstack and not self.training and a == geo.STAY:
                     a = self._unstack(ctx, uid, masks[k], a)
+            charging_now = False
+            if self.cfg.charge and combat_on:
+                a2, charging_now = self._charge(ctx, uid, masks[k], a, threats, charge_claimed)
+                if a2 != a:
+                    a = a2
+                    st["charge_moves"] = st.get("charge_moves", 0) + 1
+            if self.cfg.hunt and combat_on and not charging_now and a != geo.SAP:
+                a2 = self._hunt(ctx, uid, masks[k], a, stationary, hunt_taken)
+                if a2 != a:
+                    a = a2
+                    st["hunt_moves"] = st.get("hunt_moves", 0) + 1
             self._prev_feats[uid] = feats[k]
             self._prev_actions[uid] = a
             self._prev_masks[uid] = masks[k]
@@ -473,7 +497,7 @@ class Agent_x:
                 if d is not None:
                     a = d
                     self._prev_actions[uid] = a
-            if (self.cfg.fog_sap and a == geo.STAY
+            if (self.cfg.fog_sap and a == geo.STAY and not charging_now
                     and ctx["sensor_range"] <= self.cfg.fog_sap_max_sensor
                     and not (self.cfg.fog_v2 and sap_targets[uid] is not None)):
                 sap = self._fog_sap(ctx, uid, planned_fog) or sap
@@ -512,7 +536,8 @@ class Agent_x:
                         self._final_sap_rule_origin = "pt_sap"
                     a = geo.SAP
                     self._prev_actions[uid] = a
-            if (self.cfg.art_sap and fight and a != geo.SAP and sap is not None and masks[k][geo.SAP]
+            if (self.cfg.art_sap and fight and not charging_now and a != geo.SAP and sap is not None
+                    and masks[k][geo.SAP]
                     and self._artillery_ok(ctx, uid, sap)
                     and (not self.cfg.art_still or self.training or self._sap_on_still(ctx, uid, sap, stationary))):
                 if (self.cfg.art_move_guard and 1 <= a <= 4 and masks[k][a]
@@ -525,7 +550,7 @@ class Agent_x:
                     if final_probe:
                         self._final_sap_rule_origin = "art_sap"
                     self._prev_actions[uid] = a
-            if (self.cfg.idle_sap and a == geo.STAY and sap is not None and masks[k][geo.SAP]
+            if (self.cfg.idle_sap and a == geo.STAY and not charging_now and sap is not None and masks[k][geo.SAP]
                     and float(ctx["ally_ene"][uid]) >= ctx["sap_cost"] + self.cfg.idle_sap_reserve):
                 a = geo.SAP  # 20.10.2026: jede stehende Unit mit Ziel in Reichweite sappt
                 if final_probe:
@@ -627,6 +652,10 @@ class Agent_x:
                 if sap is None:
                     a = geo.STAY
                     self._prev_actions[uid] = a
+            if focus and int(uid) in focus:
+                sap, a = focus[int(uid)], geo.SAP  # 15.11.2026: geplanter gemeinsamer Abschuss
+                self._prev_actions[uid] = a
+                st["focus_saps"] = st.get("focus_saps", 0) + 1
             if final_probe:
                 final_a, final_sap = self._final_sap_policy(
                     ctx, uid, masks[k], int(network_greedy[k]), a, sap, fog_origin)
@@ -1205,6 +1234,55 @@ class Agent_x:
                        dtype=bool)
         self._enemy_prev = {int(i): (int(c[0]), int(c[1])) for i, c in zip(ids, ec)}
         return out
+
+    def _holders(self, ctx: dict, ids) -> set:
+        """Units, die als Erste auf einem bewiesenen Punkte-Tile stehen."""
+        out = set()
+        for u in ids:
+            x, y = int(ctx["ally_pos"][u][0]), int(ctx["ally_pos"][u][1])
+            if self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == int(u):
+                out.add(int(u))
+        return out
+
+    def _charge(self, ctx: dict, uid: int, mask: np.ndarray, a: int, threats, claimed: set) -> tuple[int, bool]:
+        """cfg.charge (15.11.2026): Unit ohne gehaltenes Punkte-Tile tankt unter charge_low Energie am besten
+        erreichbaren Energiefeld, bis charge_high erreicht ist. Rueckgabe (Aktion, tankt gerade)."""
+        uid = int(uid)
+        e = float(ctx["ally_ene"][uid])
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        holder = bool(self.belief.point_tiles[x, y]) and ctx["first_on_tile"].get((x, y)) == uid
+        if holder or e >= self.cfg.charge_high or (uid not in self._charging and e >= self.cfg.charge_low):
+            self._charging.discard(uid)
+            return a, False
+        self._charging.add(uid)
+        neb = self.param_est.nebula(default=None)
+        drain = float(neb) if neb is not None else 3.0
+        dist_unit = self._paths.get(ctx["step"], ctx["passable"], (x, y))
+        goal = combat.charge_goal(ctx, uid, dist_unit, self.cfg.charge_radius, drain, threats, claimed)
+        if goal is None:
+            here = float(ctx["energy_map"][x, y]) - (drain if ctx["nebula"][x, y] else 0.0)
+            if here > 0 and mask[geo.STAY]:
+                return geo.STAY, True
+            return a, True
+        claimed.add(goal)
+        d = combat.step_to(ctx, self._paths, uid, mask, goal)
+        return (d if d is not None else a), True
+
+    def _hunt(self, ctx: dict, uid: int, mask: np.ndarray, a: int, stationary: np.ndarray, taken: set) -> int:
+        """cfg.hunt (15.11.2026): starke Unit ohne gehaltenes Punkte-Tile laeuft auf einen schwaecheren,
+        stehenden Gegner zu und zerstoert ihn per Kollision."""
+        uid = int(uid)
+        x, y = int(ctx["ally_pos"][uid][0]), int(ctx["ally_pos"][uid][1])
+        if self.belief.point_tiles[x, y] and ctx["first_on_tile"].get((x, y)) == uid:
+            return a
+        dist_unit = self._paths.get(ctx["step"], ctx["passable"], (x, y))
+        tgt = combat.hunt_target(ctx, uid, dist_unit, self.belief.point_tiles, stationary,
+                                 self.cfg.hunt_min, self.cfg.hunt_radius, self.cfg.hunt_margin, taken)
+        if tgt is None:
+            return a
+        taken.add(tgt)
+        d = combat.step_to(ctx, self._paths, uid, mask, tgt)
+        return d if d is not None else a
 
     def _rule_override(self, ctx: dict, uid: int, mask: np.ndarray, a: int) -> int:
         """Regel-Schalter aus rules.py auf die Netz-Aktion anwenden (Sap bleibt)."""
