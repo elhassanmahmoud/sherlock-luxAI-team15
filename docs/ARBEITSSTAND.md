@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Im direkten Vergleich mit V15 hilft sichtbarer Gegnerkontakt
+
+Auf identischen 24 Karten gewinnt der Kontaktagent 26/48 gegen V15, der reine R3 hatte 12/48 gewonnen. Das gepaarte Kartenintervall des Zuwachses beträgt +4,2 bis +54,2 Prozentpunkte. Das Intervall für die Siegquote gegen V15 selbst (33,3 bis 75,0 %) lässt eine allgemeine Überlegenheit offen. [Direktduell und Begegnungen je Karte](../experiments/analysis/r3_v4_contact_20261115/direct_v4/ERGEBNIS.md).
+
 ## 15.11.2026 – Auf denselben Karten gewinnt die einfachere Auswertung
 
 Mit zwei Ansichten trifft das nachtrainierte Netz mehr gespeicherte Lehrerentscheidungen als mit einer. Im Spiel verlor es beide Solution-Partien auf 7170236, die der Ein-Ansicht-Midpoint und der ursprüngliche Diagonal-R3 gewannen. 30/32 gegen Solution, 0/32 gegen Kaggle, 24/32 im direkten Duell gegen V14. Zwei von sieben Auswahlkriterien erfüllt. Die unabhängige Bestätigung läuft mit einer Ansicht. [Beide Ansichten](../experiments/analysis/r8_midpoint_diagonal_20261115/VORAUSWAHL.md) · [Eine Ansicht](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md).

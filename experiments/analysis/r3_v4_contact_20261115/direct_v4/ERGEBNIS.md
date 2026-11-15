@@ -1,0 +1,7 @@
+# Kontakt gegen V15 auf denselben 24 Karten
+
+Der Kontaktagent gewinnt **26 von 48** direkten Partien gegen V15. Auf 13 Karten gewinnt er auf beiden Seiten, auf den übrigen elf gewinnt V15 auf beiden Seiten. Die Karte hat damit großen Einfluss. Das 95-%-Intervall über ganze Karten reicht von 33,3 bis 75,0 % und lässt die Frage nach einem Direktvorteil gegenüber V15 offen. Die einzelnen Matches innerhalb der Partien enden insgesamt 68 zu 76.
+
+Für die Frage, ob der Wechsel zum V15-Verhalten bei sichtbarem Gegner R3 im Duell hilft, gibt es einen zweiten Vergleich. Der reine R3 hatte auf genau diesen Karten gegen denselben V15 nur **12/48** Spiele gewonnen. Die Kontaktregel dreht 18 frühere Niederlagen und verliert vier frühere Siege. Das ergibt netto **14 zusätzliche Siege** und einen Zuwachs von 29,2 Prozentpunkten (gepaartes 95-%-Kartenintervall +4,2 bis +54,2). Die Karten wurden für diesen direkten Vergleich wiederverwendet. Der unabhängige Vergleich gegen Solution und Kaggle steht im [separaten Bericht](../FRISCHE_KARTEN.md).
+
+Beide Befehlsströme und alle drei Matchausgänge sind je Partie durch Prüfsummen gebunden. Die 48 [Originalprotokolle](partien.tar.gz) lassen sich direkt in diesen Ordner entpacken. Die [Auswertung](completed.json) enthält sämtliche Einzelprüfsummen und die gepaarten Kartenergebnisse. [Quellen und Einstellungen](protocol.json) · [Vorab festgelegte Auswertung](../DIREKTVERSUCH_V4.md).
