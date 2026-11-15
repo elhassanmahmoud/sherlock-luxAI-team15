@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Gegenspieler auf länger besetzten Punktefeldern erkannt
+
+In 80 V14-Archiven unterscheidet die Besetzung im vorigen Zug zwei Situationen mit gleicher aktueller Gegnerzahl. Gegen Kaggle blieb das Feld in 86 % gegenüber 45 % der Beobachtungen im Folgezug sichtbar besetzt, gegen Solution in 77 % gegenüber 60 %. Zwölf historische Solution-Traces erlaubten zusätzlich einen Abgleich mit der tatsächlichen Folgebesetzung. Ein eigener Bewegungsberater mit dieser zeitlichen Information wird separat geprüft. [Daten und Einschränkungen](../experiments/analysis/temporal_movement_20261115/BEOBACHTUNG.md) · [Festgelegter Vergleich](../experiments/analysis/temporal_movement_20261115/PLAN.md).
+
 ## 15.11.2026 – Öffentliche Schussreichweite als Wahl zwischen zwei eigenen Agenten geprüft
 
 Auf 80 historischen Karten wurde festgelegt, FT18 bei Reichweite 6 oder 7 und sonst V14 zu spielen. Auf 400 weiteren archivierten Karten gewann diese Wahl 764/800 ganze Spiele gegen Solution, V14 allein 761/800. Der Unterschied beträgt +0,375 Prozentpunkte bei einem gepaarten 95-%-Intervall von −0,75 bis +1,50. Die Regel wird vorerst zurückgestellt. Die gesonderte Studie zur Bewegungswahl nach Match 1 verfolgt eine andere Frage. Mahmouds neuer Hybrid aus V14 und seinem Nachahmungsnetz ist lokal integriert (Commit `218ae09`). [Archivvergleich und Reproduktion](../experiments/analysis/late_ft18_20261115/public_selector/ERGEBNIS.md).
