@@ -1,0 +1,143 @@
+{
+  "arm": "v4",
+  "seed": 7286137,
+  "side": "player_0",
+  "score": {
+    "game_win": 1,
+    "our_wins": 2,
+    "opp_wins": 1,
+    "our_points": 2583,
+    "opp_points": 2422,
+    "steps": 303
+  },
+  "source": {
+    "r3_parent": "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8",
+    "v4_parent": "b2bd67e43f213cd99669bf3eee759e3fdeb1c0f5",
+    "r3": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+    "v4": "0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f",
+    "v14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "files_sha256": "5e2a323f07b544950c80b6fb74769406498c3ed3d60fdfa69bb1cb36d5464b53",
+    "engine": {
+      "python": "3.13.13",
+      "platform": "Darwin",
+      "machine": "arm64",
+      "runtime_flags": {
+        "JAX_PLATFORMS": null,
+        "XLA_FLAGS": null,
+        "CUDA_VISIBLE_DEVICES": null,
+        "PYTHONHASHSEED": null
+      },
+      "versions": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "torch": "2.14.1",
+        "jax": "0.12.0",
+        "jaxlib": "0.12.0",
+        "luxai-s3": "0.2.1"
+      },
+      "lux_modules": {
+        "__init__.py": "da1c1acb29d388eb52af7575fa08d97e8b27d18dec3922af36b607847780ca16",
+        "env.py": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+        "globals.py": "7033def6a262ae10037fd57919e7ed8abf1c71d5d64a61ac9940fc2ac909f095",
+        "params.py": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+        "profiler.py": "0cbc0fe73000c8ff9e369ea0b6bf3591eb4dbc74087d626bf8a2df254c0c88fa",
+        "pygame_render.py": "64c9c63c5b4303ccac8eec96db8c92c259e8410a7b43c6c88a62085578d60fd6",
+        "spaces.py": "06911437936581f0519c58255991b13b1fa932d9f4a008582f7bfbb4e37a500d",
+        "state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+        "utils.py": "bffc2f799af0c918e48511c2e9af3f745c794654c12eba4e3a94cfabbf4b0b49",
+        "wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26"
+      }
+    },
+    "historical": [
+      "06452ab615c2dd35f1b4e63261ce0f3d5014dabe8c35840b3113fef705e67dde",
+      "7d407d4fd7322f65d6ae5d27a87a157e2cf0a144b9eac303a93c86db9fea27ae",
+      "75cb58f9439c12784688b2eac1dcb4cbe753d040027993be863c0a214d5049fe",
+      "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c"
+    ]
+  },
+  "matched_prior": false,
+  "matches": [
+    {
+      "match": 1,
+      "points_before_last": [
+        459,
+        307
+      ],
+      "final_gain": [
+        14,
+        1
+      ],
+      "final_points": [
+        473,
+        308
+      ],
+      "tie_energy": [
+        2937,
+        78
+      ],
+      "won": true,
+      "decided_by": "points",
+      "first_scoring_action_step": [
+        35,
+        35
+      ],
+      "last_lead_after_action": 100,
+      "last_nonbehind_after_action": 100
+    },
+    {
+      "match": 2,
+      "points_before_last": [
+        1031,
+        1048
+      ],
+      "final_gain": [
+        14,
+        13
+      ],
+      "final_points": [
+        1045,
+        1061
+      ],
+      "tie_energy": [
+        2383,
+        2390
+      ],
+      "won": false,
+      "decided_by": "points",
+      "first_scoring_action_step": [
+        1,
+        1
+      ],
+      "last_lead_after_action": null,
+      "last_nonbehind_after_action": 38
+    },
+    {
+      "match": 3,
+      "points_before_last": [
+        1051,
+        1039
+      ],
+      "final_gain": [
+        14,
+        14
+      ],
+      "final_points": [
+        1065,
+        1053
+      ],
+      "tie_energy": [
+        3462,
+        3350
+      ],
+      "won": true,
+      "decided_by": "points",
+      "first_scoring_action_step": [
+        1,
+        1
+      ],
+      "last_lead_after_action": 100,
+      "last_nonbehind_after_action": 100
+    }
+  ],
+  "timeline_sha256": "2e544156d8aed8947af082a0fe2227b49ba08a68319a693dc6925699eec1a611"
+}

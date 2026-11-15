@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Beide verbleibenden Solution-Verluste stammen von einer Karte
+
+Auf 7286137 gewinnt V15 beide Startseiten 2:1, der Zwei-Ansichten-Berater verliert beide 0:3. Ein neuer Kandidat behält dessen Eröffnung und verwendet nach einer Niederlage im ersten Match V14 für den Rest der Partie. In 13 gezielten Diagnosepartien holte er einen der beiden Solution-Sitze und zwei frühere Kaggle-Niederlagen. Die drei knappen Solution-Siege und beide neutralen Kontrollverläufe blieben erhalten. Ein Vergleich auf neuen Karten läuft. [Acht Vergleichsverläufe](../experiments/analysis/movement_reflection_20261115/last_solution_map/ERGEBNIS.md) · [Rückschaltung](../experiments/analysis/diagonal_after_loss_20261115/BEKANNTE_KARTEN.md).
+
 ## 15.11.2026 – Abschlussvortrag und drei echte Kursreplays
 
 Neun Folien mit 9:55 Minuten Sprechzeit. Moe übernimmt 1–3 und 8–9, Mahmoud 4–7. Der Vortrag erklärt die Maskierung und den Regeldurchgriff sowie die unterschiedliche Entscheidungsverteilung in V15 und im Zwei-Ansichten-Kandidaten. Ein Direktvergleich und die externen Gegner haben getrennte Ergebnisse. Die drei vorab festgelegten V15-Kursspiele sind lokal abspielbar, jeweils mit 303 Aktionen und 304 Zuständen. Zum Vorzeigen springt das erste Replay direkt zu Match 1, Zug 35. [Präsentation](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Stichpunkte](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md) · [Partien](presentation/finale_2711/replays/README.md).
