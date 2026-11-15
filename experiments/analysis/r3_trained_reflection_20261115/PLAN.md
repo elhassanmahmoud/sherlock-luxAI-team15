@@ -1,0 +1,19 @@
+# Diagonale Ansichten beim Lernen
+
+R3 und beide R8-Arme lernten bisher aus der ursprünglichen kanonischen Ansicht. Der bestätigte Diagonal-R3 wertet dieselben Gewichte zur Laufzeit zweimal aus. Die älteren MLP-Ensembles nutzen Symmetrie im Kartengedächtnis, bei der R3-Konsensstudie wurde ausschließlich die Entscheidung nach der Inferenz verändert. Hier prüfen wir, ob ein direkt aus R3 nachtrainiertes Netz aus achsenvertauschten Darstellungen desselben Lehrerbefehls lernen kann. Der Lehrer selbst kann bei Gleichständen oder richtungsabhängiger Strategie eine andere Wahl treffen, wenn er die gespiegelte Welt neu spielt. Diese zweite Lehrerentscheidung wurde nicht erhoben.
+
+**Ein neuer Fit.** Kontrolle ist der bereits ausgeführte unveränderte R8-Arm mit echten R3-Stellungen, Checkpoint `93046242…`. Neuer Arm startet mit demselben R3 `99b07775…`. Beide erhalten dieselben 1.024 AdamW-Updates, Seed 2711, Lernrate 0,0001, 256 zulässige Einheitszeilen pro Update, gleiche Reihenfolge und identische zwei Ziehungsprüfsummen. Die ersten 128 Beispiele stammen aus 48 R1-Lernkarten 7272000–7272047, die zweiten 128 aus 48 R3-Lernkarten 7287000–7287047. Keine Diagnose- oder Spielausgangsdaten werden für die Optimierung geladen. Ziele, Schussgewicht, 2,0-Temperatur und 0,5-Gewicht für die fünf weichen Bewegungsbewertungen entsprechen dem Original. Gleiche MPS-Ausführung und Softwareversionen wie beim Referenzfit. Beide Arme lernen aus 262.144 Beispielen. In 512 vorher festgelegten Updates spiegeln wir den gesamten Minibatch an der Hauptdiagonalen (je acht von 16 Updates, Phasenwechsel je Runde). Dabei transponieren wir alle 16 räumlichen Ebenen sowie Position, richtungsabhängige Merkmale, sechs Aktionsklassen und Masken, fünf Lehrerwerte, Schussversatz und Zielfeld. Bleiben, Schießen und die Reichweite behalten ihre Bedeutung. Wir speichern ausschließlich den letzten Stand.
+
+**Vor der ersten Gradientenberechnung festgelegte Auswahl.** Ursprünglicher R3, unaugmentierter R8 und neu trainierter Arm beraten alle mit derselben zweiten Ansicht und demselben Mittel der zurückübersetzten Rohbewertungen. Die Aktionsmaske, 70-%-Schwelle und das Beibehalten von V14-Schüssen gelten für alle drei. Auf 24 R3-On-Policy-Diagnosekarten (7287100–7287123) muss der neue Arm *mehr* endgültige Lehreraktionsklassen richtig treffen als beide Kontrollen. Auf den unabhängigen 24 älteren Karten (7272200–7272223) muss er mindestens beide erreichen. Beide Sitze, 8 Karten je Gegner pro Satz. Die gespeicherten Zustände erlauben den Vergleich der ausgegebenen Aktionsklasse; Lehrerschusskoordinaten oder neue Spielverläufe sind hier kein Zielmaß. Die 96 Sitzarchive werden gegen die registrierten Hashes geprüft. Für den Diagonal-R3 müssen Zeilenzahl, Hilfe, Schaden und Zahl der Änderungen je Sitz die vorhandenen Ergebnisse reproduzieren. Ausweisung der gepaarten Gewinne und Verluste relativ zu beiden Kontrollen sowie der verletzten zuvor richtigen V14-Züge. Alle vier Bedingungen gemeinsam erforderlich. Bei Verfehlen keine Spielaufnahme, kein zweiter Fit. Bei Erfolg nur ein neuer, separat festgelegter Spielvergleich. Derzeit ist kein Vorteil im Spiel nachgewiesen.
+
+```bash
+M=/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15
+R="$M/experiments/candidates/movement_dagger_20261115/r3_soft.pth"
+C="$M/experiments/candidates/r8_warm_20261115/r8.pth"
+OLD="$M/experiments/imitation/final_20261115_movement_dagger"
+NEW="$M/experiments/imitation/final_20261115_r3_context"
+OUT="$M/experiments/candidates/r3_trained_reflection_20261115"
+REPORT="$M/experiments/analysis/r3_trained_reflection_20261115/validation.json"
+"$M/.venv/bin/python" -B -u -m scripts.r3_trained_reflection --parent "$R" --control "$C" --old "$OLD" --new "$NEW" --out "$OUT"
+"$M/.venv/bin/python" -B -u -m scripts.r3_trained_reflection_audit --parent "$R" --control "$C" --old "$OLD" --new "$NEW" --model "$OUT/augmented.pth" --out "$REPORT"
+```
