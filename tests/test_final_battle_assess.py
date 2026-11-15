@@ -14,7 +14,11 @@ MODEL = "b" * 64
 def write_run(directory, name, first, count, opponents, winner, model=MODEL):
     directory.mkdir()
     sources = {p: "a" * 64 for p in audit.CORE}
-    if name != "v14":
+    if name == "stack_reserve":
+        sources["scripts/stack_reserve.py"] = audit.STACK_RESERVE_SHA
+        sources["scripts/combat_teacher_counterfactual.py"] = "c" * 64
+        model = None
+    elif name != "v14":
         sources["scripts/selective_advice_agent.py"] = "c" * 64
         for path in ("combat_teacher_counterfactual.py", "collect_combat_advice.py", "imitate.py"):
             sources["scripts/" + path] = "c" * 64
@@ -123,3 +127,42 @@ def test_rejects_incomplete_or_incompatible_runs(tmp_path, fault):
         manifest.write_text(json.dumps(m))
     with pytest.raises((OSError, ValueError)):
         audit.load_phase(ref, cand, None, range(2), range(2))
+
+
+
+def test_stack_protocol_requires_registered_rule_and_consistent_correction_helper(tmp_path):
+    def lost(*_): return False
+    def won(*_): return True
+    name = "stack_reserve"
+    args = SimpleNamespace(protocol=name, stage="confirm", model_sha256=None,
+                           screen_first=10, screen_maps=2, screen_direct_first=None,
+                           confirm_first=20, confirm_maps=2, confirm_direct_first=30,
+                           screen_reference=write_run(tmp_path/"s_ref","v14",10,2,EXT,lost),
+                           screen_candidate=write_run(tmp_path/"s_new",name,10,2,(*EXT,"v14"),won),
+                           screen_direct=None, reference=write_run(tmp_path/"c_ref","v14",20,2,EXT,lost),
+                           candidate=write_run(tmp_path/"c_new",name,20,2,EXT,won),
+                           direct=write_run(tmp_path/"c_direct",name,30,2,("v14",),won))
+    result = audit.assess(args)
+    assert result["policy_sha256"] == result["selection"]["policy_sha256"] == audit.STACK_RESERVE_SHA
+    assert result["model"] is None and result["game_gates_pass"]
+    args.protocol = "dagger"
+    with pytest.raises(ValueError):
+        audit.assess(args)
+    args.protocol = name
+    path = args.direct / "manifest.json"
+    original = json.loads(path.read_text())
+    for field, value, reason in (
+            ("scripts/stack_reserve.py", "f"*64, "policy SHA"),
+            ("scripts/combat_teacher_counterfactual.py", None, "Missing source"),
+            ("scripts/combat_teacher_counterfactual.py", "f"*64, "implementation")):
+        modified = {**original, "sources": dict(original["sources"])}
+        if value is None:
+            del modified["sources"][field]
+        else:
+            modified["sources"][field] = value
+        path.write_text(json.dumps(modified))
+        with pytest.raises(ValueError, match=reason):
+            audit.assess(args)
+    path.write_text(json.dumps({**original, "model": MODEL}))
+    with pytest.raises(ValueError, match="checkpoint"):
+        audit.assess(args)

@@ -4,7 +4,7 @@ python -m scripts.final_battle_assess screen --reference V14_EXT --candidate NEW
 python -m scripts.final_battle_assess confirm --reference CONF_V14 --candidate CONF_EXT --direct CONF_DIRECT \
     --screen-reference V14_EXT --screen-candidate NEW_ALL
 
-Use --protocol dagger for the registered follow-up. Fractions and confidence bounds are on the 0–1 scale.
+Use --protocol dagger or --protocol stack_reserve for the registered follow-ups. Fractions and confidence bounds are on the 0–1 scale.
 completed.json binds the JSONL rows. Manifest hashes in the report identify the configurations
 actually compared; the runner does not issue a signed manifest or separately log runtime parameters.
 """
@@ -23,6 +23,7 @@ from scripts.final_battle_select import OPPONENTS, SEATS, checked_run_files
 
 V14_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
 FIRST_MOVEMENT_MODEL = "5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad176813575"
+STACK_RESERVE_SHA = "ed19e3df648821ad54b1fa3c2dbf0148f30f496dceeb4a921ba095f712af24c6"
 KAGGLE = "experiments/opponents/kaggle3_lux3_048fn/"
 CORE = {"agents/sherlock/main.py", "agents/sherlock/config.py", "agents/sherlock/features.py",
         "agents/Solution_92_Kaggle/agent.py", "scripts/common.py", "scripts/scoring.py",
@@ -50,6 +51,10 @@ def load_run(directory, name, seeds, opponents):
     required = CORE | {policy_file}
     if name.startswith("selective_"):
         required |= {"scripts/combat_teacher_counterfactual.py", "scripts/collect_combat_advice.py", "scripts/imitate.py"}
+    if name == "stack_reserve":
+        required.add("scripts/combat_teacher_counterfactual.py")
+        if sources.get(policy_file) != STACK_RESERVE_SHA:
+            raise ValueError(f"Unregistered stack_reserve policy SHA in {directory}")
     if "kaggle3" in opponents:
         required |= {KAGGLE + "agent/base.py", KAGGLE + "agent/agent.py"}
         if any(sources.get(KAGGLE + key) != h for key, h in WEIGHT_SHA256.items()):
@@ -62,7 +67,7 @@ def load_run(directory, name, seeds, opponents):
         hashes.append(model)
     if any(not isinstance(h, str) or not re.fullmatch(r"[0-9a-f]{64}", h) for h in hashes):
         raise ValueError(f"Malformed SHA-256 in {directory}")
-    if (name == "v14" and model is not None) or (name.startswith("selective_") and model is None):
+    if (name in ("v14", "stack_reserve") and model is not None) or (name.startswith("selective_") and model is None):
         raise ValueError(f"Unexpected checkpoint binding for {name}")
     return Run(m, games, provenance)
 
@@ -95,14 +100,14 @@ class Phase:
     direct_seeds: range
 
 
-def load_phase(reference, candidate, direct, external_seeds, direct_seeds):
+def load_phase(reference, candidate, direct, external_seeds, direct_seeds, name="selective_movement"):
     if not external_seeds or not direct_seeds:
         raise ValueError("Each map block must be nonempty")
     ref = load_run(reference, "v14", external_seeds, OPPONENTS)
     if direct is None and external_seeds != direct_seeds:
         raise ValueError("The registered direct seeds require a separate --direct directory")
     opponents = OPPONENTS if direct is not None else (*OPPONENTS, "v14")
-    cand = load_run(candidate, "selective_movement", external_seeds, opponents)
+    cand = load_run(candidate, name, external_seeds, opponents)
     duel = load_run(direct, cand.manifest["candidate"], direct_seeds, ("v14",)) if direct is not None else cand
     compatible(ref, cand)
     compatible(cand, duel)
@@ -156,25 +161,31 @@ def summarize(phase, stage):
         gates["direct_lower_bound_above_half"] = direct["winrate_ci95"][0] > .5
     else:
         raise ValueError(stage)
-    return dict(stage=stage, candidate=phase.candidate.manifest["candidate"], model=phase.candidate.manifest["model"],
+    report = dict(stage=stage, candidate=phase.candidate.manifest["candidate"], model=phase.candidate.manifest["model"],
                 reference_files=phase.reference.hashes, candidate_files=phase.candidate.hashes, direct_files=phase.direct.hashes,
                 external_first=phase.external_seeds.start, direct_first=phase.direct_seeds.start,
                 by_opponent=by_opp, external=external, direct=direct, gates=gates, game_gates_pass=all(gates.values()))
+    if report["candidate"] == "stack_reserve":
+        report["policy_sha256"] = phase.candidate.manifest["sources"]["scripts/stack_reserve.py"]
+    return report
 
 
 def assess(args):
+    name = "stack_reserve" if getattr(args, "protocol", "selective") == "stack_reserve" else "selective_movement"
+    if name == "stack_reserve" and args.model_sha256 is not None:
+        raise ValueError("stack_reserve uses the registered policy source without an extra checkpoint")
     first = args.screen_first
     screen_direct = first if args.screen_direct_first is None else args.screen_direct_first
     screen_maps = range(first, first + args.screen_maps)
     direct_maps = range(screen_direct, screen_direct + args.screen_maps)
     if args.stage == "screen":
-        phase = load_phase(args.reference, args.candidate, args.direct, screen_maps, direct_maps)
+        phase = load_phase(args.reference, args.candidate, args.direct, screen_maps, direct_maps, name)
         if args.model_sha256 is not None and phase.candidate.manifest["model"] != args.model_sha256:
             raise ValueError("Model differs from the registered checkpoint")
         return summarize(phase, "screen")
     if not args.screen_reference or not args.screen_candidate:
         raise ValueError("Confirmation requires the actual completed selection runs")
-    screen = load_phase(args.screen_reference, args.screen_candidate, args.screen_direct, screen_maps, direct_maps)
+    screen = load_phase(args.screen_reference, args.screen_candidate, args.screen_direct, screen_maps, direct_maps, name)
     if args.model_sha256 is not None and screen.candidate.manifest["model"] != args.model_sha256:
         raise ValueError("Model differs from the registered checkpoint")
     report = summarize(screen, "screen")
@@ -185,7 +196,7 @@ def assess(args):
     selected = set(screen_maps) | set(direct_maps)
     if selected.intersection(external) or selected.intersection(direct) or set(external).intersection(direct):
         raise ValueError("Confirmation blocks overlap selection or each other")
-    confirmation = load_phase(args.reference, args.candidate, args.direct, external, direct)
+    confirmation = load_phase(args.reference, args.candidate, args.direct, external, direct, name)
     if screen.candidate.manifest["candidate"] != confirmation.candidate.manifest["candidate"]:
         raise ValueError("Confirmation is for a different candidate")
     compatible(screen.candidate, confirmation.candidate)
@@ -198,7 +209,7 @@ def assess(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("stage", choices=("screen", "confirm"))
-    parser.add_argument("--protocol", choices=("selective", "dagger"), default="selective")
+    parser.add_argument("--protocol", choices=("selective", "dagger", "stack_reserve"), default="selective")
     parser.add_argument("--reference", type=Path, required=True)
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--direct", type=Path, help="Separate direct-only run; otherwise read V14 duels from --candidate")

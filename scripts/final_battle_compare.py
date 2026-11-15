@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WEIGHTS = ROOT / 'agents/sherlock/weights/agent_p0.pth'
 POLICIES = {'v14': 'agents.sherlock.main:Agent_x', 'pressure': 'scripts.final_pressure:PressureAgent',
+            'stack_reserve': 'scripts.stack_reserve:StackReserveAgent',
             'contact': 'scripts.contact_reserve:ContactReserveAgent', 'learned': 'scripts.final_learning_agent:EnergyReturnAgent',
             'aim': 'scripts.combat_advice_agent:CombatAdviceAgent', 'fire': 'scripts.combat_advice_agent:CombatAdviceAgent',
             'selective_combat': 'scripts.selective_advice_agent:SelectiveAdviceAgent',
@@ -69,6 +70,8 @@ def contract(args):
     tracked += [ROOT/'scripts'/f for f in ('final_battle_compare.py','common.py','scoring.py','par_eval.py','metrics.py','kaggle3_opponent.py','experiment.py')]
     tracked.append(ROOT/(POLICIES[args.candidate].split(':')[0].replace('.','/')+'.py'))
     if args.candidate == 'learned': tracked.extend((ROOT/'scripts').glob('final_learning_*.py'))
+    if args.candidate == 'stack_reserve':
+        tracked.append(ROOT/'scripts/combat_teacher_counterfactual.py')
     if args.candidate.startswith('selective_'):
         tracked += [ROOT/'scripts'/f for f in ('combat_teacher_counterfactual.py','collect_combat_advice.py','imitate.py')]
     # Include installed opponent source/weights when that opponent is actually evaluated.
