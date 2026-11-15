@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der letzte tatsächlich gespielte Befehl hilft auf 21 von 24 Diagnosekarten
+
+Eine Häufigkeitstabelle traf mit diesem zusätzlichen Hinweis 1.868 weitere Lehreraktionen unter 147.228 Entscheidungen. Der Unterschied beträgt +1,27 Prozentpunkte, mit einem 95-%-Kartenintervall von +0,82 bis +1,71. R5 soll prüfen, ob der vollständige Bewegungsberater davon im Spiel profitiert. [Daten und Einschränkungen](../experiments/analysis/own_command_20261115/archive/ERGEBNIS.md) · [Vorab festgelegter Vergleich](../experiments/analysis/own_command_20261115/PLAN.md).
+
 ## 15.11.2026 – Bewegungsberater im direkten Duell und neuer Schüler mit Lehrerbewertungen
 
 R2 gewann 22 von 32 Spielen direkt gegen V14. Beide gewannen alle 32 Solution-Spiele und keines der 32 Kaggle-Spiele. Die externen Ergebnisse reichen nicht zur Nominierung. R3 greift beim Nachspielen von Lehrerzügen vorsichtiger ein. Auf 24 zurückgehaltenen Karten erhält er 1.012 vorher richtige Entscheidungen mehr als R2, mit 240 zusätzlichen Übereinstimmungen netto. Das trainierte Modell und die Rohdaten liegen im Repo. [R2 im Spiel](../experiments/analysis/movement_dagger_20261115/ERGEBNIS.md) · [R3 im Training](../experiments/analysis/movement_soft_20261115/TRAINING.md).
