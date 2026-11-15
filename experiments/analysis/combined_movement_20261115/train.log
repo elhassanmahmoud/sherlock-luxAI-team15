@@ -1,0 +1,22 @@
+Bewegungs-KL: 656134 geeignete Trainingszeilen, davon 631325 mit mindestens zwei legalen Aktionen
+Train: 989063 rows; validation: 51048 V14 + 156243 mixed rows
+CPU board storage: 1017354240 bytes in temporary disk files
+Before the first update, own-command input parity: {'device': 'mps:0', 'atol': 1e-06, 'rtol': 1e-05, 'max_abs_by_head': [1.4901161193847656e-08, 3.725290298461914e-09, 0.0]}
+Training: 958870/989063 Befehle im Spiel ausfuehrbar, 44677/44677 legale Schusslabels, davon 61 auf das eigene Feld
+Validierung: 198959/207291 Befehle im Spiel ausfuehrbar, 9029/9029 legale Schusslabels, davon 8 auf das eigene Feld
+Aktionsverlust: 62398/958870 ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3
+Trainingsdaten: 958870 Unit-Entscheidungen, Verteilung stay 32.3 %, up 6.2 %, right 24.2 %, down 25.8 %, left 6.8 %, sap 4.7 %
+Minibatch: 24 Spielschritte (im Mittel etwa 256 Unit-Entscheidungen), Geraet mps
+Epoche 1: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 1/5: Loss 2.2195 | Validierung Aktion 65.1 % | vollstaendiger Befehl 64.2 % | je Aktion stay 85 up 39 right 55 down 69 left 50 sap 46 | Ziel bei legalem Lehrerschuss exakt 58 %, +-1 Feld 83 % | 135s
+Epoche 2: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 2/5: Loss 1.4788 | Validierung Aktion 68.9 % | vollstaendiger Befehl 68.2 % | je Aktion stay 82 up 40 right 71 down 70 left 56 sap 42 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 132s
+Epoche 3: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 3/5: Loss 1.2694 | Validierung Aktion 69.6 % | vollstaendiger Befehl 68.7 % | je Aktion stay 83 up 43 right 72 down 70 left 46 sap 56 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 126s
+Epoche 4: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 4/5: Loss 1.1155 | Validierung Aktion 70.7 % | vollstaendiger Befehl 69.9 % | je Aktion stay 84 up 45 right 70 down 73 left 53 sap 53 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 86 % | 130s
+Epoche 5: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 5/5: Loss 1.0206 | Validierung Aktion 70.7 % | vollstaendiger Befehl 69.8 % | je Aktion stay 85 up 43 right 71 down 73 left 49 sap 56 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 86 % | 99s
+Fixe letzte Epoche, eight original V14 maps: 51048 Zeilen | Aktion 70.27 % | voller Befehl 68.95 % | Ziel bei legalem Lehrerschuss 63.62 %
+Fixe letzte Epoche, held-out mixed maps: 156243 Zeilen | Aktion 70.84 % | voller Befehl 70.07 % | Ziel bei legalem Lehrerschuss 62.81 %
+Saved /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_r7_combined/student.pth 7bbbb09944bf2db3a00c54e121c1fb981c0c60cd6a0ed5bb02fedc0ef5c62b4f

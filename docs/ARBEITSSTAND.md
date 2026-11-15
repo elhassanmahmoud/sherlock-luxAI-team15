@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R7 ist trainiert und verfehlt seinen Vergleich mit R5 um 46 Befehle
+
+R7 kombiniert den letzten ausgeführten Befehl mit weichen Lehrerbewertungen. 17.435 Nettoübereinstimmungen und 2.252 verlorene richtige V14-Aktionen auf 24 Diagnosekarten. Das sind 1.078 Nettoübereinstimmungen mehr und 91 Fehlkorrekturen weniger als R3. Für eine Nominierung waren mindestens die 17.481 von R5 verlangt. Damit endet diese Auswahl ohne neue R7-Spiele. Die Summen je Modell und Gruppe sind aus den 64 Sitzarchivberichten nachgerechnet. [Trainingsbericht und Gewichte](../experiments/analysis/combined_movement_20261115/TRAINING.md).
+
 ## 15.11.2026 – Neue Lehrerdaten überspringen ausgeschiedene Einheiten
 
 Bei allen 705 bisherigen Sitzarchiven wurden die Prüfsummen gegengeprüft. Mindestens 4.479 zusätzliche Lernzeilen und 703 Diagnosezeilen stammen von Einheiten mit negativer Energie. Die Maske zwingt für alle betroffenen Diagnosezeilen beide Schüler zu derselben Aktion. Die Differenz der korrekten Befehle zwischen ihnen bleibt gültig. Der Sammler behält Einheiten mit genau null Energie. Grenzwerte und Ausrichtung von Befehlen, Zielen und Merkmalen wurden im gemeinsamen Lauf geprüft. [Befund und Wiederholung](../experiments/analysis/full_student_20261115/AKTIVE_EINHEITEN.md).
