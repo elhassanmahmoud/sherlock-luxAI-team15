@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Sechs verbleibende Niederlagen des Hybrid-v3 für die Diagnose eingegrenzt
+
+Vier frühere V14-Siege gingen im Hybrid-v3 verloren, zehn Niederlagen drehte er in Siege. Hybrid-v2 im Kampfmodus gewinnt fünf der sechs verbleibenden v3-Niederlagen. Bei der sechsten Partie gewinnt V14. Das Auswählen eines Agenten anhand des späteren Endstands wäre im Battle nicht möglich. Die offenen Sitzpartien mit Matchständen, Punktedifferenzen und einer gezielten Vergleichsfrage stehen im [Bericht zu den sechs Niederlagen](../experiments/analysis/umbau_20261115/RESTNIEDERLAGEN.md).
+
 ## 15.11.2026 – Abschlusspräsentation erklärt den getesteten Hybrid
 
 Die aktuelle Fassung für den 27. November zeigt zuerst V14s Entscheidung und Training. Folie 6 erklärt anhand der zwei vollständigen Befehle, wann V14 und wann der v3-Schüler eine Einheit steuert. Folie 9 vergleicht 188, 179 und 194 Siege gegen Solution auf denselben 200 Spielschlüsseln. Die sechs zusätzlichen Hybridsiege ergeben ein 95-%-Kartenintervall von −1 bis +7 Prozentpunkten. Gegen den nativen Kaggle-Gegner gewann der Hybrid sechs Spiele, V14 acht. Alle neun Seiten visuell geprüft, Planzeit 9:55. Moe übernimmt 1–3 und 8–9, Mahmoud 4–7. Die gemeinsame Zeitprobe und die Aktualisierung nach einem möglichen unabhängigen Bestätigungsversuch stehen aus. [PDF](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Sprechstichpunkte und Belege](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md).
