@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der gemischte v4-Hybrid steht für die unabhängige Bestätigung fest
+
+Auf Dev B gewinnt er im direkten Duell 178/200, gegen Solution 190/200 und gegen Kaggle 4/200. Dieselben 100 Karten ergaben für V14 185/200 gegen Solution und 0/200 gegen Kaggle. Die gemischte Variante ist vor den 400 Bestätigungskarten mit Dateiprüfsumme festgelegt. Die vollständigen Karten- und Sitzschlüssel der neuen Tabellen wurden nachgerechnet. [Gepaarte Gegenprüfung](../experiments/analysis/umbau_20261115/V4_ZUWEISUNG.md).
+
 ## 15.11.2026 – R3 wartet vor der Rückkehr auf ein Punktefeld bis Zug 13
 
 Auf 13 früheren Karten gegen Solution lag der erste öffentlich sichtbare Punkt bei V14 in 48 gewonnenen zweiten und dritten Matches im Median bei Schritt 12,5. Daraus folgt ein einziger Startzeitpunkt für die verzögerte Route. 28 historische Vergleichspartien liegen geprüft vor. 14 ausgewählte Sitzpartien prüfen als Nächstes, ob die verzögerte Regel beide bekannten Problemfälle gewinnt und die übrigen Siege hält. [Herleitung und Grenzen](../experiments/analysis/movement_soft_20261115/restart_route/verzoegerung/BEFUND.md).
