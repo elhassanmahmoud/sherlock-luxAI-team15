@@ -85,6 +85,7 @@ class HybridAgent:
                 self.stats["student"] += 1
             else:
                 self.stats["v14"] += 1
+        self.v14.param_est.record_played_actions(out)
         return out
 
     def _use_student(self, ctx, belief, uid: int, student_action) -> bool:

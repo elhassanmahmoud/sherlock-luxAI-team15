@@ -131,6 +131,11 @@ class ParamEstimator:
             self.log_drop += np.log(like)
             self.n_drop += 1
 
+    def record_played_actions(self, actions) -> None:
+        """Nach einer Hybrid-Auswahl die Weltbefehle der gespeicherten Beobachtung berichtigen."""
+        if self._prev is not None:
+            self._prev["act"] = np.asarray(actions).copy()
+
     def remember(self, obs, team: int, actions) -> None:
         opp = 1 - team
         epos = np.asarray(obs["units"]["position"])[opp]

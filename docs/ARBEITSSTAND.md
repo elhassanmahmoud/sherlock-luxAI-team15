@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Energiebuchhaltung in Mahmouds Hybrid berichtigt
+
+Der Hybrid entscheidet für jedes Schiff zwischen V14 und dem Nachahmungsnetz. Wenn der Schüler den Befehl ersetzte, stand im V14-Energieschätzer noch der ursprüngliche Vorschlag. Der Hybrid übergibt dem Schätzer jetzt die tatsächlich gesendete Befehlsmatrix in Weltkoordinaten. Für beide Spielerpositionen wurde ein gemischter Zug geprüft. Nach einem Schuss mit Kosten 30 und einem Energieabfall von 100 auf 67 misst der Schätzer den verbleibenden Nebelverlust von drei korrekt. Die fokussierte integrierte Prüfung bestand mit 38 Tests. Die spielerische Wirkung dieses Buchhaltungsfixes ist offen. Unser Bewegungsberater protokollierte den endgültigen Befehl bereits zuvor. [Hybrid](../agents/sherlock/hybrid_agent.py) · [Regressionstest](../tests/test_hybrid_agent.py).
+
 ## 15.11.2026 – Gegenspieler auf länger besetzten Punktefeldern erkannt
 
 In 80 V14-Archiven unterscheidet die Besetzung im vorigen Zug zwei Situationen mit gleicher aktueller Gegnerzahl. Gegen Kaggle blieb das Feld in 86 % gegenüber 45 % der Beobachtungen im Folgezug sichtbar besetzt, gegen Solution in 77 % gegenüber 60 %. Zwölf historische Solution-Traces erlaubten zusätzlich einen Abgleich mit der tatsächlichen Folgebesetzung. Ein eigener Bewegungsberater mit dieser zeitlichen Information wird separat geprüft. [Daten und Einschränkungen](../experiments/analysis/temporal_movement_20261115/BEOBACHTUNG.md) · [Festgelegter Vergleich](../experiments/analysis/temporal_movement_20261115/PLAN.md).

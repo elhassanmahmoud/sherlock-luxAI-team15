@@ -44,3 +44,53 @@ def test_hybrid_rejects_unknown_mode(student):
     from agents.sherlock.hybrid_agent import HybridAgent
     with pytest.raises(ValueError):
         HybridAgent("player_0", V14, student, mode="chaos")
+
+
+@pytest.mark.parametrize("team,shot,move", [(0, (5, 1, 2), 2), (1, (5, -2, -1), 1)])
+def test_hybrid_estimator_uses_played_world_actions(team, shot, move):
+    from types import SimpleNamespace
+
+    from agents.sherlock.hybrid_agent import HybridAgent
+    from agents.sherlock.param_est import ParamEstimator
+
+    canonical = np.array([(3, 3), (5, 5), (1, 1)])
+    pos = np.zeros((2, 3, 2), int)
+    pos[team] = canonical if team == 0 else 7 - canonical[:, ::-1]
+    energy = np.full((2, 3), 100, int)
+    mask = np.zeros((2, 3), bool)
+    mask[team] = True
+    tiles = np.zeros((8, 8), int)
+    tiles[tuple(pos[team, 0])] = 1
+    obs = dict(units=dict(position=pos, energy=energy), units_mask=mask,
+               sensor_mask=np.ones_like(tiles, bool), map_features=dict(energy=np.zeros_like(tiles), tile_type=tiles),
+               match_steps=10)
+
+    # A points-mode hybrid uses the two student orders and keeps V14's third ship on its point.
+    # The two subagents already output native world directions and SAP offsets for their seat.
+    base = np.array([[0, 0, 0], [3, 0, 0], [0, 0, 0]])
+    advice = np.array([shot, (move, 0, 0), (4, 0, 0)])
+    ctx = dict(ally_ids=np.arange(3), ally_pos=canonical, first_on_tile={(1, 1): 2}, assigned={})
+    points = np.zeros_like(tiles, bool)
+    points[1, 1] = True
+    estimator = ParamEstimator()
+
+    def v14_act(step, public):
+        estimator.remember(public, team, base)
+        return base
+
+    hybrid = HybridAgent.__new__(HybridAgent)
+    hybrid.mode = "points"
+    hybrid.v14 = SimpleNamespace(act=v14_act, _prev_ctx=ctx, belief=SimpleNamespace(point_tiles=points),
+                                 param_est=estimator)
+    hybrid.student = SimpleNamespace(act=lambda step, public: advice)
+    hybrid.stats = {"v14": 0, "student": 0}
+    played = hybrid.act(10, obs)
+    assert played.tolist() == [list(shot), [move, 0, 0], [0, 0, 0]]
+    assert np.array_equal(estimator._prev["act"], played)
+
+    # 100 – 30 SAP – 3 nebula = 67. Remembering V14's unused STAY would imply an impossible loss of 33.
+    energy[team, :2] = (67, 98)
+    pos[team, 1] += (1, 0) if move == 2 else (0, -1)
+    estimator.observe(dict(obs, match_steps=11), team, None, {"unit_sap_cost": 30})
+    assert estimator.n_neb == 1
+    assert estimator.nebula() == 3
