@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Erster Vergleich von R3 und v4 auf allen identischen Dev-A-Sitzen
+
+R3 gewann 195/200 gegen Solution (570/600 Einzelmatches), Mahmouds v4 mixed 194/200 (557/600), V14 188/200 (522/600). R3 gewann jede der sechs v4-Niederlagen. v4 gewann alle fünf R3-Niederlagen. Eine echte Kombination braucht eine Regel, die nur vor der nächsten Aktion verfügbare Beobachtungen verwendet, und einen neuen Vergleich. Acht V14-Spiele reproduzierten die ursprünglichen Endstände vollständig. [Rohdaten, Unsicherheit und Karten](../experiments/analysis/movement_soft_20261115/dev_a_solution/ERGEBNIS.md).
+
 ## 15.11.2026 – Der neue Einzelschüler gewinnt 9.269 Lehrerbefehle auf dessen eigenen Stellungen hinzu
 
 Der Kandidat und seine Kontrolle sind nach je fünf Epochen fertig. Auf eigenen Schülerstellungen gewinnt der Kandidat 565 genaue Lehrerbefehle hinzu, auf den älteren V14-Stellungen 340. Beide festgelegten Vergleiche auf archivierten Stellungen bestanden. Der Vergleich in vollständigen Spielen ist angelaufen. Beide Gewichtedateien sind als getrennte Studienmodelle verfügbar. [Training und Modelle](../experiments/analysis/full_student_20261115/TRAINING.md).
