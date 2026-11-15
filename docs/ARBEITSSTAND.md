@@ -1,5 +1,10 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026, 21:17 Berlin – Claude Code: Nachtauftrag für Codex vorbereitet (Start nur durch Moayed)
+
+- Auf Mahmouds Wunsch: [Nachtauftrag](NACHTAUFTRAG_CODEX_20261115.md) mit sechs Aufgaben für die Nacht auf dem M3 (höchstens 2 Spielprozesse): 1. Python-3.10-Prüfung der V15-Zip, 2. unabhängige Prüfung der V15-Bestätigung und des Codes, 3. Robustheit von V15 und V14 gegen weitere Gegner, 4. Replays für die Präsentation, 5. Präsentationsabschnitt „Umbau“ als Vorschlag, 6. optional DAgger-Zusatzdaten. Kartenbereich nur 7170000–7173999. Abgabe (V14, `Gruppe15.zip`) nicht ändern; die V15-Übernahme entscheidet Mahmoud.
+- Damit Codex arbeiten kann, liegt Schüler v4 jetzt im Repo: `experiments/candidates/umbau_20261115/student_v4.pth` (2,8 MB, SHA-256 `0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f`, eigene trainierte Gewichte). Der Kaggle-Lehrer wird weiterhin nur per `scripts/fetch_kaggle3.py` geladen und nie committet.
+
 ## 15.11.2026, 21:13 Berlin – Claude Code: Tagesabschluss Umbau
 
 - Offen für Mahmoud: Entscheidung über die Übernahme von V15 ([Vorlage](../experiments/analysis/umbau_20261115/V15_ENTSCHEIDUNG.md)). Bis dahin bleibt V14 die Abgabe; `Gruppe15.zip` und die V14-Gewichte sind unverändert.
