@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Spätes Umschalten auf V15 kostet zwei Solution-Siege
+
+In sämtlichen 16 betroffenen Partien sind die 4.033 Befehlsmatrizen pro Mannschaft vor der ersten Umschaltung identisch zur Kontrolle. Von vier ursprünglichen Niederlagen wird eine gerettet, drei frühere Siege gehen verloren. Auf dem vollständigen Archiv entspricht das 362/368 statt 364/368. Alle 16 nachgespielten Sitze und 352 unveränderte Verläufe sind einzeln zuordenbar. Vier Tests und die getrennte Auswertung der versiegelten Spiele bestanden. [Ergebnisse und Rohbefehle](../experiments/analysis/r3_m3_deficit_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Sherlock holt im Entscheidungsmatch häufig noch auf
 
 Beim Stand 1:1 prüften wir ab der Mitte des dritten Matches den öffentlich sichtbaren Punktestand. Auf dem festen Archiv von 184 Karten erfasste der erste Rückstand alle vier später verlorenen Solution-Spiele und zwölf der 13 geschützten Siege. Zwei Grenztests bestanden. Der Kursmotor bestätigte die 51 ursprünglichen Matchausgänge aus 5.151 Befehlspaaren. Für eine Aussage zur Wirkung müssen alle 16 betroffenen Partien mit den geänderten Befehlen gespielt werden. [Archivdiagnose](../experiments/analysis/r3_m3_deficit_20261115/ARCHIVPRUEFUNG.md).
