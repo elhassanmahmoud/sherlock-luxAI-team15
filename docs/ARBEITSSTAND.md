@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026, 17:11 Berlin – Claude Code: Umbau – DAgger wirkt, Hybrid aus V14 und Schüler vorn gegen Solution_92
+
+- **Schüler allein:** v1 (1,9 Mio. Lehrerentscheidungen) und v2 (8,4 Mio.) liegen trotz 82 % Zugübereinstimmung deutlich unter V14: gegen Solution_92 49,5–51 % statt 94 %, gegen kaggle3 0–2 % statt 4 % (Dev A, 200 Spiele je Gegner). Diagnose: Der Schüler kämpft und überlebt wie der Lehrer, punktet aber schlechter, bleibt zu oft stehen und stapelt. Mit `imit_stay_bias` 1,5 und `imit_unstack` erreicht v2 78 %. **Nach einer DAgger-Runde** (400 Spiele, Lehrer mit gespielter Zughistorie, Moayeds Fix) erreicht **v3 89,5 %** gegen Solution_92.
+- **Hybrid** (`agents/sherlock/hybrid_agent.py`; V14 und Schüler entscheiden auf dieselbe Beobachtung, gewählt wird je Unit): Mit **v3 im Modus points** (Halter und Units auf dem Weg zu bewiesenen Punktefeldern spielen V14, alle anderen den Schüler) **97 % gegen Solution_92** (V14 94 %; Matches +4,3 pp [+0,7; +8,2]) und gegen kaggle3 3 % Spiele bei 7,0 % Matches (V14 4 % / 5,0 %; +2,0 pp [−0,7; +4,7]). Der Modus combat mit v2 liegt ebenfalls bei 97 %, sap bei 88 %. Alle Werte stammen aus der Auswahl auf Dev A; Bestätigung, Direktduell und Kursprüfung stehen noch aus. [Bericht](../experiments/analysis/umbau_20261115/README.md).
+- **Läuft:** DAgger-Runde 2 mit v3 inklusive Schalter (600 Spiele, Karten ab 7251000) und ein zweiter v3-Schüler mit anderem Startwert für ein Ensemble. V14 und `Gruppe15.zip` unverändert. Tests: 12 Imitations- und Hybridtests bestanden.
+
 ## 15.11.2026 – Alle 288 eigenen Spielverläufe vollständig, Refit gestartet
 
 Die getrennten Karten lieferten 787.631 neue Lern- und 156.243 Diagnoseentscheidungen. Auf den neuen Diagnosekarten stellte der erste Bewegungsberater 12.165 Übereinstimmungen mit dem Lehrer her und zerstörte 3.926 zuvor übereinstimmende Befehle. Die Mischung mit den älteren V14-Stellungen liefert insgesamt 958.870 ausführbare Befehle für das neue Training. Alle 288 Dateiidentitäten und die Trennung von Bewegung und Schuss sind geprüft. [Daten, Zähler und Reproduktion](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
