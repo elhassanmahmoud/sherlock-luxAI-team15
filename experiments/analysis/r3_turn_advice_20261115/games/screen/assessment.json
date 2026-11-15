@@ -1,0 +1,175 @@
+{
+  "additional_directions_by_side_and_opponent": {
+    "player_0": {
+      "kaggle3": 3174,
+      "solution92": 3666,
+      "v14": 3402
+    },
+    "player_1": {
+      "kaggle3": 3174,
+      "solution92": 3620,
+      "v14": 3402
+    }
+  },
+  "against_r3": {
+    "by_opponent": {
+      "kaggle3": {
+        "candidate_wins": 0,
+        "difference_ci95": [
+          0.0,
+          0.0
+        ],
+        "gained": 0,
+        "games": 32,
+        "lost": 0,
+        "net_wins": 0,
+        "r3_wins": 0,
+        "winrate_difference": 0.0
+      },
+      "solution92": {
+        "candidate_wins": 32,
+        "difference_ci95": [
+          0.0,
+          0.09375
+        ],
+        "gained": 1,
+        "games": 32,
+        "lost": 0,
+        "net_wins": 1,
+        "r3_wins": 31,
+        "winrate_difference": 0.03125
+      }
+    },
+    "external": {
+      "difference_ci95": [
+        0.0,
+        0.046875
+      ],
+      "games": 64,
+      "net_wins": 1,
+      "winrate_difference": 0.015625
+    },
+    "files": {
+      "games_sha256": "7cbed3071d716f66dfc864eb455a4f1ba6ea5c7fa03f9fd9814ed0eea6f4df14",
+      "manifest_sha256": "cea5e2c073e99f7c033aaccb609129eac5a6cfa61cca043d430242259d835fba"
+    }
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 2711,
+    "unit": "whole map with both seats and external opponents"
+  },
+  "by_opponent": {
+    "kaggle3": {
+      "candidate_wins": 0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gained": 0,
+      "games": 32,
+      "lost": 0,
+      "net_wins": 0,
+      "v14_wins": 0,
+      "winrate_difference": 0.0
+    },
+    "solution92": {
+      "candidate_wins": 32,
+      "difference_ci95": [
+        0.0,
+        0.25
+      ],
+      "gained": 3,
+      "games": 32,
+      "lost": 0,
+      "net_wins": 3,
+      "v14_wins": 29,
+      "winrate_difference": 0.09375
+    }
+  },
+  "candidate": "r3_turn_advice",
+  "candidate_files": {
+    "games_sha256": "170df887ab86a4a46e3b478e653ec8de25693c09be11bae0bf046c6ef25a1cef",
+    "manifest_sha256": "2fa78a13e49519fe7847b27dae57e2077b36b54bc43ecb2f5366e8a8a54da175"
+  },
+  "direct": {
+    "games": 32,
+    "losses": 4,
+    "winrate": 0.875,
+    "winrate_ci95": [
+      0.6875,
+      1.0
+    ],
+    "wins": 28
+  },
+  "direct_files": {
+    "games_sha256": "5c9d53f1e00d0ed71f7e094de49adeacc314d4bb66a74773871395ebacaf3669",
+    "manifest_sha256": "dab19a700d5d45751779e1b82ce5115dd8d83f00ee245ecc91d0e95a37923436"
+  },
+  "direct_first": 7170230,
+  "external": {
+    "difference_ci95": [
+      0.0,
+      0.125
+    ],
+    "games": 64,
+    "net_wins": 3,
+    "winrate_difference": 0.046875
+  },
+  "external_first": 7170230,
+  "game_gates_pass": true,
+  "gates": {
+    "direct_majority": true,
+    "external_more_than_r3": true,
+    "player_0_additional_directions": true,
+    "player_1_additional_directions": true,
+    "solution_at_least_r3": true,
+    "solution_at_least_reference": true,
+    "two_additional_external_wins": true
+  },
+  "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "receipt": {
+    "actor": "1c300c6ad4cf2f92107c804c29e20414d86c5a2d3faa66ae5feb8100450e6e7b",
+    "archive": "7067483ced3edd0d2b3beca65880f4bd87b518c919b309e2bc0c9dc58bf0628d",
+    "control_files": {
+      "r3": {
+        "games_sha256": "7cbed3071d716f66dfc864eb455a4f1ba6ea5c7fa03f9fd9814ed0eea6f4df14",
+        "manifest_sha256": "cea5e2c073e99f7c033aaccb609129eac5a6cfa61cca043d430242259d835fba"
+      },
+      "v14": {
+        "games_sha256": "8ad616a468ca56a32748af3742205c759db05a23f45487f329f92bcd8a934c6c",
+        "manifest_sha256": "534384f537dea6e882de9daf237026c1dea90e43655e09c3137f8499f7e3bf51"
+      }
+    },
+    "environment": {
+      "engine": "551a263ede77ef6d64c0cac6faa02b5990eba3134942118783bb28cbdfb92b80",
+      "flags": {
+        "CUDA_VISIBLE_DEVICES": null,
+        "JAX_PLATFORMS": null,
+        "PYTHONHASHSEED": null,
+        "XLA_FLAGS": null
+      },
+      "machine": "arm64",
+      "platform": "Darwin",
+      "python": "3.13.13",
+      "support": "fb1e9c1e55c2707a362a6ee08b6807fe528629d8bce8d2b77dbc77d0fb90691e",
+      "versions": {
+        "jax": "0.12.0",
+        "jaxlib": "0.12.0",
+        "luxai-s3": "0.2.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "torch": "2.14.1"
+      }
+    },
+    "original_protocol": "14fbef07e70090dc0d96eff822bf28ed3f51a1876225cc7bb0e072c8c40edff4",
+    "original_report": "dbff39a2529c4db4812812223bc8e8a2eb716e9f4d967da33a75e8f76d48c1c1",
+    "plan": "145a810e6444cf61458216caa478763ffdd7ead5cb5eec36a8816074924a259c",
+    "runner": "918a6c725e5e01325564bc5453d66f5b0996c97efe20efcea34bf21509ce8565"
+  },
+  "reference_files": {
+    "games_sha256": "8ad616a468ca56a32748af3742205c759db05a23f45487f329f92bcd8a934c6c",
+    "manifest_sha256": "534384f537dea6e882de9daf237026c1dea90e43655e09c3137f8499f7e3bf51"
+  },
+  "stage": "screen"
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 darf zwei verschiedene Bewegungsrichtungen früher unterscheiden
+
+Wenn V14 und R3 zwei verschiedene zulässige Laufrichtungen vorschlagen, übernimmt der neue Kandidat den Vorschlag des R3-Netzes schon ab 50 % Vertrauen. Auf den 16 Auswahlkarten gewann er 32/32 gegen Solution, der ursprüngliche R3 31/32 und V14 29/32. Gegen Kaggle gewannen alle 0/32. Im Direktduell schlug der Kandidat V14 28/32. Alle sieben Bedingungen für einen Vergleich auf neuen Karten sind erfüllt. [Verhalten auf gespeicherten Situationen](../experiments/analysis/r3_turn_advice_20261115/ARCHIVPRUEFUNG.md) · [Auswahlspiele](../experiments/analysis/r3_turn_advice_20261115/VORAUSWAHL.md).
+
 ## 15.11.2026 – Wechsel im Entscheidungsmatch gezielt geprüft
 
 Nach gewonnenem ersten und verlorenem zweiten Match übernahm V15 auf zehn vorab festgelegten Sitzen im dritten Match. In 20 Ausführungen reproduzierten die ersten 202 Züge beider Spieler ihre Kontrollverläufe. Der Wechsel rettete die zwei primären Solution-Niederlagen und eine separat betrachtete Niederlage. Er kostete beide geschützten Direktduelle auf einer Karte. Das allgemeine Kriterium ist verfehlt. Für eine reine Solution-Frage enthalten sechs weitere vollständige R3-Vergleiche insgesamt 364/368 Siege. In höchstens 46 dieser Partien könnte der Wechsel einen Befehl beeinflussen. [Gezielter Vergleich und Archivbestand](../experiments/analysis/r3_v4_wl_20261115/ERGEBNIS.md).
