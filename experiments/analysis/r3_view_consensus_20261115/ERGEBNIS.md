@@ -11,3 +11,5 @@ Auf 24 separaten Karten und beiden Startseiten wurden 160.863 archivierte Entsch
 | Davon neu richtig / neu falsch / weiterhin falsch | 29 / 139 / 6 |
 
 Die Zahl der zum Lehrer passenden Endbefehle sinkt von 109.672 auf 109.562. Die meisten Unterschiede zwischen den Ansichten erreichen im bisherigen Verfahren ohnehin keinen Eingriff. Bei den 174 tatsächlich geänderten Befehlen kostet das Veto mehr richtige Entscheidungen, als es zurückgewinnt. Damit ist die vorher festgelegte Offline-Bedingung verfehlt. Der Kandidat erhält keine Vergleichsspiele. Die Zählung bewertet einzelne Züge auf archivierten Stellungen und misst keine Siegquote. [Auswertung je Karte](audit.json) · [Vorabplan](PLAN.md).
+
+Die gespeicherten Merkmale sind quantisiert. Bei der Rekonstruktion des ursprünglichen R3 wichen 164 von 160.863 Endbefehlen von den damals tatsächlich gespielten ab. Die beiden Varianten oben wurden deshalb mit identischen archivierten Eingaben und derselben Präzision verglichen. Die Aussage bezieht sich auf diesen paarweisen Archivvergleich.
