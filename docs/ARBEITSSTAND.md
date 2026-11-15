@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der frühere Weg zum Punktefeld dreht die bekannte R3-Niederlage
+
+Auf 7273148/P0 erreicht der erste Punkt nun Zug 20 statt 40. Match 2 dreht sich von 229:245 auf 334:204. Alle fünf geretteten Partien und die sechs Gegenseiten blieben Siege, bei drei weniger gewonnenen Einzelmatches insgesamt. Die zwölf Sitzpartien sind nach bekannten Ergebnissen ausgewählt. Der Vorteil auf neuen Karten ist offen. [Gegenprobe für Mahmoud mit Befehlsverläufen](../experiments/analysis/movement_soft_20261115/restart_route/ERGEBNIS.md).
+
 ## 15.11.2026 – FT18 rettet sieben Spiele in der gezielten Solution-Diagnose
 
 Nach einem gewonnenen ersten Match entscheiden die letzten 18 V14-Netze mit über Bewegungen. Die Regel gewann auf den zuvor festgelegten schwierigen und leichten Karten 41/48 statt 34/48. Sämtliche bisherigen Siege wurden gehalten. Die Auswahl gegen beide externen Gegner und V14 auf neuen Karten steht an. [Versuch und Grenzen](../experiments/analysis/late_ft18_20261115/after_win/ERGEBNIS.md).

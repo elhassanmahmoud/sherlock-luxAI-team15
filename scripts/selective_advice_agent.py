@@ -155,4 +155,7 @@ class SelectiveAdviceAgent(Agent_x):
                             delta = geo.mirror_delta(*delta)
                         advice[ids[int(shots[k])]] = [geo.SAP, *delta]
         # Dieselben Modusgrenzen, Legalitaetspruefungen und Folgezustaende wie in der Lehrer-Gegenprobe.
+        return self._finish_advice(obs, base, advice)
+
+    def _finish_advice(self, obs, base, advice):
         return substitute(self, obs, base, advice, self.mode, self.selective_counts)

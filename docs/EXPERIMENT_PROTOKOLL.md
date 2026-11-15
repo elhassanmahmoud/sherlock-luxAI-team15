@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Frühe Wegprüfung nach dem Matchwechsel repariert die ausgewählte Niederlage auf 7273148/P0 und erhält die elf Kontrollsiege. 24 vollständige Wiederholungen, 134 tatsächliche Eingriffe, drei Einzelmatchsiege weniger bei einem zusätzlichen ganzen Sieg. [Gezielter Versuch](../experiments/analysis/movement_soft_20261115/restart_route/ERGEBNIS.md).
+
 15.11.2026 – Auf 24 nach bisherigen V14-Ergebnissen ausgewählten Karten gewinnt der FT18-Wechsel nach einem gewonnenen ersten Match 41/48 statt 34/48. Sieben gerettete Spiele auf sechs Karten, kein neuer Verlust, alle vier Kriterien erfüllt. Die Auswahl auf neuen Karten ist freigegeben. [96 Durchläufe](../experiments/analysis/late_ft18_20261115/after_win/ERGEBNIS.md).
 
 15.11.2026 – R5 beendet fünf Epochen. 1.364 zusätzliche Lehrerübereinstimmungen gegenüber R2 auf 24 zurückgehaltenen Karten, davon netto 1.343 mit gültigem Vorgängerbefehl. Alle drei Kriterien für einen Spielvergleich bestanden. [Training und Audit](../experiments/analysis/own_command_20261115/TRAINING.md).
