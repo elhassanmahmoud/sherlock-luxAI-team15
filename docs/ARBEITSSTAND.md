@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Ein einzelnes Netz aus beiden Nachtrainings erreicht die Spielauswahl
+
+Der feste Gewichtsmittelwert trifft auf den archivierten R3-Stellungen 362 zusätzliche Lehrerbefehle und auf den älteren Stellungen 169 zusätzliche gegenüber R3. Die Ausgangsmodelle und alle 96 Sitzsummen wurden nachgerechnet. Die nächsten Spiele prüfen, ob das auch die Siegzahl erhöht. [Bericht und Checkpoint](../experiments/analysis/r8_midpoint_20261115/ARCHIVPRUEFUNG.md).
+
 ## 15.11.2026 – R8 gewinnt auf eigenen Stellungen 253 richtige Befehle hinzu und verliert auf älteren 164
 
 Beide R3-Nachtrainings sind mit je 1.024 tatsächlich ausgeführten Updates beendet. R8 gewinnt auf neuen Stellungen netto 267 korrekte Befehle gegenüber der Warmkontrolle. Auf älteren Stellungen unterschreitet R8 den ursprünglichen R3. Zwei von drei Bedingungen für Auswahlspiele erfüllt. [Beide Checkpoints und alle 96 Auswertungen](../experiments/analysis/r8_warm_20261115/ERGEBNIS.md).
