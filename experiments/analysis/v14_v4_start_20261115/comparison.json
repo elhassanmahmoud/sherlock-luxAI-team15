@@ -1,0 +1,347 @@
+{
+  "selection_sha": "433dd6145363bc6828da319e3d52ebc710ede397e7db4cc3d76b673488a4da31",
+  "panels": {
+    "A": {
+      "binding": {
+        "v4": "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c",
+        "v14": "589ebf326adbb2535bd0079b603d914a47b7b2987b2bdf8dd83ba9c2bcefb25f"
+      },
+      "rule": {
+        "v14_when": "high",
+        "field": "unit_sensor_range",
+        "midpoint": 2.5
+      },
+      "routed": {
+        "chosen_v14_maps": 45,
+        "n_maps": 100,
+        "wins": 205,
+        "by_opponent": {
+          "kaggle3": {
+            "wins": 10,
+            "match_wins": 42
+          },
+          "solution92": {
+            "wins": 195,
+            "match_wins": 550
+          }
+        },
+        "v4": {
+          "base_wins": 204,
+          "all": {
+            "gained": 1,
+            "lost": 0,
+            "net": 1,
+            "CI95": [
+              0.0,
+              0.0075
+            ]
+          },
+          "kaggle3": {
+            "gained": 0,
+            "lost": 0,
+            "net": 0,
+            "CI95": [
+              0.0,
+              0.0
+            ]
+          },
+          "solution92": {
+            "gained": 1,
+            "lost": 0,
+            "net": 1,
+            "CI95": [
+              0.0,
+              0.015
+            ]
+          }
+        },
+        "v14": {
+          "base_wins": 196,
+          "all": {
+            "gained": 15,
+            "lost": 6,
+            "net": 9,
+            "CI95": [
+              -0.0025,
+              0.05
+            ]
+          },
+          "kaggle3": {
+            "gained": 4,
+            "lost": 2,
+            "net": 2,
+            "CI95": [
+              -0.02,
+              0.05
+            ]
+          },
+          "solution92": {
+            "gained": 11,
+            "lost": 4,
+            "net": 7,
+            "CI95": [
+              -0.005,
+              0.075
+            ]
+          }
+        }
+      },
+      "upper_bound": {
+        "best_complete_map": 211,
+        "best_fixed_observed_public_tuple": 211,
+        "public_tuples": 98,
+        "best_seat_and_opponent": 211
+      },
+      "pure": {
+        "v4": {
+          "kaggle3": {
+            "wins": 10,
+            "match_wins": 56
+          },
+          "solution92": {
+            "wins": 194,
+            "match_wins": 557
+          }
+        },
+        "v14": {
+          "kaggle3": {
+            "wins": 8,
+            "match_wins": 30
+          },
+          "solution92": {
+            "wins": 188,
+            "match_wins": 522
+          }
+        }
+      }
+    },
+    "B": {
+      "binding": {
+        "v4": "c636616ec829532fad74605d13fcfc4d813dfee7b96b453d5eda219f45d8ec26",
+        "v14": "96f43d3899c353cca8fff8ebcd63d16020689297372176f4d0d95d073e265d52"
+      },
+      "rule": {
+        "v14_when": "high",
+        "field": "unit_sensor_range",
+        "midpoint": 2.5
+      },
+      "routed": {
+        "chosen_v14_maps": 47,
+        "n_maps": 100,
+        "wins": 190,
+        "by_opponent": {
+          "kaggle3": {
+            "wins": 2,
+            "match_wins": 28
+          },
+          "solution92": {
+            "wins": 188,
+            "match_wins": 543
+          }
+        },
+        "v4": {
+          "base_wins": 194,
+          "all": {
+            "gained": 2,
+            "lost": 6,
+            "net": -4,
+            "CI95": [
+              -0.0275,
+              0.0025
+            ]
+          },
+          "kaggle3": {
+            "gained": 0,
+            "lost": 2,
+            "net": -2,
+            "CI95": [
+              -0.03,
+              0.0
+            ]
+          },
+          "solution92": {
+            "gained": 2,
+            "lost": 4,
+            "net": -2,
+            "CI95": [
+              -0.045,
+              0.01512499999999818
+            ]
+          }
+        },
+        "v14": {
+          "base_wins": 185,
+          "all": {
+            "gained": 9,
+            "lost": 4,
+            "net": 5,
+            "CI95": [
+              -0.005,
+              0.0325
+            ]
+          },
+          "kaggle3": {
+            "gained": 2,
+            "lost": 0,
+            "net": 2,
+            "CI95": [
+              0.0,
+              0.03
+            ]
+          },
+          "solution92": {
+            "gained": 7,
+            "lost": 4,
+            "net": 3,
+            "CI95": [
+              -0.02,
+              0.05
+            ]
+          }
+        }
+      },
+      "upper_bound": {
+        "best_complete_map": 199,
+        "best_fixed_observed_public_tuple": 199,
+        "public_tuples": 96,
+        "best_seat_and_opponent": 200
+      },
+      "pure": {
+        "v4": {
+          "kaggle3": {
+            "wins": 4,
+            "match_wins": 30
+          },
+          "solution92": {
+            "wins": 190,
+            "match_wins": 543
+          }
+        },
+        "v14": {
+          "kaggle3": {
+            "wins": 0,
+            "match_wins": 20
+          },
+          "solution92": {
+            "wins": 185,
+            "match_wins": 529
+          }
+        }
+      }
+    },
+    "400": {
+      "binding": {
+        "v4": "1cc603732dafff379e57f236be4fc37a0bdd7dfcfa35fcc0e7ce78c95387c4cd",
+        "v14": "957ac8668e10b6a118b40cb81338a86b3ec356556d68a116535b16d4130bfa05"
+      },
+      "rule": {
+        "v14_when": "high",
+        "field": "unit_sensor_range",
+        "midpoint": 2.5
+      },
+      "routed": {
+        "chosen_v14_maps": 181,
+        "n_maps": 400,
+        "wins": 781,
+        "by_opponent": {
+          "kaggle3": {
+            "wins": 12,
+            "match_wins": 90
+          },
+          "solution92": {
+            "wins": 769,
+            "match_wins": 2214
+          }
+        },
+        "v4": {
+          "base_wins": 776,
+          "all": {
+            "gained": 11,
+            "lost": 6,
+            "net": 5,
+            "CI95": [
+              -0.0025,
+              0.009375
+            ]
+          },
+          "kaggle3": {
+            "gained": 0,
+            "lost": 0,
+            "net": 0,
+            "CI95": [
+              0.0,
+              0.0
+            ]
+          },
+          "solution92": {
+            "gained": 11,
+            "lost": 6,
+            "net": 5,
+            "CI95": [
+              -0.005,
+              0.01875
+            ]
+          }
+        },
+        "v14": {
+          "base_wins": 779,
+          "all": {
+            "gained": 32,
+            "lost": 30,
+            "net": 2,
+            "CI95": [
+              -0.01125,
+              0.013125
+            ]
+          },
+          "kaggle3": {
+            "gained": 8,
+            "lost": 8,
+            "net": 0,
+            "CI95": [
+              -0.015,
+              0.015
+            ]
+          },
+          "solution92": {
+            "gained": 24,
+            "lost": 22,
+            "net": 2,
+            "CI95": [
+              -0.01625,
+              0.02125
+            ]
+          }
+        }
+      },
+      "upper_bound": {
+        "best_complete_map": 815,
+        "best_fixed_observed_public_tuple": 814,
+        "public_tuples": 364,
+        "best_seat_and_opponent": 817
+      },
+      "pure": {
+        "v4": {
+          "kaggle3": {
+            "wins": 12,
+            "match_wins": 102
+          },
+          "solution92": {
+            "wins": 764,
+            "match_wins": 2204
+          }
+        },
+        "v14": {
+          "kaggle3": {
+            "wins": 12,
+            "match_wins": 86
+          },
+          "solution92": {
+            "wins": 767,
+            "match_wins": 2144
+          }
+        }
+      }
+    }
+  }
+}

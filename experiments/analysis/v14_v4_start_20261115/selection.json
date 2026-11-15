@@ -1,0 +1,107 @@
+{
+  "phase": "A",
+  "sources": {
+    "params": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+    "wrapper_reference": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+    "jax": "0.12.0"
+  },
+  "proof": {
+    "maps": 6200,
+    "first": 800000,
+    "last": 809999,
+    "sha": "f73a37d5622d2aa529d75560f12677afafc3dc8e7c0f2bc7bd470f6711012c23"
+  },
+  "sha": {
+    "v4": "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c",
+    "v14": "589ebf326adbb2535bd0079b603d914a47b7b2987b2bdf8dd83ba9c2bcefb25f"
+  },
+  "code": "07624ce75e9e89c7637bb0e4b708051d89b4a1e78389496be837f8eb3b72cc0a",
+  "scores": [
+    [
+      {
+        "constant": "v4"
+      },
+      204
+    ],
+    [
+      {
+        "constant": "v14"
+      },
+      196
+    ],
+    [
+      {
+        "v14_when": "low",
+        "field": "unit_move_cost",
+        "midpoint": 3.0
+      },
+      198
+    ],
+    [
+      {
+        "v14_when": "high",
+        "field": "unit_move_cost",
+        "midpoint": 3.0
+      },
+      202
+    ],
+    [
+      {
+        "v14_when": "low",
+        "field": "unit_sap_cost",
+        "midpoint": 40.0
+      },
+      200
+    ],
+    [
+      {
+        "v14_when": "high",
+        "field": "unit_sap_cost",
+        "midpoint": 40.0
+      },
+      200
+    ],
+    [
+      {
+        "v14_when": "low",
+        "field": "unit_sap_range",
+        "midpoint": 5.0
+      },
+      201
+    ],
+    [
+      {
+        "v14_when": "high",
+        "field": "unit_sap_range",
+        "midpoint": 5.0
+      },
+      199
+    ],
+    [
+      {
+        "v14_when": "low",
+        "field": "unit_sensor_range",
+        "midpoint": 2.5
+      },
+      195
+    ],
+    [
+      {
+        "v14_when": "high",
+        "field": "unit_sensor_range",
+        "midpoint": 2.5
+      },
+      205
+    ]
+  ],
+  "selected": {
+    "v14_when": "high",
+    "field": "unit_sensor_range",
+    "midpoint": 2.5
+  },
+  "top_split": {
+    "v14_when": "high",
+    "field": "unit_sensor_range",
+    "midpoint": 2.5
+  }
+}
