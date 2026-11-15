@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Die aktuelle V14-Referenz reproduziert das Kursreplay
+
+Historische und aktuelle V14-Quellen geben auf Karte 4242 für beide Sitze je dieselben 606 vollständigen Kursbefehle aus. Für die Präsentation liegt ein echter V14-Zug mit allen sechs Q-Werten vor. Ein Asteroid sperrt die am höchsten bewertete Richtung, die Einheit zieht nach rechts. [Spielzug, Rohdaten und Quellenprüfung](../experiments/analysis/v14_course_trace_20261116/README.md).
+
 ## 16.11.2026 – Zweite Ansicht auf 100 weiteren Karten gegen Solution
 
 Die Diagonalvariante gewinnt 191/200, derselbe R3 mit einer Ansicht 192/200, V14 194/200 und V15 188/200. Vier Siege hinzugewonnen, fünf verloren gegenüber R3. Das 95-%-Intervall (−2,5 bis +1,0 Prozentpunkte) stützt keinen Vorteil der zweiten Ansicht. Alle neuen Sitzschlüssel, Spielenden und Prüfsummen sind geprüft. Diese 100 Karten bilden das erste Viertel des 400-Karten-Vergleichs. [Bericht und Zahlen pro Sitz](../experiments/analysis/movement_reflection_20261115/solution_quarter/ERGEBNIS.md).
