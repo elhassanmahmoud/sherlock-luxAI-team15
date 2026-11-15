@@ -145,28 +145,41 @@ class AdviceRecord(imitate.SideRecord):
                     **{k: np.asarray(getattr(self, k), dtype) for k, dtype in ROW_DTYPES.items()})
 
 
-def check_archive(path, seed, side, binding):
+def check_archive(path, seed, side, binding, *, student_sha=None):
+    rows = list(ROW_DTYPES)
     with np.load(path, allow_pickle=False) as z:
         meta = json.loads(z["meta"].item())
         expected = dict(seed=seed, side=side, opponent=opponent_for(seed), steps=STEPS,
                         policy="v14", teacher="kaggle3", teacher_history="played_v14_actions",
                         protocol_sha256=binding)
+        if student_sha is not None:
+            expected.update(policy="selective_movement", teacher_history="played_selective_actions",
+                            student_sha256=student_sha)
+            rows.extend(("played_act","played_sdx","played_sdy"))
         if any(meta.get(k) != v for k, v in expected.items()):
             raise ValueError(f"Archive identity mismatch: {path}")
-        arrays = {k: z[k] for k in (*ROW_DTYPES, "planes", "global_step")}
+        arrays = {k: z[k] for k in (*rows, "planes", "global_step")}
     n, frames = len(arrays["act"]), arrays["global_step"]
     if (not n or not len(frames) or len(arrays["planes"]) != len(frames)
-            or any(len(arrays[k]) != n for k in ROW_DTYPES)
+            or any(len(arrays[k]) != n for k in rows)
             or len(np.unique(np.stack((arrays["step"], arrays["uid"]), axis=1), axis=0)) != n
             or frames[0] < 0 or frames[-1] >= STEPS or np.any(np.diff(frames) <= 0)
             or not np.array_equal(np.unique(arrays["step"]), np.arange(len(frames)))
             or not np.array_equal(frames[arrays["step"]] % 101, arrays["mstep"])
             or array_digest(arrays) != meta.get("arrays_sha256")):
         raise ValueError(f"Invalid or altered advice data: {path}")
+    if student_sha is not None:
+        base, played = arrays["base_act"], arrays["played_act"]
+        if not np.all((played >= 0) & (played <= 5)):
+            raise ValueError("Invalid executed command class")
+        nonmovement = (base == 5) | (played == 5)
+        for suffix in ("act","sdx","sdy"):
+            if not np.array_equal(arrays["played_"+suffix][nonmovement],arrays["base_"+suffix][nonmovement]):
+                raise ValueError("Movement adviser changed an actual SAP order")
     return n
 
 
-def play(env, actor, opp, teacher, seed, side):
+def play(env, actor, opp, teacher, seed, side, *, record=None):
     other = SIDES[1 - SIDES.index(side)]
     for p, seat in ((actor, side), (opp, other), (teacher, side)):
         if hasattr(p, "new_game"):
@@ -177,7 +190,8 @@ def play(env, actor, opp, teacher, seed, side):
     for p in (actor, opp, teacher):
         p.set_env_cfg(info["params"])
     sap_range = int(info["params"]["unit_sap_range"])
-    record = AdviceRecord()
+    if record is None:
+        record = AdviceRecord()
     for step in range(STEPS):
         public = obs[side]
         if int(public["steps"]) != step:

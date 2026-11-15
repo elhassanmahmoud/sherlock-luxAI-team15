@@ -66,7 +66,7 @@ def make_plan(train_first, train_count, val_first, val_count):
             for group, seeds in (("train", train), ("val", val))}
 
 
-def input_index(directories, plan):
+def input_index(directories, plan, *, student_sha=None):
     from scripts.collect_combat_advice import check_archive, opponent_for
 
     expected = set(plan["train"]) | set(plan["val"])
@@ -85,7 +85,7 @@ def input_index(directories, plan):
             if key in found:
                 raise ValueError(f"Duplicate map and seat: {key}")
             binding = file_sha(path.parent / "protocol.json")
-            check_archive(path, seed, side, binding)  # verifies array digest, metadata, slots and frames
+            check_archive(path, seed, side, binding, student_sha=student_sha)  # metadata, slots, frames and digest
             found[key] = dict(path=str(path.resolve()), sha256=file_sha(path),
                               seed=seed, side=side, opponent=opponent, protocol=binding)
     if len({record["protocol"] for record in found.values()}) > 1:

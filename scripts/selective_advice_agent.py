@@ -46,6 +46,9 @@ class SelectiveAdviceAgent(Agent_x):
     def _act(self, step, obs):
         # _act_est protokolliert die hier zurueckgegebenen Befehle im Parameterschaetzer.
         base = super()._act(step, obs)
+        return self._advise(step, obs, base)
+
+    def _advise(self, step, obs, base):
         if self.training or int(obs["match_steps"]) == 0:
             return base
         ctx, cached_ids, feats, mask_map, _ = self._decide(obs)

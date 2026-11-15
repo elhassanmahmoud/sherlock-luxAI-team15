@@ -407,14 +407,17 @@ def train_student(train, val, a, log):
             s_tgt = Rt["tgt"][idx][sel]
         return logits, sel, s_logits, s_tgt
 
-    def evaluate():
+    def evaluate(start=0, stop=None):
         net.eval()
         correct = torch.zeros(6, device=dev)
         total = torch.zeros(6, device=dev)
+        stop = len(val_step_np) if stop is None else stop
         joint_correct = 0
         sap_n = sap_hit = sap_near = 0
         with torch.no_grad():
-            for idx, uniq, inv in step_batches(val_step_np, 32 if selective else 512, False):
+            for idx, uniq, inv in step_batches(val_step_np[start:stop], 32 if selective else 512, False):
+                if start:
+                    idx = idx + start
                 lg, sel, s_lg, s_tgt = batch_logits(Pv, Rv, idx, uniq, inv)
                 pred = lg.argmax(1)
                 y = Rv["act"][idx]
@@ -432,7 +435,7 @@ def train_student(train, val, a, log):
         per = [float(correct[c] / total[c]) if total[c] > 0 else float("nan") for c in range(6)]
         exact = sap_hit / sap_n if sap_n else float("nan")
         near = sap_near / sap_n if sap_n else float("nan")
-        return acc, per, joint_correct / len(Rv["act"]), exact, near
+        return acc, per, joint_correct / (stop - start), exact, near
 
     log(f"Minibatch: {k_steps} Spielschritte (im Mittel etwa {a.mb} Unit-Entscheidungen), Geraet {dev}")
     for ep in range(a.epochs):
@@ -455,6 +458,10 @@ def train_student(train, val, a, log):
             f"| vollstaendiger Befehl {100 * joint_acc:.1f} % | je Aktion " +
             " ".join(f"{nm} {100 * p:.0f}" for nm, p in zip(("stay", "up", "right", "down", "left", "sap"), per)) +
             f" | Ziel bei legalem Lehrerschuss exakt {100 * s_acc:.0f} %, +-1 Feld {100 * s_near:.0f} % | {time.time() - t0:.0f}s")
+    for cohort, start, stop in getattr(a, "validation_groups", ()):
+        acc, _, joint, exact, _ = evaluate(start, stop)
+        log(f"Fixe letzte Epoche, {cohort}: {stop-start} Zeilen | Aktion {100*acc:.2f} % "
+            f"| voller Befehl {100*joint:.2f} % | Ziel bei legalem Lehrerschuss {100*exact:.2f} %")
     return net.to("cpu").eval()
 
 
