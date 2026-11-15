@@ -15,6 +15,7 @@ import io
 import json
 import multiprocessing as mp
 import os
+import platform
 from pathlib import Path
 import shutil
 import sys
@@ -45,6 +46,14 @@ AFTER_LOSS_CASES = {
     "player_0": (7286100, False, "612391b79ae40ec260d8b72bf8d37b002682a646b4f9700f8e02346c9e39eb4f"),
     "player_1": (7286137, True, "336ac25549d864f0ad9e06bf86d74df21dd12bbf7a07ce38818c30d4b45462d6"),
 }
+TURN_ZIP = "e433a81dafc8c22c9ec16a22e6fbc9acf2e1960e343044b5ff72c0548da11d8e"
+TURN_SOURCES = "a2b78b1490d53cca531f7d8952cf155ec808b7d35c7fad2570f3def23cfaacbf"
+TURN_SCREEN = {
+    "manifest.json": "2fa78a13e49519fe7847b27dae57e2077b36b54bc43ecb2f5366e8a8a54da175",
+    "completed.json": "dbf1ef0e970914676aad5862fe1773456b311721d79a21d3d6373964f8db86cb",
+    "games.jsonl": "170df887ab86a4a46e3b478e653ec8de25693c09be11bae0bf046c6ef25a1cef",
+}
+TURN_SEEDS = {"player_0": 7170230, "player_1": 7170231}
 SEED = 7271000
 IMPORT = "agents.sherlock.main.Agent_x"
 WEIGHTS = "agents/sherlock/weights/agent.pth"
@@ -64,13 +73,37 @@ def research_digest(root):
     return h.hexdigest()
 
 
-def extract_entrant(archive, folder, research, diagonal=False):
+def turn_references(folder, research):
+    if {name:digest(folder/name) for name in TURN_SCREEN} != TURN_SCREEN:
+        raise ValueError("Different published TurnAdvice screen")
+    m = json.loads((folder/"manifest.json").read_bytes())
+    receipt = m["receipt"]
+    for name,h in m["sources"].items():
+        if name.startswith(("agents/", "scripts/")) and digest(research/name) != h:
+            raise ValueError(f"Research source differs from the recorded screen: {name}")
+    if digest(research/"scripts/r3_turn_advice.py") != receipt["actor"]:
+        raise ValueError("Different recorded TurnAdvice actor")
+    if json.loads((folder/"completed.json").read_bytes())["rows_sha256"] != TURN_SCREEN["games.jsonl"]:
+        raise ValueError("Different sealed external results")
+    rows = list(map(json.loads,(folder/"games.jsonl").read_bytes().splitlines()))
+    selected = {}
+    for side,seed in TURN_SEEDS.items():
+        row, = [r for r in rows if r["side"] == side and r["seed"] == seed and r["opponent"] == "solution92"]
+        if row["candidate"] != "r3_turn_advice" or row["steps"] != 303 or row["study"]["turn_extra_played"] <= 0:
+            raise ValueError(f"Inactive reference on {seed}/{side}")
+        selected[side] = row
+    return selected, m
+
+
+def extract_entrant(archive, folder, research, diagonal=False, turn=False):
     support = {f"sherlock/v14/{p.name}": p for p in (research / "agents/sherlock").glob("*.py")
                if p.name != "residual.py"}
     team = ("__init__.py", "main.py", "r3_adviser.py", "orders.py", "weights/agent.pth", "agents.yaml")
     expected = {"paths.csv", *support} | {"sherlock/" + name for name in team}
     if diagonal:
         expected.add("sherlock/r3_diagonal.py")
+    if turn:
+        expected.add("sherlock/r3_turn_advice.py")
     if sorted(archive.namelist()) != sorted(expected):
         raise ValueError("Unexpected final ZIP contents (files missing, duplicated or added)")
     for member, original in support.items():
@@ -216,14 +249,20 @@ class ComparedPlayer:
 def run_side(folder, args, side):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from scripts.common import make_opponent, play_game
-    if args.after_loss:
+    if args.turn:
+        from scripts.r3_turn_advice import TurnAdviceAgent as Adviser
+    elif args.after_loss:
         from scripts.r3_diag_after_loss import AfterLossAgent as Adviser
         from scripts.r3_diag_after_loss_games import Actions
     elif args.diagonal:
         from scripts.r3_diagonal import DiagonalAgent as Adviser
     else:
         from scripts.selective_advice_agent import SelectiveAdviceAgent as Adviser
-    ref = Adviser(side, agent_path=str(args.v14), advice_path=str(args.r3), mode="movement", train=False, seed=0)
+    config = {}
+    if args.turn:
+        from scripts.par_eval import build_cfg
+        config["cfg"] = build_cfg(str(args.v14), [])
+    ref = Adviser(side, agent_path=str(args.v14), advice_path=str(args.r3), mode="movement", train=False, seed=0, **config)
     ref.set_to_eval_mode()
     rival = make_opponent("solution92", "player_1" if side == "player_0" else "player_0")
     ctx = mp.get_context("spawn")
@@ -233,6 +272,8 @@ def run_side(folder, args, side):
     proc.start()
     child.close()
     seed, expected_loss, expected_world = AFTER_LOSS_CASES[side] if args.after_loss else (SEED, None, None)
+    if args.turn:
+        seed = TURN_SEEDS[side]
     player = ComparedPlayer(ref, parent, expected_loss)
     watcher = Actions(env) if args.after_loss else env
     try:
@@ -247,6 +288,15 @@ def run_side(folder, args, side):
             raise ValueError(f"Incomplete parity run for {side}: steps={result['steps']}, resets={player.resets}, "
                              f"course updates={player.updates}, counts={counts}")
         branch = {}
+        if args.turn:
+            expected = args.turn_rows[side]
+            actual = {"result": int(result["game_win"]), "wins": int(result["our_wins"]),
+                      "losses": int(result["opp_wins"]), "points": int(result["our_points"]),
+                      "opp_points": int(result["opp_points"]), "steps": result["steps"]}
+            if actual != {k:expected[k] for k in actual} or counts != expected["study"]:
+                raise ValueError(f"Recorded reference differs on {seed}/{side}: {actual}, {counts}")
+            branch = dict(official_score=actual, recorded_counters_match=True,
+                          turn_extra_played=counts["turn_extra_played"])
         if args.after_loss:
             later_movements = player.movement[1:]
             if (watcher.steps != 303 or watcher.full.hexdigest() != expected_world
@@ -278,9 +328,13 @@ def main():
     variants.add_argument("--after-loss", action="store_true", help="Exercise both public first-match branches")
     variants.add_argument("--diagonal", action="store_true", help="Compare the registered diagonal course and research policies")
     variants.add_argument("--midpoint", action="store_true", help="Compare the fixed single-view midpoint and its isolated course package")
+    variants.add_argument("--turn", action="store_true", help="Check both active TurnAdvice research screen cases")
+    parser.add_argument("--screen", type=lambda p: Path(p).resolve(), help="Archived TurnAdvice screen/external directory")
     for key in ("zip", "research", "v14", "r3", "out"):
         parser.add_argument("--" + key, type=lambda p: Path(p).resolve(), required=True)
     args = parser.parse_args()
+    if bool(args.screen) != args.turn:
+        parser.error("--turn and --screen must be used together")
     report = dict(format="final", import_path=IMPORT, load_paths=[WEIGHTS, WEIGHTS],
                   research_commit=COMMIT, games=[], result="failed")
     with args.out.open("x") as out:
@@ -303,13 +357,27 @@ def main():
             sources = DIAGONAL_SOURCES if args.diagonal else SOURCES
             if args.after_loss:
                 sources = AFTER_LOSS_SOURCES
+            if args.turn:
+                if report["zip_sha256"] != TURN_ZIP:
+                    raise ValueError("Different TurnAdvice course ZIP")
+                sources = TURN_SOURCES
+                args.turn_rows, manifest = turn_references(args.screen, args.research)
+                report.update(format="final_r3_turn_advice", screen_sha256=TURN_SCREEN,
+                              research_policy_sha256=manifest["receipt"]["actor"])
             student = MIDPOINT if args.midpoint else R3
             if (report["original_python_sources_sha256"], report["v14_sha256"], report["r3_sha256"]) != (sources, V14, student):
                 raise ValueError("Research archive or input checkpoint differs from pinned sources")
             sys.dont_write_bytecode = True
             sys.path.insert(0, str(args.research))
-            os.environ["CUDA_VISIBLE_DEVICES"] = ""
-            os.environ["JAX_PLATFORMS"] = "cpu"
+            if args.turn:
+                runtime = manifest["receipt"]["environment"]
+                if ({k:os.environ.get(k) for k in runtime["flags"]} != runtime["flags"] or
+                        (platform.system(),platform.machine(),platform.python_version()) !=
+                        (runtime["platform"],runtime["machine"],runtime["python"])):
+                    raise ValueError("Screen environment or hardware differs")
+            else:
+                os.environ["CUDA_VISIBLE_DEVICES"] = ""
+                os.environ["JAX_PLATFORMS"] = "cpu"
             import torch
             from importlib.metadata import version
             report["versions"] = {key: version(key) for key in ("torch", "jax", "numpy", "luxai-s3")}
@@ -318,9 +386,13 @@ def main():
             torch.set_num_threads(1)
             torch.manual_seed(0)
             report["engine_sha256"] = {m.__name__: digest(m.__file__) for m in (env, params, wrappers)}
+            if args.turn:
+                engine = {Path(m.__file__).name:digest(m.__file__) for m in (env,params,wrappers)}
+                if engine != manifest["engine"] or {k:version(k) for k in runtime["versions"]} != runtime["versions"]:
+                    raise ValueError("Different screen engine or numerical libraries")
             with tempfile.TemporaryDirectory() as tmp, zipfile.ZipFile(args.zip) as z:
                 folder = Path(tmp).resolve()
-                extract_entrant(z, folder, args.research, args.diagonal or args.after_loss)
+                extract_entrant(z, folder, args.research, args.diagonal or args.after_loss, args.turn)
                 report["course_weights_sha256"] = digest(folder / WEIGHTS)
                 for side in ("player_0", "player_1"):
                     report["active_side"] = side

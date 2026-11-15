@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Richtungsberater im Kurs-Runner geprüft
+
+Der separat gebaute Kurskandidat verwendet die V14-Gewichte und das ursprüngliche zusätzliche R3-Netz. Auf zwei unterschiedlichen Solution-Karten, einmal pro Startseite, stimmt jeder der 606 vollständigen Aktionsschritte mit der Forschungsfassung überein. Die neue Regel griff 194- und 160-mal. Beide Endstände stimmen auch mit der dokumentierten Vorauswahl überein. Zwei Paketbauten waren bytegleich. Vier Paket- und Regressionstests bestanden. Die unabhängigen Spiele zur Spielstärke laufen getrennt. [Paketbau und Prüfbericht](../experiments/analysis/r3_turn_advice_20261115/course/README.md).
+
 ## 15.11.2026 – Der Wechsel im dritten Match gewinnt und verliert gleich viele Solution-Partien
 
 Über sechs vollständige Kartengruppen gewinnen der ursprüngliche R3 und der Wechsel zu V15 nach Sieg–Niederlage jeweils **364/368** gegen Solution. Alle 46 knappen Kontrollen wurden aus der ursprünglichen Startstellung wiederholt. In 15 Fällen war der Wechsel erreichbar. Zwei Niederlagen wurden zu Siegen, zwei Siege zu Niederlagen. Auf 322 weiteren Sitzen schließt der belegte 3:0-Verlauf eine Umschaltung aus. Das 95-%-Kartenintervall des Unterschieds reicht von −1,09 bis +1,09 Prozentpunkten. [Rohdaten und alle vier Wechsel der Spielsieger](../experiments/analysis/r3_v4_wl_20261115/SOLUTION_AUSWERTUNG.md).
