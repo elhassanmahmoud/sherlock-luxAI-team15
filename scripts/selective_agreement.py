@@ -14,14 +14,27 @@ from scripts.imitate import PLANE_SCALE, prepare_labels
 from scripts.selective_advice_agent import load_heads
 
 
+def read_rows(data, planes):
+    keys = ("step", "pos", "feats", "mask", "act", "sdx", "sdy", "base_act")
+    rows = {key: torch.from_numpy(data[key]) for key in keys}
+    played = torch.from_numpy(data["played_act"]) if "played_act" in data.files else None
+    # prepare_labels reconstructs the SAP mask solely from public energy and SAP cost.
+    # The teacher action and offsets are scoring labels and never fed to forward_all.
+    prepare_labels(rows, *planes.shape[-2:])
+    return rows, played
+
+
 def measure(members, archive):
     with np.load(archive, allow_pickle=False) as data:
         planes = torch.from_numpy(data["planes"])
-        keys = ("step", "pos", "feats", "mask", "act", "sdx", "sdy", "base_act")
-        rows = {key: torch.from_numpy(data[key]) for key in keys}
-        played = torch.from_numpy(data["played_act"]) if "played_act" in data.files else None
-    prepare_labels(rows, *planes.shape[-2:])
-    count = Counter()
+        rows, played = read_rows(data, planes)
+    return count_agreement(members, planes, rows, played)["all"]
+
+
+def count_agreement(members, planes, rows, played=None, near=None):
+    counts = {"all": Counter()}
+    if near is not None:
+        counts["near"] = Counter()
     steps = rows["step"].numpy()
     for first in range(0, len(planes), 24):
         end = min(first + 24, len(planes))
@@ -45,11 +58,14 @@ def measure(members, archive):
                          parent_changed=played[batch] != base,
                          model_recovers_over_parent=~parent_match & after,
                          parent_matches_lost_by_model=parent_match & ~after)
-        count.update({name: int(bits.sum()) for name, bits in masks.items()})
-    if (count["advised_matches"] - count["base_matches"] != count["helped"] - count["hurt"]
-            or count["changed"] != count["helped"] + count["hurt"] + count["changed_both_disagree"]):
-        raise AssertionError("Inconsistent movement agreement counts")
-    return count
+        counts["all"].update({name: int(bits.sum()) for name,bits in masks.items()})
+        if near is not None:
+            counts["near"].update({name: int((bits & near[batch]).sum()) for name,bits in masks.items()})
+    for count in counts.values():
+        if (count["advised_matches"] - count["base_matches"] != count["helped"] - count["hurt"]
+                or count["changed"] != count["helped"] + count["hurt"] + count["changed_both_disagree"]):
+            raise AssertionError("Inconsistent movement agreement counts")
+    return counts
 
 
 def main():

@@ -10,15 +10,38 @@ from agents.sherlock.imitation_agent import sap_legal
 from agents.sherlock.imitation_net import ImitationNet, masked_sap_logits
 from agents.sherlock.main import Agent_x
 from scripts.combat_teacher_counterfactual import substitute
+from scripts.imitate import PLANE_SCALE
+
+
+HISTORY_KIND = "selective_movement_previous_enemy_v1"
+
+
+def is_next_frame(step, match_step, last_step, last_match_step):
+    """Scalar or vector; the two clocks must both advance on the same map and seat."""
+    return (step == last_step + 1) & (match_step == last_match_step + 1)
+
+
+def live_history_board(current, step, match_step, prior):
+    """One board in canonical playing coordinates; remember just its quantized occupancy."""
+    previous = np.zeros_like(current[10])
+    if prior is not None:
+        last_step, last_match_step, saved = prior
+        if is_next_frame(step, match_step, last_step, last_match_step):
+            previous = saved
+    saved = np.rint(current[10] * PLANE_SCALE) / PLANE_SCALE
+    return np.concatenate((current, previous[None]), axis=0), (step, match_step, saved)
 
 
 def load_heads(path):
     """Eigene Checkpoints aus scripts.imitate train/ensemble. Die Beratungsnetze laufen auf der CPU."""
     checkpoint = torch.load(path, map_location="cpu", weights_only=True)
-    if checkpoint.get("kind") != "imitation":
+    if checkpoint.get("kind") not in ("imitation", HISTORY_KIND):
         raise ValueError("Fuer advice_path wird ein Checkpoint vom Typ imitation benoetigt")
     members = []
     for entry in [checkpoint, *checkpoint.get("imitation_ensemble", [])]:
+        expected_channels = 17 if checkpoint["kind"] == HISTORY_KIND else 16
+        if entry["arch"].get("in_ch", 16) != expected_channels:
+            raise ValueError("Unerwartete Anzahl Kartenebenen fuer diesen Beratertyp")
         if not entry["arch"].get("sap_head"):
             raise ValueError("Ein gelernter Schusszielkopf wird fuer selektive Beratung benoetigt")
         model = ImitationNet(**entry["arch"])
@@ -28,6 +51,8 @@ def load_heads(path):
 
 
 class SelectiveAdviceAgent(Agent_x):
+    previous_enemy = False
+
     def __init__(self, player, agent_path, name="Sherlock mit selektiver Imitation", cfg=None,
                  train=False, seed=None, *, advice_path, mode):
         if mode not in ("movement", "combat"):
@@ -37,11 +62,21 @@ class SelectiveAdviceAgent(Agent_x):
             raise ValueError("Als Basis wird V14 mit seinen 36 Netzen benoetigt")
         self.mode = mode
         self.members, self.sap_own_tile = load_heads(advice_path)
+        self.previous_enemy = self.members[0].arch["in_ch"] == 17
+        if self.previous_enemy and mode != "movement":
+            raise ValueError("Der historisierte Berater wurde nur fuer Bewegung festgelegt")
         self.autosave_on_terminate = False
 
     def _reset_episode_state(self):
         super()._reset_episode_state()
         self.selective_counts = Counter()
+        self._previous_frame = None
+
+    def _input_board(self, current, step, match_step):
+        if not self.previous_enemy:
+            return current
+        board, self._previous_frame = live_history_board(current, step, match_step, self._previous_frame)
+        return board
 
     def _act(self, step, obs):
         # _act_est protokolliert die hier zurueckgegebenen Befehle im Parameterschaetzer.
@@ -50,13 +85,16 @@ class SelectiveAdviceAgent(Agent_x):
 
     def _advise(self, step, obs, base):
         if self.training or int(obs["match_steps"]) == 0:
+            self._previous_frame = None
             return base
         ctx, cached_ids, feats, mask_map, _ = self._decide(obs)
         ids = [u for u in cached_ids if ctx["ally_ene"][u] >= 0]
         if not ids:
+            self._previous_frame = None  # The collector does not store these boards.
             return base
 
-        planes = torch.from_numpy(map_planes(ctx)[None])
+        board = self._input_board(map_planes(ctx), int(obs["steps"]), int(obs["match_steps"]))
+        planes = torch.from_numpy(board[None])
         step_idx = torch.zeros(len(ids), dtype=torch.long)
         pos = torch.as_tensor(np.asarray(ctx["ally_pos"])[ids], dtype=torch.long)
         features = torch.from_numpy(np.stack([feats[u] for u in ids]))

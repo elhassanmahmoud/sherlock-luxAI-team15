@@ -348,6 +348,39 @@ def agreement(action_logits, labels, valid_shots, shot_logits, targets, height):
     return joint, exact.sum(), near.sum()
 
 
+def add_previous_enemy_input(net):
+    """Append one trainable zero channel to the already initialized R2 convolution."""
+    import torch
+    conv = net.stem[0]
+    if conv.in_channels != 16 or conv.groups != 1:
+        raise ValueError("Expected the original 16-channel student stem")
+    w = conv.weight.detach()
+    conv.weight = torch.nn.Parameter(torch.cat((w, torch.zeros_like(w[:, :1])), dim=1))
+    conv.in_channels = 17
+    net.arch["in_ch"] = 17
+
+
+def verify_initial_history_outputs(net):
+    """Check the actual freshly seeded student before any optimizer update, using no labels or RNG."""
+    import torch
+    board = torch.linspace(-1., 1., 2*16*24*24).reshape(2,16,24,24)
+    positions = torch.tensor([[0,0],[10,8],[23,23]])
+    features = torch.linspace(-1., 1., 3*net.arch["feat_dim"]).reshape(3,-1)
+    args = (torch.tensor([0,1,1]), positions, features)
+    with torch.no_grad():
+        original = net.forward_all(board,*args)
+        add_previous_enemy_input(net)
+        # First decision of a match and a later frame with observed enemy occupancy.
+        lag = torch.zeros_like(board[:,:1])
+        lag[1,0,7:12,3:5] = 32/127
+        wider = net.forward_all(torch.cat((board,lag),dim=1),*args)
+        differences = []
+        for old, new in zip(original,wider):
+            torch.testing.assert_close(new,old,rtol=1e-5,atol=1e-6)
+            differences.append(float((new-old).abs().max()))
+    return dict(device="cpu", rtol=1e-5, atol=1e-6, max_abs_by_head=differences)
+
+
 def train_student(train, val, a, log):
     import torch
     import torch.nn.functional as F
@@ -358,7 +391,15 @@ def train_student(train, val, a, log):
     dev = torch.device(a.device if a.device != "auto" else ("mps" if torch.backends.mps.is_available() else "cpu"))
     torch.manual_seed(a.seed)
     net = ImitationNet(feat_dim=FEATURE_DIM, n_actions=6, ch=a.ch, blocks=a.blocks, hidden=a.hidden,
-                       detach_value=True, sap_head=True).to(dev)
+                       detach_value=True, sap_head=True)
+    if getattr(a, "previous_enemy", False):
+        if getattr(a, "movement_distillation", None) is not None:
+            raise ValueError("Soft movement targets and previous enemy history are separate experiments")
+        a.previous_enemy_initial_parity = verify_initial_history_outputs(net)
+        log(f"Fresh seeded CPU network, before/after adding input 17: {a.previous_enemy_initial_parity}")
+    net = net.to(dev)
+    if train[0].shape[1] != net.arch["in_ch"] or val[0].shape[1] != net.arch["in_ch"]:
+        raise ValueError("Wrong number of input board channels")
 
     selective = "base_act" in train[1]
     step_rng = np.random.default_rng(a.seed) if selective else np.random

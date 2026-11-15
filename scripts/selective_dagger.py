@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import numpy as np
 
 from scripts import collect_combat_advice as collect, imitate
-from scripts.selective_advice_agent import SelectiveAdviceAgent
+from scripts.selective_advice_agent import HISTORY_KIND, SelectiveAdviceAgent, is_next_frame
 from scripts.train_combat_advice import input_index, make_plan
 
 
@@ -167,13 +167,27 @@ def movement_targets(archive, rows, span):
     return valid, scores[:, :5]
 
 
-def mapped_part(records, path, *, distill_movement=False):
-    """Disk map for the 16 int8 board channels; allocate row columns once, one decompressed archive at a time."""
+def fill_previous_enemy(part, global_steps):
+    """Fill channel 16 for one complete archive in its original map/seat order."""
+    frame = np.asarray(global_steps, dtype=np.int64)
+    mstep = frame % 101
+    if (part.shape != (len(frame),17,24,24) or not len(frame) or np.any(mstep == 0)
+            or np.any(np.diff(frame) <= 0)):
+        raise ValueError("Unexpected or unordered stored decision frames")
+    part[:,16] = 0
+    following = 1 + np.flatnonzero(is_next_frame(frame[1:], mstep[1:], frame[:-1], mstep[:-1]))
+    part[following,16] = part[following-1,10]
+
+
+def mapped_part(records, path, *, distill_movement=False, previous_enemy=False):
+    """Disk map for archived boards, with one optional intervention at a time."""
+    if previous_enemy and distill_movement:
+        raise ValueError("Soft movement targets and previous enemy history are separate experiments")
     sizes = []
     for record in records:
         with np.load(record["path"],allow_pickle=False) as z:
             sizes.append((len(z["global_step"]),len(z["act"])))
-    boards = np.memmap(path,mode="w+",dtype=np.int8,shape=(sum(b for b,_ in sizes),16,24,24))
+    boards = np.memmap(path,mode="w+",dtype=np.int8,shape=(sum(b for b,_ in sizes),17 if previous_enemy else 16,24,24))
     n = sum(u for _,u in sizes)
     widths = dict(step=(),pos=(2,),feats=(79,),mask=(6,),act=(),sdx=(),sdy=(),base_act=())
     rows = {k: np.empty((n,*shape), np.int64 if k=="step" else collect.ROW_DTYPES[k]) for k,shape in widths.items()}
@@ -187,7 +201,10 @@ def mapped_part(records, path, *, distill_movement=False):
         if collect.file_sha(filename) != r["sha256"]:
             raise ValueError(f"Archive changed before training: {filename}")
         with np.load(filename,allow_pickle=False) as z:
-            boards[b0:b0+b] = z["planes"]
+            part = boards[b0:b0+b]
+            part[:,:16] = z["planes"]
+            if previous_enemy:
+                fill_previous_enemy(part, z["global_step"])
             span = slice(u0, u0 + u)
             for key in widths:
                 rows[key][span] = z[key]
@@ -201,7 +218,27 @@ def mapped_part(records, path, *, distill_movement=False):
     return boards, rows, [u for _,u in sizes]
 
 
+def require_r2_inputs(path, metadata):
+    """Bind the comparison to exactly the same parents, file hashes, splits and hyperparameters."""
+    import torch
+    digest = collect.file_sha(path)
+    # Read only metadata. R2 weights are never copied into the freshly seeded policy.
+    baseline = torch.load(path, map_location="cpu", weights_only=True, mmap=True)
+    expected_arch = dict(feat_dim=79,n_actions=6,in_ch=16,ch=32,blocks=3,hidden=128,
+                         detach_value=True,sap_head=True)
+    if (baseline.get("kind") != "imitation" or baseline.get("epochs") != 5
+            or baseline.get("sap_own_tile") is not True or baseline.get("arch") != expected_arch
+            or baseline.get("selective_training") != metadata or baseline.get("imitation_ensemble")
+            or collect.file_sha(path) != digest):
+        raise ValueError("R2 input identity, architecture or training settings differ")
+    return digest
+
+
 def train_mixed(a):
+    r2_path = getattr(a, "previous_enemy_r2", None)
+    history = r2_path is not None
+    if history and a.distill_movement:
+        raise ValueError("Soft movement targets and previous enemy history are separate experiments")
     from agents.sherlock.ppo_agent import save_policy
     from scripts.experiment import limit_threads
     limit_threads()
@@ -216,6 +253,13 @@ def train_mixed(a):
         raise ValueError("V14 config source differs")
     original = input_index(a.original_data,base_plan)
     mixed = input_index(a.mixed_data,mixed_plan,student_sha=parent_sha)
+    identity = {k: {split:[{field:r[field] for field in ("seed","side","sha256","protocol")} for r in records]
+                    for split,records in index.items()} for k,index in (("original",original),("mixed",mixed))}
+    training = dict(parent_sha256=parent_sha, initialized_from="fixed random seed 2711", inputs=identity,
+                    combat_action_weight=3, other_action_weight=1, target_weight=0.5, mb=256,
+                    seed=2711, lr=.001, lr_schedule="OneCycleLR", optimizer="AdamW")
+    if history:
+        training["previous_enemy_r2_sha256"] = require_r2_inputs(r2_path, training)
     with log_path.open("x") as f:
         f.write(f"Movement adviser parent SHA256 {parent_sha}\n")
     def log(msg):
@@ -224,10 +268,10 @@ def train_mixed(a):
             f.write(msg+"\n")
     with tempfile.TemporaryDirectory(prefix=".dagger-boards-",dir=out.parent) as tmp:
         train_boards, train_rows, _ = mapped_part(original["train"]+mixed["train"], Path(tmp)/"train.int8",
-                                                   distill_movement=a.distill_movement)
-        val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8")
+                                                   distill_movement=a.distill_movement, previous_enemy=history)
+        val_boards,val_rows, val_sizes = mapped_part(original["val"]+mixed["val"],Path(tmp)/"val.int8", previous_enemy=history)
         cut = sum(val_sizes[:len(original["val"])])
-        cfg = SimpleNamespace(device=a.device, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
+        cfg = SimpleNamespace(device=a.device, previous_enemy=history, seed=2711,ch=32,blocks=3,hidden=128,mb=256,epochs=5,
                               lr=0.001,sap_weight=0.5,validation_groups=[
                                   ("eight original V14 maps",0,cut),("held-out mixed maps",cut,sum(val_sizes))])
         soft_metadata = {}
@@ -243,13 +287,13 @@ def train_mixed(a):
         log(f"Train: {len(train_rows['act'])} rows; validation: {cut} V14 + {sum(val_sizes)-cut} mixed rows")
         log(f"CPU board storage: {train_boards.nbytes+val_boards.nbytes} bytes in temporary disk files")
         net = imitate.train_student((train_boards,train_rows),(val_boards,val_rows),cfg,log)
+        training.update(soft_metadata)
+        if history:
+            training["initial_parity"] = cfg.previous_enemy_initial_parity
         candidate = Path(tmp)/"student.pth"
-        identity = {k: {split:[{field:r[field] for field in ("seed","side","sha256","protocol")} for r in records]
-                        for split,records in index.items()} for k,index in (("original",original),("mixed",mixed))}
-        save_policy(str(candidate),net,imitate.v14_cfg(),extra=dict(kind="imitation",sap_own_tile=True,epochs=5,
-                    teacher="kaggle3 lux3-bot 0.4.8_fn",selective_training=dict(parent_sha256=parent_sha,
-                    initialized_from="fixed random seed 2711", inputs=identity, combat_action_weight=3, other_action_weight=1,
-                    target_weight=0.5,mb=256,seed=2711,lr=.001,lr_schedule="OneCycleLR",optimizer="AdamW", **soft_metadata)))
+        save_policy(str(candidate),net,imitate.v14_cfg(),
+                    extra=dict(kind=HISTORY_KIND if history else "imitation", sap_own_tile=True, epochs=5,
+                               teacher="kaggle3 lux3-bot 0.4.8_fn", selective_training=training))
         os.link(candidate,out)
     log(f"Saved {out} {collect.file_sha(out)}")
 
@@ -267,7 +311,10 @@ def main():
     coll.add_argument("--workers",choices=(1,2),type=int,default=1)
     fit.add_argument("--original-data",type=Path,nargs="+",required=True)
     fit.add_argument("--mixed-data",type=Path,nargs="+",required=True)
-    fit.add_argument("--distill-movement", action="store_true",
+    options = fit.add_mutually_exclusive_group()
+    options.add_argument("--previous-enemy-r2", type=Path, metavar="R2_CHECKPOINT",
+                         help="Add previous observed enemy plane; verify every input against the fixed 16-channel R2")
+    options.add_argument("--distill-movement", action="store_true",
                      help="Add temperature-2 KL for selected legal teacher movements with an observed raw policy")
     fit.add_argument("--device",choices=("auto","cpu","mps"),default="auto")
     a = ap.parse_args()
