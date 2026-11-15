@@ -1,0 +1,15 @@
+# Die zweite Ansicht kostet den Midpoint zwei Solution-Siege
+
+Auf den 16 registrierten Karten 7170230–7170245 gewann der Midpoint mit zwei Ansichten **30/32 gegen Solution**, **0/32 gegen Kaggle** und **24/32 direkt gegen V14**. Beide unmittelbar verglichenen Varianten, der Midpoint mit nur einer Ansicht und der Diagonal-R3, gewannen gegen Solution jeweils 32/32. Beide verlorenen Sitze der neuen Variante liegen auf derselben Karte, **7170236**. Die bessere Übereinstimmung mit dem Lehrer im [Archivvergleich](ARCHIVPRUEFUNG.md) führte auf diesem Entwicklungssatz zu weniger gewonnenen Spielen.
+
+| Ganze Spiele | V14 | R3, eine Ansicht | Midpoint, eine Ansicht | R3, zwei Ansichten | Midpoint, zwei Ansichten |
+|---|---:|---:|---:|---:|---:|
+| Siege gegen Solution | 29/32 | 31/32 | 32/32 | 32/32 | 30/32 |
+| Siege gegen Kaggle | 0/32 | 0/32 | 0/32 | 0/32 | 0/32 |
+| Externe Siege zusammen | 29/64 | 31/64 | 32/64 | 32/64 | 30/64 |
+
+Gegenüber V14 gewinnt die neue Variante auf Karte 7170238 beide Sitze und auf 7170239 als Spieler 1 zusätzlich. Dafür gehen auf 7170236 beide Sitze verloren. Der externe Saldo gegenüber V14 beträgt damit +1 Spiel bzw. **+1,56 Prozentpunkte** (gepaartes 95-%-Intervall −7,81 bis +10,94). Gegenüber jedem der beiden unmittelbaren Vergleichsagenten beträgt er −2 Spiele bzw. **−3,13 Prozentpunkte** (−9,38 bis 0). Beim direkten Vergleich mit V14 erreichten beide Midpoint-Varianten jeweils 24/32 Siege, entsprechend 75,0 % (50,0 bis 93,75 %). Diese Intervalle beruhen auf 10.000 Ziehungen ganzer Karten mit beiden Sitzen, extern auch mit beiden Gegnern gemeinsam (Startwert 2711).
+
+**Auswahlentscheidung.** Der Kandidat erfüllt zwei der sieben Kriterien. Er gewinnt direkt die Mehrheit und erzielt gegen Solution mindestens ebenso viele Siege wie V14. Verfehlt wurden zwei zusätzliche externe Siege gegenüber V14, jeweils mehr externe Siege als bei den beiden unmittelbaren Vergleichsagenten und jeweils mindestens ebenso viele Solution-Siege wie bei diesen. Für den Zwei-Ansichten-Midpoint entfällt deshalb die unabhängige Bestätigung. Der [Einzelansicht-Midpoint](../r8_midpoint_20261115/VORAUSWAHL.md) hatte seine eigene Vorauswahl bestanden.
+
+**Prüfnachweis.** Neu ausgewertet wurden 160 Spiele. Dazu gehören 64 externe [Diagonal-R3-Spiele](games/screen/diagonal/games.jsonl), 64 externe [Zwei-Ansichten-Midpoint-Spiele](games/screen/dual_external/games.jsonl) und 32 [direkte Midpoint-Spiele](games/screen/dual_direct/games.jsonl). Die 192 externen Referenzspiele auf denselben Karten stammen aus dem [Einzelansicht-Vergleich](../r8_midpoint_20261115/games/screen/assessment.json). Für alle 352 Zeilen wurden die eindeutigen Kombinationen aus Agent, Gegner, Karte und Sitz, drei Matchausgänge, 303 Schritte und die registrierten Gewichts- und Quelldateien geprüft. Die [vollständige Auswertung](games/screen/assessment.json) enthält Prüfwerte der wiederverwendeten Referenzen. Alle gepaarten Unterschiede, Intervalle und sieben Auswahlkriterien wurden aus den Rohzeilen nachgerechnet.

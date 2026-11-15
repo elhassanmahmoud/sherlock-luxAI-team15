@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Derselbe trainierte Midpoint mit Originalansicht und Diagonalspiegelung gewann 30/32 gegen Solution (beide Eltern 32/32), 0/32 gegen Kaggle und 24/32 direkt gegen V14. 160 neue Partien, 192 bereits vorhandene externe Referenzpartien, zwei von sieben Kriterien erfüllt. [Beide Startseiten und gepaarte Vergleiche](../experiments/analysis/r8_midpoint_diagonal_20261115/VORAUSWAHL.md).
+
 15.11.2026 – 224 vollständige Auswahlspiele für den Mittelwert zweier auf eigenen Stellungen nachtrainierter Bewegungsnetze. 32/32 Solution, 0/32 Kaggle und 24/32 direkt gegen V14. Drei zusätzliche externe Siege gegenüber V14 und einer gegenüber R3. Die vorab festgelegten fünf Bedingungen für den unabhängigen Vergleich sind erfüllt. [Gepaarte Ergebnisse, Rohdaten und Unsicherheit](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md).
 
 15.11.2026 – 24 frische Karten, beide Startseiten. Auf 18 Karten gewinnt der gemischte v4-Hybrid beide Partien, auf sechs R3. V15 gewinnt 100/144 Einzelmatches. Acht historische Referenzpartien reproduzierten zuvor die ursprünglichen Endstände beider Agenten. [Spielreihen und Kartenintervall](../experiments/analysis/r3_v4_mixed_duel_20261115/ERGEBNIS.md).

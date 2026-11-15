@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Auf denselben Karten gewinnt die einfachere Auswertung
+
+Mit zwei Ansichten trifft das nachtrainierte Netz mehr gespeicherte Lehrerentscheidungen als mit einer. Im Spiel verlor es beide Solution-Partien auf 7170236, die der Ein-Ansicht-Midpoint und der ursprüngliche Diagonal-R3 gewannen. 30/32 gegen Solution, 0/32 gegen Kaggle, 24/32 im direkten Duell gegen V14. Zwei von sieben Auswahlkriterien erfüllt. Die unabhängige Bestätigung läuft mit einer Ansicht. [Beide Ansichten](../experiments/analysis/r8_midpoint_diagonal_20261115/VORAUSWAHL.md) · [Eine Ansicht](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md).
+
 ## 15.11.2026 – Nachtrainiertes Bewegungsnetz qualifiziert sich für den unabhängigen Vergleich
 
 Im Vergleich auf 16 Karten mit beiden Startseiten gewann der Ein-Ansicht-Midpoint 32/32 gegen Solution (V14 29, R3 31), 0/32 gegen Kaggle (beide Referenzen 0) und 24/32 direkt gegen V14. Alle fünf Auswahlbedingungen sind erfüllt. Die drei zusätzlichen Solution-Siege gegenüber V14 stammen von zwei Karten. Die getrennte Bestätigung umfasst 60 externe Karten und 60 weitere Karten für das Direktduell. Der Kontaktagent gewann in seinem eigenen Vergleich 30/32 direkt gegen V14, gegen beide externen Gegner insgesamt aber zwei Spiele weniger als V15. Sein separates Duell gegen V15 prüft die direkte Spielstärke. [Ein-Ansicht-Midpoint](../experiments/analysis/r8_midpoint_20261115/VORAUSWAHL.md) · [Kontakt im Spiel](../experiments/analysis/r3_v4_contact_20261115/FRISCHE_KARTEN.md).
