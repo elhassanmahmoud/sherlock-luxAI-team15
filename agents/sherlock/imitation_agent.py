@@ -119,6 +119,18 @@ class ImitationAgent(PPOAgent):
                     lg = extra(*inputs)[0]
                 logp = logp + torch.log_softmax(lg.masked_fill(~m, -torch.inf), dim=1)
             acts = logp.argmax(dim=1).numpy()
+            # 15.11.2026 (cfg.end_sap > 0): in den letzten end_sap Schritten eines Matches verfaellt die Energie
+            # ohnehin; stehende Units mit genug Energie schiessen dann (der Lehrer tut das kaum: rund 3 %).
+            end_sap = int(getattr(self.cfg, "end_sap", 0) or 0)
+            end_phase = end_sap > 0 and int(ctx["match_step"]) >= int(ctx["max_match_steps"]) - end_sap
+            end_rows = set()
+            if end_phase:
+                for k, uid in enumerate(ids):
+                    if (acts[k] == geo.STAY and energy[k] >= float(ctx["sap_cost"])
+                            and (self.has_sap_head or sap_targets[uid] is not None)):
+                        acts[k] = geo.SAP
+                        end_rows.add(k)
+                self.ep_stats["end_saps"] = self.ep_stats.get("end_saps", 0) + len(end_rows)
             if self.has_sap_head:
                 shots = torch.from_numpy(np.flatnonzero(acts == geo.SAP))
                 if shots.numel():
@@ -129,7 +141,7 @@ class ImitationAgent(PPOAgent):
                         tx, ty = divmod(flat, ctx["H"])
                         targets[row] = (tx - int(pos[row, 0]), ty - int(pos[row, 1]), 0)
         focus = {}
-        if self.cfg.focus_sap:
+        if getattr(self.cfg, "focus_sap", False):
             # 15.11.2026: sichere gemeinsame Abschuesse stehender Gegner (wie V14-Schalter focus_sap)
             from . import combat
             stationary = self._enemy_stationary(ctx)
@@ -144,6 +156,8 @@ class ImitationAgent(PPOAgent):
             target = None
             if int(uid) in focus:
                 target = focus[int(uid)]
+            elif k in end_rows and sap_targets[uid] is not None and sap_targets[uid][2] > 0:
+                target = sap_targets[uid]  # Restenergie: sichtbare Gegner zuerst
             elif a == geo.SAP and self.has_sap_head:
                 target = targets[k]
             elif a == geo.SAP:

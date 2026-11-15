@@ -83,7 +83,8 @@ def _worker(job: tuple) -> list[dict]:
     if isinstance(ckpt, dict) and ckpt.get("kind") == "imitation":
         # 15.11.2026: nachgeahmte Policy (scripts/imitate.py), gleiche Vorverarbeitung wie beim Sammeln
         from agents.sherlock.imitation_agent import ImitationAgent
-        agent = ImitationAgent("player_0", agent_path=weights, train=False)
+        agent = ImitationAgent("player_0", agent_path=weights, train=False,
+                               cfg=build_cfg(weights, overrides) if overrides else None)
     elif isinstance(ckpt, dict) and ckpt.get("kind") == "ppo":
         from agents.sherlock.ppo_agent import PPOAgent
         agent = PPOAgent("player_0", agent_path=weights, train=False,
