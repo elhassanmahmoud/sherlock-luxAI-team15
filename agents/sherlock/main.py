@@ -155,7 +155,9 @@ class Agent_x:
         # 15.11.2026 (Umbau): Checkpoints mit kind="imitation" enthalten die nachgeahmte CNN-Policy. Dann spielt
         # ein ImitationAgent (gleiche Vorverarbeitung wie beim Lernen), Agent_x bleibt die Kurs-Schnittstelle.
         self._imitation = None
-        kind = checkpoint_kind(agent_path) if agent_path and type(self) is Agent_x else None
+        # Auch Unterklassen (z. B. Mess-Wrapper der Kurspruefung) delegieren. PPOAgent/ImitationAgent rufen Agent_x immer
+        # ohne agent_path auf und koennen sich daher nicht selbst aufrufen.
+        kind = checkpoint_kind(agent_path) if agent_path else None
         if kind == "imitation":
             from .imitation_agent import ImitationAgent
             self._imitation = ImitationAgent(player, agent_path=agent_path, name=name, train=False)
