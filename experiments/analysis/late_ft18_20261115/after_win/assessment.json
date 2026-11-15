@@ -1,0 +1,112 @@
+{
+  "whole_panel": {
+    "maps": 24,
+    "games": 48,
+    "switches": 43,
+    "v14_wins": 34,
+    "chosen_wins": 41,
+    "v14_matches": 105,
+    "chosen_matches": 112,
+    "rescued": [
+      [
+        852039,
+        "player_0"
+      ],
+      [
+        852039,
+        "player_1"
+      ],
+      [
+        852041,
+        "player_0"
+      ],
+      [
+        852084,
+        "player_0"
+      ],
+      [
+        852115,
+        "player_1"
+      ],
+      [
+        852128,
+        "player_0"
+      ],
+      [
+        852136,
+        "player_1"
+      ]
+    ],
+    "lost": [],
+    "win_difference_ci95": [
+      0.041666666666666664,
+      0.25
+    ]
+  },
+  "prior_loss_maps": {
+    "maps": 12,
+    "games": 24,
+    "switches": 19,
+    "v14_wins": 10,
+    "chosen_wins": 17,
+    "v14_matches": 35,
+    "chosen_matches": 44,
+    "rescued": [
+      [
+        852039,
+        "player_0"
+      ],
+      [
+        852039,
+        "player_1"
+      ],
+      [
+        852041,
+        "player_0"
+      ],
+      [
+        852084,
+        "player_0"
+      ],
+      [
+        852115,
+        "player_1"
+      ],
+      [
+        852128,
+        "player_0"
+      ],
+      [
+        852136,
+        "player_1"
+      ]
+    ],
+    "lost": [],
+    "win_difference_ci95": [
+      0.125,
+      0.5
+    ]
+  },
+  "prior_two_win_maps": {
+    "maps": 12,
+    "games": 24,
+    "switches": 24,
+    "v14_wins": 24,
+    "chosen_wins": 24,
+    "v14_matches": 70,
+    "chosen_matches": 68,
+    "rescued": [],
+    "lost": [],
+    "win_difference_ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "gates": {
+    "three_rescued": true,
+    "two_maps": true,
+    "at_most_one_lost": true,
+    "match_sum": true
+  },
+  "advance": true
+}

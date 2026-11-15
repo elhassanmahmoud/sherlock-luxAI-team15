@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Auf 24 nach bisherigen V14-Ergebnissen ausgewählten Karten gewinnt der FT18-Wechsel nach einem gewonnenen ersten Match 41/48 statt 34/48. Sieben gerettete Spiele auf sechs Karten, kein neuer Verlust, alle vier Kriterien erfüllt. Die Auswahl auf neuen Karten ist freigegeben. [96 Durchläufe](../experiments/analysis/late_ft18_20261115/after_win/ERGEBNIS.md).
+
 15.11.2026 – R5 beendet fünf Epochen. 1.364 zusätzliche Lehrerübereinstimmungen gegenüber R2 auf 24 zurückgehaltenen Karten, davon netto 1.343 mit gültigem Vorgängerbefehl. Alle drei Kriterien für einen Spielvergleich bestanden. [Training und Audit](../experiments/analysis/own_command_20261115/TRAINING.md).
 
 15.11.2026 – 160 Vollspiele mit R3 als vollständigem Befehlsgeber im points-Hybrid. Gegen Solution 31/32 gegenüber V14 32/32, gegen Kaggle 0/32 bei beiden, direkt 18/32. Eine von drei Bedingungen erfüllt. [Ergebnis und Quellen](../experiments/analysis/points_hybrid_20261115/ERGEBNIS.md).

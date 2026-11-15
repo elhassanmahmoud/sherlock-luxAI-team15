@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – FT18 rettet sieben Spiele in der gezielten Solution-Diagnose
+
+Nach einem gewonnenen ersten Match entscheiden die letzten 18 V14-Netze mit über Bewegungen. Die Regel gewann auf den zuvor festgelegten schwierigen und leichten Karten 41/48 statt 34/48. Sämtliche bisherigen Siege wurden gehalten. Die Auswahl gegen beide externen Gegner und V14 auf neuen Karten steht an. [Versuch und Grenzen](../experiments/analysis/late_ft18_20261115/after_win/ERGEBNIS.md).
+
 ## 15.11.2026 – R5 mit vorherigem Befehl erreicht die Spielauswahl
 
 R5 imitiert auf den 24 Diagnosekarten 1.364 zusätzliche vollständige Aktionsentscheidungen bei der selektiven Bewegungswahl gegenüber R2. Dabei sinken die neu verursachten Abweichungen von 3.355 auf 3.181. Der Kandidat bleibt getrennt von V14 gespeichert. Die vorab vorgesehenen 16 Auswahlkarten bestimmen, ob er eine unabhängige Bestätigung verdient. [Training, Checkpoint und Auswertungsdaten](../experiments/analysis/own_command_20261115/TRAINING.md).
