@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Fünf Solution-Niederlagen bis zum entscheidenden Match nachgespielt
+
+16 vollständige Partien von R3 und V14, 48 Einzelmatches. Drei zusätzliche Niederlagen entstehen in verschiedenen Spielphasen. Auch erfolgreiche R3-Partien lassen zwischenzeitlich allein besetzte Felder frei. Ein pauschaler Haltebefehl lässt sich aus diesen Verläufen nicht begründen. [Nachrechnung und Verlauf je Karte](../experiments/analysis/movement_soft_20261115/dev_a_retrace/ERGEBNIS.md).
+
 ## 15.11.2026 – Ein einzelnes Netz aus beiden Nachtrainings erreicht die Spielauswahl
 
 Der feste Gewichtsmittelwert trifft auf den archivierten R3-Stellungen 362 zusätzliche Lehrerbefehle und auf den älteren Stellungen 169 zusätzliche gegenüber R3. Die Ausgangsmodelle und alle 96 Sitzsummen wurden nachgerechnet. Die nächsten Spiele prüfen, ob das auch die Siegzahl erhöht. [Bericht und Checkpoint](../experiments/analysis/r8_midpoint_20261115/ARCHIVPRUEFUNG.md).
