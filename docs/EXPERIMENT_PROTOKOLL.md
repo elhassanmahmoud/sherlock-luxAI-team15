@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – 160 Vollspiele mit R3 als vollständigem Befehlsgeber im points-Hybrid. Gegen Solution 31/32 gegenüber V14 32/32, gegen Kaggle 0/32 bei beiden, direkt 18/32. Eine von drei Bedingungen erfüllt. [Ergebnis und Quellen](../experiments/analysis/points_hybrid_20261115/ERGEBNIS.md).
+
 15.11.2026 – R3 gewinnt auf vorab zurückgehaltenen Karten 88/120 direkt gegen V14 und 119/120 gegen Solution (V14 115/120). Gegen den Kaggle-Dritten 0/120 bei beiden. 600 Spielausführungen, drei von vier Freigabekriterien erfüllt. Der gepaarte externe Vorteil von +1,67 Prozentpunkten hat das 95-%-Intervall [0, +3,75]. [Bestätigung](../experiments/analysis/movement_soft_20261115/BESTAETIGUNG.md).
 
 15.11.2026 – R3 mit weichen Bewegungszielen erfüllt nach 224 Ausführungen die vier festgelegten Auswahlkriterien. Gegen Kaggle zwei Siege mehr als V14 auf derselben Karte. Gegen Solution 31/32 wie V14, direkt 22/32. Freigabe ausschließlich für den unabhängigen Vergleich. [Auswertung](../experiments/analysis/movement_soft_20261115/AUSWAHL.md).

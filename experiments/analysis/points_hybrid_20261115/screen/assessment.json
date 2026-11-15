@@ -1,0 +1,72 @@
+{
+  "stage": "screen",
+  "candidate": "points_r3",
+  "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "reference_files": {
+    "manifest_sha256": "e8f8fe3792db1b5c51dce5d70cb9022283aaae7b6ba54030a217d1ed1018b7e1",
+    "games_sha256": "86252ad948c88f035aefd6124ccdc65398889c278de353f959341a2a35f45b30"
+  },
+  "candidate_files": {
+    "manifest_sha256": "2ba32e401c839e6faf493ecae8531eea221111151aa259ffd74dfa1cb6721891",
+    "games_sha256": "ae28614463d9b3b49b6c443d0b0dba511380d549c72cf4fd2be14cf5472a1d95"
+  },
+  "direct_files": {
+    "manifest_sha256": "2ba32e401c839e6faf493ecae8531eea221111151aa259ffd74dfa1cb6721891",
+    "games_sha256": "ae28614463d9b3b49b6c443d0b0dba511380d549c72cf4fd2be14cf5472a1d95"
+  },
+  "external_first": 7278000,
+  "direct_first": 7278000,
+  "by_opponent": {
+    "kaggle3": {
+      "games": 32,
+      "v14_wins": 0,
+      "candidate_wins": 0,
+      "gained": 0,
+      "lost": 0,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "solution92": {
+      "games": 32,
+      "v14_wins": 32,
+      "candidate_wins": 31,
+      "gained": 0,
+      "lost": 1,
+      "net_wins": -1,
+      "winrate_difference": -0.03125,
+      "difference_ci95": [
+        -0.09375,
+        0.0
+      ]
+    }
+  },
+  "external": {
+    "games": 64,
+    "net_wins": -1,
+    "winrate_difference": -0.015625,
+    "difference_ci95": [
+      -0.046875,
+      0.0
+    ]
+  },
+  "direct": {
+    "games": 32,
+    "wins": 18,
+    "losses": 14,
+    "winrate": 0.5625,
+    "winrate_ci95": [
+      0.3125,
+      0.8125
+    ]
+  },
+  "gates": {
+    "solution_at_least_reference": false,
+    "direct_majority": true,
+    "two_additional_external_wins": false
+  },
+  "game_gates_pass": false
+}
