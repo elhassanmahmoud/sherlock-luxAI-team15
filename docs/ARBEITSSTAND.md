@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 gewinnt 119/120 gegen Solution und 88/120 direkt gegen V14
+
+600 unabhängige Spielausführungen auf den vorab reservierten Karten sind abgeschlossen. V14 gewann gegen Solution 115/120. Gegen Kaggle liegen beide bei 0/120. Der direkte Vorsprung ist statistisch belegt. Die Untergrenze des gepaarten externen Vorteils liegt genau bei null, die Übernahme verlangt einen Wert darüber. V14 bleibt die Turnierversion. Im offenen Einzelfall 7273148/P0 verlor R3 trotz 887 zu 660 Gesamtpunkten zwei Matches. Die Rohdaten und das Ergebnis sind archiviert. [Bestätigung und Datengrundlage](../experiments/analysis/movement_soft_20261115/BESTAETIGUNG.md).
+
 ## 15.11.2026 – Speicherarmer Trainer für Mahmouds größeren Datensatz
 
 Nach dem gemeldeten Speicherabbruch kann der normale Imitationstrainer Archivdaten spielweise auf Platte vorbereiten und nur den jeweiligen Trainingsbatch auf den Grafikchip laden. Im zweiepochigen CPU-Test waren sämtliche Endgewichte bitgleich zum bisherigen Weg. Die Tests verwenden echte maskierte Trainingsschritte einschließlich Schusszielkopf. Eine Messung mit Mahmouds vollständigem 11,4-Millionen-Datensatz steht aus. [Verwendung, Speicherbedarf und Prüfungsumfang](../experiments/analysis/umbau_20261115/SPEICHER.md).

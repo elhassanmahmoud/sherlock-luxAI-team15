@@ -1,0 +1,199 @@
+{
+  "stage": "confirm",
+  "candidate": "selective_movement",
+  "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "reference_files": {
+    "manifest_sha256": "807963c7ebe4b278c7f85e72f8e71978c3438070311ef92e1e60871817e6d42c",
+    "games_sha256": "2da38e26a9c863a348632ab3b558eae1d83fc9a3a1b26b319ce505181c98955e"
+  },
+  "candidate_files": {
+    "manifest_sha256": "cb904ef4d18ddbb6f05afc7092ba2dd5c86d63724c0b6193eb244c78173c49fd",
+    "games_sha256": "5a7818a6333b036e476f11786f2013355e121cb1e6d8618f230d3b49a6630bf0"
+  },
+  "direct_files": {
+    "manifest_sha256": "db650772a8858bb0cfc2828b7445d8c961bef8f5e3c1516055aec068b5f657b8",
+    "games_sha256": "5a7c9322d6eae5fcf76fb61b0ceb1f15bcef380f012407b4ffc83863d9b8c3a0"
+  },
+  "external_first": 7273100,
+  "direct_first": 7273200,
+  "by_opponent": {
+    "kaggle3": {
+      "games": 120,
+      "candidate_wins": 0,
+      "gained": 0,
+      "lost": 0,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "v14_wins": 0
+    },
+    "solution92": {
+      "games": 120,
+      "candidate_wins": 119,
+      "gained": 5,
+      "lost": 1,
+      "net_wins": 4,
+      "winrate_difference": 0.03333333333333333,
+      "difference_ci95": [
+        0.0,
+        0.075
+      ],
+      "v14_wins": 115
+    }
+  },
+  "external": {
+    "games": 240,
+    "net_wins": 4,
+    "winrate_difference": 0.016666666666666666,
+    "difference_ci95": [
+      0.0,
+      0.0375
+    ]
+  },
+  "direct": {
+    "games": 120,
+    "wins": 88,
+    "losses": 32,
+    "winrate": 0.7333333333333333,
+    "winrate_ci95": [
+      0.6166666666666667,
+      0.8333333333333334
+    ]
+  },
+  "gates": {
+    "solution_at_least_reference": true,
+    "direct_majority": true,
+    "external_lower_bound_positive": false,
+    "direct_lower_bound_above_half": true
+  },
+  "game_gates_pass": false,
+  "selection": {
+    "stage": "screen",
+    "candidate": "selective_movement",
+    "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+    "reference_files": {
+      "manifest_sha256": "ea98a575aa9ab867ab6b1f5577753149a41dc28e9572cfb1c603943bd6567484",
+      "games_sha256": "74fa494ce6e0481d5c31632f0e8865bf06e4ca3f32d01f8c981b31be5265cd5f"
+    },
+    "candidate_files": {
+      "manifest_sha256": "b5e3e88443ce996c3a437cd085efff84fba9b49700f1be13d33331ceb058f4f3",
+      "games_sha256": "e0599f88245dff32bedf799c3a4df3eeba2ade58f55ad5a0c07495a0021f904e"
+    },
+    "direct_files": {
+      "manifest_sha256": "b5e3e88443ce996c3a437cd085efff84fba9b49700f1be13d33331ceb058f4f3",
+      "games_sha256": "e0599f88245dff32bedf799c3a4df3eeba2ade58f55ad5a0c07495a0021f904e"
+    },
+    "external_first": 7273000,
+    "direct_first": 7273000,
+    "by_opponent": {
+      "kaggle3": {
+        "games": 32,
+        "candidate_wins": 2,
+        "gained": 2,
+        "lost": 0,
+        "net_wins": 2,
+        "winrate_difference": 0.0625,
+        "difference_ci95": [
+          0.0,
+          0.1875
+        ],
+        "v14_wins": 0
+      },
+      "solution92": {
+        "games": 32,
+        "candidate_wins": 31,
+        "gained": 1,
+        "lost": 1,
+        "net_wins": 0,
+        "winrate_difference": 0.0,
+        "difference_ci95": [
+          -0.09375,
+          0.09375
+        ],
+        "v14_wins": 31
+      }
+    },
+    "external": {
+      "games": 64,
+      "net_wins": 2,
+      "winrate_difference": 0.03125,
+      "difference_ci95": [
+        -0.03125,
+        0.109375
+      ]
+    },
+    "direct": {
+      "games": 32,
+      "wins": 22,
+      "losses": 10,
+      "winrate": 0.6875,
+      "winrate_ci95": [
+        0.4375,
+        0.875
+      ]
+    },
+    "gates": {
+      "solution_at_least_reference": true,
+      "direct_majority": true,
+      "two_additional_external_wins": true,
+      "external_at_least_r2": true
+    },
+    "game_gates_pass": true,
+    "selection_control": {
+      "games": 64,
+      "net_wins": 1,
+      "winrate_difference": 0.015625,
+      "difference_ci95": [
+        -0.046875,
+        0.09375
+      ],
+      "by_opponent": {
+        "kaggle3": {
+          "games": 32,
+          "candidate_wins": 2,
+          "gained": 2,
+          "lost": 0,
+          "net_wins": 2,
+          "winrate_difference": 0.0625,
+          "difference_ci95": [
+            0.0,
+            0.1875
+          ],
+          "r2_wins": 0
+        },
+        "solution92": {
+          "games": 32,
+          "candidate_wins": 31,
+          "gained": 0,
+          "lost": 1,
+          "net_wins": -1,
+          "winrate_difference": -0.03125,
+          "difference_ci95": [
+            -0.09375,
+            0.0
+          ],
+          "r2_wins": 32
+        }
+      },
+      "model": "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96",
+      "files": {
+        "manifest_sha256": "1846c59cad22eab228aca6e31c81e96c02f61c1056d0cab947e83b10ec9299ce",
+        "games_sha256": "f371f71ec4c221f79250332598331da773c5519457245839aa2901cc9efc9302"
+      },
+      "r2_wins": 32,
+      "candidate_wins": 33
+    }
+  },
+  "scope": "Whole-game gates only. Default, course and submission-package checks remain separate.",
+  "protocol": "distill",
+  "bootstrap": {
+    "unit": "whole map, both seats; external opponents sampled together",
+    "draws": 10000,
+    "seed": 2711,
+    "generator": "PCG64",
+    "interval": "95% percentile"
+  }
+}
