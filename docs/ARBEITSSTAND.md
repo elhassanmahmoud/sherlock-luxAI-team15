@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Öffentliche Schussreichweite als Wahl zwischen zwei eigenen Agenten geprüft
+
+Auf 80 historischen Karten wurde festgelegt, FT18 bei Reichweite 6 oder 7 und sonst V14 zu spielen. Auf 400 weiteren archivierten Karten gewann diese Wahl 764/800 ganze Spiele gegen Solution, V14 allein 761/800. Der Unterschied beträgt +0,375 Prozentpunkte bei einem gepaarten 95-%-Intervall von −0,75 bis +1,50. Die Regel wird vorerst zurückgestellt. Die gesonderte Studie zur Bewegungswahl nach Match 1 verfolgt eine andere Frage. Mahmouds neuer Hybrid aus V14 und seinem Nachahmungsnetz ist lokal integriert (Commit `218ae09`). [Archivvergleich und Reproduktion](../experiments/analysis/late_ft18_20261115/public_selector/ERGEBNIS.md).
+
 ## 15.11.2026 – V14 gewinnt den neuen Solution-Vergleich 32/32; einfache Stapelregel verworfen
 
 Die isolierte Übernahme des Lehrer-Stillstands bei energieärmeren, gestapelten Einheiten kostete zehn von 32 Solution-Spielen. Direkt gewann diese Variante nur 2/32 gegen V14. Auf denselben Karten gewann keines der beiden Teams gegen den nativen Kaggle-Gegner. Das Nachtraining des lernenden Bewegungsberaters verwendet davon getrennte Karten und läuft weiter. [Ergebnisse und Unsicherheit](../experiments/analysis/stack_reserve_20261115/ERGEBNIS.md).

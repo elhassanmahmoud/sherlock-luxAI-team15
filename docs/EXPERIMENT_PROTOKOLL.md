@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Auswahl zwischen zwei vorliegenden Agenten über die vor dem ersten Zug bekannte Schussreichweite. Archivprüfung mit 80 Auswahlkarten und 400 getrennten Karten, beide Sitze gegen Solution. Drei zusätzliche Siege in 800 Partien, das Kartenintervall schließt null ein. [Ergebnis, Herkunft der Ausgänge und Nachrechnung](../experiments/analysis/late_ft18_20261115/public_selector/ERGEBNIS.md).
+
 15.11.2026 – Erster selbst trainierter Bewegungsberater: 96 Kandidatenspiele und 64 gepaarte externe Referenzspiele. Direkt 20/32, Solution beide 30/32, Kaggle3 0/32 gegenüber 2/32. Keine unabhängige Bestätigung und keine Übernahme. [Spiele, Quellen und Unsicherheit](../experiments/analysis/combat_advice_20261115/BEWEGUNGSSPIELE.md).
 
 15.11.2026 – Lehrerintervention in 72 ganzen Spielen. Bewegung und Kampf je sechs zusätzliche Siege über drei Gegner; Matchsiege 52 bzw. 49 gegenüber 38 in der Kontrolle. Bewegung gemäß Vorfestlegung ausgewählt. Das war direkter Lehrerzugriff auf zwölf bekannten Karten. [Zahlen und Rohdaten](../experiments/analysis/combat_advice_20261115/LEHRERENTSCHEIDUNGEN.md).
