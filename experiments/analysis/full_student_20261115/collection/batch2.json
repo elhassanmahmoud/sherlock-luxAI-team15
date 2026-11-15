@@ -1,0 +1,487 @@
+{
+  "collect": {
+    "games": 60,
+    "seed0": 7280120,
+    "mix": "kaggle3:0.4,v14:0.3,solution92:0.3",
+    "teacher": "kaggle3 lux3-bot 0.4.8_fn",
+    "shadow_cfg": "V14 agent_p0.pth",
+    "samples": 301876,
+    "files": 86,
+    "secs": 527
+  },
+  "files": [
+    {
+      "file": "g7280120_player_0_kaggle3.npz",
+      "sha256": "7b63f61b3ebe9a9c18a3fbefbb3d8616d4a32b927b0e8219d398b746082fff16",
+      "bytes": 161784
+    },
+    {
+      "file": "g7280120_player_1_kaggle3.npz",
+      "sha256": "4c93b93944016d317bc980a8bd3f5149795d4355e62ef9256566e239fb1d07f4",
+      "bytes": 161806
+    },
+    {
+      "file": "g7280121_player_1_v14.npz",
+      "sha256": "4ea47e16b33d438b507790a940f4d32f5fe173a7a458934632382f32c5dc1312",
+      "bytes": 155904
+    },
+    {
+      "file": "g7280122_player_1_v14.npz",
+      "sha256": "b816bcf3cf985a295d0323de535ba3f95e6c2f3517e5fa47431736f18089b29b",
+      "bytes": 164335
+    },
+    {
+      "file": "g7280123_player_0_solution92.npz",
+      "sha256": "d02c82a3520577d5594d3530d26a5aa69f9daae4536e928c186f767530f17fbb",
+      "bytes": 168957
+    },
+    {
+      "file": "g7280124_player_0_kaggle3.npz",
+      "sha256": "98b8689472fe480284def579a9b3d84c06590e8c0a58b58ef9c16cac0ba42572",
+      "bytes": 146022
+    },
+    {
+      "file": "g7280124_player_1_kaggle3.npz",
+      "sha256": "f586159e676f5354cb7674b093df802a4543d0b56f68e45c8953046d389f10cb",
+      "bytes": 146022
+    },
+    {
+      "file": "g7280125_player_0_kaggle3.npz",
+      "sha256": "dcb59a7b5d816da9ef5c9dc9851b7984ed042a53df1194f69bc85b8bbb0e7da8",
+      "bytes": 149059
+    },
+    {
+      "file": "g7280125_player_1_kaggle3.npz",
+      "sha256": "7391831bde8fc9d004ca95a2c25932c7b4db3278f489f381b528c3aa9b230c6f",
+      "bytes": 149043
+    },
+    {
+      "file": "g7280126_player_0_v14.npz",
+      "sha256": "4b254c3812606844cb456f6d00200ba9067b0295ad64de57ca325a79052000b7",
+      "bytes": 167535
+    },
+    {
+      "file": "g7280127_player_0_kaggle3.npz",
+      "sha256": "297dfe9fe2081a36f57bede4b0e7c38e0af61fd1c7061e400550c1340a732cd1",
+      "bytes": 167084
+    },
+    {
+      "file": "g7280127_player_1_kaggle3.npz",
+      "sha256": "f7e6e3c9652f1f262b6dc1009078c66d2a988650665dc42b9b3ca0a5ba9dd88a",
+      "bytes": 167133
+    },
+    {
+      "file": "g7280128_player_0_v14.npz",
+      "sha256": "fc33f924a97406b33034e2a8537b1a3fbb190fbb485c00a8c7ee1db66097bc41",
+      "bytes": 162982
+    },
+    {
+      "file": "g7280129_player_1_v14.npz",
+      "sha256": "51dc757cfd028b6d95ae99797dd5a70a00efce21a380ec4582081ec2a40adc1f",
+      "bytes": 175790
+    },
+    {
+      "file": "g7280130_player_0_v14.npz",
+      "sha256": "af2c8ce936588dc6db5d2cfd12f1033854be95abdfd9db9f0daa536aff5a5625",
+      "bytes": 152878
+    },
+    {
+      "file": "g7280131_player_1_v14.npz",
+      "sha256": "3e6b1ce7aff397baf93a24528313081d400956673ef730654a2e0e9af39e6d4d",
+      "bytes": 192085
+    },
+    {
+      "file": "g7280132_player_1_v14.npz",
+      "sha256": "bd3a4e7396a2f26c106c0726310ff92556ba73a90e1a423cadb50e6260bbc5f0",
+      "bytes": 164549
+    },
+    {
+      "file": "g7280133_player_0_v14.npz",
+      "sha256": "9b3a8aa5131d02d58f72d2a49717d1ee706003995cf7772b6ba699ca9bb2c11a",
+      "bytes": 165070
+    },
+    {
+      "file": "g7280134_player_0_solution92.npz",
+      "sha256": "3e822441bce96cef3789cf3fd96efc521c8ba41c2860898a03aac5e40d29fef3",
+      "bytes": 170199
+    },
+    {
+      "file": "g7280135_player_0_v14.npz",
+      "sha256": "8f402d27777016f583273f7f789a6a7631c8998db690f17d722d8745508bcb27",
+      "bytes": 169084
+    },
+    {
+      "file": "g7280136_player_0_kaggle3.npz",
+      "sha256": "ca0a1ef1fa761d852787035a3cc33f51244231ec09b9730761038129d19bebe6",
+      "bytes": 151704
+    },
+    {
+      "file": "g7280136_player_1_kaggle3.npz",
+      "sha256": "815751e92c08b271846ba1a9f7f0bc00ba13de8c97f04620d4ce71a6f49c1cd6",
+      "bytes": 151653
+    },
+    {
+      "file": "g7280137_player_1_v14.npz",
+      "sha256": "b99eb4e7eb174db102ac307ea54ceb51e9558d5cb6fa51c6de0d8f1f2b3c76b8",
+      "bytes": 173673
+    },
+    {
+      "file": "g7280138_player_0_solution92.npz",
+      "sha256": "98b98d29f4929ee251f7b99214c5c2359d8cb2a9a4bd07bbfa30d585ab4e11c8",
+      "bytes": 166318
+    },
+    {
+      "file": "g7280139_player_0_kaggle3.npz",
+      "sha256": "609c47e94b54e768584e94a3438f3df5ed9014bad41aeac6d1fe93f3a4f8d969",
+      "bytes": 145779
+    },
+    {
+      "file": "g7280139_player_1_kaggle3.npz",
+      "sha256": "327a838c71ddc0e441a0004f2574483e78b9727364dcd75604687a232e0b9f20",
+      "bytes": 145753
+    },
+    {
+      "file": "g7280140_player_0_v14.npz",
+      "sha256": "1128ff527605d4a71b12b68ea5f547bfca9b5797e32c160fa2cc43b26bfbd16b",
+      "bytes": 166910
+    },
+    {
+      "file": "g7280141_player_1_solution92.npz",
+      "sha256": "7d7e19efa13f88df187ce2fb32cbdcf9bee0e11002681e9317966b8204f21ee5",
+      "bytes": 177107
+    },
+    {
+      "file": "g7280142_player_0_kaggle3.npz",
+      "sha256": "bb6574eb2e54ee5e7a259571533c331ee039de2b4ae36b40ef7cb72e229dc62d",
+      "bytes": 161184
+    },
+    {
+      "file": "g7280142_player_1_kaggle3.npz",
+      "sha256": "496ad20454266cdf57de471b97463c88400cec38276bddac5e7300815a68e709",
+      "bytes": 161196
+    },
+    {
+      "file": "g7280143_player_0_v14.npz",
+      "sha256": "2def722a4e132a7059eeda8a0b3b9e0fca851a6bb685557582dd55dae76da426",
+      "bytes": 153587
+    },
+    {
+      "file": "g7280144_player_0_kaggle3.npz",
+      "sha256": "c939a0fccc33f766090ac6f8f4daa4b9a101ac362a669583038bd3e2c156ea3d",
+      "bytes": 136082
+    },
+    {
+      "file": "g7280144_player_1_kaggle3.npz",
+      "sha256": "efaaa19fe787ef96864579deb9f7b85ea6edfa07e5f040773ece8d1e800278e1",
+      "bytes": 136097
+    },
+    {
+      "file": "g7280145_player_1_solution92.npz",
+      "sha256": "7a332189e4b21d64cbf3dea34929a03a2fd24212440f3de4e8b1f16e61e4b14f",
+      "bytes": 166143
+    },
+    {
+      "file": "g7280146_player_0_v14.npz",
+      "sha256": "7fb84a60b687ba404209bf31a760b0ef8eef76e05c185d584c7efcc73d08ee2a",
+      "bytes": 188723
+    },
+    {
+      "file": "g7280147_player_0_kaggle3.npz",
+      "sha256": "4a0ca737b7a3f3bfba488a4907d91777f4cfd5f62d21deb95d45c3960f83bd14",
+      "bytes": 163159
+    },
+    {
+      "file": "g7280147_player_1_kaggle3.npz",
+      "sha256": "6d255c29701d7596364331c9b3ef96f1bf701668c874e799990ff0d24ae47ec0",
+      "bytes": 163021
+    },
+    {
+      "file": "g7280148_player_0_v14.npz",
+      "sha256": "9d7ffbfd6cca55c8b8118ae58755afedb6f3285ee3f416367db8bdbdd546c5a8",
+      "bytes": 176760
+    },
+    {
+      "file": "g7280149_player_0_kaggle3.npz",
+      "sha256": "ae1e90a930187956f67783a8faa8292215f4444bc23d9eb9f706fdffcc1ddc7f",
+      "bytes": 174380
+    },
+    {
+      "file": "g7280149_player_1_kaggle3.npz",
+      "sha256": "2253b9c2d431a81d86d16d7f388647256409ac479034322396fd32043ed641ea",
+      "bytes": 174393
+    },
+    {
+      "file": "g7280150_player_0_kaggle3.npz",
+      "sha256": "2694d78f73926a1488f123375be70e74f46585e2ab4a4dc77efd81d9108d9eb6",
+      "bytes": 139323
+    },
+    {
+      "file": "g7280150_player_1_kaggle3.npz",
+      "sha256": "efcd650f287f2a0854284e29da19b137bb398ec2fd3ac0f75464d056c03b2348",
+      "bytes": 139332
+    },
+    {
+      "file": "g7280151_player_0_v14.npz",
+      "sha256": "de0f852d135a44d8e350feb1079cf9c614815efeac4e702ab98bb16c5564cec8",
+      "bytes": 175954
+    },
+    {
+      "file": "g7280152_player_0_v14.npz",
+      "sha256": "ccfd80441310e3b7d9c784499517d28e45b71319af37c6fcf87ee4d32bccec46",
+      "bytes": 162788
+    },
+    {
+      "file": "g7280153_player_1_solution92.npz",
+      "sha256": "1858f2db9b4a43ba3d2e8f6a3c03d852b5c3d95116772cd860b339d372935b64",
+      "bytes": 171538
+    },
+    {
+      "file": "g7280154_player_0_v14.npz",
+      "sha256": "024cac62caae4e0f61c9dc24f3db1c025a493225d25f64fc4be6575dce5cd5a2",
+      "bytes": 188018
+    },
+    {
+      "file": "g7280155_player_1_solution92.npz",
+      "sha256": "9c25ced9fab292281e35136d7ccabfcd1f4866f2aa744ad474382b639351ad02",
+      "bytes": 174078
+    },
+    {
+      "file": "g7280156_player_0_kaggle3.npz",
+      "sha256": "0eb85170572902c6e3f169b8ea72a25da7c31638ee767466c33659ffc40be7f5",
+      "bytes": 161917
+    },
+    {
+      "file": "g7280156_player_1_kaggle3.npz",
+      "sha256": "ea4050b7bfbd14e5ccb1af91353dcf2e710a9274f6a0c1e34b0c83ecd5d32e17",
+      "bytes": 161906
+    },
+    {
+      "file": "g7280157_player_0_kaggle3.npz",
+      "sha256": "38e83b1221924b6362e7af223c2969778c6a830f161bb1e84e81604a820344f8",
+      "bytes": 166821
+    },
+    {
+      "file": "g7280157_player_1_kaggle3.npz",
+      "sha256": "cdfe78d27c20b529896aba6bed19f8079c36808dd91716a3793da2927cabbbcb",
+      "bytes": 166820
+    },
+    {
+      "file": "g7280158_player_0_kaggle3.npz",
+      "sha256": "5f85c3e741abaa4e280b54e0acaedee69dfb915d3733526a469e6cb85295cbc8",
+      "bytes": 144060
+    },
+    {
+      "file": "g7280158_player_1_kaggle3.npz",
+      "sha256": "e30a885728307081292edd38111dd05e177c3df91ce533099ffedfc18eaf91f3",
+      "bytes": 144066
+    },
+    {
+      "file": "g7280159_player_0_v14.npz",
+      "sha256": "5af1c11dc9783ddb4c2fbd0449df1847db376153d814b435079987bbadd7a7dd",
+      "bytes": 161718
+    },
+    {
+      "file": "g7280160_player_0_kaggle3.npz",
+      "sha256": "35bb56756ad517c314e2753a68519f0c874f9737472d28ee52088954d5691e2c",
+      "bytes": 176238
+    },
+    {
+      "file": "g7280160_player_1_kaggle3.npz",
+      "sha256": "24c2d83565797d169cd1b59def5ae304f26be559fc84cd7a9b67acc65aacf707",
+      "bytes": 176251
+    },
+    {
+      "file": "g7280161_player_0_kaggle3.npz",
+      "sha256": "1038f2bebc020185a41c786b8f18773c8084fb9a37a5a06a473a007eed9d175c",
+      "bytes": 178368
+    },
+    {
+      "file": "g7280161_player_1_kaggle3.npz",
+      "sha256": "34f4056a4f00f4ffbf999cdee3c4200ddde0efeb34e7093133605481ae9aec7a",
+      "bytes": 178362
+    },
+    {
+      "file": "g7280162_player_0_solution92.npz",
+      "sha256": "6d275f1f5e638bc7918ec72115fe846b014efaef8f8f885bd7c665388e63c512",
+      "bytes": 171981
+    },
+    {
+      "file": "g7280163_player_0_kaggle3.npz",
+      "sha256": "36f34051250aaa1c1a473ba6d539fc70b540fa271719e0e00cce3c75ab89bf52",
+      "bytes": 191190
+    },
+    {
+      "file": "g7280163_player_1_kaggle3.npz",
+      "sha256": "10a4d8d425400a8a7f6a12698463a3836220d608f04e71c864db46c46d0b3dd4",
+      "bytes": 191210
+    },
+    {
+      "file": "g7280164_player_0_solution92.npz",
+      "sha256": "56c467e64543168a2d7e3bb14a8399017b989050338cac80095fcded357f1ed0",
+      "bytes": 170986
+    },
+    {
+      "file": "g7280165_player_0_kaggle3.npz",
+      "sha256": "61323bc8424d8c4388f0812be980e5f9a362d00240ad62da5d2fa339dc84a68b",
+      "bytes": 155908
+    },
+    {
+      "file": "g7280165_player_1_kaggle3.npz",
+      "sha256": "7a516ad19bfd1cfaf4e0f2fb09eb34cd2b632d77a2d8e85d19a49fad3c145196",
+      "bytes": 155851
+    },
+    {
+      "file": "g7280166_player_0_v14.npz",
+      "sha256": "a56ca61fb04a346eb44fcddbd9df8af090913a1ed070bb673479b36fef4d2531",
+      "bytes": 175425
+    },
+    {
+      "file": "g7280167_player_0_kaggle3.npz",
+      "sha256": "1bb50293dbe914d960d68ca3c09ddc8ee0432a6fa07cea1d20edfc3e5ec23961",
+      "bytes": 152984
+    },
+    {
+      "file": "g7280167_player_1_kaggle3.npz",
+      "sha256": "bc0520dcee64dbed88e677bdd817f130bf9eb5aad7dee7be177ef93ea973e54a",
+      "bytes": 152988
+    },
+    {
+      "file": "g7280168_player_0_kaggle3.npz",
+      "sha256": "b5337babaa74b7fbebb19907762cf328fd432e474c172669c7c44fc75d2974bd",
+      "bytes": 166467
+    },
+    {
+      "file": "g7280168_player_1_kaggle3.npz",
+      "sha256": "f504303eb9e4f56e9234732bb8ca903015d5a5b7925ae8cc495a01d4dbb20579",
+      "bytes": 166444
+    },
+    {
+      "file": "g7280169_player_0_kaggle3.npz",
+      "sha256": "b8c8ef12b918c98f714abf6f121b580132f29391f647a20a61bc6f9542dfab06",
+      "bytes": 172638
+    },
+    {
+      "file": "g7280169_player_1_kaggle3.npz",
+      "sha256": "edce1a2a1ddaa3097080686e5e474f3cbea865f501ce41ed5975bd0c20577d7e",
+      "bytes": 172574
+    },
+    {
+      "file": "g7280170_player_0_kaggle3.npz",
+      "sha256": "ff9829031a223970bc205d32785325f40b6dad817ad329dde2375fcc162d91a8",
+      "bytes": 183819
+    },
+    {
+      "file": "g7280170_player_1_kaggle3.npz",
+      "sha256": "afc2cab86cd9895c37fb05a037bba62760ece8a14f69a159187abcaab18ca4c4",
+      "bytes": 183794
+    },
+    {
+      "file": "g7280171_player_0_v14.npz",
+      "sha256": "94af2f4ce63956f0803d330d808b0aca54928ffc094d69772b0edc9aa70ad212",
+      "bytes": 208267
+    },
+    {
+      "file": "g7280172_player_0_v14.npz",
+      "sha256": "c726daae48a430c4da755855c7d92405fcd714d3dbe60f375299cf93453eb585",
+      "bytes": 162546
+    },
+    {
+      "file": "g7280173_player_0_kaggle3.npz",
+      "sha256": "c2144548c062105a1c1a63fc4de7e3cbba0c17195aa8bbf92311d122d4502989",
+      "bytes": 170326
+    },
+    {
+      "file": "g7280173_player_1_kaggle3.npz",
+      "sha256": "243e391b403b7379e0107fd221f9b9476a08a623a9eb5a5bcd89d276ed7951a1",
+      "bytes": 170335
+    },
+    {
+      "file": "g7280174_player_1_solution92.npz",
+      "sha256": "0d4f61f4863aca74bee0fa06d00af20b9e3bd2cecfb903ed078937a6e78c1004",
+      "bytes": 168734
+    },
+    {
+      "file": "g7280175_player_0_kaggle3.npz",
+      "sha256": "c4532b162d5c125b89507821f53c6c74dae154022614a861fd587e23682f719e",
+      "bytes": 142521
+    },
+    {
+      "file": "g7280175_player_1_kaggle3.npz",
+      "sha256": "3bd41b489fb352b0ab8677276cb0883ca9179206cb039c30033d05a8dfe0ed1a",
+      "bytes": 142524
+    },
+    {
+      "file": "g7280176_player_0_kaggle3.npz",
+      "sha256": "b941ea944b3412366e28e296e5c1c24a151d62ff37107aaa605e3aa9e4989b70",
+      "bytes": 181866
+    },
+    {
+      "file": "g7280176_player_1_kaggle3.npz",
+      "sha256": "02b3f71d9f78abdc2af87ea85deec30a03cf30eea6fac01b32065c921c6ad74a",
+      "bytes": 181854
+    },
+    {
+      "file": "g7280177_player_1_v14.npz",
+      "sha256": "7f8694a38ca3e2bf07064016b81f5ae24eec7ab3faa22da3af5ba8a2efdeef6e",
+      "bytes": 156925
+    },
+    {
+      "file": "g7280178_player_1_v14.npz",
+      "sha256": "fe3861c182b10acf77506c84fd1c460345a6ad1e5ce81dcd645ea293c2b26198",
+      "bytes": 181077
+    },
+    {
+      "file": "g7280179_player_0_kaggle3.npz",
+      "sha256": "9ef0d5bf773b3789f22632ff0efafcb75ed55731be1d2fa4e469ce7beda23e60",
+      "bytes": 189717
+    },
+    {
+      "file": "g7280179_player_1_kaggle3.npz",
+      "sha256": "242d1479bca3414b3ef0d1837236aed49dc664bbb2b94fa20026d62207537e98",
+      "bytes": 189742
+    }
+  ],
+  "sources": {
+    "agents/sherlock/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agents/sherlock/assignment.py": "399e84a6a3ccef3906e3f39749db86412d05947ba3c7676d3c607154ef047db4",
+    "agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+    "agents/sherlock/candidate_progress.py": "3d6069aa3f27b81544230a4928e17feab141cf9c09cea8ed8a13c95b6b8c5a03",
+    "agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+    "agents/sherlock/combat.py": "3b99efbd83636d06beb370261f83c71e2d40e5735b78a89c0772ee43427ff80a",
+    "agents/sherlock/config.py": "4c5a37d6987415fc49e324e50454feea7e5602e2da3a427ca68ac770adaa8729",
+    "agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/hybrid_agent.py": "a5711e42e0d0ebf8cb6a602417a15ceeb235b8c90477faa2b0c2eb13b5a908a4",
+    "agents/sherlock/imitation_agent.py": "e7a3712bc02d606513732c40aa7822e4edb87f17514a7b652c7fa127272d3a92",
+    "agents/sherlock/imitation_net.py": "5112d1b005fb6e7328715e072a3137c975f6d306813350de511b0df4439c1ac8",
+    "agents/sherlock/main.py": "362790ebccbb9620e3f21f306447fd10cb31956dd182c39b8b52084980f429d2",
+    "agents/sherlock/model.py": "df21cb3cfd68795cb59b3925e8d9099337c81104596df2adadf65d3300bc80ab",
+    "agents/sherlock/opp_model.py": "d6e0f65bd754fb7eb267b17f5e6c69753a0fd01cde16152f6ea1fa2827363da9",
+    "agents/sherlock/param_est.py": "1c1c0b138f6441d4059e018701ef4fe8313bc5f2c0ffe4612910f5623b546c37",
+    "agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78",
+    "agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311",
+    "agents/sherlock/residual.py": "726cc1417ff14b33573655e3c05231e953ce43da97532d957d0142e52249237f",
+    "agents/sherlock/reward.py": "9953671c54315132ee28cdcbfe3968e23e0bbdce9e67298d794cd02633639bc8",
+    "agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+    "agents/sherlock/tactics.py": "b90122ed687c72530461baf385529c02b81b0f986c635172e36d13a99d003fce",
+    "experiments/opponents/kaggle3_lux3_048fn/__init__.py": "e16f1596201850fd4a63680b27f603cb64e67176159be3d8ed78a4403fdb1700",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/__init__.py": "9b5beb63e02bc10b791d5771322f7953aabe5d7cb495f3d8f736a0d5401a994b",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/agent.py": "04f9ed8ae63f9cd293ee738c2a8d93588f4e9d510bb36659a46602a79b9f097c",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/base.py": "b2a36588d070b95fa8ee2a5f105f29776fc17d982db0e0d276ca5a5cb513878c",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/field.py": "ad300f219bd356f57110c42581f9467e8016739eda1c1c94baa0eed46a424cd9",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/fleet.py": "2fd9e92fbb2d2448968e5ea0bb6891b66507e57b6eefba4a2194b04101e12df1",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/kit.py": "6bec17f81a3db644858243b1dede7e0a1e1fe6a4b658a65732c1bcfca06ccaa5",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/path.py": "6e41f0132309dca183f1648bcd9a24326b96d1c35c2b855a918d71b78eb01bf5",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/space.py": "62261cd6ce375c3fdced8e4d52df83125d5ae62408cb7666b1a83ac3fdc7bbce",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/state.py": "1f907237eb3a858084719245cb463b67affdfba258c025dbeb3e6d1696f0c540",
+    "experiments/opponents/kaggle3_lux3_048fn/agent/tasks.py": "86ef077fdcb336cf53fa31c211e8ef66893c90c91378ae8f4cbc66acb9d3bf78",
+    "experiments/opponents/kaggle3_lux3_048fn/imitation_learning/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "experiments/opponents/kaggle3_lux3_048fn/imitation_learning/weights/sap_unet.pth": "40053d180d014f5e6ab1692e44680517c358e071255ff703ff3d9699667b4a88",
+    "experiments/opponents/kaggle3_lux3_048fn/imitation_learning/weights/unit_unet.pth": "f807fdaa29a6410c17012ac7aac10169c4ded3bb7827483ca7c8d0df6bc3d987",
+    "experiments/opponents/kaggle3_lux3_048fn/main.py": "2e63e12b969664ef6a6082d1bccfcadbb63eaf34d7ec6386308600c8d0e34beb",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "scripts/experiment.py": "00b316de7233cbfdfd07f33751d49a9f1711a93db643aa3a5e6352c337170405",
+    "scripts/imitate.py": "35dc65233ddd426624951cb4d0a19bb3d8ccbe768a5b4ab4eff0006f26ca8e91",
+    "scripts/kaggle3_opponent.py": "1b8a08d26a867acd8aeee9adf40b1b2bedc6776d6973c69165cf220a69cdeb54"
+  }
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – 1.194.451 Entscheidungen aus echten Lehrerpartien
+
+Alle vier Sammlungen sind fertig. Auf 240 neuen Karten entstanden 337 Sitzarchive, davon 33 aus den 24 getrennten Diagnosekarten. Die Byteprüfsummen und die vorab festgelegten Karten, Sitze und Gegner stimmen in allen 337 Fällen. Zwei vollständige Schüler vergleichen das Lernen mit und ohne diese zusätzlichen Lehrerpartien. [Sammlung und lokale Datenpfade](../experiments/analysis/full_student_20261115/SAMMLUNG.md).
+
 ## 15.11.2026 – Der frühere Weg zum Punktefeld dreht die bekannte R3-Niederlage
 
 Auf 7273148/P0 erreicht der erste Punkt nun Zug 20 statt 40. Match 2 dreht sich von 229:245 auf 334:204. Alle fünf geretteten Partien und die sechs Gegenseiten blieben Siege, bei drei weniger gewonnenen Einzelmatches insgesamt. Die zwölf Sitzpartien sind nach bekannten Ergebnissen ausgewählt. Der Vorteil auf neuen Karten ist offen. [Gegenprobe für Mahmoud mit Befehlsverläufen](../experiments/analysis/movement_soft_20261115/restart_route/ERGEBNIS.md).
