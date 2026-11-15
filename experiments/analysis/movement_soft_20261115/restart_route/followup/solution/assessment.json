@@ -1,0 +1,93 @@
+{
+  "assessment_sources": {
+    "scripts/final_battle_assess.py": "01291a8c5ee6970d87f8eb5b0220cc4c32b4cea1a1a107c7fc23c9a7eef5e59e",
+    "scripts/r3_route_assess.py": "94d46aa63e257c69bf4b9b9c395332a11169812b052371a7142839e832a4087c",
+    "scripts/residual_ensemble_compare.py": "525c58d23f3245e523d2416cfc7dc452d393d83d416a4509e6fb332fe5ce463a"
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "interval": "95% percentile",
+    "seed": 2711,
+    "unit": "whole map, retaining both seats"
+  },
+  "files": {
+    "r3": {
+      "games_sha256": "d97c8fc9d27843065bf5bcc8eb21f8ee76301713eff821034fd2357c463e7449",
+      "manifest_sha256": "886cf9e5167215bd7cbb5cd86c22c268c7b5417616c49a6bc2db94b6d4d0262b"
+    },
+    "route": {
+      "games_sha256": "a3bfe646aecb40269669f966373479a311335d1f55bf31bf51e30235cfd046c9",
+      "manifest_sha256": "127bfae29f912d5780151f297ff93bf955de131d4b57c9098115c4d05be866c7"
+    },
+    "v14": {
+      "games_sha256": "edd6ef3ca1b951d647c7bf088ebf802ad5a69f29b694d1fc479cb686a549c70d",
+      "manifest_sha256": "252b554b1514a998899b0f2a49746cf4df73b8f34da28047e62da6f902592e2a"
+    }
+  },
+  "solution_gate_passes": false,
+  "stage": "solution",
+  "vs_r3": {
+    "difference": -0.016666666666666666,
+    "difference_ci95": [
+      -0.041666666666666664,
+      0.0
+    ],
+    "gained": [],
+    "games": 120,
+    "lost": [
+      [
+        7283014,
+        "player_0"
+      ],
+      [
+        7283045,
+        "player_1"
+      ]
+    ],
+    "matches": {
+      "reference": 343,
+      "route": 342
+    },
+    "wins": {
+      "reference": 120,
+      "route": 118
+    }
+  },
+  "vs_v14": {
+    "difference": -0.008333333333333333,
+    "difference_ci95": [
+      -0.041666666666666664,
+      0.016666666666666666
+    ],
+    "gained": [
+      [
+        7283004,
+        "player_0"
+      ]
+    ],
+    "games": 120,
+    "lost": [
+      [
+        7283014,
+        "player_0"
+      ],
+      [
+        7283045,
+        "player_1"
+      ]
+    ],
+    "matches": {
+      "reference": 326,
+      "route": 342
+    },
+    "wins": {
+      "reference": 119,
+      "route": 118
+    }
+  },
+  "wins": {
+    "r3": 120,
+    "route": 118,
+    "v14": 119
+  }
+}

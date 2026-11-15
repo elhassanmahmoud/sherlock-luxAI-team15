@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 gewinnt 120/120 auf 60 neuen Karten gegen Solution
+
+Der ursprüngliche R3 gewann auf einem zweiten festen Solution-Satz **120/120**, V14 119/120 und die zusätzliche Wegregel 118/120. Zusammen auf den zwei Sätzen R3 **239/240**, V14 234/240. Die sofortige Wegregel ist aus dem Vergleich ausgeschieden. Vollständige Paare, Sieger und Prüfsummen wurden nachgerechnet. [Ergebnisse und Einzelpartien](../experiments/analysis/movement_soft_20261115/restart_route/FRISCHE_KARTEN.md).
+
 ## 15.11.2026 – Der gemischte v4-Hybrid steht für die unabhängige Bestätigung fest
 
 Auf Dev B gewinnt er im direkten Duell 178/200, gegen Solution 190/200 und gegen Kaggle 4/200. Dieselben 100 Karten ergaben für V14 185/200 gegen Solution und 0/200 gegen Kaggle. Die gemischte Variante ist vor den 400 Bestätigungskarten mit Dateiprüfsumme festgelegt. Die vollständigen Karten- und Sitzschlüssel der neuen Tabellen wurden nachgerechnet. [Gepaarte Gegenprüfung](../experiments/analysis/umbau_20261115/V4_ZUWEISUNG.md).
