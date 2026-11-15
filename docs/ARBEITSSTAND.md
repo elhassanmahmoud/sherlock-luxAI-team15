@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R8 gewinnt auf eigenen Stellungen 253 richtige Befehle hinzu und verliert auf älteren 164
+
+Beide R3-Nachtrainings sind mit je 1.024 tatsächlich ausgeführten Updates beendet. R8 gewinnt auf neuen Stellungen netto 267 korrekte Befehle gegenüber der Warmkontrolle. Auf älteren Stellungen unterschreitet R8 den ursprünglichen R3. Zwei von drei Bedingungen für Auswahlspiele erfüllt. [Beide Checkpoints und alle 96 Auswertungen](../experiments/analysis/r8_warm_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – R3 ist bei strittigen Bewegungen in allen untersuchten Situationen näher am Lehrer
 
 144 neue Partien mit R3, beide Sitze, je ein Drittel gegen Solution, Kaggle und V14. Keine der 32 beobachteten Lernsituationen spricht in Summe für einen Rückwechsel zu V14. Auf getrennten Karten stimmen von 25.556 strittigen Bewegungen 21.887 R3-Befehle und 2.165 V14-Befehle mit dem Lehrer überein. Die gelernte Tabelle ändert keinen Zug. [Zählungen und Prüfsummen](../experiments/analysis/r3_context_selector_20261115/ERGEBNIS.md). Mahmouds veröffentlichter v4-Schüler ist lokal mit dem erwarteten SHA-256 verifiziert.

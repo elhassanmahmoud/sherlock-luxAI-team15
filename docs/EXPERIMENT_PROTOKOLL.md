@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Beide R3-Nachtrainings sind mit je 1.024 tatsächlich ausgeführten Updates beendet. R8 gewinnt auf neuen Stellungen netto 267 korrekte Befehle gegenüber der Warmkontrolle. Auf älteren Stellungen unterschreitet R8 den ursprünglichen R3. Zwei von drei Bedingungen für Auswahlspiele erfüllt. [Beide Checkpoints und alle 96 Auswertungen](../experiments/analysis/r8_warm_20261115/ERGEBNIS.md).
+
 15.11.2026 – Nach 224 Auswahlspielen qualifiziert sich der diagonal gespiegelte R3 mit vier zusätzlichen externen Siegen gegenüber V14 für den unabhängigen Vergleich. Der getrennte FT18-Kandidat verfehlt nach 160 Ausführungen die direkte Mehrheit. [Zwei Ansichten](../experiments/analysis/movement_reflection_20261115/VORAUSWAHL.md) · [FT18](../experiments/analysis/late_ft18_20261115/after_win/fresh/ERGEBNIS.md).
 
 15.11.2026 – 5.600 Spiele auf den 400 Bestätigungskarten für v4 mixed. Direkt 730/800 gegen V14, extern Solution 764/800 gegenüber 767/800, Kaggle 12/800 bei beiden, Default 800/800 bei beiden. Drei der vier Spielbedingungen erfüllt. [Rohdaten und Gegenprüfung](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
