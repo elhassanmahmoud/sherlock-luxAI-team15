@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Vollschüler mit zusätzlichen Lehrerpartien gewinnt das direkte Duell, verfehlt die externe Auswahl
+
+20/32 direkt gegen V14, gegen Solution 31/32 wie V14 und gegenüber 32/32 der Vollschüler-Kontrolle. Alle drei erzielen 0/32 gegen Kaggle. 224 vollständig geprüfte Spiele. Die zusätzlichen Lehrerbeispiele verbessern die Befehlsnachahmung, hier jedoch die externe Siegzahl nicht. [Spielresultate und Unsicherheit](../experiments/analysis/full_student_20261115/SPIELE.md).
+
 ## 15.11.2026 – R7 ist trainiert und verfehlt seinen Vergleich mit R5 um 46 Befehle
 
 R7 kombiniert den letzten ausgeführten Befehl mit weichen Lehrerbewertungen. 17.435 Nettoübereinstimmungen und 2.252 verlorene richtige V14-Aktionen auf 24 Diagnosekarten. Das sind 1.078 Nettoübereinstimmungen mehr und 91 Fehlkorrekturen weniger als R3. Für eine Nominierung waren mindestens die 17.481 von R5 verlangt. Damit endet diese Auswahl ohne neue R7-Spiele. Die Summen je Modell und Gruppe sind aus den 64 Sitzarchivberichten nachgerechnet. [Trainingsbericht und Gewichte](../experiments/analysis/combined_movement_20261115/TRAINING.md).
