@@ -1,0 +1,1195 @@
+{
+  "by_cohort": {
+    "original": {
+      "rows": 51048,
+      "changed": 6374,
+      "base_matches": 28096,
+      "advised_matches": 32730,
+      "helped": 5297,
+      "hurt": 663,
+      "changed_both_disagree": 414
+    },
+    "mixed": {
+      "rows": 156243,
+      "changed": 22620,
+      "base_matches": 82581,
+      "advised_matches": 98938,
+      "helped": 18700,
+      "hurt": 2343,
+      "changed_both_disagree": 1577,
+      "parent_played_matches": 90820,
+      "parent_changed": 18377,
+      "model_recovers_over_parent": 13060,
+      "parent_matches_lost_by_model": 4942
+    }
+  },
+  "model_sha256": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "totals": {
+    "rows": 207291,
+    "changed": 28994,
+    "base_matches": 110677,
+    "advised_matches": 131668,
+    "helped": 23997,
+    "hurt": 3006,
+    "changed_both_disagree": 1991,
+    "parent_played_matches": 90820,
+    "parent_changed": 18377,
+    "model_recovers_over_parent": 13060,
+    "parent_matches_lost_by_model": 4942
+  },
+  "games": [
+    {
+      "cohort": "original",
+      "seed": 7271032,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3086,
+        "changed": 386,
+        "base_matches": 1675,
+        "advised_matches": 1953,
+        "helped": 312,
+        "hurt": 34,
+        "changed_both_disagree": 40
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271032,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3317,
+        "changed": 422,
+        "base_matches": 1847,
+        "advised_matches": 2124,
+        "helped": 331,
+        "hurt": 54,
+        "changed_both_disagree": 37
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271033,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3139,
+        "changed": 428,
+        "base_matches": 1730,
+        "advised_matches": 2041,
+        "helped": 355,
+        "hurt": 44,
+        "changed_both_disagree": 29
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271033,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3139,
+        "changed": 428,
+        "base_matches": 1730,
+        "advised_matches": 2041,
+        "helped": 355,
+        "hurt": 44,
+        "changed_both_disagree": 29
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271034,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3541,
+        "changed": 528,
+        "base_matches": 1827,
+        "advised_matches": 2187,
+        "helped": 421,
+        "hurt": 61,
+        "changed_both_disagree": 46
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271034,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3608,
+        "changed": 512,
+        "base_matches": 1927,
+        "advised_matches": 2279,
+        "helped": 416,
+        "hurt": 64,
+        "changed_both_disagree": 32
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271035,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3567,
+        "changed": 528,
+        "base_matches": 1877,
+        "advised_matches": 2265,
+        "helped": 440,
+        "hurt": 52,
+        "changed_both_disagree": 36
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271035,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3496,
+        "changed": 516,
+        "base_matches": 1897,
+        "advised_matches": 2263,
+        "helped": 425,
+        "hurt": 59,
+        "changed_both_disagree": 32
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271036,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2414,
+        "changed": 304,
+        "base_matches": 1038,
+        "advised_matches": 1274,
+        "helped": 263,
+        "hurt": 27,
+        "changed_both_disagree": 14
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271036,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2414,
+        "changed": 304,
+        "base_matches": 1038,
+        "advised_matches": 1274,
+        "helped": 263,
+        "hurt": 27,
+        "changed_both_disagree": 14
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271037,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3591,
+        "changed": 363,
+        "base_matches": 2288,
+        "advised_matches": 2528,
+        "helped": 290,
+        "hurt": 50,
+        "changed_both_disagree": 23
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271037,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3666,
+        "changed": 359,
+        "base_matches": 2318,
+        "advised_matches": 2580,
+        "helped": 303,
+        "hurt": 41,
+        "changed_both_disagree": 15
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271038,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3355,
+        "changed": 380,
+        "base_matches": 2217,
+        "advised_matches": 2501,
+        "helped": 322,
+        "hurt": 38,
+        "changed_both_disagree": 20
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271038,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3347,
+        "changed": 382,
+        "base_matches": 2131,
+        "advised_matches": 2446,
+        "helped": 339,
+        "hurt": 24,
+        "changed_both_disagree": 19
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271039,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2684,
+        "changed": 267,
+        "base_matches": 1278,
+        "advised_matches": 1487,
+        "helped": 231,
+        "hurt": 22,
+        "changed_both_disagree": 14
+      }
+    },
+    {
+      "cohort": "original",
+      "seed": 7271039,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2684,
+        "changed": 267,
+        "base_matches": 1278,
+        "advised_matches": 1487,
+        "helped": 231,
+        "hurt": 22,
+        "changed_both_disagree": 14
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272200,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2541,
+        "changed": 541,
+        "base_matches": 1210,
+        "advised_matches": 1662,
+        "helped": 490,
+        "hurt": 38,
+        "changed_both_disagree": 13,
+        "parent_played_matches": 1487,
+        "parent_changed": 420,
+        "model_recovers_over_parent": 246,
+        "parent_matches_lost_by_model": 71
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272200,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2541,
+        "changed": 541,
+        "base_matches": 1210,
+        "advised_matches": 1662,
+        "helped": 490,
+        "hurt": 38,
+        "changed_both_disagree": 13,
+        "parent_played_matches": 1487,
+        "parent_changed": 420,
+        "model_recovers_over_parent": 246,
+        "parent_matches_lost_by_model": 71
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272201,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3652,
+        "changed": 528,
+        "base_matches": 1815,
+        "advised_matches": 2175,
+        "helped": 430,
+        "hurt": 70,
+        "changed_both_disagree": 28,
+        "parent_played_matches": 2000,
+        "parent_changed": 295,
+        "model_recovers_over_parent": 249,
+        "parent_matches_lost_by_model": 74
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272201,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3586,
+        "changed": 541,
+        "base_matches": 1758,
+        "advised_matches": 2158,
+        "helped": 459,
+        "hurt": 59,
+        "changed_both_disagree": 23,
+        "parent_played_matches": 1954,
+        "parent_changed": 264,
+        "model_recovers_over_parent": 283,
+        "parent_matches_lost_by_model": 79
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272202,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3624,
+        "changed": 524,
+        "base_matches": 2054,
+        "advised_matches": 2454,
+        "helped": 443,
+        "hurt": 43,
+        "changed_both_disagree": 38,
+        "parent_played_matches": 2273,
+        "parent_changed": 418,
+        "model_recovers_over_parent": 304,
+        "parent_matches_lost_by_model": 123
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272202,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3624,
+        "changed": 524,
+        "base_matches": 2054,
+        "advised_matches": 2454,
+        "helped": 443,
+        "hurt": 43,
+        "changed_both_disagree": 38,
+        "parent_played_matches": 2273,
+        "parent_changed": 418,
+        "model_recovers_over_parent": 304,
+        "parent_matches_lost_by_model": 123
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272203,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2132,
+        "changed": 260,
+        "base_matches": 1075,
+        "advised_matches": 1302,
+        "helped": 239,
+        "hurt": 12,
+        "changed_both_disagree": 9,
+        "parent_played_matches": 1158,
+        "parent_changed": 153,
+        "model_recovers_over_parent": 182,
+        "parent_matches_lost_by_model": 38
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272203,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2132,
+        "changed": 260,
+        "base_matches": 1075,
+        "advised_matches": 1302,
+        "helped": 239,
+        "hurt": 12,
+        "changed_both_disagree": 9,
+        "parent_played_matches": 1158,
+        "parent_changed": 153,
+        "model_recovers_over_parent": 182,
+        "parent_matches_lost_by_model": 38
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272204,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3503,
+        "changed": 365,
+        "base_matches": 2094,
+        "advised_matches": 2362,
+        "helped": 297,
+        "hurt": 29,
+        "changed_both_disagree": 39,
+        "parent_played_matches": 2191,
+        "parent_changed": 151,
+        "model_recovers_over_parent": 244,
+        "parent_matches_lost_by_model": 73
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272204,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3481,
+        "changed": 366,
+        "base_matches": 2148,
+        "advised_matches": 2408,
+        "helped": 295,
+        "hurt": 35,
+        "changed_both_disagree": 36,
+        "parent_played_matches": 2237,
+        "parent_changed": 160,
+        "model_recovers_over_parent": 246,
+        "parent_matches_lost_by_model": 75
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272205,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3700,
+        "changed": 603,
+        "base_matches": 1612,
+        "advised_matches": 2039,
+        "helped": 489,
+        "hurt": 62,
+        "changed_both_disagree": 52,
+        "parent_played_matches": 1861,
+        "parent_changed": 884,
+        "model_recovers_over_parent": 369,
+        "parent_matches_lost_by_model": 191
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272205,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3700,
+        "changed": 603,
+        "base_matches": 1612,
+        "advised_matches": 2039,
+        "helped": 489,
+        "hurt": 62,
+        "changed_both_disagree": 52,
+        "parent_played_matches": 1861,
+        "parent_changed": 884,
+        "model_recovers_over_parent": 369,
+        "parent_matches_lost_by_model": 191
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272206,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2417,
+        "changed": 290,
+        "base_matches": 1044,
+        "advised_matches": 1213,
+        "helped": 219,
+        "hurt": 50,
+        "changed_both_disagree": 21,
+        "parent_played_matches": 1130,
+        "parent_changed": 308,
+        "model_recovers_over_parent": 171,
+        "parent_matches_lost_by_model": 88
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272206,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2417,
+        "changed": 290,
+        "base_matches": 1044,
+        "advised_matches": 1213,
+        "helped": 219,
+        "hurt": 50,
+        "changed_both_disagree": 21,
+        "parent_played_matches": 1130,
+        "parent_changed": 308,
+        "model_recovers_over_parent": 171,
+        "parent_matches_lost_by_model": 88
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272207,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3607,
+        "changed": 442,
+        "base_matches": 2419,
+        "advised_matches": 2729,
+        "helped": 366,
+        "hurt": 56,
+        "changed_both_disagree": 20,
+        "parent_played_matches": 2537,
+        "parent_changed": 250,
+        "model_recovers_over_parent": 254,
+        "parent_matches_lost_by_model": 62
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272207,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3565,
+        "changed": 404,
+        "base_matches": 2364,
+        "advised_matches": 2677,
+        "helped": 352,
+        "hurt": 39,
+        "changed_both_disagree": 13,
+        "parent_played_matches": 2496,
+        "parent_changed": 257,
+        "model_recovers_over_parent": 249,
+        "parent_matches_lost_by_model": 68
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272208,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3511,
+        "changed": 387,
+        "base_matches": 2010,
+        "advised_matches": 2285,
+        "helped": 318,
+        "hurt": 43,
+        "changed_both_disagree": 26,
+        "parent_played_matches": 2153,
+        "parent_changed": 246,
+        "model_recovers_over_parent": 215,
+        "parent_matches_lost_by_model": 83
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272208,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3511,
+        "changed": 387,
+        "base_matches": 2010,
+        "advised_matches": 2285,
+        "helped": 318,
+        "hurt": 43,
+        "changed_both_disagree": 26,
+        "parent_played_matches": 2153,
+        "parent_changed": 246,
+        "model_recovers_over_parent": 215,
+        "parent_matches_lost_by_model": 83
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272209,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2191,
+        "changed": 324,
+        "base_matches": 1191,
+        "advised_matches": 1395,
+        "helped": 254,
+        "hurt": 50,
+        "changed_both_disagree": 20,
+        "parent_played_matches": 1277,
+        "parent_changed": 203,
+        "model_recovers_over_parent": 202,
+        "parent_matches_lost_by_model": 84
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272209,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2191,
+        "changed": 324,
+        "base_matches": 1191,
+        "advised_matches": 1395,
+        "helped": 254,
+        "hurt": 50,
+        "changed_both_disagree": 20,
+        "parent_played_matches": 1277,
+        "parent_changed": 203,
+        "model_recovers_over_parent": 202,
+        "parent_matches_lost_by_model": 84
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272210,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3665,
+        "changed": 508,
+        "base_matches": 1804,
+        "advised_matches": 2158,
+        "helped": 401,
+        "hurt": 47,
+        "changed_both_disagree": 60,
+        "parent_played_matches": 1972,
+        "parent_changed": 401,
+        "model_recovers_over_parent": 269,
+        "parent_matches_lost_by_model": 83
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272210,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3686,
+        "changed": 488,
+        "base_matches": 1860,
+        "advised_matches": 2194,
+        "helped": 388,
+        "hurt": 54,
+        "changed_both_disagree": 46,
+        "parent_played_matches": 2013,
+        "parent_changed": 343,
+        "model_recovers_over_parent": 273,
+        "parent_matches_lost_by_model": 92
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272211,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3609,
+        "changed": 498,
+        "base_matches": 1859,
+        "advised_matches": 2212,
+        "helped": 409,
+        "hurt": 56,
+        "changed_both_disagree": 33,
+        "parent_played_matches": 2024,
+        "parent_changed": 325,
+        "model_recovers_over_parent": 295,
+        "parent_matches_lost_by_model": 107
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272211,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3609,
+        "changed": 498,
+        "base_matches": 1859,
+        "advised_matches": 2212,
+        "helped": 409,
+        "hurt": 56,
+        "changed_both_disagree": 33,
+        "parent_played_matches": 2024,
+        "parent_changed": 325,
+        "model_recovers_over_parent": 295,
+        "parent_matches_lost_by_model": 107
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272212,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3061,
+        "changed": 545,
+        "base_matches": 1667,
+        "advised_matches": 2066,
+        "helped": 457,
+        "hurt": 58,
+        "changed_both_disagree": 30,
+        "parent_played_matches": 1886,
+        "parent_changed": 389,
+        "model_recovers_over_parent": 276,
+        "parent_matches_lost_by_model": 96
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272212,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3061,
+        "changed": 545,
+        "base_matches": 1667,
+        "advised_matches": 2066,
+        "helped": 457,
+        "hurt": 58,
+        "changed_both_disagree": 30,
+        "parent_played_matches": 1886,
+        "parent_changed": 389,
+        "model_recovers_over_parent": 276,
+        "parent_matches_lost_by_model": 96
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272213,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3550,
+        "changed": 604,
+        "base_matches": 1616,
+        "advised_matches": 2028,
+        "helped": 479,
+        "hurt": 67,
+        "changed_both_disagree": 58,
+        "parent_played_matches": 1862,
+        "parent_changed": 512,
+        "model_recovers_over_parent": 290,
+        "parent_matches_lost_by_model": 124
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272213,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3512,
+        "changed": 553,
+        "base_matches": 1649,
+        "advised_matches": 1995,
+        "helped": 420,
+        "hurt": 74,
+        "changed_both_disagree": 59,
+        "parent_played_matches": 1796,
+        "parent_changed": 396,
+        "model_recovers_over_parent": 292,
+        "parent_matches_lost_by_model": 93
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272214,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3434,
+        "changed": 540,
+        "base_matches": 1826,
+        "advised_matches": 2272,
+        "helped": 469,
+        "hurt": 23,
+        "changed_both_disagree": 48,
+        "parent_played_matches": 2170,
+        "parent_changed": 786,
+        "model_recovers_over_parent": 322,
+        "parent_matches_lost_by_model": 220
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272214,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3434,
+        "changed": 540,
+        "base_matches": 1826,
+        "advised_matches": 2272,
+        "helped": 469,
+        "hurt": 23,
+        "changed_both_disagree": 48,
+        "parent_played_matches": 2170,
+        "parent_changed": 786,
+        "model_recovers_over_parent": 322,
+        "parent_matches_lost_by_model": 220
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272215,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2807,
+        "changed": 508,
+        "base_matches": 1284,
+        "advised_matches": 1687,
+        "helped": 438,
+        "hurt": 35,
+        "changed_both_disagree": 35,
+        "parent_played_matches": 1464,
+        "parent_changed": 498,
+        "model_recovers_over_parent": 384,
+        "parent_matches_lost_by_model": 161
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272215,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2807,
+        "changed": 508,
+        "base_matches": 1284,
+        "advised_matches": 1687,
+        "helped": 438,
+        "hurt": 35,
+        "changed_both_disagree": 35,
+        "parent_played_matches": 1464,
+        "parent_changed": 498,
+        "model_recovers_over_parent": 384,
+        "parent_matches_lost_by_model": 161
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272216,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3617,
+        "changed": 507,
+        "base_matches": 1977,
+        "advised_matches": 2304,
+        "helped": 390,
+        "hurt": 63,
+        "changed_both_disagree": 54,
+        "parent_played_matches": 2096,
+        "parent_changed": 407,
+        "model_recovers_over_parent": 305,
+        "parent_matches_lost_by_model": 97
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272216,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3706,
+        "changed": 463,
+        "base_matches": 2011,
+        "advised_matches": 2316,
+        "helped": 362,
+        "hurt": 57,
+        "changed_both_disagree": 44,
+        "parent_played_matches": 2123,
+        "parent_changed": 308,
+        "model_recovers_over_parent": 267,
+        "parent_matches_lost_by_model": 74
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272217,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3471,
+        "changed": 421,
+        "base_matches": 2079,
+        "advised_matches": 2405,
+        "helped": 359,
+        "hurt": 33,
+        "changed_both_disagree": 29,
+        "parent_played_matches": 2213,
+        "parent_changed": 316,
+        "model_recovers_over_parent": 275,
+        "parent_matches_lost_by_model": 83
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272217,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3471,
+        "changed": 421,
+        "base_matches": 2079,
+        "advised_matches": 2405,
+        "helped": 359,
+        "hurt": 33,
+        "changed_both_disagree": 29,
+        "parent_played_matches": 2213,
+        "parent_changed": 316,
+        "model_recovers_over_parent": 275,
+        "parent_matches_lost_by_model": 83
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272218,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2644,
+        "changed": 414,
+        "base_matches": 1569,
+        "advised_matches": 1868,
+        "helped": 354,
+        "hurt": 55,
+        "changed_both_disagree": 5,
+        "parent_played_matches": 1694,
+        "parent_changed": 269,
+        "model_recovers_over_parent": 253,
+        "parent_matches_lost_by_model": 79
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272218,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 2644,
+        "changed": 414,
+        "base_matches": 1569,
+        "advised_matches": 1868,
+        "helped": 354,
+        "hurt": 55,
+        "changed_both_disagree": 5,
+        "parent_played_matches": 1694,
+        "parent_changed": 269,
+        "model_recovers_over_parent": 253,
+        "parent_matches_lost_by_model": 79
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272219,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3529,
+        "changed": 599,
+        "base_matches": 1812,
+        "advised_matches": 2238,
+        "helped": 492,
+        "hurt": 66,
+        "changed_both_disagree": 41,
+        "parent_played_matches": 1985,
+        "parent_changed": 419,
+        "model_recovers_over_parent": 363,
+        "parent_matches_lost_by_model": 110
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272219,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3598,
+        "changed": 554,
+        "base_matches": 1885,
+        "advised_matches": 2278,
+        "helped": 449,
+        "hurt": 56,
+        "changed_both_disagree": 49,
+        "parent_played_matches": 2003,
+        "parent_changed": 412,
+        "model_recovers_over_parent": 372,
+        "parent_matches_lost_by_model": 97
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272220,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3633,
+        "changed": 471,
+        "base_matches": 1764,
+        "advised_matches": 2080,
+        "helped": 378,
+        "hurt": 62,
+        "changed_both_disagree": 31,
+        "parent_played_matches": 1950,
+        "parent_changed": 598,
+        "model_recovers_over_parent": 303,
+        "parent_matches_lost_by_model": 173
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272220,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3633,
+        "changed": 471,
+        "base_matches": 1764,
+        "advised_matches": 2080,
+        "helped": 378,
+        "hurt": 62,
+        "changed_both_disagree": 31,
+        "parent_played_matches": 1950,
+        "parent_changed": 598,
+        "model_recovers_over_parent": 303,
+        "parent_matches_lost_by_model": 173
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272221,
+      "side": "player_0",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3221,
+        "changed": 430,
+        "base_matches": 1435,
+        "advised_matches": 1691,
+        "helped": 327,
+        "hurt": 71,
+        "changed_both_disagree": 32,
+        "parent_played_matches": 1560,
+        "parent_changed": 314,
+        "model_recovers_over_parent": 224,
+        "parent_matches_lost_by_model": 93
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272221,
+      "side": "player_1",
+      "opponent": "kaggle3",
+      "counts": {
+        "rows": 3221,
+        "changed": 430,
+        "base_matches": 1435,
+        "advised_matches": 1691,
+        "helped": 327,
+        "hurt": 71,
+        "changed_both_disagree": 32,
+        "parent_played_matches": 1560,
+        "parent_changed": 314,
+        "model_recovers_over_parent": 224,
+        "parent_matches_lost_by_model": 93
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272222,
+      "side": "player_0",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3647,
+        "changed": 395,
+        "base_matches": 2240,
+        "advised_matches": 2553,
+        "helped": 342,
+        "hurt": 29,
+        "changed_both_disagree": 24,
+        "parent_played_matches": 2375,
+        "parent_changed": 220,
+        "model_recovers_over_parent": 234,
+        "parent_matches_lost_by_model": 56
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272222,
+      "side": "player_1",
+      "opponent": "solution92",
+      "counts": {
+        "rows": 3531,
+        "changed": 475,
+        "base_matches": 2041,
+        "advised_matches": 2409,
+        "helped": 404,
+        "hurt": 36,
+        "changed_both_disagree": 35,
+        "parent_played_matches": 2234,
+        "parent_changed": 300,
+        "model_recovers_over_parent": 256,
+        "parent_matches_lost_by_model": 81
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272223,
+      "side": "player_0",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3408,
+        "changed": 658,
+        "base_matches": 1865,
+        "advised_matches": 2347,
+        "helped": 544,
+        "hurt": 62,
+        "changed_both_disagree": 52,
+        "parent_played_matches": 2173,
+        "parent_changed": 514,
+        "model_recovers_over_parent": 286,
+        "parent_matches_lost_by_model": 112
+      }
+    },
+    {
+      "cohort": "mixed",
+      "seed": 7272223,
+      "side": "player_1",
+      "opponent": "v14",
+      "counts": {
+        "rows": 3408,
+        "changed": 658,
+        "base_matches": 1865,
+        "advised_matches": 2347,
+        "helped": 544,
+        "hurt": 62,
+        "changed_both_disagree": 52,
+        "parent_played_matches": 2173,
+        "parent_changed": 514,
+        "model_recovers_over_parent": 286,
+        "parent_matches_lost_by_model": 112
+      }
+    }
+  ],
+  "interpretation": "Preserved observations, quantized inputs; movement advice before final engine legality check."
+}

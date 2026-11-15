@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – R2 erreicht direkt 22/32, extern Gleichstand mit V14 nach 160 Ausführungen. Keine Nominierung. R3 erfüllt beide vorab festgelegten Offline-Kriterien für eigene Auswahlspiele. [R2-Spielergebnisse](../experiments/analysis/movement_dagger_20261115/ERGEBNIS.md) · [R3-Training](../experiments/analysis/movement_soft_20261115/TRAINING.md).
+
 15.11.2026 – Späte FT18-Bewegungswahl gegen Solution in 56 vollständigen Ausführungen. Acht Spiele gerettet, drei vorherige Siege verloren. 21/28 gegenüber 16/28 auf gezielt ausgewählten schwierigen Karten. Der Versuch verfehlt die Begrenzung neuer Niederlagen. [Eingriffs- und Spielergebnisse](../experiments/analysis/late_ft18_20261115/ERGEBNIS.md).
 
 15.11.2026 – 288 zusätzliche Spiele für das Nachtraining des Bewegungsberaters abgeschlossen. 120 Lernkarten und 24 getrennte Diagnosekarten, jeweils beide Sitze, gegenüber Kaggle3, Solution und V14. [Sammlung und Befehlsprüfung](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).

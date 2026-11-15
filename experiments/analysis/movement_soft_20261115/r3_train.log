@@ -1,0 +1,22 @@
+Movement adviser parent SHA256 5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad176813575
+Bewegungs-KL: 656134 geeignete Trainingszeilen, davon 631325 mit mindestens zwei legalen Aktionen
+Train: 989063 rows; validation: 51048 V14 + 156243 mixed rows
+CPU board storage: 1017354240 bytes in temporary disk files
+Training: 958870/989063 Befehle im Spiel ausfuehrbar, 44677/44677 legale Schusslabels, davon 61 auf das eigene Feld
+Validierung: 198959/207291 Befehle im Spiel ausfuehrbar, 9029/9029 legale Schusslabels, davon 8 auf das eigene Feld
+Aktionsverlust: 62398/958870 ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3
+Trainingsdaten: 958870 Unit-Entscheidungen, Verteilung stay 32.3 %, up 6.2 %, right 24.2 %, down 25.8 %, left 6.8 %, sap 4.7 %
+Minibatch: 24 Spielschritte (im Mittel etwa 256 Unit-Entscheidungen), Geraet mps
+Epoche 1: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 1/5: Loss 2.2536 | Validierung Aktion 64.2 % | vollstaendiger Befehl 63.2 % | je Aktion stay 80 up 41 right 57 down 70 left 44 sap 48 | Ziel bei legalem Lehrerschuss exakt 58 %, +-1 Feld 83 % | 146s
+Epoche 2: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 2/5: Loss 1.5034 | Validierung Aktion 67.8 % | vollstaendiger Befehl 67.2 % | je Aktion stay 80 up 41 right 71 down 71 left 50 sap 39 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 139s
+Epoche 3: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 3/5: Loss 1.2835 | Validierung Aktion 68.5 % | vollstaendiger Befehl 67.6 % | je Aktion stay 81 up 41 right 72 down 70 left 39 sap 60 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 86 % | 138s
+Epoche 4: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 4/5: Loss 1.1222 | Validierung Aktion 69.6 % | vollstaendiger Befehl 68.8 % | je Aktion stay 85 up 42 right 68 down 72 left 50 sap 53 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 86 % | 135s
+Epoche 5: 656134/958870 Trainingszeilen mit Bewegungs-KL (T=2.0, Gewicht 0.5)
+Epoche 5/5: Loss 1.0212 | Validierung Aktion 69.9 % | vollstaendiger Befehl 69.0 % | je Aktion stay 85 up 41 right 70 down 73 left 45 sap 55 | Ziel bei legalem Lehrerschuss exakt 64 %, +-1 Feld 87 % | 118s
+Fixe letzte Epoche, eight original V14 maps: 51048 Zeilen | Aktion 69.78 % | voller Befehl 68.59 % | Ziel bei legalem Lehrerschuss 65.43 %
+Fixe letzte Epoche, held-out mixed maps: 156243 Zeilen | Aktion 69.92 % | voller Befehl 69.17 % | Ziel bei legalem Lehrerschuss 62.90 %
+Saved /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_dagger_soft/student.pth 99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9

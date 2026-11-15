@@ -1,0 +1,80 @@
+{
+  "stage": "screen",
+  "candidate": "selective_movement",
+  "model": "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96",
+  "reference_files": {
+    "manifest_sha256": "556181de82f3613167e7bdb19a4c7408e39d5d8981dfb6773941ae665e2fa2f0",
+    "games_sha256": "47fac1b6d55ac27cf5230f81e595ec65369cd288b53b13f074f8e0004a02d9f4"
+  },
+  "candidate_files": {
+    "manifest_sha256": "bb01f5b68d49c9db47b35b1950a92c1bdb21d3a75aaa0172c7505d212f0c5a55",
+    "games_sha256": "d2c37c13eeecbf70fe5936b943350fcd7819fc20203f48ce2915bda68ed45900"
+  },
+  "direct_files": {
+    "manifest_sha256": "bb01f5b68d49c9db47b35b1950a92c1bdb21d3a75aaa0172c7505d212f0c5a55",
+    "games_sha256": "d2c37c13eeecbf70fe5936b943350fcd7819fc20203f48ce2915bda68ed45900"
+  },
+  "external_first": 7272300,
+  "direct_first": 7272300,
+  "by_opponent": {
+    "kaggle3": {
+      "games": 32,
+      "v14_wins": 0,
+      "candidate_wins": 0,
+      "gained": 0,
+      "lost": 0,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "solution92": {
+      "games": 32,
+      "v14_wins": 32,
+      "candidate_wins": 32,
+      "gained": 0,
+      "lost": 0,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "external": {
+    "games": 64,
+    "net_wins": 0,
+    "winrate_difference": 0.0,
+    "difference_ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "direct": {
+    "games": 32,
+    "wins": 22,
+    "losses": 10,
+    "winrate": 0.6875,
+    "winrate_ci95": [
+      0.4375,
+      0.875
+    ]
+  },
+  "gates": {
+    "solution_at_least_reference": true,
+    "direct_majority": true,
+    "two_additional_external_wins": false
+  },
+  "game_gates_pass": false,
+  "protocol": "dagger",
+  "bootstrap": {
+    "unit": "whole map, both seats; external opponents sampled together",
+    "draws": 10000,
+    "seed": 2711,
+    "generator": "PCG64",
+    "interval": "95% percentile"
+  }
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Bewegungsberater im direkten Duell und neuer Schüler mit Lehrerbewertungen
+
+R2 gewann 22 von 32 Spielen direkt gegen V14. Beide gewannen alle 32 Solution-Spiele und keines der 32 Kaggle-Spiele. Die externen Ergebnisse reichen nicht zur Nominierung. R3 greift beim Nachspielen von Lehrerzügen vorsichtiger ein. Auf 24 zurückgehaltenen Karten erhält er 1.012 vorher richtige Entscheidungen mehr als R2, mit 240 zusätzlichen Übereinstimmungen netto. Das trainierte Modell und die Rohdaten liegen im Repo. [R2 im Spiel](../experiments/analysis/movement_dagger_20261115/ERGEBNIS.md) · [R3 im Training](../experiments/analysis/movement_soft_20261115/TRAINING.md).
+
 ## 15.11.2026 – R2-Bewegungsberater auf eigenen Verläufen fertig trainiert
 
 Auf den früheren acht Diagnosekarten stieg der Anteil vollständig nachgebildeter Lehrerbefehle von 61,2 % auf 67,64 %. Auf den 24 zusätzlichen Diagnosekarten erreicht R2 68,11 %. Fünf Epochen auf der GPU des Macs abgeschlossen, Modell und Trainingslog sind für Mahmoud verfügbar. Der Vergleich in ganzen Spielen läuft getrennt. [Trainingsbericht und Checkpoint](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
