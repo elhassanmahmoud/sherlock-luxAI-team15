@@ -1,0 +1,1511 @@
+{
+  "start": "2026-11-15T22:42:40.990161+00:00",
+  "hardware": "Mac15,12",
+  "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.13 (v3.13.13:01104ce1beb, Apr  7 2026, 14:43:30) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "versions": {
+    "torch": "2.14.1",
+    "numpy": "2.5.4",
+    "jax": "0.12.0",
+    "jaxlib": "0.12.0",
+    "luxai-s3": "0.2.1"
+  },
+  "thread_env": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "GOTO_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "reference": {
+    "games.jsonl": "8ad616a468ca56a32748af3742205c759db05a23f45487f329f92bcd8a934c6c",
+    "manifest.json": "534384f537dea6e882de9daf237026c1dea90e43655e09c3137f8499f7e3bf51"
+  },
+  "expected": {
+    "player_0": [
+      3,
+      0,
+      1989,
+      1540,
+      303
+    ],
+    "player_1": [
+      3,
+      0,
+      1929,
+      1530,
+      303
+    ]
+  },
+  "seed": 7170230,
+  "fields": [
+    "wins",
+    "losses",
+    "points",
+    "opp_points",
+    "steps"
+  ],
+  "pairs_per_worker": 2,
+  "frozen": "/private/tmp/sherlock-r8-midpoint-games.2zDljB",
+  "benchmark_sha256": "197310640422f05df220d0c394e74576d9a751af7a296ced693f7800e65d9e9d",
+  "selection": "Beyond 4 only if prior stage is >=5% faster than earlier best and wins majority of timed pairs.",
+  "stages": [
+    {
+      "workers": 2,
+      "memory_samples": [
+        {
+          "seconds": 990033.59686,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990033.605708166,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990034.611654083,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990035.617272875,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990036.624835833,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990037.630588083,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990038.637635833,
+          "level": 1,
+          "swap_used_mib": 2793.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990039.662326208,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990040.670710666,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990041.67731875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990042.683983375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990043.691110375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990044.698028541,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990045.627503958,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990046.635560041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990047.642798083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990048.649790458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990049.658329916,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990050.6649355,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990051.6719285,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990052.679196875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990053.685845083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990054.692363083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990055.699015208,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990056.706325208,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990056.793360541,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990056.797393875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990057.802971083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990058.810889041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990059.818107708,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990060.826652166,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990061.833870458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990062.841126291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990063.848896,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990064.49556825,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990064.546747958,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990065.55626775,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990066.563532916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990067.571756291,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990068.579679708,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990069.586794958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990070.594099833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990071.601916708,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990072.479021583,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990072.500828958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        }
+      ],
+      "rounds": [
+        {
+          "games": 4,
+          "seconds": 7.747279749950394,
+          "games_per_minute": 30.97861542969798
+        },
+        {
+          "games": 4,
+          "seconds": 7.955170208006166,
+          "games_per_minute": 30.16905908040302
+        }
+      ],
+      "status": "complete",
+      "worker_pids": [
+        31981,
+        32042
+      ],
+      "warm_end_sample": {
+        "seconds": 990056.793360541,
+        "level": 2,
+        "swap_used_mib": 2785.19,
+        "swapouts_mib": 661189.671875
+      },
+      "games": 8,
+      "games_per_minute": 30.568478249267088,
+      "swap_delta_mib": -8.0,
+      "swap_change_after_warm_mib": 0.0,
+      "peak_swap_growth_mib": 0.0
+    },
+    {
+      "workers": 3,
+      "memory_samples": [
+        {
+          "seconds": 990073.41266025,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990073.416979125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990074.423193708,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990075.429700708,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990076.43603425,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990077.442757791,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990078.449442916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990079.457651625,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990080.463923833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990081.471070958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990082.47787625,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990083.484197166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990084.196640833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990085.203312166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990086.210033166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990087.216583125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990088.223125125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990089.228334625,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990090.2392685,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990091.2459455,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990092.253042166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990093.259669916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990094.265783916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990095.272730583,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990095.372279833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990096.378736125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990097.385172958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990098.391622333,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990099.401162,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990100.407462666,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990101.414192166,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990102.421784708,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990103.429673458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990104.435827625,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990105.442513625,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990106.449769375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990106.775738,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990106.781561291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990107.789716291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990108.804457541,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990109.81305175,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990110.822545833,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990111.8317875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990112.852720416,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990113.862197375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990114.870824375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990115.879388041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990116.450370791,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990116.517534541,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990116.5271665,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990117.535770916,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990118.544391291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990119.552234916,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990120.560365208,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990121.568513041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990122.576719833,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990123.585430208,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990124.593384166,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990125.602365041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990126.070025041,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990126.074384125,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        }
+      ],
+      "rounds": [
+        {
+          "games": 6,
+          "seconds": 9.745127500034869,
+          "games_per_minute": 36.94153821986546
+        },
+        {
+          "games": 6,
+          "seconds": 9.542665916960686,
+          "games_per_minute": 37.72530686211627
+        }
+      ],
+      "status": "complete",
+      "worker_pids": [
+        32155,
+        32198,
+        32383
+      ],
+      "warm_end_sample": {
+        "seconds": 990106.775738,
+        "level": 2,
+        "swap_used_mib": 2785.19,
+        "swapouts_mib": 661189.671875
+      },
+      "games": 12,
+      "games_per_minute": 37.32930897971811,
+      "swap_delta_mib": 0.0,
+      "swap_change_after_warm_mib": 0.0,
+      "peak_swap_growth_mib": 0.0
+    },
+    {
+      "workers": 4,
+      "memory_samples": [
+        {
+          "seconds": 990127.254234083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990127.259543166,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990128.265925958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990129.272298333,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990130.279075125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990131.285172791,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990132.292400875,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990133.299186916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990134.30576125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990135.312331375,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990136.319154833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990137.325174166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990138.287678375,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990139.294116291,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990140.3013905,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990141.310365041,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990142.318419958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990143.32506825,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990144.333310666,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990145.3398825,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990146.347312083,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990147.353782333,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990148.360746166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990148.558791375,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990149.564828958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990150.572408083,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990151.580633041,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990152.58741275,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990153.594328041,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990154.601173625,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990155.607736916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990156.614727875,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990157.622416583,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990158.629391083,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990159.304030208,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990160.310279958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990161.318322916,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990162.325926458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990163.333380625,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990164.340169875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990165.346716791,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990166.353741291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990167.359604583,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990168.366081708,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990169.373783166,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990170.32799175,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990170.334267333,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990171.3419425,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990172.350235708,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990173.358986125,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990174.368356458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990175.377459,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990176.386680333,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990177.394570458,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990178.260101333,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990178.293477833,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990178.29924925,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990179.307437375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990180.317010291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990181.326840583,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990182.336082625,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990183.345734291,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990184.3555265,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990185.365084375,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990186.373955833,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990187.38389775,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990188.397139125,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990188.783224708,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990188.841848,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990188.897324083,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990188.90197875,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        }
+      ],
+      "rounds": [
+        {
+          "games": 8,
+          "seconds": 7.96091266698204,
+          "games_per_minute": 60.294594361122
+        },
+        {
+          "games": 8,
+          "seconds": 10.598106166929938,
+          "games_per_minute": 45.291110736159624
+        }
+      ],
+      "status": "complete",
+      "worker_pids": [
+        32674,
+        32705,
+        32730,
+        32764
+      ],
+      "warm_end_sample": {
+        "seconds": 990170.32799175,
+        "level": 2,
+        "swap_used_mib": 2785.19,
+        "swapouts_mib": 661189.671875
+      },
+      "games": 16,
+      "games_per_minute": 51.72687244898095,
+      "swap_delta_mib": 0.0,
+      "swap_change_after_warm_mib": 0.0,
+      "peak_swap_growth_mib": 0.0
+    },
+    {
+      "workers": 5,
+      "memory_samples": [
+        {
+          "seconds": 990190.217383041,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990190.223042833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990191.2296155,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990192.235905083,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990193.242408833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990194.248826958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990195.254979541,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990196.26165125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990197.268746291,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990198.275024916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990199.281585208,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990200.287756125,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990201.075302916,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990202.081614333,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990203.088542208,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990204.095017,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990205.101294291,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990206.107594833,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990207.115144291,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990208.121617,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990209.128350958,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990210.135069166,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990211.142502458,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990211.403741,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990212.409956333,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990213.416449083,
+          "level": 1,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990214.424412208,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990215.431611666,
+          "level": 2,
+          "swap_used_mib": 2785.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990216.439476458,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990217.447183708,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990218.455125333,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990219.461922041,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990220.468673708,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990221.476013041,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990222.48372075,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990223.444398125,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990224.451009583,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990225.457826375,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990226.46433725,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990227.473538375,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990228.482555,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990229.492191416,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990230.496887583,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990231.504904625,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990232.513304166,
+          "level": 2,
+          "swap_used_mib": 2777.19,
+          "swapouts_mib": 661189.671875
+        },
+        {
+          "seconds": 990233.520578541,
+          "level": 2,
+          "swap_used_mib": 2976.69,
+          "swapouts_mib": 661389.171875
+        }
+      ],
+      "rounds": [],
+      "status": "aborted",
+      "worker_pids": [
+        32879,
+        32906,
+        32950
+      ]
+    }
+  ],
+  "status": "aborted",
+  "reason": "Sustained memory warning with active paging",
+  "end": "2026-11-15T22:46:00.996185+00:00"
+}

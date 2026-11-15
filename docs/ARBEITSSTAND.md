@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Vier parallele Vergleiche auf Moayeds M3
+
+Auf derselben Solution-Karte schaffte V14 bei zwei, drei und vier Prozessen rund 31, 37 und 52 vollständige Spiele pro Minute. Beim Aufwärmen der Fünferstufe begann das System auszulagern. Anschließend lieferten vier unabhängige laufende Vergleiche 81 neue Spiele in 200 Sekunden, ohne neue Auslagerung in diesem Fenster. Der zweite Wert umfasst auch den Kaggle-Gegner. [Messung, Grenzen und Reproduktion](../experiments/analysis/macos_durchsatz_20261115/ERGEBNIS.md).
+
 ## 15.11.2026 – Richtungsberater im Kurs-Runner geprüft
 
 Der separat gebaute Kurskandidat verwendet die V14-Gewichte und das ursprüngliche zusätzliche R3-Netz. Auf zwei unterschiedlichen Solution-Karten, einmal pro Startseite, stimmt jeder der 606 vollständigen Aktionsschritte mit der Forschungsfassung überein. Die neue Regel griff 194- und 160-mal. Beide Endstände stimmen auch mit der dokumentierten Vorauswahl überein. Zwei Paketbauten waren bytegleich. Vier Paket- und Regressionstests bestanden. Die unabhängigen Spiele zur Spielstärke laufen getrennt. [Paketbau und Prüfbericht](../experiments/analysis/r3_turn_advice_20261115/course/README.md).
