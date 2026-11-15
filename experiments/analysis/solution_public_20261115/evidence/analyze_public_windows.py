@@ -1,11 +1,12 @@
 """Read only the recorded public windows and the prior four passive match summaries."""
+import argparse
 from collections import Counter, defaultdict
 import csv, gzip, hashlib, json
 from pathlib import Path
 
 D=((0,0),(0,-1),(1,0),(0,1),(-1,0))
-RAW=Path('/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/analysis/solution_public_20261115')
-WORK=Path('/Users/moayedshawesh/.codex/worktrees/sherlock-student-20261104/sherlock-luxAI-team15')
+RAW = Path(__file__).resolve().parents[1]
+WORK = RAW.parents[2]
 PASS=json.loads((WORK/'experiments/analysis/solution_passive_20261115/summary.json').read_text())
 HIST=WORK/'experiments/analysis/kaggle3_20261115/v14_devA.csv'
 REF={(int(r['seed']),r['side']):r for r in csv.DictReader(HIST.open()) if r['opponent']=='solution92'}
@@ -59,6 +60,9 @@ def analyze(f,nxt,later):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
     catalog=[]
     for group in ('cases','controls'):
         p=RAW/(group+'_v1'); manifest=json.loads((p/'summary.json').read_text())
@@ -100,6 +104,7 @@ def main():
                 one_step_recoveries=sum(e['one_step_recoverable_without_own_sap'] for g,e in events),
                 occupied_observations=sum(len(g['events'])>0 for g in matches)))
     result=dict(groups=groups, catalog=catalog)
-    Path('/tmp/sherlock-solution-public-analysis.json').write_text(json.dumps(result,indent=2)+'\n')
+    with args.out.open('x') as output:
+        output.write(json.dumps(result,indent=2)+'\n')
     print(json.dumps(groups,indent=1))
 if __name__=='__main__': main()

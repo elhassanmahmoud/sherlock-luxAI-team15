@@ -51,3 +51,14 @@ Gezählt wird der Verlust einer **vor der Aktion bestätigten und von einer akti
 Die 23 rechnerisch rettbaren Fälle unterliegen demselben Kriterium wie UID 9 in Aktion 76. Es sind etwa 0,73 pro verlorenem und 0,71 pro gewonnenem Match. Die Maßnahme könnte einzelne Halter retten, ihr Vorkommen unterscheidet in dieser kleinen Auswahl Siege und Niederlagen kaum. Der Zugewinn eines ganzen Spiels ist damit nicht identifiziert. Auch Rettung durch sofortige Ablösung war meist nicht praktikabel: Beim zusätzlichen Ausschluss von Nachbarn mit geplantem SAP oder produktivem Zieleinlauf blieben zwölf Räumungen in den Niederlagen und sechs in den Siegen mit überhaupt denkbarem Nachbarn. Bei keiner der 23 rechnerischen Schussrettungen gab es auf diesen Kontrollkarten einen derartigen Nachbarn. Diese Nachbarschaftszählung verwendet rückblickend die tatsächlich aufgetretene Räumung; vor der Aktion kann der Agent sie nur prognostizieren.
 
 **Folgerung für den nächsten Versuch.** Den belegten Einzelfall als Beispiel für einen zu teuren Halterschuss nutzen. Der frühere gezielte Schussverzicht scheiterte bereits an der Stabilität über ganze Matches; die unabhängigen Kontrollzahlen liefern keinen Grund, dieselbe Regel erneut zu bauen oder zu trainieren. Für einen andersartigen Ansatz auf 7150052 wäre ein ursächlicher Nachweis nötig, dass eine konkrete alternative Bewegung mehrere Schritte vor der späten Ankunft ein zusätzliches bekanntes Ziel rechtzeitig erreichbar macht, ohne eine andere Wertung zu verdrängen. Die hier verlangte passive Prüfung weist einen solchen Befehlswechsel bisher nicht nach.
+
+## Reproduktion aus dem gemeinsamen Repo
+
+Vom Projektordner aus genügt Python mit der Standardbibliothek. Das Werkzeug prüft die archivierten Hashes und berechnet die Ereignisse aus den komprimierten Beobachtungen neu.
+
+```sh
+python3 experiments/analysis/solution_public_20261115/evidence/analyze_public_windows.py --out /tmp/sherlock-public-events.json
+cmp /tmp/sherlock-public-events.json experiments/analysis/solution_public_20261115/evidence/public_events.json
+```
+
+Als Ausgabepfad eine neue Datei verwenden. Der aufgezeichnete Quellstand des V14-Agenten steht in der Provenienzdatei.
