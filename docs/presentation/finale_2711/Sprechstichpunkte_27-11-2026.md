@@ -54,20 +54,20 @@
 ### 7 · Mahmoud
 
 - Links der echte Hochschulwettbewerb. Im Halbfinale verlor Sherlock dreimal gegen das Team, das später Zweiter wurde. Der rechte Teil zeigt zwei lokale Testgegner.
-- Auf exakt denselben 100 Karten, jeweils beide Seiten: 188 von 200 Spielen gegen Solution_92 gewonnen, nur sechs gegen den Kaggle-Agenten. Er war Dritter im öffentlichen Kaggle-Wettbewerb und diente uns als Testgegner.
-- Im ersten Lauf stellte sich der Kaggle-Agent auf ein Spiel über drei Matches ein. Er sparte im dritten zu früh. Mit seiner eigenen Einstellung für fünf Matches kam V14 auf 4 %. **Übergabe an Moe:** „Was macht dieser Gegner schon im ersten Match anders?“
+- Auf exakt denselben 100 Karten, jeweils beide Seiten: 188 von 200 Spielen gegen Solution_92 gewonnen, acht gegen den Kaggle-Agenten. Er war Dritter im öffentlichen Kaggle-Wettbewerb und diente uns als Testgegner.
+- Beim Kaggle-Gegner verwenden wir seine ursprüngliche Einstellung. In unserem Kurs dauern die Partien drei Matches. **Übergabe an Moe:** „Was macht dieser Gegner schon im ersten Match anders?“
 
 ### 8 · Moe
 
 - Ein Spiel umfasst im Kurs drei Matches. Hier vergleichen wir ausschließlich das **erste** Match auf 30 Karten, jede auf beiden Seiten.
 - Für ein greifbares Einzelbeispiel: Auf Karte 7150000, Sherlock auf Seite 0, verliert Sherlock 18 Einheiten, der Gegner zwei. Der Gegner schießt 25-mal, Sherlock neunmal. Dann auf die Mittelwerte aller 60 ersten Matches zeigen.
 - Sherlock verliert im Mittel 23 Einheiten und hat am Ende nur noch rund 390 Teamenergie. Der Gegner verliert gut eine Einheit und hat über 3.300 Energie. Wer Energie übrig hat, kann weiter schießen.
-- Der erste Punkt kommt bei Sherlock meist ähnlich früh. Die Verläufe geben uns eine Hypothese für einen Versuch. Ob eine Tankregel hilft, müssen Spiele mit dieser Regel zeigen.
+- Der erste Punkt kommt bei Sherlock meist ähnlich früh. Beim früheren Tanken überleben tatsächlich mehr Einheiten. Ob sie auch punkten, zeigt die nächste Folie.
 
 ### 9 · Moe
 
 - Das Gedächtnis hilft Sherlock, Punktefelder zu finden. Gegen den Kaggle-Agenten sehen wir, wie schnell Einheiten im Kampf verloren gehen.
-- Zwei Ideen erklären: Einheiten mit wenig Energie suchen ein erreichbares Energiefeld. Mehrere Schützen stimmen sich für einen gemeinsamen Angriff auf einen stehenden Gegner ab.
+- „Wir haben das Tanken vorgezogen. Dadurch verlieren wir im ersten Match im Schnitt fünf Einheiten weniger. Unsere Punktausbeute verbessert sich dabei kaum. Deshalb trainieren wir jetzt einen Schüler mit Entscheidungen des Kaggle-Agenten. Er lernt unter anderem, welche Einheit auf welches Feld schießen soll.“
 - Der letzte bestätigte Abgabestand ist V14 (Datenstand 15.11.). Vor einer Änderung brauchen wir neue Karten, den bisherigen Vergleichsgegner und das direkte Duell. Mit einer kurzen Pause enden, dann Fragen aufnehmen.
 
 ## Stand und Quellen für das Team
@@ -76,8 +76,8 @@
 - **Rubrik für die Probe.** Die Frage vom Einstieg am Ende beantworten. Jede Übergabe an einem Spielzug oder Befund festmachen. Begriffe wie Q-Wert einmal in Alltagssprache erklären. Auf eine Zahl zeigen, sie einordnen und frei weitersprechen. Die eigene Entscheidung am Beispiel des verworfenen Netzaustauschs erläutern.
 - **Folien 2–5.** [Ablauf von V14](../../ENTSCHEIDUNGSABLAUF_V14_P.md), [Geprüfte Battle-Fassung mit Beispiel und Training](../Sherlock_Battle_06-11-2026.html), [Nachweis zur Netzarchitektur und Herkunft](../source/ENSEMBLE_BATTLE_0611_20261104.json).
 - **Folie 6.** [Ensemblevergleich vom 8.11.](../../ENSEMBLE_ABSCHLUSS_20261108.md). 100 Panelkarten × beide Seiten pro Gegner, 200 separate Direktkarten × beide Seiten. Das 95-%-Intervall wurde über ganze Karten berechnet.
-- **Folie 7.** [Turnierbericht im Arbeitsstand vom 15.11.](../../ARBEITSSTAND.md), [lokaler Vergleich und zweite Kaggle-Einstellung](../../../experiments/analysis/kaggle3_20261115/README.md), [Einzelspiele für 188/200 und 6/200](../../../experiments/analysis/kaggle3_20261115/v14_devA.csv). Die 4 % stammen aus Mahmouds Bericht. Die CSV dieses zweiten Laufs ist im gemeinsamen Stand 020a1ae nicht enthalten.
+- **Folie 7.** [Turnierbericht im Arbeitsstand vom 15.11.](../../ARBEITSSTAND.md), [lokaler Vergleich und zweite Kaggle-Einstellung](../../../experiments/analysis/kaggle3_20261115/README.md), [Einzelspiele gegen Solution_92](../../../experiments/analysis/kaggle3_20261115/v14_devA.csv) und [200 native Kaggle-Spiele, 8 Siege](../../../experiments/analysis/kaggle3_20261115/screen1/baseline.csv).
 - **Folie 8.** [Native Matchverläufe für die 30 Karten](../../../experiments/analysis/kaggle3_20261115/trace_v14_k3_30maps.csv). Mittelwerte über 60 erste Matches, einschließlich beider Seiten. Median bis zum ersten eigenen Punkt unter den Matches mit Punktgewinn: Schritt 39 (58 von 60) für Sherlock und 43 (60 von 60) für den Gegner. Der dokumentierte Zählfehler bei Einheitenverlusten nach einem Matchwechsel betrifft die hier gewählte erste Runde nicht.
-- **Folie 9.** [Kampfideen und Prüfdesign](../../../experiments/analysis/kaggle3_20261115/README.md). Vor der Schlussprobe Folie 9 und den letzten Sprechpunkt anhand des jüngsten geprüften Vergleichs aktualisieren. Gegner, Zahl der Karten/Spiele und Prüfstatus nennen. Eine kleine Vorauswahl genügt allein nicht für einen neuen Abgabeagenten.
+- **Folie 9.** [Verluste und Energie ohne frühes Tanken](../../../experiments/analysis/kaggle3_20261115/trace2_base_30maps.csv), [dieselben Karten mit Tanken](../../../experiments/analysis/kaggle3_20261115/trace2_charge_30maps.csv) und [Plan für den CNN-Schüler](../../superpowers/plans/2026-11-15-umbau-imitation.md). Vor der Schlussprobe Folie 9 und den letzten Sprechpunkt anhand des jüngsten geprüften Vergleichs aktualisieren. Gegner, Zahl der Karten/Spiele und Prüfstatus nennen. Eine kleine Vorauswahl genügt allein nicht für einen neuen Abgabeagenten.
 
 **Bearbeiten und exportieren.** Die HTML-Quelle ist eigenständig. Bei Änderungen im Browser öffnen und als PDF drucken, mit Hintergrundgrafiken, ohne Browser-Kopf- und Fußzeilen, bei 100 % und mit der im Dokument definierten Seitengröße (16:9). Ergebnis vor dem Vortrag im Vollbild prüfen.
