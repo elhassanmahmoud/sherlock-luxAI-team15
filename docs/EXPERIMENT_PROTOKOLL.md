@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Späte FT18-Bewegungswahl gegen Solution in 56 vollständigen Ausführungen. Acht Spiele gerettet, drei vorherige Siege verloren. 21/28 gegenüber 16/28 auf gezielt ausgewählten schwierigen Karten. Der Versuch verfehlt die Begrenzung neuer Niederlagen. [Eingriffs- und Spielergebnisse](../experiments/analysis/late_ft18_20261115/ERGEBNIS.md).
+
 15.11.2026 – 288 zusätzliche Spiele für das Nachtraining des Bewegungsberaters abgeschlossen. 120 Lernkarten und 24 getrennte Diagnosekarten, jeweils beide Sitze, gegenüber Kaggle3, Solution und V14. [Sammlung und Befehlsprüfung](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
 
 15.11.2026 – In 80 archivierten Spielen und zwölf älteren Traces die Fortdauer einer sichtbaren gegnerischen Feldbesetzung gemessen. Beobachtungszahlen und Gegenprobe gegen die tatsächliche Folgebesetzung reproduziert. [Zähler und Quellen](../experiments/analysis/temporal_movement_20261115/BEOBACHTUNG.md).

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Späte Bewegungswahl der 18 Netze auf bekannten schwierigen Karten
+
+Alle 28 Referenzen reproduziert. Beide Seiten spielten im ersten Match Zug für Zug identisch. Die späte Bewegungswahl gewann 21/28 statt 16/28 gegen Solution, rettete acht Niederlagen auf sieben Karten und verlor drei frühere Siege. Damit ist die vorab gesetzte Obergrenze von einem neuen Verlust überschritten. Der angereicherte Kartensatz ist keine allgemeine Siegquote. [Spiele und Entscheidung](../experiments/analysis/late_ft18_20261115/ERGEBNIS.md).
+
 ## 15.11.2026, 17:11 Berlin – Claude Code: Umbau – DAgger wirkt, Hybrid aus V14 und Schüler vorn gegen Solution_92
 
 - **Schüler allein:** v1 (1,9 Mio. Lehrerentscheidungen) und v2 (8,4 Mio.) liegen trotz 82 % Zugübereinstimmung deutlich unter V14: gegen Solution_92 49,5–51 % statt 94 %, gegen kaggle3 0–2 % statt 4 % (Dev A, 200 Spiele je Gegner). Diagnose: Der Schüler kämpft und überlebt wie der Lehrer, punktet aber schlechter, bleibt zu oft stehen und stapelt. Mit `imit_stay_bias` 1,5 und `imit_unstack` erreicht v2 78 %. **Nach einer DAgger-Runde** (400 Spiele, Lehrer mit gespielter Zughistorie, Moayeds Fix) erreicht **v3 89,5 %** gegen Solution_92.
