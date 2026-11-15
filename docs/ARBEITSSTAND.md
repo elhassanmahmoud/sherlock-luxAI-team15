@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Lehrerbewegungen für einen eigenen Schüler ausgewählt
+
+In 72 gepaarten Kontroll- und Eingriffsspielen gewannen die echten Lehrerbewegungen sechs zuvor verlorene Spiele. Die Kampfberatung gewann ebenfalls sechs dazu, aber drei Einzelmatches weniger. Auf allen zwölf Karten war die Kontrolle reproduzierbar. Der eigene Bewegungsschüler lernt aus 32 Karten, acht andere Karten dienen zur Lerndiagnose. Er behält V14 als Basis und kann eine sichere Bewegungsentscheidung übernehmen. 23 fokussierte Tests für Training, Ausführung, Gegenprobe und vollständige Matchzählung bestanden. [Ergebnisse](../experiments/analysis/combat_advice_20261115/LEHRERENTSCHEIDUNGEN.md) · [Festgelegte Auswahl](../experiments/analysis/combat_advice_20261115/SELEKTIVER_SCHUELER.md)
+
 ## 15.11.2026 – Drei vollständige Vergleiche, neue Trainingsdaten für Kampfsituationen
 
 - Moayed hat die weitere Arbeit für das Finale freigegeben. Auf dem M3 sind drei Varianten mit denselben 36 V14-Netzen geprüft. In 192 ganzen Spielen gewann keine einen Spielschlüssel, den V14 verlor. Gegen Solution erreichte V14 24/24, Tanken 21/24, Kontaktreserve 24/24 und der lernende Scout 23/24. Gegen den nativen Kaggle-Gegner waren es 2, 2, 0 und 2 Siege von jeweils 24. Für den Scout zusätzlich 16 Trainings- und acht Diagnosepartien. Die Schätzung aus den vier Diagnosekarten lag bei +8,70 Energie, ohne zusätzlichen Spielsieg im folgenden Vergleich. [Ergebnis und Rohdaten](../experiments/analysis/finale_20261115/ERGEBNIS.md).
