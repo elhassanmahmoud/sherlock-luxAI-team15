@@ -557,7 +557,13 @@ def train_student(train, val, a, log):
             " ".join(f"{nm} {100 * p:.0f}" for nm, p in zip(("stay", "up", "right", "down", "left", "sap"), per)) +
             f" | Ziel bei legalem Lehrerschuss exakt {100 * s_acc:.0f} %, +-1 Feld {100 * s_near:.0f} % | {time.time() - t0:.0f}s")
     for cohort, start, stop in getattr(a, "validation_groups", ()):
-        acc, _, joint, exact, _ = evaluate(start, stop)
+        acc, _, joint, exact, near = evaluate(start, stop)
+        report = getattr(a, "validation_report", None)
+        if report is not None:
+            report[cohort] = dict(rows=stop - start, action=acc, full_order=joint,
+                                  legal_teacher_saps=int(Rv["sap_label"][start:stop].sum()),
+                                  target_exact=exact if np.isfinite(exact) else None,
+                                  target_near=near if np.isfinite(near) else None)
         log(f"Fixe letzte Epoche, {cohort}: {stop-start} Zeilen | Aktion {100*acc:.2f} % "
             f"| voller Befehl {100*joint:.2f} % | Ziel bei legalem Lehrerschuss {100*exact:.2f} %")
     return net.to("cpu").eval()
