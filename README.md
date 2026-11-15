@@ -1,6 +1,6 @@
 # Sherlock – RL-Agent für Lux AI Season 3
 
-**Stand 15.11.: Platz 3 im Battle vom 06.11.** Sherlock V14 belegte laut Team Platz 3 aller Teams. Jetzt läuft die Vorbereitung auf den 27.11.: Abschlusspräsentation (benotet), Turnier und Abgabe von Präsentation und agent.zip (Kursfolie 51). V14 bleibt die Abgabe; eine aus dem aktuellen Code gebaute Zip spielt nachweislich identisch (0 abweichende Aktionen in zwei vollständigen Spielen). [Plan und offene Punkte](docs/ARBEITSSTAND.md).
+**Stand 15.11.: Platz 3 im Battle vom 06.11.** Sherlock V14 belegte laut Team Platz 3 aller Teams; im Halbfinale verlor es 0:3 gegen den späteren Zweiten. Jetzt läuft die Vorbereitung auf den 27.11.: Abschlusspräsentation (benotet), Turnier und Abgabe von Präsentation und agent.zip (Kursfolie 51). V14 bleibt die Abgabe; eine aus dem aktuellen Code gebaute Zip spielt nachweislich identisch (0 abweichende Aktionen in zwei vollständigen Spielen). [Plan und offene Punkte](docs/ARBEITSSTAND.md).
 
 **Stand 10.11.: V14 bleibt unverändert.** Der jüngste Matchausgang-Pilot ist abgeschlossen: 43 von 48 alternativen Entscheidungen wirken sich auf die Aktion aus, aber nur eine verbessert und eine verschlechtert den Matchausgang. Damit fehlt die vorab geforderte Lernbasis; kein neuer Entscheidungskopf oder bestätigter Nachfolger. [Ergebnis, technische Reparatur und Grenzen](experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md) · [aktuelle Übergabe](docs/ARBEITSSTAND.md).
 
