@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Die V15-Bestätigung verlangt vollständige Kartenpaare
+
+Das Auswertungsprogramm lehnt fehlende oder doppelte Sitze, falsche Kartensätze, fremde Duellgegner und fehlerhafte Partieenden ab, bevor es ein Intervall berechnet. Die zuvor festgelegten Schwellen und Bootstrap-Rechnungen sind identisch. Neun absichtlich fehlerhafte Tabellen wurden vom bisherigen Programm akzeptiert und werden jetzt zurückgewiesen. Die vollständige Kontrolltabelle erreicht dieselben Berechnungen. 62 gezielte Regressionen im gemeinsamen freien Prüffenster bestanden. [Auswertung](../experiments/analysis/umbau_20261115/tools/gates.py).
+
 ## 15.11.2026 – Erster Vergleich von R3 und v4 auf allen identischen Dev-A-Sitzen
 
 R3 gewann 195/200 gegen Solution (570/600 Einzelmatches), Mahmouds v4 mixed 194/200 (557/600), V14 188/200 (522/600). R3 gewann jede der sechs v4-Niederlagen. v4 gewann alle fünf R3-Niederlagen. Eine echte Kombination braucht eine Regel, die nur vor der nächsten Aktion verfügbare Beobachtungen verwendet, und einen neuen Vergleich. Acht V14-Spiele reproduzierten die ursprünglichen Endstände vollständig. [Rohdaten, Unsicherheit und Karten](../experiments/analysis/movement_soft_20261115/dev_a_solution/ERGEBNIS.md).

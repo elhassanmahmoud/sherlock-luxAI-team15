@@ -4,15 +4,62 @@
         experiments/analysis/umbau_20261115/confirm/v14_ref.csv experiments/analysis/umbau_20261115/confirm/v15_candidate.csv
 
 Gepaarter Bootstrap über Karten (beide Seiten einer Karte zusammen), 10.000 Ziehungen, Seed 2711.
+Im Direktduell sind die relativen par_eval-Pfade agents/sherlock/weights/agent_p0.pth oder
+agent_p1.pth erlaubt. Beide bezeichnen V14. Absolute Pfade müssen hier lesbar sein und dessen
+SHA-256 ergeben. Die CSV enthält nur den Gegnernamen; der Gewichtsstand beim Spiel braucht
+zusätzlich das Laufprotokoll.
 """
 from __future__ import annotations
 
+from hashlib import sha256
+from pathlib import Path
 import sys
 
 import numpy as np
 import pandas as pd
 
 B, SEED = 10_000, 2711
+
+EXTERNAL = ("kaggle3", "solution92", "default")
+MAPS = range(7158000, 7158400)
+SEATS = ("player_0", "player_1")
+V14_SHA = "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+V14_PATHS = {Path("agents/sherlock/weights") / f"agent_p{side}.pth" for side in (0, 1)}
+
+
+def opponent_key(label):
+    """Relative opponent labels are the ones emitted by par_eval. Verify portable absolute aliases by bytes."""
+    if isinstance(label, str) and label.startswith("self:"):
+        path = Path(label[5:])
+        if path in V14_PATHS:
+            return "self:V14"
+        if (path.is_absolute() and Path(*path.parts[-4:]) in V14_PATHS and path.is_file()
+                and sha256(path.read_bytes()).hexdigest() == V14_SHA):
+            return "self:V14"
+    if label not in EXTERNAL:
+        raise ValueError(f"Unbekannter Gegner oder fremder V14-Pfad: {label!r}")
+    return label
+
+
+def validate_panel(df, *, candidate):
+    role = "Kandidat" if candidate else "Referenz"
+    opponents = (*EXTERNAL, "self:V14") if candidate else EXTERNAL
+    required = {"opponent","seed","side","steps","result","our_wins","opp_wins","our_points","opp_points"}
+    if missing := required.difference(df.columns):
+        raise ValueError(f"{role}: Fehlende CSV-Spalten {sorted(missing)}")
+    labels = {v: opponent_key(v) for v in df["opponent"].drop_duplicates()}
+    keys = pd.MultiIndex.from_arrays([df["opponent"].map(labels), df["seed"], df["side"]])
+    expected = pd.MultiIndex.from_product([opponents, MAPS, SEATS])
+    if not keys.is_unique or len(keys) != len(expected) or not keys.isin(expected).all():
+        raise ValueError(f"{role}: Unvollständiger, doppelter oder fremder Gegner/Karten/Sitz-Schlüssel")
+    wins, losses = df["our_wins"], df["opp_wins"]
+    if (not (df["steps"].eq(303) & wins.isin(range(4)) & losses.isin(range(4))).all()
+            or not ((wins + losses).eq(3) & df["result"].eq(wins.gt(losses).astype(int))).all()):
+        raise ValueError(f"{role}: Jeder Lauf braucht 303 Schritte, drei Matches und den passenden Spielausgang")
+    for name in ("our_points", "opp_points"):
+        v = pd.to_numeric(df[name], errors="coerce")
+        if not (v.ge(0) & v.mod(1).eq(0)).all():
+            raise ValueError(f"{role}: Ungültige Feldpunktzahl in {name}")
 
 
 def per_map(df: pd.DataFrame, opp_prefix: str) -> pd.DataFrame:
@@ -30,6 +77,8 @@ def boot_mean(x: np.ndarray, rng) -> tuple[float, float]:
 
 def main(ref_path: str, cand_path: str) -> None:
     ref, cand = pd.read_csv(ref_path), pd.read_csv(cand_path)
+    validate_panel(ref, candidate=False)
+    validate_panel(cand, candidate=True)
     rng = np.random.default_rng(SEED)
     rows, passed = [], {}
 
