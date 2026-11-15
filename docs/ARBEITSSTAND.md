@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R5 mit vorherigem Befehl erreicht die Spielauswahl
+
+R5 imitiert auf den 24 Diagnosekarten 1.364 zusätzliche vollständige Aktionsentscheidungen bei der selektiven Bewegungswahl gegenüber R2. Dabei sinken die neu verursachten Abweichungen von 3.355 auf 3.181. Der Kandidat bleibt getrennt von V14 gespeichert. Die vorab vorgesehenen 16 Auswahlkarten bestimmen, ob er eine unabhängige Bestätigung verdient. [Training, Checkpoint und Auswertungsdaten](../experiments/analysis/own_command_20261115/TRAINING.md).
+
 ## 15.11.2026 – R3 als vollständiger Befehlsgeber verfehlt die Auswahl
 
 Der R3-Schüler durfte Einheiten ohne bestätigten Punkteauftrag auch schießen lassen. Auf 16 neuen Karten verlor dieser Hybrid gegen Solution ein zusätzliches Spiel und gewann gegen Kaggle keines. Direkt 18/32, gegenüber 22/32 im separaten Bewegungsversuch auf anderen Auswahlkarten. Für diesen vollständigen Hybrid folgt keine Bestätigung. Die eigenständige Vergleichsreihe mit Schülern aus vollständigen Lehrerpartien läuft. [160 Vollspiele und Auswertung](../experiments/analysis/points_hybrid_20261115/ERGEBNIS.md).

@@ -1,0 +1,17 @@
+Movement adviser parent SHA256 5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad176813575
+Train: 989063 rows; validation: 51048 V14 + 156243 mixed rows
+CPU board storage: 1017354240 bytes in temporary disk files
+Before the first update, own-command input parity: {'device': 'mps:0', 'atol': 1e-06, 'rtol': 1e-05, 'max_abs_by_head': [1.4901161193847656e-08, 3.725290298461914e-09, 0.0]}
+Training: 958870/989063 Befehle im Spiel ausfuehrbar, 44677/44677 legale Schusslabels, davon 61 auf das eigene Feld
+Validierung: 198959/207291 Befehle im Spiel ausfuehrbar, 9029/9029 legale Schusslabels, davon 8 auf das eigene Feld
+Aktionsverlust: 62398/958870 ausfuehrbare Zeilen mit V14- oder Lehrer-SAP erhalten Gewicht 3
+Trainingsdaten: 958870 Unit-Entscheidungen, Verteilung stay 32.3 %, up 6.2 %, right 24.2 %, down 25.8 %, left 6.8 %, sap 4.7 %
+Minibatch: 24 Spielschritte (im Mittel etwa 256 Unit-Entscheidungen), Geraet mps
+Epoche 1/5: Loss 1.8510 | Validierung Aktion 63.7 % | vollstaendiger Befehl 62.9 % | je Aktion stay 83 up 40 right 51 down 71 left 46 sap 45 | Ziel bei legalem Lehrerschuss exakt 58 %, +-1 Feld 83 % | 119s
+Epoche 2/5: Loss 1.2899 | Validierung Aktion 67.7 % | vollstaendiger Befehl 67.0 % | je Aktion stay 85 up 30 right 68 down 71 left 44 sap 45 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 86 % | 120s
+Epoche 3/5: Loss 1.1076 | Validierung Aktion 68.8 % | vollstaendiger Befehl 67.9 % | je Aktion stay 87 up 38 right 69 down 70 left 39 sap 52 | Ziel bei legalem Lehrerschuss exakt 63 %, +-1 Feld 85 % | 135s
+Epoche 4/5: Loss 0.9607 | Validierung Aktion 69.6 % | vollstaendiger Befehl 68.8 % | je Aktion stay 85 up 42 right 68 down 71 left 51 sap 52 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 120s
+Epoche 5/5: Loss 0.8696 | Validierung Aktion 69.7 % | vollstaendiger Befehl 68.8 % | je Aktion stay 86 up 41 right 69 down 72 left 46 sap 53 | Ziel bei legalem Lehrerschuss exakt 62 %, +-1 Feld 85 % | 128s
+Fixe letzte Epoche, eight original V14 maps: 51048 Zeilen | Aktion 69.28 % | voller Befehl 68.15 % | Ziel bei legalem Lehrerschuss 62.52 %
+Fixe letzte Epoche, held-out mixed maps: 156243 Zeilen | Aktion 69.81 % | voller Befehl 69.05 % | Ziel bei legalem Lehrerschuss 61.98 %
+Saved /Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_own_command/student.pth a41e95000017aa853f277f8bf99d71ce4fdb8c45950751f942e6fde19570b153
