@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "source_sha256": {
+    "scripts/imitate.py": "e13d75004baadf6670372cf014744c659fc64abbcb2399bb1ddbbefd5e419ce2",
+    "agents/sherlock/imitation_agent.py": "eef8e2b4201fd34afb7ad6a9c3f3733c20402744b3c6d3e988604142729536bd",
+    "scripts/imitation_target_audit.py": "5b3edda5206c41c2d827624cba4d78c55463d1ccf2887e10a1760da18ab403ac"
+  },
+  "note": "A conflict is a pair of simultaneous legal teacher shots to different tiles, each available to both shooters. Deployed excludes each shooter's own tile; engine allows it. Affected counts distinct decisions in any conflict, not unavoidable errors. recorded_step indexes the recorded frames of one side. Fractions pool counts.",
+  "maps": 6,
+  "total": {
+    "rows": 22259,
+    "sap_labels": 484,
+    "invalid_saps": 0,
+    "legal_saps": 484,
+    "self_targets": 0,
+    "self_targets_per_legal_sap": 0.0,
+    "deployed": {
+      "eligible_saps": 484,
+      "pairs": 194,
+      "mutual_pairs": 93,
+      "conflicts": 0,
+      "affected_saps": 0,
+      "conflicts_per_pair": 0.0,
+      "conflicts_per_mutual_pair": 0.0,
+      "affected_per_eligible_sap": 0.0,
+      "affected_per_legal_sap": 0.0
+    },
+    "engine": {
+      "eligible_saps": 484,
+      "pairs": 194,
+      "mutual_pairs": 93,
+      "conflicts": 0,
+      "affected_saps": 0,
+      "conflicts_per_pair": 0.0,
+      "conflicts_per_mutual_pair": 0.0,
+      "affected_per_eligible_sap": 0.0,
+      "affected_per_legal_sap": 0.0
+    }
+  },
+  "by_side": {
+    "player_1": {
+      "rows": 11108,
+      "sap_labels": 327,
+      "invalid_saps": 0,
+      "legal_saps": 327,
+      "self_targets": 0,
+      "self_targets_per_legal_sap": 0.0,
+      "deployed": {
+        "eligible_saps": 327,
+        "pairs": 151,
+        "mutual_pairs": 61,
+        "conflicts": 0,
+        "affected_saps": 0,
+        "conflicts_per_pair": 0.0,
+        "conflicts_per_mutual_pair": 0.0,
+        "affected_per_eligible_sap": 0.0,
+        "affected_per_legal_sap": 0.0
+      },
+      "engine": {
+        "eligible_saps": 327,
+        "pairs": 151,
+        "mutual_pairs": 61,
+        "conflicts": 0,
+        "affected_saps": 0,
+        "conflicts_per_pair": 0.0,
+        "conflicts_per_mutual_pair": 0.0,
+        "affected_per_eligible_sap": 0.0,
+        "affected_per_legal_sap": 0.0
+      }
+    },
+    "player_0": {
+      "rows": 11151,
+      "sap_labels": 157,
+      "invalid_saps": 0,
+      "legal_saps": 157,
+      "self_targets": 0,
+      "self_targets_per_legal_sap": 0.0,
+      "deployed": {
+        "eligible_saps": 157,
+        "pairs": 43,
+        "mutual_pairs": 32,
+        "conflicts": 0,
+        "affected_saps": 0,
+        "conflicts_per_pair": 0.0,
+        "conflicts_per_mutual_pair": 0.0,
+        "affected_per_eligible_sap": 0.0,
+        "affected_per_legal_sap": 0.0
+      },
+      "engine": {
+        "eligible_saps": 157,
+        "pairs": 43,
+        "mutual_pairs": 32,
+        "conflicts": 0,
+        "affected_saps": 0,
+        "conflicts_per_pair": 0.0,
+        "conflicts_per_mutual_pair": 0.0,
+        "affected_per_eligible_sap": 0.0,
+        "affected_per_legal_sap": 0.0
+      }
+    }
+  },
+  "map_sides": [
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270900_player_1_solution92.npz",
+      "input_sha256": "463d268f244f54eddb8cbcb682f2f7dff021f1dabfba591fc0c1ba094479e78a",
+      "metadata": {
+        "seed": 7270900,
+        "side": "player_1",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3717,
+        "sap_labels": 70,
+        "invalid_saps": 0,
+        "legal_saps": 70,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 70,
+          "pairs": 19,
+          "mutual_pairs": 17,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 70,
+          "pairs": 19,
+          "mutual_pairs": 17,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    },
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270901_player_0_solution92.npz",
+      "input_sha256": "8a2cc623b0174209599d368587b2c231c71d50a9b2183f950e654c1f59e718d1",
+      "metadata": {
+        "seed": 7270901,
+        "side": "player_0",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3713,
+        "sap_labels": 53,
+        "invalid_saps": 0,
+        "legal_saps": 53,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 53,
+          "pairs": 5,
+          "mutual_pairs": 3,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 53,
+          "pairs": 5,
+          "mutual_pairs": 3,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    },
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270902_player_0_solution92.npz",
+      "input_sha256": "8fd6e37b5cb8bda378e54633aac86bdc986b380fea4b635617f1f3091142659f",
+      "metadata": {
+        "seed": 7270902,
+        "side": "player_0",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3718,
+        "sap_labels": 78,
+        "invalid_saps": 0,
+        "legal_saps": 78,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 78,
+          "pairs": 33,
+          "mutual_pairs": 24,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 78,
+          "pairs": 33,
+          "mutual_pairs": 24,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    },
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270903_player_0_solution92.npz",
+      "input_sha256": "7a75cc17995e4861a930ed73d0bdccaa721551e14be97b7fa77466c5e2ddf3cb",
+      "metadata": {
+        "seed": 7270903,
+        "side": "player_0",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3720,
+        "sap_labels": 26,
+        "invalid_saps": 0,
+        "legal_saps": 26,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 26,
+          "pairs": 5,
+          "mutual_pairs": 5,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 26,
+          "pairs": 5,
+          "mutual_pairs": 5,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    },
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270904_player_1_solution92.npz",
+      "input_sha256": "5d0c41e36fa9167d8afe6db5afbbf8142a7cca0d8a7645d903fbea4b35e5ffc6",
+      "metadata": {
+        "seed": 7270904,
+        "side": "player_1",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3688,
+        "sap_labels": 151,
+        "invalid_saps": 0,
+        "legal_saps": 151,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 151,
+          "pairs": 97,
+          "mutual_pairs": 27,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 151,
+          "pairs": 97,
+          "mutual_pairs": 27,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    },
+    {
+      "input": "/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/final_20261115_teacher_probe/g7270905_player_1_solution92.npz",
+      "input_sha256": "f9e61c66a87a0252a089a69efe8dec770ade9afcf19e224d9db3260f4574b2aa",
+      "metadata": {
+        "seed": 7270905,
+        "side": "player_1",
+        "opponent": "solution92",
+        "teacher_wins": 3,
+        "opp_wins": 0,
+        "sap_range": null
+      },
+      "counts": {
+        "rows": 3703,
+        "sap_labels": 106,
+        "invalid_saps": 0,
+        "legal_saps": 106,
+        "self_targets": 0,
+        "self_targets_per_legal_sap": 0.0,
+        "deployed": {
+          "eligible_saps": 106,
+          "pairs": 35,
+          "mutual_pairs": 17,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        },
+        "engine": {
+          "eligible_saps": 106,
+          "pairs": 35,
+          "mutual_pairs": 17,
+          "conflicts": 0,
+          "affected_saps": 0,
+          "conflicts_per_pair": 0.0,
+          "conflicts_per_mutual_pair": 0.0,
+          "affected_per_eligible_sap": 0.0,
+          "affected_per_legal_sap": 0.0
+        }
+      },
+      "examples": {
+        "self": [],
+        "deployed": [],
+        "engine": []
+      }
+    }
+  ]
+}
