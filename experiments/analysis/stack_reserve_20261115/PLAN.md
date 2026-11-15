@@ -1,0 +1,13 @@
+# Gemeinsame Felder bei Bewegungsentscheidungen
+
+Wenn eigene Schiffe auf demselben Feld stehen, wählt der Kaggle-Lehrer nur einen Teil von ihnen für individuelle Züge. In den vorhandenen V14-Aufzeichnungen bekommen die nach Energierang zurückgehaltenen Schiffe auf 32 Lernkarten 12.795 von 12.795 Mal den Befehl zu bleiben, auf acht anderen Karten 3.144 von 3.144 Mal. Bei 1.787 dieser 3.144 Entscheidungen hätte V14 das Schiff bewegt, davon 1.775 außerhalb des Startfelds. Bei den vom Lehrer ausgewählten Schiffen auf besetzten Feldern lautet sein Befehl nur in 137 von 2.895 Fällen „bleiben“. Diese Zählung prüft, ob sich die Empfehlung präzise nachbilden lässt. Ob das Halten Sherlock als ganzem Team hilft, ist eine andere Frage. [Zahlen nach Gegner und Karte](teacher_counts.json)
+
+## Eine Änderung an V14
+
+Für ein bereits gemeinsam belegtes Feld sortiert der Versuch die eigenen, öffentlich vorhandenen Einheiten nach Energie, bei Gleichstand nach aufsteigender Einheiten-ID. Bei mindestens zwei Einheiten behält die energiereichere Hälfte (abgerundet) ihre V14-Entscheidungen. Für die übrigen lebenden Einheiten wird ausschließlich ein Bewegungsbefehl zu Stehenbleiben. Geplante Schüsse bleiben wirksam. Einheiten mit negativer Energie zählen bei der Gruppengröße wie im beobachteten Lehrer. Die Regel braucht weder die Identität des Gegners noch ein Lehrernetz. Das frühere Experiment `stack_guard` sperrte schon den Zugang zu einem von einem Mitspieler besetzten Punktefeld. Hier können Schiffe weiterhin gemeinsam ein Feld betreten.
+
+## Auswahl vor dem ersten Spiel
+
+Diese einfache Variante und der Bewegungsschüler aus dem [separaten Nachtraining](../../../docs/superpowers/plans/2026-11-15-bewegung-dagger.md) verwenden denselben neuen Block und dieselben V14-Referenzspiele. 16 frische Karten 7272300–7272315, beide Seiten, 32 Spiele je Gegner. Der Kandidat wird gegen Kaggle3, Solution_92 und direkt gegen V14 geprüft. Er benötigt mindestens zwei zusätzliche ganze Siege über die beiden externen Gegner, gegen Solution mindestens Gleichstand sowie mehr als 16 direkte Siege. Genauso wie beim Schüler ist ein hohes Maß an Übereinstimmung mit dem Lehrer kein Auswahlkriterium.
+
+Falls beide Kandidaten bestehen, wird vor Öffnen der unabhängigen Bestätigung der Kandidat mit mehr externen ganzen Siegen gewählt, danach mehr Solution-Siege und zuletzt die einfachere Variante ohne Zusatznetz. Der Vergleich auf 60 neuen Karten extern und 60 anderen direkt wird ausschließlich für diesen einen Kandidaten verwendet. Die Karten, 95-%-Intervalle und Bedingungen für eine Übernahme stehen im verlinkten Nachtrainingsplan. Falls keiner besteht, wird dieser Bestätigungsblock für sie nicht geöffnet.
