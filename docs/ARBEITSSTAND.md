@@ -14,7 +14,7 @@ Nach einem gewonnenen ersten Match entscheiden die letzten 18 V14-Netze mit übe
 
 ## 15.11.2026 – R5 mit vorherigem Befehl erreicht die Spielauswahl
 
-R5 imitiert auf den 24 Diagnosekarten 1.364 zusätzliche vollständige Aktionsentscheidungen bei der selektiven Bewegungswahl gegenüber R2. Dabei sinken die neu verursachten Abweichungen von 3.355 auf 3.181. Der Kandidat bleibt getrennt von V14 gespeichert. Die vorab vorgesehenen 16 Auswahlkarten bestimmen, ob er eine unabhängige Bestätigung verdient. [Training, Checkpoint und Auswertungsdaten](../experiments/analysis/own_command_20261115/TRAINING.md).
+Auf den 24 Diagnosekarten trifft R5 bei der selektiven Bewegungswahl 1.364-mal häufiger die Aktionsklasse des Lehrers als R2. Dabei sinken die neu verursachten Abweichungen von 3.355 auf 3.181. Der Kandidat bleibt getrennt von V14 gespeichert. Die vorab vorgesehenen 16 Auswahlkarten bestimmen, ob er eine unabhängige Bestätigung verdient. [Training, Checkpoint und Auswertungsdaten](../experiments/analysis/own_command_20261115/TRAINING.md).
 
 ## 15.11.2026 – R3 als vollständiger Befehlsgeber verfehlt die Auswahl
 
