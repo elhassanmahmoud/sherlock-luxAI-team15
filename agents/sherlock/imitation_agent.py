@@ -70,8 +70,12 @@ class ImitationAgent(PPOAgent):
     def __init__(self, player: str, agent_path: Optional[str] = None, name: str = "Sherlock Imitation", **kw):
         net = kw.pop("net", None)
         members = []
+        own_tile = True
         if net is None and agent_path:
             ckpt = torch.load(agent_path, map_location="cpu", weights_only=False)
+            # Aeltere Schueler (vor dem 15.11., 15:40) lernten den Zielkopf ohne das eigene Feld; dessen Bewertung ist
+            # dort untrainiert. Fuer sie bleibt das eigene Feld als Ziel gesperrt.
+            own_tile = bool(ckpt.get("sap_own_tile", False))
             arch = ckpt.get("arch") or {}
             if arch.get("sap_head"):
                 net = ImitationNet(**arch)
@@ -84,6 +88,7 @@ class ImitationAgent(PPOAgent):
         super().__init__(player, agent_path=agent_path, name=name, net=net, **kw)
         self.sample = False
         self.has_sap_head = isinstance(self.net, ImitationNet)
+        self.sap_own_tile = own_tile
         if members:
             self.extra_nets = members
 
@@ -137,6 +142,9 @@ class ImitationAgent(PPOAgent):
                     positions = inputs[2][shots]
                     radii = torch.full_like(shots, int(ctx["sap_range"]))
                     scores = masked_sap_logits(smap.reshape(1, *planes.shape[1:]), inputs[1][shots], positions, radii)
+                    if not getattr(self, "sap_own_tile", True):
+                        own = positions[:, 0] * int(ctx["H"]) + positions[:, 1]
+                        scores[torch.arange(len(own)), own] = -torch.inf
                     for row, flat in zip(shots.tolist(), scores.argmax(1).tolist()):
                         tx, ty = divmod(flat, ctx["H"])
                         targets[row] = (tx - int(pos[row, 0]), ty - int(pos[row, 1]), 0)

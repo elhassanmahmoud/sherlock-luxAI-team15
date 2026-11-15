@@ -128,3 +128,30 @@ def test_student_ensemble_loads_all_members(tmp_path):
     agent = ImitationAgent("player_0", agent_path=str(out), train=False)
     assert agent.has_sap_head and len(agent.extra_nets) == 1
     assert isinstance(agent.extra_nets[0], ImitationNet)
+
+
+def test_old_students_never_target_their_own_tile(tmp_path):
+    """Schueler ohne sap_own_tile-Kennzeichen (Zielkopf ohne eigenes Feld trainiert) schiessen nie aufs eigene Feld."""
+    from luxai_s3.wrappers import LuxAIS3GymEnv
+
+    from agents.sherlock.config import AgentConfig
+    from agents.sherlock.ppo_agent import save_policy
+    torch.manual_seed(0)
+    net = ImitationNet(feat_dim=FEATURE_DIM, ch=8, blocks=1, hidden=32)
+    with torch.no_grad():
+        net.pi.bias.copy_(torch.tensor([0.0, 0.0, 0.0, 0.0, 0.0, 50.0]))
+    for own, name in ((False, "old.pth"), (True, "new.pth")):
+        save_policy(str(tmp_path / name), net, AgentConfig(),
+                    extra={"kind": "imitation", **({"sap_own_tile": True} if own else {})})
+        agent = ImitationAgent("player_0", agent_path=str(tmp_path / name), train=False)
+        assert agent.sap_own_tile is own
+    env = LuxAIS3GymEnv(numpy_output=True)
+    obs, info = env.reset(seed=7159995)
+    agent = ImitationAgent("player_0", agent_path=str(tmp_path / "old.pth"), train=False)
+    agent.set_env_cfg(info["params"])
+    for step in range(25):
+        acts = agent.act(step, obs["player_0"])
+        for u in np.nonzero(acts[:, 0] == 5)[0]:
+            assert (acts[u, 1], acts[u, 2]) != (0, 0)
+        obs, *_ = env.step({"player_0": acts, "player_1": np.zeros((16, 3), int)})
+    env.close()

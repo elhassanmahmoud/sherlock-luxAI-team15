@@ -446,7 +446,9 @@ def cmd_train(a) -> None:
     net = train_student(train, val, a, log)
     cfg = v14_cfg()
     save_policy(str(out), net, cfg, extra={"kind": "imitation", "teacher": "kaggle3 lux3-bot 0.4.8_fn",
-                                           "data": a.data, "epochs": a.epochs})
+                                           "data": a.data, "epochs": a.epochs,
+                                           # Zielkopf mit dem eigenen Feld als legalem Ziel trainiert (masked_sap_logits)
+                                           "sap_own_tile": True})
     log(f"gespeichert: {out} ({sum(p.numel() for p in net.parameters())} Parameter)")
 
 
