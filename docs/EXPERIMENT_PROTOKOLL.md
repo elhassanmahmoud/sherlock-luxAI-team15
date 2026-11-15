@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Die Wegvariante schließt den gesamten bisherigen Satz mit 119/120 gegen Solution ab, gleichauf mit R3. 108 neue Ausführungen ergänzen zwölf vorhandene. Vier weitere Wiederholungen reproduzieren den neu verlorenen Sitz und seine Gegenseite. [Vergleich und Matchverläufe](../experiments/analysis/movement_soft_20261115/restart_route/ENTWICKLUNG.md).
+
 15.11.2026 – Frühe Wegprüfung nach dem Matchwechsel repariert die ausgewählte Niederlage auf 7273148/P0 und erhält die elf Kontrollsiege. 24 vollständige Wiederholungen, 134 tatsächliche Eingriffe, drei Einzelmatchsiege weniger bei einem zusätzlichen ganzen Sieg. [Gezielter Versuch](../experiments/analysis/movement_soft_20261115/restart_route/ERGEBNIS.md).
 
 15.11.2026 – Auf 24 nach bisherigen V14-Ergebnissen ausgewählten Karten gewinnt der FT18-Wechsel nach einem gewonnenen ersten Match 41/48 statt 34/48. Sieben gerettete Spiele auf sechs Karten, kein neuer Verlust, alle vier Kriterien erfüllt. Die Auswahl auf neuen Karten ist freigegeben. [96 Durchläufe](../experiments/analysis/late_ft18_20261115/after_win/ERGEBNIS.md).

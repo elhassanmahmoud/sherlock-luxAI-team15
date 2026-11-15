@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Vollständige alte Kartenreihe ergibt erneut 119/120
+
+Die frühe Wegprüfung rettete die ursprüngliche R3-Niederlage, verlor jedoch einen zuvor gewonnenen Sitz auf 7273105. Dort erzielte die Mannschaft ihren ersten Punkt sogar drei Züge früher und verlor das zweite und dritte Match. Alle 120 Ergebnisse sind jetzt vollständig. Das Verfahren auf 60 neuen Karten ist vorab festgelegt. [Rohdaten und Wiederholung des Rückfalls](../experiments/analysis/movement_soft_20261115/restart_route/ENTWICKLUNG.md).
+
 ## 15.11.2026 – 1.194.451 Entscheidungen aus echten Lehrerpartien
 
 Alle vier Sammlungen sind fertig. Auf 240 neuen Karten entstanden 337 Sitzarchive, davon 33 aus den 24 getrennten Diagnosekarten. Die Byteprüfsummen und die vorab festgelegten Karten, Sitze und Gegner stimmen in allen 337 Fällen. Zwei vollständige Schüler vergleichen das Lernen mit und ohne diese zusätzlichen Lehrerpartien. [Sammlung und lokale Datenpfade](../experiments/analysis/full_student_20261115/SAMMLUNG.md).

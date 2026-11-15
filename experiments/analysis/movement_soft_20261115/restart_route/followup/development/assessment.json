@@ -1,0 +1,101 @@
+{
+  "assessment_sources": {
+    "scripts/final_battle_assess.py": "01291a8c5ee6970d87f8eb5b0220cc4c32b4cea1a1a107c7fc23c9a7eef5e59e",
+    "scripts/r3_route_assess.py": "94d46aa63e257c69bf4b9b9c395332a11169812b052371a7142839e832a4087c",
+    "scripts/residual_ensemble_compare.py": "525c58d23f3245e523d2416cfc7dc452d393d83d416a4509e6fb332fe5ce463a"
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "interval": "95% percentile",
+    "seed": 2711,
+    "unit": "whole map, retaining both seats"
+  },
+  "new": 108,
+  "r3_files": {
+    "games_sha256": "5a7818a6333b036e476f11786f2013355e121cb1e6d8618f230d3b49a6630bf0",
+    "manifest_sha256": "cb904ef4d18ddbb6f05afc7092ba2dd5c86d63724c0b6193eb244c78173c49fd"
+  },
+  "reused": 12,
+  "route_files": {
+    "games_sha256": "f0375ae37109cc10e38781fc83b0f71bc8c9ce51d0de5e1eb72d6a16e1da7ed0",
+    "manifest_sha256": "df8a18c7cb07ee8860189289a53973659ffeabcf20b934c3d7ddee8ecdc5da7b"
+  },
+  "scope": "Development only; includes twelve outcome-selected historical positions",
+  "stage": "development",
+  "v14_files": {
+    "games_sha256": "2da38e26a9c863a348632ab3b558eae1d83fc9a3a1b26b319ce505181c98955e",
+    "manifest_sha256": "807963c7ebe4b278c7f85e72f8e71978c3438070311ef92e1e60871817e6d42c"
+  },
+  "vs_r3": {
+    "difference": 0.0,
+    "difference_ci95": [
+      -0.025,
+      0.025
+    ],
+    "gained": [
+      [
+        7273148,
+        "player_0"
+      ]
+    ],
+    "games": 120,
+    "lost": [
+      [
+        7273105,
+        "player_0"
+      ]
+    ],
+    "matches": {
+      "reference": 347,
+      "route": 343
+    },
+    "wins": {
+      "reference": 119,
+      "route": 119
+    }
+  },
+  "vs_v14": {
+    "difference": 0.03333333333333333,
+    "difference_ci95": [
+      0.0,
+      0.075
+    ],
+    "gained": [
+      [
+        7273116,
+        "player_1"
+      ],
+      [
+        7273131,
+        "player_0"
+      ],
+      [
+        7273141,
+        "player_1"
+      ],
+      [
+        7273149,
+        "player_1"
+      ],
+      [
+        7273152,
+        "player_1"
+      ]
+    ],
+    "games": 120,
+    "lost": [
+      [
+        7273105,
+        "player_0"
+      ]
+    ],
+    "matches": {
+      "reference": 323,
+      "route": 343
+    },
+    "wins": {
+      "reference": 115,
+      "route": 119
+    }
+  }
+}
