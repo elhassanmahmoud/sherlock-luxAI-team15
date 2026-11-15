@@ -99,3 +99,11 @@ den Kaggle-Agenten chancenlos.
 mit 12 Hybrid-Spielprozessen, die je V14 mit 36 Netzen und den Schüler laden. Claude Code beendete alle drei
 Jobs wegen Speichermangel (Auslagerung 7 von 8 GB). Ohne Rückfrage wird nichts neu gestartet. Künftig großes
 Training und viele Hybrid-Spiele nicht gleichzeitig ausführen.
+
+## Taktikschalter auf dem V15-Kandidaten (Dev A, 15.11. abends)
+
+Referenz ist Hybrid v4 mixed ohne Zusatz auf denselben 100 Karten (Solution 97 %, kaggle3 5 % / Matches 9,3 %).
+`end_sap=3` ±0; `imit_sap_bias=0.5` schlechter (kaggle3 Matches −2,7 pp, Solution −1,5 pp); `imit_cover=0.5` ±0;
+`imit_cover=1.0` kaggle3 Spiele +2 pp [−2; +6], Solution −2,5 pp; `focus_sap` ±0. **Kein Schalter verbessert V15
+messbar**; alle bleiben aus. [Tabelle](tactics/VERGLEICH.txt). Folgerung: Das gelernte Netz übernimmt Schießen, Nebel und
+Koordination bereits vom Lehrer; der wirksame Hebel sind weitere DAgger-Runden.
