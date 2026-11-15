@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 
-def read_pairs(directory):
+def read_pairs(directory, candidate="ft18_movement", map_count=14):
     complete = json.loads((directory / "completed.json").read_text())
     for name in ("manifest", "pairs", "games"):
         file = directory / (name + (".json" if name == "manifest" else ".jsonl"))
@@ -15,7 +15,7 @@ def read_pairs(directory):
     manifest = json.loads((directory / "manifest.json").read_text())
     seeds = set(manifest["seeds"])
     expected = {(seed, side) for seed in seeds for side in ("player_0", "player_1")}
-    if len(seeds) != 14 or complete["pairs"] != 28 or complete["games"] != 56:
+    if len(seeds) != map_count or complete["pairs"] != 2*map_count or complete["games"] != 4*map_count:
         raise ValueError("Incomplete development panel")
     games = collections.defaultdict(dict)
     for line in (directory / "games.jsonl").read_text().splitlines():
@@ -31,10 +31,10 @@ def read_pairs(directory):
     for line in (directory / "pairs.jsonl").read_text().splitlines():
         pair = json.loads(line)
         key = pair["seed"], pair["side"]
-        if key in seen or set(games[key]) != {"v14", "ft18_movement"}:
+        if key in seen or set(games[key]) != {"v14", candidate}:
             raise ValueError(f"Duplicate or incomplete pair {key}")
         seen.add(key)
-        base, variant = games[key]["v14"], games[key]["ft18_movement"]
+        base, variant = games[key]["v14"], games[key][candidate]
         if (not pair["same_first_match"] or base["first_match"] != variant["first_match"]
                 or base["first_match"]["steps"] != 101 or base["historical_v14_differences"]
                 or any(base[field] != int(val) for field, val in pair["historical_v14"].items())

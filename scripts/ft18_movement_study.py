@@ -108,7 +108,7 @@ class PrefixObserver:
         return self.final
 
 
-def run(out):
+def run(out, *, after_win=False):
     from agents.sherlock.main import Agent_x
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from scripts.common import make_opponent, play_game
@@ -118,11 +118,24 @@ def run(out):
     from scripts.par_eval import build_cfg, require_no_agent_errors
 
     limit_threads()
-    history, manifest = references(), provenance()
+    history_loader, candidate_class, candidate_name = references, FT18MovementAgent, "ft18_movement"
+    def current_manifest():
+        data = provenance()
+        if after_win:
+            data.update(historical_csv_sha256=sha(REFERENCE), seeds=sorted({seed for seed, _ in history}),
+                        decision="FT18 movement only after a won first match", arm=candidate_name)
+            path = ROOT / "scripts/ft18_after_win.py"
+            data["source_sha256"][str(path.relative_to(ROOT))] = sha(path)
+        return data
+    if after_win:
+        from scripts.ft18_after_win import FT18AfterWinAgent, REFERENCE, reference_panel
+        history_loader, candidate_class, candidate_name = reference_panel, FT18AfterWinAgent, "ft18_after_win"
+    history = history_loader()
+    manifest = current_manifest()
     out.mkdir(parents=True, exist_ok=False)
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     agents = {}
-    for arm, cls in (("v14", Agent_x), ("ft18_movement", FT18MovementAgent)):
+    for arm, cls in (("v14", Agent_x), (candidate_name, candidate_class)):
         agent = cls("player_0", agent_path=str(WEIGHTS), cfg=build_cfg(str(WEIGHTS), []), train=False, seed=0)
         agent.set_to_eval_mode()
         agent.autosave_on_terminate = False
@@ -149,6 +162,11 @@ def run(out):
                                      r["before_rules_changed"] for r in agent.study_stats),
                                  movement_by_match=agent.movement_statistics() if arm != "v14" else [],
                                  historical_v14_differences=mismatch if arm == "v14" else None)
+                    if after_win and arm == candidate_name:
+                        won = bool(entry["first_match"]["wins_world"][int(side[-1])])
+                        if agent.first_won is not won or (not won and entry["interventions"]):
+                            raise ValueError("Movement intervention differs from the first match result")
+                        entry["switch_after_first_win"] = won
                     games.write(json.dumps(entry, allow_nan=False) + "\n")
                     games.flush()
                     trial[arm] = entry
@@ -166,7 +184,7 @@ def run(out):
                 print(seed, side, "paired", flush=True)
     finally:
         env.close()
-    if provenance() != manifest:
+    if current_manifest() != manifest:
         raise ValueError("A source changed during the study")
     (out / "completed.json").write_text(json.dumps(dict(games=2*len(history), pairs=len(history),
         games_sha256=sha(out/"games.jsonl"), pairs_sha256=sha(out/"pairs.jsonl"),
@@ -176,4 +194,6 @@ def run(out):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
-    run(parser.parse_args().out)
+    parser.add_argument("--after-win", action="store_true")
+    args = parser.parse_args()
+    run(args.out, after_win=args.after_win)
