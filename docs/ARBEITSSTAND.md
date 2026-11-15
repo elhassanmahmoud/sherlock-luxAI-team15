@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 wartet vor der Rückkehr auf ein Punktefeld bis Zug 13
+
+Auf 13 früheren Karten gegen Solution lag der erste öffentlich sichtbare Punkt bei V14 in 48 gewonnenen zweiten und dritten Matches im Median bei Schritt 12,5. Daraus folgt ein einziger Startzeitpunkt für die verzögerte Route. 28 historische Vergleichspartien liegen geprüft vor. 14 ausgewählte Sitzpartien prüfen als Nächstes, ob die verzögerte Regel beide bekannten Problemfälle gewinnt und die übrigen Siege hält. [Herleitung und Grenzen](../experiments/analysis/movement_soft_20261115/restart_route/verzoegerung/BEFUND.md).
+
 ## 15.11.2026 – Mahmouds v4 mit zwei Aufgabenteilungen verglichen
 
 Beide Varianten verwenden denselben Schüler und gewinnen 194/200 gegen Solution. Fünf Siege wechseln in jeder Richtung. Gegen Kaggle gewinnt der gemischte Hybrid zwei Spiele mehr (10/200 gegenüber 8/200). Der Unterschied hat ein gepaartes 95-%-Intervall von −3 bis +6 Prozentpunkten. Die sechs konkreten Solution-Restfälle samt direktem Vergleich der Einzelmatches stehen bereit. [Gepaarte v4-Auswertung](../experiments/analysis/umbau_20261115/V4_ZUWEISUNG.md).
