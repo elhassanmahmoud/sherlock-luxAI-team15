@@ -1,0 +1,129 @@
+{
+  "kaggle3": {
+    "v14": {
+      "games": 800,
+      "games_won": 12,
+      "matches_won": 86,
+      "matches_lost": 2314,
+      "points": 458014,
+      "rival_points": 929228,
+      "wins_by_seat": {
+        "player_0": 6,
+        "player_1": 6
+      }
+    },
+    "v15": {
+      "games": 800,
+      "games_won": 12,
+      "matches_won": 102,
+      "matches_lost": 2298,
+      "points": 461832,
+      "rival_points": 842800,
+      "wins_by_seat": {
+        "player_0": 6,
+        "player_1": 6
+      }
+    },
+    "gained": 8,
+    "lost": 8,
+    "winrate_difference": 0.0,
+    "game_difference_ci95": [
+      -0.015,
+      0.015
+    ],
+    "match_difference_ci95": [
+      -0.0075,
+      0.02083333333333333
+    ]
+  },
+  "solution92": {
+    "v14": {
+      "games": 800,
+      "games_won": 767,
+      "matches_won": 2144,
+      "matches_lost": 256,
+      "points": 1042976,
+      "rival_points": 661077,
+      "wins_by_seat": {
+        "player_0": 383,
+        "player_1": 384
+      }
+    },
+    "v15": {
+      "games": 800,
+      "games_won": 764,
+      "matches_won": 2204,
+      "matches_lost": 196,
+      "points": 1018046,
+      "rival_points": 553871,
+      "wins_by_seat": {
+        "player_0": 381,
+        "player_1": 383
+      }
+    },
+    "gained": 30,
+    "lost": 33,
+    "winrate_difference": -0.00375,
+    "game_difference_ci95": [
+      -0.02625,
+      0.0175
+    ]
+  },
+  "default": {
+    "v14": {
+      "games": 800,
+      "games_won": 800,
+      "matches_won": 2393,
+      "matches_lost": 7,
+      "points": 1370249,
+      "rival_points": 122186,
+      "wins_by_seat": {
+        "player_0": 400,
+        "player_1": 400
+      }
+    },
+    "v15": {
+      "games": 800,
+      "games_won": 800,
+      "matches_won": 2382,
+      "matches_lost": 18,
+      "points": 1193900,
+      "rival_points": 114145,
+      "wins_by_seat": {
+        "player_0": 400,
+        "player_1": 400
+      }
+    },
+    "gained": 0,
+    "lost": 0,
+    "winrate_difference": 0.0
+  },
+  "direct": {
+    "opponent_recorded": "self:agents/sherlock/weights/agent_p0.pth",
+    "games": 800,
+    "games_won": 730,
+    "matches_won": 1976,
+    "matches_lost": 424,
+    "points": 944298,
+    "rival_points": 650652,
+    "wins_by_seat": {
+      "player_0": 365,
+      "player_1": 365
+    },
+    "winrate": 0.9125,
+    "ci95": [
+      0.8849375,
+      0.94
+    ]
+  },
+  "win_gates": {
+    "kaggle": false,
+    "solution": true,
+    "direct": true,
+    "default": true
+  },
+  "csv_sha256": {
+    "v14": "957ac8668e10b6a118b40cb81338a86b3ec356556d68a116535b16d4130bfa05",
+    "v15": "1cc603732dafff379e57f236be4fc37a0bdd7dfcfa35fcc0e7ce78c95387c4cd"
+  }
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – V15 schlägt V14 in 730/800 direkten Duellen
+
+Mahmouds gemischter Hybrid gewinnt auf 400 Bestätigungskarten 764/800 gegen Solution (V14 767), 12/800 gegen Kaggle (V14 12) und 800/800 gegen Default (V14 800). Die Hürde für einen Kaggle-Vorteil ist verfehlt. Die 5.600 vollständigen Ergebnisse, beide Startpositionen, Matchsummen, Prüfsummen und Kartenziehungen wurden gegengeprüft. [Ergebnis und Rohdaten](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
+
 ## 15.11.2026 – Vollschüler mit zusätzlichen Lehrerpartien gewinnt das direkte Duell, verfehlt die externe Auswahl
 
 20/32 direkt gegen V14, gegen Solution 31/32 wie V14 und gegenüber 32/32 der Vollschüler-Kontrolle. Alle drei erzielen 0/32 gegen Kaggle. 224 vollständig geprüfte Spiele. Die zusätzlichen Lehrerbeispiele verbessern die Befehlsnachahmung, hier jedoch die externe Siegzahl nicht. [Spielresultate und Unsicherheit](../experiments/analysis/full_student_20261115/SPIELE.md).

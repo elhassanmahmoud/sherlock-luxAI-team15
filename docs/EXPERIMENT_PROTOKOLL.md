@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – 5.600 Spiele auf den 400 Bestätigungskarten für v4 mixed. Direkt 730/800 gegen V14, extern Solution 764/800 gegenüber 767/800, Kaggle 12/800 bei beiden, Default 800/800 bei beiden. Drei der vier Spielbedingungen erfüllt. [Rohdaten und Gegenprüfung](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
+
 15.11.2026 – Der ursprüngliche R3 gewann auf einem zweiten festen Solution-Satz **120/120**, V14 119/120 und die zusätzliche Wegregel 118/120. Zusammen auf den zwei Sätzen R3 **239/240**, V14 234/240. Die sofortige Wegregel ist aus dem Vergleich ausgeschieden. [360 Spielausführungen](../experiments/analysis/movement_soft_20261115/restart_route/FRISCHE_KARTEN.md).
 
 15.11.2026 – R5 gewinnt 26/32 direkt gegen V14. R5, R2 und V14 gewinnen jeweils 32/32 gegen Solution und 0/32 gegen Kaggle. Vier Kaggle-Einzelmatches für R5. Von vier Auswahlbedingungen drei erfüllt. [224 vollständige Spiele](../experiments/analysis/own_command_20261115/SPIELE.md).
