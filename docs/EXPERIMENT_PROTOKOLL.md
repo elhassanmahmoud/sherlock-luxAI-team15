@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – Erster selbst trainierter Bewegungsberater: 96 Kandidatenspiele und 64 gepaarte externe Referenzspiele. Direkt 20/32, Solution beide 30/32, Kaggle3 0/32 gegenüber 2/32. Keine unabhängige Bestätigung und keine Übernahme. [Spiele, Quellen und Unsicherheit](../experiments/analysis/combat_advice_20261115/BEWEGUNGSSPIELE.md).
+
 15.11.2026 – Lehrerintervention in 72 ganzen Spielen. Bewegung und Kampf je sechs zusätzliche Siege über drei Gegner; Matchsiege 52 bzw. 49 gegenüber 38 in der Kontrolle. Bewegung gemäß Vorfestlegung ausgewählt. Das war direkter Lehrerzugriff auf zwölf bekannten Karten. [Zahlen und Rohdaten](../experiments/analysis/combat_advice_20261115/LEHRERENTSCHEIDUNGEN.md).
 
 - 11.11.2026: **Gezielte Feldtests nach Offlinephase geschlossen.** Zwölf vorhandene Traces, 302 tatsächlich geprüfte Fensterframes: vier geeignete Spielschlüssel auf vier Karten, zwei Verlust-/zwei Kontrollspiele. Vorab geforderte sechs Schlüssel verfehlt, keine Phase B/C/D. Null neue Spiele/Modellloads/Updates; 26 synthetische Tests und unabhängige tatsächliche Rekonstruktion bestanden. Mögliches eindeutiges Feldsignal aus geplanter Belegung, keine ausgeführte Intervention oder Stärkeaussage. V14/ZIP unverändert. [Ergebnis und Grenzen](../experiments/analysis/information_probe_20261111/ERGEBNIS.md).

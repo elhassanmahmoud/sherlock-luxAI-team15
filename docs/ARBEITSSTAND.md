@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Der eigene Bewegungsschüler gewinnt 20 von 32 direkten Duellen
+
+Auf dem unabhängigen Auswahlblock gewinnt der Bewegungsschüler gegen Solution 30/32 wie V14, gegen Kaggle3 0/32 gegenüber 2/32. Direkt 20/32, mit 95-%-Kartenintervall 37,5–87,5 %. Die externe Hürde ist verfehlt. Für Mahmoud liegen die eigenen Gewichte, alle 160 Spiele und der Folgeplan vor. [Vergleich und nächste Trainingsrunde](../experiments/analysis/combat_advice_20261115/BEWEGUNGSSPIELE.md).
+
 ## 15.11.2026 – Eigener Bewegungsschüler trainiert, vier Solution-Spielverläufe geprüft
 
 Das eigene Netz ist nach fünf Epochen gespeichert. Auf acht zurückgehaltenen Karten stimmt seine Aktionsklasse in 62,4 % aller 51.048 Validierungsbeispiele mit dem Lehrer überein. Der nominierte Bewegungsmodus läuft im gepaarten Vergleich gegen Kaggle3, Solution_92 und V14. [Modell und Training](../experiments/analysis/combat_advice_20261115/BEWEGUNGSTRAINING.md)

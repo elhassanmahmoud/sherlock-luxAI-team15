@@ -1,0 +1,80 @@
+{
+  "stage": "screen",
+  "candidate": "selective_movement",
+  "model": "5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad176813575",
+  "reference_files": {
+    "manifest_sha256": "d91cb16b0755025315d4ddaaeae776c446e9e42d41307f66e43e4b05e3206b42",
+    "games_sha256": "0d056090c6c6ca7548a775fd2b88667a7e6ca1b5bde0ac9d0c3b4953264589a8"
+  },
+  "candidate_files": {
+    "manifest_sha256": "36edb5317d5fd41de6d6b7345dc3c92726def01f7a78d19d2323917d061df536",
+    "games_sha256": "7864bcc3f04596204a434cb88a035066b9b6946f940d0a95bf75c3a1778eade9"
+  },
+  "direct_files": {
+    "manifest_sha256": "36edb5317d5fd41de6d6b7345dc3c92726def01f7a78d19d2323917d061df536",
+    "games_sha256": "7864bcc3f04596204a434cb88a035066b9b6946f940d0a95bf75c3a1778eade9"
+  },
+  "external_first": 7271400,
+  "direct_first": 7271400,
+  "by_opponent": {
+    "kaggle3": {
+      "games": 32,
+      "v14_wins": 2,
+      "candidate_wins": 0,
+      "gained": 0,
+      "lost": 2,
+      "net_wins": -2,
+      "winrate_difference": -0.0625,
+      "difference_ci95": [
+        -0.1875,
+        0.0
+      ]
+    },
+    "solution92": {
+      "games": 32,
+      "v14_wins": 30,
+      "candidate_wins": 30,
+      "gained": 2,
+      "lost": 2,
+      "net_wins": 0,
+      "winrate_difference": 0.0,
+      "difference_ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "external": {
+    "games": 64,
+    "net_wins": -2,
+    "winrate_difference": -0.03125,
+    "difference_ci95": [
+      -0.09375,
+      0.0
+    ]
+  },
+  "direct": {
+    "games": 32,
+    "wins": 20,
+    "losses": 12,
+    "winrate": 0.625,
+    "winrate_ci95": [
+      0.375,
+      0.875
+    ]
+  },
+  "gates": {
+    "solution_at_least_reference": true,
+    "direct_majority": true,
+    "two_additional_external_wins": false
+  },
+  "game_gates_pass": false,
+  "protocol": "selective",
+  "bootstrap": {
+    "unit": "whole map, both seats; external opponents sampled together",
+    "draws": 10000,
+    "seed": 2711,
+    "generator": "PCG64",
+    "interval": "95% percentile"
+  }
+}
