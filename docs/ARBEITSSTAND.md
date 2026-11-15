@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – V15 gewinnt sieben zusätzliche Spiele gegen die quadratische Solution-Variante
+
+V15 gewinnt gegen drei weitere Spielweisen insgesamt 144/144, V14 137/144. Gegen die Solution-Variante mit geänderter Schussreichweite lautet der Vergleich 48/48 gegenüber 41/48 (+14,58 Prozentpunkte, 95 % +4,17 bis +27,08). Gegen Rush und das Kurs-DQN gewinnen beide alle Spiele. Auf denselben 24 Karten und beiden Startseiten wurden alle 288 Rohzeilen, Spiel- und Matchsiege und beide Abschlussdateien überprüft. Die Werte gegen die originale Solution stammen aus den separaten Vergleichen. [Robustheit gegen die drei Gegner](../experiments/analysis/umbau_20261115/robustness/ERGEBNIS.md).
+
 ## 16.11.2026 – Beide R3-Berater gewinnen gegen Solution 80/80
 
 Der Richtungsberater gewinnt den unabhängigen Direktvergleich gegen V14 mit 68/80 (85 %, 95-%-Intervall 72,5 bis 95 %). Gegen die originale Solution gewinnen Kandidat und ursprünglicher R3 80/80, V14 77/80 auf denselben 40 Karten. Die zusätzliche frühere Richtungswahl ändert 19.191 Befehle, aber keinen ganzen Solution-Spielsieg. Gegen Kaggle gewinnen Kandidat und V14 0/80. Das gepaarte Intervall des gemeinsamen externen Vorteils beträgt 0 bis +5 Prozentpunkte und verfehlt die Freigabeschwelle. Die vier Spielreihen mit 480 Schlüsseln, die Rohzeilen und die Dateiprüfsummen wurden nachgerechnet. [Vergleich der Kandidaten](../experiments/analysis/r3_turn_advice_20261115/BESTAETIGUNG.md).

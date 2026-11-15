@@ -1,0 +1,98 @@
+{
+  "opponents": {
+    "sol92_sq": {
+      "v14": {
+        "game_wins": 41,
+        "games": 48,
+        "match_wins": 117,
+        "matches": 144
+      },
+      "v15": {
+        "game_wins": 48,
+        "games": 48,
+        "match_wins": 132,
+        "matches": 144
+      },
+      "game_delta": 0.14583333333333334,
+      "game_map_ci95": [
+        0.041666666666666664,
+        0.2708333333333333
+      ],
+      "match_delta": 0.10416666666666667,
+      "match_map_ci95": [
+        0.02083333333333334,
+        0.20138888888888892
+      ],
+      "gained_seats": 7,
+      "lost_seats": 0,
+      "maps_with_changed_seat": 5
+    },
+    "rush": {
+      "v14": {
+        "game_wins": 48,
+        "games": 48,
+        "match_wins": 143,
+        "matches": 144
+      },
+      "v15": {
+        "game_wins": 48,
+        "games": 48,
+        "match_wins": 144,
+        "matches": 144
+      },
+      "game_delta": 0.0,
+      "game_map_ci95": [
+        0.0,
+        0.0
+      ],
+      "match_delta": 0.006944444444444443,
+      "match_map_ci95": [
+        0.0,
+        0.02083333333333333
+      ],
+      "gained_seats": 0,
+      "lost_seats": 0,
+      "maps_with_changed_seat": 0
+    },
+    "dqn": {
+      "v14": {
+        "game_wins": 48,
+        "games": 48,
+        "match_wins": 144,
+        "matches": 144
+      },
+      "v15": {
+        "game_wins": 48,
+        "games": 48,
+        "match_wins": 143,
+        "matches": 144
+      },
+      "game_delta": 0.0,
+      "game_map_ci95": [
+        0.0,
+        0.0
+      ],
+      "match_delta": -0.006944444444444443,
+      "match_map_ci95": [
+        -0.02083333333333333,
+        0.0
+      ],
+      "gained_seats": 0,
+      "lost_seats": 0,
+      "maps_with_changed_seat": 0
+    }
+  },
+  "files": {
+    "v14": {
+      "manifest.json": "f3c204e8da9a5c49b3dbed992650e39aa76288f07b9dc0f19d6d0a8a06658752",
+      "games.jsonl": "1429e95d57c423cbbcfaed74a0246688814b2e337dd59dfdac9cfa384d6309b2"
+    },
+    "v15": {
+      "manifest.json": "99191e2a8ff035d24824ea05894c6eb00efbcc872f0dbcf15c199a9ea57536ea",
+      "games.jsonl": "b87852c0ecfc9737ad3a1fc6414e5799b95b5414fa2bc4a7ab4d7ceaa6fa6898"
+    }
+  },
+  "maps": 24,
+  "full_games": 288,
+  "intervals": "Paired map bootstrap, both seats, 4000 draws, unadjusted 95% per opponent. A degenerate interval can be caused by identical observed outcomes on all 24 maps."
+}
