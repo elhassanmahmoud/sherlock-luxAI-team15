@@ -16,3 +16,10 @@ Vor Beginn festgelegte Dateien aus [Mahmouds Auswertung](../kaggle3_20261115/) u
 | R3-Schüler | 99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9 |
 
 Mahmoud hat die v4-Ergebnisse vor dem ersten R3-Lauf auf Dev A veröffentlicht. Wir berichten zusätzlich den gemischten v4-Hybrid auf denselben vollständigen 200 Solution-Schlüsseln. Seine gemessene Quote ist 194/200. Das erfordert keine zusätzlichen Spiele. Quelle ist `student_hyb_v4_mixed.csv` mit SHA-256 `dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c`. Die bestehende Auswertung gegenüber V14 und v3 bleibt erhalten. [v4-Daten](../kaggle3_20261115/student_hyb_v4_mixed.csv).
+
+Die Nachrechnung verwendet die Prüfsummen der Referenztabellen, die bestätigte Ausführungsquelle und die tatsächlich gespielten Partien. Im Repo ist sie auch nach Abschluss wiederholbar.
+
+```sh
+python -m scripts.r3_deva_solution --study experiments/analysis/movement_soft_20261115 \
+    --tables experiments/analysis/kaggle3_20261115
+```
