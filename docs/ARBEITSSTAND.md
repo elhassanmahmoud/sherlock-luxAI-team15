@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Das getrennte R3-Kurspaket reproduziert 606 Schritte
+
+Der entpackte ursprüngliche R3-Bewegungsberater lieferte auf beiden Sitzen einer vollständigen Lux-Partie exakt die Aktionsmatrizen der Forschungsversion. 781 Bewegungsänderungen, 120 Schüsse mit Versatz, 606 Kurs-Updates, keine abgefangenen Fehler. Die drei neuen und bestehenden Studienwerkzeuge wurden im gemeinsamen Lauf mit insgesamt 80 Tests geprüft. Im eingefrorenen R7- und Vollschüler-Trainingsstand bestanden zusätzlich 20 bzw. 9 gezielte Tests. Das R3-Paket ist ein separater Kandidat. [Dateipfad, Aufbau und Nachweis](../experiments/analysis/movement_soft_20261115/candidate_package/README.md).
+
 ## 15.11.2026 – R5 hält die externen Siege und gewinnt direkt 26/32
 
 Alle drei Modelle gewinnen auf den 16 neuen Karten 32/32 gegen Solution und 0/32 gegen Kaggle. R5 gewinnt im Direktduell 26/32 gegenüber V14. Für eine Bestätigung fehlten die zwei zusätzlichen externen Siege. Ein neuer Einzelschüler soll R5s Gedächtnis für den letzten Befehl mit R3s vorsichtigerer Auswahl verbinden. [R5-Spielergebnisse](../experiments/analysis/own_command_20261115/SPIELE.md) · [R7-Trainingsplan](../experiments/analysis/combined_movement_20261115/PLAN.md).
