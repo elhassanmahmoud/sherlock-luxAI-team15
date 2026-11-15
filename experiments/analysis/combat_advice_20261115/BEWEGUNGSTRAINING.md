@@ -7,11 +7,13 @@ Der Kandidat verwendet den bisherigen V14-Agenten und ein zusätzliches eigenes 
 | Lernkarten / Validierungskarten (je beide Seiten) | 32 / 8 |
 | Ausführbare Lehrerbefehle im Training | 193.764 von 201.432 |
 | Ausführbare Lehrerbefehle in der Validierung | 49.338 von 51.048 |
-| Richtige Aktionsklasse unter ausführbaren Befehlen | 62,4 % |
+| Richtige Aktionsklasse unter allen 51.048 Lehrerbefehlen | 62,4 % |
 | Richtiger vollständiger Befehl einschließlich möglicher Schussrichtung | 61,2 % |
 | Ziel exakt getroffen, wenn der Lehrer schießen wollte | 60 % |
 
 Die Richtung spielt eine Rolle: Auf den Validierungskarten wurden 81 % der Stillstände, 30 % der Aufwärts-, 70 % der Rechts-, 55 % der Abwärts- und 23 % der Linksbewegungen korrekt erkannt. Diese Werte messen Übereinstimmung mit dem Lehrer. Der Nutzen wird in ganzen Spielen gegen die drei Gegner geprüft.
+
+Auf den gespeicherten Validierungsstellungen würde die 0,70-Schwelle 3.432 von 51.048 Aktionsklassen ändern (6,7 %). In 2.434 Fällen gewinnt der neue Zug die Übereinstimmung mit dem Lehrer, in 605 Fällen geht sie verloren, in 393 weichen beide Vorschläge ab. Die Zahl der Übereinstimmungen steigt von 28.096 auf 29.925 (+3,58 Prozentpunkte). Diese Rechnung verwendet quantisierte Archivstellungen vor der letzten Legalitätsprüfung. In einem Spiel verändern frühere Züge alle folgenden Stellungen. [Einzeldaten je Karte und Sitz](bewegung_validierung.json)
 
 [Eigene Gewichte](../../candidates/selective_advice_20261115/movement.pth) · [Trainingsverlauf](selective_training.log) · [Vergleichsbedingungen](SELEKTIVER_SCHUELER.md)
 
