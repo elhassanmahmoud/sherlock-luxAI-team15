@@ -1,0 +1,64 @@
+{
+  "source": {
+    "agents/sherlock/model.py": "df21cb3cfd68795cb59b3925e8d9099337c81104596df2adadf65d3300bc80ab",
+    "agents/sherlock/main.py": "0df11858ecce7ead2347df98f841912bb228046baa437e281ecb5f9493f14995",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc"
+  },
+  "tool": "e529ccf54901bc7892fd846418178d22f5079053fe73d41ca51bc7b875902d88",
+  "v14": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "fixture": "d6a2b14937e3687051f5fd5ac0dca7edfad2469e7a6bd7877e0170184f6b53eb",
+  "inputs": {
+    "g7287000_player_0_solution92.npz": "7b3f703a2bb59c62312880ca62e96a379a5d8f55112fe9c2e1aa1f1df73a2c67",
+    "g7287000_player_1_solution92.npz": "74202ded42812a338eae3f77d9ae932d3dff294803bead2ed6062e66759b8567",
+    "g7287001_player_0_v14.npz": "6467ddf0f9d5a43c9e772130c49604b2a792368ca5f47cde9578510fb4a6a299",
+    "g7287001_player_1_v14.npz": "3115fa31e5cf4c93be790b93b9c09c7ac9e71b35d03a0b0c9fa72ad3a1623894",
+    "g7287002_player_0_kaggle3.npz": "093ea9fe6676335c1b4df50fa4efde7e33c5fbcaa7c830a046262a991212e20b",
+    "g7287002_player_1_kaggle3.npz": "7f879d89dd2c380fa02c05c3a06c5b9ddd8db54e284ac233f05b2f96a7c6e141"
+  },
+  "timed_batches": 450,
+  "batches": 1800,
+  "units": 19230,
+  "torch": "2.14.1",
+  "threads": 1,
+  "exact_batches": 1551,
+  "max_abs_q_error": 7.62939453125e-06,
+  "different_masked_argmax": 0,
+  "timing": {
+    "native": [
+      1.9301069170469418,
+      1.8717024580109864,
+      2.267690832959488,
+      1.98698325001169
+    ],
+    "packed": [
+      0.6516940000001341,
+      0.650806791963987,
+      0.6545620419783518,
+      0.6605543330078945
+    ]
+  },
+  "network_speed_ratio": 2.998715444122054,
+  "replay": {
+    "native": [
+      {
+        "seconds": 10.492293499992229,
+        "different_commands": 0
+      },
+      {
+        "seconds": 10.8948836249765,
+        "different_commands": 0
+      }
+    ],
+    "packed": [
+      {
+        "seconds": 8.970435000024736,
+        "different_commands": 0
+      },
+      {
+        "seconds": 8.678743333090097,
+        "different_commands": 0
+      }
+    ]
+  },
+  "action_runtime_ratio": 1.2117944938456628
+}

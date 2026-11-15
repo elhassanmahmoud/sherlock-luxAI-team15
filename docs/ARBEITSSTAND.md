@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Schnellere Auswertung der 36 V14-Netze auf dem M3
+
+Auf 19.230 Einheitsentscheidungen lieferte die gemeinsame schichtweise Berechnung dieselbe beste erlaubte Aktion. Der reine Netzdurchsatz war dreimal so hoch. Auf der V14-Kursaufnahme brauchten zwei vollständige Wiederholungen im Median 17,5 % weniger Zeit für die Agentenentscheidungen, bei jeweils 606 identischen Befehlen. [Messung mit Rundungsabweichungen und Referenzcode](../experiments/analysis/macos_durchsatz_20261115/ensemble_inferenz/ERGEBNIS.md).
+
 ## 16.11.2026 – Sichtbarer Spielstil reicht für den geplanten Wechsel nicht aus
 
 Die im Voraus festgelegte Regel erkennt in archivierten R3-Partien 42/48 V14-Sitze und wechselt bei Kaggle 0/48 Mal. Sie hätte aber auch 3/48 Solution-Sitze umgestellt, erlaubt war höchstens einer. Die Regel verwendet nur die sichtbaren Kartenbeobachtungen des ersten Matches. 432 Archivdateien, die Trennung der Kartensätze und die Ergebnisse auf den 144 R3-Sitzen sind geprüft. Der Versuch endet ohne neue Spielpartien. [Archivvergleich](../experiments/analysis/r3_observed_style_20261116/ERGEBNIS.md).

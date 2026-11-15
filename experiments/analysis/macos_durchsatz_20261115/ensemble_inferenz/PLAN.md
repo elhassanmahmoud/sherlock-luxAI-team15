@@ -1,0 +1,7 @@
+# Gemeinsame Berechnung der 36 V14-Netze
+
+Der V14-Zug wertet bei bis zu 16 aktiven Einheiten dieselben 36 Netze nacheinander aus. Die isolierte Variante stapelt die jeweiligen Gewichte einmal je Schicht und berechnet die 36 linearen Abbildungen in einer Torch-Operation. Alle Netzgewichte, Biaswerte, ReLU-Stufen, der Dueling-Ausdruck und die Reihenfolge beim abschließenden Mittel bleiben erhalten.
+
+Zuerst vergleichen wir sämtliche verfügbaren Einheitsmerkmale der sechs bestehenden R3-Aufnahmen 7287000–7287002, beide Sitze und alle drei Gegner. Erfasst werden maximaler absoluter Unterschied der sechs Q-Werte und jede Änderung der zulässigen Aktion mit dem höchsten Wert. Auf jedem vierten dieser Zustände messen wir je vier abwechselnde Durchläufe beider Verfahren mit einem Rechenthread. Auf der unabhängigen archivierten Kursaufnahme 4242 spielen beide Verfahren je zweimal dieselben 606 Züge nach. Die Zeitmessung umfasst den vollständigen Aufruf von act, die gespeicherten Beobachtungen und die Fehlerkontrolle. Es entstehen keine neuen Partien oder Trainingsbeispiele.
+
+Für eine Empfehlung zur weiteren Prüfung fordern wir null geänderte zulässige Netzentscheidungen und null abweichende Kursbefehle auf beiden Seiten, sowie mindestens zehn Prozent geringere mediane Gesamtlaufzeit der Züge. Der Test gilt für den gemessenen M3 und diesen Quell- und Gewichtsstand. Ein positiver Befund darf zukünftige getrennte Experimente beschleunigen; der bestehende 400-Karten-Vergleich benutzt durchgehend die ursprüngliche Berechnung.
