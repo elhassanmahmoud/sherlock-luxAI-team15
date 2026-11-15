@@ -1,5 +1,7 @@
 # Experiment-Protokoll
 
+15.11.2026 – R5 gewinnt 26/32 direkt gegen V14. R5, R2 und V14 gewinnen jeweils 32/32 gegen Solution und 0/32 gegen Kaggle. Vier Kaggle-Einzelmatches für R5. Von vier Auswahlbedingungen drei erfüllt. [224 vollständige Spiele](../experiments/analysis/own_command_20261115/SPIELE.md).
+
 15.11.2026 – Die Wegvariante schließt den gesamten bisherigen Satz mit 119/120 gegen Solution ab, gleichauf mit R3. 108 neue Ausführungen ergänzen zwölf vorhandene. Vier weitere Wiederholungen reproduzieren den neu verlorenen Sitz und seine Gegenseite. [Vergleich und Matchverläufe](../experiments/analysis/movement_soft_20261115/restart_route/ENTWICKLUNG.md).
 
 15.11.2026 – Frühe Wegprüfung nach dem Matchwechsel repariert die ausgewählte Niederlage auf 7273148/P0 und erhält die elf Kontrollsiege. 24 vollständige Wiederholungen, 134 tatsächliche Eingriffe, drei Einzelmatchsiege weniger bei einem zusätzlichen ganzen Sieg. [Gezielter Versuch](../experiments/analysis/movement_soft_20261115/restart_route/ERGEBNIS.md).

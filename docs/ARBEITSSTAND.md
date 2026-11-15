@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R5 hält die externen Siege und gewinnt direkt 26/32
+
+Alle drei Modelle gewinnen auf den 16 neuen Karten 32/32 gegen Solution und 0/32 gegen Kaggle. R5 gewinnt im Direktduell 26/32 gegenüber V14. Für eine Bestätigung fehlten die zwei zusätzlichen externen Siege. Ein neuer Einzelschüler soll R5s Gedächtnis für den letzten Befehl mit R3s vorsichtigerer Auswahl verbinden. [R5-Spielergebnisse](../experiments/analysis/own_command_20261115/SPIELE.md) · [R7-Trainingsplan](../experiments/analysis/combined_movement_20261115/PLAN.md).
+
 ## 15.11.2026 – Vollständige alte Kartenreihe ergibt erneut 119/120
 
 Die frühe Wegprüfung rettete die ursprüngliche R3-Niederlage, verlor jedoch einen zuvor gewonnenen Sitz auf 7273105. Dort erzielte die Mannschaft ihren ersten Punkt sogar drei Züge früher und verlor das zweite und dritte Match. Alle 120 Ergebnisse sind jetzt vollständig. Das Verfahren auf 60 neuen Karten ist vorab festgelegt. [Rohdaten und Wiederholung des Rückfalls](../experiments/analysis/movement_soft_20261115/restart_route/ENTWICKLUNG.md).

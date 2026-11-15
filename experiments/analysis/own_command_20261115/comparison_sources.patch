@@ -1,0 +1,29 @@
+--- a/scripts/final_battle_compare.py
++++ b/scripts/final_battle_compare.py
+@@ -68,6 +68,10 @@
+ def contract(args):
+     tracked = list((ROOT/'agents/sherlock').glob('*.py')) + list((ROOT/'agents/Solution_92_Kaggle').glob('*.py'))
+     tracked += [ROOT/'scripts'/f for f in ('final_battle_compare.py','common.py','scoring.py','par_eval.py','metrics.py','kaggle3_opponent.py','experiment.py')]
++    # The agents package auto-imports all of its descendants on startup.
++    tracked.extend((ROOT/'agents').rglob('*.py'))
++    tracked.extend((ROOT/'lux').glob('*.py'))
++    tracked += [ROOT/'scripts'/f for f in ('__init__.py','protocol.py','variants.py','fetch_kaggle3.py')]
+     tracked.append(ROOT/(POLICIES[args.candidate].split(':')[0].replace('.','/')+'.py'))
+     if args.candidate == 'learned': tracked.extend((ROOT/'scripts').glob('final_learning_*.py'))
+     if args.candidate == 'stack_reserve':
+@@ -81,7 +85,14 @@
+         tracked.extend(TARGET.rglob('*.py')); tracked.extend(TARGET.rglob('*.pth'))
+     import importlib.util
+     engine_path = Path(importlib.util.find_spec('luxai_s3').origin).parent
+-    return dict(candidate=args.candidate, opponents=args.opponents.split(','), first=args.first, maps=args.maps,
++    from importlib import metadata
++    import os
++    import platform
++    runtime = dict(python=platform.python_version(), platform=platform.system(), machine=platform.machine(),
++                   flags={k:os.environ.get(k) for k in ('JAX_PLATFORMS','XLA_FLAGS','CUDA_VISIBLE_DEVICES','PYTHONHASHSEED')},
++                   versions={k:metadata.version(k) for k in ('numpy','scipy','torch','jax','jaxlib','luxai-s3')},
++                   engine={p.name:digest(p) for p in sorted(engine_path.glob('*.py'))})
++    return dict(environment=runtime, candidate=args.candidate, opponents=args.opponents.split(','), first=args.first, maps=args.maps,
+                 model=digest(args.model) if args.model else None, weights=digest(WEIGHTS),
+                 sources={str(p.relative_to(ROOT)):digest(p) for p in sorted(set(tracked))},
+                 engine={k:digest(engine_path/k) for k in ('env.py','params.py','wrappers.py')})

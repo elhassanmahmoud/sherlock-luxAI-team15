@@ -4,16 +4,18 @@ python -m scripts.final_battle_assess screen --reference V14_EXT --candidate NEW
 python -m scripts.final_battle_assess confirm --reference CONF_V14 --candidate CONF_EXT --direct CONF_DIRECT \
     --screen-reference V14_EXT --screen-candidate NEW_ALL
 
-For distill and previous_enemy, pass --selection-control R2_EXT in both stages. For
+For distill, previous_enemy and own_command, pass --selection-control R2_SCREEN in both stages.
+Only own_command also requires --confirmation-control R2_FRESH in the confirm stage. For
 previous_enemy also pass --model-sha256 with the SHA-256 of the temporal training output.
 Fractions and confidence bounds are on the 0–1 scale.
 completed.json binds the JSONL rows. Manifest hashes in the report identify the configurations
-actually compared; the runner does not issue a signed manifest or separately log runtime parameters.
+actually compared. The own_command snapshot additionally records its runtime environment.
 """
 from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+from hashlib import sha256
 import json
 from pathlib import Path
 import re
@@ -28,14 +30,25 @@ FIRST_MOVEMENT_MODEL = "5327d0ff4e2cc4b09bdcb43ae51fbd7dcc9f6d8487f79f4a7cfd1ad1
 STACK_RESERVE_SHA = "ed19e3df648821ad54b1fa3c2dbf0148f30f496dceeb4a921ba095f712af24c6"
 R2_MODEL = "23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96"
 DISTILL_MODEL = "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+OWN_COMMAND_MODEL = "a41e95000017aa853f277f8bf99d71ce4fdb8c45950751f942e6fde19570b153"
+# Computed before the first game from the separate R5 runner snapshot. Native Kaggle
+# sources and weights are included for external arms and omitted in direct-only duels.
+OWN_SOURCE_DIGESTS = {
+    ("v14", True): "44d2542e1c683aed6c5ce661ed56b25327242e53175c7a923b66215961019430",
+    ("selective_movement", True): "9329ea12255fe151340415990df333376f60780dded38ef6802a40d82fde62d8",
+    ("selective_movement", False): "558b20783f564e6f4b9f52eb7ce082705ca4f89d6376eaf245d72bf084f5fba1",
+}
+OWN_ENGINE_FILES = {"__init__.py", "env.py", "globals.py", "params.py", "profiler.py", "pygame_render.py",
+                    "spaces.py", "state.py", "utils.py", "wrappers.py"}
 SEED_BLOCKS = {
     "selective": (7271400, 7271500, 7271600),
     "dagger": (7272300, 7272400, 7272500),
     "stack_reserve": (7272300, 7272400, 7272500),
     "distill": (7273000, 7273100, 7273200),
     "previous_enemy": (7275000, 7275100, 7275200),
+    "own_command": (7277000, 7277100, 7277200),
 }
-# In both snapshots the registered runner maps selective_movement to mode="movement".
+# In these snapshots the registered runner maps selective_movement to mode="movement".
 # Temporal and ordinary agents share a manifest name. Pin the actual implementation.
 _COMMON_MOVEMENT = {
     "scripts/final_battle_compare.py": "de6931510d847b0baa4dc7065ab01ef2a37613baed361ca85df1fe3b27e5d764",
@@ -43,6 +56,11 @@ _COMMON_MOVEMENT = {
     "scripts/collect_combat_advice.py": "6d54e866cbb2e451216eea10679d71a04b164d403a9f624faab8895fe61ac24c",
 }
 MOVEMENT_SOURCES = {
+    "own_command": {**_COMMON_MOVEMENT,
+                    "scripts/final_battle_compare.py": "94a3730379641129f0d6de49ee492e9f76d226d3782b47d637fe2c86962f7365",
+                    "scripts/selective_advice_agent.py": "89c8cda564e84e9ec0424aece1117702012179b498253210d2fda5f5354d502e",
+                    "scripts/imitate.py": "48a1b5c133799dfd0a6ca83b61215d1243a873634b9bed24ae01e6077c35b10e"},
+
     "distill": {**_COMMON_MOVEMENT,
                 "scripts/selective_advice_agent.py": "fc7540ce2e299ff4601bfa5c25e390b477ae65cc91a796b56432b9cb0a6759f1",
                 "scripts/imitate.py": "fa80f17712f52e4236e2ff771e62c1a8a8cac616c76d02ce493a0b8635af2ccb"},
@@ -202,6 +220,22 @@ def summarize(phase, stage):
     return report
 
 
+def own_command_runtime(phase, control):
+    reference = phase.reference.manifest.get("environment")
+    for run in (phase.reference, phase.candidate, phase.direct, control):
+        m = run.manifest
+        native = "kaggle3" in m["opponents"]
+        encoded = json.dumps(m["sources"], sort_keys=True, separators=(",", ":")).encode()
+        if sha256(encoded).hexdigest() != OWN_SOURCE_DIGESTS.get((m["candidate"], native)):
+            raise ValueError("Unregistered own-command game snapshot")
+        env = m.get("environment", {})
+        if (env != reference or not env.get("python") or not env.get("machine") or not env.get("platform")
+                or not isinstance(env.get("flags"), dict) or set(env.get("engine", {})) != OWN_ENGINE_FILES
+                or any(env["engine"].get(k) != v for k, v in m["engine"].items())
+                or set(env.get("versions", {})) != {"numpy", "scipy", "torch", "jax", "jaxlib", "luxai-s3"}):
+            raise ValueError("Different or incomplete own-command environment")
+
+
 def selection_control(phase, directory, protocol):
     control = load_run(directory, "selective_movement", phase.external_seeds, OPPONENTS)
     if control.manifest["model"] != R2_MODEL:
@@ -212,6 +246,8 @@ def selection_control(phase, directory, protocol):
     expected = {**phase.reference.manifest["sources"], **MOVEMENT_SOURCES[protocol]}
     if control.manifest["sources"] != expected:
         raise ValueError(f"Movement or reference implementation differs from the registered {protocol} snapshot")
+    if protocol == "own_command":
+        own_command_runtime(phase, control)
     by_opp, paired = external_comparison(control, phase.candidate, phase.external_seeds, "r2_wins")
     return {**paired, "by_opponent": by_opp, "model": R2_MODEL, "files": control.hashes,
             "r2_wins": sum(v["r2_wins"] for v in by_opp.values()),
@@ -223,21 +259,26 @@ def assess(args):
     name = "stack_reserve" if protocol == "stack_reserve" else "selective_movement"
     model = args.model_sha256
     control_dir = getattr(args, "selection_control", None)
+    fresh_control = getattr(args, "confirmation_control", None)
+    needs_fresh_control = protocol == "own_command" and args.stage == "confirm"
+    if bool(fresh_control) != needs_fresh_control:
+        raise ValueError("--confirmation-control on the 60 fresh external maps is required only for own_command confirmation")
     if protocol in MOVEMENT_SOURCES:
         if not control_dir:
             raise ValueError(f"{protocol} requires --selection-control from the original 16 selection maps")
         if (args.screen_first, args.confirm_first, args.confirm_direct_first) != SEED_BLOCKS[protocol] or (
                 args.screen_maps, args.confirm_maps) != (16, 60) or args.screen_direct_first not in (None, args.screen_first):
             raise ValueError(f"Map blocks differ from the registered {protocol} protocol")
-        if protocol == "distill":
-            if model not in (None, DISTILL_MODEL):
-                raise ValueError("Distill requires the registered soft-target checkpoint")
-            model = DISTILL_MODEL
+        if protocol in ("distill", "own_command"):
+            fixed = DISTILL_MODEL if protocol == "distill" else OWN_COMMAND_MODEL
+            if model not in (None, fixed):
+                raise ValueError(f"{protocol} requires the registered training checkpoint")
+            model = fixed
         elif (not model or not re.fullmatch(r"[0-9a-f]{64}", model)
               or model in (FIRST_MOVEMENT_MODEL, R2_MODEL, DISTILL_MODEL, V14_SHA)):
             raise ValueError("previous_enemy requires --model-sha256 of the temporal training output")
     elif control_dir:
-        raise ValueError("--selection-control applies only to distill and previous_enemy")
+        raise ValueError("--selection-control applies only to movement protocols with an R2 control")
     if name == "stack_reserve" and model is not None:
         raise ValueError("stack_reserve uses the registered policy source without an extra checkpoint")
     first = args.screen_first
@@ -278,6 +319,13 @@ def assess(args):
     if control_dir:
         compatible(screen.reference, confirmation.reference)
     result = summarize(confirmation, "confirm")
+    if fresh_control:
+        if screen.reference.manifest["environment"] != confirmation.reference.manifest.get("environment"):
+            raise ValueError("Different own-command environment across study phases")
+        paired = selection_control(confirmation, fresh_control, protocol)
+        result["confirmation_control"] = paired
+        result["gates"]["external_at_least_r2"] = paired["net_wins"] >= 0
+        result["game_gates_pass"] = all(result["gates"].values())
     result["selection"] = report
     result["scope"] = "Whole-game gates only. Default, course and submission-package checks remain separate."
     return result
@@ -291,6 +339,7 @@ def main():
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--direct", type=Path, help="Separate direct-only run; otherwise read V14 duels from --candidate")
     parser.add_argument("--selection-control", type=Path, help="External R2 run on the original 16 selection maps")
+    parser.add_argument("--confirmation-control", type=Path, help="Fresh R2 external comparison for own_command confirmation")
     parser.add_argument("--model-sha256", help="Also pin the candidate to the registered training output")
     for flag in ("screen-reference", "screen-candidate", "screen-direct"):
         parser.add_argument("--"+flag, type=Path)
