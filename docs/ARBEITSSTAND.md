@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Erste 25 zusätzliche Lehrerspiele für Mahmoud geprüft
+
+Der reine v4-Schüler hat 25 neue Karten gespielt. Der Kaggle-Lehrer hat 81.564 Entscheidungen beschriftet, darunter 2.839 legale Schüsse. 79.780 Entscheidungen lässt der Trainer zu. Beide Sitze und alle drei Gegner sind vertreten. Der unabhängige Neuaufbau aus Git reproduziert alle 293 eingefrorenen Dateien sowie das Laufprotokoll. Zwei Prozesse sammeln die übrigen 375 Karten. [Datensatz und Reproduktion](../experiments/analysis/umbau_20261115/dagger_zusatz/README.md).
+
 ## 16.11.2026 – V15 gewinnt sieben zusätzliche Spiele gegen die quadratische Solution-Variante
 
 V15 gewinnt gegen drei weitere Spielweisen insgesamt 144/144, V14 137/144. Gegen die Solution-Variante mit geänderter Schussreichweite lautet der Vergleich 48/48 gegenüber 41/48 (+14,58 Prozentpunkte, 95 % +4,17 bis +27,08). Gegen Rush und das Kurs-DQN gewinnen beide alle Spiele. Auf denselben 24 Karten und beiden Startseiten wurden alle 288 Rohzeilen, Spiel- und Matchsiege und beide Abschlussdateien überprüft. Die Werte gegen die originale Solution stammen aus den separaten Vergleichen. [Robustheit gegen die drei Gegner](../experiments/analysis/umbau_20261115/robustness/ERGEBNIS.md).

@@ -1,0 +1,54 @@
+--- a/scripts/imitate.py
++++ b/scripts/imitate.py
+@@ -149,6 +149,9 @@
+ def _dagger_worker(job) -> list[dict]:
+     """DAgger: der Schueler spielt selbst, ein Schatten-Lehrer auf seiner Seite sagt fuer genau diese Lagen,
+     was er getan haette. So lernt das Netz auch Zustaende, in die nur seine eigenen Fehler fuehren."""
++    checked = len(job) > 4 and job[4] == "v4_extra_7172000"
++    if checked:
++        from scripts.optional_v4_dagger import PublicChecks, store_game
+     games, out_dir, student_path = job[:3]
+     overrides = job[3] if len(job) > 3 else []
+     from scripts.experiment import limit_threads
+@@ -161,6 +164,7 @@
+     env = LuxAIS3GymEnv(numpy_output=True)
+     done_meta = []
+     for seed, sside, opp_kind in games:
++        started = time.monotonic() if checked else None
+         oside = "player_1" if sside == "player_0" else "player_0"
+         if overrides:
+             from scripts.par_eval import build_cfg
+@@ -178,15 +182,20 @@
+         for p in (student, opp, teacher):
+             if hasattr(p, "set_env_cfg"):
+                 p.set_env_cfg(info["params"])
++        audit = PublicChecks(student) if checked else None
+         rec = SideRecord()
+         step, done = 0, False
+         while not done:
+             label = np.asarray(teacher.act(step, obs[sside]))
+             acts = {sside: np.asarray(student.act(step, obs[sside])), oside: np.asarray(opp.act(step, obs[oside]))}
++            if audit is not None:
++                audit.before(step, obs[sside], student.last_fz, acts[sside], label)
+             if student.last_fz is not None:
+                 rec.add(student.last_fz, label, student.belief.mirrored)
+             obs, _, term, trunc, info = env.step(acts)
+             teacher.remember_played_actions(acts[sside])
++            if audit is not None:
++                audit.feedback += 1
+             done = bool(np.asarray(term[sside])) or bool(np.asarray(trunc[sside]))
+             step += 1
+         wins = np.asarray(obs[sside]["team_wins"]).tolist()
+@@ -194,7 +203,11 @@
+         meta = dict(seed=seed, side=sside, opponent=opp_kind, dagger=True, student=str(student_path),
+                     teacher_history="played_student_actions",
+                     student_wins=int(wins[team]), opp_wins=int(wins[1 - team]))
+-        n = rec.save(Path(out_dir) / f"g{seed}_{sside}_{opp_kind}_dagger.npz", meta)
++        if audit is None:
++            n = rec.save(Path(out_dir) / f"g{seed}_{sside}_{opp_kind}_dagger.npz", meta)
++        else:
++            meta.update(audit.result(student, opp, step), rollout_seconds=time.monotonic()-started)
++            n = store_game(rec, Path(out_dir), meta)
+         done_meta.append({**meta, "samples": n})
+     env.close()
+     return done_meta
