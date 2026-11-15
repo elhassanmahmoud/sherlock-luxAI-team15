@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Zusätzlicher Solution-Vergleich nutzt einen fünften Rechenplatz
+
+Bei vier aufgewärmten Reihen konnte der Mac weitere 80 bereits geplante R3-Kontrollspiele auf einem fünften Platz ausführen. Insgesamt wurden in 611 Sekunden 330 Spiele beendet. Es gab zeitweise Speicherwarnungen und keine zusätzliche Auslagerung. Damit liegen getrennte Werte für den identischen V14-Referenzversuch und für den tatsächlichen gemischten Betrieb vor. [Zeit- und Speicherverlauf](../experiments/analysis/macos_durchsatz_20261115/ERGEBNIS.md).
+
 ## 16.11.2026 – Der Richtungsberater profitiert je nach Karte unterschiedlich vom Nachtraining
 
 Auf 317.106 archivierten Einheitsentscheidungen wurden ursprüngliche und nachtrainierte Gewichte jeweils mit und ohne zusätzliches Richtungsfenster verglichen. Gegen den ursprünglichen Richtungsberater trifft die Kombination in der älteren Gruppe netto 106 Lehreraktionen weniger und in der jüngeren 231 mehr. Vier von fünf Bedingungen bestanden. Eine separate kombinierte Spielreihe entfällt. Der Grenztest für die gepaarte Auswertung bestand, alle Vergleichswerte wurden je Sitz an ihre früheren Messungen gebunden. [Vier Varianten auf denselben Stellungen](../experiments/analysis/midpoint_turn_20261115/ERGEBNIS.md).
