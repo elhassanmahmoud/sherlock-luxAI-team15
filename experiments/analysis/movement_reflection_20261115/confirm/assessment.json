@@ -1,0 +1,80 @@
+{
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 2711,
+    "unit": "whole map with both seats and external opponents"
+  },
+  "by_opponent": {
+    "kaggle3": {
+      "candidate_wins": 0,
+      "difference_ci95": [
+        -0.08333333333333333,
+        0.0
+      ],
+      "gained": 0,
+      "games": 120,
+      "lost": 4,
+      "net_wins": -4,
+      "v14_wins": 4,
+      "winrate_difference": -0.03333333333333333
+    },
+    "solution92": {
+      "candidate_wins": 118,
+      "difference_ci95": [
+        0.016666666666666666,
+        0.15
+      ],
+      "gained": 10,
+      "games": 120,
+      "lost": 1,
+      "net_wins": 9,
+      "v14_wins": 109,
+      "winrate_difference": 0.075
+    }
+  },
+  "candidate": "diagonal",
+  "candidate_files": {
+    "games_sha256": "3aa62eee437e849e1c745d48adf25891b83973b76e4b50052bd96b077daa0e84",
+    "manifest_sha256": "e06715ca12db558f7055284bff5ff51ae8416b237722f80421d24f46eaaf8894"
+  },
+  "direct": {
+    "games": 120,
+    "losses": 20,
+    "winrate": 0.8333333333333334,
+    "winrate_ci95": [
+      0.7333333333333333,
+      0.9166666666666666
+    ],
+    "wins": 100
+  },
+  "direct_files": {
+    "games_sha256": "7e48be55e7a8191d12d439c4a5a00d612f597f00c9d8ba3fd50012e93801d578",
+    "manifest_sha256": "e94d9d29faef522cc5c21ec0192cd7a4597d447de16842c744ce4736d3cfb5eb"
+  },
+  "direct_first": 7286200,
+  "external": {
+    "difference_ci95": [
+      -0.020833333333333332,
+      0.0625
+    ],
+    "games": 240,
+    "net_wins": 5,
+    "winrate_difference": 0.020833333333333332
+  },
+  "external_first": 7286100,
+  "game_gates_pass": false,
+  "gates": {
+    "direct_lower_bound_above_half": true,
+    "direct_majority": true,
+    "external_lower_bound_positive": false,
+    "solution_at_least_reference": true
+  },
+  "model": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "offline_sha256": "8f927db8b83927899d7dba2eeaf0fad23facba5901e05fe430f59632814857b1",
+  "reference_files": {
+    "games_sha256": "88ade28462a24f96d7e7120b2d6157a04d65d034bd8cc5a2bdbcec656904f41f",
+    "manifest_sha256": "95d3be78f62022e2431f6c7ebdbc4694a50753bfba1c14728639a1a72568768b"
+  },
+  "screen_sha256": "296c68169e093ebab3b478af096332e6581906a4be12e427be11d3368df59421",
+  "stage": "confirm"
+}

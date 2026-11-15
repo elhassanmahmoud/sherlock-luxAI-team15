@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 mit zwei Ansichten schlägt V14 gegen Solution und direkt
+
+600 frische Spiele. Gegen Solution 118/120 für R3, 109/120 für V14. Direkt 100/120 für R3. Gegen Kaggle 0/120 für R3, 4/120 für V14. Die zwei Startpositionen jeder Karte wurden bei der Unsicherheitsrechnung zusammengehalten. Die Freigabeschwelle über beide externen Gegner ist verfehlt. Zwei Kursreplays reproduzierten 606 Aktionsmatrizen. [Karten, Unsicherheit und Rohdaten](../experiments/analysis/movement_reflection_20261115/BESTAETIGUNG.md).
+
 ## 15.11.2026 – R3 und V15 gemeinsam auf elf bekannten Verlustsitzen
 
 Beide Eltern reproduzierten vier historische Spiele bis auf die Punktzahl. Ein neuer Kandidat übernimmt bei sichtbarem Gegner im Umkreis von fünf Feldern den vollständigen V15-Befehl der Einheit, sonst den von R3. Er gewinnt acht der elf ausgewählten Sitze gegen Solution, R3 sechs und V15 fünf. Für eine allgemeine Aussage folgt ein getrennter Vergleich auf 16 frischen Karten. [Ergebnisse und Einheitszüge](../experiments/analysis/r3_v4_contact_20261115/DIAGNOSE.md).

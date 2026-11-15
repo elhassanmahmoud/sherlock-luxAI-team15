@@ -1,0 +1,118 @@
+{
+  "format": "final_diagonal",
+  "import_path": "agents.sherlock.main.Agent_x",
+  "load_paths": [
+    "agents/sherlock/weights/agent.pth",
+    "agents/sherlock/weights/agent.pth"
+  ],
+  "research_commit": "0105658188b2ec5eaf5c3a4b0ef477be9a1412f8",
+  "games": [
+    {
+      "seed": 7271000,
+      "side": "player_0",
+      "opponent": "solution92",
+      "equal_action_matrices": 303,
+      "course_updates": 303,
+      "match_start_steps": [
+        0,
+        101,
+        202
+      ],
+      "team_wins_at_match_start": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "final_wins": [
+        2,
+        1
+      ],
+      "movements_per_match": [
+        137,
+        113,
+        54
+      ],
+      "selective_counts": {
+        "movement": 304,
+        "changed_steps": 167,
+        "changed_unit_orders": 304
+      },
+      "caught_errors": 0,
+      "rejected_orders": 0,
+      "sap_orders": 59,
+      "nonzero_sap_offsets": 59,
+      "world_actions_int64_le_sha256": "5605fc7f8d7145ca74498408c0c9dee6c2b4779218a45a630362de095744037d",
+      "standard_r3_actions_sha256": "e749bc4ba8fd124eea24627d60a03f7e430f3966ba4c032e33bc63f924fbbae7",
+      "differs_from_standard_r3": true
+    },
+    {
+      "seed": 7271000,
+      "side": "player_1",
+      "opponent": "solution92",
+      "equal_action_matrices": 303,
+      "course_updates": 303,
+      "match_start_steps": [
+        0,
+        101,
+        202
+      ],
+      "team_wins_at_match_start": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "final_wins": [
+        2,
+        1
+      ],
+      "movements_per_match": [
+        147,
+        122,
+        79
+      ],
+      "selective_counts": {
+        "movement": 348,
+        "changed_steps": 190,
+        "changed_unit_orders": 348
+      },
+      "caught_errors": 0,
+      "rejected_orders": 0,
+      "sap_orders": 51,
+      "nonzero_sap_offsets": 51,
+      "world_actions_int64_le_sha256": "7553e039931e864a31b06c83d0956e08d306f48c070d433eb9c9c71e133fe781",
+      "standard_r3_actions_sha256": "1dbeaa80a5dd81ba168a9382d76eaff65aa3820b118158bdafc41425e9cb413d",
+      "differs_from_standard_r3": true
+    }
+  ],
+  "result": "passed",
+  "zip_sha256": "feaf20aa7058ad856634cd8a5a2daf56bfc6da4f6be296cff6d98fc55eefac25",
+  "v14_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+  "r3_sha256": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9",
+  "original_python_sources_sha256": "2ede35c0e544c06b079b7ef7eaf7d1c0f56dd0c92f33347c172f30f48245c736",
+  "checker_sha256": "63ca4ae13e45d80ce7f63e872787e82010f23a9968f4448564e180f46e8e33d7",
+  "diagonal_source_commit": "aa5cd60354014ac33ddc4d6b1013e1842ba27aa7",
+  "engine_sha256": {
+    "luxai_s3.env": "cc1b2657e1b56df21ec890bc78eab75539575e16529b8b8e5a1e8d1b4865a469",
+    "luxai_s3.params": "74511d1415879ca65ffa9b4e6b3918e8f85d711ae47b458425bebe39694df666",
+    "luxai_s3.wrappers": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26"
+  },
+  "course_weights_sha256": "d20814949d4460c523ac718acf74e282ef5cdf4e3b743b4713d6aac95795d554"
+}
