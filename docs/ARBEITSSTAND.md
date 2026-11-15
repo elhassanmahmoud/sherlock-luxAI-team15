@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Der Richtungsberater profitiert je nach Karte unterschiedlich vom Nachtraining
+
+Auf 317.106 archivierten Einheitsentscheidungen wurden ursprüngliche und nachtrainierte Gewichte jeweils mit und ohne zusätzliches Richtungsfenster verglichen. Gegen den ursprünglichen Richtungsberater trifft die Kombination in der älteren Gruppe netto 106 Lehreraktionen weniger und in der jüngeren 231 mehr. Vier von fünf Bedingungen bestanden. Eine separate kombinierte Spielreihe entfällt. Der Grenztest für die gepaarte Auswertung bestand, alle Vergleichswerte wurden je Sitz an ihre früheren Messungen gebunden. [Vier Varianten auf denselben Stellungen](../experiments/analysis/midpoint_turn_20261115/ERGEBNIS.md).
+
 ## 16.11.2026 – Spätes Umschalten auf V15 kostet zwei Solution-Siege
 
 In sämtlichen 16 betroffenen Partien sind die 4.033 Befehlsmatrizen pro Mannschaft vor der ersten Umschaltung identisch zur Kontrolle. Von vier ursprünglichen Niederlagen wird eine gerettet, drei frühere Siege gehen verloren. Auf dem vollständigen Archiv entspricht das 362/368 statt 364/368. Alle 16 nachgespielten Sitze und 352 unveränderte Verläufe sind einzeln zuordenbar. Vier Tests und die getrennte Auswertung der versiegelten Spiele bestanden. [Ergebnisse und Rohbefehle](../experiments/analysis/r3_m3_deficit_20261115/ERGEBNIS.md).
