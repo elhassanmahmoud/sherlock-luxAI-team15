@@ -42,11 +42,35 @@ class MixedRecord(collect.AdviceRecord):
         return arrays
 
 
-def bind(out, parent_sha):
+class RawMixedRecord(MixedRecord):
+    def __init__(self,teacher):
+        super().__init__()
+        self.teacher = teacher
+        self.scores, self.selected, self.status = [], [], []
+
+    def capture(self,obs,actor,played,advised):
+        first = len(self.uid)
+        super().capture(obs,actor,played,advised)
+        if int(obs["steps"]) != self.teacher.raw_step or bool(actor.belief.mirrored) != bool(actor.team_id):
+            raise ValueError("Teacher policy and canonical V14 frame do not align")
+        self.status.append(self.teacher.raw_status)
+        for uid in self.uid[first:]:
+            self.scores.append(self.teacher.raw_scores[uid].copy())
+            self.selected.append(self.teacher.raw_selected[uid])
+
+    def arrays(self):
+        return dict(**super().arrays(),teacher_action_scores=np.asarray(self.scores, np.float32),
+                    teacher_selected=np.asarray(self.selected,np.int8),teacher_frame_status=np.asarray(self.status,np.int8))
+
+
+def bind(out, parent_sha, raw_teacher=False):
     cfg = collect.protocol()
     cfg.update(policy="selective_movement", teacher_history="played_selective_actions", student_sha256=parent_sha)
     for name in ("selective_dagger.py", "selective_advice_agent.py", "combat_teacher_counterfactual.py"):
         cfg["source_sha256"]["scripts/"+name] = collect.file_sha(Path(__file__).with_name(name))
+    if raw_teacher:
+        cfg["raw_teacher_policy"] = "pre_fallback_scores_v1"
+        cfg["source_sha256"]["scripts/teacher_policy_trace.py"] = collect.file_sha(Path(__file__).with_name("teacher_policy_trace.py"))
     raw = collect.canonical_json(cfg) + b"\n"
     path = out/"protocol.json"
     collect.publish(path, lambda f: f.write(raw))
@@ -59,7 +83,7 @@ def worker(job):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     from scripts.experiment import limit_threads
     from scripts.kaggle3_opponent import Kaggle3Opponent
-    out, parent, parent_sha, binding, keys = job
+    out, parent, parent_sha, binding, keys, raw_teacher = job
     limit_threads()
     if collect.file_sha(parent) != parent_sha:
         raise ValueError("Parent checkpoint changed")
@@ -74,13 +98,21 @@ def worker(job):
             path = out/collect.filename(seed,side)
             opponent = collect.opponent_for(seed)
             opp = imitate.make_player(opponent, f"player_{1-int(side[-1])}")
-            teacher = Kaggle3Opponent(side)
+            if raw_teacher:
+                from scripts.teacher_policy_trace import TracedTeacher
+                teacher = TracedTeacher(side)
+                record = RawMixedRecord(teacher)
+            else:
+                teacher = Kaggle3Opponent(side)
+                record = MixedRecord()
             if isinstance(opp,Kaggle3Opponent) and teacher.base.Global is opp.base.Global:
                 raise ValueError("Teacher and opponent share game history")
-            arrays, game = collect.play(env, actor, opp, teacher, seed, side, record=MixedRecord())
+            arrays, game = collect.play(env, actor, opp, teacher, seed, side, record=record)
             meta = dict(seed=seed, side=side, opponent=opponent, steps=collect.STEPS, teacher="kaggle3",
                         policy="selective_movement", teacher_history="played_selective_actions",
                         student_sha256=parent_sha, protocol_sha256=binding, arrays_sha256=collect.array_digest(arrays), **game)
+            if raw_teacher:
+                meta["raw_teacher_policy"] = "pre_fallback_scores_v1"
             collect.publish(path, lambda f: np.savez_compressed(f, meta=collect.canonical_json(meta).decode(), **arrays),
                             lambda tmp: collect.check_archive(tmp,seed,side,binding,student_sha=parent_sha))
             n = collect.check_archive(path,seed,side,binding,student_sha=parent_sha)
@@ -102,7 +134,7 @@ def collect_mixed(a):
     out = imitate._check_out(a.out)
     out.mkdir(parents=True, exist_ok=True)
     parent_sha = collect.file_sha(a.parent)
-    binding = bind(out,parent_sha)
+    binding = bind(out,parent_sha,a.raw_teacher)
     pending = []
     for seed,side in mixed["train"]+mixed["val"]:
         path = out/collect.filename(seed,side)
@@ -112,7 +144,7 @@ def collect_mixed(a):
             pending.append((seed,side))
     if pending:
         n = min(a.workers,len(pending))
-        jobs = [(out,a.parent,parent_sha,binding,pending[i::n]) for i in range(n)]
+        jobs = [(out,a.parent,parent_sha,binding,pending[i::n],a.raw_teacher) for i in range(n)]
         if n == 1:
             worker(jobs[0])
         else:
@@ -196,6 +228,7 @@ def main():
         sub.add_argument("--out",type=Path,required=True)
         for name,value in (("train-first",7272000),("train-count",120),("val-first",7272200),("val-count",24)):
             sub.add_argument("--"+name,type=int,default=value)
+    coll.add_argument("--raw-teacher",action="store_true",help="Record original six teacher scores and actual queried unit IDs")
     coll.add_argument("--workers",choices=(1,2),type=int,default=1)
     fit.add_argument("--original-data",type=Path,nargs="+",required=True)
     fit.add_argument("--mixed-data",type=Path,nargs="+",required=True)

@@ -19,6 +19,7 @@ def measure(members, archive):
         planes = torch.from_numpy(data["planes"])
         keys = ("step", "pos", "feats", "mask", "act", "sdx", "sdy", "base_act")
         rows = {key: torch.from_numpy(data[key]) for key in keys}
+        played = torch.from_numpy(data["played_act"]) if "played_act" in data.files else None
     prepare_labels(rows, *planes.shape[-2:])
     count = Counter()
     steps = rows["step"].numpy()
@@ -38,6 +39,12 @@ def measure(members, archive):
         masks = dict(rows=torch.ones_like(override), changed=override, base_matches=before,
                      advised_matches=after, helped=after & ~before, hurt=before & ~after,
                      changed_both_disagree=override & ~before & ~after)
+        if played is not None:
+            parent_match = played[batch] == teacher
+            masks.update(parent_played_matches=parent_match,
+                         parent_changed=played[batch] != base,
+                         model_recovers_over_parent=~parent_match & after,
+                         parent_matches_lost_by_model=parent_match & ~after)
         count.update({name: int(bits.sum()) for name, bits in masks.items()})
     if (count["advised_matches"] - count["base_matches"] != count["helped"] - count["hurt"]
             or count["changed"] != count["helped"] + count["hurt"] + count["changed_both_disagree"]):
@@ -71,7 +78,9 @@ def main():
             games.append(dict(cohort=group, seed=seed, side=side, opponent=opponent_for(seed),
                               counts=dict(measure(members, found[0]))))
     totals = dict(sum((Counter(g["counts"]) for g in games), Counter()))
-    result = dict(model_sha256=hashlib.sha256(args.model.read_bytes()).hexdigest(), totals=totals, games=games,
+    by_cohort = {group: dict(sum((Counter(g["counts"]) for g in games if g["cohort"] == group), Counter()))
+                 for group in cohorts}
+    result = dict(by_cohort=by_cohort, model_sha256=hashlib.sha256(args.model.read_bytes()).hexdigest(), totals=totals, games=games,
                   interpretation="Preserved observations, quantized inputs; movement advice before final engine legality check.")
     with args.out.open("x") as stream:
         json.dump(result, stream, indent=2)

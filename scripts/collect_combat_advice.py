@@ -158,7 +158,13 @@ def check_archive(path, seed, side, binding, *, student_sha=None):
             rows.extend(("played_act","played_sdx","played_sdy"))
         if any(meta.get(k) != v for k, v in expected.items()):
             raise ValueError(f"Archive identity mismatch: {path}")
-        arrays = {k: z[k] for k in (*rows, "planes", "global_step")}
+        raw = meta.get("raw_teacher_policy")
+        extras = ()
+        if raw is not None:
+            if raw != "pre_fallback_scores_v1" or student_sha is None:
+                raise ValueError("Unknown raw teacher format")
+            extras = ("teacher_action_scores","teacher_selected","teacher_frame_status")
+        arrays = {k: z[k] for k in (*rows, "planes", "global_step", *extras)}
     n, frames = len(arrays["act"]), arrays["global_step"]
     if (not n or not len(frames) or len(arrays["planes"]) != len(frames)
             or any(len(arrays[k]) != n for k in rows)
@@ -168,6 +174,15 @@ def check_archive(path, seed, side, binding, *, student_sha=None):
             or not np.array_equal(frames[arrays["step"]] % 101, arrays["mstep"])
             or array_digest(arrays) != meta.get("arrays_sha256")):
         raise ValueError(f"Invalid or altered advice data: {path}")
+    if raw is not None:
+        score, selected, status = (arrays[key] for key in extras)
+        if (score.shape != (n,6) or score.dtype != np.float32 or selected.shape != (n,)
+                or status.shape != (STEPS,) or not np.isin(status,[-1,0,1]).all()):
+            raise ValueError("Malformed raw teacher scores")
+        valid = status[frames[arrays["step"]]] == 1
+        if (not np.isfinite(score[valid]).all() or not np.isnan(score[~valid]).all()
+                or not np.isin(selected[valid],[0,1]).all() or not np.all(selected[~valid] == -1)):
+            raise ValueError("Inconsistent raw teacher frame validity")
     if student_sha is not None:
         base, played = arrays["base_act"], arrays["played_act"]
         if not np.all((played >= 0) & (played <= 5)):
