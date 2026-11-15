@@ -1,0 +1,66 @@
+<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sherlock V15 · Kurs-Replay</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1624;color:#eff3f6;font:16px/1.45 system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:24px}h1{font-size:clamp(1.4rem,4vw,2.4rem);margin:0}p{margin:.45rem 0 .9rem}
+.layout{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}canvas{width:100%;height:auto;display:block;background:#152536}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}button{background:#253f53;border:1px solid #517383;border-radius:5px;color:#fff;padding:6px 12px;font:inherit;cursor:pointer}
+input{width:100%;accent-color:#6ddac9}.p0{color:#69e6d7}.p1{color:#ffba78}.sub{color:#c4cfd9}.current{font-size:1.2rem}
+h2{font-size:1.15rem;margin:.75rem 0 .35rem}ol{padding-left:1.5em}
+@media(max-width:760px){.layout{grid-template-columns:1fr}main{padding:14px}}
+</style>
+<main><h1 id="title"></h1><p id="meta" class="sub"></p>
+<div class="layout"><div><canvas id="board" width="576" height="576" aria-label="Spielfeld aus Schiedsrichtersicht"></canvas>
+<div class="controls"><button id="play">Abspielen</button><button id="back" aria-label="Einen Zug zurück">−1</button><button id="next" aria-label="Einen Zug vor">+1</button><button id="scene">Zur Vortragsszene</button></div>
+<label for="slider" id="frame"></label><input id="slider" type="range" min="0" max="303" value="0" step="1">
+<p class="sub">Schiedsrichtersicht. Kreise zeigen aktive Schiffe, die Zahl auf einem Kreis zeigt die Anzahl auf diesem Feld. Ein heller Rahmen markiert ein in diesem Zug gewertetes Feld. Rauten sind Reliktknoten.</p></div>
+<section><div id="teams" class="current"></div><p id="score"></p><h2>Matchpunkte im Verlauf</h2><canvas id="chart" width="520" height="200" aria-label="Punktkurven des aktuellen Matches"></canvas>
+<p class="sub">Jedes Match beginnt bei null. Der letzte Wert enthält den Zuwachs im Wertungszug, bevor die Engine den öffentlichen Zähler zurücksetzt.</p>
+<h2>Vortragsszene</h2><p id="example"></p><h2>Ergebnis</h2><p id="result"></p><ol id="matches"></ol></section></div></main>
+<script type="application/json" id="data">__FRAMES__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById("data").textContent), s=data.summary, frames=data.frames;
+const el=id=>document.getElementById(id), colors=["#69e6d7","#ffba78"], board=el("board"), ctx=board.getContext("2d");
+const chart=el("chart"), line=chart.getContext("2d"), size=board.width/data.width, hsize=board.height/data.height;
+const level=t=>t===0?1:Math.floor((t-1)/101)+1;
+let turn=s.example.step, timer=null;
+el("title").textContent="Sherlock V15 gegen "+s.opponent;
+el("meta").textContent="Karte "+s.seed+" · V15 als "+s.v15_side+" · drei Matches";
+s.team_order.forEach((name,i)=>{const n=document.createElement("strong");n.className="p"+i;n.textContent=name;el("teams").append(n);if(i===0)el("teams").append(" / ");});
+el("example").textContent=s.example.text.join(" ");
+el("result").textContent=s.winner+" gewinnt. Aus Sicht von V15 "+s.v15_match_wins+":"+s.opponent_match_wins+" Matches.";
+s.matches.forEach(m=>{const n=document.createElement("li");n.textContent=m.points.join(":")+" Punkte · "+m.winner+" gewinnt"+(m.tiebreak?" nach Punktgleichstand":"");el("matches").append(n);});
+function map(f){
+ const tiles=data.terrain[f.map];
+ for(let x=0;x<data.width;x++)for(let y=0;y<data.height;y++){ctx.fillStyle=["#172a3a","#314a62","#5a5d65"][Number(tiles[x*data.height+y])];ctx.fillRect(x*size,y*hsize,size-0.65,hsize-0.65);}
+ ctx.fillStyle="#c5a4ff";for(const [x,y] of f.relics){ctx.save();ctx.translate((x+.5)*size,(y+.5)*hsize);ctx.rotate(Math.PI/4);ctx.fillRect(-4,-4,8,8);ctx.restore();}
+ for(const t of [0,1]){
+  const counts=new Map(f.fleets[t].map(pos=>[pos.join(","),0]));
+  for(const xy of f.fleets[t]){let k=xy.join(",");counts.set(k,counts.get(k)+1);}
+  for(const [k,n] of counts){const [x,y]=k.split(",").map(Number);const other=f.fleets[1-t].some(p=>p[0]===x&&p[1]===y);
+   const cx=(x+.5+(other?(t-.5)*.52:0))*size,cy=(y+.5)*hsize,r=other?size*.24:size*.34;
+   ctx.fillStyle=colors[t];ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.fill();
+   if(n>1){ctx.fillStyle="#112536";ctx.font="bold 11px system-ui";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(String(n),cx,cy);}}
+  ctx.lineWidth=2;ctx.strokeStyle=colors[t];for(const [x,y] of f.scored[t])ctx.strokeRect(x*size+2,y*hsize+2,size-5,hsize-5);
+ }
+}
+function curves(t){
+ const start=(level(t)-1)*101, values=[[0,0],...frames.slice(start+1,start+102).map(f=>f.points)];
+ const max=Math.max(1,...values.flat());const x=i=>38+i*4.55, y=v=>168-145*v/max;
+ line.fillStyle="#152536";line.fillRect(0,0,520,200);line.font="13px system-ui";line.fillStyle="#e6edf2";line.textAlign="left";
+ for(const n of [0,max])line.fillText(String(n),3,y(n)+4);
+ line.fillText("Zug 0",31,190);line.fillText("101",476,190);
+ for(const team of [0,1]){line.strokeStyle=colors[team];line.lineWidth=2.5;line.beginPath();values.forEach((v,i)=>i?line.lineTo(x(i),y(v[team])):line.moveTo(x(i),y(v[team])));line.stroke();}
+ line.strokeStyle="#eff3f6";line.lineWidth=1;line.beginPath();line.moveTo(x(t-start),12);line.lineTo(x(t-start),170);line.stroke();
+}
+function render(t){turn=Math.max(0,Math.min(303,t));const f=frames[turn];map(f);curves(turn);el("slider").value=turn;
+ el("frame").textContent="Match "+level(turn)+" · Zug "+(turn-(level(turn)-1)*101)+" · gesamter Spielzug "+turn+" / 303";
+ el("score").textContent=f.points.join(" : ")+" Punkte · "+f.wins.join(" : ")+" Matchsiege";}
+function stop(){if(timer!==null)clearInterval(timer);timer=null;el("play").textContent="Abspielen";}
+function step(t){stop();render(t);}
+el("slider").oninput=e=>step(Number(e.target.value));el("back").onclick=()=>step(turn-1);el("next").onclick=()=>step(turn+1);
+el("scene").onclick=()=>step(s.example.step);el("play").onclick=()=>{if(timer!==null)return stop();if(turn>=303)render(0);
+ el("play").textContent="Pause";timer=setInterval(()=>{render(turn+1);if(turn>=303)stop();},180);};
+render(turn);
+</script></html>
