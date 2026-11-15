@@ -1,8 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
-## 15.11.2026 – V15 schlägt V14 in 730/800 direkten Duellen
+## 15.11.2026, 20:44 Berlin – Claude Code mit Mahmoud: V15-Kandidat bestätigt – 91 % gegen V14, gleich gegen Solution, kein Kaggle-Vorteil; Entscheidung offen
 
-Mahmouds gemischter Hybrid gewinnt auf 400 Bestätigungskarten 764/800 gegen Solution (V14 767), 12/800 gegen Kaggle (V14 12) und 800/800 gegen Default (V14 800). Die Hürde für einen Kaggle-Vorteil ist verfehlt. Die 5.600 vollständigen Ergebnisse, beide Startpositionen, Matchsummen, Prüfsummen und Kartenziehungen wurden gegengeprüft. [Ergebnis und Rohdaten](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
+- **Einmalige Bestätigung** des vorab registrierten Kandidaten (Hybrid v4 mixed, SHA-256 `28933a3b…`) auf 7158000–7158399, je 800 Spiele, eingefrorene Quelle `ddbdb4b`: kaggle3 1,50 % wie V14 (Matches 4,25 statt 3,58 %), **Hürde 1 verfehlt**; Solution 95,50 % statt 95,88 % (bestanden); **direkt gegen V14 91,25 % [88,49; 94,00]** (bestanden); default 100 % (bestanden). Technik: Kurs-Runner 8/8, Zip-Kursprüfung, isoliertes Nachspielen 0 Abweichungen. [Entscheidungsvorlage](../experiments/analysis/umbau_20261115/V15_ENTSCHEIDUNG.md).
+- Nach Plan bleibt V14 die Abgabe, bis Mahmoud ausdrücklich entscheidet. Empfehlung: V15 übernehmen und in der Präsentation offenlegen, dass das Netz vom Kaggle-Agenten gelernt hat. V14-Gewichte und `Gruppe15.zip` unverändert; V14 nach allen Änderungen erneut mit 0 abweichenden Aktionen verifiziert.
+- Werkzeuge: `check_candidate_runner` prüft jetzt auch gepackte Hybride bitgenau; `Agent_x` delegiert auch in Unterklassen. Neue Taktikschalter für den Schüler, noch ungemessen: `imit_cover` (Tarnung), `imit_sap_bias`, `end_sap`, `focus_sap`.
+- Beide Rohdateien wurden unabhängig auf vollständige Kartensätze, Spielausgänge und die gewonnenen oder verlorenen Vergleichssitze geprüft. [Vergleich und Zählungen](../experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md).
 
 ## 15.11.2026 – Vollschüler mit zusätzlichen Lehrerpartien gewinnt das direkte Duell, verfehlt die externe Auswahl
 

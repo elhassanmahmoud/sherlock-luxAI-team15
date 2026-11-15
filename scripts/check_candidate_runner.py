@@ -75,6 +75,23 @@ def verify_loaded(agent, checkpoint: dict) -> None:
     import torch
     from agents.sherlock.config import AgentConfig
     from agents.sherlock.features import FEATURE_DIM
+    if isinstance(checkpoint, dict) and checkpoint.get("kind") == "hybrid" and "v14_ckpt" in checkpoint:
+        # 15.11.2026: gepackter Hybrid (V14 + nachgeahmte Policy). V14-Teil wie jeder DQN-Checkpoint pruefen,
+        # Schuelergewichte, Modus und Schuelerschalter bitgenau gegen die Datei.
+        hybrid = getattr(agent, "_imitation", None)
+        if hybrid is None or not hasattr(hybrid, "v14"):
+            raise ValueError("Hybrid checkpoint was not delegated to a HybridAgent")
+        verify_loaded(hybrid.v14, checkpoint["v14_ckpt"])
+        expected = checkpoint["student_ckpt"]["policy"]
+        loaded = hybrid.student.net.state_dict()
+        if loaded.keys() != expected.keys() or any(not torch.equal(loaded[k].cpu(), expected[k].cpu()) for k in expected):
+            raise ValueError("Loaded student weights differ")
+        if hybrid.mode != checkpoint.get("mode", "points") or hybrid.combat_radius != int(checkpoint.get("combat_radius", 5)):
+            raise ValueError("Hybrid mode differs")
+        for key, value in checkpoint.get("student_overrides", {}).items():
+            if getattr(hybrid.student.cfg, key) != value:
+                raise ValueError(f"Student switch {key} differs")
+        return
     if (not isinstance(checkpoint, dict) or "q" not in checkpoint
             or checkpoint.get("feature_dim", FEATURE_DIM) != agent.feat_dim
             or checkpoint.get("n_actions", agent.n_actions) != agent.n_actions):

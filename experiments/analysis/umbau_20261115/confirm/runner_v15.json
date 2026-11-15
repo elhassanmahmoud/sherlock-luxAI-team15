@@ -1,0 +1,125 @@
+{
+  "status": "passed",
+  "games": [
+    {
+      "side": "player_0",
+      "opponent": "default",
+      "seed": 500720,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 9.068000013940036,
+        "p95": 11.801004456356166,
+        "max": 12.420958955772221
+      }
+    },
+    {
+      "side": "player_0",
+      "opponent": "default",
+      "seed": 500721,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 7.5631249928846955,
+        "p95": 10.294149431865662,
+        "max": 11.541082989424467
+      }
+    },
+    {
+      "side": "player_1",
+      "opponent": "default",
+      "seed": 500720,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 9.129874990321696,
+        "p95": 12.199129513464868,
+        "max": 13.02066701464355
+      }
+    },
+    {
+      "side": "player_1",
+      "opponent": "default",
+      "seed": 500721,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 7.444625021889806,
+        "p95": 10.84101222222671,
+        "max": 12.067917035892606
+      }
+    },
+    {
+      "side": "player_0",
+      "opponent": "solution92",
+      "seed": 500720,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 9.13545791991055,
+        "p95": 12.339778919704258,
+        "max": 13.228541007265449
+      }
+    },
+    {
+      "side": "player_0",
+      "opponent": "solution92",
+      "seed": 500721,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 8.966875029727817,
+        "p95": 10.897657938767225,
+        "max": 11.82275009341538
+      }
+    },
+    {
+      "side": "player_1",
+      "opponent": "solution92",
+      "seed": 500720,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 9.161208057776093,
+        "p95": 12.335737282410262,
+        "max": 13.177334098145366
+      }
+    },
+    {
+      "side": "player_1",
+      "opponent": "solution92",
+      "seed": 500721,
+      "fresh_belief": true,
+      "loaded_model_verified": true,
+      "steps": 303,
+      "act_ms": {
+        "median": 8.603124995715916,
+        "p95": 10.89891642332077,
+        "max": 11.808707960881293
+      }
+    }
+  ],
+  "unchanged_sha256": {
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v15_candidate/weights/agent.pth": "28933a3b7810037b0af37b9ccfbf261c7c9b2b1353c8e0e8ef3b25e2c77cae45",
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/Paths.csv": "1c97ae130b96859ad87e91c12e9a00dae11670cde40f06835c4e96cd2965b57d",
+    "/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/lux/runner.py": "8b8a69f18ff8d1d32b84648804803cb798b5bf0a8747a5c9f97259be59816912"
+  },
+  "course_time_limit": "unknown; timings measured, no limit certified",
+  "max_rss_bytes_macos": 1972535296,
+  "notes": [
+    "Unchanged course runner; only workspace, class instrumentation and seed source patched.",
+    "Solution_92 class-global state is not reset here, matching course runner behavior.",
+    "Fresh Sherlock instance per game, as created by the course runner.",
+    "Action check covers shape, integer values and type 0..5, not all game rules.",
+    "Eight games on two reused development seeds are an integration test, not a winrate estimate."
+  ]
+}
