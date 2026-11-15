@@ -1,0 +1,352 @@
+{
+  "input_sha256": {
+    "kaggle3_20261115/devB_hyb_v4_mixed.csv": "c636616ec829532fad74605d13fcfc4d813dfee7b96b453d5eda219f45d8ec26",
+    "kaggle3_20261115/devB_v14.csv": "96f43d3899c353cca8fff8ebcd63d16020689297372176f4d0d95d073e265d52",
+    "kaggle3_20261115/student_hyb_v4_mixed.csv": "dab8ad9200433eb46b311992ef940e8110aeaf520ef4b1995b81b7403b80381c",
+    "kaggle3_20261115/student_hyb_v4_points.csv": "0dba9a914e11564a1f767182fe0230ee4e92bfe88fdafd9419e93cc3d3da7189",
+    "kaggle3_20261115/v14_ref_devA.csv": "589ebf326adbb2535bd0079b603d914a47b7b2987b2bdf8dd83ba9c2bcefb25f",
+    "umbau_20261115/confirm/v14_ref.csv": "957ac8668e10b6a118b40cb81338a86b3ec356556d68a116535b16d4130bfa05",
+    "umbau_20261115/confirm/v15_candidate.csv": "1cc603732dafff379e57f236be4fc37a0bdd7dfcfa35fcc0e7ce78c95387c4cd"
+  },
+  "panels": {
+    "Best\u00e4tigung": {
+      "groups": {
+        "all": {
+          "maps": 400,
+          "median_delta": {
+            "opp_points": -112.0,
+            "our_points": -35.0,
+            "unit_steps": 69.5
+          },
+          "more_unit_steps": 770,
+          "opponents_points_lower": 636,
+          "own_points_lower": 475,
+          "seats": 800,
+          "side_counts": {
+            "player_0": 400,
+            "player_1": 400
+          }
+        },
+        "gained": {
+          "maps": 26,
+          "median_delta": {
+            "opp_points": -375.5,
+            "our_points": 189.5,
+            "unit_steps": 162.0
+          },
+          "more_unit_steps": 29,
+          "opponents_points_lower": 30,
+          "own_points_lower": 6,
+          "seats": 30,
+          "side_counts": {
+            "player_0": 15,
+            "player_1": 15
+          }
+        },
+        "lost": {
+          "maps": 25,
+          "median_delta": {
+            "opp_points": 72.0,
+            "our_points": -293.0,
+            "unit_steps": 60.0
+          },
+          "more_unit_steps": 31,
+          "opponents_points_lower": 13,
+          "own_points_lower": 33,
+          "seats": 33,
+          "side_counts": {
+            "player_0": 17,
+            "player_1": 16
+          }
+        },
+        "lost_by_both": {
+          "maps": 3,
+          "median_delta": {
+            "opp_points": -95.0,
+            "our_points": -51.0,
+            "unit_steps": 37.0
+          },
+          "more_unit_steps": 3,
+          "opponents_points_lower": 2,
+          "own_points_lower": 3,
+          "seats": 3,
+          "side_counts": {
+            "player_0": 2,
+            "player_1": 1
+          }
+        },
+        "won_by_both": {
+          "maps": 384,
+          "median_delta": {
+            "opp_points": -112.5,
+            "our_points": -33.0,
+            "unit_steps": 67.0
+          },
+          "more_unit_steps": 707,
+          "opponents_points_lower": 591,
+          "own_points_lower": 433,
+          "seats": 734,
+          "side_counts": {
+            "player_0": 366,
+            "player_1": 368
+          }
+        }
+      },
+      "unconditional_map_paired_means": {
+        "opp_points": {
+          "ci95": [
+            -150.25978125,
+            -117.79409375000002
+          ],
+          "mean": -134.0075
+        },
+        "our_points": {
+          "ci95": [
+            -51.41553125,
+            -10.354937500000002
+          ],
+          "mean": -31.1625
+        },
+        "unit_steps": {
+          "ci95": [
+            97.6874375,
+            118.36659374999999
+          ],
+          "mean": 107.8125
+        }
+      }
+    },
+    "Dev A": {
+      "7150068_match_wins_of_three": {
+        "player_0": {
+          "mixed": 2,
+          "points": 1,
+          "v14": 3
+        },
+        "player_1": {
+          "mixed": 0,
+          "points": 2,
+          "v14": 2
+        }
+      },
+      "groups": {
+        "all": {
+          "maps": 100,
+          "median_delta": {
+            "opp_points": -118.5,
+            "our_points": -44.0,
+            "unit_steps": 78.5
+          },
+          "more_unit_steps": 192,
+          "opponents_points_lower": 167,
+          "own_points_lower": 112,
+          "seats": 200,
+          "side_counts": {
+            "player_0": 100,
+            "player_1": 100
+          }
+        },
+        "gained": {
+          "maps": 10,
+          "median_delta": {
+            "opp_points": -287.0,
+            "our_points": 168.0,
+            "unit_steps": 62.0
+          },
+          "more_unit_steps": 9,
+          "opponents_points_lower": 11,
+          "own_points_lower": 1,
+          "seats": 11,
+          "side_counts": {
+            "player_0": 5,
+            "player_1": 6
+          }
+        },
+        "lost": {
+          "maps": 5,
+          "median_delta": {
+            "opp_points": -36.0,
+            "our_points": -207.0,
+            "unit_steps": 119.0
+          },
+          "more_unit_steps": 5,
+          "opponents_points_lower": 3,
+          "own_points_lower": 5,
+          "seats": 5,
+          "side_counts": {
+            "player_0": 3,
+            "player_1": 2
+          }
+        },
+        "lost_by_both": {
+          "maps": 1,
+          "median_delta": {
+            "opp_points": -133.0,
+            "our_points": 184.0,
+            "unit_steps": 356.0
+          },
+          "more_unit_steps": 1,
+          "opponents_points_lower": 1,
+          "own_points_lower": 0,
+          "seats": 1,
+          "side_counts": {
+            "player_0": 0,
+            "player_1": 1
+          }
+        },
+        "won_by_both": {
+          "maps": 98,
+          "median_delta": {
+            "opp_points": -114.0,
+            "our_points": -47.0,
+            "unit_steps": 77.0
+          },
+          "more_unit_steps": 177,
+          "opponents_points_lower": 152,
+          "own_points_lower": 106,
+          "seats": 183,
+          "side_counts": {
+            "player_0": 92,
+            "player_1": 91
+          }
+        }
+      },
+      "points_wins_per_mixed_v14_group": {
+        "gained": 11,
+        "lost": 4,
+        "lost_by_both": 1,
+        "won_by_both": 178
+      },
+      "unconditional_map_paired_means": {
+        "opp_points": {
+          "ci95": [
+            -180.415125,
+            -122.54975
+          ],
+          "mean": -151.1
+        },
+        "our_points": {
+          "ci95": [
+            -42.58575,
+            31.336624999999977
+          ],
+          "mean": -6.245
+        },
+        "unit_steps": {
+          "ci95": [
+            102.695,
+            147.97574999999998
+          ],
+          "mean": 124.48
+        }
+      }
+    },
+    "Dev B": {
+      "groups": {
+        "all": {
+          "maps": 100,
+          "median_delta": {
+            "opp_points": -104.5,
+            "our_points": -46.5,
+            "unit_steps": 87.5
+          },
+          "more_unit_steps": 188,
+          "opponents_points_lower": 159,
+          "own_points_lower": 124,
+          "seats": 200,
+          "side_counts": {
+            "player_0": 100,
+            "player_1": 100
+          }
+        },
+        "gained": {
+          "maps": 8,
+          "median_delta": {
+            "opp_points": -325.0,
+            "our_points": 194.0,
+            "unit_steps": 145.0
+          },
+          "more_unit_steps": 11,
+          "opponents_points_lower": 10,
+          "own_points_lower": 3,
+          "seats": 11,
+          "side_counts": {
+            "player_0": 7,
+            "player_1": 4
+          }
+        },
+        "lost": {
+          "maps": 6,
+          "median_delta": {
+            "opp_points": 26.0,
+            "our_points": -122.5,
+            "unit_steps": 84.0
+          },
+          "more_unit_steps": 6,
+          "opponents_points_lower": 2,
+          "own_points_lower": 6,
+          "seats": 6,
+          "side_counts": {
+            "player_0": 3,
+            "player_1": 3
+          }
+        },
+        "lost_by_both": {
+          "maps": 4,
+          "median_delta": {
+            "opp_points": -78.5,
+            "our_points": -105.0,
+            "unit_steps": 176.5
+          },
+          "more_unit_steps": 4,
+          "opponents_points_lower": 4,
+          "own_points_lower": 3,
+          "seats": 4,
+          "side_counts": {
+            "player_0": 2,
+            "player_1": 2
+          }
+        },
+        "won_by_both": {
+          "maps": 94,
+          "median_delta": {
+            "opp_points": -103.0,
+            "our_points": -54.0,
+            "unit_steps": 84.0
+          },
+          "more_unit_steps": 167,
+          "opponents_points_lower": 143,
+          "own_points_lower": 112,
+          "seats": 179,
+          "side_counts": {
+            "player_0": 88,
+            "player_1": 91
+          }
+        }
+      },
+      "unconditional_map_paired_means": {
+        "opp_points": {
+          "ci95": [
+            -157.36087500000002,
+            -104.02925000000002
+          ],
+          "mean": -130.06
+        },
+        "our_points": {
+          "ci95": [
+            -89.23,
+            -12.134500000000006
+          ],
+          "mean": -51.665
+        },
+        "unit_steps": {
+          "ci95": [
+            92.909875,
+            128.95
+          ],
+          "mean": 110.385
+        }
+      }
+    }
+  }
+}
