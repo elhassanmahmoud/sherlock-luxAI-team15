@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 und V15 gemeinsam auf elf bekannten Verlustsitzen
+
+Beide Eltern reproduzierten vier historische Spiele bis auf die Punktzahl. Ein neuer Kandidat übernimmt bei sichtbarem Gegner im Umkreis von fünf Feldern den vollständigen V15-Befehl der Einheit, sonst den von R3. Er gewinnt acht der elf ausgewählten Sitze gegen Solution, R3 sechs und V15 fünf. Für eine allgemeine Aussage folgt ein getrennter Vergleich auf 16 frischen Karten. [Ergebnisse und Einheitszüge](../experiments/analysis/r3_v4_contact_20261115/DIAGNOSE.md).
+
 ## 15.11.2026 – V15 auf dem M3 unter Python 3.10 im Kurs-Runner geprüft
 
 Acht vollständige Partien gegen Default und Solution auf beiden Sitzen. Zwei Torch-/NumPy-Kombinationen unter Python 3.10 reproduzierten jeweils 606 Aktionsmatrizen ohne Abweichung. Alle 480 V14-Tensoren und 44 Schülertensoren wurden mit den Originalen verglichen. Die getestete ZIP liegt getrennt im Hauptcheckout. [Versionen, Pfade und Fehlerbehebung](../experiments/analysis/umbau_20261115/py310/ERGEBNIS.md).
