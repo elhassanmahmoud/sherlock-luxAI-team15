@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R3 ist bei strittigen Bewegungen in allen untersuchten Situationen näher am Lehrer
+
+144 neue Partien mit R3, beide Sitze, je ein Drittel gegen Solution, Kaggle und V14. Keine der 32 beobachteten Lernsituationen spricht in Summe für einen Rückwechsel zu V14. Auf getrennten Karten stimmen von 25.556 strittigen Bewegungen 21.887 R3-Befehle und 2.165 V14-Befehle mit dem Lehrer überein. Die gelernte Tabelle ändert keinen Zug. [Zählungen und Prüfsummen](../experiments/analysis/r3_context_selector_20261115/ERGEBNIS.md). Mahmouds veröffentlichter v4-Schüler ist lokal mit dem erwarteten SHA-256 verifiziert.
+
 ## 15.11.2026, 21:17 Berlin – Claude Code: Nachtauftrag für Codex vorbereitet (Start nur durch Moayed)
 
 - Auf Mahmouds Wunsch: [Nachtauftrag](NACHTAUFTRAG_CODEX_20261115.md) mit sechs Aufgaben für die Nacht auf dem M3 (höchstens 2 Spielprozesse): 1. Python-3.10-Prüfung der V15-Zip, 2. unabhängige Prüfung der V15-Bestätigung und des Codes, 3. Robustheit von V15 und V14 gegen weitere Gegner, 4. Replays für die Präsentation, 5. Präsentationsabschnitt „Umbau“ als Vorschlag, 6. optional DAgger-Zusatzdaten. Kartenbereich nur 7170000–7173999. Abgabe (V14, `Gruppe15.zip`) nicht ändern; die V15-Übernahme entscheidet Mahmoud.
