@@ -39,6 +39,7 @@ Er verschießt am Matchende kaum Restenergie (3 % in den letzten Schritten, obwo
 | v1 | b1 (1,87 Mio.), alter Trainer | 81,8 % / 74 % / 91 % |
 | v2 | b1+b2+b3 (8,4 Mio. ausführbare Befehle), gemeinsamer Trainer | 82,2 % / 76 % / 91 % |
 | v3 | wie v2 plus DAgger-Runde 1 (400 Spiele, 1,36 Mio., Lehrer mit gespielter Zughistorie) | 79,8 % / 75 % / 91 % (Validierung enthält DAgger-Lagen) |
+| v4 | wie v3 plus DAgger-Runde 2 (600 Spiele mit v3 und Schaltern, 11,4 Mio. insgesamt, Sparmodus `--low-memory`) | 80,5 % / 75 % / 92 % |
 
 ## Spieltests auf Dev A (100 Karten, beide Seiten; Referenz V14 auf denselben Karten)
 
@@ -54,7 +55,12 @@ Er verschießt am Matchende kaum Restenergie (3 % in den letzten Schritten, obwo
 | Hybrid v2 points | – | 90,5 % | 2 % (Matches 5,0 %) | – |
 | Hybrid v2 combat (Radius 5) | – | 97 % | 3 % (Matches 6,7 %) | – |
 | Hybrid v2 sap | – | 88 % | 1 % (Matches 3,3 %) | – |
-| **Hybrid v3 points** | – | **97 %** (Matches +4,3 pp [+0,7; +8,2]) | **3 % (Matches 7,0 %, +2,0 pp [−0,7; +4,7])** | – |
+| **Hybrid v3 points** | – | **97 %** (Matches +4,3 pp [+0,7; +8,2]) | **3 % (Matches 7,0 %, +2,0 pp [−0,7; +4,7])** | 79 % [71; 87] |
+| Hybrid v3 combat | – | 93,5 % | 1 % (Matches 4,3 %) | – |
+| Hybrid v3 mixed | – | 96,5 % | 5 % (Matches 8,7 %) | – |
+| **v4 (DAgger 1+2) + Stay-Bias 1,5 + Entstapeln** | – | **92,5 %** | 3 % (Matches 6,7 %) | **92 % [87; 97]**, Matches 510:90 |
+| Hybrid v4 points | – | 97 % (Matches +6,2 pp [+3,0; +9,5]) | 4 % (Matches 8,7 %, +3,7 pp [+0,3; +7,3]) | 83 % [75; 90] |
+| **Hybrid v4 mixed** | – | **97 %** (Matches +5,8 pp [+2,2; +9,5]) | **5 % (Matches 9,3 %, +4,3 pp [+1,0; +7,7])** | folgt |
 
 Bei den Hybrid- und v3-Zeilen gelten für den Schülerteil Stay-Bias 1,5 und Entstapeln. Alle Werte stammen aus der
 Auswahl auf Dev A und sind deshalb nach oben verzerrt; bestätigt wird erst auf dem zurückgehaltenen Satz.
