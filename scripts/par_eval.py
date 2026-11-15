@@ -80,7 +80,10 @@ def _worker(job: tuple) -> list[dict]:
     import torch
     env = LuxAIS3GymEnv(numpy_output=True)
     ckpt = torch.load(weights, map_location="cpu", weights_only=False)
-    if isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid":
+    if isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid" and "v14_ckpt" in ckpt:
+        # 15.11.2026: gepackter Hybrid (eine agent.pth wie in der Abgabe) -> genau ueber Agent_x laden
+        agent = Agent_x("player_0", agent_path=weights, train=False, seed=0)
+    elif isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid":
         # 15.11.2026: V14 + nachgeahmte Policy je Unit (agents/sherlock/hybrid_agent.py); --set gilt fuer den Schueler
         from agents.sherlock.hybrid_agent import HybridAgent
         agent = HybridAgent("player_0", ckpt["v14"], ckpt["student"], mode=ckpt.get("mode", "points"),

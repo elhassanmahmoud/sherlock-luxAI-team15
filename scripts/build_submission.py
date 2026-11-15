@@ -202,6 +202,8 @@ obs, info = env.reset(seed=1)
 
 def nets(a):  # 15.11.2026: nachgeahmte CNN-Policy (Agent_x delegiert an ImitationAgent) oder DQN-Ensemble
     im = getattr(a, "_imitation", None)
+    if im is not None and hasattr(im, "v14"):
+        return ("Hybrid", im.mode, 1 + len(im.v14.extra_q), 1 + len(im.student.extra_nets))
     return ("CNN", 1 + len(im.extra_nets)) if im is not None else ("DQN", 1 + len(a.extra_q))
 
 for side, path in (("player_0", p0), ("player_1", p1)):

@@ -603,6 +603,26 @@ def cmd_hybrid(a) -> None:
     print(f"Hybrid {a.mode}: {out}")
 
 
+def cmd_pack_hybrid(a) -> None:
+    """Hybrid fuer die Kursabgabe in EINE Datei packen (V14- und Schueler-Checkpoint eingebettet).
+    Ausgabe z. B. <run>/weights/agent.pth, dann scripts.build_submission --battle --from-run <run> --out ..."""
+    import torch
+
+    from scripts.par_eval import build_cfg, parse_value
+    out = _check_out(Path(a.out))
+    if out.exists():
+        raise SystemExit(f"{out} existiert schon")
+    overrides = {k: parse_value(v) for k, v in (kv.split("=", 1) for kv in a.set)}
+    build_cfg(a.student, a.set)  # Schalter frueh pruefen
+    v14 = torch.load(V14, map_location="cpu", weights_only=False)
+    student = torch.load(a.student, map_location="cpu", weights_only=False)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    torch.save({"kind": "hybrid", "mode": a.mode, "combat_radius": a.combat_radius, "v14_ckpt": v14,
+                "student_ckpt": student, "student_overrides": overrides, "cfg": dict(v14["cfg"]),
+                "sources": {"v14": str(V14), "student": str(Path(a.student).resolve())}}, out)
+    print(f"Gepackter Hybrid ({a.mode}, Schueler-Schalter {overrides}): {out}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -629,6 +649,12 @@ def main() -> None:
     h.add_argument("--mode", choices=("points", "combat", "sap", "mixed"), default="points")
     h.add_argument("--combat-radius", type=int, default=5)
     h.add_argument("--out", required=True)
+    ph = sub.add_parser("pack-hybrid")
+    ph.add_argument("--student", required=True)
+    ph.add_argument("--mode", choices=("points", "combat", "sap", "mixed"), default="points")
+    ph.add_argument("--combat-radius", type=int, default=5)
+    ph.add_argument("--set", action="append", default=[], metavar="KEY=VALUE")
+    ph.add_argument("--out", required=True)
     t = sub.add_parser("train")
     t.add_argument("--data", nargs="+", required=True)
     t.add_argument("--out", required=True)
@@ -649,7 +675,7 @@ def main() -> None:
     focused.set_defaults(selective=True, epochs=5, mb=256, lr=0.001, ch=32, blocks=3, hidden=128,
                          seed=2711, sap_weight=0.5)
     a = ap.parse_args()
-    commands = {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble, "hybrid": cmd_hybrid,
+    commands = {"collect": cmd_collect, "dagger": cmd_dagger, "ensemble": cmd_ensemble, "hybrid": cmd_hybrid, "pack-hybrid": cmd_pack_hybrid,
                 "train": cmd_train, "train-selective": cmd_train}
     commands[a.cmd](a)
 

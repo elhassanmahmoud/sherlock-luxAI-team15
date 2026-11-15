@@ -94,3 +94,30 @@ def test_hybrid_estimator_uses_played_world_actions(team, shot, move):
     estimator.observe(dict(obs, match_steps=11), team, None, {"unit_sap_cost": 30})
     assert estimator.n_neb == 1
     assert estimator.nebula() == 3
+
+
+def test_packed_hybrid_loads_through_agent_x_and_never_overwrites(student, tmp_path):
+    import argparse
+
+    from luxai_s3.wrappers import LuxAIS3GymEnv
+
+    from agents.sherlock.main import Agent_x
+    from scripts.imitate import cmd_pack_hybrid
+    out = tmp_path / "run" / "weights" / "agent.pth"
+    cmd_pack_hybrid(argparse.Namespace(student=student, mode="mixed", combat_radius=4,
+                                       set=["imit_stay_bias=1.5", "imit_unstack=true"], out=str(out)))
+    data = out.read_bytes()
+    a = Agent_x("player_0", agent_path=str(out))  # wie der Kurs-Runner
+    assert a._imitation is not None and a._imitation.mode == "mixed" and a._imitation.combat_radius == 4
+    assert a._imitation.student.cfg.imit_stay_bias == 1.5 and a._imitation.student.cfg.imit_unstack
+    env = LuxAIS3GymEnv(numpy_output=True)
+    obs, info = env.reset(seed=7159993)
+    a.set_env_cfg(info["params"])
+    a.save_agent()
+    for step in range(5):
+        act = a.act(step, obs["player_0"])
+        assert np.asarray(act).shape == (16, 3)
+        a.update(step, obs["player_0"], 0.0, act, False, obs["player_0"])
+        obs, *_ = env.step({"player_0": act, "player_1": np.zeros((16, 3), int)})
+    env.close()
+    assert out.read_bytes() == data

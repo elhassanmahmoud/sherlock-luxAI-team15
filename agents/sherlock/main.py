@@ -155,13 +155,23 @@ class Agent_x:
         # 15.11.2026 (Umbau): Checkpoints mit kind="imitation" enthalten die nachgeahmte CNN-Policy. Dann spielt
         # ein ImitationAgent (gleiche Vorverarbeitung wie beim Lernen), Agent_x bleibt die Kurs-Schnittstelle.
         self._imitation = None
-        if agent_path and type(self) is Agent_x and checkpoint_kind(agent_path) == "imitation":
+        kind = checkpoint_kind(agent_path) if agent_path and type(self) is Agent_x else None
+        if kind == "imitation":
             from .imitation_agent import ImitationAgent
             self._imitation = ImitationAgent(player, agent_path=agent_path, name=name, train=False)
             self.training = False
             self.autosave_on_terminate = False
             print(f"[{self.name}] geladen: {agent_path} (nachgeahmte CNN-Policy, "
                   f"Netze={1 + len(self._imitation.extra_nets)})")
+        elif kind == "hybrid":
+            # 15.11.2026: gepackter Hybrid aus V14 und Schueler (hybrid_agent.unpack_hybrid), eine Datei fuer den Kurs
+            from .hybrid_agent import unpack_hybrid
+            ckpt = torch.load(agent_path, map_location="cpu", weights_only=False)
+            self._imitation = unpack_hybrid(ckpt, player, name=name)
+            self.training = False
+            self.autosave_on_terminate = False
+            print(f"[{self.name}] geladen: {agent_path} (Hybrid V14 + nachgeahmte CNN-Policy, "
+                  f"Modus {self._imitation.mode})")
         elif agent_path:
             self.load_agent(agent_path)  # laedt auch target_q (nicht danach ueberschreiben)
 
