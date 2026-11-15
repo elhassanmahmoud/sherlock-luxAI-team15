@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – R2-Bewegungsberater auf eigenen Verläufen fertig trainiert
+
+Auf den früheren acht Diagnosekarten stieg der Anteil vollständig nachgebildeter Lehrerbefehle von 61,2 % auf 67,64 %. Auf den 24 zusätzlichen Diagnosekarten erreicht R2 68,11 %. Fünf Epochen auf der GPU des Macs abgeschlossen, Modell und Trainingslog sind für Mahmoud verfügbar. Der Vergleich in ganzen Spielen läuft getrennt. [Trainingsbericht und Checkpoint](../experiments/analysis/movement_dagger_20261115/SAMMLUNG.md).
+
 ## 15.11.2026 – Sechs verbleibende Niederlagen des Hybrid-v3 für die Diagnose eingegrenzt
 
 Vier frühere V14-Siege gingen im Hybrid-v3 verloren, zehn Niederlagen drehte er in Siege. Hybrid-v2 im Kampfmodus gewinnt fünf der sechs verbleibenden v3-Niederlagen. Bei der sechsten Partie gewinnt V14. Das Auswählen eines Agenten anhand des späteren Endstands wäre im Battle nicht möglich. Die offenen Sitzpartien mit Matchständen, Punktedifferenzen und einer gezielten Vergleichsfrage stehen im [Bericht zu den sechs Niederlagen](../experiments/analysis/umbau_20261115/RESTNIEDERLAGEN.md).

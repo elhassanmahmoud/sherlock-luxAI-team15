@@ -27,3 +27,9 @@ python experiments/analysis/movement_dagger_20261115/summarize_corpus.py \
 Für die ursprüngliche Sammlung lief die Fassung `0105658` von `scripts.selective_dagger collect` mit `--raw-teacher`. Der Elterncheckpoint ist der [erste Bewegungsberater](../../candidates/selective_advice_20261115/movement.pth). [Sammlungsprotokoll und Quellprüfsummen](collection_protocol.json) und [Kartenaufteilung und Einsatzbedingungen](../../../docs/superpowers/plans/2026-11-15-bewegung-dagger.md) binden die Daten an diesen Stand.
 
 Der Refit verwendet zusätzlich 32 ursprüngliche V14-Lernkarten und acht V14-Diagnosekarten. Das ergibt 989.063 Lernzeilen, davon 958.870 ausführbare Lehrerbefehle, sowie 207.291 getrennte Diagnosezeilen. Nur die 152 Lernkarten liefern Gradienten.
+
+## Fertiger Refit mit harten Lehrerbefehlen
+
+Die fünf Epochen sind abgeschlossen. Auf den acht ursprünglichen zurückgehaltenen Karten traf R2 68,72 % der Aktionsklassen und 67,64 % der vollständigen Befehle. Der erste Schüler erreichte dort 62,4 % und 61,2 %. Auf den 24 neuen zurückgehaltenen Karten traf R2 68,90 % der Aktionsklassen und 68,11 % der vollständigen Befehle. Bei einem Schuss zählt der vollständige Befehl nur, wenn auch das Zielfeld stimmt. Die [Trainingsausgabe](r2_train.log) enthält alle Epochen und die Nenner.
+
+Der [R2-Checkpoint](../../candidates/movement_dagger_20261115/r2.pth) wiegt rund 693 KiB (SHA-256 `23fa6208d76e81940916388b9ee56c1d290693e8febfa53622442b64b0d33f96`). Im Spiel ergänzt er V14 ausschließlich als Bewegungsberater hinter dessen Entscheidung. Er wird über `scripts.final_battle_compare --candidate selective_movement --model <R2-Checkpoint>` geladen. Der eigenständige v3-Schüler von Mahmoud verwendet andere Daten und einen anderen Einsatzweg.
