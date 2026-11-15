@@ -10,27 +10,45 @@ SEATS = ("player_0", "player_1")
 SEEDS = range(7163000, 7163012)
 
 
-def checked_games(directory, name, seeds):
-    manifest = json.loads((directory / "manifest.json").read_text())
+def checked_games(directory, name, seeds, opponents=OPPONENTS):
+    games, manifest, _ = checked_run_files(directory, name, seeds, opponents)
+    return games, manifest
+
+
+def checked_run_files(directory, name, seeds, opponents):
+    raw_manifest = (directory / "manifest.json").read_bytes()
+    manifest = json.loads(raw_manifest)
+    if name is None:
+        name = manifest["candidate"]
     finished = json.loads((directory / "completed.json").read_text())
     raw = (directory / "games.jsonl").read_bytes()
     if (hashlib.sha256(raw).hexdigest() != finished["rows_sha256"]
             or manifest["candidate"] != name or manifest["first"] != seeds.start
-            or manifest["maps"] != len(seeds) or tuple(manifest["opponents"]) != OPPONENTS):
+            or manifest["maps"] != len(seeds) or sorted(manifest["opponents"]) != sorted(opponents)):
         raise ValueError(f"Inconsistent screen in {directory}")
-    expected = {(o, s, side) for o in OPPONENTS for s in seeds for side in SEATS}
+    expected = {(o, s, side) for o in opponents for s in seeds for side in SEATS}
     games = {}
     for line in raw.splitlines():
         row = json.loads(line)
         key = row["opponent"], row["seed"], row["side"]
-        if (key in games or row["candidate"] != name or row["steps"] != 303
+        if (key in games or row["candidate"] != name or type(row["steps"]) is not int or row["steps"] != 303
+                or any(type(row[k]) is not int for k in ("seed", "wins", "losses"))
                 or row["wins"] not in range(4) or row["wins"] + row["losses"] != 3
+                or type(row["result"]) not in (int, float)
                 or row["result"] != int(row["wins"] > row["losses"])):
             raise ValueError(f"Invalid game in {directory}: {key}")
         games[key] = row
     if games.keys() != expected:
         raise ValueError(f"Missing or unexpected keys in {directory}")
-    return games, manifest
+    reconstructed = {}
+    for opp in opponents:
+        subset = [row for (o, _, _), row in games.items() if o == opp]
+        reconstructed[opp] = dict(played=len(subset), wins=sum(r["result"] for r in subset),
+                                  matches=sum(r["wins"] for r in subset))
+    if finished.get("summary") != reconstructed:
+        raise ValueError(f"Completion summary differs from games in {directory}")
+    return games, manifest, {"manifest_sha256": hashlib.sha256(raw_manifest).hexdigest(),
+                             "games_sha256": finished["rows_sha256"]}
 
 
 def combat_arms(diagnosis):

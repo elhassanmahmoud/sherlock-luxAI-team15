@@ -40,10 +40,10 @@ def validate_rows(job, rows):
             raise ValueError('Invalid complete-game outcome')
 
 
-def interval(values):
+def interval(values, *, seed=0, draws=5000):
     """Input is one mean per whole map, already keeping roles/players paired."""
     values=np.asarray(values,dtype=float)
-    samples=np.random.Generator(np.random.PCG64(0)).integers(0,len(values),(5000,len(values)))
+    samples=np.random.Generator(np.random.PCG64(seed)).integers(0,len(values),(draws,len(values)))
     return np.quantile(values[samples].mean(1),[.025,.975]).tolist()
 
 
