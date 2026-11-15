@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026, 21:13 Berlin – Claude Code: Tagesabschluss Umbau
+
+- Offen für Mahmoud: Entscheidung über die Übernahme von V15 ([Vorlage](../experiments/analysis/umbau_20261115/V15_ENTSCHEIDUNG.md)). Bis dahin bleibt V14 die Abgabe; `Gruppe15.zip` und die V14-Gewichte sind unverändert.
+- Beim Abschluss lief noch: DAgger-Runde 3 mit Schüler v4 und Schaltern (600 Spiele ab 7252000), danach v5 im Sparmodus und der Test von Hybrid v5 mixed auf Dev A gegen Solution, kaggle3, V14 und direkt gegen den V15-Kandidaten (`experiments/analysis/umbau_20261115/v5/`). Ergebnisse liegen erst vor, wenn der Lauf vollständig ist; abgebrochene Teile nicht als Ergebnis werten.
+- Betriebslehren: großes Training nicht gleichzeitig mit vielen Hybrid-Spielprozessen (Speicher, 15.11. 17:43 gestoppt); `--low-memory` für Trainings mit mehr als 9 Mio. Entscheidungen; Hintergrund-Wartebedingungen nicht mit `pgrep -f` auf eigene Befehlstexte (findet sich selbst).
+
 ## 15.11.2026 – R3 mit zweiter Kartenansicht erreicht die Bestätigung
 
 32/32 gegen Solution, 2/32 gegen Kaggle, 22/32 gegen V14. Der ursprüngliche R3 erzielt extern 31/32 und 0/32, V14 30/32 und 0/32. Die Kaggle-Siege liegen auf derselben Karte. Für die 224 Auswahlspiele wurden Sitzschlüssel, Matchsummen, Prüfsummen und Rohdaten nachgerechnet. Die 600 unabhängigen Bestätigungsspiele sind gestartet. [R3-Vorauswahl](../experiments/analysis/movement_reflection_20261115/VORAUSWAHL.md).
