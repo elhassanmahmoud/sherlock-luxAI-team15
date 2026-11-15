@@ -1,0 +1,1587 @@
+{
+ "archive_protocol": "3476e80f57ff23f76fb4d8aa00269e647116ca9c468c0d2d0f6278af85567a03",
+ "by_block": {
+  "r3_train": {
+   "kaggle3": {
+    "by_seat": {
+     "player_0": 0,
+     "player_1": 0
+    },
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "maps": 16,
+    "seats": 32,
+    "triggered_maps": 0,
+    "triggers": 0
+   },
+   "solution92": {
+    "by_seat": {
+     "player_0": 1,
+     "player_1": 1
+    },
+    "ci95": [
+     0.0,
+     0.1875
+    ],
+    "maps": 16,
+    "seats": 32,
+    "triggered_maps": 1,
+    "triggers": 2
+   },
+   "v14": {
+    "by_seat": {
+     "player_0": 14,
+     "player_1": 14
+    },
+    "ci95": [
+     0.6875,
+     1.0
+    ],
+    "maps": 16,
+    "seats": 32,
+    "triggered_maps": 14,
+    "triggers": 28
+   }
+  },
+  "r3_val": {
+   "kaggle3": {
+    "by_seat": {
+     "player_0": 0,
+     "player_1": 0
+    },
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "maps": 8,
+    "seats": 16,
+    "triggered_maps": 0,
+    "triggers": 0
+   },
+   "solution92": {
+    "by_seat": {
+     "player_0": 1,
+     "player_1": 0
+    },
+    "ci95": [
+     0.0,
+     0.1875
+    ],
+    "maps": 8,
+    "seats": 16,
+    "triggered_maps": 1,
+    "triggers": 1
+   },
+   "v14": {
+    "by_seat": {
+     "player_0": 7,
+     "player_1": 7
+    },
+    "ci95": [
+     0.625,
+     1.0
+    ],
+    "maps": 8,
+    "seats": 16,
+    "triggered_maps": 7,
+    "triggers": 14
+   }
+  }
+ },
+ "cases": [
+  {
+   "archive_sha256": "7b3f703a2bb59c62312880ca62e96a379a5d8f55112fe9c2e1aa1f1df73a2c67",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.004584054117286383,
+   "seed": 7287000,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "74202ded42812a338eae3f77d9ae932d3dff294803bead2ed6062e66759b8567",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.002156098039380788,
+   "seed": 7287000,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "6467ddf0f9d5a43c9e772130c49604b2a792368ca5f47cde9578510fb4a6a299",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9393124009392165,
+   "seed": 7287001,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "3115fa31e5cf4c93be790b93b9c09c7ac9e71b35d03a0b0c9fa72ad3a1623894",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9393124009392165,
+   "seed": 7287001,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "093ea9fe6676335c1b4df50fa4efde7e33c5fbcaa7c830a046262a991212e20b",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.04175609151132258,
+   "seed": 7287002,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "7f879d89dd2c380fa02c05c3a06c5b9ddd8db54e284ac233f05b2f96a7c6e141",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.04175609151132258,
+   "seed": 7287002,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "fb3ceba929d766e307708c50d8afc748d051cc6e58900b5fed24409398a4bbb0",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.031777028586705544,
+   "seed": 7287003,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "fb30ceada17d6801d7624a0458717a9877ae28891e174d7c00108255bebc93e2",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.04765723672821207,
+   "seed": 7287003,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "a404182f601ad6ce444ce9e4fb69a0144771f7adb550952e1f5bbc522685c7b6",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9969130455257557,
+   "seed": 7287004,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "559980eb0c67cc52cdf05e472b0f7d78fd447ed3d077a264e8046b5d2aff6e04",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9969130455257557,
+   "seed": 7287004,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "aaa3adaac7c22746ed480708ab9affb22191e1bb2350333e35f011aac556274b",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.31152355526340614,
+   "seed": 7287005,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "65186fd81a9a8f08adb1f0eeb2440c4ff9138597a2fc65cd8be7daaa1fa3cd43",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.31152355526340614,
+   "seed": 7287005,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "8a44771d7e4e376b553e45cdc87ace479ca6ff8b1c58b05504c9e0ba7fce6716",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.12268828300677306,
+   "seed": 7287006,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "a09b84ecc6a0b5990b16927df2c01f02976a300f91ffdb621ff87385f6a99b76",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.11113752806563906,
+   "seed": 7287006,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "25bb1e904a6169654b451727d35971779c55f69ecb84576189f56023731fe6d8",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9941256250190053,
+   "seed": 7287007,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "83b46d947d173469ba8dcc0276ceee77ba1b5a890dc7849182cd6c2a85031d12",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9941256250190053,
+   "seed": 7287007,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "ad77e401e0029ff551b146349ee3af3d3c22ccd9c72eb084bbcdecab3c7c3f85",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.17021641926444622,
+   "seed": 7287008,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "3953d6d60711a41cbac18137286bd624097ab910ce65017d6b22b9c05d948429",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.17021641926444622,
+   "seed": 7287008,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "2a42292e822c3e417cbfb2294a0f300c40f083198a1d3225c3fa54a3bc1aeae1",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.013362361307624818,
+   "seed": 7287009,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "6f68b00020999ed2fdacff102711e1eb545bdadffe990a39d6c2c32c8effbdf3",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.030831977336009828,
+   "seed": 7287009,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "505320bec782e284a153a6ac11834ddb4eef6d09984f06677334465126b1cbcf",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.5572454449431036,
+   "seed": 7287010,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "86a494ef41ea9bc85e3e00f3de4db915b32781f0d8e6df8f4d7421caf9e11734",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.5572454449431036,
+   "seed": 7287010,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "7f3fc8175444cc2d2cc0690e25e6def5726c12a3c44ab31338b680dbec1aacc8",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 7.906815350898498e-05,
+   "seed": 7287011,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e75349bbb307e4a543c8f6cd03cda06310dc8cfea15904660841e2e2babb2d4e",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 7.906815350898498e-05,
+   "seed": 7287011,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "9c7d28f777f10fc7204f8640f106b9e15960452a78235a832fd800a892c46702",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.057795703992069555,
+   "seed": 7287012,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "da8b7be072ea50ce8ffd4e4bfaa9bcfd5e56404a7bb6f04ae0894b1c9cb1346f",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.11915407107325184,
+   "seed": 7287012,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "c0eb6a1c5b15f2d9b0a901e6cd627ae717a4b46a0863ab5a289ac64431c5b5f6",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9957433265930247,
+   "seed": 7287013,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "697b47418bbcf23ad2b276578ee2f262fa7ec812797bb39bc9c82145b78b7b8f",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9957433265930247,
+   "seed": 7287013,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "9967d840f7bb18de145debadfc1f85544203b2b54234d5e9b14a636046787527",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.003983212877372686,
+   "seed": 7287014,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "8b4f20b0165cc62543eae061a39ed190bac4f31fe5642aad19104c7903ba9be5",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.003983212877372686,
+   "seed": 7287014,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "6c70b32ba994016832ac5734196fda419302571a6aa275e952a37711830c1708",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.15377601858842357,
+   "seed": 7287015,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "387cc64dc15ff1691d22b5ebc5f02ed59932fac098505bd585d74f2c97adcbd4",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.056120541488885706,
+   "seed": 7287015,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "a7fb146d94a5f80008fc28a8d2f188bcf26ba7dbf007984fab2ca3adfce380ab",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9899749166321326,
+   "seed": 7287016,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "bd0b73262bce1d5f2c07b05916c507142fa202a95e53962b0164e6e35a99cbbe",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9899749166321326,
+   "seed": 7287016,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "1f1a552ae14a4a1a62bfb2bcff7c5b31e97b1b7b584304b4d9f86b2c8f8703df",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.028225813731087634,
+   "seed": 7287017,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "bca78f7174810dba31cfc2acc8e09ec7fb9bcc9fee36fcfb34a45b5a1179131a",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.028225813731087634,
+   "seed": 7287017,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e4db84e0e5e664765e2666b61511212e803ee046fed6bb36e25ca35eb9445964",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.8532897646862456,
+   "seed": 7287018,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "f35aa33ad016b5e8bfdf92cb7f51690b17632c022fe8afe7308b4b9d001736f5",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.9421370863331937,
+   "seed": 7287018,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "989f1dcc26c43151afaab3975f0e857df504dd68f13599c4207d0562129d3baa",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9960541128760542,
+   "seed": 7287019,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "577b2276ed56543010dc1ae1546f452df099687f4896f55e654d2594b8f87c6d",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9960541128760542,
+   "seed": 7287019,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "11703273f318053bd780620a61a5bfedcfa1dfbaead84356c3dbf6d522b9f055",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.028612241668846555,
+   "seed": 7287020,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "ea1d094cd1183660c0baa6d5f987c0165d52c79fe31fbe2352f7bb97c023b973",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.028612241668846555,
+   "seed": 7287020,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "d8eeb4f2b21dec4f9c805e3ac8e948e1a2d73fac0ca0d9e702164e3525234b1b",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.2540821052291498,
+   "seed": 7287021,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "14403e807d60c533859bb3d1c4fc3075eddd498f4f3948bda282cc3764da5100",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.09799901741552236,
+   "seed": 7287021,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "150d2b0d597b829446a5973b414dc803a44c3a189e1463fc9d2bf7341416f797",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.972415580725723,
+   "seed": 7287022,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "d0fe940612285dc70eade5146a325c94d52e22f4cd5c4f879d17a503cb71457d",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.972415580725723,
+   "seed": 7287022,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "64034482990aa85a76b850e167488fe598395de80af1ad1d8ea049da193a6aef",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.011190979235557645,
+   "seed": 7287023,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "f9cda10e9f57f3a746dd7508d90f206623b14243e0a10a97e8677ccc1952a99e",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.011190979235557645,
+   "seed": 7287023,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "3c99c225ad7d111c4dd9a5ff97ad42fb88e84c9d4257a8f9a7a577cb7ff8a24c",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.2209258365213828,
+   "seed": 7287024,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "198420de9bd01d8a5e49faa92641b27b371b701ee5d30845bd17a7700c73a3af",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.08859969505575215,
+   "seed": 7287024,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "46f1891be51457b0ca2999acb17227bbc722e409139c49439c90e5cb58749a1e",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8335519063760193,
+   "seed": 7287025,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "8467b78785824affba6616a85f1160d76ef36c31c95c5a282d3310861ab5bdb2",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8335519063760193,
+   "seed": 7287025,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "7cfcb333feb77f0708bfae1a6d5d78371d0f74cc33c6c8052afe064788fc5b81",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.00104339653365648,
+   "seed": 7287026,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "27fda76d5f022ffb0282bed1bf3ea22335311acc481b21ed411bb13618ee2a5a",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.00104339653365648,
+   "seed": 7287026,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "1350b56f716d3be578627033a3ca44e297410ae70e1dfe5bdd975f693e328681",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.08213284570634116,
+   "seed": 7287027,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "98c3d89fbca24f0d4cb2e4a4622b1380ca8b2409ad7f299b0545601d6c0c9617",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.06978967604354201,
+   "seed": 7287027,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "7fdfd2589dd84b9acae2f994ea2b1e9860e2d2ef48b3bdbfa190f6231f76619f",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.011654838385200227,
+   "seed": 7287028,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "9528d4f773e7f145cfc6d6efd975ebb8428818808872eac8c79304d09c929bbb",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.011654838385200227,
+   "seed": 7287028,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "71356785a66ea6aa74f483f5b5f9153ea6d22ec02d03cbe4b221552f10ce059e",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0002983302392666646,
+   "seed": 7287029,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "8fddad827bcb053a0bca15b7062af86d3b09f3ec9bafd4c63a666c0e176b4517",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0002983302392666646,
+   "seed": 7287029,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "93eabefdd16d998fbed7b7c953e5b4f1f40f4a8723b609e77a0e53bb12b6a83c",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.04821533466829172,
+   "seed": 7287030,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "7dadf986414eb56f43681721530f99b281e4d96e0e46a7becb065a785c9b1bb3",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.0982357945690064,
+   "seed": 7287030,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "2839dc3acb9233b37d1fb6d55ea353f77d4a52b419a7681154d71fd7bd5fb9a3",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8547136916497068,
+   "seed": 7287031,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "c78b7efd1f1561f390dae657b61ff4450bcf1f4c9b8349645665bf0dd59f3df9",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8547136916497068,
+   "seed": 7287031,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "e19a16251f4b5ec63f3125da7e221e461dd2e940da99b32803d8af14ecbb2661",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0031761361648312133,
+   "seed": 7287032,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "bae8722e8ae592938eafd9b18670ec7e8857f605b994cf5986874a0f344c9e37",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0031761361648312133,
+   "seed": 7287032,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "6b43ba2b9e215d0fb5fa2f173368768c140882f49d31fcda0766283a8314fae9",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.12028188972200708,
+   "seed": 7287033,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "3fa557c29ae954e2cc080627c326b4447d304da3ef682d72b0f8109cbfe8b120",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.16944258303245588,
+   "seed": 7287033,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "aa0c396bb2290466ba529bf5f85647efc8b273c7b88ce1abad8845bfd0dd5422",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.857795360463751,
+   "seed": 7287034,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "4bfeeacb1c69c0115742283e5f92d3de0e7f66088b776e5e47418ca70407d193",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.857795360463751,
+   "seed": 7287034,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "5717750f7b50e4e3ba53b249488087f408eda8c13d1d3a7452b0102b1c82ecdc",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0968615838142669,
+   "seed": 7287035,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "d59e4f020ef4196ccce07943cdfa092fc186748ab49d044afc3e7fbc6c7c2d59",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0968615838142669,
+   "seed": 7287035,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "a6f81d8dcbd77b5d981db1c883c55e3a3504c44a4141586e6fb313704a0680eb",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.04707823093170378,
+   "seed": 7287036,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "c2566e1ecc1be1370fc70f92f4a5808a4512d0780bd44a8224102325a19f1e0e",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.17002138167629322,
+   "seed": 7287036,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "eb63648599e51ee4c9339b06639307dfb1ff2d61c3213f09fa42fdc41e5e55a2",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9454468166387565,
+   "seed": 7287037,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "32a29cec9b117d6036ac3987c33b821df30d659e5b0b9d2be7dffb1cf86011fe",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9454468166387565,
+   "seed": 7287037,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "6bb499ad022972ff4a77fc3d70b241c290ee6af6e80359807b1ea8f05391906a",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.026035211726626144,
+   "seed": 7287038,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "b3c30e6d62628d53feeab9b4e4b8e54e9803bf242c5ab843671992588968f4dc",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.026035211726626144,
+   "seed": 7287038,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "bf2e29bbb42aef8a7bf4b06b50a6c0181227516f24959a73f10c366afdc16897",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.1788570715706432,
+   "seed": 7287039,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "0f3a73f89cb5090b6c8a54650e82727f2613a759e1cd18f85c340fd64269ab44",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.3663335492179063,
+   "seed": 7287039,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e20273d950ef96058dd01a15927be592529dac71a0b73149b51fe39a642696c1",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8910202803081873,
+   "seed": 7287040,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "d9b4e5e817356a55767d07bb231d7514f2c7b52db283b8890c0698d2e98fc976",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8910202803081873,
+   "seed": 7287040,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "1a70589d8b34768054f7bc3129dcb686dda75136f0b16b6d441bd88b1ec536e3",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0001365513325586076,
+   "seed": 7287041,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "ef93300778bc8b8680f7b46cbac0eb74c744f9904b3c486df0fcefb3dffeae0c",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0001365513325586076,
+   "seed": 7287041,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "fb1367556dcb1cce45b3fc15aa917937579105c8ae02aec2b810987b09cb7573",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.01476060466110276,
+   "seed": 7287042,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "be88f49e76bd9cee1da9ad8b69ae84b780bd2c35617aea1827681ea7d8b5df43",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.18657381658149377,
+   "seed": 7287042,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "39d546d8697106ff108aec19f8b96454f8e1cb210759920f9d8dfeaab10270fe",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.7907342617977215,
+   "seed": 7287043,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "e790e0ce4ab7b846dc880e2b3c856e9a8de1684974292ae9e596eeb04dc8c947",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.7907342617977215,
+   "seed": 7287043,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "594939cb303f4709e8083301eecad5fe31fe81e8451fa87488fb6d169508c11d",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.03453322125115321,
+   "seed": 7287044,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e0b97957ad460d4cce373bda5a7806e38cb296b1de6e678c8c8ab3a8fe45418f",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.03453322125115321,
+   "seed": 7287044,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "1f13b048b3a6d3b2905cc17d6734527b4677c800100bb4f2a4fe60d6f7926419",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.03786162183885652,
+   "seed": 7287045,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "1e421568dd99598d79d30823fc8cac820db36c9ea46337f444a21ee407bf3ab2",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.03403466706954702,
+   "seed": 7287045,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "d2ebc349e0442fd9788c942efeeb495a81e76365d3c6301ebf9a990d0558dc2f",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8937692050394713,
+   "seed": 7287046,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "c3c980ec966265eded1a397bd61abd84ae2fa137b080a3d8783c5193595c24e7",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8937692050394713,
+   "seed": 7287046,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "dd331946107f5bb6578542761012a6bc473d424d56f623784280a9b44caf1e8c",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0050034784406821475,
+   "seed": 7287047,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "5cd207c487f75facb873f8a5c8e6488243791eee60eebb9ddea7d3610d9233f8",
+   "group": "r3_train",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.0050034784406821475,
+   "seed": 7287047,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "972e4635050373f733ae356ff5c5371abd151de4f82ac5024d87df0b15f026df",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9155108533293975,
+   "seed": 7287100,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "82324cf92063ce3c2333dd4aca9dad5a4e061eb525a9b63f75edca06e907c80f",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9155108533293975,
+   "seed": 7287100,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "65967b1bc967aa9a0f5d8a7a846d10a3a4fcff80eb22b4a50ad28d78bd3626a5",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.021351161978073213,
+   "seed": 7287101,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e77b1371797f0ab9e0e17d42f7b3608c59c2c67bbe9946be8d999743db49f43e",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.021351161978073213,
+   "seed": 7287101,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "41ed3881a78d88af6e8e6be5b45a0746e4961cb6dbf3f64ff03d5ebd35780ad2",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.31055514190940553,
+   "seed": 7287102,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "3cbcf7318ea74de4198974422e6886d715eb77e37b4c2cb73ab395475da65144",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.2027992994889442,
+   "seed": 7287102,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "d0973fb341a3cede914baea4f3dae8203e9de837553b5ee1987b79e7f55e5284",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.2268657309729873,
+   "seed": 7287103,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "8b343e1e4b7ac6c18b4cc7599ffea67d519a5e7c75c266b942412d9ea9213bc9",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.2268657309729873,
+   "seed": 7287103,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "5966387258ce56f579d4d4f1a4819eb577ddaf232fc2e37ff401d20ec40691c7",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.1679636757489692,
+   "seed": 7287104,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "0902ae3a83a66bcba40fee578c3622ec2c03f050657f85b2b9dec0c51b5d9aaa",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.1679636757489692,
+   "seed": 7287104,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "661839e101236149c3dc676768a5c0e4b210b9250f72e29fe6bdc8fb3379941b",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.30698269945111534,
+   "seed": 7287105,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "6ed5aa5936b2bf53e59a4db3c5b5b417d8f687287156589110927db10bcdd4ba",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.0002543602827630646,
+   "seed": 7287105,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "ab1047fd1e2bd531af37f131070aaa584a59cccfd88d4cb6438b94a540deceb8",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9878743140519852,
+   "seed": 7287106,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "1a8770e9fe5c741c25593446701afe6078f5a00ca2aa5ef7f895bfd07e7b5feb",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9878743140519852,
+   "seed": 7287106,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "a9c981cbee276cdaf48c8efa5e2c233d0f94b6273b7b414aaa3a130f0b741807",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.001575101790778764,
+   "seed": 7287107,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "2747933c4761c253f85b7236f30eda3ad79fb94d2540c7a14863283ff7eb6bd6",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.001575101790778764,
+   "seed": 7287107,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "ee1c014c825d70a986810620831212fb40adf6709baf35ab41b2a8c47ffb1bf7",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.11642357069289291,
+   "seed": 7287108,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "62e45a8894e016738a0979e7a8dded96816450ef791aaa7a0b0f00b3461fe1b2",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.4329785751615274,
+   "seed": 7287108,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "adf31862297d7d5690b4901a872290a8782c714ad79d342d81776aa80a1c9415",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8845781948377298,
+   "seed": 7287109,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "e86fbc4cc19ca04e7409ca5d467d6bad27fcf645e64e2c2a1e1027a3c41163bf",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.8845781948377298,
+   "seed": 7287109,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "5b28d0f703fc66ae89dca6e0865e589757dd06876e9d715025d7fa264322799a",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.1216858158683473,
+   "seed": 7287110,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "4ce6951f0ce0418aae6e7e6a275e43f95944231f2ad1ea0ff1702e570b7c767b",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.1216858158683473,
+   "seed": 7287110,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "3c1cc337599496f8d09efcff8323fa4865abec210ab85f929e6a8584f986f234",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.2182575670556861,
+   "seed": 7287111,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "048adb713cf76335af4ebd5cfb3ca75385652025eccbc0be310d5ce1a0a492ab",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.3622202961620585,
+   "seed": 7287111,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "9c54c5a6e16516aaff135a5a7f29094f1e1b574046a922dc9c1239f1e9e48018",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.994670971374047,
+   "seed": 7287112,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "4e4f9145b99293031f9aa54f85b5a085b9ce6dc36042401d312ee55ac04fe9df",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.994670971374047,
+   "seed": 7287112,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "038df757a88eb765d2db40a485eb51ddfd9e35235ba1eece92491a809833bde2",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.07097361195152574,
+   "seed": 7287113,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "d4ac376359c4c0ce79bf519dd387aa307d127c8705a3db5a092dc2e0223fc3e2",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.07097361195152574,
+   "seed": 7287113,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "38dafe2e78c08b8c06ae8ee7ec21c7dc15b296175c38b1e857587fc59f7c9334",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.856237892055525,
+   "seed": 7287114,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "a30c608a2dc93f703cddec750fcb76e3b2ffd163ce5cfafc5e28988fc183eca5",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.13663030719250932,
+   "seed": 7287114,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "f3facd91dc8c0cd6c4a8760ea4fab2fd73eae7b0eb5a7de4971bb3d2e7400398",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9685537888242097,
+   "seed": 7287115,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "e86b6222514c78d4f641b0cac685eeb1f040f2553c424b008cd1e8d364c462fc",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9685537888242097,
+   "seed": 7287115,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "d55f4d1523b420f8c0e81b8eb1ca9194712dad45c877c2280167bd4a742155ec",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.005082168363500915,
+   "seed": 7287116,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "e1babea863932a6b75e400a430336a4c95835c352a6cc3e41d043abbe972e9d1",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.005082168363500915,
+   "seed": 7287116,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "2628754ccfc079d1d99fe7001445feba03a531ba57976bb3f6f275ff209b02a6",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.29161405920262445,
+   "seed": 7287117,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "63df2a63494d89dc0bb483220ede772e56c84ddd7f1aa472cb9851332cc371e6",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.1561553895436566,
+   "seed": 7287117,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "eb4487f8b2c819424b756c1df398be3bd03e2a6cf7c774a2f1fa8ab3f0c2e939",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9657877875189465,
+   "seed": 7287118,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "b9e49276a3fa68f35035b83b166d3d4ee38bafa73e8f337317f9a7f6e124e086",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9657877875189465,
+   "seed": 7287118,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "dbd5bcb87f326f6988a39001336f904cc50d01251a98fd298fcb94995ac51fb9",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.12911327414711457,
+   "seed": 7287119,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "27c1f51d85ae4e10329366783f29963c08d0ee230ee0f310cf9e52a81dbad3c2",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.12911327414711457,
+   "seed": 7287119,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "c5e37ff0b27d4a022a7188c10012fe7be1e56fc7bebbefd087399c5ffbd06e57",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.17392997534586216,
+   "seed": 7287120,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "612d4a1b7c4520f285c3ef8f9315899433fd9ad21c7e922538fd0ce8ae4293b6",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.07806116974528465,
+   "seed": 7287120,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "04ee57b7ce1b85c4f1985baa947249744a31f0c635a051cf51b963f9b834b49d",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9997537723855537,
+   "seed": 7287121,
+   "side": "player_0",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "dd53a866b5cad6750354ad1adaa9b08d8afbc1a4be8b7cb5dff82998eca61c0a",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "v14",
+   "score": 0.9997537723855537,
+   "seed": 7287121,
+   "side": "player_1",
+   "triggers": true
+  },
+  {
+   "archive_sha256": "35853ec97a4fe5fdcf0bfe491752e372b84e373120c04cd742fe036104e2bf29",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.4415166543053479,
+   "seed": 7287122,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "5b96d6588008c7b77630b5cf6bc35dc62356faf7afb5874488a579475152b3bd",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "kaggle3",
+   "score": 0.4415166543053479,
+   "seed": 7287122,
+   "side": "player_1",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "9593a89cb293a7f1128d3c22899a7def3bc01046945c80693c3d18f22fe171ba",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.13931162525612342,
+   "seed": 7287123,
+   "side": "player_0",
+   "triggers": false
+  },
+  {
+   "archive_sha256": "78e2dccdf30887552c7e8c4e91b1f960c13cb23a52c89f1ac0b4bf92391002ad",
+   "group": "r3_val",
+   "m1_boards": 100,
+   "opponent": "solution92",
+   "score": 0.22467508804208433,
+   "seed": 7287123,
+   "side": "player_1",
+   "triggers": false
+  }
+ ],
+ "counts": {
+  "kaggle3": {
+   "by_seat": {
+    "player_0": 0,
+    "player_1": 0
+   },
+   "ci95": [
+    0.0,
+    0.0
+   ],
+   "maps": 24,
+   "seats": 48,
+   "triggered_maps": 0,
+   "triggers": 0
+  },
+  "solution92": {
+   "by_seat": {
+    "player_0": 2,
+    "player_1": 1
+   },
+   "ci95": [
+    0.0,
+    0.16666666666666666
+   ],
+   "maps": 24,
+   "seats": 48,
+   "triggered_maps": 2,
+   "triggers": 3
+  },
+  "v14": {
+   "by_seat": {
+    "player_0": 21,
+    "player_1": 21
+   },
+   "ci95": [
+    0.75,
+    1.0
+   ],
+   "maps": 24,
+   "seats": 48,
+   "triggered_maps": 21,
+   "triggers": 42
+  }
+ },
+ "passes": false,
+ "plan_sha256": "e1c79a474ff21eabfc350becde3b6487088df3451d0eff0e9707b2fc5e921846",
+ "rule_sha256": "21b26606a15f4f70dc1a5cd786c5fd7dbaf1f816cc1cb0ce66b7d5eaab5bbc06",
+ "source_registers": {
+  "r3_train": "5dde3b73432758af1fd4b1e07f9722bbe1816341ccc8b00a6a94761680bf2090",
+  "r3_val": "2a10ebcd77c6922281521d00c97f9c76bd8eebb38ca6a64d390a15cac57f4e9f"
+ },
+ "source_sha256": "7b02526060c78dc265aa0f671d9edc95f4d738d3d9490ba898530eed2f2e8839"
+}

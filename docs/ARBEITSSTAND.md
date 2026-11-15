@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Sichtbarer Spielstil reicht für den geplanten Wechsel nicht aus
+
+Die im Voraus festgelegte Regel erkennt in archivierten R3-Partien 42/48 V14-Sitze und wechselt bei Kaggle 0/48 Mal. Sie hätte aber auch 3/48 Solution-Sitze umgestellt, erlaubt war höchstens einer. Die Regel verwendet nur die sichtbaren Kartenbeobachtungen des ersten Matches. 432 Archivdateien, die Trennung der Kartensätze und die Ergebnisse auf den 144 R3-Sitzen sind geprüft. Der Versuch endet ohne neue Spielpartien. [Archivvergleich](../experiments/analysis/r3_observed_style_20261116/ERGEBNIS.md).
+
 ## 16.11.2026 – Die aktuelle V14-Referenz reproduziert das Kursreplay
 
 Historische und aktuelle V14-Quellen geben auf Karte 4242 für beide Sitze je dieselben 606 vollständigen Kursbefehle aus. Für die Präsentation liegt ein echter V14-Zug mit allen sechs Q-Werten vor. Ein Asteroid sperrt die am höchsten bewertete Richtung, die Einheit zieht nach rechts. [Spielzug, Rohdaten und Quellenprüfung](../experiments/analysis/v14_course_trace_20261116/README.md).
