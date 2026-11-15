@@ -626,7 +626,7 @@ def main() -> None:
     e.add_argument("--out", required=True)
     h = sub.add_parser("hybrid")
     h.add_argument("--student", required=True)
-    h.add_argument("--mode", choices=("points", "combat", "sap"), default="points")
+    h.add_argument("--mode", choices=("points", "combat", "sap", "mixed"), default="points")
     h.add_argument("--combat-radius", type=int, default=5)
     h.add_argument("--out", required=True)
     t = sub.add_parser("train")
