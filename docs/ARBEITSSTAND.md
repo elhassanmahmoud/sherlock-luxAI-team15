@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 15.11.2026 – Abschlussvortrag und drei echte Kursreplays
+
+Neun Folien mit 9:55 Minuten Sprechzeit. Moe übernimmt 1–3 und 8–9, Mahmoud 4–7. Der Vortrag erklärt die Maskierung und den Regeldurchgriff sowie die unterschiedliche Entscheidungsverteilung in V15 und im Zwei-Ansichten-Kandidaten. Ein Direktvergleich und die externen Gegner haben getrennte Ergebnisse. Die drei vorab festgelegten V15-Kursspiele sind lokal abspielbar, jeweils mit 303 Aktionen und 304 Zuständen. Zum Vorzeigen springt das erste Replay direkt zu Match 1, Zug 35. [Präsentation](presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf) · [Stichpunkte](presentation/finale_2711/Sprechstichpunkte_27-11-2026.md) · [Partien](presentation/finale_2711/replays/README.md).
+
 ## 15.11.2026 – R3 mit zwei Ansichten schlägt V14 gegen Solution und direkt
 
 600 frische Spiele. Gegen Solution 118/120 für R3, 109/120 für V14. Direkt 100/120 für R3. Gegen Kaggle 0/120 für R3, 4/120 für V14. Die zwei Startpositionen jeder Karte wurden bei der Unsicherheitsrechnung zusammengehalten. Die Freigabeschwelle über beide externen Gegner ist verfehlt. Zwei Kursreplays reproduzierten 606 Aktionsmatrizen. [Karten, Unsicherheit und Rohdaten](../experiments/analysis/movement_reflection_20261115/BESTAETIGUNG.md).
