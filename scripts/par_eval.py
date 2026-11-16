@@ -71,7 +71,13 @@ def require_no_agent_errors(agent, opponent) -> None:
 
 
 def _worker(job: tuple) -> list[dict]:
-    weights, overrides, seeds, opponents = job
+    if len(job) == 4:  # Historical callers supply this four-tuple.
+        weights, overrides, seeds, opponents = job
+        packed_v14 = False
+    else:
+        weights, overrides, seeds, opponents, packed_v14 = job
+        if type(packed_v14) is not bool:
+            raise ValueError("packed_v14 must be boolean")
     limit_threads()
     from luxai_s3.wrappers import LuxAIS3GymEnv
 
@@ -80,7 +86,11 @@ def _worker(job: tuple) -> list[dict]:
 
     import torch
     env = LuxAIS3GymEnv(numpy_output=True)
-    ckpt = torch.load(weights, map_location="cpu", weights_only=False)
+    if packed_v14:
+        from scripts import packed_v14 as backend
+        ckpt = backend.load_checkpoint(weights, overrides)
+    else:
+        ckpt = torch.load(weights, map_location="cpu", weights_only=False)
     if isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid" and "v14_ckpt" in ckpt:
         # 15.11.2026: gepackter Hybrid (eine agent.pth wie in der Abgabe) -> genau ueber Agent_x laden
         agent = Agent_x("player_0", agent_path=weights, train=False, seed=0)
@@ -108,6 +118,8 @@ def _worker(job: tuple) -> list[dict]:
             agent.set_cnn_policy(PPOAgent("player_0", agent_path=cnn).net, w, temp)
     agent.set_to_eval_mode()
     agent.autosave_on_terminate = False
+    if packed_v14:
+        backend.install(agent, ckpt)
     rows = []
     for opp_name in opponents:
         for seed in seeds:
@@ -144,8 +156,13 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=14)
     ap.add_argument("--opponents", default=",".join(P.EVAL_OPPONENTS))
     ap.add_argument("--out", required=True)
+    ap.add_argument("--packed-v14", action="store_true",
+                    help="CPU: nur die 36 unveränderten Netze des V14-Kandidaten gemeinsam berechnen")
     args = ap.parse_args()
 
+    if args.packed_v14:
+        from scripts.packed_v14 import verified_bytes
+        verified_bytes(args.weights, args.set)
     build_cfg(args.weights, cnn_args(args.set)[0])  # Schalter frueh pruefen
     out = Path(args.out)
     if out.exists():
@@ -160,6 +177,8 @@ def main() -> None:
     opponents = [o for o in args.opponents.split(",") if o]
     chunks = [seeds[i::args.workers] for i in range(args.workers)]
     jobs = [(args.weights, args.set, c, opponents) for c in chunks if c]
+    if args.packed_v14:
+        jobs = [(*job, True) for job in jobs]
     t0 = time.time()
     ctx = mp.get_context("spawn")
     with ctx.Pool(len(jobs)) as pool:
