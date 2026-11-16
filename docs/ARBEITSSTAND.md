@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – V15 gegen FT18 und Zufall
+
+V15 gewann gegen den historischen FT18 auf zwölf Karten beide Startseiten (24/24), V14 nur 14/24. Gegen den nativen Zufallsgegner gewannen beide 16/16. Alle 80 Partien sind nach Sitz, Kartenstand und Gegneridentität geprüft. [Endstände, Unsicherheit und Reproduktion](../experiments/analysis/umbau_20261115/robustness_ft18_random/ERGEBNIS.md).
+
+## 16.11.2026 – Schnellere V14-Auswertung im Spiel geprüft
+
+Die optionale gebündelte CPU-Berechnung für die 36 V14-Netze produzierte in zwölf direkten Wiederholungen des ursprünglichen Rechenwegs alle 7.272 Befehlsmatrizen beider Spieler identisch. Auch die 36 Matchenden und zwölf archivierten Gesamtergebnisse stimmten überein. Auf dem M3 war diese CPU-Methode für einzelne Stellungen schneller als die GPU. Die GPU erreichte bei Archivgruppen zu 64 Stellungen 2,93-fachen Durchsatz. 16 gezielte Werkzeug- und Regressionstests bestanden. [Komplette Befehlsfolgen](../experiments/analysis/macos_durchsatz_20261115/ensemble_inferenz/ERGEBNIS.md) · [M3-Messung](../experiments/analysis/macos_durchsatz_20261115/ensemble_inferenz/M3_CPU_GPU.md).
+
 ## 16.11.2026 – Wann entscheidet sich der v4-Schüler für einen Schuss?
 
 Auf 15 vor der Auswertung gewählten Lehrerspielen erkannte das reine v4-Netz auf gerundeten Eingaben 652 von 1.542 empfohlenen Schüssen. Wählten beide Schießen, stimmte bei 468 von 652 das genaue Zielfeld. Zugleich sagte v4 bei 981 Lehrer-Bewegungen oder Haltebefehlen einen Schuss voraus. Für das nächste Nachtraining kann Mahmoud die Entscheidung zu schießen und die Wahl des Zielfelds getrennt beurteilen. Die 15 vollständigen Schülerbefehlsfolgen ließen sich aus den archivierten Eingaben nicht exakt reproduzieren. [Vorauswahl, Gegenprüfung und Grenzen](../experiments/analysis/umbau_20261115/dagger_zusatz/schussdiagnose/ERGEBNIS.md).
