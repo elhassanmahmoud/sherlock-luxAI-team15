@@ -1,0 +1,383 @@
+{
+  "cases": {
+    "7151043/P0": {
+      "handoffs": 8,
+      "matches": 1
+    },
+    "7151059/P1": {
+      "handoffs": 3,
+      "matches": 2
+    },
+    "7151068/P0": {
+      "handoffs": 9,
+      "matches": 2
+    },
+    "7151073/P0": {
+      "handoffs": 8,
+      "matches": 2
+    },
+    "7151094/P1": {
+      "handoffs": 10,
+      "matches": 3
+    }
+  },
+  "direct": {
+    "r3": {
+      "blend": 30,
+      "delta_blend": {
+        "ci95": [
+          -0.625,
+          -0.15625
+        ],
+        "gained": [
+          [
+            7173409,
+            "player_0"
+          ]
+        ],
+        "lost": [
+          [
+            7173400,
+            "player_0"
+          ],
+          [
+            7173400,
+            "player_1"
+          ],
+          [
+            7173403,
+            "player_1"
+          ],
+          [
+            7173407,
+            "player_0"
+          ],
+          [
+            7173407,
+            "player_1"
+          ],
+          [
+            7173408,
+            "player_0"
+          ],
+          [
+            7173408,
+            "player_1"
+          ],
+          [
+            7173410,
+            "player_0"
+          ],
+          [
+            7173412,
+            "player_0"
+          ],
+          [
+            7173412,
+            "player_1"
+          ],
+          [
+            7173414,
+            "player_1"
+          ],
+          [
+            7173415,
+            "player_0"
+          ],
+          [
+            7173415,
+            "player_1"
+          ]
+        ],
+        "value": -0.375
+      },
+      "delta_field": {
+        "ci95": [
+          -0.28125,
+          0.12578124999998863
+        ],
+        "gained": [
+          [
+            7173402,
+            "player_0"
+          ],
+          [
+            7173404,
+            "player_0"
+          ],
+          [
+            7173410,
+            "player_1"
+          ],
+          [
+            7173411,
+            "player_1"
+          ],
+          [
+            7173414,
+            "player_0"
+          ]
+        ],
+        "lost": [
+          [
+            7173403,
+            "player_1"
+          ],
+          [
+            7173407,
+            "player_0"
+          ],
+          [
+            7173408,
+            "player_1"
+          ],
+          [
+            7173409,
+            "player_1"
+          ],
+          [
+            7173410,
+            "player_0"
+          ],
+          [
+            7173412,
+            "player_0"
+          ],
+          [
+            7173412,
+            "player_1"
+          ]
+        ],
+        "value": -0.0625
+      },
+      "field": 20,
+      "n": 32,
+      "rate": {
+        "ci95": [
+          0.34375,
+          0.75
+        ],
+        "value": 0.5625
+      },
+      "unit": 18
+    },
+    "v15": {
+      "blend": 18,
+      "delta_blend": {
+        "ci95": [
+          -0.625,
+          -0.125
+        ],
+        "gained": [],
+        "lost": [
+          [
+            7173406,
+            "player_0"
+          ],
+          [
+            7173406,
+            "player_1"
+          ],
+          [
+            7173407,
+            "player_0"
+          ],
+          [
+            7173407,
+            "player_1"
+          ],
+          [
+            7173410,
+            "player_0"
+          ],
+          [
+            7173410,
+            "player_1"
+          ],
+          [
+            7173411,
+            "player_0"
+          ],
+          [
+            7173411,
+            "player_1"
+          ],
+          [
+            7173413,
+            "player_0"
+          ],
+          [
+            7173413,
+            "player_1"
+          ],
+          [
+            7173414,
+            "player_0"
+          ],
+          [
+            7173414,
+            "player_1"
+          ]
+        ],
+        "value": -0.375
+      },
+      "delta_field": {
+        "ci95": [
+          -0.5,
+          0.0
+        ],
+        "gained": [
+          [
+            7173415,
+            "player_0"
+          ],
+          [
+            7173415,
+            "player_1"
+          ]
+        ],
+        "lost": [
+          [
+            7173404,
+            "player_0"
+          ],
+          [
+            7173404,
+            "player_1"
+          ],
+          [
+            7173406,
+            "player_0"
+          ],
+          [
+            7173406,
+            "player_1"
+          ],
+          [
+            7173408,
+            "player_0"
+          ],
+          [
+            7173408,
+            "player_1"
+          ],
+          [
+            7173409,
+            "player_0"
+          ],
+          [
+            7173409,
+            "player_1"
+          ],
+          [
+            7173411,
+            "player_0"
+          ],
+          [
+            7173411,
+            "player_1"
+          ]
+        ],
+        "value": -0.25
+      },
+      "delta_r3": {
+        "ci95": [
+          -0.1875,
+          0.1875
+        ],
+        "gained": [
+          [
+            7173415,
+            "player_0"
+          ],
+          [
+            7173415,
+            "player_1"
+          ]
+        ],
+        "lost": [
+          [
+            7173414,
+            "player_0"
+          ],
+          [
+            7173414,
+            "player_1"
+          ]
+        ],
+        "value": 0.0
+      },
+      "field": 14,
+      "n": 32,
+      "r3": 6,
+      "rate": {
+        "ci95": [
+          0.0,
+          0.375
+        ],
+        "value": 0.1875
+      },
+      "unit": 6
+    }
+  },
+  "routing": {
+    "cases": {
+      "early_handoffs": 22,
+      "games": 5,
+      "games_with_handoff": 5,
+      "handoffs": 38,
+      "observed_any_ally": 37,
+      "observed_own_unit": 37,
+      "turns_all_retained": 37,
+      "turns_all_retained_and_gained": 36,
+      "turns_with_handoff": 38
+    },
+    "r3": {
+      "early_handoffs": 80,
+      "games": 32,
+      "games_with_handoff": 32,
+      "handoffs": 237,
+      "observed_any_ally": 232,
+      "observed_own_unit": 232,
+      "turns_all_retained": 222,
+      "turns_all_retained_and_gained": 221,
+      "turns_with_handoff": 230
+    },
+    "solution": {
+      "early_handoffs": 179,
+      "games": 80,
+      "games_with_handoff": 80,
+      "handoffs": 679,
+      "observed_any_ally": 672,
+      "observed_own_unit": 672,
+      "turns_all_retained": 640,
+      "turns_all_retained_and_gained": 634,
+      "turns_with_handoff": 656
+    },
+    "v15": {
+      "early_handoffs": 72,
+      "games": 32,
+      "games_with_handoff": 32,
+      "handoffs": 218,
+      "observed_any_ally": 212,
+      "observed_own_unit": 212,
+      "turns_all_retained": 200,
+      "turns_all_retained_and_gained": 196,
+      "turns_with_handoff": 214
+    }
+  },
+  "solution": {
+    "delta": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "gained": [],
+      "lost": [],
+      "value": 0.0
+    },
+    "n": 80,
+    "r3": 80,
+    "unit": 80
+  }
+}

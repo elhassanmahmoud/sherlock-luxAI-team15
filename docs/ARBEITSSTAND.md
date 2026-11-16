@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Übergabe einzelner Einheiten von R3 an V15
+
+Die getrennte Replayprüfung fand 79 gemeinsam mögliche Überschreibungen in 1.485 Stellungen. Auf 40 weiteren Solution-Karten und beiden Sitzen gewann die Einzelübergabe 80/80 und R3 80/80. Direkt gewann die Regel 18/32 gegen R3 und 6/32 gegen V15. Im vollständigen zusätzlichen 40-Karten-Archivblock gewann der Kandidat 76/80 und R3 76/80. Fünf gezielt ausgewählte Diagnosesitze sind separat ausgewiesen. Ein Vorteil gegenüber R3 gegen Solution ist auf diesen Karten nicht nachgewiesen. R3 bleibt die Abgabe. [Regel, tatsächlich besetzte Felder und Vergleich](../experiments/analysis/unit_handoff_20261116/ERGEBNIS.md).
+
 ## 16.11.2026 – Gezielte frühe Feldbesetzung mit R3 und V15
 
 In den fünf abweichenden Partien ließ sich jeder ursprüngliche Ausgang einschließlich der Punkte reproduzieren. Die drei zusätzlichen Niederlagen der bisherigen Mischung kippten im ersten Match. Der neue Kandidat nutzt dort R3 und lässt V15 ab Match zwei bei Kontakt oder bei der frühen Wiederbesetzung bekannter Punktefelder übernehmen. Auf 40 neuen Karten gewann er **79/80** gegen Solution, R3 **79/80** und die bisherige Mischung **79/80**. Direkt gewann er **20/32** gegen R3 und **14/32** gegen V15. Der frische Solution-Satz belegt keinen Vorteil des Kandidaten gegenüber R3. R3 bleibt die Abgabe. [Auswertung und fünf Zugverläufe](../experiments/analysis/r3_field_20261116/ERGEBNIS.md).
