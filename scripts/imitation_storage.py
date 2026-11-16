@@ -6,8 +6,11 @@ import numpy as np
 import torch
 
 
-def store_partition(files, folder, prepare_labels):
-    """Same file and step order as concat_games; calculate the regular action/target masks per game."""
+def store_partition(files, folder, prepare_labels, extra_feats=None):
+    """Same file and step order as concat_games; calculate the regular action/target masks per game.
+
+    extra_feats (16.11.2026): optional function of the open archive returning float16 columns that are
+    appended to the 79 unit features (e.g. the previous own move, scripts/imitate.py prev_move_columns)."""
     if not files:
         raise ValueError("Need at least one game in each data split")
     folder = Path(folder)
@@ -24,6 +27,8 @@ def store_partition(files, folder, prepare_labels):
                 board = z["planes"]
                 keys = ("step","pos","feats","mask","act","sdx","sdy")
                 raw = {k:z[k] for k in keys}
+                if extra_feats is not None:
+                    raw["feats"] = np.concatenate([raw["feats"], extra_feats(z)], axis=1).astype(np.float16)
             n = len(raw["step"])
             if (not n or not len(board) or np.any(raw["step"][1:] < raw["step"][:-1])
                     or raw["step"].min() < 0 or raw["step"].max() >= len(board)):

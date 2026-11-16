@@ -18,6 +18,7 @@ from . import geometry as geo
 from .cnn_model import map_planes
 from .imitation_net import ImitationNet, masked_sap_logits
 from .ppo_agent import PPOAgent
+from .prev_move import MoveTracker
 
 
 def featurize(agent, obs):
@@ -69,6 +70,7 @@ class ImitationAgent(PPOAgent):
 
     def __init__(self, player: str, agent_path: Optional[str] = None, name: str = "Sherlock Imitation", **kw):
         net = kw.pop("net", None)
+        prev_move = bool(kw.pop("prev_move_input", False))
         members = []
         own_tile = True
         if net is None and agent_path:
@@ -76,6 +78,8 @@ class ImitationAgent(PPOAgent):
             # Aeltere Schueler (vor dem 15.11., 15:40) lernten den Zielkopf ohne das eigene Feld; dessen Bewertung ist
             # dort untrainiert. Fuer sie bleibt das eigene Feld als Ziel gesperrt.
             own_tile = bool(ckpt.get("sap_own_tile", False))
+            # 16.11.2026 (v6): letzte eigene Bewegung je Unit als 5 Zusatzmerkmale (prev_move.py)
+            prev_move = bool(ckpt.get("prev_move_input", False))
             arch = ckpt.get("arch") or {}
             if arch.get("sap_head"):
                 net = ImitationNet(**arch)
@@ -89,8 +93,26 @@ class ImitationAgent(PPOAgent):
         self.sample = False
         self.has_sap_head = isinstance(self.net, ImitationNet)
         self.sap_own_tile = own_tile
+        self.prev_move_input = prev_move
+        self.move_tracker = MoveTracker()
         if members:
+            if prev_move and any(m.arch["feat_dim"] != self.net.arch["feat_dim"] for m in members):
+                raise ValueError("Ensemble-Mitglieder brauchen dieselben Eingaben (letzte Bewegung)")
             self.extra_nets = members
+
+    def _reset_episode_state(self) -> None:
+        super()._reset_episode_state()
+        tracker = getattr(self, "move_tracker", None)
+        if tracker is not None:
+            tracker.reset()
+
+    def prev_move_features(self, ctx, ids, pos) -> np.ndarray:
+        """Fuenf Zusatzmerkmale je Unit (prev_move.py) und die Positionen dieses Zugs fuer den naechsten merken."""
+        ms = int(ctx["match_step"])
+        extra = self.move_tracker.features(ms, ids, pos)
+        live = [float(ctx["ally_ene"][u]) >= 0 for u in ids]
+        self.move_tracker.record(ms, ids, pos, live)
+        return extra
 
     def _unstack_actions(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray) -> np.ndarray:
         """cfg.imit_unstack: je Feld bleibt hoechstens eine Unit stehen; die anderen nehmen ihre beste erlaubte
@@ -158,6 +180,8 @@ class ImitationAgent(PPOAgent):
         if fz is None:
             return actions
         ctx, ids, feats, masks, sap_targets, planes, pos = fz
+        if getattr(self, "prev_move_input", False):  # last_fz (DAgger-Archiv) behaelt 79 Merkmale; 5 aus Positionen
+            feats = np.concatenate([feats, self.prev_move_features(ctx, ids, pos)], axis=1).astype(np.float32)
         energy = np.array([float(ctx["ally_ene"][u]) for u in ids])
         if self.has_sap_head:
             masks = sap_legal(masks, energy, float(ctx["sap_cost"]))

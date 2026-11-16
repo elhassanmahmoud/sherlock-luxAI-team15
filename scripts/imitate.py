@@ -254,7 +254,13 @@ def cmd_collect(a) -> None:
 
 
 # ------------------------------------------------------------------ Training
-def concat_games(files, *, with_base=False):
+def prev_move_columns(z) -> np.ndarray:
+    """16.11.2026 (v6): letzte eigene Bewegung je Zeile aus Bildindex, Unit-ID, Position und Matchschritt."""
+    from agents.sherlock.prev_move import archive_onehot
+    return archive_onehot(z["step"], z["uid"], z["pos"], z["mstep"]).astype(np.float16)
+
+
+def concat_games(files, *, with_base=False, prev_move=False):
     columns = ("pos", "feats", "mask", "act", "sdx", "sdy") + (("base_act",) if with_base else ())
     planes, rows = [], {k: [] for k in ("step", *columns)}
     off = 0
@@ -265,7 +271,10 @@ def concat_games(files, *, with_base=False):
             rows["step"].append(z["step"].astype(np.int64) + off)
             off += len(board)
             for k in columns:
-                rows[k].append(z[k])
+                if k == "feats" and prev_move:
+                    rows[k].append(np.concatenate([z[k], prev_move_columns(z)], axis=1))
+                else:
+                    rows[k].append(z[k])
     return np.concatenate(planes), {k: np.concatenate(v) for k, v in rows.items()}
 
 
@@ -281,9 +290,10 @@ def partition_files(dirs: list[str], val_frac: float, seed: int):
     return parts
 
 
-def load_data(dirs: list[str], val_frac: float, seed: int):
+def load_data(dirs: list[str], val_frac: float, seed: int, prev_move: bool = False):
     parts = partition_files(dirs,val_frac,seed)
-    return concat_games(parts["train"]), concat_games(parts["val"]), len(parts["train"]), len(parts["val"])
+    return (concat_games(parts["train"], prev_move=prev_move), concat_games(parts["val"], prev_move=prev_move),
+            len(parts["train"]), len(parts["val"]))
 
 
 def selective_data(dirs):
@@ -369,6 +379,34 @@ def add_previous_enemy_input(net):
     net.arch["in_ch"] = 17
 
 
+def widen_unit_input(net, extra: int):
+    """Warmstart (16.11.2026): Unit-Eingang um `extra` Merkmale mit Null-Gewichten erweitern. Vor dem ersten
+    Lernschritt bleiben alle Ausgaben gleich; geprueft mit festen Eingaben."""
+    import torch
+    layer = net.unit[0]
+    old = layer.in_features
+    if old != net.arch["feat_dim"]:
+        raise ValueError("Unit-Eingang und Architektur passen nicht zusammen")
+    device = layer.weight.device
+    planes = torch.linspace(-1., 1., 2 * net.arch["in_ch"] * 24 * 24, device=device).reshape(2, -1, 24, 24)
+    pos = torch.tensor([[0, 0], [10, 8], [23, 23]], device=device)
+    steps = torch.tensor([0, 1, 1], device=device)
+    feats = torch.linspace(-1., 1., 3 * old, device=device).reshape(3, old)
+    with torch.no_grad():
+        before = net.forward_all(planes, steps, pos, feats)
+        w = layer.weight.detach()
+        layer.weight = torch.nn.Parameter(torch.cat((w, w.new_zeros((w.shape[0], extra))), dim=1))
+        layer.in_features = net.arch["feat_dim"] = old + extra
+        onehot = torch.zeros((3, extra), device=device)
+        onehot[1, 2 % extra] = 1.0  # beliebige Zusatzwerte: Null-Gewichte -> keine Wirkung
+        after = net.forward_all(planes, steps, pos, torch.cat((feats, onehot), dim=1))
+        delta = []
+        for a, b in zip(before, after):
+            torch.testing.assert_close(b, a, rtol=1e-5, atol=1e-6)
+            delta.append(float((b - a).abs().max()))
+    return dict(old_feat_dim=old, new_feat_dim=old + extra, max_abs_by_head=delta)
+
+
 def verify_initial_history_outputs(net):
     """Check the actual freshly seeded student before any optimizer update, using no labels or RNG."""
     import torch
@@ -399,8 +437,27 @@ def train_student(train, val, a, log):
 
     dev = torch.device(a.device if a.device != "auto" else ("mps" if torch.backends.mps.is_available() else "cpu"))
     torch.manual_seed(a.seed)
-    net = ImitationNet(feat_dim=FEATURE_DIM, n_actions=6, ch=a.ch, blocks=a.blocks, hidden=a.hidden,
-                       detach_value=True, sap_head=True)
+    prev_move = bool(getattr(a, "prev_move", False))
+    init = getattr(a, "init", None)
+    if init:
+        # 16.11.2026: Warmstart von einem fertigen Schueler; mit --prev-move den Unit-Eingang um 5 Null-Spalten erweitern
+        from agents.sherlock.prev_move import N_PREV
+        ck = torch.load(init, map_location="cpu", weights_only=False)
+        net = ImitationNet(**ck["arch"])
+        net.load_state_dict(ck["policy"])
+        have_prev = bool(ck.get("prev_move_input", False))
+        if have_prev and not prev_move:
+            raise ValueError("Startnetz nutzt die letzte Bewegung, --prev-move fehlt")
+        if prev_move and not have_prev:
+            a.widen_check = widen_unit_input(net, N_PREV)
+            log(f"Warmstart {init}: Unit-Eingang erweitert, Ausgaben unveraendert {a.widen_check}")
+        else:
+            log(f"Warmstart {init} ohne Aenderung der Eingaben")
+        a.ch, a.blocks, a.hidden = net.arch["ch"], net.arch["blocks"], net.arch["hidden"]
+    else:
+        from agents.sherlock.prev_move import N_PREV
+        net = ImitationNet(feat_dim=FEATURE_DIM + (N_PREV if prev_move else 0), n_actions=6, ch=a.ch,
+                           blocks=a.blocks, hidden=a.hidden, detach_value=True, sap_head=True)
     if getattr(a, "previous_enemy", False):
         if getattr(a, "movement_distillation", None) is not None:
             raise ValueError("Soft movement targets and previous enemy history are separate experiments")
@@ -409,6 +466,9 @@ def train_student(train, val, a, log):
     net = net.to(dev)
     if train[0].shape[1] != net.arch["in_ch"] or val[0].shape[1] != net.arch["in_ch"]:
         raise ValueError("Wrong number of input board channels")
+    if train[1]["feats"].shape[1] != net.arch["feat_dim"] or val[1]["feats"].shape[1] != net.arch["feat_dim"]:
+        raise ValueError(f"Merkmalszahl der Daten ({train[1]['feats'].shape[1]}) passt nicht zum Netz "
+                         f"({net.arch['feat_dim']})")
 
     if getattr(a, "own_command_input", False):
         from scripts.own_command_study import widen_and_check
@@ -602,14 +662,21 @@ def cmd_train(a) -> None:
             parts = partition_files(a.data, a.val_frac, a.seed)
             nt, nv = len(parts["train"]), len(parts["val"])
             tmp = Path(resources.enter_context(tempfile.TemporaryDirectory(prefix=".imitation-data-",dir=out.parent)))
-            train, val = (store_partition(parts[k],tmp/k,prepare_labels) for k in ("train","val"))
+            extra_feats = prev_move_columns if getattr(a, "prev_move", False) else None
+            train, val = (store_partition(parts[k],tmp/k,prepare_labels,extra_feats=extra_feats)
+                          for k in ("train","val"))
             disk_bytes = sum(f.stat().st_size for f in tmp.glob("*/*"))
             log(f"Temporärer Plattenspeicher {disk_bytes / 2**30:.2f} GiB; Validierung auf CPU")
         else:
-            train, val, nt, nv = load_data(a.data, a.val_frac, a.seed)
+            train, val, nt, nv = load_data(a.data, a.val_frac, a.seed, prev_move=getattr(a, "prev_move", False))
         log(f"Dateien: {nt} Training, {nv} Validierung (getrennt nach Spiel), geladen in {time.time() - t0:.0f}s")
         net = train_student(train, val, a, log)
         del train, val
+    if getattr(a, "prev_move", False):
+        extra["prev_move_input"] = True  # ImitationAgent haengt im Spiel dieselben 5 Merkmale an (prev_move.py)
+    if getattr(a, "init", None):
+        extra["init"] = str(Path(a.init).resolve())
+        extra["lr"] = a.lr
     cfg = v14_cfg()
     save_policy(str(out), net, cfg, extra={"kind": "imitation", "teacher": "kaggle3 lux3-bot 0.4.8_fn",
                                            "data": a.data, "epochs": a.epochs,
@@ -714,6 +781,10 @@ def main() -> None:
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--device", default="auto")
     t.add_argument("--sap-weight", type=float, default=0.5)
+    t.add_argument("--prev-move", action="store_true",
+                   help="16.11.2026: letzte eigene Bewegung je Unit als 5 Zusatzmerkmale (agents/sherlock/prev_move.py)")
+    t.add_argument("--init", default=None,
+                   help="Warmstart von einem fertigen Schueler (mit --prev-move: Unit-Eingang mit Null-Gewichten erweitern)")
     focused = sub.add_parser("train-selective", help="6 Aktionsklassen; feste Kampfkarten und SAP-Gewichtung")
     focused.add_argument("--data", nargs="+", required=True)
     focused.add_argument("--out", required=True)
