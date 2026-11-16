@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Original-R3 für die Abschlussabgabe freigegeben
+
+Der normale Paketaufruf für Team 15 stellt jetzt das geprüfte [Finale-ZIP](../experiments/releases/20261116_r3_finale/agent.zip) als `dist/agent.zip` bereit. Die SHA-256 stimmt mit dem unter Python 3.10 und in der Projektumgebung getesteten Kurskandidaten überein. Beide Startseiten luden beim regulären Aufruf den R3-Berater und führten ihn für eine aktive Einheit aus. 38 Paket- und Regressionstests bestanden. Die beiden V14-Forschungsgewichte, ihre versionierte Sicherung und das frühere November-Battle-ZIP wurden per SHA-256 geprüft. Eine zweite Kopie des historischen ZIP liegt im Desktopprojekt. [Importpfad, Gewichte, Sicherung und Freigabeentscheidung](../experiments/releases/20261116_r3_finale/README.md).
+
+## 16.11.2026 – Direkter Kartenvergleich der drei Finalisten
+
+Auf denselben 400 Karten und beiden Startseiten gewann der ursprüngliche R3 **788/800** gegen die originale Solution, V14 **767/800** und V15 **764/800**. Gegen den Kaggle-Dritten gewannen alle drei jeweils 12/800. Über beide Gegner beträgt der Unterschied R3 gegenüber V14 +1,31 Prozentpunkte (95-%-Kartenintervall +0,25 bis +2,44). Damit hat R3 die vorab festgelegten Bedingungen für das Finale erfüllt. [Geprüftes Abgabepaket](../experiments/releases/20261116_r3_finale/agent.zip). Auf allen zwölf von R3 verlorenen Solution-Sitzen gewann mindestens eine der beiden anderen Versionen. Um diese Gelegenheit im Spiel zu nutzen, müsste ein Agent vor der Entscheidung aus öffentlich sichtbaren Beobachtungen den passenden Spielstil erkennen. Dafür braucht er einen Test auf weiteren Karten. 16 historische Endstände, alle 1.600 neuen Spiele, beide Referenzdateien und die Zuordnung pro Sitz wurden unabhängig geprüft. [Gepaarter Vergleich und Quellen](../experiments/analysis/movement_soft_20261115/shared_400/ERGEBNIS.md).
+
 ## 16.11.2026 – V15 gegen FT18 und Zufall
 
 V15 gewann gegen den historischen FT18 auf zwölf Karten beide Startseiten (24/24), V14 nur 14/24. Gegen den nativen Zufallsgegner gewannen beide 16/16. Alle 80 Partien sind nach Sitz, Kartenstand und Gegneridentität geprüft. [Endstände, Unsicherheit und Reproduktion](../experiments/analysis/umbau_20261115/robustness_ft18_random/ERGEBNIS.md).

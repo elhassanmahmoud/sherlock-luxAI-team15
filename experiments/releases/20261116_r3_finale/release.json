@@ -1,0 +1,26 @@
+{
+  "active": "R3",
+  "competition": "Finale 27.11.2026",
+  "package": "agent.zip",
+  "sha256": "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d",
+  "bytes": 27591024,
+  "import_path": "agents.sherlock.main.Agent_x",
+  "weights": {
+    "player_0": "agents/sherlock/weights/agent.pth",
+    "player_1": "agents/sherlock/weights/agent.pth",
+    "bundle_sha256": "d20814949d4460c523ac718acf74e282ef5cdf4e3b743b4713d6aac95795d554",
+    "v14_sha256": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+    "r3_sha256": "99b07775582e68efef8b63f545980e969cb0ed3c7d65052b48179508b87dd7b9"
+  },
+  "evidence": {
+    "experiments/analysis/movement_soft_20261115/shared_400/measured/assessment.json": "ec8d9fec11c8e8c395e9bb33e27900ed8c2091cba976885c92989dff76a16ea1",
+    "experiments/analysis/movement_soft_20261115/candidate_package/parity.json": "bf8a159eb3c1fd2cb47d13426fdaaaeb7c593d5fbc6a14be35079363b1bfcf16",
+    "experiments/analysis/movement_soft_20261115/candidate_package/parity_py310.json": "d817bca772b86ba0480b6cdc16aa964bbdc8034ab76e3b241b1227d3f3fd7228",
+    "experiments/analysis/movement_soft_20261115/shared_400/sitzvergleich/coverage.json": "4a617efaaad7c47ec3a32d020bf31a18c8a46015119fd7aca8887d666eeef2bc"
+  },
+  "backups": {
+    "v14_weights": "experiments/releases/20261101_v14_baseline",
+    "previous_battle_zip_sha256": "88dfbe320cc1df076366e43d928f76a230690d6b96b573eefd583d7979dff9d6",
+    "previous_battle_zip_local_backup": "experiments/releases/20261101_v14_baseline/Gruppe15_Battle_0611.zip"
+  }
+}

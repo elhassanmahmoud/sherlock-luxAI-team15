@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 16.11.2026 – R3 auf 400 gemeinsamen Karten
+
+Auf denselben 400 Karten und beiden Startseiten gewann der ursprüngliche R3 **788/800** gegen die originale Solution, V14 **767/800** und V15 **764/800**. Gegen den Kaggle-Dritten gewannen alle drei jeweils 12/800. Über beide Gegner beträgt der Unterschied R3 gegenüber V14 +1,31 Prozentpunkte (95-%-Kartenintervall +0,25 bis +2,44). Damit hat R3 die vorab festgelegten Bedingungen für das Finale erfüllt. [Geprüftes Abgabepaket](../experiments/releases/20261116_r3_finale/agent.zip). [Messung und Intervalle](../experiments/analysis/movement_soft_20261115/shared_400/ERGEBNIS.md).
+
 15.11.2026 – In zwei getrennten Archiven verbessert die zusätzliche R3-Korrektur zwischen zwei unterschiedlichen Bewegungsrichtungen die Lehrerübereinstimmung um netto 3.569 und 3.441 Befehle. Beide Kartenintervalle sind positiv. Die drei Gegnergruppen bestehen einzeln. [Archivprüfung und Spieltestbedingung](../experiments/analysis/r3_turn_advice_20261115/ARCHIVPRUEFUNG.md).
 
 15.11.2026 – Derselbe trainierte Midpoint mit Originalansicht und Diagonalspiegelung gewann 30/32 gegen Solution (beide Eltern 32/32), 0/32 gegen Kaggle und 24/32 direkt gegen V14. 160 neue Partien, 192 bereits vorhandene externe Referenzpartien, zwei von sieben Kriterien erfüllt. [Beide Startseiten und gepaarte Vergleiche](../experiments/analysis/r8_midpoint_diagonal_20261115/VORAUSWAHL.md).

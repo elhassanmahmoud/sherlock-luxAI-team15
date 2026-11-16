@@ -5,14 +5,17 @@
     python -m scripts.build_submission --from-run experiments/runs/20261010_full_s1
     python -m scripts.build_submission --battle          # Gruppe15.zip im Projektordner
 
-Inhalt von dist/agent.zip:
+Die Standardabgabe kopiert das freigegebene R3-Archiv unverändert nach dist/agent.zip.
+Andere Teams/Gruppen und --from-run erzeugen ein Paket aus den gewählten Quellen.
+
+Inhalt des Kursformats:
 
     <team_name>/
         __init__.py          leer
         main.py              Klasse Agent_x (act, update, set_to_eval_mode,
                              set_env_cfg, save_agent, load_agent)
         *.py                 Belief, Features, Netz, Reward, ...
-        weights/agent_p0.pth, weights/agent_p1.pth
+        weights/agent.pth     R3: beide Sitze laden dieselbe Datei
         agents.yaml          Import-Pfad + Lade-Pfade
     paths.csv                Moodle-Gruppe;Import_Path;Load_Path_P0;Load_Path_P1
 
@@ -30,6 +33,7 @@ Battle-Zip wird zweimal geprueft: Ordner unter agents/ und in der Projektwurzel.
 from __future__ import annotations
 
 import argparse
+from hashlib import sha256
 import keyword
 import shutil
 import subprocess
@@ -42,6 +46,7 @@ from scripts.common import ROOT
 from scripts.output_paths import checked_output
 
 SRC = ROOT / "agents" / "sherlock"
+R3_ZIP_SHA256 = "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d"
 REQUIRED = ["act", "update", "set_to_eval_mode", "set_env_cfg", "save_agent", "load_agent"]
 
 
@@ -79,6 +84,25 @@ def sources(out: Path, from_run: Path | None) -> tuple[list[Path], list[Path], P
 def yaml_text(imp: str, lp0: str, lp1: str) -> str:
     return (f"%YAML 1.2\n---\n\nIMPORT_PATH: '{imp}'\n"
             f"LOAD_PATH_P0: '{lp0}'\nLOAD_PATH_P1: '{lp1}'\n")
+
+
+def copy_final_release(out: Path) -> Path:
+    release = ROOT / "experiments/releases/20261116_r3_finale/agent.zip"
+    try:
+        out = checked_output(out, SRC / "weights")
+        data = release.read_bytes()
+        if sha256(data).hexdigest() != R3_ZIP_SHA256:
+            raise ValueError("R3-Freigabearchiv hat eine abweichende SHA-256")
+        if out.exists() and out.samefile(release):
+            raise ValueError("Die Ausgabe verweist auf das R3-Freigabearchiv")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=out.parent) as tmp:
+            stage = Path(tmp) / "agent.zip"
+            stage.write_bytes(data)
+            stage.replace(out)
+    except (ValueError, OSError) as exc:
+        raise SystemExit(str(exc)) from exc
+    return out
 
 
 def build(team: str, group: int, out: Path, from_run: Path | None = None) -> Path:
@@ -208,13 +232,27 @@ def nets(a):  # 15.11.2026: nachgeahmte CNN-Policy (Agent_x delegiert an Imitati
         return ("Hybrid", im.mode, 1 + len(im.v14.extra_q), 1 + len(im.student.extra_nets))
     return ("CNN", 1 + len(im.extra_nets)) if im is not None else ("DQN", 1 + len(a.extra_q))
 
+r3 = getattr(sys.modules[cls.__module__], "KIND", None) == "sherlock_r3_selective_movement_0105658"
+if r3:
+    # At reset both teams have no live ships. Advance once to exercise the loaded adviser.
+    empty = {side: np.zeros((16, 3), dtype=int) for side in ("player_0", "player_1")}
+    active_obs = env.step(empty)[0]
+
 for side, path in (("player_0", p0), ("player_1", p1)):
     a = guard_course_calls(cls(side, agent_path=path))
     a.set_to_eval_mode(); a.set_env_cfg(info["params"])
     act = a.act(0, obs[side])
     assert np.asarray(act).shape == (16, 3), act.shape
-    assert a.env_steps > 0 or getattr(a, "_imitation", None) is not None, "Gewichte nicht geladen"
-    print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={nets(a)}")
+    if r3:
+        assert not np.any(act) and a._actor.mode == "movement" and not a._actor.training
+        evaluated = []
+        with a._actor.members[0].pi.register_forward_hook(lambda module, inputs, output: evaluated.append(len(output))):
+            orders = np.asarray(a.act(1, active_obs[side]))
+        assert orders.shape == (16, 3) and evaluated and evaluated[0] > 0, "R3-Ratgeber wurde nicht ausgeführt"
+        print(f"  {side}: R3 geladen, Ratgeber für {evaluated[0]} aktive Einheit(en) ausgeführt")
+    else:
+        assert a.env_steps > 0 or getattr(a, "_imitation", None) is not None, "Gewichte nicht geladen"
+        print(f"  {side}: {a.name} geladen, env_steps={a.env_steps}, Netze={nets(a)}")
 if sys.argv[6] == "frozen":
     # Runner mit train=True: kein set_to_eval_mode, save_agent() vor dem Spiel, update() bis Spielende
     for side, path in (("player_0", p0), ("player_1", p1)):
@@ -286,7 +324,11 @@ def main() -> None:
         out, paths = build_battle(args.group, Path(args.out or ROOT / f"Gruppe{args.group}.zip"), from_run,
                                   args.half)
     else:
-        out = build(args.team_name, args.group, Path(args.out or ROOT / "dist" / "agent.zip"), from_run)
+        target = Path(args.out or ROOT / "dist" / "agent.zip")
+        if args.team_name == "sherlock" and args.group == 15 and from_run is None:
+            out = copy_final_release(target)
+        else:
+            out = build(args.team_name, args.group, target, from_run)
     with zipfile.ZipFile(out) as z:
         names = z.namelist()
     print(f"{out} ({out.stat().st_size / 1e6:.1f} MB):")
