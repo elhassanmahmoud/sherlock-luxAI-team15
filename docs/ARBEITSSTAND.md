@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Original-R3 im Python-3.10-Kursformat bestätigt
+
+Das identische vorbereitete Kandidaten-ZIP reproduziert auf beiden Sitzen die 606 vollständigen Befehlsmatrizen der Forschungsfassung und der früheren Projektumgebung. Matchwechsel, Updates, Gewichtshashes und Fehlerzähler wurden überprüft. [Kursprüfung](../experiments/analysis/movement_soft_20261115/candidate_package/README.md).
+
 ## 16.11.2026 – Schnellere Auswertung der 36 V14-Netze auf dem M3
 
 Auf 19.230 Einheitsentscheidungen lieferte die gemeinsame schichtweise Berechnung dieselbe beste erlaubte Aktion. Der reine Netzdurchsatz war dreimal so hoch. Auf der V14-Kursaufnahme brauchten zwei vollständige Wiederholungen im Median 17,5 % weniger Zeit für die Agentenentscheidungen, bei jeweils 606 identischen Befehlen. [Messung mit Rundungsabweichungen und Referenzcode](../experiments/analysis/macos_durchsatz_20261115/ensemble_inferenz/ERGEBNIS.md).
