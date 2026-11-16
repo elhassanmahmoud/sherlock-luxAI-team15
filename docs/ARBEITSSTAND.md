@@ -1,5 +1,13 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026, 22:36 Berlin – Claude Code mit Mahmoud: Lauf DAgger-Runde 3 → v5 gegen R3 gestartet, neuer Codex-Auftrag
+
+- Moayeds Freigabe von R3 als Finalabgabe übernommen. Neue Kandidaten werden ab jetzt gegen R3 gemessen. Dafür lädt `scripts/par_eval.py` das unveränderte R3-Paket als Spieler oder Gegner (`r3zip:PFAD`, `scripts/r3_package.py`). Sechs gespeicherte R3-Spiele gegen Solution (7158000–7158002, beide Sitze) wurden mit identischen Matches und Punkten nachgespielt. 476 Tests bestanden (neu `tests/test_r3_package.py` und alle Tests mit `par_eval`), dazu 14 Tests für das gepackte V14 (Commit `1c148c3`).
+- **Läuft auf Mahmouds M5** (eingefrorene Quelle `1c148c3`, streng nacheinander): DAgger-Runde 3 (600 Spiele mit Schüler v4 und Schaltern, Karten 7252000–7252599, Gegner Kaggle/V14/Solution 60/20/20 %) → Schüler v5 (alle Daten, gleiches Rezept wie v4) → Tests auf Dev A: Hybrid v5 gegen Solution, Kaggle, R3 und V14; R3 und V15 als Referenz auf denselben Karten; reiner v5. Die Teildaten vom 15.11. (`k3_dagger3_teil_abgebrochen`) werden nicht verwendet.
+- Mahmoud erlaubt den Betrieb bis 17.11., 09:00; danach laufen keine Prozesse mehr.
+- **Neuer Auftrag für Codex:** [AUFTRAG_CODEX_20261116.md](AUFTRAG_CODEX_20261116.md). Der wichtigste Punkt: R3 gegen die übrigen Spielstile und FT18 prüfen. Moayed schickt zuerst das 400-Spiele-Archiv an Mahmoud. Reserviert für Mahmoud sind Dev C 7164000–7164099, DAgger ab 7253000 und eine frische Bestätigung auf 7159000–7159399. Codex nutzt 7165000–7165999 und 7173000–7173399.
+- V14-Gewichte, R3-Paket und `Gruppe15.zip` unverändert.
+
 ## 16.11.2026 – Übergabe einzelner Einheiten von R3 an V15
 
 Die getrennte Replayprüfung fand 79 gemeinsam mögliche Überschreibungen in 1.485 Stellungen. Auf 40 weiteren Solution-Karten und beiden Sitzen gewann die Einzelübergabe 80/80 und R3 80/80. Direkt gewann die Regel 18/32 gegen R3 und 6/32 gegen V15. Im vollständigen zusätzlichen 40-Karten-Archivblock gewann der Kandidat 76/80 und R3 76/80. Fünf gezielt ausgewählte Diagnosesitze sind separat ausgewiesen. Ein Vorteil gegenüber R3 gegen Solution ist auf diesen Karten nicht nachgewiesen. R3 bleibt die Abgabe. [Regel, tatsächlich besetzte Felder und Vergleich](../experiments/analysis/unit_handoff_20261116/ERGEBNIS.md).
