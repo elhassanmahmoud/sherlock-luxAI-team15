@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026, 23:33 Berlin – Schüler v5 nach DAgger-Runde 3: direkt 180/200 gegen R3, gegen Kaggle unverändert
+
+Auf Dev A gewann der reine v5 gegen Solution 190/200 (v4 185/200), gegen Kaggle 4/200 und direkt **180/200 gegen R3**. Der Hybrid v5 (V14 hält Punktefelder) gewann 193/200 gegen Solution, 0/200 gegen Kaggle und 158/200 direkt gegen R3. V15 kam auf denselben Karten auf 136/200. R3 selbst gewann 195/200 gegen Solution und 4/200 gegen Kaggle. Gegen Kaggle holen alle Varianten 33–36 % der Punkte. Weil v5 gegen Solution unter R3 liegt und gegen Kaggle nicht besser ist, gibt es keine Bestätigung. R3 bleibt die Abgabe. Die Schülergewichte liegen für Codex unter `experiments/candidates/umbau_20261116/student_v5.pth`. Es läuft der Vergleich der neuen Eingabe „letzte eigene Bewegung“ (v6) mit einer gleich lange trainierten Kontrolle. [Ergebnis, Rohdaten und gepaarte Intervalle](../experiments/analysis/umbau_20261115/v5/ERGEBNIS.md).
+
 ## 16.11.2026, 22:36 Berlin – Claude Code mit Mahmoud: Lauf DAgger-Runde 3 → v5 gegen R3 gestartet, neuer Codex-Auftrag
 
 - Moayeds Freigabe von R3 als Finalabgabe übernommen. Neue Kandidaten werden ab jetzt gegen R3 gemessen. Dafür lädt `scripts/par_eval.py` das unveränderte R3-Paket als Spieler oder Gegner (`r3zip:PFAD`, `scripts/r3_package.py`). Sechs gespeicherte R3-Spiele gegen Solution (7158000–7158002, beide Sitze) wurden mit identischen Matches und Punkten nachgespielt. 476 Tests bestanden (neu `tests/test_r3_package.py` und alle Tests mit `par_eval`), dazu 14 Tests für das gepackte V14 (Commit `1c148c3`).

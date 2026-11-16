@@ -1,0 +1,20 @@
+22:34:20 START Quelle 1c148c3e19239a2fee2e9f94f6fa6b84d55a92f1
+DAgger: 600 Spiele, 2013415 Entscheidungen in 658s; Schueler gewinnt kaggle3 3/371, v14 109/121, solution92 105/108
+22:45:19 DAGGER3_DONE
+Epoche 1/2: Loss 1.1434 | Validierung Aktion 79.0 % | vollstaendiger Befehl 78.7 % | je Aktion stay 92 up 41 right 80 down 75 left 36 sap 34 | Ziel bei legalem Lehrerschuss exakt 73 %, +-1 Feld 90 % | 743s
+Epoche 2/2: Loss 0.8062 | Validierung Aktion 80.5 % | vollstaendiger Befehl 80.2 % | je Aktion stay 93 up 43 right 80 down 79 left 43 sap 34 | Ziel bei legalem Lehrerschuss exakt 75 %, +-1 Feld 91 % | 724s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5_b123d123.pth (699081 Parameter)
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5_b123d123.pth (699081 Parameter)
+23:10:05 V5_TRAINED
+Gepackter Hybrid (mixed, Schueler-Schalter {'imit_stay_bias': 1.5, 'imit_unstack': True}): /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v5_mixed/weights/agent.pth
+hyb_v5_mixed_devA.csv: kaggle3: 0.000 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.790 (200 Spiele), self:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/agents/sherlock/weights/agent_p0.pth: 0.910 (200 Spiele), solution92: 0.965 (200 Spiele) in 579s
+23:19:48 hyb_v5_mixed_devA fertig
+r3_devA.csv: kaggle3: 0.020 (200 Spiele), solution92: 0.975 (200 Spiele) in 246s
+23:23:56 r3_devA fertig
+v15_vs_r3_devA.csv: r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.680 (200 Spiele) in 159s
+23:26:37 v15_vs_r3_devA fertig
+student_v5_devA.csv: kaggle3: 0.020 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.900 (200 Spiele), solution92: 0.950 (200 Spiele) in 288s
+23:31:27 student_v5_devA fertig
+af01b28114deda63e2ce36858b3551cc75f3eff81d780c4918df0acf046768c1  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5_b123d123.pth
+791a42c393f2660c75bc58d79f763f2fb2c35da36ed98980496cb293e880ec01  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v5_mixed/weights/agent.pth
+23:31:27 V5_DONE
