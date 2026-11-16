@@ -1,0 +1,12 @@
+Temporärer Plattenspeicher 13.42 GiB; Validierung auf CPU
+Dateien: 3892 Training, 331 Validierung (getrennt nach Spiel), geladen in 14s
+Warmstart /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5_b123d123.pth ohne Aenderung der Eingaben
+Training: 13246061/13472824 Befehle im Spiel ausfuehrbar, 518595/518595 legale Schusslabels, davon 171 auf das eigene Feld
+Validierung: 1124334/1143821 Befehle im Spiel ausfuehrbar, 45925/45925 legale Schusslabels, davon 16 auf das eigene Feld
+Trainingsdaten: 13246061 Unit-Entscheidungen, Verteilung stay 42.2 %, up 3.9 %, right 23.0 %, down 23.1 %, left 3.9 %, sap 3.9 %
+Minibatch: 181 Spielschritte (im Mittel etwa 2048 Unit-Entscheidungen), Geraet mps
+Epoche 1/2: Loss 0.7897 | Validierung Aktion 79.6 % | vollstaendiger Befehl 79.3 % | je Aktion stay 93 up 44 right 79 down 79 left 47 sap 31 | Ziel bei legalem Lehrerschuss exakt 76 %, +-1 Feld 92 % | 724s
+Epoche 2/2: Loss 0.6956 | Validierung Aktion 80.2 % | vollstaendiger Befehl 79.9 % | je Aktion stay 93 up 46 right 80 down 79 left 46 sap 39 | Ziel bei legalem Lehrerschuss exakt 78 %, +-1 Feld 92 % | 725s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5c_from_v5.pth (699081 Parameter)
+eft 46 sap 39 | Ziel bei legalem Lehrerschuss exakt 78 %, +-1 Feld 92 % | 725s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v5c_from_v5.pth (699081 Parameter)
