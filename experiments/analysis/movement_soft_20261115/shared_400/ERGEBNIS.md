@@ -15,7 +15,11 @@ Die getrennte Direktprüfung gewann R3 mit 88/120 gegen V14. Das 95-%-Karteninte
 
 ## Wie weit reicht eine Wahl zwischen den drei Agenten?
 
-Auf jedem der zwölf von R3 verlorenen Solution-Sitze gewann V14 oder V15. Hätte man für jeden Sitz den Sieger im Nachhinein auswählen dürfen, wären höchstens 800/800 Siege möglich gewesen. Eine einzige Wahl für beide Sitze derselben Karte hätte höchstens 799/800 erreicht. Das sind rechnerische Obergrenzen für diese drei vorhandenen Versionen. Ein Agent müsste vor seiner Entscheidung aus öffentlich sichtbaren Spieldaten erkennen, welches Verhalten hilft. [Gemeinsame Niederlagen mit den Endständen aller Versionen](sitzvergleich/coverage.json) · [Einzelvergleich nach Gegner, Karte und Sitz](sitzvergleich/joined.csv)
+Von den zwölf Solution-Niederlagen von R3 gewannen V14 und V15 sechs gemeinsam. Drei weitere rettete allein V14, die übrigen drei allein V15. Hätte man für jeden Sitz den Sieger im Nachhinein auswählen dürfen, wären höchstens 800/800 Siege möglich gewesen. Eine einzige Wahl für beide Sitze derselben Karte hätte höchstens 799/800 erreicht. Das sind rechnerische Obergrenzen für diese drei vorhandenen Versionen. Ein Agent müsste vor seiner Entscheidung aus öffentlich sichtbaren Spieldaten erkennen, welches Verhalten hilft. [Gemeinsame Niederlagen mit den Endständen aller Versionen](sitzvergleich/coverage.json) · [Einzelvergleich nach Gegner, Karte und Sitz](sitzvergleich/joined.csv)
+
+## Was lässt sich vor dem Spiel erkennen?
+
+Auf einem **anderen** Entwicklungssatz mit 100 Karten gewann R3 195/200 gegen Solution, V14 188/200 und V15 194/200. R3 verlor dort auf vier verschiedenen Karten fünf Sitze. V15 gewann alle fünf, V14 drei. Vier betroffene Karten sind eine schmale Grundlage, um vorherzusagen, wann der Wechsel einem laufenden Agenten hilft. Eine bereits erprobte Startwahl nach öffentlicher Sichtweite verlor ihren Vorteil auf dem zweiten Entwicklungssatz. Für einen weiteren Versuch braucht es eine vor dem Ergebnis beobachtbare Spielinformation und Karten, die für die Wahl der Regel unbenutzt bleiben. Die 800/800 aus der rückblickenden Auswahl sind kein Spielergebnis eines ausführbaren Agenten. [R3-Einzelspiele auf Dev A](../dev_a_solution/r3/games.jsonl) · [V14](../../kaggle3_20261115/v14_ref_devA.csv) · [V15](../../kaggle3_20261115/student_hyb_v4_mixed.csv) · [Frühere Regel mit Sichtweite](../../v14_v4_start_20261115/ERGEBNIS.md)
 
 ## Karten und Nachprüfung
 
