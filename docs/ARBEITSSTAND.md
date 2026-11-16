@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – 400 zusätzliche Lehrerspiele zur Übergabe bereit
+
+Für Mahmoud liegen 1.350.818 beschriftete Einheitsentscheidungen vor, davon 1.317.756 mit der Trainingsmaske verwendbar. Der reine v4-Schüler gewann bei dieser Aufnahme 80/90 gegen V14, 70/75 gegen Solution und 2/235 gegen Kaggle. Die 400 NPZs wurden tief geprüft sowie aus dem lokalen Übergabearchiv einzeln verifiziert. [Datenumfang, Ergebnisse, Archivname und Prüfsummen](../experiments/analysis/umbau_20261115/dagger_zusatz/ERGEBNIS.md).
+
 ## 16.11.2026 – Original-R3 im Python-3.10-Kursformat bestätigt
 
 Das identische vorbereitete Kandidaten-ZIP reproduziert auf beiden Sitzen die 606 vollständigen Befehlsmatrizen der Forschungsfassung und der früheren Projektumgebung. Matchwechsel, Updates, Gewichtshashes und Fehlerzähler wurden überprüft. [Kursprüfung](../experiments/analysis/movement_soft_20261115/candidate_package/README.md).
