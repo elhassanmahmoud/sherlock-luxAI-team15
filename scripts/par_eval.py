@@ -85,13 +85,18 @@ def _worker(job: tuple) -> list[dict]:
     from scripts.common import make_opponent, play_game
 
     import torch
+    from scripts import r3_package
     env = LuxAIS3GymEnv(numpy_output=True)
-    if packed_v14:
+    if r3_package.is_spec(weights):
+        ckpt = None  # 16.11.2026: R3-Kurspaket als zu messender Spieler (scripts/r3_package.py)
+    elif packed_v14:
         from scripts import packed_v14 as backend
         ckpt = backend.load_checkpoint(weights, overrides)
     else:
         ckpt = torch.load(weights, map_location="cpu", weights_only=False)
-    if isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid" and "v14_ckpt" in ckpt:
+    if r3_package.is_spec(weights):
+        agent = r3_package.r3_package_agent("player_0", weights[len(r3_package.PREFIX):])
+    elif isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid" and "v14_ckpt" in ckpt:
         # 15.11.2026: gepackter Hybrid (eine agent.pth wie in der Abgabe) -> genau ueber Agent_x laden
         agent = Agent_x("player_0", agent_path=weights, train=False, seed=0)
     elif isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid":
@@ -131,6 +136,8 @@ def _worker(job: tuple) -> list[dict]:
                     from agents.sherlock.imitation_agent import ImitationAgent
                     opp = ImitationAgent(opp_side, agent_path=opp_name[5:], train=False)
                     opp.set_to_eval_mode()
+                elif r3_package.is_spec(opp_name):  # 16.11.2026: freigegebenes R3-Finalpaket als Gegner
+                    opp = r3_package.r3_package_agent(opp_side, opp_name[len(r3_package.PREFIX):])
                 elif opp_name.startswith("ppo:"):  # 22.10.2026: CNN-PPO-Checkpoint als Gegner
                     from agents.sherlock.ppo_agent import PPOAgent
                     opp = PPOAgent(opp_side, agent_path=opp_name[4:], train=False)
@@ -160,10 +167,18 @@ def main() -> None:
                     help="CPU: nur die 36 unveränderten Netze des V14-Kandidaten gemeinsam berechnen")
     args = ap.parse_args()
 
-    if args.packed_v14:
-        from scripts.packed_v14 import verified_bytes
-        verified_bytes(args.weights, args.set)
-    build_cfg(args.weights, cnn_args(args.set)[0])  # Schalter frueh pruefen
+    from scripts import r3_package
+    if r3_package.is_spec(args.weights):
+        # 16.11.2026: das R3-Paket wird unveraendert gespielt, also ohne Schalter und ohne Packed-Backend
+        if args.set or args.packed_v14:
+            raise SystemExit("r3zip: unterstuetzt weder --set noch --packed-v14")
+        if not Path(args.weights[len(r3_package.PREFIX):]).is_file():
+            raise SystemExit(f"R3-Paket fehlt: {args.weights}")
+    else:
+        if args.packed_v14:
+            from scripts.packed_v14 import verified_bytes
+            verified_bytes(args.weights, args.set)
+        build_cfg(args.weights, cnn_args(args.set)[0])  # Schalter frueh pruefen
     out = Path(args.out)
     if out.exists():
         raise SystemExit(f"{out} existiert schon - neuen Namen waehlen")
