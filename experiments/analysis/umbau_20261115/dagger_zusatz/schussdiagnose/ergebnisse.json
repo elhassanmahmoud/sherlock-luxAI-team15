@@ -1,0 +1,2022 @@
+{
+  "actor_flags": {
+    "end_sap": 0,
+    "focus_sap": false,
+    "imit_cover": 0.0,
+    "imit_sap_bias": 0.0,
+    "imit_stay_bias": 1.5,
+    "imit_unstack": true
+  },
+  "auditor_sha256": "1ea5f6bf3bd37f40e5245ab3c4db264220d1fa139b60f266597397347768c961",
+  "by_opponent_and_match": {
+    "kaggle3": {
+      "1": {
+        "admitted": 5006,
+        "correct_class": 3858,
+        "exact_order": 3824,
+        "false_sap_on_teacher_non_sap": 150,
+        "rows": 5157,
+        "rows_with_evidence_of_filtered_stack_peer": 10,
+        "sap_exact_target_and_fire": 58,
+        "sap_to_move": 137,
+        "sap_to_sap": 92,
+        "sap_to_stay": 11,
+        "target_head_exact_on_teacher_sap": 148,
+        "teacher_sap": 240
+      },
+      "2": {
+        "admitted": 5075,
+        "correct_class": 3828,
+        "exact_order": 3788,
+        "false_sap_on_teacher_non_sap": 209,
+        "rows": 5276,
+        "rows_with_evidence_of_filtered_stack_peer": 8,
+        "sap_exact_target_and_fire": 85,
+        "sap_to_move": 131,
+        "sap_to_sap": 125,
+        "sap_to_stay": 19,
+        "target_head_exact_on_teacher_sap": 185,
+        "teacher_sap": 275
+      },
+      "3": {
+        "admitted": 4611,
+        "correct_class": 3375,
+        "exact_order": 3348,
+        "false_sap_on_teacher_non_sap": 98,
+        "rows": 4722,
+        "rows_with_evidence_of_filtered_stack_peer": 9,
+        "sap_exact_target_and_fire": 44,
+        "sap_to_move": 115,
+        "sap_to_sap": 71,
+        "sap_to_stay": 4,
+        "target_head_exact_on_teacher_sap": 116,
+        "teacher_sap": 190
+      }
+    },
+    "solution92": {
+      "1": {
+        "admitted": 6080,
+        "correct_class": 4744,
+        "exact_order": 4740,
+        "false_sap_on_teacher_non_sap": 55,
+        "rows": 6192,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 23,
+        "sap_to_move": 36,
+        "sap_to_sap": 27,
+        "sap_to_stay": 29,
+        "target_head_exact_on_teacher_sap": 68,
+        "teacher_sap": 92
+      },
+      "2": {
+        "admitted": 5807,
+        "correct_class": 4606,
+        "exact_order": 4587,
+        "false_sap_on_teacher_non_sap": 119,
+        "rows": 6181,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 78,
+        "sap_to_move": 61,
+        "sap_to_sap": 97,
+        "sap_to_stay": 26,
+        "target_head_exact_on_teacher_sap": 144,
+        "teacher_sap": 184
+      },
+      "3": {
+        "admitted": 5978,
+        "correct_class": 4732,
+        "exact_order": 4724,
+        "false_sap_on_teacher_non_sap": 78,
+        "rows": 6131,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 64,
+        "sap_to_move": 84,
+        "sap_to_sap": 72,
+        "sap_to_stay": 8,
+        "target_head_exact_on_teacher_sap": 136,
+        "teacher_sap": 164
+      }
+    },
+    "v14": {
+      "1": {
+        "admitted": 6050,
+        "correct_class": 4760,
+        "exact_order": 4739,
+        "false_sap_on_teacher_non_sap": 88,
+        "rows": 6175,
+        "rows_with_evidence_of_filtered_stack_peer": 2,
+        "sap_exact_target_and_fire": 42,
+        "sap_to_move": 64,
+        "sap_to_sap": 63,
+        "sap_to_stay": 30,
+        "target_head_exact_on_teacher_sap": 111,
+        "teacher_sap": 157
+      },
+      "2": {
+        "admitted": 5929,
+        "correct_class": 4713,
+        "exact_order": 4694,
+        "false_sap_on_teacher_non_sap": 104,
+        "rows": 6060,
+        "rows_with_evidence_of_filtered_stack_peer": 1,
+        "sap_exact_target_and_fire": 45,
+        "sap_to_move": 76,
+        "sap_to_sap": 64,
+        "sap_to_stay": 14,
+        "target_head_exact_on_teacher_sap": 112,
+        "teacher_sap": 154
+      },
+      "3": {
+        "admitted": 6022,
+        "correct_class": 4854,
+        "exact_order": 4842,
+        "false_sap_on_teacher_non_sap": 80,
+        "rows": 6147,
+        "rows_with_evidence_of_filtered_stack_peer": 1,
+        "sap_exact_target_and_fire": 29,
+        "sap_to_move": 38,
+        "sap_to_sap": 41,
+        "sap_to_stay": 7,
+        "target_head_exact_on_teacher_sap": 62,
+        "teacher_sap": 86
+      }
+    }
+  },
+  "cases": [
+    {
+      "canonical_teacher_sha256": "6e5a13c42013c06979dd9128431b76d1dd3b7c6932e6df436c12d1a47c288175",
+      "confusion_teacher_by_predicted": [
+        [
+          1628,
+          23,
+          71,
+          55,
+          24,
+          11
+        ],
+        [
+          14,
+          74,
+          35,
+          44,
+          18,
+          14
+        ],
+        [
+          21,
+          13,
+          496,
+          57,
+          10,
+          7
+        ],
+        [
+          10,
+          9,
+          70,
+          462,
+          8,
+          12
+        ],
+        [
+          26,
+          13,
+          34,
+          44,
+          42,
+          5
+        ],
+        [
+          1,
+          2,
+          8,
+          8,
+          4,
+          40
+        ]
+      ],
+      "counts": {
+        "admitted": 3413,
+        "correct_class": 2742,
+        "exact_order": 2731,
+        "false_sap_on_teacher_non_sap": 49,
+        "rows": 3697,
+        "rows_with_evidence_of_filtered_stack_peer": 1,
+        "sap_exact_target_and_fire": 29,
+        "sap_to_move": 22,
+        "sap_to_sap": 40,
+        "sap_to_stay": 1,
+        "target_head_exact_on_teacher_sap": 46,
+        "teacher_sap": 63
+      },
+      "matches": {
+        "1": {
+          "admitted": 1132,
+          "correct_class": 886,
+          "exact_order": 882,
+          "false_sap_on_teacher_non_sap": 11,
+          "rows": 1236,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 8,
+          "sap_to_move": 10,
+          "sap_to_sap": 12,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 16,
+          "teacher_sap": 22
+        },
+        "2": {
+          "admitted": 1127,
+          "correct_class": 912,
+          "exact_order": 908,
+          "false_sap_on_teacher_non_sap": 31,
+          "rows": 1238,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 10,
+          "sap_to_move": 5,
+          "sap_to_sap": 14,
+          "sap_to_stay": 1,
+          "target_head_exact_on_teacher_sap": 14,
+          "teacher_sap": 20
+        },
+        "3": {
+          "admitted": 1154,
+          "correct_class": 944,
+          "exact_order": 941,
+          "false_sap_on_teacher_non_sap": 7,
+          "rows": 1223,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 11,
+          "sap_to_move": 7,
+          "sap_to_sap": 14,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 16,
+          "teacher_sap": 21
+        }
+      },
+      "opponent": "v14",
+      "reconstructed_world_sha256": "d07917366c10774b762269d02f9180e16ea7cff3f33e337409dec84e0be198ff",
+      "recorded_world_sha256": "de106782c9da4f0fa188d33bf1f42d07ead90bb367f523d25917174d6f0acd52",
+      "seed": 7172000,
+      "sha256": "48aabae93e8ad4eae5f75f588a9fb29e06196e8f3c09fc02b7325873c0bdacf5",
+      "side": "player_1",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "fa0d545277770cdbade3100d7748e1936251f81079f507eac432b2e9205e616f",
+      "confusion_teacher_by_predicted": [
+        [
+          651,
+          51,
+          110,
+          91,
+          47,
+          59
+        ],
+        [
+          6,
+          107,
+          15,
+          24,
+          19,
+          9
+        ],
+        [
+          7,
+          18,
+          691,
+          120,
+          33,
+          13
+        ],
+        [
+          3,
+          23,
+          98,
+          611,
+          16,
+          15
+        ],
+        [
+          16,
+          15,
+          31,
+          21,
+          98,
+          13
+        ],
+        [
+          3,
+          4,
+          12,
+          8,
+          7,
+          66
+        ]
+      ],
+      "counts": {
+        "admitted": 3131,
+        "correct_class": 2224,
+        "exact_order": 2194,
+        "false_sap_on_teacher_non_sap": 109,
+        "rows": 3188,
+        "rows_with_evidence_of_filtered_stack_peer": 4,
+        "sap_exact_target_and_fire": 36,
+        "sap_to_move": 31,
+        "sap_to_sap": 66,
+        "sap_to_stay": 3,
+        "target_head_exact_on_teacher_sap": 62,
+        "teacher_sap": 100
+      },
+      "matches": {
+        "1": {
+          "admitted": 1014,
+          "correct_class": 736,
+          "exact_order": 726,
+          "false_sap_on_teacher_non_sap": 39,
+          "rows": 1018,
+          "rows_with_evidence_of_filtered_stack_peer": 3,
+          "sap_exact_target_and_fire": 16,
+          "sap_to_move": 16,
+          "sap_to_sap": 26,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 28,
+          "teacher_sap": 42
+        },
+        "2": {
+          "admitted": 1047,
+          "correct_class": 777,
+          "exact_order": 764,
+          "false_sap_on_teacher_non_sap": 40,
+          "rows": 1072,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 11,
+          "sap_to_move": 11,
+          "sap_to_sap": 24,
+          "sap_to_stay": 2,
+          "target_head_exact_on_teacher_sap": 22,
+          "teacher_sap": 37
+        },
+        "3": {
+          "admitted": 1070,
+          "correct_class": 711,
+          "exact_order": 704,
+          "false_sap_on_teacher_non_sap": 30,
+          "rows": 1098,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 9,
+          "sap_to_move": 4,
+          "sap_to_sap": 16,
+          "sap_to_stay": 1,
+          "target_head_exact_on_teacher_sap": 12,
+          "teacher_sap": 21
+        }
+      },
+      "opponent": "kaggle3",
+      "reconstructed_world_sha256": "6ee0f192878781eb364b998b688e9eda9ea3243ae50d63bde7351327ae87d6ad",
+      "recorded_world_sha256": "7e2f61e13792e3a1da83340227b7163778578ccd6f9c5efdb616753fd08df274",
+      "seed": 7172001,
+      "sha256": "f5eaf1ba54bcde21d24718dbb01cb8e27451aa75e40e8496e926ea322c8d33a9",
+      "side": "player_1",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "a35515902255def7a84264e1a2acb9438ca89419eb6b7db8ed8b2d0bd30a7324",
+      "confusion_teacher_by_predicted": [
+        [
+          244,
+          17,
+          78,
+          18,
+          70,
+          45
+        ],
+        [
+          1,
+          143,
+          37,
+          9,
+          11,
+          3
+        ],
+        [
+          13,
+          16,
+          1280,
+          25,
+          60,
+          36
+        ],
+        [
+          2,
+          12,
+          57,
+          280,
+          18,
+          24
+        ],
+        [
+          15,
+          17,
+          36,
+          23,
+          136,
+          27
+        ],
+        [
+          0,
+          18,
+          73,
+          27,
+          30,
+          70
+        ]
+      ],
+      "counts": {
+        "admitted": 2971,
+        "correct_class": 2153,
+        "exact_order": 2127,
+        "false_sap_on_teacher_non_sap": 135,
+        "rows": 3075,
+        "rows_with_evidence_of_filtered_stack_peer": 14,
+        "sap_exact_target_and_fire": 44,
+        "sap_to_move": 148,
+        "sap_to_sap": 70,
+        "sap_to_stay": 0,
+        "target_head_exact_on_teacher_sap": 118,
+        "teacher_sap": 218
+      },
+      "matches": {
+        "1": {
+          "admitted": 930,
+          "correct_class": 675,
+          "exact_order": 668,
+          "false_sap_on_teacher_non_sap": 33,
+          "rows": 967,
+          "rows_with_evidence_of_filtered_stack_peer": 4,
+          "sap_exact_target_and_fire": 8,
+          "sap_to_move": 45,
+          "sap_to_sap": 15,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 30,
+          "teacher_sap": 60
+        },
+        "2": {
+          "admitted": 1130,
+          "correct_class": 828,
+          "exact_order": 817,
+          "false_sap_on_teacher_non_sap": 85,
+          "rows": 1166,
+          "rows_with_evidence_of_filtered_stack_peer": 4,
+          "sap_exact_target_and_fire": 30,
+          "sap_to_move": 43,
+          "sap_to_sap": 41,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 52,
+          "teacher_sap": 84
+        },
+        "3": {
+          "admitted": 911,
+          "correct_class": 650,
+          "exact_order": 642,
+          "false_sap_on_teacher_non_sap": 17,
+          "rows": 942,
+          "rows_with_evidence_of_filtered_stack_peer": 6,
+          "sap_exact_target_and_fire": 6,
+          "sap_to_move": 60,
+          "sap_to_sap": 14,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 36,
+          "teacher_sap": 74
+        }
+      },
+      "opponent": "kaggle3",
+      "reconstructed_world_sha256": "0276ce531e79ececae368456a9a9b0d8a32cfecee8890acd18c7ba2c557b1d3c",
+      "recorded_world_sha256": "e49bdef36e8314af13248f120a0e0e721634ccdc3ff700b389ad14dcc1a6a9d8",
+      "seed": 7172002,
+      "sha256": "d799db57a58d07c9093d840cabdbaffb3b042b7ce822e488de4019813943e122",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "768a67e60cd57d84b43561ff8ce6ea29865644a4ab28fa0583e811e62016b98f",
+      "confusion_teacher_by_predicted": [
+        [
+          685,
+          19,
+          28,
+          70,
+          12,
+          63
+        ],
+        [
+          14,
+          74,
+          16,
+          24,
+          6,
+          4
+        ],
+        [
+          13,
+          7,
+          421,
+          89,
+          13,
+          15
+        ],
+        [
+          10,
+          6,
+          62,
+          842,
+          7,
+          21
+        ],
+        [
+          14,
+          14,
+          18,
+          35,
+          66,
+          15
+        ],
+        [
+          18,
+          3,
+          33,
+          52,
+          5,
+          75
+        ]
+      ],
+      "counts": {
+        "admitted": 2869,
+        "correct_class": 2163,
+        "exact_order": 2136,
+        "false_sap_on_teacher_non_sap": 118,
+        "rows": 3011,
+        "rows_with_evidence_of_filtered_stack_peer": 5,
+        "sap_exact_target_and_fire": 48,
+        "sap_to_move": 93,
+        "sap_to_sap": 75,
+        "sap_to_stay": 18,
+        "target_head_exact_on_teacher_sap": 119,
+        "teacher_sap": 186
+      },
+      "matches": {
+        "1": {
+          "admitted": 1138,
+          "correct_class": 885,
+          "exact_order": 876,
+          "false_sap_on_teacher_non_sap": 39,
+          "rows": 1171,
+          "rows_with_evidence_of_filtered_stack_peer": 3,
+          "sap_exact_target_and_fire": 11,
+          "sap_to_move": 14,
+          "sap_to_sap": 20,
+          "sap_to_stay": 6,
+          "target_head_exact_on_teacher_sap": 20,
+          "teacher_sap": 40
+        },
+        "2": {
+          "admitted": 1031,
+          "correct_class": 744,
+          "exact_order": 734,
+          "false_sap_on_teacher_non_sap": 57,
+          "rows": 1127,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 17,
+          "sap_to_move": 44,
+          "sap_to_sap": 27,
+          "sap_to_stay": 9,
+          "target_head_exact_on_teacher_sap": 50,
+          "teacher_sap": 80
+        },
+        "3": {
+          "admitted": 700,
+          "correct_class": 534,
+          "exact_order": 526,
+          "false_sap_on_teacher_non_sap": 22,
+          "rows": 713,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 20,
+          "sap_to_move": 35,
+          "sap_to_sap": 28,
+          "sap_to_stay": 3,
+          "target_head_exact_on_teacher_sap": 49,
+          "teacher_sap": 66
+        }
+      },
+      "opponent": "kaggle3",
+      "reconstructed_world_sha256": "fe63e5de762de89a63ac695ced24f98941d860e2b95fbedd45221c42730ce702",
+      "recorded_world_sha256": "d2741b6d71e4da837def7e41086eb8c7d115b0158ae3c7744dff1d259867916e",
+      "seed": 7172003,
+      "sha256": "8d17e74876583119c4801b0335e708c167755004eec71bb91c86a0c628da09c8",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "4dd44810e6b5cad58c3cad89a382a210011a30b13ecd59cfb7dcab7615a244ef",
+      "confusion_teacher_by_predicted": [
+        [
+          1252,
+          22,
+          44,
+          37,
+          14,
+          16
+        ],
+        [
+          25,
+          110,
+          32,
+          28,
+          15,
+          3
+        ],
+        [
+          35,
+          16,
+          744,
+          167,
+          18,
+          12
+        ],
+        [
+          11,
+          10,
+          87,
+          543,
+          24,
+          19
+        ],
+        [
+          1,
+          13,
+          26,
+          26,
+          91,
+          8
+        ],
+        [
+          10,
+          5,
+          27,
+          10,
+          5,
+          46
+        ]
+      ],
+      "counts": {
+        "admitted": 3552,
+        "correct_class": 2786,
+        "exact_order": 2779,
+        "false_sap_on_teacher_non_sap": 58,
+        "rows": 3564,
+        "rows_with_evidence_of_filtered_stack_peer": 1,
+        "sap_exact_target_and_fire": 39,
+        "sap_to_move": 47,
+        "sap_to_sap": 46,
+        "sap_to_stay": 10,
+        "target_head_exact_on_teacher_sap": 90,
+        "teacher_sap": 103
+      },
+      "matches": {
+        "1": {
+          "admitted": 1154,
+          "correct_class": 937,
+          "exact_order": 932,
+          "false_sap_on_teacher_non_sap": 26,
+          "rows": 1159,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 16,
+          "sap_to_move": 27,
+          "sap_to_sap": 21,
+          "sap_to_stay": 2,
+          "target_head_exact_on_teacher_sap": 40,
+          "teacher_sap": 50
+        },
+        "2": {
+          "admitted": 1178,
+          "correct_class": 914,
+          "exact_order": 914,
+          "false_sap_on_teacher_non_sap": 22,
+          "rows": 1184,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 20,
+          "sap_to_move": 17,
+          "sap_to_sap": 20,
+          "sap_to_stay": 8,
+          "target_head_exact_on_teacher_sap": 45,
+          "teacher_sap": 45
+        },
+        "3": {
+          "admitted": 1220,
+          "correct_class": 935,
+          "exact_order": 933,
+          "false_sap_on_teacher_non_sap": 10,
+          "rows": 1221,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 3,
+          "sap_to_move": 3,
+          "sap_to_sap": 5,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 5,
+          "teacher_sap": 8
+        }
+      },
+      "opponent": "kaggle3",
+      "reconstructed_world_sha256": "4132080734f8c1fa67404c44517dc2b1a2678dc333fde01a3b902b3e2cf194de",
+      "recorded_world_sha256": "b495852aa44dc70223ec8908a6cefdb463f553b773ac2b0e7c60aa53118edad8",
+      "seed": 7172004,
+      "sha256": "667d0b006b6fd424c587b8063a7711366514a6d7ed4aa5b64cb622ce6d1d3ab9",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "f752141a2c36597f623b2dca2b1046db38e287cb7e3bc62f1df2b07ed72c8ec1",
+      "confusion_teacher_by_predicted": [
+        [
+          227,
+          14,
+          70,
+          24,
+          35,
+          18
+        ],
+        [
+          0,
+          49,
+          14,
+          2,
+          3,
+          1
+        ],
+        [
+          15,
+          15,
+          1076,
+          22,
+          7,
+          13
+        ],
+        [
+          4,
+          8,
+          63,
+          329,
+          12,
+          3
+        ],
+        [
+          3,
+          2,
+          12,
+          5,
+          23,
+          2
+        ],
+        [
+          3,
+          6,
+          41,
+          15,
+          2,
+          31
+        ]
+      ],
+      "counts": {
+        "admitted": 2169,
+        "correct_class": 1735,
+        "exact_order": 1724,
+        "false_sap_on_teacher_non_sap": 37,
+        "rows": 2317,
+        "rows_with_evidence_of_filtered_stack_peer": 3,
+        "sap_exact_target_and_fire": 20,
+        "sap_to_move": 64,
+        "sap_to_sap": 31,
+        "sap_to_stay": 3,
+        "target_head_exact_on_teacher_sap": 60,
+        "teacher_sap": 98
+      },
+      "matches": {
+        "1": {
+          "admitted": 770,
+          "correct_class": 625,
+          "exact_order": 622,
+          "false_sap_on_teacher_non_sap": 13,
+          "rows": 842,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 7,
+          "sap_to_move": 35,
+          "sap_to_sap": 10,
+          "sap_to_stay": 3,
+          "target_head_exact_on_teacher_sap": 30,
+          "teacher_sap": 48
+        },
+        "2": {
+          "admitted": 689,
+          "correct_class": 565,
+          "exact_order": 559,
+          "false_sap_on_teacher_non_sap": 5,
+          "rows": 727,
+          "rows_with_evidence_of_filtered_stack_peer": 2,
+          "sap_exact_target_and_fire": 7,
+          "sap_to_move": 16,
+          "sap_to_sap": 13,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 16,
+          "teacher_sap": 29
+        },
+        "3": {
+          "admitted": 710,
+          "correct_class": 545,
+          "exact_order": 543,
+          "false_sap_on_teacher_non_sap": 19,
+          "rows": 748,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 6,
+          "sap_to_move": 13,
+          "sap_to_sap": 8,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 14,
+          "teacher_sap": 21
+        }
+      },
+      "opponent": "kaggle3",
+      "reconstructed_world_sha256": "35fe26414395064ec70d1f8fb7ad3e0c5766591d7f4ae2420ae5d48058207595",
+      "recorded_world_sha256": "8862306d282a29ebd2e8a6c9b02154622f69dd61fc60ea726f555d9f933fd810",
+      "seed": 7172005,
+      "sha256": "97d508faa08ec1474bcdd52cd7116727868078857b96e866f19aba7d89354c0a",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "01282be147302c1dd0bccfe8d6c9c3021befd661d881ead2d56bd5ed184a7d12",
+      "confusion_teacher_by_predicted": [
+        [
+          916,
+          37,
+          54,
+          88,
+          32,
+          11
+        ],
+        [
+          16,
+          86,
+          23,
+          33,
+          30,
+          16
+        ],
+        [
+          6,
+          19,
+          489,
+          62,
+          42,
+          7
+        ],
+        [
+          35,
+          13,
+          134,
+          1009,
+          42,
+          12
+        ],
+        [
+          27,
+          7,
+          37,
+          53,
+          186,
+          9
+        ],
+        [
+          10,
+          5,
+          13,
+          29,
+          14,
+          52
+        ]
+      ],
+      "counts": {
+        "admitted": 3654,
+        "correct_class": 2738,
+        "exact_order": 2722,
+        "false_sap_on_teacher_non_sap": 55,
+        "rows": 3658,
+        "rows_with_evidence_of_filtered_stack_peer": 2,
+        "sap_exact_target_and_fire": 36,
+        "sap_to_move": 61,
+        "sap_to_sap": 52,
+        "sap_to_stay": 10,
+        "target_head_exact_on_teacher_sap": 88,
+        "teacher_sap": 123
+      },
+      "matches": {
+        "1": {
+          "admitted": 1233,
+          "correct_class": 911,
+          "exact_order": 902,
+          "false_sap_on_teacher_non_sap": 18,
+          "rows": 1233,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 16,
+          "sap_to_move": 27,
+          "sap_to_sap": 25,
+          "sap_to_stay": 6,
+          "target_head_exact_on_teacher_sap": 41,
+          "teacher_sap": 58
+        },
+        "2": {
+          "admitted": 1196,
+          "correct_class": 852,
+          "exact_order": 848,
+          "false_sap_on_teacher_non_sap": 27,
+          "rows": 1199,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 12,
+          "sap_to_move": 20,
+          "sap_to_sap": 16,
+          "sap_to_stay": 4,
+          "target_head_exact_on_teacher_sap": 28,
+          "teacher_sap": 40
+        },
+        "3": {
+          "admitted": 1225,
+          "correct_class": 975,
+          "exact_order": 972,
+          "false_sap_on_teacher_non_sap": 10,
+          "rows": 1226,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 8,
+          "sap_to_move": 14,
+          "sap_to_sap": 11,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 19,
+          "teacher_sap": 25
+        }
+      },
+      "opponent": "v14",
+      "reconstructed_world_sha256": "5207e8ffff25e8fa5d2cf2388e9d013bacd12f547c65aca77996e6bcc8bc2e0e",
+      "recorded_world_sha256": "aed1bf928976f1bb3437aa2a13279a10684575ed05fec3409fdd3d79ffb0d21e",
+      "seed": 7172007,
+      "sha256": "fd58c793424662b4afe05d0da1d3495d3bd214605fb9ae312df8b5496c085948",
+      "side": "player_1",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "1c7e75a00eb2545e7accf1637c8553d007888788f5dad6794fa81671f94f0610",
+      "confusion_teacher_by_predicted": [
+        [
+          1517,
+          8,
+          57,
+          40,
+          26,
+          14
+        ],
+        [
+          28,
+          46,
+          26,
+          16,
+          15,
+          3
+        ],
+        [
+          20,
+          4,
+          570,
+          69,
+          11,
+          10
+        ],
+        [
+          36,
+          7,
+          75,
+          798,
+          16,
+          4
+        ],
+        [
+          11,
+          19,
+          31,
+          28,
+          81,
+          4
+        ],
+        [
+          7,
+          4,
+          14,
+          4,
+          5,
+          28
+        ]
+      ],
+      "counts": {
+        "admitted": 3652,
+        "correct_class": 3040,
+        "exact_order": 3030,
+        "false_sap_on_teacher_non_sap": 35,
+        "rows": 3685,
+        "rows_with_evidence_of_filtered_stack_peer": 1,
+        "sap_exact_target_and_fire": 18,
+        "sap_to_move": 27,
+        "sap_to_sap": 28,
+        "sap_to_stay": 7,
+        "target_head_exact_on_teacher_sap": 43,
+        "teacher_sap": 62
+      },
+      "matches": {
+        "1": {
+          "admitted": 1219,
+          "correct_class": 948,
+          "exact_order": 947,
+          "false_sap_on_teacher_non_sap": 5,
+          "rows": 1239,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 2,
+          "sap_to_move": 7,
+          "sap_to_sap": 3,
+          "sap_to_stay": 3,
+          "target_head_exact_on_teacher_sap": 11,
+          "teacher_sap": 13
+        },
+        "2": {
+          "admitted": 1210,
+          "correct_class": 1055,
+          "exact_order": 1048,
+          "false_sap_on_teacher_non_sap": 12,
+          "rows": 1220,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 12,
+          "sap_to_move": 14,
+          "sap_to_sap": 19,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 21,
+          "teacher_sap": 33
+        },
+        "3": {
+          "admitted": 1223,
+          "correct_class": 1037,
+          "exact_order": 1035,
+          "false_sap_on_teacher_non_sap": 18,
+          "rows": 1226,
+          "rows_with_evidence_of_filtered_stack_peer": 1,
+          "sap_exact_target_and_fire": 4,
+          "sap_to_move": 6,
+          "sap_to_sap": 6,
+          "sap_to_stay": 4,
+          "target_head_exact_on_teacher_sap": 11,
+          "teacher_sap": 16
+        }
+      },
+      "opponent": "v14",
+      "reconstructed_world_sha256": "345f992f2f8220b7edf0e495bd792447d9932a68b9a1dee96a5fe8c240e24f75",
+      "recorded_world_sha256": "7a7c0c164e7d8d9092b892d2f5247b9258addfa9f6f19a8c983d2abf129e6100",
+      "seed": 7172009,
+      "sha256": "9c485b2ee464971fda202dc1a3d00c0e5c5b3682342da1d92f6f0efe490baa75",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "6cd28372728b9cbe4c4f9ca8bd59b12c64b62be13d7dad81684aed8a17f784a1",
+      "confusion_teacher_by_predicted": [
+        [
+          1389,
+          25,
+          36,
+          56,
+          15,
+          46
+        ],
+        [
+          17,
+          68,
+          28,
+          23,
+          10,
+          1
+        ],
+        [
+          33,
+          9,
+          581,
+          79,
+          13,
+          4
+        ],
+        [
+          36,
+          10,
+          71,
+          800,
+          17,
+          3
+        ],
+        [
+          7,
+          12,
+          36,
+          35,
+          133,
+          4
+        ],
+        [
+          26,
+          0,
+          19,
+          14,
+          10,
+          24
+        ]
+      ],
+      "counts": {
+        "admitted": 3690,
+        "correct_class": 2995,
+        "exact_order": 2988,
+        "false_sap_on_teacher_non_sap": 58,
+        "rows": 3690,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 17,
+        "sap_to_move": 43,
+        "sap_to_sap": 24,
+        "sap_to_stay": 26,
+        "target_head_exact_on_teacher_sap": 67,
+        "teacher_sap": 93
+      },
+      "matches": {
+        "1": {
+          "admitted": 1235,
+          "correct_class": 1038,
+          "exact_order": 1036,
+          "false_sap_on_teacher_non_sap": 20,
+          "rows": 1235,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 9,
+          "sap_to_move": 8,
+          "sap_to_sap": 11,
+          "sap_to_stay": 21,
+          "target_head_exact_on_teacher_sap": 26,
+          "teacher_sap": 40
+        },
+        "2": {
+          "admitted": 1217,
+          "correct_class": 934,
+          "exact_order": 932,
+          "false_sap_on_teacher_non_sap": 14,
+          "rows": 1217,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 7,
+          "sap_to_move": 25,
+          "sap_to_sap": 9,
+          "sap_to_stay": 3,
+          "target_head_exact_on_teacher_sap": 32,
+          "teacher_sap": 37
+        },
+        "3": {
+          "admitted": 1238,
+          "correct_class": 1023,
+          "exact_order": 1020,
+          "false_sap_on_teacher_non_sap": 24,
+          "rows": 1238,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 1,
+          "sap_to_move": 10,
+          "sap_to_sap": 4,
+          "sap_to_stay": 2,
+          "target_head_exact_on_teacher_sap": 9,
+          "teacher_sap": 16
+        }
+      },
+      "opponent": "v14",
+      "reconstructed_world_sha256": "b94aec7505bfc7bb90d882bebdc7743e1708cb7b7f9c24a203616d97c9fc3f30",
+      "recorded_world_sha256": "5e142cd25f0fbd837e925d8a4a5a87d5b8c5485fba79e34ce9c94107a0b897dc",
+      "seed": 7172012,
+      "sha256": "92a90277b4edc96323c3310957f02df03d7a6ef77915fdbdcebce6290c534095",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "5145c91137da38119550b0a2e17f2eefbd6a7b4ec5982113033734ec5c2c847e",
+      "confusion_teacher_by_predicted": [
+        [
+          1880,
+          17,
+          49,
+          35,
+          20,
+          54
+        ],
+        [
+          18,
+          55,
+          13,
+          24,
+          2,
+          11
+        ],
+        [
+          33,
+          14,
+          480,
+          66,
+          9,
+          21
+        ],
+        [
+          19,
+          19,
+          52,
+          343,
+          14,
+          6
+        ],
+        [
+          26,
+          3,
+          24,
+          20,
+          59,
+          7
+        ],
+        [
+          13,
+          7,
+          1,
+          15,
+          5,
+          29
+        ]
+      ],
+      "counts": {
+        "admitted": 3463,
+        "correct_class": 2846,
+        "exact_order": 2841,
+        "false_sap_on_teacher_non_sap": 99,
+        "rows": 3698,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 24,
+        "sap_to_move": 28,
+        "sap_to_sap": 29,
+        "sap_to_stay": 13,
+        "target_head_exact_on_teacher_sap": 57,
+        "teacher_sap": 70
+      },
+      "matches": {
+        "1": {
+          "admitted": 1218,
+          "correct_class": 1026,
+          "exact_order": 1026,
+          "false_sap_on_teacher_non_sap": 28,
+          "rows": 1232,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 5,
+          "sap_to_move": 4,
+          "sap_to_sap": 5,
+          "sap_to_stay": 9,
+          "target_head_exact_on_teacher_sap": 15,
+          "teacher_sap": 18
+        },
+        "2": {
+          "admitted": 1047,
+          "correct_class": 805,
+          "exact_order": 800,
+          "false_sap_on_teacher_non_sap": 33,
+          "rows": 1228,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 9,
+          "sap_to_move": 18,
+          "sap_to_sap": 14,
+          "sap_to_stay": 2,
+          "target_head_exact_on_teacher_sap": 25,
+          "teacher_sap": 34
+        },
+        "3": {
+          "admitted": 1198,
+          "correct_class": 1015,
+          "exact_order": 1015,
+          "false_sap_on_teacher_non_sap": 38,
+          "rows": 1238,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 10,
+          "sap_to_move": 6,
+          "sap_to_sap": 10,
+          "sap_to_stay": 2,
+          "target_head_exact_on_teacher_sap": 17,
+          "teacher_sap": 18
+        }
+      },
+      "opponent": "solution92",
+      "reconstructed_world_sha256": "1088a3176879766c7c17a27f4aa0f416fc1dc428efddf8eb356f722f412c347b",
+      "recorded_world_sha256": "fe14060dc8b4ecdf6f23cbb2273b730f37b6f4c2b6d6b7498eea0086d510802f",
+      "seed": 7172014,
+      "sha256": "271a879589ae923882b412f2939caf51c640b87fa6e50eb5e79998823d512533",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "7d06ae9bdb49bfc141052ae272df8046c8cedf997d75f4483fa7a76ef59ea15b",
+      "confusion_teacher_by_predicted": [
+        [
+          1307,
+          31,
+          64,
+          55,
+          15,
+          30
+        ],
+        [
+          25,
+          82,
+          72,
+          24,
+          17,
+          5
+        ],
+        [
+          72,
+          20,
+          816,
+          117,
+          11,
+          26
+        ],
+        [
+          31,
+          9,
+          46,
+          530,
+          8,
+          13
+        ],
+        [
+          6,
+          8,
+          21,
+          21,
+          53,
+          1
+        ],
+        [
+          7,
+          3,
+          7,
+          14,
+          1,
+          24
+        ]
+      ],
+      "counts": {
+        "admitted": 3592,
+        "correct_class": 2812,
+        "exact_order": 2804,
+        "false_sap_on_teacher_non_sap": 75,
+        "rows": 3652,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 16,
+        "sap_to_move": 25,
+        "sap_to_sap": 24,
+        "sap_to_stay": 7,
+        "target_head_exact_on_teacher_sap": 41,
+        "teacher_sap": 56
+      },
+      "matches": {
+        "1": {
+          "admitted": 1231,
+          "correct_class": 977,
+          "exact_order": 972,
+          "false_sap_on_teacher_non_sap": 34,
+          "rows": 1232,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 7,
+          "sap_to_move": 12,
+          "sap_to_sap": 12,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 17,
+          "teacher_sap": 24
+        },
+        "2": {
+          "admitted": 1179,
+          "correct_class": 960,
+          "exact_order": 958,
+          "false_sap_on_teacher_non_sap": 20,
+          "rows": 1186,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 4,
+          "sap_to_move": 12,
+          "sap_to_sap": 6,
+          "sap_to_stay": 6,
+          "target_head_exact_on_teacher_sap": 17,
+          "teacher_sap": 24
+        },
+        "3": {
+          "admitted": 1182,
+          "correct_class": 875,
+          "exact_order": 874,
+          "false_sap_on_teacher_non_sap": 21,
+          "rows": 1234,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 5,
+          "sap_to_move": 1,
+          "sap_to_sap": 6,
+          "sap_to_stay": 1,
+          "target_head_exact_on_teacher_sap": 7,
+          "teacher_sap": 8
+        }
+      },
+      "opponent": "v14",
+      "reconstructed_world_sha256": "6c137b84e83d7e01c470c856e0bcab78e3101c26b15a5a84dc60b9d9c29e51de",
+      "recorded_world_sha256": "dbf5e8472e605241a417f2ed51aced468695d04c6aa66d104153648dd33dffce",
+      "seed": 7172020,
+      "sha256": "9de12c12b19d346e59927d5407292de48a9896b1d42bb685bd857521764cda23",
+      "side": "player_1",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "fad0838bc1ec22aa939f971c3d0b38869a53f8d50579ec390c77ceb606ea2a35",
+      "confusion_teacher_by_predicted": [
+        [
+          1666,
+          52,
+          59,
+          113,
+          25,
+          27
+        ],
+        [
+          40,
+          79,
+          43,
+          32,
+          28,
+          0
+        ],
+        [
+          17,
+          9,
+          287,
+          66,
+          19,
+          4
+        ],
+        [
+          14,
+          5,
+          91,
+          396,
+          8,
+          7
+        ],
+        [
+          40,
+          8,
+          39,
+          50,
+          91,
+          1
+        ],
+        [
+          0,
+          0,
+          7,
+          10,
+          0,
+          58
+        ]
+      ],
+      "counts": {
+        "admitted": 3391,
+        "correct_class": 2577,
+        "exact_order": 2572,
+        "false_sap_on_teacher_non_sap": 39,
+        "rows": 3716,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 53,
+        "sap_to_move": 17,
+        "sap_to_sap": 58,
+        "sap_to_stay": 0,
+        "target_head_exact_on_teacher_sap": 61,
+        "teacher_sap": 75
+      },
+      "matches": {
+        "1": {
+          "admitted": 1143,
+          "correct_class": 823,
+          "exact_order": 822,
+          "false_sap_on_teacher_non_sap": 14,
+          "rows": 1240,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 15,
+          "sap_to_move": 13,
+          "sap_to_sap": 16,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 21,
+          "teacher_sap": 29
+        },
+        "2": {
+          "admitted": 1104,
+          "correct_class": 868,
+          "exact_order": 866,
+          "false_sap_on_teacher_non_sap": 16,
+          "rows": 1239,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 28,
+          "sap_to_move": 3,
+          "sap_to_sap": 30,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 29,
+          "teacher_sap": 33
+        },
+        "3": {
+          "admitted": 1144,
+          "correct_class": 886,
+          "exact_order": 884,
+          "false_sap_on_teacher_non_sap": 9,
+          "rows": 1237,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 10,
+          "sap_to_move": 1,
+          "sap_to_sap": 12,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 11,
+          "teacher_sap": 13
+        }
+      },
+      "opponent": "solution92",
+      "reconstructed_world_sha256": "5144b8d51ce6ddfaa0668a2d0d3b204cb4b709a323a63b4f977ba3f000c6eeb3",
+      "recorded_world_sha256": "436678612800abef0cea38a39d80daecce6b6df232d37617e5af856b6cbaa16e",
+      "seed": 7172032,
+      "sha256": "fa274074a29b7f973643266c1763cb38ca83b54738573663c3446f6e83b600b5",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "b5104682d168424f9dd013b2570dcb23acd129292aad3e1ef05a53b9a8018477",
+      "confusion_teacher_by_predicted": [
+        [
+          1685,
+          20,
+          33,
+          53,
+          27,
+          18
+        ],
+        [
+          32,
+          75,
+          33,
+          24,
+          31,
+          2
+        ],
+        [
+          18,
+          2,
+          368,
+          75,
+          13,
+          1
+        ],
+        [
+          44,
+          5,
+          65,
+          766,
+          9,
+          1
+        ],
+        [
+          14,
+          21,
+          30,
+          28,
+          103,
+          4
+        ],
+        [
+          12,
+          6,
+          12,
+          11,
+          3,
+          73
+        ]
+      ],
+      "counts": {
+        "admitted": 3717,
+        "correct_class": 3070,
+        "exact_order": 3061,
+        "false_sap_on_teacher_non_sap": 26,
+        "rows": 3718,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 64,
+        "sap_to_move": 32,
+        "sap_to_sap": 73,
+        "sap_to_stay": 12,
+        "target_head_exact_on_teacher_sap": 100,
+        "teacher_sap": 117
+      },
+      "matches": {
+        "1": {
+          "admitted": 1240,
+          "correct_class": 1027,
+          "exact_order": 1027,
+          "false_sap_on_teacher_non_sap": 0,
+          "rows": 1240,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 0,
+          "sap_to_move": 3,
+          "sap_to_sap": 0,
+          "sap_to_stay": 3,
+          "target_head_exact_on_teacher_sap": 4,
+          "teacher_sap": 6
+        },
+        "2": {
+          "admitted": 1240,
+          "correct_class": 1002,
+          "exact_order": 997,
+          "false_sap_on_teacher_non_sap": 21,
+          "rows": 1240,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 31,
+          "sap_to_move": 15,
+          "sap_to_sap": 36,
+          "sap_to_stay": 9,
+          "target_head_exact_on_teacher_sap": 52,
+          "teacher_sap": 60
+        },
+        "3": {
+          "admitted": 1237,
+          "correct_class": 1041,
+          "exact_order": 1037,
+          "false_sap_on_teacher_non_sap": 5,
+          "rows": 1238,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 33,
+          "sap_to_move": 14,
+          "sap_to_sap": 37,
+          "sap_to_stay": 0,
+          "target_head_exact_on_teacher_sap": 44,
+          "teacher_sap": 51
+        }
+      },
+      "opponent": "solution92",
+      "reconstructed_world_sha256": "d81143ef048ae9575b558188fe236cabcf64c62001b0410549002a2637bf95c2",
+      "recorded_world_sha256": "2ff1eef338b6a797366e431f6f93ccf61ebd23b80d63811f2fa11a0dd3782f24",
+      "seed": 7172047,
+      "sha256": "bd8faaad78ebb95fb1c1b0de54a426050420c29ecd4416ded6db849efc9c09fa",
+      "side": "player_1",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "21bfce597aaed61d808934cfb5c6f5897fc6c1428e4e57937f0e8189614d3936",
+      "confusion_teacher_by_predicted": [
+        [
+          1087,
+          40,
+          116,
+          63,
+          72,
+          31
+        ],
+        [
+          11,
+          94,
+          45,
+          35,
+          20,
+          1
+        ],
+        [
+          11,
+          12,
+          677,
+          113,
+          38,
+          5
+        ],
+        [
+          12,
+          14,
+          97,
+          755,
+          16,
+          9
+        ],
+        [
+          7,
+          22,
+          62,
+          36,
+          92,
+          5
+        ],
+        [
+          19,
+          0,
+          21,
+          19,
+          4,
+          23
+        ]
+      ],
+      "counts": {
+        "admitted": 3684,
+        "correct_class": 2728,
+        "exact_order": 2717,
+        "false_sap_on_teacher_non_sap": 51,
+        "rows": 3705,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 12,
+        "sap_to_move": 44,
+        "sap_to_sap": 23,
+        "sap_to_stay": 19,
+        "target_head_exact_on_teacher_sap": 57,
+        "teacher_sap": 86
+      },
+      "matches": {
+        "1": {
+          "admitted": 1239,
+          "correct_class": 895,
+          "exact_order": 892,
+          "false_sap_on_teacher_non_sap": 4,
+          "rows": 1240,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 0,
+          "sap_to_move": 12,
+          "sap_to_sap": 3,
+          "sap_to_stay": 8,
+          "target_head_exact_on_teacher_sap": 14,
+          "teacher_sap": 23
+        },
+        "2": {
+          "admitted": 1216,
+          "correct_class": 925,
+          "exact_order": 919,
+          "false_sap_on_teacher_non_sap": 32,
+          "rows": 1235,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 7,
+          "sap_to_move": 17,
+          "sap_to_sap": 13,
+          "sap_to_stay": 10,
+          "target_head_exact_on_teacher_sap": 26,
+          "teacher_sap": 40
+        },
+        "3": {
+          "admitted": 1229,
+          "correct_class": 908,
+          "exact_order": 906,
+          "false_sap_on_teacher_non_sap": 15,
+          "rows": 1230,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 5,
+          "sap_to_move": 15,
+          "sap_to_sap": 7,
+          "sap_to_stay": 1,
+          "target_head_exact_on_teacher_sap": 17,
+          "teacher_sap": 23
+        }
+      },
+      "opponent": "solution92",
+      "reconstructed_world_sha256": "6b06b3a1818e996bfa5dd3788538a7a21f7d0089ce1476624d217c7ca54418fa",
+      "recorded_world_sha256": "39ac55be7d4fa6572ec8e5e9dac45bfb08ae8bdb98243462645c8eaa04b0198d",
+      "seed": 7172052,
+      "sha256": "fb26e1607773e35815af20a480abf25af2c5286baa3780bd4b6fea0b06d9a648",
+      "side": "player_0",
+      "whole_stream_equal": false
+    },
+    {
+      "canonical_teacher_sha256": "39100a2f6485cc3ae99f50fd0aea7afb29138d7698870b28a788690b0304c54a",
+      "confusion_teacher_by_predicted": [
+        [
+          1466,
+          14,
+          38,
+          68,
+          15,
+          24
+        ],
+        [
+          17,
+          77,
+          18,
+          29,
+          7,
+          1
+        ],
+        [
+          50,
+          14,
+          486,
+          59,
+          10,
+          5
+        ],
+        [
+          68,
+          9,
+          104,
+          720,
+          16,
+          5
+        ],
+        [
+          17,
+          13,
+          20,
+          47,
+          99,
+          2
+        ],
+        [
+          19,
+          2,
+          12,
+          42,
+          4,
+          13
+        ]
+      ],
+      "counts": {
+        "admitted": 3610,
+        "correct_class": 2861,
+        "exact_order": 2860,
+        "false_sap_on_teacher_non_sap": 37,
+        "rows": 3667,
+        "rows_with_evidence_of_filtered_stack_peer": 0,
+        "sap_exact_target_and_fire": 12,
+        "sap_to_move": 60,
+        "sap_to_sap": 13,
+        "sap_to_stay": 19,
+        "target_head_exact_on_teacher_sap": 73,
+        "teacher_sap": 92
+      },
+      "matches": {
+        "1": {
+          "admitted": 1240,
+          "correct_class": 973,
+          "exact_order": 973,
+          "false_sap_on_teacher_non_sap": 9,
+          "rows": 1240,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 3,
+          "sap_to_move": 4,
+          "sap_to_sap": 3,
+          "sap_to_stay": 9,
+          "target_head_exact_on_teacher_sap": 14,
+          "teacher_sap": 16
+        },
+        "2": {
+          "admitted": 1200,
+          "correct_class": 1006,
+          "exact_order": 1005,
+          "false_sap_on_teacher_non_sap": 17,
+          "rows": 1239,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 3,
+          "sap_to_move": 8,
+          "sap_to_sap": 4,
+          "sap_to_stay": 5,
+          "target_head_exact_on_teacher_sap": 12,
+          "teacher_sap": 17
+        },
+        "3": {
+          "admitted": 1170,
+          "correct_class": 882,
+          "exact_order": 882,
+          "false_sap_on_teacher_non_sap": 11,
+          "rows": 1188,
+          "rows_with_evidence_of_filtered_stack_peer": 0,
+          "sap_exact_target_and_fire": 6,
+          "sap_to_move": 48,
+          "sap_to_sap": 6,
+          "sap_to_stay": 5,
+          "target_head_exact_on_teacher_sap": 47,
+          "teacher_sap": 59
+        }
+      },
+      "opponent": "solution92",
+      "reconstructed_world_sha256": "ea9a31cdd5c61023862dc2f2f770b577fae86c4b3d68c88d32ed32351fdaa992",
+      "recorded_world_sha256": "c14f121b7c00aea8d8041bd7a61275a36cfd4b8c9b22f030f7667d16685fcfd2",
+      "seed": 7172054,
+      "sha256": "40c682ea6aafe3046a948860496febbf36117098f3ca1ab3d8f37562e943f82a",
+      "side": "player_0",
+      "whole_stream_equal": false
+    }
+  ],
+  "freeze_sha256": "adeb0c096fc025f8ced1abbbff55b2f2d651147b48d4161f8708de07b6055521",
+  "imported_source_sha256": {
+    "agents/DQN/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/DQN/feat_generator.py": "fab42beace7099bbf70ff6a85df9fe5ef027b67ed0bfc162380f5215c77e5128",
+    "agents/DQN/main.py": "ec26aa60799ed3e4a7ac0238e7b00c64bf111bd5ddc84ff9cadc8f58f1476843",
+    "agents/Solution_92_Kaggle/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/Solution_92_Kaggle/agent.py": "de835c2cc24960695229b092d7a2fd66627f49e4fe1f99a31d2e03360c1cdcc5",
+    "agents/Solution_92_Kaggle/base.py": "ec227fc8873ea09c6579cfe28e67f5b7e4e1913e9997c9841c23faeddb9aa33c",
+    "agents/Solution_92_Kaggle/pathfinding.py": "87307cf0948c78a57f5316cb82e8e29ea4408cb3cd71bf12ac5987f9ef6afeaf",
+    "agents/__init__.py": "6c326dbf6ca0bf31b95766f311b1b6c24d83529a4485cb887a1fb98ae51e77dc",
+    "agents/default/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "agents/default/default.py": "07c6b27d3f7c8a3a169deaa0f93ba02ae47b3f0a07659787e00a596225d6d0c0",
+    "agents/sherlock/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agents/sherlock/assignment.py": "399e84a6a3ccef3906e3f39749db86412d05947ba3c7676d3c607154ef047db4",
+    "agents/sherlock/belief.py": "229e39c8495a7dc154a48d879e36890af17fe63558e571d95c3207a4dd8eef56",
+    "agents/sherlock/candidate_progress.py": "3d6069aa3f27b81544230a4928e17feab141cf9c09cea8ed8a13c95b6b8c5a03",
+    "agents/sherlock/cnn_model.py": "20b932f6ffb622eb8e2e5df1775d88f7ea6ea796d53d1a9bef04ead60747d5e6",
+    "agents/sherlock/combat.py": "3b99efbd83636d06beb370261f83c71e2d40e5735b78a89c0772ee43427ff80a",
+    "agents/sherlock/config.py": "0a24852b27b2ae7dbb7615ff2811b829a5bfe4a62304df1ebfe387eb86b275aa",
+    "agents/sherlock/features.py": "f514e11f047ddbcb705d3541c5639bd2b78be6efff32b05520eddcbc9921e94d",
+    "agents/sherlock/geometry.py": "081ffbbfa6b50b8d01b1a2875250ec7c66aa8275a56bb44bc478808df099c9fa",
+    "agents/sherlock/hybrid_agent.py": "72d5e1a5ba53372d2c52422d5ff59afcd5922dfaf4e281f78bd4455e7b63c1da",
+    "agents/sherlock/imitation_agent.py": "63aafbafef953034c85ec08935330222b2d1a0a82f5fc3171b8a6303a9d7f569",
+    "agents/sherlock/imitation_net.py": "5112d1b005fb6e7328715e072a3137c975f6d306813350de511b0df4439c1ac8",
+    "agents/sherlock/main.py": "0df11858ecce7ead2347df98f841912bb228046baa437e281ecb5f9493f14995",
+    "agents/sherlock/model.py": "df21cb3cfd68795cb59b3925e8d9099337c81104596df2adadf65d3300bc80ab",
+    "agents/sherlock/opp_model.py": "d6e0f65bd754fb7eb267b17f5e6c69753a0fd01cde16152f6ea1fa2827363da9",
+    "agents/sherlock/own_command.py": "e1913787b27ff0684e82e21e5286693b329585e8ec6c3dc82d5c6b80ce7f7e8d",
+    "agents/sherlock/param_est.py": "1c1c0b138f6441d4059e018701ef4fe8313bc5f2c0ffe4612910f5623b546c37",
+    "agents/sherlock/ppo_agent.py": "831e2b19dfd5c2f57c421421c2243b56001f17329d46ff2eaf9d3a493f977c78",
+    "agents/sherlock/replay_buffer.py": "901294bbc4d0f6a0e86177b6811044f0c792025bce8f4271f110412fbc1f0311",
+    "agents/sherlock/residual.py": "726cc1417ff14b33573655e3c05231e953ce43da97532d957d0142e52249237f",
+    "agents/sherlock/reward.py": "9953671c54315132ee28cdcbfe3968e23e0bbdce9e67298d794cd02633639bc8",
+    "agents/sherlock/rules.py": "81b3f97d533a13220c2ed019a5f5bf81f78180a7ac66d4cdc0ce4094c077b2fc",
+    "agents/sherlock/tactics.py": "b90122ed687c72530461baf385529c02b81b0f986c635172e36d13a99d003fce",
+    "lux/__init__.py": "40687d2d1aae048b8e57e8727ee37d64c8e39f542f4fd3b568a32cd6839c5917",
+    "lux/runner.py": "8b8a69f18ff8d1d32b84648804803cb798b5bf0a8747a5c9f97259be59816912",
+    "lux/utils.py": "1ec78a4ad40d85be439a380a77077b8aa5f602e5b6262894ed2c9c1c0b6057f5",
+    "scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "scripts/experiment.py": "00b316de7233cbfdfd07f33751d49a9f1711a93db643aa3a5e6352c337170405",
+    "scripts/imitate.py": "e2244dd3a749bbbe779c3623d333edce78d6a7ef7041dbe151fd67a35c371b65",
+    "scripts/optional_v4_dagger.py": "2c56576efd008dcd1eabb894f092a8a4d18c3e1b5f2e7abbeed0b983cfdfada0",
+    "scripts/par_eval.py": "a2460e6663878c8993093e035881ba6132865e7aeeac7d976543e9147fd7a58f",
+    "scripts/protocol.py": "44d35c70faee2e6251a65636f74976bb232704459cfe088dee156fcc6c43fcc4",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "scripts/variants.py": "be550a92ce1f10153a82418116c0b618d1cb6b9b6895f9531d178193aa6b0ff5"
+  },
+  "index_sha256": "fd46ae863eb6a99a2876480f13eb0ec61fcdcb52da78711f82b93f2d2648e94e",
+  "model_sha256": "0e8b280cb2173c4efd0d0c94e38119bf2f570dd5af06f52e1b5a7c9743ad7b7f",
+  "numpy_version": "2.5.4",
+  "opponents": {
+    "kaggle3": {
+      "admitted": 14692,
+      "correct_class": 11061,
+      "exact_order": 10960,
+      "false_sap_on_teacher_non_sap": 457,
+      "rows": 15155,
+      "rows_with_evidence_of_filtered_stack_peer": 27,
+      "sap_exact_target_and_fire": 187,
+      "sap_to_move": 383,
+      "sap_to_sap": 288,
+      "sap_to_stay": 34,
+      "target_head_exact_on_teacher_sap": 449,
+      "teacher_sap": 705
+    },
+    "solution92": {
+      "admitted": 17865,
+      "correct_class": 14082,
+      "exact_order": 14051,
+      "false_sap_on_teacher_non_sap": 252,
+      "rows": 18504,
+      "rows_with_evidence_of_filtered_stack_peer": 0,
+      "sap_exact_target_and_fire": 165,
+      "sap_to_move": 181,
+      "sap_to_sap": 196,
+      "sap_to_stay": 63,
+      "target_head_exact_on_teacher_sap": 348,
+      "teacher_sap": 440
+    },
+    "v14": {
+      "admitted": 18001,
+      "correct_class": 14327,
+      "exact_order": 14275,
+      "false_sap_on_teacher_non_sap": 272,
+      "rows": 18382,
+      "rows_with_evidence_of_filtered_stack_peer": 4,
+      "sap_exact_target_and_fire": 116,
+      "sap_to_move": 178,
+      "sap_to_sap": 168,
+      "sap_to_stay": 51,
+      "target_head_exact_on_teacher_sap": 285,
+      "teacher_sap": 397
+    }
+  },
+  "protocol_sha256": "bdbc249aeb9831b8f83eaf2144da3f361ac983e20d6cd16f46b955ec2bd34290",
+  "python_version": "3.13.13",
+  "rss_high_water_mib": 498.8,
+  "sample_sha256": "cb7fee3485c1276b24563b5503f92cf54f2e32cb63d34736ee660d3d955030a9",
+  "source_commit": "d609183ea6d0ceb416687418613970a8ca2e53e3",
+  "torch_threads": [
+    1,
+    1
+  ],
+  "torch_version": "2.14.1"
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Wann entscheidet sich der v4-Schüler für einen Schuss?
+
+Auf 15 vor der Auswertung gewählten Lehrerspielen erkannte das reine v4-Netz auf gerundeten Eingaben 652 von 1.542 empfohlenen Schüssen. Wählten beide Schießen, stimmte bei 468 von 652 das genaue Zielfeld. Zugleich sagte v4 bei 981 Lehrer-Bewegungen oder Haltebefehlen einen Schuss voraus. Für das nächste Nachtraining kann Mahmoud die Entscheidung zu schießen und die Wahl des Zielfelds getrennt beurteilen. Die 15 vollständigen Schülerbefehlsfolgen ließen sich aus den archivierten Eingaben nicht exakt reproduzieren. [Vorauswahl, Gegenprüfung und Grenzen](../experiments/analysis/umbau_20261115/dagger_zusatz/schussdiagnose/ERGEBNIS.md).
+
 ## 16.11.2026 – 400 zusätzliche Lehrerspiele zur Übergabe bereit
 
 Für Mahmoud liegen 1.350.818 beschriftete Einheitsentscheidungen vor, davon 1.317.756 mit der Trainingsmaske verwendbar. Der reine v4-Schüler gewann bei dieser Aufnahme 80/90 gegen V14, 70/75 gegen Solution und 2/235 gegen Kaggle. Die 400 NPZs wurden tief geprüft sowie aus dem lokalen Übergabearchiv einzeln verifiziert. [Datenumfang, Ergebnisse, Archivname und Prüfsummen](../experiments/analysis/umbau_20261115/dagger_zusatz/ERGEBNIS.md).
