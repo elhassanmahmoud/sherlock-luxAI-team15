@@ -20,3 +20,16 @@ Zum Wiederholen im Desktopprojekt mit den sechs archivierten NPZs:
 ```
 
 [Messplan](PLAN.md) · [Einzelzeiten und Prüfsummen](result.json)
+
+## Gegenprobe mit vollständigen Partien
+
+Der gewöhnliche parallele Evaluator hat die originale Solution und den Kaggle-Dritten auf 7158000–7158002 jeweils auf beiden Sitzen gespielt. Derselbe V14 trat je zwölfmal in der ursprünglichen und in der beschleunigten Auswertung an. **Alle 7.272 verglichenen Befehlsmatrizen beider Spieler** (12 gepaarte Partien × 303 Züge × zwei Spieler), alle 36 Matchendstände und alle zwölf Gesamtergebnisse stimmten überein. Auch die zwölf früher veröffentlichten V14-Spielstände konnten reproduziert werden. Diese 24 technischen Ausführungen gehören nicht zur Siegstatistik eines neuen Agenten.
+
+Für neue Vergleichsläufe bietet `scripts.par_eval` die Option `--packed-v14`. Sie gilt für die ursprünglichen 36 V14-Netze im CPU-Spielmodus und betrifft nur den ausgewerteten Agenten. Ein Aufruf ohne diesen Schalter nutzt den bisherigen Rechenweg. Der Gegner und die Spielumgebung liefen in beiden Armen auf den ursprünglichen Pfaden. Für eine Wiederholung der Gegenprobe werden die ursprünglichen Referenz-CSV und der lokal installierte Kaggle-Gegner benötigt.
+
+```sh
+.venv/bin/python -m scripts.v14_packed_parity run --out /tmp/v14-spielvergleich --reference experiments/analysis/umbau_20261115/confirm/v14_ref.csv
+.venv/bin/python -m scripts.v14_packed_parity verify --out /tmp/v14-spielvergleich --reference experiments/analysis/umbau_20261115/confirm/v14_ref.csv
+```
+
+[Alle gepaarten Endstände](spielvergleich.json) · [Vollständige Befehle und Quellenbindung](spielbefehle.tar.gz)
