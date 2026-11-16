@@ -1,0 +1,657 @@
+{
+  "replay_matches": 16,
+  "replay_files": {
+    "manifest_sha256": "1e5807f5865c86b91c84ed779fd3886642cd0abd2abe85f8c6baf6461b3d4858",
+    "games_sha256": "1866950633ce8208f2a015d2f8aa8c19b2455320320636d0ca68da2c1783505c"
+  },
+  "r3_files": {
+    "manifest_sha256": "27f6033f8a509e7b0a63b38586abebc4c0870f6cb5cb7780e1ead86a7054ecba",
+    "games_sha256": "6154c21e78a3abfccfba9a50a1f73efa767c909eaa3aaf5e472347edb3e6b649"
+  },
+  "comparisons": {
+    "v14": {
+      "by_opponent": {
+        "kaggle3": {
+          "games": 800,
+          "reference_game_wins": 12,
+          "r3_game_wins": 12,
+          "reference_match_wins": 86,
+          "r3_match_wins": 80,
+          "gained": [
+            [
+              7158000,
+              "player_0"
+            ],
+            [
+              7158000,
+              "player_1"
+            ],
+            [
+              7158102,
+              "player_0"
+            ],
+            [
+              7158102,
+              "player_1"
+            ],
+            [
+              7158155,
+              "player_0"
+            ],
+            [
+              7158155,
+              "player_1"
+            ],
+            [
+              7158383,
+              "player_0"
+            ],
+            [
+              7158383,
+              "player_1"
+            ]
+          ],
+          "lost": [
+            [
+              7158032,
+              "player_0"
+            ],
+            [
+              7158032,
+              "player_1"
+            ],
+            [
+              7158035,
+              "player_0"
+            ],
+            [
+              7158035,
+              "player_1"
+            ],
+            [
+              7158259,
+              "player_0"
+            ],
+            [
+              7158259,
+              "player_1"
+            ],
+            [
+              7158391,
+              "player_0"
+            ],
+            [
+              7158391,
+              "player_1"
+            ]
+          ],
+          "net_game_wins": 0,
+          "winrate_delta": 0.0,
+          "ci95": [
+            -0.015,
+            0.015
+          ],
+          "match_winrate_delta": -0.0024999999999999988,
+          "match_ci95": [
+            -0.015,
+            0.010833333333333332
+          ]
+        },
+        "solution92": {
+          "games": 800,
+          "reference_game_wins": 767,
+          "r3_game_wins": 788,
+          "reference_match_wins": 2144,
+          "r3_match_wins": 2286,
+          "gained": [
+            [
+              7158063,
+              "player_0"
+            ],
+            [
+              7158070,
+              "player_1"
+            ],
+            [
+              7158080,
+              "player_1"
+            ],
+            [
+              7158088,
+              "player_1"
+            ],
+            [
+              7158117,
+              "player_1"
+            ],
+            [
+              7158126,
+              "player_1"
+            ],
+            [
+              7158127,
+              "player_0"
+            ],
+            [
+              7158133,
+              "player_1"
+            ],
+            [
+              7158141,
+              "player_0"
+            ],
+            [
+              7158142,
+              "player_1"
+            ],
+            [
+              7158150,
+              "player_0"
+            ],
+            [
+              7158150,
+              "player_1"
+            ],
+            [
+              7158157,
+              "player_1"
+            ],
+            [
+              7158189,
+              "player_0"
+            ],
+            [
+              7158191,
+              "player_0"
+            ],
+            [
+              7158192,
+              "player_0"
+            ],
+            [
+              7158192,
+              "player_1"
+            ],
+            [
+              7158201,
+              "player_0"
+            ],
+            [
+              7158206,
+              "player_1"
+            ],
+            [
+              7158213,
+              "player_0"
+            ],
+            [
+              7158226,
+              "player_0"
+            ],
+            [
+              7158226,
+              "player_1"
+            ],
+            [
+              7158241,
+              "player_0"
+            ],
+            [
+              7158249,
+              "player_1"
+            ],
+            [
+              7158261,
+              "player_0"
+            ],
+            [
+              7158261,
+              "player_1"
+            ],
+            [
+              7158282,
+              "player_0"
+            ],
+            [
+              7158358,
+              "player_0"
+            ],
+            [
+              7158359,
+              "player_0"
+            ],
+            [
+              7158385,
+              "player_0"
+            ]
+          ],
+          "lost": [
+            [
+              7158020,
+              "player_0"
+            ],
+            [
+              7158020,
+              "player_1"
+            ],
+            [
+              7158030,
+              "player_0"
+            ],
+            [
+              7158056,
+              "player_1"
+            ],
+            [
+              7158059,
+              "player_0"
+            ],
+            [
+              7158098,
+              "player_1"
+            ],
+            [
+              7158229,
+              "player_0"
+            ],
+            [
+              7158234,
+              "player_0"
+            ],
+            [
+              7158358,
+              "player_1"
+            ]
+          ],
+          "net_game_wins": 21,
+          "winrate_delta": 0.02625,
+          "ci95": [
+            0.01,
+            0.04375
+          ],
+          "match_winrate_delta": 0.05916666666666666,
+          "match_ci95": [
+            0.04125,
+            0.07666666666666666
+          ]
+        }
+      },
+      "external": {
+        "games": 1600,
+        "reference_game_wins": 779,
+        "r3_game_wins": 800,
+        "reference_match_wins": 2230,
+        "r3_match_wins": 2366,
+        "net_game_wins": 21,
+        "winrate_delta": 0.013125,
+        "ci95": [
+          0.0025,
+          0.024375
+        ],
+        "match_winrate_delta": 0.028333333333333332,
+        "match_ci95": [
+          0.0175,
+          0.03916666666666666
+        ]
+      }
+    },
+    "v4_mixed": {
+      "by_opponent": {
+        "kaggle3": {
+          "games": 800,
+          "reference_game_wins": 12,
+          "r3_game_wins": 12,
+          "reference_match_wins": 102,
+          "r3_match_wins": 80,
+          "gained": [
+            [
+              7158000,
+              "player_0"
+            ],
+            [
+              7158000,
+              "player_1"
+            ],
+            [
+              7158102,
+              "player_0"
+            ],
+            [
+              7158102,
+              "player_1"
+            ],
+            [
+              7158155,
+              "player_0"
+            ],
+            [
+              7158155,
+              "player_1"
+            ],
+            [
+              7158369,
+              "player_0"
+            ],
+            [
+              7158369,
+              "player_1"
+            ],
+            [
+              7158383,
+              "player_0"
+            ],
+            [
+              7158383,
+              "player_1"
+            ]
+          ],
+          "lost": [
+            [
+              7158032,
+              "player_0"
+            ],
+            [
+              7158032,
+              "player_1"
+            ],
+            [
+              7158083,
+              "player_0"
+            ],
+            [
+              7158083,
+              "player_1"
+            ],
+            [
+              7158210,
+              "player_0"
+            ],
+            [
+              7158210,
+              "player_1"
+            ],
+            [
+              7158277,
+              "player_0"
+            ],
+            [
+              7158277,
+              "player_1"
+            ],
+            [
+              7158302,
+              "player_0"
+            ],
+            [
+              7158302,
+              "player_1"
+            ]
+          ],
+          "net_game_wins": 0,
+          "winrate_delta": 0.0,
+          "ci95": [
+            -0.015,
+            0.015
+          ],
+          "match_winrate_delta": -0.009166666666666667,
+          "match_ci95": [
+            -0.02333333333333333,
+            0.005020833333333032
+          ]
+        },
+        "solution92": {
+          "games": 800,
+          "reference_game_wins": 764,
+          "r3_game_wins": 788,
+          "reference_match_wins": 2204,
+          "r3_match_wins": 2286,
+          "gained": [
+            [
+              7158053,
+              "player_1"
+            ],
+            [
+              7158056,
+              "player_0"
+            ],
+            [
+              7158059,
+              "player_1"
+            ],
+            [
+              7158060,
+              "player_1"
+            ],
+            [
+              7158070,
+              "player_0"
+            ],
+            [
+              7158073,
+              "player_0"
+            ],
+            [
+              7158076,
+              "player_0"
+            ],
+            [
+              7158076,
+              "player_1"
+            ],
+            [
+              7158082,
+              "player_0"
+            ],
+            [
+              7158082,
+              "player_1"
+            ],
+            [
+              7158117,
+              "player_0"
+            ],
+            [
+              7158117,
+              "player_1"
+            ],
+            [
+              7158132,
+              "player_0"
+            ],
+            [
+              7158141,
+              "player_0"
+            ],
+            [
+              7158141,
+              "player_1"
+            ],
+            [
+              7158153,
+              "player_1"
+            ],
+            [
+              7158188,
+              "player_0"
+            ],
+            [
+              7158188,
+              "player_1"
+            ],
+            [
+              7158230,
+              "player_0"
+            ],
+            [
+              7158230,
+              "player_1"
+            ],
+            [
+              7158234,
+              "player_1"
+            ],
+            [
+              7158241,
+              "player_1"
+            ],
+            [
+              7158243,
+              "player_0"
+            ],
+            [
+              7158259,
+              "player_0"
+            ],
+            [
+              7158270,
+              "player_0"
+            ],
+            [
+              7158289,
+              "player_1"
+            ],
+            [
+              7158297,
+              "player_0"
+            ],
+            [
+              7158306,
+              "player_0"
+            ],
+            [
+              7158358,
+              "player_0"
+            ],
+            [
+              7158369,
+              "player_0"
+            ],
+            [
+              7158369,
+              "player_1"
+            ],
+            [
+              7158373,
+              "player_1"
+            ],
+            [
+              7158383,
+              "player_1"
+            ]
+          ],
+          "lost": [
+            [
+              7158020,
+              "player_0"
+            ],
+            [
+              7158020,
+              "player_1"
+            ],
+            [
+              7158030,
+              "player_0"
+            ],
+            [
+              7158030,
+              "player_1"
+            ],
+            [
+              7158077,
+              "player_0"
+            ],
+            [
+              7158098,
+              "player_1"
+            ],
+            [
+              7158229,
+              "player_0"
+            ],
+            [
+              7158229,
+              "player_1"
+            ],
+            [
+              7158358,
+              "player_1"
+            ]
+          ],
+          "net_game_wins": 24,
+          "winrate_delta": 0.03,
+          "ci95": [
+            0.0125,
+            0.04875
+          ],
+          "match_winrate_delta": 0.034166666666666665,
+          "match_ci95": [
+            0.017083333333333336,
+            0.05125
+          ]
+        }
+      },
+      "external": {
+        "games": 1600,
+        "reference_game_wins": 776,
+        "r3_game_wins": 800,
+        "reference_match_wins": 2306,
+        "r3_match_wins": 2366,
+        "net_game_wins": 24,
+        "winrate_delta": 0.015,
+        "ci95": [
+          0.0025,
+          0.028125
+        ],
+        "match_winrate_delta": 0.0125,
+        "match_ci95": [
+          0.0006250000000000009,
+          0.024375
+        ]
+      }
+    }
+  },
+  "game_panel": {
+    "external_lower_positive": true,
+    "solution_at_least_v14": true
+  },
+  "separate_evidence": {
+    "direct_vs_historical_v14": {
+      "games": 120,
+      "wins": 88,
+      "winrate": 0.7333333333333333,
+      "ci95": [
+        0.6166666666666667,
+        0.8333333333333334
+      ],
+      "lower_above_half": true,
+      "files": {
+        "manifest_sha256": "db650772a8858bb0cfc2828b7445d8c961bef8f5e3c1516055aec068b5f657b8",
+        "games_sha256": "5a7c9322d6eae5fcf76fb61b0ceb1f15bcef380f012407b4ffc83863d9b8c3a0"
+      }
+    },
+    "current_incumbent": {
+      "course_import": "agents.sherlock.main.Agent_x",
+      "weights": {
+        "agents/sherlock/weights/agent_p0.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8",
+        "agents/sherlock/weights/agent_p1.pth": "98a0735005926ecd47b52f9c290110069893e4a44c2304b063f1551ffd96d3d8"
+      },
+      "registered_v14_weights_both": true,
+      "different_registered_agent_sources": [
+        "agents/sherlock/config.py",
+        "agents/sherlock/imitation_agent.py",
+        "agents/sherlock/main.py",
+        "agents/sherlock/param_est.py"
+      ],
+      "archived_direct_test_exact_current_sources": false
+    },
+    "direct_vs_v4_mixed": "no direct duel in these data",
+    "course_candidate": {
+      "record_sha256": "bf8a159eb3c1fd2cb47d13426fdaaaeb7c593d5fbc6a14be35079363b1bfcf16",
+      "ordered_matrices": 606,
+      "zip_sha256": "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d",
+      "local_zip_matches_verified_course_record": true
+    }
+  },
+  "protocol_sha256": "1a4757fbafa5602c089425788b1cf46d901555bea440b6af12d689146c385029",
+  "scope": "400 previously published confirmation maps; both seats and both external opponents paired. Historical direct duel and R3 course ZIP parity are separate checks."
+}
