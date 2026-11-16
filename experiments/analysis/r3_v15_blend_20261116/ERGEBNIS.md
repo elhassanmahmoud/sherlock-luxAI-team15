@@ -16,6 +16,8 @@ Differenz der Kombination in ganzen Spielsiegen, gepaart auf denselben 80 Sitzen
 - Gegenüber v15: +0,00 Prozentpunkte (95-%-Intervall +0,00 bis +0,00), 0 hinzugewonnen, 0 verloren.
 - Gegenüber contact: +0,00 Prozentpunkte (95-%-Intervall +0,00 bis +0,00), 0 hinzugewonnen, 0 verloren.
 
+Auf jeder der 40 Karten gewannen alle vier Agenten auf beiden Seiten. Jede Bootstrap-Stichprobe enthält daher nur Nulldifferenzen. Andere, schwierigere Karten können die Agenten weiterhin unterscheiden.
+
 ## Direktduelle auf 16 anderen Karten
 
 - Gegner r3: Kombination 30/32 Spiele, 78/96 Matches, Siegquote 93,75 % (95-%-Intervall 81,25 bis 100,00).

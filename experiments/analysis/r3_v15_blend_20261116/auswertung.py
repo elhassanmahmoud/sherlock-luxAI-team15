@@ -250,6 +250,8 @@ def markdown(r):
     lines+=['','Differenz der Kombination in ganzen Spielsiegen, gepaart auf denselben 80 Sitzen.','']
     for name,comparison in r['solution_deltas'].items():
         lines.append(f'- Gegenüber {name}: {effect(comparison)}.')
+    if all(x['wins']==x['games'] for x in r['solution'].values()):
+        lines+=['','Auf jeder der 40 Karten gewannen alle vier Agenten auf beiden Seiten. Jede Bootstrap-Stichprobe enthält daher nur Nulldifferenzen. Andere, schwierigere Karten können die Agenten weiterhin unterscheiden.']
     lines+=['','## Direktduelle auf 16 anderen Karten','']
     for name,d in r['direct'].items():
         lines += [f"- Gegner {name}: Kombination {record(d['blend'])}, Siegquote {effect(d['blend_winrate'],False)}.",

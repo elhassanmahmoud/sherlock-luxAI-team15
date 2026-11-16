@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 16.11.2026 – Kombination aus R3 und V15 auf 100 Entwicklungskarten
+
+Auf allen 100 Dev-B-Karten und beiden Startseiten gewann die Kombination **196/200** gegen die originale Solution, der freigegebene R3 **197/200** und V15 **190/200**. Direkt gewann sie 30/32 gegen R3 und 18/32 gegen V15, gegenüber 6/32 von R3 gegen V15. Die engere Kontaktroute allein gewann 26/32 bzw. 18/32. Die zwölf bekannten R3-Verluste wurden mit beiden Eltern inklusive aller Punkte reproduziert. Die vollständigen neuen Spiele, ihre Originalgegner und die Kartenintervalle wurden nach Sitz geprüft. [Gesamtergebnis und Entscheidung](../experiments/analysis/r3_v15_blend_20261116/GESAMT.md).
+
 ## 16.11.2026 – Original-R3 für die Abschlussabgabe freigegeben
 
 Der normale Paketaufruf für Team 15 stellt jetzt das geprüfte [Finale-ZIP](../experiments/releases/20261116_r3_finale/agent.zip) als `dist/agent.zip` bereit. Die SHA-256 stimmt mit dem unter Python 3.10 und in der Projektumgebung getesteten Kurskandidaten überein. Beide Startseiten luden beim regulären Aufruf den R3-Berater und führten ihn für eine aktive Einheit aus. 38 Paket- und Regressionstests bestanden. Die beiden V14-Forschungsgewichte, ihre versionierte Sicherung und das frühere November-Battle-ZIP wurden per SHA-256 geprüft. Eine zweite Kopie des historischen ZIP liegt im Desktopprojekt. [Importpfad, Gewichte, Sicherung und Freigabeentscheidung](../experiments/releases/20261116_r3_finale/README.md).

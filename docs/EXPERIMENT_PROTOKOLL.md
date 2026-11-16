@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 16.11.2026 – Kombination aus R3 und V15 auf 100 Entwicklungskarten
+
+Auf allen 100 Dev-B-Karten und beiden Startseiten gewann die Kombination **196/200** gegen die originale Solution, der freigegebene R3 **197/200** und V15 **190/200**. Direkt gewann sie 30/32 gegen R3 und 18/32 gegen V15, gegenüber 6/32 von R3 gegen V15. Die engere Kontaktroute allein gewann 26/32 bzw. 18/32. Die zwölf bekannten R3-Verluste wurden mit beiden Eltern inklusive aller Punkte reproduziert. Die vollständigen neuen Spiele, ihre Originalgegner und die Kartenintervalle wurden nach Sitz geprüft. [Gesamtergebnis und Entscheidung](../experiments/analysis/r3_v15_blend_20261116/GESAMT.md).
+
 ## 16.11.2026 – R3 auf 400 gemeinsamen Karten
 
 Auf denselben 400 Karten und beiden Startseiten gewann der ursprüngliche R3 **788/800** gegen die originale Solution, V14 **767/800** und V15 **764/800**. Gegen den Kaggle-Dritten gewannen alle drei jeweils 12/800. Über beide Gegner beträgt der Unterschied R3 gegenüber V14 +1,31 Prozentpunkte (95-%-Kartenintervall +0,25 bis +2,44). Damit hat R3 die vorab festgelegten Bedingungen für das Finale erfüllt. [Geprüftes Abgabepaket](../experiments/releases/20261116_r3_finale/agent.zip). [Messung und Intervalle](../experiments/analysis/movement_soft_20261115/shared_400/ERGEBNIS.md).
