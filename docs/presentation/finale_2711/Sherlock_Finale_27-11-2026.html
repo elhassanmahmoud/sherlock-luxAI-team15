@@ -75,8 +75,8 @@
     <div class="kicker">SHERLOCK / ABSCHLUSSPRÄSENTATION</div>
     <h1>Sherlock</h1>
   </header>
-  <p class="teal" style="font-size:43px;line-height:1.16;max-width:1080px">Wie Sherlock Punktefelder findet<br>und mit zwei Kartenansichten gegen Solution gewinnt</p>
-  <p style="font-size:25px;margin-top:35px">Lux AI Season 3 · Platz 3 im Kurs-Battle vom 6. November</p>
+  <p class="teal" style="font-size:43px;line-height:1.16;max-width:1080px">Wie Sherlock Punktefelder findet<br>und wer den nächsten Zug entscheidet</p>
+  <p style="font-size:25px;margin-top:35px">Lux AI Season 3 · Finaleversion Original-R3</p>
   <div style="margin-top:auto;margin-bottom:34px"><p>Mahmoud El-Hassan · Moayed Shawesh</p><p class="teal" style="font-size:21px;margin-top:7px">HTW Berlin · Anwendungen der KI · 27. November 2026</p></div>
   <footer><span>Team 15</span><span>01</span></footer>
 </section>
@@ -105,10 +105,10 @@
     <div class="station"><div class="mark">1 · Regeln</div><h3>Wissen und<br>Ziele</h3><p>Karte und Punktestand auswerten. Jeder Einheit ein Ziel zuweisen.</p></div><div class="arrow" aria-hidden="true">→</div>
     <div class="station"><div class="mark">2 · Eingabe</div><h3>79 Merkmale<br>je Einheit</h3><p>Etwa eigene Energie, Richtung zum Ziel und Gegner in Reichweite.</p></div><div class="arrow" aria-hidden="true">→</div>
     <div class="station learn"><div class="mark">3 · Gelernt</div><h3>36 Netze<br>bewerten</h3><p>Jedes Netz bewertet sechs Aktionen. Für jede Aktion bilden wir den Mittelwert.</p></div><div class="arrow" aria-hidden="true">→</div>
-    <div class="station"><div class="mark">4 · Regeln</div><h3>Aktion wählen<br>und prüfen</h3><p>Beste erlaubte Aktion wählen. Weg- und Schussregeln können sie ändern.</p></div>
+    <div class="station"><div class="mark">4 · Regeln</div><h3>Aktion wählen<br>und prüfen</h3><p>Maske filtert die Aktionen. Höchsten erlaubten Q-Wert wählen, dann Weg- und Schussregeln prüfen.</p></div>
   </div>
   <p class="barline"><b>Ausgabe pro Einheit</b> &nbsp; Stehen bleiben, in eine von vier Richtungen ziehen oder schießen.</p>
-  <p class="source">Aktionsmaske und mögliches Schussziel werden separat vorbereitet. Im nächsten Schritt aktualisiert Sherlock sein Wissen.</p>
+  <p class="source">Pro Zug bis zu 16 Einheiten. Jeder Befehl enthält die Aktion sowie zwei Zahlen für den horizontalen und vertikalen Zielversatz beim Schuss.</p>
   <footer><span>Team 15 · Sherlock V14</span><span>03</span></footer>
 </section>
 
@@ -118,16 +118,16 @@
     <h3>Was die 36 Netze berechnen</h3>
     <p style="margin-top:18px">Jedes Netz verarbeitet dieselben 79 Zahlen in zwei Schichten mit je 256 Neuronen.</p>
     <p style="margin-top:21px">Seine sechs <b>Q-Werte</b> schätzen, wie viel Belohnung eine Aktion langfristig bringt.</p>
-    <p class="accent sectionline" style="margin-top:30px">Den höchsten erlaubten Mittelwert hat hier der Zug nach rechts.</p>
+    <p class="accent sectionline" style="margin-top:30px">Nach dem Sperren von „runter“ liegt „rechts“ vorn. Genau diesen Befehl spielt die Einheit.</p>
   </div><figure class="pane" style="padding:24px 29px">
-    <figcaption class="eyebrow" style="margin-bottom:6px">Aufgezeichneter Spielschritt</figcaption>
+    <figcaption class="eyebrow" style="margin-bottom:6px">V14 · Karte 4242 · Match 1, Zug 45</figcaption>
     <table aria-label="Mittelwerte der 36 Netze mit Aktionsmaske"><thead><tr><th>Aktion</th><th class="numeric">Q-Mittel</th><th>Auswahl</th></tr></thead><tbody>
-      <tr><td>Stehen</td><td class="numeric">51,0</td><td>erlaubt</td></tr>
-      <tr><td>Hoch</td><td class="numeric">51,3</td><td>erlaubt</td></tr>
-      <tr class="selected"><td>Rechts</td><td class="numeric">52,2</td><td>gespielt</td></tr>
-      <tr><td>Runter</td><td class="numeric">53,8</td><td>Asteroid</td></tr>
-      <tr><td>Links</td><td class="numeric">51,2</td><td>Kartenrand</td></tr>
-      <tr><td>Schuss</td><td class="numeric">47,6</td><td>kein sichtbares Ziel</td></tr>
+      <tr><td>Stehen</td><td class="numeric">10,07</td><td>erlaubt</td></tr>
+      <tr><td>Hoch</td><td class="numeric">9,37</td><td>erlaubt</td></tr>
+      <tr class="selected"><td>Rechts</td><td class="numeric">11,08</td><td>gespielt</td></tr>
+      <tr><td>Runter</td><td class="numeric">11,46</td><td>Asteroid</td></tr>
+      <tr><td>Links</td><td class="numeric">9,51</td><td>erlaubt</td></tr>
+      <tr><td>Schuss</td><td class="numeric">8,21</td><td>erlaubt</td></tr>
     </tbody></table>
   </figure></div>
   <footer><span>Team 15 · Sherlock V14</span><span>04</span></footer>
@@ -147,40 +147,37 @@
 </section>
 
 <section class="slide" id="bewegungsberater">
-  <header style="margin-bottom:25px"><div class="kicker">SHERLOCK / BEWEGUNGSBERATER R3</div><h2>Ein Schüler, zwei Kartenansichten</h2></header>
+  <header style="margin-bottom:25px"><div class="kicker">SHERLOCK / FINALEVERSION ORIGINAL-R3</div><h2>Wann ändert R3 die Bewegung?</h2></header>
   <div style="display:grid;grid-template-columns:.98fr 55px 1.02fr;align-items:stretch">
     <div><p class="mark" style="margin-bottom:13px">1 · Vorschläge für dieselbe Einheit</p>
       <div class="station" style="padding:15px 21px"><h3 style="min-height:0;margin:0 0 5px">V14 legt einen Befehl fest</h3><p>36 Netze, die Aktionsmaske und die Regeln liefern Bewegung, Stillstand oder Schuss.</p></div>
-      <div class="station learn" style="margin-top:12px;padding:16px 20px"><h3 style="min-height:0;margin:0 0 6px">Dasselbe CNN rechnet zweimal</h3><p>Es sieht Karte und Einheitsmerkmale einmal normal, einmal mit vertauschtem x und y. „Rechts“ wird dabei zu „unten“.</p></div>
+      <div class="station learn" style="margin-top:12px;padding:16px 20px"><h3 style="min-height:0;margin:0 0 6px">Ein Netz liest die Karte</h3><p>R3 liest 16 Kartenebenen und 79 Merkmale je Einheit. Das CNN bewertet die sechs Aktionen.</p></div>
     </div><div class="arrow" aria-hidden="true">→</div>
     <div><p class="mark" style="margin-bottom:13px">2 · Endgültige Aktionswahl</p>
       <div class="pane" style="padding:20px 23px"><h3>Welche Empfehlung gilt?</h3>
-        <p style="font-size:22px;margin-top:11px">Richtungen zurückübersetzen, je Aktion die Bewertungen mitteln und gesperrte Aktionen ausblenden.</p>
+        <p style="font-size:22px;margin-top:11px">Gesperrte Aktionen ausblenden und die übrigen Bewertungen in Anteile umrechnen.</p>
         <div class="rule" style="margin:13px 0"></div>
         <p style="font-size:22px"><b>V14 schießt?</b> Schuss und Ziel bleiben erhalten.</p>
         <p style="font-size:22px;margin-top:10px"><b>V14 bewegt sich oder steht?</b> Ab <b>70&nbsp;%</b> gilt der erlaubte Zug oder Stillstand des Schülers. Sonst gilt V14s Befehl.</p>
       </div>
     </div>
   </div>
-  <p class="barline" style="margin-top:21px;font-size:23px"><b>Training auf 152 Karten.</b> Der Schüler lernt aus den Zügen und Richtungsbewertungen des Kaggle-Lehrers. Beide Ansichten nutzen dieselben trainierten Gewichte.</p>
-  <footer><span>Team 15 · R3 mit zwei Ansichten</span><span>06</span></footer>
+  <p class="barline" style="margin-top:21px;font-size:23px"><b>Training auf 152 Karten.</b> Der Schüler lernt aus Zügen und Bewertungen des Kaggle-Lehrers. Eine Variante wertet dieselbe Stellung zusätzlich mit vertauschten Kartenachsen aus.</p>
+  <footer><span>Team 15 · Finaleversion: 36 V14-Netze und ein zusätzlicher R3-Berater</span><span>06</span></footer>
 </section>
 
 <section class="slide" id="gegnertest">
-  <header><div class="kicker">SHERLOCK / V15-KANDIDAT</div><h2>Wer übernimmt beim gemischten Hybrid?</h2></header>
+  <header><div class="kicker">SHERLOCK / V15-KANDIDAT</div><h2>Wie entscheidet die Alternative V15?</h2></header>
   <div class="cols" style="grid-template-columns:1.02fr .98fr;align-items:start;gap:50px"><div class="pane" style="padding:27px 30px">
     <h3>Ist ein Gegner in der Nähe?</h3><p style="margin-top:16px"><b>Ja.</b> Bei einem sichtbaren Gegner im Umkreis von fünf Feldern übernimmt der Schüler den ganzen Befehl, auch das Schussziel.</p>
-    <div class="rule"></div><p><b>Nein.</b> V14 behält Einheiten, die ein bestätigtes Punktefeld halten oder ansteuern. Die übrigen folgen dem Schüler.</p>
-  </div><figure>
-    <figcaption class="eyebrow">Unabhängiger Vergleich · 400 Karten, beide Seiten</figcaption>
-    <table aria-label="Gewonnene Spiele des gemischten Hybrids v4 und der Referenz V14"><thead><tr><th>Gegner</th><th class="numeric">V14</th><th class="numeric">Hybrid v4</th></tr></thead><tbody>
-      <tr><td>Solution_92</td><td class="numeric">767/800</td><td class="numeric">764/800</td></tr>
-      <tr><td>Kaggle-Platz 3</td><td class="numeric">12/800</td><td class="numeric">12/800</td></tr>
-    </tbody></table>
-    <div style="margin-top:20px"><div class="charthead"><h3>Direkt gegen V14</h3><div class="value">91,25 %</div></div><div class="track"><div class="fill" style="width:91.25%"></div></div><p class="chartnote">730 Siege für den Hybrid, 70 für V14.</p></div>
-  </figure></div>
-  <p class="barline" style="margin-top:30px">Der v4-Schüler lernte von Kaggle-Platz 3. V15 wurde auf anderen Karten als R3 geprüft.</p>
-  <footer><span>Team 15 · Separater Vergleich · V15-Kandidat mit v4-Schüler</span><span>07</span></footer>
+    <div class="rule"></div><p><b>Nein.</b> V14 steuert den ersten Halter eines bestätigten Punktefelds und Einheiten auf dem Weg zu solchen Feldern. Die übrigen folgen dem Schüler.</p>
+  </div><figure class="station learn" style="padding:25px 28px"><figcaption class="eyebrow">Beispiel · dieselbe Einheit auf einem Punktefeld</figcaption>
+      <h3 style="min-height:0">Ein Schiff hält ein Punktefeld.</h3>
+      <p><b>Sieben Felder bis zum nächsten sichtbaren Gegner:</b> V14 entscheidet für den Halter.</p>
+      <div class="rule"></div><p><b>Drei Felder bis zum Gegner:</b> Der v4-Schüler übernimmt. Er darf auch schießen und das Ziel wählen.</p>
+    </figure></div>
+  <p class="barline" style="margin-top:30px">Im direkten Vergleich gewann der Hybrid mit dem v4-Schüler 730 von 800 Spielen gegen V14.</p>
+  <footer><span>Team 15 · V15-Kandidat mit eigenem v4-Schüler</span><span>07</span></footer>
 </section>
 
 <section class="slide" id="kampf">
@@ -199,39 +196,23 @@
 </section>
 
 <section class="slide dark" id="bestaetigung">
-  <header style="margin-bottom:19px"><div class="kicker">SHERLOCK / UNABHÄNGIGER SPIELTEST</div><h2>118 Siege in 120 Spielen gegen Solution</h2></header>
-  <p style="font-size:25px">R3 mit zwei Ansichten und V14 spielen dieselben 60 neuen Karten von beiden Seiten.</p>
-  <div class="cols sectionline" style="grid-template-columns:1fr 1fr;gap:50px;margin-top:20px;padding-top:22px">
-    <figure><figcaption style="font-size:26px;font-weight:700;margin-bottom:12px">Ganze Spiele gewonnen</figcaption>
-      <table aria-label="Ganze Siege auf 60 Karten mit beiden Sitzen" style="font-size:25px"><thead><tr><th style="color:var(--mint)">Gegner</th><th class="numeric" style="color:var(--mint)">V14</th><th class="numeric" style="color:var(--mint)">R3 · zwei Ansichten</th></tr></thead><tbody>
-        <tr><td>Solution_92</td><td class="numeric">109/120</td><td class="numeric"><b>118/120</b></td></tr>
-        <tr><td>Kaggle-Platz 3</td><td class="numeric">4/120</td><td class="numeric">0/120</td></tr>
-      </tbody></table>
-      <p style="font-size:24px;margin-top:24px"><b style="color:var(--mint)">Direkt gegen V14</b><br>100 Siege in 120 Spielen auf 60 weiteren Karten.</p>
+  <header style="margin-bottom:23px"><div class="kicker">SHERLOCK / GEPAARTE SPIELVERGLEICHE</div><h2>98,5 % gegen Solution</h2></header>
+  <div class="cols sectionline" style="grid-template-columns:1.08fr .92fr;gap:53px;padding-top:23px">
+    <figure><figcaption style="font-size:26px;font-weight:700">400 gemeinsame Karten · zwei Gegner</figcaption>
+      <p style="font-size:20px;margin:7px 0 14px;color:var(--mint)">Gewonnene Spiele von je 800</p>
+      <table style="font-size:25px"><thead><tr><th style="color:var(--mint)">Gegner</th>
+      <th class="numeric" style="color:var(--mint)">V14</th><th class="numeric" style="color:var(--mint)">Original-R3</th><th class="numeric" style="color:var(--mint)">V15</th>
+      </tr></thead><tbody><tr><td>Solution_92</td><td class="numeric">767</td><td class="numeric">788</td><td class="numeric">764</td></tr><tr><td>Kaggle-Platz 3</td><td class="numeric">12</td><td class="numeric">12</td><td class="numeric">12</td></tr></tbody></table>
+      <p style="font-size:21px;margin-top:24px">Original-R3 gegenüber V14 über beide Gegner: <b>+1,31 Prozentpunkte</b><br>95-%-Kartenintervall: +0,25 bis +2,44.</p>
     </figure>
-    <figure aria-label="95-Prozent-Intervalle der gepaarten Siegquotendifferenzen"><figcaption style="font-size:26px;font-weight:700">Wie sicher ist der Vorsprung?</figcaption>
-      <p style="font-size:18px;margin:6px 0 17px;color:var(--mint)">Siegquotendifferenz in Prozentpunkten, 95-%-Kartenintervalle</p>
-      <div class="cichart" style="position:relative;height:174px;--zero:22.727%">
-        <div style="position:absolute;left:var(--zero);top:30px;height:32px;border-left:2px dashed #bed0cc"></div>
-        <div style="position:absolute;top:0;left:0;font-size:20px">Solution <strong>+7,50</strong></div>
-        <div style="position:absolute;top:38px;left:30.303%;width:60.606%;height:4px;background:var(--mint)"></div>
-        <div style="position:absolute;top:33px;left:30.303%;width:60.606%;height:14px;border-left:2px solid var(--mint);border-right:2px solid var(--mint)"></div>
-        <div style="position:absolute;top:32px;left:56.818%;width:16px;height:16px;border-radius:50%;background:white;transform:translateX(-50%)"></div>
-        <div style="position:absolute;top:51px;left:30.303%;transform:translateX(-50%);font-size:17px">+1,67</div>
-        <div style="position:absolute;top:51px;left:90.909%;transform:translateX(-50%);font-size:17px">+15,00</div>
-        <div style="position:absolute;left:var(--zero);top:112px;height:40px;border-left:2px dashed #bed0cc"></div>
-        <div style="position:absolute;top:83px;left:0;font-size:20px">Beide Gegner <strong>+2,08</strong></div>
-        <div style="position:absolute;top:121px;left:13.258%;width:37.879%;height:4px;background:var(--mint)"></div>
-        <div style="position:absolute;top:116px;left:13.258%;width:37.879%;height:14px;border-left:2px solid var(--mint);border-right:2px solid var(--mint)"></div>
-        <div style="position:absolute;top:115px;left:32.197%;width:16px;height:16px;border-radius:50%;background:white;transform:translateX(-50%)"></div>
-        <div style="position:absolute;top:134px;left:13.258%;transform:translateX(-50%);font-size:17px">−2,08</div>
-        <div style="position:absolute;top:134px;left:51.137%;transform:translateX(-50%);font-size:17px">+6,25</div>
-        <div style="position:absolute;top:154px;left:var(--zero);transform:translateX(-50%);font-size:16px">0</div>
-      </div>
+    <figure><figcaption style="font-size:26px;font-weight:700">Eine oder zwei Ansichten?</figcaption>
+      <p style="font-size:20px;margin:7px 0 14px;color:var(--mint)">Solution · die ersten 100 dieser 400 Karten</p>
+      <table style="font-size:24px"><tbody><tr><td>R3 mit einer Ansicht</td><td class="numeric">192/200</td></tr><tr><td>R3 mit zwei Ansichten</td><td class="numeric">191/200</td></tr></tbody></table>
+      <p style="font-size:21px;margin-top:21px">Zweite minus erste Ansicht: <b>−0,50 Prozentpunkte</b><br>95-%-Kartenintervall: −2,50 bis +1,00.</p>
     </figure>
   </div>
-  <p class="sectionline" style="margin-top:20px;font-size:24px">Gegen Solution ist der Vorteil messbar. Über beide Gegner ist er noch unsicher.<br><b style="color:var(--mint)">Die bisherige Abgabe bleibt V14.</b></p>
-  <footer><span>Team 15 · Zwei unabhängige Blöcke, 600 vollständig ausgespielte Partien</span><span>09</span></footer>
+  <p class="sectionline" style="margin-top:30px;font-size:25px">Auf diesen Karten bleibt ein Vorteil der zweiten Ansicht offen.<br><b style="color:var(--mint)">Für das Finale spielt Original-R3 mit einer Kartenansicht.</b></p>
+  <footer><span>Team 15 · Gewertet werden Siege in ganzen Spielen mit je drei Matches</span><span>09</span></footer>
 </section>
 </body>
 </html>
