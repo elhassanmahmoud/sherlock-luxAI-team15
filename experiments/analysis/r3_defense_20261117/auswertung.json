@@ -1,0 +1,217 @@
+{
+  "cases": {
+    "7158016/P0": {
+      "defense": 2,
+      "defense_points": [
+        1065,
+        527
+      ],
+      "r3": 2,
+      "unit": 1,
+      "v15": 3
+    },
+    "7158020/P0": {
+      "defense": 1,
+      "defense_points": [
+        2267,
+        2129
+      ],
+      "r3": 1,
+      "unit": 1,
+      "v15": 2
+    },
+    "7158020/P1": {
+      "defense": 1,
+      "defense_points": [
+        2230,
+        2244
+      ],
+      "r3": 1,
+      "unit": 1,
+      "v15": 2
+    },
+    "7158030/P1": {
+      "defense": 3,
+      "defense_points": [
+        1685,
+        1276
+      ],
+      "r3": 0,
+      "unit": 1,
+      "v15": 3
+    }
+  },
+  "direct": {
+    "r3": {
+      "game_win": 20,
+      "n": 32,
+      "opp_points": 30200,
+      "our_points": 31471,
+      "our_wins": 55,
+      "rate": {
+        "ci95": [
+          0.40625,
+          0.8125
+        ],
+        "value": 0.625
+      }
+    },
+    "r3_vs_v15": {
+      "game_win": 4,
+      "n": 32,
+      "opp_points": 34916,
+      "our_points": 27354,
+      "our_wins": 20
+    },
+    "v15": {
+      "game_win": 6,
+      "n": 32,
+      "opp_points": 33782,
+      "our_points": 27838,
+      "our_wins": 22,
+      "rate": {
+        "ci95": [
+          0.0,
+          0.375
+        ],
+        "value": 0.1875
+      }
+    },
+    "vs_v15_relative_to_r3": {
+      "ci95": [
+        -0.125,
+        0.25156249999997726
+      ],
+      "gained": [
+        [
+          7165800,
+          "player_0"
+        ],
+        [
+          7165800,
+          "player_1"
+        ],
+        [
+          7165807,
+          "player_0"
+        ],
+        [
+          7165807,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7165801,
+          "player_0"
+        ],
+        [
+          7165801,
+          "player_1"
+        ]
+      ],
+      "value": 0.0625
+    }
+  },
+  "routing": {
+    "cases": {
+      "changed_turns": 79,
+      "changed_unit_actions": 108,
+      "games_with_changes": 4,
+      "n": 4,
+      "no_visible_enemy_in_splash": 102,
+      "r3_was_sap": 5,
+      "shooter_held_known": 0
+    },
+    "r3": {
+      "changed_turns": 751,
+      "changed_unit_actions": 944,
+      "games_with_changes": 32,
+      "n": 32,
+      "no_visible_enemy_in_splash": 613,
+      "r3_was_sap": 157,
+      "shooter_held_known": 390
+    },
+    "solution": {
+      "changed_turns": 1243,
+      "changed_unit_actions": 1619,
+      "games_with_changes": 77,
+      "n": 80,
+      "no_visible_enemy_in_splash": 1040,
+      "r3_was_sap": 162,
+      "shooter_held_known": 571
+    },
+    "v15": {
+      "changed_turns": 542,
+      "changed_unit_actions": 642,
+      "games_with_changes": 32,
+      "n": 32,
+      "no_visible_enemy_in_splash": 376,
+      "r3_was_sap": 118,
+      "shooter_held_known": 214
+    }
+  },
+  "solution": {
+    "defense": {
+      "game_win": 80,
+      "n": 80,
+      "opp_points": 44783,
+      "our_points": 102433,
+      "our_wins": 235
+    },
+    "r3": {
+      "game_win": 78,
+      "n": 80,
+      "opp_points": 45638,
+      "our_points": 103442,
+      "our_wins": 232
+    },
+    "v15": {
+      "game_win": 77,
+      "n": 80,
+      "opp_points": 47921,
+      "our_points": 91703,
+      "our_wins": 224
+    },
+    "vs_r3": {
+      "ci95": [
+        0.0,
+        0.075
+      ],
+      "gained": [
+        [
+          7165740,
+          "player_0"
+        ],
+        [
+          7165740,
+          "player_1"
+        ]
+      ],
+      "lost": [],
+      "value": 0.025
+    },
+    "vs_v15": {
+      "ci95": [
+        0.0,
+        0.0875
+      ],
+      "gained": [
+        [
+          7165740,
+          "player_1"
+        ],
+        [
+          7165767,
+          "player_1"
+        ],
+        [
+          7165773,
+          "player_1"
+        ]
+      ],
+      "lost": [],
+      "value": 0.0375
+    }
+  }
+}

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 17.11.2026 – V15s Verteidigung auf vier Solution-Starts
+
+Auf vier ausgewählten Startseiten ließ das vollständige V15 606 Gegnerpunkte weniger zu als R3. Die eigenen Feldserien waren auf einem dieser Starts länger, Solutions Feldserien auf allen vier kürzer. Der daraus abgeleitete Kandidat übernahm nur V15-Schüsse auf bestätigte, scheinbar freie Punktefelder bei erhaltener eigener Felddeckung. Auf 40 weiteren Karten gewann er 80/80 gegen Solution, Original-R3 78/80 und Original-V15 77/80. Im getrennten Prüfsatz gewann der Kandidat 116/120, R3 118/120. Auf den V15-Spielbahnen verhinderten die ausgewählten Schüsse unmittelbar 42 gegnerische Punkte. Beim R3-Kandidaten waren es 34. Im direkten Duell gewann er 20/32 gegen R3 und 6/32 gegen V15. Ein allgemeiner Siegquotenvorteil gegenüber R3 ist im zweiten Kartensatz nicht bestätigt. R3 bleibt die Abgabe. [Diagnose, Gegenproben und Vergleich](../experiments/analysis/r3_defense_20261117/ERGEBNIS.md).
+
 ## 16.11.2026, 23:33 Berlin – Schüler v5 nach DAgger-Runde 3: direkt 180/200 gegen R3, gegen Kaggle unverändert
 
 Auf Dev A gewann der reine v5 gegen Solution 190/200 (v4 185/200), gegen Kaggle 4/200 und direkt **180/200 gegen R3**. Der Hybrid v5 (V14 hält Punktefelder) gewann 193/200 gegen Solution, 0/200 gegen Kaggle und 158/200 direkt gegen R3. V15 kam auf denselben Karten auf 136/200. R3 selbst gewann 195/200 gegen Solution und 4/200 gegen Kaggle. Gegen Kaggle holen alle Varianten 33–36 % der Punkte. Weil v5 gegen Solution unter R3 liegt und gegen Kaggle nicht besser ist, gibt es keine Bestätigung. R3 bleibt die Abgabe. Die Schülergewichte liegen für Codex unter `experiments/candidates/umbau_20261116/student_v5.pth`. Es läuft der Vergleich der neuen Eingabe „letzte eigene Bewegung“ (v6) mit einer gleich lange trainierten Kontrolle. [Ergebnis, Rohdaten und gepaarte Intervalle](../experiments/analysis/umbau_20261115/v5/ERGEBNIS.md).

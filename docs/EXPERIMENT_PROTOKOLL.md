@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 17.11.2026 – V15s Verteidigung auf vier Solution-Starts
+
+Auf vier ausgewählten Startseiten ließ das vollständige V15 606 Gegnerpunkte weniger zu als R3. Die eigenen Feldserien waren auf einem dieser Starts länger, Solutions Feldserien auf allen vier kürzer. Der daraus abgeleitete Kandidat übernahm nur V15-Schüsse auf bestätigte, scheinbar freie Punktefelder bei erhaltener eigener Felddeckung. Auf 40 weiteren Karten gewann er 80/80 gegen Solution, Original-R3 78/80 und Original-V15 77/80. Im getrennten Prüfsatz gewann der Kandidat 116/120, R3 118/120. Auf den V15-Spielbahnen verhinderten die ausgewählten Schüsse unmittelbar 42 gegnerische Punkte. Beim R3-Kandidaten waren es 34. Im direkten Duell gewann er 20/32 gegen R3 und 6/32 gegen V15. Ein allgemeiner Siegquotenvorteil gegenüber R3 ist im zweiten Kartensatz nicht bestätigt. R3 bleibt die Abgabe. [Diagnose, Gegenproben und Vergleich](../experiments/analysis/r3_defense_20261117/ERGEBNIS.md).
+
 ## 16.11.2026 – Übergabe einzelner Einheiten von R3 an V15
 
 Die getrennte Replayprüfung fand 79 gemeinsam mögliche Überschreibungen in 1.485 Stellungen. Auf 40 weiteren Solution-Karten und beiden Sitzen gewann die Einzelübergabe 80/80 und R3 80/80. Direkt gewann die Regel 18/32 gegen R3 und 6/32 gegen V15. Im vollständigen zusätzlichen 40-Karten-Archivblock gewann der Kandidat 76/80 und R3 76/80. Fünf gezielt ausgewählte Diagnosesitze sind separat ausgewiesen. Ein Vorteil gegenüber R3 gegen Solution ist auf diesen Karten nicht nachgewiesen. R3 bleibt die Abgabe. [Regel, tatsächlich besetzte Felder und Vergleich](../experiments/analysis/unit_handoff_20261116/ERGEBNIS.md).
