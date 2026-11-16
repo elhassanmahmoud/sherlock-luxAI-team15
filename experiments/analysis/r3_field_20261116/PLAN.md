@@ -1,0 +1,5 @@
+# Gezielte frühe Feldbesetzung
+
+Diagnose ausschließlich anhand der fünf abweichenden Solution-Partien aus Dev B. Für jede Partie vergleichen wir die tatsächlichen Züge des Original-R3 und der bisherigen Kombination. Die fünf Fälle gehen getrennt in die Auswertung ein.
+
+Vor den Vergleichsspielen legen wir 40 neue Karten 7426100–7426139 fest. Gegen Original-Solution spielen R3, die bisherige Kombination und der gezielte Kandidat jeweils beide Sitze. Gegen R3 und V15 spielt der Kandidat außerdem auf den früheren 16 direkten Vergleichskarten 7173400–7173415 je beide Seiten. Die archivierten direkten Ergebnisse der bisherigen Kombination und des Original-R3 dienen als gepaarte Referenz. Die fünf Diagnosefälle werden mit der gezielten Regel ebenfalls gespielt. Keine Anpassung nach Sichtung der neuen Siege. Eine Überlegenheit gegen Solution erfordert zusätzliche gewonnene Spiele und ein positives kartengepaartes Intervall. Für die Duelle berichten wir auch Verluste bisheriger Siege. Die Finaleversion bleibt R3.

@@ -1,0 +1,5 @@
+# Festgelegte Übergabe
+
+Die zehn vollständig wiederholten Originalpartien zeigen auf den drei verlorenen Sitzen denselben Wechsel im ersten Match. Auf zwei davon gab die Kombination während dieses Matches kein von R3 eingeplantes bekanntes Punktefeld frei. Auf den zwei geretteten Sitzen gewann R3 bereits das erste Match. Die Kombination gewann dort zusätzlich Match zwei und drei. Deshalb trennen wir Erkundung und Wiederbesetzung auf Ebene der Matches.
+
+Im ersten Match führt jede Einheit den R3-Befehl aus. In Match zwei und drei nutzt eine Einheit bei sichtbarem Gegner in höchstens fünf Feldern Chebyshev-Distanz den V15-Befehl. In den ersten 25 Spielzügen dieser beiden Matches gilt das auch ohne Kontakt, sobald das eigene Gedächtnis mindestens ein bestätigtes Punktefeld kennt. Sonst gilt R3. Die Auswahl verwendet weder Kartennummer noch Gegneridentität. Beide Eltern erhalten die tatsächlich gespielte Aktion zurück. Die Regel wurde vor dem ersten Kandidatenspiel festgelegt. Sie stellt keine Behauptung auf, dass jeder übernommene V15-Befehl unmittelbar ein Feld ansteuert.
