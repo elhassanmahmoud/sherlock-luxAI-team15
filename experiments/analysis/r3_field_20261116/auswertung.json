@@ -1,0 +1,309 @@
+{
+  "cases": {
+    "7151043/player_0": 2,
+    "7151059/player_1": 1,
+    "7151068/player_0": 2,
+    "7151073/player_0": 3,
+    "7151094/player_1": 3
+  },
+  "solution": {
+    "field": [
+      79,
+      80
+    ],
+    "blend": [
+      79,
+      80
+    ],
+    "r3": [
+      79,
+      80
+    ],
+    "vs_blend": {
+      "value": 0.0,
+      "ci95": [
+        -0.0375,
+        0.0375
+      ],
+      "gained": [
+        [
+          7426132,
+          "player_0"
+        ]
+      ],
+      "lost": [
+        [
+          7426119,
+          "player_0"
+        ]
+      ]
+    },
+    "vs_r3": {
+      "value": 0.0,
+      "ci95": [
+        -0.0375,
+        0.0375
+      ],
+      "gained": [
+        [
+          7426126,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7426119,
+          "player_0"
+        ]
+      ]
+    }
+  },
+  "direct": {
+    "r3": {
+      "field": 20,
+      "baseline_blend": 30,
+      "games": 32,
+      "rate": {
+        "value": 0.625,
+        "ci95": [
+          0.4375,
+          0.8125
+        ]
+      },
+      "delta": {
+        "value": -0.3125,
+        "ci95": [
+          -0.53125,
+          -0.0625
+        ],
+        "gained": [
+          [
+            7173409,
+            "player_0"
+          ],
+          [
+            7173409,
+            "player_1"
+          ]
+        ],
+        "lost": [
+          [
+            7173400,
+            "player_0"
+          ],
+          [
+            7173400,
+            "player_1"
+          ],
+          [
+            7173402,
+            "player_0"
+          ],
+          [
+            7173404,
+            "player_0"
+          ],
+          [
+            7173407,
+            "player_1"
+          ],
+          [
+            7173408,
+            "player_0"
+          ],
+          [
+            7173410,
+            "player_1"
+          ],
+          [
+            7173411,
+            "player_1"
+          ],
+          [
+            7173414,
+            "player_0"
+          ],
+          [
+            7173414,
+            "player_1"
+          ],
+          [
+            7173415,
+            "player_0"
+          ],
+          [
+            7173415,
+            "player_1"
+          ]
+        ]
+      }
+    },
+    "v15": {
+      "field": 14,
+      "baseline_blend": 18,
+      "games": 32,
+      "rate": {
+        "value": 0.4375,
+        "ci95": [
+          0.1875,
+          0.6875
+        ]
+      },
+      "delta": {
+        "value": -0.125,
+        "ci95": [
+          -0.4375,
+          0.1875
+        ],
+        "gained": [
+          [
+            7173404,
+            "player_0"
+          ],
+          [
+            7173404,
+            "player_1"
+          ],
+          [
+            7173408,
+            "player_0"
+          ],
+          [
+            7173408,
+            "player_1"
+          ],
+          [
+            7173409,
+            "player_0"
+          ],
+          [
+            7173409,
+            "player_1"
+          ]
+        ],
+        "lost": [
+          [
+            7173407,
+            "player_0"
+          ],
+          [
+            7173407,
+            "player_1"
+          ],
+          [
+            7173410,
+            "player_0"
+          ],
+          [
+            7173410,
+            "player_1"
+          ],
+          [
+            7173413,
+            "player_0"
+          ],
+          [
+            7173413,
+            "player_1"
+          ],
+          [
+            7173414,
+            "player_0"
+          ],
+          [
+            7173414,
+            "player_1"
+          ],
+          [
+            7173415,
+            "player_0"
+          ],
+          [
+            7173415,
+            "player_1"
+          ]
+        ]
+      }
+    },
+    "r3_against_v15": 6,
+    "vs_v15_relative_to_original_r3": {
+      "value": 0.25,
+      "ci95": [
+        0.0,
+        0.5
+      ],
+      "gained": [
+        [
+          7173404,
+          "player_0"
+        ],
+        [
+          7173404,
+          "player_1"
+        ],
+        [
+          7173406,
+          "player_0"
+        ],
+        [
+          7173406,
+          "player_1"
+        ],
+        [
+          7173408,
+          "player_0"
+        ],
+        [
+          7173408,
+          "player_1"
+        ],
+        [
+          7173409,
+          "player_0"
+        ],
+        [
+          7173409,
+          "player_1"
+        ],
+        [
+          7173411,
+          "player_0"
+        ],
+        [
+          7173411,
+          "player_1"
+        ]
+      ],
+      "lost": [
+        [
+          7173414,
+          "player_0"
+        ],
+        [
+          7173414,
+          "player_1"
+        ]
+      ]
+    }
+  },
+  "routing": {
+    "r3": {
+      "field_opening_differences": 1444,
+      "first_match_contact_differences": 7456,
+      "later_contact_differences": 7734,
+      "opening_deferred_unknown": 24
+    },
+    "v15": {
+      "field_opening_differences": 1362,
+      "first_match_contact_differences": 4816,
+      "later_contact_differences": 6858,
+      "opening_deferred_unknown": 40
+    },
+    "solution": {
+      "field_opening_differences": 3734,
+      "first_match_contact_differences": 15149,
+      "later_contact_differences": 24111,
+      "opening_deferred_unknown": 0
+    }
+  }
+}
