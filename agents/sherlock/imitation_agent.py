@@ -114,6 +114,63 @@ class ImitationAgent(PPOAgent):
         self.move_tracker.record(ms, ids, pos, live)
         return extra
 
+    def _point_holder_rows(self, ctx, ids, pos) -> list[int]:
+        """Zeilen der Units, die als erste auf einem bekannten Punktefeld stehen (cfg.imit_hold_points)."""
+        points = np.asarray(self.belief.point_tiles, dtype=bool)
+        first = ctx["first_on_tile"]
+        rows = []
+        for k in range(len(ids)):
+            tile = (int(pos[k][0]), int(pos[k][1]))
+            if points[tile] and first.get(tile) == int(ids[k]):
+                rows.append(k)
+        return rows
+
+    def _fill_points(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray, max_dist: int) -> np.ndarray:
+        """cfg.imit_fill_points > 0 (17.11.2026): Jedes bekannte Punktefeld, auf dem keine eigene Unit steht und auf das
+        in diesem Zug keine eigene Unit zieht, bekommt die nächste eigene Unit (Manhattan-Abstand höchstens max_dist),
+        die weder schießt noch ein Punktefeld hält. Sie nimmt unter den erlaubten Bewegungen, die den
+        Abstand verkleinern, die vom Netz am höchsten bewertete. Gegen Kaggle blieben im dritten Match 3,5-5 bekannte
+        Punktefelder leer, während der Schüler nur 2-3 besetzte."""
+        points = np.asarray(self.belief.point_tiles, dtype=bool)
+        here = [(int(p[0]), int(p[1])) for p in pos]
+        taken = set(here)
+        for k, (x, y) in enumerate(here):
+            a = int(acts[k])
+            if 1 <= a <= 4:
+                taken.add((x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])))
+        free = [(int(tx), int(ty)) for tx, ty in zip(*np.nonzero(points)) if (int(tx), int(ty)) not in taken]
+        if not free:
+            return acts
+        first = ctx.get("first_on_tile", {})
+        pairs = []
+        for k, (x, y) in enumerate(here):
+            if int(acts[k]) == geo.SAP or (points[x, y] and first.get((x, y), int(ids[k])) == int(ids[k])):
+                continue  # Schützen und Halter bleiben; zusätzlich gestapelte Units auf Punktefeldern dürfen weiter
+            for t in free:
+                d = abs(x - t[0]) + abs(y - t[1])
+                if d <= max_dist:
+                    pairs.append((d, k, t))
+        pairs.sort()
+        acts = acts.copy()
+        used_k, used_t = set(), set()
+        for d, k, t in pairs:
+            if k in used_k or t in used_t:
+                continue
+            x, y = here[k]
+            best, best_lp = None, -np.inf
+            for a in range(1, 5):
+                nx, ny = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+                if np.isfinite(logp[k, a]) and abs(nx - t[0]) + abs(ny - t[1]) < d and logp[k, a] > best_lp:
+                    best, best_lp = a, float(logp[k, a])
+            if best is None:
+                continue
+            used_k.add(k)
+            used_t.add(t)
+            if int(acts[k]) != best:
+                acts[k] = best
+                self.ep_stats["fill_moves"] = self.ep_stats.get("fill_moves", 0) + 1
+        return acts
+
     def _unstack_actions(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray) -> np.ndarray:
         """cfg.imit_unstack: je Feld bleibt hoechstens eine Unit stehen; die anderen nehmen ihre beste erlaubte
         Bewegung (nach der Netzbewertung). Schuesse bleiben erhalten (Schuetzen stehen ebenfalls)."""
@@ -205,7 +262,12 @@ class ImitationAgent(PPOAgent):
                 logp = logp + torch.log_softmax(lg.masked_fill(~m, -torch.inf), dim=1)
             stay_bias = float(getattr(self.cfg, "imit_stay_bias", 0.0) or 0.0)
             if stay_bias:
-                logp[:, geo.STAY] -= stay_bias
+                bias = torch.full((len(ids),), stay_bias, dtype=logp.dtype)
+                if getattr(self.cfg, "imit_hold_points", False):
+                    for k in self._point_holder_rows(ctx, ids, pos):
+                        bias[k] = 0.0
+                        self.ep_stats["hold_points"] = self.ep_stats.get("hold_points", 0) + 1
+                logp[:, geo.STAY] -= bias
             sap_bias = float(getattr(self.cfg, "imit_sap_bias", 0.0) or 0.0)
             if sap_bias:
                 logp[:, geo.SAP] += sap_bias  # gesperrte Schuesse bleiben -inf
@@ -215,6 +277,9 @@ class ImitationAgent(PPOAgent):
             cover = float(getattr(self.cfg, "imit_cover", 0.0) or 0.0)
             if cover > 0:
                 acts = self._cover_moves(ctx, ids, pos, logp.numpy(), acts, cover)
+            fill = int(getattr(self.cfg, "imit_fill_points", 0) or 0)
+            if fill > 0:
+                acts = self._fill_points(ctx, ids, pos, logp.numpy(), acts, fill)
             # 15.11.2026 (cfg.end_sap > 0): in den letzten end_sap Schritten eines Matches verfaellt die Energie
             # ohnehin; stehende Units mit genug Energie schiessen dann (der Lehrer tut das kaum: rund 3 %).
             end_sap = int(getattr(self.cfg, "end_sap", 0) or 0)

@@ -404,6 +404,14 @@ class AgentConfig:
     imit_unstack: bool = False
     """True (15.11.2026, nur ImitationAgent): je Feld bleibt hoechstens eine eigene Unit stehen (der erste Halter bzw.
     die mit der hoechsten STAY-Bewertung), die anderen nehmen ihre beste erlaubte Bewegung."""
+    imit_hold_points: bool = False
+    """True (17.11.2026, nur ImitationAgent): imit_stay_bias gilt nicht fuer den ersten Halter eines bekannten
+    Punktefelds. Der reine Schueler hielt gegen Kaggle 203-211 statt 251 (R3) Unit-Schritte je Match auf
+    Punktefeldern; die Strafe fuers Stehenbleiben trieb auch Halter vom Feld."""
+    imit_fill_points: int = 0
+    """> 0 (17.11.2026, nur ImitationAgent): bekannte Punktefelder ohne eigene Unit bekommen die naechste eigene Unit
+    (Manhattan-Abstand hoechstens dieser Wert), die nicht schiesst und nicht selbst auf einem Punktefeld steht. Gegen
+    Kaggle blieben im dritten Match 3,5-5 bekannte Punktefelder leer (weder eigene noch Kaggle-Units)."""
     fog_sap: bool = False
     """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
     unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte
