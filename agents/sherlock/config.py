@@ -412,6 +412,15 @@ class AgentConfig:
     """> 0 (17.11.2026, nur ImitationAgent): bekannte Punktefelder ohne eigene Unit bekommen die naechste eigene Unit
     (Manhattan-Abstand hoechstens dieser Wert), die nicht schiesst und nicht selbst auf einem Punktefeld steht. Gegen
     Kaggle blieben im dritten Match 3,5-5 bekannte Punktefelder leer (weder eigene noch Kaggle-Units)."""
+    imit_end_fill: int = 0
+    """> 0 (17.11.2026, nur ImitationAgent, "Matchende-Sturm"): In den letzten imit_end_fill punktenden Schritten eines
+    Matches bleiben Halter auf ihrem Punktefeld, und jedes bekannte Punktefeld ohne eigene und ohne sichtbare
+    gegnerische Unit bekommt die nächste eigene Unit, die es vor dem Matchende erreicht. Die Engine entfernt am
+    Matchende alle Units, Überleben und Energie zählen dann nicht mehr. Gegen Kaggle besetzte der Schüler in den
+    letzten 10 Schritten 3 Felder, Kaggle 8, und 5,2 bekannte Felder blieben leer."""
+    imit_tactics: str = ""
+    """Taktikschicht hinter der Policy (17.11.2026, nur ImitationAgent, agents/sherlock/tactics_layer.py), Schalter
+    wie bei R3T mit "," oder "+" getrennt, z. B. "granate+nebel+sog". Leer = aus."""
     fog_sap: bool = False
     """True: Units auf bewiesenen Punkte-Tiles, die stehen wuerden, sappen auf
     unsichtbare Gegner-Punkte-Tiles, wenn der Gegner-Punktgewinn versteckte

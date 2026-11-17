@@ -75,3 +75,17 @@ def test_package_refuses_protected_targets(tmp_path):
             b.build("ens8", target)
     with pytest.raises(ValueError):
         b.build("ens8", tmp_path / "x.zip", {"gibt_es_nicht": 1})
+
+
+def test_package_keeps_beast_switches(tmp_path):
+    """17.11.2026, abends: Text- und Zahlenschalter der Taktikschicht und des Matchende-Sturms landen im Paket."""
+    import torch
+
+    _student()
+    out = tmp_path / "agent.zip"
+    b.build("ens8", out, switches={"imit_stay_bias": 1.0, "imit_unstack": True, "imit_hold_points": True,
+                                   "imit_end_fill": 10, "imit_tactics": "granate+sog"})
+    with zipfile.ZipFile(out) as z:
+        assert "sherlock/tactics_layer.py" in z.namelist()
+        ck = torch.load(io.BytesIO(z.read("sherlock/weights/agent.pth")), map_location="cpu", weights_only=False)
+    assert ck["cfg"]["imit_end_fill"] == 10 and ck["cfg"]["imit_tactics"] == "granate+sog"

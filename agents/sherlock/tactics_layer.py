@@ -1,0 +1,473 @@
+"""Taktikschicht hinter der Policy des Imitations-Schülers (17.11.2026, abends; Schalter cfg.imit_tactics).
+
+Übernommen aus agents/sherlock_r3t/tactics.py (dort über den R3-Befehlen gemessen, Stand 42afa00), damit die Schicht
+im Kurspaket des Schülers liegt (scripts/build_student_package.py kopiert agents/sherlock/*.py). Eigener Dateiname,
+weil agents/sherlock/tactics.py der nicht eingebundene Entwurf vom 22.10. ist. Die R3T-Kopie bleibt unverändert, ihre
+Messungen sollen reproduzierbar bleiben. Geändert: ohne die R3-spezifischen Schalter `schueler*`,
+und Schalter dürfen auch mit "+" getrennt werden ("granate+nebel"), damit sie in kommagetrennte Angaben passen.
+
+Grundlage ist die Messung R3 gegen Kaggle (experiments/analysis/r3_kaggle_20261117): R3 verliert je Match etwa
+24 Units (Kaggle 3), meist mit nur rund 20 Energie: Halter auf Punktefeldern durch Schüsse aus der Ferne, schwache
+Units durch den Energie-Sog neben starken Gegnern oder durch Zusammenstöße. Kaggle schießt doppelt so oft und trifft
+mit dem Streuschaden oft mehrere Units. Der reine Schüler verliert je Match etwa 17 Units (Kaggle 8).
+
+Die Schicht ändert nur einzelne Units und nur, wenn ihre Rechnung einen klaren Vorteil zeigt. Alle Schalter sind
+standardmäßig aus; ohne Schalter kommen die Befehle unverändert zurück. Gerechnet wird in Weltkoordinaten nach
+den Regeln der Engine (luxai_s3/env.py): erst Bewegung, dann Saps auf die neuen Positionen (Ziel voller Schaden,
+die 8 Nachbarfelder Schaden mal Streufaktor), dann Zusammenstöße (die Seite mit mehr Energie auf dem Feld bleibt),
+dann der Sog (Sog-Faktor mal Energie der gegnerischen Units auf den 4 Nachbarfeldern), zuletzt das Energiefeld.
+Eine Unit stirbt, wenn ihre Energie danach unter 0 liegt und auch das Feld sie nicht mehr über 0 hebt.
+"""
+from __future__ import annotations
+
+from collections import Counter
+from dataclasses import dataclass, fields
+
+import numpy as np
+
+STAY, UP, RIGHT, DOWN, LEFT, SAP = range(6)
+DXY = ((0, 0), (0, -1), (1, 0), (0, 1), (-1, 0))
+ADJ4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+
+@dataclass
+class TacticsCfg:
+    granate: bool = False
+    """Schüsse nach erwartetem Schaden samt Streuung auf die vorhergesagten Positionen, im Team abgestimmt."""
+    granate_min: float = 1.0
+    """Ein neuer Schuss muss mindestens so viel erwarteten Wert bringen (in Schusskosten)."""
+    granate_keep: float = 1.0
+    """Nach einem neuen Schuss bleibt mindestens so viel Energie (in Schusskosten): Halter sollen einen Treffer
+    überleben. Die meisten R3-Units starben auf Punktefeldern mit rund 20 Energie."""
+    granate_new: bool = True
+    """Stehende Units ohne R3-Schuss dürfen neu feuern."""
+    granate_retarget: float = 0.25
+    """R3-Schüsse auf sichtbare Gegner bekommen ein neues Ziel, wenn es so viel mehr Wert bringt (in Schusskosten)."""
+    kill_bonus: float = 1.0
+    """Zusätzlicher Wert eines erwarteten Abschusses (in Schusskosten)."""
+    holder_bonus: float = 0.5
+    """Schaden an Gegnern auf bekannten Punktefeldern zählt um diesen Anteil mehr."""
+    sog: bool = False
+    """Bewegungen und Stehenbleiben meiden, die durch Sog oder Zusammenstoß wahrscheinlich tödlich sind."""
+    sog_vf: float = 0.25
+    """Angenommener Sog-Faktor (die Engine zieht ihn aus 0,0625/0,125/0,25/0,375; Mittel 0,2)."""
+    sog_risk: float = 0.5
+    """Ab diesem Todesrisiko weicht eine Unit aus, wenn eine Alternative mindestens 0,25 sicherer ist."""
+    sog_holder_risk: float = 0.75
+    """Halter auf bekannten Punktefeldern verlassen ihr Feld erst ab diesem Risiko."""
+    tanken: bool = False
+    """Stehende Units ohne Punktefeld und ohne erreichtes Ziel ziehen auf ein deutlich besseres Nachbarfeld."""
+    tanken_gain: float = 3.0
+    """Mindestens so viel mehr Feldenergie je Schritt als hier, nach Abzug der Zugkosten."""
+    nebel: bool = False
+    """Mit granate: unsichtbare Gegner auf bekannten Punktefeldern mitbeschießen. Erklärt der Punktgewinn des
+    Gegners mehr besetzte Punktefelder als sichtbar, sitzen die übrigen Halter gleich wahrscheinlich auf den
+    unsichtbaren Punktefeldern."""
+    nebel_energy: float = 150.0
+    """Angenommene Energie eines unsichtbaren Halters (Kaggle-Units hatten am Matchende im Mittel rund 200)."""
+    erobern: bool = False
+    """Eine Unit ohne eigenes Punktefeld neben einem schwächeren gegnerischen Halter zieht auf dessen Punktefeld:
+    der Zusammenstoß zerstört ihn, und das Feld gehört uns."""
+    erobern_margin: float = 10.0
+    """So viel Energie muss unsere Unit nach dem Zug mehr haben als alle Gegner, die auf das Feld kommen könnten."""
+    sparen: bool = False
+    """Halter auf Punktefeldern feuern nicht, wenn danach weniger als sparen_keep Schusskosten Energie bleiben, außer
+    ein sichtbarer Gegner auf dem Zielfeld hat weniger Energie als ein Schuss kostet (sicherer Abschuss). In der
+    Analyse starben die meisten R3-Halter mit rund 20 Energie durch einen Schuss."""
+    sparen_keep: float = 1.0
+    wechsel: bool = False
+    """Ein Halter mit weniger als wechsel_low Schusskosten Energie tauscht mit einer eigenen Unit ohne Punktefeld
+    direkt daneben, die mindestens wechsel_high Schusskosten hat: beide ziehen gleichzeitig, das Feld bleibt besetzt."""
+    wechsel_low: float = 1.0
+    wechsel_high: float = 2.5
+
+    @classmethod
+    def parse(cls, spec: str) -> "TacticsCfg":
+        """'granate,sog,granate_keep=0.5' oder 'granate+sog+granate_keep=0.5' -> Schalter an bzw. Werte gesetzt."""
+        kinds = {f.name: f.type for f in fields(cls)}
+        out = {}
+        for part in filter(None, (p.strip() for p in (spec or "").replace("+", ",").split(","))):
+            key, _, val = part.partition("=")
+            if key not in kinds:
+                raise ValueError(f"Unbekannter Taktik-Schalter: {key}")
+            default = getattr(cls, key)
+            if isinstance(default, bool):
+                out[key] = True if not val else val.lower() in ("1", "true", "ja", "on")
+            else:
+                out[key] = type(default)(val)
+        return cls(**out)
+
+    def active(self) -> bool:
+        return self.granate or self.sog or self.tanken or self.erobern or self.sparen or self.wechsel
+
+
+def _cheb(a, b) -> int:
+    return max(abs(int(a[0]) - int(b[0])), abs(int(a[1]) - int(b[1])))
+
+
+class Tactics:
+    """Zustand über die Schritte eines Spiels (letzte Gegnerpositionen) und Zähler je Spiel."""
+
+    def __init__(self, cfg: TacticsCfg):
+        self.cfg = cfg
+        self.reset()
+
+    def reset(self) -> None:
+        self.prev_enemy: dict[int, tuple[int, int]] = {}
+        self.prev_points: tuple[int, int] | None = None  # (match_steps, Gegnerpunkte) des letzten Schritts
+        self.counts: Counter = Counter()
+
+    # ------------------------------------------------------------------ Lage
+    def _situation(self, obs, team: int, env_cfg: dict, point_tiles, energy_map, nebula_map, nebula_drain):
+        W, H = np.asarray(obs["map_features"]["tile_type"]).shape
+        pos = np.asarray(obs["units"]["position"]).astype(int)
+        ene = np.asarray(obs["units"]["energy"]).reshape(2, -1).astype(int)
+        mask = np.asarray(obs["units_mask"]).astype(bool)
+        tile = np.asarray(obs["map_features"]["tile_type"]).astype(int)
+        seen = np.asarray(obs["sensor_mask"]).astype(bool)
+        field = np.where(seen, np.asarray(obs["map_features"]["energy"]), energy_map).astype(float)
+        nebula = np.where(seen, tile == 1, nebula_map).astype(bool)
+        gain = field - nebula * float(nebula_drain or 0.0)
+        opp = 1 - team
+        allies = [int(u) for u in np.flatnonzero(mask[team] & (ene[team] >= 0))]
+        enemies = []
+        mc = int(env_cfg.get("unit_move_cost", 2))
+        for e in np.flatnonzero(mask[opp] & (ene[opp] >= 0)):
+            q = (int(pos[opp, e, 0]), int(pos[opp, e, 1]))
+            enemies.append(dict(id=int(e), q=q, E=int(ene[opp, e]), holder=bool(point_tiles[q]),
+                                dist=self._predict(q, self.prev_enemy.get(int(e)), int(ene[opp, e]), mc, tile,
+                                                   bool(point_tiles[q]), W, H)))
+        hidden = self._hidden_holders(obs, opp, seen, point_tiles, enemies, pos[team][allies]) if self.cfg.nebel else []
+        return dict(W=W, H=H, pos=pos[team], ene=ene[team], allies=allies, enemies=enemies, tile=tile,
+                    gain=gain, nebula=nebula, point_tiles=point_tiles, mc=mc, hidden=hidden,
+                    cost=int(env_cfg.get("unit_sap_cost", 40)), rng=int(env_cfg.get("unit_sap_range", 4)))
+
+    def _hidden_holders(self, obs, opp, seen, point_tiles, enemies, ally_pos) -> list[dict]:
+        """Unsichtbare gegnerische Halter: Punktgewinn des Gegners minus sichtbar besetzte Punktefelder, verteilt auf
+        die unsichtbaren Punktefelder ohne eigene Unit."""
+        ms = int(obs["match_steps"])
+        pts = int(np.asarray(obs["team_points"])[opp])
+        prev, self.prev_points = self.prev_points, (ms, pts)
+        if prev is None or prev[0] != ms - 1:
+            return []
+        shown = {en["q"] for en in enemies if point_tiles[en["q"]]}
+        k = (pts - prev[1]) - len(shown)
+        if k <= 0:
+            return []
+        mine = {(int(x), int(y)) for x, y in ally_pos}
+        cands = [tuple(map(int, t)) for t in np.argwhere(point_tiles & ~seen)]
+        cands = [t for t in cands if t not in mine]
+        if not cands:
+            return []
+        p = min(1.0, k / len(cands))
+        return [dict(id=-1 - i, q=t, E=int(self.cfg.nebel_energy), holder=True, dist={t: p})
+                for i, t in enumerate(cands)]
+
+    @staticmethod
+    def _passable(tile, x, y, W, H) -> bool:
+        return 0 <= x < W and 0 <= y < H and tile[x, y] != 2
+
+    def _predict(self, q, prev, E, mc, tile, holder, W, H) -> dict:
+        """Wahrscheinliche Position des Gegners nach seinem Zug: Halter und stehende Gegner bleiben eher stehen,
+        laufende laufen eher weiter."""
+        if E < mc:
+            return {q: 1.0}
+        opts = [(d, (q[0] + dx, q[1] + dy)) for d, (dx, dy) in enumerate(DXY) if d == STAY
+                or self._passable(tile, q[0] + dx, q[1] + dy, W, H)]
+        if holder:
+            p_stay, cont = 0.85, None
+        elif prev is None:
+            p_stay, cont = 0.5, None
+        elif tuple(prev) == tuple(q):
+            p_stay, cont = 0.75, None
+        else:
+            p_stay = 0.25
+            step = (q[0] - prev[0], q[1] - prev[1])
+            cont = (q[0] + step[0], q[1] + step[1]) if abs(step[0]) + abs(step[1]) == 1 else None
+        dist = {q: p_stay}
+        movers = [t for d, t in opts if d != STAY]
+        if cont in movers:
+            dist[cont] = 0.45
+        rest = [t for t in movers if t not in dist]
+        left = 1.0 - sum(dist.values())
+        for t in rest:
+            dist[t] = dist.get(t, 0.0) + left / len(rest)
+        if not rest:
+            dist[q] += left
+        return dist
+
+    # ------------------------------------------------------------------ Einstieg
+    def apply(self, actions, obs, team: int, env_cfg: dict, *, point_tiles, energy_map, nebula_map,
+              nebula_drain: float | None = None, dropoff: float = 0.5, assigned: dict | None = None) -> np.ndarray:
+        """Weltaktionen (n, 3) -> geänderte Kopie. point_tiles/energy_map/nebula_map in Weltkoordinaten."""
+        out = np.array(actions, dtype=int, copy=True)
+        if not self.cfg.active() or int(obs["match_steps"]) == 0:
+            self._remember(obs, team)
+            return out
+        s = self._situation(obs, team, env_cfg or {}, point_tiles, energy_map, nebula_map, nebula_drain)
+        locked: set[int] = set()
+        if self.cfg.sparen:
+            self._sparen(out, s)
+        if self.cfg.wechsel:
+            locked |= self._wechsel(out, s)
+        if self.cfg.sog:
+            locked |= self._sog(out, s, locked)
+        if self.cfg.erobern:
+            locked |= self._erobern(out, s, locked)
+        if self.cfg.tanken:
+            locked |= self._tanken(out, s, assigned or {}, locked)
+        if self.cfg.granate:
+            self._granate(out, s, float(dropoff), locked)
+        self._remember(obs, team)
+        return out
+
+    def _remember(self, obs, team: int) -> None:
+        opp = 1 - team
+        pos = np.asarray(obs["units"]["position"]).astype(int)
+        mask = np.asarray(obs["units_mask"]).astype(bool)
+        self.prev_enemy = {int(e): (int(pos[opp, e, 0]), int(pos[opp, e, 1])) for e in np.flatnonzero(mask[opp])}
+
+    # ------------------------------------------------------------------ Sog und Zusammenstoß
+    def _risk(self, s, dest, e_post: float) -> float:
+        """Todesrisiko einer eigenen Unit mit Energie e_post (nach eigenen Kosten) auf dest."""
+        coll_survive, void = 1.0, 0.0
+        adj = {(dest[0] + dx, dest[1] + dy) for dx, dy in ADJ4}
+        for en in s["enemies"]:
+            for t, p in en["dist"].items():
+                e_after = en["E"] - (s["mc"] if t != en["q"] else 0)
+                if t == dest and e_after >= e_post:
+                    coll_survive *= 1.0 - p
+                elif t in adj:
+                    void += p * e_after
+        coll = 1.0 - coll_survive
+        lethal = e_post - self.cfg.sog_vf * void + float(s["gain"][dest]) < 0
+        return max(coll, 1.0 if lethal else 0.0)
+
+    def _options(self, s, u):
+        """Erlaubte Bewegungen der Unit u: (Aktion, Ziel, Energie nach Kosten)."""
+        x, y = map(int, s["pos"][u])
+        e = int(s["ene"][u])
+        out = [(STAY, (x, y), float(e))]
+        if e >= s["mc"]:
+            for d in (UP, RIGHT, DOWN, LEFT):
+                nx, ny = x + DXY[d][0], y + DXY[d][1]
+                if self._passable(s["tile"], nx, ny, s["W"], s["H"]):
+                    out.append((d, (nx, ny), float(e - s["mc"])))
+        return out
+
+    def _sog(self, out, s, locked: set[int] = frozenset()) -> set[int]:
+        changed = set()
+        if not s["enemies"]:
+            return changed
+        for u in s["allies"]:
+            a = int(out[u, 0])
+            if a == SAP or u in locked:
+                continue
+            opts = self._options(s, u)
+            here = next(o for o in opts if o[0] == STAY)
+            cur = next((o for o in opts if o[0] == a), here)
+            r0 = self._risk(s, cur[1], cur[2])
+            holder = bool(s["point_tiles"][here[1]]) and a == STAY
+            if r0 < (self.cfg.sog_holder_risk if holder else self.cfg.sog_risk):
+                continue
+            want = cur[1]
+            best = None
+            for o in opts:
+                r = self._risk(s, o[1], o[2])
+                key = (r, abs(o[1][0] - want[0]) + abs(o[1][1] - want[1]), -float(s["gain"][o[1]]))
+                if best is None or key < best[0]:
+                    best = (key, o)
+            if best is not None and best[1][0] != a and best[0][0] <= r0 - 0.25:
+                out[u] = (best[1][0], 0, 0)
+                changed.add(u)
+                self.counts["sog_ausweichen"] += 1
+                if holder:
+                    self.counts["sog_halter_weg"] += 1
+        return changed
+
+    # ------------------------------------------------------------------ Sparen und Halterwechsel
+    def _sparen(self, out, s) -> None:
+        cost = s["cost"]
+        for u in s["allies"]:
+            if int(out[u, 0]) != SAP:
+                continue
+            here = (int(s["pos"][u][0]), int(s["pos"][u][1]))
+            if not s["point_tiles"][here] or s["ene"][u] - cost >= self.cfg.sparen_keep * cost:
+                continue
+            T = (here[0] + int(out[u, 1]), here[1] + int(out[u, 2]))
+            if any(en["q"] == T and en["E"] < cost for en in s["enemies"]):
+                continue
+            out[u] = (STAY, 0, 0)
+            self.counts["sparen"] += 1
+
+    def _wechsel(self, out, s) -> set[int]:
+        changed: set[int] = set()
+        cost = s["cost"]
+        busy = set()
+        weak = [u for u in s["allies"] if s["point_tiles"][tuple(map(int, s["pos"][u]))]
+                and s["ene"][u] < self.cfg.wechsel_low * cost and int(out[u, 0]) in (STAY, SAP)]
+        for u in sorted(weak, key=lambda u: int(s["ene"][u])):
+            hx, hy = map(int, s["pos"][u])
+            best = None
+            for v in s["allies"]:
+                if v == u or v in busy or v in changed:
+                    continue
+                vx, vy = map(int, s["pos"][v])
+                if abs(vx - hx) + abs(vy - hy) != 1 or s["point_tiles"][vx, vy]:
+                    continue
+                if s["ene"][v] - s["mc"] < self.cfg.wechsel_high * cost or s["ene"][u] < s["mc"]:
+                    continue
+                if best is None or s["ene"][v] > s["ene"][best]:
+                    best = v
+            if best is None:
+                continue
+            vx, vy = map(int, s["pos"][best])
+            d_v = next(d for d in (UP, RIGHT, DOWN, LEFT) if (vx + DXY[d][0], vy + DXY[d][1]) == (hx, hy))
+            d_u = next(d for d in (UP, RIGHT, DOWN, LEFT) if (hx + DXY[d][0], hy + DXY[d][1]) == (vx, vy))
+            out[best] = (d_v, 0, 0)
+            out[u] = (d_u, 0, 0)
+            changed |= {u, best}
+            busy |= {u, best}
+            self.counts["wechsel"] += 1
+        return changed
+
+    # ------------------------------------------------------------------ Erobern
+    def _erobern(self, out, s, locked: set[int]) -> set[int]:
+        changed = set()
+        taken: set[tuple[int, int]] = set()
+        for u in sorted(s["allies"], key=lambda u: -int(s["ene"][u])):
+            if u in locked or int(out[u, 0]) == SAP:
+                continue
+            here = (int(s["pos"][u][0]), int(s["pos"][u][1]))
+            if s["point_tiles"][here] or int(s["ene"][u]) < s["mc"]:
+                continue
+            e_post = float(s["ene"][u] - s["mc"])
+            best = None
+            for d in (UP, RIGHT, DOWN, LEFT):
+                dest = (here[0] + DXY[d][0], here[1] + DXY[d][1])
+                if dest in taken or not self._passable(s["tile"], dest[0], dest[1], s["W"], s["H"]):
+                    continue
+                holders = [en for en in s["enemies"] if en["q"] == dest and en["holder"]]
+                if not holders:
+                    continue
+                # alle Gegner, die nach ihrem Zug auf dem Feld stehen könnten, zählen voll (Zusammenstoß summiert)
+                rivals = sum(en["E"] - (s["mc"] if en["q"] != dest else 0) for en in s["enemies"]
+                             if abs(en["q"][0] - dest[0]) + abs(en["q"][1] - dest[1]) <= 1)
+                if e_post < rivals + self.cfg.erobern_margin:
+                    continue
+                others = [en for en in s["enemies"] if en["q"] != dest]
+                void = sum(en["E"] for en in others if abs(en["q"][0] - dest[0]) + abs(en["q"][1] - dest[1]) <= 2)
+                if e_post - self.cfg.sog_vf * void + float(s["gain"][dest]) < 0:
+                    continue
+                gain = sum(en["E"] for en in holders)
+                if best is None or gain > best[0]:
+                    best = (gain, d, dest)
+            if best is not None:
+                out[u] = (best[1], 0, 0)
+                changed.add(u)
+                taken.add(best[2])
+                self.counts["erobern"] += 1
+        return changed
+
+    # ------------------------------------------------------------------ Tanken
+    def _tanken(self, out, s, assigned: dict, locked: set[int]) -> set[int]:
+        changed = set()
+        for u in s["allies"]:
+            if u in locked or int(out[u, 0]) != STAY:
+                continue
+            here = (int(s["pos"][u][0]), int(s["pos"][u][1]))
+            if s["point_tiles"][here] or assigned.get(u) == here:
+                continue
+            base = float(s["gain"][here])
+            best = None
+            for d, dest, e_post in self._options(s, u):
+                if d == STAY:
+                    continue
+                g = float(s["gain"][dest]) - base - s["mc"]
+                if g >= self.cfg.tanken_gain and self._risk(s, dest, e_post) < 0.2 and (best is None or g > best[0]):
+                    best = (g, d)
+            if best is not None:
+                out[u] = (best[1], 0, 0)
+                changed.add(u)
+                self.counts["tanken"] += 1
+        return changed
+
+    # ------------------------------------------------------------------ Granaten
+    def _granate(self, out, s, drop: float, locked: set[int]) -> None:
+        cost, rng = s["cost"], s["rng"]
+        if not (s["enemies"] or s.get("hidden")) or cost <= 0:
+            return
+        targets_e = s["enemies"] + s.get("hidden", [])
+        planned = [dict.fromkeys(en["dist"], 0.0) for en in targets_e]
+        visible = {en["q"] for en in s["enemies"]}
+
+        def value(k, T, extra=None):
+            en = targets_e[k]
+            tot = 0.0
+            for t, p in en["dist"].items():
+                d = cost if t == T else (cost * drop if _cheb(t, T) == 1 else 0.0)
+                if d == 0.0:
+                    continue
+                e_after = en["E"] - (s["mc"] if t != en["q"] else 0)
+                cap = max(e_after + float(s["gain"][t]), 0.0) + 1.0
+                before = planned[k][t] if extra is None else extra
+                w = 1.0 + self.cfg.holder_bonus * en["holder"]
+                gained = (min(before + d, cap) - min(before, cap)) * w
+                if before < cap <= before + d:
+                    gained += self.cfg.kill_bonus * cost
+                tot += p * gained
+            return tot
+
+        targets = set()
+        for en in targets_e:
+            for t in en["dist"]:
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        T = (t[0] + dx, t[1] + dy)
+                        if 0 <= T[0] < s["W"] and 0 <= T[1] < s["H"]:
+                            targets.add(T)
+
+        def best_target(u):
+            p = s["pos"][u]
+            best = (0.0, None)
+            for T in targets:
+                if _cheb(T, p) > rng:
+                    continue
+                v = sum(value(k, T) for k in range(len(targets_e)))
+                if v > best[0]:
+                    best = (v, T)
+            return best
+
+        def commit(T):
+            for k, en in enumerate(targets_e):
+                for t in en["dist"]:
+                    planned[k][t] += cost if t == T else (cost * drop if _cheb(t, T) == 1 else 0.0)
+
+        # 1) R3-Schüsse auf sichtbare Ziele zuerst (sie wollten ohnehin schießen), Nebelschüsse bleiben unberührt
+        shooters = [u for u in s["allies"] if int(out[u, 0]) == SAP and u not in locked]
+        for u in sorted(shooters, key=lambda u: -int(s["ene"][u])):
+            p = s["pos"][u]
+            T0 = (int(p[0] + out[u, 1]), int(p[1] + out[u, 2]))
+            if not any(_cheb(T0, q) <= 1 for q in visible):
+                commit(T0)  # R3-Nebelschuss: bleibt, sein Schaden zählt als geplant
+                continue
+            v0 = sum(value(k, T0) for k in range(len(targets_e)))
+            v, T = best_target(u)
+            if T is not None and T != T0 and v >= v0 + self.cfg.granate_retarget * cost:
+                out[u] = (SAP, T[0] - int(p[0]), T[1] - int(p[1]))
+                self.counts["granate_neu_gezielt"] += 1
+                commit(T)
+            else:
+                commit(T0)
+        # 2) Stehende Units mit genug Energie feuern zusätzlich, wenn sich der Schuss lohnt
+        if not self.cfg.granate_new:
+            return
+        idle = [u for u in s["allies"] if int(out[u, 0]) == STAY and u not in locked
+                and s["ene"][u] - cost >= self.cfg.granate_keep * cost]
+        for u in sorted(idle, key=lambda u: -int(s["ene"][u])):
+            v, T = best_target(u)
+            if T is not None and v >= self.cfg.granate_min * cost:
+                p = s["pos"][u]
+                out[u] = (SAP, T[0] - int(p[0]), T[1] - int(p[1]))
+                self.counts["granate_zusatz"] += 1
+                commit(T)

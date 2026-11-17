@@ -105,6 +105,9 @@ class ImitationAgent(PPOAgent):
         tracker = getattr(self, "move_tracker", None)
         if tracker is not None:
             tracker.reset()
+        tactics = getattr(self, "_tactics", None)
+        if tactics is not None:
+            tactics.reset()
 
     def prev_move_features(self, ctx, ids, pos) -> np.ndarray:
         """Fuenf Zusatzmerkmale je Unit (prev_move.py) und die Positionen dieses Zugs fuer den naechsten merken."""
@@ -171,6 +174,113 @@ class ImitationAgent(PPOAgent):
                 self.ep_stats["fill_moves"] = self.ep_stats.get("fill_moves", 0) + 1
         return acts
 
+    def _end_fill(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray, n: int) -> np.ndarray:
+        """cfg.imit_end_fill > 0 (17.11.2026, "Matchende-Sturm"): In den letzten n punktenden Schritten eines Matches
+        zählt nur noch, wie viele Punktefelder besetzt sind; die Engine entfernt am Matchende alle Units. Halter (erste
+        eigene Unit auf einem bekannten Punktefeld) bleiben stehen, ein Schuss bleibt erlaubt (er bewegt die Unit
+        nicht). Jedes bekannte Punktefeld ohne eigene Unit, ohne eigenen Zug darauf und ohne sichtbaren Gegner bekommt
+        die nächste eigene Unit ohne Punktefeld, ohne Schuss und ohne Zug auf ein Punktefeld, die es vor dem Matchende
+        erreicht (Manhattan-Abstand höchstens die verbleibenden Schritte). Sie nimmt unter den erlaubten Bewegungen,
+        die den Abstand verkleinern, die vom Netz am höchsten bewertete.
+
+        Die Aktion bei match_steps m wirkt im Schritt m und punktet noch, wenn m <= max_match_steps (luxai_s3/env.py:
+        Punkte vor der Prüfung match_steps >= max_steps_in_match). Ab dieser Aktion punkten also
+        max_match_steps - m + 1 Schritte."""
+        left = int(ctx["max_match_steps"]) - int(ctx["match_step"]) + 1
+        if not 0 < left <= n:
+            return acts
+        points = np.asarray(self.belief.point_tiles, dtype=bool)
+        first = ctx.get("first_on_tile", {})
+        here = [(int(p[0]), int(p[1])) for p in pos]
+        acts = acts.copy()
+        holders = set()
+        for k, tile in enumerate(here):
+            if points[tile] and first.get(tile) == int(ids[k]):
+                holders.add(k)
+                if 1 <= int(acts[k]) <= 4:
+                    acts[k] = geo.STAY
+                    self.ep_stats["end_hold"] = self.ep_stats.get("end_hold", 0) + 1
+        taken, filling = set(), set()
+        for k, (x, y) in enumerate(here):
+            a = int(acts[k])
+            if 1 <= a <= 4:
+                dest = (x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a]))
+                taken.add(dest)
+                if 0 <= dest[0] < points.shape[0] and 0 <= dest[1] < points.shape[1] and points[dest]:
+                    filling.add(k)
+            else:
+                taken.add((x, y))
+        ec = np.asarray(ctx.get("enemy_coords", np.zeros((0, 2), dtype=int))).reshape(-1, 2)
+        enemy = {(int(x), int(y)) for x, y in ec}
+        free = [(int(tx), int(ty)) for tx, ty in zip(*np.nonzero(points))
+                if (int(tx), int(ty)) not in taken and (int(tx), int(ty)) not in enemy]
+        if not free:
+            return acts
+        pairs = []
+        for k, (x, y) in enumerate(here):
+            if k in holders or k in filling or int(acts[k]) == geo.SAP:
+                continue
+            for t in free:
+                d = abs(x - t[0]) + abs(y - t[1])
+                if 0 < d <= left:
+                    pairs.append((d, k, t))
+        pairs.sort()
+        used_k, used_t = set(), set()
+        for d, k, t in pairs:
+            if k in used_k or t in used_t:
+                continue
+            x, y = here[k]
+            best, best_lp = None, -np.inf
+            for a in range(1, 5):
+                nx, ny = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+                if np.isfinite(logp[k, a]) and abs(nx - t[0]) + abs(ny - t[1]) < d and logp[k, a] > best_lp:
+                    best, best_lp = a, float(logp[k, a])
+            if best is None:
+                continue
+            used_k.add(k)
+            used_t.add(t)
+            if int(acts[k]) != best:
+                acts[k] = best
+                self.ep_stats["end_fill_moves"] = self.ep_stats.get("end_fill_moves", 0) + 1
+        return acts
+
+    def _world_maps(self):
+        """Punktefelder, Energiefeld und Nebel aus dem Gedächtnis in Weltkoordinaten (für die Taktikschicht)."""
+        b = self.belief
+        maps = [np.asarray(b.point_tiles, dtype=bool), np.asarray(b.energy_map, dtype=float),
+                np.asarray(b.nebula, dtype=bool)]
+        if b.mirrored:
+            maps = [geo.mirror_map(m) for m in maps]
+        return maps
+
+    def _apply_tactics(self, spec: str, obs, actions: np.ndarray) -> np.ndarray:
+        """cfg.imit_tactics (17.11.2026): Taktikschicht (tactics_layer.py) hinter der Policy, wie R3T hinter R3. Die
+        Parameterschätzung (Streufaktor, Nebelabzug) sieht dabei die tatsächlich gespielten Befehle."""
+        from .tactics_layer import Tactics, TacticsCfg
+
+        if getattr(self, "_tactics", None) is None or self._tactics_spec != spec:
+            self._tactics = Tactics(TacticsCfg.parse(spec))
+            self._tactics_spec = spec
+        est = self.param_est
+        env_cfg = self.env_cfg or {}
+        est.observe(obs, self.team_id, None, env_cfg)
+        points, energy, nebula = self._world_maps()
+        W, H = points.shape
+        assigned = {}
+        ctx = getattr(self, "_prev_ctx", None) or {}
+        for uid, t in (ctx.get("assigned") or {}).items():
+            if t is not None:
+                t = (int(t[0]), int(t[1]))
+                assigned[int(uid)] = geo.mirror_xy(*t, W, H) if self.belief.mirrored else t
+        out = self._tactics.apply(actions, obs, self.team_id, env_cfg, point_tiles=points, energy_map=energy,
+                                  nebula_map=nebula, nebula_drain=est.nebula(default=None),
+                                  dropoff=est.dropoff(default=0.5), assigned=assigned)
+        est.remember(obs, self.team_id, out)
+        changed = int(np.any(out != actions, axis=1).sum())
+        if changed:
+            self.ep_stats["tactics_units"] = self.ep_stats.get("tactics_units", 0) + changed
+        return out
+
     def _unstack_actions(self, ctx, ids, pos, logp: np.ndarray, acts: np.ndarray) -> np.ndarray:
         """cfg.imit_unstack: je Feld bleibt hoechstens eine Unit stehen; die anderen nehmen ihre beste erlaubte
         Bewegung (nach der Netzbewertung). Schuesse bleiben erhalten (Schuetzen stehen ebenfalls)."""
@@ -228,6 +338,13 @@ class ImitationAgent(PPOAgent):
         return acts
 
     def act(self, step: int, obs) -> np.ndarray:
+        actions = self._policy_act(step, obs)
+        spec = str(getattr(self.cfg, "imit_tactics", "") or "")
+        if spec:
+            actions = self._apply_tactics(spec, obs, actions)
+        return actions
+
+    def _policy_act(self, step: int, obs) -> np.ndarray:
         max_units = int((self.env_cfg or {}).get("max_units", 16))
         actions = np.zeros((max_units, 3), dtype=int)
         self._prev_feats, self._prev_actions, self._prev_masks = {}, {}, {}
@@ -280,6 +397,9 @@ class ImitationAgent(PPOAgent):
             fill = int(getattr(self.cfg, "imit_fill_points", 0) or 0)
             if fill > 0:
                 acts = self._fill_points(ctx, ids, pos, logp.numpy(), acts, fill)
+            end_fill = int(getattr(self.cfg, "imit_end_fill", 0) or 0)
+            if end_fill > 0:
+                acts = self._end_fill(ctx, ids, pos, logp.numpy(), acts, end_fill)
             # 15.11.2026 (cfg.end_sap > 0): in den letzten end_sap Schritten eines Matches verfaellt die Energie
             # ohnehin; stehende Units mit genug Energie schiessen dann (der Lehrer tut das kaum: rund 3 %).
             end_sap = int(getattr(self.cfg, "end_sap", 0) or 0)
