@@ -108,10 +108,11 @@ Training: v5 (von Grund auf), v6 und v5c (Fortsetzungen von v5), v7, v7L (größ
 Alle Schüler liegen lokal unter `experiments/imitation/students/`. Ihre Prüfsummen stehen in den Ergebnisdateien.
 Im Repo liegen `experiments/candidates/umbau_20261116/student_v5.pth` und `student_v6.pth`.
 
-## Eingefroren um FREEZE_ZEIT
+## Eingefroren am 17.11.2026 um 06:16
 
-- Keine Prozesse mehr auf Mahmouds Rechner (geprüft mit `ps`). Alles committet und gepusht (letzter Commit siehe
-  `git log`).
+- Keine Prozesse mehr auf Mahmouds Rechner (geprüft mit `ps` um 06:16, auch der Wecker für 08:30 ist beendet).
+  Erlaubt war der Betrieb bis 09:00. Nach Runde 5 lohnte sich keine weitere Runde, deshalb endete die Nacht früher.
+- Alles committet und gepusht (letzter Commit siehe `git log`).
 - Unverändert (SHA-256 geprüft): V14-Gewichte `agent_p0.pth` und `agent_p1.pth` (`98a07350…d3d8`), R3-Paket
   `experiments/releases/20261116_r3_finale/agent.zip` (`8aabdc73…a64d`), `dist/agent.zip` (`bd94ca73…24cf`, alt),
   `Gruppe15.zip` (`50c188b1…688a`).
