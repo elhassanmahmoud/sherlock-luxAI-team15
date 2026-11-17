@@ -31,9 +31,10 @@ Rückweg genügt es, `copy_final_release` wieder darauf zeigen zu lassen und `di
 - **Agent:** ein gelerntes Netz-Ensemble (zwei CNNs), das den Kaggle-Dritten mit DAgger nachahmt; fest eingestellt sind
   nur „weniger stehen bleiben“ und „höchstens eine stehende Unit je Feld“. Kein Kaggle-Code im Paket. Das passt zur
   Kursvorgabe „trainierte Gewichte“, in der Präsentation offenlegen, von wem das Netz gelernt hat.
-- **Größe und Tempo:** 9,5 MB statt 37 MB. Die 1.600 Bestätigungsspiele dauerten mit dem Schüler 1.104 s, mit R3
-  914 s (je 10 Prozesse, einschließlich der Gegner). Eine Zeitgrenze des Kurses ist nicht bekannt; die Ladeprüfung
-  des Kursrunners bestand er auf beiden Seiten; ganze Kursrunner-Spiele prüft Codex mit dem 3.10-Nachspielen.
+- **Größe und Tempo:** 9,5 MB statt 37 MB. Im unveränderten Kursrunner spielte das empfohlene Paket 8 von 8 ganzen
+  Spielen gegen default und Solution auf beiden Seiten (Gewichte und Schalter in jeder Instanz bitgenau geprüft,
+  frisches Gedächtnis); ein Zug dauerte im Median 5–6 ms, höchstens 7 ms
+  ([Protokoll](../devf_20261117/kursrunner_p9_s10_halter.json)). Eine Zeitgrenze des Kurses ist nicht bekannt.
 - **Robustheit:** gegen default, Zufall, Rush, Solution-Variante und das DQN der Vorlage alle 50 Spiele gewonnen wie
   R3, gegen V14 48/50 (R3 34/50); kein Warnzeichen ([Ergebnis](../robust_p9_20261117/ERGEBNIS.md)).
 - **Bessere Variante bestätigt:** Stay-Bias 1,0 mit Halter-Regel bestand die dritte frische Bestätigung auf
