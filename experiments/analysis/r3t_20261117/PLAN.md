@@ -42,3 +42,14 @@ Liste laufen nach dem ersten Durchgang mit derselben Leseregel auf Dev D ([Skrip
 | EROBERN | `r3t:erobern` | eine Unit ohne eigenes Punktefeld zieht auf das Feld eines schwächeren gegnerischen Halters daneben (Zusammenstoß zerstört ihn) |
 | SPAREN | `r3t:sparen` | Halter feuern nicht, wenn danach weniger als ein Schuss Energie bleibt, außer bei sicherem Abschuss |
 | WECHSEL | `r3t:wechsel` | ein schwacher Halter tauscht mit einer starken eigenen Unit daneben, das Feld bleibt besetzt |
+
+**Nachtrag 2, 17.11.2026, 07:52, vor dem ersten Dev-D-Spiel dieser Varianten:** Der Imitations-Schüler aus DAgger-Runde 5
+(Ensemble v8 + v8L) spielt jetzt auf R3 statt auf V14: Units mit sichtbarem Gegner im Umkreis 5 und Units ohne
+Punktefeld-Aufgabe spielen den Schüler, die übrigen R3 (wie der Hybrid "mixed"). Gleiche Leseregel, Dev D, nach dem
+zweiten Durchgang ([Skript](run_screen3.sh)):
+
+| Variante | Schalter | Idee |
+|---|---|---|
+| SCHUELER | `r3t:schueler=ens8` | R3 + Schüler im Kampf und ohne Punktefeld-Aufgabe |
+| SCHUELER_ALLE | `r3t:schueler=ens8,granate,sog,tanken` | dazu die drei Taktiken des ersten Durchgangs |
+| HYB_ENS8 (Vergleich) | gepackter Hybrid V14 + Ensemble v8 + v8L (SHA `f021f63d…`) | bisheriger Schüler-Hybrid auf denselben Karten |
