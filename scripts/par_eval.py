@@ -87,8 +87,9 @@ def _worker(job: tuple) -> list[dict]:
     import torch
     from scripts import r3_package
     env = LuxAIS3GymEnv(numpy_output=True)
-    if r3_package.is_spec(weights):
-        ckpt = None  # 16.11.2026: R3-Kurspaket als zu messender Spieler (scripts/r3_package.py)
+    from agents.sherlock_r3t import agent as r3t
+    if r3_package.is_spec(weights) or r3t.is_spec(weights):
+        ckpt = None  # 16.11.2026: R3-Kurspaket als zu messender Spieler (scripts/r3_package.py); 17.11.: r3t: mit Taktiken
     elif packed_v14:
         from scripts import packed_v14 as backend
         ckpt = backend.load_checkpoint(weights, overrides)
@@ -96,6 +97,8 @@ def _worker(job: tuple) -> list[dict]:
         ckpt = torch.load(weights, map_location="cpu", weights_only=False)
     if r3_package.is_spec(weights):
         agent = r3_package.r3_package_agent("player_0", weights[len(r3_package.PREFIX):])
+    elif r3t.is_spec(weights):  # 17.11.2026: R3 + Taktikschicht (agents/sherlock_r3t), z. B. r3t:granate,sog
+        agent = r3t.make_r3t("player_0", r3t.DEFAULT_ZIP, weights[len(r3t.PREFIX):])
     elif isinstance(ckpt, dict) and ckpt.get("kind") == "hybrid" and "v14_ckpt" in ckpt:
         # 15.11.2026: gepackter Hybrid (eine agent.pth wie in der Abgabe) -> genau ueber Agent_x laden
         agent = Agent_x("player_0", agent_path=weights, train=False, seed=0)
@@ -138,6 +141,8 @@ def _worker(job: tuple) -> list[dict]:
                     opp.set_to_eval_mode()
                 elif r3_package.is_spec(opp_name):  # 16.11.2026: freigegebenes R3-Finalpaket als Gegner
                     opp = r3_package.r3_package_agent(opp_side, opp_name[len(r3_package.PREFIX):])
+                elif r3t.is_spec(opp_name):  # 17.11.2026: R3 + Taktikschicht als Gegner
+                    opp = r3t.make_r3t(opp_side, r3t.DEFAULT_ZIP, opp_name[len(r3t.PREFIX):])
                 elif opp_name.startswith("ppo:"):  # 22.10.2026: CNN-PPO-Checkpoint als Gegner
                     from agents.sherlock.ppo_agent import PPOAgent
                     opp = PPOAgent(opp_side, agent_path=opp_name[4:], train=False)
@@ -168,7 +173,13 @@ def main() -> None:
     args = ap.parse_args()
 
     from scripts import r3_package
-    if r3_package.is_spec(args.weights):
+    from agents.sherlock_r3t import agent as r3t
+    from agents.sherlock_r3t.tactics import TacticsCfg
+    if r3t.is_spec(args.weights):
+        if args.set or args.packed_v14:
+            raise SystemExit("r3t: unterstuetzt weder --set noch --packed-v14 (Schalter stehen hinter r3t:)")
+        TacticsCfg.parse(args.weights[len(r3t.PREFIX):])  # Schalter frueh pruefen
+    elif r3_package.is_spec(args.weights):
         # 16.11.2026: das R3-Paket wird unveraendert gespielt, also ohne Schalter und ohne Packed-Backend
         if args.set or args.packed_v14:
             raise SystemExit("r3zip: unterstuetzt weder --set noch --packed-v14")
