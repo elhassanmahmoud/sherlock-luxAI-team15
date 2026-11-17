@@ -1,0 +1,29 @@
+00:55:16 START Quelle 8324845, bester Schueler /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v6_pm_from_v5.pth, letzte Bewegung 1, Stay-Bias 1.5
+DAgger: 600 Spiele, 2034812 Entscheidungen in 609s; Schueler gewinnt solution92 106/112, kaggle3 4/361, v14 120/127
+01:05:25 DAGGER4_DONE
+Warmstart /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v6_pm_from_v5.pth ohne Aenderung der Eingaben
+Epoche 1/2: Loss 0.7214 | Validierung Aktion 82.6 % | vollstaendiger Befehl 82.3 % | je Aktion stay 94 up 57 right 82 down 81 left 51 sap 36 | Ziel bei legalem Lehrerschuss exakt 77 %, +-1 Feld 93 % | 837s
+Epoche 2/2: Loss 0.6397 | Validierung Aktion 83.3 % | vollstaendiger Befehl 83.0 % | je Aktion stay 94 up 54 right 82 down 82 left 54 sap 42 | Ziel bei legalem Lehrerschuss exakt 79 %, +-1 Feld 93 % | 828s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7_from_best.pth (699721 Parameter)
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7_from_best.pth (699721 Parameter)
+01:33:35 v7 trainiert
+Epoche 1/2: Loss 1.0675 | Validierung Aktion 80.8 % | vollstaendiger Befehl 80.5 % | je Aktion stay 93 up 43 right 80 down 82 left 44 sap 29 | Ziel bei legalem Lehrerschuss exakt 71 %, +-1 Feld 90 % | 2064s
+Epoche 2/2: Loss 0.7635 | Validierung Aktion 82.2 % | vollstaendiger Befehl 81.9 % | je Aktion stay 94 up 51 right 80 down 81 left 53 sap 36 | Ziel bei legalem Lehrerschuss exakt 74 %, +-1 Feld 91 % | 2060s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7L_scratch.pth (1809193 Parameter)
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7L_scratch.pth (1809193 Parameter)
+02:42:44 v7L trainiert
+Gepackter Hybrid (mixed, Schueler-Schalter {'imit_stay_bias': 1.5, 'imit_unstack': True}): /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v7_mixed/weights/agent.pth
+Gepackter Hybrid (mixed, Schueler-Schalter {'imit_stay_bias': 1.5, 'imit_unstack': True}): /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v7L_mixed/weights/agent.pth
+student_v7_devA.csv: kaggle3: 0.010 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.880 (200 Spiele), solution92: 0.980 (200 Spiele) in 275s
+02:47:24 student_v7_devA fertig
+hyb_v7_mixed_devA.csv: kaggle3: 0.030 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.810 (200 Spiele), solution92: 0.990 (200 Spiele) in 450s
+02:54:57 hyb_v7_mixed_devA fertig
+student_v7L_devA.csv: kaggle3: 0.030 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.830 (200 Spiele), solution92: 0.970 (200 Spiele) in 374s
+03:01:12 student_v7L_devA fertig
+hyb_v7L_mixed_devA.csv: kaggle3: 0.050 (200 Spiele), r3zip:/Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/releases/20261116_r3_finale/agent.zip: 0.820 (200 Spiele), solution92: 0.980 (200 Spiele) in 525s
+03:10:00 hyb_v7L_mixed_devA fertig
+a63d66c0938bb4983ebe89478acaaeead53c3b63e7b9fbf4ef14cd0592d56ec5  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7_from_best.pth
+e6f1d5344a35b799181f0e4462a8b9424e33047f969f4eaeeef8ae2f94bd216c  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v7L_scratch.pth
+d5dc152cff0889b74d1241e0fb0bf217b1c69dde1ad2080c2c4a8020be331082  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v7_mixed/weights/agent.pth
+1b17f0fea626fb01bc9957d13f5fd0b91da7f8d8ce9f9363abada574d9e6a269  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/releases/v7L_mixed/weights/agent.pth
+03:10:00 C_DONE
