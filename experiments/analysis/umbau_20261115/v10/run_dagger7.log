@@ -1,0 +1,27 @@
+15:10:48 START Quelle ab34c54, Schalter imit_stay_bias=1.0 imit_unstack=true imit_hold_points=true
+DAgger: 600 Spiele, 2054348 Entscheidungen in 754s; Schueler gewinnt kaggle3 18/357, v14 120/123, solution92 120/120
+15:23:23 DAGGER7_DONE
+Warmstart /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v9_from_v8.pth ohne Aenderung der Eingaben
+Epoche 1/2: Loss 0.7045 | Validierung Aktion 82.3 % | vollstaendiger Befehl 82.0 % | je Aktion stay 94 up 55 right 82 down 83 left 58 sap 36 | Ziel bei legalem Lehrerschuss exakt 77 %, +-1 Feld 92 % | 1154s
+Epoche 2/2: Loss 0.6367 | Validierung Aktion 82.9 % | vollstaendiger Befehl 82.6 % | je Aktion stay 94 up 58 right 83 down 83 left 57 sap 43 | Ziel bei legalem Lehrerschuss exakt 79 %, +-1 Feld 93 % | 1146s
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v10_from_v9.pth (699721 Parameter)
+gespeichert: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v10_from_v9.pth (699721 Parameter)
+16:02:15 v10 trainiert
+Ensemble mit 2 Schuelern: /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/ens_v10_v8L.pth
+88 Spieldateien aus /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/k3_holdout_teacher
+| Schüler | gleiche Aktion | stehen | hoch | rechts | runter | links | Schuss | Lehrer wiederholt: Schüler richtig | Lehrer wechselt: Schüler richtig | Schüler wiederholt | Lehrer wiederholt |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ENS9 | 87.28 % | 95.2 | 65.6 | 87.0 | 86.6 | 62.4 | 50.4 | 95.38 % | 70.23 % | 69.94 % | 67.21 % |
+| V10 | 87.01 % | 94.5 | 66.1 | 86.8 | 86.3 | 62.6 | 53.4 | 94.64 % | 70.87 % | 69.07 % | 67.21 % |
+| ENS10 | 87.31 % | 95.2 | 65.8 | 87.1 | 86.7 | 62.6 | 50.5 | 95.34 % | 70.37 % | 69.85 % | 67.21 % |
+16:05:42 Nachahmung teacher fertig
+60 Spieldateien aus /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/k3_holdout_dagger_v5
+| Schüler | gleiche Aktion | stehen | hoch | rechts | runter | links | Schuss | Lehrer wiederholt: Schüler richtig | Lehrer wechselt: Schüler richtig | Schüler wiederholt | Lehrer wiederholt |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ENS9 | 82.09 % | 93.5 | 61.6 | 83.8 | 84.7 | 61.5 | 36.0 | 94.15 % | 65.12 % | 62.56 % | 57.63 % |
+| V10 | 82.07 % | 92.9 | 62.5 | 83.8 | 84.5 | 62.2 | 38.9 | 93.49 % | 65.97 % | 61.71 % | 57.63 % |
+| ENS10 | 82.19 % | 93.4 | 62.1 | 83.9 | 84.8 | 61.8 | 36.5 | 94.11 % | 65.41 % | 62.48 % | 57.63 % |
+16:08:01 Nachahmung dagger_v5 fertig
+7590f07366b8d7696ca266c2684149783529cd4eb763b0900f8a23ff435ce521  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/v10_from_v9.pth
+cc22c1de177f6eab5fe5404865404eaa8c3bfe47b011f8fb0b0f3f5ca924dd2d  /Users/elhassanmahmoud/Documents/AKI_LuxAgent15/experiments/imitation/students/ens_v10_v8L.pth
+16:08:01 DAGGER7_ALL_DONE
