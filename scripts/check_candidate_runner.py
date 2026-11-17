@@ -97,6 +97,25 @@ def verify_loaded(agent, checkpoint: dict) -> None:
             if getattr(hybrid.student.cfg, key) != value:
                 raise ValueError(f"Student switch {key} differs")
         return
+    if isinstance(checkpoint, dict) and checkpoint.get("kind") == "imitation":
+        # 17.11.2026: reiner Schueler (nachgeahmte Policy, auch als Ensemble), von Agent_x an einen ImitationAgent
+        # delegiert. Alle Netze bitgenau und die Spielschalter gegen die Datei pruefen.
+        student = getattr(agent, "_imitation", None)
+        if student is None or hasattr(student, "v14"):
+            raise ValueError("Imitation checkpoint was not delegated to an ImitationAgent")
+        nets = [student.net, *student.extra_nets]
+        states = [checkpoint["policy"], *[m["policy"] for m in checkpoint.get("imitation_ensemble", [])]]
+        if len(nets) != len(states):
+            raise ValueError("Loaded student ensemble size differs")
+        for net, state in zip(nets, states):
+            loaded = net.state_dict()
+            if loaded.keys() != state.keys() or any(not torch.equal(loaded[k].cpu(), state[k].cpu()) for k in state):
+                raise ValueError("Loaded student weights differ")
+        # PPOAgent setzt buffer_capacity=1 (kein Replay Buffer fuer eine reine Policy); sonst muss alles gleich sein
+        loaded_cfg = dict(student.cfg.to_dict(), buffer_capacity=None)
+        if loaded_cfg != dict(AgentConfig.from_dict(checkpoint["cfg"]).to_dict(), buffer_capacity=None):
+            raise ValueError("Loaded student config differs")
+        return
     if (not isinstance(checkpoint, dict) or "q" not in checkpoint
             or checkpoint.get("feature_dim", FEATURE_DIM) != agent.feat_dim
             or checkpoint.get("n_actions", agent.n_actions) != agent.n_actions):
@@ -167,9 +186,14 @@ def run_check(weights: Path) -> dict:
     def load(path):
         cls = ObservedAgent if path == "agents.sherlock.main.Agent_x" else loader(path)
 
-        def create(*args, **kwargs):
-            return guard_course_calls(cls(*args, **kwargs))
-        return create
+        class Guarded:
+            """Erzeugt die echte Klasse mit Fehlerprüfung nach act/update (guard_course_calls). 17.11.2026: Der
+            Kursrunner entscheidet über inspect.signature(Klasse.__init__), ob er agent_path übergibt; eine einfache
+            Fabrikfunktion verdeckte diese Signatur, sodass die Gewichte des Kandidaten nicht übergeben wurden."""
+            def __new__(klass, *args, **kwargs):
+                return guard_course_calls(cls(*args, **kwargs))
+        Guarded.__init__ = cls.__init__  # nur für die Signaturprüfung; __new__ liefert eine echte Instanz von cls
+        return Guarded
 
     initial_cwd = Path.cwd()
     try:

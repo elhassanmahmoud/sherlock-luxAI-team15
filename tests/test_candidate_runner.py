@@ -86,3 +86,33 @@ def test_checkpoint_load_and_probe_fail_closed(tmp_path):
     torch.save(checkpoint, path)
     with pytest.raises(ValueError, match="q: Eingabedimension"):
         Agent_x("player_0", agent_path=str(path), train=False)
+
+
+def test_verify_loaded_accepts_pure_student_and_rejects_changed_weights(tmp_path):
+    """17.11.2026: gepackter reiner Schüler (kind imitation, Ensemble) wird bitgenau geprüft."""
+    import io
+
+    import pytest
+    import torch
+
+    from agents.sherlock.main import Agent_x
+    from agents.sherlock_r3t.agent import STUDENTS
+    from scripts import build_student_package
+    from scripts.check_candidate_runner import verify_loaded
+
+    if not STUDENTS["ens8"].is_file():
+        pytest.skip("Schülergewichte liegen nur lokal vor")
+    data = build_student_package.packed_checkpoint(STUDENTS["ens8"], {"imit_stay_bias": 1.0, "imit_unstack": True,
+                                                                      "imit_hold_points": True})
+    path = tmp_path / "agent.pth"
+    path.write_bytes(data)
+    checkpoint = torch.load(io.BytesIO(data), map_location="cpu", weights_only=False)
+    agent = Agent_x("player_0", agent_path=str(path))
+    verify_loaded(agent, checkpoint)
+    changed = dict(checkpoint, cfg=dict(checkpoint["cfg"], imit_stay_bias=1.5))
+    with pytest.raises(ValueError, match="config"):
+        verify_loaded(agent, changed)
+    key = next(iter(checkpoint["policy"]))
+    tampered = dict(checkpoint, policy={**checkpoint["policy"], key: checkpoint["policy"][key] + 1})
+    with pytest.raises(ValueError, match="weights"):
+        verify_loaded(agent, tampered)
