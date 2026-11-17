@@ -32,3 +32,13 @@ Test nur noch für Varianten benutzt, die hier ausdrücklich nachgetragen werden
 
 Zur Erklärung (nicht zur Auswahl) läuft für jede Variante zusätzlich die Energie- und Todesanalyse auf den
 Analysekarten 7256000–7256029 gegen Kaggle.
+
+**Nachtrag 1, 17.11.2026, 07:27, vor dem ersten Dev-D-Spiel dieser Varianten:** Vier weitere Taktiken aus Mahmouds
+Liste laufen nach dem ersten Durchgang mit derselben Leseregel auf Dev D ([Skript](run_screen2.sh)):
+
+| Variante | Schalter | Idee |
+|---|---|---|
+| NEBEL | `r3t:granate,nebel` | Granaten auch auf unsichtbare Halter: Erklärt der Punktgewinn des Gegners mehr besetzte Punktefelder als sichtbar, gelten die unsichtbaren Punktefelder als besetzt |
+| EROBERN | `r3t:erobern` | eine Unit ohne eigenes Punktefeld zieht auf das Feld eines schwächeren gegnerischen Halters daneben (Zusammenstoß zerstört ihn) |
+| SPAREN | `r3t:sparen` | Halter feuern nicht, wenn danach weniger als ein Schuss Energie bleibt, außer bei sicherem Abschuss |
+| WECHSEL | `r3t:wechsel` | ein schwacher Halter tauscht mit einer starken eigenen Unit daneben, das Feld bleibt besetzt |
