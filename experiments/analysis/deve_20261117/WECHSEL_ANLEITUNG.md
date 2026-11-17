@@ -32,5 +32,8 @@ Rückweg genügt es, `copy_final_release` wieder darauf zeigen zu lassen und `di
 - **Größe und Tempo:** 9,5 MB statt 37 MB. Die 1.600 Bestätigungsspiele dauerten mit dem Schüler 1.104 s, mit R3
   914 s (je 10 Prozesse, einschließlich der Gegner). Eine Zeitgrenze des Kurses ist nicht bekannt; die Ladeprüfung
   des Kursrunners bestand er auf beiden Seiten; ganze Kursrunner-Spiele prüft Codex mit dem 3.10-Nachspielen.
-- **Offen:** Robustheit gegen weitere Spielweisen (läuft, [Plan](../robust_p9_20261117/PLAN.md)). Mögliche bessere
-  Variante aus Dev F (Schalter für Punktefelder); sie bräuchte eine eigene frische Bestätigung.
+- **Robustheit:** gegen default, Zufall, Rush, Solution-Variante und das DQN der Vorlage alle 50 Spiele gewonnen wie
+  R3, gegen V14 48/50 (R3 34/50); kein Warnzeichen ([Ergebnis](../robust_p9_20261117/ERGEBNIS.md)).
+- **Mögliche bessere Variante:** Stay-Bias 1,0 mit Halter-Regel war auf Dev F besser als P9
+  ([Dev F](../devf_20261117/ERGEBNIS.md)); ihre eigene frische Bestätigung auf 7261000–7261399 läuft. Besteht sie,
+  wäre sie der bessere Ersatz (gleicher Ablauf, anderes Paket).
