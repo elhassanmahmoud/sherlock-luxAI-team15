@@ -40,11 +40,13 @@ der Regel.
 
 Zweite Prüfung auf 7256200–7256399 (gepaarter Punkteanteil gegen Kaggle): SCHUELER +3,98 [+3,04; +4,96],
 SCHUELER_ALLE +3,49 [+2,52; +4,52], HYB_ENS8 +3,87 [+2,93; +4,83]; alle drei bestehen die Regel. Nach der Auswahlregel
-tritt **SCHUELER** an (, höchster Wert unter den R3-Varianten).
+tritt **SCHUELER** an (`r3t:schueler=ens8`, höchster Wert unter den R3-Varianten).
 
-- Kurspaket , SHA-256
-  , gebaut mit  aus der
-  eingefrorenen Quelle . Der Bau ist reproduzierbar (gleiche Prüfsumme wie das Probepaket, das in 8 Spielen
-  exakt wie  spielte).
-- Enthalten: R3 unverändert (v14- und r3-Teil bytegleich), Schüler Ensemble v8 + v8L (SHA-256 ),
-  Schüler-Code als , Taktikschicht ohne aktive Taktik.
+- Kurspaket `experiments/candidates/r3t_20261117/agent_r3_schueler_ens8.zip`, SHA-256
+  `23b75afd90e639a909555864b68caaee1798b20b3af12c5d8906e03d5b32500d`, gebaut mit `scripts/build_r3t_package.py` aus der
+  eingefrorenen Quelle `149a6f8`. Der Bau ist reproduzierbar (gleiche Prüfsumme wie das Probepaket, das in 8 Spielen
+  exakt wie `r3t:schueler=ens8` spielte).
+- Enthalten: R3 unverändert (v14- und r3-Teil bytegleich), Schüler Ensemble v8 + v8L (SHA-256 `1a68ad14…7ad0`),
+  Schüler-Code als `sherlock/stud/`, Taktikschicht ohne aktive Taktik.
+- Korrektur 09:19: Beim ersten Eintragen fehlten durch einen Shell-Fehler die markierten Angaben (Commit `985e523`).
+  Inhalt und Kandidat sind unverändert.
