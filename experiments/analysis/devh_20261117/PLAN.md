@@ -137,7 +137,7 @@ heute mehr schaden als nützen, ist offen.
 MASKFREI spielt nach ENDE10F auf denselben Karten (800 Spiele), aus derselben eingefrorenen Quelle wie ENDE10F. Es gilt
 dieselbe Regel „Ein Modul hilft“. Am Ablauf der Bestätigung 5 ändert sich nichts.
 
-## Nachtrag 17.11.2026, 22:30, vor dem ersten Spiel der Bestätigung 5: Kandidat
+## Nachtrag 17.11.2026, 22:24, vor dem ersten Spiel der Bestätigung 5: Kandidat
 
 Nach der Regel hilft nur **SAPBIAS** (`imit_sap_bias=0.5`): +0,52 [−0,39; +1,43] Prozentpunkte Punkteanteil gegen
 Kaggle gegenüber K, Spiele gegen Solution +0,50, gegen beide zusammen ±0,00. ENDE10F (+0,18) und MASKFREI (−0,71)
