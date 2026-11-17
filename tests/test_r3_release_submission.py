@@ -32,7 +32,7 @@ def test_final_release_is_k_and_r3_stays_available():
     real_root = Path(builder.__file__).resolve().parents[1]
     k = real_root / builder.FINAL_RELEASE
     r3 = real_root / builder.R3_RELEASE
-    assert builder.FINAL_RELEASE == "experiments/releases/20261117_sherlock_schueler/agent.zip"
+    assert builder.FINAL_RELEASE == "experiments/releases/20261117_sherlock_v16/agent.zip"
     assert sha256(k.read_bytes()).hexdigest() == builder.FINAL_ZIP_SHA256
     assert sha256(r3.read_bytes()).hexdigest() == builder.R3_ZIP_SHA256
 

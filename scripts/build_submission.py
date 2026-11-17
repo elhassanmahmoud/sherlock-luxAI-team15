@@ -47,7 +47,7 @@ from scripts.output_paths import checked_output
 
 SRC = ROOT / "agents" / "sherlock"
 # 17.11.2026, abends: Abgabe ist K (reiner Schüler v9, Stay-Bias 1,0, Halter-Regel), Ja von Mahmoud und Moayed.
-FINAL_RELEASE = "experiments/releases/20261117_sherlock_schueler/agent.zip"
+FINAL_RELEASE = "experiments/releases/20261117_sherlock_v16/agent.zip"
 FINAL_ZIP_SHA256 = "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
 # Rückweg: bis 17.11.2026 war R3 die Abgabe. Zum Zurückwechseln FINAL_* auf diese Werte setzen.
 R3_RELEASE = "experiments/releases/20261116_r3_finale/agent.zip"

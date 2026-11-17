@@ -9,7 +9,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 
 | | |
 |---|---|
-| **Aktuelle Abgabe** | **Sherlock in der Schüler-Version** seit 17.11.2026, 23:24 (Teamentscheidung Mahmoud und Moayed) · [Release](experiments/releases/20261117_sherlock_schueler/README.md) |
+| **Aktuelle Abgabe** | **Sherlock V16** seit 17.11.2026, 23:24 (Teamentscheidung Mahmoud und Moayed) · [Release](experiments/releases/20261117_sherlock_v16/README.md) |
 | Was der Agent ist | zwei CNNs (0,7 und 1,8 Millionen Parameter), die durch Nachahmung und sechs DAgger-Runden vom öffentlichen Kaggle-Drittplatzierten gelernt haben, dazu Sherlocks Gedächtnis, Aktionsmasken und drei feste Spielschalter |
 | Direkt gegen die vorige Abgabe R3 | **194 von 200 Spielen gewonnen** (400 frische Karten) |
 | Gegen den Kaggle-Drittplatzierten | 20/800 statt 10/800 Spiele, **216 statt 76 von 2.400 Matches**, Punkteanteil 39,3 statt 33,4 % |
@@ -17,6 +17,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 | Gegen Battle-Sherlock V14 | 48/50 (R3 34/50); gemessen mit demselben Netz bei Stay-Bias 1,5 |
 | Gegen `default`, Zufall, Rush-Bot, Solution-Variante, DQN der Vorlage | je 50/50 (ebenso) |
 | Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms) |
+| Gespielte Spiele bisher | **rund 1,54 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele und 5.928 Spiele für die Nachahmung ([Zahlen und Fakten](#zahlen-und-fakten)) |
 | Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11.** |
 
 Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die meisten Spiele: Er holt etwa 40 % der Punkte und gewinnt rund jedes zehnte Match.
@@ -27,7 +28,7 @@ Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die 
 - [Wie er gelernt hat](#wie-er-gelernt-hat)
 - [Ergebnisse auf frischen Karten](#ergebnisse-auf-frischen-karten)
 - [Getestet und verworfen: Handtaktiken](#getestet-und-verworfen-handtaktiken)
-- [Entwicklung von Sherlock](#entwicklung-von-sherlock)
+- [Entwicklung von Sherlock](#entwicklung-von-sherlock) · [Zahlen und Fakten](#zahlen-und-fakten)
 - [Abgabe](#abgabe)
 - [Installation](#installation) · [Nutzung](#nutzung) · [Wie wir testen](#wie-wir-testen) · [Projektstruktur](#projektstruktur)
 - [Grenzen und nächste Schritte](#grenzen-und-nächste-schritte)
@@ -61,8 +62,8 @@ flowchart LR
 ## Wie er gelernt hat
 
 - **Lehrer:** der öffentlich freigegebene Kaggle-Drittplatzierte ([lux3-bot 0.4.8](https://github.com/andreyd41/lux3-bot/releases/tag/0.4.8), Apache-2.0). Er dient nur als Lehrer und Testgegner. **Der Kaggle-Code ist nicht im Abgabepaket**; Sherlock spielt mit eigenen Gewichten.
-- **Nachahmung** (`scripts/imitate.py`): Der Schüler bekommt genau die Eingaben, die er auch im Spiel sieht, und lernt für jede Einheit die Aktion und das Schussziel des Lehrers.
-- **DAgger, sechs Runden:** Der Schüler spielt selbst, und der Lehrer sagt in jeder Lage, was er getan hätte. So lernt der Schüler auch Lagen, in die nur er selbst gerät. Zusammen bis zu rund 19 Millionen Einheitsentscheidungen.
+- **Nachahmung** (`scripts/imitate.py`): Das Netz bekommt genau die Eingaben, die er auch im Spiel sieht, und lernt für jede Einheit die Aktion und das Schussziel des Lehrers.
+- **DAgger, sechs Runden:** Sherlock spielt selbst, und der Lehrer sagt in jeder Lage, was er getan hätte. So lernt das Netz auch Lagen, in die nur Sherlock selbst gerät. Zusammen bis zu rund 19 Millionen Einheitsentscheidungen.
 - **Netze:** Ensemble aus v9 (64 Kanäle, 6 Blöcke) und v8L (96 Kanäle, 8 Blöcke).
 - **Wie genau er nachahmt:** Auf frischen Spielen wählt das Ensemble in 87 % der Lehrer-Lagen und 82 % der eigenen Lagen dieselbe Aktion wie der Lehrer. Am schwersten sind Schüsse: Nur etwa jeden zweiten Lehrerschuss erkennt er (36–50 %).
 - **Verlauf:** Umbau auf Nachahmung am 15.11., DAgger-Runden 3–6 am 16./17.11., Auswahl und Bestätigungen am 17.11. Eine siebte DAgger-Runde (v10) brachte keinen messbaren Fortschritt mehr.
@@ -99,7 +100,7 @@ Am 17.11. liefen auf 200 unbenutzten Karten (Dev H) 17 Varianten des neuen Sherl
 | öfter schießen (`imit_sap_bias`) | +0,52, in der frischen Bestätigung nur +0,13 |
 | **alles gleichzeitig** | **−1,64** (Kaggle-Siege 7 statt 24 von 400) |
 
-Der Schüler hat Schießen, Zielen und Ausweichen bereits vom Lehrer gelernt; Handregeln obendrauf stören ihn eher. [Dev H und Bestätigung 5](experiments/analysis/devh_20261117/ERGEBNIS.md)
+Das Netz hat Schießen, Zielen und Ausweichen bereits vom Lehrer gelernt; Handregeln obendrauf stören ihn eher. [Dev H und Bestätigung 5](experiments/analysis/devh_20261117/ERGEBNIS.md)
 
 ## Entwicklung von Sherlock
 
@@ -110,9 +111,67 @@ Der Schüler hat Schießen, Zielen und Ausweichen bereits vom Lehrer gelernt; Ha
 | 20.10.–01.11. | V3 bis V14 | 18, später 36 DQN-Netze, dazu Regeln für Saps, Nebel und Wege | 78 → 95 % gegen Solution_92 |
 | 06.11. | V14 im Battle | Platz 3 aller Teams | [Battle-Folien](Sherlock_Battle_06-11-2026.pdf) |
 | 16.11. | R3 | V14 plus nachgeahmter Bewegungsberater | 788/800 gegen Solution_92 |
-| **17.11.** | **Schüler-Version** | **Nachahmung und DAgger vom Kaggle-Drittplatzierten** | **siehe oben** |
+| **17.11.** | **V16** | **Nachahmung und DAgger vom Kaggle-Drittplatzierten** | **siehe oben** |
 
 Die DQN-Versionen sind unter [Historie](#historie-dqn-sherlock-bis-v14-und-r3) beschrieben; alle früheren Abgaben liegen mit Rückweg unter `experiments/releases/`.
+
+## Zahlen und Fakten
+
+Spiele: Stand 17.11.2026, aus den Dateien im Repository nachgezählt mit `python experiments/analysis/count_games.py`.
+
+### Spiele
+
+| Art | Spiele |
+|---|---:|
+| Neue DQN-Netze trainiert (Ablation, Grundnetze, weitere Versuche) | 337.904 |
+| Nachtraining vorhandener DQN-Netze | 278.400 |
+| Prof-DQN zum Vergleich gleich lang neu trainiert | 9.000 |
+| DQN-Läufe ohne Angabe der Art | 1.600 |
+| CNN mit PPO | 35.600 |
+| **Training zusammen** (272 DQN-Läufe, 7 PPO-Läufe) | **662.504** |
+| Zwischenprüfungen während des Trainings | 66.912 |
+| Nachahmung: Lehrerspiele des Kaggle-Drittplatzierten (9,2 Mio. aufgezeichnete Einheitsentscheidungen) | 1.800 |
+| Nachahmung: DAgger-Runden 1–7 (13,5 Mio. Einheitsentscheidungen) | 4.000 |
+| Nachahmung: Prüf- und Testspiele (0,5 Mio. Einheitsentscheidungen) | 128 |
+| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | 806.616 |
+| **Alle Spiele zusammen** | **1.541.960** |
+
+- **Trainings:** 272 DQN-Läufe und 7 CNN/PPO-Läufe bis zum Battle; seit dem 15.11. 13 nachgeahmte Netze (v1 bis v10, dazu v5c, v7L und v8L) und 5 Ensembles aus zusammen 23,3 Millionen aufgezeichneten Einheitsentscheidungen.
+- **In V16 stecken** 1.800 Lehrerspiele und 3.400 Spiele aus den DAgger-Runden 1–6 mit 20,7 Millionen aufgezeichneten Einheitsentscheidungen; im Training verwendet wurden bis zu rund 19 Millionen. In den 36 Netzen von V14 steckten 165.000 Trainingsspiele (66.000 der 18 Grundnetze und 18 × 5.500 Spiele Nachtraining).
+- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` und `experiments/analysis/` ein Bewertungsspiel. Zeilen, die in allen Spalten einschließlich der Laufzeit einer anderen gleichen, zählen nur einmal (10.700 Zeilen); darunter sind auch verschiedene Läufe mit genau gleichem Spielverlauf, die Zahl ist also eher zu niedrig. Die Nachahmungsspiele stammen aus `collect.json` je Datensammlung. Ein Spiel hat 3 Matches à 100 Schritte.
+
+### Rechenzeit (Stand 01.11.)
+
+| | Prozess-Stunden |
+|---|---:|
+| Training DQN | 558 |
+| Training CNN/PPO | 29 |
+| Bewertung | 780 |
+| **Zusammen** | **rund 1.370** |
+
+Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozesse gleichzeitig, die echte Laufzeit war also viel kürzer.
+
+### Karten und Gegner
+
+- **33.005 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt (Stand 17.11.), jede Karte meist von beiden Seiten.
+- **Gegner** (bis 01.11. 25 verschiedene, seit dem 15.11. zusätzlich der Kaggle-Drittplatzierte, R3 und die Varianten von V16): Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
+
+### Agent und Code (Stand 17.11.)
+
+| | |
+|---|---|
+| Netze der Abgabe | 2 CNNs mit 0,70 + 1,81 = **2,5 Millionen Parametern** (V14: 36 × 152.967 = 5,5 Millionen) |
+| Eingabe und Ausgabe | 16 Kartenebenen, je Einheit 79 Merkmale und 5 Bewegungsmerkmale; 6 Aktionen (stehen, 4 Richtungen, Sap) und ein Schussziel |
+| Einstellungen | 190 in `AgentConfig`, davon 109 Schalter; in der Abgabe sind 3 Spielschalter gesetzt |
+| Agent (`agents/sherlock/`) | 25 Python-Dateien, 7.495 Zeilen |
+| Skripte (`scripts/`) | 241 Python-Dateien mit 54.630 Zeilen, 48 Shell-Skripte |
+| Tests (`tests/`) | 209 Dateien mit 34.066 Zeilen, **3.298 Tests** |
+
+### Versionen und Verlauf (Stand 17.11.)
+
+- **11 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13, V14, R3 und V16. Alle Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert, `full_s0` als Git-Tag `abgabe-review-full_s0`.
+- **922 Commits** seit dem 10.10.2026 (Moayed 507, Mahmoud 415).
+- **Dokumentation:** 427 Einträge im Arbeitsstand; jede Auswahl und Bestätigung seit der Battle-Woche mit vorab festgelegtem Plan.
 
 ## Abgabe
 
@@ -131,7 +190,7 @@ shasum -a 256 dist/agent.zip         # 0c59706b6af1c2cd74819a4b13269b69cb55786e0
 | Agentenklasse | `agents.sherlock.main.Agent_x` |
 | Gewichte für beide Spieler | `agents/sherlock/weights/agent.pth` |
 
-In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kursrunner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. **Rückweg zu R3:** In `scripts/build_submission.py` `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen und neu bauen ([R3-Release](experiments/releases/20261116_r3_finale/README.md)). `--from-run experiments/runs/<lauf>` verpackt die Gewichte eines Laufs, ohne die Abgabe zu ersetzen; `scripts/build_student_package.py` baut Schüler-Pakete im selben Format.
+In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kursrunner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. **Rückweg zu R3:** In `scripts/build_submission.py` `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen und neu bauen ([R3-Release](experiments/releases/20261116_r3_finale/README.md)). `--from-run experiments/runs/<lauf>` verpackt die Gewichte eines Laufs, ohne die Abgabe zu ersetzen; `scripts/build_student_package.py` baut Pakete aus nachgeahmten Netzen im selben Format.
 
 ## Installation
 
@@ -155,9 +214,9 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 |---|---|
 | Ein Spiel über den Kurs-Runner mit Replay (Gruppe 15 gegen 2, siehe `main.py`) | `python main.py` → `replays/15_vs_2/*.json` |
 | Spiel spielen und sofort im Browser ansehen (Viewer braucht Internet) | `python -m scripts.play_and_view` (Optionen `--gegner default\|solution\|dqn`, `--seite 1`) |
-| Abgabepaket gegen Solution und Kaggle auf festen Karten spielen | `python -m scripts.par_eval --weights "r3zip:experiments/releases/20261117_sherlock_schueler/agent.zip" --opponents solution92,kaggle3 --seed-list KARTEN.json --workers 10 --out ergebnis.csv` |
-| Schüler mit Schaltern spielen (Gewichte lokal unter `experiments/imitation/students/`) | `python -m scripts.par_eval --weights experiments/imitation/students/ens_v9_v8L.pth --set imit_stay_bias=1.0 --set imit_unstack=true --set imit_hold_points=true --opponents solution92,kaggle3 --seed-list KARTEN.json --out ergebnis.csv` |
-| Schüler-Kurspaket bauen | `python -m scripts.build_student_package --student ens9 --set imit_stay_bias=1.0 --set imit_unstack=true --set imit_hold_points=true --out PAKET.zip` |
+| Abgabepaket gegen Solution und Kaggle auf festen Karten spielen | `python -m scripts.par_eval --weights "r3zip:experiments/releases/20261117_sherlock_v16/agent.zip" --opponents solution92,kaggle3 --seed-list KARTEN.json --workers 10 --out ergebnis.csv` |
+| Netz mit Schaltern spielen (Gewichte lokal unter `experiments/imitation/students/`) | `python -m scripts.par_eval --weights experiments/imitation/students/ens_v9_v8L.pth --set imit_stay_bias=1.0 --set imit_unstack=true --set imit_hold_points=true --opponents solution92,kaggle3 --seed-list KARTEN.json --out ergebnis.csv` |
+| Kurspaket aus einem nachgeahmten Netz bauen | `python -m scripts.build_student_package --student ens9 --set imit_stay_bias=1.0 --set imit_unstack=true --set imit_hold_points=true --out PAKET.zip` |
 | Abgabe bauen und prüfen | `python -m scripts.build_submission` |
 | Paket unter einer anderen Python-Version prüfen | `python scripts/xversion_replay.py record PAKET.zip spiel.pkl --seed 4242`, dann `/pfad/zu/python3.10 -I scripts/xversion_replay.py replay PAKET.zip spiel.pkl` |
 | Kandidat im unveränderten Kursrunner prüfen (8 ganze Spiele) | `python -m scripts.check_candidate_runner --weights …/sherlock/weights/agent.pth --out bericht.json` |
@@ -184,7 +243,7 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 ├── README.md, CLAUDE.md, AGENTS.md   Überblick; gemeinsame Regeln für Claude Code und Codex
 ├── agents/
 │   ├── sherlock/                 unser Agent
-│   │   ├── main.py               Agent_x: Kursschnittstelle, Absturzschutz, delegiert Schüler-Checkpoints an imitation_agent.py
+│   │   ├── main.py               Agent_x: Kursschnittstelle, Absturzschutz, delegiert Checkpoints der nachgeahmten Netze an imitation_agent.py
 │   │   ├── imitation_agent.py    neuer Sherlock: Netze, Spielschalter, Matchende-Sturm, Taktikschicht (Schalter)
 │   │   ├── imitation_net.py      CNN mit Aktions- und Zielkopf
 │   │   ├── prev_move.py          Eingabe „letzte eigene Bewegungen“
@@ -195,10 +254,10 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 │   │   ├── geometry.py           Spiegelung echt ↔ kanonisch
 │   │   ├── config.py             alle Schalter und Hyperparameter (AgentConfig)
 │   │   ├── model.py, rules.py, reward.py, replay_buffer.py   DQN-Sherlock bis V14
-│   │   ├── cnn_model.py, ppo_agent.py, hybrid_agent.py       CNN/PPO-Versuche und V14+Schüler-Hybride
+│   │   ├── cnn_model.py, ppo_agent.py, hybrid_agent.py       CNN/PPO-Versuche und Hybride aus V14 und nachgeahmtem Netz
 │   │   ├── agents.yaml           Import-/Lade-Pfade (Folie 51)
 │   │   └── weights/              V14-Referenzgewichte agent_p0.pth / agent_p1.pth (nicht die Abgabe)
-│   ├── sherlock_r3t/             R3 mit Taktikschicht und Schüler-Mix (Versuch vom 17.11.)
+│   ├── sherlock_r3t/             R3 mit Taktikschicht und nachgeahmtem Netz (Versuch vom 17.11.)
 │   ├── DQN/                      Baseline des Dozenten (unverändert)
 │   ├── default/                  schwacher Benchmark-Gegner
 │   └── Solution_92_Kaggle/       starker regelbasierter Gegner
@@ -206,7 +265,7 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 │   ├── imitate.py                Nachahmen, DAgger-Daten sammeln, Ensembles bauen
 │   ├── par_eval.py               parallele Bewertung auf festen Karten
 │   ├── build_submission.py       dist/agent.zip aus dem Release bzw. Gruppe15.zip bauen und prüfen
-│   ├── build_student_package.py  Schüler-Kurspakete im Abgabeformat
+│   ├── build_student_package.py  Kurspakete aus nachgeahmten Netzen im Abgabeformat
 │   ├── check_candidate_runner.py Kandidat im unveränderten Kursrunner prüfen
 │   ├── xversion_replay.py        Paket unter anderen Python-/torch-Versionen nachspielen
 │   ├── train.py, finetune.py     DQN-Training (eigene Run-Ordner, Abgabe geschützt)
@@ -215,12 +274,12 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 ├── experiments/
 │   ├── analysis/                 Auswertungen je Studie (Pläne, Ergebnisse, Rohdaten), z. B. deve/devf/devg/devh_20261117
 │   ├── candidates/               geprüfte Kandidatenpakete
-│   ├── releases/                 alle Abgaben mit Rückweg, aktuell 20261117_sherlock_schueler
+│   ├── releases/                 alle Abgaben mit Rückweg, aktuell 20261117_sherlock_v16
 │   ├── opponents/                Kaggle-Drittplatzierter als Lehrer und Testgegner (nicht in der Abgabe)
-│   └── imitation/students/       Schülergewichte (lokal, nicht im Repository)
+│   └── imitation/students/       Gewichte der nachgeahmten Netze (lokal, nicht im Repository)
 ├── docs/
 │   ├── ARBEITSSTAND.md           Übergabe: Änderungen, Prüfungen, offene Aufgaben (neueste oben)
-│   ├── TAGESBERICHT_20261117.md  Bericht zum Wechsel auf die Schüler-Version
+│   ├── TAGESBERICHT_20261117.md  Bericht zum Wechsel auf V16
 │   └── presentation/             Präsentationen und Bilder
 ├── lux/                          Runner und Spielregeln des Kurses (nicht ändern)
 ├── main.py                       ein Spiel über den Kurs-Runner (mit Replay)
@@ -251,8 +310,8 @@ Bis zum 16.11. war Sherlock ein Ensemble aus Double-DQN-Netzen mit Dueling-Kopf,
 - **08.–11.11.:** größere Ensembles und mehrere Lernpiloten; kein bestätigter Nachfolger · [Ensemble-Abschluss](docs/ENSEMBLE_ABSCHLUSS_20261108.md) · [Matchausgang-Pilot](experiments/analysis/match_outcome_probe_20261110/ERGEBNIS.md)
 - **15.11.:** Der Kaggle-Drittplatzierte wird Testgegner und Lehrer. V15 (V14 plus nachgeahmtes Netz) gewinnt 730/800 direkt gegen V14, extern ohne Vorteil · [Vergleich](experiments/analysis/umbau_20261115/confirm/ERGEBNIS.md) · [Kaggle als Gegner](experiments/analysis/kaggle3_20261115/README.md)
 - **16.11.:** Gemeinsamer Vergleich auf 400 Karten: R3 788/800 gegen Solution (V14 767, V15 764), Kaggle alle 12/800; **R3 wird Finalabgabe** · [Ergebnis](experiments/analysis/movement_soft_20261115/shared_400/ERGEBNIS.md) · [R3-Release](experiments/releases/20261116_r3_finale/README.md)
-- **16./17.11.:** DAgger-Runden 3–6, Schüler v5 bis v9 · [v5](experiments/analysis/umbau_20261115/v5/ERGEBNIS.md) · [v7](experiments/analysis/umbau_20261115/v7/ERGEBNIS.md) · [v8](experiments/analysis/umbau_20261115/v8/ERGEBNIS.md) · [v9](experiments/analysis/umbau_20261115/v9/ERGEBNIS.md) · [Morgenbericht](docs/MORGENBERICHT_20261117.md)
-- **17.11.:** Analyse R3 gegen Kaggle (24 eigene Tode je Match gegen 3), Taktikschicht über R3, R3 mit Schüler verfehlt eine Bestätigung um ein Spiel; danach Dev E bis Dev G und zwei bestandene Bestätigungen des reinen Schülers; abends Dev H, Bestätigung 5 und **Wechsel auf die Schüler-Version** · [Analyse](experiments/analysis/r3_kaggle_20261117/ERGEBNIS.md) · [Taktiken über R3](experiments/analysis/r3t_20261117/ERGEBNIS.md) · [Tagesbericht](docs/TAGESBERICHT_20261117.md)
+- **16./17.11.:** DAgger-Runden 3–6, Netze v5 bis v9 · [v5](experiments/analysis/umbau_20261115/v5/ERGEBNIS.md) · [v7](experiments/analysis/umbau_20261115/v7/ERGEBNIS.md) · [v8](experiments/analysis/umbau_20261115/v8/ERGEBNIS.md) · [v9](experiments/analysis/umbau_20261115/v9/ERGEBNIS.md) · [Morgenbericht](docs/MORGENBERICHT_20261117.md)
+- **17.11.:** Analyse R3 gegen Kaggle (24 eigene Tode je Match gegen 3), Taktikschicht über R3, R3 mit nachgeahmtem Netz verfehlt eine Bestätigung um ein Spiel; danach Dev E bis Dev G und zwei bestandene Bestätigungen des reinen Netz-Agenten; abends Dev H, Bestätigung 5 und **Wechsel auf V16** · [Analyse](experiments/analysis/r3_kaggle_20261117/ERGEBNIS.md) · [Taktiken über R3](experiments/analysis/r3t_20261117/ERGEBNIS.md) · [Tagesbericht](docs/TAGESBERICHT_20261117.md)
 
 ### Fortschritt der DQN-Versionen gegen Solution_92
 
@@ -419,59 +478,6 @@ für jedes Spiel:
 - **Eigenes Trainingsskript:** Der Kurs-Runner (`lux/runner.py`) erzeugt die Agenten in jedem Spiel neu und ruft `save_agent()` vor dem Spiel auf, Gelerntes würde nie gespeichert. `scripts/train.py` und `scripts/finetune.py` nutzen das Env direkt; zur Abgabe bleibt der Agent voll runner-kompatibel (`tests/test_runner.py`).
 - **Ohne Gewinn untersucht:** Self-Play und Gegner-Pool, CNN mit PPO, weitere Nachtrainings-Runden und mehr als 36 Netze. Beispiel Runde 6 (01.11.): 12 Netze je 2.000 Spiele unter den V12-Regeln; auf 685 frischen Karten ohne Nebelabzug 25 änderte sich nichts (−0,07 Punkte). Das sind Ergebnisse unserer Versuche, keine allgemeinen Aussagen über diese Verfahren.
 
-### Zahlen und Fakten
-
-Spiele und Rechenzeit: Stand 01.11.2026, 17:56 (ohne die Nachahmungs- und DAgger-Läufe ab dem 15.11.), alles aus den Dateien im Repository nachgezählt (Spiele mit `python experiments/analysis/count_games.py`).
-
-#### Spiele
-
-| Art | Läufe | Spiele |
-|---|---:|---:|
-| Neue DQN-Netze trainiert (Ablation, Grundnetze, weitere Versuche) | 112 | 337.904 |
-| Nachtraining vorhandener DQN-Netze | 141 | 257.600 |
-| Prof-DQN zum Vergleich gleich lang neu trainiert | 3 | 9.000 |
-| CNN mit PPO | 7 | 35.600 |
-| **Training zusammen** | **263** | **640.104** |
-| Zwischenprüfungen während des Trainings | | 65.824 |
-| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | | 644.419 |
-| **Alle Spiele zusammen** | | **1.350.347** |
-
-- In den 36 Netzen der Abgabe stecken **165.000 Trainingsspiele**: 66.000 der 18 Grundnetze und 18 × 5.500 = 99.000 Spiele Nachtraining.
-- Jede Zeile in `experiments/runs/*/train.csv` ist ein Trainingsspiel, jede Zeile der Ergebnisdateien unter `experiments/compare/` ein Bewertungsspiel. Zeilen, die in allen Spalten einschließlich der Laufzeit einer anderen gleichen, zählen nur einmal (10.397 Zeilen); darunter sind auch verschiedene Läufe mit genau gleichem Spielverlauf, die Zahl ist also eher zu niedrig. Ein Spiel hat 3 Matches à 100 Schritte. Laufende Messungen kommen erst nach ihrem Ende dazu.
-
-#### Rechenzeit
-
-| | Prozess-Stunden |
-|---|---:|
-| Training DQN | 558 |
-| Training CNN/PPO | 29 |
-| Bewertung | 780 |
-| **Zusammen** | **rund 1.370** |
-
-Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozesse gleichzeitig, die echte Laufzeit war also viel kürzer.
-
-#### Karten und Gegner
-
-- **24.050 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt, jede Karte meist von beiden Seiten.
-- **25 verschiedene Gegner:** Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
-
-#### Agent und Code (Stand 17.11.)
-
-| | |
-|---|---|
-| Netze der Abgabe | 2 CNNs mit 0,70 + 1,81 = **2,5 Millionen Parametern** (V14: 36 × 152.967 = 5,5 Millionen) |
-| Eingabe und Ausgabe | 16 Kartenebenen, je Einheit 79 Merkmale und 5 Bewegungsmerkmale; 6 Aktionen (stehen, 4 Richtungen, Sap) und ein Schussziel |
-| Einstellungen | 190 in `AgentConfig`, davon 109 Schalter; in der Abgabe sind 3 Spielschalter des Schülers gesetzt |
-| Agent (`agents/sherlock/`) | 25 Python-Dateien, 7.495 Zeilen |
-| Skripte (`scripts/`) | 241 Python-Dateien mit 54.630 Zeilen, 48 Shell-Skripte |
-| Tests (`tests/`) | 209 Dateien mit 34.066 Zeilen, **3.298 Tests** |
-
-#### Versionen und Verlauf (Stand 17.11.)
-
-- **11 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13, V14, R3 und die Schüler-Version. Alle Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert, `full_s0` als Git-Tag `abgabe-review-full_s0`.
-- **922 Commits** seit dem 10.10.2026 (Moayed 507, Mahmoud 415).
-- **Dokumentation:** 427 Einträge im Arbeitsstand; jede Auswahl und Bestätigung seit der Battle-Woche mit vorab festgelegtem Plan.
-
 ### So testeten wir in der Battle-Woche
 
 - **Feste Karten, beide Seiten, ohne Lernen:** Jede Karte (Seed) wird von beiden Seiten gespielt, ε = 0. `scripts/par_eval.py` verteilt die Spiele auf mehrere Prozesse.
@@ -538,10 +544,10 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 
 - [CLAUDE.md](CLAUDE.md): gemeinsame Regeln und fachlicher Überblick für Claude Code und Codex; [AGENTS.md](AGENTS.md) verweist Codex darauf.
 - [Arbeitsstand](docs/ARBEITSSTAND.md): jede abgeschlossene Arbeit mit Grund, Prüfungen und offenen Punkten, neueste oben.
-- [Tagesbericht 17.11.](docs/TAGESBERICHT_20261117.md): wie es zur Schüler-Version kam.
+- [Tagesbericht 17.11.](docs/TAGESBERICHT_20261117.md): wie es zu V16 kam.
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): Versuche und Auswahlentscheidungen bis zur Battle-Woche.
-- Releases: [Schüler-Version (aktuell)](experiments/releases/20261117_sherlock_schueler/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
-- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Entwurf Finale 27.11. ([PDF](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf), [Sprechstichpunkte](docs/presentation/finale_2711/Sprechstichpunkte_27-11-2026.md); noch auf R3-Stand, wird auf die Schüler-Version umgestellt).
+- Releases: [V16 (aktuell)](experiments/releases/20261117_sherlock_v16/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
+- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Entwurf Finale 27.11. ([PDF](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf), [Sprechstichpunkte](docs/presentation/finale_2711/Sprechstichpunkte_27-11-2026.md); noch auf R3-Stand, wird auf V16 umgestellt).
 
 ## Quellen
 

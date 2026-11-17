@@ -108,4 +108,4 @@ Prozentpunkte, Spiele gegen beide Gegner +0,31 [−1,12; +1,81], gewonnene Match
 Kaggle 34 statt 18. Gegen Solution gewann K hier 778/800, R3 789/800. In der dritten Bestätigung waren es 787 zu 787. Der
 Vorsprung gegen Kaggle zeigt sich damit auf dem vierten unabhängigen Kartensatz. Gegen Solution liegt K hier etwas
 hinter R3. Den Wechsel von R3 auf K haben Mahmoud und Moayed am Abend beschlossen
-([Release](../../releases/20261117_sherlock_schueler/README.md)).
+([Release](../../releases/20261117_sherlock_v16/README.md)).

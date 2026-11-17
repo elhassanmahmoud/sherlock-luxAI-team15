@@ -1,9 +1,9 @@
-# Tagesbericht 17.11.2026: Ein Schüler-Agent schlägt R3 in zwei frischen Bestätigungen
+# Tagesbericht 17.11.2026: Sherlock V16 schlägt R3 in zwei frischen Bestätigungen
 
-**Entschieden am Abend (23:24):** Mahmoud und Moayed haben zugestimmt, R3 durch den reinen Schüler v9 mit Stay-Bias 1,0
-und Halter-Regel zu ersetzen. Der Agent heißt weiter Sherlock. Die Prüfung unter Python 3.10 ist bestanden
+**Entschieden am Abend (23:24):** Mahmoud und Moayed haben zugestimmt, R3 durch Sherlock V16 zu ersetzen (das
+nachgeahmte Netz-Ensemble v9 + v8L mit Stay-Bias 1,0 und Halter-Regel, in diesem Bericht „reiner Schüler“ genannt). Die Prüfung unter Python 3.10 ist bestanden
 ([3.10-Prüfung](../experiments/analysis/deve_20261117/PY310_ERGEBNIS.md)), `dist/agent.zip` ist neu gebaut und geprüft
-([Release](../experiments/releases/20261117_sherlock_schueler/README.md)).
+([Release](../experiments/releases/20261117_sherlock_v16/README.md)).
 
 ## Das Wichtigste in Zahlen
 
@@ -63,7 +63,7 @@ Matches gegen Kaggle; gegen Solution 778 statt 789/800) ([Dev H und Bestätigung
 
 ## Offen
 
-- Erledigt: Ja von Mahmoud und Moayed, Release `experiments/releases/20261117_sherlock_schueler/`, `dist/agent.zip`
+- Erledigt: Ja von Mahmoud und Moayed, Release `experiments/releases/20261117_sherlock_v16/`, `dist/agent.zip`
   neu gebaut und geprüft; Python 3.10 bestanden (0 abweichende Aktionen, 8/8 Kursrunner-Spiele).
 - Abgeschlossen am Nachmittag: DAgger-Runde 7 → Schüler v10 → vorab festgelegter Vergleich Dev G (7264000–7264199).
   Keine neue Variante war besser als der empfohlene Kandidat (v10 +0,47, Dreier-Ensemble +0,18, Stay-Bias 0,5 +0,37;

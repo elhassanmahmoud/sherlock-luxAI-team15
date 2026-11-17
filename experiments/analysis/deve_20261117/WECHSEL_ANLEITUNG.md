@@ -1,7 +1,7 @@
 # Wechsel von R3 auf den reinen Schüler: Ablauf (vorbereitet am 17.11.2026, ausgeführt am 17.11.2026, 23:24)
 
 **Ausgeführt:** Mahmoud und Moayed haben zugestimmt, die 3.10-Prüfung ist bestanden. Release unter
-`experiments/releases/20261117_sherlock_schueler/` (bytegleiche Kopie von `agent_p9_s10_halter.zip`, SHA-256
+`experiments/releases/20261117_sherlock_v16/` (bytegleiche Kopie von `agent_p9_s10_halter.zip`, SHA-256
 `0c59706b…6099`); `scripts/build_submission.py` zeigt mit `FINAL_RELEASE` darauf, `dist/agent.zip` ist neu gebaut
 („Check ok“ auf beiden Seiten). Rückweg: `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen.
 
