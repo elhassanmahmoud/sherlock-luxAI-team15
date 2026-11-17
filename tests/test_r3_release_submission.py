@@ -19,12 +19,22 @@ def project(tmp_path, monkeypatch):
     (source / "main.py").write_text("# fixture\n")
     for side in (0, 1):
         (source / f"weights/agent_p{side}.pth").write_bytes(b"old")
-    release = tmp_path / "experiments/releases/20261116_r3_finale/agent.zip"
+    release = tmp_path / builder.FINAL_RELEASE
     release.parent.mkdir(parents=True)
     with zipfile.ZipFile(release, "x") as archive:
         archive.writestr("release-marker", b"published")
-    monkeypatch.setattr(builder, "R3_ZIP_SHA256", sha256(release.read_bytes()).hexdigest(), raising=False)
+    monkeypatch.setattr(builder, "FINAL_ZIP_SHA256", sha256(release.read_bytes()).hexdigest())
     return release
+
+
+def test_final_release_is_k_and_r3_stays_available():
+    """17.11.2026: Abgabe ist K; das R3-Release bleibt als Rückweg mit seiner Prüfsumme erhalten."""
+    real_root = Path(builder.__file__).resolve().parents[1]
+    k = real_root / builder.FINAL_RELEASE
+    r3 = real_root / builder.R3_RELEASE
+    assert builder.FINAL_RELEASE == "experiments/releases/20261117_sherlock_schueler/agent.zip"
+    assert sha256(k.read_bytes()).hexdigest() == builder.FINAL_ZIP_SHA256
+    assert sha256(r3.read_bytes()).hexdigest() == builder.R3_ZIP_SHA256
 
 
 def invoke(monkeypatch, *options):

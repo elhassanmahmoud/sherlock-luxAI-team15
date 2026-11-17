@@ -60,7 +60,8 @@ def build(student: str, out: Path, switches: dict | None = None) -> str:
     switches = dict(DEFAULT_SWITCHES if switches is None else switches)
     src = Path(STUDENTS.get(student, student)).resolve()
     out = out.resolve()
-    if out in PROTECTED or R3_DIR.resolve() in out.parents or SRC.resolve() in out.parents:
+    # 17.11.2026: alle Releases geschützt (R3 und seit dem Wechsel K), nicht nur das R3-Release
+    if out in PROTECTED or (ROOT / "experiments/releases").resolve() in out.parents or SRC.resolve() in out.parents:
         raise SystemExit(f"Geschützte Datei oder Verzeichnis: {out}")
     if out.exists():
         raise SystemExit(f"{out} existiert schon")

@@ -1,4 +1,9 @@
-# Wechsel von R3 auf den reinen Schüler: Ablauf (vorbereitet am 17.11.2026, noch nicht ausgeführt)
+# Wechsel von R3 auf den reinen Schüler: Ablauf (vorbereitet am 17.11.2026, ausgeführt am 17.11.2026, 23:24)
+
+**Ausgeführt:** Mahmoud und Moayed haben zugestimmt, die 3.10-Prüfung ist bestanden. Release unter
+`experiments/releases/20261117_sherlock_schueler/` (bytegleiche Kopie von `agent_p9_s10_halter.zip`, SHA-256
+`0c59706b…6099`); `scripts/build_submission.py` zeigt mit `FINAL_RELEASE` darauf, `dist/agent.zip` ist neu gebaut
+(„Check ok“ auf beiden Seiten). Rückweg: `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen.
 
 **Stand 15:11: Empfohlen ist das Paket aus der dritten Bestätigung,** `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip` (SHA-256 `0c59706b…6099`, reiner Schüler v9 mit Stay-Bias 1,0 und Halter-Regel). Es lag auf frischen Karten +1,64 Prozentpunkte Punkteanteil gegen Kaggle vor P9 und +5,51 vor R3 ([Ergebnis](../devf_20261117/BESTAETIGUNG3_ERGEBNIS.md)). Die Schritte unten gelten genauso, nur mit diesem Paket und seiner Prüfsumme.
 

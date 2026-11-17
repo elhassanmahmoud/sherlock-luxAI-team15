@@ -46,6 +46,11 @@ from scripts.common import ROOT
 from scripts.output_paths import checked_output
 
 SRC = ROOT / "agents" / "sherlock"
+# 17.11.2026, abends: Abgabe ist K (reiner Schüler v9, Stay-Bias 1,0, Halter-Regel), Ja von Mahmoud und Moayed.
+FINAL_RELEASE = "experiments/releases/20261117_sherlock_schueler/agent.zip"
+FINAL_ZIP_SHA256 = "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
+# Rückweg: bis 17.11.2026 war R3 die Abgabe. Zum Zurückwechseln FINAL_* auf diese Werte setzen.
+R3_RELEASE = "experiments/releases/20261116_r3_finale/agent.zip"
 R3_ZIP_SHA256 = "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d"
 REQUIRED = ["act", "update", "set_to_eval_mode", "set_env_cfg", "save_agent", "load_agent"]
 
@@ -87,14 +92,14 @@ def yaml_text(imp: str, lp0: str, lp1: str) -> str:
 
 
 def copy_final_release(out: Path) -> Path:
-    release = ROOT / "experiments/releases/20261116_r3_finale/agent.zip"
+    release = ROOT / FINAL_RELEASE
     try:
         out = checked_output(out, SRC / "weights")
         data = release.read_bytes()
-        if sha256(data).hexdigest() != R3_ZIP_SHA256:
-            raise ValueError("R3-Freigabearchiv hat eine abweichende SHA-256")
+        if sha256(data).hexdigest() != FINAL_ZIP_SHA256:
+            raise ValueError("Freigabearchiv hat eine abweichende SHA-256")
         if out.exists() and out.samefile(release):
-            raise ValueError("Die Ausgabe verweist auf das R3-Freigabearchiv")
+            raise ValueError("Die Ausgabe verweist auf das Freigabearchiv")
         out.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=out.parent) as tmp:
             stage = Path(tmp) / "agent.zip"

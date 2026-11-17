@@ -70,7 +70,7 @@ def test_course_agent_plays_student_with_switches(tmp_path):
 def test_package_refuses_protected_targets(tmp_path):
     _student()
     for target in (b.ROOT / "dist/agent.zip", b.ROOT / "Gruppe15.zip", b.R3_DIR / "neu.zip",
-                   b.SRC / "weights" / "neu.zip"):
+                   b.ROOT / "experiments/releases/20261117_sherlock_schueler/neu.zip", b.SRC / "weights" / "neu.zip"):
         with pytest.raises(SystemExit):
             b.build("ens8", target)
     with pytest.raises(ValueError):

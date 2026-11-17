@@ -1,5 +1,7 @@
 # Projekt: Lux AI Season 3 – RL-Agent (HTW Berlin, Anwendungen KI, WS 26/27)
 
+**Abgabe seit 17.11.2026, 23:24 (Ja von Mahmoud und Moayed): Sherlock in der Schüler-Version „K“.** Reiner Imitations-Schüler v9 (Ensemble v9 + v8L, gelernt vom Kaggle-Drittplatzierten), Schalter `imit_stay_bias=1.0`, `imit_unstack`, `imit_hold_points`. [Release](experiments/releases/20261117_sherlock_schueler/README.md), SHA-256 `0c59706b…6099`; `python -m scripts.build_submission` kopiert es nach `dist/agent.zip` und prüft beide Seiten. R3 (`experiments/releases/20261116_r3_finale/`, `8aabdc73…`) bleibt unverändert als Rückweg (`R3_RELEASE` in `scripts/build_submission.py`). Die Handtaktiken (`imit_tactics`, `imit_end_fill`, `end_sap`, `focus_sap`, `imit_cover`, `imit_sap_bias`) sind eingebaut, aber aus: In Dev H half keine, alle zusammen −1,6 Prozentpunkte ([Dev H](experiments/analysis/devh_20261117/ERGEBNIS.md)). Der Agent heißt weiter Sherlock.
+
 **Gemeinsame Prüfung vom 16.11.**
 
 Auf denselben 400 Karten und beiden Startseiten gewann der ursprüngliche R3 **788/800** gegen die originale Solution, V14 **767/800** und V15 **764/800**. Gegen den Kaggle-Dritten gewannen alle drei jeweils 12/800. Über beide Gegner beträgt der Unterschied R3 gegenüber V14 +1,31 Prozentpunkte (95-%-Kartenintervall +0,25 bis +2,44). Damit hat R3 die vorab festgelegten Bedingungen für das Finale erfüllt. [Geprüftes Abgabepaket](experiments/releases/20261116_r3_finale/agent.zip). [Vergleich auf 400 Karten](experiments/analysis/movement_soft_20261115/shared_400/ERGEBNIS.md).

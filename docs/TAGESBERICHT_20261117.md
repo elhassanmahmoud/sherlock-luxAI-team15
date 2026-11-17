@@ -1,8 +1,9 @@
 # Tagesbericht 17.11.2026: Ein Schüler-Agent schlägt R3 in zwei frischen Bestätigungen
 
-**Für Mahmoud und Moayed. Entscheidung nötig:** Soll R3 als Finalabgabe durch den reinen Schüler v9 mit Stay-Bias 1,0
-und Halter-Regel ersetzt werden? Nach unseren vorab festgelegten Regeln lautet die Empfehlung **ja**. Die Prüfung unter
-Python 3.10 ist bestanden ([3.10-Prüfung](../experiments/analysis/deve_20261117/PY310_ERGEBNIS.md)). Bis beide zustimmen, bleibt R3 die Abgabe.
+**Entschieden am Abend (23:24):** Mahmoud und Moayed haben zugestimmt, R3 durch den reinen Schüler v9 mit Stay-Bias 1,0
+und Halter-Regel zu ersetzen. Der Agent heißt weiter Sherlock. Die Prüfung unter Python 3.10 ist bestanden
+([3.10-Prüfung](../experiments/analysis/deve_20261117/PY310_ERGEBNIS.md)), `dist/agent.zip` ist neu gebaut und geprüft
+([Release](../experiments/releases/20261117_sherlock_schueler/README.md)).
 
 ## Das Wichtigste in Zahlen
 
@@ -51,9 +52,19 @@ Kaggle-Drittplatzierten gelernt hat (bis zu 19 Mio. Entscheidungen). Fest einges
 weniger Stehenbleiben (Stay-Bias 1,0), höchstens eine stehende Unit je Feld, keine Strafe für Halter auf Punktefeldern.
 Der Kaggle-Code ist nicht im Paket. In der Präsentation offenlegen, von wem das Netz gelernt hat.
 
+## Abend: „Beast“-Test und Bestätigung 5
+
+Auf Mahmouds Wunsch („alles Mögliche eingebaut“) liefen auf Dev H (7266000–7266199) 17 Varianten des empfohlenen
+Schülers: alle Taktiken, ein Matchende-Sturm in drei Versionen, vier nie gemessene Schüler-Schalter und der Schüler ohne
+Sicherheitsmasken. Keine Handregel half belastbar, die meisten kosteten 0,4–0,7 Prozentpunkte, **alle zusammen −1,64**
+(Kaggle-Siege 7 statt 24 von 400). Nur „öfter schießen“ erreichte knapp die Schwelle und fiel in der frischen
+Bestätigung 5 (7267000–7267399) durch (+0,13 gegenüber K). Dort lag K erneut +4,49 Prozentpunkte vor R3 (238 statt 98
+Matches gegen Kaggle; gegen Solution 778 statt 789/800) ([Dev H und Bestätigung 5](../experiments/analysis/devh_20261117/ERGEBNIS.md)).
+
 ## Offen
 
-- Ja von Mahmoud und Moayed; danach Release und `dist/agent.zip` nach der Anleitung. **Python 3.10 am Abend geprüft und bestanden:** 0 abweichende Aktionen, 8/8 Kursrunner-Spiele ([3.10-Prüfung](../experiments/analysis/deve_20261117/PY310_ERGEBNIS.md)).
+- Erledigt: Ja von Mahmoud und Moayed, Release `experiments/releases/20261117_sherlock_schueler/`, `dist/agent.zip`
+  neu gebaut und geprüft; Python 3.10 bestanden (0 abweichende Aktionen, 8/8 Kursrunner-Spiele).
 - Abgeschlossen am Nachmittag: DAgger-Runde 7 → Schüler v10 → vorab festgelegter Vergleich Dev G (7264000–7264199).
   Keine neue Variante war besser als der empfohlene Kandidat (v10 +0,47, Dreier-Ensemble +0,18, Stay-Bias 0,5 +0,37;
   verlangt +1,0), der dort erneut +5,0 Prozentpunkte vor R3 lag

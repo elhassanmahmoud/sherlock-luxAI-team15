@@ -1,0 +1,35 @@
+{
+  "active": "K (reiner Imitations-Schüler v9, Ensemble v9 + v8L, Stay-Bias 1,0, Entstapeln, Halter-Regel)",
+  "competition": "Finale 27.11.2026",
+  "team_decision": "Mahmoud und Moayed, 17.11.2026 abends (Mahmoud im Chat: \"ja moayed sagt ja\")",
+  "package": "agent.zip",
+  "sha256": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099",
+  "bytes": 9469516,
+  "source_candidate": "experiments/candidates/devf_20261117/agent_p9_s10_halter.zip",
+  "import_path": "agents.sherlock.main.Agent_x",
+  "weights": {
+    "player_0": "agents/sherlock/weights/agent.pth",
+    "player_1": "agents/sherlock/weights/agent.pth",
+    "bundle_sha256": "8ed7412856d6176b81e257360c8eac4a41b844fec935db33aff9e19221d86495",
+    "switches": {
+      "imit_stay_bias": 1.0,
+      "imit_unstack": true,
+      "imit_hold_points": true
+    }
+  },
+  "evidence": {
+    "experiments/analysis/devf_20261117/BESTAETIGUNG3_ERGEBNIS.md": "b0a78b2fc0e7a1dceb0fa8c9c76e03bd84119ea116aa1a7003029ca8c9c6b6c9",
+    "experiments/analysis/deve_20261117/BESTAETIGUNG_ERGEBNIS.md": "d997b13bc46f62f5a7d62cbb3eb45f8d641df92e0778c3facf1687df1f8f68e8",
+    "experiments/analysis/devf_20261117/kursrunner_p9_s10_halter.json": "f4b27ff769ad431017da5eddf67651c0e451aed9cd0fe3c24a4143db5058ca6b",
+    "experiments/analysis/deve_20261117/kursrunner_p9_s10_halter_py310.json": "a4ac167f67f4e31dfa5b24392bf7befcb63f2cc5116fc3281a3e186902666f8b",
+    "experiments/analysis/deve_20261117/PY310_ERGEBNIS.md": "7fbf7d16fed75cd76219748fe5306e8604f4818b914f8485551641f54348e4b3",
+    "experiments/analysis/robust_p9_20261117/ERGEBNIS.md": "aa5e2fe6184c03ab14de5ae120b84da9b0622e31651f6a914f329c83ab5fee88",
+    "experiments/analysis/devg_20261117/ERGEBNIS.md": "abecf0c2dff1308d4e722f52a5d7f27e68e811729cbe480248c5c23cb41217d5",
+    "experiments/analysis/devh_20261117/ERGEBNIS.md": "84924d8d2e70c0ec493fdd36a5f9254eb24890e17a64278ea3e99efb98141bbe"
+  },
+  "backups": {
+    "r3_release": "experiments/releases/20261116_r3_finale",
+    "r3_zip_sha256": "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d",
+    "v14_weights": "experiments/releases/20261101_v14_baseline"
+  }
+}
