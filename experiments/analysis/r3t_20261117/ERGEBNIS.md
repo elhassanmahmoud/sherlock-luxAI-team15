@@ -6,9 +6,9 @@ Kaggle +0,0 bis +0,8 Prozentpunkte Punkteanteil, keine Variante erfüllt die Reg
 Imitations-Schüler auf R3** (Units im Kampf und ohne Punktefeld-Aufgabe spielen den Schüler, der von Kaggle gelernt
 hat): Auf Dev D +3,71 [+2,09; +5,39] Prozentpunkte Punkteanteil gegen Kaggle und 199/200 gegen Solution (R3 193/200),
 auf 200 frischen Karten der zweiten Prüfung +3,98 [+3,04; +4,96] bei gleicher Solution-Bilanz (391/400). Ganze Spiele
-gegen Kaggle gewinnt er weiter selten (6/400 statt 4/400). Er ist der Kandidat für die frische Bestätigung auf
-7159000–7159399 ([Plan](BESTAETIGUNG_PLAN.md)). Bis zu ihrem Ergebnis und der Entscheidung von Mahmoud und Moayed
-bleibt R3 die Abgabe.
+gegen Kaggle gewinnt er weiter selten (6/400 statt 4/400). In der frischen Bestätigung auf 7159000–7159399 gewann er gleich viele Spiele wie R3
+(803 statt 804 von 1.600) und hob den Punkteanteil gegen Kaggle um +3,53 [+2,85; +4,20]. Die verlangte Gleichheit bei den Siegen
+verfehlte er um ein Spiel, deshalb bleibt R3 nach der Regel die Abgabe ([Ergebnis](BESTAETIGUNG_ERGEBNIS.md)).
 
 ## Was gelaufen ist
 
