@@ -97,3 +97,26 @@ frische Bestätigung.
   Mahmoud und Moayed, vorher die 3.10-Prüfung des neuen Pakets.
 - **Nicht bestanden:** K bleibt empfohlen. Keine Wiederholung auf anderen Karten und keine nachträgliche Änderung der
   Regel. Dev H und 7267000–7267399 werden danach für keine Auswahl mehr benutzt.
+
+## Nachtrag 17.11.2026, 20:08, nach ENDE10 und vor dem Ergebnis aller übrigen Dev-H-Agenten: ENDE10F
+
+**Anlass, offen gesagt:** ENDE10 brachte auf Dev H nur +0,26 [−0,40; +0,93] Prozentpunkte Punkteanteil gegen Kaggle.
+Eine Nachmessung auf den Analysekarten 7256000–7256009 (20 Spiele gegen Kaggle, `punktefelder_ende10.csv`) und ein
+protokolliertes Einzelspiel zeigen den Grund: In den letzten 10 Schritten bleiben weiter rund 5 bekannte Punktefelder
+leer, obwohl Units in 1–3 Feldern Abstand stehen. Die Sicherheitsmasken des Schülers (`safe_moves`,
+`collision_guard`) sperren oft genau den Zug auf das freie Feld, sobald ein Gegner in der Nähe ist. Einzelne Units
+pendeln deshalb neben einem freien Feld hin und her.
+
+**Neu:** Schalter `imit_end_force` (nur zusammen mit `imit_end_fill`). In der Endphase darf eine Unit jede begehbare
+Annäherung nehmen, wenn das Netz keine erlaubt. Felder mit sichtbarem Gegner zählen als frei, wenn die Unit dort nach
+den Zügen mehr Energie hat als alle Gegner darauf (der Zusammenstoß zerstört sie). Ohne den Schalter bleibt
+`imit_end_fill` Zeile für Zeile gleich.
+
+| Name | zusätzlich zu K |
+|---|---|
+| ENDE10F | `imit_end_fill=10`, `imit_end_force=true` |
+
+ENDE10F spielt nach dem letzten Dev-H-Agenten auf denselben Karten 7266000–7266199 (800 Spiele). Die Tests des neuen
+Schalters laufen erst nach dem Ende von Dev H (keine Tests während laufender Auswertungen). Es gilt dieselbe Regel
+„Ein Modul hilft“. Für den Beast-Kandidaten zählt ENDE10F zur Familie ENDE10/ENDE20: Von den helfenden ENDE-Varianten
+kommt nur die mit dem höchsten Punkteanteil hinein. Am Ablauf der Bestätigung 5 ändert sich nichts.

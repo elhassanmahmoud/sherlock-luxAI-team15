@@ -7,7 +7,8 @@ Gepaart nach Karte gegen K (beide Seiten zusammen), 10.000 Ziehungen, Seed 2711.
 2. Spiele gegen Solution im Mittel >= -1,0,
 3. Spiele gegen Solution und Kaggle zusammen im Mittel >= -0,5,
 4. fehlerfrei über 303 Schritte (prüft load(); par_eval bricht bei abgefangenen Fehlern ab).
-Beast = K + alle helfenden Module (von ENDE10/ENDE20 und GRANATE/NEBEL jeweils das mit dem höheren Punkteanteil).
+Beast = K + alle helfenden Module (von ENDE10/ENDE20/ENDE10F und GRANATE/NEBEL jeweils das mit dem höchsten
+Punkteanteil; ENDE10F laut Nachtrag 20:08).
 """
 from __future__ import annotations
 
@@ -20,10 +21,11 @@ from experiments.analysis.r3t_20261117.analyze import diff, per_map, share  # no
 from experiments.analysis.umbau_20261115.tools.compare_dev import load  # noqa: E402
 
 D = Path(__file__).resolve().parent
-ORDER = ("K", "ENDE10", "ENDE20", "ALLE", "ENDSAP", "GRANATE", "NEBEL", "SOG", "FOCUS", "SPAREN", "WECHSEL",
+ORDER = ("K", "ENDE10", "ENDE20", "ENDE10F", "ALLE", "ENDSAP", "GRANATE", "NEBEL", "SOG", "FOCUS", "SPAREN", "WECHSEL",
          "EROBERN", "TANKEN", "COVER", "SAPBIAS", "BEAST")
 SINGLE = tuple(n for n in ORDER if n not in ("K", "ALLE", "BEAST"))
-SWITCHES = {"ENDE10": ["imit_end_fill=10"], "ENDE20": ["imit_end_fill=20"], "ENDSAP": ["end_sap=10"],
+SWITCHES = {"ENDE10": ["imit_end_fill=10"], "ENDE20": ["imit_end_fill=20"],
+            "ENDE10F": ["imit_end_fill=10", "imit_end_force=true"], "ENDSAP": ["end_sap=10"],
             "GRANATE": ["t:granate"], "NEBEL": ["t:granate", "t:nebel"], "SOG": ["t:sog"],
             "FOCUS": ["focus_sap=true"], "SPAREN": ["t:sparen"], "WECHSEL": ["t:wechsel"],
             "EROBERN": ["t:erobern"], "TANKEN": ["t:tanken"], "COVER": ["imit_cover=0.5"],
@@ -44,9 +46,11 @@ def evaluate(f, k) -> dict:
 def beast(helpers: list[str], res: dict) -> tuple[list[str], list[str]]:
     """Helfende Module zusammenlegen; liefert (Module, --set-Angaben)."""
     chosen = set(helpers)
-    for a, b in (("ENDE10", "ENDE20"), ("GRANATE", "NEBEL")):
-        if {a, b} <= chosen:
-            chosen.discard(a if res[a]["share"][0] < res[b]["share"][0] else b)
+    for family in (("ENDE10", "ENDE20", "ENDE10F"), ("GRANATE", "NEBEL")):  # je Familie nur die beste Variante
+        members = [n for n in family if n in chosen]
+        for n in members:
+            if n != max(members, key=lambda m: res[m]["share"][0]):
+                chosen.discard(n)
     tactics, sets = [], []
     for name in ORDER:
         if name not in chosen:
