@@ -1,0 +1,59 @@
+# Tagesbericht 17.11.2026: Ein Schüler-Agent schlägt R3 in zwei frischen Bestätigungen
+
+**Für Mahmoud und Moayed. Entscheidung nötig:** Soll R3 als Finalabgabe durch den reinen Schüler v9 mit Stay-Bias 1,0
+und Halter-Regel ersetzt werden? Nach unseren vorab festgelegten Regeln lautet die Empfehlung **ja**. Vorher fehlt das
+Nachspielen unter Python 3.10 ([Codex-Auftrag](AUFTRAG_CODEX_20261117.md)). Bis beide zustimmen, bleibt R3 die Abgabe.
+
+## Das Wichtigste in Zahlen
+
+| Auf 400 frischen Karten (7261000–7261399) | R3 (Abgabe) | empfohlener Schüler |
+|---|---:|---:|
+| gewonnene Spiele gegen Solution | 787/800 | **787/800** |
+| gewonnene Spiele gegen Kaggle | 10/800 | **20/800** |
+| gewonnene Matches gegen Kaggle | 76/2.400 | **216/2.400** |
+| Punkteanteil gegen Kaggle | 33,4 % | **39,3 %** |
+| direkt gegen R3 | – | 194/200 |
+
+Gepaart gegen R3: Punkteanteil gegen Kaggle +5,51 [+4,66; +6,34] Prozentpunkte, Spiele gegen beide Gegner zusammen
++0,62 [−0,38; +1,62]. Paket: `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip` (SHA-256 `0c59706b…6099`,
+9,5 MB, Format wie R3, Ladeprüfung des Kursrunners bestanden). [Ergebnis](../experiments/analysis/devf_20261117/BESTAETIGUNG3_ERGEBNIS.md)
+· [Wechselanleitung mit Rückweg](../experiments/analysis/deve_20261117/WECHSEL_ANLEITUNG.md).
+
+## Wie wir dorthin kamen
+
+1. **Vormittag: Taktiken und R3 + Schüler.** Eine engine-genaue Analyse zeigte, dass R3 gegen Kaggle den Energiekrieg
+   verliert (24 eigene Tode je Match gegen 3). Die gewünschten Handregeln (Granaten, Nebel-Schüsse, Erobern, Ausweichen,
+   Sparen, Halterwechsel, Tanken) brachten einzeln höchstens +0,8 Prozentpunkte. R3 mit eingebautem Imitations-Schüler
+   brachte +4, verfehlte die erste frische Bestätigung (7159000–7159399) aber um ein einziges Spiel
+   ([Ergebnis](../experiments/analysis/r3t_20261117/BESTAETIGUNG_ERGEBNIS.md)).
+2. **Mittag: Diagnose und Dev E.** Der reine Schüler (alle Units spielen das Netz) kämpfte gegen Kaggle am stärksten.
+   Auf Dev E (7258000–7258199) war der reine Schüler v9 der beste von sechs Agenten: Kaggle 22/400 statt 2/400
+   ([Ergebnis](../experiments/analysis/deve_20261117/ERGEBNIS.md)).
+3. **Zweite frische Bestätigung bestanden** (7260000–7260399): reiner Schüler v9, Kaggle 28/800 statt 16/800,
+   Solution 789/800 statt 787/800 ([Ergebnis](../experiments/analysis/deve_20261117/BESTAETIGUNG_ERGEBNIS.md)).
+4. **Dev F** (7259000–7259199): Eine schwächere Strafe fürs Stehenbleiben (1,0 statt 1,5) zusammen mit der neuen
+   Halter-Regel war besser; gezieltes Besetzen freier Punktefelder schadete
+   ([Ergebnis](../experiments/analysis/devf_20261117/ERGEBNIS.md)).
+5. **Dritte frische Bestätigung bestanden** (7261000–7261399): die Variante aus Dev F, auf denselben Karten auch
+   +1,64 Prozentpunkte Punkteanteil vor dem Schüler aus Schritt 3.
+6. **Robustheit:** Gegen default, Zufall, Rush, eine Solution-Variante und das DQN der Vorlage alle 50 Spiele
+   gewonnen wie R3, gegen V14 48/50 (R3 34/50) ([Ergebnis](../experiments/analysis/robust_p9_20261117/ERGEBNIS.md)).
+
+Alle Vergleiche waren vor dem ersten Spiel festgelegt (Pläne mit Commit), liefen aus eingefrorenen Quellständen und
+werden gepaart nach Karte ausgewertet. Die Spielbedingung der Bestätigungen erlaubt seit Mittag eine Toleranz von einem
+halben Prozentpunkt, weil die Siege gegen beide Gegner fast ausgereizt sind; **beide bestandenen Bestätigungen hätten
+auch die alte, strengere Regel erfüllt.**
+
+## Was der neue Agent ist
+
+Ein Ensemble aus zwei CNNs, das durch Nachahmung und sechs DAgger-Runden vom öffentlich freigegebenen
+Kaggle-Drittplatzierten gelernt hat (bis zu 19 Mio. Entscheidungen). Fest eingestellt sind nur drei Spielschalter:
+weniger Stehenbleiben (Stay-Bias 1,0), höchstens eine stehende Unit je Feld, keine Strafe für Halter auf Punktefeldern.
+Der Kaggle-Code ist nicht im Paket. In der Präsentation offenlegen, von wem das Netz gelernt hat.
+
+## Offen
+
+- Ja von Mahmoud und Moayed; Nachspielen unter Python 3.10; danach Release und `dist/agent.zip` nach der Anleitung.
+- Läuft noch: DAgger-Runde 7 → Schüler v10 → vorab festgelegter Vergleich Dev G (7264000–7264199); besteht ein
+  neuer Schüler, folgt eine eigene frische Bestätigung auf 7265000–7265399.
+- Präsentation (27.11., Upload bis 23.11.): Mahmouds Folien auf den neuen Agenten umstellen, falls gewechselt wird.
