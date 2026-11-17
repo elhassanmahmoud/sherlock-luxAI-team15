@@ -124,3 +124,41 @@ def test_switches_off_play_like_before_and_switches_on_act_in_a_real_game():
     tac, _ = _student_game({"imit_tactics": "granate+nebel+sog+sparen+wechsel+erobern+tanken"})
     assert tac.ep_stats.get("tactics_units", 0) > 0
     assert sum(tac._tactics.counts.values()) > 0
+
+
+def _force_fake(points, force):
+    return SimpleNamespace(belief=SimpleNamespace(point_tiles=points), ep_stats={},
+                           cfg=SimpleNamespace(imit_end_force=force))
+
+
+def test_end_force_takes_masked_but_passable_closing_move():
+    points = np.zeros((24, 24), dtype=bool)
+    points[5, 5] = True
+    logp = np.zeros((1, 6), dtype=np.float32)
+    logp[0, geo.RIGHT] = -np.inf  # von der Sicherheitsmaske gesperrt, aber begehbar
+    ctx = dict(_ctx(95), ally_ene={0: 50.0}, move_cost=2, passable=np.ones((24, 24), dtype=bool))
+    pos, acts = np.array([[4, 5]]), np.array([geo.STAY])
+    assert ImitationAgent._end_fill(_force_fake(points, False), ctx, [0], pos, logp, acts, 10).tolist() == [geo.STAY]
+    fake = _force_fake(points, True)
+    assert ImitationAgent._end_fill(fake, ctx, [0], pos, logp, acts, 10).tolist() == [geo.RIGHT]
+    assert fake.ep_stats["end_force_moves"] == 1
+    # Asteroid auf dem Zielfeld oder zu wenig Energie: auch mit Schalter kein Zug
+    blocked = dict(ctx, passable=np.ones((24, 24), dtype=bool))
+    blocked["passable"][5, 5] = False
+    assert ImitationAgent._end_fill(_force_fake(points, True), blocked, [0], pos, logp, acts, 10).tolist() == [0]
+    weak = dict(ctx, ally_ene={0: 1.0})
+    assert ImitationAgent._end_fill(_force_fake(points, True), weak, [0], pos, logp, acts, 10).tolist() == [0]
+
+
+def test_end_force_attacks_enemy_tile_only_when_stronger():
+    points = np.zeros((24, 24), dtype=bool)
+    points[5, 5] = True
+    logp = np.zeros((1, 6), dtype=np.float32)
+    base = dict(_ctx(95, enemies=[(5, 5)]), move_cost=2, passable=np.ones((24, 24), dtype=bool))
+    pos, acts = np.array([[4, 5]]), np.array([geo.STAY])
+    strong = dict(base, ally_ene={0: 100.0}, enemy_energies=np.array([90.0]))
+    weak = dict(base, ally_ene={0: 80.0}, enemy_energies=np.array([90.0]))
+    assert ImitationAgent._end_fill(_force_fake(points, True), strong, [0], pos, logp, acts, 10).tolist() == [2]
+    assert ImitationAgent._end_fill(_force_fake(points, True), weak, [0], pos, logp, acts, 10).tolist() == [0]
+    # ohne Schalter bleiben Felder mit Gegner tabu
+    assert ImitationAgent._end_fill(_force_fake(points, False), strong, [0], pos, logp, acts, 10).tolist() == [0]

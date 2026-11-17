@@ -185,10 +185,17 @@ class ImitationAgent(PPOAgent):
 
         Die Aktion bei match_steps m wirkt im Schritt m und punktet noch, wenn m <= max_match_steps (luxai_s3/env.py:
         Punkte vor der Prüfung match_steps >= max_steps_in_match). Ab dieser Aktion punkten also
-        max_match_steps - m + 1 Schritte."""
+        max_match_steps - m + 1 Schritte.
+
+        cfg.imit_end_force (17.11.2026, abends, nach der Diagnose zu ENDE10): Die Sicherheitsmasken (safe_moves,
+        collision_guard, Nebel) sperrten oft genau den Zug auf das freie Feld, sobald ein Gegner in der Nähe war. Mit
+        dem Schalter darf die Unit in der Endphase jede begehbare Annäherung nehmen, wenn das Netz keine erlaubt, und
+        Felder mit sichtbarem Gegner zählen als frei, wenn sie nach den Zügen mehr Energie hat als alle Gegner darauf
+        (der Zusammenstoß zerstört sie, das Feld gehört uns)."""
         left = int(ctx["max_match_steps"]) - int(ctx["match_step"]) + 1
         if not 0 < left <= n:
             return acts
+        force = bool(getattr(getattr(self, "cfg", None), "imit_end_force", False))
         points = np.asarray(self.belief.point_tiles, dtype=bool)
         first = ctx.get("first_on_tile", {})
         here = [(int(p[0]), int(p[1])) for p in pos]
@@ -213,16 +220,31 @@ class ImitationAgent(PPOAgent):
         ec = np.asarray(ctx.get("enemy_coords", np.zeros((0, 2), dtype=int))).reshape(-1, 2)
         enemy = {(int(x), int(y)) for x, y in ec}
         free = [(int(tx), int(ty)) for tx, ty in zip(*np.nonzero(points))
-                if (int(tx), int(ty)) not in taken and (int(tx), int(ty)) not in enemy]
+                if (int(tx), int(ty)) not in taken and (force or (int(tx), int(ty)) not in enemy)]
         if not free:
             return acts
+        W, H = points.shape
+        enemy_e: dict[tuple[int, int], float] = {}
+        if force:
+            ee = np.asarray(ctx.get("enemy_energies", []), dtype=float).reshape(-1)
+            if len(ee) == len(ec):
+                for (ex, ey), e in zip(ec, ee):
+                    enemy_e[(int(ex), int(ey))] = enemy_e.get((int(ex), int(ey)), 0.0) + float(e)
+        move_cost = float(ctx.get("move_cost", 0) or 0)
+        passable = np.asarray(ctx.get("passable", np.ones((W, H), dtype=bool)), dtype=bool)
+        ally_ene = ctx.get("ally_ene")
+
+        def energy_of(k: int) -> float:
+            return float(ally_ene[ids[k]]) if ally_ene is not None else np.inf
+
         pairs = []
         for k, (x, y) in enumerate(here):
             if k in holders or k in filling or int(acts[k]) == geo.SAP:
                 continue
             for t in free:
                 d = abs(x - t[0]) + abs(y - t[1])
-                if 0 < d <= left:
+                # Felder mit Gegner nur mit genug Energie für den Zusammenstoß (unbekannte Energie: nie)
+                if 0 < d <= left and (t not in enemy or energy_of(k) - d * move_cost > enemy_e.get(t, np.inf)):
                     pairs.append((d, k, t))
         pairs.sort()
         used_k, used_t = set(), set()
@@ -235,6 +257,13 @@ class ImitationAgent(PPOAgent):
                 nx, ny = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
                 if np.isfinite(logp[k, a]) and abs(nx - t[0]) + abs(ny - t[1]) < d and logp[k, a] > best_lp:
                     best, best_lp = a, float(logp[k, a])
+            if best is None and force and energy_of(k) >= move_cost:
+                for a in range(1, 5):
+                    nx, ny = x + int(geo.DIR_DX[a]), y + int(geo.DIR_DY[a])
+                    if 0 <= nx < W and 0 <= ny < H and passable[nx, ny] and abs(nx - t[0]) + abs(ny - t[1]) < d:
+                        best = a
+                        self.ep_stats["end_force_moves"] = self.ep_stats.get("end_force_moves", 0) + 1
+                        break
             if best is None:
                 continue
             used_k.add(k)

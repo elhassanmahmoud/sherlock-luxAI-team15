@@ -418,6 +418,11 @@ class AgentConfig:
     gegnerische Unit bekommt die nächste eigene Unit, die es vor dem Matchende erreicht. Die Engine entfernt am
     Matchende alle Units, Überleben und Energie zählen dann nicht mehr. Gegen Kaggle besetzte der Schüler in den
     letzten 10 Schritten 3 Felder, Kaggle 8, und 5,2 bekannte Felder blieben leer."""
+    imit_end_force: bool = False
+    """True (17.11.2026, abends, mit imit_end_fill): In der Endphase darf die Unit jede begehbare Annäherung nehmen,
+    auch wenn die Sicherheitsmasken (safe_moves, collision_guard, Nebel) sie sperren, und Felder mit sichtbarem Gegner
+    zählen als frei, wenn sie dort nach den Zügen mehr Energie hat als alle Gegner darauf. Diagnose zu ENDE10 auf Dev H:
+    Die Masken sperrten oft genau den Zug auf das freie Feld, die Besetzung am Matchende stieg kaum."""
     imit_tactics: str = ""
     """Taktikschicht hinter der Policy (17.11.2026, nur ImitationAgent, agents/sherlock/tactics_layer.py), Schalter
     wie bei R3T mit "," oder "+" getrennt, z. B. "granate+nebel+sog". Leer = aus."""
