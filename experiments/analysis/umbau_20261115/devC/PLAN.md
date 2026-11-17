@@ -20,7 +20,7 @@ Solution und Kaggle zusammen mindestens +2 Prozentpunkte über R3, gepaart nach 
 vorher eigens festgelegt werden und braucht zusätzlich ein Ja von Mahmoud und Moayed. Ohne beides bleibt R3 die
 Abgabe. Dev C wird nach dieser Gegenprobe nicht mehr für Auswahlen zwischen diesen Kandidaten verwendet.
 
-**Nachtrag 17.11.2026, 03:39, vor dem ersten Dev-C-Ergebnis:** Zusätzlich spielt der reine Ensemble-Schüler v7 + v7L
+**Nachtrag 17.11.2026, 03:38, vor dem ersten Dev-C-Ergebnis:** Zusätzlich spielt der reine Ensemble-Schüler v7 + v7L
 (ohne V14, Schalter Stay-Bias 1,5 und Entstapeln) gegen Solution, Kaggle und R3 ([Skript](run_e2.sh)). Grund: Auf
 Dev A gewann er 197/200 gegen Solution, 8/200 gegen Kaggle und 196/200 direkt gegen R3. Für ihn gilt dieselbe
 Leseregel.

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Nachtrag zu run_e.sh (17.11.2026, 03:39, vor dem ersten Dev-C-Ergebnis): reiner Ensemble-Schüler v7 + v7L auf Dev C.
+# Nachtrag zu run_e.sh (17.11.2026, 03:38, vor dem ersten Dev-C-Ergebnis): reiner Ensemble-Schüler v7 + v7L auf Dev C.
 # Gleiche Leseregel wie in PLAN.md. Startet erst, wenn run_e.sh fertig ist (nie parallel).
 SP=/private/tmp/claude-501/-Users-elhassanmahmoud-Documents-AKI-LuxAgent15/d5bcfcfa-cd35-4364-b2b5-1a6260ee2252/scratchpad
 MAIN=/Users/elhassanmahmoud/Documents/AKI_LuxAgent15
