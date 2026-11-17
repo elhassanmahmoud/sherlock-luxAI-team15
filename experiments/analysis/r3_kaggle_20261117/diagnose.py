@@ -142,7 +142,9 @@ def play(job):
         me = make_r3t(side, R3_ZIP, spec[4:])
     elif spec.startswith("student:"):  # 17.11.: reiner Schüler (alle Units), gleiche Schalter wie in r3t:schueler=
         from agents.sherlock_r3t.agent import load_student
-        me = load_student(spec[len("student:"):], side)
+        name, _, sw = spec[len("student:"):].partition(":")  # student:NAME[:k=v,k=v]
+        from scripts.par_eval import parse_value
+        me = load_student(name, side, {k: parse_value(v) for k, v in (kv.split("=", 1) for kv in sw.split(",") if kv)})
     else:
         me = r3_package.r3_package_agent(side, str(R3_ZIP))
     opp = make_opponent("kaggle3", opp_side)

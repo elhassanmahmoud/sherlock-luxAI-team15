@@ -35,3 +35,21 @@ echten Folgezustand). Werte je Match (180 Matches je Agent):
 
 Rohdaten: `../r3t_20261117/diag_r3_v2`, `diag_schueler_ens8`, `diag_student_ens8`, `diag_student_ens9`
 (`matches.csv`, `deaths.csv`, `games.csv`).
+
+## Nachtrag 17.11.2026, 17:05: der empfohlene Kandidat auf denselben Karten
+
+Dieselbe Diagnose für den reinen Schüler v9 mit Stay-Bias 1,0 und Halter-Regel (`--agent
+"student:ens9:imit_stay_bias=1.0,imit_hold_points=true"`), verglichen mit P9 (Stay-Bias 1,5) und R3, je 180 Matches:
+
+| | R3 | P9 | Kandidat |
+|---|---:|---:|---:|
+| gewonnene Matches | 6 | 10 | 12 |
+| eigene Punkte / Kaggle-Punkte je Match | 195 / 377 | 180 / 301 | **190 / 303** |
+| eigene Tode / Kaggle-Tode | 24,2 / 2,8 | 16,8 / 8,5 | 17,2 / 8,4 |
+| Unit-Schritte auf Punktefeldern (eigene / Kaggle) | 251 / 405 | 203 / 333 | 214 / 334 |
+| Energie für Bewegungen je Match | 1.870 | 1.991 | 1.912 |
+
+Die schwächere Stehstrafe und die Halter-Regel bringen etwas mehr Punkte und mehr Zeit auf Punktefeldern bei
+weniger Bewegungskosten. Die große Lücke bleibt: Kaggle holt weiter rund 300 Punkte je Match gegen unsere 190 und
+besetzt in den letzten 10 Schritten jedes Matches 8 Felder gegen unsere 3
+([Punktefelder](PUNKTEFELDER.md), Rohdaten `punktefelder/student_ens9_s10h.csv`, `../r3t_20261117/diag_student_ens9_s10h/`).

@@ -26,8 +26,10 @@ STUDENTS = {"ens8": ROOT / "experiments/imitation/students/ens_v8_v8L.pth",
 STUDENT_OVERRIDES = {"imit_stay_bias": 1.5, "imit_unstack": True}
 
 
-def load_student(path_or_name: str, player: str):
-    """Imitations-Schüler aus dem aktuellen Repo-Code (versteht auch die Eingabe "letzte Bewegung")."""
+def load_student(path_or_name: str, player: str, overrides: dict | None = None):
+    """Imitations-Schüler aus dem aktuellen Repo-Code (versteht auch die Eingabe "letzte Bewegung").
+
+    `overrides` ersetzt einzelne Spielschalter (17.11.2026, z. B. {"imit_stay_bias": 1.0, "imit_hold_points": True})."""
     from dataclasses import replace
 
     from agents.sherlock.config import AgentConfig
@@ -35,7 +37,7 @@ def load_student(path_or_name: str, player: str):
     from agents.sherlock.main import Agent_x
 
     path = str(STUDENTS.get(path_or_name, path_or_name))
-    cfg = replace(Agent_x._cfg_from_checkpoint(path) or AgentConfig(), **STUDENT_OVERRIDES)
+    cfg = replace(Agent_x._cfg_from_checkpoint(path) or AgentConfig(), **{**STUDENT_OVERRIDES, **(overrides or {})})
     student = ImitationAgent(player, agent_path=path, cfg=cfg, train=False)
     student.set_to_eval_mode()
     return student

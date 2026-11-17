@@ -34,7 +34,9 @@ def make_agent(spec: str, side: str):
         return make_r3t(side, R3_ZIP, spec[4:])
     if spec.startswith("student:"):
         from agents.sherlock_r3t.agent import load_student
-        return load_student(spec[len("student:"):], side)
+        name, _, sw = spec[len("student:"):].partition(":")  # student:NAME[:k=v,k=v]
+        from scripts.par_eval import parse_value
+        return load_student(name, side, {k: parse_value(v) for k, v in (kv.split("=", 1) for kv in sw.split(",") if kv)})
     from scripts import r3_package
     return r3_package.r3_package_agent(side, str(R3_ZIP))
 
