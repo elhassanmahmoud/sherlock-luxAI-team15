@@ -53,3 +53,18 @@ zweiten Durchgang ([Skript](run_screen3.sh)):
 | SCHUELER | `r3t:schueler=ens8` | R3 + Schüler im Kampf und ohne Punktefeld-Aufgabe |
 | SCHUELER_ALLE | `r3t:schueler=ens8,granate,sog,tanken` | dazu die drei Taktiken des ersten Durchgangs |
 | HYB_ENS8 (Vergleich) | gepackter Hybrid V14 + Ensemble v8 + v8L (SHA `f021f63d…`) | bisheriger Schüler-Hybrid auf denselben Karten |
+
+## Zweite Prüfung (festgelegt am 17.11.2026, 08:32, vor dem ersten Spiel auf diesen Karten)
+
+Auf Dev D erfüllten drei Varianten die Leseregel, alle über den Punkteanteil gegen Kaggle: SCHUELER (+3,71
+[+2,09; +5,39]), SCHUELER_ALLE (+3,50 [+2,20; +4,81]) und HYB_ENS8 (+3,03 [+1,60; +4,40]). Gewonnene Spiele gegen
+Solution und Kaggle zusammen lagen bei +1,0, +0,75 und +0,25. Alle Taktiken ohne Schüler verfehlten die Regel.
+
+- **Karten:** 7256200–7256399 (200 Karten, beide Seiten), bisher von niemandem benutzt.
+- **Spiele:** R3 (Referenz), SCHUELER, SCHUELER_ALLE und HYB_ENS8 gegen Solution und Kaggle, je 800 Spiele.
+  Eingefrorene Quelle (Commit dieses Nachtrags), 10 Prozesse, streng nacheinander ([Skript](run_check2.sh)).
+- **Regel:** dieselbe wie auf Dev D. Wer auch hier besteht, wird Mahmoud und Moayed für eine frische Bestätigung auf
+  7159000–7159399 vorgeschlagen. Diese Bestätigung bekommt vorher eine eigene, strengere Regel und braucht ein Ja von
+  beiden. Bis dahin bleibt R3 die Abgabe.
+- Für ein Kurspaket braucht der Schüler-Mix zusätzlich die Schülergewichte und den neueren Schüler-Code. Das Paket wird
+  erst gebaut, wenn eine Variante diese zweite Prüfung besteht.
