@@ -75,3 +75,19 @@ Zusätzlich treten an (gleiche Karten, gleiche Regel wie oben, als weitere Varia
 | PB_S10_HF | Stay-Bias 1,0, Entstapeln, `imit_hold_points`, `imit_fill_points=6` |
 
 Damit spielen auf Dev F 7 Agenten je 800 Spiele (zusammen 5.600).
+
+## Nachtrag 17.11.2026, 14:15, vor dem ersten Spiel der dritten Bestätigung: Kandidat
+
+Nach der Regel besteht nur **PB_S10_H** (Stay-Bias 1,0, Entstapeln, `imit_hold_points`): gegenüber PB +1,15
+[+0,02; +2,34] Punkteanteil gegen Kaggle, gegenüber R3 +4,57 [+3,37; +5,73] ([Ergebnis](ERGEBNIS.md)).
+
+- Kurspaket `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip`, SHA-256
+  `0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099`, gebaut mit `scripts/build_student_package.py
+  --student ens9 --set imit_stay_bias=1.0 --set imit_unstack=true --set imit_hold_points=true` aus der eingefrorenen
+  Quelle `ab34c54`. Zwei Bauläufe ergaben dieselbe Prüfsumme; Ladeprüfung des Kursrunners auf beiden Seiten bestanden.
+- Gleichheitstest: Das Paket spielte auf 7259000–7259003 (beide Seiten, gegen Solution und Kaggle, 16 Spiele) in allen
+  verglichenen Spalten genau wie PB_S10_H auf Dev F.
+- Dritte Bestätigung auf **7261000–7261399** nach der Regel aus
+  [BESTAETIGUNG_PLAN.md](../deve_20261117/BESTAETIGUNG_PLAN.md) gegen R3; zur Information spielt das bereits bestätigte
+  P9-Paket auf denselben Karten, der Kandidat zusätzlich direkt gegen R3 auf 7261000–7261099
+  ([Skript](run_bestaetigung3.sh), [Auswertung](analyze_bestaetigung3.py)). Start nach der Robustheitsprüfung.
