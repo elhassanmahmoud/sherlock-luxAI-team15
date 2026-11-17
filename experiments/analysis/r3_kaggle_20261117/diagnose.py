@@ -12,7 +12,8 @@ Punkten) und `deaths.csv` (eine Zeile je Tod).
     python experiments/analysis/r3_kaggle_20261117/diagnose.py --agent r3t:granate,sog --seeds ... --out DIR
 
 Mit --agent r3t:SCHALTER spielt R3 mit der Taktikschicht (agents/sherlock_r3t); `games.csv` enthält dann je Spiel,
-wie oft jede Taktik eingegriffen hat.
+wie oft jede Taktik eingegriffen hat. Mit --agent student:ens9 spielt der reine Imitations-Schüler alle Units
+(Schalter wie bei r3t:schueler=, also stay_bias 1.5 und unstack).
 """
 from __future__ import annotations
 
@@ -139,6 +140,9 @@ def play(job):
     if spec.startswith("r3t:"):
         from agents.sherlock_r3t.agent import make_r3t
         me = make_r3t(side, R3_ZIP, spec[4:])
+    elif spec.startswith("student:"):  # 17.11.: reiner Schüler (alle Units), gleiche Schalter wie in r3t:schueler=
+        from agents.sherlock_r3t.agent import load_student
+        me = load_student(spec[len("student:"):], side)
     else:
         me = r3_package.r3_package_agent(side, str(R3_ZIP))
     opp = make_opponent("kaggle3", opp_side)
@@ -281,7 +285,7 @@ def main():
     ap.add_argument("--seeds", required=True, help="START:ENDE (Ende exklusiv)")
     ap.add_argument("--workers", type=int, default=10)
     ap.add_argument("--out", required=True)
-    ap.add_argument("--agent", default="r3", help="r3 (unverändertes Paket) oder r3t:SCHALTER")
+    ap.add_argument("--agent", default="r3", help="r3 (unverändertes Paket), r3t:SCHALTER oder student:NAME|PFAD")
     a = ap.parse_args()
     lo, hi = map(int, a.seeds.split(":"))
     spec = "" if a.agent == "r3" else a.agent
