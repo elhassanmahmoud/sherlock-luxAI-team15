@@ -1,0 +1,34 @@
+# Test der Taktikschicht über R3 (festgelegt am 17.11.2026 vor dem ersten Testspiel)
+
+**Was getestet wird:** Die neue Taktikschicht `agents/sherlock_r3t/` setzt auf die fertigen Befehle des
+unveränderten R3-Pakets auf und ändert einzelne Units. Grundlage ist die
+[Energie- und Todesanalyse](../r3_kaggle_20261117/ERGEBNIS.md). Ohne Schalter spielt sie exakt wie R3 (geprüft auf
+12 Spielen, alle Spalten gleich).
+
+| Variante | Schalter | Idee |
+|---|---|---|
+| R3 | – | Referenz, unverändertes Paket (`r3zip:`) |
+| GRANATE | `r3t:granate` | Schüsse nach erwartetem Schaden samt Streuung auf vorhergesagte Positionen, im Team abgestimmt, Abschüsse zählen extra; stehende Units mit Reserve feuern zusätzlich |
+| SOG | `r3t:sog` | Züge meiden, die durch Sog oder Zusammenstoß mit stärkeren Gegnern wahrscheinlich tödlich sind |
+| TANKEN | `r3t:tanken` | wartende Units ohne Punktefeld ziehen auf ein deutlich besseres Energiefeld nebenan |
+| ALLE | `r3t:granate,sog,tanken` | alle drei zusammen |
+
+**Karten:** Dev D = 7256100–7256199, beide Seiten, bisher von niemandem benutzt (aus Mahmouds Bereich ab 7253000).
+Gegner Solution und Kaggle, je Variante 400 Spiele, zusammen 2.000. Eingefrorene Quelle (Commit dieses Plans),
+10 Prozesse, streng nacheinander ([Skript](run_screen.sh)).
+
+**Vorab festgelegte Leseregel:** Gepaart nach Karte gegen R3 (10.000 Ziehungen, Seed 2711,
+[compare_dev.py](../umbau_20261115/tools/compare_dev.py)). Eine Variante gilt als **vielversprechend**, wenn
+
+1. sie gegen Solution und Kaggle zusammen mindestens +2 Prozentpunkte gewonnene Spiele über R3 liegt **oder** ihr
+   Punkteanteil gegen Kaggle (eigene Punkte durch alle Punkte, je Karte gepaart) mindestens 3 Prozentpunkte über R3
+   liegt, und
+2. sie gegen Solution im Mittel nicht mehr als 1 Prozentpunkt unter R3 liegt.
+
+Vielversprechende Varianten und ihre Kombinationen gehen in eine zweite Prüfung auf frischen Karten 7256200–7256399
+mit derselben Regel. Erst danach käme eine frische Bestätigung auf 7159000–7159399 in Frage, die vorher eigens
+festgelegt wird und ein Ja von Mahmoud und Moayed braucht. Bis dahin bleibt R3 die Abgabe. Dev D wird nach diesem
+Test nur noch für Varianten benutzt, die hier ausdrücklich nachgetragen werden.
+
+Zur Erklärung (nicht zur Auswahl) läuft für jede Variante zusätzlich die Energie- und Todesanalyse auf den
+Analysekarten 7256000–7256029 gegen Kaggle.
