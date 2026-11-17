@@ -158,16 +158,27 @@ def _dagger_worker(job) -> list[dict]:
     from agents.sherlock.imitation_agent import ImitationAgent
     from scripts.kaggle3_opponent import Kaggle3Opponent
 
+    from agents.sherlock_r3t import agent as r3t
+
     env = LuxAIS3GymEnv(numpy_output=True)
     done_meta = []
     for seed, sside, opp_kind in games:
         oside = "player_1" if sside == "player_0" else "player_0"
-        if overrides:
+        if r3t.is_spec(student_path):
+            # 17.11.2026: R3 mit Schueler-Mix (und Taktiken) spielt; aufgezeichnet werden die Merkmale des eingebauten
+            # Schuelers in genau den Lagen, in die der Mix kommt
+            student = r3t.make_r3t(sside, r3t.DEFAULT_ZIP, student_path[len(r3t.PREFIX):])
+            if student.student is None:
+                raise ValueError("DAgger mit r3t: braucht schueler=")
+            fz_source = student.student
+        elif overrides:
             from scripts.par_eval import build_cfg
             student = ImitationAgent(sside, agent_path=student_path, train=False,
                                      cfg=build_cfg(student_path, overrides))
+            fz_source = student
         else:
             student = ImitationAgent(sside, agent_path=student_path, train=False)
+            fz_source = student
         student.set_to_eval_mode()
         opp = make_player(opp_kind, oside)
         teacher = Kaggle3Opponent(sside)
@@ -183,8 +194,8 @@ def _dagger_worker(job) -> list[dict]:
         while not done:
             label = np.asarray(teacher.act(step, obs[sside]))
             acts = {sside: np.asarray(student.act(step, obs[sside])), oside: np.asarray(opp.act(step, obs[oside]))}
-            if student.last_fz is not None:
-                rec.add(student.last_fz, label, student.belief.mirrored)
+            if fz_source.last_fz is not None:
+                rec.add(fz_source.last_fz, label, fz_source.belief.mirrored)
             obs, _, term, trunc, info = env.step(acts)
             teacher.remember_played_actions(acts[sside])
             done = bool(np.asarray(term[sside])) or bool(np.asarray(trunc[sside]))
@@ -210,7 +221,8 @@ def cmd_dagger(a) -> None:
              for i in range(a.games)]
     chunks = [games[i::a.workers] for i in range(a.workers) if games[i::a.workers]]
     t0 = time.time()
-    student = str(Path(a.student).resolve())
+    from agents.sherlock_r3t import agent as r3t
+    student = a.student if r3t.is_spec(a.student) else str(Path(a.student).resolve())
     with mp.get_context("spawn").Pool(len(chunks)) as pool:
         metas = [m for part in pool.map(_dagger_worker, [(c, str(out), student, a.set) for c in chunks]) for m in part]
     (out / "collect.json").write_text(json.dumps(dict(
