@@ -3,14 +3,17 @@
 **Kurz:** Kein Kandidat besteht die [vorab festgelegte Leseregel](PLAN.md). Verlangt waren mindestens +2
 Prozentpunkte über R3 gegen Solution und Kaggle zusammen, und gegen Solution nicht unter R3. Der Hybrid v7L kommt
 mit +1,75 am nächsten, genau wie auf Dev A. Das reine Ensemble v7 + v7L gewinnt auch auf neuen Karten **192/200
-direkt gegen R3**, liegt gegen die externen Gegner aber 0,75 Prozentpunkte unter R3. **Keine Bestätigung, R3 bleibt
-die Abgabe.**
+direkt gegen R3**, liegt gegen die externen Gegner aber 0,75 Prozentpunkte unter R3. Auch der danach vorab angemeldete
+Hybrid aus dem Ensemble v8 + v8L (DAgger-Runde 5) besteht nicht: Er gewinnt 200/200 gegen Solution und 8/200 gegen
+Kaggle, liegt aber ebenfalls nur +1,75 über R3. **Keine Bestätigung, R3 bleibt die Abgabe.**
 
 ## Was gelaufen ist
 
 Karten 7164000–7164099, beide Seiten, bisher von niemandem benutzt. Eingefrorene Quelle `8324845`, 10 Prozesse,
 streng nacheinander von 03:37 bis 04:16 ([Skript](run_e.sh), [Protokoll](run_e.log); reines Ensemble als Nachtrag
-vor dem ersten Ergebnis: [Skript](run_e2.sh), [Protokoll](run_e2.log)). Alle Spiele liefen über alle 303 Schritte.
+vor dem ersten Ergebnis: [Skript](run_e2.sh), [Protokoll](run_e2.log)). Der Hybrid Ensemble v8 + v8L lief als
+Nachtrag 2 von 05:58 bis 06:08 allein ([Skript](run_e3.sh), [Protokoll](run_e3.log)). Er wurde vor seinem ersten
+Dev-C-Spiel im [Plan](PLAN.md) angemeldet, nur nach seinen Dev-A-Werten. Alle Spiele liefen über alle 303 Schritte.
 
 ## Ergebnisse (gewonnene Spiele von 200, in Klammern Matches von 600)
 
@@ -21,6 +24,7 @@ vor dem ersten Ergebnis: [Skript](run_e2.sh), [Protokoll](run_e2.log)). Alle Spi
 | Hybrid v7L | 198 (567) | 10 (32) | 162 (456) | 33,1 % | +1,75 [−0,75; +4,5] | nein, knapp unter +2 |
 | Hybrid Ensemble v7 + v7L | 199 (570) | 4 (22) | 174 (474) | 33,6 % | +0,5 [−1,75; +2,75] | nein |
 | reines Ensemble v7 + v7L | 196 (566) | 2 (30) | **192** (556) | 34,1 % | −0,75 [−3,0; +1,5] | nein |
+| Hybrid Ensemble v8 + v8L (Nachtrag 2) | 200 (579) | 8 (38) | 170 (482) | 33,5 % | +1,75 [−0,75; +4,5] | nein, knapp unter +2 |
 
 Gepaart nach Karte (Prozentpunkte ganze Spiele, 95-%-Kartenintervall, 10.000 Ziehungen, Seed 2711;
 [Werkzeug](../tools/compare_dev.py)), getrennt nach Gegner:
@@ -29,6 +33,8 @@ Gepaart nach Karte (Prozentpunkte ganze Spiele, 95-%-Kartenintervall, 10.000 Zie
 - Hybrid Ensemble: Solution +1,0 [−1,0; +3,5], Kaggle 0,0 [−4,0; +4,0].
 - reines Ensemble: Solution −0,5 [−3,5; +2,5], Kaggle −1,0 [−5,0; +2,0].
 - V15: Solution −1,0 [−4,5; +2,5], Kaggle −1,0 [−5,0; +2,0].
+- Hybrid Ensemble v8 + v8L: Solution +1,5 [0,0; +4,0], Kaggle +2,0 [−3,0; +7,0] (8 Spiele gewonnen, 4 verloren
+  gegenüber R3).
 
 ## Einordnung
 
@@ -37,18 +43,22 @@ Gepaart nach Karte (Prozentpunkte ganze Spiele, 95-%-Kartenintervall, 10.000 Zie
 - Nur der Hybrid v7L lag auf beiden Kartensätzen bei +1,75, vor allem durch Kaggle (je 10/200 statt 4/200). Über
   beide Sätze zusammen (200 Karten) sind das +1,75 [0,0; +3,62]. Das ist nur eine Einordnung und keine erfüllte
   Regel: v7L wurde auch wegen seiner Dev-A-Werte ausgewählt.
+- Der Hybrid Ensemble v8 + v8L landet auf Dev C ebenfalls bei +1,75, nach +2,25 auf Dev A. Über beide Sätze zusammen
+  sind das +2,0 [+0,12; +4,0]. Auch das ist nur eine Einordnung: Er wurde wegen seines Dev-A-Werts ausgewählt, der
+  deshalb eher zu hoch liegt. Der unverzerrte Dev-C-Wert verfehlt die Regel.
 - Das reine Ensemble ist ein sehr starker direkter Gegner für R3: 192/200 Spiele und 556/600 Matches auf neuen
   Karten. Gegen Solution und Kaggle ist es nicht besser. Stärke gegen unseren eigenen R3 überträgt sich also nicht
   automatisch auf andere Gegner.
 - V15 liegt auch hier unter R3, passend zur Prüfung auf 400 Karten vom 16.11.
-- Dev C ist damit verbraucht. Laut Plan wird es nicht mehr für Auswahlen zwischen diesen Kandidaten verwendet.
+- Dev C ist damit verbraucht. Laut Plan wird es nach dem Nachtrag 2 für keinen weiteren Kandidaten benutzt.
 
 ## Dateien
 
 - Rohdaten: `r3_devC.csv`, `v15_devC.csv`, `hyb_v7L_mixed_devC.csv`, `hyb_ens_v7_v7L_mixed_devC.csv`,
-  `student_ens_v7_v7L_devC.csv` (je Spiel eine Zeile).
+  `student_ens_v7_v7L_devC.csv`, `hyb_ens_v8_v8L_mixed_devC.csv` (je Spiel eine Zeile).
 - SHA-256 der gespielten Dateien: R3-Paket `8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d`,
   V15 `28933a3b7810037b0af37b9ccfbf261c7c9b2b1353c8e0e8ef3b25e2c77cae45`, Hybrid v7L
   `1b17f0fea626fb01bc9957d13f5fd0b91da7f8d8ce9f9363abada574d9e6a269`, Hybrid Ensemble
   `dbdbfe98debe376841a072a4c2c860ff094cd0cdfb5d91a8fced62e7a005b9d6`, reines Ensemble
-  `dca29436b560c71e7fff3d8b71af7f14afb783718c092d474c0a6b19ff2c1047`.
+  `dca29436b560c71e7fff3d8b71af7f14afb783718c092d474c0a6b19ff2c1047`, Hybrid Ensemble v8 + v8L
+  `f021f63d3268afe423daaf53a83e10399cbb508824c1d00dcc9921e94bc1ffd7`.
