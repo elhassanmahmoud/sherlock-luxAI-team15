@@ -58,6 +58,25 @@ def guard_course_calls(player):
     return player
 
 
+def weights_path(base, group):
+    """Gewichtspfad relativ zu base. Battle-Format: `GRUPPE/agent.pth` (der Agent laedt die Datei neben main.py).
+    Kurspaket-Format (17.11.2026; paths.csv + Ordner mit weights/agent.pth wie R3 und die Schueler-Pakete): Pfad
+    aus paths.csv. Ohne auffindbare Gewichte Abbruch: vorher spielten Aufzeichnung und Nachspielen eines
+    Kurspakets still mit zufaellig initialisierten Netzen."""
+    weights = f"{group}/agent.pth"
+    paths_csv = os.path.join(base, "agents", "paths.csv")
+    if os.path.isfile(paths_csv):
+        import csv
+        with open(paths_csv, encoding="utf-8", newline="") as f:
+            rows = list(csv.DictReader(f, delimiter=";"))
+        if rows and rows[0].get("Load_Path_P0"):
+            weights = rows[0]["Load_Path_P0"]
+    if not (os.path.isfile(os.path.join(base, weights))
+            or os.path.isfile(os.path.join(base, "agents", group, "agent.pth"))):
+        raise FileNotFoundError(f"Keine Gewichte im Paket gefunden ({weights})")
+    return weights
+
+
 def unpack(zip_path):
     """Zip wie beim Prof unter agents/ entpacken; Gewichte-Pfad bleibt relativ (Rueckfall neben main.py)."""
     base = tempfile.mkdtemp(prefix="xversion_")
@@ -65,10 +84,19 @@ def unpack(zip_path):
     with zipfile.ZipFile(zip_path) as z:
         z.extractall(os.path.join(base, "agents"))
         group = next(n.split("/")[0] for n in z.namelist() if n.endswith("/main.py"))
+    weights = weights_path(base, group)
     sys.path.insert(0, os.path.join(base, "agents"))
     os.chdir(base)
     module = __import__(f"{group}.main", fromlist=["Agent_x"])
-    return module.Agent_x, f"{group}/agent.pth"
+    return module.Agent_x, weights
+
+
+def n_nets(agent):
+    """Zahl der gespielten Netze: Schueler-Ensemble (Agent_x delegiert an _imitation) oder DQN-Ensemble."""
+    student = getattr(agent, "__dict__", {}).get("_imitation")
+    if student is not None and hasattr(student, "extra_nets"):
+        return 1 + len(student.extra_nets)
+    return 1 + len(agent.extra_q)
 
 
 def plain(x):
@@ -113,7 +141,7 @@ def record(args):
     wins = np.asarray(obs["player_0"]["team_wins"]).tolist()
     with open(args.pkl, "wb") as f:
         pickle.dump(dict(cfg=cfg, rec=rec, wins=wins, py=sys.version), f, protocol=4)
-    print(f"aufgezeichnet: {len(rec)} Schritte, Matchsiege {wins}, Netze {1 + len(agents[0].extra_q)}")
+    print(f"aufgezeichnet: {len(rec)} Schritte, Matchsiege {wins}, Netze {n_nets(agents[0])}")
 
 
 def replay(args):
@@ -136,7 +164,7 @@ def replay(args):
                      next_obs=arrays(r["next_obs"][a.player]))
     print(f"Python {sys.version.split()[0]}, torch {torch.__version__}, numpy {np.__version__} "
           f"(aufgezeichnet mit Python {d['py'].split()[0]}): {len(d['rec'])} Schritte, "
-          f"Netze {1 + len(agents[0].extra_q)}, eingefroren {agents[0].cfg.frozen}, "
+          f"Netze {n_nets(agents[0])}, eingefroren {agents[0].cfg.frozen}, "
           f"abweichende Aktionen {diff}" + (f", erste bei {first}" if first else ""))
     return 1 if diff else 0
 
