@@ -40,3 +40,15 @@ entscheiden die gewonnenen Matches gegen Kaggle. **Danach:** frische Bestätigun
 aus [BESTAETIGUNG_PLAN.md](../deve_20261117/BESTAETIGUNG_PLAN.md) gegen R3; der zuletzt bestätigte Kandidat spielt zur
 Information mit. Besteht keine Variante, bleibt es beim zuletzt bestätigten Kandidaten. Dev G wird danach für keine
 Auswahl mehr benutzt.
+
+## Nachtrag 17.11.2026, 15:18, vor dem ersten Dev-G-Spiel
+
+Die dritte Bestätigung ist bestanden, also gelten die **Schalter S = Stay-Bias 1,0, Entstapeln und Halter-Regel**.
+Weil Stay-Bias 1,0 auf Dev F besser war als 1,5 und der Schüler damit immer noch seltener steht als der Lehrer
+(35,8 % gegen 41 %), tritt zusätzlich an:
+
+| Name | Spieler |
+|---|---|
+| PS05 | Ensemble v9 + v8L mit Stay-Bias 0,5, Entstapeln und Halter-Regel |
+
+PS05 wird nach derselben Regel wie E10 und E3 gegen PS und R3 bewertet. Damit spielen auf Dev G 5 Agenten je 800 Spiele.

@@ -26,4 +26,6 @@ run r3_devG --weights "r3zip:$R3ZIP" --opponents solution92,kaggle3
 run ps_devG --weights $S/ens_v9_v8L.pth --opponents solution92,kaggle3 "${SW[@]}"
 run e10_devG --weights $S/ens_v10_v8L.pth --opponents solution92,kaggle3 "${SW[@]}"
 run e3_devG --weights $S/ens_v10_v9_v8L.pth --opponents solution92,kaggle3 "${SW[@]}"
+run ps05_devG --weights $S/ens_v9_v8L.pth --opponents solution92,kaggle3 --set imit_stay_bias=0.5 --set imit_unstack=true \
+    --set imit_hold_points=true
 log "DEVG_DONE"

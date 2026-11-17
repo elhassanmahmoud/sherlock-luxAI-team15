@@ -19,8 +19,8 @@ from experiments.analysis.r3t_20261117.analyze import diff, per_map, share  # no
 from experiments.analysis.umbau_20261115.tools.compare_dev import load  # noqa: E402
 
 D = Path(__file__).resolve().parent
-AGENTS = ("R3", "PS", "E10", "E3")
-VARIANTS = ("E10", "E3")
+AGENTS = ("R3", "PS", "E10", "E3", "PS05")
+VARIANTS = ("E10", "E3", "PS05")
 cell = lambda r: f"{r[0]:+.2f} [{r[1]:+.2f}; {r[2]:+.2f}]"  # noqa: E731
 
 
