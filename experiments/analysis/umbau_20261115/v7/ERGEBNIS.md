@@ -6,7 +6,8 @@ Intervalle enthalten null, und Dev A ist durch frühere Auswahlen nach oben verz
 ist der bisher stärkste Schüler im direkten Duell: Rein gespielt gewinnt es **196/200 gegen R3** (v7 allein 176/200),
 als Hybrid 200/200 gegen Solution. Auf frischen, nie trainierten Spielen ahmen die Schüler mit letzter Bewegung den
 Lehrer messbar besser nach, wiederholen ihre letzte Bewegung aber öfter als der Lehrer. **Keine Bestätigung, R3
-bleibt die Abgabe.** Die Gegenprobe auf den unbenutzten Karten Dev C läuft ([Plan](../devC/PLAN.md)).
+bleibt die Abgabe.** Auf den unbenutzten Karten Dev C bestand kein Kandidat die vorab festgelegte Regel. Das reine
+Ensemble gewann dort 192/200 direkt gegen R3, lag gegen Solution und Kaggle aber unter R3 ([Dev C](../devC/ERGEBNIS.md)).
 
 ## Was gelaufen ist
 
