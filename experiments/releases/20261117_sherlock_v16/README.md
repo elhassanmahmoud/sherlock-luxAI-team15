@@ -1,8 +1,8 @@
-# Sherlock für das Finale am 27. November (Schüler-Version, intern „K“)
+# Sherlock V16 für das Finale am 27. November
 
-**Seit dem 17.11.2026 ist diese Sherlock-Version die Abschlussabgabe von Team 15.** Der Agent heißt weiter Sherlock
-(Ordner `sherlock/`, Klasse `agents.sherlock.main.Agent_x`); intern nennen wir die Version „K“. Sie ist der reine
-Imitations-Schüler v9 (Ensemble aus zwei CNNs) mit drei festen Spielschaltern und ersetzt R3. Mahmoud und Moayed haben dem Wechsel am Abend des 17.11. zugestimmt.
+**Seit dem 17.11.2026 ist Sherlock V16 die Abschlussabgabe von Team 15.** Der Agent heißt weiter Sherlock (Ordner
+`sherlock/`, Klasse `agents.sherlock.main.Agent_x`); in den Messungen heißt die Version intern „K“. V16 ist ein Ensemble
+aus zwei CNNs, die vom Kaggle-Drittplatzierten gelernt haben, mit drei festen Spielschaltern, und ersetzt R3. Mahmoud und Moayed haben dem Wechsel am Abend des 17.11. zugestimmt.
 Das fertige [agent.zip](agent.zip) ist die bytegleiche Kopie des geprüften Kandidatenpakets
 `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip` und hat die SHA-256-Prüfsumme
 `0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099`.
@@ -16,7 +16,7 @@ Das fertige [agent.zip](agent.zip) ist die bytegleiche Kopie des geprüften Kand
 
 ## Was in dieser Version steckt
 
-- **Netze:** zwei CNNs (Schüler v9 und v8L), deren Bewertungen gemittelt werden. Sie sehen die ganze Karte als 16
+- **Netze:** zwei CNNs (v9 und v8L), deren Bewertungen gemittelt werden. Sie sehen die ganze Karte als 16
   Ebenen aus Sherlocks Gedächtnis, je Unit 79 Merkmale und die letzten eigenen Bewegungen. Ein eigener Zielkopf wählt
   das Feld für jeden Schuss.
 - **Gelernt** durch Nachahmung und sechs DAgger-Runden vom öffentlich freigegebenen Kaggle-Drittplatzierten (lux3-bot,
