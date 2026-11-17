@@ -21,7 +21,8 @@ from .tactics import Tactics, TacticsCfg
 PREFIX = "r3t:"
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ZIP = ROOT / "experiments/releases/20261116_r3_finale/agent.zip"
-STUDENTS = {"ens8": ROOT / "experiments/imitation/students/ens_v8_v8L.pth"}
+STUDENTS = {"ens8": ROOT / "experiments/imitation/students/ens_v8_v8L.pth",
+            "ens9": ROOT / "experiments/imitation/students/ens_v9_v8L.pth"}
 STUDENT_OVERRIDES = {"imit_stay_bias": 1.5, "imit_unstack": True}
 
 
