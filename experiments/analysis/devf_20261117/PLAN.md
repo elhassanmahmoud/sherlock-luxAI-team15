@@ -55,3 +55,23 @@ höchstens 0,5 Prozentpunkte auseinander, entscheiden die gewonnenen Matches geg
 [BESTAETIGUNG_PLAN.md](../deve_20261117/BESTAETIGUNG_PLAN.md), gegen R3. Wurde der Dev-E-Sieger auf 7260000–7260399
 bestätigt, spielt er dort zur Information mit, damit beide Kandidaten auf denselben Karten verglichen werden. Besteht
 keine Variante, gibt es keine weitere Bestätigung. Dev F wird danach für keine Auswahl mehr benutzt.
+
+## Nachtrag 17.11.2026, 11:32, vor dem Ende von Dev E und vor dem ersten Dev-F-Spiel: freie Punktefelder besetzen
+
+Eine zusätzliche Messung auf den Analysekarten 7256000–7256009 (20 Spiele des reinen Schülers v8 + v8L gegen Kaggle,
+[Skript](../deve_20261117/punktefelder.py)) zeigt: Auf der eigenen Kartenhälfte liegen im zweiten und dritten Match
+meist 3–4,5 bekannte Punktefelder leer (weder eigene noch Kaggle-Units), während 6–10 eigene Units weder auf einem
+Punktefeld stehen noch einen Gegner im Umkreis von 3 Feldern haben. Neu ist deshalb der Schalter
+`imit_fill_points` (Wert = größter Manhattan-Abstand): Jedes bekannte, freie Punktefeld bekommt die nächste eigene
+Unit, die nicht schießt und kein Punktefeld hält; sie nimmt die vom Netz am höchsten bewertete erlaubte Bewegung, die
+den Abstand verkleinert. Mit ausgeschalteten neuen Schaltern spielt der Schüler nachweislich unverändert (alle 600
+Messzeilen der Zusatzmessung gleich).
+
+Zusätzlich treten an (gleiche Karten, gleiche Regel wie oben, als weitere Varianten neben PB_H, PB_S10, PB_S10_H):
+
+| Name | Spieler |
+|---|---|
+| PB_HF | Stay-Bias 1,5, Entstapeln, `imit_hold_points`, `imit_fill_points=6` |
+| PB_S10_HF | Stay-Bias 1,0, Entstapeln, `imit_hold_points`, `imit_fill_points=6` |
+
+Damit spielen auf Dev F 7 Agenten je 800 Spiele (zusammen 5.600).
