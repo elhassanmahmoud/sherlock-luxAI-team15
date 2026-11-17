@@ -35,3 +35,16 @@ Gepaart nach Karte gegen R3 (beide Seiten zusammen, 10.000 Ziehungen, Seed 2711,
 Kursrunner auf beiden Seiten und Nachspielen unter Python 3.10 (`scripts/xversion_replay.py`).
 **Nicht bestanden:** R3 bleibt die Abgabe. Keine Wiederholung auf anderen Karten und keine nachträgliche Änderung
 der Regel.
+
+## Nachtrag 17.11.2026, 09:18, vor dem ersten Bestätigungsspiel: Kandidat
+
+Zweite Prüfung auf 7256200–7256399 (gepaarter Punkteanteil gegen Kaggle): SCHUELER +3,98 [+3,04; +4,96],
+SCHUELER_ALLE +3,49 [+2,52; +4,52], HYB_ENS8 +3,87 [+2,93; +4,83]; alle drei bestehen die Regel. Nach der Auswahlregel
+tritt **SCHUELER** an (, höchster Wert unter den R3-Varianten).
+
+- Kurspaket , SHA-256
+  , gebaut mit  aus der
+  eingefrorenen Quelle . Der Bau ist reproduzierbar (gleiche Prüfsumme wie das Probepaket, das in 8 Spielen
+  exakt wie  spielte).
+- Enthalten: R3 unverändert (v14- und r3-Teil bytegleich), Schüler Ensemble v8 + v8L (SHA-256 ),
+  Schüler-Code als , Taktikschicht ohne aktive Taktik.
