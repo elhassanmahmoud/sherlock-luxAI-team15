@@ -46,3 +46,19 @@ Punkten soll sich auch in gewonnenen Matches zeigen.
 das Nachspielen unter Python 3.10 (`scripts/xversion_replay.py`).
 **Nicht bestanden:** R3 bleibt die Abgabe. Keine Wiederholung auf anderen Karten und keine nachträgliche Änderung
 der Regel.
+
+## Nachtrag 17.11.2026, 12:36, vor dem ersten Bestätigungsspiel: Kandidat
+
+Nach der Dev-E-Auswahlregel tritt **P9 an, der reine Schüler v9** (Ensemble v9 + v8L, Spielschalter imit_stay_bias 1,5
+und imit_unstack). Auf Dev E: Punkteanteil gegen Kaggle +4,97 [+3,92; +6,03] gegenüber R3, 0,68 vor P8
+([Ergebnis](ERGEBNIS.md)).
+
+- Kurspaket `experiments/candidates/deve_20261117/agent_p9_reiner_schueler.zip`, SHA-256
+  `1579eb8338d1e9a98e52a96e0777633578e99e3d6e81365660f526852655253f`, 9,5 MB, gebaut mit
+  `scripts/build_student_package.py` aus der eingefrorenen Quelle `ab34c54` (Schülergewichte `ens_v9_v8L.pth`,
+  SHA-256 `a9f551f8…e7ea`). Zwei Bauläufe ergaben dieselbe Prüfsumme.
+- Ladeprüfung des Kursrunners auf beiden Seiten bestanden (`scripts.build_submission.check`: „Check ok“).
+- Gleichheitstest: Das Paket spielte auf 7258000–7258003 (beide Seiten, gegen Solution und Kaggle, 16 Spiele) in allen
+  verglichenen Spalten genau wie P9 auf Dev E.
+- Für das Duell gegen R3 spielt P9 als gleichwertige Spec (`--weights …/ens_v9_v8L.pth --set imit_stay_bias=1.5
+  --set imit_unstack=true`), weil pro Prozess nur ein Paket mit dem Modul `sherlock` geladen werden kann.
