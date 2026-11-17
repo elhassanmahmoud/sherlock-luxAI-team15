@@ -8,7 +8,7 @@ W = H = 24
 ENV = {"unit_move_cost": 2, "unit_sap_cost": 40, "unit_sap_range": 4, "max_units": 16}
 
 
-def make_obs(ours, theirs, *, team=0, field=None, tile=None, match_steps=10):
+def make_obs(ours, theirs, *, team=0, field=None, tile=None, match_steps=10, team_points=(0, 0), seen=None):
     """ours/theirs: {slot: ((x, y), energy)}; Gegner sind sichtbar."""
     pos = np.full((2, 16, 2), -1, dtype=int)
     ene = np.full((2, 16), -1, dtype=int)
@@ -21,8 +21,9 @@ def make_obs(ours, theirs, *, team=0, field=None, tile=None, match_steps=10):
         "units_mask": mask,
         "map_features": {"tile_type": np.zeros((W, H), int) if tile is None else tile,
                          "energy": np.zeros((W, H), int) if field is None else field},
-        "sensor_mask": np.ones((W, H), dtype=bool),
+        "sensor_mask": np.ones((W, H), dtype=bool) if seen is None else seen,
         "match_steps": match_steps,
+        "team_points": np.array(team_points),
     }
 
 
@@ -166,3 +167,72 @@ def test_player_one_actions_use_world_coordinates():
     out = t.apply(np.zeros((16, 3), int), obs, 1, ENV, point_tiles=points, energy_map=np.zeros((W, H)),
                   nebula_map=np.zeros((W, H), bool), nebula_drain=0.0, dropoff=0.5, assigned={})
     assert tuple(out[0]) == (SAP, -3, 0)
+
+
+def test_nebel_shoots_hidden_holder_when_enemy_points_are_unexplained():
+    points = np.zeros((W, H), bool)
+    points[8, 5] = True
+    seen = np.ones((W, H), bool)
+    seen[8, 5] = False
+    t = Tactics(TacticsCfg.parse("granate,nebel"))
+    run(None, make_obs({0: ((5, 5), 300)}, {}, match_steps=9, team_points=(0, 10), seen=seen), points=points, tactics=t)
+    out, _ = run(None, make_obs({0: ((5, 5), 300)}, {}, match_steps=10, team_points=(0, 11), seen=seen), points=points,
+                 tactics=t)
+    assert tuple(out[0]) == (SAP, 3, 0)
+
+
+def test_nebel_needs_unexplained_points():
+    points = np.zeros((W, H), bool)
+    points[8, 5] = True
+    seen = np.ones((W, H), bool)
+    seen[8, 5] = False
+    t = Tactics(TacticsCfg.parse("granate,nebel"))
+    run(None, make_obs({0: ((5, 5), 300)}, {}, match_steps=9, team_points=(0, 10), seen=seen), points=points, tactics=t)
+    out, _ = run(None, make_obs({0: ((5, 5), 300)}, {}, match_steps=10, team_points=(0, 10), seen=seen), points=points,
+                 tactics=t)
+    assert out[0, 0] == STAY
+
+
+def test_erobern_takes_tile_of_weaker_holder_only():
+    points = np.zeros((W, H), bool)
+    points[6, 5] = True
+    out, t = run("erobern", make_obs({0: ((5, 5), 200)}, {0: ((6, 5), 50)}), points=points)
+    assert out[0, 0] == RIGHT and t.counts["erobern"] == 1
+    out, _ = run("erobern", make_obs({0: ((5, 5), 200)}, {0: ((6, 5), 250)}), points=points)
+    assert out[0, 0] == STAY
+
+
+def test_erobern_counts_enemies_that_could_join_the_tile():
+    points = np.zeros((W, H), bool)
+    points[6, 5] = True
+    out, _ = run("erobern", make_obs({0: ((5, 5), 200)}, {0: ((6, 5), 50), 1: ((7, 5), 180)}), points=points)
+    assert out[0, 0] == STAY
+
+
+def test_erobern_keeps_own_holders_on_their_tiles():
+    points = np.zeros((W, H), bool)
+    points[6, 5] = points[5, 5] = True
+    out, _ = run("erobern", make_obs({0: ((5, 5), 200)}, {0: ((6, 5), 50)}), points=points)
+    assert out[0, 0] == STAY
+
+
+def test_sparen_stops_weak_holder_from_firing_unless_sure_kill():
+    points = np.zeros((W, H), bool)
+    points[5, 5] = True
+    acts = np.zeros((16, 3), int)
+    acts[0] = (SAP, 3, 0)
+    out, t = run("sparen", make_obs({0: ((5, 5), 70)}, {0: ((8, 5), 100)}), acts, points=points)
+    assert out[0, 0] == STAY and t.counts["sparen"] == 1
+    out, _ = run("sparen", make_obs({0: ((5, 5), 70)}, {0: ((8, 5), 30)}), acts, points=points)
+    assert tuple(out[0]) == (SAP, 3, 0)  # sicherer Abschuss
+    out, _ = run("sparen", make_obs({0: ((5, 5), 200)}, {0: ((8, 5), 100)}), acts, points=points)
+    assert tuple(out[0]) == (SAP, 3, 0)  # genug Energie
+
+
+def test_wechsel_swaps_weak_holder_with_strong_neighbour():
+    points = np.zeros((W, H), bool)
+    points[5, 5] = True
+    out, t = run("wechsel", make_obs({0: ((5, 5), 20), 1: ((5, 6), 150)}, {}), points=points)
+    assert out[0, 0] == DOWN and out[1, 0] == UP and t.counts["wechsel"] == 1
+    out, _ = run("wechsel", make_obs({0: ((5, 5), 20), 1: ((5, 6), 60)}, {}), points=points)
+    assert out[0, 0] == STAY and out[1, 0] == STAY  # Nachbar zu schwach
