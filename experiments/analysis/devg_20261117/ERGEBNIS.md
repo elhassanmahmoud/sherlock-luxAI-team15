@@ -5,7 +5,7 @@ v9 mit Stay-Bias 1,0, Entstapeln und Halter-Regel) liegen das Ensemble v10 + v8L
 v10 + v9 + v8L bei +0,18 und Stay-Bias 0,5 bei +0,37 Prozentpunkten Punkteanteil gegen Kaggle; verlangt waren
 mindestens +1,0 mit unterer Grenze über 0. **Es gibt keine vierte Bestätigung; empfohlen bleibt PS**
 (`experiments/candidates/devf_20261117/agent_p9_s10_halter.zip`). PS lag auch auf diesen 200 unbenutzten Karten
-+5,02 [+3,92; +6,03] Prozentpunkte vor R3, der dritte unabhängige Kartensatz mit diesem Bild.
++5,02 [+3,92; +6,12] Prozentpunkte vor R3, der dritte unabhängige Kartensatz mit diesem Bild.
 
 ## Was gelaufen ist
 

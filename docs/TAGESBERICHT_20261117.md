@@ -54,6 +54,9 @@ Der Kaggle-Code ist nicht im Paket. In der Präsentation offenlegen, von wem das
 ## Offen
 
 - Ja von Mahmoud und Moayed; Nachspielen unter Python 3.10; danach Release und `dist/agent.zip` nach der Anleitung.
-- Läuft noch: DAgger-Runde 7 → Schüler v10 → vorab festgelegter Vergleich Dev G (7264000–7264199); besteht ein
-  neuer Schüler, folgt eine eigene frische Bestätigung auf 7265000–7265399.
+- Abgeschlossen am Nachmittag: DAgger-Runde 7 → Schüler v10 → vorab festgelegter Vergleich Dev G (7264000–7264199).
+  Keine neue Variante war besser als der empfohlene Kandidat (v10 +0,47, Dreier-Ensemble +0,18, Stay-Bias 0,5 +0,37;
+  verlangt +1,0), der dort erneut +5,0 Prozentpunkte vor R3 lag
+  ([Ergebnis](../experiments/analysis/devg_20261117/ERGEBNIS.md)). DAgger und Schalter sind damit weitgehend
+  ausgereizt.
 - Präsentation (27.11., Upload bis 23.11.): Mahmouds Folien auf den neuen Agenten umstellen, falls gewechselt wird.
