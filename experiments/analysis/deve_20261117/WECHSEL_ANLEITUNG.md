@@ -1,4 +1,6 @@
-# Wechsel von R3 auf den reinen Schüler v9: Ablauf (vorbereitet am 17.11.2026, noch nicht ausgeführt)
+# Wechsel von R3 auf den reinen Schüler: Ablauf (vorbereitet am 17.11.2026, noch nicht ausgeführt)
+
+**Stand 15:11: Empfohlen ist das Paket aus der dritten Bestätigung,** `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip` (SHA-256 `0c59706b…6099`, reiner Schüler v9 mit Stay-Bias 1,0 und Halter-Regel). Es lag auf frischen Karten +1,64 Prozentpunkte Punkteanteil gegen Kaggle vor P9 und +5,51 vor R3 ([Ergebnis](../devf_20261117/BESTAETIGUNG3_ERGEBNIS.md)). Die Schritte unten gelten genauso, nur mit diesem Paket und seiner Prüfsumme.
 
 **Erst ausführen, wenn beide Bedingungen erfüllt sind:**
 
@@ -34,6 +36,6 @@ Rückweg genügt es, `copy_final_release` wieder darauf zeigen zu lassen und `di
   des Kursrunners bestand er auf beiden Seiten; ganze Kursrunner-Spiele prüft Codex mit dem 3.10-Nachspielen.
 - **Robustheit:** gegen default, Zufall, Rush, Solution-Variante und das DQN der Vorlage alle 50 Spiele gewonnen wie
   R3, gegen V14 48/50 (R3 34/50); kein Warnzeichen ([Ergebnis](../robust_p9_20261117/ERGEBNIS.md)).
-- **Mögliche bessere Variante:** Stay-Bias 1,0 mit Halter-Regel war auf Dev F besser als P9
-  ([Dev F](../devf_20261117/ERGEBNIS.md)); ihre eigene frische Bestätigung auf 7261000–7261399 läuft. Besteht sie,
-  wäre sie der bessere Ersatz (gleicher Ablauf, anderes Paket).
+- **Bessere Variante bestätigt:** Stay-Bias 1,0 mit Halter-Regel bestand die dritte frische Bestätigung auf
+  7261000–7261399 (Solution 787/800 wie R3, Kaggle 20/800, Matches gegen Kaggle 216 statt 76, direkt 194/200). Die
+  Robustheitsprüfung lief mit P9; die neue Variante hat dasselbe Netz und nur zwei andere Schalterwerte.

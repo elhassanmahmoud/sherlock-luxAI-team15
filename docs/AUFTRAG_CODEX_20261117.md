@@ -38,10 +38,10 @@ Moayed.** Ergänzt den Auftrag vom 16.11.; offene Punkte von dort gelten weiter.
 
 ## Aufgaben (in dieser Reihenfolge)
 
-1. **Moayed, bitte entscheiden:** Der reine Schüler v9 hat die frische Bestätigung bestanden. Ein Wechsel von R3
+1. **Moayed, bitte entscheiden:** Zwei Schüler-Pakete haben frische Bestätigungen bestanden; empfohlen ist `experiments/candidates/devf_20261117/agent_p9_s10_halter.zip` (SHA-256 `0c59706b…6099`, Stay-Bias 1,0 und Halter-Regel, +1,64 Punkteanteil gegen Kaggle vor P9, [Ergebnis](../experiments/analysis/devf_20261117/BESTAETIGUNG3_ERGEBNIS.md)). Ein Wechsel von R3
    braucht dein ausdrückliches Ja zusammen mit Mahmouds. Bitte im Arbeitsstand oder direkt an Mahmoud melden.
 2. **Nachspielen unter Python 3.10** (bei Mahmoud fehlt Python 3.10), wichtig vor einem Wechsel:
-   `scripts/xversion_replay.py record experiments/candidates/deve_20261117/agent_p9_reiner_schueler.zip spiel.pkl
+   `scripts/xversion_replay.py record experiments/candidates/devf_20261117/agent_p9_s10_halter.zip spiel.pkl
    --seed 4242` in der Projektumgebung, dann `python3.10 -I scripts/xversion_replay.py replay … spiel.pkl`. Erwartet:
    0 abweichende Aktionen. Dazu die Ladeprüfung des Kursrunners auf beiden Seiten (`scripts.build_submission.check`).
    Ergebnis nach `experiments/analysis/deve_20261117/PY310_CODEX.md`.
