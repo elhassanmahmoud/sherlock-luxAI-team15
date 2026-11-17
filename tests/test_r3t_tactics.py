@@ -236,3 +236,10 @@ def test_wechsel_swaps_weak_holder_with_strong_neighbour():
     assert out[0, 0] == DOWN and out[1, 0] == UP and t.counts["wechsel"] == 1
     out, _ = run("wechsel", make_obs({0: ((5, 5), 20), 1: ((5, 6), 60)}, {}), points=points)
     assert out[0, 0] == STAY and out[1, 0] == STAY  # Nachbar zu schwach
+
+
+def test_student_switch_is_a_layer_option_not_a_tactic():
+    cfg = TacticsCfg.parse("schueler=ens8,schueler_radius=4")
+    assert cfg.schueler == "ens8" and cfg.schueler_radius == 4
+    assert cfg.layer_active() and not cfg.active()
+    assert not TacticsCfg.parse("").layer_active()

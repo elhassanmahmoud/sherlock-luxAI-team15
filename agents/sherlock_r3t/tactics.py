@@ -74,6 +74,12 @@ class TacticsCfg:
     direkt daneben, die mindestens wechsel_high Schusskosten hat: beide ziehen gleichzeitig, das Feld bleibt besetzt."""
     wechsel_low: float = 1.0
     wechsel_high: float = 2.5
+    schueler: str = ""
+    """Pfad zu einem Imitations-Schüler (oder Kurzname ens8). Wie beim Hybrid "mixed": Units mit sichtbarem Gegner im
+    Umkreis schueler_radius und Units ohne Punktefeld-Aufgabe spielen den Schüler, Halter und Units auf dem Weg zum
+    Punktefeld ohne Gegner in der Nähe spielen R3. Schalter des Schülers wie bisher: Stay-Bias 1,5, Entstapeln.
+    Wird in agents/sherlock_r3t/agent.py ausgewertet, die übrigen Taktiken wirken danach."""
+    schueler_radius: int = 5
 
     @classmethod
     def parse(cls, spec: str) -> "TacticsCfg":
@@ -93,6 +99,10 @@ class TacticsCfg:
 
     def active(self) -> bool:
         return self.granate or self.sog or self.tanken or self.erobern or self.sparen or self.wechsel
+
+    def layer_active(self) -> bool:
+        """Irgendein Teil der Schicht aktiv (Taktiken oder Schüler)."""
+        return self.active() or bool(self.schueler)
 
 
 def _cheb(a, b) -> int:

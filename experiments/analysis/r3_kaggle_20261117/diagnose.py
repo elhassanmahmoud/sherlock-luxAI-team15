@@ -157,6 +157,10 @@ def play(job):
     team = 0 if side == "player_0" else 1
     rows, deaths = {}, []
     match, mismatch, step, done = -1, 0, 0, False
+    from agents.sherlock_r3t.tactics import Tactics, TacticsCfg
+    predictor = Tactics(TacticsCfg())
+    pred = {}  # Kategorie -> [n, Summe p(tatsaechlich), Treffer top-1, blieb stehen, lief weiter]
+    prev_true = {}
     while not done:
         s = snap(env.state)
         if s["match_steps"] == 0:
@@ -169,11 +173,31 @@ def play(job):
         obs, _, term, trunc, _ = env.step(acts)
         done = bool(np.asarray(term[side])) or bool(np.asarray(trunc[side]))
         s2 = snap(env.state)
+        k = 1 - team
+        if s["match_steps"] != 0 and s2["match_steps"] != 0:
+            W_, H_ = s["tile"].shape
+            for u in np.flatnonzero(r["alive"][k] & r["survive"][k]):
+                q = (int(s["pos"][k, u, 0]), int(s["pos"][k, u, 1]))
+                nxt = (int(r["pos"][k, u, 0]), int(r["pos"][k, u, 1]))
+                prv = prev_true.get(int(u))
+                holder = bool(s["weights"][q] > 0)
+                cat = "halter" if holder else "unbekannt" if prv is None else "stehend" if prv == q else "laufend"
+                d = predictor._predict(q, prv, int(s["en"][k, u]), int(p["unit_move_cost"]), s["tile"], holder, W_, H_)
+                c = pred.setdefault(cat, [0, 0.0, 0, 0, 0])
+                c[0] += 1
+                c[1] += d.get(nxt, 0.0)
+                c[2] += int(max(d, key=d.get) == nxt)
+                c[3] += int(nxt == q)
+                if prv is not None and prv != q:
+                    c[4] += int((nxt[0] - q[0], nxt[1] - q[1]) == (q[0] - prv[0], q[1] - prv[1]))
+        prev_true = {int(u): (int(s2["pos"][k, u, 0]), int(s2["pos"][k, u, 1]))
+                     for u in np.flatnonzero(s2["mask"][k] & (s2["en"][k] >= 0))} if s2["match_steps"] != 0 else {}
         for t in range(2):
             key = (match, t)
             row = rows.setdefault(key, dict(seed=seed, side=side, match=match, team="R3" if t == team else "Kaggle",
                                             **{f: 0 for f in FLOWS}, saps=0, sap_direct_hits=0, sap_splash_hits=0,
                                             sap_misses=0, deaths_collision=0, deaths_energy=0, unit_steps=0,
+                                            field_net_points=0, field_raw_points=0, field_raw_other=0,
                                             unit_steps_on_points=0, energy_sum_end=0, units_end=0, points=0,
                                             won=0, check_mismatch=0))
             al = r["alive"][t]
@@ -210,6 +234,12 @@ def play(job):
                     if s2["tile"][x, y] == 1:
                         row["nebula"] += int(p["nebula_tile_energy_reduction"])
                     row["field_net"] += gain
+                    raw = int(np.asarray(env.state.map_features.energy)[x, y])  # Feldwert ohne Kappung
+                    if s["weights"][x, y] > 0:
+                        row["field_net_points"] += gain
+                        row["field_raw_points"] += raw
+                    else:
+                        row["field_raw_other"] += raw
                     if e2 < 0:
                         row["deaths_energy"] += 1
                         cause = "sap" if info_row["sap_in"] >= info_row["void_in"] and info_row["sap_in"] > 0 else \
@@ -238,6 +268,9 @@ def play(job):
         row["check_mismatch"] = mismatch
     counts = dict(getattr(getattr(me, "tactics", None), "counts", {}) or {})
     game = dict(seed=seed, side=side, agent=spec or "r3", **{f"t_{k}": v for k, v in sorted(counts.items())})
+    for cat, (n, ps, top, stay, cont) in pred.items():
+        game.update({f"v_{cat}_n": n, f"v_{cat}_p": ps, f"v_{cat}_top1": top, f"v_{cat}_stay": stay,
+                     f"v_{cat}_cont": cont})
     return out, deaths, game
 
 
@@ -258,7 +291,7 @@ def main():
     matches = [r for rows, _, _ in res for r in rows]
     deaths = [d for _, ds, _ in res for d in ds]
     games = [g for _, _, g in res]
-    keys = sorted({k for g in games for k in g if k.startswith("t_")})
+    keys = sorted({k for g in games for k in g if k.startswith(("t_", "v_"))})
     games = [{**{k: g.get(k) for k in ("seed", "side", "agent")}, **{k: g.get(k, 0) for k in keys}} for g in games]
     for name, data in (("matches.csv", matches), ("deaths.csv", deaths), ("games.csv", games)):
         with open(out / name, "w", newline="") as f:
