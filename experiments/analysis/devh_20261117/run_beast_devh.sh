@@ -4,6 +4,7 @@
 #   run_beast_devh.sh FROZEN_DIR PREV_LOG KEY=VALUE...
 set -u
 FROZEN=$1; PREV_LOG=$2; shift 2
+PREV_LOG=$(cd "$(dirname "$PREV_LOG")" && pwd)/$(basename "$PREV_LOG")  # absolut, vor dem cd
 MAIN=/Users/elhassanmahmoud/Documents/AKI_LuxAgent15
 cd $FROZEN || exit 1
 PY=$MAIN/.venv/bin/python

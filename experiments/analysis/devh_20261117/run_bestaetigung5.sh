@@ -3,7 +3,8 @@
 # Solution und Kaggle; danach der Kandidat (Repo-Code mit seinen Schaltern) direkt gegen das K-Paket auf 7267000-7267099.
 #   run_bestaetigung5.sh FROZEN_DIR KANDIDAT_ZIP PREV_LOG PREV_MARKER KEY=VALUE...
 set -u
-FROZEN=$1; CAND=$2; PREV_LOG=$3; MARKER=$4; shift 4
+FROZEN=$1; CAND=$(cd "$(dirname "$2")" && pwd)/$(basename "$2"); PREV_LOG=$3; MARKER=$4; shift 4
+PREV_LOG=$(cd "$(dirname "$PREV_LOG")" && pwd)/$(basename "$PREV_LOG")  # absolut, vor dem cd
 MAIN=/Users/elhassanmahmoud/Documents/AKI_LuxAgent15
 cd $FROZEN || exit 1
 PY=$MAIN/.venv/bin/python
