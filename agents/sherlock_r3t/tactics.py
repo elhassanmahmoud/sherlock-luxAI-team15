@@ -80,6 +80,9 @@ class TacticsCfg:
     Punktefeld ohne Gegner in der Nähe spielen R3. Schalter des Schülers wie bisher: Stay-Bias 1,5, Entstapeln.
     Wird in agents/sherlock_r3t/agent.py ausgewertet, die übrigen Taktiken wirken danach."""
     schueler_radius: int = 5
+    schueler_halter: bool = False
+    """Mit schueler: Halter auf Punktefeldern und Units auf dem Weg dorthin spielen immer R3, auch mit Gegner in der
+    Nähe (wie der Hybrid "points"). Der Schüler übernimmt dann nur Units ohne Punktefeld-Aufgabe."""
 
     @classmethod
     def parse(cls, spec: str) -> "TacticsCfg":

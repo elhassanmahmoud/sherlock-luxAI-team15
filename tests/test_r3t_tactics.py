@@ -243,3 +243,8 @@ def test_student_switch_is_a_layer_option_not_a_tactic():
     assert cfg.schueler == "ens8" and cfg.schueler_radius == 4
     assert cfg.layer_active() and not cfg.active()
     assert not TacticsCfg.parse("").layer_active()
+
+
+def test_student_holder_switch_parses():
+    cfg = TacticsCfg.parse("schueler=ens8,schueler_halter")
+    assert cfg.schueler_halter and cfg.layer_active()

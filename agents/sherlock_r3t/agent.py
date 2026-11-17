@@ -91,7 +91,8 @@ def _r3t_class(zip_path: Path):
                 holder = bool(self.belief.point_tiles[x, y]) and ctx["first_on_tile"].get((x, y)) == uid
                 tgt = ctx["assigned"].get(uid)
                 to_point = tgt is not None and bool(self.belief.point_tiles[int(tgt[0]), int(tgt[1])])
-                if near or not (holder or to_point):
+                keep = holder or to_point
+                if (near and not (keep and self.tactics.cfg.schueler_halter)) or not keep:
                     out[uid] = student_actions[uid]
                     self.tactics.counts["schueler_units"] += 1
             return out
