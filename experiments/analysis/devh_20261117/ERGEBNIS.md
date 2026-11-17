@@ -6,7 +6,8 @@ nie gemessene Schüler-Schalter und der Schüler ohne die alten Sicherheitsmaske
 Schüler.** Die meisten bringen nichts oder schaden leicht. **Alles gleichzeitig einzuschalten schadet deutlich:**
 −1,64 [−2,54; −0,75] Prozentpunkte Punkteanteil gegen Kaggle, nur 7 statt 24 von 400 Spielen gegen Kaggle gewonnen.
 Nach der vorab festgelegten Regel hilft nur „öfter schießen“ (`imit_sap_bias=0.5`), und das knapp (+0,52 bei
-verlangten +0,5). Es geht in die frische Bestätigung 5.
+verlangten +0,5). **In der frischen Bestätigung 5 fiel es durch** (+0,13 gegenüber K); K bleibt die beste Version und ist
+seit dem Abend die Abgabe.
 
 [Plan mit zwei Nachträgen](PLAN.md) · [Auswertung](analyze_devh.py) · Protokolle [Hauptlauf](run_devh.log),
 [Nachträge](run_devh_nachtrag.log). Eingefrorene Quellen `0cd2ce3` (Hauptlauf) und `9d8ebfb` (ENDE10F, MASKFREI);
@@ -74,8 +75,37 @@ alle Spiele über 303 Schritte, kein abgefangener Fehler.
 6. Das Ergebnis passt zu Dev G: Die Spielweise des Schülers ist durch Nachahmung und einfache Schalter weitgehend
    ausgereizt. Größere Fortschritte bräuchten etwas Neues im Lernen selbst, nicht mehr Regeln.
 
-## Wie es weitergeht
+## Bestätigung 5 (7267000–7267399, 22:25–23:22): nicht bestanden
 
-SAPBIAS ist nach der Regel der einzige Kandidat und spielt in der frischen Bestätigung 5 auf 7267000–7267399 gegen K und
-R3 (Paket `experiments/candidates/devh_20261117/agent_k_sapbias.zip`, SHA-256 `f3c725c1…eb47`). Dort sind mindestens +1,0
-Prozentpunkte gegenüber K verlangt; der Dev-H-Wert von +0,52 macht ein Bestehen eher unwahrscheinlich.
+Kandidat SAPBIAS als Kurspaket (`agent_k_sapbias.zip`), K als Kurspaket (`agent_p9_s10_halter.zip`) und R3 je 1.600 Spiele
+auf 400 frischen Karten, danach der Kandidat direkt gegen K ([Skript](run_bestaetigung5.sh),
+[Protokoll](run_bestaetigung5.log), [Auswertung](analyze_bestaetigung5.py)):
+
+| | Solution | Kaggle | Matches gegen Kaggle | Punkteanteil gegen Kaggle |
+|---|---:|---:|---:|---:|
+| Kandidat (K + öfter schießen) | 777/800 | 28/800 | 222/2.400 | 39,5 % |
+| **K** | 778/800 | **34/800** | **238/2.400** | 39,3 % |
+| R3 | 789/800 | 18/800 | 98/2.400 | 33,8 % |
+
+| Bedingung | verlangt | gemessen | erfüllt |
+|---|---|---|---|
+| 1. gegen K: Punkteanteil gegen Kaggle | Mittel ≥ +1,0, untere Grenze > 0 | +0,13 [−0,55; +0,81] | nein |
+| 2. gegen K: Spiele Solution + Kaggle | Mittel ≥ −0,5, untere Grenze ≥ −1,5 | −0,44 [−1,62; +0,81] | nein |
+| 3. gegen K: Spiele Solution | Mittel ≥ −0,5 | −0,12 [−1,12; +0,88] | ja |
+| 4. gegen K: Matches je Spiel gegen Kaggle | Mittel > 0 | −0,020 [−0,083; +0,040] | nein |
+| 5a. gegen R3: Punkteanteil gegen Kaggle | Mittel ≥ +2,0, untere Grenze > 0 | +4,62 [+3,75; +5,48] | ja |
+| 5b. gegen R3: Spiele Solution + Kaggle | Mittel ≥ −0,5, untere Grenze ≥ −1,5 | −0,12 [−1,50; +1,25] | ja |
+| 5c. gegen R3: Spiele Solution | Mittel ≥ −0,5 | −1,50 [−3,12; ±0,00] | nein |
+| 5d. gegen R3: Matches je Spiel gegen Kaggle | Mittel > 0 | +0,155 [+0,100; +0,210] | ja |
+| 6. Technik | keine Fehler, 303 Schritte | geprüft | ja |
+
+Direkt gegen K gewann der Kandidat 94/200 Spiele (298/600 Matches), also etwa gleich stark. **„Öfter schießen“ ist
+damit verworfen, K bleibt die empfohlene Version.** Der knappe Dev-H-Wert (+0,52) hat sich auf frischen Karten nicht
+bestätigt.
+
+**Zur Information, K gegen R3 auf denselben frischen Karten:** Punkteanteil gegen Kaggle +4,49 [+3,66; +5,34]
+Prozentpunkte, Spiele gegen beide Gegner +0,31 [−1,12; +1,81], gewonnene Matches gegen Kaggle 238 statt 98, Spiele gegen
+Kaggle 34 statt 18. Gegen Solution gewann K hier 778/800, R3 789/800. In der dritten Bestätigung waren es 787 zu 787. Der
+Vorsprung gegen Kaggle zeigt sich damit auf dem vierten unabhängigen Kartensatz. Gegen Solution liegt K hier etwas
+hinter R3. Den Wechsel von R3 auf K haben Mahmoud und Moayed am Abend beschlossen
+([Release](../../releases/20261117_sherlock_schueler/README.md)).
