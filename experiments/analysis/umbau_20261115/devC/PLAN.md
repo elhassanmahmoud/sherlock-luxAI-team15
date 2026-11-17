@@ -24,3 +24,11 @@ Abgabe. Dev C wird nach dieser Gegenprobe nicht mehr für Auswahlen zwischen die
 (ohne V14, Schalter Stay-Bias 1,5 und Entstapeln) gegen Solution, Kaggle und R3 ([Skript](run_e2.sh)). Grund: Auf
 Dev A gewann er 197/200 gegen Solution, 8/200 gegen Kaggle und 196/200 direkt gegen R3. Für ihn gilt dieselbe
 Leseregel.
+
+**Nachtrag 2, 17.11.2026, 05:58, vor dem ersten Dev-C-Spiel dieses Kandidaten:** Nach DAgger-Runde 5 spielt
+zusätzlich der Hybrid aus dem Ensemble v8 + v8L (gepackt, SHA `f021f63d…`) auf Dev C gegen Solution, Kaggle und R3
+([Skript](run_e3.sh)). Grund: Auf Dev A lag er gegen Solution und Kaggle zusammen +2,25 [−0,75; +5,25] Prozentpunkte
+über R3 (Solution 198/200, Kaggle 10/200), der höchste Wert aller Schüler. Ausgewählt wurde er nur nach den
+Dev-A-Zahlen. Es gilt dieselbe Leseregel. Einschränkung: Die R3-Zahlen auf Dev C sind schon bekannt, und er ist der
+fünfte Kandidat auf diesen Karten. Ein Bestehen hieße deshalb nur, dass Mahmoud und Moayed eine frische Bestätigung
+auf 7159000–7159399 festlegen können. Danach wird Dev C für keinen weiteren Kandidaten benutzt.
