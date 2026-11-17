@@ -63,3 +63,22 @@ auf dem M5 und doppelt nichts.
 
 Keine Übernahme oder Änderung der Abgabe, keine Wiederholung abgeschlossener Studien, keine Nutzung der für Mahmoud
 reservierten Karten, kein Training mit Millionen Entscheidungen auf dem M3.
+
+## Nachtrag 17.11.2026 morgens (Claude Code nach der Nacht auf dem M5)
+
+**Stand:** R3 bleibt die Abgabe. Kein Schüler war gegen Solution und Kaggle sicher besser als R3, weder auf Dev A noch
+auf den neuen Karten Dev C. Das reine Ensemble aus v7 und v7L gewann aber auf Dev C **192/200 direkt gegen R3**.
+Nach DAgger-Runde 5 lag der beste Hybrid (Ensemble v8 + v8L) auf Dev C bei +1,75 Prozentpunkten über R3, knapp unter
+der vorab festgelegten Schwelle von +2. Alles Weitere steht im [Morgenbericht](MORGENBERICHT_20261117.md). Die Aufgaben 0–4 gelten weiter. Änderungen:
+
+- **Zu 2 (Präsentation):** In die Fragenliste bitte auch diese Frage aufnehmen: „Euer Netz schlägt euren eigenen Agenten
+  192 von 200 Mal. Warum gebt ihr es nicht ab?“ Antwort: Gegen Solution und Kaggle war es nicht besser, und dort messen
+  wir die Stärke gegen fremde Gegner ([Dev C](../experiments/analysis/umbau_20261115/devC/ERGEBNIS.md)).
+- **Zu 3 (Code-Review):** Die v6-Änderung ist gepusht (`8324845`). Zusätzlich bitte die beiden Auswertewerkzeuge
+  `experiments/analysis/umbau_20261115/tools/compare_dev.py` und `offline_eval.py` lesen und prüfen. Befunde wie oben als
+  Datei.
+- **5 entfällt:** Mahmouds M5 sammelt 600 DAgger-Spiele in 10 Minuten. Auf dem M3 lohnt sich das nicht.
+- **Karten:** Dev C (7164000–7164099), 7253000–7255599 (DAgger 4/5 und frische Prüfspiele) sind jetzt verbraucht.
+  7159000–7159399 bleibt für eine Bestätigung reserviert.
+- Ab 17.11., 09:00 laufen auf Mahmouds Rechner keine Prozesse mehr. Die Dateien unter „Heute nicht ändern“ bitte
+  trotzdem nur nach Absprache mit Mahmoud ändern.
