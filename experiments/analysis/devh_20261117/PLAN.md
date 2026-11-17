@@ -136,3 +136,18 @@ heute mehr schaden als nützen, ist offen.
 
 MASKFREI spielt nach ENDE10F auf denselben Karten (800 Spiele), aus derselben eingefrorenen Quelle wie ENDE10F. Es gilt
 dieselbe Regel „Ein Modul hilft“. Am Ablauf der Bestätigung 5 ändert sich nichts.
+
+## Nachtrag 17.11.2026, 22:30, vor dem ersten Spiel der Bestätigung 5: Kandidat
+
+Nach der Regel hilft nur **SAPBIAS** (`imit_sap_bias=0.5`): +0,52 [−0,39; +1,43] Prozentpunkte Punkteanteil gegen
+Kaggle gegenüber K, Spiele gegen Solution +0,50, gegen beide zusammen ±0,00. ENDE10F (+0,18) und MASKFREI (−0,71)
+helfen nicht. Damit ist SAPBIAS allein der Kandidat; eine Kombination entfällt.
+
+- Kurspaket `experiments/candidates/devh_20261117/agent_k_sapbias.zip`, SHA-256
+  `f3c725c1ad6e598c94196e5a31aa7b4478f3b99e24d0d21845b6d57f7f65eb47`, aus der eingefrorenen Quelle `9d8ebfb`; ein
+  zweiter Bau ergab dieselbe Prüfsumme, Ladeprüfung des Kursrunners auf beiden Seiten bestanden („Check ok“).
+- Gleichheitstest: Das Paket spielte auf 7266000–7266003 (beide Seiten, gegen Solution und Kaggle, 16 Spiele) in allen
+  Spielspalten (Ergebnis, Punkte, Matches, Schüsse, Stehen usw.) genau wie SAPBIAS auf Dev H. Nur die
+  Gedächtnis-Statistiken `relics_found` und `known_point_tiles` stehen beim Paket auf 0, weil sie dort vom äußeren
+  Agent_x statt vom Schüler gelesen werden.
+- Bestätigung 5 auf 7267000–7267399 genau nach der Regel oben (gegenüber K und gegenüber R3).
