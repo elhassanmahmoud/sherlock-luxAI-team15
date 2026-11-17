@@ -18,11 +18,12 @@ Moayed.** Ergänzt den Auftrag vom 16.11.; offene Punkte von dort gelten weiter.
 - **Dev E (vorab festgelegt, 7258000–7258199):** Der reine Schüler v9 (Ensemble v9 + v8L) war am stärksten:
   Solution 394/400 (R3 387/400), **Kaggle 22/400** (R3 2/400), Matches gegen Kaggle 140 statt 54 von 1.200, direkt
   98/100 gegen R3 ([Ergebnis](../experiments/analysis/deve_20261117/ERGEBNIS.md)).
-- Seit 12:36 läuft seine frische Bestätigung auf 7260000–7260399
-  ([Regel und Kandidat](../experiments/analysis/deve_20261117/BESTAETIGUNG_PLAN.md)), danach Dev F
-  ([Plan](../experiments/analysis/devf_20261117/PLAN.md)). Kurspaket des Kandidaten:
+- **Frische Bestätigung auf 7260000–7260399 bestanden** (13:12): Solution 789/800 (R3 787/800), Kaggle 28/800
+  (R3 16/800), Matches gegen Kaggle 236 statt 90 von 2.400, Punkteanteil gegen Kaggle +4,02 [+3,10; +4,92], direkt
+  192/200 ([Ergebnis](../experiments/analysis/deve_20261117/BESTAETIGUNG_ERGEBNIS.md)). Kurspaket im Repo:
   `experiments/candidates/deve_20261117/agent_p9_reiner_schueler.zip` (SHA-256 `1579eb83…253f`, 9,5 MB, Format
-  wie R3, Ladeprüfung bestanden).
+  wie R3, Ladeprüfung bestanden). Danach laufen Dev F ([Plan](../experiments/analysis/devf_20261117/PLAN.md)) und
+  die Robustheit gegen sechs weitere Spielweisen.
 
 ## Rahmen
 
@@ -37,13 +38,13 @@ Moayed.** Ergänzt den Auftrag vom 16.11.; offene Punkte von dort gelten weiter.
 
 ## Aufgaben (in dieser Reihenfolge)
 
-1. **Moayed, bitte:** Entscheidung vorbereiten. Besteht ein Kandidat die frische Bestätigung, braucht ein Wechsel
-   von R3 dein ausdrückliches Ja zusammen mit Mahmoud. Die Ergebnisse stehen dann im Arbeitsstand.
-2. **Nachspielen unter Python 3.10** (bei Mahmoud fehlt Python 3.10): für das bestätigte Kandidatenpaket
-   `scripts/xversion_replay.py record PAKET.zip spiel.pkl --seed 4242` in der Projektumgebung, dann
-   `python3.10 -I scripts/xversion_replay.py replay PAKET.zip spiel.pkl`. Erwartet: 0 abweichende Aktionen. Dazu
-   die Ladeprüfung des Kursrunners auf beiden Seiten (`scripts.build_submission.check`). Das Paket legt Mahmoud nach
-   der Bestätigung unter `experiments/candidates/` ab.
+1. **Moayed, bitte entscheiden:** Der reine Schüler v9 hat die frische Bestätigung bestanden. Ein Wechsel von R3
+   braucht dein ausdrückliches Ja zusammen mit Mahmouds. Bitte im Arbeitsstand oder direkt an Mahmoud melden.
+2. **Nachspielen unter Python 3.10** (bei Mahmoud fehlt Python 3.10), wichtig vor einem Wechsel:
+   `scripts/xversion_replay.py record experiments/candidates/deve_20261117/agent_p9_reiner_schueler.zip spiel.pkl
+   --seed 4242` in der Projektumgebung, dann `python3.10 -I scripts/xversion_replay.py replay … spiel.pkl`. Erwartet:
+   0 abweichende Aktionen. Dazu die Ladeprüfung des Kursrunners auf beiden Seiten (`scripts.build_submission.check`).
+   Ergebnis nach `experiments/analysis/deve_20261117/PY310_CODEX.md`.
 3. **Code-Review (nur lesen):** `agents/sherlock_r3t/` (Taktikschicht und Schüler-Mix), `scripts/build_r3t_package.py`,
    `scripts/build_student_package.py`, die Schalter `imit_hold_points` und `imit_fill_points` in
    `agents/sherlock/imitation_agent.py`. Schwerpunkte: Koordinaten (kanonisch gegen Welt, Spiegelung für player_1),
