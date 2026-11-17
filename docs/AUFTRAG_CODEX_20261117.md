@@ -43,8 +43,12 @@ Moayed.** Ergänzt den Auftrag vom 16.11.; offene Punkte von dort gelten weiter.
 2. **Nachspielen unter Python 3.10** (bei Mahmoud fehlt Python 3.10), wichtig vor einem Wechsel:
    `scripts/xversion_replay.py record experiments/candidates/devf_20261117/agent_p9_s10_halter.zip spiel.pkl
    --seed 4242` in der Projektumgebung, dann `python3.10 -I scripts/xversion_replay.py replay … spiel.pkl`. Erwartet:
-   0 abweichende Aktionen. Dazu die Ladeprüfung des Kursrunners auf beiden Seiten (`scripts.build_submission.check`).
-   Ergebnis nach `experiments/analysis/deve_20261117/PY310_CODEX.md`.
+   0 abweichende Aktionen. Unter Python 3.14 hat Mahmouds Rechner das Paket bereits geprüft: Ladeprüfung auf beiden
+   Seiten und 8/8 ganze Kursrunner-Spiele mit bitgenau geprüften Gewichten
+   ([Protokoll](../experiments/analysis/devf_20261117/kursrunner_p9_s10_halter.json)). Bitte die 8 Kursrunner-Spiele
+   (`python -m scripts.check_candidate_runner --weights …/sherlock/weights/agent.pth --out …`) auch unter 3.10
+   wiederholen. Hinweis: Im Prüfskript war seit `493c3eb` der `agent_path` für den Kursrunner verdeckt, behoben in
+   `c8d164e`. Ergebnis nach `experiments/analysis/deve_20261117/PY310_CODEX.md`.
 3. **Code-Review (nur lesen):** `agents/sherlock_r3t/` (Taktikschicht und Schüler-Mix), `scripts/build_r3t_package.py`,
    `scripts/build_student_package.py`, die Schalter `imit_hold_points` und `imit_fill_points` in
    `agents/sherlock/imitation_agent.py`. Schwerpunkte: Koordinaten (kanonisch gegen Welt, Spiegelung für player_1),
