@@ -190,8 +190,10 @@ def play(job):
                 c[3] += int(nxt == q)
                 if prv is not None and prv != q:
                     c[4] += int((nxt[0] - q[0], nxt[1] - q[1]) == (q[0] - prv[0], q[1] - prv[1]))
-        prev_true = {int(u): (int(s2["pos"][k, u, 0]), int(s2["pos"][k, u, 1]))
-                     for u in np.flatnonzero(s2["mask"][k] & (s2["en"][k] >= 0))} if s2["match_steps"] != 0 else {}
+        # Position zu Beginn dieses Schritts merken: im nächsten Schritt ist das die Vorposition (wie in der Taktikschicht,
+        # die die Gegnerposition der letzten Beobachtung mit der aktuellen vergleicht)
+        prev_true = {int(u): (int(s["pos"][k, u, 0]), int(s["pos"][k, u, 1]))
+                     for u in np.flatnonzero(r["alive"][k] & r["survive"][k])} if s2["match_steps"] != 0 else {}
         for t in range(2):
             key = (match, t)
             row = rows.setdefault(key, dict(seed=seed, side=side, match=match, team="R3" if t == team else "Kaggle",
