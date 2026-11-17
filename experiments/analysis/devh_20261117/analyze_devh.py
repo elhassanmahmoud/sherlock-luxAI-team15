@@ -22,14 +22,14 @@ from experiments.analysis.umbau_20261115.tools.compare_dev import load  # noqa: 
 
 D = Path(__file__).resolve().parent
 ORDER = ("K", "ENDE10", "ENDE20", "ENDE10F", "ALLE", "ENDSAP", "GRANATE", "NEBEL", "SOG", "FOCUS", "SPAREN", "WECHSEL",
-         "EROBERN", "TANKEN", "COVER", "SAPBIAS", "BEAST")
+         "EROBERN", "TANKEN", "COVER", "SAPBIAS", "MASKFREI", "BEAST")
 SINGLE = tuple(n for n in ORDER if n not in ("K", "ALLE", "BEAST"))
 SWITCHES = {"ENDE10": ["imit_end_fill=10"], "ENDE20": ["imit_end_fill=20"],
             "ENDE10F": ["imit_end_fill=10", "imit_end_force=true"], "ENDSAP": ["end_sap=10"],
             "GRANATE": ["t:granate"], "NEBEL": ["t:granate", "t:nebel"], "SOG": ["t:sog"],
             "FOCUS": ["focus_sap=true"], "SPAREN": ["t:sparen"], "WECHSEL": ["t:wechsel"],
             "EROBERN": ["t:erobern"], "TANKEN": ["t:tanken"], "COVER": ["imit_cover=0.5"],
-            "SAPBIAS": ["imit_sap_bias=0.5"]}
+            "SAPBIAS": ["imit_sap_bias=0.5"], "MASKFREI": ["safe_moves=false", "collision_guard=false"]}
 cell = lambda r: f"{r[0]:+.2f} [{r[1]:+.2f}; {r[2]:+.2f}]"  # noqa: E731
 
 

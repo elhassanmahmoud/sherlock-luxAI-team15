@@ -120,3 +120,19 @@ ENDE10F spielt nach dem letzten Dev-H-Agenten auf denselben Karten 7266000–726
 Schalters laufen erst nach dem Ende von Dev H (keine Tests während laufender Auswertungen). Es gilt dieselbe Regel
 „Ein Modul hilft“. Für den Beast-Kandidaten zählt ENDE10F zur Familie ENDE10/ENDE20: Von den helfenden ENDE-Varianten
 kommt nur die mit dem höchsten Punkteanteil hinein. Am Ablauf der Bestätigung 5 ändert sich nichts.
+
+## Zweiter Nachtrag 17.11.2026, 20:39, vor den Ergebnissen von NEBEL bis SAPBIAS: MASKFREI
+
+**Anlass:** Dieselbe Diagnose wie beim ersten Nachtrag. Die Sicherheitsmasken `safe_moves` (kein Zug auf ein Feld mit
+mindestens gleich starkem sichtbarem Gegner) und `collision_guard` (kein Zug auf ein Feld, auf das ein mindestens gleich
+starker beweglicher Gegner ziehen kann) stammen aus der DQN-Zeit (20./22.10.). Der Kaggle-Lehrer kennt sie nicht. Im
+Training des Schülers wurden Lehrerzüge, die diese Masken verbieten, verworfen (`scripts/imitate.py`, `admitted`). Der
+Schüler kann solche Züge also nie spielen, auch wenn Kaggle sie in derselben Lage macht. Ob die Masken dem Schüler
+heute mehr schaden als nützen, ist offen.
+
+| Name | zusätzlich zu K |
+|---|---|
+| MASKFREI | `safe_moves=false`, `collision_guard=false` (das ganze Spiel) |
+
+MASKFREI spielt nach ENDE10F auf denselben Karten (800 Spiele), aus derselben eingefrorenen Quelle wie ENDE10F. Es gilt
+dieselbe Regel „Ein Modul hilft“. Am Ablauf der Bestätigung 5 ändert sich nichts.
