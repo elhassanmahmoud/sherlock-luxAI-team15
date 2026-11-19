@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 19.11.2026 – Echte Züge von V16 für die Abschlusspräsentation (nur Messung)
+
+Das unveränderte Abgabepaket spielte als player_0 je 10 Spiele gegen Kaggle und Solution (4242–4251); jeder Zug wurde exakt nachgerechnet. Gegen Kaggle trafen 82 % der 286 Schüsse auf Felder ohne sichtbaren Gegner. Keine Auswahl, keine Änderung der Abgabe. [Ergebnis](../experiments/analysis/finale_20261119/ERGEBNIS.md).
+
 ## 17.11.2026 – V15s Verteidigung auf vier Solution-Starts
 
 Auf vier ausgewählten Startseiten ließ das vollständige V15 606 Gegnerpunkte weniger zu als R3. Die eigenen Feldserien waren auf einem dieser Starts länger, Solutions Feldserien auf allen vier kürzer. Der daraus abgeleitete Kandidat übernahm nur V15-Schüsse auf bestätigte, scheinbar freie Punktefelder bei erhaltener eigener Felddeckung. Auf 40 weiteren Karten gewann er 80/80 gegen Solution, Original-R3 78/80 und Original-V15 77/80. Im getrennten Prüfsatz gewann der Kandidat 116/120, R3 118/120. Auf den V15-Spielbahnen verhinderten die ausgewählten Schüsse unmittelbar 42 gegnerische Punkte. Beim R3-Kandidaten waren es 34. Im direkten Duell gewann er 20/32 gegen R3 und 6/32 gegen V15. Ein allgemeiner Siegquotenvorteil gegenüber R3 ist im zweiten Kartensatz nicht bestätigt. R3 bleibt die Abgabe. [Diagnose, Gegenproben und Vergleich](../experiments/analysis/r3_defense_20261117/ERGEBNIS.md).

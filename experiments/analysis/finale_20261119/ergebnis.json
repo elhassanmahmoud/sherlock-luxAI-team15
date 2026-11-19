@@ -1,0 +1,336 @@
+{
+ "source": "experiments/analysis/finale_20261119/zugbeispiel.py, Abgabepaket SHA-256 0c59706b…6099, V16 als player_0",
+ "seeds": "4242-4251",
+ "summary": {
+  "kaggle3": {
+   "games": 10,
+   "decisions": 33539,
+   "saps": 1438,
+   "holder_rule_decisive": 302,
+   "stay_bias_decisive": 627,
+   "blocked_best_moves": 3107,
+   "match_wins": [
+    5,
+    25
+   ],
+   "game_wins": 1,
+   "shots": {
+    "sichtbar": {
+     "n": 1139,
+     "direct": 473,
+     "any_hit": 1085,
+     "target_not_visible": 45
+    },
+    "vorhalten": {
+     "n": 13,
+     "direct": 5,
+     "any_hit": 12,
+     "target_not_visible": 10
+    },
+    "unsichtbar": {
+     "n": 286,
+     "direct": 114,
+     "any_hit": 234,
+     "target_not_visible": 268
+    }
+   },
+   "blocked_reasons": {
+    "Asteroid": 812,
+    "zu wenig Energie für einen Schuss": 1442,
+    "Gefahr durch stärkeren Gegner (safe_moves/collision_guard) oder Nebel": 184,
+    "zu wenig Energie": 479,
+    "Kartenrand": 190
+   }
+  },
+  "solution92": {
+   "games": 10,
+   "decisions": 37037,
+   "saps": 701,
+   "holder_rule_decisive": 231,
+   "stay_bias_decisive": 484,
+   "blocked_best_moves": 1225,
+   "match_wins": [
+    29,
+    1
+   ],
+   "game_wins": 10,
+   "shots": {
+    "sichtbar": {
+     "n": 493,
+     "direct": 211,
+     "any_hit": 462,
+     "target_not_visible": 31
+    },
+    "vorhalten": {
+     "n": 33,
+     "direct": 9,
+     "any_hit": 21,
+     "target_not_visible": 20
+    },
+    "unsichtbar": {
+     "n": 175,
+     "direct": 35,
+     "any_hit": 97,
+     "target_not_visible": 149
+    }
+   },
+   "blocked_reasons": {
+    "Asteroid": 663,
+    "zu wenig Energie für einen Schuss": 301,
+    "zu wenig Energie": 86,
+    "Kartenrand": 154,
+    "Gefahr durch stärkeren Gegner (safe_moves/collision_guard) oder Nebel": 21
+   }
+  }
+ },
+ "schuss_beispiel": {
+  "kind": "schuss_ohne_sichtbaren_gegner",
+  "step": 268,
+  "match": 3,
+  "match_step": 66,
+  "unit": 11,
+  "x": 10,
+  "y": 6,
+  "energy": 32.0,
+  "holder": 1,
+  "action": "schuss",
+  "argmax_before_unstack": "schuss",
+  "top_unmasked": "schuss",
+  "top_unmasked_legal": 1,
+  "top_without_bias": "schuss",
+  "p_stehen": 0.0868,
+  "p_hoch": 0.0026,
+  "p_rechts": 0.0245,
+  "p_runter": 0.0011,
+  "p_links": 0.0006,
+  "p_schuss": 0.8843,
+  "target_x": 17,
+  "target_y": 13,
+  "target_dist": 7,
+  "target_visible": 0,
+  "enemy_visible_near_target": 0,
+  "nearest_visible_enemy_to_target": 99,
+  "shot_category": "unsichtbar",
+  "enemies_visible_in_range": 0,
+  "target_p": 1.0,
+  "direct_hits": 1,
+  "splash_hits": 3,
+  "top_targets": [
+   {
+    "x": 17,
+    "y": 13,
+    "p": 1.0
+   },
+   {
+    "x": 16,
+    "y": 13,
+    "p": 0.0
+   },
+   {
+    "x": 17,
+    "y": 12,
+    "p": 0.0
+   },
+   {
+    "x": 16,
+    "y": 12,
+    "p": 0.0
+   },
+   {
+    "x": 13,
+    "y": 10,
+    "p": 0.0
+   }
+  ],
+  "sap_range": 7,
+  "sap_cost": 31.0,
+  "visible_enemies": [],
+  "true_enemies_after_move": [
+   [
+    15,
+    4
+   ],
+   [
+    19,
+    19
+   ],
+   [
+    20,
+    8
+   ],
+   [
+    19,
+    16
+   ],
+   [
+    20,
+    3
+   ],
+   [
+    18,
+    9
+   ],
+   [
+    15,
+    16
+   ],
+   [
+    11,
+    12
+   ],
+   [
+    13,
+    10
+   ],
+   [
+    19,
+    8
+   ],
+   [
+    16,
+    14
+   ],
+   [
+    17,
+    14
+   ],
+   [
+    20,
+    15
+   ],
+   [
+    17,
+    13
+   ],
+   [
+    20,
+    16
+   ],
+   [
+    18,
+    12
+   ]
+  ],
+  "hit_enemies": [
+   {
+    "x": 16,
+    "y": 14,
+    "direct": 0
+   },
+   {
+    "x": 17,
+    "y": 14,
+    "direct": 0
+   },
+   {
+    "x": 17,
+    "y": 13,
+    "direct": 1
+   },
+   {
+    "x": 18,
+    "y": 12,
+    "direct": 0
+   }
+  ],
+  "own_units": [
+   [
+    5,
+    3
+   ],
+   [
+    7,
+    3
+   ],
+   [
+    0,
+    2
+   ],
+   [
+    7,
+    4
+   ],
+   [
+    3,
+    2
+   ],
+   [
+    8,
+    3
+   ],
+   [
+    9,
+    5
+   ],
+   [
+    10,
+    6
+   ]
+  ],
+  "relics": [
+   [
+    9,
+    5
+   ],
+   [
+    19,
+    15
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    18,
+    14
+   ]
+  ],
+  "target_known_point_tile": 1
+ },
+ "halter_beispiel": {
+  "kind": "halter_regel_entscheidet",
+  "step": 53,
+  "match": 1,
+  "match_step": 53,
+  "unit": 2,
+  "x": 8,
+  "y": 3,
+  "energy": 85.0,
+  "holder": 1,
+  "action": "stehen",
+  "argmax_before_unstack": "stehen",
+  "top_unmasked": "stehen",
+  "top_unmasked_legal": 1,
+  "top_without_bias": "stehen",
+  "p_stehen": 0.6543,
+  "p_hoch": 0.0,
+  "p_rechts": 0.3439,
+  "p_runter": 0.0,
+  "p_links": 0.0,
+  "p_schuss": 0.0018,
+  "combined_after_mask": [
+   0.6543,
+   0.0,
+   0.3439,
+   0.0,
+   0.0,
+   0.0018
+  ],
+  "final": [
+   0.6543,
+   0.0,
+   0.3439,
+   0.0,
+   0.0,
+   0.0018
+  ],
+  "without_holder_rule": [
+   0.4105,
+   0.0,
+   0.5864,
+   0.0,
+   0.0,
+   0.003
+  ]
+ }
+}
