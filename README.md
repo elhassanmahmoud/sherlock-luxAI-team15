@@ -18,7 +18,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 | Gegen `default`, Zufall, Rush-Bot, Solution-Variante, DQN der Vorlage | je 50/50 (ebenso) |
 | Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms) |
 | Gespielte Spiele bisher | **rund 1,54 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele und 5.928 Spiele für die Nachahmung ([Zahlen und Fakten](#zahlen-und-fakten)) |
-| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11.** |
+| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11.** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md)) |
 
 Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die meisten Spiele: Er holt etwa 40 % der Punkte und gewinnt rund jedes zehnte Match.
 
@@ -189,6 +189,8 @@ shasum -a 256 dist/agent.zip         # 0c59706b6af1c2cd74819a4b13269b69cb55786e0
 | Gruppe | 15 |
 | Agentenklasse | `agents.sherlock.main.Agent_x` |
 | Gewichte für beide Spieler | `agents/sherlock/weights/agent.pth` |
+
+**Falls der Prof wieder das Format der Battle-Mail verlangt** (`Gruppe15/`, `Gruppe15.main.Agent_x`, `Gruppe15/agent.pth`): `python -m scripts.build_submission --battle` verpackt dasselbe Release bytegleich nach `dist/Gruppe15.zip` (SHA-256 `8347ea2b…ae95`; Kursrunner-Prüfung unter `agents/` und in der Projektwurzel bestanden, zwei ganze Spiele mit 0 abweichenden Aktionen gegenüber `dist/agent.zip`). Die alte V14-Datei `Gruppe15.zip` im Projektordner bleibt unverändert.
 
 In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kursrunner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. **Rückweg zu R3:** In `scripts/build_submission.py` `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen und neu bauen ([R3-Release](experiments/releases/20261116_r3_finale/README.md)). `--from-run experiments/runs/<lauf>` verpackt die Gewichte eines Laufs, ohne die Abgabe zu ersetzen; `scripts/build_student_package.py` baut Pakete aus nachgeahmten Netzen im selben Format.
 
@@ -491,10 +493,10 @@ für jedes Spiel:
 ### Battle-Abgabe am 06.11.
 
 - **Format laut Prof-Mail:** `Gruppe15.zip` mit Ordner `Gruppe15/`, Agent-Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth` (eine Datei für beide Seiten). Upload auf Moodle bis **Mittwoch, 04.11.2026, 23:59 Uhr**.
-- **Bauen:** `python -m scripts.build_submission --battle` erzeugt `Gruppe15.zip` im Projektordner (nicht im Repository). In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kurs-Runner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. Das Skript prüft das Paket in einer frischen Kursvorlage, einmal unter `agents/` und einmal in der Projektwurzel („Check ok“).
+- **Bauen:** `python -m scripts.build_submission --battle` erzeugte damals `Gruppe15.zip` im Projektordner (nicht im Repository); seit dem 19.11. verpackt derselbe Befehl die Finalabgabe V16 nach `dist/Gruppe15.zip`, die V14-Gewichte nur noch mit `--from-run`. In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kurs-Runner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. Das Skript prüft das Paket in einer frischen Kursvorlage, einmal unter `agents/` und einmal in der Projektwurzel („Check ok“).
 - **Absturzschutz:** Der Kurs-Runner fängt Fehler des Agenten nicht ab. Nur in der eingefrorenen Abgabe fängt Sherlock deshalb Fehler in `act()` und `update()` ab; die Einheiten bleiben dann einen Schritt stehen, und das Spiel läuft weiter. In Training und Messungen bleiben Fehler sichtbar.
 - **Andere Python-Versionen:** Mit `scripts/xversion_replay.py` aufgezeichnete Spiele spielt die Zip unter Python 3.10 mit torch 2.2/numpy 1.26 und mit torch 2.14/numpy 2.2 ohne eine einzige abweichende Aktion nach (V14: 3 Spiele, darunter eines mit Nebelabzug 25 und eines mit Sichtweite 1).
-- **Falls Moodle 22 MB ablehnt:** `python -m scripts.build_submission --battle --half` speichert die Gewichte als float16 (10,7 MB). Mit V12 wich dabei in drei nachgespielten Spielen 1 von 1.818 Zügen ab.
+- **Falls Moodle 22 MB ablehnt:** `python -m scripts.build_submission --battle --half` (seit 19.11. nur noch mit `--from-run`) speicherte die Gewichte als float16 (10,7 MB). Mit V12 wich dabei in drei nachgespielten Spielen 1 von 1.818 Zügen ab.
 
 ### Grenzen und Versuche (Stand 03.11.)
 
@@ -547,7 +549,7 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 - [Tagesbericht 17.11.](docs/TAGESBERICHT_20261117.md): wie es zu V16 kam.
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): Versuche und Auswahlentscheidungen bis zur Battle-Woche.
 - Releases: [V16 (aktuell)](experiments/releases/20261117_sherlock_v16/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
-- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Entwurf Finale 27.11. ([PDF](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.pdf), [Sprechstichpunkte](docs/presentation/finale_2711/Sprechstichpunkte_27-11-2026.md); noch auf R3-Stand, wird auf V16 umgestellt).
+- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Finale 27.11. mit V16 ([PDF](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md), [Folien-Quelle](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html); Stand 19.11., gemeinsame Zeitprobe offen).
 
 ## Quellen
 

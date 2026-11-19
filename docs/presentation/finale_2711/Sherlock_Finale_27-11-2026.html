@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sherlock · Abschlusspräsentation · 27. November 2026</title>
 <style>
-  :root { --ink:#142D35; --dark:#102D35; --paper:#F7F6F1; --teal:#0F7774; --soft:#E6F1EE; --mint:#A8D5C8; --muted:#52646A; --line:#C6D4D0; --rust:#A64525; }
+  :root { --ink:#142D35; --dark:#102D35; --paper:#F7F6F1; --teal:#0F7774; --soft:#E6F1EE; --mint:#A8D5C8; --muted:#52646A; --line:#C6D4D0; --rust:#A64525; --mark:#00968A; --markneg:#B5452A; }
   * {box-sizing:border-box}
   @page {size:1280px 720px; margin:0}
   html, body {margin:0;padding:0}
@@ -13,206 +13,374 @@
   .slide {position:relative;display:flex;flex-direction:column;isolation:isolate;width:1280px;height:720px;padding:44px 73px 62px;background:var(--paper);break-after:page;overflow:hidden}
   .slide:last-of-type {break-after:auto}
   .dark {background:var(--dark);color:white}
-  header {margin-bottom:40px}
-  .kicker {font-size:16px;font-weight:700;color:var(--teal);letter-spacing:.045em;margin-bottom:23px}
+  header {margin-bottom:36px}
+  .kicker {font-size:16px;font-weight:700;color:var(--teal);letter-spacing:.045em;margin-bottom:21px}
   .dark .kicker {color:var(--mint)}
-  h1,h2,h3,p,figure {margin:0}
+  h1,h2,h3,p,figure,ol,ul {margin:0}
   h1 {font-size:86px;letter-spacing:-.035em;line-height:1.02}
-  h2 {font-size:46px;letter-spacing:-.023em;line-height:1.09}
-  h3 {font-size:27px;line-height:1.2}
-  p {font-size:25px;line-height:1.34}
+  h2 {font-size:44px;letter-spacing:-.023em;line-height:1.1}
+  h3 {font-size:26px;line-height:1.2}
+  p {font-size:24px;line-height:1.34}
+  b {font-weight:700}
   footer {position:absolute;left:73px;right:73px;bottom:25px;display:flex;justify-content:space-between;color:var(--muted);font-size:14px}
   .dark footer {color:#ADCCC4}
   .teal {color:var(--teal)}
   .dark .teal {color:var(--mint)}
-  .small,.source {font-size:18px;line-height:1.35;color:var(--muted)}
-  .source {position:absolute;left:73px;right:73px;bottom:69px}
-  .pane {background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:31px}
-  .cols {display:grid;grid-template-columns:1fr 1fr;gap:53px}
-  .eyebrow {font-size:18px;font-weight:700;color:var(--muted);margin-bottom:17px}
-  .accent {font-size:30px;font-weight:700;line-height:1.23;color:var(--teal)}
-  .rule {height:2px;background:var(--line);margin:18px 0}
-  .mark {font-size:20px;font-weight:700;color:var(--teal);line-height:1.2}
+  .small,.source {font-size:17px;line-height:1.35;color:var(--muted)}
+  .dark .small {color:#ADCCC4}
+  .source {position:absolute;left:73px;right:73px;bottom:66px}
+  .pane {background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:28px 30px}
+  .cols {display:grid;grid-template-columns:1fr 1fr;gap:50px}
+  .eyebrow {font-size:17px;font-weight:700;color:var(--muted);margin-bottom:14px}
+  .dark .eyebrow {color:var(--mint)}
+  .accent {font-size:28px;font-weight:700;line-height:1.24;color:var(--teal)}
+  .rule {height:2px;background:var(--line);margin:17px 0}
+  .mark {font-size:20px;font-weight:700;color:var(--teal);line-height:1.25}
   .grid4 {display:grid;grid-template-columns:repeat(4,87px);gap:11px;margin:23px 0 13px}
   .tile {height:85px;background:var(--soft);border:2px solid var(--teal);border-radius:4px;display:grid;place-items:center;font-size:41px;font-weight:700;color:var(--teal)}
   .tile.unknown {background:transparent;border:2px dashed var(--muted);color:var(--muted)}
-  .steps {display:flex;flex-direction:column;gap:22px}
-  .step {display:grid;grid-template-columns:42px 1fr;column-gap:13px;align-items:baseline}
-  .step .index {color:var(--teal);font-size:30px;font-weight:700}
-  .step p {font-size:23px;color:var(--muted);margin-top:4px}
-  .flow {display:grid;grid-template-columns:1fr 36px 1fr 36px 1fr 36px 1fr;align-items:stretch;margin:8px 0 34px}
-  .station {padding:23px 20px 27px;background:white;border:1px solid var(--line);border-radius:8px}
-  .station.learn {background:var(--soft);border:2px solid var(--teal);padding:22px 19px 26px}
-  .station h3 {margin:16px 0 12px;min-height:64px}
-  .station p {font-size:22px;line-height:1.32;color:var(--muted)}
-  .arrow {align-self:center;text-align:center;color:var(--teal);font-size:30px}
-  .barline {border-top:2px solid var(--line);padding-top:22px;font-size:25px}
-  table {border-collapse:collapse;width:100%;font-size:24px;font-variant-numeric:tabular-nums}
-  th {font-weight:700;text-align:left;font-size:17px;line-height:1.2;color:var(--muted);border-bottom:2px solid var(--teal)}
-  td,th {padding:13px 8px;border-bottom:1px solid var(--line)}
+  .steps {display:flex;flex-direction:column;gap:20px}
+  .step {display:grid;grid-template-columns:40px 1fr;column-gap:12px;align-items:baseline}
+  .step .index {color:var(--teal);font-size:28px;font-weight:700}
+  .step p {font-size:21px;color:var(--muted);margin-top:4px;line-height:1.32}
+  .step b {font-size:23px}
+  .barline {border-top:2px solid var(--line);padding-top:20px;font-size:23px}
+  .dark .barline {border-color:#4B686B}
+  table {border-collapse:collapse;width:100%;font-size:22px;font-variant-numeric:tabular-nums}
+  th {font-weight:700;text-align:left;font-size:16px;line-height:1.2;color:var(--muted);border-bottom:2px solid var(--teal)}
+  td,th {padding:11px 8px;border-bottom:1px solid var(--line)}
   .numeric {text-align:right;white-space:nowrap}
-  .selected td {font-weight:700;color:var(--teal)}
-  #bestaetigung th, #bestaetigung td {padding:9px 8px}
-  .charts {display:flex;flex-direction:column;gap:29px}
-  .charthead {display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
-  .charthead .value {font-size:44px;line-height:1;font-weight:700;color:var(--teal)}
-  .track {width:100%;height:19px;background:#E0E6E3}
-  .fill {height:100%;background:var(--teal)}
-  .chartnote {font-size:18px;color:var(--muted);margin-top:8px}
-  .hero {font-size:79px;letter-spacing:-.045em;line-height:1;color:var(--teal);font-weight:700}
+  .dark th {color:var(--mint);border-color:var(--mint)}
+  .dark td {border-color:#3C5A5E}
+  .dark .win {color:var(--mint);font-weight:700}
+  .hero {font-size:76px;letter-spacing:-.04em;line-height:1;color:var(--teal);font-weight:700}
   .dark .hero {color:var(--mint)}
-  .sectionline {border-top:2px solid var(--line);padding-top:22px}
-  .datum {font-size:34px;line-height:1.1;font-weight:700;color:var(--teal)}
+  .sectionline {border-top:2px solid var(--line);padding-top:20px}
   .dark .sectionline {border-color:#4B686B}
+  .box {background:white;border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+  .box.learn {background:var(--soft);border:2px solid var(--teal)}
+  .box h3 {font-size:22px;margin:0 0 4px}
+  .box p {font-size:18px;color:var(--muted);line-height:1.3}
+  .down {text-align:center;color:var(--teal);font-size:24px;line-height:1;margin:6px 0}
+  .code {background:var(--dark);color:#E9F2EF;border-radius:8px;padding:24px 26px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:17.5px;line-height:1.55;white-space:pre}
+  .code .c {color:#8FC7B9}
+  .code .k {color:#FFFFFF;font-weight:700}
+  .legend {display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:10px;font-size:15px;color:var(--muted)}
+  .legend span {display:flex;align-items:center;gap:8px}
+  .legend svg {flex:none}
+  .stat {display:flex;align-items:baseline;gap:14px}
+  .stat .value {font-size:46px;font-weight:700;color:var(--teal);letter-spacing:-.02em}
+  .three {display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .three .pane h3 {font-size:24px;margin-bottom:10px}
+  .three .pane p {font-size:20px;color:var(--muted)}
+  .reserve .kicker {color:var(--muted)}
   @media screen {body {display:flex;flex-direction:column;align-items:flex-start;gap:16px} }
   @media print {body {background:transparent}}
 </style>
 </head>
 <body>
 
+<!-- 01 · Moe -->
 <section class="slide dark" id="start">
-  <header style="margin-bottom:52px">
+  <header style="margin-bottom:46px">
     <div class="kicker">SHERLOCK / ABSCHLUSSPRÄSENTATION</div>
-    <h1>Sherlock</h1>
+    <h1>Sherlock V16</h1>
   </header>
-  <p class="teal" style="font-size:43px;line-height:1.16;max-width:1080px">Wie Sherlock Punktefelder findet<br>und wer den nächsten Zug entscheidet</p>
-  <p style="font-size:25px;margin-top:35px">Lux AI Season 3 · Finaleversion Original-R3</p>
+  <p class="teal" style="font-size:43px;line-height:1.16;max-width:1080px">Vom Besten lernen: Wie Sherlock<br>vom Kaggle-Dritten kämpfen lernte</p>
+  <p style="font-size:25px;margin-top:35px">Lux AI Season 3 · Agent von Team 15</p>
   <div style="margin-top:auto;margin-bottom:34px"><p>Mahmoud El-Hassan · Moayed Shawesh</p><p class="teal" style="font-size:21px;margin-top:7px">HTW Berlin · Anwendungen der KI · 27. November 2026</p></div>
   <footer><span>Team 15</span><span>01</span></footer>
 </section>
 
+<!-- 02 · Moe -->
 <section class="slide" id="gedaechtnis">
-  <header><div class="kicker">SHERLOCK / KARTENWISSEN</div><h2>Wo auf der Karte gibt es Punkte?</h2></header>
-  <div class="cols"><figure style="padding:24px 0">
+  <header><div class="kicker">SHERLOCK / GEDÄCHTNIS</div><h2>Wo auf der Karte gibt es Punkte?</h2></header>
+  <div class="cols"><figure style="padding:22px 0">
     <div class="eyebrow">Beispiel für einen Spielschritt</div>
     <p>Wir besetzen vier verschiedene Felder.<br>Der Punktestand steigt um <b>drei.</b></p>
     <div class="grid4" aria-label="Zwei bekannte Punktefelder und zwei unbekannte Felder"><div class="tile">+1</div><div class="tile">+1</div><div class="tile unknown">?</div><div class="tile unknown">?</div></div>
     <figcaption class="small">Zwei Felder kennen wir schon als Punktefelder.</figcaption>
-    <p class="accent" style="margin-top:31px">Genau eines der beiden offenen Felder bringt den dritten Punkt.</p>
-  </figure><div class="pane"><h3 style="margin-bottom:23px">So verteilt Sherlock seine Einheiten</h3>
-    <div class="steps">
-      <div class="step"><div class="index">1</div><div><b style="font-size:25px">Punkte halten</b><p>Erreichbare bekannte Punktefelder besetzen.</p></div></div>
-      <div class="step"><div class="index">2</div><div><b style="font-size:25px">Kandidaten prüfen</b><p>Mögliche Punktefelder in der Nähe eines Relikts testen.</p></div></div>
-      <div class="step"><div class="index">3</div><div><b style="font-size:25px">Erkunden</b><p>Einheiten in unbekannte Bereiche schicken.</p></div></div>
+    <p class="accent" style="margin-top:28px">Genau eines der beiden offenen Felder bringt den dritten Punkt.</p>
+  </figure><div class="pane"><h3 style="margin-bottom:20px">Was Sherlock sich merkt</h3>
+    <div class="steps" style="gap:17px">
+      <div class="step"><div class="index">1</div><div><b>Relikte und Punktefelder</b><p>über alle Matches, aus dem Punktestand erschlossen</p></div></div>
+      <div class="step"><div class="index">2</div><div><b>Das Spiegelbild der Karte</b><p>Die Karte ist symmetrisch: Eine Hälfte verrät die andere.</p></div></div>
+      <div class="step"><div class="index">3</div><div><b>Nebel, Asteroiden, Energie</b><p>Sie wandern, Sherlock verfolgt sie.</p></div></div>
     </div>
+    <p class="accent sectionline" style="margin-top:20px;font-size:24px">Daraus entstehen 16 Kartenebenen für Sherlocks Netz.</p>
   </div></div>
-  <footer><span>Team 15 · Sherlock V14</span><span>02</span></footer>
+  <footer><span>Team 15 · Sherlock V16</span><span>02</span></footer>
 </section>
 
-<section class="slide" id="ablauf">
-  <header><div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div><h2>Wie wird aus einer Beobachtung ein Zug?</h2></header>
-  <div class="flow" aria-label="Vier Stationen in Aufrufreihenfolge">
-    <div class="station"><div class="mark">1 · Regeln</div><h3>Wissen und<br>Ziele</h3><p>Karte und Punktestand auswerten. Jeder Einheit ein Ziel zuweisen.</p></div><div class="arrow" aria-hidden="true">→</div>
-    <div class="station"><div class="mark">2 · Eingabe</div><h3>79 Merkmale<br>je Einheit</h3><p>Etwa eigene Energie, Richtung zum Ziel und Gegner in Reichweite.</p></div><div class="arrow" aria-hidden="true">→</div>
-    <div class="station learn"><div class="mark">3 · Gelernt</div><h3>36 Netze<br>bewerten</h3><p>Jedes Netz bewertet sechs Aktionen. Für jede Aktion bilden wir den Mittelwert.</p></div><div class="arrow" aria-hidden="true">→</div>
-    <div class="station"><div class="mark">4 · Regeln</div><h3>Aktion wählen<br>und prüfen</h3><p>Maske filtert die Aktionen. Höchsten erlaubten Q-Wert wählen, dann Weg- und Schussregeln prüfen.</p></div>
+<!-- 03 · Moe -->
+<section class="slide" id="weg">
+  <header style="margin-bottom:24px"><div class="kicker">SHERLOCK / UNSER WEG BIS ZUM BATTLE</div><h2>Eigenes Reinforcement Learning brachte uns auf Platz 3</h2></header>
+  <div class="cols" style="grid-template-columns:1.1fr .9fr;gap:44px;align-items:start">
+    <figure>
+      <figcaption class="eyebrow" style="margin-bottom:2px">Siege gegen Solution_92, frisch gemessen bei jeder neuen Abgabe</figcaption>
+      <img src="diagramm_weg.svg" width="560" height="330" alt="Siegquote gegen Solution_92: Review 16.10. 47 %, V3 78 %, V7 84 %, V10 90 %, V12 94 %, V14 im Battle 95 %">
+      <p class="small" style="margin-top:4px">DQN-Netze (erst 18, dann 36) und Regeln für Wege, Schüsse und Nebel</p>
+    </figure>
+    <div class="pane" style="padding:26px 30px">
+      <div class="eyebrow">V14 gegen den Kaggle-Dritten</div>
+      <div class="hero" style="font-size:70px">12 von 800</div>
+      <p style="font-size:20px;margin-top:8px;color:var(--muted)">Spiele gewonnen · 400 Karten, beide Seiten</p>
+      <div class="rule"></div>
+      <p style="font-size:21px">Im ersten Match verliert V14 im Mittel <b>23&nbsp;Einheiten</b>, der Kaggle-Dritte nur gut eine.</p>
+      <p style="font-size:21px;margin-top:12px">17 Handregeln und sogar ein Orakel, das alle Punktefelder kennt, brachten keinen Durchbruch.</p>
+      <p class="accent" style="font-size:23px;margin-top:16px">Uns fehlte Kampfstärke, nicht Wissen.</p>
+    </div>
   </div>
-  <p class="barline"><b>Ausgabe pro Einheit</b> &nbsp; Stehen bleiben, in eine von vier Richtungen ziehen oder schießen.</p>
-  <p class="source">Pro Zug bis zu 16 Einheiten. Jeder Befehl enthält die Aktion sowie zwei Zahlen für den horizontalen und vertikalen Zielversatz beim Schuss.</p>
-  <footer><span>Team 15 · Sherlock V14</span><span>03</span></footer>
+  <footer><span>Team 15 · Platz 3 im Kurs-Battle am 6. November mit V14</span><span>03</span></footer>
 </section>
 
-<section class="slide" id="aktionswahl">
-  <header><div class="kicker">SHERLOCK / AKTIONSWAHL</div><h2>Ein Asteroid sperrt den bestbewerteten Zug</h2></header>
-  <div class="cols" style="grid-template-columns:.9fr 1.1fr"><div>
-    <h3>Was die 36 Netze berechnen</h3>
-    <p style="margin-top:18px">Jedes Netz verarbeitet dieselben 79 Zahlen in zwei Schichten mit je 256 Neuronen.</p>
-    <p style="margin-top:21px">Seine sechs <b>Q-Werte</b> schätzen, wie viel Belohnung eine Aktion langfristig bringt.</p>
-    <p class="accent sectionline" style="margin-top:30px">Nach dem Sperren von „runter“ liegt „rechts“ vorn. Genau diesen Befehl spielt die Einheit.</p>
-  </div><figure class="pane" style="padding:24px 29px">
-    <figcaption class="eyebrow" style="margin-bottom:6px">V14 · Karte 4242 · Match 1, Zug 45</figcaption>
-    <table aria-label="Mittelwerte der 36 Netze mit Aktionsmaske"><thead><tr><th>Aktion</th><th class="numeric">Q-Mittel</th><th>Auswahl</th></tr></thead><tbody>
-      <tr><td>Stehen</td><td class="numeric">10,07</td><td>erlaubt</td></tr>
-      <tr><td>Hoch</td><td class="numeric">9,37</td><td>erlaubt</td></tr>
-      <tr class="selected"><td>Rechts</td><td class="numeric">11,08</td><td>gespielt</td></tr>
-      <tr><td>Runter</td><td class="numeric">11,46</td><td>Asteroid</td></tr>
-      <tr><td>Links</td><td class="numeric">9,51</td><td>erlaubt</td></tr>
-      <tr><td>Schuss</td><td class="numeric">8,21</td><td>erlaubt</td></tr>
-    </tbody></table>
-  </figure></div>
-  <footer><span>Team 15 · Sherlock V14</span><span>04</span></footer>
+<!-- 04 · Mahmoud -->
+<section class="slide" id="idee">
+  <header><div class="kicker">SHERLOCK / NACHAHMUNGSLERNEN</div><h2>Die Idee: vom Kaggle-Dritten lernen</h2></header>
+  <div class="cols" style="grid-template-columns:.84fr 1.16fr;gap:46px">
+    <div class="pane">
+      <div class="eyebrow">Der Lehrer</div>
+      <h3>lux3-bot, Platz 3 im Kaggle-Wettbewerb zu Lux AI Season 3</h3>
+      <p style="margin-top:14px;font-size:21px">Öffentlich unter der Apache-2.0-Lizenz. Er hat selbst aus Replays der besten Kaggle-Teams gelernt.</p>
+      <div class="rule"></div>
+      <p style="font-size:21px"><b>Nicht in unserer Abgabe.</b> Sherlock spielt mit eigenen Netzen und eigenem Gedächtnis.</p>
+    </div>
+    <div class="steps" style="gap:22px">
+      <div class="step"><div class="index">1</div><div><h3>Der Lehrer spielt</h3><p>1.800 Spiele gegen sich selbst, gegen V14 und gegen Solution_92.</p></div></div>
+      <div class="step"><div class="index">2</div><div><h3>Sherlock schreibt mit</h3><p>Für jede Einheit und jeden Zug: Sherlocks eigene Sicht und die Entscheidung des Lehrers. Rund 9 Millionen Beispiele.</p></div></div>
+      <div class="step"><div class="index">3</div><div><h3>Das Netz lernt vorherzusagen</h3><p>Welche der sechs Aktionen wählt der Lehrer, und auf welches Feld schießt er? Je sicherer das Netz richtig liegt, desto kleiner der Fehler (Kreuzentropie).</p></div></div>
+    </div>
+  </div>
+  <p class="barline" style="margin-top:26px">Das Netz sieht nur, was Sherlock sieht. Was der Lehrer intern weiß, bleibt ihm verborgen.</p>
+  <footer><span>Team 15 · Sherlock V16</span><span>04</span></footer>
 </section>
 
-<section class="slide" id="training">
-  <header><div class="kicker">SHERLOCK / REINFORCEMENT LEARNING</div><h2>Wie lernen die Netze gute Aktionen?</h2></header>
-  <div class="cols" style="grid-template-columns:1.13fr .87fr"><div class="steps" style="gap:24px">
-    <div class="step"><div class="index">1</div><div><h3>Erfahrungen sammeln</h3><p>Frühere Situationen, Aktionen, Belohnungen und Folgesituationen je Einheit speichern.</p></div></div>
-    <div class="step"><div class="index">2</div><div><h3>Aktionswerte anpassen</h3><p>Double DQN übt an zufällig gezogenen Erfahrungen. Ein zweites Netz bewertet die vom lernenden Netz gewählte Folgeaktion.</p></div></div>
-    <div class="step"><div class="index">3</div><div><h3>Gewichtsstände kombinieren</h3><p>18 Grundnetze plus je eine weitertrainierte Fassung. Im Turnier bleiben die Gewichte fest.</p></div></div>
-  </div><div class="pane"><h3>Wofür gibt es Belohnung?</h3><p style="margin-top:19px">Ein Punktefeld halten oder ein neues Feld entdecken bringt ein positives Signal. Der Verlust einer Einheit kostet Belohnung.</p>
-    <div class="rule"></div><p style="font-size:23px">Am Matchende kommt ein Bonus oder Abzug für das Ergebnis hinzu.</p>
-  </div></div>
-  <p class="source">Die Grundnetze lernten in insgesamt 66.000 Spielen. Im Nachtraining kamen 99.000 hinzu, unter anderem gegen den Kursagenten und Solution_92.</p>
-  <footer><span>Team 15 · Sherlock V14</span><span>05</span></footer>
+<!-- 05 · Mahmoud -->
+<section class="slide" id="dagger">
+  <header style="margin-bottom:26px"><div class="kicker">SHERLOCK / DAGGER</div><h2>Nur zuschauen reicht nicht: DAgger</h2></header>
+  <div class="cols" style="grid-template-columns:.92fr 1.08fr;gap:38px;align-items:start">
+    <div>
+      <p style="font-size:22px">Mit reinen Lehrerspielen gerät das Netz in Lagen, die der Lehrer nie erlebt hat. Dann bleibt es oft einfach stehen.</p>
+      <div class="pane" style="margin-top:20px;padding:20px 24px">
+        <div class="steps" style="gap:10px">
+          <div class="step"><div class="index">1</div><div><b>Sherlock spielt selbst</b></div></div>
+          <div class="step"><div class="index">2</div><div><b>Der Lehrer sagt zu jeder Lage, was er tun würde</b></div></div>
+          <div class="step"><div class="index">3</div><div><b>Diese Lagen kommen zu den Beispielen</b></div></div>
+          <div class="step"><div class="index">4</div><div><b>Das Netz lernt weiter</b> <span class="teal" style="font-size:21px">· dann wieder 1</span></div></div>
+        </div>
+      </div>
+      <p class="mark" style="margin-top:20px">6 Runden mit 3.400 Spielen · insgesamt 19&nbsp;Mio. Entscheidungen</p>
+    </div>
+    <figure>
+      <figcaption class="eyebrow" style="margin-bottom:2px">Siege gegen Solution_92 · 100 Entwicklungskarten, je 200 Spiele</figcaption>
+      <img src="diagramm_dagger.svg" width="560" height="330" alt="Nur Lehrerspiele 78 %, nach Runde 1 89,5 %, Runde 2 92,5 %, Runde 3 95 %, Runde 4 98 %; V14 auf denselben Karten 94 %">
+      <p class="small" style="margin-top:4px">Runden 5 und 6 brachten kaum noch Zuwachs. Die Karten dienten auch zur Auswahl, die Werte sind daher etwas zu günstig.</p>
+    </figure>
+  </div>
+  <footer><span>Team 15 · Sherlock V16</span><span>05</span></footer>
 </section>
 
-<section class="slide" id="bewegungsberater">
-  <header style="margin-bottom:25px"><div class="kicker">SHERLOCK / FINALEVERSION ORIGINAL-R3</div><h2>Wann ändert R3 die Bewegung?</h2></header>
-  <div style="display:grid;grid-template-columns:.98fr 55px 1.02fr;align-items:stretch">
-    <div><p class="mark" style="margin-bottom:13px">1 · Vorschläge für dieselbe Einheit</p>
-      <div class="station" style="padding:15px 21px"><h3 style="min-height:0;margin:0 0 5px">V14 legt einen Befehl fest</h3><p>36 Netze, die Aktionsmaske und die Regeln liefern Bewegung, Stillstand oder Schuss.</p></div>
-      <div class="station learn" style="margin-top:12px;padding:16px 20px"><h3 style="min-height:0;margin:0 0 6px">Ein Netz liest die Karte</h3><p>R3 liest 16 Kartenebenen und 79 Merkmale je Einheit. Das CNN bewertet die sechs Aktionen.</p></div>
-    </div><div class="arrow" aria-hidden="true">→</div>
-    <div><p class="mark" style="margin-bottom:13px">2 · Endgültige Aktionswahl</p>
-      <div class="pane" style="padding:20px 23px"><h3>Welche Empfehlung gilt?</h3>
-        <p style="font-size:22px;margin-top:11px">Gesperrte Aktionen ausblenden und die übrigen Bewertungen in Anteile umrechnen.</p>
-        <div class="rule" style="margin:13px 0"></div>
-        <p style="font-size:22px"><b>V14 schießt?</b> Schuss und Ziel bleiben erhalten.</p>
-        <p style="font-size:22px;margin-top:10px"><b>V14 bewegt sich oder steht?</b> Ab <b>70&nbsp;%</b> gilt der erlaubte Zug oder Stillstand des Schülers. Sonst gilt V14s Befehl.</p>
+<!-- 06 · Mahmoud -->
+<section class="slide" id="entscheidung">
+  <header style="margin-bottom:24px"><div class="kicker">SHERLOCK / ENTSCHEIDUNGSABLAUF</div><h2>So entscheidet Sherlock V16 in jedem Zug</h2></header>
+  <div class="cols" style="grid-template-columns:1fr 1fr;gap:34px;align-items:start">
+    <div>
+      <div class="box"><h3>Eingabe</h3><p>16 Kartenebenen (24 × 24) · je Einheit 79 Merkmale und ihre letzte Bewegung</p></div>
+      <div class="down" aria-hidden="true">↓</div>
+      <div class="box learn"><h3>CNN aus Residual-Blöcken</h3><p>erkennt Muster auf der ganzen Karte und liest den Wert an der Position jeder Einheit</p></div>
+      <div class="down" aria-hidden="true">↓</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="box"><h3>Aktionskopf</h3><p>Wahrscheinlichkeit für jede der 6 Aktionen</p></div>
+        <div class="box"><h3>Zielkopf</h3><p>Bewertung jedes Feldes als Schussziel</p></div>
+      </div>
+      <p class="small" style="margin-top:14px">Zwei solche Netze stimmen ab: v9 (6 Blöcke, 0,7&nbsp;Mio. Parameter) und v8L (8 Blöcke, 1,8&nbsp;Mio.).</p>
+    </div>
+    <div class="code" style="font-size:17px"><span class="k">für jeden Zug:</span>
+  Gedächtnis aktualisieren
+  <span class="k">für jede Einheit:</span>
+    p = p<sub>v9</sub> · p<sub>v8L</sub>     <span class="c"># beide Netze stimmen ab</span>
+    p[gesperrt] = 0     <span class="c"># Rand, Asteroid, Energie,</span>
+                        <span class="c"># stärkerer Gegner</span>
+    p[stehen] · 0,37    <span class="c"># außer Halter</span>
+    Aktion = höchstes p
+  je Feld höchstens eine stehende Einheit
+  <span class="k">bei Schuss:</span>
+    Ziel = bestes Feld der Zielkarte
+           in Reichweite</div>
+  </div>
+  <footer><span>Team 15 · Sherlock V16 · gespielt wird immer die wahrscheinlichste erlaubte Aktion</span><span>06</span></footer>
+</section>
+
+<!-- 07 · Mahmoud -->
+<section class="slide" id="schuss">
+  <header style="margin-bottom:18px"><div class="kicker">SHERLOCK / EIN ECHTER ZUG</div><h2>Kein Gegner sichtbar, trotzdem vier Treffer</h2></header>
+  <div class="cols" style="grid-template-columns:400px 1fr;gap:40px;align-items:start">
+    <figure>
+      <img src="../../../experiments/analysis/finale_20261119/karte_schuss.svg" width="396" height="396" alt="Karte 4247, Match 3, Zug 66: Einheit 11 bei (10, 6) schießt auf (17, 13); alle Gegner sind für Sherlock unsichtbar, vier werden getroffen">
+      <div class="legend">
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#0F7774"/></svg>schießende Einheit</span>
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="5" fill="none" stroke="#B5452A" stroke-width="1.8"/></svg>Kaggle, unsichtbar</span>
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="4.5" fill="#00968A"/></svg>eigene Einheit</span>
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="5" fill="#B5452A"/></svg>Kaggle, getroffen</span>
+        <span><svg width="16" height="16"><rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="#00968A" stroke-width="2"/></svg>bekanntes Punktefeld</span>
+        <span><svg width="16" height="16"><path d="M8 2 L14 8 L8 14 L2 8 Z" fill="#142D35"/></svg>Relikt</span>
+        <span><svg width="16" height="16"><rect x="1" y="1" width="14" height="14" fill="#DCE3E0"/></svg>nicht sichtbar</span>
+        <span><svg width="16" height="16"><rect x="1" y="1" width="14" height="14" fill="none" stroke="#0F7774" stroke-width="1.5"/></svg>Schussreichweite</span>
+      </div>
+    </figure>
+    <div>
+      <div class="eyebrow">Karte 4247 · Match 3 · Zug 66 · V16 gegen den Kaggle-Dritten</div>
+      <div class="steps" style="gap:13px">
+        <div class="step"><div class="index">1</div><div><b>Einheit 11 sieht keinen einzigen Gegner.</b></div></div>
+        <div class="step"><div class="index">2</div><div><b>Das Netz wählt „schießen“ mit 88&nbsp;%.</b></div></div>
+        <div class="step"><div class="index">3</div><div><b>Die Zielkarte wählt Feld (17, 13), sieben Felder entfernt:</b><p>ein Punktefeld neben dem gegnerischen Relikt, das Sherlock schon kennt.</p></div></div>
+        <div class="step"><div class="index">4</div><div><b>Auf dem Feld und direkt daneben standen vier Kaggle-Einheiten:</b><p>ein direkter Treffer, drei durch Streuschaden.</p></div></div>
+      </div>
+      <div class="pane" style="margin-top:20px;padding:18px 22px">
+        <p style="font-size:20px"><b>10 Spiele gegen den Kaggle-Dritten:</b> 286 von 1.438 Schüssen gingen auf Felder ohne sichtbaren Gegner. <b class="teal">82&nbsp;% davon trafen.</b></p>
       </div>
     </div>
   </div>
-  <p class="barline" style="margin-top:21px;font-size:23px"><b>Training auf 152 Karten.</b> Der Schüler lernt aus Zügen und Bewertungen des Kaggle-Lehrers. Eine Variante wertet dieselbe Stellung zusätzlich mit vertauschten Kartenachsen aus.</p>
-  <footer><span>Team 15 · Finaleversion: 36 V14-Netze und ein zusätzlicher R3-Berater</span><span>06</span></footer>
+  <footer><span>Team 15 · Karte aus Schiedsrichtersicht; Sherlock selbst sah nur die hellen Felder</span><span>07</span></footer>
 </section>
 
-<section class="slide" id="gegnertest">
-  <header><div class="kicker">SHERLOCK / V15-KANDIDAT</div><h2>Wie entscheidet die Alternative V15?</h2></header>
-  <div class="cols" style="grid-template-columns:1.02fr .98fr;align-items:start;gap:50px"><div class="pane" style="padding:27px 30px">
-    <h3>Ist ein Gegner in der Nähe?</h3><p style="margin-top:16px"><b>Ja.</b> Bei einem sichtbaren Gegner im Umkreis von fünf Feldern übernimmt der Schüler den ganzen Befehl, auch das Schussziel.</p>
-    <div class="rule"></div><p><b>Nein.</b> V14 steuert den ersten Halter eines bestätigten Punktefelds und Einheiten auf dem Weg zu solchen Feldern. Die übrigen folgen dem Schüler.</p>
-  </div><figure class="station learn" style="padding:25px 28px"><figcaption class="eyebrow">Beispiel · dieselbe Einheit auf einem Punktefeld</figcaption>
-      <h3 style="min-height:0">Ein Schiff hält ein Punktefeld.</h3>
-      <p><b>Sieben Felder bis zum nächsten sichtbaren Gegner:</b> V14 entscheidet für den Halter.</p>
-      <div class="rule"></div><p><b>Drei Felder bis zum Gegner:</b> Der v4-Schüler übernimmt. Er darf auch schießen und das Ziel wählen.</p>
-    </figure></div>
-  <p class="barline" style="margin-top:30px">Im direkten Vergleich gewann der Hybrid mit dem v4-Schüler 730 von 800 Spielen gegen V14.</p>
-  <footer><span>Team 15 · V15-Kandidat mit eigenem v4-Schüler</span><span>07</span></footer>
-</section>
-
-<section class="slide" id="kampf">
-  <header><div class="kicker">SHERLOCK / SPIELANALYSE</div><h2>Im ersten Match verliert V14 im Mittel 23 Einheiten</h2></header>
-  <div class="cols" style="grid-template-columns:1.14fr .86fr"><figure>
-    <figcaption class="eyebrow">Mittelwerte im ersten Match · V14 gegen den Kaggle-Agenten</figcaption>
-    <table><thead><tr><th>Pro Team</th><th class="numeric">V14</th><th class="numeric">Kaggle-Agent</th></tr></thead><tbody>
-      <tr><td>Verlorene Einheiten</td><td class="numeric"><b>23,0</b></td><td class="numeric"><b>1,2</b></td></tr>
-      <tr><td>Schüsse</td><td class="numeric">11,3</td><td class="numeric">29,1</td></tr>
-      <tr><td>Energie vor dem letzten Zug</td><td class="numeric">387</td><td class="numeric">3.354</td></tr>
-    </tbody></table>
-    <p class="small" style="margin-top:18px">30 Karten auf beiden Seiten, 60 erste Matches. Kaggle-Agent mit seiner ursprünglichen Match-Einstellung.</p>
-  </figure><div class="pane"><h3>Warum Energie zählt</h3><p style="margin-top:16px">Wer mehr Energie hat, kann öfter schießen und hat bei Kollisionen einen Vorteil.</p><div class="rule"></div><p style="font-size:23px"><b>Unsere Vermutung:</b> Wer früh Energie sammelt, kann Punktefelder später besser verteidigen.</p></div></div>
-  <p class="barline" style="margin-top:32px">Sherlock findet den ersten Punkt meist ähnlich früh. Der große Unterschied zeigt sich im Kampf.</p>
-  <footer><span>Team 15 · Aufgezeichnete Spiele vom 15. November</span><span>08</span></footer>
-</section>
-
-<section class="slide dark" id="bestaetigung">
-  <header style="margin-bottom:23px"><div class="kicker">SHERLOCK / GEPAARTE SPIELVERGLEICHE</div><h2>98,5 % gegen Solution</h2></header>
-  <div class="cols sectionline" style="grid-template-columns:1.08fr .92fr;gap:53px;padding-top:23px">
-    <figure><figcaption style="font-size:26px;font-weight:700">400 gemeinsame Karten · zwei Gegner</figcaption>
-      <p style="font-size:20px;margin:7px 0 14px;color:var(--mint)">Gewonnene Spiele von je 800</p>
-      <table style="font-size:25px"><thead><tr><th style="color:var(--mint)">Gegner</th>
-      <th class="numeric" style="color:var(--mint)">V14</th><th class="numeric" style="color:var(--mint)">Original-R3</th><th class="numeric" style="color:var(--mint)">V15</th>
-      </tr></thead><tbody><tr><td>Solution_92</td><td class="numeric">767</td><td class="numeric">788</td><td class="numeric">764</td></tr><tr><td>Kaggle-Platz 3</td><td class="numeric">12</td><td class="numeric">12</td><td class="numeric">12</td></tr></tbody></table>
-      <p style="font-size:21px;margin-top:24px">Original-R3 gegenüber V14 über beide Gegner: <b>+1,31 Prozentpunkte</b><br>95-%-Kartenintervall: +0,25 bis +2,44.</p>
-    </figure>
-    <figure><figcaption style="font-size:26px;font-weight:700">Eine oder zwei Ansichten?</figcaption>
-      <p style="font-size:20px;margin:7px 0 14px;color:var(--mint)">Solution · die ersten 100 dieser 400 Karten</p>
-      <table style="font-size:24px"><tbody><tr><td>R3 mit einer Ansicht</td><td class="numeric">192/200</td></tr><tr><td>R3 mit zwei Ansichten</td><td class="numeric">191/200</td></tr></tbody></table>
-      <p style="font-size:21px;margin-top:21px">Zweite minus erste Ansicht: <b>−0,50 Prozentpunkte</b><br>95-%-Kartenintervall: −2,50 bis +1,00.</p>
+<!-- 08 · Moe -->
+<section class="slide" id="regeln">
+  <header style="margin-bottom:22px"><div class="kicker">SHERLOCK / REGELN AUF DEM NETZ</div><h2>Drei kleine Schalter helfen, 17 Handtaktiken nicht</h2></header>
+  <div class="cols" style="grid-template-columns:.88fr 1.12fr;gap:34px;align-items:start">
+    <div class="pane" style="padding:22px 26px">
+      <div class="eyebrow" style="margin-bottom:8px">Unsere drei Schalter aus der Spielanalyse</div>
+      <p style="font-size:19px;line-height:1.4"><b>Seltener stehen bleiben, je Feld höchstens eine stehende Einheit:</b> gegen Solution_92 von 49,5&nbsp;% auf 78&nbsp;% (erstes Netz, Entwicklungskarten)</p>
+      <p style="font-size:19px;line-height:1.4;margin-top:8px"><b>Halter-Regel:</b> Wer ein Punktefeld hält, wird nicht weggeschoben.</p>
+      <div class="rule" style="margin:12px 0"></div>
+      <p style="font-size:17px;color:var(--muted)">Einheit 2 auf einem Punktefeld (Karte 4247, Match 1, Zug 53)</p>
+      <table style="font-size:18px;margin-top:4px"><thead><tr><th></th><th class="numeric">stehen</th><th class="numeric">rechts</th></tr></thead><tbody>
+        <tr><td style="padding:7px 8px">ohne Halter-Regel</td><td class="numeric" style="padding:7px 8px">41&nbsp;%</td><td class="numeric" style="padding:7px 8px"><b>59&nbsp;%</b></td></tr>
+        <tr><td style="padding:7px 8px">mit Halter-Regel</td><td class="numeric" style="padding:7px 8px"><b>65&nbsp;%</b></td><td class="numeric" style="padding:7px 8px">34&nbsp;%</td></tr>
+      </tbody></table>
+      <p style="font-size:17px;margin-top:10px">Halter-Regel mit milderer Stehstrafe, frische Karten: <b>+1,6 Prozentpunkte</b> Punkteanteil gegen Kaggle</p>
+    </div>
+    <figure>
+      <figcaption class="eyebrow" style="margin-bottom:2px">Handtaktiken zusätzlich zum Netz · je 800 Spiele</figcaption>
+      <img src="diagramm_taktiken.svg" width="580" height="337" alt="Änderung des Punkteanteils gegen Kaggle: alles gleichzeitig −1,64; ohne Sicherheitsmasken −0,71; Nebel-Schüsse −0,67; gemeinsame Abschüsse −0,67; Granaten −0,66; Ausweichen −0,43; Tanken +0,21; Matchende-Sturm +0,26; öfter schießen +0,52">
+      <p class="small" style="margin-top:2px">„Öfter schießen“ fiel in der frischen Bestätigung durch (+0,13). Alles gleichzeitig: nur 7 statt 24 Siege von 400 gegen Kaggle.</p>
     </figure>
   </div>
-  <p class="sectionline" style="margin-top:30px;font-size:25px">Auf diesen Karten bleibt ein Vorteil der zweiten Ansicht offen.<br><b style="color:var(--mint)">Für das Finale spielt Original-R3 mit einer Kartenansicht.</b></p>
-  <footer><span>Team 15 · Gewertet werden Siege in ganzen Spielen mit je drei Matches</span><span>09</span></footer>
+  <footer><span>Team 15 · Das Netz hat Schießen und Ausweichen schon gelernt; feste Regeln stören es eher</span><span>08</span></footer>
+</section>
+
+<!-- 09 · Moe -->
+<section class="slide dark" id="ergebnis">
+  <header style="margin-bottom:20px"><div class="kicker">SHERLOCK / ERGEBNIS AUF FRISCHEN KARTEN</div><h2>194 von 200 Spielen gegen unsere vorige Version</h2></header>
+  <p class="small" style="margin-bottom:18px;font-size:19px">R3 war bis zum 17. November unsere Finalversion: V14 mit einem nachgeahmten Bewegungsberater.</p>
+  <div class="cols sectionline" style="grid-template-columns:1.08fr .92fr;gap:46px;padding-top:20px">
+    <figure><figcaption style="font-size:23px;font-weight:700">400 frische Karten · beide Seiten</figcaption>
+      <table style="font-size:22px;margin-top:10px"><thead><tr><th>Gewonnen</th><th class="numeric">R3</th><th class="numeric">V16</th></tr></thead><tbody>
+        <tr><td>Spiele gegen Solution_92</td><td class="numeric">787 / 800</td><td class="numeric">787 / 800</td></tr>
+        <tr><td>Spiele gegen Kaggle</td><td class="numeric">10 / 800</td><td class="numeric win">20 / 800</td></tr>
+        <tr><td>Matches gegen Kaggle</td><td class="numeric">76 / 2.400</td><td class="numeric win">216 / 2.400</td></tr>
+        <tr><td>Punkteanteil gegen Kaggle</td><td class="numeric">33,4&nbsp;%</td><td class="numeric win">39,3&nbsp;%</td></tr>
+      </tbody></table>
+    </figure>
+    <figure><figcaption style="font-size:23px;font-weight:700">Im Kampf gegen Kaggle</figcaption>
+      <table style="font-size:22px;margin-top:10px"><thead><tr><th>Je Match</th><th class="numeric">R3</th><th class="numeric">V16</th></tr></thead><tbody>
+        <tr><td>eigene verlorene Einheiten</td><td class="numeric">24</td><td class="numeric win">17</td></tr>
+        <tr><td>verlorene Kaggle-Einheiten</td><td class="numeric">3</td><td class="numeric win">8</td></tr>
+        <tr><td>direkte Treffer</td><td class="numeric">7</td><td class="numeric win">22</td></tr>
+        <tr><td>Punkte von Kaggle</td><td class="numeric">377</td><td class="numeric win">303</td></tr>
+      </tbody></table>
+    </figure>
+  </div>
+  <p class="small" style="margin-top:22px;font-size:17px">Kaggle = der Kaggle-Dritte. Links: vorab festgelegte Regel, Karten 7261000–7261399, gepaart nach Karte ausgewertet. Rechts: 180 Matches je Agent auf 30 Analysekarten, Schritt für Schritt mit den Spielregeln nachgerechnet. Gegen fünf weitere Spielweisen gewann das Netz jeweils 50 von 50 Spielen.</p>
+  <footer><span>Team 15 · Sherlock V16 ist seit dem 17. November unsere Abgabe</span><span>09</span></footer>
+</section>
+
+<!-- 10 · Moe -->
+<section class="slide" id="fazit">
+  <header style="margin-bottom:28px"><div class="kicker">SHERLOCK / FAZIT</div><h2>Was wir mitnehmen</h2></header>
+  <div class="three">
+    <div class="pane"><h3>Vom Besten lernen</h3><p>Gedächtnis, ein starker Lehrer und DAgger brachten mehr als alle Handregeln zusammen.</p></div>
+    <div class="pane"><h3>Nur frische Karten zählen</h3><p>Jede neue Version musste eine vorab festgelegte Prüfung auf neuen Karten bestehen. Viele gute Ideen fielen dort durch.</p></div>
+    <div class="pane"><h3>Der Lehrer bleibt stärker</h3><p>Gegen ihn holt Sherlock rund 40&nbsp;% der Punkte und etwa jedes zehnte Match.</p></div>
+  </div>
+  <p class="barline" style="margin-top:30px;font-size:21px"><b>Nächste Schritte:</b> das nachgeahmte Netz mit Reinforcement Learning weitertrainieren, etwa mit PPO nahe am Lehrer · Schüsse besser erkennen (heute 36–50&nbsp;% der Lehrerschüsse) · am Matchende mehr Punktefelder besetzen (Kaggle&nbsp;8, wir&nbsp;3)</p>
+  <p class="accent" style="margin-top:auto;margin-bottom:30px;font-size:34px">Danke! Habt ihr Fragen?</p>
+  <footer><span>Team 15 · Sherlock V16</span><span>10</span></footer>
+</section>
+
+<!-- Reserve -->
+<section class="slide reserve" id="reserve-zahlen">
+  <header style="margin-bottom:26px"><div class="kicker">RESERVE / ZAHLEN UND FAKTEN</div><h2>1,54 Millionen Spiele seit dem 10. Oktober</h2></header>
+  <div class="cols" style="grid-template-columns:1fr 1fr;gap:46px">
+    <table><tbody>
+      <tr><td>Trainingsspiele (272 DQN-Läufe, 7 PPO-Läufe)</td><td class="numeric">662.504</td></tr>
+      <tr><td>Zwischenprüfungen im Training</td><td class="numeric">66.912</td></tr>
+      <tr><td>Bewertungsspiele (Vergleiche, Bestätigungen)</td><td class="numeric">806.616</td></tr>
+      <tr><td>Spiele für die Nachahmung</td><td class="numeric">5.928</td></tr>
+      <tr><td><b>zusammen</b></td><td class="numeric"><b>1.541.960</b></td></tr>
+      <tr><td>verschiedene Karten in Bewertungen</td><td class="numeric">33.005</td></tr>
+    </tbody></table>
+    <table><tbody>
+      <tr><td>Abgabestände seit dem 10.10.</td><td class="numeric">11</td></tr>
+      <tr><td>Netze in V16 · Parameter</td><td class="numeric">2 · 2,5 Mio.</td></tr>
+      <tr><td>Abgabedatei · Zeit je Zug (Median)</td><td class="numeric">9,5 MB · 5–6 ms</td></tr>
+      <tr><td>Tests im Projekt</td><td class="numeric">3.298</td></tr>
+      <tr><td>Commits (Moayed / Mahmoud)</td><td class="numeric">507 / 415</td></tr>
+      <tr><td>Gegnertypen in Tests</td><td class="numeric">über 25</td></tr>
+    </tbody></table>
+  </div>
+  <p class="small" style="margin-top:24px">Spiele und Karten Stand 17.11., nachgezählt mit experiments/analysis/count_games.py. Gegner: Solution_92 und drei Varianten, default, das DQN der Vorlage, Rush-Bot, Zufall, CNN-PPO, 16 eigene frühere Stände und der Kaggle-Dritte.</p>
+  <footer><span>Team 15 · Reserve</span><span>R1</span></footer>
+</section>
+
+<section class="slide reserve" id="reserve-training">
+  <header style="margin-bottom:24px"><div class="kicker">RESERVE / TRAINING IM DETAIL</div><h2>Wie die beiden Netze trainiert wurden</h2></header>
+  <table style="font-size:20px"><tbody>
+    <tr><td style="width:300px"><b>Daten</b></td><td>1.800 Lehrerspiele, dazu 6 DAgger-Runden mit 3.400 Spielen (Gegner Kaggle, V14, Solution_92)</td></tr>
+    <tr><td><b>Beispiele</b></td><td>19,0 Mio. Einheitsentscheidungen, 18,7 Mio. davon im Spiel ausführbar; Validierung getrennt nach Spiel</td></tr>
+    <tr><td><b>Verlust</b></td><td>Kreuzentropie der Aktion + 0,5 × Kreuzentropie des Schussziels</td></tr>
+    <tr><td><b>Optimierung</b></td><td>AdamW, OneCycle-Lernrate, Minibatch etwa 2.048 Entscheidungen, Apple-GPU</td></tr>
+    <tr><td><b>v9</b></td><td>64 Kanäle, 6 Residual-Blöcke, 0,70 Mio. Parameter; 2 Epochen zu je 17,5 Minuten als Fortsetzung von v8</td></tr>
+    <tr><td><b>v8L</b></td><td>96 Kanäle, 8 Residual-Blöcke, 1,81 Mio. Parameter; von Grund auf trainiert, dann eine Epoche fortgesetzt</td></tr>
+    <tr><td><b>Nachahmung, frische Spiele</b></td><td>gleiche Aktion wie der Lehrer: 87 % in Lehrerspielen, 82 % in eigenen Spielen · Lehrerschuss erkannt: 50 % bzw. 36 %</td></tr>
+  </tbody></table>
+  <p class="small" style="margin-top:20px">Eingaben in Training und Spiel stammen aus derselben Funktion. Der Lehrer läuft nur beim Sammeln der Daten, nie in der Abgabe.</p>
+  <footer><span>Team 15 · Reserve</span><span>R2</span></footer>
+</section>
+
+<section class="slide reserve" id="reserve-v14">
+  <header style="margin-bottom:24px"><div class="kicker">RESERVE / DAS ALTE DQN</div><h2>Wie V14 entschied und lernte</h2></header>
+  <div class="cols" style="grid-template-columns:1fr 1fr;gap:44px">
+    <figure class="pane" style="padding:22px 26px">
+      <figcaption class="eyebrow" style="margin-bottom:6px">V14 · Karte 4242 · Match 1, Zug 45 · Mittel der 36 Netze</figcaption>
+      <table style="font-size:20px"><thead><tr><th>Aktion</th><th class="numeric">Q-Wert</th><th>Auswahl</th></tr></thead><tbody>
+        <tr><td>Stehen</td><td class="numeric">10,07</td><td>erlaubt</td></tr>
+        <tr><td>Hoch</td><td class="numeric">9,37</td><td>erlaubt</td></tr>
+        <tr><td><b>Rechts</b></td><td class="numeric"><b>11,08</b></td><td><b>gespielt</b></td></tr>
+        <tr><td>Runter</td><td class="numeric">11,46</td><td>Asteroid</td></tr>
+        <tr><td>Links</td><td class="numeric">9,51</td><td>erlaubt</td></tr>
+        <tr><td>Schuss</td><td class="numeric">8,21</td><td>erlaubt</td></tr>
+      </tbody></table>
+    </figure>
+    <div class="steps" style="gap:18px">
+      <div class="step"><div class="index">1</div><div><b>Q-Werte statt Wahrscheinlichkeiten</b><p>Jedes der 36 Netze schätzt, wie viel Belohnung eine Aktion langfristig bringt.</p></div></div>
+      <div class="step"><div class="index">2</div><div><b>Double DQN mit Replay Buffer</b><p>Belohnung für gehaltene und neu entdeckte Punktefelder, Abzug für verlorene Einheiten, Bonus am Matchende.</p></div></div>
+      <div class="step"><div class="index">3</div><div><b>18 Grundnetze plus je ein Nachtraining</b><p>66.000 Spiele für die Grundnetze, je 5.500 Spiele Nachtraining.</p></div></div>
+    </div>
+  </div>
+  <footer><span>Team 15 · Reserve · V14 war unsere Abgabe im Battle am 6. November</span><span>R3</span></footer>
+</section>
+
+<section class="slide reserve" id="reserve-pruefungen">
+  <header style="margin-bottom:24px"><div class="kicker">RESERVE / ALLE PRÜFUNGEN</div><h2>V16 gegen R3 auf vier unbenutzten Kartensätzen</h2></header>
+  <table style="font-size:19px"><thead><tr><th>Prüfung</th><th class="numeric">Solution_92 (V16 / R3)</th><th class="numeric">Kaggle-Spiele</th><th class="numeric">Kaggle-Matches</th><th class="numeric">Punkteanteil, Δ zu R3</th></tr></thead><tbody>
+    <tr><td>Bestätigung 2 (gleiches Netz, Stay-Bias 1,5)</td><td class="numeric">789 / 787 von 800</td><td class="numeric">28 / 16</td><td class="numeric">236 / 90</td><td class="numeric">+4,02 [+3,10; +4,92]</td></tr>
+    <tr><td><b>Bestätigung 3 (Abgabe)</b></td><td class="numeric"><b>787 / 787 von 800</b></td><td class="numeric"><b>20 / 10</b></td><td class="numeric"><b>216 / 76</b></td><td class="numeric"><b>+5,51 [+4,66; +6,34]</b></td></tr>
+    <tr><td>Dev G</td><td class="numeric">395 / 393 von 400</td><td class="numeric">10 / 6</td><td class="numeric">100 / 34</td><td class="numeric">+5,02 [+3,92; +6,12]</td></tr>
+    <tr><td>Bestätigung 5 (zur Information)</td><td class="numeric">778 / 789 von 800</td><td class="numeric">34 / 18</td><td class="numeric">238 / 98</td><td class="numeric">+4,49 [+3,66; +5,34]</td></tr>
+  </tbody></table>
+  <p class="small" style="margin-top:20px">Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, gepaart nach Karte ausgewertet (10.000 Ziehungen, 95-%-Intervall). Robustheit: gegen default, Zufall, Rush-Bot, eine Solution-Variante und das DQN der Vorlage je 50/50, gegen V14 48/50.</p>
+  <footer><span>Team 15 · Reserve</span><span>R4</span></footer>
 </section>
 </body>
 </html>
