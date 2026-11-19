@@ -65,6 +65,23 @@ python -m scripts.build_submission
 shasum -a 256 dist/agent.zip   # 0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099
 ```
 
+## Im Format der Battle-Mail (Gruppe15.zip)
+
+Falls der Prof fürs Finale wieder das Format der Battle-Mail vom 29.10. verlangt (Ordner `Gruppe15/`, Agentenklasse
+`Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth`), verpackt der Befehl dieses Release um: Code und `agent.pth`
+bytegleich, nur der Ordner heißt anders, dazu `agents.yaml` und `LIESMICH.txt` mit den Battle-Pfaden. Die historische
+V14-Datei `Gruppe15.zip` im Projektordner bleibt unberührt.
+
+```sh
+python -m scripts.build_submission --battle
+shasum -a 256 dist/Gruppe15.zip   # 8347ea2bb6e3547bc7881999ebef82d8b09582a2d98a53a3c74e0d8a52b6ae95
+```
+
+Geprüft am 19.11.2026: Laden, Pflichtmethoden und ein Zug auf beiden Seiten, mit dem Ordner unter `agents/` und in der
+Projektwurzel, auch mit `train=True` (eingefroren, `.pth` unverändert); zwei ganze Spiele (Karten 4242 und 4243, beide
+Seiten) mit diesem Release aufgezeichnet und mit `dist/Gruppe15.zip` nachgespielt: 0 abweichende Aktionen
+(`scripts/xversion_replay.py`). Zwei Bauläufe ergaben dieselbe SHA-256.
+
 ## Rückweg zu R3
 
 Das R3-Release bleibt unverändert unter [`../20261116_r3_finale/`](../20261116_r3_finale/README.md) (SHA-256

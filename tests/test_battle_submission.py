@@ -58,6 +58,14 @@ def sandbox(tmp_path, monkeypatch):
     return src / "weights"
 
 
+@pytest.fixture
+def run_weights(tmp_path):
+    """Gewichte eines Experiment-Laufs: seit 19.11.2026 nutzt --battle ohne --from-run die Finalabgabe."""
+    weights = tmp_path / "run" / "weights"
+    weights.mkdir(parents=True)
+    return weights
+
+
 def build(monkeypatch, out, *args):
     monkeypatch.setattr(sys, "argv", ["build_submission", "--battle", "--out", str(out), "--no-check", *args])
     build_submission.main()
@@ -65,32 +73,34 @@ def build(monkeypatch, out, *args):
         return {n: z.read(n) for n in z.namelist()}
 
 
-def test_battle_zip_with_identical_weights_ships_one_agent_pth(sandbox, tmp_path, monkeypatch):
-    for side in (0, 1):
-        (sandbox / f"agent_p{side}.pth").write_bytes(b"same-weights")
-    files = build(monkeypatch, tmp_path / "Gruppe15.zip")
+def test_battle_zip_with_identical_weights_ships_one_agent_pth(sandbox, run_weights, tmp_path, monkeypatch):
+    (run_weights / "agent.pth").write_bytes(b"same-weights")
+    files = build(monkeypatch, tmp_path / "Gruppe15.zip", "--from-run", str(run_weights.parent))
     assert sorted(files) == ["Gruppe15/LIESMICH.txt", "Gruppe15/__init__.py", "Gruppe15/agent.pth",
                              "Gruppe15/agents.yaml", "Gruppe15/belief.py", "Gruppe15/main.py"]
     assert files["Gruppe15/agent.pth"] == b"same-weights"
     readme = files["Gruppe15/LIESMICH.txt"].decode()
     assert "Gruppe15.main.Agent_x" in readme
     assert "15;Gruppe15.main.Agent_x;Gruppe15/agent.pth;Gruppe15/agent.pth" in readme
-    assert (sandbox / "agent_p0.pth").read_bytes() == b"same-weights"
+    assert (run_weights / "agent.pth").read_bytes() == b"same-weights"
 
 
-def test_battle_zip_with_different_weights_ships_both_sides(sandbox, tmp_path, monkeypatch):
-    (sandbox / "agent_p0.pth").write_bytes(b"zero")
-    (sandbox / "agent_p1.pth").write_bytes(b"one")
-    files = build(monkeypatch, tmp_path / "Gruppe15.zip")
+def test_battle_zip_with_different_weights_ships_both_sides(sandbox, run_weights, tmp_path, monkeypatch):
+    (run_weights / "agent_p0.pth").write_bytes(b"zero")
+    (run_weights / "agent_p1.pth").write_bytes(b"one")
+    files = build(monkeypatch, tmp_path / "Gruppe15.zip", "--from-run", str(run_weights.parent))
     assert files["Gruppe15/agent_0.pth"] == b"zero" and files["Gruppe15/agent_1.pth"] == b"one"
     assert "Gruppe15/agent.pth" not in files
     assert "LOAD_PATH_P1: 'Gruppe15/agent_1.pth'" in files["Gruppe15/agents.yaml"].decode()
 
 
-def test_battle_zip_cannot_overwrite_released_weight(sandbox, monkeypatch):
+def test_battle_zip_cannot_overwrite_released_weight(sandbox, run_weights, monkeypatch):
     for side in (0, 1):
         (sandbox / f"agent_p{side}.pth").write_bytes(b"released")
+    (run_weights / "agent.pth").write_bytes(b"run")
     with pytest.raises(SystemExit):
+        build(monkeypatch, sandbox / "agent_p0.pth", "--from-run", str(run_weights.parent))
+    with pytest.raises(SystemExit):  # auch die umverpackte Finalabgabe darf keine Abgabe-Gewichte ersetzen
         build(monkeypatch, sandbox / "agent_p0.pth")
     assert (sandbox / "agent_p0.pth").read_bytes() == b"released"
 

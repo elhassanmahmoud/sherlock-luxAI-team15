@@ -3,10 +3,10 @@
     python -m scripts.build_submission
     python -m scripts.build_submission --team-name sherlock --group 15
     python -m scripts.build_submission --from-run experiments/runs/20261010_full_s1
-    python -m scripts.build_submission --battle          # Gruppe15.zip im Projektordner
+    python -m scripts.build_submission --battle          # dist/Gruppe15.zip: Finalabgabe im Battle-Format
 
-Die Standardabgabe kopiert das freigegebene R3-Archiv unverändert nach dist/agent.zip.
-Andere Teams/Gruppen und --from-run erzeugen ein Paket aus den gewählten Quellen.
+Die Standardabgabe kopiert das freigegebene Archiv (FINAL_RELEASE, seit 17.11.2026 Sherlock V16) unverändert nach
+dist/agent.zip. Andere Teams/Gruppen und --from-run erzeugen ein Paket aus den gewählten Quellen.
 
 Inhalt des Kursformats:
 
@@ -23,6 +23,10 @@ Inhalt des Kursformats:
 mit Ordner Gruppe<N>/, Import-Pfad 'Gruppe<N>.main.Agent_x' und Gewichten direkt im
 Ordner. Gleiche Gewichte fuer beide Seiten stehen einmal als agent.pth darin, sonst
 als agent_0.pth und agent_1.pth. Dazu LIESMICH.txt mit den Pfaden fuer den Prof.
+Seit 19.11.2026 verpackt --battle ohne --from-run die Finalabgabe (FINAL_RELEASE) um: Code und agent.pth
+bytegleich aus dem geprüften Archiv, nur der Ordner heißt Gruppe<N>/ (vorher nahm --battle still die
+V14-Gewichte aus agents/sherlock/weights/). Ausgabe standardmäßig dist/Gruppe<N>.zip, damit die
+historische Battle-Datei Gruppe15.zip im Projektordner erhalten bleibt.
 
 --from-run liest die Gewichte eines Experiment-Laufs direkt ins Zip.
 agents/sherlock/weights/ bleibt unveraendert. Danach prueft das Skript
@@ -34,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 from hashlib import sha256
+import io
 import keyword
 import shutil
 import subprocess
@@ -144,10 +149,10 @@ def net_count(path: Path) -> int | None:
         return None
 
 
-def readme_text(group: int, imp: str, lp0: str, lp1: str, nets: int | None = None) -> str:
+def readme_text(group: int, imp: str, lp0: str, lp1: str, nets: int | None = None, version: str = "") -> str:
     pth = (f"Pfad zum trainierten Agenten:  {lp0}   (gleiche Datei fuer Player 0 und Player 1)"
            if lp0 == lp1 else f"Pfad Player 0:  {lp0}\nPfad Player 1:  {lp1}")
-    return (f"Gruppe {group} - Agent Sherlock\n\n"
+    return (f"Gruppe {group} - Agent Sherlock{' ' + version if version else ''}\n\n"
             f"Pfad zur Agent-Klasse (act, update):  {imp}\n{pth}\n\n"
             f"Zeile fuer Paths.csv:\n{group};{imp};{lp0};{lp1}\n\n"
             "Hinweise:\n"
@@ -196,6 +201,52 @@ def frozen_bytes(path: Path, half: bool = False) -> bytes:
     buf = io.BytesIO()
     torch.save(ck, buf)
     return buf.getvalue()
+
+
+def build_battle_release(group: int, out: Path) -> tuple[Path, tuple[str, str, str]]:
+    """Finalabgabe (FINAL_RELEASE, Kursformat mit Ordner sherlock/) im Format der Battle-Mail (19.11.2026).
+
+    Alle Dateien unter sherlock/ werden bytegleich übernommen, nur unter Gruppe<N>/; sherlock/weights/agent.pth
+    liegt danach als Gruppe<N>/agent.pth neben main.py. agents.yaml und LIESMICH.txt nennen die Battle-Pfade,
+    paths.csv entfällt (die Zeile steht in LIESMICH.txt)."""
+    release = ROOT / FINAL_RELEASE
+    pkg = f"Gruppe{group}"
+    imp, lp0, lp1 = battle_paths(group, True)
+    try:
+        out = checked_output(out, SRC / "weights")
+        data = release.read_bytes()
+        if sha256(data).hexdigest() != FINAL_ZIP_SHA256:
+            raise ValueError("Freigabearchiv hat eine abweichende SHA-256")
+        if out.exists() and out.samefile(release):
+            raise ValueError("Die Ausgabe verweist auf das Freigabearchiv")
+        with zipfile.ZipFile(io.BytesIO(data)) as src:
+            members = [n for n in src.namelist() if n.startswith("sherlock/") and not n.endswith("/")]
+            if "sherlock/main.py" not in members or "sherlock/weights/agent.pth" not in members:
+                raise ValueError("Freigabearchiv hat nicht das erwartete Kursformat (sherlock/main.py, weights/agent.pth)")
+            files = {}
+            for name in members:
+                rel = name[len("sherlock/"):]
+                if rel == "agents.yaml":
+                    continue
+                target = f"{pkg}/agent.pth" if rel == "weights/agent.pth" else f"{pkg}/{rel}"
+                files[target] = src.read(name)
+        files[f"{pkg}/agents.yaml"] = yaml_text(imp, lp0, lp1).encode()
+        files[f"{pkg}/LIESMICH.txt"] = readme_text(
+            group, imp, lp0, lp1, version=f"(Finalabgabe, umverpackt aus {FINAL_RELEASE}, "
+                                          f"SHA-256 {FINAL_ZIP_SHA256[:8]}…)").encode()
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=out.parent) as tmp:
+            stage = Path(tmp) / out.name
+            with zipfile.ZipFile(stage, "w") as z:
+                for target in sorted(files):  # feste Reihenfolge und Zeitstempel: jeder Bau hat dieselbe SHA-256
+                    info = zipfile.ZipInfo(target, date_time=(1980, 1, 1, 0, 0, 0))
+                    info.compress_type = zipfile.ZIP_DEFLATED
+                    info.external_attr = 0o644 << 16
+                    z.writestr(info, files[target])
+            stage.replace(out)
+    except (ValueError, OSError, zipfile.BadZipFile) as exc:
+        raise SystemExit(str(exc)) from exc
+    return out, (imp, lp0, lp1)
 
 
 def build_battle(group: int, out: Path, from_run: Path | None = None,
@@ -315,19 +366,23 @@ def main() -> None:
     ap.add_argument("--team-name", default="sherlock", help="Ordnername im Zip (= Teamname)")
     ap.add_argument("--group", type=int, default=15, help="Moodle-Gruppennummer")
     ap.add_argument("--from-run", default=None, help="Gewichte dieses Runs direkt verpacken; Abgabe-Dateien unveraendert lassen")
-    ap.add_argument("--battle", action="store_true", help="Format aus der Battle-Mail: Gruppe<N>.zip")
-    ap.add_argument("--out", default=None, help="Standard: dist/agent.zip bzw. Gruppe<N>.zip im Projektordner")
+    ap.add_argument("--battle", action="store_true",
+                    help="Format aus der Battle-Mail: Gruppe<N>.zip (ohne --from-run: die Finalabgabe umverpackt)")
+    ap.add_argument("--out", default=None, help="Standard: dist/agent.zip bzw. dist/Gruppe<N>.zip")
     ap.add_argument("--no-check", action="store_true")
     ap.add_argument("--half", action="store_true",
-                    help="nur --battle: Netzgewichte als float16, halbe Dateigroesse (fuer eine Moodle-Grenze)")
+                    help="nur --battle --from-run: Netzgewichte als float16, halbe Dateigroesse (Moodle-Grenze)")
     args = ap.parse_args()
-    if args.half and not args.battle:
-        ap.error("--half gibt es nur mit --battle")
+    if args.half and not (args.battle and args.from_run):
+        ap.error("--half gibt es nur mit --battle --from-run (die Finalabgabe bleibt bytegleich)")
 
     from_run = Path(args.from_run).expanduser() if args.from_run else None
     if args.battle:
-        out, paths = build_battle(args.group, Path(args.out or ROOT / f"Gruppe{args.group}.zip"), from_run,
-                                  args.half)
+        target = Path(args.out or ROOT / "dist" / f"Gruppe{args.group}.zip")
+        if from_run is None:
+            out, paths = build_battle_release(args.group, target)
+        else:
+            out, paths = build_battle(args.group, target, from_run, args.half)
     else:
         target = Path(args.out or ROOT / "dist" / "agent.zip")
         if args.team_name == "sherlock" and args.group == 15 and from_run is None:
