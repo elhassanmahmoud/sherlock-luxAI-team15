@@ -39,3 +39,17 @@ Der [Kundschafter](kundschafter/ERGEBNIS.md) erreichte auf 16 neuen Karten gegen
 **Entscheidung für die beiden aktuellen Versuche.** Es zählt jeweils die im [Kundschafter-Versuch](kundschafter/PLAN.md) bzw. im [Kontrollkopf-Versuch](kontrollkopf/PLAN.md) vor dem ersten Spiel hinterlegte Bedingung. Erfüllen beide ihren kleinen Vergleich, hat wegen des Fehlers auf den Solution-Karten zuerst der Kundschafter Vorrang. Für die breite Bestätigung ist ein gemeinsamer Satz von 200 frischen Karten mit Seitentausch gegen Solution und Kaggle vorgesehen, mit einem Direktduell gegen V16 auf den ersten 50 Karten und beiden Seiten. Nur einen Kandidaten auf den Bestätigungskarten prüfen. Für den Kundschafter ist die Quote ganzer Spiele gegen Solution die primäre Messgröße. Für den Kontrollkopf ist es der Punkteanteil gegen Kaggle. Ein gesicherter Vorteil erfordert ein positives unteres Ende des paarweisen 95-%-Kartenintervalls für die vorgewählte primäre Messgröße. Die zusätzlichen Vergleichswerte, die zulässigen Einbußen und die Kartenliste sind vor einer solchen Messung festzuschreiben. Ein unklarer Befund auf diesen Karten rechtfertigt keinen Abgabewechsel.
 
 Die [Finalfolien](../../../Sherlock_Finale_27-11-2026.pdf) zeigen einen tatsächlich gespielten Zug aus dem veröffentlichten V16. Wenn sich bis zum Turnier kein Kandidat durchsetzt, sind sie fachlich unabhängig von den laufenden Versuchen einsetzbar.
+
+## Nacht zum Montag, 23. November
+
+Der Originalvergleich, die Versuche zum Punktegebiet und die Versuche zur Feldbesetzung haben getrennte Karten. Neue Prüfungen in dieser Nacht werden bis 05:45 Uhr Berliner Zeit abgeschlossen oder mit ihrem tatsächlichen Zwischenstand festgehalten. Der Bericht für Moe und Mahmoud ist für 06:00 Uhr vorgesehen.
+
+| Frage | Welche Daten eine Aussage erlauben |
+|---|---|
+| Bringt das gewöhnliche Nachtrainieren zusätzliche Siege? | [200 unabhängige Karten und Direktvergleich](bestaetigung/PLAN.md), Auswertung nach 1.700 vollständigen Partien |
+| Hilft der indirekte Hinweis auf ein weiteres Punktegebiet? | [96 natürliche V16-Spiele vor dem ersten Eingriff](signalstudie/PLAN.md), dann direkte Spiele und externe Gegner |
+| Soll ein freies Nachbarschiff ein gerade verlorenes Feld wieder besetzen? | [Wirkung desselben Zuges in zwei Spielverläufen](feldrueckkehr/DIAGNOSE.md), danach ganze Spiele auf anderen Karten |
+| Sollte Sherlock je nach Situation einem seiner beiden Netze mehr vertrauen? | [Lehrerbeispiele und getrennte Prüfkarten](netzwahl/PLAN.md), bei erfüllten Kriterien folgt der Spielvergleich |
+| Was kann Sherlock insbesondere bei kurzer Sicht von R3 übernehmen? | [Historische Niederlagen nach Sichtweite](kartenparameter/ERGEBNIS.md) und [92 echte Partien mit überprüfbarem früheren Endstand](kurze_sicht/PLAN.md) als Grundlage für das Nachlernen |
+
+Eine zusätzliche Untersuchung zur [Übergabe zwischen zwei Schiffen auf demselben Feld](halterwechsel/ERGEBNIS.md) ergab bei V16 sieben geeignete Entscheidungen auf 40 Karten. Dafür ist keine weitere Leistungsprüfung vorgesehen.

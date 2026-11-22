@@ -86,7 +86,7 @@ def run(base, initial):
     geometry = importlib.import_module("sherlock.geometry")
     policy = importlib.import_module("sherlock.imitation_agent").ImitationAgent
     results = {"old": [], "new": []}
-    for row, path, split in input_files(base, initial):
+    for row, path, split in input_files(base, initial, include_validation=False):
         if split != "valid":
             cache = base / "vorhersagen" / f"{split}_{row['seed']}.npz"
             results[split].append(inspect(row, path, cache, feature_names, geometry, policy))

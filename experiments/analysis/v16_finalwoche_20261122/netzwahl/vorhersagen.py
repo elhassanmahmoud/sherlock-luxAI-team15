@@ -24,7 +24,7 @@ RELEASE = ROOT / "experiments/releases/20261117_sherlock_v16/agent.zip"
 V16 = "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
 
 
-def input_files(base, archive_only):
+def input_files(base, archive_only, include_validation=True):
     index = ROOT / "experiments/analysis/umbau_20261115/dagger_zusatz/index-400.json"
     archive = base.parents[1] / "k3_v4_extra_7172000/data"
     items = []
@@ -36,7 +36,10 @@ def input_files(base, archive_only):
         if row["split"] == "train":
             items.append((row, previous / row["file"], "new"))
     if not archive_only:
-        for seed in [*range(160345000, 160345032), *range(160345100, 160345124)]:
+        seeds = list(range(160345000, 160345032))
+        if include_validation:
+            seeds.extend(range(160345100, 160345124))
+        for seed in seeds:
             row = json.loads((base / "frisch" / f"{seed}.json").read_text())
             items.append((row, base / "frisch" / row["file"], "new" if row["split"] == "train" else "valid"))
     return items
@@ -100,12 +103,12 @@ def predict(row, path, split, models, device, out):
     temporary.replace(path_out)
 
 
-def encode(base, archive_only, device):
+def encode(base, archive_only, device, include_validation=True):
     torch.set_num_threads(1)
     models = networks(device)
     out = base / "vorhersagen"
     out.mkdir(exist_ok=True)
-    for row, path, split in input_files(base, archive_only):
+    for row, path, split in input_files(base, archive_only, include_validation):
         cached = out / f"{split}_{row['seed']}.npz"
         if cached.exists():
             with np.load(cached, allow_pickle=False) as cache:
@@ -120,6 +123,7 @@ if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("base", type=Path)
     cli.add_argument("--archive-only", action="store_true")
+    cli.add_argument("--training-only", action="store_true")
     cli.add_argument("--device", default="mps", choices=("mps", "cpu"))
     args = cli.parse_args()
-    encode(args.base, args.archive_only, args.device)
+    encode(args.base, args.archive_only, args.device, not args.training_only)
