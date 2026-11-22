@@ -1,0 +1,48 @@
+{
+  "engine_sha256": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+  "training_fields": 131072,
+  "test_fields": 8192,
+  "source": "synthetic independent public-generator noise fields",
+  "pairs": 300,
+  "complete": {
+    "n": 8192,
+    "measures": {
+      "overall": {
+        "logloss": 5.131624825402795,
+        "top10": 0.276123046875,
+        "top25": 0.545654296875
+      },
+      "distance": {
+        "logloss": 4.2148519580930195,
+        "top10": 0.6466064453125,
+        "top25": 0.764892578125
+      },
+      "conditional": {
+        "logloss": 3.939324348963175,
+        "top10": 0.6728515625,
+        "top25": 0.8203125
+      }
+    }
+  },
+  "outside_first_zone": {
+    "n": 3211,
+    "measures": {
+      "overall": {
+        "logloss": 5.108874491382906,
+        "top10": 0.17128620367486763,
+        "top25": 0.46434132668950484
+      },
+      "distance": {
+        "logloss": 5.274390532901807,
+        "top10": 0.18716910619744628,
+        "top25": 0.45873559638741823
+      },
+      "conditional": {
+        "logloss": 5.190853973969992,
+        "top10": 0.2698536281532233,
+        "top25": 0.5910412124987025
+      }
+    }
+  },
+  "qualifies_for_game_diagnosis": false
+}

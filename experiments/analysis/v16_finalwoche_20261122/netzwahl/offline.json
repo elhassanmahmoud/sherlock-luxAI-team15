@@ -1,0 +1,229 @@
+{
+  "release": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099",
+  "plan_sha256": "8a55539824e726108c15862e6ae2bf34f370b7b9d7c9818f933c9e8c6d62f123",
+  "features": [
+    "self_energy",
+    "match_step_frac",
+    "match_idx_frac",
+    "on_point",
+    "redundant_here",
+    "enemies_in_sap",
+    "enemies_visible",
+    "explored_frac",
+    "known_points"
+  ],
+  "constant_logit": 0.5169296860694885,
+  "context_bias": 0.24150873720645905,
+  "context_weights": [
+    0.10578111559152603,
+    0.03599219769239426,
+    0.05018232390284538,
+    0.20366781949996948,
+    -0.09947530180215836,
+    -0.2805478870868683,
+    -0.07456973940134048,
+    0.14292192459106445,
+    0.09700242429971695
+  ],
+  "old_rows": 393605,
+  "recent_rows": 136882,
+  "holdout_games": 24,
+  "validation_rows": 81792,
+  "disagreements": 7617,
+  "cards_with_disagreement": 24,
+  "action_changes": 948,
+  "metrics": {
+    "original": {
+      "correct": 68277,
+      "disagreement_correct": 3783,
+      "logloss": 0.5330363512039185
+    },
+    "constant": {
+      "correct": 68302,
+      "disagreement_correct": 3808,
+      "logloss": 0.530867338180542
+    },
+    "context": {
+      "correct": 68312,
+      "disagreement_correct": 3818,
+      "logloss": 0.530132532119751
+    }
+  },
+  "per_game": [
+    {
+      "seed": 160345100,
+      "different": 317,
+      "original": 143,
+      "constant": 140,
+      "context": 144
+    },
+    {
+      "seed": 160345101,
+      "different": 347,
+      "original": 170,
+      "constant": 167,
+      "context": 160
+    },
+    {
+      "seed": 160345102,
+      "different": 319,
+      "original": 165,
+      "constant": 168,
+      "context": 168
+    },
+    {
+      "seed": 160345103,
+      "different": 264,
+      "original": 130,
+      "constant": 136,
+      "context": 135
+    },
+    {
+      "seed": 160345104,
+      "different": 354,
+      "original": 184,
+      "constant": 173,
+      "context": 177
+    },
+    {
+      "seed": 160345105,
+      "different": 274,
+      "original": 142,
+      "constant": 138,
+      "context": 136
+    },
+    {
+      "seed": 160345106,
+      "different": 403,
+      "original": 205,
+      "constant": 207,
+      "context": 205
+    },
+    {
+      "seed": 160345107,
+      "different": 266,
+      "original": 142,
+      "constant": 135,
+      "context": 134
+    },
+    {
+      "seed": 160345108,
+      "different": 319,
+      "original": 155,
+      "constant": 155,
+      "context": 155
+    },
+    {
+      "seed": 160345109,
+      "different": 386,
+      "original": 186,
+      "constant": 197,
+      "context": 198
+    },
+    {
+      "seed": 160345110,
+      "different": 281,
+      "original": 148,
+      "constant": 146,
+      "context": 145
+    },
+    {
+      "seed": 160345111,
+      "different": 176,
+      "original": 100,
+      "constant": 98,
+      "context": 101
+    },
+    {
+      "seed": 160345112,
+      "different": 356,
+      "original": 187,
+      "constant": 189,
+      "context": 189
+    },
+    {
+      "seed": 160345113,
+      "different": 438,
+      "original": 186,
+      "constant": 175,
+      "context": 178
+    },
+    {
+      "seed": 160345114,
+      "different": 334,
+      "original": 160,
+      "constant": 165,
+      "context": 159
+    },
+    {
+      "seed": 160345115,
+      "different": 324,
+      "original": 157,
+      "constant": 165,
+      "context": 166
+    },
+    {
+      "seed": 160345116,
+      "different": 301,
+      "original": 162,
+      "constant": 154,
+      "context": 163
+    },
+    {
+      "seed": 160345117,
+      "different": 357,
+      "original": 176,
+      "constant": 179,
+      "context": 183
+    },
+    {
+      "seed": 160345118,
+      "different": 204,
+      "original": 98,
+      "constant": 101,
+      "context": 104
+    },
+    {
+      "seed": 160345119,
+      "different": 316,
+      "original": 139,
+      "constant": 149,
+      "context": 149
+    },
+    {
+      "seed": 160345120,
+      "different": 317,
+      "original": 145,
+      "constant": 167,
+      "context": 167
+    },
+    {
+      "seed": 160345121,
+      "different": 409,
+      "original": 217,
+      "constant": 225,
+      "context": 220
+    },
+    {
+      "seed": 160345122,
+      "different": 321,
+      "original": 164,
+      "constant": 161,
+      "context": 159
+    },
+    {
+      "seed": 160345123,
+      "different": 234,
+      "original": 122,
+      "constant": 118,
+      "context": 123
+    }
+  ],
+  "gates": {
+    "support": true,
+    "original_disagreement_one_point": false,
+    "beats_fixed": true,
+    "logloss_improved": true
+  },
+  "eligible": false
+}
