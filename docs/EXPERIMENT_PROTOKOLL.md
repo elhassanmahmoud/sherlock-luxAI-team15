@@ -1,5 +1,11 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – V16 gegen Kaggle und Solution, gezieltes Nachtraining der Aktionswahl
+
+Acht reproduzierte Kaggle-Spiele zeigten die größere Lücke bei der späten Nutzung schon erreichter Punktefelder (38,1 % bei V16 gegenüber 65,2 % bei Kaggle). Der gepaarte Solution-Archivvergleich ergab 31 Spielsituationen aus Karte und Startseite, die nur R3 gewann, und 20 mit umgekehrtem Ergebnis. Auf acht ausgewählten Starts reproduzierten beide Original-ZIPs alle 16 Spielausgänge. In sieben der acht untersuchten V16-Matchniederlagen auf R3-Siegsitzen lag V16 schon bei Zug 70 zurück. [Kaggle-Feldverläufe](../experiments/analysis/v16_finalwoche_20261122/FELDVERLAUF.md) · [Solution-Verläufe mit einem konkreten Beispiel](../experiments/analysis/v16_finalwoche_20261122/solution/REPLAYS.md)
+
+Aus V16 wurden zwei identisch gestartete Varianten des kleinen Aktionskopfs trainiert. Bei einer Variante zählten späte Feldsituationen dreifach. Datengrundlage waren 32 ältere Lernspiele sowie zwölf neue DAgger-Spiele, von denen vier ausschließlich zur Prüfung dienten. Beide Varianten trafen auf den Prüfkarten 622 von 738 Feldentscheidungen des Lehrers. Die dreifache Gewichtung änderte gegenüber der normalen Gewichtung dort keine Aktionsauswahl und verfehlte das vorab festgelegte Kriterium. Für diese Variante wurden null Vergleichsspiele gestartet. [Plan und Messwerte](../experiments/analysis/v16_finalwoche_20261122/lernversuch/ERGEBNIS.md)
+
 ## 19.11.2026 – Echte Züge von V16 für die Abschlusspräsentation (nur Messung)
 
 Das unveränderte Abgabepaket spielte als player_0 je 10 Spiele gegen Kaggle und Solution (4242–4251); jeder Zug wurde exakt nachgerechnet. Gegen Kaggle trafen 82 % der 286 Schüsse auf Felder ohne sichtbaren Gegner. Keine Auswahl, keine Änderung der Abgabe. [Ergebnis](../experiments/analysis/finale_20261119/ERGEBNIS.md).

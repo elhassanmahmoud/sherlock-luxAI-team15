@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 22.11.2026 – Was V16 gegen Kaggle und Solution Punkte kostet
+
+Auf acht bereits bekannten Kaggle-Karten erreicht V16 früh fast so viele Punktefelder wie der Gegner, besetzt sie gegen Matchende aber seltener. Gegen Solution entsteht der Rückstand in den ausgewählten Niederlagen häufig früher. Beide Ergebnisse beruhen auf archivgetreu nachgespielten Partien. Der erste Trainingsversuch hat das kleine V16-Netz in zwei Varianten auf denselben Lehrerbeispielen nachtrainiert. Keine der 738 geprüften Feldentscheidungen änderte sich durch eine dreifache Zusatzgewichtung gegenüber gewöhnlichem Nachtraining. Diese Variante ist damit abgeschlossen. Die gesicherte Abgabe ist V16. [Messungen und Arbeitsplan bis Mittwoch](../experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md) · [Trainingsbericht](../experiments/analysis/v16_finalwoche_20261122/lernversuch/ERGEBNIS.md)
+
 ## 22.11.2026 – Abschlusspräsentation und Abgabepakete auf Moes Mac
 
 Beide Arbeitskopien haben Mahmouds 84 Commits bis `21fc289` übernommen. In der [Finalpräsentation](../Sherlock_Finale_27-11-2026.pdf) zeigt Folie 6 jetzt auch den Schritt **nach der ersten Aktionswahl**: Wollen mehrere Einheiten auf demselben Feld stehen bleiben, kann Sherlock die übrigen auf eine erlaubte Bewegung umlenken. Folie 8 erklärt, warum ein Halter auf einem Punktefeld freiwillig stehen bleiben kann. Die [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) und die [gemeinsame Zeitprobe](presentation/finale_2711/GENERALPROBE_2711.md) greifen beide Beispiele auf. Beide PDF-Kopien sind bytegleich. Alle 14 Seiten wurden gerendert, zwölf sind gegenüber der bisherigen Fassung pixelgleich. Die geplanten 9:50 Minuten sind noch gemeinsam zu proben. Moe übernimmt 1–3 und 8–10, Mahmoud 4–7.
