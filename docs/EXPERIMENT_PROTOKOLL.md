@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – Kurze Sensorreichweite und Niederlagen gegen Solution
+
+Bei Reichweite 1–2 verlor V16 auf den beiden vollständigen 400-Karten-Archiven 29 von 786 Spielen (3,69 %), bei Reichweite 3–4 sechs von 814 (0,74 %). Die vorab erwartete Richtung zeigte sich in beiden Kartensätzen. Der gemeinsame Abstand beträgt 2,95 Prozentpunkte mit einem paarweisen Kartenintervall von 1,31 bis 4,74. R3 verlor in denselben Gruppen neun bzw. 15 Spiele. Die Parameter wurden an acht originalen Kurs-Resets kontrolliert. Das begründet eine gesonderte Untersuchung der niedrigen Sichtweite und der Entscheidungen von R3 in diesen Spielen. [Karten, Messung und Aussagegrenzen](../experiments/analysis/v16_finalwoche_20261122/kartenparameter/ERGEBNIS.md)
+
 ## 22.11.2026 – Zusätzliches Punktegebiet aus beiden Spielständen ableiten
 
 Auf den zwei ausgewählten V16-Problemkarten erzielten beide Teams in einem Zug zusammen mehr Punkte, als das vollständig erkundete erste Reliktpaar erklären konnte. Auf Karte 7261020 waren es in Zug 50 fünf eigene und zehn gegnerische Punkte bei höchstens zehn möglichen. Auf 7267071 waren es in Zug 70 zusammen 14 bei höchstens zwölf. Die Obergrenze berücksichtigt, dass neu erscheinende Einheiten an den Starterecken eine Doppelwertung auslösen können. Ob Sherlock damit auf unabhängigen Karten rechtzeitig einen Suchauftrag auslösen kann, ist offen. Grundlage sind vier gespeicherte Spielverläufe, zwei pro Agent. [Spielstände, Voraussetzungen und Reproduktion](../experiments/analysis/v16_finalwoche_20261122/paarhinweis/ERGEBNIS.md)
