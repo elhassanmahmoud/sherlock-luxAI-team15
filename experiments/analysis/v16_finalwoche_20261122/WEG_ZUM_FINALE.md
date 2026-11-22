@@ -26,6 +26,8 @@ Der [erste Lernversuch](lernversuch/PLAN.md) trainierte nur die Aktionsausgabe d
 
 ## Montag bis Mittwoch · Wovon die nächste Entscheidung abhängt
 
+Sherlock kann aus den öffentlichen Spielständen gelegentlich erkennen, dass es ein weiteres Punktegebiet gibt. Auf zwei bekannten Problemkarten reichte die Summe der in einem Zug erzielten Punkte dafür schon vor der Sichtung aus. Der Hinweis liefert noch keine Position. Für eine neue Suchregel kommt es darauf an, ob er auf anderen Karten früh genug auftritt und ob es Fehlalarme gibt. [Herleitung und beide Spielzüge](paarhinweis/ERGEBNIS.md)
+
 Der [Kundschafter](kundschafter/ERGEBNIS.md) erreichte auf 16 neuen Karten gegen Solution 32/32 wie V16, verlor direkt 15:17 und schied aus. Sieben seiner acht Eingriffe gegen Solution lagen auf Karten ohne zweites Paar in Match 2. Die [gewöhnlich nachtrainierte Variante](kontrollkopf/ERGEBNIS.md) gewann auf anderen Karten 22/40 direkt sowie 14 statt 10 einzelne Matches gegen Kaggle. Sie ist als einziger Kandidat für den [festgelegten größeren Vergleich](bestaetigung/PLAN.md) ausgewählt. Beide kleinen Solution-Panels sind für eine Aussage über die allgemeine 100-%-Quote zu klein.
 
 - **Montag, 23.11.** Folien und beide ZIP-Varianten mit der neuen Kursansage abgleichen, wenn sie vorliegt. Für die Folien ist Montag der bisherige Planungstermin. Die [Generalprobe](../../../docs/presentation/finale_2711/GENERALPROBE_2711.md) läuft schon mit der präsentierbaren V16-Fassung.

@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – Zusätzliches Punktegebiet aus beiden Spielständen ableiten
+
+Auf den zwei ausgewählten V16-Problemkarten erzielten beide Teams in einem Zug zusammen mehr Punkte, als das vollständig erkundete erste Reliktpaar erklären konnte. Auf Karte 7261020 waren es in Zug 50 fünf eigene und zehn gegnerische Punkte bei höchstens zehn möglichen. Auf 7267071 waren es in Zug 70 zusammen 14 bei höchstens zwölf. Die Obergrenze berücksichtigt, dass neu erscheinende Einheiten an den Starterecken eine Doppelwertung auslösen können. Ob Sherlock damit auf unabhängigen Karten rechtzeitig einen Suchauftrag auslösen kann, ist offen. Grundlage sind vier gespeicherte Spielverläufe, zwei pro Agent. [Spielstände, Voraussetzungen und Reproduktion](../experiments/analysis/v16_finalwoche_20261122/paarhinweis/ERGEBNIS.md)
+
 ## 22.11.2026 – Ein Kundschafter in Match 2
 
 In vier technischen Vergleichen auf zwei anhand früherer Niederlagen ausgewählten Karten stieg die Zahl ganzer Siege gegen Solution von 1/4 auf 3/4. Auf 16 weiteren Karten und beiden Seiten gewannen beide Agenten jeweils alle 32 Solution-Spiele. Gegen Kaggle waren es 4/32 statt 2/32. Beide zusätzlichen Siege lagen auf derselben Karte. Direkt gewann der Kundschafter 15/32 gegen V16. Bei keinem der beiden äußeren Gegner entdeckte der Kundschafter auf diesen neuen Karten das zweite Paar früher. Zwei Auswahlbedingungen verfehlt. [Technischer Beleg und frische Prüfung](../experiments/analysis/v16_finalwoche_20261122/kundschafter/ERGEBNIS.md)

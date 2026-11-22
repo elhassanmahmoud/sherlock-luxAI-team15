@@ -6,6 +6,8 @@ Der ungewichtet nachtrainierte Aktionskopf hat den kleinen Spielvergleich bestan
 
 Die [Generalprobe](presentation/finale_2711/GENERALPROBE_2711.md) enthält jetzt eine offline abspielbare Partie, die direkt beim Originalzug von Folie 7 beginnt. Die [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) erläutern anhand der Trainingsläufe, wodurch sich die beiden Netze unterscheiden.
 
+Für einen späteren Kundschafter wurde auf den vier bereits ausgewerteten Spielverläufen geprüft, was die **beiden öffentlichen Spielstände zusammen** verraten. Auf beiden V16-Problemkarten zeigen sie ein zusätzliches Punktegebiet vor seiner Sichtung an. Der nächste Prüfpunkt ist, wie oft das bei V16 auf anderen Karten rechtzeitig gelingt. [Beispiele, Obergrenze und Grenzen der Aussage](../experiments/analysis/v16_finalwoche_20261122/paarhinweis/ERGEBNIS.md)
+
 ## 22.11.2026 – Was V16 gegen Kaggle und Solution Punkte kostet
 
 Auf acht bereits bekannten Kaggle-Karten erreicht V16 früh fast so viele Punktefelder wie der Gegner, besetzt sie gegen Matchende aber seltener. Gegen Solution entsteht der Rückstand in den ausgewählten Niederlagen häufig früher. Beide Ergebnisse beruhen auf archivgetreu nachgespielten Partien. Der erste Trainingsversuch hat das kleine V16-Netz in zwei Varianten auf denselben Lehrerbeispielen nachtrainiert. Keine der 738 geprüften Feldentscheidungen änderte sich durch eine dreifache Zusatzgewichtung gegenüber gewöhnlichem Nachtraining. Diese Variante ist damit abgeschlossen. Die gesicherte Abgabe ist V16. [Messungen und Arbeitsplan bis Mittwoch](../experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md) · [Trainingsbericht](../experiments/analysis/v16_finalwoche_20261122/lernversuch/ERGEBNIS.md)
