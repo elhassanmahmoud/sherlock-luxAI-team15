@@ -291,7 +291,9 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 
 ## Grenzen und nächste Schritte
 
-Stand **17.11.2026**:
+Für die Finalwoche gibt es einen [Arbeitsplan mit nachgespielten V16-Verlusten und neuen Trainingsmessungen](experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md). [Folien und gemeinsame Zeitprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md) beziehen sich auf den freigegebenen V16.
+
+**Erkenntnisse aus den Auswahlspielen vom 17.11.2026**
 
 - **Kaggle bleibt klar stärker.** Der neue Sherlock holt gegen den Kaggle-Drittplatzierten etwa 40 % der Punkte und gewinnt rund jedes zehnte Match, aber nur 2–4 % der ganzen Spiele. Am Matchende besetzt Kaggle mehr Punktefelder.
 - **Gegen Solution_92 liegen R3 und der neue Sherlock nahe beieinander:** 787 zu 787 von 800 (Bestätigung 3), 395 zu 393 von 400 (Dev G), 778 zu 789 von 800 (Bestätigung 5). Über beide Gegner zusammen liegt der neue Sherlock gleichauf bis leicht vorn.

@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 22.11.2026 – Auswahl für die unabhängige Prüfung auf 200 neuen Karten
+
+Der ungewichtet nachtrainierte Aktionskopf hat den kleinen Spielvergleich bestanden. Auf 20 neuen Karten erzielten beide Stände 40/40 gegen Solution und 2/40 gegen Kaggle. Der Kandidat gewann vier zusätzliche Kaggle-Matches und 22/40 direkte Spiele. Das reicht für den Eintritt in die Gegenprobe. Der getrennte Kundschafter-Versuch untersucht die späte Entdeckung eines zweiten Reliktpaars in Match 2. Beide schon bekannten P0-Niederlagen konnte er drehen. Die unabhängige Bestätigung hat einen [festen Plan](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/PLAN.md). Zuerst spielen nur die Referenzläufe. Für die endgültige Kandidatenwahl zählt der vollständige frische Kundschafter-Vergleich. V16 ist die aktuelle Abgabe.
+
+Die [Generalprobe](presentation/finale_2711/GENERALPROBE_2711.md) enthält jetzt eine offline abspielbare Partie, die direkt beim Originalzug von Folie 7 beginnt. Die [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) erläutern anhand der Trainingsläufe, wodurch sich die beiden Netze unterscheiden.
+
 ## 22.11.2026 – Was V16 gegen Kaggle und Solution Punkte kostet
 
 Auf acht bereits bekannten Kaggle-Karten erreicht V16 früh fast so viele Punktefelder wie der Gegner, besetzt sie gegen Matchende aber seltener. Gegen Solution entsteht der Rückstand in den ausgewählten Niederlagen häufig früher. Beide Ergebnisse beruhen auf archivgetreu nachgespielten Partien. Der erste Trainingsversuch hat das kleine V16-Netz in zwei Varianten auf denselben Lehrerbeispielen nachtrainiert. Keine der 738 geprüften Feldentscheidungen änderte sich durch eine dreifache Zusatzgewichtung gegenüber gewöhnlichem Nachtraining. Diese Variante ist damit abgeschlossen. Die gesicherte Abgabe ist V16. [Messungen und Arbeitsplan bis Mittwoch](../experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md) · [Trainingsbericht](../experiments/analysis/v16_finalwoche_20261122/lernversuch/ERGEBNIS.md)
