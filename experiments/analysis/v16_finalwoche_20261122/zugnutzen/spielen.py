@@ -17,15 +17,40 @@ from scripts.r3_package import r3_package_agent
 from luxai_s3.wrappers import LuxAIS3GymEnv
 
 
-def run(out, offset, stride):
+def check_qualification(replicated):
+    original_path = HERE / "offline.json"
+    first = json.loads(original_path.read_text())
+    weight = HERE / "wertberater.npz"
+    checkpoint = sha256(weight.read_bytes()).hexdigest()
+    if first["checkpoint"] != checkpoint or first["plan"] != sha256((HERE / "PLAN.md").read_bytes()).hexdigest():
+        raise ValueError("Training plan or frozen weights changed")
+    result = first
+    if replicated:
+        result = json.loads((HERE / "replikation.json").read_text())
+        if (result["original"] != sha256(original_path.read_bytes()).hexdigest()
+                or result["plan"] != sha256((HERE / "REPLIKATION.md").read_bytes()).hexdigest()
+                or result["checkpoint"] != checkpoint or first["eligible"]):
+            raise ValueError("Replication does not match the frozen initial study")
+        stats = result["overall"]
+        gates = {
+            "support": stats["n"] >= 60 and stats["maps"] >= 12,
+            "gain": stats["mean"] >= 0.15,
+            "positive": stats["positive"] > stats["negative"],
+            "card_interval": result["ci95"][0] > 0,
+        }
+        seeds = {entry["seed"] for entry in result["manifests"]}
+        if gates != result["gates"] or len(result["manifests"]) != 64 or seeds != set(range(160373000, 160373064)):
+            raise ValueError("Incomplete replication or inconsistent gates")
+    if not result["eligible"] or not result["gates"] or not all(result["gates"].values()):
+        raise ValueError("Offline study unqualified")
+    return weight
+
+
+def run(out, offset, stride, replicated=False):
     if os.getenv("PYTHONHASHSEED")!="0" or sha256(PACKAGE.read_bytes()).hexdigest()!=V16 or not verify():
         raise ValueError("Reference identity mismatch")
     limit_threads()
-    r = json.loads((HERE/"offline.json").read_text())
-    weight = HERE/"wertberater.npz"
-    if (not r["eligible"] or not all(r["gates"].values()) or sha256(weight.read_bytes()).hexdigest()!=r["checkpoint"]
-            or r["plan"]!=sha256((HERE/"PLAN.md").read_bytes()).hexdigest()):
-        raise ValueError("Offline study unqualified")
+    weight = check_qualification(replicated)
     net=ValueNet().eval()
     with np.load(weight,allow_pickle=False) as z:
         net.load_state_dict({k:torch.from_numpy(z[k]) for k in z.files})
@@ -67,7 +92,8 @@ if __name__=="__main__":
     p.add_argument("out",type=Path)
     p.add_argument("--offset",type=int,default=0)
     p.add_argument("--stride",type=int,default=1)
+    p.add_argument("--replication", action="store_true", help="Require the independent 64-map qualification")
     a=p.parse_args()
     if not 0<=a.offset<a.stride:
         p.error("Invalid lane")
-    run(a.out,a.offset,a.stride)
+    run(a.out,a.offset,a.stride,a.replication)

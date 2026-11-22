@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Gelernter Zugertrag in einer neuen Stichprobe
+
+Der Bewegungsberater lernte an 3.519 echten Alternativzügen auf 96 Trainingskarten. Auf 32 zurückgehaltenen Karten änderte er bei 902 vermessenen Alternativen 58 Befehle. Davon verbesserten 36 unmittelbar die Punktedifferenz, einer verschlechterte sie. Zwei Fälle fehlten zur vorab verlangten Mindestzahl von 60. Eine unabhängige Wiederholung prüft dasselbe eingefrorene Modell auf 64 weiteren, getrennten Karten. Nur ihr eigenes Ergebnis kann den Vergleich über ganze Spiele freigeben. [Erster Prüfsatz](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/ERGEBNIS_LERNEN.md) · [Kriterien der Wiederholung](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/REPLIKATION.md)
+
 ## Nacht zum 23.11. – Ersten zusätzlichen Solution-Sieg auf neuen Karten prüfen
 
 Eine Suche nach einem öffentlichen Hinweis auf ein zweites Relikt gewann einen zusätzlichen ganzen Solution-Sitz auf Entwicklungskarten (95/96 gegenüber 94/96). Gegen V16 gingen die direkten Spiele 48:48 aus. Die getrennte Bestätigung läuft. Die schnelle Rückkehr auf ein gerade verlorenes Feld erreichte gegen Solution 38/40 wie V16, gegen Kaggle 0/40 wie V16 und direkt 18/40. Damit ist die Feldrückkehrstudie abgeschlossen. [Reliktsignal](../experiments/analysis/v16_finalwoche_20261122/signalstudie/ENTWICKLUNGSERGEBNIS.md) · [Feldrückkehr](../experiments/analysis/v16_finalwoche_20261122/feldrueckkehr/ERGEBNIS.md)
