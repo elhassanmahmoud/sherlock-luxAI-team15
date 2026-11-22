@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 23.11.2026 – Positive Punktebeweise bei unbekannter Reliktaktivierung
+
+Die monotone Aktivierung ermöglicht manchmal einen frühen sicheren Schluss aus zwei Belegungen und dem eigenen Punktezuwachs. Auf den öffentlichen Beobachtungen aus 46 archivierten Starts gab es vier frühere Paarbeweise auf vier Starts und drei verschiedenen Karten. Die Fallzahl lag unter der vorab festgelegten Schwelle. [Herleitung, Test und Interventionshäufigkeit](../experiments/analysis/v16_finalwoche_20261122/fruehbeweis/ERGEBNIS.md)
+
 ## 22.11.2026 – Struktureller Konflikt der gemeinsamen V16-Zielkarte
 
 Abgeschlossene Diagnose auf 120 älteren und 40 aktuellen DAgger-Lernkarten. Über 19.796 legale Schüsse gab es 9.850 gleichzeitige Paare. In 3.983 Paaren konnten beide Einheiten beide Lehrerziele erreichen, nur zehnmal verlangte der Lehrer unterschiedliche Ziele. Die drei Eingangsbedingungen wurden verfehlt, null Updates, keine zusätzlichen Spiele. Der separate WECHSEL-Test reproduzierte anschließend acht alte Endstände aus Dev H und wurde auf den vorher festgelegten 120 Karten begonnen. [Zielkartenprüfung](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md) · [WECHSEL-Quellen und Laufbeleg](../experiments/analysis/v16_finalwoche_20261122/wechsel/ARCHIV.md).
