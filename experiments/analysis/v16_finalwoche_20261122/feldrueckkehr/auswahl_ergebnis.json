@@ -1,0 +1,132 @@
+{
+  "phase": "auswahl",
+  "totals": {
+    "solution92": {
+      "original": {
+        "games": 40,
+        "wins": 38,
+        "matches": 116,
+        "changed": 0,
+        "wins_with_intervention": 0,
+        "interventions": 0,
+        "seats": {
+          "0": {
+            "games": 20,
+            "wins": 20
+          },
+          "1": {
+            "games": 20,
+            "wins": 18
+          }
+        }
+      },
+      "kandidat": {
+        "games": 40,
+        "wins": 38,
+        "matches": 116,
+        "changed": 14,
+        "wins_with_intervention": 13,
+        "interventions": 17,
+        "seats": {
+          "0": {
+            "games": 20,
+            "wins": 20
+          },
+          "1": {
+            "games": 20,
+            "wins": 18
+          }
+        }
+      }
+    },
+    "kaggle3": {
+      "original": {
+        "games": 40,
+        "wins": 0,
+        "matches": 4,
+        "changed": 0,
+        "wins_with_intervention": 0,
+        "interventions": 0,
+        "seats": {
+          "0": {
+            "games": 20,
+            "wins": 0
+          },
+          "1": {
+            "games": 20,
+            "wins": 0
+          }
+        }
+      },
+      "kandidat": {
+        "games": 40,
+        "wins": 0,
+        "matches": 4,
+        "changed": 8,
+        "wins_with_intervention": 0,
+        "interventions": 12,
+        "seats": {
+          "0": {
+            "games": 20,
+            "wins": 0
+          },
+          "1": {
+            "games": 20,
+            "wins": 0
+          }
+        }
+      }
+    },
+    "v16": {
+      "kandidat": {
+        "games": 40,
+        "wins": 18,
+        "matches": 55,
+        "changed": 13,
+        "wins_with_intervention": 4,
+        "interventions": 20,
+        "seats": {
+          "0": {
+            "games": 20,
+            "wins": 7
+          },
+          "1": {
+            "games": 20,
+            "wins": 11
+          }
+        }
+      }
+    }
+  },
+  "paired": {
+    "solution92": {
+      "paired_seats": {
+        "1:1": 38,
+        "0:0": 2
+      },
+      "mean_share_delta": 0.0005778534860797019,
+      "share_delta_ci95": [
+        -1.5111073135318578e-05,
+        0.0015805990601901038
+      ]
+    },
+    "kaggle3": {
+      "paired_seats": {
+        "0:0": 40
+      },
+      "mean_share_delta": -0.0019163825063822013,
+      "share_delta_ci95": [
+        -0.008677116439357703,
+        0.002550161077007404
+      ]
+    }
+  },
+  "identical_external_seats_without_intervention": 58,
+  "gates": {
+    "solution92": true,
+    "kaggle3": true,
+    "kaggle_two_additional_matches": false,
+    "direct": false
+  },
+  "passed": false
+}

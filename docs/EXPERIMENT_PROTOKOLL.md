@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – Struktureller Konflikt der gemeinsamen V16-Zielkarte
+
+Abgeschlossene Diagnose auf 120 älteren und 40 aktuellen DAgger-Lernkarten. Über 19.796 legale Schüsse gab es 9.850 gleichzeitige Paare. In 3.983 Paaren konnten beide Einheiten beide Lehrerziele erreichen, nur zehnmal verlangte der Lehrer unterschiedliche Ziele. Die drei Eingangsbedingungen wurden verfehlt, null Updates, keine zusätzlichen Spiele. Der separate WECHSEL-Test reproduzierte anschließend acht alte Endstände aus Dev H und wurde auf den vorher festgelegten 120 Karten begonnen. [Zielkartenprüfung](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md) · [WECHSEL-Quellen und Laufbeleg](../experiments/analysis/v16_finalwoche_20261122/wechsel/ARCHIV.md).
+
 ## 22.11.2026 – Kurze Sensorreichweite und Niederlagen gegen Solution
 
 Bei Reichweite 1–2 verlor V16 auf den beiden vollständigen 400-Karten-Archiven 29 von 786 Spielen (3,69 %), bei Reichweite 3–4 sechs von 814 (0,74 %). Die vorab erwartete Richtung zeigte sich in beiden Kartensätzen. Der gemeinsame Abstand beträgt 2,95 Prozentpunkte mit einem 95-%-Intervall von 1,31 bis 4,74. Dafür wurden innerhalb jeder Sichtgruppe ganze Karten mit ihren beiden Startseiten gezogen. R3 verlor in denselben Gruppen neun bzw. 15 Spiele. Die Parameter wurden an acht originalen Kurs-Resets kontrolliert. Das begründet eine gesonderte Untersuchung der niedrigen Sichtweite und der Entscheidungen von R3 in diesen Spielen. [Karten, Messung und Aussagegrenzen](../experiments/analysis/v16_finalwoche_20261122/kartenparameter/ERGEBNIS.md)
