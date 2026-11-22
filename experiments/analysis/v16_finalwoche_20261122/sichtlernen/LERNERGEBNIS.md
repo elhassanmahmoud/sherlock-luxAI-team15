@@ -1,0 +1,5 @@
+# Mehr neue Sicht in der einzelnen Entscheidung
+
+Das Modell wurde auf **6.010 einzeln verzweigten Befehlen** aus 96 echten V16-Eröffnungen trainiert. Auf 32 bisher ungenutzten Eröffnungen mit kurzer Sicht wählte es in 991 Teamzügen eine alternative Bewegung aus. Je ausgewähltem Zug kamen gegenüber der normalen V16-Entscheidung im Mittel **3,20 zuvor unbekannte Spiegelpaare** und **3,30 noch nie selbst gesehene Felder** dazu. Die Summe der unmittelbar erzielten eigenen und gegnerischen Punkte änderte sich jeweils um null. Alle 32 Prüfkarten trugen mindestens eine Entscheidung bei.
+
+Die 991 Vergleiche beginnen jeweils im ursprünglichen V16-Zustand und ändern exakt einen Befehl für einen Zug. Sie lassen sich nicht wie 991 aufeinanderfolgende Bewegungen addieren. Ob Sherlock bei fortlaufender Nutzung seiner neuen Karte auch früher Relikte findet und mehr ganze Spiele gewinnt, prüft der getrennte Vergleich gegen Solution, Kaggle und V16. [Rohwerte je Eingriff und Originaldaten-Hashes](offline.json) · [Lernziel und Spielkriterien](PLAN.md)

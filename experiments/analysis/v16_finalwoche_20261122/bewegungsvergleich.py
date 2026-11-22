@@ -9,8 +9,10 @@ from pathlib import Path
 import numpy as np
 
 
-def run(folder, out, start):
-    cards = np.arange(start, start + 40)
+def run(folder, out, start, selected=None):
+    cards = np.arange(start, start + 40) if selected is None else np.asarray(selected, dtype=np.int64)
+    if len(cards) != 40 or len(np.unique(cards)) != 40:
+        raise ValueError("Expected exactly 40 unique fixed maps")
     pairs = defaultdict(dict)
     direct = []
     raw = []
@@ -66,7 +68,7 @@ def run(folder, out, start):
     gates=dict(solution=deltas[0]>=0,kaggle=deltas[1]>=0,additional_wins=sum(deltas)>0,direct=n>=40)
     data=gzip.compress(("\n".join(json.dumps(r,sort_keys=True) for r in raw)+"\n").encode(),mtime=0)
     (out/"auswahl_partien.jsonl.gz").write_bytes(data)
-    result=dict(start=start, maps=40, actual_games=len(raw), model=raw[0]["model"], raw_sha256=sha256(data).hexdigest(),
+    result=dict(start=start, seeds=cards.tolist(), maps=40, actual_games=len(raw), model=raw[0]["model"], raw_sha256=sha256(data).hexdigest(),
                 opponents=counts, gates=gates, qualifies=all(gates.values()))
     (out/"auswahl_ergebnis.json").write_text(json.dumps(result,indent=2)+"\n")
     print(json.dumps(result,indent=2))

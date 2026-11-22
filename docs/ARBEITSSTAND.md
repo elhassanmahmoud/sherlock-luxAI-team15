@@ -14,6 +14,8 @@ Die zeitliche Variante ist fertig. Auf 24 neuen Karten lag sie bei 67.944 korrek
 
 Ein getrenntes [Training zur frühen Sicht](../experiments/analysis/v16_finalwoche_20261122/sichtlernen/PLAN.md) untersucht, ob der nachgemessene zusätzliche Informationsgewinn einer einzelnen Bewegung ein geeigneteres Lernziel ist als die Richtung von R3 zu kopieren. Die Variante sieht in einer echten Partie ausschließlich ihre eigenen Beobachtungen. Die Original- und Alternativzüge werden nur bei der Gewinnung der Trainingsdaten im Simulator verglichen.
 
+Das frühe Sichtmodell hat auf 32 neuen Karten die Einzelzugprüfung bestanden. Pro gewählter Alternative sah Sherlock im Mittel 3,30 zusätzliche echte Felder und erfasste 3,20 zusätzliche Spiegelpaare. Im Ganzspiel kann das die folgenden Spielsituationen verändern. Es läuft deshalb ein separater Vergleich auf 40 weiteren Niedrigsichtkarten. [Trainingsergebnis](../experiments/analysis/v16_finalwoche_20261122/sichtlernen/LERNERGEBNIS.md)
+
 ## 22.11.2026 – Gemeinsame Zielkarte geprüft, Halterwechsel im Vergleich
 
 Auf 160 Lernkarten wählte der Kaggle-Lehrer in nur 10 von 3.983 gleichzeitigen, wechselseitig erreichbaren Schusspaaren zwei verschiedene Ziele. Eine zweite Rechnung der Reichweitenfenster bestätigte alle zehn Fälle auf sechs Karten. Die festgelegte Häufigkeit für einen eigenen Zielkopf je Schütze war damit verfehlt. [Ergebnis und Einzelbelege](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md).
