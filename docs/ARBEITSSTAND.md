@@ -1,5 +1,17 @@
 # Gemeinsamer Arbeitsstand
 
+## Nacht zum 23.11.2026 – Unabhängige Prüfung und drei neue Ansätze bis 06:00
+
+Der [große Vergleich des nachtrainierten Aktionskopfs](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/PLAN.md) läuft auf 200 vorab festgelegten Karten. Parallel werden andere Karten für die folgenden Fragen verwendet.
+
+- **Gegen Solution** meldete die Summe der öffentlichen Punkte in sieben von 96 Spielen frühzeitig ein verdecktes zweites Reliktpaar. Die sieben Fälle verteilen sich auf vier Karten. Dazu gehörten beide verlorenen Spiele von V16. Jetzt wird geprüft, ob die zusätzliche Information tatsächlich eine andere Entscheidung und zusätzliche Siege bewirkt. [Suchregel und Versuchsplan](../experiments/analysis/v16_finalwoche_20261122/signalstudie/PLAN.md)
+- **Gegen Kaggle** verbesserte eine gezielte Rückkehr auf ein gerade verlassenes Feld auf vier Diagnosekarten die Punktedifferenz über acht Züge im Mittel um 3,25. Die vollständige Spielbilanz wird auf getrennten Karten geprüft. [Genaue Spielsituationen](../experiments/analysis/v16_finalwoche_20261122/feldrueckkehr/DIAGNOSE.md)
+- **Beim Training** lernt Sherlock, wie stark er die Empfehlung seiner zwei Netze je nach Spielsituation gewichtet. Eine feste gelernte Gewichtung und das Original dienen als Kontrolle. Trainings- und Prüfpartien sind getrennt. [Trainingsdaten, Ziele und Kriterien](../experiments/analysis/v16_finalwoche_20261122/netzwahl/PLAN.md)
+
+Alle Abgabeentscheidungen beziehen sich weiterhin auf die geprüfte V16. Für die Nacht ist der Bericht für Montag, 23. November um 06:00 Uhr Berlin vorgesehen.
+
+Die vollständigen historischen Solution-Daten ergeben einen Schwerpunkt für neues Lernen. Bei Sensorreichweite 1–2 verlor V16 29/786 Spiele, R3 neun. Bei Reichweite 3–4 verlor V16 6/814, R3 15. Für die Diagnose werden daher beide gesicherten Agenten auf denselben früheren Solution-Sitzen bei kurzer Sicht nachgespielt. [Ergebnis nach Sichtweite](../experiments/analysis/v16_finalwoche_20261122/kartenparameter/ERGEBNIS.md) · [Auswahl der Lernbeispiele](../experiments/analysis/v16_finalwoche_20261122/kurze_sicht/PLAN.md)
+
 ## 22.11.2026 – Auswahl für die unabhängige Prüfung auf 200 neuen Karten
 
 Der ungewichtet nachtrainierte Aktionskopf hat den kleinen Spielvergleich bestanden. Auf 20 neuen Karten erzielten beide Stände 40/40 gegen Solution und 2/40 gegen Kaggle. Der Kandidat gewann vier zusätzliche Kaggle-Matches und 22/40 direkte Spiele. Das reicht für den Eintritt in die Gegenprobe. Der getrennte Kundschafter drehte zwei bekannte P0-Niederlagen. Im [frischen Vergleich](../experiments/analysis/v16_finalwoche_20261122/kundschafter/ERGEBNIS.md) erreichten beide Versionen 32/32 gegen Solution. Der Kundschafter gewann gegen Kaggle 4/32 statt 2/32 und verlor direkt 15:17. Beide zusätzlichen Kaggle-Siege stammen von derselben Karte. Damit ist der **normale Nachtrainingskopf** der einzige Kandidat für die [unabhängige Bestätigung auf 200 Karten](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/PLAN.md). Er nutzt die beiden V16-Netze und dieselben Regeln. Referenz und Kandidat laufen mit gesicherten Einzelpartien. V16 ist die aktuelle Abgabe.
