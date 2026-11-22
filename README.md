@@ -11,7 +11,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 |---|---|
 | **Aktuelle Abgabe** | **Sherlock V16** seit 17.11.2026, 23:24 (Teamentscheidung Mahmoud und Moayed) · [Release](experiments/releases/20261117_sherlock_v16/README.md) |
 | Was der Agent ist | zwei CNNs (0,7 und 1,8 Millionen Parameter), die durch Nachahmung und sechs DAgger-Runden vom öffentlichen Kaggle-Drittplatzierten gelernt haben, dazu Sherlocks Gedächtnis, Aktionsmasken und drei feste Spielschalter |
-| Direkt gegen die vorige Abgabe R3 | **194 von 200 Spielen gewonnen** (400 frische Karten) |
+| Direkt gegen die vorige Abgabe R3 | **194 von 200 Spielen gewonnen** (100 Karten, auf jeder Karte beide Startseiten) |
 | Gegen den Kaggle-Drittplatzierten | 20/800 statt 10/800 Spiele, **216 statt 76 von 2.400 Matches**, Punkteanteil 39,3 statt 33,4 % |
 | Gegen Solution_92 | 787/800 wie R3; auf einem weiteren frischen Kartensatz 778 statt 789/800 |
 | Gegen Battle-Sherlock V14 | 48/50 (R3 34/50); gemessen mit demselben Netz bei Stay-Bias 1,5 |
@@ -297,7 +297,7 @@ Stand **17.11.2026**:
 - **Gegen Solution_92 liegen R3 und der neue Sherlock nahe beieinander:** 787 zu 787 von 800 (Bestätigung 3), 395 zu 393 von 400 (Dev G), 778 zu 789 von 800 (Bestätigung 5). Über beide Gegner zusammen liegt der neue Sherlock gleichauf bis leicht vorn.
 - **Die Gegner im Finale sind unbekannt.** Gemessen wurde gegen Solution_92 und Varianten, den Kaggle-Drittplatzierten, unsere früheren Abgaben und einfache Agenten. Windows und das Zeitlimit des Kurses sind nicht geprüft; ein Zug dauert lokal 5–6 ms.
 - **Nachahmung ist weitgehend ausgereizt:** Eine siebte DAgger-Runde, ein Dreier-Ensemble, andere Schalterwerte und 17 Handtaktiken brachten keinen weiteren Gewinn. Mögliche größere Schritte: ein größeres Netz, Schüsse im Training gezielter lernen oder Weiterlernen durch eigenes Spielen (RL). Vor dem Finale werden sie nur nach festem Plan geprüft; die Abgabe bleibt bis dahin unverändert.
-- **Termine:** Review Session 20.11., Upload der Präsentation bis 23.11., Finale mit Turnier am 27.11.
+- **Termine:** Review Session 20.11., Finale mit Turnier am 27.11. Für die Folien plant das Team mit dem 23.11. Die genaue Uploadfrist und das gewünschte ZIP-Format sind laut Teamstand vom 22.11. noch in Moodle bzw. beim Prof zu bestätigen.
 
 ## Historie: DQN-Sherlock bis V14 und R3
 

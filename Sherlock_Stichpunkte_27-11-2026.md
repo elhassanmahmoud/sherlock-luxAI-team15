@@ -1,6 +1,6 @@
 # Sherlock V16 · Stichpunkte für die Abschlusspräsentation am 27. November
 
-[Präsentations-PDF](Sherlock_Finale_27-11-2026.pdf) · [Editierbare Folien (HTML)](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html)
+[Präsentations-PDF](Sherlock_Finale_27-11-2026.pdf) · [Editierbare Folien (HTML)](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html) · [Gemeinsame Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md)
 
 **Planzeit 9:50 Minuten für 10 Folien, dazu 4 Reservefolien für Fragen. Noch keine gemeinsame Zeitprobe.**
 Moe: Einstieg, Weg bis zum Battle, Schalter und Handtaktiken, Ergebnis, Fazit (5:05). Mahmoud: wie V16 lernt und
@@ -78,10 +78,12 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
   Merkmale plus ihre letzte Bewegung. Ein CNN aus Residual-Blöcken erkennt Muster auf der ganzen Karte. Für jede
   Einheit liest es den Wert an ihrer Position. Zwei Köpfe: Wahrscheinlichkeiten für die sechs Aktionen und eine
   Bewertung jedes Feldes als Schussziel.
-- Zwei Netze stimmen ab: v9 (0,7 Mio. Parameter) und v8L (1,8 Mio.). Ihre Wahrscheinlichkeiten werden multipliziert.
-- Rechts den Pseudocode durchgehen: Verbotenes wird auf null gesetzt (Rand, Asteroid, zu wenig Energie, Feld mit
-  stärkerem Gegner). Stehen wird mit 0,37 gewichtet, damit Einheiten nicht unnötig herumstehen, außer sie halten ein
-  Punktefeld. Gespielt wird die wahrscheinlichste erlaubte Aktion. Pro Feld bleibt höchstens eine Einheit stehen.
+- Rechts zeigen: v9 (0,7 Mio. Parameter) und v8L (1,8 Mio.) bewerten dieselben sechs Aktionen. Die Maske blendet
+  gesperrte Aktionen wie einen Zug in einen Asteroiden aus. Für jede übrige Aktion multipliziert Sherlock die beiden
+  Wahrscheinlichkeiten. Den Wert fürs Stehen multipliziert er mit 0,37, außer beim Halter eines bekannten Punktefelds.
+- Jede Einheit wählt zunächst die Aktion mit dem höchsten Wert. Wählen mehrere vom selben Feld aus „stehen“, darf
+  eine bleiben. Die übrigen wechseln zu ihrer besten erlaubten Bewegung, wenn sie ziehen können. Ein bereits
+  gewählter Schuss bleibt erhalten. Bei einem Schuss bestimmt die Zielkarte das beste erreichbare Feld.
 - Unterschied zu V14 in einem Satz: „V14 hat Belohnungen geschätzt, V16 schätzt, was der Lehrer tun würde.“
 
 ### 7 · Kein Gegner sichtbar, trotzdem vier Treffer (Mahmoud)
@@ -99,7 +101,8 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 ### 8 · Drei Schalter helfen, 17 Handtaktiken nicht (Moe)
 
 - Links: Drei kleine Schalter haben wir aus der Spielanalyse abgeleitet. Weil das Netz zu oft stehen blieb, wird
-  Stehen leicht bestraft und pro Feld darf nur eine Einheit stehen. Das hob unser erstes Netz gegen Solution_92 von
+  Stehen abgewertet. Wollen mehrere auf demselben Feld stehen bleiben, werden sie nach Möglichkeit verteilt.
+  Zusammen hoben die beiden Schalter unser erstes Netz gegen Solution_92 von
   49,5 % auf 78 %.
 - Die Halter-Regel am Beispiel: Ohne sie würde Einheit 2 ihr Punktefeld verlassen (rechts 59 %). Mit ihr bleibt sie
   stehen (65 %) und holt weiter jeden Zug einen Punkt. Mit milderer Stehstrafe zusammen brachte das auf frischen
@@ -136,7 +139,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 |---|---|
 | Ist das noch Reinforcement Learning? | Bis zum Battle haben wir RL gemacht (DQN und PPO mit CNN, zusammen 662.504 Trainingsspiele). V16 lernt durch Nachahmung und DAgger; der nächste Schritt wäre RL-Feintuning ab diesem Netz. |
 | Habt ihr den Kaggle-Bot kopiert? | Nein. Wir haben weder seinen Code noch seine Gewichte übernommen, er läuft nur beim Sammeln der Daten. Unser Netz hat eigene Eingaben aus Sherlocks Gedächtnis, eine eigene Architektur und eigene Gewichte; die Kursfolie 50 verweist ausdrücklich auf die Kaggle-Rangliste. |
-| Warum schlagt ihr den Lehrer nicht? | Nachahmung kommt höchstens an den Lehrer heran: Unser Netz trifft seine Aktion in 87 % der Lagen (Lehrerspiele), erkennt aber nur 36–50 % seiner Schüsse. Außerdem sieht es nicht, was der Lehrer intern weiß, etwa seine mehrschrittigen Pläne. |
+| Warum ist der Lehrer im direkten Duell häufiger erfolgreich? | Im Training übt Sherlock, aus seiner eigenen Sicht dieselbe Aktion wie der Lehrer zu wählen. Das gelingt in Lehrerspielen bei 87 % der Aktionen, bei den Schüssen erkennt Sherlock aber nur 36–50 %. Die internen Pläne des Lehrers kennt unser Netz nicht. |
 | Was ist DAgger genau? | Dataset Aggregation (Ross, Gordon, Bagnell 2011): Der Schüler spielt, der Lehrer beschriftet die Lagen des Schülers, alles kommt in einen gemeinsamen Datensatz. So lernt das Netz die Lagen, die es selbst erzeugt. |
 | Warum zwei Netze? | Ein Ensemble aus zwei unterschiedlich großen Netzen entscheidet stabiler. Ein drittes Netz brachte im Test nichts mehr (+0,18 Prozentpunkte, verlangt waren +1,0). |
 | Wozu noch die Maske? | Sie verhindert offensichtlich unsinnige oder gefährliche Züge (Rand, Asteroid, zu wenig Energie, stärkerer Gegner). Ohne Masken lag das Netz im Test 0,71 Prozentpunkte Punkteanteil gegen Kaggle schlechter (nicht gesichert, das Intervall enthält null). |

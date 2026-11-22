@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 22.11.2026 – Abschlusspräsentation und Abgabepakete auf Moes Mac
+
+Beide Arbeitskopien haben Mahmouds 84 Commits bis `21fc289` übernommen. In der [Finalpräsentation](../Sherlock_Finale_27-11-2026.pdf) zeigt Folie 6 jetzt auch den Schritt **nach der ersten Aktionswahl**: Wollen mehrere Einheiten auf demselben Feld stehen bleiben, kann Sherlock die übrigen auf eine erlaubte Bewegung umlenken. Folie 8 erklärt, warum ein Halter auf einem Punktefeld freiwillig stehen bleiben kann. Die [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) und die [gemeinsame Zeitprobe](presentation/finale_2711/GENERALPROBE_2711.md) greifen beide Beispiele auf. Beide PDF-Kopien sind bytegleich. Alle 14 Seiten wurden gerendert, zwölf sind gegenüber der bisherigen Fassung pixelgleich. Die geplanten 9:50 Minuten sind noch gemeinsam zu proben. Moe übernimmt 1–3 und 8–10, Mahmoud 4–7.
+
+In Moes lokalem `dist/agent.zip` lag noch R3. Beide V16-Formate wurden aus dem freigegebenen Release gebaut, mit dem Kursrunner geprüft und in den lokalen `dist/`-Ordnern bereitgelegt. SHA-256 wie beim Release: `0c59706b…6099` (Standard) und `8347ea2b…ae95` (Gruppenformat). Die Datei `Gruppe15.zip` direkt in der Projektwurzel stammt vom früheren Battle mit V14. Die README nennt beim Direktduell jetzt korrekt 100 Karten auf beiden Seiten. Am 22.11. lag laut Moe keine neue Ansage des Profs vor. Die bisherige Zwischenabgabe dient als Annahme für die Vorbereitung. Den genauen Folien- und Agententermin sowie das gewünschte ZIP-Format im neuen Moodle-Auftrag abgleichen.
+
 ## 19.11.2026, 16:38 Berlin – Abschlusspräsentation auf V16 umgestellt; echtes Zugbeispiel gemessen; Battle-Format der Abgabe vorbereitet
 
 **Auftrag Mahmoud:** „mach weiter und fertige die Abschlusspräsi und andere notwendige Sachen“; Finale am Freitag, 27.11. (für die Review Session am 20.11. ausdrücklich nichts extra).

@@ -198,17 +198,17 @@
     <div class="code" style="font-size:17px"><span class="k">für jeden Zug:</span>
   Gedächtnis aktualisieren
   <span class="k">für jede Einheit:</span>
+    gesperrte Aktionen ausblenden
     p = p<sub>v9</sub> · p<sub>v8L</sub>     <span class="c"># beide Netze stimmen ab</span>
-    p[gesperrt] = 0     <span class="c"># Rand, Asteroid, Energie,</span>
-                        <span class="c"># stärkerer Gegner</span>
-    p[stehen] · 0,37    <span class="c"># außer Halter</span>
+    außer beim Halter: p[stehen] ×= 0,37
     Aktion = höchstes p
-  je Feld höchstens eine stehende Einheit
+  <span class="k">bei mehrfachem »stehen« auf einem Feld:</span>
+    eine bleibt, weitere wählen ihre beste
+    erlaubte Bewegung, falls möglich
   <span class="k">bei Schuss:</span>
-    Ziel = bestes Feld der Zielkarte
-           in Reichweite</div>
+    bestes Zielfeld in Reichweite wählen</div>
   </div>
-  <footer><span>Team 15 · Sherlock V16 · gespielt wird immer die wahrscheinlichste erlaubte Aktion</span><span>06</span></footer>
+  <footer><span>Team 15 · Sherlock V16</span><span>06</span></footer>
 </section>
 
 <!-- 07 · Mahmoud -->
@@ -250,8 +250,8 @@
   <div class="cols" style="grid-template-columns:.88fr 1.12fr;gap:34px;align-items:start">
     <div class="pane" style="padding:22px 26px">
       <div class="eyebrow" style="margin-bottom:8px">Unsere drei Schalter aus der Spielanalyse</div>
-      <p style="font-size:19px;line-height:1.4"><b>Seltener stehen bleiben, je Feld höchstens eine stehende Einheit:</b> gegen Solution_92 von 49,5&nbsp;% auf 78&nbsp;% (erstes Netz, Entwicklungskarten)</p>
-      <p style="font-size:19px;line-height:1.4;margin-top:8px"><b>Halter-Regel:</b> Wer ein Punktefeld hält, wird nicht weggeschoben.</p>
+      <p style="font-size:19px;line-height:1.4"><b>Stehen abwerten und gestapelte Einheiten verteilen:</b> gegen Solution_92 von 49,5&nbsp;% auf 78&nbsp;% (erstes Netz, Entwicklungskarten)</p>
+      <p style="font-size:19px;line-height:1.4;margin-top:8px"><b>Halter-Regel:</b> Für den Halter eines bekannten Punktefelds entfällt der Abzug fürs Stehen.</p>
       <div class="rule" style="margin:12px 0"></div>
       <p style="font-size:17px;color:var(--muted)">Einheit 2 auf einem Punktefeld (Karte 4247, Match 1, Zug 53)</p>
       <table style="font-size:18px;margin-top:4px"><thead><tr><th></th><th class="numeric">stehen</th><th class="numeric">rechts</th></tr></thead><tbody>
