@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – Ein Kundschafter in Match 2
+
+In vier technischen Vergleichen auf zwei anhand früherer Niederlagen ausgewählten Karten stieg die Zahl ganzer Siege gegen Solution von 1/4 auf 3/4. Auf 16 weiteren Karten und beiden Seiten gewannen beide Agenten jeweils alle 32 Solution-Spiele. Gegen Kaggle waren es 4/32 statt 2/32. Beide zusätzlichen Siege lagen auf derselben Karte. Direkt gewann der Kundschafter 15/32 gegen V16. Bei keinem der beiden äußeren Gegner entdeckte der Kundschafter auf diesen neuen Karten das zweite Paar früher. Zwei Auswahlbedingungen verfehlt. [Technischer Beleg und frische Prüfung](../experiments/analysis/v16_finalwoche_20261122/kundschafter/ERGEBNIS.md)
+
 ## 22.11.2026 – Normales Nachtraining gegen die freigegebene V16
 
 Die ungewichtete Kontrollvariante des Lernversuchs wurde nachträglich als eigener Kandidat ausgewählt. Gegenüber V16 änderten sich nur 1.542 Zahlen im Aktionskopf des kleinen Netzes. Die Auswahlspiele liefen auf 20 neuen Karten mit beiden Startseiten. Gegen Solution gewannen beide 40/40, gegen Kaggle beide 2/40 ganze Spiele. Die Variante gewann 14 von 120 Kaggle-Matches, V16 zehn. Direkt holte die Variante 22/40 Spiele, das paarweise 95-%-Kartenintervall reicht von 35 bis 75 %. Damit erfüllt sie die Kriterien für eine unabhängige Gegenprobe. Die Abgabe ist V16. [200 vollständige Spiele und Prüfwerte](../experiments/analysis/v16_finalwoche_20261122/kontrollkopf/ERGEBNIS.md)
