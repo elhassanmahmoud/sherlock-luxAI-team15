@@ -1,0 +1,547 @@
+{
+  "eligible": false,
+  "gates": {
+    "support": true,
+    "all_gain": false,
+    "conflict_gain": false,
+    "beats_control_accuracy": false,
+    "beats_control_loss": true
+  },
+  "rows": 80621,
+  "disagreements": 7449,
+  "cards_with_disagreement": 24,
+  "metrics": {
+    "original": {
+      "hits": 68035,
+      "conflict_hits": 3673,
+      "logloss": 0.49989554286003113
+    },
+    "aktuell": {
+      "hits": 67958,
+      "conflict_hits": 3636,
+      "logloss": 0.4806250035762787
+    },
+    "zeitlich": {
+      "hits": 67944,
+      "conflict_hits": 3658,
+      "logloss": 0.4730680584907532
+    }
+  },
+  "per_map": {
+    "original": [
+      {
+        "seed": 160366000,
+        "hits": 2682,
+        "conflict_hits": 189
+      },
+      {
+        "seed": 160366001,
+        "hits": 2799,
+        "conflict_hits": 216
+      },
+      {
+        "seed": 160366002,
+        "hits": 3230,
+        "conflict_hits": 85
+      },
+      {
+        "seed": 160366003,
+        "hits": 3284,
+        "conflict_hits": 125
+      },
+      {
+        "seed": 160366004,
+        "hits": 2305,
+        "conflict_hits": 146
+      },
+      {
+        "seed": 160366005,
+        "hits": 2114,
+        "conflict_hits": 160
+      },
+      {
+        "seed": 160366006,
+        "hits": 3109,
+        "conflict_hits": 135
+      },
+      {
+        "seed": 160366007,
+        "hits": 3265,
+        "conflict_hits": 165
+      },
+      {
+        "seed": 160366008,
+        "hits": 2496,
+        "conflict_hits": 191
+      },
+      {
+        "seed": 160366009,
+        "hits": 2570,
+        "conflict_hits": 183
+      },
+      {
+        "seed": 160366010,
+        "hits": 2942,
+        "conflict_hits": 151
+      },
+      {
+        "seed": 160366011,
+        "hits": 3288,
+        "conflict_hits": 141
+      },
+      {
+        "seed": 160366012,
+        "hits": 2489,
+        "conflict_hits": 177
+      },
+      {
+        "seed": 160366013,
+        "hits": 2719,
+        "conflict_hits": 150
+      },
+      {
+        "seed": 160366014,
+        "hits": 3094,
+        "conflict_hits": 121
+      },
+      {
+        "seed": 160366015,
+        "hits": 3235,
+        "conflict_hits": 137
+      },
+      {
+        "seed": 160366016,
+        "hits": 2341,
+        "conflict_hits": 170
+      },
+      {
+        "seed": 160366017,
+        "hits": 2325,
+        "conflict_hits": 192
+      },
+      {
+        "seed": 160366018,
+        "hits": 3135,
+        "conflict_hits": 137
+      },
+      {
+        "seed": 160366019,
+        "hits": 3129,
+        "conflict_hits": 187
+      },
+      {
+        "seed": 160366020,
+        "hits": 2357,
+        "conflict_hits": 117
+      },
+      {
+        "seed": 160366021,
+        "hits": 2626,
+        "conflict_hits": 140
+      },
+      {
+        "seed": 160366022,
+        "hits": 3238,
+        "conflict_hits": 136
+      },
+      {
+        "seed": 160366023,
+        "hits": 3263,
+        "conflict_hits": 122
+      }
+    ],
+    "aktuell": [
+      {
+        "seed": 160366000,
+        "hits": 2674,
+        "conflict_hits": 180
+      },
+      {
+        "seed": 160366001,
+        "hits": 2782,
+        "conflict_hits": 207
+      },
+      {
+        "seed": 160366002,
+        "hits": 3219,
+        "conflict_hits": 90
+      },
+      {
+        "seed": 160366003,
+        "hits": 3284,
+        "conflict_hits": 115
+      },
+      {
+        "seed": 160366004,
+        "hits": 2296,
+        "conflict_hits": 133
+      },
+      {
+        "seed": 160366005,
+        "hits": 2117,
+        "conflict_hits": 161
+      },
+      {
+        "seed": 160366006,
+        "hits": 3114,
+        "conflict_hits": 142
+      },
+      {
+        "seed": 160366007,
+        "hits": 3256,
+        "conflict_hits": 159
+      },
+      {
+        "seed": 160366008,
+        "hits": 2501,
+        "conflict_hits": 192
+      },
+      {
+        "seed": 160366009,
+        "hits": 2568,
+        "conflict_hits": 187
+      },
+      {
+        "seed": 160366010,
+        "hits": 2930,
+        "conflict_hits": 144
+      },
+      {
+        "seed": 160366011,
+        "hits": 3293,
+        "conflict_hits": 138
+      },
+      {
+        "seed": 160366012,
+        "hits": 2500,
+        "conflict_hits": 192
+      },
+      {
+        "seed": 160366013,
+        "hits": 2713,
+        "conflict_hits": 151
+      },
+      {
+        "seed": 160366014,
+        "hits": 3094,
+        "conflict_hits": 118
+      },
+      {
+        "seed": 160366015,
+        "hits": 3223,
+        "conflict_hits": 137
+      },
+      {
+        "seed": 160366016,
+        "hits": 2322,
+        "conflict_hits": 150
+      },
+      {
+        "seed": 160366017,
+        "hits": 2325,
+        "conflict_hits": 192
+      },
+      {
+        "seed": 160366018,
+        "hits": 3147,
+        "conflict_hits": 143
+      },
+      {
+        "seed": 160366019,
+        "hits": 3133,
+        "conflict_hits": 196
+      },
+      {
+        "seed": 160366020,
+        "hits": 2363,
+        "conflict_hits": 121
+      },
+      {
+        "seed": 160366021,
+        "hits": 2622,
+        "conflict_hits": 134
+      },
+      {
+        "seed": 160366022,
+        "hits": 3223,
+        "conflict_hits": 125
+      },
+      {
+        "seed": 160366023,
+        "hits": 3259,
+        "conflict_hits": 129
+      }
+    ],
+    "zeitlich": [
+      {
+        "seed": 160366000,
+        "hits": 2690,
+        "conflict_hits": 198
+      },
+      {
+        "seed": 160366001,
+        "hits": 2787,
+        "conflict_hits": 216
+      },
+      {
+        "seed": 160366002,
+        "hits": 3214,
+        "conflict_hits": 89
+      },
+      {
+        "seed": 160366003,
+        "hits": 3297,
+        "conflict_hits": 125
+      },
+      {
+        "seed": 160366004,
+        "hits": 2299,
+        "conflict_hits": 137
+      },
+      {
+        "seed": 160366005,
+        "hits": 2113,
+        "conflict_hits": 162
+      },
+      {
+        "seed": 160366006,
+        "hits": 3120,
+        "conflict_hits": 135
+      },
+      {
+        "seed": 160366007,
+        "hits": 3253,
+        "conflict_hits": 155
+      },
+      {
+        "seed": 160366008,
+        "hits": 2509,
+        "conflict_hits": 193
+      },
+      {
+        "seed": 160366009,
+        "hits": 2558,
+        "conflict_hits": 184
+      },
+      {
+        "seed": 160366010,
+        "hits": 2923,
+        "conflict_hits": 139
+      },
+      {
+        "seed": 160366011,
+        "hits": 3284,
+        "conflict_hits": 139
+      },
+      {
+        "seed": 160366012,
+        "hits": 2479,
+        "conflict_hits": 174
+      },
+      {
+        "seed": 160366013,
+        "hits": 2709,
+        "conflict_hits": 153
+      },
+      {
+        "seed": 160366014,
+        "hits": 3104,
+        "conflict_hits": 130
+      },
+      {
+        "seed": 160366015,
+        "hits": 3218,
+        "conflict_hits": 137
+      },
+      {
+        "seed": 160366016,
+        "hits": 2303,
+        "conflict_hits": 139
+      },
+      {
+        "seed": 160366017,
+        "hits": 2316,
+        "conflict_hits": 183
+      },
+      {
+        "seed": 160366018,
+        "hits": 3149,
+        "conflict_hits": 142
+      },
+      {
+        "seed": 160366019,
+        "hits": 3135,
+        "conflict_hits": 199
+      },
+      {
+        "seed": 160366020,
+        "hits": 2370,
+        "conflict_hits": 130
+      },
+      {
+        "seed": 160366021,
+        "hits": 2623,
+        "conflict_hits": 135
+      },
+      {
+        "seed": 160366022,
+        "hits": 3236,
+        "conflict_hits": 138
+      },
+      {
+        "seed": 160366023,
+        "hits": 3255,
+        "conflict_hits": 126
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "seed": 160366000,
+      "source_sha": "27d85b9e9b142d175accf98ba51defe9b1f4a01702bafdf12eb3abd82ce6b9f7",
+      "projected": "a26c74f81121a7bb23660aa848c43b2cbfec5bd172742308a3ef0fc93d9015c7",
+      "rows": 3249
+    },
+    {
+      "seed": 160366001,
+      "source_sha": "e8d93fc5a5be4b79ecf169d43ee59a45d6e70e9b406067cbc9ee626a0855dca9",
+      "projected": "8885460b2575b138b65e7680882ce4515363608a31243953a5b2ed8cad0e9966",
+      "rows": 3493
+    },
+    {
+      "seed": 160366002,
+      "source_sha": "f0ccaeaa6f17d4728cdb2ceff8be7cf68877e558d225b8d24c579bbd00704a57",
+      "projected": "b1b188448e29d678478ee1c7c16176c25e611344f85ff9ca42fecebbd647459a",
+      "rows": 3603
+    },
+    {
+      "seed": 160366003,
+      "source_sha": "ab4f68a5fbcb69267dcba695aac58442b28c44829862f1c6ecd3d974f552fbf9",
+      "projected": "ed40b8876792459e916eddd40f16acfa07a723f49f9f2a4d87bdd8191563267b",
+      "rows": 3705
+    },
+    {
+      "seed": 160366004,
+      "source_sha": "807285cacc126071b9b51d596b5734f876bf0cee8e36f1c35a2eee53288084f9",
+      "projected": "0332d17ea66a6a13d34ab4d29640182e7e97418b1f212eabbfb6937d292c2aaf",
+      "rows": 2720
+    },
+    {
+      "seed": 160366005,
+      "source_sha": "06ebf5408e94a52002935dfe58638cd66b613248af9d914a010bef8e482ba1cf",
+      "projected": "eb8b3283b518a995d9f2a9e29b1f54a22c6a7ad8d97ad6206762b54a3e5d9b84",
+      "rows": 2635
+    },
+    {
+      "seed": 160366006,
+      "source_sha": "8be1cda3d5d13f076be17c72f1efa07535a38f46e6d160acc428a8e79eff5138",
+      "projected": "8272ef2c667e49b0c6ee34bd6ae1e9707c663b622ecc20b1e15f581ab32be733",
+      "rows": 3694
+    },
+    {
+      "seed": 160366007,
+      "source_sha": "871cb6ab58c05a9eaa228e92378f113af61c98c854e5975ba61a785f2f12feb2",
+      "projected": "76edee64fac32b1bf7df31c2b2167fb5c9ad32ed3c3725b44f13c85c2e604b4a",
+      "rows": 3720
+    },
+    {
+      "seed": 160366008,
+      "source_sha": "ff2b038ad47735fde7d82838fc2788137db88c75569af707521a57537f632c59",
+      "projected": "a35e98c2a5a1928abd4bddcebad2e775f410608e2fcc0f30b12efa71a25aa89c",
+      "rows": 3113
+    },
+    {
+      "seed": 160366009,
+      "source_sha": "7e7dd6d31ee0650689f21672fb6f14f35cc90da14bc978ca9a6e2a54127991fe",
+      "projected": "6acd98f93a57ba88d638a6a86f5f84afa7bc84908deb3028b73296d235686ed2",
+      "rows": 3134
+    },
+    {
+      "seed": 160366010,
+      "source_sha": "59de6d8a06ef95181fed0e401e040ca7a4ddfae60ec8fe8402983163f25722f2",
+      "projected": "ef45e560fe4e684c416578b03a83621ba9035335c48e2395ffb2c27c344cbe4f",
+      "rows": 3550
+    },
+    {
+      "seed": 160366011,
+      "source_sha": "e55c2553ecb928473c6a24408bb68635f33144c606a8ca07888e436190e65c06",
+      "projected": "03968e908d76b378ac302eeccc641c52edeb89cc837e3467591d293007fc00b9",
+      "rows": 3710
+    },
+    {
+      "seed": 160366012,
+      "source_sha": "d231b55c2ffeba1a54636a644013f9dfd537de8f786d7c90617bd22b0c654d4f",
+      "projected": "ebeb925ea8a9bae39010eb2558086f02a69e9a52ef7736b4719c9368704bda8a",
+      "rows": 3088
+    },
+    {
+      "seed": 160366013,
+      "source_sha": "6415aaed840e3a16ec384d991ed02c7125afad6552fe69344bca0a2778b527d4",
+      "projected": "d3ae046675d498bb1761e09aa5b1633e329037eab062a9c8a78c628afe69d2e5",
+      "rows": 3210
+    },
+    {
+      "seed": 160366014,
+      "source_sha": "9308a8411e6c849a734327fe43b896d95bc8625de95a05f72ac3420df7f8ab7b",
+      "projected": "4d2c61ea72fd64d4c81d28291f91b8257d12cfaf9a928ebf0352f21e52a6454f",
+      "rows": 3712
+    },
+    {
+      "seed": 160366015,
+      "source_sha": "eb812d5d041c8b739625ee9e1f031b03b6d2210888392e0ee0ed57b3f1f934e6",
+      "projected": "67869f3230ca0ff032cba16bd130f1b1ae304b75951450fe40a7eabfb90d9136",
+      "rows": 3704
+    },
+    {
+      "seed": 160366016,
+      "source_sha": "e47568290fceb9b9ee21ec1326fbc8b73b44a7c24d1a3bee526ce25d6d5cf5d4",
+      "projected": "56a343b28ef681563e171fd497ff81f52b47b05d624963e9bdca89b837b21efa",
+      "rows": 2888
+    },
+    {
+      "seed": 160366017,
+      "source_sha": "30d59e7ef79fdf578225c09840a1a947c9d04c9a5ceeef67db22de8677e8e2a3",
+      "projected": "0eaafbea9caa8c996f588bb7e968a09f61d6673dfa08acf4af58db25cfa5dd04",
+      "rows": 2784
+    },
+    {
+      "seed": 160366018,
+      "source_sha": "bfc17aa690103d8342a895110884d4bf5f3fcc3e0a2982c3b2a87fe886a150b4",
+      "projected": "db55dca0e2247f3791537c800d402d84a0da4baf2758ba9eab1e6be34b91a34b",
+      "rows": 3696
+    },
+    {
+      "seed": 160366019,
+      "source_sha": "d3b6d0bf40f06365128d8572820ce5ba2e6e1a6881391610d2398a553225a041",
+      "projected": "b8641c8953d28fdaed8b4b9cd7f2fa3d53ff952d35f4d5cac5f2e90fb3f9aaaf",
+      "rows": 3701
+    },
+    {
+      "seed": 160366020,
+      "source_sha": "e4979fc1f793165485893aec6b473dfaa4141d6767de9569780bad289df6d91e",
+      "projected": "979ae51db38a0800c6013220cf107dbd918996c794220f2248eee203c300c744",
+      "rows": 2941
+    },
+    {
+      "seed": 160366021,
+      "source_sha": "51daf31a9a900344df78a4bd4f8f5be808d8e133ad3772f4a517034c40e1111a",
+      "projected": "4cd49890904ebeb753107b2ffd3a28ce7f57ad06e693672c67fb90a223844d4d",
+      "rows": 3156
+    },
+    {
+      "seed": 160366022,
+      "source_sha": "a75592c8260234194177b48d5ba0bc9d0742fafd2b3ab9330a6bae4623ddfa9b",
+      "projected": "b9acc5afb95cdf638cfd4bf2d4acd0c2b3765f13ff1a15a6be73eb7bd2806445",
+      "rows": 3706
+    },
+    {
+      "seed": 160366023,
+      "source_sha": "37e5f05c5876d8727d6edbadf3e7211a5df7b198fd5e89fb2914f666e42dd517",
+      "projected": "d255c136e3dbd673f7f389ef28c5eeb1f93f2d5caf83d1cc4b0c46cdc404afba",
+      "rows": 3709
+    }
+  ],
+  "train": "45c093fc56b1bdbec3e10ec96ab16ddca4cb6de14ed044f3ccc7dec7830b31df",
+  "plan": "92e541914ca437722f82454373acd8ebeb78711c2edf20ada4e9fd81301f9703",
+  "checkpoint": "ad21b8019743dd48bd9528d56a36252ac4ffd835dd1d702b07148ded20639670"
+}

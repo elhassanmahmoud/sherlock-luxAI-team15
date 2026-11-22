@@ -10,6 +10,8 @@ Eine zweite getrennte Prüfung spielt das erste Match auf Karten mit einer Senso
 
 Der [Versuch zum Kurzzeitgedächtnis](../experiments/analysis/v16_finalwoche_20261122/zeitgedaechtnis/PLAN.md) prüft, ob frühere Beobachtungen derselben Einheit über die jetzige Lage hinaus bei der Entscheidung helfen. Zeitlicher Berater und Kontrolle bekommen dieselben 160 Trainingspartien. Die 24 neu aufgenommenen Prüfkarten teilen keinerlei Karten mit der vorherigen Netzgewichtung.
 
+Die zeitliche Variante ist fertig. Auf 24 neuen Karten lag sie bei 67.944 korrekten Aktionen von 80.621, das Original bei 68.035, die gleich große Kontrolle ohne frühere Züge bei 67.958. Die kalibrierteren Wahrscheinlichkeiten gaben der Lehreraktion in Summe mehr Gewicht, führten aber seltener zum richtigen erstplatzierten Befehl. Die vorab geplante Lernprüfung endet hier. [Zahlen](../experiments/analysis/v16_finalwoche_20261122/zeitgedaechtnis/ERGEBNIS.md)
+
 ## 22.11.2026 – Gemeinsame Zielkarte geprüft, Halterwechsel im Vergleich
 
 Auf 160 Lernkarten wählte der Kaggle-Lehrer in nur 10 von 3.983 gleichzeitigen, wechselseitig erreichbaren Schusspaaren zwei verschiedene Ziele. Eine zweite Rechnung der Reichweitenfenster bestätigte alle zehn Fälle auf sechs Karten. Die festgelegte Häufigkeit für einen eigenen Zielkopf je Schütze war damit verfehlt. [Ergebnis und Einzelbelege](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md).
