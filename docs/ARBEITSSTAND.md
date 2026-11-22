@@ -6,6 +6,8 @@ Eine Suche nach einem öffentlichen Hinweis auf ein zweites Relikt gewann einen 
 
 Wenn zwei eigene Einheiten dasselbe Punktefeld ansteuern, war auf 19 alten Karten in 87 Zügen ein zweites bekanntes Punktefeld im selben Zug erreichbar. Die passive Technikprüfung reproduzierte alle acht Kaggle-Sitze exakt und fand weitere 14 solche Züge auf vier Karten. Dazu läuft eine Ganzspielprüfung. Separat sammeln wir echte alternative Einzelschritte mit identischem Zufall, um eine späte Bewegungsentscheidung am tatsächlichen Spielreward zu trainieren. [Doppelte Zielorte](../experiments/analysis/v16_finalwoche_20261122/doppelziel/PLAN.md) · [Lernen aus echten Punkten](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/PLAN.md)
 
+Eine zweite getrennte Prüfung spielt das erste Match auf Karten mit höchstens zwei Sichtfeldern bis einschließlich Zug 40 mit R3 und danach mit V16. Auf zwei echten Niedrigsicht- und zwei Normalsichtpartien entsprach jeder Befehl der für die Phase zuständigen Originalversion. Jetzt laufen die Spiele gegen Solution, Kaggle und V16. [Übergabekriterien](../experiments/analysis/v16_finalwoche_20261122/fruehuebergabe/PLAN.md) · [Technikprüfung](../experiments/analysis/v16_finalwoche_20261122/fruehuebergabe/TECHNIK.md)
+
 ## 22.11.2026 – Gemeinsame Zielkarte geprüft, Halterwechsel im Vergleich
 
 Auf 160 Lernkarten wählte der Kaggle-Lehrer in nur 10 von 3.983 gleichzeitigen, wechselseitig erreichbaren Schusspaaren zwei verschiedene Ziele. Eine zweite Rechnung der Reichweitenfenster bestätigte alle zehn Fälle auf sechs Karten. Die festgelegte Häufigkeit für einen eigenen Zielkopf je Schütze war damit verfehlt. [Ergebnis und Einzelbelege](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md).

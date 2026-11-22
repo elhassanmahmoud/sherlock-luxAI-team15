@@ -1,0 +1,31 @@
+{
+  "packages": {
+    "r3": {
+      "zip": "experiments/releases/20261116_r3_finale/agent.zip",
+      "zip_sha": "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d",
+      "zip_bytes": 27591024,
+      "weight_bytes": 37105837,
+      "weight_sha": "d20814949d4460c523ac718acf74e282ef5cdf4e3b743b4713d6aac95795d554"
+    },
+    "v16": {
+      "zip": "experiments/releases/20261117_sherlock_v16/agent.zip",
+      "zip_sha": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099",
+      "zip_bytes": 9469516,
+      "weight_bytes": 10071939,
+      "weight_sha": "8ed7412856d6176b81e257360c8eac4a41b844fec935db33aff9e19221d86495"
+    }
+  },
+  "runtime_sources": {
+    "scripts/r3_package.py": "393199531ec1f8f3d818821f8e816babc3cf15b5ac5d9c5ccd30f71825a475c9",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "scripts/kaggle3_opponent.py": "1b8a08d26a867acd8aeee9adf40b1b2bedc6776d6973c69165cf220a69cdeb54",
+    "scripts/fetch_kaggle3.py": "979dd03ddf3f919a3ad623f7e5f5e2c13d1439e0c8fe1e8ba6aa95dc2c75c6e5",
+    "scripts/par_eval.py": "d53af829a2a7a4653eb71d888cbb75d6d46abf9f24612030a5fdeea1a9963c67",
+    "scripts/xversion_replay.py": "44a8ab945829cac4c4cf8cecdfa9c20e530dc898c0b69d3803cbaeeed091a7a5",
+    "experiments/analysis/v16_finalwoche_20261122/kartenparameter/auswerten.py": "4220db05221f992f2c9a13995d750003007175af909f355bfd988005ca9569de"
+  },
+  "pythonhashseed": 0,
+  "active_model_workers": 2,
+  "native_threads_per_worker": 1
+}
