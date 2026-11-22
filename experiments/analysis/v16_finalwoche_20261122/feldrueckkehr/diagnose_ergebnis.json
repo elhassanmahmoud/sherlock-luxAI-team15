@@ -1,0 +1,151 @@
+{
+  "games": 8,
+  "maps": 4,
+  "events": 8,
+  "event_games": 8,
+  "decisions_by_teacher": {
+    "original": 4,
+    "proposed": 4
+  },
+  "losses": {
+    "sap_beteiligt": {
+      "episodes": 88,
+      "vacant_turns": 666,
+      "returned": 54
+    },
+    "bewegung_ueberlebt": {
+      "episodes": 62,
+      "vacant_turns": 282,
+      "returned": 50
+    },
+    "bewegung_ueberlebt+sap_beteiligt": {
+      "episodes": 6,
+      "vacant_turns": 10,
+      "returned": 6
+    },
+    "sog_beteiligt": {
+      "episodes": 14,
+      "vacant_turns": 70,
+      "returned": 4
+    },
+    "kollision": {
+      "episodes": 4,
+      "vacant_turns": 8,
+      "returned": 2
+    },
+    "bewegung_ueberlebt+sap_und_sog": {
+      "episodes": 2,
+      "vacant_turns": 2,
+      "returned": 2
+    }
+  },
+  "barrier_games": 6,
+  "vacancy_barriers": {
+    "alle_nachbarn_punkten_oder_schiessen": 126,
+    "besetzung_zu_kurz_oder_zu_lange_her": 6,
+    "keine_nachbareinheit": 218,
+    "konkreter_reparaturvorschlag": 4,
+    "nicht_bezahlbar_oder_gesperrt": 16,
+    "nicht_sichtbar": 136,
+    "sichtbar_vom_gegner_besetzt": 8,
+    "v16_kehrt_bereits_zurueck": 84,
+    "zu_grosse_abweichung_vom_netz": 6
+  },
+  "right_censored_cases": [],
+  "effect_by_event": [
+    {
+      "seed": 160347000,
+      "side": 0,
+      "match": 2,
+      "ms": 76,
+      "own": 2,
+      "opp": 0,
+      "net": 2,
+      "reoccupancy": 1
+    },
+    {
+      "seed": 160347000,
+      "side": 1,
+      "match": 2,
+      "ms": 76,
+      "own": 2,
+      "opp": 0,
+      "net": 2,
+      "reoccupancy": 1
+    },
+    {
+      "seed": 160347001,
+      "side": 0,
+      "match": 3,
+      "ms": 77,
+      "own": 4,
+      "opp": 0,
+      "net": 4,
+      "reoccupancy": 3
+    },
+    {
+      "seed": 160347001,
+      "side": 1,
+      "match": 3,
+      "ms": 77,
+      "own": 4,
+      "opp": 0,
+      "net": 4,
+      "reoccupancy": 3
+    },
+    {
+      "seed": 160347002,
+      "side": 0,
+      "match": 3,
+      "ms": 81,
+      "own": 2,
+      "opp": -4,
+      "net": 6,
+      "reoccupancy": 2
+    },
+    {
+      "seed": 160347002,
+      "side": 1,
+      "match": 3,
+      "ms": 81,
+      "own": 2,
+      "opp": -4,
+      "net": 6,
+      "reoccupancy": 2
+    },
+    {
+      "seed": 160347003,
+      "side": 0,
+      "match": 2,
+      "ms": 69,
+      "own": 1,
+      "opp": 0,
+      "net": 1,
+      "reoccupancy": 1
+    },
+    {
+      "seed": 160347003,
+      "side": 1,
+      "match": 2,
+      "ms": 69,
+      "own": 1,
+      "opp": 0,
+      "net": 1,
+      "reoccupancy": 1
+    }
+  ],
+  "mean_net_by_map": {
+    "160347000": 2,
+    "160347001": 4,
+    "160347002": 6,
+    "160347003": 1
+  },
+  "gates": {
+    "eight": true,
+    "four_maps": true,
+    "own": true,
+    "net": true,
+    "majority": true
+  },
+  "passed": true
+}

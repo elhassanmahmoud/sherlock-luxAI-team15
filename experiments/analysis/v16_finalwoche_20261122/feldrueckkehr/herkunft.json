@@ -1,0 +1,46 @@
+{
+  "release": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099",
+  "initial_plan_before_diagnostic": "41051122de018527b5b611c75cb5f6f57b6fee2a102ac9d9a3d38d4c089e7ed2",
+  "plan_with_match_boundary": "8925222b59b23cc28947d5282f6afb563daaec4cf122692e3c200064e35a8f18",
+  "seeds": [
+    160347000,
+    160347003
+  ],
+  "model_workers": 2,
+  "hash_seed": 0,
+  "torch_threads": 1,
+  "sources": {
+    "regel.py": "671bd915373a0bf2ea94f1913b5c433b3a1e86a368556134d570097da1805968",
+    "messen.py": "bfae3cb36fb45f3a553921cfc18771f62c18b83e2584e509aee1de7e7be544bf",
+    "barrieren.py": "4eca7c324c2bb237e4b14b9820a0ecd7cd3d4246f9d4f145399efdd0029e9db3",
+    "batch.py": "99fa9e9e3a3630e5bdf1efb3a81bd54be14fb529b8018632982de2cc68ef9501",
+    "auswerten.py": "9e69ed600482060229bd36e524f0b95dadf7cbbce767eea734c4095ebf4dc83b",
+    "spielvergleich.py": "29971d11a2db2e93771338a747caec2cb1788879a031232a8444a35bf9a1e20a",
+    "spiele_auswerten.py": "5de42f3a98ce745666538d3bd84cf64a7e8ee17888b5a714a60c0c2cb586abfe"
+  },
+  "support": {
+    "scripts/r3_package.py": "393199531ec1f8f3d818821f8e816babc3cf15b5ac5d9c5ccd30f71825a475c9",
+    "scripts/common.py": "8493826dd4d5b20da8adf6458ea680b2d5dc44024e04cef52a58e6715e4743fc",
+    "scripts/scoring.py": "963ba7785483f1b707e589d3023011f1a869ef65cd4fc064d0b0b44df309aaa0",
+    "scripts/kaggle3_opponent.py": "1b8a08d26a867acd8aeee9adf40b1b2bedc6776d6973c69165cf220a69cdeb54",
+    "scripts/fetch_kaggle3.py": "979dd03ddf3f919a3ad623f7e5f5e2c13d1439e0c8fe1e8ba6aa95dc2c75c6e5",
+    "experiments/analysis/r3_kaggle_20261117/diagnose.py": "66c10d00588706ddd5d38c2cbcc8a4fec301512e3046a7fc47168923831e15e0"
+  },
+  "instrumentation_notes": [
+    "Vor der ersten Verzweigung wurde das Fehlen eines achten matchinternen Wertungsschritts für einen ersten Eingriff in Zug 94 dokumentiert.",
+    "Die ersten beiden Grundpartien enthalten die Verlustursachen, jedoch noch keine separate Zählung der Wiederbesetzungshindernisse.",
+    "Die Verzweigungen prüfen ohne Schattenlehrer bitgleiche Aktionspräfixe, ihre vollständige ursprüngliche Engine-Situation sowie dieselbe konkrete Handlungsempfehlung."
+  ],
+  "runtime": {
+    "machine": "arm64",
+    "python": "3.13.13",
+    "versions": {
+      "torch": "2.14.1",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "luxai-s3": "0.2.1",
+      "jax": "0.12.0",
+      "jaxlib": "0.12.0"
+    }
+  }
+}
