@@ -44,12 +44,14 @@ def summarize(folder, name, seat, flags):
             setattr(belief, k, v)
     belief.sensor_range = seat["sensor"]
     metrics = []
+    actual_sight = np.zeros((24, 24), dtype=bool)
     for i in range(303):
         obs = public_obs(arrays, i)
         t = int(obs["match_steps"])
         if int(obs["steps"]) != i or t != i % 101:
             raise ValueError("Observation chronology mismatch")
         belief.observe(obs)
+        actual_sight |= np.asarray(obs["sensor_mask"], dtype=bool)
         if t not in (10, 25, 50, 75, 100):
             continue
         pos = obs["units"]["position"][team]
@@ -61,7 +63,8 @@ def summarize(folder, name, seat, flags):
         own, opp = (int(obs["team_points"][k]) for k in (team, 1-team))
         metrics.append(dict(match=i // 101 + 1, turn=t, points=own, enemy_points=opp, margin=own-opp,
                             known=int(belief.point_tiles.sum()), occupied=on_points,
-                            seen_ever=int(belief.explored_ever.sum()), relics=len(belief.relic_positions)))
+                            seen_ever=int(belief.explored_ever.sum()), sensed_ever=int(actual_sight.sum()),
+                            relics=len(belief.relic_positions)))
     return metrics
 
 
@@ -79,7 +82,7 @@ def run(folder, output):
         r, v = (summarize(folder, arm, seat, flags) for arm in ("r3", "v16"))
         result.append(dict(seed=seat["seed"], side=seat["side"], group=seat["group"], r3=r, v16=v))
         for first, second in zip(r, v, strict=True):
-            for metric in ("margin", "points", "enemy_points", "known", "occupied", "seen_ever", "relics"):
+            for metric in ("margin", "points", "enemy_points", "known", "occupied", "seen_ever", "sensed_ever", "relics"):
                 key = (seat["group"], first["match"], first["turn"], metric)
                 bins[key][seat["seed"]].append(first[metric] - second[metric])
     summary = []
