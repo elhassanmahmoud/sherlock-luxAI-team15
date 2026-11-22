@@ -26,3 +26,7 @@ export PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 ```
 
 Für einen getrennten vollständigen Wiederholungslauf einen leeren Datenordner und `einfrieren.py` zum Anlegen einer eigenen Quellkopie verwenden. Ein Zustandswechsel im gemeinsamen Repository beeinflusst die bereits angelegte Kopie nicht. Die Python-Umgebung muss mit dem gespeicherten Beleg übereinstimmen. Die `auswahl.json` mit dem ausgewählten Kandidaten gehört vor Start seiner Spiele in den neuen Messordner. Dateien im Originalrelease bleiben die Quelle für die formale Abgabe.
+
+## Automatischer Abschluss dieses konkreten Laufs
+
+Die einmalig gestartete lokale [Abschlussaufsicht](abschluss.py) läuft in einer eigenen Sitzung. Alle 15 Sekunden prüft sie ausschließlich die Anzahl gesicherter Dateien und die technischen Workerzustände. Verletzte Eingangsprüfungen oder wiederholte Workerfehler erzeugen einen Fehlerstatus mit Logpfad. Nach Ende eines Arms kann sie dem verbleibenden Arm einen zweiten Worker zuteilen. Die Sperren des unveränderten Evaluators sichern dabei jede Partie einzeln. Nach vollständiger Prüfung erscheinen im selben Messordner `partien.jsonl.gz`, `ergebnis.json` und `ende.json` mit den Prüfsummen. Der aktuelle Betriebsstatus steht in `abschlussstatus.json`. Eine Chatunterbrechung lässt diese lokale Sitzung weiterlaufen. Bei einem tatsächlichen Neustart des Rechners muss die Aufsicht mit derselben Konfiguration erneut aufgerufen werden.
