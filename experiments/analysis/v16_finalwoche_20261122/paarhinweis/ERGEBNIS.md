@@ -37,6 +37,8 @@ Der ältere `_check_spawn_proof` verwendet die **eigenen** besetzten potenziell 
 
 ## Aussage für einen neuen Suchauftrag
 
+Eine getrennte [Kontrolle auf drei archivierten Demokarten](archivkontrolle/ERGEBNIS.md) ergab auf der einzigen Karte ohne zweites Paar keinen Fehlalarm. Auf den beiden anderen Karten war das zusätzliche Paar bereits vor Zug 50 bekannt. Wie oft das Signal bei einem spielenden V16 früh genug kommt, bleibt offen.
+
 Der Beleg gilt für **zwei nach dem Ausgang ausgewählte Problemkarten**, jeweils aus zwei verschiedenen Spielverläufen. 45 Überschreitungen auf derselben Karte sind kein Befund auf 45 unabhängigen Karten. Sobald ein Gedächtnis Felder fälschlich ausschließt oder eine Reliktzone falsch rekonstruiert, kann auch das Summensignal falsch auslösen. Die Engineprüfung belegt die geometrische Schranke, nicht die Unfehlbarkeit des Agentengedächtnisses.
 
 Vor einer Änderung sollten die öffentliche Bedingung, Öffnungszeit und Auswertung eingefroren werden. Dann auf unabhängigen, vorab gezogenen Karten für gewöhnliches V16 prüfen, wann ein Signal vor der eigenen Sichtung erscheint, ob es auf Ein-Paar-Karten fälschlich feuert und ob noch genug Matchzüge sowie eine geeignete Einheit zur Verfügung stehen. Versteckte Spawnpläne dienen allenfalls der externen Bewertung nach dem Spiel und dürfen weder die Stichprobe nach Ergebnis sortieren noch den Agenten steuern. Erst ein solcher Blindtest kann einen begrenzten Kundschafter **nach** Auftreten eines gültigen öffentlichen Signals rechtfertigen. Hier wurde weder eine Aktion verändert noch ein weiteres Spiel oder Training gestartet.
