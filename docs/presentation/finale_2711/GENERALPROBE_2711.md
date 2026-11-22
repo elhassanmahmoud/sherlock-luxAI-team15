@@ -10,6 +10,8 @@ Nehmt die [Final-PDF](Sherlock_Finale_27-11-2026.pdf) im Vollbild und eine Stopp
 
 **Eine Frage für die Wechselprobe.** Mahmoud fragt Moe bei Folie 8: „Zwingt eure Regel Sherlock, auf dem Feld zu bleiben?“ Moe kann auf die Tabelle zeigen: „Ohne den Abzug fürs Stehen bekommt Stehen hier 65 %, rechts 34 %. Unsere Einheit wählt also selbst Stehen. Auf einem anderen Feld kann die Bewertung anders ausfallen.“
 
+**Zum Nachspielen von Folie 7** öffnet die [V16-Partie gegen den Kaggle-Dritten](replays/V16_Kaggle_4247.html). Sie startet offline bei Match 3, Zug 66. Die Markierung zeigt den Schuss von Einheit 11. Die orangefarbenen Gegner sieht man aus Schiedsrichtersicht. Sherlock selbst sah in dem Zug keinen Gegner. Mit „Zur Vortragsszene“ springt ihr jederzeit zurück. Die Aufnahme dient der Probe oder einer Rückfrage.
+
 **Zwei Rückfragen aus dem Publikum**
 
 - „Woher weiß Sherlock, dass hinter dem Nebel jemand steht?“ → Er weiß es vor dem Zug nicht. Die Zielkarte bewertet das bekannte Punktefeld hoch. Erst das Replay zeigt, dass dort ein Gegner stand und drei weitere auf Nachbarfeldern getroffen wurden. In zehn Spielen gegen Kaggle trafen 234 von 286 Schüssen, bei denen im Umkreis von zwei Feldern um das Ziel niemand sichtbar war.
