@@ -10,7 +10,9 @@ Eine zweite getrennte Prüfung spielt das erste Match auf Karten mit einer Senso
 
 Der [Versuch zum Kurzzeitgedächtnis](../experiments/analysis/v16_finalwoche_20261122/zeitgedaechtnis/PLAN.md) prüft, ob frühere Beobachtungen derselben Einheit über die jetzige Lage hinaus bei der Entscheidung helfen. Zeitlicher Berater und Kontrolle bekommen dieselben 160 Trainingspartien. Die 24 neu aufgenommenen Prüfkarten teilen keinerlei Karten mit der vorherigen Netzgewichtung.
 
-Die zeitliche Variante ist fertig. Auf 24 neuen Karten lag sie bei 67.944 korrekten Aktionen von 80.621, das Original bei 68.035, die gleich große Kontrolle ohne frühere Züge bei 67.958. Die kalibrierteren Wahrscheinlichkeiten gaben der Lehreraktion in Summe mehr Gewicht, führten aber seltener zum richtigen erstplatzierten Befehl. Die vorab geplante Lernprüfung endet hier. [Zahlen](../experiments/analysis/v16_finalwoche_20261122/zeitgedaechtnis/ERGEBNIS.md)
+Die zeitliche Variante ist fertig. Auf 24 neuen Karten lag sie bei 67.944 korrekten Aktionen von 80.621, das Original bei 68.035, die gleich große Kontrolle ohne frühere Züge bei 67.958. Der logarithmische Vorhersagefehler sank. Beim erstplatzierten Befehl lag die zeitliche Variante seltener richtig. Die vorab geplante Lernprüfung endet hier. [Zahlen](../experiments/analysis/v16_finalwoche_20261122/zeitgedaechtnis/ERGEBNIS.md)
+
+Ein getrenntes [Training zur frühen Sicht](../experiments/analysis/v16_finalwoche_20261122/sichtlernen/PLAN.md) untersucht, ob der nachgemessene zusätzliche Informationsgewinn einer einzelnen Bewegung ein geeigneteres Lernziel ist als die Richtung von R3 zu kopieren. Die Variante sieht in einer echten Partie ausschließlich ihre eigenen Beobachtungen. Die Original- und Alternativzüge werden nur bei der Gewinnung der Trainingsdaten im Simulator verglichen.
 
 ## 22.11.2026 – Gemeinsame Zielkarte geprüft, Halterwechsel im Vergleich
 
