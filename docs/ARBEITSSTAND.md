@@ -1,5 +1,17 @@
 # Gemeinsamer Arbeitsstand
 
+## Nacht zum 23.11. – Ersten zusätzlichen Solution-Sieg auf neuen Karten prüfen
+
+Eine Suche nach einem öffentlichen Hinweis auf ein zweites Relikt gewann einen zusätzlichen ganzen Solution-Sitz auf Entwicklungskarten (95/96 gegenüber 94/96). Gegen V16 gingen die direkten Spiele 48:48 aus. Die getrennte Bestätigung läuft. Die schnelle Rückkehr auf ein gerade verlorenes Feld erreichte gegen Solution 38/40 wie V16, gegen Kaggle 0/40 wie V16 und direkt 18/40. Damit ist die Feldrückkehrstudie abgeschlossen. [Reliktsignal](../experiments/analysis/v16_finalwoche_20261122/signalstudie/ENTWICKLUNGSERGEBNIS.md) · [Feldrückkehr](../experiments/analysis/v16_finalwoche_20261122/feldrueckkehr/ERGEBNIS.md)
+
+Wenn zwei eigene Einheiten dasselbe Punktefeld ansteuern, war auf 19 alten Karten in 87 Zügen ein zweites bekanntes Punktefeld im selben Zug erreichbar. Die passive Technikprüfung reproduzierte alle acht Kaggle-Sitze exakt und fand weitere 14 solche Züge auf vier Karten. Dazu läuft eine Ganzspielprüfung. Separat sammeln wir echte alternative Einzelschritte mit identischem Zufall, um eine späte Bewegungsentscheidung am tatsächlichen Spielreward zu trainieren. [Doppelte Zielorte](../experiments/analysis/v16_finalwoche_20261122/doppelziel/PLAN.md) · [Lernen aus echten Punkten](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/PLAN.md)
+
+## 22.11.2026 – Gemeinsame Zielkarte geprüft, Halterwechsel im Vergleich
+
+Auf 160 Lernkarten wählte der Kaggle-Lehrer in nur 10 von 3.983 gleichzeitigen, wechselseitig erreichbaren Schusspaaren zwei verschiedene Ziele. Eine zweite Rechnung der Reichweitenfenster bestätigte alle zehn Fälle auf sechs Karten. Die festgelegte Häufigkeit für einen eigenen Zielkopf je Schütze war damit verfehlt. [Ergebnis und Einzelbelege](../experiments/analysis/v16_finalwoche_20261122/schuetzenziel/ERGEBNIS.md).
+
+Mahmouds Option WECHSEL hatte im alten Dev H auf sieben Kaggle-Karten beide Sitze gerettet und auf einer beide verloren. Vor der neuen unabhängigen Prüfung reproduzierten V16 und die unveränderte Option alle acht auf einer historischen Karte geprüften Endstände exakt. Die beiden Worker rechnen jetzt 1.200 getrennte Spiele auf 120 neuen Karten, einschließlich direkter Duelle. Die laufende Bestätigung des ungewichteten v9-Kopfs verwendet andere Karten. Die Abgabe ist weiterhin V16. [Altes Ergebnis und technische Parität](../experiments/analysis/v16_finalwoche_20261122/wechsel/ARCHIV.md) · [Prüfplan](../experiments/analysis/v16_finalwoche_20261122/wechsel/PLAN.md).
+
 ## Nacht zum 23.11.2026 – Unabhängige Prüfung und drei neue Ansätze bis 06:00
 
 Der [große Vergleich des nachtrainierten Aktionskopfs](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/PLAN.md) läuft auf 200 vorab festgelegten Karten. Parallel werden andere Karten für die folgenden Fragen verwendet.
