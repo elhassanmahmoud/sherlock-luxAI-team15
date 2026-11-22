@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 22.11.2026 – Normales Nachtraining gegen die freigegebene V16
+
+Die ungewichtete Kontrollvariante des Lernversuchs wurde nachträglich als eigener Kandidat ausgewählt. Gegenüber V16 änderten sich nur 1.542 Zahlen im Aktionskopf des kleinen Netzes. Die Auswahlspiele liefen auf 20 neuen Karten mit beiden Startseiten. Gegen Solution gewannen beide 40/40, gegen Kaggle beide 2/40 ganze Spiele. Die Variante gewann 14 von 120 Kaggle-Matches, V16 zehn. Direkt holte die Variante 22/40 Spiele, das paarweise 95-%-Kartenintervall reicht von 35 bis 75 %. Damit erfüllt sie die Kriterien für eine unabhängige Gegenprobe. Die Abgabe ist V16. [200 vollständige Spiele und Prüfwerte](../experiments/analysis/v16_finalwoche_20261122/kontrollkopf/ERGEBNIS.md)
+
 ## 22.11.2026 – V16 gegen Kaggle und Solution, gezieltes Nachtraining der Aktionswahl
 
 Acht reproduzierte Kaggle-Spiele zeigten die größere Lücke bei der späten Nutzung schon erreichter Punktefelder (38,1 % bei V16 gegenüber 65,2 % bei Kaggle). Der gepaarte Solution-Archivvergleich ergab 31 Spielsituationen aus Karte und Startseite, die nur R3 gewann, und 20 mit umgekehrtem Ergebnis. Auf acht ausgewählten Starts reproduzierten beide Original-ZIPs alle 16 Spielausgänge. In sieben der acht untersuchten V16-Matchniederlagen auf R3-Siegsitzen lag V16 schon bei Zug 70 zurück. [Kaggle-Feldverläufe](../experiments/analysis/v16_finalwoche_20261122/FELDVERLAUF.md) · [Solution-Verläufe mit einem konkreten Beispiel](../experiments/analysis/v16_finalwoche_20261122/solution/REPLAYS.md)

@@ -1,0 +1,174 @@
+{
+  "n": 200,
+  "counts": {
+    "solution92": {
+      "original": {
+        "n": 40,
+        "games_won": 40,
+        "matches_won": 119,
+        "points_for": 51997,
+        "points_against": 23662,
+        "sides": {
+          "player_0": {
+            "games_won": 20,
+            "matches_won": 59,
+            "points_for": 25844,
+            "points_against": 11958
+          },
+          "player_1": {
+            "games_won": 20,
+            "matches_won": 60,
+            "points_for": 26153,
+            "points_against": 11704
+          }
+        }
+      },
+      "kontrolle": {
+        "n": 40,
+        "games_won": 40,
+        "matches_won": 118,
+        "points_for": 52126,
+        "points_against": 23742,
+        "sides": {
+          "player_0": {
+            "games_won": 20,
+            "matches_won": 59,
+            "points_for": 26060,
+            "points_against": 11803
+          },
+          "player_1": {
+            "games_won": 20,
+            "matches_won": 59,
+            "points_for": 26066,
+            "points_against": 11939
+          }
+        }
+      }
+    },
+    "kaggle3": {
+      "original": {
+        "n": 40,
+        "games_won": 2,
+        "matches_won": 10,
+        "points_for": 25102,
+        "points_against": 39070,
+        "sides": {
+          "player_0": {
+            "games_won": 1,
+            "matches_won": 5,
+            "points_for": 12551,
+            "points_against": 19535
+          },
+          "player_1": {
+            "games_won": 1,
+            "matches_won": 5,
+            "points_for": 12551,
+            "points_against": 19535
+          }
+        }
+      },
+      "kontrolle": {
+        "n": 40,
+        "games_won": 2,
+        "matches_won": 14,
+        "points_for": 25500,
+        "points_against": 38062,
+        "sides": {
+          "player_0": {
+            "games_won": 1,
+            "matches_won": 7,
+            "points_for": 12750,
+            "points_against": 19031
+          },
+          "player_1": {
+            "games_won": 1,
+            "matches_won": 7,
+            "points_for": 12750,
+            "points_against": 19031
+          }
+        }
+      }
+    },
+    "v16": {
+      "kontrolle": {
+        "n": 40,
+        "games_won": 22,
+        "matches_won": 58,
+        "points_for": 31990,
+        "points_against": 32766,
+        "sides": {
+          "player_0": {
+            "games_won": 11,
+            "matches_won": 29,
+            "points_for": 15995,
+            "points_against": 16383
+          },
+          "player_1": {
+            "games_won": 11,
+            "matches_won": 29,
+            "points_for": 15995,
+            "points_against": 16383
+          }
+        }
+      }
+    }
+  },
+  "contrasts": {
+    "solution92": {
+      "seats": {
+        "both_won": 40
+      },
+      "win_rate_difference": {
+        "estimate": 0.0,
+        "map_bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matches_per_game_difference": {
+        "estimate": -0.025,
+        "map_bootstrap_95": [
+          -0.075,
+          0.0
+        ]
+      }
+    },
+    "kaggle3": {
+      "seats": {
+        "both_lost": 36,
+        "original_only": 2,
+        "control_only": 2
+      },
+      "win_rate_difference": {
+        "estimate": 0.0,
+        "map_bootstrap_95": [
+          -0.15,
+          0.15
+        ]
+      },
+      "matches_per_game_difference": {
+        "estimate": 0.1,
+        "map_bootstrap_95": [
+          -0.15,
+          0.4
+        ]
+      }
+    },
+    "v16": {
+      "win_rate": {
+        "estimate": 0.55,
+        "map_bootstrap_95": [
+          0.35,
+          0.75
+        ]
+      }
+    }
+  },
+  "gates": {
+    "solution_games": true,
+    "kaggle_games": true,
+    "kaggle_matches": true,
+    "direct": true
+  },
+  "passed": true
+}
