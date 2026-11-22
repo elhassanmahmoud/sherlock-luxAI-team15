@@ -1,0 +1,396 @@
+{
+  "all": {
+    "solution_games": 96,
+    "solution_baseline_wins": 94,
+    "solution_candidate_wins": 95,
+    "solution_new_wins": 1,
+    "solution_lost_wins": 0,
+    "solution_baseline_matchwins": 272,
+    "solution_candidate_matchwins": 272,
+    "solution_score_delta": 1041,
+    "first_scheduled": 8,
+    "actually_assigned": 8,
+    "changed_solution_games": 8,
+    "changed_solution_maps": 5,
+    "changed_solution_actions": 29,
+    "earlier_solution_sightings": 4,
+    "later_solution_sightings": 0,
+    "direct_games": 96,
+    "direct_wins": 48,
+    "direct_matchwins": 144,
+    "direct_opponent_matchwins": 144,
+    "direct_changed_games": 2,
+    "direct_changed_maps": 1,
+    "direct_changed_actions": 24,
+    "direct_changed_wins": 1,
+    "direct_asymmetric_reference": [],
+    "direct_quiet_maps_inconsistent": []
+  },
+  "by_side": {
+    "player_0": {
+      "solution_games": 48,
+      "solution_baseline_wins": 47,
+      "solution_candidate_wins": 47,
+      "solution_new_wins": 0,
+      "solution_lost_wins": 0,
+      "solution_baseline_matchwins": 136,
+      "solution_candidate_matchwins": 135,
+      "solution_score_delta": 161,
+      "first_scheduled": 3,
+      "actually_assigned": 3,
+      "changed_solution_games": 3,
+      "changed_solution_maps": 3,
+      "changed_solution_actions": 19,
+      "earlier_solution_sightings": 1,
+      "later_solution_sightings": 0,
+      "direct_games": 48,
+      "direct_wins": 23,
+      "direct_matchwins": 67,
+      "direct_opponent_matchwins": 77,
+      "direct_changed_games": 1,
+      "direct_changed_maps": 1,
+      "direct_changed_actions": 11,
+      "direct_changed_wins": 0
+    },
+    "player_1": {
+      "solution_games": 48,
+      "solution_baseline_wins": 47,
+      "solution_candidate_wins": 48,
+      "solution_new_wins": 1,
+      "solution_lost_wins": 0,
+      "solution_baseline_matchwins": 136,
+      "solution_candidate_matchwins": 137,
+      "solution_score_delta": 880,
+      "first_scheduled": 5,
+      "actually_assigned": 5,
+      "changed_solution_games": 5,
+      "changed_solution_maps": 5,
+      "changed_solution_actions": 10,
+      "earlier_solution_sightings": 3,
+      "later_solution_sightings": 0,
+      "direct_games": 48,
+      "direct_wins": 25,
+      "direct_matchwins": 77,
+      "direct_opponent_matchwins": 67,
+      "direct_changed_games": 1,
+      "direct_changed_maps": 1,
+      "direct_changed_actions": 13,
+      "direct_changed_wins": 1
+    }
+  },
+  "affected": [
+    {
+      "seed": 160343001,
+      "side": "player_0",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 2,
+      "first": {
+        "turn": 74,
+        "scores_before": [
+          130,
+          120
+        ],
+        "scores_after": [
+          137,
+          124
+        ],
+        "gains": [
+          7,
+          4
+        ],
+        "possible_fields": 10,
+        "possible_corners": [],
+        "cap": 10
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 3,
+      "matches": 3,
+      "old_score": 337,
+      "score": 541,
+      "earlier": true,
+      "later": false,
+      "old_second": null,
+      "second": 98,
+      "fields_match3_step0": 10,
+      "fields_match3_step1": 10
+    },
+    {
+      "seed": 160343001,
+      "side": "player_1",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 1,
+      "first": {
+        "turn": 75,
+        "scores_before": [
+          156,
+          100
+        ],
+        "scores_after": [
+          164,
+          103
+        ],
+        "gains": [
+          8,
+          3
+        ],
+        "possible_fields": 10,
+        "possible_corners": [],
+        "cap": 10
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 3,
+      "matches": 3,
+      "old_score": 302,
+      "score": 488,
+      "earlier": true,
+      "later": false,
+      "old_second": null,
+      "second": 89,
+      "fields_match3_step0": 12,
+      "fields_match3_step1": 12
+    },
+    {
+      "seed": 160343008,
+      "side": "player_0",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 10,
+      "first": {
+        "turn": 62,
+        "scores_before": [
+          178,
+          200
+        ],
+        "scores_after": [
+          183,
+          206
+        ],
+        "gains": [
+          5,
+          6
+        ],
+        "possible_fields": 10,
+        "possible_corners": [],
+        "cap": 10
+      },
+      "old_wins": 0,
+      "wins": 0,
+      "old_matches": 1,
+      "matches": 1,
+      "old_score": 2,
+      "score": -110,
+      "earlier": false,
+      "later": false,
+      "old_second": null,
+      "second": null,
+      "fields_match3_step0": 10,
+      "fields_match3_step1": 10
+    },
+    {
+      "seed": 160343008,
+      "side": "player_1",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 2,
+      "first": {
+        "turn": 76,
+        "scores_before": [
+          239,
+          199
+        ],
+        "scores_after": [
+          247,
+          202
+        ],
+        "gains": [
+          8,
+          3
+        ],
+        "possible_fields": 10,
+        "possible_corners": [],
+        "cap": 10
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 2,
+      "matches": 2,
+      "old_score": 299,
+      "score": 391,
+      "earlier": false,
+      "later": false,
+      "old_second": null,
+      "second": null,
+      "fields_match3_step0": 10,
+      "fields_match3_step1": 10
+    },
+    {
+      "seed": 160343014,
+      "side": "player_0",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 7,
+      "first": {
+        "turn": 64,
+        "scores_before": [
+          147,
+          150
+        ],
+        "scores_after": [
+          150,
+          154
+        ],
+        "gains": [
+          3,
+          4
+        ],
+        "possible_fields": 6,
+        "possible_corners": [],
+        "cap": 6
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 3,
+      "matches": 2,
+      "old_score": 168,
+      "score": 237,
+      "earlier": false,
+      "later": false,
+      "old_second": null,
+      "second": null,
+      "fields_match3_step0": 6,
+      "fields_match3_step1": 6
+    },
+    {
+      "seed": 160343014,
+      "side": "player_1",
+      "new": true,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 3,
+      "first": {
+        "turn": 60,
+        "scores_before": [
+          138,
+          141
+        ],
+        "scores_after": [
+          141,
+          145
+        ],
+        "gains": [
+          3,
+          4
+        ],
+        "possible_fields": 6,
+        "possible_corners": [],
+        "cap": 6
+      },
+      "old_wins": 0,
+      "wins": 1,
+      "old_matches": 1,
+      "matches": 2,
+      "old_score": -288,
+      "score": 176,
+      "earlier": true,
+      "later": false,
+      "old_second": null,
+      "second": 85,
+      "fields_match3_step0": 10,
+      "fields_match3_step1": 10
+    },
+    {
+      "seed": 160343026,
+      "side": "player_1",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 3,
+      "first": {
+        "turn": 50,
+        "scores_before": [
+          35,
+          21
+        ],
+        "scores_after": [
+          38,
+          23
+        ],
+        "gains": [
+          3,
+          2
+        ],
+        "possible_fields": 4,
+        "possible_corners": [],
+        "cap": 4
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 3,
+      "matches": 3,
+      "old_score": 566,
+      "score": 604,
+      "earlier": true,
+      "later": false,
+      "old_second": 70,
+      "second": 55,
+      "fields_match3_step0": 8,
+      "fields_match3_step1": 8
+    },
+    {
+      "seed": 160343033,
+      "side": "player_1",
+      "new": false,
+      "lost": false,
+      "started": true,
+      "changed": true,
+      "actions": 1,
+      "first": {
+        "turn": 76,
+        "scores_before": [
+          184,
+          49
+        ],
+        "scores_after": [
+          189,
+          51
+        ],
+        "gains": [
+          5,
+          2
+        ],
+        "possible_fields": 6,
+        "possible_corners": [],
+        "cap": 6
+      },
+      "old_wins": 1,
+      "wins": 1,
+      "old_matches": 3,
+      "matches": 3,
+      "old_score": 604,
+      "score": 704,
+      "earlier": false,
+      "later": false,
+      "old_second": 78,
+      "second": 78,
+      "fields_match3_step0": 11,
+      "fields_match3_step1": 11
+    }
+  ],
+  "gate": true
+}
