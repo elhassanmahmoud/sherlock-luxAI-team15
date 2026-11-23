@@ -1,0 +1,5 @@
+# Die Paritätsrechnung bestätigt Felder, die V16 schon kennt
+
+Mit zusätzlichen Gleichungen für gerade und ungerade Mannschaftspunkte ließen sich auf 9 von 160 ursprünglichen Karten zeitweise mehr echte Punktefelder beweisen als mit den bisherigen eigenen Summengrenzen. Es waren 424 zusätzliche Feld-Zug-Nachweise. V16 hatte alle betreffenden Felder zu diesen Zeitpunkten bereits selbst als sicher markiert. Für den Agenten gab es daher auf **0 von 160 Karten** einen zusätzlichen nutzbaren Wissensvorsprung.
+
+Die Entwicklung umfasste 80 ganze Partien gegen Solution und 80 gegen V16. Beide Hälften nutzten die aufgezeichnete Originalaktion. Alle zusätzlichen Positivnachweise entsprachen dem gleichzeitigen Schiedsrichterzustand. Die separaten 48 Prüfkarten und die neuen Ganzspielkarten wurden für diese Erweiterung nicht geöffnet. Die Gauß-Elimination wurde außerdem in 600 endlichen Gleichungssystemen gegen sämtliche binären Lösungen und in 32 vollständigen kleinen Partien mit wachsenden Reliktmengen kontrolliert. [Messbericht](train.json) · [Karten](train_karten.jsonl.gz) · [Überprüfung](test_gleichungen.py)
