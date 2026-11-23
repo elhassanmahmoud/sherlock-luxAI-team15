@@ -2,6 +2,7 @@
 import argparse
 import ast
 from datetime import datetime
+import fcntl
 import gzip
 import json
 from pathlib import Path
@@ -170,6 +171,20 @@ def score(rows,label):
                 sight_gain=float(mean[:,4].mean()),credit_gain=float(mean[:,5].mean()),way_a=bool(a),way_b=bool(b),qualified=bool(a or b))
 
 
+def play_if_available(path, token, generate):
+    """Hold the claim through publication so additional workers can help on any lane."""
+    path.parent.mkdir(parents=True,exist_ok=True)
+    with path.with_suffix(".lock").open("a+b") as claim:
+        try:
+            fcntl.flock(claim,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:
+            return
+        if path.exists():
+            assert json.loads(path.read_text())["source"]==token
+        else:
+            write_once(path,generate())
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("folder",type=Path);p.add_argument("stage",choices=("nominate","play","score"))
@@ -185,12 +200,13 @@ def main():
     keys=[(s,t,a,o) for s in range(164300000,164300160) for t in (0,1) for a,o in (("v16","solution92"),(label,"solution92"),(label,"v16"))]
     def dest(k):return args.folder/"alle"/("_".join(map(str,k))+".json")
     if args.stage=="play":
+        assert 0<=args.lane<args.stride
         env=LuxAIS3GymEnv(numpy_output=True)
         try:
-            for k in keys[args.lane::args.stride]:
+            order=[k for offset in range(args.stride) for k in keys[(args.lane+offset)%args.stride::args.stride]]
+            for k in order:
                 if datetime.now(CUTOFF.tzinfo)>=CUTOFF:break
-                if dest(k).exists():assert json.loads(dest(k).read_text())["source"]==token
-                else:write_once(dest(k),run(env,k,token))
+                play_if_available(dest(k),token,lambda:run(env,k,token))
         finally:env.close()
         return
     rows={k:json.loads(dest(k).read_text()) for k in keys}
