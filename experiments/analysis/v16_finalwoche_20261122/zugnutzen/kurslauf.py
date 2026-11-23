@@ -37,8 +37,15 @@ def verify(archive, tape, output):
         shutil.copytree(ROOT / "agents/Solution_92_Kaggle", agents / "Solution_92_Kaggle")
         shutil.copytree(ROOT / "lux", root / "lux")
         with ZipFile(archive) as package:
-            package.extractall(agents)
-        header, row = (agents / "paths.csv").read_text().strip().splitlines()
+            if "paths.csv" in package.namelist():
+                package.extractall(agents)
+                header, row = (agents / "paths.csv").read_text().strip().splitlines()
+            elif "Gruppe15/agent.pth" in package.namelist():
+                package.extractall(root)
+                header = "Moodle Gruppe;Import_Path;Load_Path_P0;Load_Path_P1"
+                row = "15;Gruppe15.main.Agent_x;Gruppe15/agent.pth;Gruppe15/agent.pth"
+            else:
+                raise ValueError("Unknown course archive layout")
         (root / "Paths.csv").write_text(header + "\n2;agents.Solution_92_Kaggle.agent.Agent;;\n" + row + "\n")
         sys.path.insert(0, str(root))
         old_cwd = Path.cwd()
