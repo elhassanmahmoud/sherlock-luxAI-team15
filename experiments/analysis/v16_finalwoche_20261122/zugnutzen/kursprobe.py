@@ -16,7 +16,7 @@ import torch
 HERE=Path(__file__).resolve().parent
 
 
-def record(folder):
+def record(folder, study):
     from spielen import PACKAGE, Policy, ValueNet, check_qualification
     from scripts.r3_package import r3_package_agent
     from scripts.common import make_opponent, play_game
@@ -25,10 +25,24 @@ def record(folder):
     from luxai_s3.wrappers import LuxAIS3GymEnv
     limit_threads()
     folder.mkdir(parents=True,exist_ok=True)
-    net=ValueNet().eval()
-    with np.load(check_qualification(True),allow_pickle=False) as z:
-        net.load_state_dict({k:torch.from_numpy(z[k]) for k in z.files})
-    archive=gzip.decompress((HERE/"auswahl_partien.jsonl.gz").read_bytes()).splitlines()
+    if study == "late":
+        source = HERE
+        net = ValueNet().eval()
+        with np.load(check_qualification(True), allow_pickle=False) as z:
+            net.load_state_dict({k:torch.from_numpy(z[k]) for k in z.files})
+        def candidate(base):
+            return Policy(base, net)
+    else:
+        source = HERE.parent/"sichtlernen"
+        sys.path.insert(0, str(source))
+        from sicht import Scout, NAMES
+        stored = json.loads((source/"offline.json").read_bytes())
+        if not stored["eligible"] or stored["estimate"]["names"] != list(NAMES):
+            raise ValueError("Incorrect visibility estimator")
+        params = np.asarray(stored["estimate"]["w"], dtype=float), stored["estimate"]["bias"]
+        def candidate(base):
+            return Scout(base, params)
+    archive=gzip.decompress((source/"auswahl_partien.jsonl.gz").read_bytes()).splitlines()
     chosen={}
     for row in sorted(map(json.loads,archive),key=lambda r:r["seed"]):
         if row["arm"]=="adviser" and row["changes"]>0 and row["opponent"]!="v16":
@@ -61,7 +75,7 @@ def record(folder):
     try:
         for (opponent,side),r in chosen.items():
             s=r["seed"]
-            receiver=Recorder(Policy(r3_package_agent(side,PACKAGE),net))
+            receiver=Recorder(candidate(r3_package_agent(side,PACKAGE)))
             rival=make_opponent(opponent,"player_"+str(1-int(side[-1])))
             g=play_game(env,receiver,rival,s,side,train=False)
             require_no_agent_errors(receiver.policy.base,rival)
@@ -123,8 +137,8 @@ def compare(folder,package,out):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     subs=p.add_subparsers(dest="mode",required=True)
-    a=subs.add_parser("record");a.add_argument("folder",type=Path)
+    a=subs.add_parser("record");a.add_argument("folder",type=Path);a.add_argument("--study",choices=("late","visibility"),default="late")
     a=subs.add_parser("compare");a.add_argument("folder",type=Path);a.add_argument("package",type=Path);a.add_argument("out",type=Path)
     a=p.parse_args()
-    if a.mode=="record":record(a.folder)
+    if a.mode=="record":record(a.folder, a.study)
     else:compare(a.folder,a.package,a.out)

@@ -74,16 +74,7 @@ Agent = Agent_x
     return (header+"\n\n"+"\n\n\n".join(ast.get_source_segment(original,n) for n in nodes)+"\n\n"+wrapper).encode()
 
 
-def build(out):
-    out=out.resolve()
-    for file,digest in ARTIFACTS.items():
-        if sha256(file.read_bytes()).hexdigest()!=digest:
-            raise ValueError(f"Source changed: {file.name}")
-    for directory in (ROOT/"dist",ROOT/"agents",ROOT/"experiments/releases"):
-        if out.is_relative_to(directory.resolve()):
-            raise ValueError("This builder is for a separate experimental candidate")
-    if out.exists():
-        raise FileExistsError(out)
+def archived_base():
     with ZipFile(V16) as base:
         files={name:base.read(name) for name in base.namelist()}
     files["sherlock/v16_main.py"]=files["sherlock/main.py"]
@@ -92,8 +83,16 @@ def build(out):
     for name,content in list(files.items()):
         if name.endswith(".py"):
             files[name]=content.replace(b"from .main import ", b"from .v16_main import ")
-    files["sherlock/main.py"]=portable_source()
-    files["sherlock/wertberater.npz"]=(HERE/"wertberater.npz").read_bytes()
+    return files
+
+
+def write_experimental(out, files):
+    out=out.resolve()
+    for directory in (ROOT/"dist",ROOT/"agents",ROOT/"experiments/releases"):
+        if out.is_relative_to(directory.resolve()):
+            raise ValueError("This builder is for a separate experimental candidate")
+    if out.exists():
+        raise FileExistsError(out)
     out.parent.mkdir(exist_ok=True,parents=True)
     with ZipFile(out,"x",compression=ZIP_DEFLATED) as package:
         for name,value in sorted(files.items()):
@@ -105,6 +104,17 @@ def build(out):
         if package.testzip() or package.read("sherlock/weights/agent.pth")!=original.read("sherlock/weights/agent.pth"):
             raise ValueError("Corrupt package or rewritten V16 weights")
     return sha256(out.read_bytes()).hexdigest()
+
+
+
+def build(out):
+    for file,digest in ARTIFACTS.items():
+        if sha256(file.read_bytes()).hexdigest()!=digest:
+            raise ValueError(f"Source changed: {file.name}")
+    files = archived_base()
+    files["sherlock/main.py"]=portable_source()
+    files["sherlock/wertberater.npz"]=(HERE/"wertberater.npz").read_bytes()
+    return write_experimental(out, files)
 
 
 if __name__=="__main__":
