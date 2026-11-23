@@ -1,0 +1,166 @@
+{
+  "games": 1040,
+  "independent_maps": 120,
+  "groups": {
+    "solution92": {
+      "original": {
+        "n": 240,
+        "wins": 237,
+        "matches": 692,
+        "p0_wins": 119,
+        "p1_wins": 118,
+        "changed": 0,
+        "active_maps": 0
+      },
+      "mitte2": {
+        "n": 240,
+        "wins": 238,
+        "matches": 697,
+        "p0_wins": 120,
+        "p1_wins": 118,
+        "changed": 174,
+        "active_maps": 98
+      }
+    },
+    "kaggle3": {
+      "original": {
+        "n": 240,
+        "wins": 8,
+        "matches": 100,
+        "p0_wins": 4,
+        "p1_wins": 4,
+        "changed": 0,
+        "active_maps": 0
+      },
+      "mitte2": {
+        "n": 240,
+        "wins": 8,
+        "matches": 100,
+        "p0_wins": 4,
+        "p1_wins": 4,
+        "changed": 36,
+        "active_maps": 18
+      }
+    },
+    "v16": {
+      "mitte2": {
+        "n": 80,
+        "wins": 38,
+        "matches": 115,
+        "p0_wins": 20,
+        "p1_wins": 18,
+        "changed": 23,
+        "active_maps": 23
+      }
+    }
+  },
+  "paired": {
+    "solution92": {
+      "wins": {
+        "mean": 0.004166666666666667,
+        "ci95": [
+          0.0,
+          0.0125
+        ]
+      },
+      "matches": {
+        "mean": 0.020833333333333332,
+        "ci95": [
+          -0.004166666666666667,
+          0.05416666666666667
+        ]
+      },
+      "point_share": {
+        "mean": 0.00016468688964615396,
+        "ci95": [
+          -0.003286894811338173,
+          0.003709205044678553
+        ]
+      },
+      "whole_seats": {
+        "1:1": 237,
+        "0:0": 2,
+        "1:0": 1
+      },
+      "map_wins_delta": {
+        "0": 119,
+        "1": 1
+      },
+      "changed_game_outcomes": [
+        {
+          "seed": 160384039,
+          "team": 0,
+          "delta": 1,
+          "turn": 49
+        }
+      ]
+    },
+    "kaggle3": {
+      "wins": {
+        "mean": 0.0,
+        "ci95": [
+          -0.025,
+          0.025
+        ]
+      },
+      "matches": {
+        "mean": 0.0,
+        "ci95": [
+          -0.025,
+          0.025
+        ]
+      },
+      "point_share": {
+        "mean": 0.001796171213167661,
+        "ci95": [
+          0.00019876118616085335,
+          0.0037105332007991783
+        ]
+      },
+      "whole_seats": {
+        "0:0": 230,
+        "1:1": 6,
+        "0:1": 2,
+        "1:0": 2
+      },
+      "map_wins_delta": {
+        "0": 118,
+        "-2": 1,
+        "2": 1
+      },
+      "changed_game_outcomes": [
+        {
+          "seed": 160384093,
+          "team": 0,
+          "delta": -1,
+          "turn": 41
+        },
+        {
+          "seed": 160384093,
+          "team": 1,
+          "delta": -1,
+          "turn": 41
+        },
+        {
+          "seed": 160384096,
+          "team": 0,
+          "delta": 1,
+          "turn": 26
+        },
+        {
+          "seed": 160384096,
+          "team": 1,
+          "delta": 1,
+          "turn": 26
+        }
+      ]
+    }
+  },
+  "identical_inactive_external_pairs": 270,
+  "gates": {
+    "solution_positive_lower": false,
+    "kaggle_at_least_as_many": true,
+    "direct_at_least_40": false
+  },
+  "passed": false
+}
