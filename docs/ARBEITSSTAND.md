@@ -6,6 +6,10 @@ Der Bewegungsberater lernte an 3.519 echten Alternativzügen auf 96 Trainingskar
 
 Die Wiederholung auf 64 frischen Karten ist abgeschlossen. Unter 83 geänderten Zügen verbesserten 60 sofort den Punktsaldo, 23 waren neutral. Der Vorteil von +0,75 Punkten je Eingriff blieb auch im 95-%-Kartenintervall positiv (+0,63 bis +0,86). Das ist ein belastbarer Vorteil für diesen einzelnen Zug. Ob er ganze Spiele entscheidet, wird auf getrennten Karten gemessen. [Einzeldaten der Wiederholung](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/replikation.json)
 
+## 23.11.2026 – R3-Eröffnung auf 40 neuen Karten mit kurzer Sicht
+
+Nach jeweils 80 ganzen Partien erzielte die R3-Eröffnung gegen Solution 78 Siege (V16 76), gegen den Kaggle-Dritten zwei (V16 sechs) und direkt gegen V16 28. Die zwei zusätzlichen Solution-Siege stammen von verschiedenen Karten, jeweils auf Startseite 1 bei Reichweite 1. Der ganze Agent verfehlte die Auswahlbedingungen. Der Befund erlaubt eine gezieltere Analyse dieser Eröffnungen. [Ergebnisse und 400 Einzelpartien](../experiments/analysis/v16_finalwoche_20261122/fruehuebergabe/ERGEBNIS.md)
+
 ## Nacht zum 23.11. – Ersten zusätzlichen Solution-Sieg auf neuen Karten prüfen
 
 Eine Suche nach einem öffentlichen Hinweis auf ein zweites Relikt gewann einen zusätzlichen ganzen Solution-Sitz auf Entwicklungskarten (95/96 gegenüber 94/96). Gegen V16 gingen die direkten Spiele 48:48 aus. Die getrennte Bestätigung läuft. Die schnelle Rückkehr auf ein gerade verlorenes Feld erreichte gegen Solution 38/40 wie V16, gegen Kaggle 0/40 wie V16 und direkt 18/40. Damit ist die Feldrückkehrstudie abgeschlossen. [Reliktsignal](../experiments/analysis/v16_finalwoche_20261122/signalstudie/ENTWICKLUNGSERGEBNIS.md) · [Feldrückkehr](../experiments/analysis/v16_finalwoche_20261122/feldrueckkehr/ERGEBNIS.md)

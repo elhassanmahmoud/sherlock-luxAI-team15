@@ -1,0 +1,128 @@
+{
+  "phase": "auswahl",
+  "games": 400,
+  "map_count": 40,
+  "results": {
+    "solution92": {
+      "original": {
+        "games": 80,
+        "wins": 76,
+        "matches": 225,
+        "p0_wins": 38,
+        "p1_wins": 38,
+        "changed_games": 0,
+        "diff_unit_commands": 0,
+        "median_secs": 18.175
+      },
+      "staffel": {
+        "games": 80,
+        "wins": 78,
+        "matches": 226,
+        "p0_wins": 38,
+        "p1_wins": 40,
+        "changed_games": 80,
+        "diff_unit_commands": 5236,
+        "median_secs": 20.27
+      }
+    },
+    "kaggle3": {
+      "original": {
+        "games": 80,
+        "wins": 6,
+        "matches": 30,
+        "p0_wins": 3,
+        "p1_wins": 3,
+        "changed_games": 0,
+        "diff_unit_commands": 0,
+        "median_secs": 34.915000000000006
+      },
+      "staffel": {
+        "games": 80,
+        "wins": 2,
+        "matches": 18,
+        "p0_wins": 1,
+        "p1_wins": 1,
+        "changed_games": 80,
+        "diff_unit_commands": 5180,
+        "median_secs": 37.53
+      }
+    },
+    "v16": {
+      "staffel": {
+        "games": 80,
+        "wins": 28,
+        "matches": 86,
+        "p0_wins": 14,
+        "p1_wins": 14,
+        "changed_games": 80,
+        "diff_unit_commands": 5206,
+        "median_secs": 27.715
+      }
+    }
+  },
+  "paired": {
+    "solution92": {
+      "whole_game_seats": {
+        "1:1": 76,
+        "1:0": 2,
+        "0:0": 2
+      },
+      "wins": {
+        "difference": 0.025,
+        "ci95": [
+          0.0,
+          0.0625
+        ]
+      },
+      "matches": {
+        "difference": 0.0125,
+        "ci95": [
+          -0.075,
+          0.0875
+        ]
+      },
+      "point_share": {
+        "difference": 0.00584530311334488,
+        "ci95": [
+          -0.006183134596225624,
+          0.017982416712907803
+        ]
+      }
+    },
+    "kaggle3": {
+      "whole_game_seats": {
+        "0:0": 72,
+        "1:0": 2,
+        "0:1": 6
+      },
+      "wins": {
+        "difference": -0.05,
+        "ci95": [
+          -0.15,
+          0.05
+        ]
+      },
+      "matches": {
+        "difference": -0.15,
+        "ci95": [
+          -0.375,
+          0.05
+        ]
+      },
+      "point_share": {
+        "difference": -0.025848299563952404,
+        "ci95": [
+          -0.05303896738905177,
+          -0.0003553723611183415
+        ]
+      }
+    }
+  },
+  "identical_inactive_external_pairs": 0,
+  "gates": {
+    "more_solution_wins": true,
+    "at_least_as_many_kaggle_wins": false,
+    "direct_at_least_40": false
+  },
+  "passed": false
+}
