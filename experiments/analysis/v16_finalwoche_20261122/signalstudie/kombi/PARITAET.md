@@ -1,0 +1,5 @@
+# Sind die gesperrten Varianten noch dieselben Agenten?
+
+Vor Ausgabe des Technikergebnisses festgelegt. Für jeden Sitz genau eine vollständige Partie pro geprüfter Einzelkomponente. Aus den bekannten Rettungssitzen des betreffenden Moduls und Sitzes wird stets die kleinste Karten-ID genommen. Zwei unabhängig initialisierte Implementierungen erhalten dasselbe öffentliche Beobachtungsobjekt. Die Kombination mit gesperrtem jeweils anderen Modul und das unveränderte Original-Einzelmodul müssen auf **jedem der 303 Züge** die identische vollständige Aktionsmatrix ausgeben. Der Hash der Beobachtung wird vor, zwischen und nach beiden Aufrufen geprüft. Zusätzlich werden alle 303 Teamaktionen zu einem reproduzierbaren Hash zusammengefasst. Die vier Partien sind technische Kontrollwiedergaben und fließen nicht in die Siegquote oder die Rettungszahlen ein.
+
+Die Kombination selbst benutzt je Team und Zug nur eine V16-Instanz, die genau einmal aufgerufen wird. Die zweite Agenteninstanz ist ausschließlich Teil dieser unabhängigen Nebenrechnung für den byteweisen Vergleich zweier Programme.
