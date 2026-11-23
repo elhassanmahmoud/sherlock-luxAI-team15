@@ -13,6 +13,13 @@ from erheben import HERE, MODEL_SHA, NAMES, V16, cases, sha, sources
 def records(folder, split):
     out = []
     expected = cases(split)
+    # Official opponent fails before the intervention on one fixed training map.
+    # Preserve the technical loss separately. Every one of the 80 test maps is compulsory.
+    if split == "train":
+        note = HERE/"trainingsausfall.json"
+        if sha(note) != "7c0c09ee16ac33d2c6724b4649a9df5575065c9f917c6c2223222724be8f9f41":
+            raise ValueError("Incorrect technical exclusion")
+        expected = [case for case in expected if case[0] != 160390154]
     if {p.stem for p in folder.glob("*.json")} != {str(c[0]) for c in expected}:
         raise ValueError("Incorrect set of map identities")
     spec = sources()
@@ -61,7 +68,7 @@ def train(folder):
     z = (x - center)/scale
     beta = np.linalg.solve(z.T @ z + 32*np.eye(z.shape[1]), z.T @ (y-y.mean()))
     archive(rows, HERE/"trainingskarten.jsonl.gz")
-    result = dict(inputs=NAMES, n_maps=len(rows), n_proposals=len(real), train_data=sha(HERE/"trainingskarten.jsonl.gz"),
+    result = dict(inputs=NAMES, planned_maps=160, technical_exclusion=[160390154], n_maps=len(rows), n_proposals=len(real), train_data=sha(HERE/"trainingskarten.jsonl.gz"),
                   sources=sources(), fit_code=sha(HERE/"lernen.py"), intercept=float(y.mean()),
                   mean=center.tolist(), scale=scale.tolist(), coefficients=beta.tolist(), lambda_ridge=32,
                   threshold=1, clipped_targets=int(np.count_nonzero(y != target)))

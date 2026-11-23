@@ -1,0 +1,82 @@
+{
+  "clipped_targets": 1,
+  "coefficients": [
+    0.04101646411937656,
+    -0.7781248460335989,
+    -0.09925286042136268,
+    -0.585521297255577,
+    -1.8510087073426273,
+    -0.0006463299105622159,
+    -0.870106007130537,
+    -0.5431175931509107,
+    -0.95235454549616,
+    -0.7140142884865792,
+    -0.48085028319041623,
+    0.9723750791954868,
+    0.11184546266472337
+  ],
+  "fit_code": "70eb6c2d827d0cc3b9725a5699a215350bcafbf0509bc16b55cd823afb144012",
+  "inputs": [
+    "instant_prediction",
+    "network_gap",
+    "team_plans_original",
+    "team_plans_alternative",
+    "friendly_original",
+    "friendly_alternative",
+    "known_point_original",
+    "known_point_alternative",
+    "enemy_energy_original",
+    "enemy_energy_alternative",
+    "time",
+    "score_margin",
+    "match_margin"
+  ],
+  "intercept": 2.7096774193548385,
+  "lambda_ridge": 32,
+  "mean": [
+    0.7407594544272269,
+    0.3719173808712312,
+    0.28225806451612906,
+    0.013440860215053764,
+    0.0456989247311828,
+    0.1424731182795699,
+    0.010752688172043012,
+    0.8924731182795699,
+    0.0034946235277319468,
+    0.0030107526208764763,
+    0.493440860215054,
+    -0.2551612903225806,
+    0.1827956989247312
+  ],
+  "n_maps": 159,
+  "n_proposals": 93,
+  "planned_maps": 160,
+  "scale": [
+    0.26686710834228805,
+    0.2859148426778232,
+    0.0985500149452869,
+    0.056387572482266224,
+    0.115622651438745,
+    0.15291895326159022,
+    0.10313616179167144,
+    0.30978194173952533,
+    0.0236749365128663,
+    0.02057493183929206,
+    0.1347358596618952,
+    0.24340599697167675,
+    0.983150920487094
+  ],
+  "sources": {
+    "folgewert/PLAN.md": "b6031c4088e6bf5576c864abcb08b0e8086ff4ac5eca935158340f9d164ae0e6",
+    "folgewert/erheben.py": "91c6d047e1fe0d5d883c3758ae6e1a5e270c30f621e975fe87697862668a2532",
+    "mitte2/mitte.py": "22f80ab0852f22adc07202da37cd6a20263570a46aa669427be08e6af5bd9620",
+    "mitte2/optionen.py": "c03586fe09e697b5a8ba39dba0c93ae9ffe970b1822730ec9c59a021bca7748e",
+    "mitte2/verlauf.py": "95cde6cf4cc25bd6ebed81481eca5a99314196101d7e39613cbed09947b0389d",
+    "zugnutzen/berater.py": "315cce8f84389355ee0bd1482e3e92bb24ff3b74da5d30a1e268a01d27fc6b8c"
+  },
+  "technical_exclusion": [
+    160390154
+  ],
+  "threshold": 1,
+  "train_data": "bf140d75f378f258a7b29c7a154c10e4af12974e0411bc232df6eb8b26730a44"
+}

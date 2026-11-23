@@ -1,0 +1,5 @@
+# Eine Trainingskarte konnte der Vergleichsgegner nicht spielen
+
+Vor der Anpassung oder Auswertung der neuen Wertfunktion brach Kaggle auf der ursprünglichen V16-Bahn von Karte 160390154, Seite 0, in seiner eigenen Sichtschätzung ab. Seine Liste der möglichen Nebeleffekte war leer. In einem frischen Prozess mit denselben Quellen und demselben Seed ließ sich die identische Ausnahme wiederholen. Auf beiden Versuchen stand die Gegenbewegung noch aus. Für diese Karte existiert weder eine Punktdifferenz noch eine Aussage über das Vorhandensein einer Eingriffsgelegenheit.
+
+Für das Trainingsmodell verwenden wir deshalb höchstens 159 der vorgesehenen 160 Karten. Eine Ersatzkarte gibt es nicht. Die 80 gesonderten Prüfkarten, Schwellen, Gewichte des ursprünglichen Beraters, Zielgröße und Auswertungsmethode bleiben wie vor Beginn bestimmt. Ein technischer Abbruch auf einer Prüfkarte würde die Freigabe der Ganzspielprüfung verhindern. [Quelle und Fingerabdrücke beider Fehlerprotokolle](trainingsausfall.json)
