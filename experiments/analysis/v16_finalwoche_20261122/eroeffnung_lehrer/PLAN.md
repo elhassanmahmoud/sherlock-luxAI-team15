@@ -1,0 +1,5 @@
+# Vorab festgelegter Vergleich der ersten Gebietssuche
+
+Acht neue Kurskarten, die ersten acht aufsteigenden Seeds ab 160394000 mit öffentlicher Reichweite exakt 1. Beide Startseiten. Original-V16 und originaler Kaggle-Dritter spielen separat je dasselbe erste Match gegen die unveränderte Solution. 32 Eröffnungen. Die Auswahl verwendet weder Ausgang noch Position eines Relikts. Abbruch nach Match 1. Keine Variantenauswahl oder Aussage über ganze Spiele.
+
+Je Version und Start werden der erste Zug mit direkt sichtbarem Relikt in der eigenen öffentlichen Beobachtung, erste Punktegutschrift an das eigene Team, Stand nach Zug 70, abschließende Punkte und Matchsieger aufgezeichnet. Ausbleibende Sicht oder Gutschrift bis zum Schluss werden als solche gezählt und beim paarweisen Unterschied als Zug 101 behandelt. Erstere Vergleiche betreffen den Gesamteffekt der jeweiligen Politik gegen den mit ihr interagierenden Gegner. Gegenstand ist die Frage, ob eine gezieltere frühe Erkundung vom Lehrer lernbar sein könnte. Kleine Stichprobe. Vorhandene Finalpakete bleiben unverändert.
