@@ -1,6 +1,6 @@
 # Suchrichtung bei geringer Sicht
 
-**Arbeitsstand am 23. November, 10:38 Uhr.** Flottenblick hat den ersten vollständigen Vergleich für eine unabhängige Wiederholung bestanden. Die Abgabe ist V16. Die spätere Suche ab Zug 55 gewinnt 119/120 ganze Spiele gegen Solution wie V16 und 61/120 direkt. Ihr Sichtvorteil auf zuvor ausgewählten schwierigen Eröffnungen ließ sich über alle Karten nicht sicher bestätigen.
+**Arbeitsstand am 23. November, 11:20 Uhr.** Die unabhängige Prüfung der frühen Flottensuche ist vollständig. Auf 120 neuen Sicht-1-Karten kam das erste Relikt gegen Solution im Mittel 0,76 Züge früher (95-%-Kartenintervall −1,08 bis +2,71). In ganzen Spielen gewann sie 231/240 gegen Solution, Original-V16 232/240, und direkt 111/240. V16 bleibt die Abgabe. Ein späterer gezielter Schritt auf ein fragliches Punktefeld gewann elf sofortige Gutschriften, bei 88/96 ganzen Spielen wie V16 und 48/96 direkt. Für diesen anderen Kandidaten folgt eine unabhängige Prüfung. [720 vollständige Partien der Flottensuche](flottenblick/bestaetigung/ERGEBNIS.md) · [Wirkung der Feldprobe](feldprobe/duell.json)
 
 ## Welche Suchrichtung hilft?
 
@@ -15,7 +15,7 @@ Jede Zeile basiert auf vollständigen Drei-Match-Partien, 40 neuen Karten mit Si
 | Nach dem ersten eigenen Punkt suchen | −0,04 | 0,00 | 78/80 | 79/80 | 38/80 |
 | Künftige Sicht der übrigen Flotte | +1,76 | 0,00 | 77/80 | 76/80 | 40/80 |
 
-Beim Flottenblick kann der gemessene Sichtvorteil auf diesen 40 Karten auch durch die Kartenwahl entstanden sein (95-%-Intervall −1,06 bis +5,13 Züge). Der zusätzliche ganze Sieg stammt von einer Karte, Startseite 1. Die eigens gebaute Versuchs-ZIP reproduziert die Befehle im Kursrunner auf zwei Python-Versionen. Die 120 zusätzlichen Sicht-1-Karten der Bestätigung werden vor Abschluss nicht zur Modellwahl oder Zwischenwertung verwendet. [Erste drei Modelle](vergleich/ERGEBNIS.md) · [Aufbruch](standsuche/duelle/ERGEBNIS.md) · [Erster Punkt](punktsicht/ERGEBNIS.md) · [Flottenblick](flottenblick/ganzspiel/ERGEBNIS.md) · [Kursrunner](flottenkurs/ERGEBNIS.md)
+Beim Flottenblick kann der gemessene Sichtvorteil auf diesen 40 Karten auch durch die Kartenwahl entstanden sein (95-%-Intervall −1,06 bis +5,13 Züge). Der zusätzliche ganze Sieg stammt von einer Karte, Startseite 1. Die eigens gebaute Versuchs-ZIP reproduziert die Befehle im Kursrunner auf zwei Python-Versionen. Die anschließende Bestätigung auf 120 zusätzlichen Sicht-1-Karten verfehlte die vorher festgelegten Bedingungen. Der ungefilterte Folgetest entfiel. [Erste drei Modelle](vergleich/ERGEBNIS.md) · [Aufbruch](standsuche/duelle/ERGEBNIS.md) · [Erster Punkt](punktsicht/ERGEBNIS.md) · [Flottenblick](flottenblick/ganzspiel/ERGEBNIS.md) · [Kursrunner](flottenkurs/ERGEBNIS.md)
 
 ## Was aus den Spielzügen folgt
 
