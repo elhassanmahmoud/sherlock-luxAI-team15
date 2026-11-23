@@ -1,0 +1,155 @@
+{
+  "n": 900,
+  "external": {
+    "total": {
+      "sides": 400,
+      "maps": 200,
+      "baseline_wins": 393,
+      "candidate_wins": 396,
+      "added": 3,
+      "lost": 0,
+      "baseline_matches": 1154,
+      "candidate_matches": 1163,
+      "score_diff": 1869,
+      "altered_sides": 16,
+      "altered_maps": 9,
+      "changed_actions": 63,
+      "earlier": 12,
+      "later": 1
+    },
+    "by_side": {
+      "player_0": {
+        "sides": 200,
+        "maps": 200,
+        "baseline_wins": 198,
+        "candidate_wins": 200,
+        "added": 2,
+        "lost": 0,
+        "baseline_matches": 582,
+        "candidate_matches": 585,
+        "score_diff": 1045,
+        "altered_sides": 7,
+        "altered_maps": 7,
+        "changed_actions": 20,
+        "earlier": 5,
+        "later": 0
+      },
+      "player_1": {
+        "sides": 200,
+        "maps": 200,
+        "baseline_wins": 195,
+        "candidate_wins": 196,
+        "added": 1,
+        "lost": 0,
+        "baseline_matches": 572,
+        "candidate_matches": 578,
+        "score_diff": 824,
+        "altered_sides": 9,
+        "altered_maps": 9,
+        "changed_actions": 43,
+        "earlier": 7,
+        "later": 1
+      }
+    },
+    "mean": 0.0075,
+    "ci95": [
+      0.0,
+      0.02
+    ],
+    "changed_outcomes": [
+      {
+        "seed": 160344002,
+        "side": "player_0",
+        "baseline": 0,
+        "candidate": 1,
+        "delta": 1,
+        "old_matches": 1,
+        "matches": 2,
+        "score_diff": 200,
+        "changes": 5,
+        "first": 51,
+        "old_sight": null,
+        "sight": 56,
+        "old_fields_3": 4,
+        "fields_3": 6
+      },
+      {
+        "seed": 160344002,
+        "side": "player_1",
+        "baseline": 0,
+        "candidate": 1,
+        "delta": 1,
+        "old_matches": 1,
+        "matches": 3,
+        "score_diff": 278,
+        "changes": 2,
+        "first": 67,
+        "old_sight": null,
+        "sight": 73,
+        "old_fields_3": 4,
+        "fields_3": 8
+      },
+      {
+        "seed": 160344183,
+        "side": "player_0",
+        "baseline": 0,
+        "candidate": 1,
+        "delta": 1,
+        "old_matches": 1,
+        "matches": 3,
+        "score_diff": 550,
+        "changes": 5,
+        "first": 56,
+        "old_sight": null,
+        "sight": 67,
+        "old_fields_3": 2,
+        "fields_3": 6
+      }
+    ]
+  },
+  "direct": {
+    "total": {
+      "games": 100,
+      "wins": 50,
+      "matchwins": 150,
+      "changed_sides": 1,
+      "changed_wins": 0,
+      "changed_maps": 1,
+      "quiet_wins": 50
+    },
+    "by_side": {
+      "player_0": {
+        "games": 50,
+        "wins": 25,
+        "matchwins": 72,
+        "changed_sides": 1,
+        "changed_wins": 0,
+        "changed_maps": 1,
+        "quiet_wins": 25
+      },
+      "player_1": {
+        "games": 50,
+        "wins": 25,
+        "matchwins": 78,
+        "changed_sides": 0,
+        "changed_wins": 0,
+        "changed_maps": 0,
+        "quiet_wins": 25
+      }
+    },
+    "both_quiet_maps": 49,
+    "both_active_maps": 0,
+    "single_active_reference": [
+      {
+        "seed": 160344002,
+        "side": "player_0",
+        "baseline_matchwins": 0,
+        "matchwins": 0,
+        "baseline_game_win": false,
+        "game_win": 0
+      }
+    ],
+    "quiet_inconsistency": []
+  },
+  "gate": false
+}

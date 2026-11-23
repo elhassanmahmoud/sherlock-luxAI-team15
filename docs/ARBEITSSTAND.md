@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Reliktsignal und gelernte Bewegung in Match 2
+
+Der Kundschafter holt auf 200 unabhängigen Karten 396/400 Siege gegen Solution, V16 393/400. Drei zusätzliche Sitze verteilen sich auf zwei Karten. Das gepaarte Intervall schließt null ein. Im direkten Duell 50/100. Die vorab bedingte Kaggle-Stufe entfiel. [900 vollständige Spiele](../experiments/analysis/v16_finalwoche_20261122/signalstudie/ERGEBNIS.md)
+
+Ein anderer Versuch prüfte genau eine vom Reward-Modell empfohlene Bewegung in der Mitte des zweiten Matches. Auf 27 gezielt gewählten alten Niederlagen drehte sie sieben ganze Spiele, bei 27 Gewinnkontrollen blieb jeder Spielsieg erhalten. Der geplante Saldo nach 15 Zügen war im Mittel negativ. Die alte Prüfung ist damit abgeschlossen. Der separate Versuch auf 120 neuen, ungefilterten Karten prüft einmalig die für das Turnier entscheidende Quote ganzer Spiele für den eingefrorenen Kandidaten. [Verläufe vom gleichen Ausgangszustand](../experiments/analysis/v16_finalwoche_20261122/mitte2/ERGEBNIS.md) · [Neue Spielprüfung](../experiments/analysis/v16_finalwoche_20261122/mitte2_spielquote/PLAN.md)
+
 ## 23.11.2026 – Wo die zweite Matchentscheidung gegen Solution fehlt
 
 Alle 35 V16-Niederlagen der beiden 800er-Vergleiche endeten 1:2, 27 nach einer Führung von 1:0. Zum zweiten Matchsieg fehlten im Median 23 Punkte. Auf 20 Sitzen war Match 2 die knappere der beiden Niederlagen. Die letzte Zehn-Zug-Phase brachte in 24 Fällen bereits eine Aufholbewegung. [Rekonstruierte Matchausgänge, Punkte und Zeitverläufe](../experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md)

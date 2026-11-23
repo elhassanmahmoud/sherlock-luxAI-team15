@@ -20,6 +20,8 @@ Original-V16 gewann 94 von 96 Spielen gegen Solution, je 47 von 48 auf beiden Se
 
 [96 kompakte Einzelprotokolle, Teil A](beobachtung/worker_0.jsonl) · [Teil B](beobachtung/worker_1.jsonl) · [Auswertung mit Sitzen und Karten](beobachtung/ergebnis.json) · [Rechenumgebung](umgebung.json) · [Überlappungsprüfung beider Arbeitskopien](seedpruefung.json)
 
+Der Startstand der Suche ist im Bericht zur Kartenüberlappung festgehalten. Nach Veröffentlichung dieser Studie können spätere Teamdokumente auf die reservierten Seeds verweisen. Das ist bei einer Wiederholung der Suche zu berücksichtigen.
+
 Aus dem Projektordner mit aktivierter Kurs-Python-Umgebung:
 
 ```sh
