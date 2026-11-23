@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – 960 Spiele für sicheres Punktewissen nachgerechnet
+
+Der Kandidat gewann auf 160 neuen ungefilterten Karten 315 von 320 gegen Solution, V16 314. Direkt gewann er 162 von 320 gegen V16. Der vorgegebene statistische Nachweis gelang auf keinem der beiden Wege. Der frühere Vorsprung um einen externen Sieg trat auch hier auf einer anderen Karte auf. Gegen Solution änderten sieben Sitze ihre Befehle, ein bisheriger Verlust wurde gewonnen. Originalcode, Gewichte und beide Abgabepakete sind weiterhin V16. Die Suche mit gemeinsamem Reliktort- und Flottenmodell sowie die getrennten Versuche zu späteren Feldentscheidungen laufen weiter. [Auswertung, Unsicherheiten und Karte](../experiments/analysis/relictsuche_20261123/punktwissen/ERGEBNIS.md)
+
 ## 23.11.2026 – Zwei frühe Niederlagen auf ihren tatsächlichen weiteren Verlauf geprüft
 
 Die gelernte Entscheidung über einen oder drei abweichende Suchschritte gewann auf getrennten Karten 45/48 gegen Solution gegenüber 46/48 für V16 und 24/48 direkt gegen V16. Beide ursprünglichen externen Niederlagen blieben bei allen drei real ausgespielten Eröffnungen Niederlagen, jeweils nach einem gewonnenen ersten Match. Gegen dieselben Gegner und bei identischen 101 V16-Auftaktbefehlen gewann eine R3-Übernahme beide ganzen Spiele. Auf einem dieser zwei Verlustsitze reichte zusätzliches öffentliches Feldwissen, um Match 3 von 412:427 auf 461:256 zu drehen. Die allgemeinen Stärketests bleiben unabhängig von diesen ausgewählten Fällen. [Fallprüfung](../experiments/analysis/relictsuche_20261123/entscheidende_matches/ERGEBNIS.md) · [Gestoppter Suchlängenwähler](../experiments/analysis/relictsuche_20261123/spielwert/ERGEBNIS.md) · [Vergleich der Suchmethoden](../experiments/analysis/relictsuche_20261123/suchvergleich/suchvergleich.png)

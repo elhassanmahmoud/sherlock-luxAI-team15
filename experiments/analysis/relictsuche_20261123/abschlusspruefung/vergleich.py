@@ -1,5 +1,6 @@
 """One untouched release comparison. Bind the selected player before opening the cards."""
 import argparse
+import ast
 from datetime import datetime
 import gzip
 import json
@@ -28,6 +29,7 @@ FILES={
     "fehlmarkierung": ("duelle.json", ("fehlmarkierung","punktgrenzen","punktspeicher")),
     "folgewahl": ("duell.json", ("folgewahl","r3_folge")),
     "r3_folge": ("pilotpruefung/ergebnis.json", ("r3_folge",)),
+    "rueckweg": ("sicht1/ergebnis.json", ("feldprobe/rueckweg","feldprobe")),
     "halteprobe": ("leistung.json", ("halteprobe","feldprobe")),
     "entscheidungsspiel": ("duell.json", ("entscheidungsspiel","folgewahl","r3_folge")),
     "suche_und_wissen": ("duelle.json", ("suche_und_wissen","zielschaetzer","punktgrenzen","punktwissen","punktspeicher")),
@@ -37,6 +39,9 @@ FILES={
 def make(label,side):
     if label=="v16":return r3_package_agent(side,PACKAGE)
     if label=="solution92":return make_opponent(label,side)
+    if label=="rueckweg":
+        from experiments.analysis.relictsuche_20261123.feldprobe.rueckweg.kandidat import create
+        return create(side)
     if label=="punktgrenzen":
         from experiments.analysis.relictsuche_20261123.punktgrenzen.politik import AreaKnowledge
         return AreaKnowledge(r3_package_agent(side,PACKAGE))
@@ -57,11 +62,30 @@ def make(label,side):
     return import_module(f"experiments.analysis.relictsuche_20261123.{label}.{name}").create(side)
 
 
-def nomination(label):
+def local_imports(files):
+    root=STUDY.parents[2]
+    pending=[p for p in files if p.suffix==".py"]
+    while pending:
+        src=pending.pop()
+        for node in ast.walk(ast.parse(src.read_bytes())):
+            if not isinstance(node,ast.ImportFrom) or not node.module:
+                continue
+            parts=node.module.split(".")
+            dep=(root.joinpath(*parts) if len(parts)>1 else src.parent/parts[0]).with_suffix(".py")
+            if dep.is_file() and dep not in files:
+                files.add(dep)
+                pending.append(dep)
+    return files
+
+
+def nomination(label, sealed=None):
     gate,groups=FILES[label]
-    check=STUDY/label/gate
+    check=STUDY/groups[0]/gate
     result=json.loads(check.read_text())
     assert result.get("passed",result.get("qualified",False))
+    root=STUDY.parents[2]
+    if sealed is not None:
+        return dict(player=label,sources={name:sha(root/name) for name in sealed},base=common_source())
     files={HERE/"PLAN.md",Path(__file__),check}
     for group in groups:
         folder=STUDY/group
@@ -77,7 +101,7 @@ def nomination(label):
         extra=STUDY/label/"gegenpruefung_leistung.json"
         assert extra.exists() and json.loads(extra.read_text())["archive_sha"]==result["archive_sha"]
         files.add(extra)
-    return dict(player=label,sources={str(f.relative_to(STUDY.parents[2])):sha(f) for f in sorted(files)},base=common_source())
+    return dict(player=label,sources={str(f.relative_to(STUDY.parents[2])):sha(f) for f in sorted(local_imports(files))},base=common_source())
 
 
 class Referee(Monitor):
@@ -111,6 +135,9 @@ def run(env,key,token):
     require_no_agent_errors(getattr(actor,"base",actor),rival)
     assert rec.turn==r["steps"]==303 and r["game_win"]==int(sum(m["win"] for m in rec.matches)>=2)
     if arm in ("punktgrenzen","fehlmarkierung"):assert actor.events==rec.evidence
+    for model in ("teacher","r3"):
+        backup=getattr(actor,model,None)
+        if backup is not None:require_no_agent_errors(backup,rival)
     cmds=np.stack(rec.commands)
     assert hashlib.sha256(cmds.astype("<i4").tobytes()).hexdigest()==rec.digest.hexdigest()
     return dict(key=list(key),source=token,sensor=rec.sensor,matches=rec.matches,win=r["game_win"],sight=rec.first_sight,
@@ -153,7 +180,7 @@ def main():
     if args.stage=="nominate":
         write_once(note,nomination(label));return
     record=json.loads(note.read_text())
-    assert record==nomination(label)
+    assert record==nomination(label,record["sources"])
     token=stamp(record)
     keys=[(s,t,a,o) for s in range(164300000,164300160) for t in (0,1) for a,o in (("v16","solution92"),(label,"solution92"),(label,"v16"))]
     def dest(k):return args.folder/"alle"/("_".join(map(str,k))+".json")
