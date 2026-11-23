@@ -1,0 +1,14 @@
+# Vorab festgelegter Leistungsvergleich zur späten Gebietssuche
+
+Auf 48 frischen Karten aus `karten.json`, Bereich ab 162030000, werden beide Startseiten bei Sensorreichweite eins gespielt. Jede der 96 Situationen läuft einmal mit Original-V16 gegen Solution, einmal mit Kandidat gegen Solution und einmal mit Kandidat direkt gegen Original-V16. Der normale Spielvertrag umfasst 303 Befehlsrunden und drei abgeschlossene Matches. Die vollständig getrennten Karten für Lernen, Standortprüfung und Technik sind im Lernplan festgelegt. Zwischenstände der 288 Leistungsspiele bleiben bis zur Vollständigkeit geschlossen.
+
+Der erste geometrische Alarm auf der jeweiligen **Referenzbahn** im zweiten oder dritten Match ist unser Vergleichszeitpunkt, wenn mindestens eine tatsächlich öffentlich beobachtete Reliktposition vorliegt und die Matchrunde zwischen 10 und 80 liegt. Die bekannte Fläche umfasst sämtliche 5×5-Gebiete um öffentlich beobachtete Paare und deren Spiegel. Zu diesem Zeitpunkt werden die tatsächlichen aktiven, bisher ungesehenen Paar-IDs einmalig zur **Auswertung** bestimmt. Für beide Spieler beträgt die Messzeit die früheste anschließende öffentliche Sicht einer dieser Paar-IDs im gleichen Match. Ohne Sicht gilt 101. Ohne Referenzalarm oder ohne ein auswertbares verborgenes Paar ist der Zeitgewinn null. Bei einem aktiven Paar, dessen Position mit einer bekannten Position zusammenfällt, bleibt die öffentliche Paar-ID maßgeblich. Vor dem ersten Eingriff müssen Original- und Kandidatenbahn gegen Solution einschließlich Match 1 übereinstimmen.
+
+Für diesen ersten Vergleich müssen gemeinsam folgende Bedingungen erfüllt sein.
+
+- Der Kandidat gewinnt gegen Solution mindestens gleich viele komplette Partien wie die separat gemessene Referenz auf denselben 96 Sitzen.
+- Der Kandidat gewinnt im direkten Vergleich mit V16 mindestens 48 von 96 kompletten Partien.
+- Im Paarvergleich gegen Solution wird das beim Referenzalarm fehlende Gebiet im Mittel mindestens **0,5 Züge je der 96 Situationen** früher sichtbar. Es gibt mehr Sitze mit früherer als mit späterer Sichtung.
+- Auf mindestens vier unterschiedlichen Solution-Karten wird tatsächlich ein Befehl geändert. Jede Änderung bleibt an dieselbe einmalig gebundene Schiff-ID pro Gesamtspiel gebunden. Der Spieler bleibt in Match 1 und bei fehlendem geometrischem Alarm auf V16-Kurs. Ein unabhängiger Spielprüfer kontrolliert jeden geänderten Befehl, Rolle, Aktionserinnerung, zeitliches Fenster und öffentliche Bewegungsmaske.
+
+Wir berichten zusätzlich beide Sitze, Alarme mit eigenen bzw. gegnerischen Punkten, Ziel-Sichtungen auf veränderten Sitzen, späte Matchsiege und Punktdifferenzen, neu bzw. verloren gewonnene Partien, 95-%-Intervalle mit Karten als Wiederholungseinheit und alle Rohpartien. Der Leistungsversuch entscheidet nur über einen getrennten Bestätigungsversuch. Er erteilt keine Freigabe für die Abgabe.

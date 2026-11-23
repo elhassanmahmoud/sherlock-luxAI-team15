@@ -1,0 +1,205 @@
+{
+  "equivariant_frames": 13896,
+  "equivariant_routes": 4,
+  "tested": 48,
+  "all": {
+    "alarms": 4,
+    "routes": 4,
+    "planned": {
+      "sight": 1,
+      "exact": 0,
+      "field": 1
+    },
+    "baseline": {
+      "sight": 1,
+      "exact": 1,
+      "field": 0
+    },
+    "opp_scores": 2
+  },
+  "per_side": [
+    {
+      "alarms": 0,
+      "routes": 0,
+      "planned": {
+        "sight": 0,
+        "exact": 0,
+        "field": 0
+      },
+      "baseline": {
+        "sight": 0,
+        "exact": 0,
+        "field": 0
+      },
+      "opp_scores": 0
+    },
+    {
+      "alarms": 4,
+      "routes": 4,
+      "planned": {
+        "sight": 1,
+        "exact": 0,
+        "field": 1
+      },
+      "baseline": {
+        "sight": 1,
+        "exact": 1,
+        "field": 0
+      },
+      "opp_scores": 2
+    }
+  ],
+  "records": [
+    {
+      "seed": 162015052,
+      "team": 1,
+      "op": "solution92",
+      "t": 144,
+      "alert": [
+        6,
+        4
+      ],
+      "cap": [
+        5,
+        15
+      ],
+      "options": true,
+      "uid": 11,
+      "start": 144,
+      "steps": 1,
+      "forecast": {
+        "gain": 0.06362754405887608,
+        "sight": 0.067286916077137,
+        "field": 0.0025029383083467016
+      },
+      "foe_field_present": false,
+      "planned": {
+        "sight": false,
+        "exact": false,
+        "field": false,
+        "min_distance": 13
+      },
+      "original": {
+        "sight": false,
+        "exact": false,
+        "field": false,
+        "min_distance": 12
+      }
+    },
+    {
+      "seed": 162015095,
+      "team": 1,
+      "op": "solution92",
+      "t": 126,
+      "alert": [
+        1,
+        0
+      ],
+      "cap": [
+        0,
+        16
+      ],
+      "options": true,
+      "uid": 0,
+      "start": 126,
+      "steps": 3,
+      "forecast": {
+        "gain": 0.1723414840975626,
+        "sight": 0.3446790161132812,
+        "field": 0.5127211335278569
+      },
+      "foe_field_present": true,
+      "planned": {
+        "sight": false,
+        "exact": false,
+        "field": true,
+        "min_distance": 2
+      },
+      "original": {
+        "sight": true,
+        "exact": true,
+        "field": false,
+        "min_distance": 0
+      }
+    },
+    {
+      "seed": 162015136,
+      "team": 1,
+      "op": "v16",
+      "t": 164,
+      "alert": [
+        1,
+        0
+      ],
+      "cap": [
+        0,
+        16
+      ],
+      "options": true,
+      "uid": 12,
+      "start": 164,
+      "steps": 1,
+      "forecast": {
+        "gain": 0.625069042624854,
+        "sight": 0.6752931475639343,
+        "field": 0.0
+      },
+      "foe_field_present": true,
+      "planned": {
+        "sight": true,
+        "exact": false,
+        "field": false,
+        "min_distance": 1
+      },
+      "original": {
+        "sight": false,
+        "exact": false,
+        "field": false,
+        "min_distance": 2
+      }
+    },
+    {
+      "seed": 162015151,
+      "team": 1,
+      "op": "v16",
+      "t": 126,
+      "alert": [
+        2,
+        0
+      ],
+      "cap": [
+        1,
+        16
+      ],
+      "options": true,
+      "uid": 6,
+      "start": 126,
+      "steps": 5,
+      "forecast": {
+        "gain": 0.14680620266620528,
+        "sight": 0.161519193649292,
+        "field": 0.2365482623092382
+      },
+      "foe_field_present": false,
+      "planned": {
+        "sight": false,
+        "exact": false,
+        "field": false,
+        "min_distance": 11
+      },
+      "original": {
+        "sight": false,
+        "exact": false,
+        "field": false,
+        "min_distance": 6
+      }
+    }
+  ],
+  "sha": {
+    "mechanik.py": "fa6d653b1b17f46e1db61a866e8d12d52516294b7fb0ad50de3d77c637712697",
+    "kandidat.py": "a445b6e636093cdfafc255910ba511353edf7e4060bc9a41202d68215512b46b",
+    "ort.py": "d01fa783154f01d1e5ef1c4d15fe72a1e22b7b139cff50f91a60540bb10b2b65",
+    "modell.json": "a88ab1d412d14dfc47a93bc154f21a028361272465e100ec61b1a53e4892d692",
+    "lernquellen.json.gz": "111beb5fb65587630fb7ca9e1ccebdc1b5860f14bbfd76c50273b8a5ba03130c"
+  }
+}
