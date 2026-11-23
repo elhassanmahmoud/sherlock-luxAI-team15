@@ -73,3 +73,15 @@ Die 40 Karten des früheren Vergleichs dreier Richtungsregeln bilden eine eigene
 Das bekannte 48er-Panel enthält genau 288 vollständige Partien. V16 gewann 93/96 gegen Solution, der gemeinsame Sucher 95/96 und direkt gegen V16 51/96. Gepaarte Fundzeiten aller Sitze einschließlich der technischen 101 ergeben 68 Züge Vorsprung, also 0,7083 pro Sitz. Die erste eigene Gutschrift rückte insgesamt um 143 Züge vor. Die Identität der ursprünglichen Serie, die Sitzzuordnung an beiden Kartenenden und alle fünf Summen wurden gegen das veröffentlichte Ergebnis geprüft. [Pilotbilanz](../ortundflotte/duelle.json)
 
 Die Daten pro Reihe enthalten die vollständigen Schwellenwerte von Zug 0 bis 100 sowie den SHA-256-Abdruck des gelesenen Spielarchivs. [Historische Gegenrechnung](historisch.json) · [Berechnung](auswerten.py)
+
+## Führte ein früher Blick auch zum Spielgewinn?
+
+Die vier Serien des vollen Kundschafters bis einschließlich der 96-Karten-Wiederholung liefern gegen Solution zusammen 428 paarweise verglichene Sitze auf 214 verschiedenen Karten mit Sichtweite eins. Jede Karte wurde nur einmal in diese Beschreibung aufgenommen. Das Ergebnis der separaten Übernahmeprüfungen bleibt jeweils auf deren vorab festgelegten Karten.
+
+| Erste Sicht des Teams | Sitze | Früher verlorenes Spiel gewonnen | Gleicher Gewinner | Früheren Sieg abgegeben |
+|---|---:|---:|---:|---:|
+| Früher als V16 | 103 | 3 | 100 | 0 |
+| Gleicher Zug | 240 | 2 | 238 | 0 |
+| Später als V16 | 85 | 4 | 78 | 3 |
+
+Von neun zusätzlichen Siegen traten sechs mit gleicher oder späterer Sicht ein. Alle drei abgegebenen Siege gehörten zu den 85 Sitzen mit späterer Sicht. Damit sind die erste Sicht und der Spielgewinn auch unter derselben Suchpolitik unterscheidbare Lernziele. Aus der nachträglichen Gruppierung lässt sich vor dem Zug noch keine Entscheidungsregel gewinnen. [Gepaartes Ergebnis für erste Sicht und erste Gutschrift](zeit_und_siege.json)
