@@ -33,7 +33,19 @@ Unter Kurs-Python 3.10.15 und 3.13.13 wurde der unveränderte Klassenlader aus `
 
 Die jeweils installierte V16-Gewichtsdatei wurde vor und nach dem Aufruf geprüft. Die beiden Kurs-Einstellungen umfassten auf Spieler 0 Auswertungsmodus und auf Spieler 1 die Standardinitialisierung mit anschließendem kursüblichem Speichern. Der getrennte Paketcheck prüfte `train=True`, `update` und Speichern. Die Beobachtungswiedergabe bewertet technische Gleichheit auf den gewählten Fällen. Die Aussage zur Spielstärke stammt weiterhin aus den eigenständigen Spielserien. [Kurs 3.10](kurs_310.json) · [Kurs 3.13](kurs_313.json) · [Nativer Lader](native.json)
 
-## Wiederholung auf dem Studienrechner
+## Beide Forschungsarchive in einer eigenen Arbeitskopie erzeugen
+
+Mit aktivierter Python-Projektumgebung vom Stamm der Arbeitskopie aus ausführen:
+
+```sh
+python experiments/analysis/relictsuche_20261123/ortflottenkurs/paket.py
+```
+
+Der Standardordner ist `experiments/imitation/relictsuche_20261123/ortflottenkurs/`. Darin stehen anschließend `Gruppe15.zip` für den Kurs und `agent.zip` für den nativen Lader. Mit `--out andere/ausgabe` lässt sich ein anderer relativer Zielordner wählen. Der Bau erzeugt die benötigte V16-Kursvorlage vorübergehend aus dem im Projekt enthaltenen V16-Freigabearchiv. Er prüft das Ergebnis gegen die archivierten SHA-256-Werte in der Tabelle oben und liest das historische Manifest nur zur Kontrolle. [Paketbau](paket.py) · [Referenzmanifest](pakete.json)
+
+Am 23. November wurden beide Aufrufe in einer temporären Projektkopie geprüft. Zu Beginn fehlten dort sowohl `dist/` als auch die Forschungsarchive. Beide Aufrufe erzeugten beide ZIPs bytegleich zu den historischen Originaldateien und bestanden die Kurs-Ladetests unter `agents/` und in der Projektwurzel. Der SHA-256-Wert des Referenzmanifests war vor und nach beiden Aufrufen `dd421b11017e0335615c8ef19538b5cfca0a6b2af9c1ed8e5bc4df83b8ba19b6`.
+
+## Wiederholung der Befehlsvergleiche auf dem ursprünglichen Studienrechner
 
 Verwendet werden die beiden bereits eingerichteten lokalen Interpreter und die bei `aufnehmen.py` angegebenen externen Archivpfade. Die beiden neuen ZIPs und die vier Beobachtungsdateien liegen unter `experiments/imitation/relictsuche_20261123/ortflottenkurs` im Desktop-Arbeitsverzeichnis. Vom Stamm der Arbeitskopie aus lassen sich Quellen, Verpackung und Befehle wie folgt erneut prüfen.
 
@@ -45,7 +57,7 @@ py310=$desktop/experiments/imitation/finalwoche_20261122/kurs310/env/bin/python
 export PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
 "$py313" "$study/aufnehmen.py" 0
 "$py313" "$study/aufnehmen.py" 1
-"$py313" "$study/paket.py"
+"$py313" "$study/paket.py" --out "$desktop/experiments/imitation/relictsuche_20261123/ortflottenkurs"
 "$py310" -I "$study/paritaet.py" course "$study/kurs_310.json"
 "$py313" -I "$study/paritaet.py" course "$study/kurs_313.json"
 "$py313" -I "$study/paritaet.py" native "$study/native.json"

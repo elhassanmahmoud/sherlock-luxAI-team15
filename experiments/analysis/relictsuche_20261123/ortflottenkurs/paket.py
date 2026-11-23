@@ -6,20 +6,20 @@ import io
 import json
 from pathlib import Path
 import sys
+from tempfile import TemporaryDirectory
 from zipfile import ZIP_DEFLATED,ZipFile,ZipInfo
 
 HERE=Path(__file__).resolve().parent
 D=HERE.parent
 ROOT=HERE.parents[3]
 sys.path.insert(0,str(ROOT))
-from experiments.analysis.relictsuche_20261123.vergleich.spielen import common_source,sha,stamp,require
+from experiments.analysis.relictsuche_20261123.vergleich.spielen import sha,stamp,require
 from experiments.analysis.relictsuche_20261123.flottenkurs.paket import WRAPPER as FLEET_WRAPPER, OFFICIAL,WEIGHT
-from scripts.build_submission import battle_paths,check_battle
+from scripts.build_submission import battle_paths,build_battle_release,check_battle
 
-COURSE=ROOT/"dist/Gruppe15.zip"
 NATIVE=ROOT/"experiments/releases/20261117_sherlock_v16/agent.zip"
 NATIVE_SHA="0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
-DEFAULT=Path("/Users/moayedshawesh/Desktop/KI/sherlock-luxAI-team15/experiments/imitation/relictsuche_20261123/ortflottenkurs")
+DEFAULT=ROOT/"experiments/imitation/relictsuche_20261123/ortflottenkurs"
 
 
 def provenance():
@@ -28,10 +28,13 @@ def provenance():
     val=json.loads((joint/"valid.json").read_bytes())
     official=[joint/n for n in ("PLAN.md","richtung.py","kandidat.py","spielen.py","train.json","valid.json")]
     official.extend(D/"flottenblick"/n for n in ("flotte.py","kandidat.py","vorhersage.py","flottengewichte.npz","modell.json"))
-    pilot_id=stamp(dict(common=common_source(),files={str(p.relative_to(D)):sha(p) for p in official}))
+    history=json.loads((D/"vergleich/discovery/herkunft.json").read_bytes())
+    course=history["common"]
+    require(all(sha(ROOT/file)==digest for file,digest in course["support"].items()),"Historical course sources changed")
+    pilot_id=stamp(dict(common=course,files={str(p.relative_to(D)):sha(p) for p in official}))
     require(pilot["passed"] and pilot["games"]==288 and pilot["source"]==pilot_id and val["selected"] in (1,2),"Fresh panel source or weights changed")
     prior=D/"zielschaetzer";other=[prior/"kandidat.py",prior/"ort.json",D/"routenlernen/routes.py"]
-    archived=json.dumps(json.loads((D/"vergleich/discovery/herkunft.json").read_bytes()),sort_keys=True)
+    archived=json.dumps(history,sort_keys=True)
     fleet=json.dumps(json.loads((D/"flottenblick/ganzspiel/serie.json").read_bytes()),sort_keys=True)
     require(all(sha(p) in archived for p in other[:2]) and sha(other[2]) in fleet,"Transitive model input differs from earlier frozen evaluation")
     return {"fresh_pilot_source":pilot_id,"fresh_result":sha(joint/"duelle.json"),"prior_index":val["selected"],
@@ -105,12 +108,22 @@ def build(folder):
     folder=folder.resolve()
     require(not any(folder.is_relative_to((ROOT/d).resolve()) for d in ("dist","agents","experiments/releases")),
             "Cannot write into official agent, release or dist paths")
+    with TemporaryDirectory() as temp:
+        course,_=build_battle_release(15,Path(temp)/"Gruppe15.zip")
+        build_archives(folder,course)
+
+
+def build_archives(folder,course):
+    reference=json.loads((HERE/"pakete.json").read_bytes())
     info=provenance()
+    require(info=={k:v for k,v in reference.items() if k!="archives"},"Historical research lineage differs")
     folder.mkdir(parents=True,exist_ok=True)
     results={}
-    for kind,base,name in (("Gruppe15",COURSE,"Gruppe15.zip"),("sherlock",NATIVE,"agent.zip")):
+    for kind,base,name in (("Gruppe15",course,"Gruppe15.zip"),("sherlock",NATIVE,"agent.zip")):
         obj=content(base,kind,runtime(info["prior_index"]))
         raw=encoded(obj)
+        expected=reference["archives"][name]
+        require(sha256(raw).hexdigest()==expected["sha256"],"New archive differs from historical research package")
         # Independent reconstruction from the unchanged sources; the intermediate member objects are rebuilt.
         require(raw==encoded(content(base,kind,runtime(provenance()["prior_index"]))),"Nondeterministic rebuild")
         path=folder/name
@@ -121,8 +134,7 @@ def build(folder):
         if kind=="Gruppe15":check_battle(path,battle_paths(15,True))
         results[name]=dict(path=str(path),sha256=sha(path),original_sha256=sha(base),bytes=len(raw),member_count=len(obj),
                            base_weight_sha256=WEIGHT,forecast_weight_sha256=sha256(obj[kind+"/flottengewichte.npz"]).hexdigest())
-    info["archives"]=results
-    (HERE/"pakete.json").write_text(json.dumps(info,indent=2)+"\n")
+        require(all(results[name][k]==v for k,v in expected.items() if k!="path"),"Historical archive details differ")
     print(json.dumps(results),flush=True)
 
 
