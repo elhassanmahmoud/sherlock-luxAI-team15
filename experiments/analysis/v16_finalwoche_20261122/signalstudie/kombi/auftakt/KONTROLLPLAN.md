@@ -1,0 +1,5 @@
+# Vorfestlegung der kleinen Gegenprobe
+
+Zuerst wird der gewonnene Gegensitz 160386070/P0 aufgenommen. Zusätzlich ziehen wir in der Reihenfolge der drei Verluste 062/P0, 062/P1 und 070/P1 je zwei Siege der Original-V16 gegen Solution aus dem abgeschlossenen 80-Karten-Panel. Je Verlust zählen ausschließlich die gleiche Startseite und exakt dieselbe öffentliche Sensorreichweite. Wir verwenden in aufsteigender numerischer Reihenfolge die beiden kleinsten zulässigen Seeds, lassen die beiden Verlustkarten aus und verwenden jede Kontrollkarte höchstens einmal. Die Auswahl verwendet weder Informationen aus einzelnen Matches noch Entdeckungs- oder Besetzungszeiten. Die Liste wird vor der ersten Spielwiederholung gespeichert.
+
+Primäre Beobachtung ist die Anzahl der gewählten Siegsitze mit null bestätigten Feldern beim Entscheiden in Zug 70. Ergänzend werden der öffentliche Rückstand vor Zug 70, die erste Feldbestätigung, die erste direkte Reliktsicht und der Sieger von Match 1 erfasst. Drei ausgesuchte Niederlagen und sieben ausgesuchte Siege ergeben keine Schätzung für die Häufigkeit im gesamten Panel.

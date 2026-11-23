@@ -24,7 +24,7 @@ Im Direktduell änderte die Kombination auf 17 von 80 Sitzen mindestens einen Be
 
 ## Wo die noch offenen Niederlagen liegen
 
-Die 3 Solution-Niederlagen der Kombination lagen auf 2 Karten (160386062, 160386070). In 3 dieser Sitze war Match 1 verloren, in 3 änderte keines der beiden Module einen Befehl. Mitte2 setzt voraus, dass Sherlock das erste Match gewonnen hat. Für die weitere Entwicklung bietet sich deshalb eine getrennte Untersuchung verlorener Auftaktmatches und ihrer Aufholchancen an.
+Die 3 Solution-Niederlagen der Kombination lagen auf 2 Karten (160386062, 160386070). In 3 dieser Sitze war Match 1 verloren, in 3 änderte keines der beiden Module einen Befehl. Mitte2 setzt voraus, dass Sherlock das erste Match gewonnen hat. Die [Zugdiagnose aller drei verlorenen Auftaktmatches](auftakt/ERGEBNIS.md) findet im ersten Match bis Zug 70 auf keinem dieser Sitze auch nur ein bekanntes Punktefeld.
 
 Gegen Kaggle änderte sich der Spielsieger auf 2 Startseiten. Beide Startseiten liegen auf derselben Karte (160386074). Das gepaarte Intervall für den Kaggle-Unterschied beträgt 0,00 bis 3,75 Prozentpunkte. In den direkten Spielen mit einem unveränderten Gegensitz kippten 2 ganze Ergebnisse. Auf 160386003/P0 ging die Matchbilanz von 2:1 auf 1:2 zurück. Auf 160386020/P0 ging die Matchbilanz von 2:1 auf 1:2 zurück.
 
