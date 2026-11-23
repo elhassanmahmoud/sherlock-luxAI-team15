@@ -1,4 +1,8 @@
-# Feldprobe erzielt auf dem geänderten Zug elf zusätzliche eigene Punkte
+# Der unmittelbare Punktegewinn bestätigt sich, ein Gesamtsieg geht verloren
+
+Die unabhängige Bestätigung auf 120 weiteren Sicht-1-Karten und 720 vollständigen Partien zeigte 28 zusätzliche eigene Punkte auf dem geänderten Zug. Das entspricht 0,117 Punkten pro gepaartem Sitz [0,071; 0,167]. Direkt gegen Original-V16 gewann die Feldprobe 123/240 Spiele (51,25 Prozent [47,50; 55,00]). Gegen Original-Solution gewann sie 231/240, das ursprüngliche V16 auf denselben Sitzen 232/240. Karte 162800176 P0 wechselte von Sieg zu Niederlage. Damit verfehlt die Feldprobe eine der fünf Bestätigungsbedingungen. Die ungefilterte allgemeine Prüfung entfällt. [Vollständige Bestätigung](bestaetigung/sicht1/ERGEBNIS.md)
+
+## Vorangegangene Auswahl auf 48 Karten
 
 Auf 48 neuen Sicht-1-Karten gewann die gelernte Feldprobe gegen Original-Solution 88 von 96 ganzen Spielen. Original-V16 gewann dieselben 88 Sitze. Im direkten Vergleich gewann die Feldprobe 48 von 96 Partien, das 95-Prozent-Kartenintervall beträgt 43,75 bis 56,25 Prozent. Damit erreicht sie die vorab festgelegten Auswahlgrenzen und qualifiziert sich für die unabhängige Bestätigung.
 
