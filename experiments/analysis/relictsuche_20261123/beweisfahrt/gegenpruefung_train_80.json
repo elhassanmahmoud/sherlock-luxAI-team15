@@ -1,0 +1,213 @@
+{
+  "maps": 80,
+  "cases": 6,
+  "arrivals": 3,
+  "earlier": 3,
+  "more": 4,
+  "fewer": 0,
+  "extra_target": 14,
+  "extra_own": 9,
+  "extra_foe": 5,
+  "per_screened_map": {
+    "eligible": {
+      "mean": 0.075,
+      "ci95": [
+        0.025,
+        0.1375
+      ]
+    },
+    "extra_target": {
+      "mean": 0.175,
+      "ci95": [
+        0.0125,
+        0.475
+      ]
+    },
+    "extra_own": {
+      "mean": 0.1125,
+      "ci95": [
+        -0.15,
+        0.45
+      ]
+    },
+    "arrived": {
+      "mean": 0.0375,
+      "ci95": [
+        0.0,
+        0.0875
+      ]
+    }
+  },
+  "archive_sha": "d5fa0c576f829fd096f16fc9f1596813ee4e75a4c489242390b28cecb1e21579",
+  "examples": [
+    {
+      "seed": 162500021,
+      "team": 0,
+      "opponent": "v16",
+      "step": 186,
+      "uid": 9,
+      "target": 222,
+      "route": [
+        270,
+        246,
+        222
+      ],
+      "base_target_gains": [],
+      "new_target_gains": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "new_ship_arrivals": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "first_new_credit_ahead": 10,
+      "extra_target": 10,
+      "extra_own": 10,
+      "extra_foe": 0,
+      "changes": 2
+    },
+    {
+      "seed": 162500090,
+      "team": 1,
+      "opponent": "v16",
+      "step": 161,
+      "uid": 5,
+      "target": 454,
+      "route": [
+        502,
+        478,
+        454
+      ],
+      "base_target_gains": [
+        12
+      ],
+      "new_target_gains": [
+        3,
+        10
+      ],
+      "new_ship_arrivals": [
+        3
+      ],
+      "first_new_credit_ahead": 9,
+      "extra_target": 1,
+      "extra_own": 1,
+      "extra_foe": 0,
+      "changes": 1
+    },
+    {
+      "seed": 162500207,
+      "team": 1,
+      "opponent": "v16",
+      "step": 123,
+      "uid": 2,
+      "target": 378,
+      "route": [
+        331,
+        355,
+        379,
+        378
+      ],
+      "base_target_gains": [],
+      "new_target_gains": [
+        4
+      ],
+      "new_ship_arrivals": [
+        4
+      ],
+      "first_new_credit_ahead": 9,
+      "extra_target": 1,
+      "extra_own": 0,
+      "extra_foe": 0,
+      "changes": 4
+    },
+    {
+      "seed": 162500212,
+      "team": 0,
+      "opponent": "solution92",
+      "step": 221,
+      "uid": 4,
+      "target": 4,
+      "route": [
+        3,
+        4
+      ],
+      "base_target_gains": [
+        9
+      ],
+      "new_target_gains": [
+        10,
+        11,
+        12
+      ],
+      "new_ship_arrivals": [],
+      "first_new_credit_ahead": -4,
+      "extra_target": 2,
+      "extra_own": -2,
+      "extra_foe": 0,
+      "changes": 1
+    },
+    {
+      "seed": 162500241,
+      "team": 0,
+      "opponent": "solution92",
+      "step": 121,
+      "uid": 0,
+      "target": 318,
+      "route": [
+        342,
+        318
+      ],
+      "base_target_gains": [],
+      "new_target_gains": [],
+      "new_ship_arrivals": [],
+      "first_new_credit_ahead": 0,
+      "extra_target": 0,
+      "extra_own": -5,
+      "extra_foe": 6,
+      "changes": 1
+    },
+    {
+      "seed": 162500282,
+      "team": 1,
+      "opponent": "solution92",
+      "step": 157,
+      "uid": 2,
+      "target": 513,
+      "route": [
+        512,
+        513
+      ],
+      "base_target_gains": [
+        2,
+        5
+      ],
+      "new_target_gains": [
+        2,
+        5
+      ],
+      "new_ship_arrivals": [],
+      "first_new_credit_ahead": -11,
+      "extra_target": 0,
+      "extra_own": 5,
+      "extra_foe": -1,
+      "changes": 1
+    }
+  ]
+}

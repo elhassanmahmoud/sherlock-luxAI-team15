@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Gewinnzug reproduziert und Kurspaket geprüft
+
+Den zusätzlich gewonnenen Solution-Sitz haben wir viermal mit verschiedenen öffentlichen Hinweisen ausgespielt. Im zweiten Match kannte Sherlock in Zug 10 das Feld (22,21), drei Züge später blieb Schiff 3 darauf stehen. Original-V16 verlor 524:564, die Variante allein mit diesem Hinweis gewann 598:580. Für Mahmoud gibt es eine Grafik mit dem echten Punkteverlauf und die öffentliche Herleitung. Das separate Forschungspaket reproduziert auf Python 3.10 und 3.13 jeweils 19.392 Einheitenbefehle. Die ungefilterte Stärkeprüfung läuft weiter. Weitere laufende Experimente nutzen selbst gelernte Suchwege, kurzzeitiges Halten nach einer Messbewegung und zusätzliche öffentliche Grenzen zur Bestimmung von Punktefeldern. [Fallbeispiel](../experiments/analysis/relictsuche_20261123/beispiel/ERGEBNIS.md) · [Kursprüfung](../experiments/analysis/relictsuche_20261123/wissenskurs/ERGEBNIS.md) · [Tagesübersicht](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
+
 ## 23.11.2026 – Ein Zusatzsieg mit sicherem Feldwissen
 
 Auf 64 neuen Sicht-1-Karten gewann der Kandidat gegen Solution 123/128, V16 122/128. Im direkten Duell gewann er 66/128. Auf 21 Karten hat ein anhand der eigenen Punktesumme bewiesenes Feld die ursprünglichen Netzentscheidungen verändert. Seit dem ersten Beweis verbesserte sich die Punktedifferenz direkt auf den betroffenen Feldern gegen Solution um durchschnittlich 5,50 pro Sitz. Die getrennte Prüfung auf 160 Karten mit allen Sichtweiten läuft. V16 bleibt die Abgabe. Die Analyse von 776 bisherigen V16-Kontrollspielen erklärt die Erweiterung der Eröffnungsstudie: 14 von 29 ganzen Niederlagen entstanden nach einem bereits gewonnenen ersten Match. [Vergleich und Feldwirkung](../experiments/analysis/relictsuche_20261123/punktwissen/ERGEBNIS.md) · [Zeitpunkt der Niederlagen](../experiments/analysis/relictsuche_20261123/niederlagen/ERGEBNIS.md)

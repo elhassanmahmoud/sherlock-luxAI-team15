@@ -1,0 +1,142 @@
+{
+  "passed": false,
+  "gates": {
+    "five_maps": true,
+    "three_early": false,
+    "more_better": true,
+    "own_points": false
+  },
+  "selected": {
+    "n": 5,
+    "arrived": 2,
+    "earlier": 2,
+    "better": 2,
+    "worse": 1,
+    "extra": 3,
+    "own": -28,
+    "foe": 1
+  },
+  "rejected": {
+    "n": 0,
+    "arrived": 0,
+    "earlier": 0,
+    "better": 0,
+    "worse": 0,
+    "extra": 0,
+    "own": 0,
+    "foe": 0
+  },
+  "intervals_all_80": {
+    "chosen": {
+      "mean": 0.0625,
+      "ci95": [
+        0.0125,
+        0.125
+      ]
+    },
+    "arrived": {
+      "mean": 0.025,
+      "ci95": [
+        0.0,
+        0.0625
+      ]
+    },
+    "earlier": {
+      "mean": 0.025,
+      "ci95": [
+        0.0,
+        0.0625
+      ]
+    },
+    "extra": {
+      "mean": 0.0375,
+      "ci95": [
+        -0.2375,
+        0.35
+      ]
+    },
+    "own": {
+      "mean": -0.35,
+      "ci95": [
+        -1.3625,
+        0.3
+      ]
+    },
+    "foe": {
+      "mean": 0.0125,
+      "ci95": [
+        -0.025,
+        0.05
+      ]
+    }
+  },
+  "selected_cases": [
+    {
+      "seed": 162515039,
+      "team": 0,
+      "opponent": "v16",
+      "eligible": true,
+      "pred": 1.421366735271105,
+      "chosen": true,
+      "arrived": false,
+      "earlier": false,
+      "extra": 0,
+      "own": 0,
+      "foe": 0
+    },
+    {
+      "seed": 162515084,
+      "team": 1,
+      "opponent": "v16",
+      "eligible": true,
+      "pred": 2.5161788670849115,
+      "chosen": true,
+      "arrived": true,
+      "earlier": true,
+      "extra": 9,
+      "own": 9,
+      "foe": 1
+    },
+    {
+      "seed": 162515118,
+      "team": 0,
+      "opponent": "v16",
+      "eligible": true,
+      "pred": 2.4799799028755647,
+      "chosen": true,
+      "arrived": false,
+      "earlier": false,
+      "extra": 1,
+      "own": -3,
+      "foe": -1
+    },
+    {
+      "seed": 162515180,
+      "team": 0,
+      "opponent": "solution92",
+      "eligible": true,
+      "pred": 2.516213943470688,
+      "chosen": true,
+      "arrived": true,
+      "earlier": true,
+      "extra": -7,
+      "own": -36,
+      "foe": 0
+    },
+    {
+      "seed": 162515221,
+      "team": 1,
+      "opponent": "solution92",
+      "eligible": true,
+      "pred": 1.6999959182957636,
+      "chosen": true,
+      "arrived": false,
+      "earlier": false,
+      "extra": 0,
+      "own": 2,
+      "foe": 1
+    }
+  ],
+  "model_sha": "eea9e71e9375977d5b81704e20686350b298172ccb945991071a9cd618c88476",
+  "archive_sha": "c90f459e55136032436a259cc4eeb9b71efa40c684d74981b8b9a24bf2afa3f1"
+}
