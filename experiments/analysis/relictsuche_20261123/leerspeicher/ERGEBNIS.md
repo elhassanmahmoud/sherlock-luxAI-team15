@@ -1,0 +1,7 @@
+# Weniger falsche Leerurteile, aber auch weniger nutzbare Punkte
+
+Auf 160 echten V16-Verläufen wurde jeder Zug mit zwei verschiedenen Gedächtniseinstellungen erneut ausgewertet. Das vorsichtige Rückholen von Leerwissen senkte die Zahl falsch leerer Felder von **5.288 auf 448 Feld-Zug-Paare**. Dafür sank die Zahl korrekt leer bekannter Felder von 6,15 Millionen auf 3,11 Millionen. Die Zahlen zählen ein über mehrere Züge bekanntes physisches Feld in jedem Zug und sind keine unabhängigen Ereignisse.
+
+Im zweiten Match entfernte der vorsichtige Speicher sämtliche 3.535 falschen Leermarkierungen und sämtliche 30 falschen positiven Feld-Zug-Paare. Im dritten stieg die Zahl falscher positiver Feld-Zug-Paare von 317 auf 606. Insgesamt waren zuvor 452.104 tatsächlich punktende Feld-Zug-Paare positiv bekannt, mit der Änderung 449.196. Zu einem freien Schiff in Reichweite gab es 58 zusätzliche gegenüber 750 verlorenen positiven Feld-Zug-Paaren. Auf fünf Karten trat wenigstens ein neu erreichbares Feld auf, gefordert waren zwölf.
+
+Die konservative Freigabe könnte bekannte Fehler korrigieren, nimmt dem Original aber zu viel bewährtes Wissen über leere Felder. Beide Versionen erhielten dieselben ursprünglichen Beobachtungen und Aktionen, die erste Runde blieb exakt gleich. Zwei der vier vorab festgelegten Kriterien wurden verfehlt, daher folgten keine neuen Leistungsduelle mit dieser Einstellung. [Prüfkriterien](PLAN.md) · [Ergebnisse nach Match](train.json) · [Alle 160 Karten](train_karten.jsonl.gz)
