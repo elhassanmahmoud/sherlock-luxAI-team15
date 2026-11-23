@@ -1,0 +1,75 @@
+{
+  "maps": 32,
+  "openings": 128,
+  "opening_turns": 12928,
+  "opened_seats": 64,
+  "first_to_101_if_missing": true,
+  "interventions": 806,
+  "affected_seats": 64,
+  "affected_maps": 32,
+  "candidate_wins": 61,
+  "original_wins": 60,
+  "metrics": {
+    "first_sight": {
+      "original": 47.265625,
+      "learned": 44.953125,
+      "difference": -2.3125,
+      "ci95": [
+        -7.703515625,
+        2.1878906249999943
+      ],
+      "less": 19,
+      "equal": 15,
+      "greater": 30
+    },
+    "first_credit": {
+      "original": 42.75,
+      "learned": 43.515625,
+      "difference": 0.765625,
+      "ci95": [
+        -1.8597656249999996,
+        3.4375
+      ],
+      "less": 17,
+      "equal": 17,
+      "greater": 30
+    },
+    "score_margin70": {
+      "original": -2.265625,
+      "learned": -3.875,
+      "difference": -1.609375,
+      "ci95": [
+        -14.62578125,
+        12.750781249999989
+      ],
+      "less": 36,
+      "equal": 2,
+      "greater": 26
+    },
+    "final_margin": {
+      "original": 135.875,
+      "learned": 135.28125,
+      "difference": -0.59375,
+      "ci95": [
+        -29.65625,
+        32.09453124999999
+      ],
+      "less": 37,
+      "equal": 0,
+      "greater": 27
+    },
+    "opening_win": {
+      "original": 0.9375,
+      "learned": 0.953125,
+      "difference": 0.015625,
+      "ci95": [
+        -0.046875,
+        0.078125
+      ],
+      "less": 2,
+      "equal": 59,
+      "greater": 3
+    }
+  },
+  "raw_sha256": "7297b3916dcb567669111fde3cb1b16fe03488c0f3c116ebbf3712c96f3edecc"
+}
