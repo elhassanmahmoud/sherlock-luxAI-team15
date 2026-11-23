@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Gelernter Spätzug erreicht unabhängigen Ganzspielvergleich
+
+Auf 40 neuen Karten spielte der am tatsächlichen Punktertrag trainierte Berater 80/80 gegen Solution (V16 ebenfalls 80), 6/80 gegen den Kaggle-Dritten (V16 zwei) und 45/80 direkt gegen V16. Alle Auswahlkriterien sind erfüllt. Auf weiteren 120 Karten prüft eine getrennte Messung mit 1.040 Spielen die gemeinsame externe Siegquote. Das alternative Vermeiden doppelter Zielorte erzielte 80/80 gegen Solution (V16 79) und 4/80 gegen Kaggle (V16 zwei), blieb im Direktvergleich aber bei 38/80. [Gelernter Berater](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/ERGEBNIS_AUSWAHL.md) · [Doppelte Zielwahl](../experiments/analysis/v16_finalwoche_20261122/doppelziel/ERGEBNIS.md)
+
 ## 23.11.2026 – Was in den vier verbliebenen Scout-Niederlagen passiert
 
 Ein fehlendes Reliktgebiet, unentdeckte Punktefelder in bekanntem Gebiet und ein Rückstand auf bereits bewiesenen Feldern kamen auf verschiedenen Karten vor. Alle vier Niederlagen und ihre gewonnenen Gegensitze sind mit den ursprünglichen Match- und Punkteständen reproduziert. [Aufteilung nach tatsächlichem Kartenwissen](../experiments/analysis/v16_finalwoche_20261122/restspiele/ERGEBNIS.md)
