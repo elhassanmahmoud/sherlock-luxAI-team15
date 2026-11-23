@@ -4,6 +4,8 @@
 
 Wir trainieren die Suchrichtung bei Sichtweite eins an getrennten Kartensätzen. Der Vergleich erfasst, wann das Team sein erstes Relikt sieht, wann es erstmals punktet und wer das ganze Spiel gegen Solution sowie direkt gegen V16 gewinnt. Karten, Auswahlverfahren und Bedingungen für einen Abgabewechsel stehen vor der Messung im [Versuchsplan](../experiments/analysis/relictsuche_20261123/PLAN.md).
 
+Der aus echten Gegenfortsetzungen gelernte Korridor erreichte auf 80 separaten Sicht-1-Karten wie V16 68/80 erste Matches. Reliktfund im Mittel 0,61 Züge früher, 95-%-Kartenintervall −0,81 bis +2,11. Ein zweites Richtungsmodell gewann auf 32 anderen Karten mit beiden Sitzen 61/64 erste Matches gegenüber V16 mit 60/64. Der gemeinsame Vergleich spielt alle drei Modelle gegen Solution und direkt gegen V16 über volle drei Matches. [Gegenfortsetzungen](../experiments/analysis/relictsuche_20261123/routenwert/ERGEBNIS.md) · [Richtungsmodell](../experiments/analysis/relictsuche_20261123/routenlernen/EROEFFNUNG.md)
+
 ## 23.11.2026 – Sieben Vergleiche vor dem letzten Battle abgeschlossen
 
 Alle **7.640 vollständigen Partien auf 960 frischen Karten** sind geprüft. V16 bleibt die Abgabe. Der signalgesteuerte Kundschafter erreichte 396/400 gegen Solution (V16 393/400), auf nur zwei Karten kamen neue Siege hinzu. Das Direktduell endete 50:50. Auch die getrennten großen Tests der frühen Erkundung, des Spätzugberaters und der einzelnen Match-2-Korrektur begründen keinen Wechsel. Das an 15-Zug-Punkten nachtrainierte Modell trennte auf 80 neuen Karten dauerhaft gute Bewegungen nicht ausreichend zuverlässig.
