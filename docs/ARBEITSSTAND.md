@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Der Kundschafter hat den ersten Stärketest bestanden
+
+Der kombinierte Reliktort- und Flottenschätzer gewann auf 48 neuen Sicht-1-Karten 95 von 96 Spielen gegen Solution gegenüber 93 von 96 für V16. Direkt gewann er 51 von 96 gegen V16. Ein bewegtes freies Schiff rettete zwei Spiele, in denen V16 das zweite Match verloren hatte. Der getrennte Stärkenachweis dieses Spielers läuft auf 160 vorher reservierten ungefilterten Karten. Die Kursfassung wird separat geprüft. [Ergebnisse und zwei Spielsituationen](../experiments/analysis/relictsuche_20261123/ortundflotte/ERGEBNIS.md) · [Festgeschriebene Identität des Kandidaten](../experiments/analysis/relictsuche_20261123/abschlusspruefung/nominierung.json)
+
 ## 23.11.2026 – 960 Spiele für sicheres Punktewissen nachgerechnet
 
 Der Kandidat gewann auf 160 neuen ungefilterten Karten 315 von 320 gegen Solution, V16 314. Direkt gewann er 162 von 320 gegen V16. Der vorgegebene statistische Nachweis gelang auf keinem der beiden Wege. Der frühere Vorsprung um einen externen Sieg trat auch hier auf einer anderen Karte auf. Gegen Solution änderten sieben Sitze ihre Befehle, ein bisheriger Verlust wurde gewonnen. Originalcode, Gewichte und beide Abgabepakete sind weiterhin V16. Die Suche mit gemeinsamem Reliktort- und Flottenmodell sowie die getrennten Versuche zu späteren Feldentscheidungen laufen weiter. [Auswertung, Unsicherheiten und Karte](../experiments/analysis/relictsuche_20261123/punktwissen/ERGEBNIS.md)

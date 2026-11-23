@@ -1,6 +1,8 @@
 # Suchrichtung bei geringer Sicht
 
-**Arbeitsstand am 23. November, 14:05 Uhr.** Im vollständigen, unabhängig nachgerechneten Vergleich auf 160 neuen Karten gewann der Kandidat mit zusätzlichem Punktewissen 315/320 gegen Solution, Original-V16 314/320. Direkt waren es 162/320 gegen V16. Beide Stichprobenvorteile sind mit Gleichstand vereinbar. Die Abgabe bleibt V16. Ein früher Wechsel der gesamten Mannschaft zu R3 rettete zwar einzelne Solution-Spiele, senkte aber auf den 80 ursprünglichen Direktsitzen einer eigenen Archivreihe die Zahl der Siege von 37 auf 12. [960 unabhängige Spiele](punktwissen/ERGEBNIS.md) · [Ganzer Mannschaftswechsel](folgewahl/ERGEBNIS.md)
+**Arbeitsstand am 23. November, 14:26 Uhr.** Der trainierte Kundschafter mit Reliktort- und Flottenmodell gewann auf 48 neuen Sicht-1-Karten 95 von 96 gegen Solution, Original-V16 93. Im direkten Duell gewann er 51 von 96. Die erste Reliktsicht kam im Mittel 0,71 Züge früher, mit einem 95-%-Kartenintervall von −1,82 bis +4,04. Der Kandidat ist für genau einen unabhängigen Test auf 160 weiteren Karten nominiert. V16 ist während der Prüfung die Abgabe. [Vollständige Ergebnisse der Suchrichtung](ortundflotte/ERGEBNIS.md) · [Vergleich aller Suchmodelle](suchvergleich/suchvergleich.png)
+
+**Zusätzliches Punktewissen.** Im vollständigen, unabhängig nachgerechneten Vergleich auf 160 neuen Karten gewann der Kandidat mit zusätzlichem Punktewissen 315/320 gegen Solution, Original-V16 314/320. Direkt waren es 162/320 gegen V16. Beide Stichprobenvorteile sind mit Gleichstand vereinbar. Die Abgabe bleibt V16. Ein früher Wechsel der gesamten Mannschaft zu R3 rettete zwar einzelne Solution-Spiele, senkte aber auf den 80 ursprünglichen Direktsitzen einer eigenen Archivreihe die Zahl der Siege von 37 auf 12. [960 unabhängige Spiele](punktwissen/ERGEBNIS.md) · [Ganzer Mannschaftswechsel](folgewahl/ERGEBNIS.md)
 
 **Frühere Auswahl und Feldprobe.** Die gezielte Feldprobe hat sich auf 120 neuen Sicht-1-Karten bei der unmittelbaren Gutschrift bestätigt. Sie brachte 28 zusätzliche eigene Punkte im ersten Zug, gewann aber 231/240 gegen Solution gegenüber 232/240 für V16. Direkt lag sie bei 123/240. Die ursprüngliche Ein-Schritt-Probe erhält keine allgemeine Prüfung. Die laufende Variante mit einem gelernten zusätzlichen Wartezug ist ein anderer Spieler. [720 ganze Feldprobe-Partien und Nachrechnung](feldprobe/bestaetigung/sicht1/ergebnis.json)
 
@@ -12,7 +14,7 @@ Der erste Kandidat mit zusätzlichen sicheren Punkteinformationen hatte in seine
 
 ![Zeitgewinn beim ersten Relikt, direkte Siegquote und Siege gegen Solution](suchvergleich/suchvergleich.png)
 
-Jede Zeile basiert auf vollständigen Drei-Match-Partien, 40 neuen Karten mit Sichtweite eins und beiden Startseiten. Alle Varianten dürfen in der Eröffnung nur die Bewegung eines freien Schiffes ändern. Die ersten drei Zeilen teilen sich dieselben Karten und dieselbe V16-Kontrolle. Jede weitere Zeile hat eigene Karten. Ein positiver Zeitgewinn heißt, dass Sherlock das Relikt bzw. den ersten Punkt früher erreichte.
+Die Grafik zeigt vollständige Drei-Match-Partien auf beiden Startseiten. Je nach Versuchsreihe sind es 40, 48, 60, 64 oder 120 neue Karten mit Sichtweite eins. Die folgende Tabelle enthält die ersten Auswahlreihen auf jeweils 40 Karten. Alle Varianten dürfen in der Eröffnung nur die Bewegung eines freien Schiffes ändern. Die ersten drei Zeilen teilen sich dieselben Karten und dieselbe V16-Kontrolle. Jede weitere Zeile hat eigene Karten. Ein positiver Zeitgewinn heißt, dass Sherlock das Relikt bzw. den ersten Punkt früher erreichte.
 
 | Ansatz | Erstes Relikt, Züge früher | Erster Punkt, Züge früher | Siege gegen Solution | V16 auf denselben Sitzen | Siege direkt gegen V16 |
 |---|---:|---:|---:|---:|---:|
