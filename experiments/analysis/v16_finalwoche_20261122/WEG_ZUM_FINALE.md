@@ -1,5 +1,17 @@
 # Sherlock bis zum Finale am 27. November
 
+## Übergabe am Montagmorgen, 23. November
+
+Alle sieben Hauptvergleiche sind beendet. Der [Morgenbericht](../../../docs/MORGENBERICHT_20261123.md) enthält 7.640 vollständige Partien auf 960 verschiedenen Karten. Der signalgesteuerte Kundschafter brachte drei zusätzliche Solution-Siege auf zwei Karten. Sowohl dieser Einzelversuch als auch die Kombination, das Nachtraining und die getrennten Bewegungstests verfehlten mindestens eine vorab festgelegte Bedingung. Das Team kann mit V16 für das Battle proben.
+
+**Als Nächstes lohnt sich die erste Reliktsuche auf Karten mit Sichtweite eins.** In allen drei verbliebenen Verlusten des Kombinationstests fehlte bis Zug 70 ein bestätigtes Punktefeld. Auf sechs weiteren, unabhängig von der Entdeckungszeit ausgewählten gewonnenen Karten waren dort bereits vier bis acht Felder bekannt. Der gewonnene Gegensitz einer der Verlustkarten zeigt, dass ein später Feldbeweis einen Sieg zulässt. Seine Einheiten erreichten rechtzeitig ein ertragreiches Gebiet. [Zehn echte Verläufe](signalstudie/kombi/auftakt/ERGEBNIS.md) · [Warum die erste Feldbestätigung allein zu wenig sagt](sichtlernen/spielwechsel/ERGEBNIS.md)
+
+1. Auf einem neuen, vorab festgelegten Satz von Karten mit Sichtweite eins V16 und Lehrer auf beiden Sitzen beobachten. Jeweils Zeitpunkt der ersten Reliktsicht, erste Gutschrift sowie eigene und gegnerische Punkte in den 20 folgenden Zügen erfassen. Die drei bekannten Verlustsitze dienen der Diagnose.
+2. An den tatsächlichen Unterschieden prüfen, ob *eine freie* Einheit einen früheren Zugang zu diesem Gebiet ermöglicht und ob der Vorsprung über die nächsten Wertungen erhalten bleibt. Ein Schiff von einem bereits punktenden Feld zu nehmen hat messbare Kosten. Wo zeitiger Kontakt diesen Aufwand nicht deckt, soll V16 seine Bewegung ausführen.
+3. Erst bei einem reproduzierbaren Gewinn in diesen Situationen gezielt neue Lehrerbeispiele sammeln. Vor einem Austausch den Kandidaten auf weiteren ungefilterten Karten gegen Solution, den Kaggle-Dritten und direkt gegen V16 spielen lassen. Für die Abgabe zählen gewonnene ganze Spiele und die Unsicherheit über Karten.
+
+Die folgenden Abschnitte halten den ursprünglichen Auftrag vom 22. November und die Herkunft der abgeschlossenen Vergleiche fest.
+
 **Stand am Sonntag, 22. November.** Die Referenz für alle weiteren Vergleiche ist der [freigegebene V16](../../releases/20261117_sherlock_v16/README.md). Mahmoud hat R3 mit zwei durch Nachahmung und sechs DAgger-Runden trainierten CNNs abgelöst. Die Modelle bewerten jede Einheit aus Sherlocks eigener Beobachtung. Als Lehrer und schwerer Prüfgegner diente der öffentliche Kaggle-Drittplatzierte. Gegen andere Kursteams gibt es vor dem Turnier keine gemessene Siegquote.
 
 | Bisher belegter Vergleich | V16 | R3 |
