@@ -73,7 +73,7 @@ def verify(archive, tape, output):
 
             def act(self, step, obs):
                 action = orig_act(self, step=step, obs=obs)
-                guard(self.base, seat)
+                guard(getattr(self, "base", self), seat)
                 if step != observed["steps"] or not np.array_equal(action, commands[step]):
                     raise ValueError(f"Course diverged from its recorded commands at {seat} turn {step}")
                 observed["steps"] += 1
@@ -83,7 +83,7 @@ def verify(archive, tape, output):
 
             def update(self, *args, **kwargs):
                 value = orig_update(self, *args, **kwargs)
-                guard(self.base, seat)
+                guard(getattr(self, "base", self), seat)
                 observed["updates"] += 1
                 return value
 
@@ -101,11 +101,21 @@ def verify(archive, tape, output):
 
             rng = SimpleNamespace(integers=recorded_seed)
             fixed_draw = SimpleNamespace(random=SimpleNamespace(default_rng=lambda: rng))
-            with patch.object(runner, "np", fixed_draw), patch.object(cls, "__init__", init), \
-                 patch.object(cls, "act", act), patch.object(cls, "update", update), patch.object(cls, "save_agent", save):
+            # Observe only the top-level course interface. The released imitation
+            # agent also inherits the original Agent_x through an internal PPO class.
+            observed_class = type("ObservedCourseAgent", (cls,), {
+                "__init__": init, "act": act, "update": update, "save_agent": save,
+            })
+            original_resolver = runner.load_class_from_path
+
+            def resolve(path):
+                loaded = original_resolver(path)
+                return observed_class if loaded is cls else loaded
+
+            with patch.object(runner, "np", fixed_draw), patch.object(runner, "load_class_from_path", resolve):
                 runner.run_agents(*groups, games_to_play=1, train=bool(side))
             if (observed != {"steps": 303, "updates": 303*side, "saves": side}
-                    or len(player) != 1 or player[0].changed != meta["changes"]
+                    or len(player) != 1 or getattr(player[0], "changed", 0) != meta["changes"]
                     or sha256(weights.read_bytes()).hexdigest() != snapshot):
                 raise ValueError("Unexpected runner calls, intervention count or changed weights")
         finally:

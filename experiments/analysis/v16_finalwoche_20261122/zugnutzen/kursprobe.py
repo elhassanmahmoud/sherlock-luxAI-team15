@@ -32,6 +32,19 @@ def record(folder, study):
             net.load_state_dict({k:torch.from_numpy(z[k]) for k in z.files})
         def candidate(base):
             return Policy(base, net)
+    elif study == "official":
+        source = HERE.parent/"sichtlernen"
+
+        class Reference:
+            changed = 0
+
+            def __init__(self, base):
+                self.base = base
+
+            def __getattr__(self, key):
+                return getattr(self.base, key)
+
+        candidate = Reference
     else:
         source = HERE.parent/"sichtlernen"
         sys.path.insert(0, str(source))
@@ -45,9 +58,11 @@ def record(folder, study):
     archive=gzip.decompress((source/"auswahl_partien.jsonl.gz").read_bytes()).splitlines()
     chosen={}
     for row in sorted(map(json.loads,archive),key=lambda r:r["seed"]):
-        if row["arm"]=="adviser" and row["changes"]>0 and row["opponent"]!="v16":
+        correct = (row["arm"]=="original" and row["changes"]==0 if study=="official"
+                   else row["arm"]=="adviser" and row["changes"]>0)
+        if correct and row["opponent"]!="v16":
             chosen.setdefault((row["opponent"],row["side"]),row)
-    if len(chosen)!=4: raise ValueError("Need an actually intervened game from both seats and opponents")
+    if len(chosen)!=4: raise ValueError("Expected the selected policy on both seats and opponents")
 
     class Recorder:
         def __init__(self,policy):
@@ -137,7 +152,7 @@ def compare(folder,package,out):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     subs=p.add_subparsers(dest="mode",required=True)
-    a=subs.add_parser("record");a.add_argument("folder",type=Path);a.add_argument("--study",choices=("late","visibility"),default="late")
+    a=subs.add_parser("record");a.add_argument("folder",type=Path);a.add_argument("--study",choices=("late","visibility","official"),default="late")
     a=subs.add_parser("compare");a.add_argument("folder",type=Path);a.add_argument("package",type=Path);a.add_argument("out",type=Path)
     a=p.parse_args()
     if a.mode=="record":record(a.folder, a.study)
