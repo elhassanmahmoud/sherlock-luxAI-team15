@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Was der Kundschafter selbst sieht
+
+Auf 28 von 80 Starts fand der frühe Zielschätzer das erste Relikt schneller. Elfmal sah es allein der umgeleitete Kundschafter, auf den anderen 17 Starts fand es die übrige Flotte. Auf getrennten Kartensätzen gewann die nach drei Wartezügen gelernte Suchrichtung 78/80 gegen Solution wie V16 und 39/80 direkt. Die Suche nach der ersten eigenen Gutschrift erreichte 78/80 gegenüber 79/80 sowie 38/80 direkt. [Physische Sicht](../experiments/analysis/relictsuche_20261123/fundursache/ERGEBNIS.md) · [Wartende Schiffe](../experiments/analysis/relictsuche_20261123/standsuche/duelle/ERGEBNIS.md) · [Suche nach Gutschrift](../experiments/analysis/relictsuche_20261123/punktsicht/ERGEBNIS.md)
+
+Auf 40 weiteren Karten ergab die öffentliche Punkteanzeige in 16 späten Matches einen echten Hinweis auf ein fehlendes Reliktgebiet mit mindestens fünf Zügen Vorlauf. In sechs Fällen verlor das Team das Match. Die großzügige Gebietsschranke hatte in diesen Spielen keine Meldung ohne Punkte außerhalb der bekannten Gebiete. Wir prüfen den Nutzen einer einzelnen Suchbewegung separat auf V16. [Meldungen und Gegenrechnung](../experiments/analysis/relictsuche_20261123/spaetgebiet/ERGEBNIS.md)
+
 ## 23.11.2026 – Drei trainierte Suchwege im vollständigen Vergleich
 
 560 ganze Partien auf 40 Sicht-1-Karten sind abgeschlossen. Der Zielschätzer brachte den ersten Punkt gegen Solution im Mittel 4,30 Züge früher, gewann 72/80 gegenüber 75/80 für V16 und 28/80 direkt gegen V16. Die beiden anderen Ansätze gewannen gegen Solution 76/80 und 75/80, direkt 32/80 und 36/80. V16 bleibt die geprüfte Abgabe. [Vergleich mit Kartenintervallen](../experiments/analysis/relictsuche_20261123/vergleich/ERGEBNIS.md)
