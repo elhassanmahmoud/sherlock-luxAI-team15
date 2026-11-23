@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 23.11.2026 – Breite Bestätigung des ungewichteten Kontrollkopfs
+
+V16 und sein eingefrorener, an der letzten v9-Aktionsschicht nachtrainierter Kandidat spielten auf 200 neuen Karten beide Startseiten gegen Solution 92 und den Kaggle-Dritten. Auf 50 dieser Karten spielten sie zusätzlich direkt. Ergebnis aus 1.700 vollständigen Partien, jeweils Kandidat gegenüber V16: Solution 390 zu 394 von 400, Kaggle 16 zu 14 von 400, direkt 42 von 100. Kaggle-Punkteanteil +0,31 Prozentpunkte [−0,98 bis +1,68] bei verlangten mindestens +1,00 und positiver Untergrenze. Vier Bedingungen verfehlt. Das kleine Entwicklungssignal von 22/40 im direkten Vergleich wurde nicht bestätigt. [Vergleich mit gepaarten Unsicherheiten und zweiter Rechnung](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/ERGEBNIS.md)
+
 ## 23.11.2026 – Positive Punktebeweise bei unbekannter Reliktaktivierung
 
 Die monotone Aktivierung ermöglicht manchmal einen frühen sicheren Schluss aus zwei Belegungen und dem eigenen Punktezuwachs. Auf den öffentlichen Beobachtungen aus 46 archivierten Starts gab es vier frühere Paarbeweise auf vier Starts und drei verschiedenen Karten. Die Fallzahl lag unter der vorab festgelegten Schwelle. [Herleitung, Test und Interventionshäufigkeit](../experiments/analysis/v16_finalwoche_20261122/fruehbeweis/ERGEBNIS.md)

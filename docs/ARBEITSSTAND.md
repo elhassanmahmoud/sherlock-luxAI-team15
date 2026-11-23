@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Nachtrainierter Aktionskopf auf 200 neuen Karten geprüft
+
+Der im kleinen Vergleich aufgefallene Kontrollkopf gewinnt gegen Solution 390/400 Spiele, V16 394/400. Gegen Kaggle sind es 16/400 gegenüber 14/400, direkt 42/100. Der primäre Kaggle-Punkteanteil stieg um 0,31 Prozentpunkte (95-%-Kartenintervall −0,98 bis +1,68). Eine der fünf Bedingungen erfüllt. Der Versuch ist mit 1.700 unabhängig nachgerechneten Spielen abgeschlossen. Der aktuelle Agent für Abgabe und Präsentation bleibt V16. [Nachtraining, Messung und Rohpartien](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/ERGEBNIS.md)
+
 ## 23.11.2026 – Die Testversion läuft auch im Kursrunner
 
 Der gelernte Spätzug wurde separat verpackt. In Python 3.10 und 3.13 liefert die ZIP über vier echte Spielverläufe jeweils dieselben 19.392 Einzelbefehle wie das Forschungsmodell. Im unveränderten Kursrunner reproduzierten zwei ganze Spiele dieselben Befehle bei beiden Trainingseinstellungen. Parallel wird der unabhängige Stärkevergleich abgeschlossen. [Kursprüfung](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/KURSPRUEFUNG.md)

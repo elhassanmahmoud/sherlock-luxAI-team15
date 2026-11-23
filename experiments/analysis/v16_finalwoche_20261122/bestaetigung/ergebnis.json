@@ -1,0 +1,114 @@
+{
+  "candidate": "kontrolle",
+  "count": 1700,
+  "counts": {
+    "solution92": {
+      "referenz": {
+        "games": 400,
+        "wins": 394,
+        "matches": 1148,
+        "mean_point_share": 0.7263803616151902
+      },
+      "kandidat": {
+        "games": 400,
+        "wins": 390,
+        "matches": 1140,
+        "mean_point_share": 0.7295495932756901
+      }
+    },
+    "kaggle3": {
+      "referenz": {
+        "games": 400,
+        "wins": 14,
+        "matches": 104,
+        "mean_point_share": 0.32567687417247365
+      },
+      "kandidat": {
+        "games": 400,
+        "wins": 16,
+        "matches": 98,
+        "mean_point_share": 0.32880228653869026
+      }
+    },
+    "direct": {
+      "games": 100,
+      "wins": 42,
+      "matches": 138
+    }
+  },
+  "contrasts": {
+    "solution92": {
+      "win_rate": {
+        "mean": -0.01,
+        "ci95": [
+          -0.0275,
+          0.005
+        ]
+      },
+      "point_share": {
+        "mean": 0.003169231660500008,
+        "ci95": [
+          -0.0026380808877831245,
+          0.008616226180291234
+        ]
+      },
+      "matches_per_game": {
+        "mean": -0.02,
+        "ci95": [
+          -0.055,
+          0.0125
+        ]
+      },
+      "paired_seats": {
+        "both_won": 388,
+        "candidate_only": 2,
+        "reference_only": 6,
+        "both_lost": 4
+      }
+    },
+    "kaggle3": {
+      "win_rate": {
+        "mean": 0.005,
+        "ci95": [
+          -0.025,
+          0.035
+        ]
+      },
+      "point_share": {
+        "mean": 0.0031254123662165746,
+        "ci95": [
+          -0.009757529470172194,
+          0.016848640373035975
+        ]
+      },
+      "matches_per_game": {
+        "mean": -0.015,
+        "ci95": [
+          -0.1,
+          0.065
+        ]
+      },
+      "paired_seats": {
+        "both_won": 6,
+        "candidate_only": 10,
+        "reference_only": 8,
+        "both_lost": 376
+      }
+    },
+    "direct": {
+      "mean": 0.42,
+      "ci95": [
+        0.28,
+        0.56
+      ]
+    }
+  },
+  "gates": {
+    "direct_at_least_50": false,
+    "kaggle_wins_retained": true,
+    "kaggle_point_share_delta_at_least_1pp": false,
+    "kaggle_point_share_lower95_positive": false,
+    "solution_wins_retained": false
+  },
+  "passed": false
+}
