@@ -1,0 +1,123 @@
+{
+  "games": 1040,
+  "maps": 120,
+  "source": {
+    "BEWEGUNG_BESTAETIGEN.md": "4081c85e4d72c144121bb8e0fc52e5317cdfe451efa4ab855b1f24b86203fd65",
+    "auswahl_ergebnis.json": "c4524ff355b28f28d7f72dba8e87c89d9d4c2143577febd5d98eb543791a0749",
+    "replikation.json": "eee716d2fed33f79715e86bf472563745ad15277b09966b28242087e396412b0",
+    "PLAN.md": "62ab851d3ddba42b5808c233525591d368a62f18fa1bc5953c995d0ec5bd7500",
+    "berater.py": "315cce8f84389355ee0bd1482e3e92bb24ff3b74da5d30a1e268a01d27fc6b8c",
+    "spielen.py": "0c6d6647b6906c6fcfffd777f2d5a8550d0dc2f4a523df998c0731d0f16ef874",
+    "bestaetigen.py": "13fb14246611880d92f81b94ea2a08319a3741c47651d5bebd1a1cfb3d0017d4",
+    "agent.zip": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099",
+    "wertberater.npz": "67d6f11e7c87b20f068f0b800fc352362b962d2577903a2182658d50f56c06fb"
+  },
+  "evidence_sha256": "b6db134bf5e756ac5d2c6f22d346bca43daafe6e09a39586db55e2066513f0b6",
+  "external": {
+    "solution92": {
+      "arms": {
+        "original": {
+          "game_win": 237,
+          "our_wins": 696,
+          "our_points": 283417,
+          "opp_points": 131105,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 237,
+          "our_wins": 696,
+          "our_points": 283943,
+          "opp_points": 131198,
+          "changes": 330
+        }
+      },
+      "n_per_arm": 240,
+      "swings": [],
+      "delta_pp": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "kaggle3": {
+      "arms": {
+        "original": {
+          "game_win": 8,
+          "our_wins": 64,
+          "our_points": 128148,
+          "opp_points": 206514,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 4,
+          "our_wins": 58,
+          "our_points": 126934,
+          "opp_points": 207442,
+          "changes": 516
+        }
+      },
+      "n_per_arm": 240,
+      "swings": [
+        {
+          "seed": 160365025,
+          "team": 0,
+          "delta": -1
+        },
+        {
+          "seed": 160365025,
+          "team": 1,
+          "delta": -1
+        },
+        {
+          "seed": 160365029,
+          "team": 0,
+          "delta": -1
+        },
+        {
+          "seed": 160365029,
+          "team": 1,
+          "delta": -1
+        }
+      ],
+      "delta_pp": -1.6666666666666667,
+      "ci95": [
+        -4.166666666666666,
+        0.0
+      ]
+    }
+  },
+  "direct": {
+    "wins": 43,
+    "games": 80,
+    "ci95": [
+      45.0,
+      63.74999999999999
+    ]
+  },
+  "primary_delta_pp": -0.8333333333333334,
+  "primary_ci95": [
+    -2.083333333333333,
+    0.0
+  ],
+  "family_intervals": {
+    "1": [
+      -2.083333333333333,
+      0.0
+    ],
+    "2": [
+      -2.5,
+      0.0
+    ],
+    "3": [
+      -2.5,
+      0.0
+    ]
+  },
+  "gates": {
+    "primary": false,
+    "solution": true,
+    "kaggle": false,
+    "direct": true
+  },
+  "all_gates": false
+}
