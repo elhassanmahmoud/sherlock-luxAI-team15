@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Wo die zweite Matchentscheidung gegen Solution fehlt
+
+Alle 35 V16-Niederlagen der beiden 800er-Vergleiche endeten 1:2, 27 nach einer Führung von 1:0. Zum zweiten Matchsieg fehlten im Median 23 Punkte. Auf 20 Sitzen war Match 2 die knappere der beiden Niederlagen. Die letzte Zehn-Zug-Phase brachte in 24 Fällen bereits eine Aufholbewegung. [Rekonstruierte Matchausgänge, Punkte und Zeitverläufe](../experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md)
+
 ## 23.11.2026 – Gelernter Zugertrag in einer neuen Stichprobe
 
 Der Bewegungsberater lernte an 3.519 echten Alternativzügen auf 96 Trainingskarten. Auf 32 zurückgehaltenen Karten änderte er bei 902 vermessenen Alternativen 58 Befehle. Davon verbesserten 36 unmittelbar die Punktedifferenz, einer verschlechterte sie. Zwei Fälle fehlten zur vorab verlangten Mindestzahl von 60. Eine unabhängige Wiederholung prüft dasselbe eingefrorene Modell auf 64 weiteren, getrennten Karten. Nur ihr eigenes Ergebnis kann den Vergleich über ganze Spiele freigeben. [Erster Prüfsatz](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/ERGEBNIS_LERNEN.md) · [Kriterien der Wiederholung](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/REPLIKATION.md)

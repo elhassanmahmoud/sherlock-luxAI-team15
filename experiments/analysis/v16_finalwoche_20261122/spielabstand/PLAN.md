@@ -1,0 +1,9 @@
+# Wie viele Punkte fehlten V16 zum zweiten Matchsieg?
+
+Der gelernte Berater kann in einem einzelnen Zug zusätzlich punkten. Ob das gegen Solution oft genug ein Spiel drehen könnte, hängt vom tatsächlichen Endstand der verlorenen Matches ab. Jede der 35 vollständigen V16-Niederlagen aus den beiden früheren Bestätigungen wird deshalb chronologisch rekonstruiert. Die 1.565 gewonnenen Starts werden nicht ausgewählt. Diese Untersuchung erklärt die historischen Niederlagen und misst keine neue Siegquote.
+
+Die drei Matches je Start getrennt auswerten. Eigene und gegnerische Punkte nach jedem Zug aus den tatsächlichen belegten Punktefeldern zählen, inklusive letztem Spielzug. Summe und Gewinner mit beiden Original-CSV-Dateien abgleichen. Wo das ursprüngliche V16-Befehlsprotokoll bereits vorhanden ist, seine Prüfsumme und die öffentliche Beobachtung während der Wiederholung prüfen. Sonst die identische gesicherte V16 ausführen.
+
+Für jeden verlorenen Sitz die kleinste ganzzahlige zusätzliche Punktzahl je Match bestimmen, mit der V16 mindestens zwei Matches durch einen Vorsprung sicher gewinnt. Ein tatsächlich bereits gewonnenes Match braucht null. Ein verlorenes Match mit Gleichstand braucht einen zusätzlichen Punkt. Bei Rückstand von z. B. vier braucht es fünf für einen sicheren Sieg, vier für einen möglichen Sieg mit günstiger Gleichstandsauflösung. Die tatsächlich vergebenen Tie-Breaks bleiben beim Ausgangsstand erhalten. Beide Grenzen zeigen. Festgelegte Mehrpunkte je Match: 1, 3, 5, 10, 25, 50. Solche rechnerischen Gutschriften verändern keinen weiteren Zug und sind keine Vorhersage für einen Agenten.
+
+Für die engsten nötigen verlorenen Matches zusätzlich die Punktsalden bis Zug 25, 50, 75, 90 und 100 angeben. Das ordnet ein, ob schon vor den letzten zehn Zügen ein größerer Rückstand bestand. Die im Spiel verwendeten Entscheidungen und die Abgabe werden nicht verändert.
