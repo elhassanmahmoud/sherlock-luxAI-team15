@@ -1,0 +1,123 @@
+{
+  "start": 160369000,
+  "seeds": [
+    160369000,
+    160369001,
+    160369002,
+    160369005,
+    160369006,
+    160369008,
+    160369015,
+    160369021,
+    160369025,
+    160369027,
+    160369035,
+    160369036,
+    160369037,
+    160369038,
+    160369040,
+    160369042,
+    160369043,
+    160369046,
+    160369047,
+    160369049,
+    160369050,
+    160369052,
+    160369054,
+    160369055,
+    160369056,
+    160369057,
+    160369058,
+    160369060,
+    160369061,
+    160369064,
+    160369066,
+    160369067,
+    160369072,
+    160369076,
+    160369077,
+    160369079,
+    160369080,
+    160369083,
+    160369085,
+    160369087
+  ],
+  "maps": 40,
+  "actual_games": 400,
+  "model": "e72490c582937866d462fcb11661f2ba248ad8c839abb83ef359cfba51b9eb55",
+  "raw_sha256": "c1fbb03979885488a36561fc6c8594e6544ee144aabbd8016d8fd5d77a9fc27e",
+  "opponents": {
+    "solution92": {
+      "games_per_arm": 80,
+      "by_arm": {
+        "original": {
+          "game_win": 79,
+          "our_wins": 224,
+          "our_points": 94256,
+          "opp_points": 47430,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 80,
+          "our_wins": 233,
+          "our_points": 95745,
+          "opp_points": 47514,
+          "changes": 1456
+        }
+      },
+      "seats_changed": 80,
+      "new_wins": 1,
+      "lost_wins": 0,
+      "delta_pp": 1.25,
+      "paired_ci95_pp": [
+        0.0,
+        3.75
+      ]
+    },
+    "kaggle3": {
+      "games_per_arm": 80,
+      "by_arm": {
+        "original": {
+          "game_win": 4,
+          "our_wins": 35,
+          "our_points": 47916,
+          "opp_points": 69974,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 4,
+          "our_wins": 27,
+          "our_points": 45564,
+          "opp_points": 71722,
+          "changes": 1434
+        }
+      },
+      "seats_changed": 80,
+      "new_wins": 2,
+      "lost_wins": 2,
+      "delta_pp": 0.0,
+      "paired_ci95_pp": [
+        -7.5,
+        7.5
+      ]
+    },
+    "direct": {
+      "wins": 45,
+      "games": 80,
+      "active": 80,
+      "own_match_wins": 123,
+      "by_side": {
+        "player_0": 23,
+        "player_1": 22
+      }
+    }
+  },
+  "gates": {
+    "solution": true,
+    "kaggle": true,
+    "additional_wins": true,
+    "direct": true,
+    "additional_solution": true
+  },
+  "qualifies": true
+}
