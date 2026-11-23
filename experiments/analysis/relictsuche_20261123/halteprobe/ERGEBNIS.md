@@ -1,5 +1,7 @@
 # Ein Wartezug nach dem Betreten eines ungewissen Punktefelds
 
+**Gegen Solution gewann die Halteprobe 90 von 96 ganzen Partien, ebenso viele wie die ursprüngliche Feldprobe und eine mehr als V16. Im direkten Duell gegen Original-V16 gewannen Feldprobe und Halteprobe jeweils 43 von 96.** Der einzelne Zusatzhalt änderte dort keinen ganzen Sieg. Die Halteprobe verfehlt die vorher festgelegte Mindestzahl von 48 Direktsiegen. Auf den sechs frischen Solution-Sitzen mit echtem Zusatzhalt entstanden saldiert drei zusätzliche eigene Sofortpunkte. Die Studie ist als eigener Kandidat abgeschlossen. [Vollständiger Vergleich](leistung.json) · [Unabhängige Gegenrechnung](gegenpruefung_leistung.json) · [Drei gezielte Archivkontrollen](direktursache.json)
+
 ## Was der Spieler erfährt
 
 Die bestehende Feldprobe ändert einmal den Bewegungsbefehl eines freien V16-Schiffs. Eine Runde später kann Sherlock öffentlich sehen, ob dieses Schiff am Ziel angekommen ist, welche Felder die eigene Flotte jetzt belegt und wie viele Punkte das Team gerade erhalten hat. Bei mehreren gleichzeitig besetzten unbekannten Feldern kann dieselbe Punktzahl verschiedene Ursachen haben.
@@ -52,4 +54,34 @@ Alle elf gewählten ursprünglichen Ankünfte waren punktebringend. Unter den 18
 
 Die vier Züge zeigen auch den Preis eines verzögerten Auftrags. Auf Karte 162400078 (Sitz 1, V16) brachte der Halt auf (18,22) sofort +1, über vier Züge lag das Team bei −2. Auf 162400011 (Sitz 1, Solution) blieb die unmittelbare Teamgutschrift gleich, über vier Züge lag sie um einen Punkt niedriger. Auf 162400056 (Sitz 1, Solution) brachte der Halt auf (16,10) dagegen vier zusätzliche Punkte in vier Zügen. [Fallbilanz einschließlich verworfener Gelegenheiten](fallbilanz.json) · [Alle echten Paarergebnisse](mechanik.json) · [Komprimierte Protokolle](mechanik_partien.jsonl.gz) · [Gegenprüfung](gegenpruefung_mechanik.json)
 
-Alle vorab festgelegten Kriterien dieser historischen Mechanikprüfung sind erfüllt. Der Stärkevergleich auf 48 neuen Sicht-1-Karten ist am 23.11. um 12:42 Uhr gestartet. [Festgelegte Karten](karten_leistung.json) · [Quellbindungen](quellen_leistung.json)
+Alle vorab festgelegten Kriterien dieser historischen Mechanikprüfung sind erfüllt. Der Stärkevergleich auf 48 neuen Sicht-1-Karten startete am 23.11. um 12:42 Uhr. [Festgelegte Karten](karten_leistung.json) · [Quellbindungen](quellen_leistung.json)
+
+## Ganze Spiele auf 48 neuen Karten
+
+Die ersten 48 Sicht-1-Karten ab 163500000 wurden nach der Sensorweite ausgewählt. Beide Sitze jeder Karte traten in allen fünf vorab festgelegten Gruppen an. Insgesamt liefen 480 vollständige Spiele im ursprünglichen Kursablauf. Für 145.440 Runden wurden die Punktreihen erneut gegen die 1.440 Matchresultate und alle Gesamtresultate gerechnet. Bei jedem Zusatzhalt gegen Solution stimmten die gemeinsamen Befehlsfolgen der Halteprobe und ihrer Feldprobenkontrolle bis zum Eingriff überein. Auf den anderen 90 Sitzen stimmten die beiden Gruppen über das ganze Spiel überein.
+
+| Gegner | Variante | Siege / Spiele | Sitz 0 | Sitz 1 |
+|---|---|---:|---:|---:|
+| Original-Solution | Original-V16 | 89/96 | 45/48 | 44/48 |
+| Original-Solution | Feldprobe | 90/96 | 46/48 | 44/48 |
+| Original-Solution | Halteprobe | 90/96 | 45/48 | 45/48 |
+| Original-V16 | Halteprobe | **43/96** | 23/48 | 20/48 |
+| Feldprobe | Halteprobe | 49/96 | 26/48 | 23/48 |
+
+Gegen Solution führte die ursprüngliche Feldprobe auf 26 Sitzen eine Messbewegung aus. In 19 dieser Fälle ließ der Folgeschutz einen Halt zu, in sechs wählte ihn das Modell aus. Vier der sechs Schiffe standen auf einem tatsächlich punktebringenden Feld, zwei auf einem leeren. Die eigene Sofortdifferenz gegenüber der Feldprobe war viermal +1, einmal 0 und einmal −1. Über vier Züge betrug sie zusammen +5. Auf alle 96 Sitze umgelegt ergeben sich +0,031 eigene Sofortpunkte (95-%-Kartenintervall −0,010 bis +0,094). Der direkte Gewinnanteil gegen V16 lag bei 44,8 % (39,6 bis 50,0 %), gegen Feldprobe bei 51,0 % (50,0 bis 53,1 %). Alle Intervalle halten die beiden Sitze einer Karte zusammen.
+
+Gegen Solution drehte der Zusatzhalt zwei volle Partien in entgegengesetzte Richtungen. Auf Karte 163500081, Sitz 1, brachte er sofort +1 auf (18,22). Das dritte Match ging von 598:606 auf 641:558, die ganze Partie von einer Niederlage zu einem Sieg. Auf Karte 163500159, Sitz 0, brachte der Halt auf (1,6) ebenfalls sofort +1 und über vier Züge +3. Das dritte Match wechselte von 416:406 zu 351:511, wodurch das Team die Partie verlor. Gegenüber Original-V16 blieb jeder von dessen 89 Solution-Siegen erhalten. [Eingriffs- und Ergebnispaare](leistung.json) · [Alle 480 Befehlsprüfsummen und Punktkurven](leistung_partien.jsonl.gz)
+
+Gegen die unveränderte Feldprobe trat ein Zusatzhalt nur auf drei der 96 Sitze auf. Auf 46 Karten spielte somit in beiden Durchläufen die reine Feldprobe gegen sich selbst. Der zusätzliche Direktsieg entstand auf der Karte 163500081, auf der sich auf beiden Sitzen in derselben Runde die öffentlich begründete Halteentscheidung ergab. Auf der zweiten betroffenen Karte änderte der einseitige Zusatzhalt das ganze Ergebnis nicht. [Gegenprüfung mit vertauschten Varianten](gegenpruefung_leistung.json)
+
+## Was die Niederlagen gegen V16 erklärt
+
+Auf 93 der 96 direkten Sitze gegen V16 gab die Halteprobe genau die Befehle der Feldprobe. Beide Varianten gewannen dort 43 Partien. Für die drei übrigen Sitze wurden nach Abschluss des festen Vergleichs drei zusätzliche vollständige Feldprobenkontrollen auf denselben Karten gespielt. Alle gemeinsamen Befehle bis zur Halteentscheidung sowie die tatsächliche Ankunft und die Punktfolge bis zu diesem Zeitpunkt stimmten überein.
+
+| Karte und Sitz | Wartezug und Feld | Zusätzliche eigene Punkte sofort / über vier Züge | Zweites Match mit Feldprobe → mit Zusatzhalt | Ganze Partie |
+|---|---|---:|---|---|
+| 163500055, Sitz 1 | Schritt 134 auf (18,18), leer | 0 / 0 | 385:380 → 392:422 | beide verloren |
+| 163500081, Sitz 0 | Schritt 25 auf (1,5), aktiver Punkt | +1 / +1 | 557:600 → 533:520 | beide verloren |
+| 163500081, Sitz 1 | Schritt 25 auf (18,22), aktiver Punkt | +1 / +1 | 557:600 → 533:520 | beide verloren |
+
+Damit steht die ursprüngliche Feldprobe auf genau diesen 96 direkten Sitzen bei 43 Siegen. Die Halteprobe verlor mit denselben Schiffsbewegungen bis zum Zusatzhalt ebenfalls alle drei gezielt nachgespielten Gesamtpartien. Die späteren Punktverläufe und drei zweite Matchausgänge änderten sich. Der Rückstand unter die Hälfte der ganzen Spiele bestand schon vor dem Hinzufügen des Halteentscheiders. Die drei nachträglichen Kontrollspiele und ihre 909 Schritte sind separat archiviert. [Ergebnisse der drei Ursachenvergleiche](direktursache.json) · [Kontrollprotokolle](direktkontrollen.jsonl.gz) · [Gegenrechnung](gegenpruefung_direktursache.json)

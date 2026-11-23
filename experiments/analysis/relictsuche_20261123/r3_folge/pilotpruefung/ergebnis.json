@@ -1,0 +1,76 @@
+{
+  "ci95_percent": {
+    "direct_win_rate": [
+      34.375,
+      50.0
+    ],
+    "solution_m2_delta": [
+      0.0,
+      0.0
+    ],
+    "solution_win_delta": [
+      0.0,
+      4.6875
+    ]
+  },
+  "counts": {
+    "direct": {
+      "activations": 23,
+      "by_seat": [
+        15,
+        12
+      ],
+      "changes": 26,
+      "rounds": [
+        32,
+        24,
+        31
+      ],
+      "wins": 27
+    },
+    "reference": {
+      "activations": 0,
+      "by_seat": [
+        29,
+        31
+      ],
+      "changes": 0,
+      "rounds": [
+        61,
+        59,
+        59
+      ],
+      "wins": 60
+    },
+    "solution": {
+      "activations": 45,
+      "by_seat": [
+        30,
+        31
+      ],
+      "changes": 47,
+      "rounds": [
+        61,
+        59,
+        60
+      ],
+      "wins": 61
+    }
+  },
+  "data_sha": "25affc2d3c29f45fe2dc51b49938d3b9ea7d7dc2143ef12318ab0c8eacd5a3ac",
+  "games": 192,
+  "gates": {
+    "direct_more_than_half": false,
+    "m2_nonnegative": true,
+    "more_solution_games": true
+  },
+  "lost": [],
+  "maps": 32,
+  "qualified": false,
+  "rescued": [
+    [
+      163420124,
+      0
+    ]
+  ]
+}

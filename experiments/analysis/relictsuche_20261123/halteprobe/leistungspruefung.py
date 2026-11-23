@@ -45,6 +45,41 @@ def direct_controls(history, panel):
     return details
 
 
+def verify_three(history):
+    path = HERE / "direktkontrollen.jsonl.gz"
+    result = read("direktursache.json")
+    assert sha256(path.read_bytes()).hexdigest() == result["archive_sha"]
+    controls = [json.loads(line) for line in gzip.decompress(path.read_bytes()).splitlines()]
+    direct = {(s, t): r for (s, t, policy, opponent), r in history.items()
+              if policy == "hold" and opponent == "v16"}
+    used = {k for k, r in direct.items() if len(r["events"]) == 2}
+    assert used == {tuple(r["key"][:2]) for r in controls} and len(used) == len(controls) == 3
+    by_key = {(r["seed"], r["side"]): r for r in result["cases"]}
+    assert set(by_key) == used
+    for control in controls:
+        seed, side, variant, opponent = control["key"]
+        assert [variant, opponent] == ["probe", "v16"] and control["errors"] == [0, 0]
+        key = (seed, side)
+        hold, reported = direct[key], by_key[key]
+        turn = hold["events"][1][0]
+        assert hold["prefix"][:turn + 1] == control["prefix"][:turn + 1]
+        assert hold["events"][:1] == control["events"] and hold["window"][0] == control["window"][0]
+        assert hold["profile"][:turn] == control["profile"][:turn]
+        for match in range(3):
+            points = np.sum(control["profile"][101 * match:101 * (match + 1)], axis=0).tolist()
+            assert points == control["matches"][match]["points"]
+        assert len(control["profile"]) == len(control["prefix"]) == control["steps"] == 303
+        assert control["win"] == (sum(m["win"] for m in control["matches"]) >= 2) == reported["control_win"]
+        assert hold["win"] == reported["hold_win"]
+        diff = np.array(hold["profile"]) - np.array(control["profile"])
+        assert [diff[turn].tolist(), diff[turn:turn + 4].sum(0).tolist(), diff.sum(0).tolist()] == [
+            reported["gain_immediate"], reported["gain_four"], reported["gain_end"]]
+    field_wins = sum(r["win"] for k, r in direct.items() if k not in used) + sum(r["win"] for r in controls)
+    assert field_wins == result["original_feldprobe_wins"] and sum(r["win"] for r in direct.values()) == result["halteprobe_wins"]
+    return {"extra_controls": len(controls), "fieldprobe_wins": field_wins, "stay_wins": result["halteprobe_wins"],
+            "complete_turns": sum(r["steps"] for r in controls), "archive_sha": result["archive_sha"]}
+
+
 def main():
     panel = read("karten_leistung.json")
     report = read("leistung.json")
@@ -134,6 +169,9 @@ def main():
            "gates": gates, "passed": all(gates.values()), "public_followups": followups,
            "paired_direct_against_feldprobe": direct_controls(history, panel),
            "archive_sha": report["archive_sha"]}
+    if (HERE / "direktursache.json").exists():
+        additional = verify_three(history)
+        (HERE / "gegenpruefung_direktursache.json").write_text(json.dumps(additional, indent=2) + "\n")
     (HERE / "gegenpruefung_leistung.json").write_text(json.dumps(out, indent=2) + "\n")
     print(totals, gates)
 

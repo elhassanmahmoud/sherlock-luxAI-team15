@@ -1,0 +1,5 @@
+# Eine kurze Gegnerspur lokalisierte versteckte Punkte selten besser
+
+Das Modell lernte aus 160 Karten, wo ein kürzlich gesehenes gegnerisches Schiff aus seiner letzten beobachteten Bewegungsrichtung heraus tatsächlich Punkte sammelt. Auf den Lernkarten war ein Zusatzgewicht von 15 % am besten. Die Daten von 48 anderen Karten führten auf elf Karten zu 18 auswertbaren Situationen mit späteren Punkten auf momentan unsichtbaren Feldern außerhalb bekannter Gebiete.
+
+Auf diesen elf Karten stieg der mittlere Vorhersagefehler von 5,814 auf 5,844. Nur auf einer Karte wurde die Verteilung besser. Die zehn höchsten Empfehlungen trafen bei beiden Verfahren kartengewichtet 12,1 % der tatsächlichen Gutschriften. Gegen Solution allein gab es in dieser kleinen Kontrolle drei auswertbare Situationen auf zwei Karten, alle mit identischer Vorhersage. Gegen V16 waren es 15 auf neun Karten. Damit ergibt sich aus der gerade zuletzt sichtbaren Bewegungsrichtung kein geprüfter neuer Spielkandidat. [Trainingsverteilung](train.json) · [Getrennte Prüfung](valid.json) · [Lernvorgehen](PLAN.md)
