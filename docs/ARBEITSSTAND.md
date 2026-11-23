@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Zusätzlicher Halterwechsel im Spiel geprüft
+
+WECHSEL aktivierte auf 172 von 240 Kaggle-Startplätzen die Ablösung eines erschöpften Schiffes. Auf 120 neuen Karten gewann die Regel 4/240 ganze Spiele gegen Kaggle, V16 8/240 (−1,67 Prozentpunkte, 95-%-Kartenintervall −4,17 bis 0,00). Gegen Solution 232 statt 234 Siege, direkt 106/240. Keine der drei Bedingungen für eine Übernahme erfüllt. Alle 1.200 Partien wurden getrennt nachgerechnet. [Ergebnisse, Eingriffszahlen und Rohdaten](../experiments/analysis/v16_finalwoche_20261122/wechsel/ERGEBNIS.md)
+
 ## 23.11.2026 – Nachtrainierter Aktionskopf auf 200 neuen Karten geprüft
 
 Der im kleinen Vergleich aufgefallene Kontrollkopf gewinnt gegen Solution 390/400 Spiele, V16 394/400. Gegen Kaggle sind es 16/400 gegenüber 14/400, direkt 42/100. Der primäre Kaggle-Punkteanteil stieg um 0,31 Prozentpunkte (95-%-Kartenintervall −0,98 bis +1,68). Eine der fünf Bedingungen erfüllt. Der Versuch ist mit 1.700 unabhängig nachgerechneten Spielen abgeschlossen. Der aktuelle Agent für Abgabe und Präsentation bleibt V16. [Nachtraining, Messung und Rohpartien](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/ERGEBNIS.md)

@@ -1,0 +1,112 @@
+{
+  "n": 1200,
+  "counts": {
+    "solution92": {
+      "original": {
+        "n": 240,
+        "wins": 234,
+        "matches": 679,
+        "score": 269466,
+        "enemy_score": 120423,
+        "mean_point_share": 0.7121385259481826,
+        "swap_pairs": 0,
+        "changed_orders": 0,
+        "games_with_swaps": 0
+      },
+      "wechsel": {
+        "n": 240,
+        "wins": 232,
+        "matches": 679,
+        "score": 267511,
+        "enemy_score": 121298,
+        "mean_point_share": 0.708860951436183,
+        "swap_pairs": 585,
+        "changed_orders": 1012,
+        "games_with_swaps": 184
+      }
+    },
+    "kaggle3": {
+      "original": {
+        "n": 240,
+        "wins": 8,
+        "matches": 62,
+        "score": 116892,
+        "enemy_score": 204464,
+        "mean_point_share": 0.32244405297868134,
+        "swap_pairs": 0,
+        "changed_orders": 0,
+        "games_with_swaps": 0
+      },
+      "wechsel": {
+        "n": 240,
+        "wins": 4,
+        "matches": 58,
+        "score": 116150,
+        "enemy_score": 203550,
+        "mean_point_share": 0.3237075109928307,
+        "swap_pairs": 740,
+        "changed_orders": 1214,
+        "games_with_swaps": 172
+      }
+    },
+    "v16": {
+      "wechsel": {
+        "n": 240,
+        "wins": 106,
+        "matches": 325,
+        "score": 155494,
+        "enemy_score": 156714,
+        "mean_point_share": 0.4996929691544458,
+        "swap_pairs": 1143,
+        "changed_orders": 1918,
+        "games_with_swaps": 209
+      }
+    }
+  },
+  "contrasts": {
+    "solution92": {
+      "win_difference": {
+        "mean": -0.008333333333333333,
+        "ci95": [
+          -0.020833333333333332,
+          0.0
+        ]
+      },
+      "winner_flips": {
+        "only_original": 3,
+        "only_wechsel": 1
+      },
+      "maps_with_win_advantage": 0,
+      "maps_with_win_disadvantage": 2
+    },
+    "kaggle3": {
+      "win_difference": {
+        "mean": -0.016666666666666666,
+        "ci95": [
+          -0.041666666666666664,
+          0.0
+        ]
+      },
+      "winner_flips": {
+        "only_original": 4,
+        "only_wechsel": 0
+      },
+      "maps_with_win_advantage": 0,
+      "maps_with_win_disadvantage": 2
+    },
+    "v16": {
+      "mean": 0.44166666666666665,
+      "ci95": [
+        0.37083333333333335,
+        0.5125
+      ]
+    }
+  },
+  "gates": {
+    "kaggle_win_gain_lower95_positive": false,
+    "solution_games_retained": false,
+    "direct_at_least_half": false
+  },
+  "passed": false,
+  "direct_superiority": false
+}

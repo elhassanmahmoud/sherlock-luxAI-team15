@@ -1,5 +1,9 @@
 # Experiment-Protokoll
 
+## 23.11.2026 – Historische WECHSEL-Option auf frischen Karten
+
+Nach Reproduktion von acht historischen Endständen liefen 1.200 vorab festgelegte Spiele. Der Halterwechsel holte 4/240 statt 8/240 ganze Siege gegen Kaggle, 232/240 statt 234/240 gegen Solution und 106/240 direkt gegen V16. Primäre Differenz −1,67 Prozentpunkte [−4,17 bis 0,00]. Gegen Kaggle gingen vier Sitze auf zwei Karten verloren, es kam keiner hinzu. Das historische Plus von zwölf Kaggle-Spielen unter 17 geprüften Varianten bestätigte sich nicht. Die Taktik bleibt aus. [Sitzabgleich, Eingriffshäufigkeit und Gegenrechnung](../experiments/analysis/v16_finalwoche_20261122/wechsel/ERGEBNIS.md)
+
 ## 23.11.2026 – Breite Bestätigung des ungewichteten Kontrollkopfs
 
 V16 und sein eingefrorener, an der letzten v9-Aktionsschicht nachtrainierter Kandidat spielten auf 200 neuen Karten beide Startseiten gegen Solution 92 und den Kaggle-Dritten. Auf 50 dieser Karten spielten sie zusätzlich direkt. Ergebnis aus 1.700 vollständigen Partien, jeweils Kandidat gegenüber V16: Solution 390 zu 394 von 400, Kaggle 16 zu 14 von 400, direkt 42 von 100. Kaggle-Punkteanteil +0,31 Prozentpunkte [−0,98 bis +1,68] bei verlangten mindestens +1,00 und positiver Untergrenze. Vier Bedingungen verfehlt. Das kleine Entwicklungssignal von 22/40 im direkten Vergleich wurde nicht bestätigt. [Vergleich mit gepaarten Unsicherheiten und zweiter Rechnung](../experiments/analysis/v16_finalwoche_20261122/bestaetigung/ERGEBNIS.md)

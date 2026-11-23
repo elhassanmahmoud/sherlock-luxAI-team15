@@ -27,8 +27,21 @@ def run(directory):
         for name in (("wechsel",) if o=="v16" else ("original","wechsel")):
             rows=[records[s,p,o,name] for s,p in sites]
             implicit=src["counts"][o][name]
+            if implicit["games_with_swaps"]!=sum(r["swaps"]>0 for r in rows):
+                raise ValueError(f"Intervention frequency mismatch {o} {name}")
             for key,col in (("wins","game_win"),("matches","our_wins"),("swap_pairs","swaps"),("changed_orders","changed_units")):
                 if implicit[key]!=sum(r[col] for r in rows):raise ValueError(f"Aggregate {o} {name} {key}")
+    no_change=0
+    for s,p in sites:
+        for opponent in ("solution92","kaggle3"):
+            baseline=records[s,p,opponent,"original"]
+            candidate=records[s,p,opponent,"wechsel"]
+            if baseline["swaps"] or baseline["changed_units"]:
+                raise ValueError("Reference changed a command")
+            if candidate["swaps"]==0:
+                for name in ("our_points","opp_points","our_wins","opp_wins","game_win"):
+                    if baseline[name]!=candidate[name]:raise ValueError(f"Unchanged game differs: {s} {p} {opponent}")
+                no_change+=1
     delta=defaultdict(list)
     for s,p in sites:
         delta[s].append(records[s,p,"kaggle3","wechsel"]["game_win"]-records[s,p,"kaggle3","original"]["game_win"])
@@ -44,7 +57,8 @@ def run(directory):
     passed=(ci[0]>0) and (direct>=120) and (sol_delta>=0)
     if src["passed"]!=bool(passed): raise ValueError("Final decision mismatch")
     return dict(verified=True,n=1200,source_sha256=source,kaggle_winrate_difference=float(effects.mean()),
-                kaggle_ci95=ci.tolist(),solution_wins_delta=sol_delta,direct_wins=direct,passed=bool(passed))
+                kaggle_ci95=ci.tolist(),solution_wins_delta=sol_delta,direct_wins=direct,
+                unchanged_external_pairs=no_change,passed=bool(passed))
 
 
 if __name__=="__main__":print(json.dumps(run(Path(sys.argv[1])),indent=2))
