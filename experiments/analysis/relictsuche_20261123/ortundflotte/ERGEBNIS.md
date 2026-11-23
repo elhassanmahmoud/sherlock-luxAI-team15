@@ -1,0 +1,7 @@
+# Welcher Suchweg ergänzt die übrige Flotte?
+
+Wir haben die auf 49.152 Karten gelernte Häufigkeit der ersten Reliktposition mit der trainierten Acht-Zug-Vorhersage für die übrigen Schiffe kombiniert. Auf 480 Entwicklungskarten mit 1.788 angebotenen Suchsituationen erzielte die volle Ortsgewichtung die höchste mittlere Vorverlegung im kurzen Vergleich. Sie wurde vor Öffnung der getrennten 160 Karten festgehalten.
+
+Auf diesen Karten lagen 681 verwertbare Situationen vor. Der neue Bewerter änderte auf 123 Karten mindestens eine Wegwahl. Auf zwölf Karten rückte die Sicht im Mittel der dort untersuchten Situationen vor, auf sechs trat sie später ein. Über alle 160 Karten ergaben sich 0,081 Züge frühere Sicht im Acht-Zug-Fenster (95-%-Kartenintervall +0,017 bis +0,167). Der Schiedsrichter prüfte hierzu am tatsächlichen ersten Reliktpaar, wann die angebotene Position des freien Schiffs und die aufgezeichnete Sensorleistung der übrigen Flotte die echte Sichtschwelle überschritten hätten. Außerhalb des kurzen Fensters gibt dieser Vergleich keine Fundzeit an. Im vollständigen Spiel können die anderen Schiffe auf einen geänderten Befehl reagieren.
+
+Für Mahmoud ist der wesentliche Unterschied zur älteren Flottensuche, dass zwei unerkundete Orte jetzt verschieden bewertet werden können, auch wenn an beiden die gleiche Wahrscheinlichkeit besteht, dass die übrige Flotte vorbeikommt. [Trainingskarten](train.json) · [Getrennte Vorauswahl](valid.json) · [Suchregel und Spielplan](PLAN.md)
