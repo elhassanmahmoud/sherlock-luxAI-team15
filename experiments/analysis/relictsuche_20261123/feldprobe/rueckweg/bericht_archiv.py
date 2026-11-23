@@ -31,6 +31,9 @@ def main():
         check(p["veto"]==back and p["prior_turns"]==a["t"],"Bad public decision")
     by={(p["phase"],p["seed"],p["team"],p["opponent"]):p for p in prefixes}
     details=list(csv.DictReader((HERE/"archiv_sitze.csv").open()))
+    control_rows=read(HERE/"v16_kontrollen.jsonl.gz")
+    controls={(r["phase"],r["seed"]):r for r in control_rows}
+    check(len(controls)==len(control_rows) and all(r["identity"]==result["identity"] for r in control_rows),"Repeated or stale direct control")
     output={}
     direct_parity=0
     for study,path in ARCH.items():
@@ -68,8 +71,7 @@ def main():
                     opp=raw[s,1-t,"probe","v16"]
                     if opp["event"] is None: win=1-opp["win"]
                     else:
-                        f=WORK/"control"/study/f"{s}.json"
-                        g=json.loads(f.read_bytes())
+                        g=controls[study,s]
                         check(g["prefix"][str(a["t"])]==a["prefix"],"Nonidentical direct control prefix")
                         win=g["win"] if g["team"]==t else 1-g["win"]
                     check(int(line["direct_verzicht"])==win,"Incorrect actual self-play score")
@@ -118,10 +120,11 @@ def main():
            f"Gegen Solution lieferten die archivierten Originalkontrollen den Ausgang bei Verzicht. Für die direkten Sitze wurden {new} zusätzliche V16-gegen-V16-Spiele karteneindeutig durchgeführt, "
            f"für {old} weitere betroffene Karten lag ein vollständiger unveränderter Originalverlauf bereits im Gegenplatz vor. Die {direct_parity} bestehenden direkten Duelle mit zwei inaktiven Probe-Sitzen stimmen in beiden Sitzorientierungen vollständig in den Befehlsprüfsummen überein.",
            "", "Die neue unabhängige 48-Karten-Prüfung ist eröffnet." if result["passed"] else "Der frische Vergleich entfällt gemäß dem vor der Fallauszählung festgelegten Plan.",
-           "", "Einzelbefunde einschließlich jedes verworfenen Punktefeldes stehen in `archivbilanz.json`. `archiv_sitze.csv` enthält alle Sitze. "
+           "", "Die vollständigen Prüfsummen und Matchendstände der neu gespielten Originalkontrollen stehen in `v16_kontrollen.jsonl.gz`. Einzelbefunde einschließlich jedes verworfenen Punktefeldes stehen in `archivbilanz.json`. `archiv_sitze.csv` enthält alle Sitze. "
            "`archiv_praefixe.jsonl.gz` enthält die letzten öffentlichen Aktionen, Positionen und Untergrenzen zu jedem ursprünglichen Eingriff.",""]
     (HERE/"ARCHIV.md").write_text("\n".join(text))
-    proof=dict(passed=all(gates.values()),cases=len(prefixes),archived_seats=len(details),unmodified_direct_map_pairs=direct_parity,different_cards=len(cards),gates=gates,
+    proof=dict(passed=all(gates.values()),cases=len(prefixes),archived_seats=len(details),new_original_direct_controls=len(controls),unmodified_direct_map_pairs=direct_parity,
+               original_direct_archive_sha256=hashlib.sha256((HERE/"v16_kontrollen.jsonl.gz").read_bytes()).hexdigest(),different_cards=len(cards),gates=gates,
                archival_result_sha256=hashlib.sha256((HERE/"archivbilanz.json").read_bytes()).hexdigest())
     (HERE/"archiv_nachpruefung.json").write_text(json.dumps(proof,indent=2)+"\n")
     print(json.dumps(proof))

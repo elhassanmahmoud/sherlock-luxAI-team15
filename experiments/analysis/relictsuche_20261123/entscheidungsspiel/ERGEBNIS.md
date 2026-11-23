@@ -1,0 +1,5 @@
+# R3 nur im Entscheidungsmatch
+
+V16 spielte Match 1 und 2. R3 durfte erst bei einer Führung nach Match 1 und Ausgleich nach Match 2 übernehmen. Auf einer von zwei ausgewählten bekannten Solution-Niederlagen rettete die späte Übergabe das Spiel. Die Befehle beider Teams waren in allen 202 vorausgehenden Zügen zum Original identisch. Bei der zweiten Niederlage kam die Übergabe zu spät.
+
+Auf dem vorab registrierten Entwicklungsarchiv (160 Karten, je ein echter Originalverlauf, Gegner und Startseite rotierend) trat die Regel gegen Solution fünfmal ein. Es blieb bei 76/80 Siegen. Direkt übernahm R3 auf 26 von 80 Original-Sitzen. Die Gesamtzahl der Siege sank von 37/80 auf 30/80. Die tatsächlichen Fortsetzungen aller 49 potentiell betroffenen Karten einschließlich nicht vorher entschiedener Punktgleichstände wurden gespielt. Wenn die öffentliche Matchfolge die Übergabe ausschloss, galt derselbe bereits gespielte Originalverlauf. Damit endete der Versuch vor der separaten Auswahlserie. [Kontrolle beider bekannter Fälle](technik.json) · [Ergebnisse und Zahl der Abzweigungen](train.json) · [Einzelne Karten](train_karten.jsonl.gz)

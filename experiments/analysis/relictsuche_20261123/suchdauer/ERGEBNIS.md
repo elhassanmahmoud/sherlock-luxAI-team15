@@ -1,0 +1,5 @@
+# Lässt sich ein später Fund vorhersagen?
+
+Der Regressor lernte aus 384 Karten, wie lange Original-V16 vom ersten möglichen Richtungswechsel bis zur Reliktsicht brauchte. Auf den 96 getrennten Archivkarten lagen die wirklichen Wartezeiten für freigegebene und abgelehnte Wege praktisch gleichauf (33,68 gegenüber 33,05 Zügen). Auch der quadratische Vorhersagefehler war geringfügig schlechter als bei einer konstanten Prognose (RMSE 19,99 gegenüber 19,79 Zügen).
+
+Die echte dreistufige Wegänderung wurde in 31 Spielen freigegeben. Gegen Solution erreichte die Auswahl das Relikt im Mittel 1,52 Züge früher, gewann aber wie V16 46/48. Gegen V16 kam das Relikt 1,44 Züge später. Im direkten Vergleich gewann die Auswahl nur 18/48, gegenüber 22/48 auf diesen ursprünglichen V16-Selbstspielsitzen. Die 25 öffentlichen Merkmale bei Beginn der geplanten Route genügten hier nicht, um besonders lange Suchen zu erkennen. Es wurden keine zusätzlichen Karten mit dieser Regel gespielt. [Trainingsziel und Freigabekriterien](PLAN.md) · [Beide Pfade und alle 96 Entscheidungen](pilot.json)
