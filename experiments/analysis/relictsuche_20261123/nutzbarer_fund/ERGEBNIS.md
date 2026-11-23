@@ -1,0 +1,5 @@
+# Kann die Mannschaft einen frühen Reliktfund verwerten?
+
+Der Regressor lernte aus den öffentlichen Stellungen auf 160 V16-Entwicklungskarten. 155 Karten boten mindestens einen geeigneten Zeitpunkt vor der ersten eigenen Gutschrift und dem ersten sichtbaren Relikt. Das Lernziel waren die tatsächlichen Gutschriften in den folgenden 24 Zügen im Gebiet des ersten Reliktpaars.
+
+Auf 48 getrennten Karten waren in 46 Partien insgesamt 178 frühe Stellungen verfügbar. Für die untere Hälfte der Vorhersagen ergaben sich tatsächlich 0,20 eigene Punkte je Folgezug, für die obere Hälfte 0,55. Der mittlere quadratische Fehler fiel von 0,360 für eine konstante Vorhersage auf 0,324. Damit ist die Aussicht auf nahen Ertrag teilweise aus dem öffentlichen Flottenbild ablesbar. Ob dieses Wissen bei der Wahl *eines anderen Suchwegs* hilft, prüfen wir an den tatsächlich erreichbaren Wegen und den originalen Folgepunkten. [Unabhängige Ertragsvorhersagen](valid.json) · [Im Voraus festgelegter Versuch](PLAN.md)

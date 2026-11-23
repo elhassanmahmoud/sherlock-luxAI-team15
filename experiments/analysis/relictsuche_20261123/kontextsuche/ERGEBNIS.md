@@ -1,0 +1,5 @@
+# Eine vorsichtigere Freigabe lässt fast alle Funde beim Originalzeitpunkt
+
+Auf 64 neuen Karten mit Sicht eins spielte die gelernte Kontextwahl den Suchweg gegen Solution auf 21 von 128 Sitzen frei. Dreimal sah Sherlock das Relikt früher, zweimal später, auf den anderen 123 Sitzen im gleichen Zug. Der mittlere Zeitgewinn von 0,02 Zügen ist mit einer kleinen Verzögerung vereinbar (95-%-Kartenintervall −0,20 bis +0,28). Gegen Solution gewannen beide Varianten genau dieselben 126/128 Spiele. Direkt gegen V16 gewann die Kontextwahl 61/128 (47,66 %, Intervall 42,97 bis 52,34 %).
+
+Der Regressor hatte auf 640 bereits ausgespielten Routenbeispielen gelernt, ob eine einzige freie Einheit von V16 abweichen sollte. Die unabhängigen Spiele zeigen, dass die Vorsicht die früher beobachteten Nachteile abschwächt, aber auf diesen Karten zu keinem zusätzlichen externen Sieg führt. [448 tatsächliche vollständige Spiele](duelle.jsonl.gz) · [Kartenintervalle und beide Gegner](duelle.json) · [Freigaberegel](PLAN.md)
