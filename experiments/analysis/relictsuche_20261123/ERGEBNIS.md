@@ -1,6 +1,6 @@
 # Suchrichtung bei geringer Sicht
 
-**Arbeitsstand am 23. November, 09:51 Uhr.** Flottenblick hat den ersten vollständigen Vergleich für eine unabhängige Wiederholung bestanden. Die Abgabe ist V16. Ein anderes Modell findet das erste Relikt auf schwierigen Starts ab Zug 55 früher. Die Auswirkung auf ganze Partien wird getrennt geprüft.
+**Arbeitsstand am 23. November, 10:24 Uhr.** Flottenblick hat den ersten vollständigen Vergleich für eine unabhängige Wiederholung bestanden. Die Abgabe ist V16. Die spätere Suche ab Zug 55 gewinnt 119/120 ganze Spiele gegen Solution wie V16 und 61/120 direkt. Ihr Sichtvorteil auf zuvor ausgewählten schwierigen Eröffnungen ließ sich über alle Karten nicht sicher bestätigen.
 
 ## Welche Suchrichtung hilft?
 
@@ -21,4 +21,6 @@ Beim Flottenblick kann der gemessene Sichtvorteil auf diesen 40 Karten auch durc
 
 - Auf 28 der 80 Sitze kam der frühe Zielschätzer früher zum ersten Relikt. Elfmal kam die entscheidende Sicht vom umgeleiteten Schiff selbst, 17-mal von einem anderen Schiff. [Sicht in der echten Spielumgebung](fundursache/ERGEBNIS.md)
 - Die vier verlorenen früheren Siege des Zielschätzers kippten alle in Match 3. Der größte zusätzliche Punkterückstand entstand jeweils außerhalb der Sherlock damals bekannten Reliktgebiete. Eine eigene passive Untersuchung zeigte, dass sich solche Gebiete teilweise allein aus der öffentlichen Punkteanzeige und der Sicht beweisen lassen. [Vier verlorene Spiele](uebergang/ERGEBNIS.md) · [88 überprüfte Partien](spaetgebiet/ERGEBNIS.md)
-- Wenn bis Zug 55 sowohl die erste Sicht als auch die erste eigene Gutschrift fehlen, holte eine späte Richtungswahl beides auf 64 anderen, gezielt schwierigen Karten um gut vier Züge vor. Die Zahl der gewonnenen **ersten Matches** blieb bei 43/64. Die 420 vollständigen Partien prüfen die Spielwirkung auf ungefilterten Starts mit Sichtweite eins. [Unabhängige Prüfung auf schwierigen Starts](spaetsuche/OFFLINE.md)
+- Wenn bis Zug 55 sowohl die erste Sicht als auch die erste eigene Gutschrift fehlen, holte eine späte Richtungswahl beides auf 64 anderen, gezielt schwierigen Karten um gut vier Züge vor. Die Zahl der gewonnenen **ersten Matches** blieb bei 43/64. Auf 60 neuen Sicht-1-Karten mit beiden Sitzen und beiden Gegnern ergaben 420 vollständige Spiele +0,70 Züge früher im Mittel (95-%-Intervall −0,04 bis +1,89). Gegen Solution 119/120 wie V16 und direkt 61/120. [Schwierige Starts](spaetsuche/OFFLINE.md) · [Vollständige Partien](spaetsuche/ERGEBNIS.md)
+
+Die drei übrigen ganzen Flottenblick-Niederlagen entstanden nach eigener Gutschrift in Zug 11 oder 20. Alle drei reproduzieren V16 exakt. Auf zwei Karten blieben einzelne bereits vom eigenen Team genutzte Punktefelder über längere Zeit unbestimmt oder fälschlich als leer eingestuft. Zwei neue Versuche prüfen, ob Sherlock aus dem öffentlichen Punktestand sichereres Feldwissen oder eine sinnvolle einzelne Bewegung ableiten kann. [Vier Nachspiele mit allen Gutschriften](fruehepunkte/ERGEBNIS.md)
