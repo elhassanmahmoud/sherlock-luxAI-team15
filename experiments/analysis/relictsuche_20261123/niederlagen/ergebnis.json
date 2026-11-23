@@ -1,0 +1,388 @@
+{
+  "cards": 388,
+  "sources": {
+    "vergleich/discovery": {
+      "seats": 80,
+      "sha256": "30b4cba7525b30d0ece56f3f0aaa1aa03a985ffa44c8d010a71836f0e69d07cf"
+    },
+    "standsuche/duelle/discovery": {
+      "seats": 80,
+      "sha256": "ba75df3563540887c437e3892906127b5019d04bc647129128ffe939fcebcf0d"
+    },
+    "punktsicht": {
+      "seats": 80,
+      "sha256": "695e2672636f1787fb87d4a855865d9640705c2e3595a6ff81b7e1e489cc23b7"
+    },
+    "flottenblick/ganzspiel": {
+      "seats": 80,
+      "sha256": "21133ddc7d6c6b225a61a1bfd609ec35f9fbe4b60e5e1e5902bd1923c2d0a51a"
+    },
+    "flottenblick/bestaetigung": {
+      "seats": 240,
+      "sha256": "8babd88ef3f9420e5a3d7fc8336b04963650dfe458face6859f384ef4717a0a6"
+    },
+    "spaetsuche/panel": {
+      "seats": 120,
+      "sha256": "d280089d1c99e04b127096097059fb2cf1e11980d56ab44f237960a8f7a589d9"
+    },
+    "feldprobe": {
+      "seats": 96,
+      "sha256": "2aeaf780a4c7b589173078138250f001f1319dd17ea5d6187728ae9aa33936f9"
+    }
+  },
+  "overall": {
+    "seats": 776,
+    "wins": 747,
+    "losses": 29,
+    "loss_maps": 23,
+    "first_match_won_among_losses": 14,
+    "first_match_decisive_if_later_fixed": 9,
+    "lost_all_matches": 6,
+    "first_sight_losses": {
+      "n": 29,
+      "median": 65.0,
+      "quartiles": [
+        21.0,
+        87.0
+      ]
+    },
+    "first_sight_wins": {
+      "n": 747,
+      "median": 45.0,
+      "quartiles": [
+        30.0,
+        55.0
+      ]
+    },
+    "first_credit_losses": {
+      "n": 29,
+      "median": 45.0,
+      "quartiles": [
+        20.0,
+        62.0
+      ]
+    },
+    "first_credit_wins": {
+      "n": 747,
+      "median": 42.0,
+      "quartiles": [
+        28.0,
+        52.0
+      ]
+    },
+    "patterns": {
+      "111": 640,
+      "100": 14,
+      "101": 26,
+      "110": 43,
+      "011": 38,
+      "010": 4,
+      "001": 5,
+      "000": 6
+    }
+  },
+  "by_start_side": {
+    "0": {
+      "seats": 388,
+      "wins": 371,
+      "losses": 17,
+      "loss_maps": 17,
+      "first_match_won_among_losses": 7,
+      "first_match_decisive_if_later_fixed": 5,
+      "lost_all_matches": 5,
+      "first_sight_losses": {
+        "n": 17,
+        "median": 65.0,
+        "quartiles": [
+          25.0,
+          92.0
+        ]
+      },
+      "first_sight_wins": {
+        "n": 371,
+        "median": 44.0,
+        "quartiles": [
+          30.0,
+          55.0
+        ]
+      },
+      "first_credit_losses": {
+        "n": 17,
+        "median": 48.0,
+        "quartiles": [
+          24.0,
+          62.0
+        ]
+      },
+      "first_credit_wins": {
+        "n": 371,
+        "median": 42.0,
+        "quartiles": [
+          28.0,
+          52.0
+        ]
+      },
+      "patterns": {
+        "111": 320,
+        "100": 7,
+        "101": 13,
+        "110": 15,
+        "011": 23,
+        "001": 4,
+        "000": 5,
+        "010": 1
+      }
+    },
+    "1": {
+      "seats": 388,
+      "wins": 376,
+      "losses": 12,
+      "loss_maps": 12,
+      "first_match_won_among_losses": 7,
+      "first_match_decisive_if_later_fixed": 4,
+      "lost_all_matches": 1,
+      "first_sight_losses": {
+        "n": 12,
+        "median": 61.5,
+        "quartiles": [
+          18.5,
+          80.25
+        ]
+      },
+      "first_sight_wins": {
+        "n": 376,
+        "median": 45.0,
+        "quartiles": [
+          31.0,
+          55.0
+        ]
+      },
+      "first_credit_losses": {
+        "n": 12,
+        "median": 34.0,
+        "quartiles": [
+          11.75,
+          56.5
+        ]
+      },
+      "first_credit_wins": {
+        "n": 376,
+        "median": 43.0,
+        "quartiles": [
+          28.0,
+          52.0
+        ]
+      },
+      "patterns": {
+        "111": 320,
+        "100": 7,
+        "101": 13,
+        "010": 3,
+        "110": 28,
+        "011": 15,
+        "000": 1,
+        "001": 1
+      }
+    }
+  },
+  "by_first_sight": {
+    "0-30": {
+      "seats": 198,
+      "wins": 188,
+      "losses": 10,
+      "loss_maps": 8,
+      "first_match_won_among_losses": 6,
+      "first_match_decisive_if_later_fixed": 2,
+      "lost_all_matches": 2,
+      "first_sight_losses": {
+        "n": 10,
+        "median": 17.5,
+        "quartiles": [
+          10.25,
+          21.0
+        ]
+      },
+      "first_sight_wins": {
+        "n": 188,
+        "median": 21.0,
+        "quartiles": [
+          15.75,
+          26.0
+        ]
+      },
+      "first_credit_losses": {
+        "n": 10,
+        "median": 14.0,
+        "quartiles": [
+          8.75,
+          20.0
+        ]
+      },
+      "first_credit_wins": {
+        "n": 188,
+        "median": 22.0,
+        "quartiles": [
+          15.0,
+          27.0
+        ]
+      },
+      "patterns": {
+        "111": 175,
+        "110": 8,
+        "100": 6,
+        "101": 3,
+        "000": 2,
+        "011": 2,
+        "010": 2
+      }
+    },
+    "31-50": {
+      "seats": 309,
+      "wins": 309,
+      "losses": 0,
+      "loss_maps": 0,
+      "first_match_won_among_losses": 0,
+      "first_match_decisive_if_later_fixed": 0,
+      "lost_all_matches": 0,
+      "first_sight_losses": null,
+      "first_sight_wins": {
+        "n": 309,
+        "median": 43.0,
+        "quartiles": [
+          38.0,
+          46.0
+        ]
+      },
+      "first_credit_losses": null,
+      "first_credit_wins": {
+        "n": 309,
+        "median": 43.0,
+        "quartiles": [
+          37.0,
+          48.0
+        ]
+      },
+      "patterns": {
+        "111": 275,
+        "110": 19,
+        "101": 11,
+        "011": 4
+      }
+    },
+    "51-70": {
+      "seats": 193,
+      "wins": 185,
+      "losses": 8,
+      "loss_maps": 5,
+      "first_match_won_among_losses": 6,
+      "first_match_decisive_if_later_fixed": 2,
+      "lost_all_matches": 0,
+      "first_sight_losses": {
+        "n": 8,
+        "median": 64.0,
+        "quartiles": [
+          57.0,
+          66.5
+        ]
+      },
+      "first_sight_wins": {
+        "n": 185,
+        "median": 57.0,
+        "quartiles": [
+          53.0,
+          62.0
+        ]
+      },
+      "first_credit_losses": {
+        "n": 8,
+        "median": 61.5,
+        "quartiles": [
+          57.0,
+          64.25
+        ]
+      },
+      "first_credit_wins": {
+        "n": 185,
+        "median": 54.0,
+        "quartiles": [
+          49.0,
+          60.0
+        ]
+      },
+      "patterns": {
+        "111": 163,
+        "100": 6,
+        "101": 7,
+        "010": 1,
+        "011": 5,
+        "110": 10,
+        "001": 1
+      }
+    },
+    "71-101": {
+      "seats": 76,
+      "wins": 65,
+      "losses": 11,
+      "loss_maps": 10,
+      "first_match_won_among_losses": 2,
+      "first_match_decisive_if_later_fixed": 5,
+      "lost_all_matches": 4,
+      "first_sight_losses": {
+        "n": 11,
+        "median": 92.0,
+        "quartiles": [
+          87.0,
+          98.5
+        ]
+      },
+      "first_sight_wins": {
+        "n": 65,
+        "median": 79.0,
+        "quartiles": [
+          73.0,
+          90.0
+        ]
+      },
+      "first_credit_losses": {
+        "n": 11,
+        "median": 45.0,
+        "quartiles": [
+          44.0,
+          101.0
+        ]
+      },
+      "first_credit_wins": {
+        "n": 65,
+        "median": 68.0,
+        "quartiles": [
+          46.0,
+          80.0
+        ]
+      },
+      "patterns": {
+        "011": 27,
+        "111": 27,
+        "110": 6,
+        "100": 2,
+        "010": 1,
+        "001": 4,
+        "101": 5,
+        "000": 4
+      }
+    }
+  },
+  "loss_rate": {
+    "mean": 0.037371134020618556,
+    "ci95": [
+      0.023195876288659795,
+      0.05412371134020619
+    ]
+  },
+  "ceiling_first_match_only": {
+    "mean": 0.011597938144329897,
+    "ci95": [
+      0.005154639175257732,
+      0.019329896907216496
+    ]
+  }
+}
