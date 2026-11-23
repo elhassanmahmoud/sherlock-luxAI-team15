@@ -148,6 +148,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 | Wie habt ihr getestet? | Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, Auswahl auf Entwicklungskarten, Bestätigung auf nie benutzten Karten, gepaarte Auswertung nach Karte mit Bootstrap. Insgesamt 1,54 Millionen Spiele seit dem 10. Oktober. |
 | Was war euer eigener Beitrag? | Gedächtnis und Merkmale (16 Kartenebenen, 79 Merkmale), die ganze Lernkette mit DAgger, die Schalter aus der Spielanalyse wie die Halter-Regel, die schrittgenaue Nachrechnung der Kämpfe und die Prüfungen. |
 | Warum ist V16 gegen Solution nicht besser als R3? | Beide liegen bei rund 98 %; auf einem weiteren frischen Kartensatz lag V16 sogar 11 Spiele von 800 hinter R3 (778 statt 789). Wir haben V16 gewählt, weil es gegen den viel stärkeren Kaggle-Dritten klar besser ist und R3 direkt 194 von 200 Mal schlägt. |
+| Wo fehlen euch gegen Solution noch Siege? | „Wir haben alle 35 Niederlagen aus zwei Tests mit insgesamt 1.600 Spielen nachgespielt. 27-mal haben wir das erste Match gewonnen und danach beide verloren. Das knappere verlorene Match war meistens das zweite. Genau dort wollen wir früher punkten.“ [Rekonstruierte Matchstände](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md) |
 | Wie lange dauert ein Zug? | Im Kursrunner im Median 5–6 ms, die Abgabedatei ist 9,5 MB groß und unter Python 3.10 und 3.14 geprüft. |
 
 ## Quellen für jede Zahl
