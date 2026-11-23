@@ -1,0 +1,5 @@
+# Eine bessere Zeitprognose ergab noch keinen besseren Suchweg
+
+Das Modell lernte an 480 Karten, wann die übrige Flotte ein Feld wahrscheinlich erstmals erreicht. Auf 160 getrennten Karten mit 681 möglichen Suchentscheidungen sank der nach Karten gemittelte quadratische Wahrscheinlichkeitsfehler für die acht Zeithorizonte von 0,0360 auf 0,0269. Als Referenz diente die bestehende Prognose, ob das Feld innerhalb von acht Zügen irgendwann sichtbar wird.
+
+Der tatsächliche früheste Reliktblick im Acht-Zug-Fenster änderte sich dadurch im Mittel um −0,001 Züge gegenüber der gemeinsamen Orts- und Flottensuche (95-%-Kartenintervall −0,042 bis +0,037 Züge). Auf acht Karten gab es im Mittel eine Verbesserung, auf sieben eine Verschlechterung. Damit fehlt der zeitliche Vorteil, den wir für neue ganze Partien mit diesem Modell gefordert hatten. Die zugrunde liegende vollständige Spielprüfung für den getrennten gemeinsamen Orts- und Flottenkandidaten läuft unabhängig weiter. [Festgelegtes Lernziel](PLAN.md) · [Getrennter Vergleich](valid.json) · [Alle geprüften Wegwahlen](situationen.jsonl.gz)
