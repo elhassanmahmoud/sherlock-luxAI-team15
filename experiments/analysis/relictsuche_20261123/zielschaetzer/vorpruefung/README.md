@@ -1,0 +1,3 @@
+# Verworfen vor dem ersten Leistungsspiel
+
+Die erste Schnittstellenprüfung prüfte höchstens ein abweichendes Schiff je Zug. Sie ließ eine neue Schiffs-ID in einem späteren Zug desselben Spiels zu. Zudem erhielt V16 nach einem Umleiten weiterhin die ursprünglich ausgewählte Voraktion. Beide Punkte wurden vor der Spieleauswahl korrigiert. Für diese Vorfassung gab es ausschließlich Schattenentscheidungen zu unveränderten V16-Präfixen. Die Zahlen in diesem Ordner gehören zur Vorfassung. Die gekoppelte Prüfung des aktualisierten Agenten steht eine Ebene höher. Für beide Fassungen gelten derselbe Ortsprior und dieselben unabhängigen Prüfkarten.

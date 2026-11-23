@@ -1,0 +1,51 @@
+{
+  "eligible": true,
+  "sources": {
+    "kandidat.py": "2b850d9cc94d13514da09b3a8e31670dafd3126b0dda6277e69622f69b6b9b46",
+    "lernen.py": "9e8ea45c6a1d0c5f258cec25fcabf349f8a13da648071be589b4f714a4a6bfd9",
+    "ort.json": "9588bd7faadd5b6d88e39e4848ce01878d4d78c3d23d0c48da43bc7b4e435bd1",
+    "PLAN.md": "f5d2b091fc5edb3aa44d8e4f8eb817fc908497621b8961805ec246d088d19b24",
+    "pruefen.py": "ded92069f2d33b6f6b9936e43a72d46221bc5d4ab4173ee606aada6817728426",
+    "agent.zip": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
+  },
+  "first_seed": 161180004,
+  "last_seed": 161180103,
+  "maps": 32,
+  "seats": 64,
+  "snapshots": 94,
+  "by_step": {
+    "20": 56,
+    "35": 26,
+    "50": 10,
+    "65": 2
+  },
+  "totals": {
+    "changes": 1091,
+    "with_plan": 1550,
+    "ineligible": 3634,
+    "duplicate_commands": 2592,
+    "prefix_commands": 5184
+  },
+  "changes_by_side": {
+    "0": 530,
+    "1": 561
+  },
+  "quality": {
+    "flat": {
+      "logloss": 5.70720391719296,
+      "top_quarter": 0.25439407955596666
+    },
+    "flat_visibility": {
+      "logloss": 5.666637493827629,
+      "top_quarter": 0.3061898714408805
+    },
+    "learned_visibility": {
+      "logloss": 5.0276753055625525,
+      "top_quarter": 0.648936170212766
+    },
+    "learned_full": {
+      "logloss": 4.995221634813787,
+      "top_quarter": 0.6595744680851063
+    }
+  }
+}

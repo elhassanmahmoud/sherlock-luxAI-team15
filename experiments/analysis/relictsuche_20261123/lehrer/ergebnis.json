@@ -1,0 +1,623 @@
+{
+  "all": {
+    "maps": 24,
+    "seats": 28,
+    "metrics": {
+      "first_sight": {
+        "r3_mean": 42.857142857142854,
+        "v16_mean": 51.285714285714285,
+        "r3_median": 44.0,
+        "v16_median": 46.0,
+        "r3_less": 12,
+        "ties": 6,
+        "r3_more": 10
+      },
+      "first_credit": {
+        "r3_mean": 37.92857142857143,
+        "v16_mean": 44.142857142857146,
+        "r3_median": 39.0,
+        "v16_median": 42.0,
+        "r3_less": 11,
+        "ties": 9,
+        "r3_more": 8
+      },
+      "win_match": {
+        "r3_mean": 1.0,
+        "v16_mean": 0.75,
+        "r3_median": 1.0,
+        "v16_median": 1.0,
+        "r3_less": 0,
+        "ties": 21,
+        "r3_more": 7
+      },
+      "points70": {
+        "r3_mean": 75.57142857142857,
+        "v16_mean": 47.714285714285715,
+        "r3_median": 50.5,
+        "v16_median": 32.5,
+        "r3_less": 6,
+        "ties": 0,
+        "r3_more": 22
+      },
+      "enemy70": {
+        "r3_mean": 49.535714285714285,
+        "v16_mean": 63.464285714285715,
+        "r3_median": 15.0,
+        "v16_median": 42.0,
+        "r3_less": 20,
+        "ties": 5,
+        "r3_more": 3
+      },
+      "final_points": {
+        "r3_mean": 265.42857142857144,
+        "v16_mean": 160.42857142857142,
+        "r3_median": 262.5,
+        "v16_median": 166.5,
+        "r3_less": 2,
+        "ties": 1,
+        "r3_more": 25
+      },
+      "active_ships": {
+        "r3_mean": 6.071428571428571,
+        "v16_mean": 5.321428571428571,
+        "r3_median": 7.0,
+        "v16_median": 5.0,
+        "r3_less": 5,
+        "ties": 9,
+        "r3_more": 14
+      },
+      "unique_new": {
+        "r3_mean": 143.85714285714286,
+        "v16_mean": 116.14285714285714,
+        "r3_median": 165.5,
+        "v16_median": 126.5,
+        "r3_less": 4,
+        "ties": 1,
+        "r3_more": 23
+      },
+      "productive_moves": {
+        "r3_mean": 60.714285714285715,
+        "v16_mean": 47.75,
+        "r3_median": 72.0,
+        "v16_median": 51.0,
+        "r3_less": 3,
+        "ties": 2,
+        "r3_more": 23
+      },
+      "ship_moves": {
+        "r3_mean": 138.17857142857142,
+        "v16_mean": 120.07142857142857,
+        "r3_median": 164.0,
+        "v16_median": 145.0,
+        "r3_less": 0,
+        "ties": 4,
+        "r3_more": 24
+      },
+      "new_seen": {
+        "r3_mean": 150.82142857142858,
+        "v16_mean": 122.0,
+        "r3_median": 171.5,
+        "v16_median": 133.5,
+        "r3_less": 4,
+        "ties": 1,
+        "r3_more": 23
+      }
+    },
+    "single_common": 25,
+    "common_r3_closer": 7,
+    "common_r3_closer_earlier_sight": 3,
+    "r3_earlier_both": 7,
+    "mean_common_steps": 29.642857142857142,
+    "r3_finders": {
+      "finds": 28,
+      "at_spawn": 4,
+      "exactly_one_moved": 27,
+      "exactly_one_moved_after_spawn": 24
+    },
+    "v16_finders": {
+      "finds": 25,
+      "at_spawn": 7,
+      "exactly_one_moved": 23,
+      "exactly_one_moved_after_spawn": 18
+    }
+  },
+  "r3_only": {
+    "maps": 17,
+    "seats": 21,
+    "metrics": {
+      "first_sight": {
+        "r3_mean": 42.666666666666664,
+        "v16_mean": 52.857142857142854,
+        "r3_median": 46.0,
+        "v16_median": 43.0,
+        "r3_less": 9,
+        "ties": 5,
+        "r3_more": 7
+      },
+      "first_credit": {
+        "r3_mean": 37.333333333333336,
+        "v16_mean": 43.714285714285715,
+        "r3_median": 41.0,
+        "v16_median": 41.0,
+        "r3_less": 6,
+        "ties": 9,
+        "r3_more": 6
+      },
+      "win_match": {
+        "r3_mean": 1.0,
+        "v16_mean": 0.6666666666666666,
+        "r3_median": 1.0,
+        "v16_median": 1.0,
+        "r3_less": 0,
+        "ties": 14,
+        "r3_more": 7
+      },
+      "points70": {
+        "r3_mean": 66.28571428571429,
+        "v16_mean": 47.904761904761905,
+        "r3_median": 51.0,
+        "v16_median": 28.0,
+        "r3_less": 4,
+        "ties": 0,
+        "r3_more": 17
+      },
+      "enemy70": {
+        "r3_mean": 50.476190476190474,
+        "v16_mean": 58.904761904761905,
+        "r3_median": 16.0,
+        "v16_median": 37.0,
+        "r3_less": 14,
+        "ties": 4,
+        "r3_more": 3
+      },
+      "final_points": {
+        "r3_mean": 244.38095238095238,
+        "v16_mean": 138.57142857142858,
+        "r3_median": 259.0,
+        "v16_median": 106.0,
+        "r3_less": 2,
+        "ties": 1,
+        "r3_more": 18
+      },
+      "active_ships": {
+        "r3_mean": 5.904761904761905,
+        "v16_mean": 5.428571428571429,
+        "r3_median": 7.0,
+        "v16_median": 6.0,
+        "r3_less": 5,
+        "ties": 8,
+        "r3_more": 8
+      },
+      "unique_new": {
+        "r3_mean": 139.0,
+        "v16_mean": 115.33333333333333,
+        "r3_median": 162.0,
+        "v16_median": 132.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 17
+      },
+      "productive_moves": {
+        "r3_mean": 59.095238095238095,
+        "v16_mean": 48.142857142857146,
+        "r3_median": 73.0,
+        "v16_median": 52.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 17
+      },
+      "ship_moves": {
+        "r3_mean": 127.71428571428571,
+        "v16_mean": 113.28571428571429,
+        "r3_median": 156.0,
+        "v16_median": 141.0,
+        "r3_less": 0,
+        "ties": 4,
+        "r3_more": 17
+      },
+      "new_seen": {
+        "r3_mean": 145.23809523809524,
+        "v16_mean": 120.28571428571429,
+        "r3_median": 167.0,
+        "v16_median": 135.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 17
+      }
+    },
+    "single_common": 19,
+    "common_r3_closer": 5,
+    "common_r3_closer_earlier_sight": 2,
+    "r3_earlier_both": 5,
+    "mean_common_steps": 28.19047619047619,
+    "r3_finders": {
+      "finds": 21,
+      "at_spawn": 3,
+      "exactly_one_moved": 20,
+      "exactly_one_moved_after_spawn": 18
+    },
+    "v16_finders": {
+      "finds": 18,
+      "at_spawn": 6,
+      "exactly_one_moved": 17,
+      "exactly_one_moved_after_spawn": 12
+    }
+  },
+  "both": {
+    "maps": 7,
+    "seats": 7,
+    "metrics": {
+      "first_sight": {
+        "r3_mean": 43.42857142857143,
+        "v16_mean": 46.57142857142857,
+        "r3_median": 37.0,
+        "v16_median": 46.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 3
+      },
+      "first_credit": {
+        "r3_mean": 39.714285714285715,
+        "v16_mean": 45.42857142857143,
+        "r3_median": 37.0,
+        "v16_median": 46.0,
+        "r3_less": 5,
+        "ties": 0,
+        "r3_more": 2
+      },
+      "win_match": {
+        "r3_mean": 1.0,
+        "v16_mean": 1.0,
+        "r3_median": 1.0,
+        "v16_median": 1.0,
+        "r3_less": 0,
+        "ties": 7,
+        "r3_more": 0
+      },
+      "points70": {
+        "r3_mean": 103.42857142857143,
+        "v16_mean": 47.142857142857146,
+        "r3_median": 35.0,
+        "v16_median": 43.0,
+        "r3_less": 2,
+        "ties": 0,
+        "r3_more": 5
+      },
+      "enemy70": {
+        "r3_mean": 46.714285714285715,
+        "v16_mean": 77.14285714285714,
+        "r3_median": 14.0,
+        "v16_median": 47.0,
+        "r3_less": 6,
+        "ties": 1,
+        "r3_more": 0
+      },
+      "final_points": {
+        "r3_mean": 328.57142857142856,
+        "v16_mean": 226.0,
+        "r3_median": 295.0,
+        "v16_median": 206.0,
+        "r3_less": 0,
+        "ties": 0,
+        "r3_more": 7
+      },
+      "active_ships": {
+        "r3_mean": 6.571428571428571,
+        "v16_mean": 5.0,
+        "r3_median": 7.0,
+        "v16_median": 5.0,
+        "r3_less": 0,
+        "ties": 1,
+        "r3_more": 6
+      },
+      "unique_new": {
+        "r3_mean": 158.42857142857142,
+        "v16_mean": 118.57142857142857,
+        "r3_median": 168.0,
+        "v16_median": 120.0,
+        "r3_less": 1,
+        "ties": 0,
+        "r3_more": 6
+      },
+      "productive_moves": {
+        "r3_mean": 65.57142857142857,
+        "v16_mean": 46.57142857142857,
+        "r3_median": 71.0,
+        "v16_median": 51.0,
+        "r3_less": 0,
+        "ties": 1,
+        "r3_more": 6
+      },
+      "ship_moves": {
+        "r3_mean": 169.57142857142858,
+        "v16_mean": 140.42857142857142,
+        "r3_median": 171.0,
+        "v16_median": 149.0,
+        "r3_less": 0,
+        "ties": 0,
+        "r3_more": 7
+      },
+      "new_seen": {
+        "r3_mean": 167.57142857142858,
+        "v16_mean": 127.14285714285714,
+        "r3_median": 174.0,
+        "v16_median": 133.0,
+        "r3_less": 1,
+        "ties": 0,
+        "r3_more": 6
+      }
+    },
+    "single_common": 6,
+    "common_r3_closer": 2,
+    "common_r3_closer_earlier_sight": 1,
+    "r3_earlier_both": 2,
+    "mean_common_steps": 34.0,
+    "r3_finders": {
+      "finds": 7,
+      "at_spawn": 1,
+      "exactly_one_moved": 7,
+      "exactly_one_moved_after_spawn": 6
+    },
+    "v16_finders": {
+      "finds": 7,
+      "at_spawn": 1,
+      "exactly_one_moved": 6,
+      "exactly_one_moved_after_spawn": 6
+    }
+  },
+  "p0": {
+    "maps": 19,
+    "seats": 19,
+    "metrics": {
+      "first_sight": {
+        "r3_mean": 42.73684210526316,
+        "v16_mean": 49.31578947368421,
+        "r3_median": 37.0,
+        "v16_median": 46.0,
+        "r3_less": 8,
+        "ties": 4,
+        "r3_more": 7
+      },
+      "first_credit": {
+        "r3_mean": 37.31578947368421,
+        "v16_mean": 41.31578947368421,
+        "r3_median": 37.0,
+        "v16_median": 41.0,
+        "r3_less": 7,
+        "ties": 5,
+        "r3_more": 7
+      },
+      "win_match": {
+        "r3_mean": 1.0,
+        "v16_mean": 0.7368421052631579,
+        "r3_median": 1.0,
+        "v16_median": 1.0,
+        "r3_less": 0,
+        "ties": 14,
+        "r3_more": 5
+      },
+      "points70": {
+        "r3_mean": 74.94736842105263,
+        "v16_mean": 45.89473684210526,
+        "r3_median": 51.0,
+        "v16_median": 34.0,
+        "r3_less": 5,
+        "ties": 0,
+        "r3_more": 14
+      },
+      "enemy70": {
+        "r3_mean": 53.526315789473685,
+        "v16_mean": 69.84210526315789,
+        "r3_median": 27.0,
+        "v16_median": 50.0,
+        "r3_less": 13,
+        "ties": 4,
+        "r3_more": 2
+      },
+      "final_points": {
+        "r3_mean": 254.94736842105263,
+        "v16_mean": 164.57894736842104,
+        "r3_median": 259.0,
+        "v16_median": 158.0,
+        "r3_less": 2,
+        "ties": 0,
+        "r3_more": 17
+      },
+      "active_ships": {
+        "r3_mean": 6.0,
+        "v16_mean": 5.2631578947368425,
+        "r3_median": 7.0,
+        "v16_median": 5.0,
+        "r3_less": 3,
+        "ties": 7,
+        "r3_more": 9
+      },
+      "unique_new": {
+        "r3_mean": 136.21052631578948,
+        "v16_mean": 107.78947368421052,
+        "r3_median": 162.0,
+        "v16_median": 124.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 15
+      },
+      "productive_moves": {
+        "r3_mean": 58.0,
+        "v16_mean": 44.526315789473685,
+        "r3_median": 71.0,
+        "v16_median": 51.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 15
+      },
+      "ship_moves": {
+        "r3_mean": 133.42105263157896,
+        "v16_mean": 114.21052631578948,
+        "r3_median": 158.0,
+        "v16_median": 141.0,
+        "r3_less": 0,
+        "ties": 3,
+        "r3_more": 16
+      },
+      "new_seen": {
+        "r3_mean": 143.94736842105263,
+        "v16_mean": 114.05263157894737,
+        "r3_median": 167.0,
+        "v16_median": 133.0,
+        "r3_less": 3,
+        "ties": 1,
+        "r3_more": 15
+      }
+    },
+    "single_common": 16,
+    "common_r3_closer": 4,
+    "common_r3_closer_earlier_sight": 2,
+    "r3_earlier_both": 4,
+    "mean_common_steps": 29.526315789473685,
+    "r3_finders": {
+      "finds": 19,
+      "at_spawn": 2,
+      "exactly_one_moved": 18,
+      "exactly_one_moved_after_spawn": 17
+    },
+    "v16_finders": {
+      "finds": 18,
+      "at_spawn": 4,
+      "exactly_one_moved": 16,
+      "exactly_one_moved_after_spawn": 14
+    }
+  },
+  "p1": {
+    "maps": 9,
+    "seats": 9,
+    "metrics": {
+      "first_sight": {
+        "r3_mean": 43.111111111111114,
+        "v16_mean": 55.44444444444444,
+        "r3_median": 46.0,
+        "v16_median": 43.0,
+        "r3_less": 4,
+        "ties": 2,
+        "r3_more": 3
+      },
+      "first_credit": {
+        "r3_mean": 39.22222222222222,
+        "v16_mean": 50.111111111111114,
+        "r3_median": 43.0,
+        "v16_median": 43.0,
+        "r3_less": 4,
+        "ties": 4,
+        "r3_more": 1
+      },
+      "win_match": {
+        "r3_mean": 1.0,
+        "v16_mean": 0.7777777777777778,
+        "r3_median": 1.0,
+        "v16_median": 1.0,
+        "r3_less": 0,
+        "ties": 7,
+        "r3_more": 2
+      },
+      "points70": {
+        "r3_mean": 76.88888888888889,
+        "v16_mean": 51.55555555555556,
+        "r3_median": 50.0,
+        "v16_median": 23.0,
+        "r3_less": 1,
+        "ties": 0,
+        "r3_more": 8
+      },
+      "enemy70": {
+        "r3_mean": 41.111111111111114,
+        "v16_mean": 50.0,
+        "r3_median": 5.0,
+        "v16_median": 22.0,
+        "r3_less": 7,
+        "ties": 1,
+        "r3_more": 1
+      },
+      "final_points": {
+        "r3_mean": 287.55555555555554,
+        "v16_mean": 151.66666666666666,
+        "r3_median": 303.0,
+        "v16_median": 175.0,
+        "r3_less": 0,
+        "ties": 1,
+        "r3_more": 8
+      },
+      "active_ships": {
+        "r3_mean": 6.222222222222222,
+        "v16_mean": 5.444444444444445,
+        "r3_median": 7.0,
+        "v16_median": 4.0,
+        "r3_less": 2,
+        "ties": 2,
+        "r3_more": 5
+      },
+      "unique_new": {
+        "r3_mean": 160.0,
+        "v16_mean": 133.77777777777777,
+        "r3_median": 175.0,
+        "v16_median": 132.0,
+        "r3_less": 1,
+        "ties": 0,
+        "r3_more": 8
+      },
+      "productive_moves": {
+        "r3_mean": 66.44444444444444,
+        "v16_mean": 54.55555555555556,
+        "r3_median": 73.0,
+        "v16_median": 58.0,
+        "r3_less": 0,
+        "ties": 1,
+        "r3_more": 8
+      },
+      "ship_moves": {
+        "r3_mean": 148.22222222222223,
+        "v16_mean": 132.44444444444446,
+        "r3_median": 170.0,
+        "v16_median": 160.0,
+        "r3_less": 0,
+        "ties": 1,
+        "r3_more": 8
+      },
+      "new_seen": {
+        "r3_mean": 165.33333333333334,
+        "v16_mean": 138.77777777777777,
+        "r3_median": 181.0,
+        "v16_median": 135.0,
+        "r3_less": 1,
+        "ties": 0,
+        "r3_more": 8
+      }
+    },
+    "single_common": 9,
+    "common_r3_closer": 3,
+    "common_r3_closer_earlier_sight": 1,
+    "r3_earlier_both": 3,
+    "mean_common_steps": 29.88888888888889,
+    "r3_finders": {
+      "finds": 9,
+      "at_spawn": 2,
+      "exactly_one_moved": 9,
+      "exactly_one_moved_after_spawn": 7
+    },
+    "v16_finders": {
+      "finds": 7,
+      "at_spawn": 3,
+      "exactly_one_moved": 7,
+      "exactly_one_moved_after_spawn": 4
+    }
+  },
+  "sources": {
+    "state.py": "8b658ed767ff0fd9f9cfbec681d57157f2702826979e611fba392fb183d503d5",
+    "wrappers.py": "79ce95b43c8e78a1dada485266d71d210dc9065e89e4880f1af95504b76bcf26",
+    "archiv.py": "4624a7c08217e8fdf983682e6db5b48cc8b32638afe8967973f958a746c938df",
+    "PLAN.md": "b2dc47a891855a0af07ae510badfa38ba8caaf7513c4436a9513c43b271ff3f6",
+    "sitzpaare.json.gz": "8b1955ceefc0801a292e7d9a96f7d3bd06ba1d71601d7c801cff5b3872e657b1"
+  },
+  "packages": {
+    "r3": "8aabdc732143a1e3f5babdd6edb6272e166b54671ee397e50e02083261c4a64d",
+    "v16": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
+  }
+}
