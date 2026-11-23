@@ -1,6 +1,6 @@
 # Der unmittelbare Punktegewinn bestätigt sich, ein Gesamtsieg geht verloren
 
-Die unabhängige Bestätigung auf 120 weiteren Sicht-1-Karten und 720 vollständigen Partien zeigte 28 zusätzliche eigene Punkte auf dem geänderten Zug. Das entspricht 0,117 Punkten pro gepaartem Sitz [0,071; 0,167]. Direkt gegen Original-V16 gewann die Feldprobe 123/240 Spiele (51,25 Prozent [47,50; 55,00]). Gegen Original-Solution gewann sie 231/240, das ursprüngliche V16 auf denselben Sitzen 232/240. Karte 162800176 P0 wechselte von Sieg zu Niederlage. Damit verfehlt die Feldprobe eine der fünf Bestätigungsbedingungen. Die ungefilterte allgemeine Prüfung entfällt. [Vollständige Bestätigung](bestaetigung/sicht1/ERGEBNIS.md)
+Die unabhängige Bestätigung auf 120 weiteren Sicht-1-Karten und 720 vollständigen Partien zeigte 28 zusätzliche eigene Punkte auf dem geänderten Zug. Das entspricht 0,117 Punkten pro gepaartem Sitz [0,071; 0,167]. Direkt gegen Original-V16 gewann die Feldprobe 123/240 Spiele (51,25 Prozent [47,50; 55,00]). Gegen Original-Solution gewann sie 231/240, das ursprüngliche V16 auf denselben Sitzen 232/240. Karte 162800176 P0 wechselte von Sieg zu Niederlage. Damit verfehlt die Feldprobe eine der fünf Bestätigungsbedingungen. Die ungefilterte allgemeine Prüfung entfällt. [Vollständige Bestätigung](bestaetigung/sicht1/ERGEBNIS.md) · [Zugweiser Vergleich des verlorenen Sitzes](bestaetigung/verlust/ERGEBNIS.md)
 
 ## Vorangegangene Auswahl auf 48 Karten
 

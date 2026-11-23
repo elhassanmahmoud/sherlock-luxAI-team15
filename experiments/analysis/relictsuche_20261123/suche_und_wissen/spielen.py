@@ -24,9 +24,20 @@ from scripts.scoring import point_tile_map
 HERE=Path(__file__).resolve().parent
 
 
+class NativeProposal:
+    """The scout can replace a native command after the memory has supplied truthful features."""
+    def __init__(self,scout):
+        self.base=scout.base.base
+        self.scout=scout
+
+    @property
+    def changes(self):
+        return self.scout.changes
+
+
 class Audit(Monitor):
     def __init__(self,env,t,player,kind):
-        route=player if kind in ("suche","beide") else None
+        route=NativeProposal(player) if kind=="beide" else player if kind=="suche" else None
         super().__init__(env,t,"discovery",route)
         self.memory=player.base if kind=="beide" else player if kind=="wissen" else None
         self.checked=[]

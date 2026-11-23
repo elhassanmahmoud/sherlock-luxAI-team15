@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Zwei frühe Niederlagen auf ihren tatsächlichen weiteren Verlauf geprüft
+
+Die gelernte Entscheidung über einen oder drei abweichende Suchschritte gewann auf getrennten Karten 45/48 gegen Solution gegenüber 46/48 für V16 und 24/48 direkt gegen V16. Beide ursprünglichen externen Niederlagen blieben bei allen drei real ausgespielten Eröffnungen Niederlagen, jeweils nach einem gewonnenen ersten Match. Gegen dieselben Gegner und bei identischen 101 V16-Auftaktbefehlen gewann eine R3-Übernahme beide ganzen Spiele. Auf einem dieser zwei Verlustsitze reichte zusätzliches öffentliches Feldwissen, um Match 3 von 412:427 auf 461:256 zu drehen. Die allgemeinen Stärketests bleiben unabhängig von diesen ausgewählten Fällen. [Fallprüfung](../experiments/analysis/relictsuche_20261123/entscheidende_matches/ERGEBNIS.md) · [Gestoppter Suchlängenwähler](../experiments/analysis/relictsuche_20261123/spielwert/ERGEBNIS.md) · [Vergleich der Suchmethoden](../experiments/analysis/relictsuche_20261123/suchvergleich/suchvergleich.png)
+
 ## 23.11.2026 – Feldprobe bestätigt Sofortpunkte, kostet einen ganzen Sieg
 
 Auf 120 neuen Sicht-1-Karten brachte das Anfahren eines zuvor ungewissen Felds gegenüber dem tatsächlichen ursprünglichen Befehl 28 zusätzliche Sofortpunkte gegen Solution. Bei ganzen Spielen gewann die Feldprobe 231/240, Original-V16 232/240. Direkt ergaben sich 123/240. Ein weiterer Suchkandidat verbindet die gelernte Verteilung der ersten Reliktposition mit der Sichtvorhersage der übrigen Flotte. Ein Rücknahmetest auf drei bekannten Fehlerkarten verkürzte die tatsächliche Besetzung falscher Punktefelder von 140 auf 50 Schiffszüge. Die unabhängigen Spielprüfungen laufen. V16 ist weiterhin die Abgabe. [Tagesübersicht und Einzelberichte](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
