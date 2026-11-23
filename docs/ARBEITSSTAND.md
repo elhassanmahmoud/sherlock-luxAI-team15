@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Unabhängige Prüfung des Kundschafters mit 319 von 320 Solution-Siegen
+
+Auf 160 neuen ungefilterten Karten gewann die nominierte Suchrichtung 319/320 gegen Solution (V16 316/320) und 161/320 direkt gegen V16. Die drei gewonnenen Sitze lagen auf zwei Karten. Bei Sichtweite eins rückte die erste Gutschrift um 2,57 Züge vor (95-%-Kartenintervall +1,04 bis +4,39); ein allgemeiner Vorteil bei der ersten Reliktsicht und die Übernahmeschwelle für die Spielstärke wurden verfehlt. Die einzige übrige Niederlage betraf Sichtweite zwei und war befehlsgleich mit V16. In einer zusätzlichen frischen Studie gewann der Kundschafter gegen Solution dieselben 61/64 Spiele wie V16. Eine letzte getrennte Wiederholung auf 96 neuen Sicht-1-Karten wurde mit demselben versiegelten Spieler festgeschrieben. [Gesamtprüfung](../experiments/analysis/relictsuche_20261123/abschlusspruefung/ERGEBNIS.md) · [Zusatzvergleich](../experiments/analysis/relictsuche_20261123/kundschafter_feldwissen/ERGEBNIS.md) · [Letzter Prüfsatz](../experiments/analysis/relictsuche_20261123/sicht1_wiederholung/PLAN.md)
+
 ## 23.11.2026 – Der Kundschafter hat den ersten Stärketest bestanden
 
 Der kombinierte Reliktort- und Flottenschätzer gewann auf 48 neuen Sicht-1-Karten 95 von 96 Spielen gegen Solution gegenüber 93 von 96 für V16. Direkt gewann er 51 von 96 gegen V16. Ein bewegtes freies Schiff rettete zwei Spiele, in denen V16 das zweite Match verloren hatte. Der getrennte Stärkenachweis dieses Spielers läuft auf 160 vorher reservierten ungefilterten Karten. Die Kursfassung wird separat geprüft. [Ergebnisse und zwei Spielsituationen](../experiments/analysis/relictsuche_20261123/ortundflotte/ERGEBNIS.md) · [Festgeschriebene Identität des Kandidaten](../experiments/analysis/relictsuche_20261123/abschlusspruefung/nominierung.json)

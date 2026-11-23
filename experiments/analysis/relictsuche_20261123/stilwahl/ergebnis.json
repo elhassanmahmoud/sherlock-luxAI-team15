@@ -1,0 +1,415 @@
+{
+  "gates": {
+    "eight_real_switches": false,
+    "neither_opponent_loses_net": true,
+    "nonnegative_risk_lower90": true,
+    "risk_better_than_native_and_base": false,
+    "two_gains_in_two_folds": false
+  },
+  "models": {
+    "always_pick": {
+      "both": {
+        "gain_folds": [
+          3
+        ],
+        "gain_seeds": [
+          162000048
+        ],
+        "gains": 1,
+        "loss_seeds": [
+          162000052,
+          162000064,
+          162000109,
+          162000131,
+          162000159,
+          162000175,
+          162000201,
+          162000235,
+          162000243,
+          162000255,
+          162000325,
+          162000364,
+          162000388,
+          162000395,
+          162000413,
+          162000422,
+          162000470,
+          162000480,
+          162000491,
+          162000514,
+          162000535,
+          162000554,
+          162000599,
+          162000644,
+          162000658
+        ],
+        "losses": 25,
+        "maps": 160,
+        "native_wins": 113,
+        "risk_ci95": [
+          -0.425,
+          -0.19375
+        ],
+        "risk_lower90": -0.38125,
+        "risk_mean": -0.30625,
+        "risk_total": -49,
+        "switched": 115,
+        "whole_wins": 89
+      },
+      "solution92": {
+        "gain_folds": [
+          3
+        ],
+        "gain_seeds": [
+          162000048
+        ],
+        "gains": 1,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 76,
+        "risk_ci95": [
+          0.0,
+          0.0375
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0125,
+        "risk_total": 1,
+        "switched": 71,
+        "whole_wins": 77
+      },
+      "v16": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [
+          162000052,
+          162000064,
+          162000109,
+          162000131,
+          162000159,
+          162000175,
+          162000201,
+          162000235,
+          162000243,
+          162000255,
+          162000325,
+          162000364,
+          162000388,
+          162000395,
+          162000413,
+          162000422,
+          162000470,
+          162000480,
+          162000491,
+          162000514,
+          162000535,
+          162000554,
+          162000599,
+          162000644,
+          162000658
+        ],
+        "losses": 25,
+        "maps": 80,
+        "native_wins": 37,
+        "risk_ci95": [
+          -0.825,
+          -0.425
+        ],
+        "risk_lower90": -0.75,
+        "risk_mean": -0.625,
+        "risk_total": -50,
+        "switched": 44,
+        "whole_wins": 12
+      }
+    },
+    "base21": {
+      "both": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 160,
+        "native_wins": 113,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 1,
+        "whole_wins": 113
+      },
+      "solution92": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 76,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 1,
+        "whole_wins": 76
+      },
+      "v16": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 37,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 37
+      }
+    },
+    "extended": {
+      "both": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 160,
+        "native_wins": 113,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 2,
+        "whole_wins": 113
+      },
+      "solution92": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 76,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 2,
+        "whole_wins": 76
+      },
+      "v16": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 37,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 37
+      }
+    },
+    "native_pick": {
+      "both": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 160,
+        "native_wins": 113,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 113
+      },
+      "solution92": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 76,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 76
+      },
+      "v16": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 37,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 37
+      }
+    },
+    "old_pick": {
+      "both": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 160,
+        "native_wins": 113,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 6,
+        "whole_wins": 113
+      },
+      "solution92": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 76,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 6,
+        "whole_wins": 76
+      },
+      "v16": {
+        "gain_folds": [],
+        "gain_seeds": [],
+        "gains": 0,
+        "loss_seeds": [],
+        "losses": 0,
+        "maps": 80,
+        "native_wins": 37,
+        "risk_ci95": [
+          0.0,
+          0.0
+        ],
+        "risk_lower90": 0.0,
+        "risk_mean": 0.0,
+        "risk_total": 0,
+        "switched": 0,
+        "whole_wins": 37
+      }
+    }
+  },
+  "passed": false,
+  "support": {
+    "both": {
+      "m1_wins": 115,
+      "maps": 160,
+      "observation_counts": {
+        "consecutive": 492,
+        "moving": 1062
+      },
+      "supported": 45,
+      "true_gains_all": 1,
+      "true_gains_supported": 1,
+      "true_gains_without_contact_support": [],
+      "true_losses_all": 25,
+      "true_losses_supported": 0
+    },
+    "solution92": {
+      "m1_wins": 71,
+      "maps": 80,
+      "observation_counts": {
+        "consecutive": 492,
+        "moving": 1062
+      },
+      "supported": 45,
+      "true_gains_all": 1,
+      "true_gains_supported": 1,
+      "true_gains_without_contact_support": [],
+      "true_losses_all": 0,
+      "true_losses_supported": 0
+    },
+    "v16": {
+      "m1_wins": 44,
+      "maps": 80,
+      "observation_counts": {
+        "consecutive": 0,
+        "moving": 0
+      },
+      "supported": 0,
+      "true_gains_all": 0,
+      "true_gains_supported": 0,
+      "true_gains_without_contact_support": [],
+      "true_losses_all": 25,
+      "true_losses_supported": 0
+    }
+  },
+  "technical": {
+    "archived_games": 275,
+    "archived_scores_sha": "fbc358ca7eed53cbe17bc1c7c9bf136f9a63b92ed8c0d233956bcde9d2a4c96c",
+    "input_rows_sha": "ac24e02353fff4fe29ba4043af91c8ea905baa7f94dd874211928797d925d8d8",
+    "maps": 160,
+    "mirror_checks": 160,
+    "never_opened_valid_maps": 48,
+    "outcome_identifiers_in_model": false,
+    "plan_sha": "35ab7545887ce989c09a3f6157bb46bcf26a2272c4a10839e799c25d087a922d",
+    "reproduced_original_features": 3360,
+    "test_per_fold": 40,
+    "train_supported_per_fold": [
+      36,
+      33,
+      33,
+      33
+    ],
+    "uid_permutation_checks": 160
+  }
+}

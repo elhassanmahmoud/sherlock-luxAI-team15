@@ -1,0 +1,3 @@
+# Das zuerst verfügbare Schiff war selten austauschbar
+
+Auf 160 neuen Entwicklungsplätzen erschien vor dem ersten Fund oder Punkt 136-mal ein geeignetes freies Schiff. Nur auf elf Plätzen waren im gleichen Moment mehrere Schiffe mit ausreichender Wartezeit, Energie und mehreren sicheren Richtungen verfügbar. Der neue Bewerter bevorzugte je nach Mindestvorsprung sechs oder sieben Mal ein anderes Schiff. In keinem dieser Fälle änderte sich im restlichen Acht-Zug-Vergleich der tatsächliche erste Blick auf ein aktives Relikt. Der vorab geregelte Gleichstand wählte das ursprüngliche Schiff. Es folgten keine neuen Ganzspieltests dieser Variante. [Ergebnisse](train.json) · [Schiffe und verglichene Wege](train_karten.jsonl.gz)
