@@ -1,0 +1,5 @@
+# Ein anderer Blick auf demselben Weg reicht selten
+
+Im ursprünglichen V16-Verlauf fanden sich 7.488 geeignete rechtwinklige Wendungen auf 159 von 160 Lernkarten. Nur bei acht dieser Wendungen auf acht Karten hätte das andere freie Zwischenfeld ein bereits aktives, noch ungesehenes erstes Relikt in Reichweite eins bringen können. Selbst wenn ein Spieler die kommende Bewegung und den tatsächlichen Reliktort gekannt und je Karte die früheste solche Gelegenheit getroffen hätte, liegt der so mögliche direkte Zeitgewinn bei durchschnittlich **0,22 Zügen** über alle Karten. Gefordert war mindestens ein Zug.
+
+Das ist eine bewusst günstige Rechnung für den unmittelbaren Reliktblick. Nebel kann einen geometrisch möglichen Blick zusätzlich verhindern. Eine geänderte Bewegung könnte auch später die übrige Flotte beeinflussen; das ist mit diesem Vergleich unbeobachtet. Für das Ziel eines direkten früheren Blicks bei derselben Endposition trägt die Variante zu selten. Der Vorhersagelauf für die zweite Bewegung entfällt. [Zählung](ergebnis.json) · [Alle 160 Karten](karten.jsonl.gz) · [Definition und Bedingungen](PLAN.md)
