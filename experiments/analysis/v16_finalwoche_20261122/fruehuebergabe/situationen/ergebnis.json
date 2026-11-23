@@ -1,0 +1,93 @@
+{
+  "groups": {
+    "solution_gerettet": {
+      "games": 2,
+      "maps": 2,
+      "triggered": 1,
+      "positive_maps": 1,
+      "active_opponents": [
+        "solution92"
+      ],
+      "active_sides": [
+        1
+      ],
+      "steps": {
+        "6": 1,
+        "4": 1
+      },
+      "positive_by_sensor": {
+        "1": 1
+      }
+    },
+    "kaggle_verloren": {
+      "games": 6,
+      "maps": 3,
+      "triggered": 2,
+      "positive_maps": 1,
+      "active_opponents": [
+        "kaggle3"
+      ],
+      "active_sides": [
+        0,
+        1
+      ],
+      "steps": {
+        "6": 2,
+        "5": 2,
+        "8": 2
+      },
+      "positive_by_sensor": {
+        "1": 2
+      }
+    },
+    "kaggle_gerettet": {
+      "games": 2,
+      "maps": 1,
+      "triggered": 0,
+      "positive_maps": 0,
+      "active_opponents": [],
+      "active_sides": [],
+      "steps": {
+        "6": 2
+      },
+      "positive_by_sensor": {}
+    },
+    "kontrolle": {
+      "games": 32,
+      "maps": 32,
+      "triggered": 17,
+      "positive_maps": 17,
+      "active_opponents": [
+        "kaggle3",
+        "solution92"
+      ],
+      "active_sides": [
+        0,
+        1
+      ],
+      "steps": {
+        "5": 6,
+        "4": 5,
+        "2": 7,
+        "1": 7,
+        "21": 1,
+        "3": 3,
+        "6": 1,
+        "10": 1,
+        "9": 1
+      },
+      "positive_by_sensor": {
+        "1": 8,
+        "2": 9
+      }
+    }
+  },
+  "gates": {
+    "both_saved_solution": false,
+    "none_of_six_kaggle_losses": false,
+    "control_frequency": true,
+    "control_both_seats": true,
+    "control_both_opponents": true
+  },
+  "passed": false
+}
