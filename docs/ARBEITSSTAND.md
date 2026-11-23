@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Die Testversion läuft auch im Kursrunner
+
+Der gelernte Spätzug wurde separat verpackt. In Python 3.10 und 3.13 liefert die ZIP über vier echte Spielverläufe jeweils dieselben 19.392 Einzelbefehle wie das Forschungsmodell. Im unveränderten Kursrunner reproduzierten zwei ganze Spiele dieselben Befehle bei beiden Trainingseinstellungen. Parallel wird der unabhängige Stärkevergleich abgeschlossen. [Kursprüfung](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/KURSPRUEFUNG.md)
+
+Ein zweiter Lernversuch prüft, welche der zunächst guten Bewegungen nach 15 echten Zügen noch etwas bringen. Trainings- und Prüfkarten sowie die Anforderungen an den Vorteil sind vor der ersten Erhebung festgelegt. [Längerfristiger Bewegungswert](../experiments/analysis/v16_finalwoche_20261122/folgewert/PLAN.md)
+
 ## 23.11.2026 – Gelernter Spätzug erreicht unabhängigen Ganzspielvergleich
 
 Auf 40 neuen Karten spielte der am tatsächlichen Punktertrag trainierte Berater 80/80 gegen Solution (V16 ebenfalls 80), 6/80 gegen den Kaggle-Dritten (V16 zwei) und 45/80 direkt gegen V16. Alle Auswahlkriterien sind erfüllt. Auf weiteren 120 Karten prüft eine getrennte Messung mit 1.040 Spielen die gemeinsame externe Siegquote. Das alternative Vermeiden doppelter Zielorte erzielte 80/80 gegen Solution (V16 79) und 4/80 gegen Kaggle (V16 zwei), blieb im Direktvergleich aber bei 38/80. [Gelernter Berater](../experiments/analysis/v16_finalwoche_20261122/zugnutzen/ERGEBNIS_AUSWAHL.md) · [Doppelte Zielwahl](../experiments/analysis/v16_finalwoche_20261122/doppelziel/ERGEBNIS.md)
