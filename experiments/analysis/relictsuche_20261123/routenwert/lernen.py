@@ -1,9 +1,7 @@
 """Fit public route utility on training maps and evaluate once on held-out matched outcomes."""
 import argparse
 import gzip
-import hashlib
 import json
-import math
 from pathlib import Path
 
 import numpy as np

@@ -1,0 +1,60 @@
+{
+  "training": {
+    "maps": 320,
+    "openings": 1238,
+    "raw_sha256": "e4af62c489ba70ebe5a6deab9973dcb8d134b445289c741189a6fedbacc91a01",
+    "eligible": 306,
+    "any_earlier": 128,
+    "prospectively_earlier": 50,
+    "prospectively_later": 31,
+    "gain_means": [
+      1.153125,
+      0.890625,
+      2.228125,
+      0.009375
+    ],
+    "ci95": [
+      [
+        0.203125,
+        0.174921875,
+        -0.79078125,
+        -0.0125
+      ],
+      [
+        2.178203124999999,
+        1.662578124999999,
+        5.659453124999999,
+        0.034375
+      ]
+    ]
+  },
+  "held": {
+    "maps": 80,
+    "openings": 302,
+    "raw_sha256": "df776b8b2f680a9f0ce26ca3c966f604a6aeb4a88c2bfe4661de9e336b06bf14",
+    "eligible": 74,
+    "any_earlier": 32,
+    "prospectively_earlier": 7,
+    "prospectively_later": 5,
+    "gain_means": [
+      0.6125,
+      0.9625,
+      -3.3125,
+      0.0
+    ],
+    "ci95": [
+      [
+        -0.8128124999999999,
+        -0.4,
+        -8.538124999999999,
+        -0.0375
+      ],
+      [
+        2.1125,
+        2.725,
+        1.4128124999999956,
+        0.0375
+      ]
+    ]
+  }
+}
