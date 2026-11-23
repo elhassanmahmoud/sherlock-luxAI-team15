@@ -1,0 +1,7 @@
+# Die vier verbliebenen Solution-Niederlagen
+
+Im unabhängigen 200-Karten-Vergleich des Reliktsignals blieben genau vier verlorene Startplätze. Auf allen vier Karten gewann der Kandidat den anderen Startplatz. Der Kundschafter änderte auf keinem dieser acht Sitze einen Befehl. Hier interessiert, in welcher Spielphase und auf welchen Feldern der Gegenspieler den Abstand aufbaut.
+
+Für jede Karte spielen wir den gesicherten Sherlock auf beiden Startseiten nochmals, ohne Eingriff. Vor jedem Zug hat Sherlock zu einem Feld entweder ein bestätigtes Punktewissen, kennt nur seine Lage im Umfeld eines bereits entdeckten Relikts oder kennt dort auch kein Reliktumfeld. Die spiegelbildlich erschlossenen Felder werden in Weltkoordinaten umgerechnet. Nach dem Zug bestimmen wir aus der Engine die Felder, die eigenen und gegnerischen Punkte tatsächlich erzeugten. Gemeinsam besetzte Felder heben sich im Saldo auf. Die drei Wissenskategorien sind disjunkt. Für jede werden die Feldpunkte beider Teams und zusätzlich die zuvor tatsächlich sichtbaren Gegner-Punktefelder erfasst.
+
+Je Startplatz werden die drei Matches getrennt in vier Zeitfenstern ausgewertet (Züge 0–25, 26–50, 51–75, 76–100). Alle vollständigen Endpunkte und die drei Matches müssen exakt zum ursprünglichen Versuch passen. Dies sind gezielt ausgewählte Niederlagen und ihre spiegelverkehrten Kontrollsitze. Sie erlauben eine konkrete Fehlererklärung auf den vier Karten. Eine nächste Taktik braucht eigene Verhaltens- und unabhängige Leistungsprüfungen.
