@@ -76,6 +76,27 @@ def main():
             'python "$d/auswerten.py" frisch',
             'python "$d/berichten.py"',
             "```",""]
+    defeated=[r for r in raw if r["opponent"]=="solution92" and r["arm"]=="beide" and not r["game_win"]]
+    loss_maps=sorted({r["seed"] for r in defeated})
+    old_lost_first=sum(r["match_winners"][0]!=int(r["side"][-1]) for r in defeated)
+    no_change=sum(not r["events"] for r in defeated)
+    external_flip_maps=sorted({r["seed"] for r in ka["flips"]})
+    map_note=("Beide Startseiten liegen auf derselben Karte" if len(external_flip_maps)==1 and len(ka["flips"])==2
+              else "Die betroffenen Karten sind")
+    direct_flips=[r for r in duel["inferred_control"] if (r["baseline_matches"]>=2)!=(r["candidate_matches"]>=2)]
+    notes=["## Wo die noch offenen Niederlagen liegen","",
+        f"Die {len(defeated)} Solution-Niederlagen der Kombination lagen auf {len(loss_maps)} Karten ({', '.join(map(str,loss_maps))}). "
+        f"In {old_lost_first} dieser Sitze war Match 1 verloren, in {no_change} änderte keines der beiden Module einen Befehl. "
+        "Mitte2 setzt voraus, dass Sherlock das erste Match gewonnen hat. Für die weitere Entwicklung bietet sich deshalb eine getrennte Untersuchung verlorener Auftaktmatches und ihrer Aufholchancen an.",
+        "",
+        f"Gegen Kaggle änderte sich der Spielsieger auf {len(ka['flips'])} Startseiten. {map_note} "
+        f"({', '.join(map(str,external_flip_maps)) or 'keine'}). Das gepaarte Intervall für den Kaggle-Unterschied beträgt "
+        f"{de(100*ka['ci95'][0])} bis {de(100*ka['ci95'][1])} Prozentpunkte. "
+        f"In den direkten Spielen mit einem unveränderten Gegensitz kippten {len(direct_flips)} ganze Ergebnisse. "
+        + " ".join(f"Auf {r['seed']}/P{r['side'][-1]} ging die Matchbilanz von {r['baseline_matches']}:{3-r['baseline_matches']} auf {r['candidate_matches']}:{3-r['candidate_matches']} zurück." for r in direct_flips),
+        ""]
+    before=lines.index("## Entscheidung und Herkunft")
+    lines[before:before]=notes
     (HERE/"ERGEBNIS.md").write_text("\n".join(lines))
 
 

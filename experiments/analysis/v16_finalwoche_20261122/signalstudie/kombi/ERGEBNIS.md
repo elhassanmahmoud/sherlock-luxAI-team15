@@ -22,6 +22,12 @@ Die folgenden Kategorien zählen ganze Sitze nach den tatsächlich geänderten B
 
 Im Direktduell änderte die Kombination auf 17 von 80 Sitzen mindestens einen Befehl. Sie gewann 12 dieser veränderten Sitze und 26 der übrigen 63. P0 gewann 19/40, P1 19/40. Auf 23 der 40 Karten blieben beide Sitze unverändert, auf 0 griff die Kombination auf beiden Sitzen ein. Bei 17 weiteren Karten gibt der unveränderte Gegensitz eine direkte Referenz für die Wirkung auf den anderen Sitz.
 
+## Wo die noch offenen Niederlagen liegen
+
+Die 3 Solution-Niederlagen der Kombination lagen auf 2 Karten (160386062, 160386070). In 3 dieser Sitze war Match 1 verloren, in 3 änderte keines der beiden Module einen Befehl. Mitte2 setzt voraus, dass Sherlock das erste Match gewonnen hat. Für die weitere Entwicklung bietet sich deshalb eine getrennte Untersuchung verlorener Auftaktmatches und ihrer Aufholchancen an.
+
+Gegen Kaggle änderte sich der Spielsieger auf 2 Startseiten. Beide Startseiten liegen auf derselben Karte (160386074). Das gepaarte Intervall für den Kaggle-Unterschied beträgt 0,00 bis 3,75 Prozentpunkte. In den direkten Spielen mit einem unveränderten Gegensitz kippten 2 ganze Ergebnisse. Auf 160386003/P0 ging die Matchbilanz von 2:1 auf 1:2 zurück. Auf 160386020/P0 ging die Matchbilanz von 2:1 auf 1:2 zurück.
+
 ## Entscheidung und Herkunft
 
 Für die positive Entscheidung waren alle drei Bedingungen gemeinsam festgelegt. Die untere Grenze für zusätzliche Solution-Siege ist nicht strikt positiv. Die Bedingung für mindestens so viele ganze Kaggle-Siege wie V16 ist erfüllt, die Grenze von 40/80 Direktspielen ist verfehlt.
