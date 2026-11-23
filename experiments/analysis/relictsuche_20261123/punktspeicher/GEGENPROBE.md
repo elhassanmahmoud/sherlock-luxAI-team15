@@ -1,0 +1,5 @@
+# Erkannte Felder und Nutzen des matchübergreifenden Speichers
+
+Vor der ersten Beweisauswertung festgelegt. Dieselben öffentlichen Gleichungen werden zweimal ausgewertet. Der Hauptspeicher behält positive Fakten und alte untere Gutschriftgrenzen über die Matchgrenze. Die Kontrollrechnung verwirft beim Matchwechsel sukzessive alle alten Schranken und Festlegungen. Beide verwenden innerhalb eines Matches dieselben Rechenregeln. Ein Vorsprung nur im dauerhaften Speicher und ein bereits in einem früheren Match belegter sowie weiterhin von V16 übersehener Punkt werden gesondert erfasst.
+
+Zusätzlich zur engen Gelegenheit (alternativer Kurs auf sichtbares freies Feld) zählen wir, ob ein freies eigenes Schiff überhaupt physisch mit einem erlaubten Schritt auf das Ziel gelangen könnte, auch wenn V16 diese Richtung schon wählte oder ein sichtbarer Gegner dort steht. Diese weitere Zahl beschreibt Zugang und begründet keinen zusätzlichen Ertrag. Die früheste öffentliche Ableitung, V16s erste positive Markierung und ein gleichzeitiger Widerspruch zur Nullmarkierung werden getrennt vom tatsächlichen Besetzen gespeichert.
