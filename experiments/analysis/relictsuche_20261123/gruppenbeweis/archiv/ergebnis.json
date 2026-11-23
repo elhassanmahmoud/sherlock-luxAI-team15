@@ -1,0 +1,226 @@
+{
+  "audit_sha256": "47e6e377105fa73e6f9af2b9879de2ce5e024195eb518e9c20ac71f10b725edc",
+  "categories": {
+    "also_single": {
+      "decision_times": 0,
+      "group_ticks": 0,
+      "map_groups": 0,
+      "maps": 0,
+      "seat_groups": 0,
+      "seats": 0,
+      "sides": [
+        0,
+        0
+      ],
+      "ticks_by_match": [
+        0,
+        0,
+        0
+      ],
+      "ticks_by_size": {}
+    },
+    "ambiguous": {
+      "decision_times": 2,
+      "group_ticks": 3,
+      "map_groups": 2,
+      "maps": 1,
+      "seat_groups": 2,
+      "seats": 1,
+      "sides": [
+        1,
+        0
+      ],
+      "ticks_by_match": [
+        3,
+        0,
+        0
+      ],
+      "ticks_by_size": {
+        "3": 3
+      }
+    },
+    "full": {
+      "decision_times": 2,
+      "group_ticks": 3,
+      "map_groups": 2,
+      "maps": 1,
+      "seat_groups": 2,
+      "seats": 1,
+      "sides": [
+        1,
+        0
+      ],
+      "ticks_by_match": [
+        3,
+        0,
+        0
+      ],
+      "ticks_by_size": {
+        "3": 3
+      }
+    },
+    "open": {
+      "decision_times": 142,
+      "group_ticks": 1124,
+      "map_groups": 55,
+      "maps": 2,
+      "seat_groups": 77,
+      "seats": 4,
+      "sides": [
+        2,
+        2
+      ],
+      "ticks_by_match": [
+        1066,
+        33,
+        25
+      ],
+      "ticks_by_size": {
+        "2": 172,
+        "3": 952
+      }
+    },
+    "partial": {
+      "decision_times": 57,
+      "group_ticks": 195,
+      "map_groups": 36,
+      "maps": 2,
+      "seat_groups": 46,
+      "seats": 4,
+      "sides": [
+        2,
+        2
+      ],
+      "ticks_by_match": [
+        190,
+        3,
+        2
+      ],
+      "ticks_by_size": {
+        "2": 53,
+        "3": 142
+      }
+    },
+    "partial_without_full": {
+      "decision_times": 57,
+      "group_ticks": 192,
+      "map_groups": 36,
+      "maps": 2,
+      "seat_groups": 46,
+      "seats": 4,
+      "sides": [
+        2,
+        2
+      ],
+      "ticks_by_match": [
+        187,
+        3,
+        2
+      ],
+      "ticks_by_size": {
+        "2": 53,
+        "3": 139
+      }
+    },
+    "primary": {
+      "decision_times": 2,
+      "group_ticks": 3,
+      "map_groups": 2,
+      "maps": 1,
+      "seat_groups": 2,
+      "seats": 1,
+      "sides": [
+        1,
+        0
+      ],
+      "ticks_by_match": [
+        3,
+        0,
+        0
+      ],
+      "ticks_by_size": {
+        "3": 3
+      }
+    },
+    "separate": {
+      "decision_times": 2,
+      "group_ticks": 3,
+      "map_groups": 2,
+      "maps": 1,
+      "seat_groups": 2,
+      "seats": 1,
+      "sides": [
+        1,
+        0
+      ],
+      "ticks_by_match": [
+        3,
+        0,
+        0
+      ],
+      "ticks_by_size": {
+        "3": 3
+      }
+    }
+  },
+  "checks": {
+    "group_zero_rejected_at_first_proof": 2,
+    "independent_route_frames": 1212,
+    "observations": 1212,
+    "public_integer_queries": 9,
+    "validated_group_2_ticks": 5599,
+    "validated_group_3_ticks": 14308
+  },
+  "consecutive_seats": [
+    [
+      161620111,
+      0
+    ]
+  ],
+  "evaluation": {
+    "audit.py": "beb73575932d582fa5b348ff236a868facaf433f38024dee696e4a751d64e8f1",
+    "auswerten.py": "147200bee514e5d9f7ac306d6189fb0d446bd4c4e91ccee5c184b6a9973e3a88",
+    "pruefen.py": "5380e6587f17e988c99f52f33d1f5dde9cede7219c6d2300f2438b835138b7e1"
+  },
+  "evidence_sha256": "aaba16348c4a2ec548b3dec24107346a109b95e6875c2330589102ce79d4d517",
+  "games": 4,
+  "gate_applies": false,
+  "gates": {
+    "eight_maps": false,
+    "eight_repeated_seats": false,
+    "three_per_side": false,
+    "twelve_seats": false
+  },
+  "group": "archiv",
+  "maps": 2,
+  "pass_all": false,
+  "primary_examples": [
+    {
+      "group": [
+        24,
+        48,
+        72
+      ],
+      "path": [
+        73,
+        72,
+        48,
+        24
+      ],
+      "seed": 161620111,
+      "step": 34,
+      "team": 0,
+      "uid": 7
+    }
+  ],
+  "sources": {
+    "gruppenbeweis/PLAN.md": "1a855bcdb4639614a6954c72ae6d3a6e8f80ff0f5f7a5439b972d96cf69e819f",
+    "gruppenbeweis/gruppen.py": "1a2d940cae0064c01efefa1ec6d812a646f6f3e650d78e9b5bda45a73bc02839",
+    "gruppenbeweis/studie.py": "e26f2c8ac66eb2ebf9ecb770d4483531ec88973c16f026e1f1c5335d29559824",
+    "gruppenbeweis/wege.py": "52e5b9b2ca918c9338b83f8d22c473328c64a7363fbbce192c244e7c68bc8acf",
+    "punktspeicher/archiv/beobachtungen.jsonl.gz": "93615be960de738c5611db883d5f2235aef50a6c4cc704df6bf90c7a0e55fe39",
+    "punktspeicher/archiv/beweise.jsonl.gz": "bd320d24b8eee5e690c483ad504a3b24f0542561b0e864db3d7073a9f705808f",
+    "punktspeicher/beweise.py": "9db1687b2435743ea4cb0d081781ccdac7c16f26980e0fca265f6718b915dd06",
+    "punktspeicher/karten.json": "e5b4d7431adfb23e9eb131d68ff3d6b4793e3af4016ce5e7967d52ca44a8f3bc"
+  }
+}

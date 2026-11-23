@@ -1,0 +1,24 @@
+# Gesicherte Gruppen eröffnen auf zwei von 40 Karten einen zusätzlichen Weg
+
+Auf **32 von 40 frischen Sicht-1-Karten** ließen sich zwei oder drei noch unbestimmte Spiegelpaare so eingrenzen, dass mindestens eines davon einen Punkt gab. Auf **23 Karten** konnte ein freies Schiff mindestens eines der möglichen Ziele erreichen. Nur auf **zwei Karten und drei von 80 Sitzen** konnte ein Schiff tatsächlich alle Mitglieder derselben Gruppe in höchstens vier Schritten besuchen. Jede dieser Gelegenheiten kam zusätzlich zu den erreichbaren Einzelbeweisen. Auf keinem Sitz stand dieselbe Möglichkeit für dasselbe Schiff in zwei aufeinanderfolgenden Entscheidungen bereit.
+
+| Frische öffentliche Befunde | Karten | Sitze P0 / P1 | Verschiedene Zeitpunkte über alle Sitze | Gruppen je Zeitpunkt gezählt |
+|---|---:|---:|---:|---:|
+| V16 und Einzelbeweiser kannten keines der Gruppenmitglieder als Punktefeld | 32 | 28 / 22 | 1.119 | 1.487 |
+| Ein freies Schiff konnte wenigstens ein Mitglied erreichen | 23 | 15 / 17 | 266 | 299 |
+| Mindestens ein Mitglied erreichbar, für diese Gruppe fehlte eine vollständige Tour | 23 | 15 / 17 | 257 | 290 |
+| Ein freies Schiff konnte alle Mitglieder in höchstens vier Zügen erreichen | 2 | 2 / 1 | 9 | 9 |
+
+Alle neun vollständigen Tourmöglichkeiten betrafen Zweiergruppen. Vier lagen in Match 1, fünf in Match 3. Ein unabhängiges ganzzahliges Modell bestätigte an jedem dieser Zeitpunkte, dass jedes Mitglied einzeln noch null sein konnte. Das Modell schloss bereits beim ersten öffentlichen Beweis aus, dass alle Mitglieder zugleich null waren. Für eine Teilroute kann dagegen gerade das unerreichbare Feld allein den Beweis erfüllen. Die 23 Karten mit Teilzugang begründen deshalb keine ebenso häufige Gelegenheit, sich mit einem einzelnen Schiff einen Punkt zu sichern. [Alle Frischbefunde](frisch/ergebnis.json) · [Öffentliche Originalverläufe](../punktspeicher/frisch/beobachtungen.jsonl.gz)
+
+Auf `162300120` standen in Match 1 auf beiden Sitzen bei Zug 7 und 13 echte Alternativen offen. P0-Schiff 0 hätte bei Zug 7 von `(2,4)` über `(1,4)`, `(1,3)` und `(1,2)` nach `(1,1)` fahren können. Die beiden Endpunkte der Zielgruppe `(1,4)` und `(1,1)` waren bereits bei Zug 6 zusammen nachgewiesen. Das ursprüngliche Schiff fuhr Richtung Osten. Auf `162300036/P0` konnte in Match 3 alle drei Züge ein jeweils anderes Schiff einen bekannten Weg über `(3,0)` nach `(0,0)` einschlagen. Das ergab fünf Einstiegszeitpunkte auf einer Karte. Auf beiden Karten blieben die Originalbefehle unverändert. Die Zusatzpunkte einer solchen Fahrt wurden folglich nicht gemessen. [Wege und Zeitpunkte](frisch/gruppen.jsonl.gz) · [Unabhängige Nullhypothesen und Routen](frisch/nachrechnung.jsonl.gz)
+
+Auf den zwei ausgewählten alten Verlustkarten war bei allen vier Sitzen mindestens ein Gruppenmitglied erreichbar. Eine vollständige Dreiergruppe fand sich auf `161620111/P0`, Match 1, Zug 33 und 34. Auf `161620068` fand sich keine vollständige Gruppentour. Die Archivkarten trugen zu keiner Mindestzahl bei. [Archivresultat](archiv/ergebnis.json)
+
+Die Entscheidung war vorab an acht neue Karten, zwölf Sitze, drei Sitze je Startseite und acht Sitze mit aufeinanderfolgender Gelegenheit für dieselbe Gruppe und UID gebunden. Mit zwei Karten, drei Sitzen, der Sitzverteilung 2/1 und null wiederholten Sitzen wurden alle vier Bedingungen verfehlt. Der Versuch endete nach der passiven Prüfung. Die für einen möglichen richtungslernenden Spieler reservierten Karten ab 162600000 wurden nicht verwendet. [Vorabplan](PLAN.md)
+
+## Prüfung und Wiederholung
+
+In den 84 unveränderten Originalpartien überprüfte der Auswerter 113.132 Zweiergruppen- und 272.283 Dreiergruppen-Zustände an der jeweils aktiven Schiedsrichtermaske. Jede geprüfte Gruppe enthielt mindestens ein aktives Punktefeld. Eine zweite Wegsuche reproduzierte sämtliche vollständigen Touren auf allen 25.452 Beobachtungen. Die sieben ersten praktisch nutzbaren Gruppennachweise auf beiden Stichproben ließen sich mit zeitlich geordneten öffentlichen Gutschriften unabhängig bestätigen. 11.775 vollständige Vergleiche mit kleinen binären Zustandsräumen und 224 direkte Vergleiche des zeitlichen Solvers mit einer vollständigen Aufzählung bestanden. [Prüfprotokoll](pruefungen.json) · [Binäres öffentliches Modell](audit.py)
+
+Die vorliegenden Beobachtungen und Zertifikate sind im Repository enthalten. Für die Wiederholung mit der Projekt-Python-Umgebung zuerst `solverpruefung.py` ausführen. Danach `studie.py archiv 0`, `studie.py archiv 1`, `studie.py frisch 0` und `studie.py frisch 1` ausführen. `auswerten.py archiv` und `auswerten.py frisch` kontrollieren beide Sitzseiten, alle Wege und die gebundenen Quelldateien. Die Eingaben der Gruppenrechnung stammen ausschließlich aus der jeweils bereits verfügbaren öffentlichen Beobachtung. [Beweislogik](gruppen.py) · [Wegbedingungen](wege.py) · [Auswertung](auswerten.py)
