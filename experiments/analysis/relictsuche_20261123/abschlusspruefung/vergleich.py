@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 from luxai_s3.wrappers import LuxAIS3GymEnv
 
-from experiments.analysis.relictsuche_20261123.fehlmarkierung.korrekturspiele import decoded
+from experiments.analysis.relictsuche_20261123.punktwissen.spiele import decoded
 from experiments.analysis.relictsuche_20261123.punktspeicher.beweise import MIRROR
 from experiments.analysis.relictsuche_20261123.punktwissen.kandidat import PACKAGE
 from experiments.analysis.relictsuche_20261123.vergleich.spielen import CUTOFF,Monitor,common_source,sha,stamp,write_once
@@ -27,6 +27,10 @@ FILES={
     "punktgrenzen": ("duell.json", ("punktgrenzen","punktwissen","punktspeicher")),
     "fehlmarkierung": ("duelle.json", ("fehlmarkierung","punktgrenzen","punktspeicher")),
     "folgewahl": ("duell.json", ("folgewahl","r3_folge")),
+    "r3_folge": ("pilotpruefung/ergebnis.json", ("r3_folge",)),
+    "halteprobe": ("leistung.json", ("halteprobe","feldprobe")),
+    "entscheidungsspiel": ("duell.json", ("entscheidungsspiel","folgewahl","r3_folge")),
+    "suche_und_wissen": ("duelle.json", ("suche_und_wissen","zielschaetzer","punktgrenzen","punktwissen","punktspeicher")),
 }
 
 
@@ -36,6 +40,15 @@ def make(label,side):
     if label=="punktgrenzen":
         from experiments.analysis.relictsuche_20261123.punktgrenzen.politik import AreaKnowledge
         return AreaKnowledge(r3_package_agent(side,PACKAGE))
+    if label=="r3_folge":
+        from experiments.analysis.relictsuche_20261123.r3_folge.berater import create
+        return create(side)
+    if label=="entscheidungsspiel":
+        from experiments.analysis.relictsuche_20261123.entscheidungsspiel.spieler import Decider
+        return Decider(side)
+    if label=="suche_und_wissen":
+        from experiments.analysis.relictsuche_20261123.suche_und_wissen.spieler import make_player
+        return make_player(side,"beide")
     if label=="folgewahl":
         from experiments.analysis.relictsuche_20261123.folgewahl.politik import Switch
         return Switch(side)
@@ -48,7 +61,7 @@ def nomination(label):
     gate,groups=FILES[label]
     check=STUDY/label/gate
     result=json.loads(check.read_text())
-    assert result["passed"]
+    assert result.get("passed",result.get("qualified",False))
     files={HERE/"PLAN.md",Path(__file__),check}
     for group in groups:
         folder=STUDY/group
@@ -56,7 +69,15 @@ def nomination(label):
         files.update(folder.glob("*.npz"))
         for f in ("modell.json","ort.json","valid.json","technik.json"):
             if (folder/f).exists(): files.add(folder/f)
-    return dict(player=label,sources={str(f.relative_to(STUDY)):sha(f) for f in sorted(files)},base=common_source())
+    if label in ("folgewahl","r3_folge","entscheidungsspiel"):
+        from experiments.analysis.relictsuche_20261123.folgewahl.sammeln import OLD
+        files.add(OLD)
+        files.add(STUDY.parent/"v16_finalwoche_20261122/fruehuebergabe/staffel.py")
+    if label=="halteprobe":
+        extra=STUDY/label/"gegenpruefung_leistung.json"
+        assert extra.exists() and json.loads(extra.read_text())["archive_sha"]==result["archive_sha"]
+        files.add(extra)
+    return dict(player=label,sources={str(f.relative_to(STUDY.parents[2])):sha(f) for f in sorted(files)},base=common_source())
 
 
 class Referee(Monitor):
