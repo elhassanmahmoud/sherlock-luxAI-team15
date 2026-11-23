@@ -1,0 +1,5 @@
+# Wie lang musste der Sucher tatsächlich eingreifen?
+
+Auf allen sieben Sitzen, deren ganzer Gewinner im abgeschlossenen Wiederholungstest gegen Solution wechselte, spielen wir jeweils vier Fortsetzungen. Sherlock darf höchstens null, einen, drei oder acht seiner ursprünglichen V16-Befehle überschreiben. Alle Zweige verwenden dieselbe eingefrorene Richtungswahl. Ein Schritt, den V16 von sich aus ebenfalls gemacht hätte, verbraucht keinen Eingriff. Die Höchstgrenze acht entspricht dem vollständigen Kundschafter. Nach Erreichen der Grenze entscheidet der normal weiterlaufende V16 wieder selbst. Die Befehle stammen zu jeder Zeit aus den tatsächlichen öffentlichen Beobachtungen.
+
+Null und acht müssen das archivierte Spiel einschließlich aller 303 Züge reproduzieren. Erhoben werden Zahl und Zug der abweichenden Suchbefehle, erste öffentliche Reliktsicht, erste Gutschrift und Gewinner aller drei Matches. Die sieben Fälle wurden wegen ihres geänderten Spielausgangs gewählt. Das sind Erklärungen auf bekannten Karten. Aus dem Vergleich wird keine neue Modellwahl für die Abgabe abgeleitet.
