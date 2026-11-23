@@ -1,0 +1,188 @@
+{
+  "games": 1040,
+  "maps": 120,
+  "source": {
+    "BEWEGUNG_BESTAETIGEN.md": "4081c85e4d72c144121bb8e0fc52e5317cdfe451efa4ab855b1f24b86203fd65",
+    "auswahl_ergebnis.json": "c9ce8fce842c89d24c1516b8bb230164f91d39d2cfb2d4d6f5b573ba567e39e6",
+    "offline.json": "9aab8a85d8a240af038509f07219f5d8dea22b9f259d0f015b12719e4ff7f2b6",
+    "PLAN.md": "2d3fe812ea16723b2ea3cbfdb7b0954091e681fdd0fee45c65884b758532da20",
+    "sicht.py": "d46e8bff8da579258eafbd2f16b2f21736db1b6b08a687c639c620b3a53d1f7a",
+    "spielen.py": "8d22f4471fcb1b91c1aee7a4375f9950c2f0a25d53ac79acdcfc31d3a3635322",
+    "bestaetigen.py": "e53345b2f6734503aa48ec64213279b0f404b07179c672a0c3aec56bf3a34948",
+    "agent.zip": "0c59706b6af1c2cd74819a4b13269b69cb55786e07e3daaa2d6e6547a6b86099"
+  },
+  "evidence_sha256": "6d96a07c9e716408db357db12a65266b5a501e7a6da6c12ae6566ce10a7008bb",
+  "external": {
+    "solution92": {
+      "arms": {
+        "original": {
+          "game_win": 235,
+          "our_wins": 694,
+          "our_points": 276465,
+          "opp_points": 129183,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 236,
+          "our_wins": 692,
+          "our_points": 276800,
+          "opp_points": 128818,
+          "changes": 2404
+        }
+      },
+      "n_per_arm": 240,
+      "swings": [
+        {
+          "seed": 160370081,
+          "team": 1,
+          "delta": 1
+        },
+        {
+          "seed": 160370093,
+          "team": 0,
+          "delta": 1
+        },
+        {
+          "seed": 160370099,
+          "team": 1,
+          "delta": -1
+        }
+      ],
+      "delta_pp": 0.4166666666666667,
+      "ci95": [
+        -0.8333333333333334,
+        2.083333333333333
+      ]
+    },
+    "kaggle3": {
+      "arms": {
+        "original": {
+          "game_win": 8,
+          "our_wins": 80,
+          "our_points": 132736,
+          "opp_points": 207024,
+          "changes": 0
+        },
+        "adviser": {
+          "game_win": 10,
+          "our_wins": 70,
+          "our_points": 131678,
+          "opp_points": 208552,
+          "changes": 2336
+        }
+      },
+      "n_per_arm": 240,
+      "swings": [
+        {
+          "seed": 160370010,
+          "team": 0,
+          "delta": 1
+        },
+        {
+          "seed": 160370010,
+          "team": 1,
+          "delta": 1
+        },
+        {
+          "seed": 160370024,
+          "team": 0,
+          "delta": -1
+        },
+        {
+          "seed": 160370024,
+          "team": 1,
+          "delta": -1
+        },
+        {
+          "seed": 160370052,
+          "team": 0,
+          "delta": 1
+        },
+        {
+          "seed": 160370052,
+          "team": 1,
+          "delta": 1
+        },
+        {
+          "seed": 160370076,
+          "team": 0,
+          "delta": -1
+        },
+        {
+          "seed": 160370076,
+          "team": 1,
+          "delta": -1
+        },
+        {
+          "seed": 160370096,
+          "team": 0,
+          "delta": -1
+        },
+        {
+          "seed": 160370096,
+          "team": 1,
+          "delta": -1
+        },
+        {
+          "seed": 160370099,
+          "team": 0,
+          "delta": 1
+        },
+        {
+          "seed": 160370099,
+          "team": 1,
+          "delta": 1
+        },
+        {
+          "seed": 160370105,
+          "team": 0,
+          "delta": 1
+        },
+        {
+          "seed": 160370105,
+          "team": 1,
+          "delta": 1
+        }
+      ],
+      "delta_pp": 0.8333333333333334,
+      "ci95": [
+        -3.3333333333333335,
+        5.0
+      ]
+    }
+  },
+  "direct": {
+    "wins": 37,
+    "games": 80,
+    "ci95": [
+      36.25,
+      56.25
+    ]
+  },
+  "primary_delta_pp": 0.4166666666666667,
+  "primary_ci95": [
+    -0.8333333333333334,
+    2.083333333333333
+  ],
+  "family_intervals": {
+    "1": [
+      -0.8333333333333334,
+      2.083333333333333
+    ],
+    "2": [
+      -1.25,
+      2.083333333333333
+    ],
+    "3": [
+      -1.25,
+      2.083333333333333
+    ]
+  },
+  "gates": {
+    "primary": false,
+    "solution": true,
+    "kaggle": true,
+    "direct": false
+  },
+  "all_gates": false
+}

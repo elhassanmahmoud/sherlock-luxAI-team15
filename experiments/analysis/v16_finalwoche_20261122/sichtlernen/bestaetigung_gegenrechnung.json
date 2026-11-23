@@ -1,0 +1,44 @@
+{
+  "verified": true,
+  "study": "sichtlernen",
+  "games": 1040,
+  "maps": 120,
+  "compared_family": [
+    "zugnutzen",
+    "sichtlernen"
+  ],
+  "primary": "game-win difference vs Solution",
+  "favourable_direction": "positive",
+  "primary_delta_pp": 0.4166666666666667,
+  "primary_ci95_pp": [
+    -0.8333333333333334,
+    2.0833333333333335
+  ],
+  "bonferroni_ci97_5_pp": [
+    -1.25,
+    2.0833333333333335
+  ],
+  "external_wins_per_240": {
+    "solution92": {
+      "original": 235,
+      "adviser": 236
+    },
+    "kaggle3": {
+      "original": 8,
+      "adviser": 10
+    }
+  },
+  "direct_wins_per_80": 37,
+  "direct_ci95_percent": [
+    36.25,
+    56.25
+  ],
+  "gates": {
+    "primary": false,
+    "solution": true,
+    "kaggle": true,
+    "direct": false
+  },
+  "qualified_after_family_correction": false,
+  "archive_sha256": "6d96a07c9e716408db357db12a65266b5a501e7a6da6c12ae6566ce10a7008bb"
+}
