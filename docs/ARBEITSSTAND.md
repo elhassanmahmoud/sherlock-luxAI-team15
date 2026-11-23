@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Feldprobe bestätigt Sofortpunkte, kostet einen ganzen Sieg
+
+Auf 120 neuen Sicht-1-Karten brachte das Anfahren eines zuvor ungewissen Felds gegenüber dem tatsächlichen ursprünglichen Befehl 28 zusätzliche Sofortpunkte gegen Solution. Bei ganzen Spielen gewann die Feldprobe 231/240, Original-V16 232/240. Direkt ergaben sich 123/240. Ein weiterer Suchkandidat verbindet die gelernte Verteilung der ersten Reliktposition mit der Sichtvorhersage der übrigen Flotte. Ein Rücknahmetest auf drei bekannten Fehlerkarten verkürzte die tatsächliche Besetzung falscher Punktefelder von 140 auf 50 Schiffszüge. Die unabhängigen Spielprüfungen laufen. V16 ist weiterhin die Abgabe. [Tagesübersicht und Einzelberichte](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
+
 ## 23.11.2026 – Gewinnzug reproduziert und Kurspaket geprüft
 
 Den zusätzlich gewonnenen Solution-Sitz haben wir viermal mit verschiedenen öffentlichen Hinweisen ausgespielt. Im zweiten Match kannte Sherlock in Zug 10 das Feld (22,21), drei Züge später blieb Schiff 3 darauf stehen. Original-V16 verlor 524:564, die Variante allein mit diesem Hinweis gewann 598:580. Für Mahmoud gibt es eine Grafik mit dem echten Punkteverlauf und die öffentliche Herleitung. Das separate Forschungspaket reproduziert auf Python 3.10 und 3.13 jeweils 19.392 Einheitenbefehle. Die ungefilterte Stärkeprüfung läuft weiter. Weitere laufende Experimente nutzen selbst gelernte Suchwege, kurzzeitiges Halten nach einer Messbewegung und zusätzliche öffentliche Grenzen zur Bestimmung von Punktefeldern. [Fallbeispiel](../experiments/analysis/relictsuche_20261123/beispiel/ERGEBNIS.md) · [Kursprüfung](../experiments/analysis/relictsuche_20261123/wissenskurs/ERGEBNIS.md) · [Tagesübersicht](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
