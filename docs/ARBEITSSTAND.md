@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Sieben Vergleiche vor dem letzten Battle abgeschlossen
+
+Alle **7.640 vollständigen Partien auf 960 frischen Karten** sind geprüft. V16 bleibt die Abgabe. Der signalgesteuerte Kundschafter erreichte 396/400 gegen Solution (V16 393/400), auf nur zwei Karten kamen neue Siege hinzu. Das Direktduell endete 50:50. Auch die getrennten großen Tests der frühen Erkundung, des Spätzugberaters und der einzelnen Match-2-Korrektur begründen keinen Wechsel. Das an 15-Zug-Punkten nachtrainierte Modell trennte auf 80 neuen Karten dauerhaft gute Bewegungen nicht ausreichend zuverlässig.
+
+Moe und Mahmoud finden die Spielzahlen, Kartenintervalle, geprüften Pakete, Hinweise zur Präsentation und die empfohlene nächste Untersuchung im [Morgenbericht](MORGENBERICHT_20261123.md). Auf Karten mit Sichtweite eins als Nächstes den Weg ins erste Reliktgebiet und dessen tatsächliche Besetzung prüfen. Die konkreten Verläufe sind vorhanden. [Eröffnung mit Gegenprobe](../experiments/analysis/v16_finalwoche_20261122/signalstudie/kombi/auftakt/ERGEBNIS.md)
+
 ## 23.11.2026 – Zusätzlicher Halterwechsel im Spiel geprüft
 
 WECHSEL aktivierte auf 172 von 240 Kaggle-Startplätzen die Ablösung eines erschöpften Schiffes. Auf 120 neuen Karten gewann die Regel 4/240 ganze Spiele gegen Kaggle, V16 8/240 (−1,67 Prozentpunkte, 95-%-Kartenintervall −4,17 bis 0,00). Gegen Solution 232 statt 234 Siege, direkt 106/240. Keine der drei Bedingungen für eine Übernahme erfüllt. Alle 1.200 Partien wurden getrennt nachgerechnet. [Ergebnisse, Eingriffszahlen und Rohdaten](../experiments/analysis/v16_finalwoche_20261122/wechsel/ERGEBNIS.md)
