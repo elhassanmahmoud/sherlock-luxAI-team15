@@ -8,6 +8,8 @@ Der erste Kandidat mit zusätzlichen sicheren Punkteinformationen hatte in seine
 
 ## Welche Suchrichtung hilft?
 
+![Zeitgewinn beim ersten Relikt, direkte Siegquote und Siege gegen Solution](suchvergleich/suchvergleich.png)
+
 Jede Zeile basiert auf vollständigen Drei-Match-Partien, 40 neuen Karten mit Sichtweite eins und beiden Startseiten. Alle Varianten dürfen in der Eröffnung nur die Bewegung eines freien Schiffes ändern. Die ersten drei Zeilen teilen sich dieselben Karten und dieselbe V16-Kontrolle. Jede weitere Zeile hat eigene Karten. Ein positiver Zeitgewinn heißt, dass Sherlock das Relikt bzw. den ersten Punkt früher erreichte.
 
 | Ansatz | Erstes Relikt, Züge früher | Erster Punkt, Züge früher | Siege gegen Solution | V16 auf denselben Sitzen | Siege direkt gegen V16 |
