@@ -1,0 +1,39 @@
+{
+  "verified": true,
+  "checked_original_game_records": 239,
+  "train_maps": 159,
+  "test_maps": 80,
+  "technical_training_exclusion": 160390154,
+  "train_proposals": 93,
+  "test_proposals": 52,
+  "accepted": 39,
+  "rejected": 13,
+  "gains": {
+    "versus_v16": {
+      "ci95": [
+        -1.3125,
+        1.25
+      ],
+      "mean": -0.0375,
+      "total": -3
+    },
+    "versus_always": {
+      "ci95": [
+        -0.9875,
+        0.5875
+      ],
+      "mean": -0.1125,
+      "total": -9
+    }
+  },
+  "gates": {
+    "training": true,
+    "accepted": true,
+    "rejected": true,
+    "v16": false,
+    "instant": false
+  },
+  "eligible": false,
+  "model_sha256": "1396872b1075faa48692f40e5939c9b38ec38ee5a7a0152870725de880189f39",
+  "archive_sha256": "4be151f0873601c203a6f10e2a3b7494acb28e06f75ed5c67189bafc6c2b2148"
+}
