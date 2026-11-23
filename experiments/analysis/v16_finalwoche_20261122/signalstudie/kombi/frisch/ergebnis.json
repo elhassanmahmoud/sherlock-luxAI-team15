@@ -1,0 +1,301 @@
+{
+  "n": 720,
+  "gate": false,
+  "results": {
+    "solution92": {
+      "total": {
+        "sides": 160,
+        "maps": 80,
+        "base": 157,
+        "combined": 157,
+        "added": 0,
+        "lost": 0,
+        "reference_matches": 455,
+        "combined_matches": 457,
+        "point_diff": 3074,
+        "affected": 127,
+        "modules": {
+          "mitte": 118,
+          "kein": 33,
+          "mitte+signal": 8,
+          "signal": 1
+        },
+        "changed_actions": 171
+      },
+      "by_side": {
+        "player_0": {
+          "sides": 80,
+          "maps": 80,
+          "base": 79,
+          "combined": 79,
+          "added": 0,
+          "lost": 0,
+          "reference_matches": 230,
+          "combined_matches": 230,
+          "point_diff": 1259,
+          "affected": 65,
+          "modules": {
+            "mitte": 61,
+            "kein": 15,
+            "mitte+signal": 3,
+            "signal": 1
+          },
+          "changed_actions": 82
+        },
+        "player_1": {
+          "sides": 80,
+          "maps": 80,
+          "base": 78,
+          "combined": 78,
+          "added": 0,
+          "lost": 0,
+          "reference_matches": 225,
+          "combined_matches": 227,
+          "point_diff": 1815,
+          "affected": 62,
+          "modules": {
+            "mitte": 57,
+            "kein": 18,
+            "mitte+signal": 5
+          },
+          "changed_actions": 89
+        }
+      },
+      "diff": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "flips": []
+    },
+    "kaggle3": {
+      "total": {
+        "sides": 160,
+        "maps": 80,
+        "base": 4,
+        "combined": 6,
+        "added": 2,
+        "lost": 0,
+        "reference_matches": 46,
+        "combined_matches": 48,
+        "point_diff": 576,
+        "affected": 12,
+        "modules": {
+          "kein": 148,
+          "mitte": 12
+        },
+        "changed_actions": 12
+      },
+      "by_side": {
+        "player_0": {
+          "sides": 80,
+          "maps": 80,
+          "base": 2,
+          "combined": 3,
+          "added": 1,
+          "lost": 0,
+          "reference_matches": 23,
+          "combined_matches": 24,
+          "point_diff": 288,
+          "affected": 6,
+          "modules": {
+            "kein": 74,
+            "mitte": 6
+          },
+          "changed_actions": 6
+        },
+        "player_1": {
+          "sides": 80,
+          "maps": 80,
+          "base": 2,
+          "combined": 3,
+          "added": 1,
+          "lost": 0,
+          "reference_matches": 23,
+          "combined_matches": 24,
+          "point_diff": 288,
+          "affected": 6,
+          "modules": {
+            "kein": 74,
+            "mitte": 6
+          },
+          "changed_actions": 6
+        }
+      },
+      "diff": 0.0125,
+      "ci95": [
+        0.0,
+        0.0375
+      ],
+      "flips": [
+        {
+          "seed": 160386074,
+          "side": "player_0",
+          "base": 0,
+          "comb": 1,
+          "old_matches": 1,
+          "matches": 2,
+          "reference_points": -162,
+          "candidate_points": -57,
+          "delta": 1,
+          "modules": [
+            "mitte"
+          ],
+          "changes": 1
+        },
+        {
+          "seed": 160386074,
+          "side": "player_1",
+          "base": 0,
+          "comb": 1,
+          "old_matches": 1,
+          "matches": 2,
+          "reference_points": -162,
+          "candidate_points": -57,
+          "delta": 1,
+          "modules": [
+            "mitte"
+          ],
+          "changes": 1
+        }
+      ]
+    },
+    "v16": {
+      "total": {
+        "n": 80,
+        "wins": 38,
+        "matchwins": 123,
+        "affected": 17,
+        "affected_wins": 12,
+        "quiet_wins": 26,
+        "both_modules": 0
+      },
+      "by_side": {
+        "player_0": {
+          "n": 40,
+          "wins": 19,
+          "matchwins": 60,
+          "affected": 10,
+          "affected_wins": 6,
+          "quiet_wins": 13,
+          "both_modules": 0
+        },
+        "player_1": {
+          "n": 40,
+          "wins": 19,
+          "matchwins": 63,
+          "affected": 7,
+          "affected_wins": 6,
+          "quiet_wins": 13,
+          "both_modules": 0
+        }
+      },
+      "unchanged_maps": 23,
+      "both_active": 0,
+      "inferred_control": [
+        {
+          "seed": 160386002,
+          "side": "player_0",
+          "baseline_matches": 3,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386003,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 1
+        },
+        {
+          "seed": 160386004,
+          "side": "player_1",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386005,
+          "side": "player_1",
+          "baseline_matches": 1,
+          "candidate_matches": 1
+        },
+        {
+          "seed": 160386009,
+          "side": "player_1",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386011,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 2
+        },
+        {
+          "seed": 160386012,
+          "side": "player_1",
+          "baseline_matches": 3,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386016,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386017,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 2
+        },
+        {
+          "seed": 160386020,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 1
+        },
+        {
+          "seed": 160386021,
+          "side": "player_0",
+          "baseline_matches": 1,
+          "candidate_matches": 1
+        },
+        {
+          "seed": 160386023,
+          "side": "player_0",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386024,
+          "side": "player_1",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386026,
+          "side": "player_1",
+          "baseline_matches": 2,
+          "candidate_matches": 3
+        },
+        {
+          "seed": 160386032,
+          "side": "player_0",
+          "baseline_matches": 3,
+          "candidate_matches": 2
+        },
+        {
+          "seed": 160386037,
+          "side": "player_1",
+          "baseline_matches": 2,
+          "candidate_matches": 2
+        },
+        {
+          "seed": 160386038,
+          "side": "player_0",
+          "baseline_matches": 1,
+          "candidate_matches": 1
+        }
+      ]
+    }
+  }
+}
