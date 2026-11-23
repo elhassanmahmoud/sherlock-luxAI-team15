@@ -1,0 +1,3 @@
+# Nach drei Suchschritten erneut abbiegen
+
+Auf 192 neuen Entwicklungsplätzen erlaubten 116 eine weitere sichere Richtung für dasselbe bereits unterwegs befindliche Schiff. Die erneute Bewertung bevorzugte in 30 Fällen einen anderen ersten Befehl. Bei einem geforderten Vorsprung von einem bzw. drei Wertungspunkten blieben 17 bzw. neun Fälle. In keinem dieser Fälle änderte das Abbiegen die Sicht auf das echte erste Relikt innerhalb des verbleibenden kurzen Auftrags. Die ursprüngliche Richtung blieb nach der vorher vereinbarten Auswahl vorn. Der begrenzte Gegenvergleich enthält keine Messung der Wirkung über diesen Restweg hinaus. [Ergebnisse und Kriterien](train.json) · [Tatsächliche Gabelungen](train_karten.jsonl.gz)
