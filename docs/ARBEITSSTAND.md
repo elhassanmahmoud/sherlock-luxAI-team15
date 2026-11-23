@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Kandidat für die unabhängige Sichtprüfung
+
+Der gelernte Flottenblick fand das erste Relikt auf 40 neuen Karten mit Sichtweite eins im Mittel 1,76 Züge früher. Er gewann 77/80 gegen Solution, V16 auf denselben Sitzen 76/80, im Direktduell 40/80. Der Sichtgewinn ist in dieser Stichprobe unsicher. Das Forschungsmodell spielt im unveränderten Kursrunner auf Python 3.10 und 3.13 genau die aufgezeichneten Befehle. Die Bestätigung auf 120 weiteren Karten läuft. Die Abgabe bleibt V16. [Tagesübersicht](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
+
 ## 23.11.2026 – Was der Kundschafter selbst sieht
 
 Auf 28 von 80 Starts fand der frühe Zielschätzer das erste Relikt schneller. Elfmal sah es allein der umgeleitete Kundschafter, auf den anderen 17 Starts fand es die übrige Flotte. Auf getrennten Kartensätzen gewann die nach drei Wartezügen gelernte Suchrichtung 78/80 gegen Solution wie V16 und 39/80 direkt. Die Suche nach der ersten eigenen Gutschrift erreichte 78/80 gegenüber 79/80 sowie 38/80 direkt. [Physische Sicht](../experiments/analysis/relictsuche_20261123/fundursache/ERGEBNIS.md) · [Wartende Schiffe](../experiments/analysis/relictsuche_20261123/standsuche/duelle/ERGEBNIS.md) · [Suche nach Gutschrift](../experiments/analysis/relictsuche_20261123/punktsicht/ERGEBNIS.md)
