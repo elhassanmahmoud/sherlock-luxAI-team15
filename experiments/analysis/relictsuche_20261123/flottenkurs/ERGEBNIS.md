@@ -1,0 +1,7 @@
+# Flottenblick im Kursrunner
+
+Die Forschungsfassung liegt als separates Paket im geforderten Ordnerformat vor. Einstiegspunkt ist `Gruppe15.main.Agent_x`, die ursprünglichen zwei V16-Netze stehen für beide Sitze in `Gruppe15/agent.pth`. Die Gewichte für die neue Sichtvorhersage und ihre Kalibrierung liegen separat daneben. Die eigentliche Abgabe liegt weiterhin unter `dist/Gruppe15.zip`.
+
+Der unveränderte Kursrunner spielte auf Python **3.10.15** und **3.13.13** jeweils vier vollständige Verläufe. Alle **19.392 Einheitenbefehle pro Python-Version** entsprachen den vorab aufgezeichneten Befehlen. Die beiden Niedrigsicht-Sitze (161620000) hatten drei und fünf echte Umleitungen, die beiden Normalsicht-Sitze (161050000) jeweils null. Auf P0 lief der Kurs mit abgeschaltetem Training. Auf P1 standen je Spiel 303 Aktualisierungen und ein Speicheraufruf an. Die eingebettete ursprüngliche Gewichtsdatei hatte jeweils auch anschließend denselben SHA-256-Wert. Die Laderoutine hat das Paket sowohl im Verzeichnis agents als auch in der Projektwurzel geprüft.
+
+SHA-256 der gesonderten Forschungs-ZIP: `44334be0dcb530d7c68bb0a5e01eac730315236e45723b577cbe780a0879d657`. Der Paketbau ist aus der offiziellen V16-ZIP und den sechs Quellen der geprüften Auswahl reproduzierbar. [Paket und Herkunft](paket.json) · [Paketbau](paket.py) · [Aktiver Sitz P0 auf 3.10](kurs310_161620000_player_0.json) · [Aktiver Sitz P1 auf 3.13](kurs313_161620000_player_1.json)
