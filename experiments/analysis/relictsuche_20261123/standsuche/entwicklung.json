@@ -1,0 +1,181 @@
+{
+  "features": [
+    "relic_mass",
+    "extra_mass",
+    "new_cells",
+    "fresh_cells",
+    "new_mirror_pairs",
+    "overlap_now",
+    "closest_ally",
+    "distance_gain_ally",
+    "walkable_length",
+    "move_cost",
+    "start_energy",
+    "energy_gain",
+    "recent_gain",
+    "idle_duration",
+    "turn",
+    "crowding",
+    "outward",
+    "target_nebula",
+    "tile_energy",
+    "optical_coverage",
+    "known_fraction",
+    "visible_fraction",
+    "timed_novelty",
+    "late_mass",
+    "nearby_relic_mass"
+  ],
+  "validation": [
+    {
+      "kind": "ridge",
+      "threshold": 0.25,
+      "changed": 105,
+      "conservative_utility": -0.6200457266670933,
+      "average_gain": [
+        -0.8802083333333334,
+        0.036458333333333336,
+        1.7083333333333333,
+        0.0,
+        -0.0653645833333334
+      ]
+    },
+    {
+      "kind": "ridge",
+      "threshold": 1.0,
+      "changed": 77,
+      "conservative_utility": -0.421130633636972,
+      "average_gain": [
+        -0.53125,
+        0.015625,
+        3.125,
+        0.005208333333333333,
+        0.08828124999999999
+      ]
+    },
+    {
+      "kind": "ridge",
+      "threshold": 2.0,
+      "changed": 30,
+      "conservative_utility": -0.12379215326226797,
+      "average_gain": [
+        -0.11979166666666667,
+        0.2604166666666667,
+        1.0572916666666667,
+        -0.005208333333333333,
+        0.22161458333333328
+      ]
+    },
+    {
+      "kind": "ridge",
+      "threshold": 3.5,
+      "changed": 6,
+      "conservative_utility": -0.08197916694866005,
+      "average_gain": [
+        -0.03125,
+        -0.09375,
+        0.4791666666666667,
+        0.0,
+        0.01875
+      ]
+    },
+    {
+      "kind": "mlp",
+      "threshold": 0.25,
+      "changed": 94,
+      "conservative_utility": -0.7903612849371896,
+      "average_gain": [
+        -0.453125,
+        0.0625,
+        0.578125,
+        0.0,
+        -0.2265625
+      ]
+    },
+    {
+      "kind": "mlp",
+      "threshold": 1.0,
+      "changed": 74,
+      "conservative_utility": -0.5810065092361343,
+      "average_gain": [
+        -0.3229166666666667,
+        0.078125,
+        2.0364583333333335,
+        -0.005208333333333333,
+        -0.059635416666666746
+      ]
+    },
+    {
+      "kind": "mlp",
+      "threshold": 2.0,
+      "changed": 40,
+      "conservative_utility": -0.456102576713607,
+      "average_gain": [
+        -0.109375,
+        -0.25,
+        -1.0572916666666667,
+        -0.005208333333333333,
+        -0.14531249999999998
+      ]
+    },
+    {
+      "kind": "mlp",
+      "threshold": 3.5,
+      "changed": 11,
+      "conservative_utility": -0.2821212887460893,
+      "average_gain": [
+        -0.15625,
+        -0.03125,
+        -0.3177083333333333,
+        -0.010416666666666666,
+        -0.08281250000000002
+      ]
+    },
+    {
+      "kind": "prior",
+      "threshold": 0.0001,
+      "changed": 146,
+      "conservative_utility": -0.7950833495638161,
+      "average_gain": [
+        -1.046875,
+        0.5625,
+        -2.03125,
+        -0.026041666666666668,
+        -0.07656249999999988
+      ]
+    },
+    {
+      "kind": "prior",
+      "threshold": 0.01,
+      "changed": 129,
+      "conservative_utility": -0.6425673846817279,
+      "average_gain": [
+        -0.8697916666666666,
+        0.4479166666666667,
+        0.03125,
+        -0.020833333333333332,
+        0.011458333333333251
+      ]
+    },
+    {
+      "kind": "prior",
+      "threshold": 0.035,
+      "changed": 71,
+      "conservative_utility": -0.528360752128785,
+      "average_gain": [
+        -0.5729166666666666,
+        -0.026041666666666668,
+        1.6197916666666667,
+        0.0,
+        -0.0033854166666666178
+      ]
+    }
+  ],
+  "maps": 768,
+  "informative": 588,
+  "trajectories": 2686,
+  "seed_ranges": [
+    161500001,
+    161503006
+  ]
+}
