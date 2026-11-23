@@ -1,0 +1,101 @@
+{
+  "pre_sight": {
+    "seats": 44,
+    "maps": 26,
+    "side_0": 21
+  },
+  "at_least_ten_turns": {
+    "seats": 44,
+    "maps": 26,
+    "side_0": 21
+  },
+  "has_free_other": {
+    "seats": 34,
+    "maps": 21,
+    "side_0": 16
+  },
+  "has_different_route": {
+    "seats": 34,
+    "maps": 21,
+    "side_0": 16
+  },
+  "same_time": 39,
+  "first_sight_earlier": 77,
+  "both_missing": 0,
+  "pre_sight_window": {
+    "median": 7.0,
+    "at_least_five": 26
+  },
+  "first_signal": {
+    "full": {
+      "logloss": 2.9733775359814696,
+      "rank": 8.681818181818182,
+      "possible": 62.5
+    },
+    "reference": {
+      "logloss": 4.816586188758001,
+      "rank": 59.39772727272727,
+      "possible": 209.0
+    }
+  },
+  "first_actionable": {
+    "full": {
+      "logloss": 2.4932563872402023,
+      "rank": 5.852941176470588,
+      "possible": 37.1764705882353
+    },
+    "reference": {
+      "logloss": 4.643170268873148,
+      "rank": 52.220588235294116,
+      "possible": 191.23529411764707
+    }
+  },
+  "targets": {
+    "chosen": {
+      "n": 34,
+      "true_hits": 4,
+      "avg_predictions": 0.08122237187820855,
+      "true_not_used_by_own5": 3,
+      "all_route_visible": 19,
+      "mean_steps": 3.6470588235294117,
+      "hypothetical_uncovered_point_slots": 19,
+      "historical_ship_unique_points_same_window": 9,
+      "safe_historically_nonproducing": 27,
+      "later_observed_turns": 340,
+      "later_hypothetical_slots": 37,
+      "later_original_unique": 14
+    },
+    "baseline": {
+      "n": 34,
+      "true_hits": 1,
+      "avg_predictions": 0.04058223370733693,
+      "true_not_used_by_own5": 0,
+      "all_route_visible": 16,
+      "mean_steps": 4.0588235294117645,
+      "hypothetical_uncovered_point_slots": 4,
+      "historical_ship_unique_points_same_window": 6,
+      "safe_historically_nonproducing": 30,
+      "later_observed_turns": 340,
+      "later_hypothetical_slots": 7,
+      "later_original_unique": 14
+    }
+  },
+  "equal_feasible_target_hit_rate": 0.016159558738725575,
+  "original_only": {
+    "total_pre_sight_wins": 40,
+    "mean_points_first_10_after_clue": 5.863636363636363,
+    "mean_points_next_10_after_clue": 16.454545454545453,
+    "seats_with_20_full_future_turns": 44,
+    "full_window_first_10": 5.863636363636363,
+    "full_window_next_10": 16.454545454545453
+  },
+  "sha256": {
+    "quellen.json.gz": "1027354ff30b4199b54a5bf54501c6414fcc1629ea44150568ce851d6e1c68b0",
+    "diagnose.json.gz": "b7396af5c0cda2661776db65519c83bc321ebb19dcf1028d4ceab02b354a7229",
+    "ort.json": "9588bd7faadd5b6d88e39e4848ce01878d4d78c3d23d0c48da43bc7b4e435bd1",
+    "PLAN.md": "f80ede879da4f4555e81a052898709032c5b7e4df568d3c25e9a3a6949efa58e",
+    "belegung.py": "22e74998833740e6e91101d2115b10ce4f7ddbb55271bf0f0dc71627326d8cc9",
+    "gelegenheit.py": "26f1ff2a3e0c7376a024c6eb7b1d20fdceb3c1713c3f39a801162a605402cc0e",
+    "auswerten.py": "8d06c6da50d8b7875db0d496dbb7fdf84cfe0f8bf0068f5e16f0bd6a8d559b43"
+  }
+}
