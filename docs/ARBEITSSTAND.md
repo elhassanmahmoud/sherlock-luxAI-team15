@@ -1,10 +1,16 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Drei trainierte Suchwege im vollständigen Vergleich
+
+560 ganze Partien auf 40 Sicht-1-Karten sind abgeschlossen. Der Zielschätzer brachte den ersten Punkt gegen Solution im Mittel 4,30 Züge früher, gewann 72/80 gegenüber 75/80 für V16 und 28/80 direkt gegen V16. Die beiden anderen Ansätze gewannen gegen Solution 76/80 und 75/80, direkt 32/80 und 36/80. V16 bleibt die geprüfte Abgabe. [Vergleich mit Kartenintervallen](../experiments/analysis/relictsuche_20261123/vergleich/ERGEBNIS.md)
+
+Alle vier früheren V16-Siege, die der Zielschätzer verlor, kippten im dritten Match. Der größte zusätzliche Punkterückstand entstand jeweils außerhalb der damals bekannten Reliktgebiete. 16 Wiederholungen stimmen mit den ursprünglichen Befehlen und Ergebnissen überein. Es laufen getrennte Folgeversuche zum frühen Warten, zur zweiten freien Einheit nach einer Gutschrift, zur künftigen Sicht der übrigen eigenen Flotte und zur späten ersten Suche. [Reproduzierte Wissensverläufe](../experiments/analysis/relictsuche_20261123/uebergang/ERGEBNIS.md)
+
 ## 23.11.2026 – Suchrichtung eines freien Schiffs in Match 1
 
 Wir trainieren die Suchrichtung bei Sichtweite eins an getrennten Kartensätzen. Der Vergleich erfasst, wann das Team sein erstes Relikt sieht, wann es erstmals punktet und wer das ganze Spiel gegen Solution sowie direkt gegen V16 gewinnt. Karten, Auswahlverfahren und Bedingungen für einen Abgabewechsel stehen vor der Messung im [Versuchsplan](../experiments/analysis/relictsuche_20261123/PLAN.md).
 
-Der aus echten Gegenfortsetzungen gelernte Korridor erreichte auf 80 separaten Sicht-1-Karten wie V16 68/80 erste Matches. Reliktfund im Mittel 0,61 Züge früher, 95-%-Kartenintervall −0,81 bis +2,11. Ein zweites Richtungsmodell gewann auf 32 anderen Karten mit beiden Sitzen 61/64 erste Matches gegenüber V16 mit 60/64. Der gemeinsame Vergleich spielt alle drei Modelle gegen Solution und direkt gegen V16 über volle drei Matches. [Gegenfortsetzungen](../experiments/analysis/relictsuche_20261123/routenwert/ERGEBNIS.md) · [Richtungsmodell](../experiments/analysis/relictsuche_20261123/routenlernen/EROEFFNUNG.md)
+Der aus echten Gegenfortsetzungen gelernte Korridor erreichte auf 80 separaten Sicht-1-Karten wie V16 68/80 erste Matches. Reliktfund im Mittel 0,61 Züge früher, 95-%-Kartenintervall −0,81 bis +2,11. Ein zweites Richtungsmodell gewann auf 32 anderen Karten mit beiden Sitzen 61/64 erste Matches gegenüber V16 mit 60/64. Der vollständige Vergleich über drei Matches ist oben dokumentiert. [Gegenfortsetzungen](../experiments/analysis/relictsuche_20261123/routenwert/ERGEBNIS.md) · [Richtungsmodell](../experiments/analysis/relictsuche_20261123/routenlernen/EROEFFNUNG.md)
 
 ## 23.11.2026 – Sieben Vergleiche vor dem letzten Battle abgeschlossen
 
