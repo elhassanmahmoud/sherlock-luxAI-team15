@@ -10,4 +10,6 @@ Drei gezielt ausgewählte V16-Partien sind mit dem Originalpaket reproduziert. F
 
 Auf der ersten Karte kamen sechs Punkte hinzu, fünf davon waren schon erklärt. Ein tatsächlich zahlendes Feld hatte V16 noch als leer gespeichert. Unter dieser falschen Voraussetzung blieb nur ein anderer Ort übrig und V16 erklärte ihn zum sicheren Punktefeld. In den beiden anderen Spielen entstanden die Fehlschlüsse beim Weiterrechnen bereits gespeicherter Gleichungen. Ein falsch gesetztes Feld blieb teilweise mehrere Dutzend Züge besetzt. Eine verlorene Partie hatte auch der separat geprüfte positive Feldbeweiser vollständig identisch gespielt.
 
+Bei 95 der 97 Schiffszüge auf einer falschen Markierung konnten wir bereits aus den bis dahin öffentlichen Beobachtungen beweisen, dass das Feld leer war. V16 gab in 86 dieser 95 Fälle einen Wartebefehl. Für die drei Karten waren es 11, 46 und 38 öffentlich erkennbare Schiffszüge. Ein eigener Versuch prüft jetzt, was die ursprünglichen Netze nach Rücknahme der widerlegten Markierung tun. [Widerlegung je Spielzug](widerspruch.json) · [Prüfung im echten Spiel](KORREKTURPLAN.md)
+
 Die Zählungen stammen aus bekannten Fehlerfällen. Für eine Aussage über die Häufigkeit braucht es unabhängig gewählte Karten. [Reproduzierte Aufrufe und Spielzüge](ursachen.json) · [Prüfung der öffentlichen Widerlegbarkeit](WIDERSPRUCH.md)
