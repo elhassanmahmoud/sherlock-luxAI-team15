@@ -1,5 +1,11 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Was in den vier verbliebenen Scout-Niederlagen passiert
+
+Ein fehlendes Reliktgebiet, unentdeckte Punktefelder in bekanntem Gebiet und ein Rückstand auf bereits bewiesenen Feldern kamen auf verschiedenen Karten vor. Alle vier Niederlagen und ihre gewonnenen Gegensitze sind mit den ursprünglichen Match- und Punkteständen reproduziert. [Aufteilung nach tatsächlichem Kartenwissen](../experiments/analysis/v16_finalwoche_20261122/restspiele/ERGEBNIS.md)
+
+Als Hinweis auf ein verborgenes Feld erwies sich wiederholtes gegnerisches Stehenbleiben bei laufendem Punktgewinn in sechs von sieben beobachteten Fällen als zutreffend. Für einen eigenen Erkundungsschritt am Spiegelfeld fehlte auf diesen fünf Karten jeweils ein nahes freies Schiff. [Archivprüfung mit 46 Sitzen](../experiments/analysis/v16_finalwoche_20261122/gegnerspur/ERGEBNIS.md)
+
 ## 23.11.2026 – Reliktsignal und gelernte Bewegung in Match 2
 
 Der Kundschafter holt auf 200 unabhängigen Karten 396/400 Siege gegen Solution, V16 393/400. Drei zusätzliche Sitze verteilen sich auf zwei Karten. Das gepaarte Intervall schließt null ein. Im direkten Duell 50/100. Die vorab bedingte Kaggle-Stufe entfiel. [900 vollständige Spiele](../experiments/analysis/v16_finalwoche_20261122/signalstudie/ERGEBNIS.md)

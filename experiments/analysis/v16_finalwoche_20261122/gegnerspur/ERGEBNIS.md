@@ -1,0 +1,5 @@
+# Der Hinweis traf oft zu, doch ein Schiff zum Überprüfen fehlte
+
+In 46 vollständig gespeicherten V16-Spielverläufen fanden sich sieben unterschiedliche Feldpaare auf fünf Karten, bei denen ein sichtbarer Gegner während mehrerer eigener Punktgewinne auf einem noch unbestimmten Feld stand. Sechs davon waren zu diesem Zeitpunkt tatsächlich Punktefelder. Im Mittel waren nur 24,7 % der damals noch offenen Kandidatenpaare echt. Sieben Meldungen sind zu wenig für eine genaue Einschätzung der Zuverlässigkeit.
+
+In **keinem** der sieben Fälle konnte eine freie eigene Einheit das gespiegelte Kandidatenfeld gemäß den vorab festgeschriebenen Bedingungen binnen zwölf weiterer Züge von einem Nachbarfeld aus prüfen. Treffergüte alleine hilft hier bei der unmittelbaren Bewegungsauswahl kaum. Ein Spieltest mit der geplanten Einzelbewegung entfällt. Es wurde kein fremdes Stehenbleiben als sicheres Punktewissen in V16 eingetragen. [Beobachtungen, Alternativen und Eignung](ergebnis.json) · [Vorab festgelegte Situationen](PLAN.md)
