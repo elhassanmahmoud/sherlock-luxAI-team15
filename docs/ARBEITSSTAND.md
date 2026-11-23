@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 23.11.2026 – Früherer Punktgewinn und späterer Feldverlust
+
+Die späte Suchrichtung gewann in 420 vollständigen Testspielen 119/120 gegen Solution wie V16 und 61/120 direkt. Ein separat gelerntes spätes Ortsmodell kam auf 94/96 wie V16 sowie 47/96 direkt. Beide Vergleiche sind abgeschlossen. Beim schnellen frühen Zielschätzer brachte das erste Relikt im direkten Duell den ersten eigenen Punkt 5,08 Züge früher. Am Ende des ersten Matches verlor seine Punktedifferenz gegenüber dem V16-Selbstspiel in den letzten 30 Zügen im Mittel 30,45 Punkte. Der größte Anteil entfiel auf zuvor genutzte Felder. Die unabhängige Prüfung des Flottenblicks und getrennte Versuche zur öffentlichen Felderkennung laufen. [Vergleich und vollständige Rohdaten](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
+
 ## 23.11.2026 – Kandidat für die unabhängige Sichtprüfung
 
 Der gelernte Flottenblick fand das erste Relikt auf 40 neuen Karten mit Sichtweite eins im Mittel 1,76 Züge früher. Er gewann 77/80 gegen Solution, V16 auf denselben Sitzen 76/80, im Direktduell 40/80. Der Sichtgewinn ist in dieser Stichprobe unsicher. Das Forschungsmodell spielt im unveränderten Kursrunner auf Python 3.10 und 3.13 genau die aufgezeichneten Befehle. Die Bestätigung auf 120 weiteren Karten läuft. Die Abgabe bleibt V16. [Tagesübersicht](../experiments/analysis/relictsuche_20261123/ERGEBNIS.md)
