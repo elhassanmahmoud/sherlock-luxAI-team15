@@ -1,0 +1,165 @@
+{
+  "maps": 64,
+  "paired_seats": 128,
+  "actual_opening_prefixes": 384,
+  "results": {
+    "original": {
+      "exclusive_pairs": 1.15625,
+      "exclusive_physical": 1.3203125,
+      "new_pairs": 26.0078125,
+      "extra_all": 3.96875,
+      "first_sight_in_window": 0.109375,
+      "first_credit_in_window": 0.109375,
+      "margin_at_8": -0.625,
+      "interventions": 0.0,
+      "eligible_seats": 98,
+      "uid_gap_or_jump_seats": 0,
+      "changed_seats": 0
+    },
+    "simple": {
+      "exclusive_pairs": 11.0078125,
+      "exclusive_physical": 11.5859375,
+      "new_pairs": 35.6875,
+      "extra_all": 13.203125,
+      "first_sight_in_window": 0.1015625,
+      "first_credit_in_window": 0.1328125,
+      "margin_at_8": -0.59375,
+      "interventions": 1.875,
+      "eligible_seats": 98,
+      "uid_gap_or_jump_seats": 0,
+      "changed_seats": 98
+    },
+    "cnn": {
+      "exclusive_pairs": 11.4453125,
+      "exclusive_physical": 12.0078125,
+      "new_pairs": 36.4140625,
+      "extra_all": 13.890625,
+      "first_sight_in_window": 0.1015625,
+      "first_credit_in_window": 0.1328125,
+      "margin_at_8": -0.59375,
+      "interventions": 2.078125,
+      "eligible_seats": 98,
+      "uid_gap_or_jump_seats": 0,
+      "changed_seats": 98
+    }
+  },
+  "cnn_gain": {
+    "original": {
+      "exclusive_pairs": {
+        "mean": 10.2890625,
+        "ci95": [
+          8.1326171875,
+          12.453320312499997
+        ]
+      },
+      "exclusive_physical": {
+        "mean": 10.6875,
+        "ci95": [
+          8.4375,
+          12.906640624999994
+        ]
+      },
+      "new_pairs": {
+        "mean": 10.40625,
+        "ci95": [
+          8.2421875,
+          12.578320312499997
+        ]
+      },
+      "extra_all": {
+        "mean": 9.921875,
+        "ci95": [
+          7.9140625,
+          11.929882812499997
+        ]
+      },
+      "first_sight_in_window": {
+        "mean": -0.0078125,
+        "ci95": [
+          -0.046875,
+          0.0234375
+        ]
+      },
+      "first_credit_in_window": {
+        "mean": 0.0234375,
+        "ci95": [
+          -0.03125,
+          0.078125
+        ]
+      },
+      "margin_at_8": {
+        "mean": 0.03125,
+        "ci95": [
+          -0.0625,
+          0.109375
+        ]
+      },
+      "interventions": {
+        "mean": 2.078125,
+        "ci95": [
+          1.65625,
+          2.53125
+        ]
+      }
+    },
+    "simple": {
+      "exclusive_pairs": {
+        "mean": 0.4375,
+        "ci95": [
+          -0.1875,
+          1.21875
+        ]
+      },
+      "exclusive_physical": {
+        "mean": 0.421875,
+        "ci95": [
+          -0.203125,
+          1.203125
+        ]
+      },
+      "new_pairs": {
+        "mean": 0.7265625,
+        "ci95": [
+          -0.0703125,
+          1.6953125
+        ]
+      },
+      "extra_all": {
+        "mean": 0.6875,
+        "ci95": [
+          0.078125,
+          1.46875
+        ]
+      },
+      "first_sight_in_window": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_credit_in_window": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "margin_at_8": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "interventions": {
+        "mean": 0.203125,
+        "ci95": [
+          -0.046875,
+          0.5
+        ]
+      }
+    }
+  },
+  "pass_real_exclusive": true
+}
