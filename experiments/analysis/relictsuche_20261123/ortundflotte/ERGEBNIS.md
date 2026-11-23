@@ -7,3 +7,5 @@ Auf diesen Karten lagen 681 verwertbare Situationen vor. Der neue Bewerter ände
 Für Mahmoud ist der wesentliche Unterschied zur älteren Flottensuche, dass zwei unerkundete Orte jetzt verschieden bewertet werden können, auch wenn an beiden die gleiche Wahrscheinlichkeit besteht, dass die übrige Flotte vorbeikommt. [Trainingskarten](train.json) · [Getrennte Vorauswahl](valid.json) · [Suchregel und Spielplan](PLAN.md)
 
 Die ersten beiden technischen Vergleichssitze ließen in der ursprünglichen Flottensuche keinen Eingriff zu. Für den aktiven Technikvergleich wurden deshalb zwei bereits archivierte Sitze mit mindestens drei ausgeführten Suchbewegungen verwendet.
+
+Auf den beiden aktiven technischen Sitzen spielte die neue Implementierung mit ausgeschalteter Ortsgewichtung alle 303 Befehle genauso wie das archivierte Original der Flottensuche. Mit der gelernten Gewichtung rückte die erste Sicht hier von Zug 73 auf 71 gegen Solution und von 41 auf 40 direkt gegen V16 vor. Die zwei bekannten Verläufe dienen der Funktionsprüfung. [Echte Befehle, Zeitpunkte und Matchstände](technik.json)
