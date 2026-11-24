@@ -300,36 +300,37 @@
   <header style="margin-bottom:28px"><div class="kicker">SHERLOCK / FAZIT</div><h2>Was wir mitnehmen</h2></header>
   <div class="three">
     <div class="pane"><h3>Vom Besten lernen</h3><p>Gedächtnis, ein starker Lehrer und DAgger brachten mehr als alle Handregeln zusammen.</p></div>
-    <div class="pane"><h3>Nur frische Karten zählen</h3><p>Jede neue Version musste eine vorab festgelegte Prüfung auf neuen Karten bestehen. Viele gute Ideen fielen dort durch.</p></div>
+    <div class="pane"><h3>Nur frische Karten zählen</h3><p>Jede neue Version musste eine vorab festgelegte Prüfung auf neuen Karten bestehen. Auch nach V16 fielen dort über 20 weitere Ideen durch.</p></div>
     <div class="pane"><h3>Der Lehrer bleibt stärker</h3><p>Gegen ihn holt Sherlock rund 40&nbsp;% der Punkte und etwa jedes zehnte Match.</p></div>
   </div>
-  <p class="barline" style="margin-top:30px;font-size:21px"><b>Nächste Schritte:</b> das nachgeahmte Netz mit Reinforcement Learning weitertrainieren, etwa mit PPO nahe am Lehrer · Schüsse besser erkennen (heute 36–50&nbsp;% der Lehrerschüsse) · am Matchende mehr Punktefelder besetzen (Kaggle&nbsp;8, wir&nbsp;3)</p>
+  <p class="barline" style="margin-top:30px;font-size:21px"><b>Nächste Schritte:</b> das nachgeahmte Netz mit Reinforcement Learning weitertrainieren, etwa mit PPO nahe am Lehrer · Schüsse besser erkennen (heute 36–50&nbsp;% der Lehrerschüsse) · an später erscheinenden Relikten schneller punkten (dort lag V16 in allen 18 untersuchten verlorenen Matches 2 und 3 gegen Solution_92 zurück) · am Matchende mehr Punktefelder besetzen (Kaggle&nbsp;8, wir&nbsp;3)</p>
   <p class="accent" style="margin-top:auto;margin-bottom:30px;font-size:34px">Danke! Habt ihr Fragen?</p>
   <footer><span>Team 15 · Sherlock V16</span><span>10</span></footer>
 </section>
 
 <!-- Reserve -->
 <section class="slide reserve" id="reserve-zahlen">
-  <header style="margin-bottom:26px"><div class="kicker">RESERVE / ZAHLEN UND FAKTEN</div><h2>1,54 Millionen Spiele seit dem 10. Oktober</h2></header>
+  <header style="margin-bottom:26px"><div class="kicker">RESERVE / ZAHLEN UND FAKTEN</div><h2>Über 1,55 Millionen Spiele seit dem 10. Oktober</h2></header>
   <div class="cols" style="grid-template-columns:1fr 1fr;gap:46px">
     <table><tbody>
       <tr><td>Trainingsspiele (272 DQN-Läufe, 7 PPO-Läufe)</td><td class="numeric">662.504</td></tr>
       <tr><td>Zwischenprüfungen im Training</td><td class="numeric">66.912</td></tr>
-      <tr><td>Bewertungsspiele (Vergleiche, Bestätigungen)</td><td class="numeric">806.616</td></tr>
+      <tr><td>Bewertungsspiele bis 17.11.</td><td class="numeric">806.616</td></tr>
       <tr><td>Spiele für die Nachahmung</td><td class="numeric">5.928</td></tr>
-      <tr><td><b>zusammen</b></td><td class="numeric"><b>1.541.960</b></td></tr>
-      <tr><td>verschiedene Karten in Bewertungen</td><td class="numeric">33.005</td></tr>
+      <tr><td>Prüfspiele nach V16 (Folie R5)</td><td class="numeric">9.176</td></tr>
+      <tr><td><b>zusammen, mindestens</b></td><td class="numeric"><b>1.551.136</b></td></tr>
+      <tr><td>verschiedene Karten in Bewertungen bis 17.11.</td><td class="numeric">33.005</td></tr>
     </tbody></table>
     <table><tbody>
       <tr><td>Abgabestände seit dem 10.10.</td><td class="numeric">11</td></tr>
       <tr><td>Netze in V16 · Parameter</td><td class="numeric">2 · 2,5 Mio.</td></tr>
       <tr><td>Abgabedatei · Zeit je Zug (Median)</td><td class="numeric">9,5 MB · 5–6 ms</td></tr>
       <tr><td>Tests im Projekt</td><td class="numeric">3.298</td></tr>
-      <tr><td>Commits (Moayed / Mahmoud)</td><td class="numeric">507 / 415</td></tr>
+      <tr><td>Commits (Moayed / Mahmoud)</td><td class="numeric">652 / 455</td></tr>
       <tr><td>Gegnertypen in Tests</td><td class="numeric">über 25</td></tr>
     </tbody></table>
   </div>
-  <p class="small" style="margin-top:24px">Spiele und Karten Stand 17.11., nachgezählt mit experiments/analysis/count_games.py. Gegner: Solution_92 und drei Varianten, default, das DQN der Vorlage, Rush-Bot, Zufall, CNN-PPO, 16 eigene frühere Stände und der Kaggle-Dritte.</p>
+  <p class="small" style="margin-top:24px">Bis 17.11. nachgezählt mit experiments/analysis/count_games.py, Prüfspiele nach V16 aus den Ergebnisberichten, Commits Stand 24.11. Gegner: Solution_92 und drei Varianten, default, das DQN der Vorlage, Rush-Bot, Zufall, CNN-PPO, 16 eigene frühere Stände und der Kaggle-Dritte.</p>
   <footer><span>Team 15 · Reserve</span><span>R1</span></footer>
 </section>
 
@@ -381,6 +382,23 @@
   </tbody></table>
   <p class="small" style="margin-top:20px">Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, gepaart nach Karte ausgewertet (10.000 Ziehungen, 95-%-Intervall). Robustheit: gegen default, Zufall, Rush-Bot, eine Solution-Variante und das DQN der Vorlage je 50/50, gegen V14 48/50.</p>
   <footer><span>Team 15 · Reserve</span><span>R4</span></footer>
+</section>
+
+<section class="slide reserve" id="reserve-nach-v16">
+  <header style="margin-bottom:18px"><div class="kicker">RESERVE / NACH DEM 17. NOVEMBER GEPRÜFT</div><h2>Keine weitere Idee war sicher besser als V16</h2></header>
+  <table style="font-size:17px"><thead><tr><th>Idee, jeweils auf neuen Karten mit beiden Startseiten</th><th class="numeric">Karten</th><th class="numeric">Solution_92 · neu / V16</th><th class="numeric">Kaggle · neu / V16</th><th class="numeric">direkt gegen V16</th></tr></thead><tbody>
+    <tr><td style="padding:7px 8px">Kundschafter sucht bei kurzer Sicht das erste Relikt</td><td class="numeric" style="padding:7px 8px">160</td><td class="numeric" style="padding:7px 8px">319 / 316 von 320</td><td class="numeric" style="padding:7px 8px">–</td><td class="numeric" style="padding:7px 8px">161 / 320</td></tr>
+    <tr><td style="padding:7px 8px">derselbe, Wiederholung nur bei Sichtweite 1</td><td class="numeric" style="padding:7px 8px">96</td><td class="numeric" style="padding:7px 8px">178 / 177 von 192</td><td class="numeric" style="padding:7px 8px">–</td><td class="numeric" style="padding:7px 8px">102 / 192</td></tr>
+    <tr><td style="padding:7px 8px">zweites Relikt auf ein Punktesignal hin suchen</td><td class="numeric" style="padding:7px 8px">200</td><td class="numeric" style="padding:7px 8px">396 / 393 von 400</td><td class="numeric" style="padding:7px 8px">–</td><td class="numeric" style="padding:7px 8px">50 / 100</td></tr>
+    <tr><td style="padding:7px 8px">ein beratener Zug in Match 2</td><td class="numeric" style="padding:7px 8px">120</td><td class="numeric" style="padding:7px 8px">238 / 237 von 240</td><td class="numeric" style="padding:7px 8px">8 / 8 von 240</td><td class="numeric" style="padding:7px 8px">38 / 80</td></tr>
+    <tr><td style="padding:7px 8px">Signal-Suche und Match-2-Zug zusammen</td><td class="numeric" style="padding:7px 8px">80</td><td class="numeric" style="padding:7px 8px">157 / 157 von 160</td><td class="numeric" style="padding:7px 8px">6 / 4 von 160</td><td class="numeric" style="padding:7px 8px">38 / 80</td></tr>
+    <tr><td style="padding:7px 8px">gelernter Zug am Matchende</td><td class="numeric" style="padding:7px 8px">120</td><td class="numeric" style="padding:7px 8px">237 / 237 von 240</td><td class="numeric" style="padding:7px 8px">4 / 8 von 240</td><td class="numeric" style="padding:7px 8px">43 / 80</td></tr>
+    <tr><td style="padding:7px 8px">gelernte Erkundung am Anfang</td><td class="numeric" style="padding:7px 8px">120</td><td class="numeric" style="padding:7px 8px">236 / 235 von 240</td><td class="numeric" style="padding:7px 8px">10 / 8 von 240</td><td class="numeric" style="padding:7px 8px">37 / 80</td></tr>
+    <tr><td style="padding:7px 8px">Aktionsausgabe des kleinen Netzes v9 nachtrainiert</td><td class="numeric" style="padding:7px 8px">200</td><td class="numeric" style="padding:7px 8px">390 / 394 von 400</td><td class="numeric" style="padding:7px 8px">16 / 14 von 400</td><td class="numeric" style="padding:7px 8px">42 / 100</td></tr>
+    <tr><td style="padding:7px 8px">erschöpften Halter auf dem Punktefeld ablösen</td><td class="numeric" style="padding:7px 8px">120</td><td class="numeric" style="padding:7px 8px">232 / 234 von 240</td><td class="numeric" style="padding:7px 8px">4 / 8 von 240</td><td class="numeric" style="padding:7px 8px">106 / 240</td></tr>
+  </tbody></table>
+  <p class="small" style="margin-top:14px">Zusammen 9.176 ganze Spiele auf 1.216 neuen Karten, jede Regel vor dem ersten Spiel festgelegt; weitere kleine Versuche schieden schon in der Auswahl aus. Wo V16 gegen Solution_92 noch verliert: Alle 35 Niederlagen aus 1.600 Spielen endeten 1:2, 27-mal nach gewonnenem ersten Match. In den untersuchten verlorenen Matches 2 und 3 holte Solution_92 an den später erscheinenden Relikten jedes Mal mehr Punkte (18 von 18).</p>
+  <footer><span>Team 15 · Reserve</span><span>R5</span></footer>
 </section>
 </body>
 </html>

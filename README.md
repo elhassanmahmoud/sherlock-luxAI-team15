@@ -5,7 +5,7 @@ Team 15 (Moodle-Gruppe `15`) · Mahmoud El-Hassan, Moayed Shawesh · Agent **She
 
 Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit Nebel, wandernden Asteroiden und versteckten Punkte-Feldern rund um Relics. Im Kurs besteht ein Spiel aus 3 Matches à 100 Schritte; jede Seite steuert bis zu 16 Einheiten. Viele Spielparameter (Sichtweite, Sap-Kosten, Streuschaden, Nebel-Abzug …) werden pro Spiel zufällig gezogen und sind nicht direkt sichtbar.
 
-## Auf einen Blick (Stand 17.11.2026)
+## Auf einen Blick (Stand 24.11.2026)
 
 | | |
 |---|---|
@@ -14,11 +14,12 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 | Direkt gegen die vorige Abgabe R3 | **194 von 200 Spielen gewonnen** (100 Karten, auf jeder Karte beide Startseiten) |
 | Gegen den Kaggle-Drittplatzierten | 20/800 statt 10/800 Spiele, **216 statt 76 von 2.400 Matches**, Punkteanteil 39,3 statt 33,4 % |
 | Gegen Solution_92 | 787/800 wie R3; auf einem weiteren frischen Kartensatz 778 statt 789/800 |
+| Nach V16 geprüft (22./23.11.) | über 20 weitere Ideen, keine auf neuen Karten sicher besser; am nächsten kam ein Kundschafter (319 statt 316 von 320 gegen Solution_92, in der Wiederholung 178 statt 177 von 192, direkt 102/192) · [Morgenbericht](docs/MORGENBERICHT_20261123.md) · [Reliktsuche](experiments/analysis/relictsuche_20261123/ERGEBNIS.md) |
 | Gegen Battle-Sherlock V14 | 48/50 (R3 34/50); gemessen mit demselben Netz bei Stay-Bias 1,5 |
 | Gegen `default`, Zufall, Rush-Bot, Solution-Variante, DQN der Vorlage | je 50/50 (ebenso) |
-| Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms) |
-| Gespielte Spiele bisher | **rund 1,54 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele und 5.928 Spiele für die Nachahmung ([Zahlen und Fakten](#zahlen-und-fakten)) |
-| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11.** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md)) |
+| Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms). Battle-Format `dist/Gruppe15.zip` (`8347ea2b…ae95`). Beide am 24.11. neu gebaut (bytegleich) und je ein ganzes Kursrunner-Spiel auf beiden Seiten gegen Solution_92 gewonnen (3:0, 3:0) |
+| Gespielte Spiele bisher | **über 1,55 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele bis 17.11., 5.928 Spiele für die Nachahmung und 9.176 Prüfspiele nach V16 ([Zahlen und Fakten](#zahlen-und-fakten)) |
+| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier und Abgabe der Unterlagen am 27.11.** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte mit Checkliste](Sherlock_Stichpunkte_27-11-2026.md)) |
 
 Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die meisten Spiele: Er holt etwa 40 % der Punkte und gewinnt rund jedes zehnte Match.
 
@@ -117,7 +118,7 @@ Die DQN-Versionen sind unter [Historie](#historie-dqn-sherlock-bis-v14-und-r3) b
 
 ## Zahlen und Fakten
 
-Spiele: Stand 17.11.2026, aus den Dateien im Repository nachgezählt mit `python experiments/analysis/count_games.py`.
+Spiele: Stand 17.11.2026, aus den Dateien im Repository nachgezählt mit `python experiments/analysis/count_games.py`. Die 9.176 Prüfspiele nach V16 vom 22./23.11. erfasst das Skript nicht; sie stammen aus den Ergebnisberichten (sieben große Vergleiche mit 7.640 Spielen, Kundschafter-Prüfung mit 960 und ihre Wiederholung mit 576 Spielen).
 
 ### Spiele
 
@@ -133,8 +134,9 @@ Spiele: Stand 17.11.2026, aus den Dateien im Repository nachgezählt mit `python
 | Nachahmung: Lehrerspiele des Kaggle-Drittplatzierten (9,2 Mio. aufgezeichnete Einheitsentscheidungen) | 1.800 |
 | Nachahmung: DAgger-Runden 1–7 (13,5 Mio. Einheitsentscheidungen) | 4.000 |
 | Nachahmung: Prüf- und Testspiele (0,5 Mio. Einheitsentscheidungen) | 128 |
-| Bewertungsspiele (Vergleiche, Screens, Bestätigungen, Diagnosen) | 806.616 |
-| **Alle Spiele zusammen** | **1.541.960** |
+| Bewertungsspiele bis 17.11. (Vergleiche, Screens, Bestätigungen, Diagnosen) | 806.616 |
+| Prüfspiele nach V16 (22./23.11., aus den Ergebnisberichten) | 9.176 |
+| **Alle Spiele zusammen, mindestens** | **1.551.136** |
 
 - **Trainings:** 272 DQN-Läufe und 7 CNN/PPO-Läufe bis zum Battle; seit dem 15.11. 13 nachgeahmte Netze (v1 bis v10, dazu v5c, v7L und v8L) und 5 Ensembles aus zusammen 23,3 Millionen aufgezeichneten Einheitsentscheidungen.
 - **In V16 stecken** 1.800 Lehrerspiele und 3.400 Spiele aus den DAgger-Runden 1–6 mit 20,7 Millionen aufgezeichneten Einheitsentscheidungen; im Training verwendet wurden bis zu rund 19 Millionen. In den 36 Netzen von V14 steckten 165.000 Trainingsspiele (66.000 der 18 Grundnetze und 18 × 5.500 Spiele Nachtraining).
@@ -170,7 +172,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 ### Versionen und Verlauf (Stand 17.11.)
 
 - **11 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13, V14, R3 und V16. Alle Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert, `full_s0` als Git-Tag `abgabe-review-full_s0`.
-- **922 Commits** seit dem 10.10.2026 (Moayed 507, Mahmoud 415).
+- **1.107 Commits** seit dem 10.10.2026, Stand 24.11. (Moayed 652, Mahmoud 455).
 - **Dokumentation:** 427 Einträge im Arbeitsstand; jede Auswahl und Bestätigung seit der Battle-Woche mit vorab festgelegtem Plan.
 
 ## Abgabe
@@ -293,13 +295,15 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 
 Für die Finalwoche gibt es einen [Arbeitsplan mit nachgespielten V16-Verlusten und neuen Trainingsmessungen](experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md). [Folien und gemeinsame Zeitprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md) beziehen sich auf den freigegebenen V16.
 
+**Nach V16 (22./23.11.2026):** Über 20 weitere Ideen wurden auf neuen Karten geprüft, allein in den Vergleichen der Reservefolie R5 9.176 Spiele. Keine war sicher besser, V16 bleibt. In den untersuchten verlorenen Matches 2 und 3 gegen Solution_92 holte der Gegner an den später erscheinenden Relikten jedes Mal mehr Punkte (18 von 18). Das ist der nächste Ansatzpunkt. [Morgenbericht](docs/MORGENBERICHT_20261123.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md)
+
 **Erkenntnisse aus den Auswahlspielen vom 17.11.2026**
 
 - **Kaggle bleibt klar stärker.** Der neue Sherlock holt gegen den Kaggle-Drittplatzierten etwa 40 % der Punkte und gewinnt rund jedes zehnte Match, aber nur 2–4 % der ganzen Spiele. Am Matchende besetzt Kaggle mehr Punktefelder.
 - **Gegen Solution_92 liegen R3 und der neue Sherlock nahe beieinander:** 787 zu 787 von 800 (Bestätigung 3), 395 zu 393 von 400 (Dev G), 778 zu 789 von 800 (Bestätigung 5). Über beide Gegner zusammen liegt der neue Sherlock gleichauf bis leicht vorn.
 - **Die Gegner im Finale sind unbekannt.** Gemessen wurde gegen Solution_92 und Varianten, den Kaggle-Drittplatzierten, unsere früheren Abgaben und einfache Agenten. Windows und das Zeitlimit des Kurses sind nicht geprüft; ein Zug dauert lokal 5–6 ms.
 - **Nachahmung ist weitgehend ausgereizt:** Eine siebte DAgger-Runde, ein Dreier-Ensemble, andere Schalterwerte und 17 Handtaktiken brachten keinen weiteren Gewinn. Mögliche größere Schritte: ein größeres Netz, Schüsse im Training gezielter lernen oder Weiterlernen durch eigenes Spielen (RL). Vor dem Finale werden sie nur nach festem Plan geprüft; die Abgabe bleibt bis dahin unverändert.
-- **Termine:** Review Session 20.11., Finale mit Turnier am 27.11. Für die Folien plant das Team mit dem 23.11. Die genaue Uploadfrist und das gewünschte ZIP-Format sind laut Teamstand vom 22.11. noch in Moodle bzw. beim Prof zu bestätigen.
+- **Termine:** Finale mit Turnier am 27.11.; laut Kursfolie 8 werden die Unterlagen am selben Tag abgegeben. Frist mit Uhrzeit, ZIP-Format und Slot in Moodle prüfen. Welche Datei hochgeladen wird, steht in den [Stichpunkten](Sherlock_Stichpunkte_27-11-2026.md) unter „Das Wichtigste für Freitag“.
 
 ## Historie: DQN-Sherlock bis V14 und R3
 

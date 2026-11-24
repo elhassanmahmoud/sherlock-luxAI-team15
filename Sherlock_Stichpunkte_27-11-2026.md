@@ -2,7 +2,19 @@
 
 [Präsentations-PDF](Sherlock_Finale_27-11-2026.pdf) · [Editierbare Folien (HTML)](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html) · [Gemeinsame Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md)
 
-**Planzeit 9:50 Minuten für 10 Folien, dazu 4 Reservefolien für Fragen. Noch keine gemeinsame Zeitprobe.**
+## Das Wichtigste für Freitag (Stand 24.11.)
+
+| Was | Stand |
+|---|---|
+| **Abgabe-ZIP** | `dist/Gruppe15.zip` im Format der Battle-Mail (Ordner `Gruppe15/`, Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth`, SHA-256 `8347ea2b…ae95`) oder `dist/agent.zip` im Format von Kursfolie 51 (Ordner `sherlock/` mit `paths.csv`, SHA-256 `0c59706b…6099`). Beide enthalten V16. **Nicht** die alte `Gruppe15.zip` direkt im Projektordner hochladen, das ist V14. |
+| **ZIP geprüft** | Am 24.11. beide neu gebaut, bytegleich mit dem Release. Beide Seiten laden, auch mit `train=True`, mit dem Ordner unter `agents/` und in der Projektwurzel. Je ein ganzes Spiel im unveränderten Kursrunner gegen Solution_92 auf beiden Seiten: 3:0 und 3:0. Der Agent braucht nur torch und numpy und läuft auf der CPU. Python 3.10 hat Moe am 22.11. geprüft (9.696 gleiche Befehle). |
+| **Präsentation** | `Sherlock_Finale_27-11-2026.pdf`: 10 Folien und 5 Reservefolien. Neu am 24.11.: Folie 10 mit dem Stand nach V16, Reservefolie R1 mit neuen Zahlen und Reservefolie R5 mit allen Prüfungen nach V16. |
+| **In Moodle prüfen** | Frist mit Uhrzeit (im Oktober war es 08:00 Uhr am Vortragstag), gewünschtes ZIP-Format und ob ein Slot gebucht werden muss. Laut Kursfolie 8 sind am 27.11. Abschlusspräsentation, Battle und Abgabe der Unterlagen. Eine neue Ansage des Profs lag bis zum 22.11. nicht vor. |
+| **Ablauf am 27.11.** | Laut Kursfolie 10 stellen zwei Teams ihre Agenten je 10 Minuten vor. Danach spielen die Agenten drei Spiele mit je drei Matches, das Replay läuft in doppelter Geschwindigkeit. Turniermodus mit Preis. Benotet werden die drei Präsentationen mit je 33 % (Kursfolie 8). |
+| **Mitnehmen** | Laptop mit der PDF offline, die Replay-Datei zu Folie 7 (`docs/presentation/finale_2711/replays/V16_Kaggle_4247.html`), die PDF zusätzlich auf einem USB-Stick. |
+| **Proben** | Zweimal mit Stoppuhr nach der [Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md), Ziel 9:50. |
+
+**Planzeit 9:50 Minuten für 10 Folien, dazu 5 Reservefolien für Fragen. Noch keine gemeinsame Zeitprobe.**
 Moe: Einstieg, Weg bis zum Battle, Schalter und Handtaktiken, Ergebnis, Fazit (5:05). Mahmoud: wie V16 lernt und
 entscheidet, mit einem echten Zug (4:45). Die Zeiten enthalten Zeige- und Übergabepausen. In eigenen Worten sprechen,
 die Folien nur als Stütze nehmen.
@@ -126,10 +138,11 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 ### 10 · Was wir mitnehmen (Moe)
 
 - Drei Sätze: Vom Besten lernen hat mehr gebracht als alle Handregeln. Nur frische Karten mit fester Regel zeigen
-  echte Fortschritte, viele gute Ideen fielen dort durch. Der Lehrer bleibt stärker: Wir holen gegen ihn rund 40 %
-  der Punkte und etwa jedes zehnte Match.
-- Nächste Schritte nennen: das nachgeahmte Netz mit RL weitertrainieren (zum Beispiel PPO, das nahe am Lehrer
-  bleibt), Schüsse besser erkennen, am Matchende mehr Punktefelder besetzen.
+  echte Fortschritte: Auch nach V16 haben wir über 20 weitere Ideen geprüft, keine war sicher besser, deshalb spielt
+  V16 im Turnier. Der Lehrer bleibt stärker: Wir holen gegen ihn rund 40 % der Punkte und etwa jedes zehnte Match.
+- Nächste Schritte nur nennen, nicht ausführen: das nachgeahmte Netz mit RL weitertrainieren (zum Beispiel PPO, das
+  nahe am Lehrer bleibt), Schüsse besser erkennen, an später erscheinenden Relikten schneller punkten, am Matchende
+  mehr Punktefelder besetzen. Die Zahlen dazu stehen auf Reservefolie R5.
 - Zur Eingangsfrage zurück: „Wenn das eigene Training nicht weiterkommt, hilft ein guter Lehrer, wenn man ihn ehrlich
   nennt und sauber prüft.“ Dann: „Danke! Habt ihr Fragen?“
 
@@ -145,11 +158,12 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 | Warum habt ihr kein drittes Netz genommen? | Das haben wir ausprobiert. Mit dem dritten Netz stieg unser Punkteanteil gegen Kaggle um 0,18 Prozentpunkte. Für diesen Versuch hatten wir vorab mindestens einen Prozentpunkt verlangt. [Spielvergleich](experiments/analysis/devg_20261117/ERGEBNIS.md) |
 | Wozu noch die Maske? | Sie verhindert offensichtlich unsinnige oder gefährliche Züge (Rand, Asteroid, zu wenig Energie, stärkerer Gegner). Ohne Masken lag das Netz im Test 0,71 Prozentpunkte Punkteanteil gegen Kaggle schlechter (nicht gesichert, das Intervall enthält null). |
 | Warum die Stehstrafe? | Der Lehrer verfolgt Pläne über mehrere Züge, die das Netz nicht sieht. Im Zweifel blieb es stehen (58–67 % der Züge statt 46 % beim Lehrer); die Strafe gleicht das aus. |
-| Wie habt ihr getestet? | Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, Auswahl auf Entwicklungskarten, Bestätigung auf nie benutzten Karten, gepaarte Auswertung nach Karte mit Bootstrap. Insgesamt 1,54 Millionen Spiele seit dem 10. Oktober. |
+| Wie habt ihr getestet? | Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, Auswahl auf Entwicklungskarten, Bestätigung auf nie benutzten Karten, gepaarte Auswertung nach Karte mit Bootstrap. Insgesamt über 1,55 Millionen Spiele seit dem 10. Oktober. |
 | Was war euer eigener Beitrag? | Gedächtnis und Merkmale (16 Kartenebenen, 79 Merkmale), die ganze Lernkette mit DAgger, die Schalter aus der Spielanalyse wie die Halter-Regel, die schrittgenaue Nachrechnung der Kämpfe und die Prüfungen. |
 | Warum ist V16 gegen Solution nicht besser als R3? | Beide liegen bei rund 98 %; auf einem weiteren frischen Kartensatz lag V16 sogar 11 Spiele von 800 hinter R3 (778 statt 789). Wir haben V16 gewählt, weil es gegen den viel stärkeren Kaggle-Dritten klar besser ist und R3 direkt 194 von 200 Mal schlägt. |
-| Wo fehlen euch gegen Solution noch Siege? | „Wir haben alle 35 Niederlagen aus zwei Tests mit insgesamt 1.600 Spielen nachgespielt. 27-mal haben wir das erste Match gewonnen und danach beide verloren. Das knappere verlorene Match war meistens das zweite. Genau dort wollen wir früher punkten.“ [Rekonstruierte Matchstände](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md) |
-| Habt ihr nach dem V16-Release eine stärkere Version gefunden? | „Unser Kundschafter gewann auf 200 neuen Karten 396 von 400 Spielen gegen Solution, V16 auf denselben Starts 393. Die drei zusätzlichen Siege kamen von zwei Karten und das direkte Duell endete 50:50. Deshalb schicken wir V16 ins Battle.“ [Vergleich](experiments/analysis/v16_finalwoche_20261122/signalstudie/ERGEBNIS.md) |
+| Wo fehlen euch gegen Solution noch Siege? | „Wir haben alle 35 Niederlagen aus zwei Tests mit insgesamt 1.600 Spielen nachgespielt. 27-mal haben wir das erste Match gewonnen und danach beide verloren. Das knappere verlorene Match war meistens das zweite. In den untersuchten verlorenen Matches 2 und 3 holte Solution an den später erscheinenden Relikten jedes Mal mehr Punkte, 18 von 18. Genau dort wollen wir früher punkten.“ [Rekonstruierte Matchstände](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md) |
+| Habt ihr nach dem V16-Release eine stärkere Version gefunden? | „Wir haben danach über 20 Ideen geprüft, allein in den Vergleichen auf Reservefolie R5 9.176 Spiele auf neuen Karten. Am nächsten kam ein Kundschafter, der bei kurzer Sicht ein freies Schiff das erste Relikt suchen lässt: 319 von 320 Spielen gegen Solution, V16 316. In der vorab festgelegten Wiederholung waren es nur noch 178 zu 177 von 192, direkt 102 von 192. Das reicht nicht für einen Wechsel, deshalb spielt V16.“ [160 Karten](experiments/analysis/relictsuche_20261123/abschlusspruefung/ERGEBNIS.md) · [Wiederholung](experiments/analysis/relictsuche_20261123/sicht1_wiederholung/ERGEBNIS.md) · [alle Vergleiche](docs/MORGENBERICHT_20261123.md) |
+| Läuft eure Abgabe sicher beim Prof? | Sie braucht nur torch und numpy und läuft auf der CPU. Im unveränderten Kursrunner lief sie unter Python 3.10 und 3.14; nach dem letzten Bau am 24.11. hat sie gegen Solution_92 auf beiden Seiten je ein ganzes Spiel 3:0 gewonnen. Liegt der Ordner woanders, findet der Agent seine Gewichte direkt neben `main.py`. |
 | Wie lange dauert ein Zug? | Im Kursrunner im Median 5–6 ms, die Abgabedatei ist 9,5 MB groß und unter Python 3.10 und 3.14 geprüft. |
 
 ## Quellen für jede Zahl
@@ -185,6 +199,17 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
   [Ergebnis](experiments/analysis/robust_p9_20261117/ERGEBNIS.md), gemessen mit demselben Netz bei Stay-Bias 1,5.
 - **Folie 10 und Reserve:** [Release V16](experiments/releases/20261117_sherlock_v16/README.md), Zahlen und Fakten in der
   [README](README.md#zahlen-und-fakten).
+- **Folie 10 und Reserve R5 (Prüfungen nach V16):** sieben große Vergleiche mit 7.640 Spielen auf 960 Karten im
+  [Morgenbericht vom 23.11.](docs/MORGENBERICHT_20261123.md), Kundschafter auf 160 Karten (960 Spiele,
+  [Ergebnis](experiments/analysis/relictsuche_20261123/abschlusspruefung/ERGEBNIS.md)) und seine Wiederholung auf 96 Karten
+  (576 Spiele, [Ergebnis](experiments/analysis/relictsuche_20261123/sicht1_wiederholung/ERGEBNIS.md)). Die übrigen
+  Versuche vom 22. und 23.11. stehen im [Arbeitsstand](docs/ARBEITSSTAND.md) und in der
+  [Übersicht zur Reliktsuche](experiments/analysis/relictsuche_20261123/ERGEBNIS.md). 35 Niederlagen:
+  [spielabstand](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md); 18 von 18:
+  [gemeinsame Niederlagen](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md).
+- **Reserve R1:** `experiments/analysis/count_games.py` zählt bis 17.11. 1.541.960 Spiele; dazu die 9.176 Prüfspiele
+  von R5 (7.640 + 960 + 576), die das Skript nicht erfasst. Commits mit `git shortlog -sn` am 24.11.: Moayed 652,
+  Mahmoud 455 (452 + 3 unter anderen Adressen). Tests in `tests/` unverändert 3.298.
 
 ## Für die Probe
 
