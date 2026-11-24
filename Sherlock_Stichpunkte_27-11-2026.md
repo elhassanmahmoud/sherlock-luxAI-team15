@@ -26,13 +26,13 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 |---|---|---:|---:|
 | 1 · Sherlock V16 | Moe | 0:30 | 0:30 |
 | 2 · Wo gibt es Punkte? | Moe | 0:55 | 1:25 |
-| 3 · Eigenes RL brachte uns auf Platz 3 | Moe | 1:10 | 2:35 |
+| 3 · Platz 3 mit V14 | Moe | 1:10 | 2:35 |
 | 4 · Die Idee: vom Kaggle-Dritten lernen | Mahmoud | 1:10 | 3:45 |
 | 5 · Nur zuschauen reicht nicht: DAgger | Mahmoud | 1:15 | 5:00 |
 | 6 · So entscheidet V16 in jedem Zug | Mahmoud | 1:10 | 6:10 |
 | 7 · Kein Gegner sichtbar, trotzdem vier Treffer | Mahmoud | 1:10 | 7:20 |
 | 8 · Drei Schalter helfen, 17 Handtaktiken nicht | Moe | 1:00 | 8:20 |
-| 9 · 194 von 200 gegen unsere vorige Version | Moe | 0:55 | 9:15 |
+| 9 · 194 Siege gegen R3 | Moe | 0:55 | 9:15 |
 | 10 · Was wir mitnehmen | Moe | 0:35 | 9:50 |
 
 ## Folie für Folie
@@ -51,7 +51,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
   Spiegelsymmetrie der Karte und verfolgt wandernden Nebel, Asteroiden und das Energiefeld.
 - Überleitung: „Dieses Gedächtnis haben wir selbst gebaut. Es ist bis heute die Eingabe für Sherlocks Netz.“
 
-### 3 · Eigenes RL brachte uns auf Platz 3 (Moe)
+### 3 · Platz 3 mit V14 (Moe)
 
 - Auf die Kurve zeigen: vom Review am 16.10. mit 47 % gegen Solution_92 bis 95 % mit V14 im Battle. Dahinter stecken
   DQN-Netze (erst 18, dann 36) und viele Regeln für Wege, Schüsse und Nebel.
@@ -121,7 +121,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 **Für Rückfragen:** Am gezeigten Zug steigt der Wert fürs Stehen von 41 % auf 65 %. Der gemessene Zuwachs von 1,6 Prozentpunkten beim Punkteanteil gegen Kaggle gehört zur Halter-Regel **zusammen mit** der milderen Stehstrafe. Beim ersten Netz halfen Stehabzug und Entstapeln zusammen gegen Solution (49,5 % auf 78 % auf Entwicklungskarten).
 
-### 9 · 194 von 200 Spielen gegen unsere vorige Version (Moe)
+### 9 · 194 Siege gegen R3 (Moe)
 
 - Kurz einordnen: R3 war bis zum 17. November unsere Finalversion, V14 mit einem kleinen nachgeahmten Berater für
   Bewegungen.
@@ -136,7 +136,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 **Merkfolge für die 35 Sekunden:** Lehrer → ein zusätzlicher Sieg → V16 spielt → zweites Gebiet.
 
-„Vom Kaggle-Dritten hat Sherlock vor allem das Kämpfen gelernt. Diese Woche haben wir getestet, ob ein freies Schiff bei schlechter Sicht das erste Relikt früher findet. Auf denselben neuen Karten gewann der Kundschafter gegen Solution 178 von 192 Spielen, V16 gewann 177. Ein Sieg mehr reicht uns für einen Wechsel nicht. Deshalb spielt V16. Als Nächstes wollen wir an späteren Relikten früher punkten. Danke! Habt ihr Fragen?“
+„Vom Kaggle-Dritten hat Sherlock vor allem das Kämpfen gelernt. Diese Woche haben wir getestet, ob ein freies Schiff bei schlechter Sicht das erste Relikt früher findet. Auf denselben neuen Karten gewann der Kundschafter gegen Solution 178 von 192 Spielen, V16 gewann 177. Ein Sieg mehr reicht uns für einen Wechsel nicht. Deshalb spielt V16. Als Nächstes wollen wir die zweite Reliktgruppe früh finden und mit einem freien Schiff ein Punktefeld besetzen und halten. Danke! Habt ihr Fragen?“
 
 **Für Rückfragen:** Reservefolie R5 zeigt die anderen Versuche. Auf den elf Startplätzen, auf denen beide Varianten gegen Solution verloren, lag V16 in allen 18 verlorenen zweiten oder dritten Matches bei den später aktivierten Reliktgruppen hinten.
 

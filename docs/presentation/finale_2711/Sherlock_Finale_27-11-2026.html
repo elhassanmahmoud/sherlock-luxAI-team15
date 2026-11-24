@@ -73,6 +73,15 @@
   .three {display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
   .three .pane h3 {font-size:24px;margin-bottom:10px}
   .three .pane p {font-size:20px;color:var(--muted)}
+  .outlook {display:grid;grid-template-columns:2.25fr 1fr;gap:36px;margin-top:28px;border-top:2px solid var(--line);padding-top:20px}
+  .outlook h3 {font-size:23px;margin-bottom:12px}
+  .scout-route {display:grid;grid-template-columns:1fr 29px 1fr 29px 1fr;align-items:center;gap:4px;margin:0;padding:0;list-style:none}
+  .scout-route li {display:grid;grid-template-rows:42px auto;gap:7px;font-size:20px;line-height:1.14;font-weight:600}
+  .scout-route svg {width:65px;height:42px;color:var(--teal)}
+  .scout-route .arrow {display:block;color:var(--teal);font-size:28px;font-weight:400}
+  .other-ideas {border-left:1px solid var(--line);padding-left:27px}
+  .other-ideas ul {margin:0;padding-left:20px;color:var(--muted);font-size:18px;line-height:1.32}
+  .other-ideas li + li {margin-top:5px}
   .reserve .kicker {color:var(--muted)}
   @media screen {body {display:flex;flex-direction:column;align-items:flex-start;gap:16px} }
   @media print {body {background:transparent}}
@@ -114,7 +123,7 @@
 
 <!-- 03 · Moe -->
 <section class="slide" id="weg">
-  <header style="margin-bottom:24px"><div class="kicker">SHERLOCK / UNSER WEG BIS ZUM BATTLE</div><h2>Eigenes Reinforcement Learning brachte uns auf Platz 3</h2></header>
+  <header style="margin-bottom:24px"><div class="kicker">SHERLOCK / UNSER WEG BIS ZUM BATTLE</div><h2>Platz 3 mit V14</h2></header>
   <div class="cols" style="grid-template-columns:1.1fr .9fr;gap:44px;align-items:start">
     <figure>
       <figcaption class="eyebrow" style="margin-bottom:2px">Siege gegen Solution_92, frisch gemessen bei jeder neuen Abgabe</figcaption>
@@ -271,8 +280,8 @@
 
 <!-- 09 · Moe -->
 <section class="slide dark" id="ergebnis">
-  <header style="margin-bottom:20px"><div class="kicker">SHERLOCK / ERGEBNIS AUF FRISCHEN KARTEN</div><h2>194 von 200 Spielen gegen unsere vorige Version</h2></header>
-  <p class="small" style="margin-bottom:18px;font-size:19px">R3 war bis zum 17. November unsere Finalversion: V14 mit einem nachgeahmten Bewegungsberater.</p>
+  <header style="margin-bottom:20px"><div class="kicker">SHERLOCK / ERGEBNIS AUF FRISCHEN KARTEN</div><h2>194 Siege gegen R3</h2></header>
+  <p class="small" style="margin-bottom:18px;font-size:19px">200 direkte Duelle mit unserer vorigen Finalversion R3. Sie ergänzte V14 um einen nachgeahmten Bewegungsberater.</p>
   <div class="cols sectionline" style="grid-template-columns:1.08fr .92fr;gap:46px;padding-top:20px">
     <figure><figcaption style="font-size:23px;font-weight:700">400 frische Karten · beide Seiten</figcaption>
       <table style="font-size:22px;margin-top:10px"><thead><tr><th>Gewonnen</th><th class="numeric">R3</th><th class="numeric">V16</th></tr></thead><tbody>
@@ -303,7 +312,22 @@
     <div class="pane"><h3>Nur frische Karten zählen</h3><p>Jede neue Version musste eine vorab festgelegte Prüfung auf neuen Karten bestehen. Auch nach V16 fielen dort über 20 weitere Ideen durch.</p></div>
     <div class="pane"><h3>Der Lehrer bleibt stärker</h3><p>Gegen ihn holt Sherlock rund 40&nbsp;% der Punkte und etwa jedes zehnte Match.</p></div>
   </div>
-  <p class="barline" style="margin-top:30px;font-size:21px"><b>Nächste Schritte:</b> das nachgeahmte Netz mit Reinforcement Learning weitertrainieren, etwa mit PPO nahe am Lehrer · Schüsse besser erkennen (heute 36–50&nbsp;% der Lehrerschüsse) · an später erscheinenden Relikten schneller punkten (dort lag V16 in allen 18 untersuchten verlorenen Matches 2 und 3 gegen Solution_92 zurück) · am Matchende mehr Punktefelder besetzen (Kaggle&nbsp;8, wir&nbsp;3)</p>
+  <div class="outlook">
+    <div><h3>Unser nächstes Ziel an der zweiten Reliktgruppe</h3>
+      <ul class="scout-route" aria-label="Geplanter Ablauf">
+        <li><svg viewBox="0 0 65 42" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 13V5h9m23 0h9v8M5 29v8h9m23 0h9v-8"/><path d="m25 10 11 11-11 11-11-11z" fill="#E6F1EE"/></svg>Neue Reliktgruppe<br>früh orten</li>
+        <li class="arrow" aria-hidden="true">→</li>
+        <li><svg viewBox="0 0 65 42" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.3"><path d="m5 11 21 10-21 10 4-10z" fill="#A8D5C8"/><path d="M32 21h23" stroke-dasharray="4 3"/><path d="m50 15 7 6-7 6"/></svg>Ein freies Schiff<br>hinschicken</li>
+        <li class="arrow" aria-hidden="true">→</li>
+        <li><svg viewBox="0 0 65 42" aria-hidden="true"><rect x="2" y="3" width="42" height="36" rx="4" fill="#E6F1EE" stroke="currentColor" stroke-width="2.3"/><text x="23" y="29" fill="currentColor" text-anchor="middle" font-size="22" font-family="Helvetica,Arial,sans-serif" font-weight="bold">+1</text></svg>Punktefeld besetzen<br>und halten</li>
+      </ul>
+    </div>
+    <div class="other-ideas"><h3>Weitere Ideen</h3><ul>
+      <li>Mit PPO weitertrainieren</li>
+      <li>Schüsse des Lehrers besser erkennen</li>
+      <li>Am Matchende mehr Felder besetzen</li>
+    </ul></div>
+  </div>
   <p class="accent" style="margin-top:auto;margin-bottom:30px;font-size:34px">Danke! Habt ihr Fragen?</p>
   <footer><span>Team 15 · Sherlock V16</span><span>10</span></footer>
 </section>

@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 24.11.2026 – Zwei kürzere Folientitel und ein grafischer Ausblick
+
+Folie 3 heißt „Platz 3 mit V14“, Folie 9 „194 Siege gegen R3“. Der Untertitel nennt die 200 Direktduelle. Auf Folie 10 („Was wir mitnehmen“) zeigen drei Symbole den geplanten Versuch an der zweiten Reliktgruppe: früh orten, ein freies Schiff schicken und ein Punktefeld halten. Die drei weiteren Trainingsideen stehen daneben. Folientitel und Schlusssatz sind in den [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) nachgezogen. Die gerenderte [PDF](../Sherlock_Finale_27-11-2026.pdf) hat 15 Seiten; im Bildvergleich änderten sich ausschließlich 3, 9 und 10. Die gemeinsame Zeitprobe steht aus.
+
 ## 24.11.2026 – Sprechkarten für Moe und bestätigte Agentenfrist
 
 Die [Karteikarten](../Sherlock_Stichpunkte_27-11-2026.md) übernehmen die bestehende Aufteilung aus der Generalprobe. Moe spricht Folien 1–3 und 8–10, Mahmoud 4–7. Auf Folie 8 erklärt Moe die Reihenfolge von Maske, Stehabzug, Halter-Regel und Entstapeln. Folie 10 nennt den Vergleich auf 96 neuen Sicht-1-Karten (Kundschafter 178/192 gegen Solution, V16 177/192). Zahlen und Ablauf wurden mit der Wiederholungsprüfung und der V16-Battle-ZIP abgeglichen. Laut dem neuen Moodle-Eintrag ist der Agent als `Gruppe15.zip` am Mittwoch, 25.11., um 23:59 Uhr fällig. Eine gemeinsame Zeitprobe steht noch aus.
