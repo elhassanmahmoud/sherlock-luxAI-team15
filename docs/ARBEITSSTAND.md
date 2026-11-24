@@ -1,5 +1,9 @@
 # Gemeinsamer Arbeitsstand
 
+## 24.11.2026 – Sprechkarten für Moe und bestätigte Agentenfrist
+
+Die [Karteikarten](../Sherlock_Stichpunkte_27-11-2026.md) übernehmen die bestehende Aufteilung aus der Generalprobe. Moe spricht Folien 1–3 und 8–10, Mahmoud 4–7. Auf Folie 8 erklärt Moe die Reihenfolge von Maske, Stehabzug, Halter-Regel und Entstapeln. Folie 10 nennt den Vergleich auf 96 neuen Sicht-1-Karten (Kundschafter 178/192 gegen Solution, V16 177/192). Zahlen und Ablauf wurden mit der Wiederholungsprüfung und der V16-Battle-ZIP abgeglichen. Laut dem neuen Moodle-Eintrag ist der Agent als `Gruppe15.zip` am Mittwoch, 25.11., um 23:59 Uhr fällig. Eine gemeinsame Zeitprobe steht noch aus.
+
 ## 24.11.2026, 13:55 Berlin – Abgabe-ZIPs neu gebaut und geprüft; Präsentation auf den Stand nach Moes Prüfungen gebracht
 
 **Auftrag Mahmoud:** „fertige mir die zip nochmal als abgabe und bearbeite unsere präsi auf den neuesten stand für freitag und gib alle notwendigen infos ein“. Vorher alle 145 Commits von Moe bis `d52bcc8` übernommen und gesichtet: nur Forschung und Folien, Agent, Gewichte und Abgabepakete unverändert.

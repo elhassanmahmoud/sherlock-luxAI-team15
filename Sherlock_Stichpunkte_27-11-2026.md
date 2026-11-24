@@ -6,10 +6,10 @@
 
 | Was | Stand |
 |---|---|
-| **Abgabe-ZIP** | `dist/Gruppe15.zip` im Format der Battle-Mail (Ordner `Gruppe15/`, Klasse `Gruppe15.main.Agent_x`, Gewichte `Gruppe15/agent.pth`, SHA-256 `8347ea2b…ae95`) oder `dist/agent.zip` im Format von Kursfolie 51 (Ordner `sherlock/` mit `paths.csv`, SHA-256 `0c59706b…6099`). Beide enthalten V16. **Nicht** die alte `Gruppe15.zip` direkt im Projektordner hochladen, das ist V14. |
-| **ZIP geprüft** | Am 24.11. beide neu gebaut, bytegleich mit dem Release. Beide Seiten laden, auch mit `train=True`, mit dem Ordner unter `agents/` und in der Projektwurzel. Je ein ganzes Spiel im unveränderten Kursrunner gegen Solution_92 auf beiden Seiten: 3:0 und 3:0. Der Agent braucht nur torch und numpy und läuft auf der CPU. Python 3.10 hat Moe am 22.11. geprüft (9.696 gleiche Befehle). |
+| **Abgabe-ZIP** | Für „Submission Battle Session 2“ die Datei `dist/Gruppe15.zip` mit dem Ordner `Gruppe15/` verwenden. Agentenklasse `Gruppe15.main.Agent_x`, Gewichte für beide Startseiten `Gruppe15/agent.pth`, SHA-256 `8347ea2b…ae95`. Die gleichnamige ZIP im Projektstamm enthält noch V14. |
+| **ZIP geprüft** | Am 24.11. beide neu gebaut, bytegleich mit dem Release. Beide Seiten laden, auch mit `train=True`, mit dem Ordner unter `agents/` und in der Projektwurzel. Die Battle-ZIP gewann im unveränderten Kursrunner gegen Solution_92 von jeder Startseite ein ganzes Spiel mit 3:0 Matches. Der Agent braucht nur torch und numpy und läuft auf der CPU. Python 3.10 hat Moe am 22.11. geprüft (9.696 gleiche Befehle). |
 | **Präsentation** | `Sherlock_Finale_27-11-2026.pdf`: 10 Folien und 5 Reservefolien. Neu am 24.11.: Folie 10 mit dem Stand nach V16, Reservefolie R1 mit neuen Zahlen und Reservefolie R5 mit allen Prüfungen nach V16. |
-| **In Moodle prüfen** | Frist mit Uhrzeit (im Oktober war es 08:00 Uhr am Vortragstag), gewünschtes ZIP-Format und ob ein Slot gebucht werden muss. Laut Kursfolie 8 sind am 27.11. Abschlusspräsentation, Battle und Abgabe der Unterlagen. Eine neue Ansage des Profs lag bis zum 22.11. nicht vor. |
+| **Abgabefrist** | Der Agent ist laut Moodle bis **Mittwoch, 25.11.2026, 23:59 Uhr** fällig. Die Präsentation ist für Freitag, 27.11., vorzubereiten. Eine eigene PDF-Uploadfrist oder Slotzeit nennt dieser Moodle-Eintrag nicht. |
 | **Ablauf am 27.11.** | Laut Kursfolie 10 stellen zwei Teams ihre Agenten je 10 Minuten vor. Danach spielen die Agenten drei Spiele mit je drei Matches, das Replay läuft in doppelter Geschwindigkeit. Turniermodus mit Preis. Benotet werden die drei Präsentationen mit je 33 % (Kursfolie 8). |
 | **Mitnehmen** | Laptop mit der PDF offline, die Replay-Datei zu Folie 7 (`docs/presentation/finale_2711/replays/V16_Kaggle_4247.html`), die PDF zusätzlich auf einem USB-Stick. |
 | **Proben** | Zweimal mit Stoppuhr nach der [Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md), Ziel 9:50. |
@@ -112,17 +112,14 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 ### 8 · Drei Schalter helfen, 17 Handtaktiken nicht (Moe)
 
-- Links: Drei kleine Schalter haben wir aus der Spielanalyse abgeleitet. Weil das Netz zu oft stehen blieb, wird
-  Stehen abgewertet. Wollen mehrere auf demselben Feld stehen bleiben, werden sie nach Möglichkeit verteilt.
-  Zusammen hoben die beiden Schalter unser erstes Netz gegen Solution_92 von
-  49,5 % auf 78 %.
-- Die Halter-Regel am Beispiel: Ohne sie würde Einheit 2 ihr Punktefeld verlassen (rechts 59 %). Mit ihr bleibt sie
-  stehen (65 %) und holt weiter jeden Zug einen Punkt. Mit milderer Stehstrafe zusammen brachte das auf frischen
-  Karten +1,6 Prozentpunkte Punkteanteil gegen Kaggle.
-- Rechts: 17 Handtaktiken, je 800 Spiele. Granaten, Nebel-Schüsse, gemeinsame Abschüsse und Ausweichen kosten Punkte.
-  Alles gleichzeitig kostet am meisten: −1,64 Prozentpunkte und nur 7 statt 24 Siege von 400 gegen Kaggle.
-  „Öfter schießen“ sah zuerst gut aus, fiel aber in der frischen Bestätigung durch.
-- „Das Netz hat Schießen und Ausweichen schon gelernt. Feste Regeln stören es eher.“
+**Merkfolge für die Minute:** Maske → Stehen bewerten → Aktion wählen → doppelte Stehbefehle auflösen.
+
+- „Die Maske sperrt zuerst die Aktionen, die für das Schiff ausscheiden. Die beiden Netze bewerten die übrigen Möglichkeiten. Weil Sherlock früher zu oft stehen blieb, bekommt Stehen einen Abzug.“
+- „Schaut auf Einheit 2 links. Sie hält ein bekanntes Punktefeld. Für sie entfällt der Abzug. Dadurch wird Stehen ihre beste Aktion und sie sammelt dort weiter Punkte. Sie dürfte das Feld auch verlassen.“
+- „Erst nach der Auswahl schaut Sherlock, ob mehrere Schiffe auf demselben Feld stehen bleiben wollen. Eines bleibt. Die anderen nehmen ihre beste erlaubte Bewegung, wenn es eine gibt.“
+- Auf die Balken rechts zeigen: „Zusätzliche feste Taktiken haben wir auch getestet. Alle zusammen verschlechterten unser Ergebnis gegen den Kaggle-Dritten.“
+
+**Für Rückfragen:** Am gezeigten Zug steigt der Wert fürs Stehen von 41 % auf 65 %. Der gemessene Zuwachs von 1,6 Prozentpunkten beim Punkteanteil gegen Kaggle gehört zur Halter-Regel **zusammen mit** der milderen Stehstrafe. Beim ersten Netz halfen Stehabzug und Entstapeln zusammen gegen Solution (49,5 % auf 78 % auf Entwicklungskarten).
 
 ### 9 · 194 von 200 Spielen gegen unsere vorige Version (Moe)
 
@@ -137,14 +134,11 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 ### 10 · Was wir mitnehmen (Moe)
 
-- Drei Sätze: Vom Besten lernen hat mehr gebracht als alle Handregeln. Nur frische Karten mit fester Regel zeigen
-  echte Fortschritte: Auch nach V16 haben wir über 20 weitere Ideen geprüft, keine war sicher besser, deshalb spielt
-  V16 im Turnier. Der Lehrer bleibt stärker: Wir holen gegen ihn rund 40 % der Punkte und etwa jedes zehnte Match.
-- Nächste Schritte nur nennen, nicht ausführen: das nachgeahmte Netz mit RL weitertrainieren (zum Beispiel PPO, das
-  nahe am Lehrer bleibt), Schüsse besser erkennen, an später erscheinenden Relikten schneller punkten, am Matchende
-  mehr Punktefelder besetzen. Die Zahlen dazu stehen auf Reservefolie R5.
-- Zur Eingangsfrage zurück: „Wenn das eigene Training nicht weiterkommt, hilft ein guter Lehrer, wenn man ihn ehrlich
-  nennt und sauber prüft.“ Dann: „Danke! Habt ihr Fragen?“
+**Merkfolge für die 35 Sekunden:** Lehrer → ein zusätzlicher Sieg → V16 spielt → zweites Gebiet.
+
+„Vom Kaggle-Dritten hat Sherlock vor allem das Kämpfen gelernt. Diese Woche haben wir getestet, ob ein freies Schiff bei schlechter Sicht das erste Relikt früher findet. Auf denselben neuen Karten gewann der Kundschafter gegen Solution 178 von 192 Spielen, V16 gewann 177. Ein Sieg mehr reicht uns für einen Wechsel nicht. Deshalb spielt V16. Als Nächstes wollen wir an späteren Relikten früher punkten. Danke! Habt ihr Fragen?“
+
+**Für Rückfragen:** Reservefolie R5 zeigt die anderen Versuche. Auf den elf Startplätzen, auf denen beide Varianten gegen Solution verloren, lag V16 in allen 18 verlorenen zweiten oder dritten Matches bei den später aktivierten Reliktgruppen hinten.
 
 ## Fragen, mit denen wir rechnen
 
