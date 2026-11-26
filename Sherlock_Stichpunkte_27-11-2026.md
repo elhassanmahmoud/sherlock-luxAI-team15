@@ -2,15 +2,15 @@
 
 [Präsentations-PDF](Sherlock_Finale_27-11-2026.pdf) · [Editierbare Folien (HTML)](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html) · [Gemeinsame Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md)
 
-## Das Wichtigste für Freitag (Stand 24.11.)
+## Das Wichtigste für Freitag (Stand 26.11.)
 
 | Was | Stand |
 |---|---|
 | **Abgabe-ZIP** | Für „Submission Battle Session 2“ die Datei `dist/Gruppe15.zip` mit dem Ordner `Gruppe15/` verwenden. Agentenklasse `Gruppe15.main.Agent_x`, Gewichte für beide Startseiten `Gruppe15/agent.pth`, SHA-256 `8347ea2b…ae95`. Die gleichnamige ZIP im Projektstamm enthält noch V14. |
 | **ZIP geprüft** | Am 24.11. beide neu gebaut, bytegleich mit dem Release. Beide Seiten laden, auch mit `train=True`, mit dem Ordner unter `agents/` und in der Projektwurzel. Die Battle-ZIP gewann im unveränderten Kursrunner gegen Solution_92 von jeder Startseite ein ganzes Spiel mit 3:0 Matches. Der Agent braucht nur torch und numpy und läuft auf der CPU. Python 3.10 hat Moe am 22.11. geprüft (9.696 gleiche Befehle). |
-| **Präsentation** | `Sherlock_Finale_27-11-2026.pdf`: 10 Folien und 5 Reservefolien. Neu am 24.11.: Folie 10 mit dem Stand nach V16, Reservefolie R1 mit neuen Zahlen und Reservefolie R5 mit allen Prüfungen nach V16. |
-| **Abgabefrist** | Der Agent ist laut Moodle bis **Mittwoch, 25.11.2026, 23:59 Uhr** fällig. Die Präsentation ist für Freitag, 27.11., vorzubereiten. Eine eigene PDF-Uploadfrist oder Slotzeit nennt dieser Moodle-Eintrag nicht. |
-| **Ablauf am 27.11.** | Laut Kursfolie 10 stellen zwei Teams ihre Agenten je 10 Minuten vor. Danach spielen die Agenten drei Spiele mit je drei Matches, das Replay läuft in doppelter Geschwindigkeit. Turniermodus mit Preis. Benotet werden die drei Präsentationen mit je 33 % (Kursfolie 8). |
+| **Präsentation** | `Sherlock_Finale_27-11-2026.pdf`: 10 Folien und 5 Reservefolien. Neu am 26.11.: Folie 10 schließt das Projekt ab. Die zweite Reliktgruppe steht dort jetzt als Ausblick und nicht mehr als nächstes Ziel, die Fußzeile nennt V16 unsere finale Version. Dazu neuer Sprechtext für die Folien 1 und 10. Am 24.11.: Stand nach V16 auf Folie 10, neue Zahlen auf R1, neue Reservefolie R5. |
+| **Abgabefrist** | Der Agent war laut Moodle bis **Mittwoch, 25.11.2026, 23:59 Uhr** fällig (`dist/Gruppe15.zip`). Vor dem Vortrag in Moodle nachsehen, ob dort diese Datei mit V16 liegt. Eine eigene PDF-Uploadfrist oder Slotzeit nennt dieser Moodle-Eintrag nicht. |
+| **Ablauf am 27.11.** | Laut Kursfolie 10 stellen zwei Teams ihre Agenten je 10 Minuten vor. Danach spielen die Agenten drei Spiele mit je drei Matches, das Replay läuft in doppelter Geschwindigkeit. Turniermodus mit Preis. Benotet werden die drei Präsentationen mit je 33 % (Kursfolie 8). Es ist unsere letzte Präsentation, danach ist das Modul abgeschlossen. |
 | **Mitnehmen** | Laptop mit der PDF offline, die Replay-Datei zu Folie 7 (`docs/presentation/finale_2711/replays/V16_Kaggle_4247.html`), die PDF zusätzlich auf einem USB-Stick. |
 | **Proben** | Zweimal mit Stoppuhr nach der [Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md), Ziel 9:50. |
 
@@ -39,8 +39,8 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 ### 1 · Sherlock V16 (Moe)
 
-- „Im Battle am 6. November wurde Sherlock Dritter. Heute zeigen wir, was danach passiert ist: Sherlock hat vom
-  Drittplatzierten des Kaggle-Wettbewerbs gelernt.“
+- „Im Battle am 6. November wurde Sherlock Dritter. Heute, in unserer letzten Präsentation, zeigen wir, was danach
+  passiert ist: Sherlock hat vom Drittplatzierten des Kaggle-Wettbewerbs gelernt.“
 - Frage aufwerfen, die am Ende beantwortet wird: „Was macht man, wenn das eigene Training nicht mehr weiterkommt?“
 
 ### 2 · Wo gibt es Punkte? (Moe)
@@ -134,9 +134,9 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 ### 10 · Was wir mitnehmen (Moe)
 
-**Merkfolge für die 35 Sekunden:** Lehrer → ein zusätzlicher Sieg → V16 spielt → zweites Gebiet.
+**Merkfolge für die 35 Sekunden:** Antwort auf die Eingangsfrage → ein Sieg mehr reicht nicht → V16 spielt heute → mit mehr Zeit: zweite Reliktgruppe → „Das war Sherlock.“
 
-„Vom Kaggle-Dritten hat Sherlock vor allem das Kämpfen gelernt. Diese Woche haben wir getestet, ob ein freies Schiff bei schlechter Sicht das erste Relikt früher findet. Auf denselben neuen Karten gewann der Kundschafter gegen Solution 178 von 192 Spielen, V16 gewann 177. Ein Sieg mehr reicht uns für einen Wechsel nicht. Deshalb spielt V16. Als Nächstes wollen wir die zweite Reliktgruppe früh finden und mit einem freien Schiff ein Punktefeld besetzen und halten. Danke! Habt ihr Fragen?“
+„Unsere Antwort auf die Frage vom Anfang: vom Besten lernen, so hat Sherlock das Kämpfen gelernt. Zuletzt testeten wir, ob ein freies Schiff bei schlechter Sicht das erste Relikt früher findet. Dieser Kundschafter gewann gegen Solution 178 von 192 Spielen, V16 177. Ein Sieg mehr reicht nicht, deshalb spielt V16 heute im Turnier. Mit mehr Zeit hätten wir an der zweiten Reliktgruppe angesetzt: früh finden, ein freies Schiff hinschicken, das Punktefeld halten. Das war Sherlock. Danke! Habt ihr Fragen?“
 
 **Für Rückfragen:** Reservefolie R5 zeigt die anderen Versuche. Auf den elf Startplätzen, auf denen beide Varianten gegen Solution verloren, lag V16 in allen 18 verlorenen zweiten oder dritten Matches bei den später aktivierten Reliktgruppen hinten.
 
@@ -155,8 +155,9 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 | Wie habt ihr getestet? | Jede Karte von beiden Seiten, Regel vor dem ersten Spiel festgelegt, Auswahl auf Entwicklungskarten, Bestätigung auf nie benutzten Karten, gepaarte Auswertung nach Karte mit Bootstrap. Insgesamt über 1,55 Millionen Spiele seit dem 10. Oktober. |
 | Was war euer eigener Beitrag? | Gedächtnis und Merkmale (16 Kartenebenen, 79 Merkmale), die ganze Lernkette mit DAgger, die Schalter aus der Spielanalyse wie die Halter-Regel, die schrittgenaue Nachrechnung der Kämpfe und die Prüfungen. |
 | Warum ist V16 gegen Solution nicht besser als R3? | Beide liegen bei rund 98 %; auf einem weiteren frischen Kartensatz lag V16 sogar 11 Spiele von 800 hinter R3 (778 statt 789). Wir haben V16 gewählt, weil es gegen den viel stärkeren Kaggle-Dritten klar besser ist und R3 direkt 194 von 200 Mal schlägt. |
-| Wo fehlen euch gegen Solution noch Siege? | „Wir haben alle 35 Niederlagen aus zwei Tests mit insgesamt 1.600 Spielen nachgespielt. 27-mal haben wir das erste Match gewonnen und danach beide verloren. Das knappere verlorene Match war meistens das zweite. In den untersuchten verlorenen Matches 2 und 3 holte Solution an den später erscheinenden Relikten jedes Mal mehr Punkte, 18 von 18. Genau dort wollen wir früher punkten.“ [Rekonstruierte Matchstände](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md) |
+| Wo fehlen euch gegen Solution noch Siege? | „Wir haben alle 35 Niederlagen aus zwei Tests mit insgesamt 1.600 Spielen nachgespielt. 27-mal haben wir das erste Match gewonnen und danach beide verloren. Das knappere verlorene Match war meistens das zweite. In den untersuchten verlorenen Matches 2 und 3 holte Solution an den später erscheinenden Relikten jedes Mal mehr Punkte, 18 von 18. Genau dort hätten wir als Nächstes angesetzt.“ [Rekonstruierte Matchstände](experiments/analysis/v16_finalwoche_20261122/spielabstand/ERGEBNIS.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md) |
 | Habt ihr nach dem V16-Release eine stärkere Version gefunden? | „Wir haben danach über 20 Ideen geprüft, allein in den Vergleichen auf Reservefolie R5 9.176 Spiele auf neuen Karten. Am nächsten kam ein Kundschafter, der bei kurzer Sicht ein freies Schiff das erste Relikt suchen lässt: 319 von 320 Spielen gegen Solution, V16 316. In der vorab festgelegten Wiederholung waren es nur noch 178 zu 177 von 192, direkt 102 von 192. Das reicht nicht für einen Wechsel, deshalb spielt V16.“ [160 Karten](experiments/analysis/relictsuche_20261123/abschlusspruefung/ERGEBNIS.md) · [Wiederholung](experiments/analysis/relictsuche_20261123/sicht1_wiederholung/ERGEBNIS.md) · [alle Vergleiche](docs/MORGENBERICHT_20261123.md) |
+| Wie geht es mit Sherlock weiter? | „Mit dem Modul endet heute auch unser Projekt, V16 ist die finale Version. Wer weitermacht, sollte bei der zweiten Reliktgruppe ansetzen und das Netz durch eigenes Spielen mit RL nachtrainieren, zum Beispiel mit PPO nahe am Lehrer.“ |
 | Läuft eure Abgabe sicher beim Prof? | Sie braucht nur torch und numpy und läuft auf der CPU. Im unveränderten Kursrunner lief sie unter Python 3.10 und 3.14; nach dem letzten Bau am 24.11. hat sie gegen Solution_92 auf beiden Seiten je ein ganzes Spiel 3:0 gewonnen. Liegt der Ordner woanders, findet der Agent seine Gewichte direkt neben `main.py`. |
 | Wie lange dauert ein Zug? | Im Kursrunner im Median 5–6 ms, die Abgabedatei ist 9,5 MB groß und unter Python 3.10 und 3.14 geprüft. |
 
@@ -209,7 +210,7 @@ damit unsere beste frühere Version in 194 von 200 Spielen. Handregeln helfen de
 
 - Zweimal gemeinsam mit Uhr proben, die Übergaben (nach Folie 3 und nach Folie 7) üben.
 - Auf jeder Folie höchstens zwei Zahlen laut sagen; die übrigen stehen für Nachfragen bereit.
-- Vor dem Vortrag prüfen: PDF im Vollbild, Moodle-Frist und Dateiname der Abgabe.
+- Vor dem Vortrag prüfen: PDF im Vollbild und in Moodle, ob `Gruppe15.zip` mit V16 hochgeladen ist.
 
 **PDF neu erzeugen** (nach Änderungen an der HTML-Datei oder den Diagrammen):
 

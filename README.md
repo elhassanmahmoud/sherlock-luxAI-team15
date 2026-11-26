@@ -19,7 +19,7 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 | Gegen `default`, Zufall, Rush-Bot, Solution-Variante, DQN der Vorlage | je 50/50 (ebenso) |
 | Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms). Battle-Format `dist/Gruppe15.zip` (`8347ea2b…ae95`). Beide am 24.11. neu gebaut (bytegleich) und je ein ganzes Kursrunner-Spiel auf beiden Seiten gegen Solution_92 gewonnen (3:0, 3:0) |
 | Gespielte Spiele bisher | **über 1,55 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele bis 17.11., 5.928 Spiele für die Nachahmung und 9.176 Prüfspiele nach V16 ([Zahlen und Fakten](#zahlen-und-fakten)) |
-| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier und Abgabe der Unterlagen am 27.11.** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte mit Checkliste](Sherlock_Stichpunkte_27-11-2026.md)) |
+| Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11., unsere letzte Präsentation im Modul** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte mit Checkliste](Sherlock_Stichpunkte_27-11-2026.md)); den Agenten verlangte Moodle bis 25.11., 23:59 Uhr als `Gruppe15.zip` |
 
 Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die meisten Spiele: Er holt etwa 40 % der Punkte und gewinnt rund jedes zehnte Match.
 
@@ -303,7 +303,7 @@ Für die Finalwoche gibt es einen [Arbeitsplan mit nachgespielten V16-Verlusten 
 - **Gegen Solution_92 liegen R3 und der neue Sherlock nahe beieinander:** 787 zu 787 von 800 (Bestätigung 3), 395 zu 393 von 400 (Dev G), 778 zu 789 von 800 (Bestätigung 5). Über beide Gegner zusammen liegt der neue Sherlock gleichauf bis leicht vorn.
 - **Die Gegner im Finale sind unbekannt.** Gemessen wurde gegen Solution_92 und Varianten, den Kaggle-Drittplatzierten, unsere früheren Abgaben und einfache Agenten. Windows und das Zeitlimit des Kurses sind nicht geprüft; ein Zug dauert lokal 5–6 ms.
 - **Nachahmung ist weitgehend ausgereizt:** Eine siebte DAgger-Runde, ein Dreier-Ensemble, andere Schalterwerte und 17 Handtaktiken brachten keinen weiteren Gewinn. Mögliche größere Schritte: ein größeres Netz, Schüsse im Training gezielter lernen oder Weiterlernen durch eigenes Spielen (RL). Vor dem Finale werden sie nur nach festem Plan geprüft; die Abgabe bleibt bis dahin unverändert.
-- **Termine:** Finale mit Turnier am 27.11.; laut Kursfolie 8 werden die Unterlagen am selben Tag abgegeben. Frist mit Uhrzeit, ZIP-Format und Slot in Moodle prüfen. Welche Datei hochgeladen wird, steht in den [Stichpunkten](Sherlock_Stichpunkte_27-11-2026.md) unter „Das Wichtigste für Freitag“.
+- **Termine:** Finale mit Turnier am 27.11., unsere letzte Präsentation; danach ist das Modul abgeschlossen. Den Agenten verlangte Moodle bis Mittwoch, 25.11., 23:59 Uhr als `Gruppe15.zip`. Welche Datei das ist, steht in den [Stichpunkten](Sherlock_Stichpunkte_27-11-2026.md) unter „Das Wichtigste für Freitag“.
 
 ## Historie: DQN-Sherlock bis V14 und R3
 
@@ -555,7 +555,7 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 - [Tagesbericht 17.11.](docs/TAGESBERICHT_20261117.md): wie es zu V16 kam.
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): Versuche und Auswahlentscheidungen bis zur Battle-Woche.
 - Releases: [V16 (aktuell)](experiments/releases/20261117_sherlock_v16/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
-- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Finale 27.11. mit V16 ([PDF](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md), [Folien-Quelle](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html); Stand 19.11., gemeinsame Zeitprobe offen).
+- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Finale 27.11. mit V16 ([PDF](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md), [Folien-Quelle](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html); Stand 26.11., gemeinsame Zeitprobe offen).
 
 ## Quellen
 

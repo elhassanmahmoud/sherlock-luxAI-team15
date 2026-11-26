@@ -1,5 +1,17 @@
 # Gemeinsamer Arbeitsstand
 
+## 26.11.2026, 20:54 Berlin – Folien auf die letzte Präsentation zugeschnitten
+
+**Auftrag Mahmoud:** „morgen ist die letzte präsi von unserem agent und dann wars das mit dem modul […] dass die präsi auch so angepasst ist“. Vorher Moes zwei Commits vom 24.11. übernommen (`24b3643`).
+
+**Folie 10:** Die zweite Reliktgruppe steht jetzt als „Ausblick: mehr Punkte an der zweiten Reliktgruppe“ statt als „Unser nächstes Ziel“. Die Liste rechts heißt „Weitere offene Ideen“, die Fußzeile „Sherlock V16 ist unsere finale Version“. Symbole, Kacheln und Zahlen sind unverändert.
+
+**Sprechkarten:** Auf Folie 1 sagt Moe, dass es unsere letzte Präsentation ist. Der Text zu Folie 10 beantwortet wieder die Eingangsfrage von Folie 1 und sagt, dass V16 heute im Turnier spielt. Die zweite Reliktgruppe ist jetzt das, was wir mit mehr Zeit angegangen wären, und der Text endet mit „Das war Sherlock.“ Die Länge ist fast gleich, 79 statt 77 Wörter. Im Fragenteil ist eine Antwort umformuliert („hätten wir als Nächstes angesetzt“), neu ist „Wie geht es mit Sherlock weiter?“. In der Checkliste steht die Frist vom 25.11. jetzt als vergangen. Vor dem Vortrag soll in Moodle geprüft werden, ob `Gruppe15.zip` mit V16 hochgeladen ist. Generalprobe, README und CLAUDE.md sind nachgezogen.
+
+**Geprüft:** Die alte HTML-Fassung mit Headless-Chrome 158 neu gerendert, sie ist auf allen 15 Seiten pixelgleich mit der bisherigen PDF. Die neue PDF hat 15 Seiten, 960 × 540 pt. Im Bildvergleich hat sich nur Seite 10 geändert, sie wurde als Bild angesehen: Die neue Überschrift passt in eine Zeile, nichts läuft über. Beide PDF-Kopien sind bytegleich (SHA-256 `6c4fd043…72bb`). Agent, Gewichte und Abgabe-ZIPs sind unverändert, `dist/agent.zip` (`0c59706b…6099`) und `dist/Gruppe15.zip` (`8347ea2b…ae95`) per SHA geprüft. Keine Spiele, kein Training, keine Tests mit pytest.
+
+**Offen:** In Moodle prüfen, ob `Gruppe15.zip` mit V16 hochgeladen ist (Frist 25.11., 23:59 Uhr). Gemeinsame Zeitprobe.
+
 ## 24.11.2026 – Zwei kürzere Folientitel und ein grafischer Ausblick
 
 Folie 3 heißt „Platz 3 mit V14“, Folie 9 „194 Siege gegen R3“. Der Untertitel nennt die 200 Direktduelle. Auf Folie 10 („Was wir mitnehmen“) zeigen drei Symbole den geplanten Versuch an der zweiten Reliktgruppe: früh orten, ein freies Schiff schicken und ein Punktefeld halten. Die drei weiteren Trainingsideen stehen daneben. Folientitel und Schlusssatz sind in den [Sprechkarten](../Sherlock_Stichpunkte_27-11-2026.md) nachgezogen. Die gerenderte [PDF](../Sherlock_Finale_27-11-2026.pdf) hat 15 Seiten; im Bildvergleich änderten sich ausschließlich 3, 9 und 10. Die gemeinsame Zeitprobe steht aus.
