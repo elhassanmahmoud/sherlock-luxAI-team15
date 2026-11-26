@@ -5,11 +5,11 @@ Team 15 (Moodle-Gruppe `15`) · Mahmoud El-Hassan, Moayed Shawesh · Agent **She
 
 Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit Nebel, wandernden Asteroiden und versteckten Punkte-Feldern rund um Relics. Im Kurs besteht ein Spiel aus 3 Matches à 100 Schritte; jede Seite steuert bis zu 16 Einheiten. Viele Spielparameter (Sichtweite, Sap-Kosten, Streuschaden, Nebel-Abzug …) werden pro Spiel zufällig gezogen und sind nicht direkt sichtbar.
 
-## Auf einen Blick (Stand 24.11.2026)
+## Auf einen Blick (Stand 26.11.2026)
 
 | | |
 |---|---|
-| **Aktuelle Abgabe** | **Sherlock V16** seit 17.11.2026, 23:24 (Teamentscheidung Mahmoud und Moayed) · [Release](experiments/releases/20261117_sherlock_v16/README.md) |
+| **Finale Abgabe** | **Sherlock V16** seit 17.11.2026, 23:24 (Teamentscheidung Mahmoud und Moayed) · [Release](experiments/releases/20261117_sherlock_v16/README.md) |
 | Was der Agent ist | zwei CNNs (0,7 und 1,8 Millionen Parameter), die durch Nachahmung und sechs DAgger-Runden vom öffentlichen Kaggle-Drittplatzierten gelernt haben, dazu Sherlocks Gedächtnis, Aktionsmasken und drei feste Spielschalter |
 | Direkt gegen die vorige Abgabe R3 | **194 von 200 Spielen gewonnen** (100 Karten, auf jeder Karte beide Startseiten) |
 | Gegen den Kaggle-Drittplatzierten | 20/800 statt 10/800 Spiele, **216 statt 76 von 2.400 Matches**, Punkteanteil 39,3 statt 33,4 % |
@@ -17,8 +17,8 @@ Lux AI Season 3 ist ein Zwei-Spieler-Strategiespiel auf einer 24×24-Karte mit N
 | Nach V16 geprüft (22./23.11.) | über 20 weitere Ideen, keine auf neuen Karten sicher besser; am nächsten kam ein Kundschafter (319 statt 316 von 320 gegen Solution_92, in der Wiederholung 178 statt 177 von 192, direkt 102/192) · [Morgenbericht](docs/MORGENBERICHT_20261123.md) · [Reliktsuche](experiments/analysis/relictsuche_20261123/ERGEBNIS.md) |
 | Gegen Battle-Sherlock V14 | 48/50 (R3 34/50); gemessen mit demselben Netz bei Stay-Bias 1,5 |
 | Gegen `default`, Zufall, Rush-Bot, Solution-Variante, DQN der Vorlage | je 50/50 (ebenso) |
-| Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms). Battle-Format `dist/Gruppe15.zip` (`8347ea2b…ae95`). Beide am 24.11. neu gebaut (bytegleich) und je ein ganzes Kursrunner-Spiel auf beiden Seiten gegen Solution_92 gewonnen (3:0, 3:0) |
-| Gespielte Spiele bisher | **über 1,55 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele bis 17.11., 5.928 Spiele für die Nachahmung und 9.176 Prüfspiele nach V16 ([Zahlen und Fakten](#zahlen-und-fakten)) |
+| Abgabedatei | `dist/agent.zip`, 9,5 MB, SHA-256 `0c59706b…6099`; im unveränderten Kursrunner unter Python 3.14 und 3.10 geprüft (8/8 ganze Spiele, ein Zug im Median 5–6 ms). Battle-Format `dist/Gruppe15.zip` (`8347ea2b…ae95`), so in Moodle verlangt. Beide am 24.11. neu gebaut (bytegleich) und je ein ganzes Kursrunner-Spiel auf beiden Seiten gegen Solution_92 gewonnen (3:0, 3:0) |
+| Gespielte Spiele insgesamt | **über 1,55 Millionen**: 662.504 Trainingsspiele, 66.912 Zwischenprüfungen, 806.616 Bewertungsspiele bis 17.11., 5.928 Spiele für die Nachahmung und 9.176 Prüfspiele nach V16 ([Zahlen und Fakten](#zahlen-und-fakten)) |
 | Termine | Review 16.10. (Note 1,3) · Battle 06.11. (Platz 3 mit V14) · **Finale mit Turnier am 27.11., unsere letzte Präsentation im Modul** ([Folien](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte mit Checkliste](Sherlock_Stichpunkte_27-11-2026.md)); den Agenten verlangte Moodle bis 25.11., 23:59 Uhr als `Gruppe15.zip` |
 
 Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die meisten Spiele: Er holt etwa 40 % der Punkte und gewinnt rund jedes zehnte Match.
@@ -32,7 +32,7 @@ Gegen den Kaggle-Drittplatzierten verliert auch der neue Sherlock weiterhin die 
 - [Entwicklung von Sherlock](#entwicklung-von-sherlock) · [Zahlen und Fakten](#zahlen-und-fakten)
 - [Abgabe](#abgabe)
 - [Installation](#installation) · [Nutzung](#nutzung) · [Wie wir testen](#wie-wir-testen) · [Projektstruktur](#projektstruktur)
-- [Grenzen und nächste Schritte](#grenzen-und-nächste-schritte)
+- [Grenzen und Ausblick](#grenzen-und-ausblick)
 - [Historie: DQN-Sherlock bis V14 und R3](#historie-dqn-sherlock-bis-v14-und-r3)
 - [Dokumentation und Zusammenarbeit](#dokumentation-und-zusammenarbeit) · [Quellen](#quellen)
 
@@ -113,6 +113,7 @@ Das Netz hat Schießen, Zielen und Ausweichen bereits vom Lehrer gelernt; Handre
 | 06.11. | V14 im Battle | Platz 3 aller Teams | [Battle-Folien](Sherlock_Battle_06-11-2026.pdf) |
 | 16.11. | R3 | V14 plus nachgeahmter Bewegungsberater | 788/800 gegen Solution_92 |
 | **17.11.** | **V16** | **Nachahmung und DAgger vom Kaggle-Drittplatzierten** | **siehe oben** |
+| 27.11. | V16 im Finale | letzte Präsentation und Turnier, danach ist das Modul abgeschlossen | [Finale-Folien](Sherlock_Finale_27-11-2026.pdf) |
 
 Die DQN-Versionen sind unter [Historie](#historie-dqn-sherlock-bis-v14-und-r3) beschrieben; alle früheren Abgaben liegen mit Rückweg unter `experiments/releases/`.
 
@@ -158,7 +159,7 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 - **33.005 verschiedene Karten** (Seeds) wurden in Bewertungen gespielt (Stand 17.11.), jede Karte meist von beiden Seiten.
 - **Gegner** (bis 01.11. 25 verschiedene, seit dem 15.11. zusätzlich der Kaggle-Drittplatzierte, R3 und die Varianten von V16): Solution_92 und drei Varianten (`sol92_sq` schießt im ganzen Sap-Quadrat, `sol92_weak` zielt auf den schwächsten Gegner, `sol92_sqweak` beides), `default`, das DQN-Beispiel des Profs, ein Rush-Bot, ein Zufallsspieler, ein CNN-PPO-Agent und 16 eigene frühere Stände, darunter die zurückgehaltenen RL-Ensembles `league_nets6` und `threat6`.
 
-### Agent und Code (Stand 17.11.)
+### Agent und Code (Stand 26.11.)
 
 | | |
 |---|---|
@@ -166,14 +167,14 @@ Summe der Spielzeiten je Prozess (Spalte `secs`). Meist liefen 12 bis 14 Prozess
 | Eingabe und Ausgabe | 16 Kartenebenen, je Einheit 79 Merkmale und 5 Bewegungsmerkmale; 6 Aktionen (stehen, 4 Richtungen, Sap) und ein Schussziel |
 | Einstellungen | 190 in `AgentConfig`, davon 109 Schalter; in der Abgabe sind 3 Spielschalter gesetzt |
 | Agent (`agents/sherlock/`) | 25 Python-Dateien, 7.495 Zeilen |
-| Skripte (`scripts/`) | 241 Python-Dateien mit 54.630 Zeilen, 48 Shell-Skripte |
-| Tests (`tests/`) | 209 Dateien mit 34.066 Zeilen, **3.298 Tests** |
+| Skripte (`scripts/`) | 241 Python-Dateien mit 54.685 Zeilen, 47 Shell-Skripte |
+| Tests (`tests/`) | 210 Dateien mit 34.182 Zeilen, **3.321 Tests** |
 
-### Versionen und Verlauf (Stand 17.11.)
+### Versionen und Verlauf (Stand 26.11.)
 
 - **11 Abgabe-Stände** seit dem 10.10.: `full_s0`, `old3_sym3`, V3, V7, V10, V11, V12, V13, V14, R3 und V16. Alle Abgaben ab `old3_sym3` sind unter `experiments/releases/` gesichert, `full_s0` als Git-Tag `abgabe-review-full_s0`.
-- **1.107 Commits** seit dem 10.10.2026, Stand 24.11. (Moayed 652, Mahmoud 455).
-- **Dokumentation:** 427 Einträge im Arbeitsstand; jede Auswahl und Bestätigung seit der Battle-Woche mit vorab festgelegtem Plan.
+- **1.112 Commits** seit dem 10.10.2026 (Moayed 654, Mahmoud 458).
+- **Dokumentation:** 465 Einträge im Arbeitsstand; jede Auswahl und Bestätigung seit der Battle-Woche mit vorab festgelegtem Plan.
 
 ## Abgabe
 
@@ -192,7 +193,7 @@ shasum -a 256 dist/agent.zip         # 0c59706b6af1c2cd74819a4b13269b69cb55786e0
 | Agentenklasse | `agents.sherlock.main.Agent_x` |
 | Gewichte für beide Spieler | `agents/sherlock/weights/agent.pth` |
 
-**Falls der Prof wieder das Format der Battle-Mail verlangt** (`Gruppe15/`, `Gruppe15.main.Agent_x`, `Gruppe15/agent.pth`): `python -m scripts.build_submission --battle` verpackt dasselbe Release bytegleich nach `dist/Gruppe15.zip` (SHA-256 `8347ea2b…ae95`; Kursrunner-Prüfung unter `agents/` und in der Projektwurzel bestanden, zwei ganze Spiele mit 0 abweichenden Aktionen gegenüber `dist/agent.zip`). Die alte V14-Datei `Gruppe15.zip` im Projektordner bleibt unverändert.
+**In Moodle verlangt war das Format der Battle-Mail** („Submission Battle Session 2“, Frist Mittwoch, 25.11.2026, 23:59 Uhr; `Gruppe15/`, `Gruppe15.main.Agent_x`, `Gruppe15/agent.pth`): `python -m scripts.build_submission --battle` verpackt dasselbe Release bytegleich nach `dist/Gruppe15.zip` (SHA-256 `8347ea2b…ae95`; Kursrunner-Prüfung unter `agents/` und in der Projektwurzel bestanden, zwei ganze Spiele mit 0 abweichenden Aktionen gegenüber `dist/agent.zip`). Die alte V14-Datei `Gruppe15.zip` im Projektordner bleibt unverändert.
 
 In der mitgelieferten `agent.pth` ist `frozen=True` gesetzt: Auch wenn der Kursrunner mit `train=True` startet, lernt Sherlock nichts und überschreibt keine Datei. **Rückweg zu R3:** In `scripts/build_submission.py` `FINAL_RELEASE`/`FINAL_ZIP_SHA256` auf `R3_RELEASE`/`R3_ZIP_SHA256` setzen und neu bauen ([R3-Release](experiments/releases/20261116_r3_finale/README.md)). `--from-run experiments/runs/<lauf>` verpackt die Gewichte eines Laufs, ohne die Abgabe zu ersetzen; `scripts/build_student_package.py` baut Pakete aus nachgeahmten Netzen im selben Format.
 
@@ -274,11 +275,11 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 │   ├── xversion_replay.py        Paket unter anderen Python-/torch-Versionen nachspielen
 │   ├── train.py, finetune.py     DQN-Training (eigene Run-Ordner, Abgabe geschützt)
 │   └── common.py, metrics.py, …  Spiel-Schleife, Kennzahlen, Gegner
-├── tests/                        pytest (3.298 Tests, Stand 17.11.)
+├── tests/                        pytest (3.321 Tests, Stand 26.11.)
 ├── experiments/
 │   ├── analysis/                 Auswertungen je Studie (Pläne, Ergebnisse, Rohdaten), z. B. deve/devf/devg/devh_20261117
 │   ├── candidates/               geprüfte Kandidatenpakete
-│   ├── releases/                 alle Abgaben mit Rückweg, aktuell 20261117_sherlock_v16
+│   ├── releases/                 alle Abgaben mit Rückweg, final 20261117_sherlock_v16
 │   ├── opponents/                Kaggle-Drittplatzierter als Lehrer und Testgegner (nicht in der Abgabe)
 │   └── imitation/students/       Gewichte der nachgeahmten Netze (lokal, nicht im Repository)
 ├── docs/
@@ -291,18 +292,18 @@ Alle Befehle aus dem Projektordner mit aktiviertem venv.
 └── requirements.txt
 ```
 
-## Grenzen und nächste Schritte
+## Grenzen und Ausblick
 
-Für die Finalwoche gibt es einen [Arbeitsplan mit nachgespielten V16-Verlusten und neuen Trainingsmessungen](experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md). [Folien und gemeinsame Zeitprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md) beziehen sich auf den freigegebenen V16.
+Mit dem Finale am 27.11. endet das Projekt, V16 bleibt die finale Abgabe. Die Finalwoche ist im [Arbeitsplan mit nachgespielten V16-Verlusten und neuen Trainingsmessungen](experiments/analysis/v16_finalwoche_20261122/WEG_ZUM_FINALE.md) dokumentiert, [Folien und Generalprobe](docs/presentation/finale_2711/GENERALPROBE_2711.md) beziehen sich auf V16. Die folgenden Grenzen und Ideen bleiben offen.
 
-**Nach V16 (22./23.11.2026):** Über 20 weitere Ideen wurden auf neuen Karten geprüft, allein in den Vergleichen der Reservefolie R5 9.176 Spiele. Keine war sicher besser, V16 bleibt. In den untersuchten verlorenen Matches 2 und 3 gegen Solution_92 holte der Gegner an den später erscheinenden Relikten jedes Mal mehr Punkte (18 von 18). Das ist der nächste Ansatzpunkt. [Morgenbericht](docs/MORGENBERICHT_20261123.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md)
+**Nach V16 (22./23.11.2026):** Über 20 weitere Ideen wurden auf neuen Karten geprüft, allein in den Vergleichen der Reservefolie R5 9.176 Spiele. Keine war sicher besser, V16 bleibt. In den untersuchten verlorenen Matches 2 und 3 gegen Solution_92 holte der Gegner an den später erscheinenden Relikten jedes Mal mehr Punkte (18 von 18). Dort läge der nächste Ansatzpunkt. [Morgenbericht](docs/MORGENBERICHT_20261123.md) · [Punkte je Reliktgruppe](experiments/analysis/relictsuche_20261123/gemeinsame_niederlagen/ERGEBNIS.md)
 
 **Erkenntnisse aus den Auswahlspielen vom 17.11.2026**
 
 - **Kaggle bleibt klar stärker.** Der neue Sherlock holt gegen den Kaggle-Drittplatzierten etwa 40 % der Punkte und gewinnt rund jedes zehnte Match, aber nur 2–4 % der ganzen Spiele. Am Matchende besetzt Kaggle mehr Punktefelder.
 - **Gegen Solution_92 liegen R3 und der neue Sherlock nahe beieinander:** 787 zu 787 von 800 (Bestätigung 3), 395 zu 393 von 400 (Dev G), 778 zu 789 von 800 (Bestätigung 5). Über beide Gegner zusammen liegt der neue Sherlock gleichauf bis leicht vorn.
 - **Die Gegner im Finale sind unbekannt.** Gemessen wurde gegen Solution_92 und Varianten, den Kaggle-Drittplatzierten, unsere früheren Abgaben und einfache Agenten. Windows und das Zeitlimit des Kurses sind nicht geprüft; ein Zug dauert lokal 5–6 ms.
-- **Nachahmung ist weitgehend ausgereizt:** Eine siebte DAgger-Runde, ein Dreier-Ensemble, andere Schalterwerte und 17 Handtaktiken brachten keinen weiteren Gewinn. Mögliche größere Schritte: ein größeres Netz, Schüsse im Training gezielter lernen oder Weiterlernen durch eigenes Spielen (RL). Vor dem Finale werden sie nur nach festem Plan geprüft; die Abgabe bleibt bis dahin unverändert.
+- **Nachahmung ist weitgehend ausgereizt:** Eine siebte DAgger-Runde, ein Dreier-Ensemble, andere Schalterwerte und 17 Handtaktiken brachten keinen weiteren Gewinn. Mögliche größere Schritte wären ein größeres Netz, gezielteres Lernen der Schüsse oder Weiterlernen durch eigenes Spielen (RL); sie bleiben offen.
 - **Termine:** Finale mit Turnier am 27.11., unsere letzte Präsentation; danach ist das Modul abgeschlossen. Den Agenten verlangte Moodle bis Mittwoch, 25.11., 23:59 Uhr als `Gruppe15.zip`. Welche Datei das ist, steht in den [Stichpunkten](Sherlock_Stichpunkte_27-11-2026.md) unter „Das Wichtigste für Freitag“.
 
 ## Historie: DQN-Sherlock bis V14 und R3
@@ -554,8 +555,8 @@ Gemessen auf 30 Test-Seeds × 2 Seiten (60 Spiele pro Gegner und Trainingsstart)
 - [Arbeitsstand](docs/ARBEITSSTAND.md): jede abgeschlossene Arbeit mit Grund, Prüfungen und offenen Punkten, neueste oben.
 - [Tagesbericht 17.11.](docs/TAGESBERICHT_20261117.md): wie es zu V16 kam.
 - [Experimentprotokoll](docs/EXPERIMENT_PROTOKOLL.md): Versuche und Auswahlentscheidungen bis zur Battle-Woche.
-- Releases: [V16 (aktuell)](experiments/releases/20261117_sherlock_v16/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
-- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Finale 27.11. mit V16 ([PDF](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md), [Folien-Quelle](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html); Stand 26.11., gemeinsame Zeitprobe offen).
+- Releases: [V16 (finale Abgabe)](experiments/releases/20261117_sherlock_v16/README.md) · [R3](experiments/releases/20261116_r3_finale/README.md) · Übernahmeberichte der DQN-Versionen: [V3](experiments/analysis/autonomous_20261020/RELEASE.md) · [V7](experiments/analysis/release_20261022_v7/RELEASE.md) · [V10](experiments/analysis/release_20261022_v10/RELEASE.md) · [V11](experiments/analysis/release_20261030_v11/RELEASE.md) · [V12](experiments/analysis/release_20261031_v12/RELEASE.md) · [V13](experiments/analysis/release_20261101_v13/RELEASE.md) · [V14](experiments/analysis/release_20261101_v14/RELEASE.md).
+- Präsentationen: Review 16.10. ([PowerPoint](docs/presentation/Sherlock_Review_16-10-2026.pptx), [PDF](docs/presentation/Sherlock_Review_16-10-2026.pdf)) · Battle 06.11. ([PDF](Sherlock_Battle_06-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_06-11-2026.md)) · Finale 27.11. mit V16 ([PDF](Sherlock_Finale_27-11-2026.pdf), [Stichpunkte](Sherlock_Stichpunkte_27-11-2026.md), [Folien-Quelle](docs/presentation/finale_2711/Sherlock_Finale_27-11-2026.html); Stand 26.11.).
 
 ## Quellen
 

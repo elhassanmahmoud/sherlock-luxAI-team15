@@ -1,5 +1,28 @@
 # Gemeinsamer Arbeitsstand
 
+## 26.11.2026, 21:34 Berlin – README auf den Endstand gebracht
+
+**Auftrag Mahmoud:** „geh nochmal die github readme durch ob alles nach aktuellem ende stand ist und das wars“.
+
+**Geändert:** „Auf einen Blick“ hat jetzt den Stand 26.11. und heißt „Finale Abgabe“. Als in Moodle verlangtes Format steht dort `dist/Gruppe15.zip` („Submission Battle Session 2“, Frist 25.11., 23:59 Uhr). Auch der Abschnitt „Abgabe“ nennt das so, statt „Falls der Prof wieder … verlangt“. Die Entwicklungstabelle hat eine neue Zeile 27.11. (Finale, letzte Präsentation). Der Abschnitt „Grenzen und nächste Schritte“ heißt jetzt „Grenzen und Ausblick“: Das Projekt endet mit dem Finale, die Ideen bleiben offen, angekündigte Prüfungen gibt es nicht mehr.
+
+Nachgezählt wurde Folgendes:
+
+- 1.112 Commits (Moayed 654, Mahmoud 458), dieser Commit eingerechnet
+- 465 Einträge im Arbeitsstand
+- Skripte: 241 Python-Dateien mit 54.685 Zeilen und 47 Shell-Skripte im Repository
+- Tests: 210 Dateien mit 34.182 Zeilen und 3.321 gesammelten Tests. Am 17.11. waren es 3.298; die Tests vom 19.11. zu `build_submission --battle` kamen dazu.
+- Agentencode seit dem V16-Release unverändert (25 Dateien, 7.495 Zeilen)
+
+**Geprüft:** Alle 79 Dateilinks und alle Sprungmarken der README sind vorhanden. Die Zählweise ist an den Werten vom 17.11. nachvollzogen: Release-Commit `a880656` ergibt 54.630 und 34.066 Zeilen wie in der bisherigen README. Die Testzahl stammt aus `pytest --collect-only`. Ausgeführt wurden keine Tests, und es liefen keine Auswertungen.
+
+**Beobachtet, nicht geändert:**
+
+- `tests/test_r3_m3_deficit_games.py` (Moe, 16.11.) lässt sich lokal nicht sammeln, weil beim Import ein Modul `r3_native` fehlt, das nicht im Repository liegt.
+- Reservefolie R1 und die Quellenzeile zu R1 in den Stichpunkten nennen noch 3.298 Tests. Die PDF wurde dafür nicht neu erzeugt.
+
+**Offen:** wie im vorigen Eintrag (Moodle-Upload prüfen, Zeitprobe).
+
 ## 26.11.2026, 20:54 Berlin – Folien auf die letzte Präsentation zugeschnitten
 
 **Auftrag Mahmoud:** „morgen ist die letzte präsi von unserem agent und dann wars das mit dem modul […] dass die präsi auch so angepasst ist“. Vorher Moes zwei Commits vom 24.11. übernommen (`24b3643`).
